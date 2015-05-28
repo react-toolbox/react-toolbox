@@ -1,0 +1,8 @@
+{
+  "name"            : "secrets",
+  "version"         : "0.5.28",
+  "dependencies"    : {
+    "hamsa"         : "*",
+    "stylmethods"   : "*"
+  }
+}
