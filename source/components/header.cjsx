@@ -31,8 +31,14 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    <header ref="header" data-component="header">
-      { <Navigation routes={@props.routes}/> if @props.routes }
-      { <h1>{@props.title}</h1> if @props.title }
-      { <Navigation routes={@props.subroutes}/> if @props.subroutes }
+    <header ref="header" data-component="header" data-flex="horizontal center grow">
+      <div>
+        <Navigation routes={@props.routes} role="text"/>
+        <h1>{@props.title}</h1>
+        { <Navigation routes={@props.subroutes} role="text"/> if @props.subroutes }
+      </div>
+      <nav data-role="circle">
+        <button className="main">+</button>
+        <button>?</button>
+      </nav>
     </header>

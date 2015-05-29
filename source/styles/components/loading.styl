@@ -1,0 +1,35 @@
+[data-loading]
+  z-index                           : 2
+  > div
+    width                           : SIZE = (1.5 * UNIT)
+    height                          : SIZE
+    border-radius                   : SIZE
+    &::after
+      content                       : ""
+      position                      : absolute
+      width                         : SIZE
+      height                        : SIZE
+      transform                       scale(0.0)
+      border-radius                 : SIZE
+      background-color              : THEME
+
+    SPEED = (3 * ANIMATION_DURATION)
+    &::after
+      animation                       LOADING SPEED infinite
+    &:nth-child(n+1)
+      margin-top                    : -(SIZE)
+    &:nth-child(1)::after
+      animation-delay                 (SPEED / 2.5)
+    &:nth-child(2)::after
+      animation-delay                 (SPEED / 5)
+
+  article &
+    margin-top                      : HEADER_HEIGHT
+
+  // -- Classes
+  &.absolute
+    height                          : 100vh
+    width                           : 100vw
+
+  &.relative
+    position                        : relative

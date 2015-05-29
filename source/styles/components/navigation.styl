@@ -1,0 +1,21 @@
+nav
+  &[data-role="text"]
+    font-size                         : FONT_SIZE_NORMAL
+    > *:not(:last-child)
+      margin-right                    : SPACE
+      transition                        opacity ANIMATION_DURATION ANIMATION_EASE
+      &:not(.active)
+        font-weight                   : FONT_WEIGHT_THIN
+        opacity                       : 0.75
+      &:hover, &:active, &.active
+        opacity                       : 1
+
+  &[data-role="circle"]
+    > *
+      width                           : SIZE = BUTTON_CIRCLE_HEIGHT
+      height                          : SIZE
+      font-size                       : FONT_SIZE_BIG
+      line-height                     : SIZE
+      border-radius                   : SIZE
+      background-color                : PRIMARY
+      box-shadow                      : 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24)

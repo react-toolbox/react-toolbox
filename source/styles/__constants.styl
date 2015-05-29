@@ -1,9 +1,11 @@
-@import url("http://fonts.googleapis.com/css?family=Roboto:500,300,700,400")
+@import url("http://fonts.googleapis.com/css?family=Roboto:300,400,700")
 
 // -- Colors
 COLOR                       = #222222
 BACKGROUND                  = #ffffff
-THEME                       = #ffc107
+THEME                       = #00bcd4
+
+PRIMARY                     = rgb(255, 64, 129)
 
 // -- Fonts
 FONT_FAMILY                 = "Roboto", "Helvetica Neue", "Helvetica", "sans-serif"
@@ -12,36 +14,22 @@ FONT_SIZE_TINY              = 80%
 FONT_SIZE_SMALL             = 90%
 FONT_SIZE_NORMAL            = 100%
 FONT_SIZE_BIG               = 120%
-FONT_WEIGHT_THIN            = normal
-FONT_WEIGHT_NORMAL          = normal
-FONT_WEIGHT_BOLD            = bold
+FONT_WEIGHT_THIN            = 100
+FONT_WEIGHT_NORMAL          = 400
+FONT_WEIGHT_BOLD            = 700
 
 // -- Sizes
 UNIT                        = 4rem
 SPACE                       = (UNIT * 0.29)
-MENU_WIDTH                  = 85vw
-HEADER_HEIGHT               = 10vh
+HEADER_HEIGHT               = 25vh
+
 BUTTON_HEIGHT               = (2.5 * SPACE)
 BUTTON_HEIGHT               = 14vw
+BUTTON_CIRCLE_HEIGHT        = (2.75 * SPACE)
 BORDER_RADIUS               = (SPACE / 2)
-UPLOAD_IMAGE_USER           = 45vw
 H1_SHADOW                   = (SPACE / 6) (SPACE / 6) rgba(0,0,0,0.2)
-
-LI_AVATAR_SIZE              = (UNIT / 1.2)
-LI_HEIGHT                   = 72px
 
 // -- Animations
 ANIMATION_DURATION          = 450ms
 ANIMATION_EASE              = cubic-bezier(.55,0,.1,1)
 ANIMATION_DELAY             = (ANIMATION_DURATION / 5)
-
-delayChild(child, increment)
-  &:nth-child({child})
-    transition-delay ((child + increment) * ANIMATION_DELAY)
-
-@keyframes LOADING
-  0%
-    transform scale(0.0)
-  100%
-    transform scale(1.0)
-    opacity: 0

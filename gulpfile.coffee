@@ -24,6 +24,7 @@ path =
                     "source/styles/__constants.styl"
                     "source/styles/normalize.styl"
                     "source/styles/app.styl"
+                    "source/styles/modules/*.styl"
                     "source/styles/components/*.styl"
                     "source/styles/screens/*.styl"]
   dependencies  : [ "node_modules/react/dist/react-with-addons.js"

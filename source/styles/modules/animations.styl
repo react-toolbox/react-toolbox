@@ -1,0 +1,16 @@
+/*
+@todo
+*/
+
+// -- KEYFRAMES
+@keyframes LOADING
+  0%
+    transform scale(0.0)
+  100%
+    transform scale(1.0)
+    opacity: 0.1
+
+// -- FUNCTIONS
+delayChild(child, increment)
+  &:nth-child({child})
+    transition-delay ((child + increment) * ANIMATION_DELAY)

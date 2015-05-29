@@ -19,14 +19,12 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    <nav>
+    <nav data-role={@props.role}>
     {
       for route, index in @props.routes
         method = if route.back is true then @onBack
         <a href={"#" + route.route} key={index} onClick={method}>
-          <span className={"icon " + route.icon}></span>
-          <strong>{route.label}</strong>
-          <small>{route.count}</small>
+          {route.label}
         </a>
     }
     </nav>

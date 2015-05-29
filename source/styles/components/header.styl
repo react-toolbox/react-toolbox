@@ -1,6 +1,33 @@
 header
-  position                            : fixed
-  height                              : UNIT
-  width                               : 100vw
-  background-color                    : THEME
-  color                               : WHITE
+  position                              : fixed
+  // padding                               : UNIT 0
+  height                                : HEADER_HEIGHT
+  width                                 : 100vw
+  background-color                      : THEME
+  color                                 : WHITE
+  transition                            all ANIMATION_DURATION ANIMATION_EASE
+  > *
+    padding                             : 0 UNIT
+  h1
+    font-weight                         : FONT_WEIGHT_NORMAL
+    padding                             : (UNIT / 2) 0
+  nav
+    &[data-role="text"]
+      &:first-child
+        font-size                       : FONT_SIZE_TINY
+
+    &[data-role="circle"]
+      position                          : absolute
+      right                             : 0
+      bottom                            : -(BUTTON_CIRCLE_HEIGHT / 2)
+      > *
+        margin-left                     : SPACE
+
+  // -- Effects
+  &.scrolling
+    // padding                             : SPACE 0
+    transform                             translateY(-(1.5 * SPACE))
+    nav
+      &[data-role="text"]
+        &:first-child
+          opacity                       : 0
