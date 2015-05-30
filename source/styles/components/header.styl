@@ -1,4 +1,5 @@
 header
+  z-index                               : 2
   position                              : fixed
   height                                : HEADER_HEIGHT
   width                                 : 100vw
@@ -16,6 +17,7 @@ header
     box-shadow                            0 0 0 (SIZE / 10) alpha(WHITE, 15%)
   h1
     padding                             : (UNIT / 2) 0
+    text-transform                      : Capitalize
     transition                            all ANIMATION_DURATION ANIMATION_EASE
   nav
     &[data-role="text"]
@@ -31,7 +33,20 @@ header
       > *
         margin-left                     : SPACE
 
+  // -- States
+  > *
+    transition all ANIMATION_DURATION ANIMATION_EASE
+  &.expanded
+    height                              : 100vh
+  &.disabled
+    delayChild index, 2 for index in (0..3)
+
+    > *
+      opacity                           : 0
+      transform                           translateY(-10vh)
+
   // -- Effects
+
   .scrolling &
     height                              : (HEADER_HEIGHT / 2)
     box-shadow                          : HEADER_SHADOW

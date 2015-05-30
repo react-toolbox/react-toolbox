@@ -1,0 +1,38 @@
+input[type="email"], input[type="search"], input[type="text"], input[type="tel"],
+input[type="url"], input[type="password"], textarea, select
+  width                           : 100%
+  padding                         : (SPACE / 2)
+  font-size                       : FONT_SIZE_NORMAL
+  border                          : none
+  border-bottom                   : solid (SPACE / 10)
+  box-shadow                      : none
+  box-sizing                      : border-box
+  transition                        all ANIMATION_DURATION ANIMATION_EASE
+  & :focus
+    outline                       : 0
+
+  -webkit-appearance              : none
+  -moz-appearance                 : none
+  appearance                      : none
+  outline                         : none
+  -webkit-tap-highlight-color     : rgba(255, 255, 255, 0)
+  -webkit-touch-callout           : none
+
+  // -- class ------------------------------------------------------------------
+  &.transparent
+    font-size                     : FONT_SIZE_BIG
+    font-weight                   : FONT_WEIGHT_BOLD
+    background-color              : transparent
+    color                         : WHITE
+    border-bottom-color           : alpha(WHITE, 50%)
+    &:hover, &:focus, &:active
+      border-bottom-color         : WHITE
+    &::-webkit-input-placeholder
+      color                       : alpha(WHITE, 50%)
+
+  &.white
+    border-bottom-color           :  alpha(BACKGROUND, 25%)
+    opacity                       : 0.75
+    &:hover, &:focus, &:active
+      border-bottom-color         : THEME
+      opacity                     : 1

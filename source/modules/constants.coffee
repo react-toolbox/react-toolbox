@@ -12,10 +12,15 @@ module.exports =
     ,
       label: "reports", route: "/campaigns/reports"
     ]
-
     CREATIVES: [
       label: "list", route: "/creatives/list"
     ]
+    USERS: []
+    DEALS: []
+    ANALYTICS: []
 
   HEIGHT:
     LI : 80
+
+  ANIMATION:
+    DURATION : 450

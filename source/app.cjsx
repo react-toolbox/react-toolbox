@@ -1,45 +1,63 @@
 "use strict"
 
 SPArouter       = require "spa-router"
-# -- Models
-Session         = require "./models/session"
+# -- components
+Button          = require "./components/button"
+Router          = require "./components/router"
+# -- forms
+FormSession     = require "./forms/form.session"
 # -- Screens
-ScreenSession   = require "./screens/session"
 ScreenConsole   = require "./screens/console"
+# -- Modules
+C               = require "./modules/constants"
 
 App = React.createClass
-
-  # -- States & Properties
-  getInitialState: ->
-    session   : null
-    context   : "campaigns"
 
   # -- Lifecycle
   componentWillMount: ->
     SPArouter.listen
-      "/session/:id"      : (id) =>
-        @setState session: false, context: id
-      "/:context/:area/:element" : (context, area, element) =>
-        @setState session: true, context: context
+      "/session/:context" : (context) =>
+        @setState session: false, context: context
       "/:context/:area" : (context, area) =>
-        @setState session: true, context: context
-      "/:context" : (context) =>
-        @setState session: true, context: context
+        @setState session: true, context: context, area: area
 
   # -- Events
   onSessionSuccess: (data) ->
-    @setState session: true
-    SPArouter.path "console"
+    header_style = @refs.header.getDOMNode().classList
+    header_style.add "disabled"
+    header_style.remove "expanded"
+    setTimeout =>
+      SPArouter.path "campaigns/list"
+    , C.ANIMATION.DURATION
+    setTimeout =>
+      header_style.remove "disabled"
+    , (C.ANIMATION.DURATION * 2)
+
+  onConsoleScroll: (value) -> @setState scrolling: value
+
+  onLogout: -> SPArouter.path "session/login"
 
   # -- Render
   render: ->
-    <app>
-    {
-      if @state.session
-        <ScreenConsole context={@state.context}/>
-      else
-        <ScreenSession context={@state.context} onSuccess={@onSessionSuccess} />
-    }
+    if @state.session
+      avatar = "http://soyjavi.com/assets/img/soyjavi.hat.jpg"
+    else
+      avatar = "./assets/img/avatar.jpg"
+
+    <app className={"scrolling" if @state.scrolling}>
+      <header ref="header"
+              data-flex="horizontal center grow"
+              data-flex-justify="start"
+              className={"expanded" unless @state.session}>
+        <img src={avatar} data-flex-grow="min" onClick={@onLogout}/>
+        {
+          if @state.session
+            <Router context={@state.context} area={@state.area} />
+          else
+            <FormSession context={@state.context} onSuccess={@onSessionSuccess}/>
+        }
+      </header>
+    { <ScreenConsole context={@state.context} onScroll={@onConsoleScroll}/> if @state.session }
     </app>
 
 React.render <App />, document.body

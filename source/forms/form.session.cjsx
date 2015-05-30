@@ -2,6 +2,9 @@
 @todo
 ###
 
+# -- components
+Button         = require "../components/button"
+
 module.exports = React.createClass
 
   # -- States & Properties
@@ -11,7 +14,7 @@ module.exports = React.createClass
     onSuccess : React.PropTypes.function
 
   getInitialState: ->
-    disabled: false
+    disabled : true
 
   # -- Events
   onKeyUp: (event) ->
@@ -32,23 +35,19 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    <article data-screen="session" className={@state.active} data-flex="vertical center">
+    label = if @props.context is "login" then "Sign In" else "Sign Up"
+    <form data-flex="vertical" className="session">
       <h1>Welcome...</h1>
-      <form data-flex="vertical center">
-        <input ref="mail" type="text" placeholder="mail" onKeyUp={@onKeyUp} className="transparent"/>
-        <input ref="password" type="password" placeholder="password" onKeyUp={@onKeyUp} className="transparent"/>
-        <button ref="button" onClick={@onSign} disabled={@state.disabled} className="radius white">
-          <abbr>{ if @props.context is "login" then "Sign In" else "Sign Up"}</abbr>
-        </button>
-      </form>
+      <input ref="mail" type="text" placeholder="mail" onKeyUp={@onKeyUp} className="transparent"/>
+      <input ref="password" type="password" placeholder="password" onKeyUp={@onKeyUp} className="transparent"/>
+      <Button ref="button" caption={label} onClick={@onSign} disabled={@state.disabled} style="primary" />
       {
         if @props.context is "login"
           <a href="#/session/signup">Dont have an account? <strong>Sign Up</strong></a>
         else
           <a href="#/session/login">You have an account, <strong>Sign In</strong></a>
       }
-      <small>Copyright 2015</small>
-    </article>
+    </form>
 
   # -- Private methods
   _getFormValues: ->

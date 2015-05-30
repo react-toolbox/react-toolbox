@@ -15,10 +15,10 @@ module.exports = React.createClass
   # -- Events
   onClick: (event) ->
     event.preventDefault()
-    console.log ">"
+    @props.onClick.call @, event
 
   # -- Render
   render: ->
-    <button onClick={@onClick} className={@props.style}>
+    <button onClick={@onClick} className={@props.style} disabled={@props.disabled}>
       <abbr>{@props.caption}</abbr>
     </button>
