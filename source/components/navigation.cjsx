@@ -23,7 +23,11 @@ module.exports = React.createClass
     {
       for route, index in @props.routes
         method = if route.back is true then @onBack
-        <a href={"#" + route.route} key={index} onClick={method}>
+        console.log route.className
+        <a href={"#" + route.route}
+           key={index}
+           className={route.className}
+           onClick={method}>
           {route.label}
         </a>
     }

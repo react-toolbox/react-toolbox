@@ -7,4 +7,22 @@ button, .button
   text-align                              : center
   border                                  : none
   overflow                                : hidden
-  transition                                all ANIMATION_DURATION ANIMATION_EASE
+  transition-property                       opacity, box-shadow
+  transition-duration                       ANIMATION_DURATION
+  transition-timing-function                ANIMATION_EASE
+
+  &.circle
+    width                                 : SIZE = BUTTON_CIRCLE_HEIGHT
+    height                                : SIZE
+    font-size                             : FONT_SIZE_BIG
+    line-height                           : SIZE
+    border-radius                         : SIZE
+    box-shadow                              BUTTON_SHADOW
+    &:hover, &:active
+      box-shadow                            BUTTON_SHADOW, inset 0 0 0 UNIT alpha(WHITE, 15%)
+
+  // -- Colors
+  &.primary
+    background-color                      : PRIMARY
+  &.secondary
+    background-color                      : PRIMARY

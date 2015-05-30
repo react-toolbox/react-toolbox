@@ -1,33 +1,45 @@
 header
   position                              : fixed
-  // padding                               : UNIT 0
   height                                : HEADER_HEIGHT
   width                                 : 100vw
-  background-color                      : THEME
   color                                 : WHITE
-  transition                            all ANIMATION_DURATION ANIMATION_EASE
-  > *
-    padding                             : 0 UNIT
+  background-color                      : THEME
+  transition-property                     height, transform, box-shadow
+  transition-duration                     ANIMATION_DURATION
+  transition-timing-function              ANIMATION_EASE
+  > img
+    width                               : SIZE = (UNIT / 1.5)
+    height                              : SIZE
+    margin                              : 0 ((OFFSET - SIZE) / 2)
+    border-radius                       : SIZE
+    background-color                    : alpha(WHITE, 25%)
+    box-shadow                            0 0 0 (SIZE / 10) alpha(WHITE, 15%)
   h1
-    font-weight                         : FONT_WEIGHT_NORMAL
     padding                             : (UNIT / 2) 0
+    transition                            all ANIMATION_DURATION ANIMATION_EASE
   nav
     &[data-role="text"]
       &:first-child
+        display                         : block
         font-size                       : FONT_SIZE_TINY
+        transition                        all ANIMATION_DURATION ANIMATION_EASE
 
     &[data-role="circle"]
       position                          : absolute
-      right                             : 0
+      right                             : OFFSET
       bottom                            : -(BUTTON_CIRCLE_HEIGHT / 2)
       > *
         margin-left                     : SPACE
 
   // -- Effects
-  &.scrolling
-    // padding                             : SPACE 0
-    transform                             translateY(-(1.5 * SPACE))
+  .scrolling &
+    height                              : (HEADER_HEIGHT / 2)
+    box-shadow                          : HEADER_SHADOW
+    transform                             translateY(-(SPACE))
+    h1
+      padding                           : 0
     nav
       &[data-role="text"]
         &:first-child
+          transform                       translateY(-10vh)
           opacity                       : 0

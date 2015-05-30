@@ -8,11 +8,14 @@ module.exports =
 
   SUBROUTES:
     CAMPAIGNS: [
-      label: "list", route: "/console/campaigns"
+      label: "list", route: "/campaigns/list"
     ,
-      label: "reports", route: "/console/campaigns/reports"
+      label: "reports", route: "/campaigns/reports"
     ]
 
     CREATIVES: [
-      label: "list", route: "/console/creatives/list"
+      label: "list", route: "/creatives/list"
     ]
+
+  HEIGHT:
+    LI : 80

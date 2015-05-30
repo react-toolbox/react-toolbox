@@ -19,7 +19,11 @@ App = React.createClass
     SPArouter.listen
       "/session/:id"      : (id) =>
         @setState session: false, context: id
-      "/console/:context" : (context) =>
+      "/:context/:area/:element" : (context, area, element) =>
+        @setState session: true, context: context
+      "/:context/:area" : (context, area) =>
+        @setState session: true, context: context
+      "/:context" : (context) =>
         @setState session: true, context: context
 
   # -- Events

@@ -2,7 +2,9 @@
 @todo
 ###
 
+Button     = require './button'
 Navigation = require './navigation'
+
 
 module.exports = React.createClass
 
@@ -32,13 +34,16 @@ module.exports = React.createClass
   # -- Render
   render: ->
     <header ref="header" data-component="header" data-flex="horizontal center grow">
-      <div>
+      <img src="http://soyjavi.com/assets/img/soyjavi.hat.jpg" data-flex-grow="min"/>
+      <div data-flex-grow="max">
         <Navigation routes={@props.routes} role="text"/>
-        <h1>{@props.title}</h1>
+        <div>
+          <h1>{@props.title}</h1>
+        </div>
         { <Navigation routes={@props.subroutes} role="text"/> if @props.subroutes }
       </div>
       <nav data-role="circle">
-        <button className="main">+</button>
-        <button>?</button>
+        <Button caption="+" style="circle primary"/>
+        <Button caption="?" style="circle secondary"/>
       </nav>
     </header>
