@@ -19,6 +19,10 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    <button onClick={@onClick} className={@props.style} disabled={@props.disabled}>
+    <button data-component="button"
+            onClick={@onClick}
+            className={@props.style}
+            disabled={@props.disabled}>
+      { <span className="icon {{@props.icon}}"></span> if @props.icon }
       <abbr>{@props.caption}</abbr>
     </button>

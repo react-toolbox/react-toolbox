@@ -76,6 +76,6 @@ gulp.task "dependencies", ->
 gulp.task "init", ["source", "style", "dependencies"]
 
 gulp.task "default", ->
-  gulp.run ["server", "init"]
+  gulp.run ["server"]
   gulp.watch path.source, ["source"]
   gulp.watch path.style, ["style"]

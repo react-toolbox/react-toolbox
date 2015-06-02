@@ -2,12 +2,13 @@
 
 SPArouter       = require "spa-router"
 # -- components
-Button          = require "./components/button"
+
 Router          = require "./components/router"
 # -- forms
 FormSession     = require "./forms/form.session"
 # -- Screens
 ScreenConsole   = require "./screens/console"
+ScreenForm      = require "./screens/form"
 # -- Modules
 C               = require "./modules/constants"
 
@@ -39,6 +40,8 @@ App = React.createClass
 
   # -- Render
   render: ->
+    # return <ScreenForm />
+
     if @state.session
       avatar = "http://soyjavi.com/assets/img/soyjavi.hat.jpg"
     else
