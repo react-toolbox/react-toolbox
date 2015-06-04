@@ -24,34 +24,27 @@ module.exports = React.createClass
   # -- Events
   onSubmit: (event) ->
     event.preventDefault()
-    @props.onSubmit? event, @getValue()
+    @props.onSubmit? event, @
 
   onChange: (event) ->
-    console.log "form.onChange"
     is_valid = true
-    values = @getValue()
-    # for attr in @props.attributes when attr.required and values[attr.ref].trim() is ""
-    #   console.log attr.ref
-    #   is_valid = false
-    #   break
-
-    console.log "is_valid", is_valid
-    # @TODO: Handler if have errors
-    # @props.onChange? event, @getValue()
+    value = @getValue()
+    for attr in @props.attributes when attr.required and value[attr.ref]?.trim() is ""
+      is_valid = false
+      @refs[attr.ref].setError?()
+      break
+    @props[if is_valid then "onValid" else "onError"]? event, @
+    @props.onChange? event, @
 
   # -- Render
   render: ->
-    <form onSubmit={@onSubmit} onChange={@onChange}>
+    <form data-component-form
+          onSubmit={@onSubmit}
+          onChange={@onChange}>
     {
       for attribute, index in @props.attributes
-        <Input  ref={attribute.ref}
-                type={attribute.type}
-                value={attribute.value}
-                label={attribute.label}
-                required={attribute.required}
-                disabled={attribute.disabled}/>
+        <Input {...attribute} />
     }
-      <button>submit</button>
     </form>
 
   # -- Extends
@@ -60,5 +53,5 @@ module.exports = React.createClass
     value[ref] = el.getValue() for ref, el of @refs
     value
 
-  setValue: ->
-    @
+  setValue: (data) ->
+    @setState attributes: data

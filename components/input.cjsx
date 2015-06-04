@@ -6,49 +6,41 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
+    type        : React.PropTypes.string.required
     label       : React.PropTypes.string
     value       : React.PropTypes.string
-    type        : React.PropTypes.string
+    error       : React.PropTypes.string
     required    : React.PropTypes.bool
     disabled    : React.PropTypes.bool
-    # -- Events
+    multiline   : React.PropTypes.bool
     onChange    : React.PropTypes.func
-    onBlur      : React.PropTypes.func
-    onFocus     : React.PropTypes.func
 
   getDefaultProps: ->
     type        : "text"
     disabled    : false
+    multiline   : false
 
   getInitialState: ->
     value       : @props.value
 
   # -- Events
   onChange: (event) ->
-    value = event.target.value
-    @setState value: value
-    @props.onChange? event, value
-
-  onBlur: (event) ->
-    console.log "onBlur"
-    @props.onBlur? event, value
-
-  onFocus: (event) ->
-    console.log "onFocus"
-    @props.onFocus? event, value
+    @setState value: event.target.value
+    @props.onChange? event, @
 
   # -- Render
   render: ->
-    <div data-component-input={@props.type}>
-      <input
-        type={@props.type}
-        value={@state.value}
-        placeholder={@props.hint} 
-        disabled={@props.disabled}
-        required={@props.required}
-        onBlur={@onBlur}
-        onFocus={@onFocus}
-        onChange={@onChange}/>
+    # -- styles
+    style = ""
+    style += " error" if @props.error
+    # -- tag
+    <div data-component-input={@props.type} className={style}>
+      {
+        if @props.multiline
+          <textarea {...@props} onChange={@onChange}>{@state.value}</textarea>
+        else
+          <input  {...@props} value={@state.value} onChange={@onChange} />
+      }
       <span className="bar"></span>
       { <label>{@props.label}</label> if @props.label }
       { <span className="error">{@props.error}</span> if @props.error }
@@ -61,5 +53,5 @@ module.exports = React.createClass
   setValue: (data) ->
     @setState value: data
 
-  clearValue: ->
-    @setState ""
+  setError: (data = "Unknown error") ->
+    @setState error: data
