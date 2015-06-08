@@ -2,10 +2,15 @@
 @todo
 ###
 
-FontIcon = require "./font_icon"
-Ripple   = require "./ripple"
+# -- Components
+FontIcon    = require "./font_icon"
+Ripple      = require "./ripple"
+# -- Mixins
+# StyleMixin  = require "./mixins/style"
 
 module.exports = React.createClass
+
+  # mixins: [StyleMixin]
 
   # -- States & Properties
   propTypes:

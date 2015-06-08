@@ -26,7 +26,6 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
-    "start": "gulp",
-    "postinstall": "bower install"
+    "start": "gulp"
   }
 }

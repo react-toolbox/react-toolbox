@@ -13,8 +13,11 @@ pkg           = require "./package.json"
 # -- BROWSERIFY ----------------------------------------------------------------
 browserify    = require "browserify"
 source        = require "vinyl-source-stream"
-bundler       = browserify "./source/app.cjsx", extensions: [".cjsx", ".coffee"]
-bundler.transform require "coffee-reactify"
+components    = browserify "./index.cjsx", extensions: [".cjsx", ".coffee"]
+components.transform require "coffee-reactify"
+spec          = browserify "./spec/test.cjsx", extensions: [".cjsx", ".coffee"]
+spec.transform require "coffee-reactify"
+
 # -- FILES ---------------------------------------------------------------------
 path =
   dist          :   "./dist"
@@ -29,6 +32,7 @@ path =
                     "source/styles/screens/*.styl"]
   dependencies  : [ "node_modules/react/dist/react-with-addons.js"
                     "bower_components/hamsa/dist/hamsa.js"]
+  spec          : [ "spec/*.cjsx" ]
 # -- BANNER --------------------------------------------------------------------
 banner = [
   "/**"
@@ -45,15 +49,16 @@ gulp.task "server", ->
   connect.server
     port      : 8000
     livereload: true
-    root      : path.dist
+    # root      : path.dist
 
 gulp.task "source", ->
-  bundler.bundle()
-    .on "error", gutil.log.bind(gutil, "Browserify Error")
+  components.bundle()
+  # gulp.src path.soure
+  #   .pipe coffee().on 'error', gutil.log
     .pipe source "#{pkg.name}.js"
     # .pipe uglify mangle: true
     .pipe header banner, pkg: pkg
-    .pipe gulp.dest "#{path.dist}/assets/js"
+    .pipe gulp.dest "#{path.dist}"
     .pipe connect.reload()
 
 gulp.task "style", ->
@@ -66,16 +71,18 @@ gulp.task "style", ->
     .pipe gulp.dest "#{path.dist}/assets/css"
     .pipe connect.reload()
 
-gulp.task "dependencies", ->
-  gulp.src path.dependencies
-    .pipe concat "#{pkg.name}.dependencies.js"
-    .pipe gulp.dest "#{path.dist}/assets/js"
-    # .pipe uglify mangle: true
+gulp.task "spec", ->
+  spec.bundle()
+    .on "error", gutil.log.bind(gutil, "Browserify Error")
+    .pipe source "#{pkg.name}.test.js"
+    .pipe header banner, pkg: pkg
+    .pipe gulp.dest "spec/"
     .pipe connect.reload()
 
-gulp.task "init", ["source", "style", "dependencies"]
+gulp.task "init", ["source", "style", "spec"]
 
 gulp.task "default", ->
-  gulp.run ["server"]
+  gulp.run ["init", "server"]
   gulp.watch path.source, ["source"]
   gulp.watch path.style, ["style"]
+  gulp.watch path.spec, ["spec"]
