@@ -21,10 +21,12 @@
     "gulp-util": "*",
     "gulp-yml": "*",
     "moment": "^2.10.2",
+    "node-libs-browser": "^0.5.2",
     "react": "^0.13.2",
     "react-inline": "^0.6.1",
     "spa-router": "^0.5.20",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "webpack": "^1.9.10"
   },
   "scripts": {
     "start": "gulp"
