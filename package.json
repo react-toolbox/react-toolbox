@@ -8,27 +8,15 @@
     "coffee-script": "*"
   },
   "devDependencies": {
-    "browserify": "^10.0.0",
-    "coffee-reactify": "^3.0.0",
-    "gulp": "*",
-    "gulp-cjsx": "*",
-    "gulp-concat": "*",
-    "gulp-connect": "*",
-    "gulp-flatten": "*",
-    "gulp-header": "*",
-    "gulp-stylus": "*",
-    "gulp-uglify": "*",
-    "gulp-util": "*",
-    "gulp-yml": "*",
-    "moment": "^2.10.2",
+    "css-loader": "^0.14.5",
     "node-libs-browser": "^0.5.2",
     "react": "^0.13.2",
-    "react-inline": "^0.6.1",
-    "spa-router": "^0.5.20",
-    "vinyl-source-stream": "^1.1.0",
+    "style-loader": "^0.12.3",
+    "stylus-loader": "^1.2.0",
     "webpack": "^1.9.10"
   },
   "scripts": {
-    "start": "gulp"
+    "start" : "webpack-dev-server --devtool eval --watch",
+    "deploy": "NODE_ENV=production webpack -p"
   }
 }

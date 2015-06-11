@@ -1,4 +1,2 @@
-bower_components
-dist/assets/**/*.css
-dist/assets/**/*.js
+build
 node_modules

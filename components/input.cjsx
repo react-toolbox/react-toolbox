@@ -14,11 +14,14 @@ module.exports = React.createClass
     disabled    : React.PropTypes.bool
     multiline   : React.PropTypes.bool
     onChange    : React.PropTypes.func
+    style       : React.PropTypes.object
 
   getDefaultProps: ->
     type        : "text"
     disabled    : false
     multiline   : false
+    style       :
+      borderBottom    : "solid 2px red"
 
   getInitialState: ->
     value       : @props.value
@@ -34,7 +37,7 @@ module.exports = React.createClass
     style = ""
     style += " error" if @props.error
     # -- tag
-    <div data-component-input={@props.type} className={style}>
+    <div data-component-input={@props.type} className={style} style={@props.style}>
       {
         if @props.multiline
           <textarea {...@props} onChange={@onChange}>{@state.value}</textarea>
