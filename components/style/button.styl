@@ -1,3 +1,64 @@
-button
-  font-size: 16px
-  font-weight: bold
+@import '__constants.styl'
+
+[data-component-button]
+  z-index                       : 1
+  display                       : inline-block
+  position                      : relative
+  overflow                      : hidden
+  font-weight                   : normal
+  text-align                    : center
+  text-decoration               : none
+  white-space                   : nowrap
+  border                        : none
+  transition-property             background-color, box-shadow
+  transition-duration             ANIMATION_DURATION
+  transition-timing-function      ANIMATION_EASE
+
+  // -- Style
+  &:not([disabled])
+    cursor                      : pointer
+    box-shadow                    ZDEPTH_SHADOW_1
+    &:hover /*, &:active, &:focus */
+      outline                   : 0
+      box-shadow                  ZDEPTH_SHADOW_2, inset 0 0 0 UNIT alpha(WHITE, 10%)
+    &:not(.primary):not(.secondary)
+      color                     : COLOR
+      background-color          : WHITE
+    &.primary, &.secondary
+      color                     : WHITE
+    &.primary
+      background-color          : PRIMARY
+    &.secondary
+      background-color          : SECONDARY
+
+  &[disabled]
+    background-color            : darken(BACKGROUND, 7.5%)
+    color                       : darken(BACKGROUND, 35%)
+
+  // -- Layout
+  & ~ &:not(:last-child)
+    margin-left                 : SPACE
+  > *
+    pointer-events                  : none
+
+[data-component-button="square"]
+  margin-bottom                 : SPACE
+  padding                       : (SPACE / 2) (SPACE / 1.25)
+  font-size                     : FONT_SIZE_SMALL
+  text-transform                : uppercase
+  border-radius                 : (SPACE / 8)
+  > *
+    vertical-align              : bottom
+  > .icon
+    font-size                   : FONT_SIZE_BIG
+    margin-right                : (SPACE / 2)
+  &.anchor
+    width                       : 100%
+
+[data-component-button="circle"]
+  width                         : BUTTON_CIRCLE_HEIGHT
+  height                        : BUTTON_CIRCLE_HEIGHT
+  font-size                     : (BUTTON_CIRCLE_HEIGHT / 2.25)
+  border-radius                 : 50%
+  > .icon
+    line-height                 : BUTTON_CIRCLE_HEIGHT

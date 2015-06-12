@@ -2,17 +2,11 @@
 @todo
 ###
 
-
-css = require "./style/button.styl"
-# -- Components
-FontIcon    = require "./font_icon"
-Ripple      = require "./ripple"
-# -- Mixins
-# StyleMixin  = require "./mixins/style"
+Style     = require './style/button'
+FontIcon  = require './font_icon'
+Ripple    = require './ripple'
 
 module.exports = React.createClass
-
-  # mixins: [StyleMixin]
 
   # -- States & Properties
   propTypes:
@@ -29,6 +23,10 @@ module.exports = React.createClass
   getInitialState: ->
     ripple      : undefined
 
+  # -- Lifecycle
+  componentWillReceiveProps: ->
+    @setState ripple: undefined
+
   # -- Events
   onClick: (event) ->
     event.preventDefault()
@@ -39,6 +37,7 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
+    console.log "ripple", @state.ripple
     <button data-component-button={@props.type}
             onClick={@onClick}
             className={@props.style}

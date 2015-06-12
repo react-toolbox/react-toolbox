@@ -2,18 +2,20 @@
 @todo
 ###
 
+Button    = require "./button"
 Input     = require "./input"
 
 module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    attributes        : React.PropTypes.array.required
+    attributes        : React.PropTypes.array
     storage           : React.PropTypes.bool
     # -- Events
     onSubmit          : React.PropTypes.func
     onError           : React.PropTypes.func
     onValid           : React.PropTypes.func
+    onChange          : React.PropTypes.func
 
   getDefaultProps: ->
     storage           : false
@@ -31,10 +33,16 @@ module.exports = React.createClass
     value = @getValue()
     for attr in @props.attributes when attr.required and value[attr.ref]?.trim() is ""
       is_valid = false
-      @refs[attr.ref].setError?()
+      @refs[attr.ref].setError? "Required field"
       break
-    @props[if is_valid then "onValid" else "onError"]? event, @
+
     @props.onChange? event, @
+    if is_valid
+      @refs.submit?.getDOMNode().removeAttribute "disabled"
+      @props.onValid? event, @
+    else
+      @refs.submit?.getDOMNode().setAttribute "disabled", true
+      @props.onError? event, @
 
   # -- Render
   render: ->
@@ -43,14 +51,17 @@ module.exports = React.createClass
           onChange={@onChange}>
     {
       for attribute, index in @props.attributes
-        <Input {...attribute} />
+        if attribute.type is "submit"
+          <Button {...attribute} type="square" ref="submit" onClick={@onSubmit}/>
+        else
+          <Input {...attribute} />
     }
     </form>
 
   # -- Extends
   getValue: ->
     value = {}
-    value[ref] = el.getValue() for ref, el of @refs
+    value[ref] = el.getValue() for ref, el of @refs when el.getValue?
     value
 
   setValue: (data) ->

@@ -1,0 +1,24 @@
+@import '__constants.styl'
+
+[data-component-ripple]
+  position                    : absolute
+  background-color            : alpha(WHITE, 0.65)
+  transform                     translateX(-50%) translateY(-50%)
+  border-radius               : 50%
+  // -- Classes
+  &.active, &:hover
+    animation-name              ripple
+    animation-iteration-count   1
+    animation-timing-function   ANIMATION_EASE
+    animation-duration          (2 * ANIMATION_DURATION)
+    opacity : 0.1
+
+@keyframes ripple
+  0%
+    width                     : 0
+    height                    : 0
+    opacity                   : 1
+  100%
+    width                     : SIZE = (4 * UNIT)
+    height                    : SIZE
+    opacity                   : 0

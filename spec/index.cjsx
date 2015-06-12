@@ -1,10 +1,7 @@
 "use strict"
 
 # -- Components
-Input     = require "../components/input"
-Form      = require "../components/form"
 Button    = require "../components/button"
-FontIcon  = require "../components/font_icon"
 
 Test = React.createClass
   getInitialState: ->
@@ -38,21 +35,19 @@ Test = React.createClass
     ]
 
     <app>
-      <h1>Hello World !</h1>
-      <Form attributes={attributes}
-            onError={@onFormError}
-            onValid={@onFormValid}/>
-      # <Button caption="Login" disabled={not @state.submitable} />
-      # <Button caption="Primary" style="primary" icon="access_alarm" />
-      # <Button caption="Secondary" style="secondary" onClick={@onButtonClick}/>
-      # <Button caption="Disabled" disabled={true} onClick={@onButtonClick}/>
-      #
-      # <Button type="circle" icon="access_alarm" disabled={not @state.submitable} />
-      # <Button type="circle" icon="explore" style="primary" />
-      # <Button type="circle" icon="zoom_in" style="secondary" />
-      # <Button type="circle" icon="input" disabled={true} />
-      #
-      <FontIcon value="access_alarm" />
+      <h1>React-Kit</h1>
+      <h2>New way for create</h2>
+
+      <h3>Buttons</h3>
+      <Button caption="Login" disabled={not @state.submitable} />
+      <Button caption="Primary" style="primary" icon="access_alarm" />
+      <Button caption="Secondary" style="secondary" onClick={@onButtonClick}/>
+      <Button caption="Disabled" disabled={true} onClick={@onButtonClick}/>
+
+      <Button type="circle" icon="access_alarm" disabled={not @state.submitable} />
+      <Button type="circle" icon="explore" style="primary" />
+      <Button type="circle" icon="zoom_in" style="secondary" />
+      <Button type="circle" icon="input" disabled={true} />
     </app>
 
 React.render <Test/>, document.body

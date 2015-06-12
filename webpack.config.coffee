@@ -6,11 +6,11 @@ node_modules  = __dirname + '/node_modules'
 module.exports =
   cache       : true
 
-  resolve     : extensions: ['', '.cjsx', '.coffee', '.js', '.json', 'styl']
+  resolve     : extensions: ['', '.cjsx', '.coffee', '.js', '.json', '.styl']
 
   context     : __dirname + '/spec'
 
-  entry       : ['./test.cjsx']
+  entry       : ['./index.cjsx']
 
   output :
     path      : if process.env.NODE_ENV is 'production' then './dist' else './build'
@@ -28,12 +28,12 @@ module.exports =
     inline      : true
 
   module :
-    noParse: [node_modules + '/react/dist/*.js']
+    noParse : [node_modules + '/react/dist/*.js']
 
     loaders : [
       test    : /\.cjsx$/,    loader: 'coffee-jsx-loader'
     ,
       test    : /\.coffee$/,  loader: 'coffee-jsx-loader'
     ,
-      test    : /\.styl$/,    loader: 'style-loader!css-loader!stylus-loader'
+      test    : /\.styl$/,    loader: 'style-loader!css-loader!stylus-loader?importLoaders=1&minimize!'
     ]
