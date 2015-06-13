@@ -1,7 +1,9 @@
 "use strict"
 
-pkg           = require "./package.json"
-node_modules  = __dirname + '/node_modules'
+pkg               = require './package.json'
+node_modules      = __dirname + '/node_modules'
+ExtractTextPlugin = require('extract-text-webpack-plugin')
+environment       = process.env.NODE_ENV
 
 module.exports =
   cache       : true
@@ -10,17 +12,17 @@ module.exports =
 
   context     : __dirname + '/spec'
 
-  entry       : ['./index.cjsx']
+  entry       : [ 'webpack/hot/dev-server', './index.cjsx']
 
   output :
-    path      : if process.env.NODE_ENV is 'production' then './dist' else './build'
+    path      : if environment is 'production' then './dist' else './build'
     filename  : pkg.name + '.js'
     publicPath: '/build/'
 
   devServer:
     # contentBase : "./build"
-    # host        : "localhost"
-    # port        : 8000
+    host        : "localhost"
+    port        : 8080
     # colors      : true
     # progress    : true
     # noInfo      : false
@@ -35,5 +37,9 @@ module.exports =
     ,
       test    : /\.coffee$/,  loader: 'coffee-jsx-loader'
     ,
-      test    : /\.styl$/,    loader: 'style-loader!css-loader!stylus-loader?importLoaders=1&minimize!'
+      test    : /\.styl$/,    loader: ExtractTextPlugin.extract('style-loader', 'css-loader!stylus-loader!')
     ]
+
+  plugins: [
+    new ExtractTextPlugin pkg.name + '.css', allChunks: true
+  ]

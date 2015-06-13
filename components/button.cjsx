@@ -37,7 +37,6 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    console.log "ripple", @state.ripple
     <button data-component-button={@props.type}
             onClick={@onClick}
             className={@props.style}
