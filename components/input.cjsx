@@ -2,11 +2,13 @@
 @todo
 ###
 
+Style     = require './style/input'
+
 module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    type        : React.PropTypes.string.required
+    type        : React.PropTypes.string
     label       : React.PropTypes.string
     value       : React.PropTypes.string
     error       : React.PropTypes.string
@@ -14,47 +16,54 @@ module.exports = React.createClass
     disabled    : React.PropTypes.bool
     multiline   : React.PropTypes.bool
     onChange    : React.PropTypes.func
-    style       : React.PropTypes.object
 
   getDefaultProps: ->
     type        : "text"
+    required    : false
     disabled    : false
     multiline   : false
-    style       :
-      borderBottom    : "solid 2px red"
 
   getInitialState: ->
     value       : @props.value
+    checked     : @props.value
+    error       : @props.error
+    touch       : @props.type in ["checkbox", "radio"]
 
   # -- Events
   onChange: (event) ->
-    @setState value: event.target.value
+    if @state.touch
+      @setState checked: event.target.checked, error: undefined
+    else
+      @setState value: event.target.value, error: undefined
     @props.onChange? event, @
 
   # -- Render
   render: ->
-    # -- styles
-    style = ""
-    style += " error" if @props.error
-    # -- tag
-    <div data-component-input={@props.type} className={style} style={@props.style}>
+    className = ""
+    className += " disabled" if @props.disabled
+    className += " error" if @state.error
+    className += " touch" if @state.touch
+    className += " radio" if @props.type is "radio"
+    className += " checked" if @state.checked
+
+    <div data-component-input={@props.type} className={className}>
       {
         if @props.multiline
-          <textarea {...@props} onChange={@onChange}>{@state.value}</textarea>
+          <textarea ref="input" {...@props} onChange={@onChange}>{@state.value}</textarea>
         else
-          <input  {...@props} value={@state.value} onChange={@onChange} />
+          <input ref="input" {...@props} value={@state.value} checked={@state.checked} onChange={@onChange} />
       }
       <span className="bar"></span>
       { <label>{@props.label}</label> if @props.label }
-      { <span className="error">{@props.error}</span> if @props.error }
+      { <span className="error">{@state.error}</span> if @state.error }
     </div>
 
   # -- Extends
   getValue: ->
-    @state.value
+    @refs.input?.getDOMNode()[if @state.touch then "checked" else "value"]
 
   setValue: (data) ->
     @setState value: data
 
   setError: (data = "Unknown error") ->
-    @setState error: data
+    @setState error: @props.error or data

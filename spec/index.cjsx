@@ -2,6 +2,7 @@
 
 # -- Components
 Button    = require "../components/button"
+Form      = require "../components/form"
 
 Test = React.createClass
   getInitialState: ->
@@ -24,19 +25,37 @@ Test = React.createClass
   # -- Render
   render: ->
     attributes = [
-      ref: "name", label: "Your Name", required: true
+      ref: "name", label: "Your Name", required: true#, onChange: @onInputChange
     ,
       ref: "description", multiline: true, label: "Description", value: "Doer"
+    ,
+      ref: "birthdate", type: "date", label: "Birthdate"
     ,
       ref: "years", type: "number", label: "Years"
     ,
       ref: "twitter", label: "Nickname", disabled: true
     ,
+      ref: "nomad", type: "checkbox", label: "Are you a nomad?", value: true
+    ,
+      ref: "cow", type: "checkbox", label: "Are you a cow?", value: false
+    ,
+      ref: "girl", type: "checkbox", label: "Are you a girl?", value: false, disabled: true
+    ,
+      ref: "nomad_2", type: "radio", label: "Are you a nomad_2?", value: true
+    ,
+      ref: "cow_2", type: "radio", label: "Are you a cow_2?", value: false
+    ,
+      ref: "girl_2", type: "radio", label: "Are you a girl_2?", value: false, disabled: true
+    ,
+      type: "submit", caption: "Send", style: "primary anchor", disabled: true
     ]
 
     <app>
       <h1>React-Kit</h1>
       <h2>New way for create</h2>
+
+      <h2>Forms</h2>
+      <Form attributes={attributes} />
 
       <h3>Buttons</h3>
       <Button caption="Login" disabled={not @state.submitable} />

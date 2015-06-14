@@ -2,6 +2,7 @@
 @todo
 ###
 
+Style     = require './style/form'
 Button    = require "./button"
 Input     = require "./input"
 
