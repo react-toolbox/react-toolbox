@@ -2,7 +2,7 @@
 @todo
 ###
 
-Style     = require './style/ripple'
+require "./style/ripple"
 
 module.exports = React.createClass
 

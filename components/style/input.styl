@@ -1,4 +1,4 @@
-@import '__constants.styl'
+@import "__constants.styl"
 
 [data-component-input]
   position                            : relative
@@ -60,6 +60,21 @@
       border-radius                   : 50%
     &.disabled .bar
       box-shadow                        inset 0 0 0 RADIUS lighten(COLOR, 75%)
+    &.checked
+      &.radio .bar
+        box-shadow                      : inset 0 0 0 RADIUS SECONDARY, inset 0 0 0 (RADIUS * 2.5) WHITE
+      &:not(.radio) .bar
+        box-shadow                      : none
+      .bar
+        background-color                : SECONDARY
+        &:before
+          background-color              : alpha(SECONDARY, .5)
+          animation-name                  ripple-touch
+          animation-iteration-count       1
+          animation-timing-function       ANIMATION_EASE
+          animation-duration              (2 * ANIMATION_DURATION)
+        &:after
+          transform                       scale(1)
 
   &:not(.touch)
     input, textarea
@@ -120,21 +135,7 @@
     input, textarea
       border-bottom-color             : CANCEL
 
-  &.checked
-    &.radio .bar
-      box-shadow                      : inset 0 0 0 RADIUS SECONDARY, inset 0 0 0 (RADIUS * 2.5) WHITE
-    &:not(.radio) .bar
-      box-shadow                      : none
-    .bar
-      background-color                : SECONDARY
-      &:before
-        background-color              : alpha(SECONDARY, .5)
-        animation-name                  ripple-touch
-        animation-iteration-count       1
-        animation-timing-function       ANIMATION_EASE
-        animation-duration              (2 * ANIMATION_DURATION)
-      &:after
-        transform                       scale(1)
+
 
   // -- Children
   label

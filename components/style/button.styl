@@ -1,4 +1,4 @@
-@import '__constants.styl'
+@import "__constants.styl"
 
 [data-component-button]
   z-index                       : 1
@@ -17,32 +17,52 @@
   // -- Style
   &:not([disabled])
     cursor                      : pointer
-    box-shadow                    ZDEPTH_SHADOW_1
-    &:hover /*, &:active, &:focus */
+    &:hover, &:active, &:focus
       outline                   : 0
-      box-shadow                  ZDEPTH_SHADOW_2, inset 0 0 0 UNIT alpha(WHITE, 10%)
-    &:not(.primary):not(.secondary)
-      color                     : COLOR
-      background-color          : WHITE
-    &.primary, &.secondary
-      color                     : WHITE
-    &.primary
-      background-color          : PRIMARY
-    &.secondary
-      background-color          : SECONDARY
+    &:not(.transparent)
+      box-shadow                  ZDEPTH_SHADOW_1
+      &:not(.primary):not(.secondary)
+        color                   : COLOR
+        background-color        : WHITE
+      &:hover
+        box-shadow                ZDEPTH_SHADOW_2, inset 0 0 0 UNIT alpha(WHITE, 10%)
+      &.primary, &.secondary
+        color                   : WHITE
+      &.primary
+        background-color        : PRIMARY
+      &.secondary
+        background-color        : SECONDARY
+
+    &.transparent
+      background-color          : transparent
+      &:not(.primary):not(.secondary)
+        &:hover
+          background-color      : alpha(COLOR, 12.5%)
+      &.primary
+        color                   : PRIMARY
+        &:hover
+          background-color      : alpha(PRIMARY, 12.5%)
+      &.secondary
+        color                   : SECONDARY
+        &:hover
+          background-color      : alpha(SECONDARY, 12.5%)
 
   &[disabled]
-    background-color            : darken(BACKGROUND, 7.5%)
-    color                       : darken(BACKGROUND, 35%)
+    &:not(.transparent)
+      color                     : darken(BACKGROUND, 35%)
+      background-color          : darken(BACKGROUND, 7.5%)
+    &.transparent
+      color                     : darken(BACKGROUND, 25%)
+      background-color          : transparent
+
 
   // -- Layout
-  & ~ &:not(:last-child)
+  &:not(.transparent) ~ &:not(:last-child)
     margin-left                 : SPACE
   > *
-    pointer-events                  : none
+    pointer-events              : none
 
 [data-component-button="square"]
-  margin-bottom                 : SPACE
   padding                       : (SPACE / 2) (SPACE / 1.25)
   font-size                     : FONT_SIZE_SMALL
   text-transform                : uppercase

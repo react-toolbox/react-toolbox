@@ -4,6 +4,8 @@
 Button    = require "../components/button"
 Form      = require "../components/form"
 
+Dialog    = require './examples/dialog'
+
 Test = React.createClass
   getInitialState: ->
     submitable      : false
@@ -21,6 +23,10 @@ Test = React.createClass
 
   onButtonClick: (event, button) ->
     console.log "onButtonClick", button
+
+  onShowDialog: ->
+    console.log "onShowDialog"
+    @refs.dialog.show()
 
   # -- Render
   render: ->
@@ -51,13 +57,17 @@ Test = React.createClass
     ]
 
     <app>
-      <h1>React-Kit</h1>
-      <h2>New way for create</h2>
+      <h1>React-Kit <small>New way for create</small></h1>
+      <br/>
 
       <h2>Forms</h2>
       <Form attributes={attributes} />
 
-      <h3>Buttons</h3>
+      <br/>
+      <h2>Buttons</h2>
+      <Button caption="Show dialog" onClick={@onShowDialog}/>
+
+
       <Button caption="Login" disabled={not @state.submitable} />
       <Button caption="Primary" style="primary" icon="access_alarm" />
       <Button caption="Secondary" style="secondary" onClick={@onButtonClick}/>
@@ -67,6 +77,9 @@ Test = React.createClass
       <Button type="circle" icon="explore" style="primary" />
       <Button type="circle" icon="zoom_in" style="secondary" />
       <Button type="circle" icon="input" disabled={true} />
+
+      # -- Dialog
+      <Dialog ref="dialog" />
     </app>
 
 React.render <Test/>, document.body

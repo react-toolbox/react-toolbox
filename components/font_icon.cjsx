@@ -7,7 +7,7 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    value        : React.PropTypes.array.required
+    value        : React.PropTypes.string
 
   # -- Render
   render: ->

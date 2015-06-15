@@ -19,6 +19,7 @@ module.exports = React.createClass
     onChange          : React.PropTypes.func
 
   getDefaultProps: ->
+    attributes        : []
     storage           : false
 
   getInitialState: ->
@@ -50,13 +51,14 @@ module.exports = React.createClass
     <form data-component-form
           onSubmit={@onSubmit}
           onChange={@onChange}>
-    {
-      for attribute, index in @props.attributes
-        if attribute.type is "submit"
-          <Button {...attribute} type="square" ref="submit" onClick={@onSubmit}/>
-        else
-          <Input {...attribute} />
-    }
+      {
+        for attribute, index in @props.attributes
+          if attribute.type is "submit"
+            <Button {...attribute} type="square" ref="submit" onClick={@onSubmit}/>
+          else
+            <Input {...attribute} />
+      }
+      { @props.children }
     </form>
 
   # -- Extends
