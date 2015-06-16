@@ -1,0 +1,18 @@
+@import "__constants.styl"
+
+[data-component-navigation="horizontal"]
+  > *
+    display                         : inline-block
+    margin-right                    : SPACE
+    color                           : WHITE
+    font-size                       : FONT_SIZE_SMALL
+    font-weight                     : FONT_WEIGHT_NORMAL !important
+
+[data-component-navigation="vertical"]
+  > *
+    display                         : block
+    padding                         : 0 SPACE
+    line-height                     : UNIT
+    transition-property               box-shadow, opacity
+    &.active
+      box-shadow                      inset MENU_WIDTH 0 BACKGROUND
