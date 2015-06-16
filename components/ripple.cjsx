@@ -2,13 +2,17 @@
 @todo
 ###
 
-Style     = require './style/ripple'
+Style = require './style/ripple'
 
 module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
     origin    : React.PropTypes.object
+    loading   : React.PropTypes.bool
+
+  getDefaultProps: ->
+    loading   : false
 
   getInitialState: ->
     className : undefined
@@ -24,6 +28,8 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
+    className = @state.className
+    className += " loading" if @props.loading
     <div  data-component-ripple
-          className={@state.className}
+          className={className}
           style={left: @props.origin?.left, top: @props.origin?.top} />

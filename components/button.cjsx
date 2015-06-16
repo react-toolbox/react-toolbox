@@ -2,9 +2,9 @@
 @todo
 ###
 
-Style     = require './style/button'
-FontIcon  = require './font_icon'
-Ripple    = require './ripple'
+Style    = require './style/button'
+FontIcon = require "./font_icon"
+Ripple   = require "./ripple"
 
 module.exports = React.createClass
 
@@ -15,10 +15,12 @@ module.exports = React.createClass
     icon        : React.PropTypes.string
     style       : React.PropTypes.string
     disabled    : React.PropTypes.bool
+    loading     : React.PropTypes.bool
 
   getDefaultProps: ->
     type        : "square"
     disabled    : false
+    loading     : false
 
   getInitialState: ->
     ripple      : undefined
@@ -30,9 +32,10 @@ module.exports = React.createClass
   # -- Events
   onClick: (event) ->
     event.preventDefault()
+    client = event.target.getBoundingClientRect?()
     @setState ripple:
-                left  : event.pageX - event.target.offsetLeft
-                top   : event.pageY - event.target.offsetTop
+                left  : event.pageX - client?.left
+                top   : event.pageY - client?.top
     @props.onClick? event, @
 
   # -- Render
@@ -40,9 +43,9 @@ module.exports = React.createClass
     <button data-component-button={@props.type}
             onClick={@onClick}
             className={@props.style}
-            disabled={@props.disabled}
+            disabled={@props.disabled or @props.loading}
             data-flex="horizontal center">
       { <FontIcon value={@props.icon} /> if @props.icon }
       { <abbr>{@props.caption}</abbr> if @props.caption }
-      <Ripple origin={@state.ripple} />
+      <Ripple origin={@state.ripple} loading={@props.loading} />
     </button>

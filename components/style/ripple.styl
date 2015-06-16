@@ -6,11 +6,16 @@
   transform                     translateX(-50%) translateY(-50%)
   border-radius               : 50%
   // -- Classes
-  &.active
+  &.active, &.loading
     animation-name              ripple
-    animation-iteration-count   1
     animation-timing-function   ANIMATION_EASE
     animation-duration          (2 * ANIMATION_DURATION)
+  &.active
+    animation-iteration-count   1
+  &.loading
+    left                      : 50%
+    top                       : 50%
+    animation-iteration-count   infinite
 
 @keyframes ripple
   0%
