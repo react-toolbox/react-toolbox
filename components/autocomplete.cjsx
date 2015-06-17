@@ -26,20 +26,29 @@ module.exports = React.createClass
   getInitialState: ->
     focus       : false
     sugerences  : []
+    values      : []
 
   # -- Events
   onChange: ->
+    sugerences = []
     value = @refs.input.getValue().toLowerCase().trim()
     if value.length > 0
-      sugerences = []
-      for data in @props.dataSource
-        sugerences.push data if data.toLowerCase().trim().indexOf(value) > -1
+      for data in @props.dataSource when data not in @state.values
+        sugerences.push data if data.toLowerCase().trim().indexOf(value) is 0
       @setState focus: true, sugerences: sugerences if sugerences.length > 0
-    else
-      @setState focus: false
+    @setState focus: false if sugerences.length is 0
 
-  onSelect: (event)->
-    @setState focus: false
+  onSelect: (event) ->
+    values = @state.values
+    values.push @state.sugerences[event.target.getAttribute "id"]
+    @setState focus: false, values: values
+    @refs.input.setValue ""
+    @props.onChange? @
+
+  onUnselect: (event) ->
+    values = @state.values
+    values.splice parseInt(event.target.getAttribute "id"), 1
+    @setState focus: false, values: values
     @props.onChange? @
 
   # -- Render
@@ -47,10 +56,12 @@ module.exports = React.createClass
     className = ""
     className += " focus" if @state.focus
     <div data-component-autocomplete={@props.type} className={className}>
-      <ul data-role="selected"></ul>
+      <ul data-role="values" data-flex="horizontal wrap" onClick={@onUnselect}>
+      {<li id={index}>{value}</li> for value, index in @state.values}
+      </ul>
       <Input {...@props} ref="input" onChange={@onChange}/>
       <ul data-role="sugerences" onClick={@onSelect}>
-      { <li id={index}>{sugerence}</li> for sugerence, index in @state.sugerences }
+      {<li id={index}>{sugerence}</li> for sugerence, index in @state.sugerences}
       </ul>
     </div>
 
