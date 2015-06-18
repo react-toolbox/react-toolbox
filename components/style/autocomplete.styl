@@ -1,0 +1,34 @@
+@import "__constants.styl"
+
+[data-component-autocomplete]
+  position                                      : relative
+  // -- Children
+  > [data-role="values"]
+    > *
+      display                                   : inline-block
+      margin-right                              : (SPACE / 2)
+      padding                                   : (SPACE / 4)
+      font-size                                 : FONT_SIZE_SMALL
+      color                                     : WHITE
+      background-color                          : THEME
+      cursor                                    : pointer
+  > [data-role="sugerences"]
+    z-index                                     : 10
+    position                                    : absolute
+    width                                       : 100%
+    overflow-x                                  : hidden
+    overflow-y                                  : scroll
+    max-height                                  : (2 * UNIT)
+    margin-top                                  : -(SPACE)
+    background-color                            : WHITE
+    cursor                                      : pointer
+    visibility                                  : hidden
+    > *
+      padding                                   : (SPACE / 2)
+      &:hover
+        background-color                        : THEME
+
+  // -- Styles
+  &.focus
+    > [data-role="sugerences"]
+      visibility                                : visible

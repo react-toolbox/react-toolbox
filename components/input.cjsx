@@ -16,6 +16,9 @@ module.exports = React.createClass
     disabled    : React.PropTypes.bool
     multiline   : React.PropTypes.bool
     onChange    : React.PropTypes.func
+    onKeyPress  : React.PropTypes.func
+    onFocus     : React.PropTypes.func
+    onBlur      : React.PropTypes.func
 
   getDefaultProps: ->
     type        : "text"
@@ -51,7 +54,11 @@ module.exports = React.createClass
         if @props.multiline
           <textarea ref="input" {...@props} onChange={@onChange}>{@state.value}</textarea>
         else
-          <input ref="input" {...@props} value={@state.value} checked={@state.checked} onChange={@onChange} />
+          <input ref="input" {...@props} value={@state.value} checked={@state.checked} 
+                 onChange={@onChange}
+                 onKeyPress={@props.onKeyPress}
+                 onFocus={@props.onFocus}
+                 onBlur={@props.onBlur}/>
       }
       <span className="bar"></span>
       { <label>{@props.label}</label> if @props.label }

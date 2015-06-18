@@ -10,64 +10,116 @@ module.exports = React.createClass
   # -- States & Properties
   propTypes:
     type        : React.PropTypes.string
+    dataSource  : React.PropTypes.object #or React.PropTypes.array
+    multiple    : React.PropTypes.bool
+    exact       : React.PropTypes.bool
+    # -- Inherit for <Input/>
     label       : React.PropTypes.string
     value       : React.PropTypes.string
     error       : React.PropTypes.string
     required    : React.PropTypes.bool
     disabled    : React.PropTypes.bool
-    multiline   : React.PropTypes.bool
-    dataSource  : React.PropTypes.array
     onChange    : React.PropTypes.func
 
   getDefaultProps: ->
     type        : "text"
-    dataSource  : []
+    dataSource  : {}
+    multiple    : true
+    exact       : true
 
   getInitialState: ->
     focus       : false
-    sugerences  : []
-    values      : []
+    dataSource  : _index @props.dataSource
+    sugestions  : {}
+    values      : {}
 
   # -- Events
+  onFocus: ->
+    @refs.sugestions.getDOMNode().scrollTop = 0
+    @setState focus: true, sugestions: @_getSugestions()
+
+  onBlur: (event) ->
+    setTimeout (=> @setState focus: false, sugestions: {}), 300
+
   onChange: ->
-    sugerences = []
+    sugestions = {}
     value = @refs.input.getValue().toLowerCase().trim()
     if value.length > 0
-      for data in @props.dataSource when data not in @state.values
-        sugerences.push data if data.toLowerCase().trim().indexOf(value) is 0
-      @setState focus: true, sugerences: sugerences if sugerences.length > 0
-    @setState focus: false if sugerences.length is 0
+      @setState focus: true, sugestions: sugestions = @_getSugestions value
+    @setState focus: false if Object.keys(sugestions).length is 0
+
+  onKeyPress: (event) ->
+    query = @refs.input.getValue().trim()
+    if event.which is 13 and query isnt ""
+      if @props.exact
+        for key, label of @state.sugestions when query.toLowerCase() is label.toLowerCase()
+          @_addValue {"#{key}": label}
+          break
+      else
+        @_addValue query
 
   onSelect: (event) ->
-    values = @state.values
-    values.push @state.sugerences[event.target.getAttribute "id"]
-    @setState focus: false, values: values
-    @refs.input.setValue ""
-    @props.onChange? @
+    key = event.target.getAttribute "id"
+    @_addValue {"#{key}": @state.sugestions[key]}
 
   onUnselect: (event) ->
-    values = @state.values
-    values.splice parseInt(event.target.getAttribute "id"), 1
-    @setState focus: false, values: values
+    delete @state.values[event.target.getAttribute "id"]
+    @setState focus: false, values: @state.values
     @props.onChange? @
 
   # -- Render
   render: ->
-    className = ""
-    className += " focus" if @state.focus
-    <div data-component-autocomplete={@props.type} className={className}>
-      <ul data-role="values" data-flex="horizontal wrap" onClick={@onUnselect}>
-      {<li id={index}>{value}</li> for value, index in @state.values}
-      </ul>
-      <Input {...@props} ref="input" onChange={@onChange}/>
-      <ul data-role="sugerences" onClick={@onSelect}>
-      {<li id={index}>{sugerence}</li> for sugerence, index in @state.sugerences}
+    <div data-component-autocomplete={@props.type}
+         className={className = "focus" if @state.focus}>
+      {
+        if @props.multiple
+          <ul data-role="values" data-flex="horizontal wrap" onClick={@onUnselect}>
+            {<li id={key}>{label}</li> for key, label of @state.values}
+          </ul>
+      }
+      <Input {...@props} ref="input" onChange={@onChange}
+             onKeyPress={@onKeyPress} onFocus={@onFocus} onBlur={@onBlur}/>
+      <ul ref="sugestions" data-role="sugestions" onClick={@onSelect}>
+        {<li id={key}>{label}</li> for key, label of @state.sugestions}
       </ul>
     </div>
 
   # -- Extends
   getValue: ->
+    if @props.multiple
+      (key for key of @state.values)
+    else
+      Object.keys(@state.values)?[0]
 
   setValue: ->
+    # @TODO
 
-  setError: ->
+  setError: (data) ->
+    @refs.input.setError data
+
+  # -- Internal methods
+  _addValue: (value) ->
+    key = Object.keys(value)[0]
+    if @props.multiple
+      values = @state.values
+      values[key] = value[key]
+    else
+      values = value
+    @setState focus: false, values: values
+    @refs.input.setValue if @props.multiple then "" else value[key]
+    @props.onChange? @
+
+  _getSugestions: (query) ->
+    sugestions = {}
+    for key, label of @state.dataSource when not @state.values[key]
+      if not query or label.toLowerCase().trim().indexOf(query) is 0
+        sugestions[key] = label
+    sugestions
+
+# -- Private methods
+_index = (data = {}) ->
+  indexed = data
+  if data.length?
+    indexed = {}
+    indexed[item] = item for item in data
+  indexed
