@@ -10,7 +10,7 @@ module.exports = React.createClass
   # -- States & Properties
   propTypes:
     type        : React.PropTypes.string
-    dataSource  : React.PropTypes.object #or React.PropTypes.array
+    dataSource  : React.PropTypes.object
     multiple    : React.PropTypes.bool
     exact       : React.PropTypes.bool
     # -- Inherit for <Input/>
@@ -32,6 +32,10 @@ module.exports = React.createClass
     dataSource  : _index @props.dataSource
     sugestions  : {}
     values      : {}
+
+  # -- Lifecycle
+  componentDidMount: ->
+    @setValue @props.value if @props.value
 
   # -- Events
   onFocus: ->
@@ -78,7 +82,7 @@ module.exports = React.createClass
             {<li id={key}>{label}</li> for key, label of @state.values}
           </ul>
       }
-      <Input {...@props} ref="input" onChange={@onChange}
+      <Input {...@props} value="" ref="input" onChange={@onChange}
              onKeyPress={@onKeyPress} onFocus={@onFocus} onBlur={@onBlur}/>
       <ul ref="sugestions" data-role="sugestions" onClick={@onSelect}>
         {<li id={key}>{label}</li> for key, label of @state.sugestions}
@@ -92,8 +96,12 @@ module.exports = React.createClass
     else
       Object.keys(@state.values)?[0]
 
-  setValue: ->
-    # @TODO
+  setValue: (data) ->
+    data = [data] if typeof data is 'string'
+    values = {}
+    values[key] = label for key, label of @state.dataSource when key in data
+    @setState values: values
+    @refs.input.setValue values[Object.keys(values)?[0]] unless @state.multiple
 
   setError: (data) ->
     @refs.input.setError data

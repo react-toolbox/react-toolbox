@@ -1,10 +1,11 @@
 "use strict"
 
 # -- Components
-Button    = require "../components/button"
-Form      = require "../components/form"
+Autocomplete  = require "../components/autocomplete"
+Button        = require "../components/button"
+Form          = require "../components/form"
 
-Dialog    = require './examples/dialog'
+Dialog        = require './examples/dialog'
 
 Test = React.createClass
   getInitialState: ->
@@ -27,6 +28,10 @@ Test = React.createClass
   onShowDialog: ->
     console.log "onShowDialog"
     @refs.dialog.show()
+
+  onAutocompleteValues: ->
+    console.log @refs.autocomplete_multiple.getValue()
+    console.log @refs.autocomplete_simple.getValue()
 
   # -- Render
   render: ->
@@ -55,10 +60,27 @@ Test = React.createClass
     ,
       type: "submit", caption: "Send", style: "primary anchor", disabled: true
     ]
+    attributes = []
+
+    countries = ["Spain", "England", "USA", "Thailand", "Tongo", "Slovenia"]
+    countries_selected = ["USA", "Tongo"]
+    countries_obj =
+      "ES-es"   : "Spain"
+      "TH-th"   : "Thailand"
+      "EN-gb"   : "England"
+      "EN-en"   : "USA"
+    countries_obj_selected = "TH-th"
 
     <app>
       <h1>React-Kit <small>New way for create</small></h1>
       <br/>
+
+      <h2>Autocomplete</h2>
+      <Autocomplete ref="autocomplete_multiple" placeholder="elements is up to you..."
+                    dataSource={countries} value={countries_selected}/>
+      <Autocomplete ref="autocomplete_simple" multiple=false exact=false
+                    dataSource={countries_obj} value={countries_obj_selected}/>
+      <Button caption="Get values of autocomplete" onClick={@onAutocompleteValues} />
 
       <h2>Forms</h2>
       <Form attributes={attributes} />
