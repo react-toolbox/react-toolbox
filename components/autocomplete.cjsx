@@ -51,18 +51,19 @@ module.exports = React.createClass
   onKeyPress: (event) ->
     query = @refs.input.getValue().trim()
     if event.which is 13 and query isnt ""
-      if @props.exact
-        for key, label of @state.sugestions when query.toLowerCase() is label.toLowerCase()
-          @_addValue {"#{key}": label}
-          break
-      else
-        @_addValue query
+      for key, label of @state.sugestions when query.toLowerCase() is label.toLowerCase()
+        sugestion = {"#{key}": label}
+        break
+      unless @props.exact
+        @_addValue sugestion or {"#{query}": query}
+      else if sugestion
+        @_addValue sugestion
 
   onSelect: (event) ->
     key = event.target.getAttribute "id"
     @_addValue {"#{key}": @state.sugestions[key]}
 
-  onUnselect: (event) ->
+  onDelete: (event) ->
     delete @state.values[event.target.getAttribute "id"]
     @setState focus: false, values: @state.values
     @props.onChange? @
@@ -73,7 +74,7 @@ module.exports = React.createClass
          className={className = "focus" if @state.focus}>
       {
         if @props.multiple
-          <ul data-role="values" data-flex="horizontal wrap" onClick={@onUnselect}>
+          <ul data-role="values" data-flex="horizontal wrap" onClick={@onDelete}>
             {<li id={key}>{label}</li> for key, label of @state.values}
           </ul>
       }
