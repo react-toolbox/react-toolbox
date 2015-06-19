@@ -1,0 +1,30 @@
+{
+  "name": "react-toolbox-example",
+  "version": "0.6.19",
+  "description": "Sample project that uses react-toolbox",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soyjavi/react-toolbox.git"
+  },
+  "scripts": {
+    "start": "npm run build & npm run server",
+    "server": "webpack-dev-server --hot",
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "deploy": "NODE_ENV=production webpack -p"
+  },
+  "dependencies": {
+    "coffee-script": "*",
+    "react-toolbox": "^0.6.19",
+    "react": ">=0.13"
+  },
+  "devDependencies": {
+    "coffee-jsx-loader": "^0.1.2",
+    "css-loader": "^0.15.1",
+    "extract-text-webpack-plugin": "^0.8.2",
+    "node-libs-browser": "^0.5.2",
+    "style-loader": "^0.12.3",
+    "stylus-loader": "^1.2.1",
+    "webpack": "^1.9.11"
+  }
+}

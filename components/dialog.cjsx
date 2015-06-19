@@ -4,7 +4,7 @@
 
 Style = require './style/dialog'
 Button = require './button'
-Navigation = require './Navigation'
+Navigation = require './navigation'
 
 module.exports = React.createClass
 
