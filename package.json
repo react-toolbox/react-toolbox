@@ -1,7 +1,7 @@
 {
-  "name"        : "react-kit",
-  "version"     : "0.6.13",
-  "description" : "",
+  "name"        : "react-toolbox",
+  "version"     : "0.6.19",
+  "description" : "A set of complementary tools to ReactJS.",
   "homepage"    : "http://zetapath.com",
   "author"      : "Zetapath LTD.",
   "main"        : "./components",
