@@ -1,36 +1,42 @@
 {
-  "name"        : "react-toolbox",
-  "version"     : "0.6.19",
-  "description" : "A set of complementary tools to ReactJS.",
-  "homepage"    : "http://zetapath.com",
-  "author"      : "Zetapath LTD.",
-  "main"        : "./components",
+  "name": "react-toolbox",
+  "version": "0.6.19",
+  "description": "A set of complementary tools to ReactJS.",
+  "homepage": "http://zetapath.com",
+  "author": "Javi Jiménez Villar - @soyjavi",
+  "main": "./components",
   "scripts": {
-    "start"     : "npm run build & npm run server",
-    "server"    : "webpack-dev-server --hot",
-    "build"     : "webpack",
-    "watch"     : "webpack --watch",
-    "deploy"    : "NODE_ENV=production webpack -p"
+    "start": "npm run build & npm run server",
+    "server": "webpack-dev-server --hot",
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "deploy": "NODE_ENV=production webpack -p"
+  },
+  "bugs": {
+    "url": "https://github.com/callemall/material-ui/issues"
   },
   "keywords": [
     "react",
     "react-component",
     "material design",
-    "toolkit"
+    "toolkit",
+    "components",
+    "tools"
   ],
   "license": "MIT",
   "dependencies": {
     "coffee-script": "*"
   },
   "devDependencies": {
-    "css-loader"                  : "^0.14.5",
-    "classnames"                  : "^2.1.2",
-    "extract-text-webpack-plugin" : "^0.8.1",
-    "node-libs-browser"           : "^0.5.2",
-    "react"                       : "^0.13.2",
-    "react-inline"                : "^0.6.2",
-    "style-loader"                : "^0.12.3",
-    "stylus-loader"               : "^1.2.0",
-    "webpack"                     : "^1.9.10"
+    "classnames": "^2.1.2",
+    "coffee-jsx-loader": "^0.1.2",
+    "css-loader": "^0.14.5",
+    "extract-text-webpack-plugin": "^0.8.1",
+    "node-libs-browser": "^0.5.2",
+    "react": "^0.13.2",
+    "react-inline": "^0.6.2",
+    "style-loader": "^0.12.3",
+    "stylus-loader": "^1.2.0",
+    "webpack": "^1.9.10"
   }
 }
