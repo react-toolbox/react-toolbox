@@ -28,7 +28,7 @@ module.exports = React.createClass
   render: ->
     className = @props.className
     className += " active" if @state.active
-    <div ref="sss" data-component-dialog={@props.type} data-flex="vertical center" className={className}>
+    <div data-component-dialog={@props.type} data-flex="vertical center" className={className}>
       <div>
         {<h1>{@props.title}</h1>}
         {@props.children}
