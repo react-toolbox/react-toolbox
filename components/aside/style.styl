@@ -1,0 +1,49 @@
+@import "../constants"
+
+[data-component-aside]
+  position                        : absolute
+  z-index                         : 2
+  top                             : 0
+  width                           : 100vw
+  height                          : 100vh
+  pointer-events                  : none
+  transition-property               background-color
+  transition-duration               ANIMATION_DURATION
+  transition-timing-function        ANIMATION_EASE
+
+  // -- Children
+  > *
+    position                      : absolute
+    top                           : 0
+    height                        : 100%
+    width                         : (4 * UNIT)
+    background-color              : WHITE
+    transition-property             transform
+    transition-duration             ANIMATION_DURATION
+    transition-timing-function      ANIMATION_EASE
+
+  // -- Style
+  &.active
+    pointer-events                : all
+    > *
+      box-shadow                  : ZDEPTH_SHADOW_1
+      transform                     translateX(0%)
+  &:not(.hideable)
+    z-index                       : 2
+    width                         : (4 * UNIT)
+  &.hideable
+    z-index                       : 3
+    &.active
+      background-color            : rgba(0,0,0,0.5)
+
+[data-component-aside="left"]
+  left                            : 0
+  > *
+    left                          : 0
+    transform                       translateX(-100%)
+
+[data-component-aside="right"]
+  right                           : 0
+  > *
+    right                         : 0
+    transform                       translateX(100%)
