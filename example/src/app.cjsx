@@ -1,7 +1,8 @@
 "use strict"
 
-Toolbox = require 'react-toolbox'
-Button  = Toolbox.Button
+# Toolbox = require 'react-toolbox'
+# Button  = Toolbox.Button
+Button  = require 'react-toolbox/components/button'
 Form    = require 'react-toolbox/components/form'
 
 App = React.createClass
@@ -21,6 +22,7 @@ App = React.createClass
       <h1>Hello React-Toolbox</h1>
       <Form attributes={@state.fields} />
       <Button caption="Hello world!" type="square" style="primary"/>
+      <Button icon="adb" type="circle" style="secondary" />
     </app>
 
 React.render <App/>, document.body

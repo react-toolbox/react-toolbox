@@ -1,40 +1,38 @@
 {
-  "name": "react-toolbox",
-  "version": "0.6.19",
-  "description": "A set of complementary tools to ReactJS.",
-  "homepage": "http://zetapath.com",
-  "author": "Javi Jiménez Villar - @soyjavi",
-  "main": "./components",
-  "scripts": {
-    "start": "npm run build & npm run server",
-    "server": "webpack-dev-server --hot",
-    "build": "webpack",
-    "watch": "webpack --watch",
-    "deploy": "NODE_ENV=production webpack -p"
+  "name"                          : "react-toolbox",
+  "version"                       : "0.6.20",
+  "description"                   : "A set of complementary tools to ReactJS.",
+  "homepage"                      : "http://zetapath.com",
+  "author"                        : "Javi Jimenez Villar <hi@soyjavi.com> (http://soyjavi.com/)",
+  "main"                          : "./components",
+  "directories" : {
+    "react-toolbox"               : "./react-toolbox/components"
   },
-  "bugs": {
-    "url": "https://github.com/callemall/material-ui/issues"
+  "scripts" : {
+    "start"                       : "npm run build & npm run server",
+    "server"                      : "webpack-dev-server --hot",
+    "build"                       : "webpack",
+    "watch"                       : "webpack --watch",
+    "deploy"                      : "NODE_ENV=production webpack -p"
   },
-  "keywords": [
-    "react",
-    "react-component",
-    "material design",
-    "toolkit",
-    "components",
-    "tools"
-  ],
-  "license": "MIT",
-  "dependencies": {
-    "coffee-script": "*",
-    "react": "^0.13.2"
+  "bugs" : {
+    "url"                         : "https://github.com/soyjavi/react-toolbox/issues",
+    "email"                       : "issues@react-toolbox.com"
+  },
+  "keywords"                      : [ "react", "react-component", "material design", "toolkit", "components"],
+  "license"                       : "MIT",
+  "dependencies" : {
+    "coffee-script"               : "*",
+    "react"                       : "^0.13.2"
   },
   "devDependencies": {
-    "coffee-jsx-loader": "^0.1.2",
-    "css-loader": "^0.14.5",
-    "extract-text-webpack-plugin": "^0.8.1",
-    "node-libs-browser": "^0.5.2",
-    "style-loader": "^0.12.3",
-    "stylus-loader": "^1.2.0",
-    "webpack": "^1.9.10"
-  }
+    "coffee-jsx-loader"           : "^0.1.2",
+    "css-loader"                  : "^0.14.5",
+    "extract-text-webpack-plugin" : "^0.8.1",
+    "node-libs-browser"           : "^0.5.2",
+    "style-loader"                : "^0.12.3",
+    "stylus-loader"               : "^1.2.0",
+    "webpack"                     : "^1.9.10"
+  },
+  "repository"                    : "github:soyjavi/react-toolbox"
 }
