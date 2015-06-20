@@ -11,7 +11,7 @@ module.exports =
   context       : __dirname
 
   entry:
-    # commons     : ['./components/style/__commons.styl']
+    commons     : ['./node_modules/react-toolbox/components/style/__commons.styl']
     test        : ['webpack/hot/dev-server', './src/app.cjsx']
 
   output:
@@ -20,18 +20,11 @@ module.exports =
     publicPath  : '/build/'
 
   devServer:
-    # contentBase : './build'
     host        : 'localhost'
     port        : 8080
-    # colors      : true
-    # progress    : true
-    # noInfo      : false
-    # hot         : true
     inline      : true
 
   module:
-    noParse     : [node_modules + '/react/dist/*.js']
-
     loaders: [
       test      : /\.cjsx$/,    loader: 'coffee-jsx-loader'
     ,
