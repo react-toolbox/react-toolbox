@@ -32,4 +32,8 @@ module.exports = React.createClass
     className += " loading" if @props.loading
     <div  data-component-ripple
           className={className}
-          style={left: @props.origin?.left, top: @props.origin?.top} />
+          style={
+            left  : @props.origin?.left,
+            top   : @props.origin?.top,
+            width : @props.origin?.width,
+            height: @props.origin?.width} />

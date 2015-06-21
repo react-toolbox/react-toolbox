@@ -36,6 +36,7 @@ module.exports = React.createClass
     @setState ripple:
                 left  : event.pageX - client?.left
                 top   : event.pageY - client?.top
+                width : (client?.width * 2.5)
     @props.onClick? event, @
 
   # -- Render

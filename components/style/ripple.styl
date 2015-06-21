@@ -5,6 +5,10 @@
   background-color            : alpha(WHITE, 0.65)
   transform                     translateX(-50%) translateY(-50%)
   border-radius               : 50%
+  width                       : SIZE = (4 * UNIT)
+  height                      : SIZE
+  opacity                     : 0
+
   // -- Classes
   &.active, &.loading
     animation-name              ripple
@@ -23,6 +27,4 @@
     height                    : 0
     opacity                   : 1
   100%
-    width                     : SIZE = (4 * UNIT)
-    height                    : SIZE
     opacity                   : 0
