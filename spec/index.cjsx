@@ -1,7 +1,8 @@
 "use strict"
 
 # -- Components
-Aside         = require './components/aside'
+Aside   = require './components/aside'
+Button  = require './components/button'
 
 Test = React.createClass
   # -- Render
@@ -10,6 +11,7 @@ Test = React.createClass
       <h1>React-Kit <small>New way for create</small></h1>
 
       <Aside />
+      <Button />
     </test>
 
 React.render <Test/>, document.body

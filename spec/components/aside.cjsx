@@ -17,10 +17,10 @@ module.exports = React.createClass
   render: ->
     <section>
       <h2>Aside</h2>
-      <Aside ref="left" hideable=true>
-        <Button caption="Close" onClick={@onClick.bind null, "left", "hide"} />
+      <Aside ref="left" hideable=true />
+      <Aside ref="right" type="right">
+        <Button caption="Close" onClick={@onClick.bind null, "right", "hide"} />
       </Aside>
-      <Aside ref="right" type="right"/>
       <nav>
         <Button caption="Show aside left" onClick={@onClick.bind null, "left", "show"} />
         <Button caption="Show aside right" onClick={@onClick.bind null, "right", "show"} />
