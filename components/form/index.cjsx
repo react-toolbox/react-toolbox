@@ -2,7 +2,7 @@
 @todo
 ###
 
-require './style'
+require "./style"
 Autocomplete  = require "../autocomplete"
 Button        = require "../button"
 Input         = require "../input"
@@ -26,6 +26,10 @@ module.exports = React.createClass
   getInitialState: ->
     attributes        : if @props.storage then do @storage else @props.attributes
 
+  # -- Lifecycle
+  componentWillReceiveProps: (next_props) ->
+    @setValue next_props.attributes if next_props.attributes
+
   # -- Events
   onSubmit: (event) ->
     event.preventDefault()
@@ -34,7 +38,7 @@ module.exports = React.createClass
   onChange: (event) ->
     is_valid = true
     value = @getValue()
-    for attr in @props.attributes when attr.required and value[attr.ref]?.trim() is ""
+    for attr in @state.attributes when attr.required and value[attr.ref]?.trim() is ""
       is_valid = false
       @refs[attr.ref].setError? "Required field"
       break
@@ -53,7 +57,7 @@ module.exports = React.createClass
     <form data-component-form className={@props.className}
           onSubmit={@onSubmit} onChange={@onChange}>
       {
-        for attribute, index in @props.attributes
+        for attribute, index in @state.attributes
           if attribute.type is "submit"
             <Button {...attribute} type="square" ref="submit" onClick={@onSubmit}/>
           else if attribute.type is "autocomplete"
@@ -81,5 +85,5 @@ module.exports = React.createClass
     value[ref] = el.getValue() for ref, el of @refs when el.getValue?
     value
 
-  setValue: (data) ->
-    @setState attributes: data
+  setValue: (data = {}) ->
+    @refs[field.ref].setValue? field.value for field in data
