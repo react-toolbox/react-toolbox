@@ -6,8 +6,6 @@ Button          = require '../../components/button'
 
 module.exports = React.createClass
 
-  # -- States & Properties
-
   # -- Events
   onClick: (ref, method) ->
     @refs[ref][method]()
