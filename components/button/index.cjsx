@@ -2,9 +2,9 @@
 @todo
 ###
 
-Style    = require './style/button'
-FontIcon = require "./font_icon"
-Ripple   = require "./ripple"
+require './style'
+FontIcon = require "../font_icon"
+Ripple   = require "../ripple"
 
 module.exports = React.createClass
 

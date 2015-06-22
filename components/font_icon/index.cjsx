@@ -3,6 +3,8 @@
 ###
 
 
+# require './style'
+
 module.exports = React.createClass
 
   # -- States & Properties

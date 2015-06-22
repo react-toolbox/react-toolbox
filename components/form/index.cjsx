@@ -2,10 +2,10 @@
 @todo
 ###
 
-Style         = require './style/form'
-Autocomplete  = require "./autocomplete"
-Button        = require "./button"
-Input         = require "./input"
+require './style'
+Autocomplete  = require "../autocomplete"
+Button        = require "../button"
+Input         = require "../input"
 
 module.exports = React.createClass
 

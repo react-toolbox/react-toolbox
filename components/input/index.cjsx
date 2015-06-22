@@ -2,7 +2,7 @@
 @todo
 ###
 
-Style     = require './style/input'
+require './style'
 
 module.exports = React.createClass
 

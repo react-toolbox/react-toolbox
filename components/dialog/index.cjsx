@@ -2,9 +2,9 @@
 @todo
 ###
 
-Style = require './style/dialog'
-Button = require './button'
-Navigation = require './navigation'
+require './style'
+Button      = require '../button'
+Navigation  = require '../navigation'
 
 module.exports = React.createClass
 

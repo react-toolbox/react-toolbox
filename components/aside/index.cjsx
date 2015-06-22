@@ -2,7 +2,7 @@
 @todo
 ###
 
-Style    = require './style'
+require './style'
 
 module.exports = React.createClass
 

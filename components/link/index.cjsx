@@ -2,8 +2,8 @@
 @todo
 ###
 
-Style = require './style/link'
-FontIcon = require "./font_icon"
+require './style'
+FontIcon = require "../font_icon"
 
 module.exports = React.createClass
 

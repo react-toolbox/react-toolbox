@@ -11,7 +11,7 @@ module.exports =
   context       : __dirname
 
   entry:
-    commons     : ['./components/style/__commons.styl']
+    commons     : ['./components/commons.styl']
     test        : ['webpack/hot/dev-server', './spec/index.cjsx']
     # test        : ['webpack/hot/dev-server', './spec/index.cjsx']
 

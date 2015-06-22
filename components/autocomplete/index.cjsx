@@ -2,8 +2,8 @@
 @todo
 ###
 
-Style = require './style/autocomplete'
-Input = require './input'
+require './style'
+Input = require '../input'
 
 module.exports = React.createClass
 
