@@ -30,7 +30,7 @@ module.exports = React.createClass
   getInitialState: ->
     focus       : false
     dataSource  : _index @props.dataSource
-    sugestions  : {}
+    suggestions  : {}
     values      : {}
 
   # -- Lifecycle
@@ -39,33 +39,33 @@ module.exports = React.createClass
 
   # -- Events
   onFocus: ->
-    @refs.sugestions.getDOMNode().scrollTop = 0
-    @setState focus: true, sugestions: @_getSugestions()
+    @refs.suggestions.getDOMNode().scrollTop = 0
+    @setState focus: true, suggestions: @_getSuggestions()
 
   onBlur: (event) ->
-    setTimeout (=> @setState focus: false, sugestions: {}), 300
+    setTimeout (=> @setState focus: false, suggestions: {}), 300
 
   onChange: ->
-    sugestions = {}
+    suggestions = {}
     value = @refs.input.getValue().toLowerCase().trim()
     if value.length > 0
-      @setState focus: true, sugestions: sugestions = @_getSugestions value
-    @setState focus: false if Object.keys(sugestions).length is 0
+      @setState focus: true, suggestions: suggestions = @_getSuggestions value
+    @setState focus: false if Object.keys(suggestions).length is 0
 
   onKeyPress: (event) ->
     query = @refs.input.getValue().trim()
     if event.which is 13 and query isnt ""
-      for key, label of @state.sugestions when query.toLowerCase() is label.toLowerCase()
-        sugestion = {"#{key}": label}
+      for key, label of @state.suggestions when query.toLowerCase() is label.toLowerCase()
+        suggestion = {"#{key}": label}
         break
       unless @props.exact
-        @_addValue sugestion or {"#{query}": query}
-      else if sugestion
-        @_addValue sugestion
+        @_addValue suggestion or {"#{query}": query}
+      else if suggestion
+        @_addValue suggestion
 
   onSelect: (event) ->
     key = event.target.getAttribute "id"
-    @_addValue {"#{key}": @state.sugestions[key]}
+    @_addValue {"#{key}": @state.suggestions[key]}
 
   onDelete: (event) ->
     delete @state.values[event.target.getAttribute "id"]
@@ -84,8 +84,8 @@ module.exports = React.createClass
       }
       <Input {...@props} value="" ref="input" onChange={@onChange}
              onKeyPress={@onKeyPress} onFocus={@onFocus} onBlur={@onBlur}/>
-      <ul ref="sugestions" data-role="sugestions" onClick={@onSelect}>
-        {<li id={key}>{label}</li> for key, label of @state.sugestions}
+      <ul ref="suggestions" data-role="suggestions" onClick={@onSelect}>
+        {<li id={key}>{label}</li> for key, label of @state.suggestions}
       </ul>
     </div>
 
@@ -118,12 +118,12 @@ module.exports = React.createClass
     @refs.input.setValue if @props.multiple then "" else value[key]
     @props.onChange? @
 
-  _getSugestions: (query) ->
-    sugestions = {}
+  _getSuggestions: (query) ->
+    suggestions = {}
     for key, label of @state.dataSource when not @state.values[key]
       if not query or label.toLowerCase().trim().indexOf(query) is 0
-        sugestions[key] = label
-    sugestions
+        suggestions[key] = label
+    suggestions
 
 # -- Private methods
 _index = (data = {}) ->

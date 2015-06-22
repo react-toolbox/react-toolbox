@@ -3,32 +3,38 @@
 [data-component-autocomplete]
   position                                      : relative
   // -- Children
+  > [data-role] > *
+    font-size                                   : FONT_SIZE_SMALL
+    cursor                                      : pointer
   > [data-role="values"]
     > *
       display                                   : inline-block
-      margin-right                              : (SPACE / 2)
-      padding                                   : (SPACE / 2)
+      margin                                    : 0 (SPACE / 2) (SPACE / 2) 0
+      padding                                   : (SPACE / 4) (SPACE / 2)
       font-size                                 : FONT_SIZE_SMALL
       color                                     : WHITE
       background-color                          : THEME
-      cursor                                    : pointer
-  > [data-role="sugestions"]
-    z-index                                     : 1
+      border-radius                             : (SPACE / 8)
+  > [data-role="suggestions"]
+    z-index                                     : 10
     position                                    : absolute
     width                                       : 100%
     overflow-x                                  : hidden
     overflow-y                                  : scroll
-    max-height                                  : (2 * UNIT)
+    max-height                                  : 0
     margin-top                                  : -(SPACE)
     background-color                            : WHITE
-    cursor                                      : pointer
     visibility                                  : hidden
+    box-shadow                                  : ZDEPTH_SHADOW_1
+    transition                                    max-height ANIMATION_DURATION ANIMATION_EASE
     > *
       padding                                   : (SPACE / 2)
       &:hover
+        color                                   : WHITE
         background-color                        : THEME
 
   // -- Styles
   &.focus
-    > [data-role="sugestions"]
+    > [data-role="suggestions"]
+      max-height                                : 25vh
       visibility                                : visible
