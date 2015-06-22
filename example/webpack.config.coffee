@@ -11,7 +11,7 @@ module.exports =
   context       : __dirname
 
   entry:
-    commons     : ['./node_modules/react-toolbox/components/style/__commons.styl']
+    commons     : ['./node_modules/react-toolbox/components/commons.styl']
     test        : ['webpack/hot/dev-server', './src/app.cjsx']
 
   output:
