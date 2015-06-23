@@ -5,8 +5,19 @@ Aside         = require './components/aside'
 Autocomplete  = require './components/autocomplete'
 Button        = require './components/button'
 Dialog        = require './components/dialog'
+Form          = require './components/form'
+
+# React           = require('react/addons')
+# TestUtils       = React.addons.TestUtils
+# shallowRenderer = TestUtils.createRenderer()
+
+# shallowRenderer.render(React.createElement(MyComponent, { className: 'MyComponent' }, 'some child text'))
+#
+# component = shallowRenderer.getRenderOutput();
+
 
 Test = React.createClass
+
   # -- Render
   render: ->
     <test>
@@ -16,6 +27,7 @@ Test = React.createClass
       <Autocomplete />
       <Button />
       <Dialog />
+      <Form />
     </test>
 
 React.render <Test/>, document.body
