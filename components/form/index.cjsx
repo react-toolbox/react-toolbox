@@ -24,11 +24,11 @@ module.exports = React.createClass
     attributes        : []
 
   getInitialState: ->
-    attributes        : if @props.storage then do @storage else @props.attributes
+    attributes        : @storage @props
 
   # -- Lifecycle
   componentWillReceiveProps: (next_props) ->
-    @setValue next_props.attributes if next_props.attributes
+    @setValue (item for item in @storage next_props) if next_props.attributes
 
   # -- Events
   onSubmit: (event) ->
@@ -44,7 +44,7 @@ module.exports = React.createClass
       break
 
     @props.onChange? event, @
-    @storage value if @props.storage
+    @storage @props, value if @props.storage
     if is_valid
       @refs.submit?.getDOMNode().removeAttribute "disabled"
       @props.onValid? event, @
@@ -69,16 +69,16 @@ module.exports = React.createClass
     </form>
 
   # -- Extends
-  storage: (value) ->
-    key = "react-toolbox-form-#{@props.storage}"
+  storage: (props, value) ->
+    key = "react-toolbox-form-#{props.storage}"
     if value
       store = {}
-      store[attr.ref] = value[attr.ref] for attr in @props.attributes when attr.storage
+      store[attr.ref] = value[attr.ref] for attr in props.attributes when attr.storage
       window.localStorage.setItem key, JSON.stringify store
-    else
+    else if props.storage
       store = JSON.parse window.localStorage.getItem key or {}
-      input.value = store?[input.ref] or input.value for input in @props.attributes
-      @props.attributes
+      input.value = store?[input.ref] or input.value for input in props.attributes
+    props.attributes
 
   getValue: ->
     value = {}
