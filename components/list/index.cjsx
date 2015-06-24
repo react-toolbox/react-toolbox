@@ -18,16 +18,16 @@ module.exports = React.createClass
     dataSource  : []
 
   # -- Events
-  onClick: (event) ->
-
+  onClick: (event, item) ->
+    @props.onClick? event, item
 
   # -- Render
   render: ->
     <ul data-component-list={@props.type}>
     {
       for item, index in @props.dataSource
-        <li key={index} onClick={@props.onClick.bind null, item}>
-          {@props.itemFactory @props.dataSource[index]}
+        <li key={index} onClick={@onClick.bind null, item}>
+          {@props.itemFactory item}
         </li>
     }
     </ul>
