@@ -12,6 +12,7 @@ module.exports = React.createClass
     route       : React.PropTypes.array
     icon        : React.PropTypes.string
     caption     : React.PropTypes.string
+    count       : React.PropTypes.number
     style       : React.PropTypes.string
     onClick     : React.PropTypes.func
 
@@ -28,4 +29,5 @@ module.exports = React.createClass
         data-flex="horizontal center">
       { <FontIcon value={@props.icon} /> if @props.icon }
       { <abbr>{@props.caption}</abbr> if @props.caption }
+      { <small>{@props.count}</small> if @props.count and parseInt(@props.count) isnt 0}
     </a>
