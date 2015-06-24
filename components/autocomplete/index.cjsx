@@ -11,6 +11,7 @@ module.exports = React.createClass
   propTypes:
     type        : React.PropTypes.string
     dataSource  : React.PropTypes.object
+    colors      : React.PropTypes.object
     multiple    : React.PropTypes.bool
     exact       : React.PropTypes.bool
     # -- Inherit for <Input/>
@@ -24,26 +25,27 @@ module.exports = React.createClass
   getDefaultProps: ->
     type        : "text"
     dataSource  : {}
+    colors      : {}
     multiple    : true
     exact       : true
 
   getInitialState: ->
     focus       : false
     dataSource  : _index @props.dataSource
-    suggestions  : {}
+    suggestions : {}
     values      : {}
 
   # -- Lifecycle
   componentDidMount: ->
     @setValue @props.value if @props.value
 
+  componentWillReceiveProps: (next_props) ->
+    @setState dataSource: _index next_props.dataSource if next_props.dataSource
+
   # -- Events
   onFocus: ->
     @refs.suggestions.getDOMNode().scrollTop = 0
     @setState focus: true, suggestions: @_getSuggestions()
-
-  onBlur: (event) ->
-    setTimeout (=> @setState focus: false, suggestions: {}), 300
 
   onChange: ->
     suggestions = {}
@@ -63,6 +65,9 @@ module.exports = React.createClass
       else if suggestion
         @_addValue suggestion
 
+  onBlur: (event) ->
+    setTimeout (=> @setState focus: false, suggestions: {}), 300
+
   onSelect: (event) ->
     key = event.target.getAttribute "id"
     @_addValue {"#{key}": @state.suggestions[key]}
@@ -75,15 +80,18 @@ module.exports = React.createClass
   # -- Render
   render: ->
     <div data-component-autocomplete={@props.type}
-         className={className = "focus" if @state.focus}>
+         className={"focus" if @state.focus}>
       {
         if @props.multiple
           <ul data-role="values" data-flex="horizontal wrap" onClick={@onDelete}>
-            {<li id={key}>{label}</li> for key, label of @state.values}
+            {
+              for key, label of @state.values
+                <li id={key} style={backgroundColor: @props.colors[key]}>{label}</li>
+            }
           </ul>
       }
-      <Input {...@props} value="" ref="input" onChange={@onChange}
-             onKeyPress={@onKeyPress} onFocus={@onFocus} onBlur={@onBlur}/>
+      <Input {...@props} value="" ref="input" onFocus={@onFocus}
+             onChange={@onChange} onKeyPress={@onKeyPress} onBlur={@onBlur}/>
       <ul ref="suggestions" data-role="suggestions" onClick={@onSelect}>
         {<li id={key}>{label}</li> for key, label of @state.suggestions}
       </ul>
@@ -100,8 +108,9 @@ module.exports = React.createClass
     data = [data] if typeof data is 'string'
     values = {}
     values[key] = label for key, label of @state.dataSource when key in data
+    @state.values = values
     @setState values: values
-    @refs.input.setValue values[Object.keys(values)?[0]] unless @state.multiple
+    @refs.input.setValue values[Object.keys(values)?[0]] unless @props.multiple
 
   setError: (data) ->
     @refs.input.setError data
@@ -112,11 +121,12 @@ module.exports = React.createClass
     if @props.multiple
       values = @state.values
       values[key] = value[key]
+      @props.onChange? @
     else
       values = value
+      setTimeout (=> @props.onChange? @), 10
     @setState focus: false, values: values
     @refs.input.setValue if @props.multiple then "" else value[key]
-    @props.onChange? @
 
   _getSuggestions: (query) ->
     suggestions = {}
