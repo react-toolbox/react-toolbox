@@ -104,10 +104,10 @@ module.exports = React.createClass
     else
       Object.keys(@state.values)?[0]
 
-  setValue: (data) ->
-    data = [data] if typeof data is 'string'
+  setValue: (data = []) ->
     values = {}
-    values[key] = label for key, label of @state.dataSource when key in data
+    data = [data] if typeof data is 'string'
+    values[key] = label for key, label of @state?.dataSource when key in data
     @state.values = values
     @setState values: values
     @refs.input.setValue values[Object.keys(values)?[0]] unless @props.multiple
