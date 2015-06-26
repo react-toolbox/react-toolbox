@@ -1,7 +1,11 @@
 "use strict"
 
+# React-Toolbox full dependency way:
 # Toolbox = require 'react-toolbox'
 # Button  = Toolbox.Button
+# Form    = Toolbox.Form
+
+# Standalone dependencies way:
 Button  = require 'react-toolbox/components/button'
 Form    = require 'react-toolbox/components/form'
 
