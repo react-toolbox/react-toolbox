@@ -24,7 +24,6 @@ module.exports = React.createClass
 
   # -- Events
   onSelect: (event) ->
-    console.log "onSelect", event.target
     @setState active: true
 
   onItem: (event) ->
@@ -33,17 +32,17 @@ module.exports = React.createClass
   # -- Render
   render: ->
     className = @props.className
-    className += " active" if @state.active is true
-
-    console.log "render.className", className
-
-    <div data-component-dropdown={@props.type} className={className}>
+    if @state.active is true
+      className += " active"
+      stylesheet = height: @getDOMNode().offsetHeight * Object.keys(@props.dataSource).length
+    <div data-component-dropdown={@props.type}
+         className={className}>
       <span onClick={@onSelect}>{@props.dataSource[@state.value]}</span>
-      <ul onClick={@onItem}>
-        {
-          for key, label of @props.dataSource
-            <li id={key} className={"selected" if key is @state.value}>{label}</li>
-        }
+      <ul onClick={@onItem} style={stylesheet}>
+      {
+        for key, label of @props.dataSource
+          <li id={key} className={"selected" if key is @state.value}>{label}</li>
+      }
       </ul>
     </div>
 

@@ -14,6 +14,7 @@ module.exports = React.createClass
       "TH-th"   : "Thailand"
       "EN-gb"   : "England"
       "EN-en"   : "USA"
+      "FR-fr"   : "France"
 
   # -- Events
   onAutocompleteValues: (ref, method) ->
@@ -28,10 +29,7 @@ module.exports = React.createClass
     <section>
       <h2>Dropdown</h2>
       <p>lorem ipsum...</p>
-
       <Dropdown ref="dropdown" dataSource={@state.countries_obj} />
-
       <Dropdown ref="dropdown" dataSource={@state.countries_obj}
                 value={countries_obj_selected} />
-
     </section>
