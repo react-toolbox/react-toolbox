@@ -1,0 +1,70 @@
+@import "../constants.styl"
+
+[data-component-dropdown]
+  position                        : relative
+  margin-bottom                   : SPACE
+  width                           : (4 * UNIT)
+  height                          : INPUT_HEIGHT
+  color                           : COLOR
+  border-bottom                   : 1px solid lighten(COLOR, 75%)
+  // -- Class
+  &.active
+    > span
+      opacity                     : 0
+      transform                     translateY(25%)
+      &:after
+        transform                   scale(0)
+    > ul
+      z-index                     : 2
+      visibility                  : visible
+      height                      : auto
+      opacity                     : 1
+      transform                     translateY(0%)
+      box-shadow                    ZDEPTH_SHADOW_1
+
+  // -- Children
+  > *
+    width                         : 100%
+    transition-property             opacity, transform, box-shadow, height
+    transition-duration             ANIMATION_DURATION
+    transition-timing-function      ANIMATION_EASE
+  > span
+    display                       : block
+    // padding                       : (SPACE / 2) 0
+    line-height                   : INPUT_HEIGHT
+    font-size                     : FONT_SIZE_NORMAL
+    &:after
+      SIZE = (INPUT_HEIGHT / 7)
+      position                    : absolute
+      content                     : ""
+      right                       : (SPACE / 2)
+      top                         : SPACE
+      width                       : 0
+      height                      : 0
+      border-left                 : SIZE solid transparent
+      border-right                : SIZE solid transparent
+      border-top                  : SIZE solid lighten(COLOR, 75%)
+      transition                    transform ANIMATION_DURATION ANIMATION_EASE
+
+  > ul
+    z-index                       : -1
+    position                      : absolute
+    overflow                      : hidden
+    top                           : 0
+    left                          : -(OFFSET = (SPACE / 1.25))
+    right                         : -(OFFSET)
+    width                         : auto
+    height                        : 0
+    list-style                    : none
+    opacity                       : 0
+    background-color              : WHITE
+    border-radius                 : BORDER_RADIUS
+    transform                       translateY(-(INPUT_HEIGHT))
+    > li
+      padding                     : (SPACE / 2) OFFSET
+      font-size                   : FONT_SIZE_SMALL
+      &:hover
+        background-color          : BACKGROUND
+        cursor                    : pointer
+      &.selected
+        color                     : THEME
