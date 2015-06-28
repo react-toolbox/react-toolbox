@@ -3,7 +3,7 @@
 [data-component-dropdown]
   position                        : relative
   margin-bottom                   : SPACE
-  height                          : INPUT_HEIGHT
+  // height                          : INPUT_HEIGHT
   width                           : inherit
   color                           : COLOR
   border-bottom                   : 1px solid lighten(COLOR, 75%)
@@ -28,8 +28,14 @@
   // -- Children
   > *
     width                         : 100%
+  > label
+    position                      : relative
+    bottom                        : -(SPACE / 4)
+    font-size                     : FONT_SIZE_TINY
+    color                         : THEME
   > span
     display                       : block
+    height                        : INPUT_HEIGHT
     line-height                   : INPUT_HEIGHT
     font-size                     : FONT_SIZE_NORMAL
     transition-property             opacity, transform
@@ -40,7 +46,7 @@
       position                    : absolute
       content                     : ""
       right                       : (SPACE / 2)
-      top                         : SPACE
+      bottom                      : SPACE
       width                       : 0
       height                      : 0
       border-left                 : BORDER = SIZE solid transparent

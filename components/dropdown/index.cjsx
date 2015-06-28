@@ -1,5 +1,8 @@
 ###
 @todo
+
+- Disable options
+- can set a icon like dispatcher
 ###
 
 require './style'
@@ -12,6 +15,7 @@ module.exports = React.createClass
     className   : React.PropTypes.string
     dataSource  : React.PropTypes.object
     value       : React.PropTypes.string
+    label       : React.PropTypes.string
 
   getDefaultProps: ->
     type        : "normal"
@@ -34,10 +38,11 @@ module.exports = React.createClass
     className = @props.className
     if @state.active is true
       className += " active"
-      stylesheet = height: @getDOMNode().offsetHeight * Object.keys(@props.dataSource).length
-    <div data-component-dropdown={@props.type}
-         className={className}>
-      <span onClick={@onSelect}>{@props.dataSource[@state.value]}</span>
+      stylesheet = height: @refs.value.getDOMNode().offsetHeight * Object.keys(@props.dataSource).length
+
+    <div data-component-dropdown={@props.type} className={className}>
+      { <label>{@props.label}</label> if @props.label }
+      <span ref="value" onClick={@onSelect}>{@props.dataSource[@state.value]}</span>
       <ul onClick={@onItem} style={stylesheet}>
       {
         for key, label of @props.dataSource
