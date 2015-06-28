@@ -28,7 +28,7 @@
       height                          : SPACE
       margin-right                    : (SPACE / 1.32)
       border-radius                   : RADIUS
-      box-shadow                      : inset 0 0 0 RADIUS COLOR
+      box-shadow                      : inset 0 0 0 RADIUS FORM_COLOR
       transition-property               background-color, box-shadow
       transition-duration               ANIMATION_DURATION
       transition-timing-function        ANIMATION_EASE
@@ -52,14 +52,14 @@
         transition                      transform ANIMATION_DURATION ANIMATION_DELAY ANIMATION_EASE
     label
       font-size                       : FONT_SIZE_SMALL
-      color                           : COLOR
+      color                           : FORM_COLOR
     // -- Style
     &:not(.radio) .bar:after
       content                         : "✓"
     &.radio .bar
       border-radius                   : 50%
     &.disabled .bar
-      box-shadow                        inset 0 0 0 RADIUS lighten(COLOR, 75%)
+      box-shadow                        inset 0 0 0 RADIUS FORM_BORDER_COLOR
     &.checked
       &.radio .bar
         box-shadow                      : inset 0 0 0 RADIUS SECONDARY, inset 0 0 0 (RADIUS * 2.5) WHITE
@@ -81,10 +81,10 @@
       display                         : block
       padding                         : (SPACE / 2) 0
       width                           : 100%
-      color                           : COLOR
+      color                           : FORM_COLOR
       background-color                : transparent
       border                          : none
-      border-bottom                   : 1px solid lighten(COLOR, 75%)
+      border-bottom                   : 1px solid FORM_BORDER_COLOR
       // -- Attributes
       &:focus
         outline                       : none
@@ -93,8 +93,9 @@
       &:focus ~ label, &:valid ~ label
         top                           : -(SPACE / 2)
         font-size                     : FONT_SIZE_TINY
-        color                         : THEME
+        // color                         : THEME
       &:disabled
+        color                         : FORM_BORDER_COLOR
         border-bottom-style           : dotted
       &:invalid
         &:not(:required):not(:focus)
@@ -108,7 +109,7 @@
       position                        : absolute
       left                            : 0
       top                             : (SPACE / 2)
-      color                           : lighten(COLOR, 75%)
+      color                           : FORM_BORDER_COLOR
       transition-property               top, font-size, color
       transition-duration               ANIMATION_DURATION
       transition-timing-function        ANIMATION_EASE

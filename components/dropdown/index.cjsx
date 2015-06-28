@@ -1,8 +1,7 @@
 ###
 @todo
-
-- Disable options
 - can set a icon like dispatcher
+- can set different template (maybe use a kind of mixin)
 ###
 
 require './style'
@@ -16,11 +15,13 @@ module.exports = React.createClass
     dataSource  : React.PropTypes.object
     value       : React.PropTypes.string
     label       : React.PropTypes.string
+    disabled    : React.PropTypes.disabled
 
   getDefaultProps: ->
     type        : "normal"
     className   : ""
     dataSource  : {}
+    disabled    : false
 
   getInitialState: ->
     active      : false
@@ -28,14 +29,15 @@ module.exports = React.createClass
 
   # -- Events
   onSelect: (event) ->
-    @setState active: true
+    @setState active: true unless @props.disabled
 
   onItem: (event) ->
-    @setState active: false, value: event.target.getAttribute "id"
+    @setState active: false, value: event.target.getAttribute "id" unless @props.disabled
 
   # -- Render
   render: ->
     className = @props.className
+    className += " disabled" if @props.disabled
     if @state.active is true
       className += " active"
       stylesheet = height: @refs.value.getDOMNode().offsetHeight * Object.keys(@props.dataSource).length

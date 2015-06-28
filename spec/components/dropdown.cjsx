@@ -30,6 +30,7 @@ module.exports = React.createClass
       <h2>Dropdown</h2>
       <p>lorem ipsum...</p>
       <Dropdown ref="dropdown" dataSource={@state.countries_obj} label="Countries"/>
+      <Dropdown ref="dropdown" dataSource={@state.countries_obj} disabled={true}/>
       <Dropdown ref="dropdown" dataSource={@state.countries_obj}
                 value={countries_obj_selected} />
     </section>

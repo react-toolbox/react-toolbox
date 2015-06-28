@@ -5,8 +5,8 @@
   margin-bottom                   : SPACE
   // height                          : INPUT_HEIGHT
   width                           : inherit
-  color                           : COLOR
-  border-bottom                   : 1px solid lighten(COLOR, 75%)
+  color                           : FORM_COLOR
+  border-bottom                   : 1px solid FORM_BORDER_COLOR
 
   // -- Class
   &.active
@@ -24,6 +24,11 @@
         transition                  opacity ANIMATION_DURATION ANIMATION_EASE
   &:not(.active) > ul
     pointer-events                :none
+  &.disabled
+    color                         : FORM_BORDER_COLOR
+    border-bottom-style           : dotted
+    > span:after
+      transform                     scale(0)
 
   // -- Children
   > *
@@ -32,7 +37,7 @@
     position                      : relative
     bottom                        : -(SPACE / 4)
     font-size                     : FONT_SIZE_TINY
-    color                         : THEME
+    color                         : FORM_BORDER_COLOR
   > span
     display                       : block
     height                        : INPUT_HEIGHT
@@ -51,7 +56,7 @@
       height                      : 0
       border-left                 : BORDER = SIZE solid transparent
       border-right                : BORDER
-      border-top                  : SIZE solid lighten(COLOR, 75%)
+      border-top                  : SIZE solid FORM_BORDER_COLOR
       transition                    transform ANIMATION_DURATION ANIMATION_EASE
 
   > ul
