@@ -3,17 +3,16 @@
 [data-component-dropdown]
   position                        : relative
   margin-bottom                   : SPACE
-  // height                          : INPUT_HEIGHT
   width                           : inherit
   color                           : FORM_COLOR
   border-bottom                   : 1px solid FORM_BORDER_COLOR
 
   // -- Class
   &.active
-    > span
+    > label, > span
       opacity                     : 0
       transform                     translateY((INPUT_HEIGHT / 4))
-      &:after
+    > span:after
         transform                   scale(0)
     > ul
       opacity                     : 1
@@ -22,8 +21,12 @@
       > li
         opacity                   : 1
         transition                  opacity ANIMATION_DURATION ANIMATION_EASE
-  &:not(.active) > ul
-    pointer-events                :none
+  &:not(.active)
+    > ul
+      pointer-events              : none
+    > *, > * > li
+      transition-delay              ANIMATION_DURATION
+
   &.disabled
     color                         : FORM_BORDER_COLOR
     border-bottom-style           : dotted
@@ -33,6 +36,10 @@
   // -- Children
   > *
     width                         : 100%
+  > label, > span
+    transition-property             opacity, transform
+    transition-duration             ANIMATION_DURATION
+    transition-timing-function      ANIMATION_EASE
   > label
     position                      : relative
     bottom                        : -(SPACE / 4)
@@ -43,9 +50,6 @@
     height                        : INPUT_HEIGHT
     line-height                   : INPUT_HEIGHT
     font-size                     : FONT_SIZE_NORMAL
-    transition-property             opacity, transform
-    transition-duration             ANIMATION_DURATION
-    transition-timing-function      ANIMATION_EASE
     &:after
       SIZE = (INPUT_HEIGHT / 7)
       position                    : absolute
@@ -77,10 +81,17 @@
     transition-duration             ANIMATION_DURATION
     transition-timing-function      ANIMATION_EASE
     > li
+      position                    : relative
       padding                     : (SPACE / 2) OFFSET
       opacity                     : 0
-      &:hover
-        background-color          : BACKGROUND
-        cursor                    : pointer
+      overflow                    : hidden
+      cursor                      : pointer
       &.selected
         color                     : PRIMARY
+      > *
+        pointer-events            : none
+      > [data-component-ripple]
+        background-color          : lighten(FORM_BORDER_COLOR, 50%)
+
+  > label + ul
+    top                           : SPACE

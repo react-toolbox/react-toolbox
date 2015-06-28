@@ -4,6 +4,7 @@
 
 require "./style"
 Autocomplete  = require "../autocomplete"
+Dropdown      = require "../dropdown"
 Button        = require "../button"
 Input         = require "../input"
 
@@ -62,6 +63,8 @@ module.exports = React.createClass
             <Button {...attribute} type="square" ref="submit" onClick={@onSubmit}/>
           else if attribute.type is "autocomplete"
             <Autocomplete {...attribute} onChange={@onChange}/>
+          else if attribute.type is "dropdown"
+            <Dropdown {...attribute} />
           else
             <Input {...attribute} />
       }

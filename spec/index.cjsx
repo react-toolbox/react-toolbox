@@ -24,12 +24,12 @@ Test = React.createClass
     <test>
       <h1>React-Kit <small>New way for create</small></h1>
 
-      <Dropdown />
+      <Form />
       <Aside />
       <Autocomplete />
       <Button />
       <Dialog />
-      <Form />
+      <Dropdown />
     </test>
 
 React.render <Test/>, document.body
