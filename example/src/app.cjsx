@@ -22,7 +22,7 @@ App = React.createClass
     ]
 
   render: ->
-    <app>
+    <app data-toolbox={true}>
       <h1>Hello React-Toolbox</h1>
       <Form attributes={@state.fields} />
       <Button caption="Hello world!" type="square" style="primary"/>

@@ -21,7 +21,7 @@ Test = React.createClass
 
   # -- Render
   render: ->
-    <test>
+    <app data-toolbox={true}>
       <h1>React-Kit <small>New way for create</small></h1>
 
       <Form />
@@ -30,6 +30,6 @@ Test = React.createClass
       <Button />
       <Dialog />
       <Dropdown />
-    </test>
+    </app>
 
 React.render <Test/>, document.body

@@ -1,6 +1,6 @@
 {
   "name": "react-toolbox-example",
-  "version": "0.6.19",
+  "version": "0.6.28",
   "description": "Sample project that uses react-toolbox",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "coffee-script": "*",
-    "react-toolbox": "^0.6.19",
+    "react-toolbox": "^0.6.28",
     "react": ">=0.13"
   },
   "devDependencies": {

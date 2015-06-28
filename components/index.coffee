@@ -5,6 +5,7 @@ module.exports =
   Autocomplete  : require "./autocomplete"
   Button        : require "./button"
   Dialog        : require "./dialog"
+  Dropdown      : require "./dropdown"
   FontIcon      : require "./font_icon"
   Form          : require "./form"
   Input         : require "./input"
