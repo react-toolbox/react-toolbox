@@ -1,0 +1,97 @@
+@import "../constants.styl"
+
+[data-component-dropdown]
+  position                        : relative
+  margin-bottom                   : SPACE
+  width                           : inherit
+  color                           : FORM_COLOR
+  border-bottom                   : 1px solid FORM_BORDER_COLOR
+
+  // -- Class
+  &.active
+    > label, > span
+      opacity                     : 0
+      transform                     translateY((INPUT_HEIGHT / 4))
+    > span:after
+        transform                   scale(0)
+    > ul
+      opacity                     : 1
+      transform                     translateY(0%)
+      box-shadow                    ZDEPTH_SHADOW_1
+      > li
+        opacity                   : 1
+        transition                  opacity ANIMATION_DURATION ANIMATION_EASE
+  &:not(.active)
+    > ul
+      pointer-events              : none
+    > *, > * > li
+      transition-delay              ANIMATION_DURATION
+
+  &.disabled
+    color                         : FORM_BORDER_COLOR
+    border-bottom-style           : dotted
+    > span:after
+      transform                     scale(0)
+
+  // -- Children
+  > *
+    width                         : 100%
+  > label, > span
+    transition-property             opacity, transform
+    transition-duration             ANIMATION_DURATION
+    transition-timing-function      ANIMATION_EASE
+  > label
+    position                      : relative
+    bottom                        : -(SPACE / 4)
+    font-size                     : FONT_SIZE_TINY
+    color                         : FORM_BORDER_COLOR
+  > span
+    display                       : block
+    height                        : INPUT_HEIGHT
+    line-height                   : INPUT_HEIGHT
+    font-size                     : FONT_SIZE_NORMAL
+    &:after
+      SIZE = (INPUT_HEIGHT / 7)
+      position                    : absolute
+      content                     : ""
+      right                       : (SPACE / 2)
+      bottom                      : SPACE
+      width                       : 0
+      height                      : 0
+      border-left                 : BORDER = SIZE solid transparent
+      border-right                : BORDER
+      border-top                  : SIZE solid FORM_BORDER_COLOR
+      transition                    transform ANIMATION_DURATION ANIMATION_EASE
+
+  > ul
+    z-index                       : 2
+    position                      : absolute
+    top                           : 0
+    left                          : -(OFFSET = (SPACE / 1.25))
+    right                         : -(OFFSET)
+    width                         : auto
+    height                        : 0
+    max-height                    : 50vh
+    list-style                    : none
+    opacity                       : 0
+    background-color              : WHITE
+    border-radius                 : BORDER_RADIUS
+    transform                       translateY(-(INPUT_HEIGHT / 2))
+    transition-property             height, box-shadow, opacity, transform
+    transition-duration             ANIMATION_DURATION
+    transition-timing-function      ANIMATION_EASE
+    > li
+      position                    : relative
+      padding                     : (SPACE / 2) OFFSET
+      opacity                     : 0
+      overflow                    : hidden
+      cursor                      : pointer
+      &.selected
+        color                     : PRIMARY
+      > *
+        pointer-events            : none
+      > [data-component-ripple]
+        background-color          : lighten(FORM_BORDER_COLOR, 50%)
+
+  > label + ul
+    top                           : SPACE

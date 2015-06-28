@@ -25,6 +25,7 @@ module.exports = React.createClass
     el = @getDOMNode()
     for key in ["animationend", "webkitAnimationEnd", "oAnimationEnd", "MSAnimationEnd"]
       el.addEventListener key, (=> @setState className: undefined), false
+    @setState className: "active" if @props.origin?
 
   # -- Render
   render: ->

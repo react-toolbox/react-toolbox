@@ -31,6 +31,8 @@ module.exports = React.createClass
     ,
       ref: "girl_2", type: "radio", label: "Are you a girl_2?", value: false, disabled: true
     ,
+      ref: "type_user", type: "dropdown", label: "Type of user", dataSource: {1: "Normal", 2: "Root"}
+    ,
       type: "submit", caption: "Send", style: "primary anchor", disabled: true
     ]
 
