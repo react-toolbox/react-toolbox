@@ -1,0 +1,40 @@
+@import '../constants.styl'
+
+// -- Main styles
+[data-component-progressbar]
+  display                       : inline-block
+  position                      : relative
+  height                        : PROGRESS_BAR_HEIGHT
+  width                         : 100%
+  background                    : darken(BACKGROUND, 7.5%)
+  overflow                      : hidden
+
+  [data-component-progressbar-value], [data-component-progressbar-buffer]
+    position                    : absolute
+    bottom                      : 0
+    left                        : 0
+    right                       : 0
+    top                         : 0
+    transform                     scaleX(0)
+    transform-origin              left center
+    transition-duration           ANIMATION_DURATION
+    transition-timing-function    ANIMATION_EASE
+
+  [data-component-progressbar-value]
+    background-color            : SECONDARY
+
+  [data-component-progressbar-buffer]
+    background-color            : lighten(SECONDARY, 70%)
+
+  &.indeterminate > [data-component-progressbar-value]
+    transform-origin              center center
+    animation                     indeterminate-bar 1s linear infinite
+
+// -- Animation for the indeterminate progress bar
+@keyframes indeterminate-bar
+  0%
+    transform: translate(-50%) scaleX(0)
+  50%
+    transform: translate(0%) scaleX(0.3)
+  100%
+    transform: translate(50%) scaleX(0)
