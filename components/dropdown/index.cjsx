@@ -18,6 +18,7 @@ module.exports = React.createClass
     value       : React.PropTypes.string
     label       : React.PropTypes.string
     disabled    : React.PropTypes.disabled
+    onChange    : React.PropTypes.func
 
   getDefaultProps: ->
     type        : "normal"
@@ -42,9 +43,10 @@ module.exports = React.createClass
         active    : false
         value     : target.getAttribute "id"
         ripple :
-            left  : event.pageX - client?.left
-            top   : event.pageY - client?.top
-            width : (client?.width * 2)
+          left    : event.pageX - client?.left
+          top     : event.pageY - client?.top
+          width   : (client?.width * 2)
+      @props.onChange event, @
 
   # -- Render
   render: ->

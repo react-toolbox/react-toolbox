@@ -16,11 +16,6 @@ module.exports = React.createClass
       "EN-en"   : "USA"
       "FR-fr"   : "France"
 
-  # -- Events
-  onAutocompleteValues: (ref, method) ->
-    console.log @refs.autocomplete_multiple.getValue()
-    console.log @refs.autocomplete_simple.getValue()
-
   # -- Render
   render: ->
     countries_selected = ["USA", "Tongo"]
