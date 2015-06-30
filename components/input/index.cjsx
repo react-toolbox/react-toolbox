@@ -52,7 +52,11 @@ module.exports = React.createClass
     <div data-component-input={@props.type} className={className}>
       {
         if @props.multiline
-          <textarea ref="input" {...@props} onChange={@onChange}>{@state.value}</textarea>
+          <textarea ref="input" {...@props} value={@state.value}
+                    onChange={@onChange}
+                    onKeyPress={@props.onKeyPress}
+                    onFocus={@props.onFocus}
+                    onBlur={@props.onBlur}>{@state.value}</textarea>
         else
           <input ref="input" {...@props} value={@state.value} checked={@state.checked} 
                  onChange={@onChange}
