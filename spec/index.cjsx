@@ -7,6 +7,7 @@ Button        = require './components/button'
 Dialog        = require './components/dialog'
 Dropdown      = require './components/dropdown'
 Form          = require './components/form'
+Progress      = require './components/progress'
 
 # React           = require('react/addons')
 # TestUtils       = React.addons.TestUtils
@@ -30,6 +31,7 @@ Test = React.createClass
       <Button />
       <Dialog />
       <Dropdown />
+      <Progress />
     </app>
 
 React.render <Test/>, document.body
