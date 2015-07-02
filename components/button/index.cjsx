@@ -23,6 +23,7 @@ module.exports = React.createClass
     loading     : false
 
   getInitialState: ->
+    loading     : @props.loading
     ripple      : undefined
 
   # -- Lifecycle
@@ -44,9 +45,13 @@ module.exports = React.createClass
     <button data-component-button={@props.type}
             onClick={@onClick}
             className={@props.style}
-            disabled={@props.disabled or @props.loading}
+            disabled={@props.disabled or @state.loading}
             data-flex="horizontal center">
       { <FontIcon value={@props.icon} /> if @props.icon }
       { <abbr>{@props.caption}</abbr> if @props.caption }
-      <Ripple origin={@state.ripple} loading={@props.loading} />
+      <Ripple origin={@state.ripple} loading={@state.loading} />
     </button>
+
+  # -- Extends
+  loading: (value) ->
+    @setState loading: value
