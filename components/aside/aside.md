@@ -1,7 +1,7 @@
 # Aside
 
 ```
-var Aside = require('react-toolbox/components/input');
+var Aside = require('react-toolbox/components/aside');
 
 <Aside>
   <header/>
