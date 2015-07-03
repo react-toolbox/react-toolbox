@@ -8,29 +8,31 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    type        : React.PropTypes.string
-    label       : React.PropTypes.string
-    value       : React.PropTypes.string
-    error       : React.PropTypes.string
-    required    : React.PropTypes.bool
+    className   : React.PropTypes.string
     disabled    : React.PropTypes.bool
+    error       : React.PropTypes.string
+    label       : React.PropTypes.string
     multiline   : React.PropTypes.bool
     onChange    : React.PropTypes.func
     onKeyPress  : React.PropTypes.func
     onFocus     : React.PropTypes.func
     onBlur      : React.PropTypes.func
+    required    : React.PropTypes.bool
+    type        : React.PropTypes.string
+    value       : React.PropTypes.string
 
   getDefaultProps: ->
-    type        : "text"
-    required    : false
+    className   : ''
     disabled    : false
     multiline   : false
+    required    : false
+    type        : 'text'
 
   getInitialState: ->
-    value       : @props.value
     checked     : @props.value
     error       : @props.error
-    touch       : @props.type in ["checkbox", "radio"]
+    touch       : @props.type in ['checkbox', 'radio']
+    value       : @props.value
 
   # -- Events
   onChange: (event) ->
@@ -42,39 +44,39 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    className = ""
-    className += " disabled" if @props.disabled
-    className += " error" if @state.error
-    className += " touch" if @state.touch
-    className += " radio" if @props.type is "radio"
-    className += " checked" if @state.checked
+    className = @props.className
+    className += ' disabled' if @props.disabled
+    className += ' error' if @state.error
+    className += ' touch' if @state.touch
+    className += ' radio' if @props.type is 'radio'
+    className += ' checked' if @state.checked
 
     <div data-component-input={@props.type} className={className}>
       {
         if @props.multiline
-          <textarea ref="input" {...@props} value={@state.value}
+          <textarea ref='input' {...@props} value={@state.value}
                     onChange={@onChange}
                     onKeyPress={@props.onKeyPress}
                     onFocus={@props.onFocus}
                     onBlur={@props.onBlur}>{@state.value}</textarea>
         else
-          <input ref="input" {...@props} value={@state.value} checked={@state.checked} 
+          <input ref='input' {...@props} value={@state.value} checked={@state.checked} 
                  onChange={@onChange}
                  onKeyPress={@props.onKeyPress}
                  onFocus={@props.onFocus}
                  onBlur={@props.onBlur}/>
       }
-      <span className="bar"></span>
+      <span className='bar'></span>
       { <label>{@props.label}</label> if @props.label }
-      { <span className="error">{@state.error}</span> if @state.error }
+      { <span className='error'>{@state.error}</span> if @state.error }
     </div>
 
   # -- Extends
   getValue: ->
-    @refs.input?.getDOMNode()[if @state.touch then "checked" else "value"]
+    @refs.input?.getDOMNode()[if @state.touch then 'checked' else 'value']
 
   setValue: (data) ->
     @setState value: data
 
-  setError: (data = "Unknown error") ->
+  setError: (data = 'Unknown error') ->
     @setState error: @props.error or data
