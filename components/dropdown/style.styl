@@ -9,10 +9,10 @@
 
   // -- Class
   &.active
-    > label, > span
+    > label, > div
       opacity                     : 0
       transform                     translateY((INPUT_HEIGHT / 4))
-    > span:after
+    > div:after
         transform                   scale(0)
     > ul
       opacity                     : 1
@@ -30,39 +30,23 @@
   &.disabled
     color                         : FORM_BORDER_COLOR
     border-bottom-style           : dotted
-    > span:after
+    > div:after
       transform                     scale(0)
 
   // -- Children
   > *
     width                         : 100%
-  > label, > span
+  > label, > div
     transition-property             opacity, transform
     transition-duration             ANIMATION_DURATION
     transition-timing-function      ANIMATION_EASE
+  > label + ul
+    top                           : SPACE
   > label
     position                      : relative
     bottom                        : -(SPACE / 4)
     font-size                     : FONT_SIZE_TINY
     color                         : FORM_BORDER_COLOR
-  > span
-    display                       : block
-    height                        : INPUT_HEIGHT
-    line-height                   : INPUT_HEIGHT
-    font-size                     : FONT_SIZE_NORMAL
-    &:after
-      SIZE = (INPUT_HEIGHT / 7)
-      position                    : absolute
-      content                     : ""
-      right                       : (SPACE / 2)
-      bottom                      : SPACE
-      width                       : 0
-      height                      : 0
-      border-left                 : BORDER = SIZE solid transparent
-      border-right                : BORDER
-      border-top                  : SIZE solid FORM_BORDER_COLOR
-      transition                    transform ANIMATION_DURATION ANIMATION_EASE
-
   > ul
     z-index                       : 2
     position                      : absolute
@@ -93,6 +77,24 @@
         pointer-events            : none
       > [data-component-ripple]
         background-color          : lighten(FORM_BORDER_COLOR, 50%)
+  > div
+    display                       : block
+    > span
+      height                      : INPUT_HEIGHT
+      font-size                   : FONT_SIZE_NORMAL
+      line-height                 : INPUT_HEIGHT
+    > :not(span)
+      margin                      : (SPACE / 2) 0
+    &:after
+      SIZE = (INPUT_HEIGHT / 7)
+      position                    : absolute
+      content                     : ""
+      right                       : (SPACE / 2)
+      bottom                      : SPACE
+      width                       : 0
+      height                      : 0
+      border-left                 : BORDER = SIZE solid transparent
+      border-right                : BORDER
+      border-top                  : SIZE solid FORM_BORDER_COLOR
+      transition                    transform ANIMATION_DURATION ANIMATION_EASE
 
-  > label + ul
-    top                           : SPACE

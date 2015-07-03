@@ -12,24 +12,33 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    type        : React.PropTypes.string
     className   : React.PropTypes.string
-    dataSource  : React.PropTypes.object
-    value       : React.PropTypes.string
-    label       : React.PropTypes.string
+    dataSource  : React.PropTypes.array
     disabled    : React.PropTypes.disabled
+    label       : React.PropTypes.string
     onChange    : React.PropTypes.func
+    template    : React.PropTypes.func
+    type        : React.PropTypes.string
+    value       : React.PropTypes.string
 
   getDefaultProps: ->
-    type        : "normal"
     className   : ""
-    dataSource  : {}
+    dataSource  : []
     disabled    : false
+    type        : "normal"
 
   getInitialState: ->
     active      : false
-    value       : @props.value or Object.keys(@props.dataSource)[0]
     ripple      : undefined
+    selected    : _selectValue @props.value, @props.dataSource
+
+  # -- Lifecycle
+  componentDidMount: ->
+    @setState
+      height: @refs.values.getDOMNode().firstElementChild.getBoundingClientRect().height
+
+  componentDidUpdate: (prev_props, prev_state) ->
+    @props.onChange? @ if prev_state.selected isnt @state.selected and prev_state.active
 
   # -- Events
   onSelect: (event) ->
@@ -37,16 +46,17 @@ module.exports = React.createClass
 
   onItem: (event) ->
     unless @props.disabled
-      target = event.target
-      client = target.getBoundingClientRect?()
-      @setState
-        active    : false
-        value     : target.getAttribute "id"
-        ripple :
-          left    : event.pageX - client?.left
-          top     : event.pageY - client?.top
-          width   : (client?.width * 2)
-      @props.onChange event, @
+      client = event.target.getBoundingClientRect?()
+      value = event.target.getAttribute("id").toString()
+      for item in @props.dataSource when item.value.toString() is value
+        @setState
+          active    : false
+          selected  : item
+          ripple :
+            left    : event.pageX - client?.left
+            top     : event.pageY - client?.top
+            width   : (client?.width * 2)
+        break
 
   # -- Render
   render: ->
@@ -54,33 +64,41 @@ module.exports = React.createClass
     className += " disabled" if @props.disabled
     if @state.active is true
       className += " active"
-      stylesheet = height: @refs.value.getDOMNode().offsetHeight * Object.keys(@props.dataSource).length
+      stylesheet = height: @state.height * @props.dataSource.length
 
     <div data-component-dropdown={@props.type} className={className}>
       { <label>{@props.label}</label> if @props.label }
-      <ul  style={stylesheet}>
+      <ul ref="values" style={stylesheet} onClick={@onItem}>
       {
-        for key, label of @props.dataSource
-          <li id={key} onClick={@onItem} className={"selected" if key is @state.value}>
-            {label}
-            { <Ripple origin={@state.ripple}/> if key is @state.value }
+        for item in @props.dataSource
+          <li id={item.value} className={"selected" if item.value is @state.selected.value}>
+            { if @props.template then @props.template item else item.label }
+            { <Ripple origin={@state.ripple}/> if item.value is @state.selected.value }
           </li>
       }
       </ul>
-      <span ref="value" onClick={@onSelect}>{@props.dataSource[@state.value]}</span>
+      <div ref="value" onClick={@onSelect}>
+      {
+        if @props.template
+          @props.template @state.selected
+        else
+          <span>{@state.selected.label}</span>
+      }
+      </div>
     </div>
 
   # -- Extends
   getValue: ->
-    @state.value
+    @state.selected.value
 
   setValue: (data) ->
-    @setState value: data
+    @setState selected: data
 
-# -- Private methods
-_index = (data = {}) ->
-  indexed = data
-  if data.length?
-    indexed = {}
-    indexed[item] = item for item in data
-  indexed
+# -- Internal methods
+_selectValue = (value, dataSource) ->
+  if value
+    for item in dataSource when item.value.toString() is value.toString()
+      return item
+      break
+  else
+    dataSource[0]
