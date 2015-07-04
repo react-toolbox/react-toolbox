@@ -1,5 +1,9 @@
 ###
-@todo Add a circular progress variant
+@todo
+v2
+  - can set different sizes for circular progress
+  - maybe a multicolor indeterminate circular progress bar
+  - refactor vendor prefixes adding to a module
 ###
 
 require './style'
@@ -10,17 +14,19 @@ module.exports = React.createClass
   propTypes:
     buffer        : React.PropTypes.number
     className     : React.PropTypes.string
-    indeterminate : React.PropTypes.bool
     max           : React.PropTypes.number
     min           : React.PropTypes.number
+    mode          : React.PropTypes.string
+    type          : React.PropTypes.string
     value         : React.PropTypes.number
 
   getDefaultProps: ->
     buffer        : 0
-    className     : ""
-    indeterminate : false
+    className     : ''
     max           : 100
     min           : 0
+    mode          : 'indeterminate'
+    type          : 'linear'
     value         : 0
 
   # -- Helper methods
@@ -29,22 +35,34 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    className   = @props.className
-    className   += ' indeterminate' if @props.indeterminate
-    valueStyle  = transformProgress(@calculateRatio(@props.value))
-    bufferStyle = transformProgress(@calculateRatio(@props.buffer))
-
-    <div data-component-progressbar
+    className  = "#{@props.type} #{@props.className} #{@props.mode}"
+    <div data-component-progressbar role="progressbar"
          className={className}
-         role="progressbar"
          aria-valuenow={@props.value}
          aria-valuemin={@props.min}
          aria-valuemax={@props.max}>
+      { if @props.type == 'circular' then @renderCircular() else @renderLinear() }
+    </div>
+
+  renderCircular: ->
+    style = transformDasharray(@calculateRatio(@props.value)) unless @props.mode == 'indeterminate'
+    <svg data-component-progressbar-circle>
+      <circle style={style} data-component-progressbar-circle-path cx="50" cy="50" r="45"/>
+    </svg>
+
+  renderLinear: ->
+    unless @props.mode == 'indeterminate'
+      bufferStyle = transformProgress(@calculateRatio(@props.buffer))
+      valueStyle  = transformProgress(@calculateRatio(@props.value))
+    <div>
       <span data-component-progressbar-buffer style={bufferStyle}></span>
       <span data-component-progressbar-value  style={valueStyle}></span>
     </div>
 
-# TODO Refactor to a module to add vendor prefixes to a property
+# -- Private methods
+transformDasharray = (ratio) ->
+  strokeDasharray: "#{2 * Math.PI * 45 * ratio}, 400"
+
 transformProgress = (ratio) ->
   WebkitTransform: "scaleX(#{ratio})"
   MsTransform:     "scaleX(#{ratio})"

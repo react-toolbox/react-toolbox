@@ -38,8 +38,11 @@ module.exports = React.createClass
       <h2>Progress bars</h2>
 
       <p>Determinate</p>
-      <ProgressBar value={@state.progress} buffer={@state.buffer}/>
+      <ProgressBar mode="determinate" value={@state.progress} buffer={@state.buffer}/>
 
       <p>Indeterminate...</p>
-      <ProgressBar indeterminate={true}/>
+      <ProgressBar mode="indeterminate"/>
+
+      <p>Circular</p>
+      <ProgressBar type="circular" mode="indeterminate"/>
     </section>
