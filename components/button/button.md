@@ -3,7 +3,6 @@
 ```
 var Button = require('react-toolbox/components/button');
 
-
 <Button caption="Login" />
 <Button caption="Primary" style="primary" icon="access_alarm" />
 <Button caption="Secondary" style="secondary" />
@@ -16,15 +15,6 @@ var Button = require('react-toolbox/components/button');
 ```
 
 ## Properties
-
-```
-type        : React.PropTypes.string
-caption     : React.PropTypes.string
-icon        : React.PropTypes.string
-className   : React.PropTypes.string
-disabled    : React.PropTypes.bool
-loading     : React.PropTypes.bool
-```
 
 | Name              | Type          | Default         | Description|
 |:-                 |:-:            | :-              |:-|
