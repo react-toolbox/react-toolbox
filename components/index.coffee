@@ -14,4 +14,5 @@ module.exports =
   Loading       : require "./loading"
   Navigation    : require "./navigation"
   Ripple        : require "./ripple"
+  ProgressBar   : require "./progress_bar"
   # -- Tools

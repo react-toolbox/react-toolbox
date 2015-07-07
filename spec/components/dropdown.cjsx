@@ -8,24 +8,50 @@ module.exports = React.createClass
 
   # -- States & Properties
   getInitialState: ->
-    countries: ["Spain", "England", "USA", "Thailand", "Tongo", "Slovenia"]
-    countries_obj:
-      "ES-es"   : "Spain"
-      "TH-th"   : "Thailand"
-      "EN-gb"   : "England"
-      "EN-en"   : "USA"
-      "FR-fr"   : "France"
+    countries: [
+      value: "ES-es", label: "Spain", img: "http://"
+    ,
+      value: "TH-th", label: "Thailand", img: "http://"
+    ,
+      value: "EN-gb", label: "England", img: "http://"
+    ,
+      value: "EN-en", label: "USA", img: "http://"
+    ,
+      value: "FR-fr", label: "France", img: "http://"
+    ]
+    selected: "TH-th"
+
+  # -- Events
+  onChange: (dropdown) ->
+    console.log "[DROPDOWN]", dropdown.getValue()
+
+  # -- Internal
+  customDropdownItem: (data) ->
+    style =
+      width           : 32
+      height          : 32
+      backgroundColor : '#ccc'
+      marginRight     : 8
+
+    <div data-flex="horizontal grow" data-flex-content="center">
+      <img src={data.img} data-flex-grow="min" style={style} />
+      <div data-flex-grow="max" data-flex="vertical" >
+        <strong>{data.label}</strong>
+        <small>{data.value}</small>
+      </div>
+    </div>
 
   # -- Render
   render: ->
-    countries_selected = ["USA", "Tongo"]
-    countries_obj_selected = "TH-th"
-
     <section>
       <h2>Dropdown</h2>
       <p>lorem ipsum...</p>
-      <Dropdown ref="dropdown" dataSource={@state.countries_obj} label="Countries"/>
-      <Dropdown ref="dropdown" dataSource={@state.countries_obj} disabled={true}/>
-      <Dropdown ref="dropdown" dataSource={@state.countries_obj}
-                value={countries_obj_selected} />
+      <Dropdown dataSource={@state.countries} label="Countries"
+                onChange={@onChange}/>
+      <Dropdown dataSource={@state.countries} disabled={true}
+                onChange={@onChange}/>
+      <Dropdown dataSource={@state.countries} value={@state.selected}
+                onChange={@onChange}/>
+      <Dropdown dataSource={@state.countries} value={@state.selected}
+                template={@customDropdownItem} onChange={@onChange}/>
     </section>

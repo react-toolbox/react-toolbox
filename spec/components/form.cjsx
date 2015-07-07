@@ -3,6 +3,7 @@
 ###
 
 Form  = require '../../components/form'
+Input  = require '../../components/input'
 
 module.exports = React.createClass
 
@@ -31,7 +32,7 @@ module.exports = React.createClass
     ,
       ref: "girl_2", type: "radio", label: "Are you a girl_2?", value: false, disabled: true
     ,
-      ref: "type_user", type: "dropdown", label: "Type of user", dataSource: {1: "Normal", 2: "Root"}
+      ref: "type_user", type: "dropdown", label: "Type of user", dataSource: [{value: 1, label: "Normal"}, {value: 2, label: "Root"}]
     ,
       type: "submit", caption: "Send", style: "primary anchor", disabled: true
     ]
