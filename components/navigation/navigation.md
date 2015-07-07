@@ -18,5 +18,6 @@ var actions = [
 | Name              | Type          | Default         | Description|
 |:-                 |:-:            | :-              |:-|
 | **actions**       | Array         |                 | Array of actions callbacks using <Button/> component definition.|
+| **className**     | String        |                 | Sets the class-styles of the Component.|
 | **routes**        | Array         |                 | Array of URL String using <Link/> component definition. |
 | **type**          | String        | "normal"        | Type of the component, overwrite this property if you need set a different stylesheet.|

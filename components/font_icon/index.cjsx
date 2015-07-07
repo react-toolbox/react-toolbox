@@ -1,8 +1,3 @@
-###
-@todo
-###
-
-
 # require './style'
 
 module.exports = React.createClass

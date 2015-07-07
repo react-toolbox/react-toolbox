@@ -18,17 +18,18 @@ var data = [
 
 | Name              | Type          | Default         | Description|
 |:-                 |:-:            | :-              |:-|
-| **type**          | String        | "text"          | Type of the component, overwrite this property if you need set a different stylesheet.|
-| **label**         | String        |                 | The text string to use for the floating label element.|
-| **value**         | String        |                 | Default value using JSON data.|
-| **error**         | String        |                 | Sets the error string.|
-| **multiple**      | Bool          | true            | If true, component can hold multiple values.|
-| **exact**         | Bool          | true            | If true, component only accepts values from dataSource property..|
-| **required**      | Boolean       | false           | If true, component needs has a value.|
-| **disabled**      | Boolean       | false           | If true, component will be disabled.|
-| **dataSource**    | Object        |                 | JSON data representing all items in the component.|
+| **className**     | String        |                 | Sets the class-styles of the Component.|
 | **colors**        | Object        |                 | JSON data representing all colors per key in the dropdown.||
+| **dataSource**    | Object        |                 | JSON data representing all items in the component.|
+| **disabled**      | Boolean       |                 | If true, component will be disabled.|
+| **error**         | String        |                 | Sets the error string.|
+| **exact**         | Bool          | true            | If true, component only accepts values from dataSource property..|
+| **label**         | String        |                 | The text string to use for the floating label element.|
+| **multiple**      | Bool          | true            | If true, component can hold multiple values.|
 | **onChange**      | Function      |                 | Callback function that is fired when the components's value changes.|
+| **required**      | Boolean       |                 | If true, component needs has a value.|
+| **type**          | String        | "text"          | Type of the component, overwrite this property if you need set a different stylesheet.|
+| **value**         | String        |                 | Default value using JSON data.|
 
 ## Methods
 

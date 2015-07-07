@@ -21,7 +21,6 @@ var fields : [
 | **onError**       | Function      |                 | Dispatch callback when a required field is null or has incorrect type.|
 | **onSubmit**      | Function      |                 | Dispatch callback when user clicks on submit <Button/> |
 | **onValid**       | Function      |                 | Dispatch callback when all required fields are full-filled.|
-
 | **Storage**       | String        |                 | Sets a localStorage key for save all current field values.|
 
 ## Methods

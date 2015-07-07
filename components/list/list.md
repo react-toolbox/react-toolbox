@@ -14,6 +14,7 @@ var template = function(data) {
 
 | Name              | Type          | Default         | Description|
 |:-                 |:-:            | :-              |:-|
+| **className**     | String        |                 | Sets the class-styles of the Component.|
 | **dataSource**    | Array         | required        | JSON data representing all items in the list. |
 | **ItemFactory**   | Function      | required        | Callback who contains the item data representation.|
 | **onClick**       | Function      |                 | Dispatch event when user clicks on any item sub-component.|

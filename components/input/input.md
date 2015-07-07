@@ -12,18 +12,18 @@ var Input = require('react-toolbox/components/input');
 
 | Name              | Type          | Default         | Description|
 |:-                 |:-:            | :-              |:-|
-| **type**          | String        | "normal"        | Type of the component, overwrite this property if you need set a different stylesheet.|
-| **label**         | String        |                 | The text string to use for the floating label element.|
-| **value**         | String        |                 | Default value using JSON data.|
-| **error**         | String        |                 | Sets the error string.|
 | **className**     | String        |                 | Sets the class-styles of the Component.|
-| **required**      | Boolean       | false           | If true, component needs has a value.|
 | **disabled**      | Boolean       | false           | If true, component will be disabled.|
+| **error**         | String        |                 | Sets the error string.|
+| **label**         | String        |                 | The text string to use for the floating label element.|
 | **multiline**     | Boolean       | false           | If true, a textarea element will be rendered. The textarea also grows and shrinks according to the number of lines.|
-| **onChange**      | Function      |                 | Callback function that is fired when the components's value changes.|
-| **onKeyPress**    | Function      |                 | Callback function that is fired when a key is pressed.|
-| **onFocus**       | Function      |                 | Callback function that is fired when components is focused.|
 | **onBlur**        | Function      |                 | Callback function that is fired when components is blured.|
+| **onChange**      | Function      |                 | Callback function that is fired when the components's value changes.|
+| **onFocus**       | Function      |                 | Callback function that is fired when components is focused.|
+| **onKeyPress**    | Function      |                 | Callback function that is fired when a key is pressed.|
+| **required**      | Boolean       | false           | If true, component needs has a value.|
+| **type**          | String        | "normal"        | Type of the component, overwrite this property if you need set a different stylesheet.|
+| **value**         | String        |                 | Default value using JSON data.|
 
 ## Methods
 

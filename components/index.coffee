@@ -15,4 +15,3 @@ module.exports =
   Navigation    : require "./navigation"
   Ripple        : require "./ripple"
   # -- Tools
-  Router        : require "./router"

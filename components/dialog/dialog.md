@@ -15,19 +15,10 @@ var actions = [
 
 ## Properties
 
-```
-    caption     : React.PropTypes.string
-    disabled    : React.PropTypes.bool
-    icon        : React.PropTypes.string
-    loading     : React.PropTypes.bool
-    style       : React.PropTypes.string
-    type        : React.PropTypes.string
-```
-
 | Name              | Type          | Default         | Description|
 |:-                 |:-:            | :-              |:-|
-| **active**        | Boolean       | false           | If true, component will be shows.|
 | **actions**       | Array         |                 | A array of actions callbacks for the component.|
+| **active**        | Boolean       |                 | If true, component will be shows.|
 | **className**     | String        | "normal"        | Set the class-styles of the Component.|
 | **title**         | String        |                 | The text string to use for the title of the component.|
 | **type**          | String        |                 | Type of the component, overwrite this property if you need set a different stylesheet.|

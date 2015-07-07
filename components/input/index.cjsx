@@ -1,30 +1,25 @@
-###
-@todo
-###
-
 require './style'
 
 module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    type        : React.PropTypes.string
-    label       : React.PropTypes.string
-    value       : React.PropTypes.string
-    error       : React.PropTypes.string
-    required    : React.PropTypes.bool
+    className   : React.PropTypes.string
     disabled    : React.PropTypes.bool
+    error       : React.PropTypes.string
+    label       : React.PropTypes.string
     multiline   : React.PropTypes.bool
-    onChange    : React.PropTypes.func
-    onKeyPress  : React.PropTypes.func
-    onFocus     : React.PropTypes.func
     onBlur      : React.PropTypes.func
+    onChange    : React.PropTypes.func
+    onFocus     : React.PropTypes.func
+    onKeyPress  : React.PropTypes.func
+    required    : React.PropTypes.bool
+    type        : React.PropTypes.string
+    value       : React.PropTypes.string
 
   getDefaultProps: ->
+    className   : ""
     type        : "text"
-    required    : false
-    disabled    : false
-    multiline   : false
 
   getInitialState: ->
     value       : @props.value
@@ -42,7 +37,7 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    className = ""
+    className = @props.className
     className += " disabled" if @props.disabled
     className += " error" if @state.error
     className += " touch" if @state.touch

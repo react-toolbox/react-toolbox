@@ -1,7 +1,3 @@
-###
-@todo
-###
-
 require './style'
 Input = require '../input'
 
@@ -9,25 +5,26 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    type        : React.PropTypes.string
-    dataSource  : React.PropTypes.object
+    className   : React.PropTypes.string
     colors      : React.PropTypes.object
-    multiple    : React.PropTypes.bool
-    exact       : React.PropTypes.bool
-    # -- Inherit for <Input/>
-    label       : React.PropTypes.string
-    value       : React.PropTypes.string
-    error       : React.PropTypes.string
-    required    : React.PropTypes.bool
+    dataSource  : React.PropTypes.object
     disabled    : React.PropTypes.bool
+    error       : React.PropTypes.string
+    exact       : React.PropTypes.bool
+    label       : React.PropTypes.string
+    multiple    : React.PropTypes.bool
     onChange    : React.PropTypes.func
+    required    : React.PropTypes.bool
+    type        : React.PropTypes.string
+    value       : React.PropTypes.string
 
   getDefaultProps: ->
-    type        : "text"
-    dataSource  : {}
+    className   : ""
     colors      : {}
-    multiple    : true
+    dataSource  : {}
     exact       : true
+    multiple    : true
+    type        : "text"
 
   getInitialState: ->
     focus       : false

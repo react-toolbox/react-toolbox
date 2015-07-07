@@ -18,12 +18,12 @@ var Button = require('react-toolbox/components/button');
 
 | Name              | Type          | Default         | Description|
 |:-                 |:-:            | :-              |:-|
-| **type**          | String        | "text"          | Type of the component, overwrite this property if you need set a different stylesheet.|
 | **caption**       | String        |                 | The text string to use for the floating label element.|
-| **icon**          | String        |                 | Default value using JSON data.|
 | **className**     | String        |                 | Set the class-styles of the Component.|
-| **disabled**      | Boolean       | false           | If true, component will be disabled.|
-| **loading**       | Boolean       | false           | If true, component will be disabled and show a loading animation.|
+| **disabled**      | Boolean       |                 | If true, component will be disabled.|
+| **icon**          | String        |                 | Default value using JSON data.|
+| **loading**       | Boolean       |                 | If true, component will be disabled and show a loading animation.|
+| **type**          | String        | "text"          | Type of the component, overwrite this property if you need set a different stylesheet.|
 
 ## Methods
 

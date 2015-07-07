@@ -1,7 +1,3 @@
-###
-@todo
-###
-
 require './style'
 # -- Components
 Button  = require '../button'
@@ -11,9 +7,10 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    type        : React.PropTypes.string
-    routes      : React.PropTypes.array
     actions     : React.PropTypes.array
+    className   : React.PropTypes.string
+    routes      : React.PropTypes.array
+    type        : React.PropTypes.string
 
   getDefaultProps: ->
     type        : "default"

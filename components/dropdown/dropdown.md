@@ -18,13 +18,13 @@ var data = [
 
 | Name              | Type          | Default         | Description|
 |:-                 |:-:            | :-              |:-|
-| **type**          | String        | "normal"        | Type of the component, overwrite this property if you need set a different stylesheet.|
 | **className**     | String        |                 | Set the class-styles of the Component.|
 | **dataSource**    | Object        |                 | JSON data representing all items in the dropdown.|
-| **value**         | String        |                 | Default value using JSON data.|
-| **label**         | String        |                 | The text string to use for the floating label element.|
 | **disabled**      | Boolean       | false           | Set components disabled.|
+| **label**         | String        |                 | The text string to use for the floating label element.|
 | **onChange**      | Function      |                 | Callback function that is fired when the components's value changes.|
+| **value**         | String        |                 | Default value using JSON data.|
+| **type**          | String        | "normal"        | Type of the component, overwrite this property if you need set a different stylesheet.|
 
 ## Methods
 

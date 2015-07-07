@@ -1,5 +1,4 @@
 ###
-@todo
 v2
   - can set a icon like dispatcher
   - can set different template (maybe use a kind of mixin )
@@ -12,19 +11,19 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    type        : React.PropTypes.string
     className   : React.PropTypes.string
     dataSource  : React.PropTypes.object
-    value       : React.PropTypes.string
-    label       : React.PropTypes.string
     disabled    : React.PropTypes.disabled
+    label       : React.PropTypes.string
     onChange    : React.PropTypes.func
+    type        : React.PropTypes.string
+    value       : React.PropTypes.string
 
   getDefaultProps: ->
-    type        : "normal"
     className   : ""
     dataSource  : {}
     disabled    : false
+    type        : "normal"
 
   getInitialState: ->
     active      : false
@@ -76,11 +75,3 @@ module.exports = React.createClass
 
   setValue: (data) ->
     @setState value: data
-
-# -- Private methods
-_index = (data = {}) ->
-  indexed = data
-  if data.length?
-    indexed = {}
-    indexed[item] = item for item in data
-  indexed

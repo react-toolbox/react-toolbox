@@ -1,21 +1,19 @@
-###
-@todo
-###
-
 require './style'
 
 module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    type        : React.PropTypes.string
+    className   : React.PropTypes.string
     dataSource  : React.PropTypes.Array
     ItemFactory : React.PropTypes.func
     onClick     : React.PropTypes.func
+    type        : React.PropTypes.string
 
   getDefaultProps: ->
-    type        : "default"
+    attributes  : ""
     dataSource  : []
+    type        : "default"
 
   # -- Events
   onClick: (event, item) ->

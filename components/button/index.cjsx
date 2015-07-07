@@ -1,7 +1,3 @@
-###
-@todo
-###
-
 require './style'
 FontIcon = require "../font_icon"
 Ripple   = require "../ripple"
@@ -10,17 +6,16 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    type        : React.PropTypes.string
     caption     : React.PropTypes.string
-    icon        : React.PropTypes.string
-    style       : React.PropTypes.string
+    className   : React.PropTypes.string
     disabled    : React.PropTypes.bool
+    icon        : React.PropTypes.string
     loading     : React.PropTypes.bool
+    type        : React.PropTypes.string
 
   getDefaultProps: ->
+    className   : ""
     type        : "square"
-    disabled    : false
-    loading     : false
 
   getInitialState: ->
     loading     : @props.loading
@@ -42,9 +37,10 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
+
     <button data-component-button={@props.type}
             onClick={@onClick}
-            className={@props.style}
+            className={@props.className}
             disabled={@props.disabled or @state.loading}
             data-flex="horizontal center">
       { <FontIcon value={@props.icon} /> if @props.icon }
