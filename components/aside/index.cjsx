@@ -10,9 +10,7 @@ module.exports = React.createClass
     type        : React.PropTypes.string.required
 
   getDefaultProps: ->
-    active      : false
     className   : ""
-    hideable    : false
     type        : "left"
 
   getInitialState: ->
