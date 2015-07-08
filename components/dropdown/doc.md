@@ -1,6 +1,5 @@
 # Dropdown
 
-
 ```
 var DropDown = require('react-toolbox/components/dropdown');
 

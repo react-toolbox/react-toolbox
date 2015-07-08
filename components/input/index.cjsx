@@ -1,7 +1,3 @@
-###
-@todo
-###
-
 require './style'
 
 module.exports = React.createClass
@@ -13,6 +9,7 @@ module.exports = React.createClass
     error       : React.PropTypes.string
     label       : React.PropTypes.string
     multiline   : React.PropTypes.bool
+    onBlur      : React.PropTypes.func
     onChange    : React.PropTypes.func
     onKeyPress  : React.PropTypes.func
     onFocus     : React.PropTypes.func

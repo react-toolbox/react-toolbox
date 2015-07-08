@@ -1,23 +1,17 @@
-###
-@todo
-###
-
 require './style'
 
 module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    type        : React.PropTypes.string.required
     active      : React.PropTypes.bool
-    hideable    : React.PropTypes.bool
     className   : React.PropTypes.string
+    hideable    : React.PropTypes.bool
+    type        : React.PropTypes.string.required
 
   getDefaultProps: ->
-    type        : "left"
-    active      : false
-    hideable    : false
     className   : ""
+    type        : "left"
 
   getInitialState: ->
     active      : @props.active

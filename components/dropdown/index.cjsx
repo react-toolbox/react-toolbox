@@ -1,5 +1,4 @@
 ###
-@todo
 v2
   - can set a icon like dispatcher
   - can set different template (maybe use a kind of mixin )

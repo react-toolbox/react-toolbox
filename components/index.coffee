@@ -16,4 +16,3 @@ module.exports =
   Ripple        : require "./ripple"
   ProgressBar   : require "./progress_bar"
   # -- Tools
-  Router        : require "./router"

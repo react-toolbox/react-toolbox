@@ -1,7 +1,3 @@
-###
-@todo
-###
-
 require "./style"
 Autocomplete  = require "../autocomplete"
 Dropdown      = require "../dropdown"
@@ -13,13 +9,12 @@ module.exports = React.createClass
   # -- States & Properties
   propTypes:
     attributes        : React.PropTypes.array
-    storage           : React.PropTypes.string
     className         : React.PropTypes.string
-    # -- Events
-    onSubmit          : React.PropTypes.func
-    onError           : React.PropTypes.func
-    onValid           : React.PropTypes.func
     onChange          : React.PropTypes.func
+    onError           : React.PropTypes.func
+    onSubmit          : React.PropTypes.func
+    onValid           : React.PropTypes.func
+    storage           : React.PropTypes.string
 
   getDefaultProps: ->
     attributes        : []
@@ -29,7 +24,10 @@ module.exports = React.createClass
 
   # -- Lifecycle
   componentWillReceiveProps: (next_props) ->
-    @setValue (item for item in @storage next_props) if next_props.attributes
+    if next_props.attributes
+      attributes = @storage next_props
+      @setState attributes: attributes
+      @setValue (item for item in attributes)
 
   # -- Events
   onSubmit: (event) ->

@@ -1,7 +1,3 @@
-###
-@todo
-###
-
 require './style'
 FontIcon = require "../font_icon"
 
@@ -9,12 +5,15 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    route       : React.PropTypes.array
-    icon        : React.PropTypes.string
     caption     : React.PropTypes.string
+    className   : React.PropTypes.string
     count       : React.PropTypes.number
-    style       : React.PropTypes.string
+    icon        : React.PropTypes.string
     onClick     : React.PropTypes.func
+    route       : React.PropTypes.array
+
+  getDefaultProps: ->
+    attributes  : ""
 
   # -- Events
   onClick: (event) ->
@@ -24,7 +23,7 @@ module.exports = React.createClass
   render: ->
     <a  data-component-link=""
         href={"##{@props.route}"}
-        className={@props.style}
+        className={@props.className}
         onClick={@onClick}
         data-flex="horizontal center">
       { <FontIcon value={@props.icon} /> if @props.icon }

@@ -1,7 +1,3 @@
-###
-@todo
-###
-
 require './style'
 Button      = require '../button'
 Navigation  = require '../navigation'
@@ -10,16 +6,15 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    type        : React.PropTypes.string
+    actions     : React.PropTypes.array
+    active      : React.PropTypes.bool
     className   : React.PropTypes.string
     title       : React.PropTypes.string
-    active      : React.PropTypes.bool
-    actions     : React.PropTypes.array
+    type        : React.PropTypes.string
 
   getDefaultProps: ->
-    className   : "normal"
-    active      : false
     actions     : []
+    className   : "normal"
 
   getInitialState: ->
     active      : @props.active
