@@ -3,6 +3,7 @@ Autocomplete  = require "../autocomplete"
 Dropdown      = require "../dropdown"
 Button        = require "../button"
 Input         = require "../input"
+Switch        = require "../switch"
 
 module.exports = React.createClass
 
@@ -62,7 +63,9 @@ module.exports = React.createClass
           else if attribute.type is "autocomplete"
             <Autocomplete {...attribute} onChange={@onChange}/>
           else if attribute.type is "dropdown"
-            <Dropdown {...attribute} />
+            <Dropdown {...attribute} onChange={@onChange}/>
+          else if attribute.type is "switch"
+            <Switch {...attribute} onChange={@onChange}/>
           else
             <Input {...attribute} />
       }

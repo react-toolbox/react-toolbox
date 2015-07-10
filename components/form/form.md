@@ -15,7 +15,7 @@ var fields : [
 
 | Name              | Type          | Default         | Description|
 |:-                 |:-:            | :-              |:-|
-| **attributes**    | array         |                 | Array of fields you want hold, fields can be instances of <Input/>, <Autocomplete>, <Dropdown> or <Button/>|
+| **attributes**    | array         |                 | Array of fields you want hold, fields can be instances of <Autocomplete>, <Button/>, <Dropdown>, <Input/> or <Switch/> |
 | **className**     | String        |                 | Set the class-styles of the Component.|
 | **onChange**      | Function      |                 | Dispatch callback when values of the component changes.|
 | **onError**       | Function      |                 | Dispatch callback when a required field is null or has incorrect type.|

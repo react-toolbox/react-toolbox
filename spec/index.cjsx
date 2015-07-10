@@ -8,6 +8,7 @@ Dialog        = require './components/dialog'
 Dropdown      = require './components/dropdown'
 Form          = require './components/form'
 Progress      = require './components/progress'
+Switch        = require './components/switch'
 
 # React           = require('react/addons')
 # TestUtils       = React.addons.TestUtils
@@ -25,12 +26,13 @@ Test = React.createClass
     <app data-toolbox={true}>
       <h1>React-Kit <small>New way for create</small></h1>
 
-      <Form />
+      <Switch />
       <Aside />
       <Autocomplete />
       <Button />
       <Dialog />
       <Dropdown />
+      <Form />
       <Progress />
     </app>
 
