@@ -1,23 +1,21 @@
-@import "../constants.styl"
+@import '../constants.styl'
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons')
 
-@font-face
-  font-family             : 'MaterialIcons'
-  src                     : url("../fonts/MaterialIcons-Regular.eot")
-  src                     : url("../fonts/MaterialIcons-Regular.eot?#iefix") format("embedded-opentype"),
-                            url("../fonts/MaterialIcons-Regular.woff2") format("woff2"),
-                            url("../fonts/MaterialIcons-Regular.woff") format("woff"),
-                            url("../fonts/MaterialIcons-Regular.ttf") format("truetype")
-  font-weight             : normal
-  font-style              : normal
-
-.icon
-  display                 : inline-block
-  font                    : normal normal normal 24px/1 MaterialIcons
-  font-size               : inherit
-  text-rendering          : auto
-  -webkit-font-smoothing  : antialiased
-  -moz-osx-font-smoothing : grayscale
-  transform               : translate(0, 0)
+[data-component-fonticon]
+  display                       : inline-block
+  font-family                   : 'Material Icons'
+  font-weight                   : normal
+  font-style                    : normal
+  font-size                     : inherit
+  line-height                   : 1
+  letter-spacing                : normal
+  text-transform                : none
+  text-rendering                : auto
+  word-wrap                     : normal
+  -webkit-font-feature-settings : 'liga'
+  -webkit-font-smoothing        : antialiased
+  -moz-osx-font-smoothing       : grayscale
+  transform                     : translate(0, 0)
 
   &.3d_rotation::before
     content: "\e84d"
