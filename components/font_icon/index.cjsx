@@ -1,4 +1,4 @@
-# require './style'
+require './style'
 
 module.exports = React.createClass
 
