@@ -1,0 +1,60 @@
+@import "../constants.styl"
+
+[data-component-switch]
+  position                            : relative
+  margin-bottom                       : SPACE
+  height                              : SIZE = (SPACE / 1.25)
+  width                               : WIDTH = (2.5 * SIZE)
+  background-color                    : FORM_BORDER_COLOR
+  border-radius                       : SPACE
+  transition                            background-color ANIMATION_DURATION ANIMATION_EASE
+
+  // -- Children
+  > *
+    pointer-events                    : none
+  > span
+    position                          : absolute
+    top                               : -(SIZE / 5)
+    right                             : (SPACE)
+    width                             : (SIZE * 1.35)
+    height                            : (SIZE * 1.35)
+    border-radius                     : 50%
+    background-color                  : WHITE
+    transition-property                 background-color, box-shadow, right
+    transition-duration                 ANIMATION_DURATION
+    transition-timing-function          ANIMATION_EASE
+  > label
+    display                           : block
+    margin-left                       : WIDTH + (SPACE / 2)
+    font-size                         : FONT_SIZE_SMALL
+    color                             : FORM_COLOR
+  > [data-component-ripple]
+    z-index                           : -1
+    overflow                          : hidden
+    max-width                         : (SIZE * 2.7)
+    max-height                        : (SIZE * 2.7)
+    top                               : (SIZE / 2)
+    left                              : (SIZE * 2)
+    background-color                  : alpha(COLOR, 10%)
+    opacity                           : 0
+    animation-duration                  (1.0 * ANIMATION_DURATION)
+
+  // -- Style
+  &:not(.disabled)
+    cursor                            : pointer
+    > span
+      box-shadow                      : ZDEPTH_SHADOW_1
+  &.disabled
+    background-color                  : lighten(FORM_BORDER_COLOR, 50%)
+    > span
+      background-color                : FORM_BORDER_COLOR
+
+  &.checked
+    background-color                  : alpha(THEME, 25%)
+    > span
+      background-color                : THEME
+      right                           : 0
+      box-shadow                      : ZDEPTH_SHADOW_2
+    > [data-component-ripple]
+      left                            : 0
+      background-color                : alpha(THEME, 15%)
