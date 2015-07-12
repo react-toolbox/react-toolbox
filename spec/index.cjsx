@@ -6,6 +6,7 @@ Autocomplete  = require './components/autocomplete'
 Button        = require './components/button'
 Dialog        = require './components/dialog'
 Dropdown      = require './components/dropdown'
+FontIcon      = require './components/font_icon'
 Form          = require './components/form'
 Progress      = require './components/progress'
 Switch        = require './components/switch'
@@ -32,6 +33,7 @@ Test = React.createClass
       <Button />
       <Dialog />
       <Dropdown />
+      <FontIcon />
       <Form />
       <Progress />
     </app>
