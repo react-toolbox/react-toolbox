@@ -20,7 +20,7 @@ module.exports = React.createClass
   # -- Render
   render: ->
     <nav data-component-navigation={@props.type}>
-      { <Link {...route} /> for route in @props.routes }
-      { <Button {...action} /> for action in @props.actions }
+      { <Link key={index} {...route} /> for route, index in @props.routes }
+      { <Button key={index} {...action} /> for action, index in @props.actions }
       { @props.children }
     </nav>

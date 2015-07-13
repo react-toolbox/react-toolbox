@@ -13,7 +13,7 @@ module.exports = React.createClass
   propTypes:
     className   : React.PropTypes.string
     dataSource  : React.PropTypes.array
-    disabled    : React.PropTypes.disabled
+    disabled    : React.PropTypes.bool
     label       : React.PropTypes.string
     onChange    : React.PropTypes.func
     template    : React.PropTypes.func
@@ -25,6 +25,7 @@ module.exports = React.createClass
     dataSource  : []
     disabled    : false
     type        : "normal"
+    value       : undefined
 
   getInitialState: ->
     active      : false
@@ -69,8 +70,8 @@ module.exports = React.createClass
       { <label>{@props.label}</label> if @props.label }
       <ul ref="values" style={stylesheet} onClick={@onItem}>
       {
-        for item in @props.dataSource
-          <li id={item.value} className={"selected" if item.value is @state.selected.value}>
+        for item, index in @props.dataSource
+          <li id={item.value} ref={index} className={"selected" if item.value is @state.selected.value}>
             { if @props.template then @props.template item else item.label }
             { <Ripple origin={@state.ripple}/> if item.value is @state.selected.value }
           </li>

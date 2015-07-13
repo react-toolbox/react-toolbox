@@ -55,9 +55,10 @@ module.exports = React.createClass
                     onChange={@onChange}
                     onKeyPress={@props.onKeyPress}
                     onFocus={@props.onFocus}
-                    onBlur={@props.onBlur}>{@state.value}</textarea>
+                    onBlur={@props.onBlur} />
         else
-          <input ref='input' {...@props} value={@state.value} checked={@state.checked} 
+          <input ref='input' {...@props} value={@state.value}
+                 checked={@state.checked} 
                  onChange={@onChange}
                  onKeyPress={@props.onKeyPress}
                  onFocus={@props.onFocus}
