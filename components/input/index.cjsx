@@ -16,7 +16,7 @@ module.exports = React.createClass
     onBlur      : React.PropTypes.func
     required    : React.PropTypes.bool
     type        : React.PropTypes.string
-    value       : React.PropTypes.string
+    value       : React.PropTypes.any
 
   getDefaultProps: ->
     className   : ''

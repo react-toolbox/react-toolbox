@@ -71,7 +71,7 @@ module.exports = React.createClass
       <ul ref="values" style={stylesheet} onClick={@onItem}>
       {
         for item, index in @props.dataSource
-          <li id={item.value} ref={index} className={"selected" if item.value is @state.selected.value}>
+          <li id={item.value} key={index} className={"selected" if item.value is @state.selected.value}>
             { if @props.template then @props.template item else item.label }
             { <Ripple origin={@state.ripple}/> if item.value is @state.selected.value }
           </li>
