@@ -77,6 +77,38 @@
           transform                       scale(1)
 
   &:not(.touch)
+
+    // -- Stylesheets
+    &.focus
+      input, textarea
+        outline                       : none
+        ~ .bar:before, ~ .bar:after
+          width                       : 50%
+        &:invalid
+          &  ~ label
+            color                     : CANCEL
+          & ~ .bar:before, & ~ .bar:after
+            background-color          : CANCEL
+    &.focus , &.valid
+      input, textarea
+        & ~ label
+          top                         : -(SPACE / 2)
+          font-size                   : FONT_SIZE_TINY
+          color                       : THEME
+    input[type="date"]
+      & ~ label
+          top                         : -(SPACE / 2)
+          font-size                   : FONT_SIZE_TINY
+          color                       : THEME
+    &:not(.focus)
+      input, textarea
+          &:invalid:not(:required)
+            border-bottom-color       : CANCEL
+    &.error
+      input, textarea
+        border-bottom-color           : CANCEL
+
+    // -- Children
     input, textarea
       display                         : block
       padding                         : (SPACE / 2) 0
@@ -86,24 +118,9 @@
       border                          : none
       border-bottom                   : 1px solid FORM_BORDER_COLOR
       // -- Attributes
-      &:focus
-        outline                       : none
-        ~ .bar:before, ~ .bar:after
-          width                       : 50%
-      &:focus ~ label, &:valid ~ label
-        top                           : -(SPACE / 2)
-        font-size                     : FONT_SIZE_TINY
-        // color                         : THEME
       &:disabled
         color                         : FORM_BORDER_COLOR
         border-bottom-style           : dotted
-      &:invalid
-        &:not(:required):not(:focus)
-          border-bottom-color         : CANCEL
-        &:focus  ~ label
-          color                       : CANCEL
-        ~ .bar:before, ~ .bar:after
-          background-color            : CANCEL
 
     label
       position                        : absolute
@@ -113,6 +130,7 @@
       transition-property               top, font-size, color
       transition-duration               ANIMATION_DURATION
       transition-timing-function        ANIMATION_EASE
+
     .bar
       position                        : relative
       display                         : block
@@ -131,12 +149,6 @@
         left                          : 50%
       &:after
         right                         : 50%
-
-  &.error
-    input, textarea
-      border-bottom-color             : CANCEL
-
-
 
   // -- Children
   label
