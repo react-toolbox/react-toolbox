@@ -7,7 +7,7 @@ module.exports = React.createClass
   propTypes:
     className   : React.PropTypes.string
     colors      : React.PropTypes.object
-    dataSource  : React.PropTypes.object
+    dataSource  : React.PropTypes.any
     disabled    : React.PropTypes.bool
     error       : React.PropTypes.string
     exact       : React.PropTypes.bool
@@ -16,7 +16,7 @@ module.exports = React.createClass
     onChange    : React.PropTypes.func
     required    : React.PropTypes.bool
     type        : React.PropTypes.string
-    value       : React.PropTypes.string
+    value       : React.PropTypes.any
 
   getDefaultProps: ->
     className   : ""
@@ -83,14 +83,14 @@ module.exports = React.createClass
           <ul data-role="values" data-flex="horizontal wrap" onClick={@onDelete}>
             {
               for key, label of @state.values
-                <li id={key} style={backgroundColor: @props.colors[key]}>{label}</li>
+                <li key={key} id={key} style={backgroundColor: @props.colors[key]}>{label}</li>
             }
           </ul>
       }
       <Input {...@props} value="" ref="input" onFocus={@onFocus}
              onChange={@onChange} onKeyPress={@onKeyPress} onBlur={@onBlur}/>
       <ul ref="suggestions" data-role="suggestions" onClick={@onSelect}>
-        {<li id={key}>{label}</li> for key, label of @state.suggestions}
+        {<li key={key} id={key}>{label}</li> for key, label of @state.suggestions}
       </ul>
     </div>
 

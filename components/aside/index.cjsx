@@ -7,7 +7,7 @@ module.exports = React.createClass
     active      : React.PropTypes.bool
     className   : React.PropTypes.string
     hideable    : React.PropTypes.bool
-    type        : React.PropTypes.string.required
+    type        : React.PropTypes.string
 
   getDefaultProps: ->
     className   : ""
