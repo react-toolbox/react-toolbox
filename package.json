@@ -32,7 +32,8 @@
     "node-libs-browser"           : "^0.5.2",
     "style-loader"                : "^0.12.3",
     "stylus-loader"               : "^1.2.0",
-    "webpack"                     : "^1.9.10"
+    "webpack"                     : "^1.9.10",
+    "webpack-dev-server"          : "*"
   },
   "repository"                    : "github:soyjavi/react-toolbox"
 }
