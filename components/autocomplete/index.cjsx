@@ -78,6 +78,7 @@ module.exports = React.createClass
   render: ->
     <div data-component-autocomplete={@props.type}
          className={"focus" if @state.focus}>
+      { <label>{@props.label}</label> if @props.label }
       {
         if @props.multiple
           <ul data-role="values" data-flex="horizontal wrap" onClick={@onDelete}>
@@ -87,7 +88,7 @@ module.exports = React.createClass
             }
           </ul>
       }
-      <Input {...@props} value="" ref="input" onFocus={@onFocus}
+      <Input {...@props} ref="input" value="" label="" onFocus={@onFocus}
              onChange={@onChange} onKeyPress={@onKeyPress} onBlur={@onBlur}/>
       <ul ref="suggestions" data-role="suggestions" onClick={@onSelect}>
         {<li key={key} id={key}>{label}</li> for key, label of @state.suggestions}
