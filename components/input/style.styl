@@ -77,7 +77,6 @@
           transform                       scale(1)
 
   &:not(.touch)
-
     // -- Stylesheets
     &.focus
       input, textarea
@@ -149,6 +148,9 @@
         left                          : 50%
       &:after
         right                         : 50%
+
+  &.hidden
+    display                           : none
 
   // -- Children
   label
