@@ -25,23 +25,24 @@ module.exports = React.createClass
     text  = "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
     legend = "Lorem Ipsum is simply dummy text"
     <section>
-      <h2>Card</h2>
+      <h2>Cards</h2>
+
       <h3>Basic properties</h3>
       <Card title="Default Card" />
       <Card title="Default Card with text" text={text} />
       <Card title="Default Card with legend" legend={legend} />
       <Card title="Default Card with actions" actions={actions} />
-      <Card title="Defaulr Card with image" text={text} legend={legend}
+      <Card title="Defaulr Card with text & image" text={text}
             image="http://cdn.tapquo.com/photos/soyjavi.jpg" />
-      <Card title="Default Card with color and onClick event"
-            text={text} legend={legend} color="#e91e63" onClick={@onClick} />
+      <Card title="Default Card with text, color & onClick event" text={text}
+            color="#e91e63" onClick={@onClick} />
 
       <h3>Sizes using type property</h3>
-      <Card type="small" title="Small Card"
-            text={text} legend={legend} color="#00bcd4" onClick={@onClick} />
-      <Card type="square" title="Square Card"
-            text={text} legend={legend} color="#00bcd4" onClick={@onClick} />
-      <Card type="wide" title="Wide card"
-            text={text} legend={legend} color="#00bcd4" onClick={@onClick} />
+      <Card type="small" title="Small Card with text & onClick event"
+            text={text} color="#00bcd4" onClick={@onClick} />
+      <Card type="square" title="Square Card with text & onClick event"
+            text={text} color="#00bcd4" onClick={@onClick} />
+      <Card type="wide" title="Wide card with text & onClick event"
+            text={text} color="#00bcd4" onClick={@onClick} />
 
     </section>
