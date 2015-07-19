@@ -1,5 +1,4 @@
-require './style'
-
+style       = require './style'
 ProgressBar = require "../progress_bar"
 Input       = require "../input"
 prefixer    = require "../prefixer"
@@ -136,16 +135,12 @@ module.exports = React.createClass
   # events. Receives the position to move to
   move: (position) ->
     value = @endPositionToValue(position)
-    @setState
-      dragging: true
-      value:    value
+    @setState value: value
 
   # This method is called when a movement was finished
   end: (events) ->
     _removeEventsFromDocument(events)
-    @setState
-      dragging: false
-      pressed:  false
+    @setState pressed: false
 
   # Given a position, this method calculates the distance to the start
   # position stored in the state and gets the corresponding value that is
@@ -183,43 +178,55 @@ module.exports = React.createClass
 
   render: ->
     knobStyles = prefixer.transform("translateX(#{@calcOffset()}px)")
-    className  = @props.className
+    className  = "#{@props.className} #{style.slider}"
     className += " editable" if @props.editable
     className += " pinned"   if @props.pinned
     className += " pressed"  if @state.pressed
-    className += " dragging" if @state.dragging
     className += " ring"     if @state.value == @props.min
 
-    <div data-component-slider className={className} tabIndex="0" ref="slider"
+    <div data-component-slider
+         className={className}
+         tabIndex="0"
+         ref="slider"
          onFocus={@onSliderFocus}
          onBlur={@onSliderBlur} >
+
       <div data-component-slider-container
+           className={style.container}
            onTouchStart={@onSliderTouchStart}
            onMouseDown={@onSliderMouseDown} >
 
         <div data-component-slider-knob
+             className={style.knob}
              style={knobStyles}
              onMouseDown={@onMouseDown}
              onTouchStart={@onTouchStart} >
 
-          <div data-component-slider-knob-inner data-value={parseInt(@state.value)}></div>
+          <div data-component-slider-knob-inner
+               className={style.knobInner}
+               data-value={parseInt(@state.value)}></div>
         </div>
 
         <div data-component-slider-progressbar>
-          <ProgressBar className="slider-progressbar-inner" ref="progressbar" mode="determinate" value={@state.value} max={@props.max} min={@props.min}/>
+          <ProgressBar className="slider-progressbar-inner"
+                       ref="progressbar"
+                       mode="determinate"
+                       value={@state.value}
+                       max={@props.max}
+                       min={@props.min}/>
           {
             if @props.snaps
-              <div className="slider-snaps">
+              <div className={style.snaps}>
               {
                 for i in [1..((@props.max - @props.min) / @props.step)]
-                  <div key="span-#{i}" className="slider-snap"></div>
+                  <div key="span-#{i}" className={style.snap}></div>
               }
               </div>
           }
         </div>
       </div>
 
-      { <Input className="slider-input" ref="input" onBlur={@onInputBlur}
+      { <Input className={style.input} ref="input" onBlur={@onInputBlur}
                value={@valueForInput(@state.value)} /> if @props.editable }
     </div>
 
