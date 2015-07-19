@@ -22,7 +22,7 @@ module.exports =
 
   devServer:
     # contentBase : './build'
-    host        : 'localhost'
+    host        : '0.0.0.0'
     port        : 8080
     # colors      : true
     # progress    : true
