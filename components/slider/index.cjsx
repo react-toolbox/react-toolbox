@@ -9,12 +9,12 @@ module.exports = React.createClass
   # -- States & Properties
   propTypes:
     className    : React.PropTypes.string
-    editable     : React.PropTypes.boolean
+    editable     : React.PropTypes.bool
     max          : React.PropTypes.number
     min          : React.PropTypes.number
     onChange     : React.PropTypes.func
-    pinned       : React.PropTypes.boolean
-    snaps        : React.PropTypes.boolean
+    pinned       : React.PropTypes.bool
+    snaps        : React.PropTypes.bool
     step         : React.PropTypes.number
     value        : React.PropTypes.number
 
@@ -44,7 +44,7 @@ module.exports = React.createClass
   componentDidUpdate: (prevProps, prevState) ->
     if prevState.value != @state.value
       @props.onChange? @
-      @refs.input.setValue(@state.value) if @refs.input?
+      @refs.input.setValue(@valueForInput(@state.value)) if @refs.input?
 
   # -- Events
   onResize: (event) ->
@@ -172,6 +172,10 @@ module.exports = React.createClass
   addToValue: (value) ->
     @setState value: @trimValue(@state.value + value)
 
+  valueForInput: (value) ->
+    decimals = (@props.step.toString().split('.')[1] || []).length
+    if decimals > 0 then value.toFixed(decimals) else value.toString()
+
   # Reads the value from the state and depending on min and max properties
   # returns the corresponding offset to the slider start
   calcOffset: ->
@@ -208,7 +212,7 @@ module.exports = React.createClass
               <div className="slider-snaps">
               {
                 for i in [1..((@props.max - @props.min) / @props.step)]
-                  <div className="slider-snap"></div>
+                  <div key="span-#{i}" className="slider-snap"></div>
               }
               </div>
           }
@@ -216,7 +220,7 @@ module.exports = React.createClass
       </div>
 
       { <Input className="slider-input" ref="input" onBlur={@onInputBlur}
-               value={@state.value} /> if @props.editable }
+               value={@valueForInput(@state.value)} /> if @props.editable }
     </div>
 
   # -- Extends
@@ -227,8 +231,9 @@ module.exports = React.createClass
 _pauseEvent = (event) ->
   event.stopPropagation()
   event.preventDefault()
-  event.cancelBubble = true
   event.returnValue = false
+  event.cancelBubble = true
+  return null
 
 _getMousePosition = (event) ->
   x: event.pageX
