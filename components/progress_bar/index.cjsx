@@ -3,10 +3,11 @@
 v2
   - can set different sizes for circular progress
   - maybe a multicolor indeterminate circular progress bar
-  - refactor vendor prefixes adding to a module
 ###
 
 require './style'
+
+prefixer = require "../prefixer"
 
 module.exports = React.createClass
 
@@ -52,8 +53,8 @@ module.exports = React.createClass
 
   renderLinear: ->
     unless @props.mode == 'indeterminate'
-      bufferStyle = transformProgress(@calculateRatio(@props.buffer))
-      valueStyle  = transformProgress(@calculateRatio(@props.value))
+      bufferStyle = prefixer.transform("scaleX(#{@calculateRatio(@props.buffer)})")
+      valueStyle  = prefixer.transform("scaleX(#{@calculateRatio(@props.value)})")
     <div>
       <span data-component-progressbar-buffer style={bufferStyle}></span>
       <span data-component-progressbar-value  style={valueStyle}></span>
@@ -62,8 +63,3 @@ module.exports = React.createClass
 # -- Private methods
 transformDasharray = (ratio) ->
   strokeDasharray: "#{2 * Math.PI * 45 * ratio}, 400"
-
-transformProgress = (ratio) ->
-  WebkitTransform: "scaleX(#{ratio})"
-  MsTransform:     "scaleX(#{ratio})"
-  transform:       "scaleX(#{ratio})"
