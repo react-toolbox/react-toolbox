@@ -110,7 +110,7 @@ RANGE_SIDE_SEPARATION = 20px
         content:                     ""
         position:                    absolute
         top:                         0
-        background-color:            #ff9800
+        background-color:            SECONDARY
         left:                        0
         width:                       26px
         height:                      26px
@@ -169,6 +169,11 @@ RANGE_SIDE_SEPARATION = 20px
         left: 20px
         transition: left 0.18s ease, width 0.18s ease
         width: calc(100% - 4px)
+
+    &.pinned
+      [data-component-slider-knob-inner]
+        &:before
+          background-color: #c8c8c8
 
   // This is just if we want to do something with it
   &.dragging
