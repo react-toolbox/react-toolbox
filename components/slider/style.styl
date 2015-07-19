@@ -1,0 +1,190 @@
+@import "../vendor"
+@import "../constants"
+
+RANGE_SIDE_SEPARATION = 20px
+
+[data-component-slider]
+  [data-component-slider-container]
+    height:               32px
+    margin-right:         32px
+    position:             relative
+    user-select:          none
+    width:                calc(100% - 32px)
+
+    // Leave extra space if something is on right or left
+    &:not(:last-child)
+      margin-right:       RANGE_SIDE_SEPARATION + 32px
+
+    &:not(:first-child)
+      margin-left:        RANGE_SIDE_SEPARATION
+
+    // This is the know style
+    [data-component-slider-knob]
+      display-flex()
+      align-items         center
+      background-color:   transparent
+      flex-direction      row
+      height:             32px
+      justify-content     center
+      left:               0
+      position:           relative
+      top:                0
+      width:              32px
+      z-index:            5
+
+      [data-component-slider-knob-inner]
+        background-color:              SECONDARY
+        border-radius:                 50%
+        height:                        12px
+        transition-duration            0.1s
+        transition-property            height, width, background-color, border
+        transition-timing-function     ease
+        width:                         12px
+        z-index:                       4
+
+    // This is the progress bar
+    [data-component-slider-progressbar]
+      height:             100%
+      left:               16px
+      position:           absolute
+      top:                0
+      width:              100%
+
+      .slider-progressbar-inner
+        height:           2px
+        position:         absolute
+        top:              15px
+
+        [data-component-progressbar-value]
+          transition-duration 0s
+
+
+
+
+
+    // This is the style for the snaps points
+    .slider-snaps
+      display-flex()
+      flex-direction      row
+      height:             2px
+      left:               0
+      pointer-events:     none
+      position:           absolute
+      top:                15px
+      width:              calc(100% + 2px)
+      &:after
+        background-color: black
+        border-radius:    50%
+        content:          ""
+        display:          block
+        height:           2px
+        width:            2px
+
+      .slider-snap
+        flex                1
+        &:after
+          background-color: black
+          border-radius:    50%
+          content:          ""
+          display:          block
+          height:           2px
+          width:            2px
+
+  // The editable class gives style to hold a numeric input next to the slider that
+  // allows to modify directly the slider value
+  &.editable
+    display-flex()
+    align-items           center
+    flex-direction        row
+
+    .slider-input
+      margin-bottom:      0
+      text-align:         center
+      width:              40px
+
+  // When the pinned class is present, the knob should have a hidden pin that
+  // is shown when is pressed
+  &.pinned
+    [data-component-slider-knob-inner]
+      &:before
+        content:                     ""
+        position:                    absolute
+        top:                         0
+        background-color:            #ff9800
+        left:                        0
+        width:                       26px
+        height:                      26px
+        margin-left:                 3px
+        border-radius:               50% 50% 50% 0
+        transition-delay             1s
+        transform                    rotate(-45deg) scale(0) translate(0)
+        transition                   transform .2s ease, background-color .18s ease
+
+      &:after
+        color:                       white
+        content:                     attr(data-value)
+        font-size:                   10px
+        height:                      26px
+        left:                        0
+        position:                    absolute
+        text-align:                  center
+        top:                         0
+        transform:                   scale(0) translate(0)
+        transition                   transform .2s ease, background-color .18s ease
+        width:                       32px
+
+    &.pressed
+      [data-component-slider-knob-inner]
+        &:before
+          transition-delay  100ms
+          transform         rotate(-45deg) scale(1) translate(17px, -17px)
+
+        &:after
+          transition-delay  100ms
+          transform         scale(1) translate(0, -17px)
+
+  // Statuses
+  &.pressed:not(.pinned)
+    [data-component-slider-knob]
+      [data-component-slider-knob-inner]
+        width: 100%
+        height: 100%
+        transform translateZ(0)
+
+    &.ring
+      [data-component-slider-container]
+        [data-component-slider-progressbar]
+          left: 30px
+          width: calc(100% - 14px)
+
+  // When there is no value selected this is the modifier class
+  &.ring
+    [data-component-slider-container]
+      [data-component-slider-knob]
+        [data-component-slider-knob-inner]
+          background-color: transparent
+          border: 2px solid #c8c8c8
+
+      [data-component-slider-progressbar]
+        left: 20px
+        transition: left 0.18s ease, width 0.18s ease
+        width: calc(100% - 4px)
+
+  // This is just if we want to do something with it
+  &.dragging
+    [data-component-slider-knob]
+      background-color:   inherit
+
+  &:focus
+    [data-component-slider-container]
+      [data-component-slider-knob]:before
+        background-color: SECONDARY
+        border-radius: 50%
+        bottom: 0
+        content: ""
+        left: 0
+        position: absolute
+        right: 0
+        top: 0
+        opacity: .26
+        z-index: 2
