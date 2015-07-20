@@ -1,9 +1,3 @@
-###
-v2
-  - can set a icon like dispatcher
-  - can set different template (maybe use a kind of mixin )
-###
-
 require './style'
 Navigation  = require "../navigation"
 Ripple      = require "../ripple"
@@ -15,8 +9,8 @@ module.exports = React.createClass
     className   : React.PropTypes.string
     color       : React.PropTypes.string
     image       : React.PropTypes.string
+    text        : React.PropTypes.string
     legend      : React.PropTypes.string
-    info        : React.PropTypes.string
     onClick     : React.PropTypes.func
     type        : React.PropTypes.string
 
@@ -33,8 +27,8 @@ module.exports = React.createClass
     @setState ripple: undefined
 
   # -- Events
-  onClick: ->
-    event.preventDefault()
+  onClick: (event) ->
+    event.preventDefault() if @props.onClick?
     client = event.target.getBoundingClientRect?()
     @setState ripple:
                 left  : event.pageX - client?.left
@@ -49,14 +43,14 @@ module.exports = React.createClass
     className += " image" if @props.image?
     className += " color" if @props.color?
     style = {}
-    style.backgroundImage = "url(#{@props.image})" if @props.image
+    style.backgroundImage = "url(#{@props.image})" if @props.image?
     style.backgroundColor = @props.color if @props.color
 
-    <div data-component-card={@props.type} className={className}
-         onClick={@onClick if @props.onClick}>
+    <div data-component-card={@props.type} className={className} onClick={@onClick}>
       {
-        if @props.title or image
+        if @props.title or @props.image
           <figure style={style}>
+            { <small>{@props.subtitle}</small> if @props.subtitle }
             { <h2>{@props.title}</h2> if @props.title }
           </figure>
       }
