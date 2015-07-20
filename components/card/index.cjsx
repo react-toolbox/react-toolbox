@@ -12,6 +12,7 @@ module.exports = React.createClass
     text        : React.PropTypes.string
     legend      : React.PropTypes.string
     onClick     : React.PropTypes.func
+    title       : React.PropTypes.string
     type        : React.PropTypes.string
 
   getDefaultProps: ->
@@ -57,5 +58,5 @@ module.exports = React.createClass
       { <p>{@props.text}</p> if @props.text }
       { <small>{@props.legend}</small> if @props.legend }
       { <Navigation actions={@props.actions} /> if @props.actions }
-      { <Ripple origin={@state.ripple} loading={@state.loading} /> if @props.onClick }
+      { <Ripple origin={@state.ripple} loading={@state.loading} /> }
     </div>

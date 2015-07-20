@@ -16,6 +16,8 @@ OFFSET                          = (SPACE / 1.25)
     pointer-events                : none
   > *:not([data-component-ripple]):not([data-component-navigation])
     padding                       : OFFSET
+  &:not(.color):not(.image) > [data-component-ripple]
+    background-color              : BACKGROUND
   &:not(.color) > *:not(figure), > *:not(:last-child)
     box-shadow                    : 0 1px darken(BACKGROUND, 5%)
   > figure
