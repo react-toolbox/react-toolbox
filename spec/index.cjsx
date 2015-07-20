@@ -4,6 +4,7 @@
 Aside         = require './components/aside'
 Autocomplete  = require './components/autocomplete'
 Button        = require './components/button'
+Card          = require './components/card'
 Dialog        = require './components/dialog'
 Dropdown      = require './components/dropdown'
 FontIcon      = require './components/font_icon'
@@ -27,6 +28,7 @@ Test = React.createClass
     <app data-toolbox={true}>
       <h1>React-Kit <small>New way for create</small></h1>
 
+      <Card />
       <Switch />
       <Aside />
       <Autocomplete />

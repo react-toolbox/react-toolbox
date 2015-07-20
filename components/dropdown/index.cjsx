@@ -15,7 +15,7 @@ module.exports = React.createClass
     dataSource  : React.PropTypes.array
     disabled    : React.PropTypes.bool
     label       : React.PropTypes.string
-    onChange    : React.PropTypes.func
+    onChange    : React.PropTypes.funca
     template    : React.PropTypes.func
     type        : React.PropTypes.string
     value       : React.PropTypes.string

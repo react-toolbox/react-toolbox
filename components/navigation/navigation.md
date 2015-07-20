@@ -7,7 +7,7 @@ var routes = [
   {route:'http://google.com', caption='Go to Google.com'},
 ];
 var actions = [
- {caption:"Primary", style:"primary", icon="access_alarm"}
+ {caption: "Primary", style: "primary", icon: "access_alarm"}
 ];
 
 <Navigation routes={routes} actions={actions} />
