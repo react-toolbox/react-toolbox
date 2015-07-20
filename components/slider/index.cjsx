@@ -43,7 +43,8 @@ module.exports = React.createClass
   componentDidUpdate: (prevProps, prevState) ->
     if prevState.value != @state.value
       @props.onChange? @
-      @refs.input.setValue(@valueForInput(@state.value)) if @refs.input?
+      if @state.value != parseFloat(@refs.input?.getValue())
+        @refs.input?.setValue(@valueForInput(@state.value))
 
   # -- Events
   onResize: (event) ->
@@ -74,14 +75,14 @@ module.exports = React.createClass
   onSliderBlur: (event) ->
     _removeEventsFromDocument(@getKeyboardEvents())
 
-  onInputBlur: ->
+  onInputChange: ->
     @setState value: @trimValue(@refs.input.getValue())
 
   onKeyDown: (event) ->
     event.stopPropagation()
     @refs.slider.getDOMNode().blur() if event.keyCode in [13, 27]
-    @addToValue(@props.step)         if event.keyCode in [38, 39]
-    @addToValue(-@props.step)        if event.keyCode in [37, 40]
+    @addToValue(@props.step)         if event.keyCode == 38
+    @addToValue(-@props.step)        if event.keyCode == 40
 
   onMouseDown: (event) ->
     @start(_getMousePosition(event))
@@ -173,19 +174,19 @@ module.exports = React.createClass
 
   # Reads the value from the state and depending on min and max properties
   # returns the corresponding offset to the slider start
-  calcOffset: ->
+  calculateKnobOffset: ->
     @state.sliderLength * (@state.value - @props.min) / (@props.max - @props.min)
 
   render: ->
-    knobStyles = prefixer.transform("translateX(#{@calcOffset()}px)")
-    className  = "#{@props.className} #{style.slider}"
+    className  = @props.className
     className += " editable" if @props.editable
     className += " pinned"   if @props.pinned
     className += " pressed"  if @state.pressed
     className += " ring"     if @state.value == @props.min
+    knobStyles = prefixer.transform("translateX(#{@calculateKnobOffset()}px)")
 
     <div data-component-slider
-         className={className}
+         className={style.root + className}
          tabIndex="0"
          ref="slider"
          onFocus={@onSliderFocus}
@@ -226,13 +227,16 @@ module.exports = React.createClass
         </div>
       </div>
 
-      { <Input className={style.input} ref="input" onBlur={@onInputBlur}
+      { <Input className={style.input} ref="input" onChange={@onInputChange}
                value={@valueForInput(@state.value)} /> if @props.editable }
     </div>
 
   # -- Extends
   getValue: ->
     @state.value
+
+  setValue: (value) ->
+    @setState value: value
 
 # -- Private methods
 _pauseEvent = (event) ->
