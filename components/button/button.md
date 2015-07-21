@@ -5,12 +5,12 @@ var Button = require('react-toolbox/components/button');
 
 <Button caption="Login" />
 <Button caption="Primary" className="primary" icon="access_alarm" />
-<Button caption="Secondary" className="secondary" />
+<Button caption="Secondary" className="accent" />
 <Button caption="Disabled" disabled />
 
 <Button type="circle" icon="access_alarm" />
 <Button type="circle" icon="explore" className="primary" />
-<Button type="circle" icon="zoom_in" className="secondary" />
+<Button type="circle" icon="zoom_in" className="accent" />
 <Button type="circle" icon="input" disabled={true} />
 ```
 

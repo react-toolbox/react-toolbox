@@ -21,40 +21,39 @@
       outline                   : 0
     &:not(.transparent)
       box-shadow                  ZDEPTH_SHADOW_1
-      &:not(.primary):not(.secondary)
-        color                   : COLOR
+      &:not(.primary):not(.accent)
+        color                   : TEXT
         background-color        : WHITE
       &:hover
         box-shadow                ZDEPTH_SHADOW_2, inset 0 0 0 UNIT alpha(WHITE, 10%)
-      &.primary, &.secondary
+      &.primary, &.accent
         color                   : WHITE
       &.primary
         background-color        : PRIMARY
-      &.secondary
-        background-color        : SECONDARY
+      &.accent
+        background-color        : ACCENT
 
     &.transparent
       background-color          : transparent
-      &:not(.primary):not(.secondary)
+      &:not(.primary):not(.accent)
         &:hover
-          background-color      : alpha(COLOR, 12.5%)
+          background-color      : alpha(TEXT, 12.5%)
       &.primary
         color                   : PRIMARY
         &:hover
           background-color      : alpha(PRIMARY, 12.5%)
-      &.secondary
-        color                   : SECONDARY
+      &.accent
+        color                   : ACCENT
         &:hover
-          background-color      : alpha(SECONDARY, 12.5%)
-
+          background-color      : alpha(ACCENT, 12.5%)
+    &:not(.primary):not(.accent) > [data-component-ripple]
+      background-color          : DIVIDER
   &[disabled]
+    color                       : darken(DIVIDER, 25%)
     &:not(.transparent)
-      color                     : darken(BACKGROUND, 35%)
-      background-color          : darken(BACKGROUND, 7.5%)
+      background-color          : DIVIDER
     &.transparent
-      color                     : darken(BACKGROUND, 25%)
       background-color          : transparent
-
 
   // -- Layout
   &:not(.transparent) ~ &:not(:last-child)

@@ -5,7 +5,7 @@
   margin-bottom                       : SPACE
   height                              : SIZE = (SPACE / 1.25)
   width                               : WIDTH = (2.5 * SIZE)
-  background-color                    : FORM_BORDER_COLOR
+  background-color                    : DIVIDER
   border-radius                       : SPACE
   transition                            background-color ANIMATION_DURATION ANIMATION_EASE
 
@@ -27,7 +27,7 @@
     display                           : block
     margin-left                       : WIDTH + (SPACE / 2)
     font-size                         : FONT_SIZE_SMALL
-    color                             : FORM_COLOR
+    color                             : FORM_TEXT
   > [data-component-ripple]
     z-index                           : -1
     overflow                          : hidden
@@ -35,7 +35,7 @@
     max-height                        : (SIZE * 2.7)
     top                               : (SIZE / 2)
     left                              : (SIZE * 2)
-    background-color                  : alpha(COLOR, 10%)
+    background-color                  : alpha(TEXT, 10%)
     opacity                           : 0
     animation-duration                  (1.0 * ANIMATION_DURATION)
 
@@ -45,16 +45,16 @@
     > span
       box-shadow                      : ZDEPTH_SHADOW_1
   &.disabled
-    background-color                  : lighten(FORM_BORDER_COLOR, 50%)
+    background-color                  : lighten(DIVIDER, 50%)
     > span
-      background-color                : FORM_BORDER_COLOR
+      background-color                : DIVIDER
 
   &.checked
-    background-color                  : alpha(THEME, 25%)
+    background-color                  : alpha(PRIMARY, 25%)
     > span
-      background-color                : THEME
+      background-color                : PRIMARY
       right                           : 0
       box-shadow                      : ZDEPTH_SHADOW_2
     > [data-component-ripple]
       left                            : 0
-      background-color                : alpha(THEME, 15%)
+      background-color                : alpha(PRIMARY, 15%)
