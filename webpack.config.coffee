@@ -22,7 +22,7 @@ module.exports =
 
   devServer:
     # contentBase : './build'
-    host        : 'localhost'
+    host        : '0.0.0.0'
     port        : 8080
     # colors      : true
     # progress    : true
@@ -38,8 +38,12 @@ module.exports =
     ,
       test      : /\.coffee$/,  loader: 'coffee-jsx-loader'
     ,
-      test      : /\.styl$/,    loader: ExtractTextPlugin.extract('style-loader', 'css-loader!stylus-loader!')
+      test      : /\.styl$/,    loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!stylus-loader!')
     ]
+
+  postcss: [
+    require('autoprefixer-core')
+  ],
 
   plugins: [
     new ExtractTextPlugin pkg.name + '.[name].css', allChunks: false

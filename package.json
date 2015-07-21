@@ -26,10 +26,12 @@
     "react"                       : "^0.13.2"
   },
   "devDependencies": {
+    "autoprefixer-core"           : "^5.1.11",
     "coffee-jsx-loader"           : "^0.1.2",
     "css-loader"                  : "^0.14.5",
     "extract-text-webpack-plugin" : "^0.8.1",
     "node-libs-browser"           : "^0.5.2",
+    "postcss-loader"              : "^0.4.3",
     "style-loader"                : "^0.12.3",
     "stylus-loader"               : "^1.2.0",
     "webpack"                     : "^1.9.10",

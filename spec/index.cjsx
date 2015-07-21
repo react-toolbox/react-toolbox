@@ -10,6 +10,7 @@ Dropdown      = require './components/dropdown'
 FontIcon      = require './components/font_icon'
 Form          = require './components/form'
 Progress      = require './components/progress'
+Slider        = require './components/slider'
 Switch        = require './components/switch'
 
 Test = React.createClass
@@ -29,6 +30,7 @@ Test = React.createClass
       <FontIcon />
       <Form />
       <Progress />
+      <Slider />
     </app>
 
 React.render <Test/>, document.body

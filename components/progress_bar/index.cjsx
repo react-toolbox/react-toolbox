@@ -1,12 +1,5 @@
-###
-@todo
-v2
-  - can set different sizes for circular progress
-  - maybe a multicolor indeterminate circular progress bar
-  - refactor vendor prefixes adding to a module
-###
-
-require './style'
+localCSS = require './style'
+prefixer = require "../prefixer"
 
 module.exports = React.createClass
 
@@ -17,6 +10,7 @@ module.exports = React.createClass
     max           : React.PropTypes.number
     min           : React.PropTypes.number
     mode          : React.PropTypes.string
+    multicolor    : React.PropTypes.bool
     type          : React.PropTypes.string
     value         : React.PropTypes.number
 
@@ -26,6 +20,7 @@ module.exports = React.createClass
     max           : 100
     min           : 0
     mode          : 'indeterminate'
+    multicolor    : false
     type          : 'linear'
     value         : 0
 
@@ -35,9 +30,11 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    className  = "#{@props.type} #{@props.className} #{@props.mode}"
-    <div data-component-progressbar role="progressbar"
-         className={className}
+    className  = if @props.type == 'linear' then localCSS.linearBar else localCSS.circularBar
+    className += " #{localCSS.root} #{@props.mode} #{@props.className}"
+    className += " multicolor" if @props.multicolor
+
+    <div className={className} role="progressbar"
          aria-valuenow={@props.value}
          aria-valuemin={@props.min}
          aria-valuemax={@props.max}>
@@ -45,25 +42,21 @@ module.exports = React.createClass
     </div>
 
   renderCircular: ->
-    style = transformDasharray(@calculateRatio(@props.value)) unless @props.mode == 'indeterminate'
-    <svg data-component-progressbar-circle>
-      <circle style={style} data-component-progressbar-circle-path cx="50" cy="50" r="45"/>
+    unless @props.mode == 'indeterminate'
+      style = _transformDasharray(@calculateRatio(@props.value))
+    <svg className={localCSS.circle}>
+      <circle id="circle" className={localCSS.circlePath} style={style} cx="30" cy="30" r="25"/>
     </svg>
 
   renderLinear: ->
     unless @props.mode == 'indeterminate'
-      bufferStyle = transformProgress(@calculateRatio(@props.buffer))
-      valueStyle  = transformProgress(@calculateRatio(@props.value))
+      bufferStyle = prefixer.transform("scaleX(#{@calculateRatio(@props.buffer)})")
+      valueStyle  = prefixer.transform("scaleX(#{@calculateRatio(@props.value)})")
     <div>
-      <span data-component-progressbar-buffer style={bufferStyle}></span>
-      <span data-component-progressbar-value  style={valueStyle}></span>
+      <span id="buffer" className={localCSS.bufferBar} style={bufferStyle}></span>
+      <span id="value"  className={localCSS.valueBar}  style={valueStyle}></span>
     </div>
 
 # -- Private methods
-transformDasharray = (ratio) ->
+_transformDasharray = (ratio) ->
   strokeDasharray: "#{2 * Math.PI * 45 * ratio}, 400"
-
-transformProgress = (ratio) ->
-  WebkitTransform: "scaleX(#{ratio})"
-  MsTransform:     "scaleX(#{ratio})"
-  transform:       "scaleX(#{ratio})"
