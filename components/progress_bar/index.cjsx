@@ -1,4 +1,4 @@
-localCss = require './style'
+localCSS = require './style'
 prefixer = require "../prefixer"
 
 module.exports = React.createClass
@@ -30,12 +30,11 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    className  = if @props.type == 'linear' then localCss.linearBar else localCss.circularBar
-    className += " #{localCss.root} #{@props.mode} #{@props.className}"
+    className  = if @props.type == 'linear' then localCSS.linearBar else localCSS.circularBar
+    className += " #{localCSS.root} #{@props.mode} #{@props.className}"
     className += " multicolor" if @props.multicolor
 
-    <div role="progressbar"
-         className={className}
+    <div className={className} role="progressbar"
          aria-valuenow={@props.value}
          aria-valuemin={@props.min}
          aria-valuemax={@props.max}>
@@ -45,8 +44,8 @@ module.exports = React.createClass
   renderCircular: ->
     unless @props.mode == 'indeterminate'
       style = _transformDasharray(@calculateRatio(@props.value))
-    <svg className={localCss.circle}>
-      <circle className={localCss.circlePath} style={style} cx="30" cy="30" r="25"/>
+    <svg className={localCSS.circle}>
+      <circle id="circle" className={localCSS.circlePath} style={style} cx="30" cy="30" r="25"/>
     </svg>
 
   renderLinear: ->
@@ -54,8 +53,8 @@ module.exports = React.createClass
       bufferStyle = prefixer.transform("scaleX(#{@calculateRatio(@props.buffer)})")
       valueStyle  = prefixer.transform("scaleX(#{@calculateRatio(@props.value)})")
     <div>
-      <span className={localCss.bufferBar} style={bufferStyle}></span>
-      <span className={localCss.valueBar}  style={valueStyle}></span>
+      <span id="buffer" className={localCSS.bufferBar} style={bufferStyle}></span>
+      <span id="value"  className={localCSS.valueBar}  style={valueStyle}></span>
     </div>
 
 # -- Private methods
