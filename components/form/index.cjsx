@@ -59,15 +59,15 @@ module.exports = React.createClass
       {
         for attribute, index in @state.attributes
           if attribute.type is "submit"
-            <Button {...attribute} type="square" ref="submit" onClick={@onSubmit}/>
+            <Button key={index} {...attribute} type="square" ref="submit" onClick={@onSubmit}/>
           else if attribute.type is "autocomplete"
-            <Autocomplete {...attribute} onChange={@onChange}/>
+            <Autocomplete key={index} {...attribute} onChange={@onChange}/>
           else if attribute.type is "dropdown"
-            <Dropdown {...attribute} onChange={@onChange}/>
+            <Dropdown key={index} {...attribute} onChange={@onChange}/>
           else if attribute.type is "switch"
-            <Switch {...attribute} onChange={@onChange}/>
+            <Switch key={index} {...attribute} onChange={@onChange}/>
           else
-            <Input {...attribute} />
+            <Input key={index} {...attribute} />
       }
       { @props.children }
     </form>

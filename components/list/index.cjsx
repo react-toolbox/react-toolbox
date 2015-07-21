@@ -5,7 +5,7 @@ module.exports = React.createClass
   # -- States & Properties
   propTypes:
     className   : React.PropTypes.string
-    dataSource  : React.PropTypes.Array
+    dataSource  : React.PropTypes.array
     ItemFactory : React.PropTypes.func
     onClick     : React.PropTypes.func
     type        : React.PropTypes.string

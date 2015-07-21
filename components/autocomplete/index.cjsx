@@ -7,7 +7,7 @@ module.exports = React.createClass
   propTypes:
     className   : React.PropTypes.string
     colors      : React.PropTypes.object
-    dataSource  : React.PropTypes.object
+    dataSource  : React.PropTypes.any
     disabled    : React.PropTypes.bool
     error       : React.PropTypes.string
     exact       : React.PropTypes.bool
@@ -16,7 +16,7 @@ module.exports = React.createClass
     onChange    : React.PropTypes.func
     required    : React.PropTypes.bool
     type        : React.PropTypes.string
-    value       : React.PropTypes.string
+    value       : React.PropTypes.any
 
   getDefaultProps: ->
     className   : ""
@@ -52,8 +52,17 @@ module.exports = React.createClass
     @setState focus: false if Object.keys(suggestions).length is 0
 
   onKeyPress: (event) ->
+    key_ascii = event.which
     query = @refs.input.getValue().trim()
-    if event.which is 13 and query isnt ""
+
+    if @state.focus
+      children = @refs.suggestions.getDOMNode().children
+      for child, index in children when child.classList.contains "active"
+        child.classList.remove "active"
+        query = child.getAttribute "id"
+        break
+
+    if key_ascii is 13 and query isnt ""
       for key, label of @state.suggestions when query.toLowerCase() is label.toLowerCase()
         suggestion = {"#{key}": label}
         break
@@ -62,12 +71,25 @@ module.exports = React.createClass
       else if suggestion
         @_addValue suggestion
 
+    else if @state.focus and key_ascii in [40, 38]
+      if key_ascii is 40
+        index = if index >= children.length - 1 then 0 else index + 1
+      else
+        index = if index is 0 then children.length - 1 else index - 1
+      children[index].classList.add "active"
+
   onBlur: (event) ->
     setTimeout (=> @setState focus: false, suggestions: {}), 300
 
   onSelect: (event) ->
     key = event.target.getAttribute "id"
     @_addValue {"#{key}": @state.suggestions[key]}
+
+  onRefreshSelection: (event) ->
+    children = @refs.suggestions.getDOMNode().children
+    for child, index in children when child.classList.contains "active"
+      child.classList.remove "active"
+      break
 
   onDelete: (event) ->
     delete @state.values[event.target.getAttribute "id"]
@@ -76,21 +98,27 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    <div data-component-autocomplete={@props.type}
-         className={"focus" if @state.focus}>
+    className = "focus" if @state.focus
+    <div data-component-autocomplete={@props.type} className={className}>
+      { <label>{@props.label}</label> if @props.label }
       {
         if @props.multiple
           <ul data-role="values" data-flex="horizontal wrap" onClick={@onDelete}>
             {
               for key, label of @state.values
-                <li id={key} style={backgroundColor: @props.colors[key]}>{label}</li>
+                <li key={key} id={key} style={backgroundColor: @props.colors[key]}>{label}</li>
             }
           </ul>
       }
-      <Input {...@props} value="" ref="input" onFocus={@onFocus}
-             onChange={@onChange} onKeyPress={@onKeyPress} onBlur={@onBlur}/>
-      <ul ref="suggestions" data-role="suggestions" onClick={@onSelect}>
-        {<li id={key}>{label}</li> for key, label of @state.suggestions}
+      <Input {...@props} ref="input" value="" label=""
+             onBlur={@onBlur}
+             onChange={@onChange}
+             onFocus={@onFocus}
+             onKeyDown={@onKeyPress}
+             />
+      <ul ref="suggestions" data-role="suggestions"
+        onClick={@onSelect} onMouseEnter={@onRefreshSelection}>
+        {<li key={key} id={key}>{label}</li> for key, label of @state.suggestions}
       </ul>
     </div>
 

@@ -16,7 +16,7 @@ module.exports = React.createClass
     onBlur      : React.PropTypes.func
     required    : React.PropTypes.bool
     type        : React.PropTypes.string
-    value       : React.PropTypes.string
+    value       : React.PropTypes.any
 
   getDefaultProps: ->
     className   : ''
@@ -30,8 +30,14 @@ module.exports = React.createClass
     error       : @props.error
     touch       : @props.type in ['checkbox', 'radio']
     value       : @props.value
+    focus       : false
+    valid       : false
 
   # -- Events
+  onBlur: (event) ->
+    @setState focus: false
+    @props.onBlur? event, @
+
   onChange: (event) ->
     if @state.touch
       @setState checked: event.target.checked, error: undefined
@@ -39,29 +45,41 @@ module.exports = React.createClass
       @setState value: event.target.value, error: undefined
     @props.onChange? event, @
 
+  onFocus: (event) ->
+    @setState focus: true
+    @props.onFocus? event, @
+
+  onKeyPress: (event) ->
+    @setState focus: true
+    @props.onKeyPress? event, @
+
   # -- Render
   render: ->
     className = @props.className
-    className += ' disabled' if @props.disabled
-    className += ' error' if @state.error
-    className += ' touch' if @state.touch
-    className += ' radio' if @props.type is 'radio'
-    className += ' checked' if @state.checked
+    className += ' checked'   if @state.checked
+    className += ' disabled'  if @props.disabled
+    className += ' error'     if @state.error
+    className += ' focus'     if @state.focus
+    className += ' hidden'    if @props.type is 'hidden'
+    className += ' touch'     if @state.touch
+    className += ' radio'     if @props.type is 'radio'
+    className += ' valid'     if @state.value? and @state.value.length > 0
 
     <div data-component-input={@props.type} className={className}>
       {
         if @props.multiline
           <textarea ref='input' {...@props} value={@state.value}
+                    onBlur={@onBlur}
                     onChange={@onChange}
-                    onKeyPress={@props.onKeyPress}
-                    onFocus={@props.onFocus}
-                    onBlur={@props.onBlur}>{@state.value}</textarea>
+                    onFocus={@onFocus}
+                    onKeyPress={@onKeyPress} />
         else
-          <input ref='input' {...@props} value={@state.value} checked={@state.checked} 
+          <input ref='input' {...@props} value={@state.value}
+                 checked={@state.checked} 
+                 onBlur={@onBlur}
                  onChange={@onChange}
-                 onKeyPress={@props.onKeyPress}
-                 onFocus={@props.onFocus}
-                 onBlur={@props.onBlur}/>
+                 onFocus={@onFocus}
+                 onKeyPress={@onKeyPress} />
       }
       <span className='bar'></span>
       { <label>{@props.label}</label> if @props.label }

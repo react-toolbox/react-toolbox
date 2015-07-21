@@ -26,7 +26,7 @@ App = React.createClass
       <h1>Hello React-Toolbox</h1>
       <Form attributes={@state.fields} />
       <Button caption="Hello world!" type="square" style="primary"/>
-      <Button icon="adb" type="circle" style="secondary" />
+      <Button icon="adb" type="circle" style="accent" />
     </app>
 
 React.render <App/>, document.body

@@ -30,6 +30,7 @@ module.exports = React.createClass
       <p>lorem ipsum...</p>
 
       <Autocomplete ref="autocomplete_multiple"
+                    label="Choose a country"
                     placeholder="elements is up to you..."
                     dataSource={@state.countries}
                     value={countries_selected}/>

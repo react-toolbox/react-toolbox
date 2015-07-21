@@ -28,7 +28,7 @@
       height                          : SPACE
       margin-right                    : (SPACE / 1.32)
       border-radius                   : RADIUS
-      box-shadow                      : inset 0 0 0 RADIUS FORM_COLOR
+      box-shadow                      : inset 0 0 0 RADIUS TEXT
       transition-property               background-color, box-shadow
       transition-duration               ANIMATION_DURATION
       transition-timing-function        ANIMATION_EASE
@@ -52,23 +52,23 @@
         transition                      transform ANIMATION_DURATION ANIMATION_DELAY ANIMATION_EASE
     label
       font-size                       : FONT_SIZE_SMALL
-      color                           : FORM_COLOR
+      color                           : TEXT
     // -- Style
     &:not(.radio) .bar:after
       content                         : "✓"
     &.radio .bar
       border-radius                   : 50%
     &.disabled .bar
-      box-shadow                        inset 0 0 0 RADIUS FORM_BORDER_COLOR
+      box-shadow                        inset 0 0 0 RADIUS DIVIDER
     &.checked
       &.radio .bar
-        box-shadow                      : inset 0 0 0 RADIUS SECONDARY, inset 0 0 0 (RADIUS * 2.5) WHITE
+        box-shadow                      : inset 0 0 0 RADIUS ACCENT, inset 0 0 0 (RADIUS * 2.5) WHITE
       &:not(.radio) .bar
         box-shadow                      : none
       .bar
-        background-color                : SECONDARY
+        background-color                : ACCENT
         &:before
-          background-color              : alpha(SECONDARY, .5)
+          background-color              : alpha(ACCENT, .5)
           animation-name                  ripple-touch
           animation-iteration-count       1
           animation-timing-function       ANIMATION_EASE
@@ -77,42 +77,59 @@
           transform                       scale(1)
 
   &:not(.touch)
+    // -- Stylesheets
+    &.focus
+      input, textarea
+        outline                       : none
+        ~ .bar:before, ~ .bar:after
+          width                       : 50%
+        &:invalid
+          &  ~ label
+            color                     : CANCEL
+          & ~ .bar:before, & ~ .bar:after
+            background-color          : CANCEL
+    &.focus , &.valid
+      input, textarea
+        & ~ label
+          top                         : -(SPACE / 2)
+          font-size                   : FONT_SIZE_TINY
+          color                       : PRIMARY
+    input[type="date"]
+      & ~ label
+          top                         : -(SPACE / 2)
+          font-size                   : FONT_SIZE_TINY
+          color                       : PRIMARY
+    &:not(.focus)
+      input, textarea
+          &:invalid:not(:required)
+            border-bottom-color       : CANCEL
+    &.error
+      input, textarea
+        border-bottom-color           : CANCEL
+
+    // -- Children
     input, textarea
       display                         : block
       padding                         : (SPACE / 2) 0
       width                           : 100%
-      color                           : FORM_COLOR
+      color                           : TEXT
       background-color                : transparent
       border                          : none
-      border-bottom                   : 1px solid FORM_BORDER_COLOR
+      border-bottom                   : 1px solid DIVIDER
       // -- Attributes
-      &:focus
-        outline                       : none
-        ~ .bar:before, ~ .bar:after
-          width                       : 50%
-      &:focus ~ label, &:valid ~ label
-        top                           : -(SPACE / 2)
-        font-size                     : FONT_SIZE_TINY
-        // color                         : THEME
       &:disabled
-        color                         : FORM_BORDER_COLOR
+        color                         : TEXT_SECONDARY
         border-bottom-style           : dotted
-      &:invalid
-        &:not(:required):not(:focus)
-          border-bottom-color         : CANCEL
-        &:focus  ~ label
-          color                       : CANCEL
-        ~ .bar:before, ~ .bar:after
-          background-color            : CANCEL
 
     label
       position                        : absolute
       left                            : 0
       top                             : (SPACE / 2)
-      color                           : FORM_BORDER_COLOR
+      color                           : TEXT_SECONDARY
       transition-property               top, font-size, color
       transition-duration               ANIMATION_DURATION
       transition-timing-function        ANIMATION_EASE
+
     .bar
       position                        : relative
       display                         : block
@@ -123,7 +140,7 @@
         height                        : 2px
         width                         : 0
         bottom                        : 0
-        background-color              : THEME
+        background-color              : PRIMARY
         transition-property             width, background-color
         transition-duration             ANIMATION_DURATION
         transition-timing-function      ANIMATION_EASE
@@ -132,11 +149,8 @@
       &:after
         right                         : 50%
 
-  &.error
-    input, textarea
-      border-bottom-color             : CANCEL
-
-
+  &.hidden
+    display                           : none
 
   // -- Children
   label

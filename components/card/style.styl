@@ -1,0 +1,62 @@
+@import "../constants.styl"
+
+SIZE                            = (5 * UNIT)
+OFFSET                          = (SPACE / 1.25)
+[data-component-card]
+  display-flex()
+  flex-direction                    column
+  position                        : relative
+  overflow                        : hidden
+  width                           : SIZE
+  box-shadow                      : ZDEPTH_SHADOW_1
+  background                      : WHITE
+
+  // -- Children
+  *:not([data-component-button])
+    pointer-events                : none
+  > *:not([data-component-ripple]):not([data-component-navigation])
+    padding                       : OFFSET
+  &:not(.color):not(.image) > [data-component-ripple]
+    background-color              : DIVIDER
+  &:not(.color) > *:not(figure), > *:not(:last-child)
+    box-shadow                    : 0 1px darken(BACKGROUND, 5%)
+  > figure
+    display-flex()
+    flex-direction                  column
+    justify-content                 flex-end
+    flex-grow                       2
+    min-height                    : (SIZE / 2)
+    background-size               : cover
+    > *
+      font-weight                 : FONT_WEIGHT_NORMAL
+
+  > [data-component-navigation]
+    padding                       : OFFSET = (OFFSET / 2)
+    > *
+      pointer-events              : all
+      padding-left                : OFFSET
+      padding-right               : OFFSET
+      box-shadow                  : none !important
+      &:hover
+        background-color          : rgba(0,0,0,0.1) !important
+
+  // -- ClassNames
+  &.touch
+    cursor                        : pointer
+    &:hover, &:active
+      box-shadow                  : ZDEPTH_SHADOW_2
+  &.image
+    > figure
+      text-shadow                 : ZDEPTH_SHADOW_1
+  &.image, &.color
+    > figure
+      color                       : WHITE
+
+// -- Extends
+[data-component-card="small"]
+  > figure
+    min-height                    : 0px
+[data-component-card="square"]
+  height                          : SIZE
+[data-component-card="wide"]
+  width                           : (SIZE * 2)
