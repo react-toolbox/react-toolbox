@@ -8,6 +8,7 @@ Dialog        = require './components/dialog'
 Dropdown      = require './components/dropdown'
 Form          = require './components/form'
 Progress      = require './components/progress'
+Slider        = require './components/slider'
 Switch        = require './components/switch'
 
 # React           = require('react/addons')
@@ -34,6 +35,7 @@ Test = React.createClass
       <Dropdown />
       <Form />
       <Progress />
+      <Slider />
     </app>
 
 React.render <Test/>, document.body
