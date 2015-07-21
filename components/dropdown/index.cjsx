@@ -23,9 +23,7 @@ module.exports = React.createClass
   getDefaultProps: ->
     className   : ""
     dataSource  : []
-    disabled    : false
     type        : "normal"
-    value       : undefined
 
   getInitialState: ->
     active      : false
