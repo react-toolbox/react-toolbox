@@ -1,89 +1,106 @@
+// @todo Set specific colors for our theme in multicolor
 @import '../constants.styl'
 
-// -- NOTE: Parameters depend on the component SVG Markup too
-CIRCLE_WRAPPER_WIDTH = 100
-CIRCLE_RADIUS        = 45
-SCALE_RATIO          = CIRCLE_RADIUS/20
+CIRCLE_WRAPPER_WIDTH         = 60  // You need to change cx and cy in markup too
+CIRCLE_RADIUS                = 25  // You need to change r in the markup too
+SCALE_RATIO                  = CIRCLE_RADIUS/20
 
-[data-component-progressbar]
-  display                         : inline-block
+// -- Linear progress bar
+:local(.linearBar)
+  display                    : inline-block
+  position                   : relative
+  height                     : PROGRESS_BAR_HEIGHT
+  width                      : 100%
+  background                 : darken(BACKGROUND, 7.5%)
+  overflow                   : hidden
 
-  &.linear
-    position                      : relative
-    height                        : PROGRESS_BAR_HEIGHT
-    width                         : 100%
-    background                    : darken(BACKGROUND, 7.5%)
-    overflow                      : hidden
+:local(.valueBar), :local(.bufferBar)
+  position                   : absolute
+  bottom                     : 0
+  left                       : 0
+  right                      : 0
+  top                        : 0
+  transform                  : scaleX(0)
+  transform-origin           : left center
+  transition-duration        : ANIMATION_DURATION
+  transition-timing-function : ANIMATION_EASE
 
-    [data-component-progressbar-value], [data-component-progressbar-buffer]
-      position                    : absolute
-      bottom                      : 0
-      left                        : 0
-      right                       : 0
-      top                         : 0
-      transform                     scaleX(0)
-      transform-origin              left center
-      transition-duration           ANIMATION_DURATION
-      transition-timing-function    ANIMATION_EASE
+:local(.valueBar)
+  background-color           : SECONDARY
 
-    [data-component-progressbar-value]
-      background-color            : SECONDARY
+:local(.bufferBar)
+  background-color           : alpha(SECONDARY, 15%)
 
-    [data-component-progressbar-buffer]
-      background-color            : alpha(SECONDARY, 15%)
+:local(.linearBar).indeterminate :local(.valueBar)
+  transform-origin           : center center
+  animation                  : linear-indeterminate-bar 1s linear infinite
 
-    &.indeterminate [data-component-progressbar-value]
-      transform-origin              center center
-      animation                     linear-indeterminate-bar 1s linear infinite
+// -- Circular progress bar
+:local(.circularBar)
+  display                    : inline-block
+  position                   : relative
+  height                     : CIRCLE_WRAPPER_WIDTH * 1px
+  width                      : CIRCLE_WRAPPER_WIDTH * 1px
+  transform                  : rotate(-90deg)
 
-  &.circular
-    position                      : relative
-    height                        : CIRCLE_WRAPPER_WIDTH * 1px
-    width                         : CIRCLE_WRAPPER_WIDTH * 1px
-    transform                       rotate(-90deg)
+:local(.circle)
+  height                     : 100%
+  width                      : 100%
 
-    [data-component-progressbar-circle]
-      height                      : 100%
-      width                       : 100%
+:local(.circlePath)
+  stroke-dasharray           : 0, SCALE_RATIO * 200
+  stroke-dashoffset          : 0
+  stroke-linecap             : round
+  stroke-miterlimit          : 20
+  stroke-width               : 4
+  stroke                     : SECONDARY
+  fill                       : none
+  transition                 : stroke-dasharray ANIMATION_DURATION ANIMATION_EASE
 
-    [data-component-progressbar-circle-path]
-      stroke-dasharray            : 0, SCALE_RATIO * 200
-      stroke-dashoffset           : 0
-      stroke-linecap              : round
-      stroke-miterlimit           : 20
-      stroke-width                : 4
-      stroke                      : SECONDARY
-      fill                        : none
-      transition                    stroke-dasharray ANIMATION_DURATION ANIMATION_EASE
+:local(.circularBar).indeterminate
+  :local(.circle)
+    animation                : circular-indeterminate-bar-rotate 2s linear infinite
 
-    &.indeterminate
-      [data-component-progressbar-circle]
-        animation                   circular-indeterminate-bar-rotate 2s linear infinite
+  :local(.circlePath)
+    stroke-dasharray         : SCALE_RATIO * 1, SCALE_RATIO * 200
+    stroke-dashoffset        : 0
+    animation                : circular-indeterminate-bar-dash 1.5s ease-in-out infinite
 
-      [data-component-progressbar-circle-path]
-        stroke-dasharray          : SCALE_RATIO * 1, SCALE_RATIO * 200
-        stroke-dashoffset         : 0
-        animation                   circular-indeterminate-bar-dash 1.5s ease-in-out infinite
+  &.multicolor :local(.circlePath)
+    animation                : circular-indeterminate-bar-dash 1.5s ease-in-out infinite, colors (1.5s*4) ease-in-out infinite
 
+// -- Animations
 @keyframes linear-indeterminate-bar
   0%
-    transform                       translate(-50%) scaleX(0)
+    transform                : translate(-50%) scaleX(0)
   50%
-    transform                       translate(-0%) scaleX(0.3)
+    transform                : translate(-0%) scaleX(0.3)
   100%
-    transform                       translate(50%) scaleX(0)
+    transform                : translate(50%) scaleX(0)
 
 @keyframes circular-indeterminate-bar-rotate
   100%
-    transform                     : rotate(360deg)
+    transform                : rotate(360deg)
 
 @keyframes circular-indeterminate-bar-dash
   0%
-    stroke-dasharray              : SCALE_RATIO * 1, SCALE_RATIO * 200
-    stroke-dashoffset             : SCALE_RATIO * 0
+    stroke-dasharray         : SCALE_RATIO * 1, SCALE_RATIO * 200
+    stroke-dashoffset        : SCALE_RATIO * 0
   50%
-    stroke-dasharray              : SCALE_RATIO * 89, SCALE_RATIO * 200
-    stroke-dashoffset             : SCALE_RATIO * -35
+    stroke-dasharray         : SCALE_RATIO * 89, SCALE_RATIO * 200
+    stroke-dashoffset        : SCALE_RATIO * -35
   100%
-    stroke-dasharray              : SCALE_RATIO * 89, SCALE_RATIO * 200
-    stroke-dashoffset             : SCALE_RATIO * -124
+    stroke-dasharray         : SCALE_RATIO * 89, SCALE_RATIO * 200
+    stroke-dashoffset        : SCALE_RATIO * -124
+
+@keyframes colors
+  0%
+    stroke: #4285F4
+  25%
+    stroke: #DE3E35
+  50%
+    stroke: #F7C223
+  75%
+    stroke: #1B9A59
+  100%
+    stroke: #4285F4
