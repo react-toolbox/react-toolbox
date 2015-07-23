@@ -37,7 +37,6 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-
     <button data-component-button={@props.type}
             onClick={@onClick}
             className={@props.className}
