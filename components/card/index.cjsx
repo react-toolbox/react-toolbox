@@ -11,6 +11,7 @@ module.exports = React.createClass
     image       : React.PropTypes.string
     text        : React.PropTypes.string
     legend      : React.PropTypes.string
+    loading     : React.PropTypes.bool
     onClick     : React.PropTypes.func
     title       : React.PropTypes.string
     type        : React.PropTypes.string
@@ -43,6 +44,7 @@ module.exports = React.createClass
     className += " touch" if @props.onClick?
     className += " image" if @props.image?
     className += " color" if @props.color?
+    className += " loading" if @state.loading?
     style = {}
     style.backgroundImage = "url(#{@props.image})" if @props.image?
     style.backgroundColor = @props.color if @props.color
@@ -60,3 +62,7 @@ module.exports = React.createClass
       { <Navigation actions={@props.actions} /> if @props.actions }
       { <Ripple origin={@state.ripple} loading={@state.loading} /> }
     </div>
+
+  # -- Extends
+  loading: (value) ->
+    @setState loading: value

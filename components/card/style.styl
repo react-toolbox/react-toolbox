@@ -51,6 +51,14 @@ OFFSET                          = (SPACE / 1.25)
   &.image, &.color
     > figure
       color                       : WHITE
+  &.loading
+    cursor                        : none
+    -webkit-filter                : grayscale(100%)
+    &, &:hover
+      box-shadow                  : 0 0 0 1px DIVIDER
+    > [data-component-ripple]
+      width                       : SIZE = (SIZE * 2)
+      height                      : SIZE
 
 // -- Extends
 [data-component-card="small"]

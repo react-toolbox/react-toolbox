@@ -23,6 +23,16 @@ var Card = require('react-toolbox/components/card');
 | **image**         | String        |                 | Sets a background image url.|
 | **text**          | String        |                 | Sets a complementary text.|
 | **legend**        | String        |                 | Sets a legend text.|
+| **loading**       | Boolean       |                 | If true, component will be disabled and show a loading animation.|
 | **onClick**       | Function      |                 | Callback function that is fired when the components's is clicked.|
 | **title**         | String        | "text"          | Sets the title of the component.|
 | **type**          | String        | "text"          | Type of the component, overwrite this property if you need set a different stylesheet.|
+
+## Methods
+
+#### loading
+If true, component will be disabled and show a loading animation.
+
+```
+card_instance.loading(true);
+```

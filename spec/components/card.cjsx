@@ -29,6 +29,7 @@ module.exports = React.createClass
 
       <h3>Basic properties</h3>
       <Card title="Default Card" />
+      <Card title="Default Card loading" loading />
       <Card title="Default Card with text" text={text} />
       <Card title="Default Card with legend" legend={legend} />
       <Card title="Default Card with actions" actions={actions} />
@@ -36,6 +37,9 @@ module.exports = React.createClass
             image="http://cdn.tapquo.com/photos/soyjavi.jpg" />
       <Card title="Default Card with text, color & onClick event" text={text}
             color="#e91e63" onClick={@onClick} />
+      <Card title="Default Card loading with text, color & onClick event"
+            text={text} color="#e91e63" onClick={@onClick} loading />
+
 
       <h3>Sizes using type property</h3>
       <Card type="small" title="Small Card with text & onClick event"
