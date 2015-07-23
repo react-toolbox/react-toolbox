@@ -1,7 +1,9 @@
+React        = require 'react/addons'
 prefixer     = require "../prefixer"
+localCSS     = require './style'
+
 ProgressBar  = require "../progress_bar"
 Input        = require "../input"
-localCSS     = require './style'
 
 module.exports = React.createClass
 
@@ -170,15 +172,16 @@ module.exports = React.createClass
     knobStyles = prefixer.transform("translateX(#{@calculateKnobOffset()}px)")
 
     <div className={localCSS.root + className}
-         tabIndex="0" ref="slider"
+         tabIndex="0"
          onFocus={@onSliderFocus}
          onBlur={@onSliderBlur} >
 
-      <div className={localCSS.container}
+      <div ref="slider"
+           className={localCSS.container}
            onTouchStart={@onSliderTouchStart}
            onMouseDown={@onSliderMouseDown} >
 
-        <div className={localCSS.knob} style={knobStyles}
+        <div ref="knob" className={localCSS.knob} style={knobStyles}
              onMouseDown={@onMouseDown}
              onTouchStart={@onTouchStart} >
           <div className={localCSS.knobInner} data-value={parseInt(@state.value)}></div>

@@ -1,5 +1,6 @@
+React    = require 'react/addons'
 localCSS = require './style'
-prefixer = require "../prefixer"
+prefixer = require '../prefixer'
 
 module.exports = React.createClass
 
@@ -42,20 +43,23 @@ module.exports = React.createClass
     </div>
 
   renderCircular: ->
-    unless @props.mode == 'indeterminate'
-      style = _transformDasharray(@calculateRatio(@props.value))
     <svg className={localCSS.circle}>
-      <circle id="circle" className={localCSS.circlePath} style={style} cx="30" cy="30" r="25"/>
+      <circle id="circle" className={localCSS.circlePath} style={@circularStyle()} cx="30" cy="30" r="25"/>
     </svg>
 
+  circularStyle: ->
+    _transformDasharray(@calculateRatio(@props.value)) unless @props.mode == 'indeterminate'
+
   renderLinear: ->
-    unless @props.mode == 'indeterminate'
-      bufferStyle = prefixer.transform("scaleX(#{@calculateRatio(@props.buffer)})")
-      valueStyle  = prefixer.transform("scaleX(#{@calculateRatio(@props.value)})")
     <div>
-      <span id="buffer" className={localCSS.bufferBar} style={bufferStyle}></span>
-      <span id="value"  className={localCSS.valueBar}  style={valueStyle}></span>
+      <span id="buffer" className={localCSS.bufferBar} style={@linearStyles()?.buffer}></span>
+      <span id="value"  className={localCSS.valueBar}  style={@linearStyles()?.value}></span>
     </div>
+
+  linearStyles: ->
+    unless @props.mode == 'indeterminate'
+      buffer: prefixer.transform("scaleX(#{@calculateRatio(@props.buffer)})")
+      value:  prefixer.transform("scaleX(#{@calculateRatio(@props.value)})")
 
 # -- Private methods
 _transformDasharray = (ratio) ->

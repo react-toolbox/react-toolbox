@@ -13,7 +13,8 @@
     "server"                      : "webpack-dev-server --hot",
     "build"                       : "webpack",
     "watch"                       : "webpack --watch",
-    "deploy"                      : "NODE_ENV=production webpack -p"
+    "deploy"                      : "NODE_ENV=production webpack -p",
+    "test"                        : "karma start"
   },
   "bugs" : {
     "url"                         : "https://github.com/soyjavi/react-toolbox/issues",
@@ -30,6 +31,12 @@
     "coffee-jsx-loader"           : "^0.1.2",
     "css-loader"                  : "^0.14.5",
     "extract-text-webpack-plugin" : "^0.8.1",
+    "expect"                      : "^1.8.0",
+    "karma"                       : "^0.12.36",
+    "karma-chrome-launcher"       : "^0.2.0",
+    "karma-cli"                   : "^0.1.0",
+    "karma-mocha"                 : "^0.2.0",
+    "karma-webpack"               : "^1.6.0",
     "node-libs-browser"           : "^0.5.2",
     "postcss-loader"              : "^0.4.3",
     "style-loader"                : "^0.12.3",
