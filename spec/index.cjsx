@@ -20,17 +20,17 @@ Test = React.createClass
     <app data-toolbox={true}>
       <h1>React-Toolbox <small>New way for create</small></h1>
 
-      <Card />
-      <Switch />
       <Aside />
       <Autocomplete />
       <Button />
+      <Card />
       <Dialog />
       <Dropdown />
       <FontIcon />
       <Form />
       <Progress />
       <Slider />
+      <Switch />
     </app>
 
 React.render <Test/>, document.body
