@@ -1,4 +1,3 @@
-React    = require 'react/addons'
 localCSS = require './style'
 prefixer = require '../prefixer'
 
@@ -52,8 +51,8 @@ module.exports = React.createClass
 
   renderLinear: ->
     <div>
-      <span id="buffer" className={localCSS.bufferBar} style={@linearStyles()?.buffer}></span>
-      <span id="value"  className={localCSS.valueBar}  style={@linearStyles()?.value}></span>
+      <span ref="buffer" data-ref="buffer" className={localCSS.bufferBar} style={@linearStyles()?.buffer}></span>
+      <span ref="value" data-ref="value" className={localCSS.valueBar} style={@linearStyles()?.value}></span>
     </div>
 
   linearStyles: ->
