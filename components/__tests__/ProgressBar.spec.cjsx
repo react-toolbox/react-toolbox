@@ -1,4 +1,3 @@
-React       = require('react/addons')
 expect      = require('expect')
 utils       = require('./utils')
 
