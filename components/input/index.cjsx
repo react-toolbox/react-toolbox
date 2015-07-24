@@ -1,4 +1,3 @@
-React = require 'react/addons'
 require './style'
 
 module.exports = React.createClass
