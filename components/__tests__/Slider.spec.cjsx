@@ -1,20 +1,21 @@
-React       = require('react/addons')
+TestUtils   = React.addons.TestUtils
 expect      = require('expect')
 utils       = require('./utils')
-
-TestUtils   = React.addons.TestUtils
 Slider      = require('../slider')
 
 describe 'Slider', ->
-  before ->
-    @component = TestUtils.renderIntoDocument(<Slider />)
-    @component.setState({ sliderStart:  0, sliderLength: 1000 })
-
   describe '#events', ->
+    slider = null
+
+    before ->
+      props = { min: -500, max: 500 }
+      state = { sliderStart:  0, sliderLength: 1000 }
+      slider = utils.renderComponent(Slider, props, state)
+
     it "sets pressed state when knob is clicked", ->
-      TestUtils.Simulate.mouseDown(@component.refs.knob)
-      expect(@component.state.pressed).toEqual(true)
+      TestUtils.Simulate.mouseDown(slider.refs.knob)
+      expect(slider.state.pressed).toEqual(true)
 
     it "sets a proper value when the slider is clicked", ->
-      TestUtils.Simulate.mouseDown(@component.refs.slider, { pageX: 800 })
-      expect(@component.state.value).toEqual(80)
+      TestUtils.Simulate.mouseDown(slider.refs.slider, { pageX: 200 })
+      expect(slider.state.value).toEqual(-300)
