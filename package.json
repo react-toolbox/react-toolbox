@@ -14,7 +14,8 @@
     "build"                       : "webpack",
     "watch"                       : "webpack --watch",
     "deploy"                      : "NODE_ENV=production webpack -p",
-    "test"                        : "karma start"
+    "test"                        : "karma start",
+    "test:watch"                  : "karma start --no-single-run"
   },
   "bugs" : {
     "url"                         : "https://github.com/soyjavi/react-toolbox/issues",

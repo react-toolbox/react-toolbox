@@ -3,11 +3,10 @@ webpack = require('webpack')
 module.exports = (config) ->
   config.set
     browsers        : ['PhantomJS']
-    singleRun       : false
+    singleRun       : true
     frameworks      : ['mocha']
     files           : ['./node_modules/react/dist/react-with-addons.js', 'tests.webpack.js']
     reporters       : ['dots']
-    browserNoActivityTimeout: 30000
 
     preprocessors:
       'tests.webpack.js' : ['webpack']
