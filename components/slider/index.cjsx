@@ -1,7 +1,5 @@
-React        = require 'react/addons'
 prefixer     = require "../prefixer"
 localCSS     = require './style'
-
 ProgressBar  = require "../progress_bar"
 Input        = require "../input"
 
@@ -82,9 +80,9 @@ module.exports = React.createClass
 
   onKeyDown: (event) ->
     event.stopPropagation()
-    @refs.slider.getDOMNode().blur() if event.keyCode in [13, 27]
-    @addToValue(@props.step)         if event.keyCode == 38
-    @addToValue(-@props.step)        if event.keyCode == 40
+    @getDOMNode().blur()      if event.keyCode in [13, 27]
+    @addToValue(@props.step)  if event.keyCode == 38
+    @addToValue(-@props.step) if event.keyCode == 40
 
   onMouseDown: (event) ->
     @start(_getMousePosition(event))
@@ -122,7 +120,7 @@ module.exports = React.createClass
 
   positionToValue: (position) ->
     offset = position.x - @state.sliderStart
-    @trimValue(offset / @state.sliderLength * (@props.max - @props.min))
+    @trimValue(offset / @state.sliderLength * (@props.max - @props.min) + @props.min)
 
   start: (position) ->
     @setState
