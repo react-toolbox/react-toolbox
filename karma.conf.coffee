@@ -2,10 +2,10 @@ webpack = require('webpack')
 
 module.exports = (config) ->
   config.set
-    browsers        : ['Chrome']
+    browsers        : ['PhantomJS']
     singleRun       : false
     frameworks      : ['mocha']
-    files           : ['tests.webpack.js']
+    files           : ['./node_modules/react/dist/react-with-addons.js', 'tests.webpack.js']
     reporters       : ['dots']
     browserNoActivityTimeout: 30000
 
