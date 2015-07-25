@@ -26,13 +26,16 @@ module.exports = React.createClass
 
   # -- Helper methods
   calculateRatio: (value) ->
-    (value - @props.min) / (@props.max - @props.min)
+    return 0 if value < @props.min
+    return 1 if value > @props.max
+    return (value - @props.min) / (@props.max - @props.min)
 
   # -- Render
   render: ->
     className  = if @props.type == 'linear' then localCSS.linearBar else localCSS.circularBar
-    className += " #{localCSS.root} #{@props.mode} #{@props.className}"
-    className += " multicolor" if @props.multicolor
+    className += " #{@props.className}" if @props.className
+    className += " #{@props.mode}"      if @props.mode
+    className += " multicolor"          if @props.multicolor
 
     <div className={className} role="progressbar"
          aria-valuenow={@props.value}
@@ -43,7 +46,7 @@ module.exports = React.createClass
 
   renderCircular: ->
     <svg className={localCSS.circle}>
-      <circle id="circle" className={localCSS.circlePath} style={@circularStyle()} cx="30" cy="30" r="25"/>
+      <circle className={localCSS.circlePath} style={@circularStyle()} cx="30" cy="30" r="25"/>
     </svg>
 
   circularStyle: ->
@@ -62,4 +65,4 @@ module.exports = React.createClass
 
 # -- Private methods
 _transformDasharray = (ratio) ->
-  strokeDasharray: "#{2 * Math.PI * 45 * ratio}, 400"
+  strokeDasharray: "#{2 * Math.PI * 25 * ratio}, 400"
