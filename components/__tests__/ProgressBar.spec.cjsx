@@ -8,7 +8,7 @@ describe 'ProgressBar', ->
 
   describe '#calculateRatio', ->
     before ->
-      progressBar = TestUtils.renderIntoDocument(<ProgressBar min={100} max={300} />)
+      progressBar = utils.renderComponent(ProgressBar, { min: 100, max: 300 })
 
     it 'calculates the right ratio', ->
       expect(progressBar.calculateRatio(150)).toEqual(0.25)

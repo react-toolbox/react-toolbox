@@ -144,18 +144,16 @@ module.exports = React.createClass
   trimValue: (value) ->
     value = @props.min if (value < @props.min)
     value = @props.max if (value > @props.max)
-    @nearest(value)
+    _round(value, @stepDecimals())
 
-  nearest: (value) ->
-    steps  = (@props.max - @props.min) / @props.step
-    zerone = Math.round((value - @props.min) * steps / (@props.max - @props.min))/steps
-    return zerone * (@props.max - @props.min) + @props.min
+  stepDecimals: ->
+    (@props.step.toString().split('.')[1] || []).length
 
   addToValue: (value) ->
     @setState value: @trimValue(@state.value + value)
 
   valueForInput: (value) ->
-    decimals = (@props.step.toString().split('.')[1] || []).length
+    decimals = @stepDecimals()
     if decimals > 0 then value.toFixed(decimals) else value.toString()
 
   calculateKnobOffset: ->
@@ -239,3 +237,9 @@ _addEventsToDocument = (events) ->
 
 _removeEventsFromDocument = (events) ->
   document.removeEventListener(key, events[key], false) for key of events
+
+_round = (n, decimals) ->
+  if (!isNaN(parseFloat(n)) && isFinite(n))
+    decimalPower = Math.pow(10, decimals)
+    return Math.round(parseFloat(n) * decimalPower) / decimalPower
+  return NaN
