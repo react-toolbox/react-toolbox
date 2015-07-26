@@ -4,20 +4,18 @@ utils       = require('./utils')
 ProgressBar = require('../progress_bar')
 
 describe 'ProgressBar', ->
-  progressBar = null
-
   describe '#calculateRatio', ->
     before ->
-      progressBar = utils.renderComponent(ProgressBar, { min: 100, max: 300 })
+      @progressBar = utils.renderComponent(ProgressBar, { min: 100, max: 300 })
 
     it 'calculates the right ratio', ->
-      expect(progressBar.calculateRatio(150)).toEqual(0.25)
+      expect(@progressBar.calculateRatio(150)).toEqual(0.25)
 
     it 'gets 0 when value is less than min', ->
-      expect(progressBar.calculateRatio(10)).toEqual(0)
+      expect(@progressBar.calculateRatio(10)).toEqual(0)
 
     it 'gets 1 when value is more than max', ->
-      expect(progressBar.calculateRatio(400)).toEqual(1)
+      expect(@progressBar.calculateRatio(400)).toEqual(1)
 
   describe '#render', ->
     it 'renders the value and buffer bars when it is linear', ->

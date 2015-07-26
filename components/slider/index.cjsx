@@ -67,7 +67,7 @@ module.exports = React.createClass
     @setState value: value, =>
       @start(position)
       _addEventsToDocument(@getTouchEventMap())
-    _pauseEvent(e)
+    _pauseEvent(event)
 
   onSliderFocus: (event) ->
     _addEventsToDocument(@getKeyboardEvents())
@@ -75,8 +75,8 @@ module.exports = React.createClass
   onSliderBlur: (event) ->
     _removeEventsFromDocument(@getKeyboardEvents())
 
-  onInputChange: ->
-    @setState value: @trimValue(@refs.input.getValue())
+  onInputChange: (event) ->
+    @setState value: @trimValue(event.target.value)
 
   onKeyDown: (event) ->
     event.stopPropagation()
@@ -191,7 +191,7 @@ module.exports = React.createClass
                        min={@props.min}/>
           {
             if @props.snaps
-              <div className={localCSS.snaps}>
+              <div ref="snaps" className={localCSS.snaps}>
               {
                 for i in [1..((@props.max - @props.min) / @props.step)]
                   <div key="span-#{i}" className={localCSS.snap}></div>

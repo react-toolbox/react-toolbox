@@ -42,6 +42,7 @@
     "node-libs-browser"           : "^0.5.2",
     "phantomjs-polyfill"          : "0.0.1",
     "postcss-loader"              : "^0.4.3",
+    "sinon"                       : "git://github.com/cjohansen/Sinon.JS#sinon-2.0",
     "style-loader"                : "^0.12.3",
     "stylus-loader"               : "^1.2.0",
     "webpack"                     : "1.10.1",
