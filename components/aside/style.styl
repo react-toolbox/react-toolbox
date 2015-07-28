@@ -1,6 +1,7 @@
-@import "../constants.styl"
+@import "../constants"
 
-[data-component-aside]
+WIDTH = (4 * UNIT)
+:local(.root)
   z-index                         : 2
   position                        : fixed
   top                             : 0
@@ -16,13 +17,13 @@
     position                      : absolute
     top                           : 0
     height                        : 100%
-    width                         : (4 * UNIT)
+    width                         : WIDTH
     background-color              : WHITE
     transition-property             transform
     transition-duration             ANIMATION_DURATION
     transition-timing-function      ANIMATION_EASE
 
-  // -- Style
+  // -- Override
   &.active
     pointer-events                : all
     > *
@@ -30,20 +31,18 @@
       transform                     translateX(0%)
   &:not(.hideable)
     z-index                       : 2
-    width                         : (4 * UNIT)
+    width                         : WIDTH
   &.hideable
     z-index                       : 3
     &.active
       background-color            : rgba(0,0,0,0.5)
-
-[data-component-aside="left"]
-  left                            : 0
-  > *
-    left                          : 0
-    transform                       translateX(-100%)
-
-[data-component-aside="right"]
-  right                           : 0
-  > *
-    right                         : 0
-    transform                       translateX(100%)
+  &.left
+    left                            : 0
+    > *
+      left                          : 0
+      transform                       translateX(-100%)
+  &.right
+    right                           : 0
+    > *
+      right                         : 0
+      transform                       translateX(100%)
