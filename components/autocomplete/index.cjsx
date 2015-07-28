@@ -1,5 +1,5 @@
-require './style'
-Input = require '../input'
+localCSS  = require './style'
+Input     = require '../input'
 
 module.exports = React.createClass
 
@@ -98,12 +98,15 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    className = "focus" if @state.focus
-    <div data-component-autocomplete={@props.type} className={className}>
+    className  = "#{localCSS.root} #{@props.className}"
+    className += " #{@props.type}"  if @props.type
+    className += " focus"           if @state.focus
+    <div data-react-toolbox='autocomplete' className={className}>
       { <label>{@props.label}</label> if @props.label }
       {
         if @props.multiple
-          <ul data-role="values" data-flex="horizontal wrap" onClick={@onDelete}>
+          <ul className={localCSS.values} data-flex="horizontal wrap"
+              onClick={@onDelete}>
             {
               for key, label of @state.values
                 <li key={key} id={key} style={backgroundColor: @props.colors[key]}>{label}</li>
@@ -116,7 +119,7 @@ module.exports = React.createClass
              onFocus={@onFocus}
              onKeyDown={@onKeyPress}
              />
-      <ul ref="suggestions" data-role="suggestions"
+      <ul ref="suggestions" className={localCSS.suggestions}
         onClick={@onSelect} onMouseEnter={@onRefreshSelection}>
         {<li key={key} id={key}>{label}</li> for key, label of @state.suggestions}
       </ul>

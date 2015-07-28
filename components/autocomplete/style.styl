@@ -1,46 +1,47 @@
 @import "../constants.styl"
 
-[data-component-autocomplete]
-  position                                      : relative
-  > label
-    font-size                                   : FONT_SIZE_TINY
-    color                                       : PRIMARY
-  > [data-role] > *
-    cursor                                      : pointer
-  > [data-role="values"]
-    > *
-      display                                   : inline-block
-      margin                                    : 0 (SPACE / 2) (SPACE / 2) 0
-      padding                                   : (SPACE / 4) (SPACE / 2)
-      font-size                                 : FONT_SIZE_SMALL
-      color                                     : WHITE
-      background-color                          : PRIMARY
-      border-radius                             : (SPACE / 8)
-  > [data-role="suggestions"]
-    z-index                                     : 2
-    position                                    : absolute
-    width                                       : 100%
-    height                                      : 0
-    max-height                                  : 50vh
-    overflow-x                                  : hidden
-    overflow-y                                  : scroll
-    margin-top                                  : -(SPACE)
-    background-color                            : WHITE
-    opacity                                     : 0
-    transform                                     translateY(-(INPUT_HEIGHT / 2))
-    transition-property                           height, box-shadow, opacity, transform
-    transition-duration                           ANIMATION_DURATION
-    transition-timing-function                    ANIMATION_EASE
-    > *
-      padding                                   : (SPACE / 2)
-      &:hover, &.active
-        color                                   : WHITE
-        background-color                        : PRIMARY_LIGHT
+:local(.values)
+  > *
+    display                                   : inline-block
+    margin                                    : 0 (SPACE / 2) (SPACE / 2) 0
+    padding                                   : (SPACE / 4) (SPACE / 2)
+    font-size                                 : FONT_SIZE_SMALL
+    color                                     : WHITE
+    background-color                          : PRIMARY
+    border-radius                             : (SPACE / 8)
+    cursor                                    : pointer
 
-  // -- Styles
+:local(.suggestions)
+  z-index                                     : 2
+  position                                    : absolute
+  width                                       : 100%
+  height                                      : 0
+  max-height                                  : 50vh
+  overflow-x                                  : hidden
+  overflow-y                                  : scroll
+  margin-top                                  : -(SPACE)
+  background-color                            : WHITE
+  opacity                                     : 0
+  transform                                   : translateY(-(INPUT_HEIGHT / 2))
+  transition-property                         : height, box-shadow, opacity, transform
+  transition-duration                         : ANIMATION_DURATION
+  transition-timing-function                  : ANIMATION_EASE
+  > *
+    cursor                                    : pointer
+    padding                                   : (SPACE / 2)
+    &:hover, &.active
+      color                                   : WHITE
+      background-color                        : PRIMARY_LIGHT
+
+:local(.root)
+  position                                    : relative
+  > label
+    font-size                                 : FONT_SIZE_TINY
+    color                                     : PRIMARY
+  // -- Overrides
   &.focus
-    > [data-role="suggestions"]
-      height                      : auto
-      opacity                     : 1
-      transform                     translateY(0%)
-      box-shadow                    ZDEPTH_SHADOW_1
+    > :local(.suggestions)
+      height                                  : auto
+      opacity                                 : 1
+      transform                               : translateY(0%)
+      box-shadow                              : ZDEPTH_SHADOW_1
