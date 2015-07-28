@@ -27,7 +27,7 @@ module.exports = React.createClass
     className += ' hideable'        if @props.hideable
     className += ' active'          if @state.active
     <div data-react-toolbox='aside' className={className} onClick={@onClick}>
-      <aside>
+      <aside className={localCSS.container}>
         { @props.children }
       </aside>
     </div>
