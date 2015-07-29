@@ -1,11 +1,12 @@
-require './style'
+localCSS = require './style'
 
 module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    value        : React.PropTypes.string
+    value : React.PropTypes.string
 
   # -- Render
   render: ->
-    <span data-component-fonticon className="icon #{@props.value}" />
+    className = "#{localCSS.root} #{@props.value}"
+    <span data-react-toolbox='icon' className={className} />
