@@ -1,28 +1,29 @@
-@import "../constants.styl"
+@import '../constants'
 
-[data-component-navigation="horizontal"]
-  > *
-    display                         : inline-block
-    margin-right                    : SPACE
-    color                           : WHITE
-    font-size                       : FONT_SIZE_SMALL
-    font-weight                     : FONT_WEIGHT_NORMAL !important
-    > small
-      margin-left                   : SIZE = (SPACE / 5)
-      padding                       : 0 SIZE
-      font-weight                   : FONT_WEIGHT_BOLD
-      color                         : BACKGROUND_DARK
-      background-color              : WHITE
-      border-radius                 : SIZE
+:local(.root)
+  &.horizontal
+    > *
+      display                         : inline-block
+      margin-right                    : SPACE
+      color                           : WHITE
+      font-size                       : FONT_SIZE_SMALL
+      font-weight                     : FONT_WEIGHT_NORMAL !important
+      > small
+        margin-left                   : SIZE = (SPACE / 5)
+        padding                       : 0 SIZE
+        font-weight                   : FONT_WEIGHT_BOLD
+        color                         : BACKGROUND_DARK
+        background-color              : WHITE
+        border-radius                 : SIZE
 
-[data-component-navigation="vertical"]
-  > *
-    display                         : block
-    padding                         : 0 SPACE
-    line-height                     : UNIT
-    transition-property               box-shadow, opacity
-    &.active
-      box-shadow                      inset MENU_WIDTH 0 BACKGROUND
-    > small
-      float                         : right
-      opacity                       : 0.5
+  &.vertical
+    > *
+      display                         : block
+      padding                         : 0 SPACE
+      line-height                     : UNIT
+      transition-property               box-shadow, opacity
+      &.active
+        box-shadow                      inset MENU_WIDTH 0 BACKGROUND
+      > small
+        float                         : right
+        opacity                       : 0.5
