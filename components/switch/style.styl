@@ -1,15 +1,25 @@
-@import "../constants.styl"
+@import '../constants'
 
-[data-component-switch]
+SIZE = (SPACE / 1.25)
+:local(.ripple)
+  z-index                             : -1
+  overflow                            : hidden
+  max-width                           : (SIZE * 2.7)
+  max-height                          : (SIZE * 2.7)
+  top                                 : (SIZE / 2)
+  left                                : (SIZE * 2)
+  background-color                    : alpha(TEXT, 10%)
+  opacity                             : 0
+  animation-duration                  : (1.0 * ANIMATION_DURATION)
+
+:local(.root)
   position                            : relative
   margin-bottom                       : SPACE
-  height                              : SIZE = (SPACE / 1.25)
+  height                              : SIZE
   width                               : WIDTH = (2.5 * SIZE)
   background-color                    : DIVIDER
   border-radius                       : SPACE
   transition                            background-color ANIMATION_DURATION ANIMATION_EASE
-
-  // -- Children
   > *
     pointer-events                    : none
   > span
@@ -28,16 +38,6 @@
     margin-left                       : WIDTH + (SPACE / 2)
     font-size                         : FONT_SIZE_SMALL
     color                             : FORM_TEXT
-  > [data-component-ripple]
-    z-index                           : -1
-    overflow                          : hidden
-    max-width                         : (SIZE * 2.7)
-    max-height                        : (SIZE * 2.7)
-    top                               : (SIZE / 2)
-    left                              : (SIZE * 2)
-    background-color                  : alpha(TEXT, 10%)
-    opacity                           : 0
-    animation-duration                  (1.0 * ANIMATION_DURATION)
 
   // -- Style
   &:not(.disabled)
@@ -55,6 +55,6 @@
       background-color                : PRIMARY
       right                           : 0
       box-shadow                      : ZDEPTH_SHADOW_2
-    > [data-component-ripple]
+    > :local(.ripple)
       left                            : 0
       background-color                : alpha(PRIMARY, 15%)
