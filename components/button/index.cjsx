@@ -1,6 +1,6 @@
-require './style'
-FontIcon = require "../font_icon"
-Ripple   = require "../ripple"
+localCSS = require './style'
+FontIcon = require '../font_icon'
+Ripple   = require '../ripple'
 
 module.exports = React.createClass
 
@@ -14,11 +14,12 @@ module.exports = React.createClass
     type        : React.PropTypes.string
 
   getDefaultProps: ->
-    className   : ""
-    type        : "square"
+    className   : ''
+    type        : 'raised'
 
   getInitialState: ->
     loading     : @props.loading
+    focused     : false
     ripple      : undefined
 
   # -- Lifecycle
@@ -29,19 +30,26 @@ module.exports = React.createClass
   onClick: (event) ->
     event.preventDefault()
     client = event.target.getBoundingClientRect?()
-    @setState ripple:
-                left  : event.pageX - client?.left
-                top   : event.pageY - client?.top
-                width : (client?.width * 2.5)
+    @setState
+      focused: true
+      ripple:
+        left  : event.pageX - client?.left
+        top   : event.pageY - client?.top
+        width : (client?.width * 2.5)
     @props.onClick? event, @
+    setTimeout (=> @setState focused: false), 450
 
   # -- Render
   render: ->
-    <button data-component-button={@props.type}
+    className  = @props.className
+    className += " #{@props.type}" if @props.type
+    className += ' focused'        if @state.focused
+
+    <button data-react-toolbox='button'
             onClick={@onClick}
-            className={@props.className}
+            className={localCSS.root + ' ' + className}
             disabled={@props.disabled or @state.loading}
-            data-flex="horizontal center">
+            data-flex='horizontal center'>
       { <FontIcon value={@props.icon} /> if @props.icon }
       { <abbr>{@props.caption}</abbr> if @props.caption }
       <Ripple origin={@state.ripple} loading={@state.loading} />
