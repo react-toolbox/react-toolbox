@@ -1,11 +1,10 @@
 ###
 v2
   - can set a icon like dispatcher
-  - can set different template (maybe use a kind of mixin )
 ###
 
-require './style'
-Ripple = require "../ripple"
+localCSS  = require './style'
+Ripple    = require '../ripple'
 
 module.exports = React.createClass
 
@@ -21,9 +20,9 @@ module.exports = React.createClass
     value       : React.PropTypes.string
 
   getDefaultProps: ->
-    className   : ""
+    className   : ''
     dataSource  : []
-    type        : "normal"
+    type        : 'normal'
 
   getInitialState: ->
     active      : false
@@ -45,7 +44,7 @@ module.exports = React.createClass
   onItem: (event) ->
     unless @props.disabled
       client = event.target.getBoundingClientRect?()
-      value = event.target.getAttribute("id").toString()
+      value = event.target.getAttribute('id').toString()
       for item in @props.dataSource when item.value.toString() is value
         @setState
           active    : false
@@ -58,24 +57,25 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    className = @props.className
-    className += " disabled" if @props.disabled
+    className  = "#{localCSS.root} #{@props.className}"
+    className += " #{@props.type}"  if @props.type
+    className += ' disabled'        if @props.disabled
     if @state.active is true
-      className += " active"
+      className += ' active'
       stylesheet = height: @state.height * @props.dataSource.length
 
-    <div data-component-dropdown={@props.type} className={className}>
+    <div data-react-toolbox='dropdown' className={className}>
       { <label>{@props.label}</label> if @props.label }
-      <ul ref="values" style={stylesheet} onClick={@onItem}>
+      <ul ref='values' className={localCSS.values} style={stylesheet} onClick={@onItem}>
       {
         for item, index in @props.dataSource
-          <li id={item.value} key={index} className={"selected" if item.value is @state.selected.value}>
+          <li id={item.value} key={index} className={'selected' if item.value is @state.selected.value}>
             { if @props.template then @props.template item else item.label }
-            { <Ripple origin={@state.ripple}/> if item.value is @state.selected.value }
+            { <Ripple className={localCSS.ripple} origin={@state.ripple}/> if item.value is @state.selected.value }
           </li>
       }
       </ul>
-      <div ref="value" onClick={@onSelect}>
+      <div ref='value' className={localCSS.value} onClick={@onSelect}>
       {
         if @props.template
           @props.template @state.selected

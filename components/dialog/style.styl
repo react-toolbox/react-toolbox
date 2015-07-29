@@ -1,6 +1,24 @@
-@import "../constants.styl"
+@import '../constants'
 
-[data-component-dialog]
+:local(.container)
+  margin                              : SPACE
+  padding                             : SPACE (SPACE * 1.5)
+  background-color                    : WHITE
+  border-radius                       : (SPACE / 5)
+  box-shadow                          : ZDEPTH_SHADOW_5
+  transition-property                 : opacity, transform
+  transition-duration                 : ANIMATION_DURATION
+  transition-timing-function          : ANIMATION_EASE
+  transition-delay                    : ANIMATION_DELAY
+  > h1
+    margin-bottom                     : SPACE
+  > nav
+    margin-top                        : SPACE
+    text-align                        : right
+    > .raised
+      margin-left                     : SPACE
+
+:local(.root)
   z-index                             : 3
   position                            : fixed
   left                                : 0
@@ -8,44 +26,25 @@
   width                               : 100vw
   height                              : 100vh
   background-color                    : rgba(0,0,0,0.5)
-  transition-property                   opacity
-  transition-duration                   (ANIMATION_DURATION / 2)
-  transition-timing-function            ANIMATION_EASE
-  // -- Children
-  > div
-    margin                            : SPACE
-    padding                           : SPACE (SPACE * 1.5)
-    background-color                  : WHITE
-    border-radius                     : (SPACE / 5)
-    box-shadow                          ZDEPTH_SHADOW_5
-    transition-property                 opacity, transform
-    transition-duration                 ANIMATION_DURATION
-    transition-timing-function          ANIMATION_EASE
-    transition-delay                    ANIMATION_DELAY
-    > h1
-      margin-bottom                   : SPACE
-    > nav
-      margin-top                      : SPACE
-      text-align                      : right
-      > *:not(.transparent)
-        margin-left                   : SPACE
-
-  // -- Styles
-  &.small > div
+  transition-property                 : opacity
+  transition-duration                 : (ANIMATION_DURATION / 2)
+  transition-timing-function          : ANIMATION_EASE
+  // -- Overrides
+  &.small > :local(.container)
     width                             : 33vw
-  &.normal > div
+  &.normal > :local(.container)
     width                             : 50vw
-  &.large > div
+  &.large > :local(.container)
     width                             : 96vw
   &:not(.active)
     pointer-events                    : none
     opacity                           : 0
-    transition-delay                    (ANIMATION_DELAY * 2)
-    > div
+    transition-delay                  : (ANIMATION_DELAY * 2)
+    > :local(.container)
       opacity                         : 0
-      transform                         translateY(-(UNIT))
+      transform                       : translateY(-(UNIT))
   &.active
     opacity                           : 1
-    > div
+    > :local(.container)
       opacity                         : 1
-      transform                         translateY(0%)
+      transform                       : translateY(0%)

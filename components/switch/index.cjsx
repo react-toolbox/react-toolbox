@@ -1,5 +1,5 @@
-require './style'
-Ripple = require "../ripple"
+localCSS  = require './style'
+Ripple    = require '../ripple'
 
 module.exports = React.createClass
 
@@ -12,7 +12,7 @@ module.exports = React.createClass
     value     : React.PropTypes.bool
 
   getDefaultProps: ->
-    className : ""
+    className : ''
 
   getInitialState: ->
     value     : @props.value
@@ -32,13 +32,13 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    className = @props.className
-    className += " checked" if @state.value
-    className += " disabled" if @props.disabled
-    <div data-component-switch className={className} onClick={@onClick}>
+    className  = "#{localCSS.root} #{@props.className}"
+    className += ' checked'   if @state.value
+    className += ' disabled'  if @props.disabled
+    <div data-react-toolbox='switch' className={className} onClick={@onClick}>
       <span></span>
       { <label>{@props.label}</label> if @props.label }
-      <Ripple origin={@state.ripple} />
+      <Ripple className={localCSS.ripple} origin={@state.ripple} />
     </div>
 
   # -- Extends

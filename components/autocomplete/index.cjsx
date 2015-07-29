@@ -1,5 +1,5 @@
-require './style'
-Input = require '../input'
+localCSS  = require './style'
+Input     = require '../input'
 
 module.exports = React.createClass
 
@@ -19,12 +19,12 @@ module.exports = React.createClass
     value       : React.PropTypes.any
 
   getDefaultProps: ->
-    className   : ""
+    className   : ''
     colors      : {}
     dataSource  : {}
     exact       : true
     multiple    : true
-    type        : "text"
+    type        : 'text'
 
   getInitialState: ->
     focus       : false
@@ -57,12 +57,12 @@ module.exports = React.createClass
 
     if @state.focus
       children = @refs.suggestions.getDOMNode().children
-      for child, index in children when child.classList.contains "active"
-        child.classList.remove "active"
-        query = child.getAttribute "id"
+      for child, index in children when child.classList.contains 'active'
+        child.classList.remove 'active'
+        query = child.getAttribute 'id'
         break
 
-    if key_ascii is 13 and query isnt ""
+    if key_ascii is 13 and query isnt ''
       for key, label of @state.suggestions when query.toLowerCase() is label.toLowerCase()
         suggestion = {"#{key}": label}
         break
@@ -76,47 +76,50 @@ module.exports = React.createClass
         index = if index >= children.length - 1 then 0 else index + 1
       else
         index = if index is 0 then children.length - 1 else index - 1
-      children[index].classList.add "active"
+      children[index].classList.add 'active'
 
   onBlur: (event) ->
     setTimeout (=> @setState focus: false, suggestions: {}), 300
 
   onSelect: (event) ->
-    key = event.target.getAttribute "id"
+    key = event.target.getAttribute 'id'
     @_addValue {"#{key}": @state.suggestions[key]}
 
   onRefreshSelection: (event) ->
     children = @refs.suggestions.getDOMNode().children
-    for child, index in children when child.classList.contains "active"
-      child.classList.remove "active"
+    for child, index in children when child.classList.contains 'active'
+      child.classList.remove 'active'
       break
 
   onDelete: (event) ->
-    delete @state.values[event.target.getAttribute "id"]
+    delete @state.values[event.target.getAttribute 'id']
     @setState focus: false, values: @state.values
     @props.onChange? @
 
   # -- Render
   render: ->
-    className = "focus" if @state.focus
-    <div data-component-autocomplete={@props.type} className={className}>
+    className  = "#{localCSS.root} #{@props.className}"
+    className += " #{@props.type}"  if @props.type
+    className += ' focus'           if @state.focus
+    <div data-react-toolbox='autocomplete' className={className}>
       { <label>{@props.label}</label> if @props.label }
       {
         if @props.multiple
-          <ul data-role="values" data-flex="horizontal wrap" onClick={@onDelete}>
+          <ul className={localCSS.values} data-flex='horizontal wrap'
+              onClick={@onDelete}>
             {
               for key, label of @state.values
                 <li key={key} id={key} style={backgroundColor: @props.colors[key]}>{label}</li>
             }
           </ul>
       }
-      <Input {...@props} ref="input" value="" label=""
+      <Input {...@props} ref='input' value='' label=''
              onBlur={@onBlur}
              onChange={@onChange}
              onFocus={@onFocus}
              onKeyDown={@onKeyPress}
              />
-      <ul ref="suggestions" data-role="suggestions"
+      <ul ref='suggestions' className={localCSS.suggestions}
         onClick={@onSelect} onMouseEnter={@onRefreshSelection}>
         {<li key={key} id={key}>{label}</li> for key, label of @state.suggestions}
       </ul>
@@ -151,7 +154,7 @@ module.exports = React.createClass
       values = value
       setTimeout (=> @props.onChange? @), 10
     @setState focus: false, values: values
-    @refs.input.setValue if @props.multiple then "" else value[key]
+    @refs.input.setValue if @props.multiple then '' else value[key]
 
   _getSuggestions: (query) ->
     suggestions = {}

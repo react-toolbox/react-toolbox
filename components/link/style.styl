@@ -1,9 +1,13 @@
-@import "../constants.styl"
+@import '../constants'
 
-[data-component-link]
+:local(.icon)
+  margin-right                    : (SPACE / 2)
+  font-size                       : FONT_SIZE_BIG
+
+:local(.root)
   position                        : relative
   overflow                        : hidden
-  transition                        opacity ANIMATION_DURATION ANIMATION_EASE
+  transition                      : opacity ANIMATION_DURATION ANIMATION_EASE
   // -- Styles
   &:not(.active)
     font-weight                   : FONT_WEIGHT_THIN
@@ -15,9 +19,6 @@
   // -- Children
   > *
     vertical-align                : middle
-  > .icon
-    margin-right                  : (SPACE / 2)
-    font-size                     : FONT_SIZE_BIG
   > abbr
     text-transform                : Capitalize
   > small
