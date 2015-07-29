@@ -1,13 +1,15 @@
-require './style'
+localCSS = require './style'
 
 module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    origin    : React.PropTypes.object
+    className : React.PropTypes.string
     loading   : React.PropTypes.bool
+    origin    : React.PropTypes.object
 
   getDefaultProps: ->
+    className : ''
     loading   : false
 
   getInitialState: ->
@@ -19,16 +21,15 @@ module.exports = React.createClass
 
   componentDidMount: ->
     el = @getDOMNode()
-    for key in ["animationend", "webkitAnimationEnd", "oAnimationEnd", "MSAnimationEnd"]
+    for key in ['animationend', 'webkitAnimationEnd', 'oAnimationEnd', 'MSAnimationEnd']
       el.addEventListener key, (=> @setState className: undefined), false
-    @setState className: "active" if @props.origin?
+    @setState className: 'active' if @props.origin?
 
   # -- Render
   render: ->
-    className = @state.className
-    className += " loading" if @props.loading
-    <div  data-component-ripple
-          className={className}
+    className  = "#{localCSS.root} #{@props.className} #{@state.className}"
+    className += ' loading' if @props.loading
+    <div  data-react-toolbox='ripple' className={className}
           style={
             left  : @props.origin?.left,
             top   : @props.origin?.top,
