@@ -1,6 +1,6 @@
 @import "../constants.styl"
 
-[data-component-button]
+:local(.root)
   z-index                       : 1
   display                       : inline-block
   position                      : relative
@@ -10,22 +10,63 @@
   text-decoration               : none
   white-space                   : nowrap
   border                        : none
-  transition-property             background-color, box-shadow
-  transition-duration             ANIMATION_DURATION
-  transition-timing-function      ANIMATION_EASE
+  transition-property           : background-color, box-shadow
+  transition-duration           : ANIMATION_DURATION
+  transition-timing-function    : ANIMATION_EASE
 
-  // -- Style
+  &.raised, &.flat
+    padding                       : (SPACE / 2) (SPACE / 1.25)
+    font-size                     : FONT_SIZE_SMALL
+    text-transform                : uppercase
+    border-radius                 : (SPACE / 8)
+    > *
+      vertical-align              : bottom
+    > .icon
+      font-size                   : FONT_SIZE_BIG
+      margin-right                : (SPACE / 2)
+    > abbr
+      font-weight                 : FONT_WEIGHT_BOLD
+    &.anchor
+      width                       : 100%
+
+  &.flat
+    background-color          : transparent
+    &:not(.primary):not(.accent)
+      > [data-component-ripple]
+        background-color      : alpha(TEXT, 12.5%)
+    &.primary
+      color                   : PRIMARY
+      > [data-component-ripple]
+        background-color      : alpha(PRIMARY, 12.5%)
+    &.accent
+      color                   : ACCENT
+      > [data-component-ripple]
+        background-color      : alpha(ACCENT, 12.5%)
+
+  &.floating
+    width                         : BUTTON_CIRCLE_HEIGHT
+    height                        : BUTTON_CIRCLE_HEIGHT
+    font-size                     : (BUTTON_CIRCLE_HEIGHT / 2.25)
+    border-radius                 : 50%
+    > .icon
+      line-height                 : BUTTON_CIRCLE_HEIGHT
+
+  // Overrides
+  &[disabled]
+    color                     : darken(DIVIDER, 25%)
+    background-color          : DIVIDER
+
   &:not([disabled])
     cursor                      : pointer
     &:hover, &:active, &:focus
       outline                   : 0
-    &:not(.transparent)
+    &:not(.flat)
       box-shadow                  ZDEPTH_SHADOW_1
       &:not(.primary):not(.accent)
         color                   : TEXT
         background-color        : WHITE
-      &:hover
-        box-shadow                ZDEPTH_SHADOW_2, inset 0 0 0 UNIT alpha(WHITE, 10%)
+      &.focused
+        box-shadow              : ZDEPTH_SHADOW_2, inset 0 0 0 UNIT alpha(WHITE, 10%)
       &.primary, &.accent
         color                   : WHITE
       &.primary
@@ -33,54 +74,8 @@
       &.accent
         background-color        : ACCENT
 
-    &.transparent
-      background-color          : transparent
-      &:not(.primary):not(.accent)
-        &:hover
-          background-color      : alpha(TEXT, 12.5%)
-      &.primary
-        color                   : PRIMARY
-        &:hover
-          background-color      : alpha(PRIMARY, 12.5%)
-      &.accent
-        color                   : ACCENT
-        &:hover
-          background-color      : alpha(ACCENT, 12.5%)
     &:not(.primary):not(.accent) > [data-component-ripple]
       background-color          : DIVIDER
-  &[disabled]
-    color                       : darken(DIVIDER, 25%)
-    &:not(.transparent)
-      background-color          : DIVIDER
-    &.transparent
-      background-color          : transparent
 
-  // -- Layout
-  &:not(.transparent) ~ &:not(:last-child)
-    margin-left                 : SPACE
   > *
-    pointer-events              : none
-
-[data-component-button="square"]
-  padding                       : (SPACE / 2) (SPACE / 1.25)
-  font-size                     : FONT_SIZE_SMALL
-  text-transform                : uppercase
-  border-radius                 : (SPACE / 8)
-  > *
-    vertical-align              : bottom
-  > .icon
-    font-size                   : FONT_SIZE_BIG
-    margin-right                : (SPACE / 2)
-  > abbr
-    font-weight                 : FONT_WEIGHT_BOLD
-
-  &.anchor
-    width                       : 100%
-
-[data-component-button="circle"]
-  width                         : BUTTON_CIRCLE_HEIGHT
-  height                        : BUTTON_CIRCLE_HEIGHT
-  font-size                     : (BUTTON_CIRCLE_HEIGHT / 2.25)
-  border-radius                 : 50%
-  > .icon
-    line-height                 : BUTTON_CIRCLE_HEIGHT
+    pointer-events: none
