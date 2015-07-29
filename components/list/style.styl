@@ -1,6 +1,6 @@
-@import "../constants.styl"
+@import '../constants'
 
-[data-component-list]
+:local(.root)
   list-style                      : none
   &, a
     color                         : TEXT
@@ -8,9 +8,8 @@
     overflow                      : hidden
     background-color              : WHITE
     box-shadow                    : ZDEPTH_SHADOW_1
-    transition-property             box-shadow
-    transition-duration             ANIMATION_DURATION
-    transition-timing-function      ANIMATION_EASE
-    // -- Classes
+    transition-property           : box-shadow
+    transition-duration           : ANIMATION_DURATION
+    transition-timing-function    : ANIMATION_EASE
     &:hover
       box-shadow                  : ZDEPTH_SHADOW_2

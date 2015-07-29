@@ -1,4 +1,4 @@
-require './style'
+localCSS = require './style'
 
 module.exports = React.createClass
 
@@ -11,9 +11,10 @@ module.exports = React.createClass
     type        : React.PropTypes.string
 
   getDefaultProps: ->
-    attributes  : ""
+    attributes  : ''
+    className   : ''
     dataSource  : []
-    type        : "default"
+    type        : 'default'
 
   # -- Events
   onClick: (event, item) ->
@@ -21,7 +22,10 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    <ul data-component-list={@props.type}>
+    className  = "#{localCSS.root} #{@props.className}"
+    className += " #{@props.type}"  if @props.type
+
+    <ul data-react-toolbox='list' className={className}>
     {
       for item, index in @props.dataSource
         <li key={index} onClick={@onClick.bind null, item}>
