@@ -1,4 +1,4 @@
-require './style'
+localCSS = require './style'
 
 module.exports = React.createClass
 
@@ -55,17 +55,18 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    className = @props.className
-    className += ' checked'   if @state.checked
-    className += ' disabled'  if @props.disabled
-    className += ' error'     if @state.error
-    className += ' focus'     if @state.focus
-    className += ' hidden'    if @props.type is 'hidden'
-    className += ' touch'     if @state.touch
-    className += ' radio'     if @props.type is 'radio'
-    className += ' valid'     if @state.value? and @state.value.length > 0
+    className  = "#{localCSS.root} #{@props.className}"
+    className += " #{@props.type}"  if @props.type
+    className += ' checked'         if @state.checked
+    className += ' disabled'        if @props.disabled
+    className += ' error'           if @state.error
+    className += ' focus'           if @state.focus
+    className += ' hidden'          if @props.type is 'hidden'
+    className += ' touch'           if @state.touch
+    className += ' radio'           if @props.type is 'radio'
+    className += ' valid'           if @state.value? and @state.value.length > 0
 
-    <div data-component-input={@props.type} className={className}>
+    <div data-react-toolbox='input' className={className}>
       {
         if @props.multiline
           <textarea ref='input' {...@props} value={@state.value}
