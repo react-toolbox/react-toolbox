@@ -5,4 +5,4 @@
 
 React-Toolbox is a set of React components that implement Google's Material Design specification.
 
-*Current version: [0.6.19]()*
+*Current version: [0.7.29]()*
