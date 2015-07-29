@@ -1,8 +1,29 @@
 @import "../constants.styl"
 
-SIZE                            = (5 * UNIT)
-OFFSET                          = (SPACE / 1.25)
-[data-component-card]
+SIZE                              = (5 * UNIT)
+OFFSET                            = (SPACE / 1.25)
+
+:local(.navigation)
+  padding                         : OFFSET = (OFFSET / 2)
+  > *
+    pointer-events                : all
+    padding-left                  : OFFSET
+    padding-right                 : OFFSET
+    box-shadow                    : none !important
+    &:hover
+      background-color            : rgba(0,0,0,0.1) !important
+
+:local(.figure)
+  display-flex()
+  flex-direction                  : column
+  justify-content                 : flex-end
+  flex-grow                       : 2
+  min-height                      : (SIZE / 2)
+  background-size                 : cover
+  > *
+    font-weight                   : FONT_WEIGHT_NORMAL
+
+:local(.root)
   display-flex()
   flex-direction                    column
   position                        : relative
@@ -12,59 +33,38 @@ OFFSET                          = (SPACE / 1.25)
   background                      : WHITE
 
   // -- Children
-  *:not([data-component-button])
+  *:not(button)
     pointer-events                : none
-  > *:not([data-component-ripple]):not([data-component-navigation])
+  > *:not(:local(.ripple)):not(:local(.navigation))
     padding                       : OFFSET
-  &:not(.color):not(.image) > [data-component-ripple]
+  &:not(.color):not(.image) > :local(.ripple)
     background-color              : DIVIDER
   &:not(.color) > *:not(figure), > *:not(:last-child)
     box-shadow                    : 0 1px darken(BACKGROUND, 5%)
-  > figure
-    display-flex()
-    flex-direction                  column
-    justify-content                 flex-end
-    flex-grow                       2
-    min-height                    : (SIZE / 2)
-    background-size               : cover
-    > *
-      font-weight                 : FONT_WEIGHT_NORMAL
+  > :local(.figure)
 
-  > [data-component-navigation]
-    padding                       : OFFSET = (OFFSET / 2)
-    > *
-      pointer-events              : all
-      padding-left                : OFFSET
-      padding-right               : OFFSET
-      box-shadow                  : none !important
-      &:hover
-        background-color          : rgba(0,0,0,0.1) !important
 
-  // -- ClassNames
+  // -- Overrides
   &.touch
     cursor                        : pointer
     &:hover, &:active
       box-shadow                  : ZDEPTH_SHADOW_2
-  &.image
-    > figure
-      text-shadow                 : ZDEPTH_SHADOW_1
+  &.image > :local(.figure)
+    text-shadow                   : ZDEPTH_SHADOW_1
   &.image, &.color
-    > figure
+    > :local(.figure)
       color                       : WHITE
   &.loading
     cursor                        : none
     -webkit-filter                : grayscale(100%)
     &, &:hover
       box-shadow                  : 0 0 0 1px DIVIDER
-    > [data-component-ripple]
+    > :local(.ripple)
       width                       : SIZE = (SIZE * 2)
       height                      : SIZE
-
-// -- Extends
-[data-component-card="small"]
-  > figure
+  &.small > :local(.figure)
     min-height                    : 0px
-[data-component-card="square"]
-  height                          : SIZE
-[data-component-card="wide"]
-  width                           : (SIZE * 2)
+  &.square
+    height                        : SIZE
+  &.wide
+    width                         : (SIZE * 2)
