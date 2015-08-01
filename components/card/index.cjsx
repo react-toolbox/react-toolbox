@@ -18,6 +18,7 @@ module.exports = React.createClass
 
   getDefaultProps: ->
     className   : ''
+    loading     : false
     type        : 'default'
 
   getInitialState: ->
@@ -45,7 +46,7 @@ module.exports = React.createClass
     className += ' touch' if @props.onClick?
     className += ' image' if @props.image?
     className += ' color' if @props.color?
-    className += ' loading' if @state.loading?
+    className += ' loading' if @state.loading
     style = {}
     style.backgroundImage = "url(#{@props.image})" if @props.image?
     style.backgroundColor = @props.color if @props.color
@@ -66,4 +67,6 @@ module.exports = React.createClass
 
   # -- Extends
   loading: (value) ->
-    @setState loading: value
+    attributes = loading: value
+    attributes.ripple = undefined unless value
+    @setState attributes

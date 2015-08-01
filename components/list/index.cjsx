@@ -17,8 +17,8 @@ module.exports = React.createClass
     type        : 'default'
 
   # -- Events
-  onClick: (event, data) ->
-    @props.onClick? event, @, data
+  onClick: (event, data, index) ->
+    @props.onClick? event, item, @refs[index] if @refs[index]?
 
   # -- Render
   render: ->
@@ -27,9 +27,9 @@ module.exports = React.createClass
 
     <ul data-react-toolbox='list' className={className}>
     {
-      for item, index in @props.dataSource
-        <li key={index} onClick={@onClick.bind null, item}>
-          {@props.itemFactory item}
+      for data, index in @props.dataSource
+        <li key={index} onClick={@onClick.bind null, data, index}>
+          {@props.itemFactory data, index}
         </li>
     }
     </ul>
