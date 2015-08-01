@@ -17,8 +17,8 @@ module.exports = React.createClass
     type        : 'default'
 
   # -- Events
-  onClick: (event, item) ->
-    @props.onClick? event, item
+  onClick: (event, data) ->
+    @props.onClick? event, @, data
 
   # -- Render
   render: ->
