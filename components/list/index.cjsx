@@ -18,7 +18,7 @@ module.exports = React.createClass
 
   # -- Events
   onClick: (event, data, index) ->
-    @props.onClick? event, item, @refs[index] if @refs[index]?
+    @props.onClick? event, item, (@refs[index] if @refs[index]?)
 
   # -- Render
   render: ->
