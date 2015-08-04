@@ -88,7 +88,17 @@ module.exports = React.createClass
 
   getValue: ->
     value = {}
-    value[ref] = el.getValue() for ref, el of @refs when el.getValue?
+    for ref, el of @refs when el.getValue?
+      if ref.indexOf('.') is -1
+        value[ref] = el.getValue()
+      else
+        parent = value
+        for attr, index in hierarchy = ref.split('.')
+          if index is hierarchy.length - 1
+            parent[attr] = el.getValue()
+          else
+            parent[attr] = parent[attr] or {}
+            parent = parent[attr]
     value
 
   setValue: (data = {}) ->
