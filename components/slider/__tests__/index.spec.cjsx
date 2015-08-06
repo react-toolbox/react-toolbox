@@ -1,10 +1,10 @@
 TestUtils   = React.addons.TestUtils
 expect      = require('expect')
 sinon       = require('sinon')
-utils       = require('./utils')
-ProgressBar = require('../progress_bar')
-Input       = require('../input')
-Slider      = require('../slider')
+utils       = require('../../test_utils')
+ProgressBar = require('../../progress_bar')
+Input       = require('../../input')
+Slider      = require('../index')
 
 describe 'Slider', ->
   describe '#positionToValue', ->

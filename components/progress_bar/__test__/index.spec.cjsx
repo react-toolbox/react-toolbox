@@ -1,7 +1,7 @@
 TestUtils   = React.addons.TestUtils
 expect      = require('expect')
-utils       = require('./utils')
-ProgressBar = require('../progress_bar')
+utils       = require('../../test_utils')
+ProgressBar = require('../index')
 
 describe 'ProgressBar', ->
   describe '#calculateRatio', ->
