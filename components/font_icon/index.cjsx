@@ -10,7 +10,10 @@ module.exports = React.createClass
   getDefaultProps: ->
     className   : ''
 
+  onClick: (event) ->
+    @props.onClick? @props.onClick(event)
+
   # -- Render
   render: ->
     className = "#{localCSS.root} #{@props.className} #{@props.value}"
-    <span data-react-toolbox='icon' className={className} />
+    <span data-react-toolbox='icon' className={className} onClick={@onClick} />
