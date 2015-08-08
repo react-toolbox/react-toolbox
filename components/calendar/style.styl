@@ -1,0 +1,115 @@
+@import '../constants'
+
+// -- Calendar sizes
+monthHeight         = 38px
+dayWidth            = 38px
+innerPadding        = 10px
+dayHeight           = dayWidth
+calendarWidth       = dayWidth  * 7
+calendarHeight      = dayHeight * 7
+totalHeight         = monthHeight + calendarHeight + innerPadding * 2
+totalWidth          = calendarWidth + innerPadding * 2
+
+:local(.root)
+  border-radius     : 3px
+  height            : totalHeight
+  overflow          : hidden
+  position          : relative
+  text-align        : center
+  width             : totalWidth
+
+// -- Prev and next controls
+:local(.prevMonth), :local(.nextMonth)
+  cursor            : pointer
+  height            : monthHeight
+  line-height       : monthHeight
+  opacity           : .7
+  position          : absolute
+  text-align        : center
+  top               : innerPadding
+  width             : dayWidth
+  z-index           : 2
+
+:local(.prevMonth)
+  left              : innerPadding
+
+:local(.nextMonth)
+  right             : innerPadding
+
+// -- Calendar
+:local(.title)
+  font-size         : 14px
+  left              : innerPadding
+  line-height       : monthHeight
+  position          : absolute
+  right             : innerPadding
+  top               : innerPadding
+
+:local(.calendar)
+  bottom            : innerPadding
+  font-size         : 12px
+  left              : innerPadding
+  position          : absolute
+  right             : innerPadding
+  top               : monthHeight + innerPadding
+
+:local(.calendarWeekDays)
+  display           : flex
+  flex-wrap         : wrap
+  height            : dayHeight
+  line-height       : dayHeight
+  opacity           : .5
+
+:local(.calendarWeekDay)
+  flex              : 0 0 (100/7)%
+
+:local(.calendarBody)
+  display           : flex
+  flex-wrap         : wrap
+
+:local(.calendarBodyDay)
+  border-radius     : 50%
+  cursor            : pointer
+  flex              : 0 0 (100/7)%
+  height            : dayHeight
+  line-height       : dayHeight
+
+  &:hover:not(.active)
+    background      : lighten(ACCENT, 65%)
+    color           : white
+
+  &.active
+    background      : ACCENT
+    color           : white
+
+// -- Slide transitions
+:local(.root) .slide-horizontal-enter, :local(.root) .slide-horizontal-leave
+  transition        : all .5s
+
+// -- Slide horizontal transition left to right
+:local(.root).right
+  .slide-horizontal-enter
+    transform       : translateX(100%)
+    opacity         : 0
+
+  .slide-horizontal-leave, .slide-horizontal-enter-active
+    transform       : translateX(0)
+    opacity         : 1
+
+  .slide-horizontal-leave-active
+    transform       : translateX(-100%)
+    opacity         : 0
+
+// -- Slide horizontal transition right to left
+:local(.root).left
+  .slide-horizontal-enter
+    transform       : translateX(-100%)
+    opacity         : 0
+
+  .slide-horizontal-leave, .slide-horizontal-enter-active
+    transform       : translateX(0)
+    opacity         : 1
+
+  .slide-horizontal-leave-active
+    transform       : translateX(100%)
+    opacity         : 0
