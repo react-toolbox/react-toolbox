@@ -1,0 +1,34 @@
+@import '../constants'
+
+dayWidth            = 38px
+innerPadding        = 10px
+calendarWidth       = dayWidth  * 7
+totalWidth          = calendarWidth + innerPadding * 2
+
+:local(.root)
+  text-align        : center
+  width             : totalWidth
+
+:local(.header)
+  background-color  : ACCENT
+  color             : white
+
+:local(.headerWeekday)
+  background-color  : darken(ACCENT, 20%)
+  font-size         : 14px
+  line-height       : 1.8
+  width             : 100%
+
+:local(.headerMonth)
+  font-size         : 18px
+  padding           : 10px
+  text-transform    : uppercase
+
+:local(.headerDay)
+  font-size         : 50px
+  line-height       : 40px
+
+:local(.headerYear)
+  font-size         : 18px
+  opacity           : .7
+  padding           : 10px

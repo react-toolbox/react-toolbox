@@ -8,6 +8,7 @@ module.exports = React.createClass
   # -- States & Properties
   propTypes:
     className:      React.PropTypes.string
+    onChange:       React.PropTypes.func
     selectedDate:   React.PropTypes.object
     viewDate:       React.PropTypes.object
 
@@ -19,6 +20,9 @@ module.exports = React.createClass
   getInitialState: ->
     selectedDate:   @props.selectedDate
     viewDate:       @props.viewDate
+
+  componentDidUpdate: (prevProps, prevState) ->
+    @props.onChange? @ if prevState.selectedDate.getTime() != @state.selectedDate.getTime()
 
   # -- Events
   onDayClick: (event) ->
@@ -90,3 +94,6 @@ module.exports = React.createClass
         </div>
       </CTG>
     </div>
+
+  getValue: ->
+    @state.selectedDate

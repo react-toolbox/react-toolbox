@@ -1,9 +1,9 @@
 module.exports =
   daysInMonth: (date) ->
-    (new Date(date.getFullYear(), date.getMonth() + 1, 0)).getDate()
+    (new Date(date.getFullYear(), date.getMonth(), 0)).getDate()
 
   firstWeekDay: (date) ->
-    (new Date(date.getFullYear(), date.getMonth() + 1, 1)).getDay()
+    (new Date(date.getFullYear(), date.getMonth(), 1)).getDay()
 
   monthInWords: (date) ->
     switch (date.getMonth())
@@ -20,6 +20,21 @@ module.exports =
       when 10 then 'November'
       when 11 then 'December'
 
+  monthInShortWords: (date) ->
+    switch (date.getMonth())
+      when 0  then 'Jan'
+      when 1  then 'Feb'
+      when 2  then 'Mar'
+      when 3  then 'Apr'
+      when 4  then 'May'
+      when 5  then 'Jun'
+      when 6  then 'Jul'
+      when 7  then 'Aug'
+      when 8  then 'Sep'
+      when 9  then 'Oct'
+      when 10 then 'Nov'
+      when 11 then 'Dec'
+
   weekDayInWords: (day) ->
     switch (day)
       when 0 then 'Sunday'
@@ -29,6 +44,16 @@ module.exports =
       when 4 then 'Thursday'
       when 5 then 'Friday'
       when 6 then 'Saturday'
+
+  weekDayInShortWords: (day) ->
+    switch (day)
+      when 0 then 'Sun'
+      when 1 then 'Mon'
+      when 2 then 'Tue'
+      when 3 then 'Wed'
+      when 4 then 'Thu'
+      when 5 then 'Fri'
+      when 6 then 'Sat'
 
   addDays: (date, days) ->
     newDate = @cloneDatetime(date)
