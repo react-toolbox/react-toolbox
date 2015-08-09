@@ -31,7 +31,9 @@
   height                                  : HEIGHT
   width                                   : 128px
   background-color                        : PRIMARY
-  transition                              : left ANIMATION_DURATION ANIMATION_EASE
+  transition-property                     : left, width
+  transition-duration                     : ANIMATION_DURATION
+  transition-timing-function              : ANIMATION_EASE
 
 :local(.tab)
   padding                                 : (OFFSET / 2) OFFSET
