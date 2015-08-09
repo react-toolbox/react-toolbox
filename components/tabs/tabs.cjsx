@@ -15,14 +15,23 @@ module.exports = React.createClass
 
   getInitialState: ->
     index     : @props.index
+    pointer   : {}
 
   # -- Lifecycle
+  componentDidMount: ->
+    @setState pointer: @pointerPosition @state.index
+
   componentWillReceiveProps: (next_props) ->
-    @setState index: next_props.index or @state.index
+    index = next_props.index or @state.index
+    @setState
+      index   : index
+      pointer : @pointerPosition index
 
   # -- Events
   onClick: (index, event, ref) ->
-    @setState index: index
+    @setState
+      index   : index
+      pointer : @pointerPosition index
     @props.onChange? @
 
   # -- Render
@@ -49,9 +58,18 @@ module.exports = React.createClass
     <div data-react-toolbox='tabs'
          className={localCSS.root + ' ' + @props.className}
          data-flex='vertical'>
-      <nav data-flex='horizontal'>
+      <nav ref='navigation' data-flex='horizontal'>
         { <label {...props}>{props.label}</label> for props in labels }
       </nav>
+      <span className={localCSS.pointer} style={@state.pointer}></span>
       { tabs }
     </div>
 
+  # -- Private methods
+  pointerPosition: (index = 0) ->
+    navigation = @refs.navigation.getDOMNode()
+    label = navigation.children[index].getBoundingClientRect()
+    style =
+      top   : "#{navigation.getBoundingClientRect().height}px"
+      left  : "#{label.left}px"
+      width : "#{label.width}px"

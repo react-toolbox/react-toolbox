@@ -1,26 +1,37 @@
 @import '../constants'
 
 :local(.root)
+  position                                : relative
   > nav
-    box-shadow                              inset 0 -1px DIVIDER
+    box-shadow                            : inset 0 -1px DIVIDER
     > label
       padding                             : (OFFSET / 2) OFFSET
       font-size                           : FONT_SIZE_TINY
       font-weight                         : FONT_WEIGHT_BOLD
       text-transform                      : Uppercase
       color                               : TEXT_SECONDARY
-      transition-property                   box-shadow, color
-      transition-duration                   ANIMATION_DURATION
-      transition-timing-function            ANIMATION_EASE
+      transition-property                 : box-shadow, color
+      transition-duration                 : ANIMATION_DURATION
+      transition-timing-function          : ANIMATION_EASE
       &.active
         color                             : TEXT
-        box-shadow                          inset 0 (-(OFFSET / 10)) PRIMARY
+        // box-shadow                        : inset 0 (-(OFFSET / 10)) PRIMARY
       &.disabled
         opacity                           : 0.2
       &:not(.disabled)
         cursor                            : pointer
       &.hidden
         display                           : none
+
+:local(.pointer)
+  HEIGHT = (OFFSET / 10)
+  position                                : absolute
+  margin-left                             : -(OFFSET)
+  margin-top                              : -(HEIGHT)
+  height                                  : HEIGHT
+  width                                   : 128px
+  background-color                        : PRIMARY
+  transition                              : left ANIMATION_DURATION ANIMATION_EASE
 
 :local(.tab)
   padding                                 : (OFFSET / 2) OFFSET
