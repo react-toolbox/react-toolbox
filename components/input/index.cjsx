@@ -88,11 +88,17 @@ module.exports = React.createClass
     </div>
 
   # -- Extends
+  blur: ->
+    @refs.input.blur?()
+
+  focus: ->
+    @refs.input.focus?()
+
   getValue: ->
     @refs.input?.getDOMNode()[if @state.touch then 'checked' else 'value']
 
-  setValue: (data) ->
-    @setState value: data
-
   setError: (data = 'Unknown error') ->
     @setState error: @props.error or data
+
+  setValue: (data) ->
+    @setState value: data

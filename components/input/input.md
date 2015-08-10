@@ -27,6 +27,22 @@ var Input = require('react-toolbox/components/input');
 
 ## Methods
 
+#### focus
+The focus event is sent to an element when it gains focus. 
+
+```
+input_instance.focus();
+```
+
+
+#### blur
+The blur event is sent to an element when it loses focus
+
+```
+input_instance.blur();
+```
+
+
 #### getValue
 Returns the value of the input.
 
