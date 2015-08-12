@@ -1,0 +1,94 @@
+rootSize              = 266px
+innerPadding          = 10px
+knobSize              = 40px
+clockSize             = rootSize  - knobSize - innerPadding
+clockSizeInner        = clockSize - knobSize - innerPadding
+clockRadius           = (clockSize/2)
+hourSize              = 30px
+handWidth             = 2px
+
+:local(.root)
+  border-radius       : 50%
+  border              : 1px solid red
+  height              : rootSize
+  margin-left         : 35px
+  padding             : (hourSize/2)
+  position            : relative
+  width               : rootSize
+
+:local(.clock)
+  border-radius       : 50%
+  height              : clockSize
+  left                : 50%
+  margin-left         : -(clockSize/2)
+  margin-top          : -(clockSize/2)
+  position            : absolute
+  top                 : 50%
+  width               : clockSize
+
+:local(.clockInner)
+  border-radius       : 50%
+  border: 1px solid blue
+  height              : clockSizeInner
+  left                : 50%
+  margin-left         : -(clockSizeInner/2)
+  margin-top          : -(clockSizeInner/2)
+  position            : absolute
+  top                 : 50%
+  width               : clockSizeInner
+  z-index             : 2
+
+:local(.hand)
+  background-color    : blue
+  bottom              : 50%
+  display             : block
+  height              : clockRadius - (knobSize/2)
+  left                : 50%
+  margin-left         : -(handWidth/2)
+  position            : absolute
+  transform-origin    : 0 100%
+  width               : handWidth
+
+  &:before
+    background-color  : blue
+    border-radius     : 50%
+    bottom            : 0
+    content           : ''
+    height            : 8px
+    left              : 50%
+    margin-bottom     : -4px
+    margin-left       : -4px
+    position          : absolute
+    width             : 8px
+
+:local(.knob)
+  cursor              : pointer
+  border-radius       : 50%
+  background-color    : blue
+  height              : knobSize
+  left                : 50%
+  margin-left         : -(knobSize/2)
+  position            : absolute
+  top                 : -(knobSize)
+  width               : knobSize
+
+:local(.root).pressed :local(.knob)
+    background-color  : pink
+
+:local(.hour)
+  color               : #444
+  border-radius       : 50%
+  height              : hourSize
+  line-height         : hourSize
+  margin-left         : -(hourSize/2)
+  pointer-events      : none
+  margin-top          : -(hourSize/2)
+  position            : absolute
+  text-align          : center
+  width               : hourSize
+
+:local(.hours)
+  for num in 1 2 3 4 5 6 7 8 9 10 11 12
+    :local(.hour):nth-child({num})
+      left            : (clockRadius + clockRadius * sin(PI * 2 * (num/12)))px
+      top             : (clockRadius - clockRadius * cos(PI * 2 * (num/12)))px
