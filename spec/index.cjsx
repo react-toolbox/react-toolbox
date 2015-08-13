@@ -12,6 +12,9 @@ Form          = require './components/form'
 Progress      = require './components/progress'
 Slider        = require './components/slider'
 Switch        = require './components/switch'
+Calendar      = require './components/calendar'
+DatePicker    = require './components/date_picker'
+Clock         = require './components/clock'
 
 Test = React.createClass
 
@@ -20,17 +23,7 @@ Test = React.createClass
     <app data-toolbox={true}>
       <h1>React-Toolbox <small>New way for create</small></h1>
 
-      <Aside />
-      <Autocomplete />
-      <Button />
-      <Card />
-      <Dialog />
-      <Dropdown />
-      <FontIcon />
-      <Form />
-      <Progress />
-      <Slider />
-      <Switch />
+      <Clock />
     </app>
 
 React.render <Test/>, document.body
