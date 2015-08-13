@@ -4,7 +4,7 @@ knobSize              = 28px
 hourSize              = 28px
 handWidth             = 2px
 handDotSize           = 8px
-clockSize             = rootSize - knobSize - innerPadding
+clockSize             = rootSize - knobSize - innerPadding - 5px
 clockRadius           = clockSize / 2
 clockHolderSize       = clockSize - knobSize - innerPadding
 innerClockSize        = clockHolderSize - knobSize - innerPadding
@@ -110,11 +110,11 @@ centeredCircle(circleSize)
 :local(.clock)
   for num in 1 2 3 4 5 6 7 8 9 10 11 12
     :local(.hour):nth-child({num})
-      left            : ((clockRadius) + (clockRadius) * sin(PI * 2 * (num/12)))
-      top             : ((clockRadius) - (clockRadius) * cos(PI * 2 * (num/12)))
+      left            :  clockRadius + clockRadius * sin(360deg / 12 * num)
+      top             :  clockRadius - clockRadius * cos(360deg / 12 * num)
 
 :local(.innerClock)
   for num in 1 2 3 4 5 6 7 8 9 10 11 12
     :local(.innerHour):nth-child({num})
-      left            : (clockInnerRadius + clockInnerRadius * sin(PI * 2 * (num/12)))
-      top             : (clockInnerRadius - clockInnerRadius * cos(PI * 2 * (num/12)))
+      left            : clockInnerRadius + clockInnerRadius * sin(360deg / 12 * num)
+      top             : clockInnerRadius - clockInnerRadius * cos(360deg / 12 * num)
