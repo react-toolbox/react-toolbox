@@ -25,6 +25,7 @@ centeredCircle(circleSize)
   border-radius       : 50%
   background-color    : #ccc
   height              : rootSize
+  margin-left         : 30px
   padding             : (hourSize/2)
   position            : relative
   width               : rootSize
@@ -49,7 +50,7 @@ centeredCircle(circleSize)
   left                : 50%
   margin-left         : -(handWidth/2)
   position            : absolute
-  transform-origin    : 0 100%
+  transform-origin    : 50% 100%
   width               : handWidth
 
   &:before
@@ -68,9 +69,9 @@ centeredCircle(circleSize)
   height              : clockRadius - (knobSize/2) - knobSize - innerPadding
 
 :local(.knob)
-  cursor              : pointer
-  border-radius       : 50%
   background-color    : magenta
+  border-radius       : 50%
+  cursor              : pointer
   height              : knobSize
   left                : 50%
   margin-left         : -(knobSize/2)
@@ -82,27 +83,27 @@ centeredCircle(circleSize)
     background-color  : pink
 
 :local(.hour)
-  color               : #444
-  border-radius       : 50%
   background-color    : gray
+  border-radius       : 50%
+  color               : #444
   height              : hourSize
   line-height         : hourSize
   margin-left         : -(hourSize/2)
-  pointer-events      : none
   margin-top          : -(hourSize/2)
+  pointer-events      : none
   position            : absolute
   text-align          : center
   width               : hourSize
 
 :local(.innerHour)
-  color               : purple
+  background-color    : yellowgreen
   border-radius       : 50%
+  color               : purple
   height              : hourSize
   line-height         : hourSize
-  background-color    : yellowgreen
   margin-left         : -(hourSize/2)
-  pointer-events      : none
   margin-top          : -(hourSize/2)
+  pointer-events      : none
   position            : absolute
   text-align          : center
   width               : hourSize
