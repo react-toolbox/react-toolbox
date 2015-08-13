@@ -2,97 +2,129 @@ css = require './style'
 
 module.exports = React.createClass
 
+  # -- States & Properties
+  propTypes:
+    className              : React.PropTypes.string
+
+  getDefaultProps: ->
+    className              : ''
+
   getInitialState: ->
-    angle: 0
-    pressed: false
+    clockCenter            : undefined
+    clockCenter            : undefined
+    clockInnerMaxRadius    : undefined
+    clockInnerMinRadius    : undefined
+    clockMaxRadius         : undefined
+    clockMinRadius         : undefined
+    handInner              : false
+    pressed                : false
+    handAngle              : 0
 
   # -- Lifecycle
   componentDidMount: ->
-    clockBounds = @refs.clock.getDOMNode().getBoundingClientRect()
     @setState
-      center:    @_getClockCenter()
-      minRadius: @_getMinRadius()
-      maxRadius: @_getMaxRadius()
+      clockCenter          : @_getClockCenter()
+      clockMaxRadius       : @_getRefRadius('root')
+      clockMinRadius       : @_getRefRadius('clockHolder')
+      clockInnerMaxRadius  : @_getRefRadius('clockHolder')
+      clockInnerMinRadius  : @_getRefRadius('innerClockHolder')
 
-  onKnobMouseDown: ->
-    @setState pressed: true
-    _addEventsToDocument(@getMouseEventMap())
-
-  getMouseEventMap: ->
-    mousemove: @onMouseMove
-    mouseup:   @onMouseUp
-
-  onMouseMove: (event) ->
-    radius = @_getClickRadius(event)
-    if (@state.minRadius < radius < @state.maxRadius)
-      @setState angle: @_trimValue(@_getAngleFromClickEvent(event))
-
-  onMouseUp: ->
-    @setState pressed: false
-    @end(@getMouseEventMap())
-
-  end: (events) ->
-    _removeEventsFromDocument(events)
-
+  # -- Position Functions
   _getClockCenter: ->
-    bounds = @refs.clock.getDOMNode().getBoundingClientRect()
+    bounds = @refs.root.getDOMNode().getBoundingClientRect()
     return {
       x: bounds.left + (bounds.right  - bounds.left)/2
       y: bounds.top  + (bounds.bottom - bounds.top) /2
     }
 
-  _getMinRadius: ->
-    bounds = @refs.clockInner.getDOMNode().getBoundingClientRect()
+  _getRefRadius: (ref) ->
+    bounds = @refs[ref].getDOMNode().getBoundingClientRect()
     (bounds.right  - bounds.left)/2
 
-  _getMaxRadius: ->
-    bounds = @refs.root.getDOMNode().getBoundingClientRect()
-    (bounds.right  - bounds.left)/2
+  _isInsideClockArea: (position) ->
+    @state.clockMinRadius < @_getPositionRadius(position) < @state.clockMaxRadius
 
-  _getAngleFromClickEvent: (event) ->
-    mouse = _getMousePosition(event)
-    _angle360(@state.center.x, @state.center.y, mouse.x, mouse.y)
+  _isInsideClockInnerArea: (position) ->
+    @state.clockInnerMinRadius < @_getPositionRadius(position) < @state.clockInnerMaxRadius
 
-  onClockClick: (event) ->
-    radius = @_getClickRadius(event)
-    if (@state.minRadius < radius < @state.maxRadius)
-      @setState angle: @_trimValue(@_getAngleFromClickEvent(event))
+  _getPositionRadius: (position) ->
+    x = @state.clockCenter.x - position.x
+    y = @state.clockCenter.y - position.y
+    Math.sqrt(x * x + y * y)
 
-  _trimValue: (angle) ->
+  # -- Helper Functions
+  _positionToAngle: (position) ->
+    _angle360(@state.clockCenter.x, @state.clockCenter.y, position.x, position.y)
+
+  _trimAngleToValue: (angle) ->
     step = 360/12
     step * Math.round(angle/step)
 
-  _getClickRadius: (event) ->
-    mouse = _getMousePosition(event)
-    x = @state.center.x - mouse.x
-    y = @state.center.y - mouse.y
-    r = Math.sqrt(x * x + y * y)
-    return r
+  _getMouseEventMap: ->
+    mousemove: @onMouseMove
+    mouseup:   @onMouseUp
+
+  _moveHandToPosition: (position) ->
+    trimAngle = @_trimAngleToValue(@_positionToAngle(position))
+    if @_isInsideClockInnerArea(position)
+      @setState
+        handAngle: trimAngle
+        handInner: true
+    else if @_isInsideClockArea(position)
+      @setState
+        handAngle: trimAngle
+        handInner: false
+
+  _end: (events) ->
+    _removeEventsFromDocument(events)
+
+  # -- Event handlers
+  onClockMouseDown: (event) ->
+    position  = _getMousePosition(event)
+    @_moveHandToPosition(position)
+    _addEventsToDocument(@_getMouseEventMap())
+    @setState pressed: true
+
+  onKnobMouseDown: (event) ->
+    _addEventsToDocument(@_getMouseEventMap())
+    @setState pressed: true
+
+  onMouseMove: (event) ->
+    position  = _getMousePosition(event)
+    @_moveHandToPosition(position)
+
+  onMouseUp: ->
+    @_end(@_getMouseEventMap())
+    @setState pressed: false
 
   render: ->
-    className  = ''
-    className += ' pressed' if @state.pressed
-    handStyle =
-      transform: "rotate(#{@state.angle}deg)"
+    className  = @props.className
+    className += css.root
+    className += " hand-inner" if @state.handInner
+    className += " pressed"    if @state.pressed
+    handStyle  = transform: "rotate(#{@state.handAngle}deg)"
 
-    <div ref="root" className={css.root + '' + className} onClick={@onClockClick}>
+    <div ref="root" className={className} onMouseDown={@onClockMouseDown}>
+      {# Main Clock }
       <div ref="clock" className={css.clock}>
-          <div ref="hand" style={handStyle} className={css.hand}>
-            <div className={css.knob} onMouseDown={@onKnobMouseDown}></div>
-          </div>
-          <div className={css.hours}>
-            { <span className={css.hour} key="hour-#{i}">{i}</span> for i in [1..12] }
-          </div>
+        { <span className={css.hour} key="hour-#{i}">{i}</span> for i in [13..23] }
+          <span className={css.hour} key="hour-00">00</span>
       </div>
-      <div ref="clockInner" className={css.clockInner} onClick={_pauseEvent}></div>
-    </div>
 
-_pauseEvent = (event) ->
-  event.stopPropagation()
-  event.preventDefault()
-  event.returnValue = false
-  event.cancelBubble = true
-  return null
+      {# Inner Clock }
+      <div ref="innerClock" className={css.innerClock}>
+        { <span className={css.innerHour} key="hour-#{i}">{i}</span> for i in [1..12] }
+      </div>
+
+      {# Support area holders }
+      <div ref="clockHolder" className={css.clockHolder}></div>
+      <div ref="innerClockHolder" className={css.innerClockHolder}></div>
+
+      {# Clock hand }
+      <div ref="hand" style={handStyle} className={css.hand}>
+        <div className={css.knob} onMouseDown={@onKnobMouseDown}></div>
+      </div>
+    </div>
 
 _getMousePosition = (event) ->
   x: event.pageX

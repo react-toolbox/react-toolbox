@@ -1,45 +1,48 @@
-rootSize              = 266px
-innerPadding          = 10px
-knobSize              = 40px
-clockSize             = rootSize  - knobSize - innerPadding
-clockSizeInner        = clockSize - knobSize - innerPadding
-clockRadius           = (clockSize/2)
-hourSize              = 30px
+rootSize              = 250px
+innerPadding          = 12px
+knobSize              = 28px
+hourSize              = 28px
 handWidth             = 2px
+handDotSize           = 8px
+clockSize             = rootSize - knobSize - innerPadding
+clockRadius           = clockSize / 2
+clockHolderSize       = clockSize - knobSize - innerPadding
+innerClockSize        = clockHolderSize - knobSize - innerPadding
+clockInnerRadius      = innerClockSize / 2
+innerClockHolderSize  = innerClockSize - knobSize - innerPadding
+
+centeredCircle(circleSize)
+  border-radius       : 50%
+  height              : circleSize
+  left                : 50%
+  margin-left         : -(circleSize/2)
+  margin-top          : -(circleSize/2)
+  position            : absolute
+  top                 : 50%
+  width               : circleSize
 
 :local(.root)
   border-radius       : 50%
-  border              : 1px solid red
+  background-color    : #ccc
   height              : rootSize
-  margin-left         : 35px
   padding             : (hourSize/2)
   position            : relative
   width               : rootSize
 
 :local(.clock)
-  border-radius       : 50%
-  height              : clockSize
-  left                : 50%
-  margin-left         : -(clockSize/2)
-  margin-top          : -(clockSize/2)
-  position            : absolute
-  top                 : 50%
-  width               : clockSize
+  centeredCircle      clockSize
 
-:local(.clockInner)
-  border-radius       : 50%
-  border: 1px solid blue
-  height              : clockSizeInner
-  left                : 50%
-  margin-left         : -(clockSizeInner/2)
-  margin-top          : -(clockSizeInner/2)
-  position            : absolute
-  top                 : 50%
-  width               : clockSizeInner
-  z-index             : 2
+:local(.clockHolder)
+  centeredCircle      clockHolderSize
+
+:local(.innerClock)
+  centeredCircle      innerClockSize
+
+:local(.innerClockHolder)
+  centeredCircle      innerClockHolderSize
 
 :local(.hand)
-  background-color    : blue
+  background-color    : magenta
   bottom              : 50%
   display             : block
   height              : clockRadius - (knobSize/2)
@@ -50,21 +53,24 @@ handWidth             = 2px
   width               : handWidth
 
   &:before
-    background-color  : blue
+    background-color  : magenta
     border-radius     : 50%
     bottom            : 0
     content           : ''
-    height            : 8px
+    height            : handDotSize
     left              : 50%
-    margin-bottom     : -4px
-    margin-left       : -4px
+    margin-bottom     : -(handDotSize/2)
+    margin-left       : -(handDotSize/2)
     position          : absolute
-    width             : 8px
+    width             : handDotSize
+
+:local(.root).hand-inner :local(.hand)
+  height              : clockRadius - (knobSize/2) - knobSize - innerPadding
 
 :local(.knob)
   cursor              : pointer
   border-radius       : 50%
-  background-color    : blue
+  background-color    : magenta
   height              : knobSize
   left                : 50%
   margin-left         : -(knobSize/2)
@@ -78,6 +84,7 @@ handWidth             = 2px
 :local(.hour)
   color               : #444
   border-radius       : 50%
+  background-color    : gray
   height              : hourSize
   line-height         : hourSize
   margin-left         : -(hourSize/2)
@@ -87,8 +94,27 @@ handWidth             = 2px
   text-align          : center
   width               : hourSize
 
-:local(.hours)
+:local(.innerHour)
+  color               : purple
+  border-radius       : 50%
+  height              : hourSize
+  line-height         : hourSize
+  background-color    : yellowgreen
+  margin-left         : -(hourSize/2)
+  pointer-events      : none
+  margin-top          : -(hourSize/2)
+  position            : absolute
+  text-align          : center
+  width               : hourSize
+
+:local(.clock)
   for num in 1 2 3 4 5 6 7 8 9 10 11 12
     :local(.hour):nth-child({num})
-      left            : (clockRadius + clockRadius * sin(PI * 2 * (num/12)))px
-      top             : (clockRadius - clockRadius * cos(PI * 2 * (num/12)))px
+      left            : ((clockRadius) + (clockRadius) * sin(PI * 2 * (num/12)))
+      top             : ((clockRadius) - (clockRadius) * cos(PI * 2 * (num/12)))
+
+:local(.innerClock)
+  for num in 1 2 3 4 5 6 7 8 9 10 11 12
+    :local(.innerHour):nth-child({num})
+      left            : (clockInnerRadius + clockInnerRadius * sin(PI * 2 * (num/12)))
+      top             : (clockInnerRadius - clockInnerRadius * cos(PI * 2 * (num/12)))
