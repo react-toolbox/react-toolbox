@@ -20,8 +20,8 @@
     text-transform                : uppercase
     border-radius                 : (SPACE / 8)
     > *
-      vertical-align              : bottom
-    > .icon
+      vertical-align              : middle
+    > [data-react-toolbox='icon']
       font-size                   : FONT_SIZE_BIG
       margin-right                : (SPACE / 2)
     > abbr
@@ -32,15 +32,15 @@
   &.flat
     background-color          : transparent
     &:not(.primary):not(.accent)
-      > [data-component-ripple]
+      > [data-react-toolbox='ripple']
         background-color      : alpha(TEXT, 12.5%)
     &.primary
       color                   : PRIMARY
-      > [data-component-ripple]
+      > [data-react-toolbox='ripple']
         background-color      : alpha(PRIMARY, 12.5%)
     &.accent
       color                   : ACCENT
-      > [data-component-ripple]
+      > [data-react-toolbox='ripple']
         background-color      : alpha(ACCENT, 12.5%)
 
   &.floating
@@ -48,7 +48,7 @@
     height                        : BUTTON_CIRCLE_HEIGHT
     font-size                     : (BUTTON_CIRCLE_HEIGHT / 2.25)
     border-radius                 : 50%
-    > .icon
+    > [data-react-toolbox='icon']
       line-height                 : BUTTON_CIRCLE_HEIGHT
 
   // Overrides
@@ -74,7 +74,7 @@
       &.accent
         background-color        : ACCENT
 
-    &:not(.primary):not(.accent) > [data-component-ripple]
+    &:not(.primary):not(.accent) > [data-react-toolbox='ripple']
       background-color          : DIVIDER
 
   > *
