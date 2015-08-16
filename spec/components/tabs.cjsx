@@ -19,5 +19,8 @@ module.exports = React.createClass
         <Tab label='Fourth' hidden>
           <small>Fourth</small>
         </Tab>
+        <Tab label='Fifth'>
+          <small>Fifth</small>
+        </Tab>
       </Tabs>
     </section>

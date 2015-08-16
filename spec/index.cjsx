@@ -12,6 +12,7 @@ Form          = require './components/form'
 Progress      = require './components/progress'
 Slider        = require './components/slider'
 Switch        = require './components/switch'
+Tabs          = require './components/tabs'
 
 Test = React.createClass
 
@@ -31,6 +32,7 @@ Test = React.createClass
       <Progress />
       <Slider />
       <Switch />
+      <Tabs />
     </app>
 
 React.render <Test/>, document.body

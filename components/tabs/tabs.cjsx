@@ -19,19 +19,19 @@ module.exports = React.createClass
 
   # -- Lifecycle
   componentDidMount: ->
-    @setState pointer: @pointerPosition @state.index
+    @setState pointer: _pointerPosition @state.index, @refs.navigation.getDOMNode()
 
   componentWillReceiveProps: (next_props) ->
     index = next_props.index or @state.index
     @setState
       index   : index
-      pointer : @pointerPosition index
+      pointer : _pointerPosition index, @refs.navigation.getDOMNode()
 
   # -- Events
   onClick: (index, event, ref) ->
     @setState
       index   : index
-      pointer : @pointerPosition index
+      pointer : _pointerPosition index, @refs.navigation.getDOMNode()
     @props.onChange? @
 
   # -- Render
@@ -65,11 +65,10 @@ module.exports = React.createClass
       { tabs }
     </div>
 
-  # -- Private methods
-  pointerPosition: (index = 0) ->
-    navigation = @refs.navigation.getDOMNode()
-    label = navigation.children[index].getBoundingClientRect()
-    style =
-      top   : "#{navigation.getBoundingClientRect().height}px"
-      left  : "#{label.left}px"
-      width : "#{label.width}px"
+# -- Private methods
+_pointerPosition = (index = 0, navigation) ->
+  label = navigation.children[index].getBoundingClientRect()
+  style =
+    top   : "#{navigation.getBoundingClientRect().height}px"
+    left  : "#{label.left}px"
+    width : "#{label.width}px"
