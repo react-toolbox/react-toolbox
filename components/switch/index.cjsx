@@ -28,7 +28,7 @@ module.exports = React.createClass
       @setState
         value : not @state.value
         ripple: change: true
-      @props.onChange? event, @
+      setTimeout (=> @props.onChange? event, @), 10
 
   # -- Render
   render: ->
