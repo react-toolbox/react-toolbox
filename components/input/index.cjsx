@@ -69,13 +69,21 @@ module.exports = React.createClass
     <div data-react-toolbox='input' className={className}>
       {
         if @props.multiline
-          <textarea ref='input' {...@props} value={@state.value}
-                    onBlur={@onBlur}
+          <textarea ref='input' {...@props}
+                    value={@state.value}
                     onChange={@onChange}
+                    onKeyPress={@onKeyPress}
                     onFocus={@onFocus}
-                    onKeyPress={@onKeyPress} />
+                    onBlur={@onBlur}
+                    value={@state.value} />
+
+        else if @props.type is 'file'
+          delete @props.value
+          <input ref="input" {...@props} onChange={@onChange} />
+
         else
-          <input ref='input' {...@props} value={@state.value}
+          <input ref='input' {...@props}
+                 value={@state.value}
                  checked={@state.checked} 
                  onBlur={@onBlur}
                  onChange={@onChange}
@@ -95,10 +103,16 @@ module.exports = React.createClass
     @refs.input.focus?()
 
   getValue: ->
-    @refs.input?.getDOMNode()[if @state.touch then 'checked' else 'value']
+    if @props.type is 'file'
+      @state.value
+    else
+      @refs.input?.getDOMNode()[if @state.touch then 'checked' else 'value']
 
   setError: (data = 'Unknown error') ->
     @setState error: @props.error or data
 
   setValue: (data) ->
-    @setState value: data
+    data = false if @state.touch and data is undefined
+    attributes = value: data
+    attributes.checked = data if @state.touch and data?
+    @setState attributes
