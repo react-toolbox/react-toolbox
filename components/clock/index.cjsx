@@ -54,7 +54,6 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    console.log @props
     <div className={css.root}>
       <div ref="wrapper" className={css.wrapper} style={height: @state.radius * 2} >
         {
