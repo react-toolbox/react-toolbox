@@ -1,54 +1,45 @@
-rootSize              = 250px
-innerPadding          = 12px
-knobSize              = 28px
-hourSize              = 28px
-handWidth             = 2px
-handDotSize           = 8px
-clockSize             = rootSize - knobSize - innerPadding - 5px
-clockRadius           = clockSize / 2
-clockHolderSize       = clockSize - knobSize - innerPadding
-innerClockSize        = clockHolderSize - knobSize - innerPadding
-clockInnerRadius      = innerClockSize / 2
-innerClockHolderSize  = innerClockSize - knobSize - innerPadding
-
-centeredCircle(circleSize)
-  border-radius       : 50%
-  height              : circleSize
-  left                : 50%
-  margin-left         : -(circleSize/2)
-  margin-top          : -(circleSize/2)
-  position            : absolute
-  top                 : 50%
-  width               : circleSize
+handWidth   = 4px
+handDotSize = 6px
+knobSize    = 34px
 
 :local(.root)
-  border-radius       : 50%
-  background-color    : #ccc
-  height              : rootSize
-  margin-left         : 30px
-  padding             : (hourSize/2)
-  position            : relative
-  width               : rootSize
+  border: 1px solid pink
+  padding: 20px
 
-:local(.clock)
-  centeredCircle      clockSize
+:local(.wrapper)
+  position: relative
 
-:local(.clockHolder)
-  centeredCircle      clockHolderSize
+:local(.face)
+  border-radius: 50%
+  position: relative
 
-:local(.innerClock)
-  centeredCircle      innerClockSize
+:local(.number)
+  width: 20px
+  text-align: center
+  pointer-events: none
+  height: 20px
+  margin-left: -10px
+  margin-top: -10px
 
-:local(.innerClockHolder)
-  centeredCircle      innerClockHolderSize
+:local(.outerSphere), :local(.innerSphere)
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translateX(-50%) translateY(-50%)
+
+:local(.outerSphere)
+  background: gray
+
+:local(.innerSphere)
+  background: yellow
 
 :local(.hand)
   background-color    : magenta
   bottom              : 50%
   display             : block
-  height              : clockRadius - (knobSize/2)
   left                : 50%
   margin-left         : -(handWidth/2)
+  opacity             : .6
   position            : absolute
   transform-origin    : 50% 100%
   width               : handWidth
@@ -65,9 +56,6 @@ centeredCircle(circleSize)
     position          : absolute
     width             : handDotSize
 
-:local(.root).hand-inner :local(.hand)
-  height              : clockRadius - (knobSize/2) - knobSize - innerPadding
-
 :local(.knob)
   background-color    : magenta
   border-radius       : 50%
@@ -78,44 +66,3 @@ centeredCircle(circleSize)
   position            : absolute
   top                 : -(knobSize)
   width               : knobSize
-
-:local(.root).pressed :local(.knob)
-    background-color  : pink
-
-:local(.hour)
-  background-color    : gray
-  border-radius       : 50%
-  color               : #444
-  height              : hourSize
-  line-height         : hourSize
-  margin-left         : -(hourSize/2)
-  margin-top          : -(hourSize/2)
-  pointer-events      : none
-  position            : absolute
-  text-align          : center
-  width               : hourSize
-
-:local(.innerHour)
-  background-color    : yellowgreen
-  border-radius       : 50%
-  color               : purple
-  height              : hourSize
-  line-height         : hourSize
-  margin-left         : -(hourSize/2)
-  margin-top          : -(hourSize/2)
-  pointer-events      : none
-  position            : absolute
-  text-align          : center
-  width               : hourSize
-
-:local(.clock)
-  for num in 1 2 3 4 5 6 7 8 9 10 11 12
-    :local(.hour):nth-child({num})
-      left            :  clockRadius + clockRadius * sin(360deg / 12 * num)
-      top             :  clockRadius - clockRadius * cos(360deg / 12 * num)
-
-:local(.innerClock)
-  for num in 1 2 3 4 5 6 7 8 9 10 11 12
-    :local(.innerHour):nth-child({num})
-      left            : clockInnerRadius + clockInnerRadius * sin(360deg / 12 * num)
-      top             : clockInnerRadius - clockInnerRadius * cos(360deg / 12 * num)

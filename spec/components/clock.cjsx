@@ -2,4 +2,7 @@ Clock = require '../../components/clock'
 
 module.exports = React.createClass
   render: ->
-    <Clock />
+    <div>
+      <Clock mode="hours" />
+      <Clock mode="minutes" />
+    </div>
