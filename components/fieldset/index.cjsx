@@ -40,6 +40,12 @@ module.exports = React.createClass
       @setState attributes: attributes, type: _determineType attributes
       @setValue next_props.value or @props.value
 
+  componentDidUpdate: ->
+    if @state.type is TYPE.RADIO
+      no_active = true
+      no_active = false for key, ref of @refs when ref.getValue?() is true
+      @refs[default].setValue true if no_active and default = Object.keys(@refs)?[0]
+
   # -- Events
   onChange: (event) ->
     if @state.type is TYPE.RADIO
