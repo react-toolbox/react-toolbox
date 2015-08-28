@@ -22,6 +22,9 @@ module.exports = React.createClass
   _onHandChange: (degrees) ->
     @props.onChange(@_valueFromDegrees(degrees))
 
+  _onMouseDown: (event)->
+    @refs.hand.mouseStart(event)
+
   # -- Internal Methods
   _valueFromDegrees: (degrees) ->
     if @props.format == 'ampm' || @props.format == '24hr' && @state.innerNumber
@@ -37,6 +40,7 @@ module.exports = React.createClass
 
     <div>
         <Face
+          onMouseDown={@_onMouseDown}
           numbers={if @props.format == '24hr' then OUTER_NUMBERS else INNER_NUMBERS}
           spacing={@props.spacing}
           radius={@props.radius}
@@ -44,12 +48,13 @@ module.exports = React.createClass
         {
           if @props.format == '24hr'
             <Face
+              onMouseDown={@_onMouseDown}
               numbers={INNER_NUMBERS}
               spacing={@props.spacing}
               radius={innerRadius}
               activeNumber={@props.selected} />
         }
-        <Hand
+        <Hand ref='hand'
           degrees={@state.degrees}
           initialAngle={@props.selected * STEP}
           length={handLength}

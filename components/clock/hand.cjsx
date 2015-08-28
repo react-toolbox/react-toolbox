@@ -32,24 +32,28 @@ module.exports = React.createClass
       @props.onHandChange(nextState.angle)
 
   # -- Event handlers
-  _onKnobMouseDown: ->
-    _addEventsToDocument(@_getMouseEventMap())
-
   _getMouseEventMap: ->
     mousemove : @onMouseMove
     mouseup   : @onMouseUp
 
   onMouseMove: (event) ->
-    position = _getMousePosition(event)
+    @_move(_getMousePosition(event))
+
+  onMouseUp: ->
+    @_end(@_getMouseEventMap())
+
+  # -- Public API
+  mouseStart: (event) ->
+    _addEventsToDocument(@_getMouseEventMap())
+    @_move(_getMousePosition(event))
+
+  # -- Internal methods
+  _move: (position) ->
     @props.onHandMouseMove(@_getPositionRadius(position)) if @props.onHandMouseMove
     newDegrees = @_trimAngleToValue(@_positionToAngle(position))
     newDegrees = if newDegrees == 360 then 0 else newDegrees
     @setState(angle: newDegrees) if @state.angle != newDegrees
 
-  onMouseUp: ->
-    @_end(@_getMouseEventMap())
-
-  # -- Internal methods
   _getPositionRadius: (position) ->
     x = @props.origin.x - position.x
     y = @props.origin.y - position.y
@@ -71,7 +75,7 @@ module.exports = React.createClass
     style.height = @props.length - @state.knobWidth/2
 
     <div className={css.hand + ' ' + @props.className} style={style}>
-      <div ref='knob' className={css.knob} onMouseDown={@_onKnobMouseDown}></div>
+      <div ref='knob' className={css.knob}></div>
     </div>
 
 # -- Static Helper functions

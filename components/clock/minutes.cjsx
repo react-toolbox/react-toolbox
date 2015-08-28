@@ -16,17 +16,21 @@ module.exports = React.createClass
   _onHandChange: (degrees) ->
     @props.onChange(degrees/STEP)
 
+  _onMouseDown: (event)->
+    @refs.hand.mouseStart(event)
+
   # -- Render
   render: ->
     handClass = if MINUTES.indexOf(('0' + @props.selected).slice(-2)) == -1 then 'smallKnob' else ''
 
     <div>
       <Face
+        onMouseDown={@_onMouseDown}
         numbers={MINUTES}
         spacing={@props.spacing}
         radius={@props.radius}
         activeNumber={@props.selected} />
-      <Hand
+      <Hand ref='hand'
         className={handClass}
         initialAngle={@props.selected * STEP}
         length={@props.radius - @props.spacing}
