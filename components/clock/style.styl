@@ -1,68 +1,88 @@
-handWidth   = 4px
-handDotSize = 6px
-knobSize    = 34px
+@import '../constants'
+
+NUMBER_SIZE     = 20px
+HAND_WIDTH      = 4px
+HAND_DOT_SIZE   = 6px
+KNOB_SIZE       = 34px
+SMALL_KNOB_SIZE = 14px
 
 :local(.root)
-  border: 1px solid pink
-  padding: 20px
+  padding             : 20px
 
 :local(.wrapper)
-  position: relative
+  background-color    : DIVIDER
+  border-radius       : 50%
+  position            : relative
 
 :local(.face)
-  border-radius: 50%
-  position: relative
+  border-radius       : 50%
+  pointer-events      : none
+  position            : relative
+  z-index             : Z_INDEX_HIGH
 
 :local(.number)
-  width: 20px
-  text-align: center
-  pointer-events: none
-  height: 20px
-  margin-left: -10px
-  margin-top: -10px
+  height              : NUMBER_SIZE
+  margin-left         : -(NUMBER_SIZE/2)
+  margin-top          : -(NUMBER_SIZE/2)
+  position            : relative
+  text-align          : center
+  width               : NUMBER_SIZE
 
-:local(.outerSphere), :local(.innerSphere)
-  position: absolute
-  top: 50%
-  left: 50%
-  transform: translateX(-50%) translateY(-50%)
+  &.active
+    color             : WHITE
 
-:local(.outerSphere)
-  background: gray
-
-:local(.innerSphere)
-  background: yellow
+:local(.face)
+  position            : absolute
+  top                 : 50%
+  left                : 50%
+  transform           : translateX(-50%) translateY(-50%)
 
 :local(.hand)
-  background-color    : magenta
+  background-color    : ACCENT
   bottom              : 50%
   display             : block
   left                : 50%
-  margin-left         : -(handWidth/2)
-  opacity             : .6
+  margin-left         : -(HAND_WIDTH/2)
   position            : absolute
   transform-origin    : 50% 100%
-  width               : handWidth
+  width               : HAND_WIDTH
 
   &:before
-    background-color  : magenta
+    background-color  : ACCENT
     border-radius     : 50%
     bottom            : 0
     content           : ''
-    height            : handDotSize
+    height            : HAND_DOT_SIZE
     left              : 50%
-    margin-bottom     : -(handDotSize/2)
-    margin-left       : -(handDotSize/2)
+    margin-bottom     : -(HAND_DOT_SIZE/2)
+    margin-left       : -(HAND_DOT_SIZE/2)
     position          : absolute
-    width             : handDotSize
+    width             : HAND_DOT_SIZE
+
+  &.small-knob :local(.knob)
+    top               : -(KNOB_SIZE/2)
+    margin-top        : -(SMALL_KNOB_SIZE/2)
+    margin-left       : -(SMALL_KNOB_SIZE/2)
+    height            : SMALL_KNOB_SIZE
+    width             : SMALL_KNOB_SIZE
+
+    &:before
+      background      : ACCENT
+      bottom          : -((KNOB_SIZE - SMALL_KNOB_SIZE)/2)
+      content         : ''
+      height          : ((KNOB_SIZE - SMALL_KNOB_SIZE)/2)
+      left            : 50%
+      margin-left     : -(HAND_WIDTH/2)
+      position        : absolute
+      width           : HAND_WIDTH
 
 :local(.knob)
-  background-color    : magenta
+  background-color    : ACCENT
   border-radius       : 50%
   cursor              : pointer
-  height              : knobSize
+  height              : KNOB_SIZE
   left                : 50%
-  margin-left         : -(knobSize/2)
+  margin-left         : -(KNOB_SIZE/2)
   position            : absolute
-  top                 : -(knobSize)
-  width               : knobSize
+  top                 : -(KNOB_SIZE)
+  width               : KNOB_SIZE

@@ -6,11 +6,23 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    onChange : React.PropTypes.func
+    initialValue : React.PropTypes.number
+    onChange     : React.PropTypes.func
+
+  getDefaultProps: ->
+    initialValue : 0
+    onChange     : null
+
+  getInitialState: ->
+    value        : @props.initialValue
 
   # -- Events
-  _onHandChange: (value) ->
-    @props.onChange(parseInt(value/STEP)) if @props.onChange
+  _onHandChange: (degrees) ->
+    @setState value: parseInt(degrees/STEP)
+
+  # -- Internal methods
+  _valueIsExactMinute: ->
+    MINUTES.indexOf(('0' + @state.value).slice(-2)) != -1
 
   # -- Render
   render: ->
@@ -19,9 +31,12 @@ module.exports = React.createClass
         className={css.outerSphere}
         numbers={MINUTES}
         spacing={@props.spacing}
-        radius={@props.radius} />
+        radius={@props.radius}
+        activeNumber={@state.value} />
       <Hand
         degrees={0}
+        className={'small-knob' unless @_valueIsExactMinute()}
+        initialAngle={@props.initialValue * STEP}
         length={@props.radius - @props.spacing}
         onHandChange={@_onHandChange}
         origin={@props.center}

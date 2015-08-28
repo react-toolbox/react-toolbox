@@ -4,9 +4,9 @@ module.exports = React.createClass
 
   # -- States & Properties
   getDefaultProps: ->
-    className : ''
-    numbers   : []
-    radius    : 0
+    numbers      : []
+    radius       : 0
+    activeNumber : null
 
   # -- Internal methods
   _numberStyle: (radius, num) ->
@@ -20,10 +20,11 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    <div ref="root" className={"#{@props.className} #{css.face}"} style={@_faceStyle()}>
+    <div ref="root" className={css.face} style={@_faceStyle()}>
       { for i, k in @props.numbers
-          <span className={css.number}
-                key={i} style={@_numberStyle(@props.radius - @props.spacing, k + 1)}>
+          <span className={css.number + (if parseInt(i) == @props.activeNumber then ' active' else '')}
+                style={@_numberStyle(@props.radius - @props.spacing, k + 1)}
+                key={i} >
             {i}
           </span> }
     </div>

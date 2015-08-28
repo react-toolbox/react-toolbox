@@ -5,25 +5,31 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
+    initialAngle : React.PropTypes.number
+    className    : React.PropTypes.string
     onHandChange : React.PropTypes.func
+    onHandMoved  : React.PropTypes.func
 
   getDefaultProps: ->
-    angle        : 0
+    className    : ''
+    initialAngle : 0
     length       : 0
     origin       : {}
 
   getInitialState: ->
-    angle        : @props.angle
+    angle        : @props.initialAngle
     knobWidth    : 0
     radius       : 0
 
   # -- Lifecycle
   componentDidMount: ->
-    @setState
-      knobWidth  : @refs.knob.getDOMNode().offsetWidth
+    @setState knobWidth: @refs.knob.getDOMNode().offsetWidth
 
   componentWillUpdate: (nextProps, nextState) ->
-    @props.onHandChange(nextState.angle)
+    if nextState.angle  != @state.angle  ||
+       nextProps.length != @props.length &&
+       @props.length != 0
+      @props.onHandChange(nextState.angle)
 
   # -- Event handlers
   _onKnobMouseDown: ->
@@ -40,6 +46,9 @@ module.exports = React.createClass
     newDegrees = if newDegrees == 360 then 0 else newDegrees
     @setState(angle: newDegrees) if @state.angle != newDegrees
 
+  onMouseUp: ->
+    @_end(@_getMouseEventMap())
+
   # -- Internal methods
   _getPositionRadius: (position) ->
     x = @props.origin.x - position.x
@@ -52,10 +61,8 @@ module.exports = React.createClass
   _positionToAngle: (position) ->
     _angle360(@props.origin.x, @props.origin.y, position.x, position.y)
 
-  onMouseUp: ->
-    @_end(@_getMouseEventMap())
-
   _end: (events) ->
+    @props.onHandMoved() if @props.onHandMoved
     _removeEventsFromDocument(events)
 
   # -- Render
@@ -63,7 +70,7 @@ module.exports = React.createClass
     style = prefixer.transform("rotate(#{@state.angle}deg)")
     style.height = @props.length - @state.knobWidth/2
 
-    <div className={css.hand} style={style}>
+    <div className={css.hand + ' ' + @props.className} style={style}>
       <div ref='knob' className={css.knob} onMouseDown={@_onKnobMouseDown}></div>
     </div>
 

@@ -7,13 +7,14 @@ module.exports = React.createClass
   # -- States & Properties
   propTypes:
     className : React.PropTypes.string
-    mode      : React.PropTypes.oneOf(['hours', 'minutes'])
+    startMode : React.PropTypes.oneOf(['hours', 'minutes'])
 
   getDefaultProps: ->
     className : ''
-    mode      : 'hours'
+    startMode : 'hours'
 
   getInitialState: ->
+    mode      : @props.startMode
     radius    : 0
 
   # -- Lifecycle
@@ -57,14 +58,16 @@ module.exports = React.createClass
     <div className={css.root}>
       <div ref="wrapper" className={css.wrapper} style={height: @state.radius * 2} >
         {
-          if @props.mode == 'minutes'
+          if @state.mode == 'minutes'
             <Minutes
               center={@state.center}
               onChange={@onMinuteChange}
               radius={@state.radius}
               spacing={@state.radius * 0.16} />
-          else if @props.mode == 'hours'
+          else if @state.mode == 'hours'
             <Hours
+              format={'24hr'}
+              initialValue={16}
               center={@state.center}
               onChange={@onHourChange}
               radius={@state.radius}
