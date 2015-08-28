@@ -1,12 +1,12 @@
-prefixer = require "../prefixer"
 css      = require './style'
+prefixer = require "../prefixer"
 
 module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    initialAngle : React.PropTypes.number
     className    : React.PropTypes.string
+    initialAngle : React.PropTypes.number
     onHandChange : React.PropTypes.func
     onHandMoved  : React.PropTypes.func
 

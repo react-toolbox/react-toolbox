@@ -1,4 +1,3 @@
-css  = require './style'
 Face = require './face'
 Hand = require './hand'
 
@@ -6,37 +5,30 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    initialValue : React.PropTypes.number
-    onChange     : React.PropTypes.func
+    selected : React.PropTypes.number
+    onChange : React.PropTypes.func
 
   getDefaultProps: ->
-    initialValue : 0
-    onChange     : null
-
-  getInitialState: ->
-    value        : @props.initialValue
+    selected : 0
+    onChange : null
 
   # -- Events
   _onHandChange: (degrees) ->
-    @setState value: parseInt(degrees/STEP)
-
-  # -- Internal methods
-  _valueIsExactMinute: ->
-    MINUTES.indexOf(('0' + @state.value).slice(-2)) != -1
+    @props.onChange(degrees/STEP)
 
   # -- Render
   render: ->
+    handClass = if MINUTES.indexOf(('0' + @props.selected).slice(-2)) == -1 then 'smallKnob' else ''
+
     <div>
       <Face
-        className={css.outerSphere}
         numbers={MINUTES}
         spacing={@props.spacing}
         radius={@props.radius}
-        activeNumber={@state.value} />
+        activeNumber={@props.selected} />
       <Hand
-        degrees={0}
-        className={'small-knob' unless @_valueIsExactMinute()}
-        initialAngle={@props.initialValue * STEP}
+        className={handClass}
+        initialAngle={@props.selected * STEP}
         length={@props.radius - @props.spacing}
         onHandChange={@_onHandChange}
         origin={@props.center}

@@ -16,6 +16,8 @@ module.exports = React.createClass
     format    : '24hr'
 
   getInitialState: ->
+    hour      : if @props.format == '24hr' then 0 else 12
+    minute    : 0
     radius    : 0
 
   # -- Lifecycle
@@ -32,10 +34,10 @@ module.exports = React.createClass
 
   # -- Events handlers
   onHourChange: (hour) ->
-    console.log "Hour changed to #{hour}"
+    @setState hour: hour
 
   onMinuteChange: (minute) ->
-    console.log "Minute changed to #{minute}"
+    @setState minute: minute
 
   # -- Helper methods
   _getRadius: ->
@@ -63,6 +65,7 @@ module.exports = React.createClass
               center={@state.center}
               onChange={@onMinuteChange}
               radius={@state.radius}
+              selected={@state.minute}
               spacing={@state.radius * 0.16} />
           else if @props.display == 'hours'
             <Hours
@@ -70,6 +73,7 @@ module.exports = React.createClass
               format={@props.format}
               onChange={@onHourChange}
               radius={@state.radius}
+              selected={@state.hour}
               spacing={@state.radius * 0.16} />
         }
       </div>

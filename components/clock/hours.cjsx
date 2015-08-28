@@ -5,37 +5,26 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    initialValue : React.PropTypes.number
     format       : React.PropTypes.oneOf(['24hr', 'ampm'])
     onChange     : React.PropTypes.func
     onHandMoved  : React.PropTypes.func
-
-  getDefaultProps: ->
-    initialValue : null
-    format       : '24hr'
-    onChange     : null
+    selected     : React.PropTypes.number
 
   getInitialState: ->
-    inner        : @props.format == '24hr' && 0 < @props.initialValue <= 12
-    value        : @props.initialValue || if @props.format == '24hr' then 0 else 12
-
-  # -- Lifecycle
-  componentWillUpdate: (nextProps, nextState) ->
-    @props.onChange(nextState.value) if nextState.value != @state.value && @props.onChange
+    innerNumber  : @props.format == '24hr' && 0 < @props.selected <= 12
 
   # -- Events
   _onHandMouseMove: (radius) ->
     if @props.format == '24hr'
       currentInner = radius < @props.radius - @props.spacing * 2
-      @setState inner: currentInner if @state.inner != currentInner
+      @setState innerNumber: currentInner if @state.innerNumber != currentInner
 
   _onHandChange: (degrees) ->
-    newValue = @_valueFromDegrees(degrees)
-    @setState value: newValue if @state.value != newValue
+    @props.onChange(@_valueFromDegrees(degrees))
 
   # -- Internal Methods
   _valueFromDegrees: (degrees) ->
-    if @props.format == 'ampm' || @props.format == '24hr' && @state.inner
+    if @props.format == 'ampm' || @props.format == '24hr' && @state.innerNumber
       parseInt(INNER_NUMBERS[degrees/STEP])
     else
       parseInt(OUTER_NUMBERS[degrees/STEP])
@@ -43,7 +32,7 @@ module.exports = React.createClass
   # -- Render
   render: ->
     innerRadius = @props.radius - @props.spacing * 2
-    handRadius  = if @state.inner then innerRadius else @props.radius
+    handRadius  = if @state.innerNumber then innerRadius else @props.radius
     handLength  = handRadius - @props.spacing
 
     <div>
@@ -51,18 +40,18 @@ module.exports = React.createClass
           numbers={if @props.format == '24hr' then OUTER_NUMBERS else INNER_NUMBERS}
           spacing={@props.spacing}
           radius={@props.radius}
-          activeNumber={@state.value} />
+          activeNumber={@props.selected} />
         {
           if @props.format == '24hr'
             <Face
               numbers={INNER_NUMBERS}
               spacing={@props.spacing}
               radius={innerRadius}
-              activeNumber={@state.value} />
+              activeNumber={@props.selected} />
         }
         <Hand
           degrees={@state.degrees}
-          initialAngle={@props.initialValue * STEP}
+          initialAngle={@props.selected * STEP}
           length={handLength}
           onHandMouseMove={@_onHandMouseMove}
           onHandMoved={@props.onHandMoved}
