@@ -7,14 +7,15 @@ module.exports = React.createClass
   # -- States & Properties
   propTypes:
     className : React.PropTypes.string
-    startMode : React.PropTypes.oneOf(['hours', 'minutes'])
+    display   : React.PropTypes.oneOf(['hours', 'minutes'])
+    format    : React.PropTypes.oneOf(['24hr', 'ampm'])
 
   getDefaultProps: ->
     className : ''
-    startMode : 'hours'
+    display   : 'hours'
+    format    : '24hr'
 
   getInitialState: ->
-    mode      : @props.startMode
     radius    : 0
 
   # -- Lifecycle
@@ -24,8 +25,7 @@ module.exports = React.createClass
 
   componentWillUpdate: ->
     center = @_getCenter()
-    if @state.center?.x != center.x && @state.center?.y != center.y
-      @setState center: center
+    @setState center: center if @state.center?.x != center.x && @state.center?.y != center.y
 
   componentWillUnmount: ->
     window.removeEventListener('resize', @handleResize)
@@ -58,17 +58,16 @@ module.exports = React.createClass
     <div className={css.root}>
       <div ref="wrapper" className={css.wrapper} style={height: @state.radius * 2} >
         {
-          if @state.mode == 'minutes'
+          if @props.display == 'minutes'
             <Minutes
               center={@state.center}
               onChange={@onMinuteChange}
               radius={@state.radius}
               spacing={@state.radius * 0.16} />
-          else if @state.mode == 'hours'
+          else if @props.display == 'hours'
             <Hours
-              format={'24hr'}
-              initialValue={16}
               center={@state.center}
+              format={@props.format}
               onChange={@onHourChange}
               radius={@state.radius}
               spacing={@state.radius * 0.16} />
