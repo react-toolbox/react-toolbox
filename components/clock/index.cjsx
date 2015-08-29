@@ -1,49 +1,62 @@
-css     = require './style'
-Hours   = require './hours'
-Minutes = require './minutes'
+css       = require './style'
+dateUtils = require '../date_utils'
+Hours     = require './hours'
+Minutes   = require './minutes'
 
 module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    className : React.PropTypes.string
-    display   : React.PropTypes.oneOf(['hours', 'minutes'])
-    format    : React.PropTypes.oneOf(['24hr', 'ampm'])
+    className   : React.PropTypes.string
+    display     : React.PropTypes.oneOf(['hours', 'minutes'])
+    format      : React.PropTypes.oneOf(['24hr', 'ampm'])
+    initialTime : React.PropTypes.object
+    onChange    : React.PropTypes.func
 
   getDefaultProps: ->
-    className : ''
-    display   : 'hours'
-    format    : '24hr'
+    className   : ''
+    display     : 'hours'
+    format      : '24hr'
+    initialTime : new Date()
 
   getInitialState: ->
-    hour      : if @props.format == '24hr' then 0 else 12
-    minute    : 0
-    radius    : 0
+    radius      : 0
+    time        : @props.initialTime
 
   # -- Lifecycle
   componentDidMount: ->
-    window.addEventListener('resize', @handleResize)
+    window.addEventListener('resize', @_handleResize)
     @setState radius: @_getRadius()
 
-  componentWillUpdate: ->
+  componentWillUpdate: (props, state) ->
     center = @_getCenter()
-    @setState center: center if @state.center?.x != center.x && @state.center?.y != center.y
+    if state.time.getTime() != @state.time.getTime() && @props.onChange
+      @props.onChange(state.time)
+    if @state.center?.x != center.x && @state.center?.y != center.y
+      @setState center: center
 
   componentWillUnmount: ->
-    window.removeEventListener('resize', @handleResize)
+    window.removeEventListener('resize', @_handleResize)
 
   # -- Events handlers
-  onHourChange: (hour) ->
-    @setState hour: hour
+  onHourChange: (hours) ->
+    @setState time: dateUtils.setHours(@state.time, @_adaptHourToFormat(hours))
 
-  onMinuteChange: (minute) ->
-    @setState minute: minute
+  onMinuteChange: (minutes) ->
+    @setState time: dateUtils.setMinutes(@state.time, minutes)
 
   # -- Helper methods
   _getRadius: ->
     @refs.wrapper.getDOMNode().getBoundingClientRect().width/2
 
-  handleResize: ->
+  _adaptHourToFormat: (hour) ->
+    if @props.format == 'ampm'
+      if dateUtils.timeMode(@state.time) == 'pm'
+        if hour < 12 then hour + 12 else hour
+      else
+        if hour == 12 then 0 else hour
+
+  _handleResize: ->
     @setState
       center: @_getCenter()
       radius: @_getRadius()
@@ -55,6 +68,10 @@ module.exports = React.createClass
       y: bounds.top  + (bounds.bottom - bounds.top) /2
     }
 
+  # -- Public methods
+  toggleTimeMode: ->
+    @setState time: dateUtils.toggleTimeMode(@state.time)
+
   # -- Render
   render: ->
     <div className={css.root}>
@@ -65,7 +82,7 @@ module.exports = React.createClass
               center={@state.center}
               onChange={@onMinuteChange}
               radius={@state.radius}
-              selected={@state.minute}
+              selected={@state.time.getMinutes()}
               spacing={@state.radius * 0.16} />
           else if @props.display == 'hours'
             <Hours
@@ -73,7 +90,7 @@ module.exports = React.createClass
               format={@props.format}
               onChange={@onHourChange}
               radius={@state.radius}
-              selected={@state.hour}
+              selected={@state.time.getHours()}
               spacing={@state.radius * 0.16} />
         }
       </div>

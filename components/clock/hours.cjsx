@@ -37,6 +37,7 @@ module.exports = React.createClass
     innerRadius = @props.radius - @props.spacing * 2
     handRadius  = if @state.innerNumber then innerRadius else @props.radius
     handLength  = handRadius - @props.spacing
+    ampmActive  = if @props.format == '24hr' then @props.selected else @props.selected % 12 || 12
 
     <div>
         <Face
@@ -44,7 +45,7 @@ module.exports = React.createClass
           numbers={if @props.format == '24hr' then OUTER_NUMBERS else INNER_NUMBERS}
           spacing={@props.spacing}
           radius={@props.radius}
-          activeNumber={@props.selected} />
+          active={ampmActive} />
         {
           if @props.format == '24hr'
             <Face
@@ -52,7 +53,7 @@ module.exports = React.createClass
               numbers={INNER_NUMBERS}
               spacing={@props.spacing}
               radius={innerRadius}
-              activeNumber={@props.selected} />
+              active={@props.selected} />
         }
         <Hand ref='hand'
           degrees={@state.degrees}

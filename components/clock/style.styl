@@ -2,9 +2,9 @@
 
 NUMBER_SIZE     = 20px
 HAND_WIDTH      = 4px
-HAND_DOT_SIZE   = 6px
+HAND_DOT_SIZE   = 10px
 KNOB_SIZE       = 34px
-SMALL_KNOB_SIZE = 14px
+SMALL_KNOB_SIZE = 12px
 
 :local(.root)
   padding             : 20px
@@ -62,17 +62,25 @@ SMALL_KNOB_SIZE = 14px
     width             : HAND_DOT_SIZE
 
   &.smallKnob :local(.knob)
-    top               : -(KNOB_SIZE/2)
-    margin-top        : -(SMALL_KNOB_SIZE/2)
-    margin-left       : -(SMALL_KNOB_SIZE/2)
-    height            : SMALL_KNOB_SIZE
-    width             : SMALL_KNOB_SIZE
+    background-color: lighten(ACCENT, 70%)
+
+    &:after
+      background      : ACCENT
+      border-radius   : 50%
+      content         : ''
+      height          : SMALL_KNOB_SIZE
+      left            : 50%
+      margin-left     : -(SMALL_KNOB_SIZE/2)
+      margin-top      : -(SMALL_KNOB_SIZE/2)
+      position        : absolute
+      top             : 50%
+      width           : SMALL_KNOB_SIZE
 
     &:before
       background      : ACCENT
-      bottom          : -((KNOB_SIZE - SMALL_KNOB_SIZE)/2)
+      bottom          : 0
       content         : ''
-      height          : ((KNOB_SIZE - SMALL_KNOB_SIZE)/2)
+      height          : KNOB_SIZE - SMALL_KNOB_SIZE
       left            : 50%
       margin-left     : -(HAND_WIDTH/2)
       position        : absolute

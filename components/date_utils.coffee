@@ -72,3 +72,22 @@ module.exports =
 
   cloneDatetime: (date) ->
     new Date(date.getTime())
+
+  timeMode: (datetime) ->
+    if datetime.getHours() >= 12 then 'pm' else 'am'
+
+  toggleTimeMode: (datetime) ->
+    newDatetime = @cloneDatetime(datetime)
+    hours = datetime.getHours()
+    if hours > 12 then newDatetime.setHours(hours - 12) else newDatetime.setHours(hours + 12)
+    newDatetime
+
+  setHours: (datetime, hours) ->
+    newDatetime = @cloneDatetime(datetime)
+    newDatetime.setHours(hours)
+    newDatetime
+
+  setMinutes: (datetime, minutes) ->
+    newDatetime = @cloneDatetime(datetime)
+    newDatetime.setMinutes(minutes)
+    newDatetime
