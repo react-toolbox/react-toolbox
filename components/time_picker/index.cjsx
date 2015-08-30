@@ -1,72 +1,61 @@
-css       = require './style'
-Clock     = require '../clock'
-dateUtils = require '../date_utils'
+css        = require './style'
+Input      = require '../input'
+TimeDialog = require './dialog'
 
 module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
     className     : React.PropTypes.string
-    initialTime   : React.PropTypes.object
     format        : React.PropTypes.oneOf(['24hr', 'ampm'])
+    value         : React.PropTypes.object
 
   getDefaultProps: ->
     className     : ''
-    initialTime   : new Date()
     format        : '24hr'
 
   getInitialState: ->
-    display       : 'hours'
-    time          : @props.initialTime
+    value         : @props.value
 
   # -- Events
-  onClockChange: (time) ->
-    @setState time: time
+  onTimeSelected: (time) ->
+    @refs.input.setValue(@formatTime(time))
+    @setState value: time
 
-  # -- Public methods
-  displayMinutes: ->
-    @setState display: 'minutes'
+  openTimeDialog: ->
+    @refs.dialog.show()
 
-  displayHours: ->
-    @setState display: 'hours'
+  # -- Private methods
+  formatTime: (date) ->
+    hours = date.getHours()
+    mins = date.getMinutes().toString()
 
-  toggleTimeMode: ->
-    @refs.clock.toggleTimeMode()
+    if (@props.format == "ampm")
+      isAM = hours < 12
+      hours = hours % 12
+      additional = if isAM then " am" else " pm"
+      hours = (hours || 12).toString()
+      mins = "0" + mins if (mins.length < 2 )
+      return hours + (if mins == "00" then "" else ":" + mins) + additional
 
-  # -- Private helpers
-  _formatHours: ->
-    if @props.format == 'ampm' then @state.time.getHours() % 12 || 12 else @state.time.getHours()
+    hours = hours.toString()
+    hours = "0" + hours if (hours.length < 2)
+    mins  = "0" + mins  if (mins.length < 2)
+    return hours + ":" + mins
 
   # -- Render
   render: ->
-    className  = " #{@props.className}"
-    className += " display-#{@state.display}"
-    className += " format-#{dateUtils.timeMode(@state.time)}"
-
-    <div className={css.root + className}>
-      <header className={css.header}>
-        <span className={css.hours} onClick={@displayHours} >
-          {_twoDigits(@_formatHours())}
-        </span>
-        <span className={css.separator}>:</span>
-        <span className={css.minutes} onClick={@displayMinutes}>
-          {_twoDigits(@state.time.getMinutes())}
-        </span>
-        {
-          if @props.format == 'ampm'
-            <div className={css.ampm}>
-              <span className={css.am} onClick={@toggleTimeMode}>AM</span>
-              <span className={css.pm} onClick={@toggleTimeMode}>PM</span>
-            </div>
-        }
-      </header>
-      <Clock ref="clock"
-             display={@state.display}
-             format={@props.format}
-             initialTime={@props.initialTime}
-             onChange={@onClockChange} />
+    <div>
+      <Input
+          ref="input"
+          type="text"
+          disabled={true}
+          onClick={@openTimeDialog}
+          placeholder="Pick up time"
+          value={@formatTime(@state.value) if @state.value} />
+      <TimeDialog
+          ref="dialog"
+          initialTime={@state.value}
+          format={@props.format}
+          onTimeSelected={@onTimeSelected} />
     </div>
-
-# -- Private helpers
-_twoDigits = (number) ->
-  ('0' + number).slice(-2)
