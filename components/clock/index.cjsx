@@ -25,7 +25,7 @@ module.exports = React.createClass
 
   # -- Lifecycle
   componentDidMount: ->
-    window.addEventListener('resize', @_handleResize)
+    window.addEventListener('resize', @handleResize)
     @setState radius: @_getRadius()
 
   componentWillUpdate: (props, state) ->
@@ -36,7 +36,7 @@ module.exports = React.createClass
       @setState center: center
 
   componentWillUnmount: ->
-    window.removeEventListener('resize', @_handleResize)
+    window.removeEventListener('resize', @handleResize)
 
   # -- Events handlers
   onHourChange: (hours) ->
@@ -58,7 +58,7 @@ module.exports = React.createClass
     else
       hour
 
-  _handleResize: ->
+  handleResize: ->
     @setState
       center: @_getCenter()
       radius: @_getRadius()
