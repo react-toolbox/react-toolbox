@@ -15,13 +15,14 @@ Switch        = require './components/switch'
 Calendar      = require './components/calendar'
 DatePicker    = require './components/date_picker'
 Clock         = require './components/clock'
+TimePicker    = require './components/time_picker'
 
 Test = React.createClass
 
   # -- Render
   render: ->
     <app data-toolbox={true}>
-      <Clock />
+      <TimePicker />
     </app>
 
 React.render <Test/>, document.body

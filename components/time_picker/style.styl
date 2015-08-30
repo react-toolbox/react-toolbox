@@ -1,0 +1,55 @@
+@import '../constants'
+
+AMPM_HEIGHT     = 22px
+AMPM_WIDTH      = 40px
+PICKER_WIDTH    = 320px
+
+:local(.root)
+  width         : PICKER_WIDTH
+
+:local(.header)
+  background    : ACCENT
+  color         : WHITE
+  font-size     : 52px
+  padding       : 10px
+  text-align    : center
+  position      : relative
+  width         : 100%
+
+:local(.hours), :local(.minutes)
+  cursor        : pointer
+  display       : inline-block
+  opacity       : .6
+
+:local(.separator)
+  margin        : 0 5px
+  opacity       : .6
+
+:local(.ampm)
+  font-size     : 16px
+  height        : AMPM_HEIGHT * 2
+  line-height   : AMPM_HEIGHT
+  margin-top    : - AMPM_HEIGHT
+  position      : absolute
+  right         : AMPM_WIDTH
+  text-align    : center
+  top           : 50%
+  width         : AMPM_WIDTH
+
+:local(.am), :local(.pm)
+  cursor        : pointer
+  display       : block
+  opacity       : .6
+
+// Modifiers
+:local(.root).display-hours :local(.hours)
+  opacity       : 1
+
+:local(.root).display-minutes :local(.minutes)
+  opacity       : 1
+
+:local(.root).format-am :local(.am)
+  opacity       : 1
+
+:local(.root).format-pm :local(.pm)
+  opacity       : 1
