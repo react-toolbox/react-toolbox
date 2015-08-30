@@ -36,16 +36,31 @@ module.exports = React.createClass
     mousemove : @onMouseMove
     mouseup   : @onMouseUp
 
+  _getTouchEventMap: ->
+    touchmove: @onTouchMove
+    touchend:  @onTouchEnd
+
   onMouseMove: (event) ->
     @_move(_getMousePosition(event))
 
+  onTouchMove: (event) ->
+    @_move(_getTouchPosition(event))
+
   onMouseUp: ->
     @_end(@_getMouseEventMap())
+
+  onTouchEnd: ->
+    @_end(@_getTouchEventMap())
 
   # -- Public API
   mouseStart: (event) ->
     _addEventsToDocument(@_getMouseEventMap())
     @_move(_getMousePosition(event))
+
+  touchStart: (event) ->
+    _addEventsToDocument(@_getTouchEventMap())
+    @_move(_getTouchPosition(event))
+    _pauseEvent(event)
 
   # -- Internal methods
   _move: (position) ->
@@ -85,9 +100,20 @@ _addEventsToDocument = (events) ->
 _removeEventsFromDocument = (events) ->
   document.removeEventListener(key, events[key], false) for key of events
 
+_pauseEvent = (event) ->
+  event.stopPropagation()
+  event.preventDefault()
+  event.returnValue = false
+  event.cancelBubble = true
+  return null
+
 _getMousePosition = (event) ->
   x: event.pageX
   y: event.pageY
+
+_getTouchPosition = (event) ->
+  x: event.touches[0]['pageX']
+  y: event.touches[0]['pageY']
 
 _angle360 = (cx, cy, ex, ey) ->
   theta = _angle(cx, cy, ex, ey)

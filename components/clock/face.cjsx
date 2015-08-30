@@ -20,7 +20,11 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    <div ref="root" className={css.face} onMouseDown={@props.onMouseDown} style={@_faceStyle()}>
+    <div ref="root"
+         className={css.face}
+         onTouchStart={@props.onTouchStart}
+         onMouseDown={@props.onMouseDown}
+         style={@_faceStyle()}>
       { for i, k in @props.numbers
           <span className={css.number + (if parseInt(i) == @props.active then ' active' else '')}
                 style={@_numberStyle(@props.radius - @props.spacing, k + 1)}

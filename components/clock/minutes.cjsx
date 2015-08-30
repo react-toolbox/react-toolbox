@@ -19,12 +19,16 @@ module.exports = React.createClass
   _onMouseDown: (event)->
     @refs.hand.mouseStart(event)
 
+  _onTouchStart: (event) ->
+    @refs.hand.touchStart(event)
+
   # -- Render
   render: ->
     handClass = if MINUTES.indexOf(('0' + @props.selected).slice(-2)) == -1 then 'smallKnob' else ''
 
     <div>
       <Face
+        onTouchStart={@_onTouchStart}
         onMouseDown={@_onMouseDown}
         numbers={MINUTES}
         spacing={@props.spacing}

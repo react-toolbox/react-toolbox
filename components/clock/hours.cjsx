@@ -25,6 +25,9 @@ module.exports = React.createClass
   _onMouseDown: (event)->
     @refs.hand.mouseStart(event)
 
+  _onTouchStart: (event) ->
+    @refs.hand.touchStart(event)
+
   # -- Internal Methods
   _valueFromDegrees: (degrees) ->
     if @props.format == 'ampm' || @props.format == '24hr' && @state.innerNumber
@@ -41,6 +44,7 @@ module.exports = React.createClass
 
     <div>
         <Face
+          onTouchStart={@_onTouchStart}
           onMouseDown={@_onMouseDown}
           numbers={if @props.format == '24hr' then OUTER_NUMBERS else INNER_NUMBERS}
           spacing={@props.spacing}
