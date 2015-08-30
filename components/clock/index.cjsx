@@ -55,6 +55,8 @@ module.exports = React.createClass
         if hour < 12 then hour + 12 else hour
       else
         if hour == 12 then 0 else hour
+    else
+      hour
 
   _handleResize: ->
     @setState
