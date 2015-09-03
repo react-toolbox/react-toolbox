@@ -1,9 +1,12 @@
-CTG       = React.addons.CSSTransitionGroup
 css       = require './style'
-FontIcon  = require '../font_icon'
 dateUtils = require '../date_utils'
 
+CTG       = React.addons.CSSTransitionGroup
+FontIcon  = require '../font_icon'
+Month     = require './month'
+
 module.exports = React.createClass
+  displayName: 'Calendar',
 
   # -- States & Properties
   propTypes:
@@ -21,8 +24,10 @@ module.exports = React.createClass
     selectedDate:   @props.selectedDate
     viewDate:       @props.viewDate
 
+  # -- Lifecycle
   componentDidUpdate: (prevProps, prevState) ->
-    @props.onChange? @ if prevState.selectedDate.getTime() != @state.selectedDate.getTime()
+    if prevState.selectedDate.getTime() != @state.selectedDate.getTime() && @props.onChange
+      @props.onChange? @
 
   # -- Events
   onDayClick: (event) ->
@@ -31,7 +36,7 @@ module.exports = React.createClass
     newDate.setDate(day)
     @setState selectedDate: newDate
 
-  # -- Handle month increment and decrement
+  # -- Public methods
   incrementViewMonth: ->
     @setState
       viewDate:  dateUtils.addMonths(@state.viewDate, 1)
@@ -42,58 +47,19 @@ module.exports = React.createClass
       viewDate: dateUtils.addMonths(@state.viewDate, -1)
       direction: 'left'
 
-  # -- Render helpers
-  isDaySelected: (day) ->
-    isSameYear  = @state.viewDate.getFullYear() == @state.selectedDate.getFullYear()
-    isSameMonth = @state.viewDate.getMonth() == @state.selectedDate.getMonth()
-    isSameDay   = day == @state.selectedDate.getDate()
-    if isSameYear && isSameMonth && isSameDay then 'active' else ''
+  getValue: ->
+    @state.selectedDate
 
   # -- Render
   render: ->
     <div className={"#{css.root} #{@state.direction}"}>
-
-      {# Controllers to move to prev and next month }
-      <FontIcon className={css.prevMonth} value='chevron_left'  onClick={@decrementViewMonth} />
-      <FontIcon className={css.nextMonth} value='chevron_right' onClick={@incrementViewMonth} />
-
-      {# Calendar itself }
+      <FontIcon className={css.prev} value='chevron_left'  onClick={@decrementViewMonth} />
+      <FontIcon className={css.next} value='chevron_right' onClick={@incrementViewMonth} />
       <CTG transitionName='slide-horizontal'>
-        <div key={@state.viewDate.getMonth()}>
-          <div className={css.title}>
-            {"#{dateUtils.monthInWords(@state.viewDate)}, #{@state.viewDate.getFullYear()}"}
-          </div>
-
-          <div className={css.calendar}>
-            <div className={css.calendarWeekDays}>
-              {
-                for i in [0..6]
-                  <span className={css.calendarWeekDay}
-                        key={"dw#{i}"}>
-                    {dateUtils.weekDayInWords(i).charAt(0)}
-                  </span>
-              }
-            </div>
-            <div className={css.calendarBody}>
-              <span key={"d1"}
-                    onClick={@onDayClick}
-                    className={css.calendarBodyDay + ' ' + @isDaySelected(1)}
-                    style={marginLeft: "#{dateUtils.firstWeekDay(@state.viewDate) * 100/7}%"}>
-                1
-              </span>
-              {
-                for i in [2..dateUtils.daysInMonth(@state.viewDate)]
-                  <span key={"d#{i}"}
-                        onClick={@onDayClick}
-                        className={css.calendarBodyDay + ' ' + @isDaySelected(i)}>
-                    {i}
-                  </span>
-              }
-            </div>
-          </div>
-        </div>
+        <Month
+          key={@state.viewDate.getMonth()}
+          viewDate={@state.viewDate}
+          selectedDate={@state.selectedDate}
+          onDayClick={@onDayClick} />
       </CTG>
     </div>
-
-  getValue: ->
-    @state.selectedDate

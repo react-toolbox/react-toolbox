@@ -1,94 +1,78 @@
 @import '../constants'
 
 // -- Calendar sizes
-monthHeight         = 38px
-dayWidth            = 38px
-innerPadding        = 10px
-dayHeight           = dayWidth
-calendarWidth       = dayWidth  * 7
-calendarHeight      = dayHeight * 7
-totalHeight         = monthHeight + calendarHeight + innerPadding * 2
-totalWidth          = calendarWidth + innerPadding * 2
+ROW_HEIGHT   = 40px
+TOTAL_HEIGHT = ROW_HEIGHT * 8
 
 :local(.root)
-  border-radius     : 3px
-  height            : totalHeight
+  background        : WHITE
+  height            : TOTAL_HEIGHT
+  font-size         : 14px
   overflow          : hidden
   position          : relative
+  line-height       : ROW_HEIGHT
   text-align        : center
-  width             : totalWidth
 
-// -- Prev and next controls
-:local(.prevMonth), :local(.nextMonth)
+:local(.prev), :local(.next)
   cursor            : pointer
-  height            : monthHeight
-  line-height       : monthHeight
+  height            : ROW_HEIGHT
+  line-height       : ROW_HEIGHT
   opacity           : .7
   position          : absolute
   text-align        : center
-  top               : innerPadding
-  width             : dayWidth
-  z-index           : 2
+  top               : 0
+  width             : ROW_HEIGHT
+  z-index           : Z_INDEX_HIGH
 
-:local(.prevMonth)
-  left              : innerPadding
+:local(.prev)
+  left              : 0
 
-:local(.nextMonth)
-  right             : innerPadding
+:local(.next)
+  right             : 0
 
-// -- Calendar
-:local(.title)
-  font-size         : 14px
-  left              : innerPadding
-  line-height       : monthHeight
-  position          : absolute
-  right             : innerPadding
-  top               : innerPadding
-
-:local(.calendar)
-  bottom            : innerPadding
-  font-size         : 12px
-  left              : innerPadding
-  position          : absolute
-  right             : innerPadding
-  top               : monthHeight + innerPadding
-
-:local(.calendarWeekDays)
+:local(.week)
   display           : flex
   flex-wrap         : wrap
-  height            : dayHeight
-  line-height       : dayHeight
+  font-size         : 13px
+  height            : ROW_HEIGHT
+  line-height       : ROW_HEIGHT
   opacity           : .5
 
-:local(.calendarWeekDay)
-  flex              : 0 0 (100/7)%
+  > span
+    flex            : 0 0 (100/7)%
 
-:local(.calendarBody)
+:local(.days)
   display           : flex
   flex-wrap         : wrap
+  font-size         : 13px
 
-:local(.calendarBodyDay)
-  border-radius     : 50%
-  cursor            : pointer
+:local(.day)
   flex              : 0 0 (100/7)%
-  height            : dayHeight
-  line-height       : dayHeight
+  padding           : 2px
 
-  &:hover:not(.active)
+  > span
+    border-radius   : 50%
+    cursor          : pointer
+    display         : inline-block
+    height          : ROW_HEIGHT
+    line-height     : ROW_HEIGHT
+    width           : ROW_HEIGHT
+
+  &:hover:not(.active) > span
     background      : lighten(ACCENT, 65%)
-    color           : white
+    color           : WHITE
 
-  &.active
+  &.active > span
     background      : ACCENT
-    color           : white
+    color           : WHITE
 
-// -- Slide transitions
+// -- Transitions
 :local(.root) .slide-horizontal-enter, :local(.root) .slide-horizontal-leave
   transition        : all .5s
 
-// -- Slide horizontal transition left to right
 :local(.root).right
   .slide-horizontal-enter
+    position        : absolute
     transform       : translateX(100%)
     opacity         : 0
 
@@ -100,9 +84,9 @@ totalWidth          = calendarWidth + innerPadding * 2
     transform       : translateX(-100%)
     opacity         : 0
 
-// -- Slide horizontal transition right to left
 :local(.root).left
   .slide-horizontal-enter
+    position        : absolute
     transform       : translateX(-100%)
     opacity         : 0
 

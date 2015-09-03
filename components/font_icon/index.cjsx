@@ -1,6 +1,7 @@
 localCSS = require './style'
 
 module.exports = React.createClass
+  displayName: 'FontIcon',
 
   # -- States & Properties
   propTypes:

@@ -1,6 +1,6 @@
 module.exports =
   daysInMonth: (date) ->
-    (new Date(date.getFullYear(), date.getMonth(), 0)).getDate()
+    (new Date(date.getFullYear(), date.getMonth() + 1, 0)).getDate()
 
   firstWeekDay: (date) ->
     (new Date(date.getFullYear(), date.getMonth(), 1)).getDay()
