@@ -1,6 +1,7 @@
 localCSS = require './style'
 
 module.exports = React.createClass
+  displayName   : 'Input'
 
   # -- States & Properties
   propTypes:

@@ -3,6 +3,7 @@ Button      = require '../button'
 Navigation  = require '../navigation'
 
 module.exports = React.createClass
+  displayName   : 'Dialog'
 
   # -- States & Properties
   propTypes:
