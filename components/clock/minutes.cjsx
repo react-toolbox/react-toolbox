@@ -2,6 +2,7 @@ Face = require './face'
 Hand = require './hand'
 
 module.exports = React.createClass
+  displayName: 'Minutes'
 
   # -- States & Properties
   propTypes:

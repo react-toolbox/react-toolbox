@@ -3,6 +3,7 @@ FontIcon = require '../font_icon'
 Ripple   = require '../ripple'
 
 module.exports = React.createClass
+  displayName   : 'Button'
 
   # -- States & Properties
   propTypes:

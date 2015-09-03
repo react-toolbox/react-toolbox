@@ -2,6 +2,7 @@ css      = require './style'
 prefixer = require "../prefixer"
 
 module.exports = React.createClass
+  displayName    : 'Hand'
 
   # -- States & Properties
   propTypes:

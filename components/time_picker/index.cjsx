@@ -3,6 +3,7 @@ Input      = require '../input'
 TimeDialog = require './dialog'
 
 module.exports = React.createClass
+  displayName     : 'TimePicker'
 
   # -- States & Properties
   propTypes:

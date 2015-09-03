@@ -4,6 +4,7 @@ Hours     = require './hours'
 Minutes   = require './minutes'
 
 module.exports = React.createClass
+  displayName   : 'Clock'
 
   # -- States & Properties
   propTypes:

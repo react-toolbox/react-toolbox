@@ -1,6 +1,7 @@
 css = require './style'
 
 module.exports = React.createClass
+  displayName : 'Face'
 
   # -- States & Properties
   getDefaultProps: ->
