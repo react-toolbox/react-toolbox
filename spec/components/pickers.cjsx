@@ -1,9 +1,11 @@
+DatePicker = require '../../components/date_picker'
 TimePicker = require '../../components/time_picker'
 
 module.exports = React.createClass
-  displayName: 'TimePickerTest'
+  displayName: 'PickersTest'
 
   render: ->
-    <div>
+    <section>
+      <DatePicker />
       <TimePicker format="ampm" />
-    </div>
+    </section>

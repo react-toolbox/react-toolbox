@@ -14,9 +14,8 @@ Progress      = require './components/progress'
 Slider        = require './components/slider'
 Switch        = require './components/switch'
 Calendar      = require './components/calendar'
-DatePicker    = require './components/date_picker'
+Pickers       = require './components/pickers'
 Clock         = require './components/clock'
-TimePicker    = require './components/time_picker'
 Tabs          = require './components/tabs'
 
 Test = React.createClass
@@ -39,8 +38,7 @@ Test = React.createClass
       <Slider />
       <Switch />
       <Tabs />
-      <DatePicker />
-      <TimePicker />
+      <Pickers />
     </app>
 
 React.render <Test/>, document.body
