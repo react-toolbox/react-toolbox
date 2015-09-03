@@ -1,13 +1,15 @@
 @import '../constants'
 
-dayWidth            = 38px
-innerPadding        = 10px
-calendarWidth       = dayWidth  * 7
-totalWidth          = calendarWidth + innerPadding * 2
+TOTAL_WIDTH         = 330px
 
-:local(.root)
+:local(.dialog)
+  padding           : 0
   text-align        : center
-  width             : totalWidth
+  width             : TOTAL_WIDTH
+
+  > nav
+    margin-top      : 0
+    padding-bottom  : 10px
 
 :local(.header)
   background-color  : ACCENT
@@ -15,20 +17,27 @@ totalWidth          = calendarWidth + innerPadding * 2
 
 :local(.headerWeekday)
   background-color  : darken(ACCENT, 20%)
+  display           : block
   font-size         : 14px
   line-height       : 1.8
   width             : 100%
 
 :local(.headerMonth)
+  display           : block
   font-size         : 18px
   padding           : 10px
   text-transform    : uppercase
 
 :local(.headerDay)
+  display           : block
   font-size         : 50px
   line-height       : 40px
 
 :local(.headerYear)
+  display           : block
   font-size         : 18px
   opacity           : .7
+  padding           : 10px
+
+:local(.calendarWrapper)
   padding           : 10px

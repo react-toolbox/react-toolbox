@@ -1,35 +1,46 @@
-css       = require './style'
-Calendar  = require '../calendar'
-dateUtils = require '../date_utils'
+css            = require './style'
+dateUtils      = require '../date_utils'
+
+Input          = require '../input'
+CalendarDialog = require './dialog'
 
 module.exports = React.createClass
+  displayName  : 'DatePicker'
 
-  # -- States & Properties
   propTypes:
-    className:    React.PropTypes.string
-    initialDate:  React.PropTypes.object
+    className  : React.PropTypes.string
+    value      : React.PropTypes.object
 
   getDefaultProps: ->
-    className:    ''
-    initialDate:  new Date()
+    className  :    ''
 
   getInitialState: ->
-    date:         @props.initialDate
+    value      : @props.value
 
   # -- Events
-  onCalendarChange: (calendar) ->
-    @setState
-      date: dateUtils.cloneDatetime(calendar.getValue())
+  openCalendarDialog: ->
+    @refs.dialog.show()
+
+  onDateSelected: (value) ->
+    @refs.input.setValue(@formatDate(value))
+    @setState value: value
+
+  # -- Private methods
+  formatDate: (date) ->
+    day = date.getDate()
+    month = dateUtils.monthInWords(date)
+    year = date.getFullYear()
+    "#{day} #{month} #{year}"
 
   # -- Render
   render: ->
-    <div className={css.root}>
-      <header className={css.header}>
-        <p className={css.headerWeekday}>{dateUtils.weekDayInWords(@state.date.getDay())}</p>
-        <p className={css.headerMonth}>{dateUtils.monthInShortWords(@state.date)}</p>
-        <p className={css.headerDay}>{@state.date.getDate()}</p>
-        <p className={css.headerYear}>{@state.date.getFullYear()}</p>
-      </header>
-
-      <Calendar onChange={@onCalendarChange} selectedDate={@state.date} />
+    <div>
+      <Input
+          ref="input"
+          type="text"
+          disabled={true}
+          onClick={@openCalendarDialog}
+          placeholder="Pick up date"
+          value={@formatDate(@state.value) if @state.value} />
+      <CalendarDialog ref="dialog" onDateSelected={@onDateSelected} />
     </div>
