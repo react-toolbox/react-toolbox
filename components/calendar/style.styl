@@ -2,7 +2,8 @@
 
 // -- Calendar sizes
 ROW_HEIGHT   = 40px
-TOTAL_HEIGHT = ROW_HEIGHT * 8
+DAY_PADDING  = 2px
+TOTAL_HEIGHT = ROW_HEIGHT * 8 + DAY_PADDING * 12
 
 :local(.root)
   background        : WHITE
@@ -14,7 +15,9 @@ TOTAL_HEIGHT = ROW_HEIGHT * 8
   text-align        : center
 
 :local(.prev), :local(.next)
+  color             : lighten(TEXT, 15%)
   cursor            : pointer
+  font-size         : 26px
   height            : ROW_HEIGHT
   line-height       : ROW_HEIGHT
   opacity           : .7
@@ -23,6 +26,9 @@ TOTAL_HEIGHT = ROW_HEIGHT * 8
   top               : 0
   width             : ROW_HEIGHT
   z-index           : Z_INDEX_HIGH
+
+:local(.title)
+  font-weight       : 500
 
 :local(.prev)
   left              : 0
@@ -48,7 +54,7 @@ TOTAL_HEIGHT = ROW_HEIGHT * 8
 
 :local(.day)
   flex              : 0 0 (100/7)%
-  padding           : 2px
+  padding           : DAY_PADDING
 
   > span
     border-radius   : 50%

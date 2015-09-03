@@ -12,7 +12,9 @@ module.exports = React.createClass
 
   render: ->
     <div>
-      <span>{ util.monthInWords(@props.viewDate)}, {@props.viewDate.getFullYear() }</span>
+      <span className={css.title}>
+        { util.monthInWords(@props.viewDate)} {@props.viewDate.getFullYear() }
+      </span>
       <div className={css.week}>
         { <span key={"dw#{i}"}>{ util.weekDayInWords(i).charAt(0) }</span> for i in [0..6] }
       </div>

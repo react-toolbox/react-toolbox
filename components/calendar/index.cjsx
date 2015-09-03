@@ -10,13 +10,11 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    className:      React.PropTypes.string
     onChange:       React.PropTypes.func
     selectedDate:   React.PropTypes.object
     viewDate:       React.PropTypes.object
 
   getDefaultProps: ->
-    className:       ''
     selectedDate:   new Date()
     viewDate:       new Date()
 
