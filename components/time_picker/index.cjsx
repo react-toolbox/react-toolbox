@@ -3,20 +3,18 @@ Input      = require '../input'
 TimeDialog = require './dialog'
 
 module.exports = React.createClass
-  displayName     : 'TimePicker'
+  displayName : 'TimePicker'
 
   # -- States & Properties
   propTypes:
-    className     : React.PropTypes.string
-    format        : React.PropTypes.oneOf(['24hr', 'ampm'])
-    value         : React.PropTypes.object
+    format    : React.PropTypes.oneOf(['24hr', 'ampm'])
+    value     : React.PropTypes.object
 
   getDefaultProps: ->
-    className     : ''
-    format        : '24hr'
+    format    : '24hr'
 
   getInitialState: ->
-    value         : @props.value
+    value     : @props.value
 
   # -- Events
   onTimeSelected: (time) ->
@@ -43,6 +41,10 @@ module.exports = React.createClass
     hours = "0" + hours if (hours.length < 2)
     mins  = "0" + mins  if (mins.length < 2)
     return hours + ":" + mins
+
+  # -- Public methods
+  getValue: ->
+    @state.value
 
   # -- Render
   render: ->
