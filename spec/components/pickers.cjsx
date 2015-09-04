@@ -10,6 +10,8 @@ module.exports = React.createClass
     datetime.setMinutes(28)
 
     <section>
+      <h2>Pickers</h2>
+
       <DatePicker />
       <DatePicker value={datetime} />
       <TimePicker value={datetime} />
