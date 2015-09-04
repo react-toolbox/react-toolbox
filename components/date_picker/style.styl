@@ -23,21 +23,31 @@ TOTAL_WIDTH         = 330px
   width             : 100%
 
 :local(.headerMonth)
+  cursor            : pointer
   display           : block
   font-size         : 18px
   padding           : 10px
   text-transform    : uppercase
 
 :local(.headerDay)
+  cursor            : pointer
   display           : block
   font-size         : 50px
   line-height       : 40px
 
 :local(.headerYear)
+  cursor            : pointer
   display           : block
   font-size         : 18px
-  opacity           : .7
   padding           : 10px
 
 :local(.calendarWrapper)
-  padding           : 10px
+  padding           : 10px 5px
+
+:local(.dialog)
+  &.display-years
+    :local(.headerDay), :local(.headerMonth)
+      opacity       : .7
+
+  &.display-months :local(.headerYear)
+    opacity         : .7
