@@ -29,13 +29,7 @@
   transition-property                 : opacity
   transition-duration                 : (ANIMATION_DURATION / 2)
   transition-timing-function          : ANIMATION_EASE
-  // -- Overrides
-  &.small > :local(.container)
-    width                             : 33vw
-  &.normal > :local(.container)
-    width                             : 50vw
-  &.large > :local(.container)
-    width                             : 96vw
+
   &:not(.active)
     pointer-events                    : none
     opacity                           : 0
@@ -48,3 +42,11 @@
     > :local(.container)
       opacity                         : 1
       transform                       : translateY(0%)
+
+  // -- Overrides
+  :local(.container).small
+    width                             : 33vw
+  :local(.container).normal
+    width                             : 50vw
+  :local(.container).large
+    width                             : 96vw
