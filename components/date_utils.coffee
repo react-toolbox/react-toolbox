@@ -70,6 +70,16 @@ module.exports =
     newDate.setFullYear(date.getFullYear() + years)
     newDate
 
+  setDay: (date, day) ->
+    newDate = @cloneDatetime(date)
+    newDate.setDate(day)
+    newDate
+
+  setYear: (date, year) ->
+    newDate = @cloneDatetime(date)
+    newDate.setFullYear(year)
+    newDate
+
   cloneDatetime: (date) ->
     new Date(date.getTime())
 

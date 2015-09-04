@@ -1,7 +1,6 @@
+CTG       = React.addons.CSSTransitionGroup
 css       = require './style'
 dateUtils = require '../date_utils'
-
-CTG       = React.addons.CSSTransitionGroup
 FontIcon  = require '../font_icon'
 Month     = require './month'
 
@@ -10,54 +9,84 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    onChange:       React.PropTypes.func
-    selectedDate:   React.PropTypes.object
-    viewDate:       React.PropTypes.object
+    display        : React.PropTypes.oneOf(['months', 'years'])
+    onChange       : React.PropTypes.func
+    selectedDate   : React.PropTypes.object
+    viewDate       : React.PropTypes.object
 
   getDefaultProps: ->
-    selectedDate:   new Date()
-    viewDate:       new Date()
+    display        : 'months'
+    selectedDate   : new Date()
+    viewDate       : new Date()
 
   getInitialState: ->
-    selectedDate:   @props.selectedDate
-    viewDate:       @props.viewDate
+    selectedDate   : @props.selectedDate
+    viewDate       : @props.viewDate
 
   # -- Lifecycle
   componentDidUpdate: (prevProps, prevState) ->
+    @_scrollToActive() if @refs.activeYear
     if prevState.selectedDate.getTime() != @state.selectedDate.getTime() && @props.onChange
       @props.onChange? @
 
   # -- Events
   onDayClick: (event) ->
-    day = parseInt(event.target.textContent)
-    newDate = dateUtils.cloneDatetime(@state.viewDate)
-    newDate.setDate(day)
-    @setState selectedDate: newDate
+    @setState
+      selectedDate: dateUtils.setDay(@state.viewDate, parseInt(event.target.textContent))
+
+  onYearClick: (event) ->
+    newDate = dateUtils.setYear(@state.viewDate, parseInt(event.target.textContent))
+    @setState
+      selectedDate: newDate
+      viewDate: newDate
+
+  # -- Private methods
+  _scrollToActive: ->
+    @refs.years.getDOMNode().scrollTop =
+      @refs.activeYear.getDOMNode().offsetTop -
+      @refs.years.getDOMNode().offsetHeight/2 +
+      @refs.activeYear.getDOMNode().offsetHeight/2
 
   # -- Public methods
-  incrementViewMonth: ->
-    @setState
-      viewDate:  dateUtils.addMonths(@state.viewDate, 1)
-      direction: 'right'
-
-  decrementViewMonth: ->
-    @setState
-      viewDate: dateUtils.addMonths(@state.viewDate, -1)
-      direction: 'left'
-
   getValue: ->
     @state.selectedDate
 
+  incrementViewMonth: ->
+    @setState
+      direction: 'right'
+      viewDate:  dateUtils.addMonths(@state.viewDate, 1)
+
+  decrementViewMonth: ->
+    @setState
+      direction: 'left'
+      viewDate: dateUtils.addMonths(@state.viewDate, -1)
+
   # -- Render
+  renderYear: (year) ->
+    props =
+      className : if year == @state.viewDate.getFullYear() then 'active' else ''
+      key       : "year-#{year}"
+      onClick   : @onYearClick
+    props.ref = 'activeYear' if year == @state.viewDate.getFullYear()
+    return <li {...props}>{ year }</li>
+
   render: ->
-    <div className={"#{css.root} #{@state.direction}"}>
-      <FontIcon className={css.prev} value='chevron_left'  onClick={@decrementViewMonth} />
-      <FontIcon className={css.next} value='chevron_right' onClick={@incrementViewMonth} />
-      <CTG transitionName='slide-horizontal'>
-        <Month
-          key={@state.viewDate.getMonth()}
-          viewDate={@state.viewDate}
-          selectedDate={@state.selectedDate}
-          onDayClick={@onDayClick} />
-      </CTG>
+    <div className={css.root}>
+      { if @props.display == 'months'
+          <div className={@state.direction}>
+            <FontIcon className={css.prev} value='chevron_left'  onClick={@decrementViewMonth} />
+            <FontIcon className={css.next} value='chevron_right' onClick={@incrementViewMonth} />
+            <CTG transitionName='slide-horizontal'>
+              <Month
+                key={@state.viewDate.getMonth()}
+                viewDate={@state.viewDate}
+                selectedDate={@state.selectedDate}
+                onDayClick={@onDayClick} />
+            </CTG>
+          </div>
+        else if @props.display == 'years'
+          <ul ref="years" className={css.years}>
+            { @renderYear(i) for i in [1900..2100] }
+          </ul>
+      }
     </div>

@@ -76,7 +76,7 @@ TOTAL_HEIGHT = ROW_HEIGHT * 8 + DAY_PADDING * 12
 :local(.root) .slide-horizontal-enter, :local(.root) .slide-horizontal-leave
   transition        : all .5s
 
-:local(.root).right
+:local(.root) .right
   .slide-horizontal-enter
     position        : absolute
     transform       : translateX(100%)
@@ -90,7 +90,7 @@ TOTAL_HEIGHT = ROW_HEIGHT * 8 + DAY_PADDING * 12
     transform       : translateX(-100%)
     opacity         : 0
 
-:local(.root).left
+:local(.root) .left
   .slide-horizontal-enter
     position        : absolute
     transform       : translateX(-100%)
@@ -103,3 +103,16 @@ TOTAL_HEIGHT = ROW_HEIGHT * 8 + DAY_PADDING * 12
   .slide-horizontal-leave-active
     transform       : translateX(100%)
     opacity         : 0
+
+:local(.years)
+  font-size         : 18px
+  height            : 100%
+  overflow          : scroll
+
+  > li
+    cursor          : pointer
+    line-height     : 2.4
+
+    &.active
+      color         : ACCENT
+      font-size     : 24px
