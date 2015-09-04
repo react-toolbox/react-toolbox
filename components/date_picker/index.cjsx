@@ -1,6 +1,5 @@
 css            = require './style'
 dateUtils      = require '../date_utils'
-
 Input          = require '../input'
 CalendarDialog = require './dialog'
 
@@ -32,6 +31,10 @@ module.exports = React.createClass
     year = date.getFullYear()
     "#{day} #{month} #{year}"
 
+  # -- Public methods
+  getValue: ->
+    @state.value
+
   # -- Render
   render: ->
     <div>
@@ -42,5 +45,8 @@ module.exports = React.createClass
           onClick={@openCalendarDialog}
           placeholder="Pick up date"
           value={@formatDate(@state.value) if @state.value} />
-      <CalendarDialog ref="dialog" onDateSelected={@onDateSelected} />
+      <CalendarDialog
+          ref="dialog"
+          initialDate={@state.value}
+          onDateSelected={@onDateSelected} />
     </div>

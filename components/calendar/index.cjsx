@@ -17,11 +17,10 @@ module.exports = React.createClass
   getDefaultProps: ->
     display        : 'months'
     selectedDate   : new Date()
-    viewDate       : new Date()
 
   getInitialState: ->
     selectedDate   : @props.selectedDate
-    viewDate       : @props.viewDate
+    viewDate       : @props.selectedDate
 
   # -- Lifecycle
   componentDidUpdate: (prevProps, prevState) ->

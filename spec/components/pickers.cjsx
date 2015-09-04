@@ -5,12 +5,13 @@ module.exports = React.createClass
   displayName: 'PickersTest'
 
   render: ->
-    time = new Date(1995,11,17);
-    time.setHours(17)
-    time.setMinutes(28)
+    datetime = new Date(1995,11,17)
+    datetime.setHours(17)
+    datetime.setMinutes(28)
 
     <section>
       <DatePicker />
-      <TimePicker value={time} />
+      <DatePicker value={datetime} />
+      <TimePicker value={datetime} />
       <TimePicker format="ampm" />
     </section>
