@@ -1,4 +1,4 @@
-prefixer     = require "../prefixer"
+prefixer     = require "../util/prefixer"
 localCSS     = require './style'
 ProgressBar  = require "../progress_bar"
 Input        = require "../input"
@@ -165,7 +165,7 @@ module.exports = React.createClass
     className += " pinned"   if @props.pinned
     className += " pressed"  if @state.pressed
     className += " ring"     if @state.value == @props.min
-    knobStyles = prefixer.transform("translateX(#{@calculateKnobOffset()}px)")
+    knobStyles = prefixer(transform: "translateX(#{@calculateKnobOffset()}px)")
 
     <div className={localCSS.root + className}
          tabIndex="0"

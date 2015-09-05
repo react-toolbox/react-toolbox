@@ -1,5 +1,5 @@
 localCSS = require './style'
-prefixer = require '../prefixer'
+prefixer = require '../util/prefixer'
 
 module.exports = React.createClass
 
@@ -60,8 +60,8 @@ module.exports = React.createClass
 
   linearStyles: ->
     unless @props.mode == 'indeterminate'
-      buffer: prefixer.transform("scaleX(#{@calculateRatio(@props.buffer)})")
-      value:  prefixer.transform("scaleX(#{@calculateRatio(@props.value)})")
+      buffer: prefixer(transform: "scaleX(#{@calculateRatio(@props.buffer)})")
+      value:  prefixer(transform: "scaleX(#{@calculateRatio(@props.value)})")
 
 # -- Private methods
 _transformDasharray = (ratio) ->
