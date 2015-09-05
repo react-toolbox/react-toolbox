@@ -7,6 +7,7 @@
 
   "ecmaFeatures": {
     "jsx": true,
+    "templateStrings": true,
     "superInFunctions": false,
     "classes": false,
     "modules": [2]
@@ -138,7 +139,7 @@
     "no-undef": [2],
     "no-undef-init": [2],
     "no-undefined": [0],
-    "no-underscore-dangle": [2],
+    "no-underscore-dangle": [0],
     "no-unreachable": [2],
     "no-unused-expressions": [2],
     "no-unused-vars": [1, {
