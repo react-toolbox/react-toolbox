@@ -1,6 +1,6 @@
 TestUtils   = React.addons.TestUtils
 expect      = require('expect')
-utils       = require('../../test_utils')
+utils       = require('../../utils/test')
 ProgressBar = require('../index')
 
 describe 'ProgressBar', ->

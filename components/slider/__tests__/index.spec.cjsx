@@ -1,7 +1,7 @@
 TestUtils   = React.addons.TestUtils
 expect      = require('expect')
 sinon       = require('sinon')
-utils       = require('../../test_utils')
+utils       = require('../../utils/test')
 ProgressBar = require('../../progress_bar')
 Input       = require('../../input')
 Slider      = require('../index')

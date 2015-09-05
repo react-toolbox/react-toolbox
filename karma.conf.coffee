@@ -20,6 +20,8 @@ module.exports = (config) ->
 
       module:
         loaders: [
+          test      : /\.js$/,      exclude:/(node_modules)/, loader: 'babel?optional=runtime'
+        ,
           test      : /\.cjsx$/,    loader: 'coffee-jsx-loader'
         ,
           test      : /\.coffee$/,  loader: 'coffee-jsx-loader'
