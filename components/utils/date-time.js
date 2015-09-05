@@ -151,6 +151,27 @@ module.exports = {
 
     newDate.setHours(hours - (hours > 12 ? -12 : 12));
     return newDate;
+  },
+
+  formatTime (date, format) {
+    let hours = date.getHours();
+    let mins = date.getMinutes().toString();
+
+    if (format === 'ampm') {
+      let isAM = hours < 12;
+      let additional = isAM ? ' am' : ' pm';
+
+      hours = hours % 12;
+      hours = (hours || 12).toString();
+      if (mins.length < 2) mins = '0' + mins;
+
+      return hours + (mins === '00' ? '' : ':' + mins) + additional;
+    }
+
+    hours = hours.toString();
+    if (hours.length < 2) hours = '0' + hours;
+    if (mins.length < 2) mins = '0' + mins;
+    return hours + ':' + mins;
   }
 
 };
