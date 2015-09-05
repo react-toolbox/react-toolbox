@@ -57,9 +57,8 @@ module.exports = {
     }
   },
 
-  getFullDayOfWeek (d) {
-    let dow = d.getDay();
-    switch (dow) {
+  getFullDayOfWeek (day) {
+    switch (day) {
       default: return 'Unknown';
       case 0: return 'Sunday';
       case 1: return 'Monday';

@@ -1,5 +1,5 @@
 css = require './style'
-dateUtils = require '../date_utils'
+dateTime  = require '../util/date-time'
 
 module.exports = React.createClass
   displayName: 'Day',
@@ -11,7 +11,7 @@ module.exports = React.createClass
     viewDate     : React.PropTypes.object
 
   _dayStyle: ->
-    marginLeft: "#{dateUtils.firstWeekDay(@props.viewDate) * 100/7}%"
+    marginLeft: "#{dateTime.getFirstWeekDay(@props.viewDate) * 100/7}%"
 
   _isSelected: () ->
     isSameYear  = @props.viewDate.getFullYear() == @props.selectedDate.getFullYear()

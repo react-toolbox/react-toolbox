@@ -1,7 +1,7 @@
-css       = require './style'
-dateUtils = require '../date_utils'
-Dialog    = require '../dialog'
 Calendar  = require '../calendar'
+css       = require './style'
+dateTime  = require '../util/date-time'
+Dialog    = require '../dialog'
 
 module.exports = React.createClass
   displayName: 'CalendarDialog'
@@ -25,7 +25,7 @@ module.exports = React.createClass
   # -- Events
   onCalendarChange: (calendar) ->
     @setState
-      date: dateUtils.cloneDatetime(calendar.getValue())
+      date: dateTime.clone(calendar.getValue())
       display: 'months'
 
   onDateCancel: (ref, method) ->
@@ -50,9 +50,9 @@ module.exports = React.createClass
     className = "display-#{@state.display}"
     <Dialog ref="dialog" type={css.dialog} className={className} actions={@state.actions}>
       <header className={css.header}>
-        <span className={css.headerWeekday}>{dateUtils.weekDayInWords(@state.date.getDay())}</span>
+        <span className={css.headerWeekday}>{dateTime.getFullDayOfWeek(@state.date.getDay())}</span>
         <div onClick={@displayMonths}>
-          <span className={css.headerMonth}>{dateUtils.monthInShortWords(@state.date)}</span>
+          <span className={css.headerMonth}>{dateTime.getShortMonth(@state.date)}</span>
           <span className={css.headerDay}>{@state.date.getDate()}</span>
         </div>
         <span className={css.headerYear} onClick={@displayYears}>

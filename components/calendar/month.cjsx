@@ -1,6 +1,6 @@
 css  = require './style'
 Day  = require './day'
-util = require '../date_utils'
+dateTime = require '../util/date-time'
 
 module.exports = React.createClass
   displayName: 'Month',
@@ -13,13 +13,13 @@ module.exports = React.createClass
   render: ->
     <div>
       <span className={css.title}>
-        { util.monthInWords(@props.viewDate)} {@props.viewDate.getFullYear() }
+        { dateTime.getFullMonth(@props.viewDate)} {@props.viewDate.getFullYear() }
       </span>
       <div className={css.week}>
-        { <span key={"dw#{i}"}>{ util.weekDayInWords(i).charAt(0) }</span> for i in [0..6] }
+        { <span key={"dw#{i}"}>{ dateTime.getFullDayOfWeek(i).charAt(0) }</span> for i in [0..6] }
       </div>
       <div className={css.days}>
-        { for i in [1..util.daysInMonth(@props.viewDate)]
+        { for i in [1..dateTime.getDaysInMonth(@props.viewDate)]
             <Day key={"d#{i}"}
               day={i}
               onClick={@props.onDayClick}
