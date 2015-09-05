@@ -13,6 +13,10 @@
     "modules": [2]
   },
 
+  "plugins": [
+    "react"
+  ],
+
   "rules": {
     "block-scoped-var": [0],
     "brace-style": [2, "1tbs", {
