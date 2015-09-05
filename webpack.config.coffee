@@ -7,7 +7,7 @@ environment       = process.env.NODE_ENV
 
 module.exports =
   cache         : true
-  resolve       : extensions: ['', '.cjsx', '.coffee', '.js', '.json', '.styl']
+  resolve       : extensions: ['', '.jsx', '.cjsx', '.coffee', '.js', '.json', '.styl']
   context       : __dirname
 
   entry:
@@ -34,7 +34,7 @@ module.exports =
     noParse     : [node_modules + '/react/dist/*.js']
 
     loaders: [
-      test      : /\.js$/,      exclude:/(node_modules)/, loader: 'babel'
+      test      : /(\.js|\.jsx)$/,      exclude:/(node_modules)/, loader: 'babel'
     ,
       test      : /\.cjsx$/,    loader: 'coffee-jsx-loader'
     ,
