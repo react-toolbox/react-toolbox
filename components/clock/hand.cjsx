@@ -1,5 +1,5 @@
 css      = require './style'
-prefixer = require "../prefixer"
+prefixer = require '../util/prefixer'
 
 module.exports = React.createClass
   displayName    : 'Hand'
@@ -87,7 +87,7 @@ module.exports = React.createClass
 
   # -- Render
   render: ->
-    style = prefixer.transform("rotate(#{@state.angle}deg)")
+    style = prefixer(transform: "rotate(#{@state.angle}deg")
     style.height = @props.length - @state.knobWidth/2
 
     <div className={css.hand + ' ' + @props.className} style={style}>

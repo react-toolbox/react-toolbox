@@ -142,7 +142,7 @@ module.exports = {
 
   setMinutes (d, minutes) {
     let newDate = this.clone(d);
-    newDate.setHours(minutes);
+    newDate.setMinutes(minutes);
     return newDate;
   },
 

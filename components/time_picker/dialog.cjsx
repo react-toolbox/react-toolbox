@@ -1,9 +1,8 @@
-css       = require './style'
-dateUtils = require '../date_utils'
-
-Button    = require '../button'
-Clock     = require '../clock'
-Dialog    = require '../dialog'
+css     = require './style'
+date    = require '../util/date-time'
+Button  = require '../button'
+Clock   = require '../clock'
+Dialog  = require '../dialog'
 
 module.exports = React.createClass
   displayName      : 'TimePickerDialog'
@@ -61,7 +60,7 @@ module.exports = React.createClass
   render: ->
     className  = " "
     className += " display-#{@state.display}"
-    className += " format-#{dateUtils.timeMode(@state.time)}"
+    className += " format-#{date.getTimeMode(@state.time)}"
 
     <Dialog ref="dialog" type={css.dialog} className={className} actions={@state.actions}>
       <header className={css.header}>
