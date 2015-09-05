@@ -1,6 +1,6 @@
 CTG       = React.addons.CSSTransitionGroup
 css       = require './style'
-dateTime  = require '../util/date-time'
+dateTime  = require '../utils/date-time'
 FontIcon  = require '../font_icon'
 Month     = require './month'
 

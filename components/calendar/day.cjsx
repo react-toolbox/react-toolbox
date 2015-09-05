@@ -1,5 +1,5 @@
 css = require './style'
-dateTime  = require '../util/date-time'
+dateTime  = require '../utils/date-time'
 
 module.exports = React.createClass
   displayName: 'Day',

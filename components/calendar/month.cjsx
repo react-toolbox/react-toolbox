@@ -1,6 +1,6 @@
 css  = require './style'
 Day  = require './day'
-dateTime = require '../util/date-time'
+dateTime = require '../utils/date-time'
 
 module.exports = React.createClass
   displayName: 'Month',
