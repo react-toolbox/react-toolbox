@@ -1,5 +1,5 @@
-prefixer     = require "../util/prefixer"
 localCSS     = require './style'
+prefixer     = require "../utils/prefixer"
 ProgressBar  = require "../progress_bar"
 Input        = require "../input"
 

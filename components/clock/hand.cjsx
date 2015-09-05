@@ -1,5 +1,5 @@
 css      = require './style'
-prefixer = require '../util/prefixer'
+prefixer = require '../utils/prefixer'
 
 module.exports = React.createClass
   displayName    : 'Hand'

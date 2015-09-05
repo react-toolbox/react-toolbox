@@ -1,7 +1,7 @@
 css     = require './style'
-date    = require '../util/date-time'
 Hours   = require './hours'
 Minutes = require './minutes'
+utils   = require '../utils/date-time'
 
 module.exports = React.createClass
   displayName   : 'Clock'
@@ -41,10 +41,10 @@ module.exports = React.createClass
 
   # -- Events handlers
   onHourChange: (hours) ->
-    @setState time: date.setHours(@state.time, @_adaptHourToFormat(hours))
+    @setState time: utils.setHours(@state.time, @_adaptHourToFormat(hours))
 
   onMinuteChange: (minutes) ->
-    @setState time: date.setMinutes(@state.time, minutes)
+    @setState time: utils.setMinutes(@state.time, minutes)
 
   # -- Helper methods
   _getRadius: ->
@@ -52,7 +52,7 @@ module.exports = React.createClass
 
   _adaptHourToFormat: (hour) ->
     if @props.format == 'ampm'
-      if date.getTimeMode(@state.time) == 'pm'
+      if utils.getTimeMode(@state.time) == 'pm'
         if hour < 12 then hour + 12 else hour
       else
         if hour == 12 then 0 else hour
@@ -73,7 +73,7 @@ module.exports = React.createClass
 
   # -- Public methods
   toggleTimeMode: ->
-    @setState time: date.toggleTimeMode(@state.time)
+    @setState time: utils.toggleTimeMode(@state.time)
 
   # -- Render
   render: ->

@@ -1,7 +1,7 @@
-CalendarDialog = require './dialog'
 css            = require './style'
-dateTime       = require '../util/date-time'
+CalendarDialog = require './dialog'
 Input          = require '../input'
+utils          = require '../utils/date-time'
 
 module.exports = React.createClass
   displayName  : 'DatePicker'
@@ -27,7 +27,7 @@ module.exports = React.createClass
   # -- Private methods
   formatDate: (date) ->
     day = date.getDate()
-    month = dateTime.getFullMonth(date)
+    month = utils.getFullMonth(date)
     year = date.getFullYear()
     "#{day} #{month} #{year}"
 

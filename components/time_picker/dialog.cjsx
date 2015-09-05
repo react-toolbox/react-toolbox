@@ -1,5 +1,5 @@
 css     = require './style'
-date    = require '../util/date-time'
+utils   = require '../utils/date-time'
 Button  = require '../button'
 Clock   = require '../clock'
 Dialog  = require '../dialog'
@@ -60,7 +60,7 @@ module.exports = React.createClass
   render: ->
     className  = " "
     className += " display-#{@state.display}"
-    className += " format-#{date.getTimeMode(@state.time)}"
+    className += " format-#{utils.getTimeMode(@state.time)}"
 
     <Dialog ref="dialog" type={css.dialog} className={className} actions={@state.actions}>
       <header className={css.header}>
