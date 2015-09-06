@@ -19,7 +19,7 @@ module.exports = React.createClass({
   getDefaultProps () {
     return {
       className: '',
-      display: 'minutes',
+      display: 'hours',
       format: '24hr',
       initialTime: new Date()
     };

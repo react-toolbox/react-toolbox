@@ -34,8 +34,8 @@ module.exports = React.createClass({
     };
   },
 
-  onClockChange (time) {
-    this.setState({time: time});
+  onClockChange (newTime) {
+    this.setState({time: newTime});
   },
 
   onTimeCancel () {

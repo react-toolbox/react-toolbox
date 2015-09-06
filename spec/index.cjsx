@@ -25,10 +25,7 @@ Test = React.createClass
   render: ->
     <app data-toolbox={true}>
       <h1>React-Toolbox <small>New way for create</small></h1>
-
-      <div style={width: '320px'}>
-        <Pickers display="minutes"/>
-      </div>
+      <Pickers />
     </app>
 
 React.render <Test/>, document.body
