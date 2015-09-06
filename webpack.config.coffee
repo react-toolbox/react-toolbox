@@ -34,7 +34,7 @@ module.exports =
     noParse     : [node_modules + '/react/dist/*.js']
 
     loaders: [
-      test      : /(\.js|\.jsx)$/,      exclude:/(node_modules)/, loader: 'babel'
+      test      : /(\.js|\.jsx)$/,      exclude:/(node_modules)/, loader: 'babel?optional=runtime'
     ,
       test      : /\.cjsx$/,    loader: 'coffee-jsx-loader'
     ,

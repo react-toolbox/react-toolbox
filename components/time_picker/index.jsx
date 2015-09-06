@@ -25,7 +25,7 @@ module.exports = React.createClass({
   },
 
   onTimeSelected (time) {
-    this.refs.input.setValue(this.formatTime(time));
+    this.refs.input.setValue(utils.formatTime(time, this.props.format));
     this.setState({value: time});
   },
 
