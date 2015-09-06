@@ -6,7 +6,7 @@ module.exports = React.createClass
   # -- States & Properties
   propTypes:
     className : React.PropTypes.string
-    index     : React.PropTypes.number.required
+    index     : React.PropTypes.number.isRequired
     onChange  : React.PropTypes.func
 
   getDefaultProps: ->

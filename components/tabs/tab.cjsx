@@ -4,11 +4,11 @@ module.exports = React.createClass
 
   # -- States & Properties
   propTypes:
-    active    : React.PropTypes.boolean
+    active    : React.PropTypes.bool
     className : React.PropTypes.string
-    disabled  : React.PropTypes.boolean
-    hidden    : React.PropTypes.boolean
-    label     : React.PropTypes.string.required
+    disabled  : React.PropTypes.bool
+    hidden    : React.PropTypes.bool
+    label     : React.PropTypes.string.isRequired
     onActive  : React.PropTypes.func
     tabIndex  : React.PropTypes.number
 
