@@ -24,5 +24,6 @@ module.exports = {
 
   events: require('./events'),
   prefixer: require('./prefixer'),
+  time: require('./time'),
   testing: require('./testing')
 };
