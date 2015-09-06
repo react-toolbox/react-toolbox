@@ -61,7 +61,7 @@ module.exports = React.createClass({
 
   show () {
     this.refs.dialog.show();
-    setTimeout(this.refs.clock.handleResize, 500);
+    setTimeout(this.refs.clock.calculateShape, 500);
   },
 
   _formatHours () {

@@ -34,38 +34,30 @@ module.exports = React.createClass({
   },
 
   componentDidMount () {
-    window.addEventListener('resize', this.handleResize);
-    this.setState({radius: this._getRadius()});
+    window.addEventListener('resize', this.calculateShape);
+    this.calculateShape();
   },
 
   componentWillUpdate (props, state) {
-    let center = this._getCenter();
-    let { x: cx, y: cy } = center;
-    let { x: sx, y: sy } = this.state.center;
-
-    if (sx !== cx || sy !== cy) {
-      this.setState({center: center});
-    }
-
     if (state.time.getTime() !== this.state.time.getTime() && this.props.onChange) {
       this.props.onChange(state.time);
     }
   },
 
   componentWillUnmount () {
-    window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('resize', this.calculateShape);
   },
 
   onHourChange (hours) {
-    this.setState({time: utils.setHours(this.state.time, this._adaptHourToFormat(hours))});
+    if (this.state.time.getHours() !== hours) {
+      this.setState({time: utils.setHours(this.state.time, this._adaptHourToFormat(hours))});
+    }
   },
 
   onMinuteChange (minutes) {
-    this.setState({time: utils.setMinutes(this.state.time, minutes)});
-  },
-
-  _getRadius () {
-    return this.refs.wrapper.getDOMNode().getBoundingClientRect().width / 2;
+    if (this.state.time.getMinutes() !== minutes) {
+      this.setState({time: utils.setMinutes(this.state.time, minutes)});
+    }
   },
 
   _adaptHourToFormat (hour) {
@@ -80,19 +72,12 @@ module.exports = React.createClass({
     }
   },
 
-  handleResize () {
+  calculateShape () {
+    let { top, left, width } = this.refs.wrapper.getDOMNode().getBoundingClientRect();
     this.setState({
-      center: this._getCenter(),
-      radius: this._getRadius()
+      center: { x: left + width / 2, y: top + width / 2 },
+      radius: width / 2
     });
-  },
-
-  _getCenter () {
-    let { left, right, top, bottom } = this.getDOMNode().getBoundingClientRect();
-    return {
-      x: left + (right - left) / 2,
-      y: top + (bottom - top) / 2
-    };
   },
 
   toggleTimeMode () {
