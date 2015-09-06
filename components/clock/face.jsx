@@ -1,5 +1,4 @@
 const React = window.React;
-
 const css = require('./style');
 
 module.exports = React.createClass({
@@ -9,7 +8,8 @@ module.exports = React.createClass({
     return {
       active: null,
       numbers: [],
-      radius: 0
+      radius: 0,
+      twoDigits: false
     };
   },
 
@@ -38,10 +38,10 @@ module.exports = React.createClass({
         {
           this.props.numbers.map((i, k) => {
             return (
-              <span className={css.number + (parseInt(i) === this.props.active ? ' active' : '')}
+              <span className={css.number + (i === this.props.active ? ' active' : '')}
                     style={this._numberStyle(this.props.radius - this.props.spacing, k + 1)}
                     key={i}>
-                {i}
+                { this.props.twoDigits ? ('0' + i).slice(-2) : i }
               </span>
             );
           })

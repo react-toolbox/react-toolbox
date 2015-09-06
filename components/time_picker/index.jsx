@@ -1,8 +1,8 @@
 const React = window.React;
+const time = require('../utils/time');
 
 const Input = require('../input');
 const TimeDialog = require('./dialog');
-const utils = require('../utils/date-time');
 
 module.exports = React.createClass({
   displayName: 'TimePicker',
@@ -25,7 +25,7 @@ module.exports = React.createClass({
   },
 
   onTimeSelected (time) {
-    this.refs.input.setValue(utils.formatTime(time, this.props.format));
+    this.refs.input.setValue(time.formatTime(time, this.props.format));
     this.setState({value: time});
   },
 
@@ -35,7 +35,7 @@ module.exports = React.createClass({
 
   formatTime () {
     if (this.state.value) {
-      return utils.formatTime(this.state.value, this.props.format);
+      return time.formatTime(this.state.value, this.props.format);
     }
   },
 

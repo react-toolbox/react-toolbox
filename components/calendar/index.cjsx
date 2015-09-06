@@ -1,6 +1,6 @@
 CTG       = React.addons.CSSTransitionGroup
 css       = require './style'
-dateTime  = require '../utils/date-time'
+time      = require '../utils/time'
 FontIcon  = require '../font_icon'
 Month     = require './month'
 
@@ -31,10 +31,10 @@ module.exports = React.createClass
   # -- Events
   onDayClick: (event) ->
     @setState
-      selectedDate: dateTime.setDay(@state.viewDate, parseInt(event.target.textContent))
+      selectedDate: time.setDay(@state.viewDate, parseInt(event.target.textContent))
 
   onYearClick: (event) ->
-    newDate = dateTime.setYear(@state.selectedDate, parseInt(event.target.textContent))
+    newDate = time.setYear(@state.selectedDate, parseInt(event.target.textContent))
     @setState
       selectedDate: newDate
       viewDate: newDate
@@ -53,12 +53,12 @@ module.exports = React.createClass
   incrementViewMonth: ->
     @setState
       direction: 'right'
-      viewDate:  dateTime.addMonths(@state.viewDate, 1)
+      viewDate:  time.addMonths(@state.viewDate, 1)
 
   decrementViewMonth: ->
     @setState
       direction: 'left'
-      viewDate: dateTime.addMonths(@state.viewDate, -1)
+      viewDate: time.addMonths(@state.viewDate, -1)
 
   # -- Render
   renderYear: (year) ->

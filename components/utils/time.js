@@ -172,10 +172,6 @@ module.exports = {
     if (hours.length < 2) hours = '0' + hours;
     if (mins.length < 2) mins = '0' + mins;
     return hours + ':' + mins;
-  },
-
-  twoDigits (number) {
-    return ('0' + number).slice(-2);
   }
 
 };

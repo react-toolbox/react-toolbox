@@ -1,8 +1,6 @@
 const React = window.React;
-
 const css = require('./style');
-const prefixer = require('../utils/prefixer');
-const helper = require('../utils/helper');
+const utils = require('../utils');
 
 module.exports = React.createClass({
   displayName: 'Hand',
@@ -57,11 +55,11 @@ module.exports = React.createClass({
   },
 
   onMouseMove (event) {
-    this._move(helper.getMousePosition(event));
+    this._move(utils.events.getMousePosition(event));
   },
 
   onTouchMove (event) {
-    this._move(helper.getTouchPosition(event));
+    this._move(utils.events.getTouchPosition(event));
   },
 
   onMouseUp () {
@@ -73,14 +71,14 @@ module.exports = React.createClass({
   },
 
   mouseStart (event) {
-    helper.addEventsToDocument(this._getMouseEventMap());
-    this._move(helper.getMousePosition(event));
+    utils.events.addEventsToDocument(this._getMouseEventMap());
+    this._move(utils.events.getMousePosition(event));
   },
 
   touchStart (event) {
-    helper.addEventsToDocument(this._getTouchEventMap());
-    this._move(helper.getTouchPosition(event));
-    helper.pauseEvent(event);
+    utils.events.addEventsToDocument(this._getTouchEventMap());
+    this._move(utils.events.getTouchPosition(event));
+    utils.events.pauseEvent(event);
   },
 
   _getPositionRadius (position) {
@@ -94,23 +92,23 @@ module.exports = React.createClass({
   },
 
   _positionToAngle (position) {
-    return helper.angle360FromPositions(this.props.origin.x, this.props.origin.y, position.x, position.y);
+    return utils.angle360FromPositions(this.props.origin.x, this.props.origin.y, position.x, position.y);
   },
 
   _end (events) {
     if (this.props.onHandMoved) this.props.onHandMoved();
-    helper.removeEventsFromDocument(events);
+    utils.events.removeEventsFromDocument(events);
   },
 
   _move (position) {
     let degrees = this._trimAngleToValue(this._positionToAngle(position));
     degrees = degrees === 360 ? 0 : degrees;
     if (this.state.angle !== degrees) this.setState({angle: degrees});
-    if (this.props.onHandMouseMove) this.props.onHandMouseMove(this._getPositionRadius(position));
+    if (this.props.onHandMove) this.props.onHandMove(this._getPositionRadius(position));
   },
 
   render () {
-    let style = prefixer({
+    let style = utils.prefixer({
       height: this.props.length - this.state.knobWidth / 2,
       transform: `rotate(${this.state.angle}deg)`
     });

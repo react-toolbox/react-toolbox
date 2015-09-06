@@ -1,12 +1,11 @@
 const React = window.React;
+const utils = require('../utils');
 
 const Face = require('./face');
 const Hand = require('./hand');
 
-const { range } = require('../utils/helper');
-
-const innerNumbers = [12, ...range(1, 12)];
-const outerNumbers = ['00', ...range(13, 24)];
+const outerNumbers = [0, ...utils.range(13, 24)];
+const innerNumbers = [12, ...utils.range(1, 12)];
 const step = 360 / 12;
 
 module.exports = React.createClass({
@@ -25,7 +24,7 @@ module.exports = React.createClass({
     };
   },
 
-  _onHandMouseMove (radius) {
+  _onHandMove (radius) {
     let currentInner = radius < this.props.radius - this.props.spacing * 2;
     if (this.props.format === '24hr' && this.state.inner !== currentInner) {
       this.setState({inner: currentInner});
@@ -46,47 +45,48 @@ module.exports = React.createClass({
 
   _valueFromDegrees (degrees) {
     if (this.props.format === 'ampm' || this.props.format === '24hr' && this.state.inner) {
-      return parseInt(innerNumbers[degrees / step]);
+      return innerNumbers[degrees / step];
     } else {
-      return parseInt(outerNumbers[degrees / step]);
+      return outerNumbers[degrees / step];
     }
   },
 
   renderInnerFace (innerRadius) {
-    return (
-      <Face
-        onTouchStart={this._onTouchStart}
-        onMouseDown={this._onMouseDown}
-        numbers={innerNumbers}
-        spacing={this.props.spacing}
-        radius={innerRadius}
-        active={this.props.selected} />
-    );
+    if (this.props.format === '24hr') {
+      return (
+        <Face
+          onTouchStart={this._onTouchStart}
+          onMouseDown={this._onMouseDown}
+          numbers={innerNumbers}
+          spacing={this.props.spacing}
+          radius={innerRadius}
+          active={this.props.selected} />
+      );
+    }
   },
 
   render () {
-    let innerRadius = this.props.radius - this.props.spacing * 2;
-    let handRadius = this.state.inner ? innerRadius : this.props.radius;
-    let handLength = handRadius - this.props.spacing;
-    let ampmActive = this.props.format === '24hr' ? this.props.selected : (this.props.selected % 12 || 12);
+    const { format, selected, radius, spacing, center, onHandMoved } = this.props;
+    const is24hr = format === '24hr';
 
     return (
       <div>
           <Face
             onTouchStart={this._onTouchStart}
             onMouseDown={this._onMouseDown}
-            numbers={this.props.format === '24hr' ? outerNumbers : innerNumbers}
-            spacing={this.props.spacing}
-            radius={this.props.radius}
-            active={ampmActive} />
-          { this.props.format === '24hr' ? this.renderInnerFace(innerRadius) : '' }
+            numbers={is24hr ? outerNumbers : innerNumbers}
+            spacing={spacing}
+            radius={radius}
+            twoDigits={is24hr}
+            active={is24hr ? selected : (selected % 12 || 12)} />
+          { this.renderInnerFace(radius - spacing * 2) }
           <Hand ref='hand'
-            initialAngle={this.props.selected * step}
-            length={handLength}
-            onHandMouseMove={this._onHandMouseMove}
-            onHandMoved={this.props.onHandMoved}
+            initialAngle={selected * step}
+            length={(this.state.inner ? radius - spacing * 2 : radius) - spacing}
+            onHandMove={this._onHandMove}
+            onHandMoved={onHandMoved}
             onHandChange={this._onHandChange}
-            origin={this.props.center}
+            origin={center}
             step={step} />
       </div>
     );

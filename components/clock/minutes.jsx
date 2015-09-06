@@ -1,12 +1,10 @@
 const React = window.React;
+const utils = require('../utils');
 
 const Face = require('./face');
 const Hand = require('./hand');
 
-const { range } = require('../utils/helper');
-const { twoDigits } = require('./../utils/date-time');
-
-const minutes = range(0, 60, 5).map(i => { return twoDigits(i); });
+const minutes = utils.range(0, 60, 5);
 const step = 360 / 60;
 
 module.exports = React.createClass({
@@ -19,7 +17,7 @@ module.exports = React.createClass({
 
   getDefaultProps () {
     return {
-      select: 0,
+      selected: 0,
       onChange: null
     };
   },
@@ -45,9 +43,10 @@ module.exports = React.createClass({
           numbers={minutes}
           spacing={this.props.spacing}
           radius={this.props.radius}
+          twoDigits={true}
           active={this.props.selected} />
         <Hand ref='hand'
-          className={minutes.indexOf(twoDigits(this.props.selected)) === -1 ? 'smallKnob' : ''}
+          className={minutes.indexOf(this.props.selected) === -1 ? 'smallKnob' : ''}
           initialAngle={this.props.selected * step}
           length={this.props.radius - this.props.spacing}
           onHandChange={this._onHandChange}

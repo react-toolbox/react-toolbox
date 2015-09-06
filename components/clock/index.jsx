@@ -1,9 +1,9 @@
 const React = window.React;
-
 const css = require('./style');
+const time = require('../utils/time');
+
 const Hours = require('./hours');
 const Minutes = require('./minutes');
-const utils = require('../utils/date-time');
 
 module.exports = React.createClass({
   displayName: 'Clock',
@@ -19,7 +19,7 @@ module.exports = React.createClass({
   getDefaultProps () {
     return {
       className: '',
-      display: 'hours',
+      display: 'minutes',
       format: '24hr',
       initialTime: new Date()
     };
@@ -50,19 +50,19 @@ module.exports = React.createClass({
 
   onHourChange (hours) {
     if (this.state.time.getHours() !== hours) {
-      this.setState({time: utils.setHours(this.state.time, this._adaptHourToFormat(hours))});
+      this.setState({time: time.setHours(this.state.time, this._adaptHourToFormat(hours))});
     }
   },
 
   onMinuteChange (minutes) {
     if (this.state.time.getMinutes() !== minutes) {
-      this.setState({time: utils.setMinutes(this.state.time, minutes)});
+      this.setState({time: time.setMinutes(this.state.time, minutes)});
     }
   },
 
   _adaptHourToFormat (hour) {
     if (this.props.format === 'ampm') {
-      if (utils.getTimeMode(this.state.time) === 'pm') {
+      if (time.getTimeMode(this.state.time) === 'pm') {
         return hour < 12 ? hour + 12 : hour;
       } else {
         return hour === 12 ? 0 : hour;
@@ -81,7 +81,7 @@ module.exports = React.createClass({
   },
 
   toggleTimeMode () {
-    this.setState({time: utils.toggleTimeMode(this.state.time)});
+    this.setState({time: time.toggleTimeMode(this.state.time)});
   },
 
   renderHours () {

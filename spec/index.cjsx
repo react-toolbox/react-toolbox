@@ -15,7 +15,7 @@ Slider        = require './components/slider'
 Switch        = require './components/switch'
 Calendar      = require './components/calendar'
 Pickers       = require './components/pickers'
-Clock         = require './components/clock'
+Clock         = require '../components/clock'
 Tabs          = require './components/tabs'
 
 Test = React.createClass
@@ -26,19 +26,9 @@ Test = React.createClass
     <app data-toolbox={true}>
       <h1>React-Toolbox <small>New way for create</small></h1>
 
-      <Aside />
-      <Autocomplete />
-      <Button />
-      <Card />
-      <Dialog />
-      <Dropdown />
-      <FontIcon />
-      <Form />
-      <Progress />
-      <Slider />
-      <Switch />
-      <Tabs />
-      <Pickers />
+      <div style={width: '320px'}>
+        <Pickers display="minutes"/>
+      </div>
     </app>
 
 React.render <Test/>, document.body
