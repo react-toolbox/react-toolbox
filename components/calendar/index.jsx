@@ -1,13 +1,15 @@
 const React = window.React;
+const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 const css = require('./style');
 const utils = require('../utils');
 
 const FontIcon = require('../font_icon');
 const Month = require('./month');
-
 const CTG = React.addons.CSSTransitionGroup;
 
 module.exports = React.createClass({
+  mixins: [PureRenderMixin],
+
   displayName: 'Calendar',
 
   propTypes: {
@@ -33,7 +35,7 @@ module.exports = React.createClass({
 
   componentDidUpdate () {
     if (this.refs.activeYear) {
-      this._scrollToActive();
+      this.scrollToActive();
     }
   },
 
@@ -49,7 +51,7 @@ module.exports = React.createClass({
     if (this.props.onChange) this.props.onChange(newDate);
   },
 
-  _scrollToActive () {
+  scrollToActive () {
     this.refs.years.getDOMNode().scrollTop =
       this.refs.activeYear.getDOMNode().offsetTop -
       this.refs.years.getDOMNode().offsetHeight / 2 +

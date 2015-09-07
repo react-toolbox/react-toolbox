@@ -1,10 +1,13 @@
 const React = window.React;
+const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 const css = require('./style');
 const utils = require('../utils');
 
 const Day = require('./day');
 
 module.exports = React.createClass({
+  mixin: [PureRenderMixin],
+
   displayName: 'Month',
 
   propTypes: {

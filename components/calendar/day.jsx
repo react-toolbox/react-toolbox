@@ -1,8 +1,11 @@
 const React = window.React;
+const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 const css = require('./style');
 const time = require('../utils/time');
 
 module.exports = React.createClass({
+  mixins: [PureRenderMixin],
+
   displayName: 'Day',
 
   propTypes: {
@@ -12,7 +15,7 @@ module.exports = React.createClass({
     viewDate: React.PropTypes.object
   },
 
-  _dayStyle () {
+  dayStyle () {
     if (this.props.day === 1) {
       return {
         marginLeft: `${time.getFirstWeekDay(this.props.viewDate) * 100 / 7}%`
@@ -20,7 +23,7 @@ module.exports = React.createClass({
     }
   },
 
-  _isSelected () {
+  isSelected () {
     const sameYear = this.props.viewDate.getFullYear() === this.props.selectedDate.getFullYear();
     const sameMonth = this.props.viewDate.getMonth() === this.props.selectedDate.getMonth();
     const sameDay = this.props.day === this.props.selectedDate.getDate();
@@ -29,9 +32,7 @@ module.exports = React.createClass({
 
   render () {
     return (
-      <div
-        className={this._isSelected() ? `${css.day} active` : css.day}
-        style={this._dayStyle()}>
+      <div className={this.isSelected() ? `${css.day} active` : css.day} style={this.dayStyle()}>
           <span onClick={this.props.onClick}>{this.props.day}</span>
       </div>
     );
