@@ -16,11 +16,11 @@ module.exports = (config) ->
       'tests.webpack.js' : ['webpack']
 
     webpack:
-      resolve       : extensions: ['', '.cjsx', '.coffee', '.js', '.json', '.styl']
+      resolve       : extensions: ['', '.jsx', '.cjsx', '.coffee', '.js', '.json', '.styl']
 
       module:
         loaders: [
-          test      : /\.js$/,      exclude:/(node_modules)/, loader: 'babel?optional=runtime'
+          test      : /(\.js|\.jsx)$/,      exclude:/(node_modules)/, loader: 'babel?optional=runtime'
         ,
           test      : /\.cjsx$/,    loader: 'coffee-jsx-loader'
         ,
