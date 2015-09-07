@@ -1,4 +1,5 @@
 const React = window.React;
+const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 const css = require('./style');
 const time = require('../utils/time');
 
@@ -6,6 +7,8 @@ const Calendar = require('../calendar');
 const Dialog = require('../dialog');
 
 module.exports = React.createClass({
+  mixins: [PureRenderMixin],
+
   displayName: 'CalendarDialog',
 
   propTypes: {
