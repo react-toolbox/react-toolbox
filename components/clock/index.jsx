@@ -38,25 +38,23 @@ module.exports = React.createClass({
     this.calculateShape();
   },
 
-  componentWillUpdate (props, state) {
-    if (state.time.getTime() !== this.state.time.getTime() && this.props.onChange) {
-      this.props.onChange(state.time);
-    }
-  },
-
   componentWillUnmount () {
     window.removeEventListener('resize', this.calculateShape);
   },
 
   onHourChange (hours) {
     if (this.state.time.getHours() !== hours) {
-      this.setState({time: time.setHours(this.state.time, this._adaptHourToFormat(hours))});
+      const newTime = time.setHours(this.state.time, this._adaptHourToFormat(hours));
+      this.setState({time: newTime});
+      if (this.props.onChange) this.props.onChange(newTime);
     }
   },
 
   onMinuteChange (minutes) {
     if (this.state.time.getMinutes() !== minutes) {
-      this.setState({time: time.setMinutes(this.state.time, minutes)});
+      let newTime = time.setMinutes(this.state.time, minutes);
+      this.setState({time: newTime});
+      if (this.props.onChange) this.props.onChange(newTime);
     }
   },
 

@@ -77,7 +77,7 @@ module.exports = React.createClass({
               ref="calendar"
               display={this.state.display}
               onChange={this.onCalendarChange}
-              selectedDate={this.state.date} />
+              selectedDate={this.props.date} />
           </div>
       </Dialog>
     );

@@ -31,22 +31,22 @@ module.exports = React.createClass({
     };
   },
 
-  componentDidUpdate (props, state) {
-    if (this.refs.activeYear) this._scrollToActive();
-    if (state.selectedDate.getTime() !== this.state.selectedDate.getTime() && this.props.onChange) {
-      this.props.onChange(this.state.selectedDate);
+  componentDidUpdate () {
+    if (this.refs.activeYear) {
+      this._scrollToActive();
     }
   },
 
   onDayClick (event) {
-    this.setState({
-      selectedDate: utils.time.setDay(this.state.viewDate, parseInt(event.target.textContent))
-    });
+    let newDate = utils.time.setDay(this.state.viewDate, parseInt(event.target.textContent));
+    this.setState({selectedDate: newDate});
+    if (this.props.onChange) this.props.onChange(newDate);
   },
 
   onYearClick (event) {
-    const date = utils.time.setYear(this.state.selectedDate, parseInt(event.target.textContent));
-    this.setState({selectedDate: date, viewDate: date});
+    let newDate = utils.time.setYear(this.state.selectedDate, parseInt(event.target.textContent));
+    this.setState({selectedDate: newDate, viewDate: newDate});
+    if (this.props.onChange) this.props.onChange(newDate);
   },
 
   _scrollToActive () {
