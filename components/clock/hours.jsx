@@ -1,4 +1,5 @@
 const React = window.React;
+const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 const utils = require('../utils');
 
 const Face = require('./face');
@@ -9,6 +10,8 @@ const innerNumbers = [12, ...utils.range(1, 12)];
 const step = 360 / 12;
 
 module.exports = React.createClass({
+  mixins: [PureRenderMixin],
+
   displayName: 'Hours',
 
   propTypes: {
@@ -24,26 +27,26 @@ module.exports = React.createClass({
     };
   },
 
-  _onHandMove (radius) {
+  onHandMove (radius) {
     let currentInner = radius < this.props.radius - this.props.spacing * 2;
     if (this.props.format === '24hr' && this.state.inner !== currentInner) {
       this.setState({inner: currentInner});
     }
   },
 
-  _onHandChange (degrees) {
-    this.props.onChange(this._valueFromDegrees(degrees));
+  onHandChange (degrees) {
+    this.props.onChange(this.valueFromDegrees(degrees));
   },
 
-  _onMouseDown (event) {
+  onMouseDown (event) {
     this.refs.hand.mouseStart(event);
   },
 
-  _onTouchStart (event) {
+  onTouchStart (event) {
     this.refs.hand.touchStart(event);
   },
 
-  _valueFromDegrees (degrees) {
+  valueFromDegrees (degrees) {
     if (this.props.format === 'ampm' || this.props.format === '24hr' && this.state.inner) {
       return innerNumbers[degrees / step];
     } else {
@@ -55,8 +58,8 @@ module.exports = React.createClass({
     if (this.props.format === '24hr') {
       return (
         <Face
-          onTouchStart={this._onTouchStart}
-          onMouseDown={this._onMouseDown}
+          onTouchStart={this.onTouchStart}
+          onMouseDown={this.onMouseDown}
           numbers={innerNumbers}
           spacing={this.props.spacing}
           radius={innerRadius}
@@ -72,8 +75,8 @@ module.exports = React.createClass({
     return (
       <div>
           <Face
-            onTouchStart={this._onTouchStart}
-            onMouseDown={this._onMouseDown}
+            onTouchStart={this.onTouchStart}
+            onMouseDown={this.onMouseDown}
             numbers={is24hr ? outerNumbers : innerNumbers}
             spacing={spacing}
             radius={radius}
@@ -83,9 +86,9 @@ module.exports = React.createClass({
           <Hand ref='hand'
             initialAngle={selected * step}
             length={(this.state.inner ? radius - spacing * 2 : radius) - spacing}
-            onHandMove={this._onHandMove}
+            onHandMove={this.onHandMove}
             onHandMoved={onHandMoved}
-            onHandChange={this._onHandChange}
+            onHandChange={this.onHandChange}
             origin={center}
             step={step} />
       </div>

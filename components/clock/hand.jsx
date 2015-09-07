@@ -1,8 +1,11 @@
 const React = window.React;
+const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 const css = require('./style');
 const utils = require('../utils');
 
 module.exports = React.createClass({
+  mixins: [PureRenderMixin],
+
   displayName: 'Hand',
 
   propTypes: {
@@ -40,14 +43,14 @@ module.exports = React.createClass({
     }
   },
 
-  _getMouseEventMap () {
+  getMouseEventMap () {
     return {
       mousemove: this.onMouseMove,
       mouseup: this.onMouseUp
     };
   },
 
-  _getTouchEventMap () {
+  getTouchEventMap () {
     return {
       touchmove: this.onTouchMove,
       touchend: this.onTouchEnd
@@ -55,56 +58,56 @@ module.exports = React.createClass({
   },
 
   onMouseMove (event) {
-    this._move(utils.events.getMousePosition(event));
+    this.move(utils.events.getMousePosition(event));
   },
 
   onTouchMove (event) {
-    this._move(utils.events.getTouchPosition(event));
+    this.move(utils.events.getTouchPosition(event));
   },
 
   onMouseUp () {
-    this._end(this._getMouseEventMap());
+    this.end(this.getMouseEventMap());
   },
 
   onTouchEnd () {
-    this._end(this._getTouchEventMap());
+    this.end(this.getTouchEventMap());
   },
 
   mouseStart (event) {
-    utils.events.addEventsToDocument(this._getMouseEventMap());
-    this._move(utils.events.getMousePosition(event));
+    utils.events.addEventsToDocument(this.getMouseEventMap());
+    this.move(utils.events.getMousePosition(event));
   },
 
   touchStart (event) {
-    utils.events.addEventsToDocument(this._getTouchEventMap());
-    this._move(utils.events.getTouchPosition(event));
+    utils.events.addEventsToDocument(this.getTouchEventMap());
+    this.move(utils.events.getTouchPosition(event));
     utils.events.pauseEvent(event);
   },
 
-  _getPositionRadius (position) {
+  getPositionRadius (position) {
     let x = this.props.origin.x - position.x;
     let y = this.props.origin.y - position.y;
     return Math.sqrt(x * x + y * y);
   },
 
-  _trimAngleToValue (angle) {
+  trimAngleToValue (angle) {
     return this.props.step * Math.round(angle / this.props.step);
   },
 
-  _positionToAngle (position) {
+  positionToAngle (position) {
     return utils.angle360FromPositions(this.props.origin.x, this.props.origin.y, position.x, position.y);
   },
 
-  _end (events) {
+  end (events) {
     if (this.props.onHandMoved) this.props.onHandMoved();
     utils.events.removeEventsFromDocument(events);
   },
 
-  _move (position) {
-    let degrees = this._trimAngleToValue(this._positionToAngle(position));
+  move (position) {
+    let degrees = this.trimAngleToValue(this.positionToAngle(position));
     degrees = degrees === 360 ? 0 : degrees;
     if (this.state.angle !== degrees) this.setState({angle: degrees});
-    if (this.props.onHandMove) this.props.onHandMove(this._getPositionRadius(position));
+    if (this.props.onHandMove) this.props.onHandMove(this.getPositionRadius(position));
   },
 
   render () {

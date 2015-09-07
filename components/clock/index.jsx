@@ -1,4 +1,5 @@
 const React = window.React;
+const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 const css = require('./style');
 const time = require('../utils/time');
 
@@ -6,6 +7,8 @@ const Hours = require('./hours');
 const Minutes = require('./minutes');
 
 module.exports = React.createClass({
+  mixins: [PureRenderMixin],
+
   displayName: 'Clock',
 
   propTypes: {
@@ -44,7 +47,7 @@ module.exports = React.createClass({
 
   onHourChange (hours) {
     if (this.state.time.getHours() !== hours) {
-      const newTime = time.setHours(this.state.time, this._adaptHourToFormat(hours));
+      const newTime = time.setHours(this.state.time, this.adaptHourToFormat(hours));
       this.setState({time: newTime});
       if (this.props.onChange) this.props.onChange(newTime);
     }
@@ -52,13 +55,19 @@ module.exports = React.createClass({
 
   onMinuteChange (minutes) {
     if (this.state.time.getMinutes() !== minutes) {
-      let newTime = time.setMinutes(this.state.time, minutes);
+      const newTime = time.setMinutes(this.state.time, minutes);
       this.setState({time: newTime});
       if (this.props.onChange) this.props.onChange(newTime);
     }
   },
 
-  _adaptHourToFormat (hour) {
+  toggleTimeMode () {
+    const newTime = time.toggleTimeMode(this.state.time);
+    this.setState({time: newTime});
+    if (this.props.onChange) this.props.onChange(newTime);
+  },
+
+  adaptHourToFormat (hour) {
     if (this.props.format === 'ampm') {
       if (time.getTimeMode(this.state.time) === 'pm') {
         return hour < 12 ? hour + 12 : hour;
@@ -76,10 +85,6 @@ module.exports = React.createClass({
       center: { x: left + width / 2, y: top + width / 2 },
       radius: width / 2
     });
-  },
-
-  toggleTimeMode () {
-    this.setState({time: time.toggleTimeMode(this.state.time)});
   },
 
   renderHours () {

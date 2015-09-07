@@ -1,4 +1,5 @@
 const React = window.React;
+const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 const utils = require('../utils');
 
 const Face = require('./face');
@@ -8,6 +9,8 @@ const minutes = utils.range(0, 60, 5);
 const step = 360 / 60;
 
 module.exports = React.createClass({
+  mixins: [PureRenderMixin],
+
   displayName: 'Minutes',
 
   propTypes: {
@@ -22,15 +25,15 @@ module.exports = React.createClass({
     };
   },
 
-  _onHandChange (degrees) {
+  onHandChange (degrees) {
     this.props.onChange(degrees / step);
   },
 
-  _onMouseDown (event) {
+  onMouseDown (event) {
     this.refs.hand.mouseStart(event);
   },
 
-  _onTouchStart (event) {
+  onTouchStart (event) {
     this.refs.hand.touchStart(event);
   },
 
@@ -38,8 +41,8 @@ module.exports = React.createClass({
     return (
       <div>
         <Face
-          onTouchStart={this._onTouchStart}
-          onMouseDown={this._onMouseDown}
+          onTouchStart={this.onTouchStart}
+          onMouseDown={this.onMouseDown}
           numbers={minutes}
           spacing={this.props.spacing}
           radius={this.props.radius}
@@ -49,7 +52,7 @@ module.exports = React.createClass({
           className={minutes.indexOf(this.props.selected) === -1 ? 'smallKnob' : ''}
           initialAngle={this.props.selected * step}
           length={this.props.radius - this.props.spacing}
-          onHandChange={this._onHandChange}
+          onHandChange={this.onHandChange}
           origin={this.props.center}
           step={step} />
       </div>

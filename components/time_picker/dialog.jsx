@@ -1,4 +1,5 @@
 const React = window.React;
+const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 const css = require('./style');
 const time = require('../utils/time');
 
@@ -6,6 +7,8 @@ const Clock = require('../clock');
 const Dialog = require('../dialog');
 
 module.exports = React.createClass({
+  mixins: [PureRenderMixin],
+
   displayName: 'TimePickerDialog',
 
   propTypes: {
@@ -61,10 +64,10 @@ module.exports = React.createClass({
 
   show () {
     this.refs.dialog.show();
-    setTimeout(this.refs.clock.calculateShape, 500);
+    setTimeout(this.refs.clock.calculateShape, 1000);
   },
 
-  _formatHours () {
+  formatHours () {
     if (this.props.format === 'ampm') {
       return this.state.time.getHours() % 12 || 12;
     } else {
@@ -89,7 +92,7 @@ module.exports = React.createClass({
       <Dialog ref="dialog" className={className} type={css.dialog} actions={this.state.actions}>
         <header className={css.header}>
           <span className={css.hours} onClick={this.displayHours}>
-            { ('0' + this._formatHours()).slice(-2) }
+            { ('0' + this.formatHours()).slice(-2) }
           </span>
           <span className={css.separator}>:</span>
           <span className={css.minutes} onClick={this.displayMinutes}>

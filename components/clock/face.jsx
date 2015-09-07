@@ -1,7 +1,10 @@
 const React = window.React;
+const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 const css = require('./style');
 
 module.exports = React.createClass({
+  mixins: [PureRenderMixin],
+
   displayName: 'Face',
 
   getDefaultProps () {
@@ -13,19 +16,29 @@ module.exports = React.createClass({
     };
   },
 
-  _numberStyle (radius, num) {
+  numberStyle (rad, num) {
     return {
       position: 'absolute',
-      left: (radius + radius * Math.sin(360 * (Math.PI / 180) / 12 * (num - 1)) + this.props.spacing),
-      top: (radius - radius * Math.cos(360 * (Math.PI / 180) / 12 * (num - 1)) + this.props.spacing)
+      left: (rad + rad * Math.sin(360 * (Math.PI / 180) / 12 * (num - 1)) + this.props.spacing),
+      top: (rad - rad * Math.cos(360 * (Math.PI / 180) / 12 * (num - 1)) + this.props.spacing)
     };
   },
 
-  _faceStyle () {
+  faceStyle () {
     return {
       height: this.props.radius * 2,
       width: this.props.radius * 2
     };
+  },
+
+  renderNumber (number, idx) {
+    return (
+      <span className={css.number + (number === this.props.active ? ' active' : '')}
+            style={this.numberStyle(this.props.radius - this.props.spacing, idx + 1)}
+            key={number}>
+        { this.props.twoDigits ? ('0' + number).slice(-2) : number }
+      </span>
+    );
   },
 
   render () {
@@ -34,18 +47,8 @@ module.exports = React.createClass({
            className={css.face}
            onTouchStart={this.props.onTouchStart}
            onMouseDown={this.props.onMouseDown}
-           style={this._faceStyle()}>
-        {
-          this.props.numbers.map((i, k) => {
-            return (
-              <span className={css.number + (i === this.props.active ? ' active' : '')}
-                    style={this._numberStyle(this.props.radius - this.props.spacing, k + 1)}
-                    key={i}>
-                { this.props.twoDigits ? ('0' + i).slice(-2) : i }
-              </span>
-            );
-          })
-        }
+           style={this.faceStyle()}>
+        { this.props.numbers.map(this.renderNumber)}
       </div>
     );
   }
