@@ -10,37 +10,26 @@ module.exports = React.createClass({
 
   propTypes: {
     className: React.PropTypes.string,
-    initialAngle: React.PropTypes.number,
-    onHandChange: React.PropTypes.func,
-    onHandMoved: React.PropTypes.func
+    angle: React.PropTypes.number,
+    onMove: React.PropTypes.func,
+    onMoved: React.PropTypes.func
   },
 
   getDefaultProps () {
     return {
       className: '',
-      initialAngle: 0,
+      angle: 0,
       length: 0,
       origin: {}
     };
   },
 
   getInitialState () {
-    return {
-      angle: this.props.initialAngle,
-      knobWidth: 0,
-      radius: 0
-    };
+    return { knobWidth: 0 };
   },
 
   componentDidMount () {
     this.setState({knobWidth: this.refs.knob.getDOMNode().offsetWidth});
-  },
-
-  componentWillUpdate (nextProps, nextState) {
-    if (nextState.angle !== this.state.angle ||
-        nextProps.length !== this.props.length && this.props.length !== 0) {
-      this.props.onHandChange(nextState.angle);
-    }
   },
 
   getMouseEventMap () {
@@ -99,21 +88,20 @@ module.exports = React.createClass({
   },
 
   end (events) {
-    if (this.props.onHandMoved) this.props.onHandMoved();
+    if (this.props.onMoved) this.props.onMoved();
     utils.events.removeEventsFromDocument(events);
   },
 
   move (position) {
     let degrees = this.trimAngleToValue(this.positionToAngle(position));
-    degrees = degrees === 360 ? 0 : degrees;
-    if (this.state.angle !== degrees) this.setState({angle: degrees});
-    if (this.props.onHandMove) this.props.onHandMove(this.getPositionRadius(position));
+    let radius = this.getPositionRadius(position);
+    if (this.props.onMove) this.props.onMove(degrees === 360 ? 0 : degrees, radius);
   },
 
   render () {
     let style = utils.prefixer({
       height: this.props.length - this.state.knobWidth / 2,
-      transform: `rotate(${this.state.angle}deg)`
+      transform: `rotate(${this.props.angle}deg)`
     });
 
     return (

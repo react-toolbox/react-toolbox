@@ -25,7 +25,7 @@ module.exports = React.createClass({
     };
   },
 
-  onHandChange (degrees) {
+  onHandMove (degrees) {
     this.props.onChange(degrees / step);
   },
 
@@ -50,9 +50,9 @@ module.exports = React.createClass({
           active={this.props.selected} />
         <Hand ref='hand'
           className={minutes.indexOf(this.props.selected) === -1 ? 'smallKnob' : ''}
-          initialAngle={this.props.selected * step}
+          angle={this.props.selected * step}
           length={this.props.radius - this.props.spacing}
-          onHandChange={this.onHandChange}
+          onMove={this.onHandMove}
           origin={this.props.center}
           step={step} />
       </div>

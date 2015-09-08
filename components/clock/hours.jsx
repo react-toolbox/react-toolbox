@@ -27,15 +27,12 @@ module.exports = React.createClass({
     };
   },
 
-  onHandMove (radius) {
+  onHandMove (degrees, radius) {
     let currentInner = radius < this.props.radius - this.props.spacing * 2;
+    this.props.onChange(this.valueFromDegrees(degrees));
     if (this.props.format === '24hr' && this.state.inner !== currentInner) {
       this.setState({inner: currentInner});
     }
-  },
-
-  onHandChange (degrees) {
-    this.props.onChange(this.valueFromDegrees(degrees));
   },
 
   onMouseDown (event) {
@@ -84,11 +81,10 @@ module.exports = React.createClass({
             active={is24hr ? selected : (selected % 12 || 12)} />
           { this.renderInnerFace(radius - spacing * 2) }
           <Hand ref='hand'
-            initialAngle={selected * step}
+            angle={selected * step}
             length={(this.state.inner ? radius - spacing * 2 : radius) - spacing}
-            onHandMove={this.onHandMove}
-            onHandMoved={onHandMoved}
-            onHandChange={this.onHandChange}
+            onMove={this.onHandMove}
+            onMoved={onHandMoved}
             origin={center}
             step={step} />
       </div>
