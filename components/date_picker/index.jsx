@@ -1,12 +1,12 @@
-const React = window.React;
-const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
-const time = require('../utils/time');
+/* global React */
 
-const CalendarDialog = require('./dialog');
-const Input = require('../input');
+import { addons } from 'react/addons';
+import time from '../utils/time';
+import CalendarDialog from './dialog';
+import Input from '../input';
 
-module.exports = React.createClass({
-  mixins: [PureRenderMixin],
+export default React.createClass({
+  mixins: [addons.PureRenderMixin],
 
   displayName: 'DatePicker',
 

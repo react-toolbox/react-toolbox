@@ -1,10 +1,11 @@
-const React = window.React;
-const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
-const css = require('./style');
-const time = require('../utils/time');
+/* global React */
 
-module.exports = React.createClass({
-  mixins: [PureRenderMixin],
+import { addons } from 'react/addons';
+import css from './style';
+import time from '../utils/time';
+
+export default React.createClass({
+  mixins: [addons.PureRenderMixin],
 
   displayName: 'Day',
 

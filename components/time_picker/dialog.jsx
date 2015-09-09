@@ -1,13 +1,13 @@
-const React = window.React;
-const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
-const css = require('./style');
-const time = require('../utils/time');
+/* global React */
 
-const Clock = require('../clock');
-const Dialog = require('../dialog');
+import { addons } from 'react/addons';
+import css from './style';
+import time from '../utils/time';
+import Clock from '../clock';
+import Dialog from '../dialog';
 
-module.exports = React.createClass({
-  mixins: [PureRenderMixin],
+export default React.createClass({
+  mixins: [addons.PureRenderMixin],
 
   displayName: 'TimePickerDialog',
 

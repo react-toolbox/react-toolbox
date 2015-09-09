@@ -1,10 +1,11 @@
-const React = window.React;
-const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
-const css = require('./style');
-const utils = require('../utils');
+/* global React */
 
-module.exports = React.createClass({
-  mixins: [PureRenderMixin],
+import { addons } from 'react/addons';
+import css from './style';
+import utils from '../utils';
+
+export default React.createClass({
+  mixins: [addons.PureRenderMixin],
 
   displayName: 'Hand',
 

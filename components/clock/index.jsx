@@ -1,13 +1,13 @@
-const React = window.React;
-const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
-const css = require('./style');
-const time = require('../utils/time');
+/* global React */
 
-const Hours = require('./hours');
-const Minutes = require('./minutes');
+import { addons } from 'react/addons';
+import css from './style';
+import time from '../utils/time';
+import Hours from './hours';
+import Minutes from './minutes';
 
-module.exports = React.createClass({
-  mixins: [PureRenderMixin],
+export default React.createClass({
+  mixins: [addons.PureRenderMixin],
 
   displayName: 'Clock',
 

@@ -1,14 +1,15 @@
-const React = window.React;
-const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
-const css = require('./style');
-const utils = require('../utils');
+/* global React */
 
-const FontIcon = require('../font_icon');
-const Month = require('./month');
-const CTG = React.addons.CSSTransitionGroup;
+import { addons } from 'react/addons';
+import css from './style';
+import utils from '../utils';
+import FontIcon from '../font_icon';
+import Month from './month';
 
-module.exports = React.createClass({
-  mixins: [PureRenderMixin],
+const { CSSTransitionGroup: CTG } = React.addons;
+
+export default React.createClass({
+  mixins: [addons.PureRenderMixin],
 
   displayName: 'Calendar',
 

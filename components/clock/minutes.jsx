@@ -1,15 +1,15 @@
-const React = window.React;
-const PureRenderMixin = require('react/addons').addons.PureRenderMixin;
-const utils = require('../utils');
+/* global React */
 
-const Face = require('./face');
-const Hand = require('./hand');
+import { addons } from 'react/addons';
+import utils from '../utils';
+import Face from './face';
+import Hand from './hand';
 
 const minutes = utils.range(0, 60, 5);
 const step = 360 / 60;
 
-module.exports = React.createClass({
-  mixins: [PureRenderMixin],
+export default React.createClass({
+  mixins: [addons.PureRenderMixin],
 
   displayName: 'Minutes',
 
