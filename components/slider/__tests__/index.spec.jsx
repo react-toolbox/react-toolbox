@@ -1,14 +1,14 @@
-const React = window.React;
-const TestUtils = React.addons.TestUtils;
-const expect = require('expect');
-const sinon = require('sinon');
-const utils = require('../../utils/testing');
+/* global React */
 
-const ProgressBar = require('../../progress_bar');
-const Input = require('../../input');
-const Slider = require('../index');
+import expect from 'expect';
+import sinon from 'sinon';
+import utils from '../../utils/testing';
+import ProgressBar from '../../progress_bar';
+import Input from '../../input';
+import Slider from '../index';
 
 describe('Slider', function () {
+  const TestUtils = React.addons.TestUtils;
   let props, state, slider, progress, input;
 
   describe('#positionToValue', function () {

@@ -1,9 +1,9 @@
-const React = window.React;
-const css = require('./style');
-const utils = require('../utils');
+/* global React */
 
-const ProgressBar = require('../progress_bar');
-const Input = require('../input');
+import css from './style';
+import utils from '../utils';
+import ProgressBar from '../progress_bar';
+import Input from '../input';
 
 module.exports = React.createClass({
   displayName: 'Slider',
