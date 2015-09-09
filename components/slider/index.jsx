@@ -51,44 +51,15 @@ module.exports = React.createClass({
   },
 
   componentDidUpdate (prevProps, prevState) {
-    if (prevState.value !== this.state.value && this.props.onChange) {
-      this.props.onChange(this);
-    }
-
-    if (this.refs.input) {
-      const inputValue = parseFloat(this.refs.input.getValue());
-      if (this.state.value !== inputValue) {
-        this.refs.input.setValue(this.valueForInput(this.state.value));
-      }
+    if (prevState.value !== this.state.value) {
+      if (this.props.onChange) this.props.onChange(this);
+      if (this.refs.input) this.refs.input.setValue(this.valueForInput(this.state.value));
     }
   },
 
   onResize () {
-    const bounds = this.refs.progressbar.getDOMNode().getBoundingClientRect();
-    this.setState({
-      sliderStart: bounds.left,
-      sliderLength: bounds.right - bounds.left
-    });
-  },
-
-  onSliderMouseDown (event) {
-    const position = utils.events.getMousePosition(event);
-    const value = this.positionToValue(position);
-    this.setState({value: value}, (function () {
-      this.start(position);
-      utils.events.addEventsToDocument(this.getTouchEventMap());
-    }).bind(this));
-    utils.events.pauseEvent(event);
-  },
-
-  onSliderTouchStart (event) {
-    const position = utils.events.getTouchPosition(event);
-    const value = this.positionToValue(position);
-    this.setState({value: value}, (function () {
-      this.start(position);
-      utils.events.addEventsToDocument(this.getTouchEventMap());
-    }).bind(this));
-    utils.events.pauseEvent(event);
+    const {left, right} = this.refs.progressbar.getDOMNode().getBoundingClientRect();
+    this.setState({sliderStart: left, sliderLength: right - left});
   },
 
   onSliderFocus () {
@@ -111,14 +82,15 @@ module.exports = React.createClass({
   },
 
   onMouseDown (event) {
-    this.start(utils.events.getMousePosition(event));
     utils.events.addEventsToDocument(this.getMouseEventMap());
+    this.start(utils.events.getMousePosition(event));
+    utils.events.pauseEvent(event);
   },
 
   onTouchStart (event) {
-    event.stopPropagation();
     this.start(utils.events.getTouchPosition(event));
     utils.events.addEventsToDocument(this.getTouchEventMap());
+    utils.events.pauseEvent(event);
   },
 
   onMouseMove (event) {
@@ -158,22 +130,12 @@ module.exports = React.createClass({
     };
   },
 
-  positionToValue (position) {
-    const offset = position.x - this.state.sliderStart;
-    return this.trimValue(offset / this.state.sliderLength * (this.props.max - this.props.min) + this.props.min);
-  },
-
   start (position) {
-    this.setState({
-      pressed: true,
-      startPosition: position.x,
-      startValue: this.state.value
-    });
+    this.setState({pressed: true, value: this.positionToValue(position)});
   },
 
   move (position) {
-    const value = this.endPositionToValue(position);
-    this.setState({value: value});
+    this.setState({value: this.positionToValue(position)});
   },
 
   end (revents) {
@@ -181,10 +143,10 @@ module.exports = React.createClass({
     this.setState({pressed: false});
   },
 
-  endPositionToValue (position) {
-    const offset = position.x - this.state.startPosition;
-    const diffValue = offset / this.state.sliderLength * (this.props.max - this.props.min);
-    return this.trimValue(diffValue + this.state.startValue);
+  positionToValue (position) {
+    let { sliderStart: start, sliderLength: length } = this.state;
+    let { max, min } = this.props;
+    return this.trimValue((position.x - start) / length * (max - min) + min);
   },
 
   trimValue (value) {
@@ -198,9 +160,7 @@ module.exports = React.createClass({
   },
 
   addToValue (value) {
-    this.setState({
-      value: this.trimValue(this.state.value + value)
-    });
+    this.setState({value: this.trimValue(this.state.value + value)});
   },
 
   valueForInput (value) {
@@ -208,19 +168,20 @@ module.exports = React.createClass({
     return decimals > 0 ? value.toFixed(decimals) : value.toString();
   },
 
-  calculateKnobOffset () {
-    return this.state.sliderLength * (this.state.value - this.props.min) / (this.props.max - this.props.min);
+  knobOffset () {
+    let { max, min } = this.props;
+    return this.state.sliderLength * (this.state.value - min) / (max - min);
   },
 
   renderSnaps () {
     if (this.props.snaps) {
       return (
         <div ref='snaps' className={css.snaps}>
-        {
-          utils.range(0, (this.props.max - this.props.min) / this.props.step).map(i => {
-            return (<div key={`span-${i}`} className={css.snap}></div>);
-          })
-        }
+          {
+            utils.range(0, (this.props.max - this.props.min) / this.props.step).map(i => {
+              return (<div key={`span-${i}`} className={css.snap}></div>);
+            })
+          }
         </div>
       );
     }
@@ -239,7 +200,7 @@ module.exports = React.createClass({
   },
 
   render () {
-    let knobStyles = utils.prefixer({transform: `translateX(${this.calculateKnobOffset()}px)`});
+    let knobStyles = utils.prefixer({transform: `translateX(${this.knobOffset()}px)`});
     let className = this.props.className;
     if (this.props.editable) className += ' editable';
     if (this.props.pinned) className += ' pinned';
@@ -256,8 +217,8 @@ module.exports = React.createClass({
         <div
           ref='slider'
           className={css.container}
-          onTouchStart={this.onSliderTouchStart}
-          onMouseDown={this.onSliderMouseDown} >
+          onTouchStart={this.onTouchStart}
+          onMouseDown={this.onMouseDown} >
 
           <div
             ref='knob'

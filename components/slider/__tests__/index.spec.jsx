@@ -31,26 +31,6 @@ describe('Slider', function () {
     });
   });
 
-  describe('#endPositionToValue', function () {
-    before(function () {
-      props = { min: -500, max: 500 };
-      state = { sliderStart: 500, sliderLength: 100, startPosition: 520, startValue: -300 };
-      slider = utils.renderComponent(Slider, props, state);
-    });
-
-    it('returns the proper value when is moved left', function () {
-      expect(slider.endPositionToValue({x: 510})).toEqual(-400);
-    });
-
-    it('returns the proper value when is moved right', function () {
-      expect(slider.endPositionToValue({x: 570})).toEqual(200);
-    });
-
-    it('returns the proper value when is not moved', function () {
-      expect(slider.endPositionToValue({x: 520})).toEqual(-300);
-    });
-  });
-
   describe('#trimValue', function () {
     before(function () {
       props = { min: 0, max: 100, step: 0.1 };
@@ -86,12 +66,12 @@ describe('Slider', function () {
     });
   });
 
-  describe('#calculateKnobOffset', function () {
+  describe('#knobOffset', function () {
     it('returns the corresponding offset for a given value and slider length/start', function () {
       props = { min: -500, max: 500, value: -250 };
       state = { sliderStart: 500, sliderLength: 100 };
       slider = utils.renderComponent(Slider, props, state);
-      expect(slider.calculateKnobOffset()).toEqual(25);
+      expect(slider.knobOffset()).toEqual(25);
     });
   });
 

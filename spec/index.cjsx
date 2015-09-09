@@ -25,7 +25,7 @@ Test = React.createClass
   render: ->
     <app data-toolbox={true}>
       <h1>React-Toolbox <small>New way for create</small></h1>
-      <Progress />
+      <Slider />
     </app>
 
 React.render <Test/>, document.body
