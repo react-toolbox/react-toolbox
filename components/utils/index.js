@@ -22,6 +22,14 @@ module.exports = {
     return range;
   },
 
+  round (number, decimals) {
+    if (!isNaN(parseFloat(number)) && isFinite(number)) {
+      let decimalPower = Math.pow(10, decimals);
+      return Math.round(parseFloat(number) * decimalPower) / decimalPower;
+    }
+    return NaN;
+  },
+
   events: require('./events'),
   prefixer: require('./prefixer'),
   time: require('./time'),
