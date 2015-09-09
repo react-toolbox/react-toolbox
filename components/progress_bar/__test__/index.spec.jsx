@@ -1,6 +1,6 @@
-const expect = require('expect');
-const utils = require('../../utils/testing');
-const ProgressBar = require('../index');
+import expect from 'expect';
+import utils from '../../utils/testing';
+import ProgressBar from '../index';
 
 describe('ProgressBar', function () {
   let progressBar;

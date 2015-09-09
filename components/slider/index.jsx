@@ -5,7 +5,7 @@ import utils from '../utils';
 import ProgressBar from '../progress_bar';
 import Input from '../input';
 
-module.exports = React.createClass({
+export default React.createClass({
   displayName: 'Slider',
 
   propTypes: {
