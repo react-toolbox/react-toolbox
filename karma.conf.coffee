@@ -8,6 +8,7 @@ module.exports = (config) ->
     singleRun       : true
     frameworks      : ['mocha']
     files           : ['./node_modules/phantomjs-polyfill/bind-polyfill.js',
+                       './node_modules/babel-core/browser-polyfill.js',
                        './node_modules/react/dist/react-with-addons.js',
                        'tests.webpack.js']
     reporters       : ['dots']
@@ -20,7 +21,7 @@ module.exports = (config) ->
 
       module:
         loaders: [
-          test      : /(\.js|\.jsx)$/,      exclude:/(node_modules)/, loader: 'babel?optional=runtime'
+          test      : /(\.js|\.jsx)$/,      exclude:/(node_modules)/, loader: 'babel'
         ,
           test      : /\.cjsx$/,    loader: 'coffee-jsx-loader'
         ,

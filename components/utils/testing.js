@@ -1,4 +1,5 @@
-const React = window.React;
+/* global React */
+
 const TestUtils = React.addons.TestUtils;
 
 module.exports = {

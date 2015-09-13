@@ -31,13 +31,14 @@ module.exports = React.createClass
 
       <Autocomplete ref="autocomplete_multiple"
                     label="Choose a country"
-                    placeholder="elements is up to you..."
+                    onChange={this.onAutocompleteValues}
+                    placeholder="Elements is up to you..."
                     dataSource={@state.countries}
                     value={countries_selected}/>
 
       <Autocomplete ref="autocomplete_simple"
                     multiple=false
-                    exact=false
+                    onChange={this.onAutocompleteValues}
                     dataSource={@state.countries_obj}
                     value={countries_obj_selected}/>
     </section>

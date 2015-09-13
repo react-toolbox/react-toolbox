@@ -98,10 +98,10 @@ module.exports = React.createClass
 
   # -- Extends
   blur: ->
-    @refs.input.blur?()
+    @refs.input.getDOMNode().blur()
 
   focus: ->
-    @refs.input.focus?()
+    @refs.input.getDOMNode().focus()
 
   getValue: ->
     if @props.type is 'file'

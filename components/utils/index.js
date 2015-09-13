@@ -30,15 +30,6 @@ module.exports = {
     return NaN;
   },
 
-  index (data = {}) {
-    let indexed = data;
-    if (data.length) {
-      indexed = {};
-      data.forEach(i => { indexed[i] = i; });
-    }
-    return indexed;
-  },
-
   events: require('./events'),
   prefixer: require('./prefixer'),
   time: require('./time'),
