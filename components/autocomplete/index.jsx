@@ -1,10 +1,13 @@
 /* global React */
 
+import { addons } from 'react/addons';
 import css from './style';
 import utils from '../utils';
 import Input from '../input';
 
 export default React.createClass({
+  mixins: [addons.PureRenderMixin],
+
   displayName: 'Autocomplete',
 
   propTypes: {
@@ -79,7 +82,7 @@ export default React.createClass({
   },
 
   handleBlur () {
-    this.setState({focus: false});
+    if (this.state.focus) this.setState({focus: false});
   },
 
   handleHover (event) {
@@ -91,16 +94,75 @@ export default React.createClass({
     this._selectOption(event.target.getAttribute('id'));
   },
 
-  handleDelete (event) {
-    this.state.values.delete(event.target.getAttribute('id'));
-    this.setState({focus: false});
-    if (this.props.onChange) this.props.onChange(this);
+  handleUnselect (event) {
+    this._unselectOption(event.target.getAttribute('id'));
+  },
+
+  _indexDataSource (data = {}) {
+    if (data.length) {
+      return new Map(data.map((item) => [item, item]));
+    } else {
+      return new Map(Object.keys(data).map((key) => [key, data[key]]));
+    }
+  },
+
+  _getSuggestions () {
+    let query = this.state.query.toLowerCase().trim() || '';
+    let suggestions = new Map();
+    for (let [key, value] of this.state.dataSource) {
+      if (!this.state.values.has(key) && value.toLowerCase().trim().startsWith(query)) {
+        suggestions.set(key, value);
+      }
+    }
+    return suggestions;
+  },
+
+  _selectOption (key) {
+    let { values, dataSource } = this.state;
+    let query = !this.props.multiple ? dataSource.get(key) : '';
+    values = new Map(values);
+
+    if (!this.props.multiple) values.clear();
+    values.set(key, dataSource.get(key));
+
+    this.setState({focus: false, query: query, values: values}, () => {
+      this.refs.input.blur();
+      if (this.props.onChange) this.props.onChange(this);
+    });
+  },
+
+  _unselectOption (key) {
+    if (key) {
+      let values = new Map(this.state.values);
+      values.delete(key);
+      this.setState({focus: false, values: values}, () => {
+        if (this.props.onChange) this.props.onChange(this);
+      });
+    }
+  },
+
+  getValue () {
+    let values = [...this.state.values.keys()];
+    return this.props.multiple ? values : (values.length > 0 ? values[0] : null);
+  },
+
+  setValue (dataParam = []) {
+    let values = new Map();
+    let data = (typeof dataParam === 'string') ? [dataParam] : dataParam;
+    for (let [key, value] of this.state.dataSource) {
+      if (data.indexOf(key) !== -1) values.set(key, value);
+    }
+    this.setState({values: values, query: this.props.multiple ? '' : values.get(data[0])});
+  },
+
+  setError (data) {
+    this.input.setError(data);
   },
 
   renderSelected () {
     if (this.props.multiple) {
       return (
-        <ul className={css.values} data-flex='horizontal wrap' onClick={this.handleDelete}>
+        <ul className={css.values} data-flex='horizontal wrap' onClick={this.handleUnselect}>
           {[...this.state.values].map(([key, value]) => {
             return (<li key={key} id={key}>{value}</li>);
           })}
@@ -137,54 +199,5 @@ export default React.createClass({
         </ul>
       </div>
     );
-  },
-
-  _indexDataSource (data = {}) {
-    if (data.length) {
-      return new Map(data.map((item) => [item, item]));
-    } else {
-      return new Map(Object.keys(data).map((key) => [key, data[key]]));
-    }
-  },
-
-  _getSuggestions () {
-    let query = this.state.query.toLowerCase().trim() || '';
-    let suggestions = new Map();
-    for (let [key, value] of this.state.dataSource) {
-      if (!this.state.values.has(key) && value.toLowerCase().trim().startsWith(query)) {
-        suggestions.set(key, value);
-      }
-    }
-    return suggestions;
-  },
-
-  _selectOption (key) {
-    if (!this.props.multiple) {
-      this.state.values.clear();
-      this.state.query = this.state.dataSource.get(key);
-    } else {
-      this.state.query = '';
-    }
-    this.state.values.set(key, this.state.dataSource.get(key));
-    this.refs.input.blur();
-    if (this.props.onChange) this.props.onChange(this);
-  },
-
-  getValue () {
-    let values = [...this.state.values.keys()];
-    return this.props.multiple ? values : (values.length > 0 ? values[0] : null);
-  },
-
-  setValue (dataParam = []) {
-    let values = new Map();
-    let data = (typeof dataParam === 'string') ? [dataParam] : dataParam;
-    for (let [key, value] of this.state.dataSource) {
-      if (data.indexOf(key) !== -1) values.set(key, value);
-    }
-    this.setState({values: values, query: this.props.multiple ? '' : values.get(data[0])});
-  },
-
-  setError (data) {
-    this.input.setError(data);
   }
 });
