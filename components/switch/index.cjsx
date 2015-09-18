@@ -1,5 +1,4 @@
 localCSS  = require './style'
-Ripple    = require '../ripple'
 
 module.exports = React.createClass
 
@@ -16,7 +15,6 @@ module.exports = React.createClass
 
   getInitialState: ->
     value     : @props.value
-    ripple    : undefined
 
   # -- Lifecycle
   componentWillReceiveProps: (next_props) ->
@@ -27,7 +25,6 @@ module.exports = React.createClass
     unless @props.disabled
       @setState
         value : not @state.value
-        ripple: change: true
       setTimeout (=> @props.onChange? event, @), 10
 
   # -- Render
@@ -38,7 +35,6 @@ module.exports = React.createClass
     <div data-react-toolbox='switch' className={className} onClick={@onClick}>
       <span></span>
       { <label>{@props.label}</label> if @props.label }
-      <Ripple className={localCSS.ripple} origin={@state.ripple} />
     </div>
 
   # -- Extends

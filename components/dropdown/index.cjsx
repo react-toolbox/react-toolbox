@@ -26,7 +26,6 @@ module.exports = React.createClass
 
   getInitialState: ->
     active      : false
-    ripple      : undefined
     selected    : _selectValue @props.value, @props.dataSource
 
   # -- Lifecycle
@@ -39,20 +38,15 @@ module.exports = React.createClass
 
   # -- Events
   onSelect: (event) ->
-    @setState active: true, ripple: undefined unless @props.disabled
+    @setState active: true unless @props.disabled
 
-  onItem: (event) ->
+  onItem: (id, event) ->
     unless @props.disabled
-      client = event.target.getBoundingClientRect?()
-      value = event.target.getAttribute('id').toString()
+      value = id.toString()
       for item in @props.dataSource when item.value.toString() is value
         @setState
           active    : false
           selected  : item
-          ripple :
-            left    : event.pageX - client?.left
-            top     : event.pageY - client?.top
-            width   : (client?.width * 2)
         break
 
   # -- Render
@@ -66,12 +60,12 @@ module.exports = React.createClass
 
     <div data-react-toolbox='dropdown' className={className}>
       { <label>{@props.label}</label> if @props.label }
-      <ul ref='values' className={localCSS.values} style={stylesheet} onClick={@onItem}>
+      <ul ref='values' className={localCSS.values} style={stylesheet}>
       {
         for item, index in @props.dataSource
-          <li id={item.value} key={index} className={'selected' if item.value is @state.selected.value}>
-            { if @props.template then @props.template item else item.label }
-            { <Ripple className={localCSS.ripple} origin={@state.ripple}/> if item.value is @state.selected.value }
+          <li id={item.value} onClick={@onItem.bind(@, item.value)} key={index} style={{position: 'relative'}} className={'selected' if item.value is @state.selected.value}>
+            {if @props.template then @props.template item else item.label }
+            { <Ripple className={localCSS.ripple}/> }
           </li>
       }
       </ul>
