@@ -23,20 +23,10 @@ module.exports = React.createClass
 
   getInitialState: ->
     loading     : @props.loading
-    ripple      : undefined
-
-  # -- Lifecycle
-  componentWillReceiveProps: ->
-    @setState ripple: undefined
 
   # -- Events
   onClick: (event) ->
     event.preventDefault() if @props.onClick?
-    client = event.target.getBoundingClientRect?()
-    @setState ripple:
-                left  : event.pageX - client?.left
-                top   : event.pageY - client?.top
-                width : (client?.width * 2.5)
     @props.onClick? event, @
 
   # -- Render
@@ -51,7 +41,7 @@ module.exports = React.createClass
     style.backgroundImage = "url(#{@props.image})" if @props.image?
     style.backgroundColor = @props.color if @props.color
 
-    <div data-react-toolbox='card' className={className} onClick={@onClick}>
+    <div data-react-toolbox='card' className={className} onMouseDown={@onClick}>
       {
         if @props.title or @props.image
           <figure className={localCSS.figure} style={style}>
@@ -62,11 +52,10 @@ module.exports = React.createClass
       { <p>{@props.text}</p> if @props.text }
       { <small>{@props.legend}</small> if @props.legend }
       { <Navigation className={localCSS.navigation} actions={@props.actions} /> if @props.actions }
-      { <Ripple className={localCSS.ripple} origin={@state.ripple} loading={@state.loading} /> }
+      { <Ripple ref="ripple" className={localCSS.ripple} loading={@state.loading} /> }
     </div>
 
   # -- Extends
   loading: (value) ->
     attributes = loading: value
-    attributes.ripple = undefined unless value
     @setState attributes
