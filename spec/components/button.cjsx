@@ -15,21 +15,9 @@ module.exports = React.createClass
     <section>
       <h2>Buttons</h2>
       <p>lorem ipsum...</p>
-      <Button caption="Login"/>
-
-      <Button caption="Login" type="flat" />
-      <Button caption="Primary" className="primary" icon="access_alarm" type="flat" />
-      <Button caption="Secondary" className="accent" type="flat" />
-      <Button caption="Disabled" disabled type="flat" />
-
-      <Button caption="Primary" className="primary" icon="access_alarm" />
-      <Button caption="Secondary" className="accent" />
-      <Button caption="Disabled" disabled />
-      <Button caption="loading" loading />
-
-      <Button type="floating" icon="access_alarm" />
-      <Button type="floating" icon="explore" className="primary" />
-      <Button type="floating" icon="zoom_in" className="accent" />
-      <Button type="floating" icon="input" disabled />
-      <Button type="floating" icon="zoom_in" loading />
+      <Button className="accent" label="Flat button" />
+      <Button className="primary" type="raised" label="Raised" />
+      <Button className="accent" type="raised" label="Raised" icon="assignment_turned_in" />
+      <Button className="primary" type="floating" icon="add" />
+      <Button className="accent mini" type="floating" icon="add" />
     </section>

@@ -2,28 +2,24 @@
 
 ```
 var Button = require('react-toolbox/components/button');
-
-<Button caption="Login" />
-<Button caption="Primary" className="primary" icon="access_alarm" />
-<Button caption="Secondary" className="accent" />
-<Button caption="Disabled" disabled />
-
-<Button type="circle" icon="access_alarm" />
-<Button type="circle" icon="explore" className="primary" />
-<Button type="circle" icon="zoom_in" className="accent" />
-<Button type="circle" icon="input" disabled={true} />
+<Button className="accent" label="Flat button" />
+<Button className="primary" type="raised" label="Raised" />
+<Button className="accent" type="raised" label="Raised" icon="assignment_turned_in" />
+<Button className="primary" type="floating" icon="add" />
+<Button className="accent mini" type="floating" icon="add" />
 ```
 
 ## Properties
 
 | Name              | Type          | Default         | Description|
 |:-                 |:-:            | :-              |:-|
-| **caption**       | String        |                 | The text string to use for the floating label element.|
 | **className**     | String        |                 | Set the class-styles of the Component.|
 | **disabled**      | Boolean       |                 | If true, component will be disabled.|
 | **icon**          | String        |                 | Default value using JSON data.|
+| **label**         | String        |                 | The text string to use for the floating label element.|
 | **loading**       | Boolean       |                 | If true, component will be disabled and show a loading animation.|
-| **type**          | String        | "text"          | Type of the component, overwrite this property if you need set a different stylesheet.|
+| **ripple**        | Boolean       |                 | If true, component will have a ripple effect on click.|
+| **type**          | String        | "flat"          | Type of the component, overwrite this property if you need set a different stylesheet.|
 
 ## Methods
 

@@ -51,10 +51,17 @@
     > [data-react-toolbox='icon']
       line-height                 : BUTTON_CIRCLE_HEIGHT
 
+    &.mini
+      width                         : BUTTON_CIRCLE_MINI_HEIGHT
+      height                        : BUTTON_CIRCLE_MINI_HEIGHT
+      > [data-react-toolbox='icon']
+        line-height                 : BUTTON_CIRCLE_MINI_HEIGHT
+
   // Overrides
   &[disabled]
     color                     : darken(DIVIDER, 25%)
     background-color          : DIVIDER
+    pointer-events            : none
 
   &:not([disabled])
     cursor                      : pointer
@@ -65,7 +72,7 @@
       &:not(.primary):not(.accent)
         color                   : TEXT
         background-color        : WHITE
-      &.focused
+      &:active
         box-shadow              : ZDEPTH_SHADOW_2, inset 0 0 0 UNIT alpha(WHITE, 10%)
       &.primary, &.accent
         color                   : WHITE
@@ -76,6 +83,3 @@
 
     &:not(.primary):not(.accent) > [data-react-toolbox='ripple']
       background-color          : DIVIDER
-
-  > *
-    pointer-events: none

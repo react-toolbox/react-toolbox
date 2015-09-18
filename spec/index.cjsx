@@ -25,7 +25,19 @@ Test = React.createClass
   render: ->
     <app data-toolbox={true}>
       <h1>React-Toolbox <small>New way for create</small></h1>
+      <Aside />
       <Autocomplete />
+      <Button />
+      <Card />
+      <Dialog />
+      <Dropdown />
+      <FontIcon />
+      <Form />
+      <Progress />
+      <Slider />
+      <Switch />
+      <Tabs />
+      <Pickers />
     </app>
 
 React.render <Test/>, document.body
