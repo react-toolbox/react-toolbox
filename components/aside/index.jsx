@@ -1,8 +1,10 @@
 /* global React */
 
+import { addons } from 'react/addons';
 import css from './style';
 
 export default React.createClass({
+  mixins: [addons.PureRenderMixin],
 
   displayName: 'Aside',
 
@@ -24,8 +26,8 @@ export default React.createClass({
     return { active: this.props.active };
   },
 
-  onClick (event) {
-    if (event.target === this.getDOMNode()) {
+  handleOverlayClick () {
+    if (this.props.hideable) {
       this.setState({active: false});
     }
   },
@@ -37,7 +39,8 @@ export default React.createClass({
     if (this.state.active) className += ' active';
 
     return (
-      <div className={className} onClick={this.onClick}>
+      <div className={className}>
+        <div className={css.overlay} onClick={this.handleOverlayClick}></div>
         <aside className={css.container}>
           { this.props.children }
         </aside>
