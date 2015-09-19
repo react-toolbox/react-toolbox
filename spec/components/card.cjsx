@@ -2,7 +2,7 @@
 @todo
 ###
 
-Card           = require '../../components/card'
+Card=  require '../../components/card'
 
 module.exports = React.createClass
 
@@ -18,9 +18,9 @@ module.exports = React.createClass
   # -- Render
   render: ->
     actions = [
-      caption: "Save", icon: "add", onClick: @onActionClick
+      label: "Save", icon: "add", onClick: @onActionClick
     ,
-      caption: "Close", onClick: @onActionClick
+      label: "Close", onClick: @onActionClick
     ]
     text  = "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
     legend = "Lorem Ipsum is simply dummy text"
