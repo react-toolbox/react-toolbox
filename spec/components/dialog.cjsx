@@ -10,7 +10,7 @@ module.exports = React.createClass
   # -- States & Properties
   getInitialState: ->
     actions: [
-      caption: "Cancel", style: "transparent", onClick: @onClose
+      label: "Cancel", style: "transparent", onClick: @onClose
     ]
 
   # -- Events
@@ -26,7 +26,7 @@ module.exports = React.createClass
       <h2>Dialog</h2>
       <p>lorem ipsum...</p>
 
-      <Button caption="Show Dialog" onClick={@onShow} />
+      <Button type="raised" label="Show Dialog" onClick={@onShow} />
 
       <Dialog ref="dialog" type="profile" title="Your profile" className="small"
               actions={@state.actions}>
