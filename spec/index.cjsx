@@ -1,7 +1,7 @@
 "use strict"
 
 # -- Components
-Aside         = require './components/aside'
+Drawer        = require './components/drawer'
 Autocomplete  = require './components/autocomplete'
 Button        = require './components/button'
 Card          = require './components/card'
@@ -25,7 +25,7 @@ Test = React.createClass
   render: ->
     <app data-toolbox={true}>
       <h1>React-Toolbox <small>New way for create</small></h1>
-      <Aside />
+      <Drawer />
       <Autocomplete />
       <Button />
       <Card />

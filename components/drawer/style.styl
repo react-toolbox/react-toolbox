@@ -30,6 +30,7 @@ WIDTH = (4 * UNIT)
   position                        : absolute
   top                             : 0
   transform-style                 : preserve-3d
+  transition-delay                : 0s
   transition-duration             : .5 * ANIMATION_DURATION
   transition-property             : transform
   transition-timing-function      : ANIMATION_EASE
@@ -52,6 +53,8 @@ WIDTH = (4 * UNIT)
   &.active
     pointer-events                : all
     > :local(.container)
+      transition-delay            : ANIMATION_DELAY
       transform                   : translateX(0)
+
     > :local(.overlay)
       opacity                     : .5

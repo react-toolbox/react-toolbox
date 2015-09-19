@@ -6,7 +6,7 @@ import css from './style';
 export default React.createClass({
   mixins: [addons.PureRenderMixin],
 
-  displayName: 'Aside',
+  displayName: 'Drawer',
 
   propTypes: {
     active: React.PropTypes.bool,
