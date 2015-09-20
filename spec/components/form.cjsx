@@ -34,7 +34,7 @@ module.exports = React.createClass
     ,
       ref: "type_user", type: "dropdown", label: "Type of user", dataSource: [{value: 1, label: "Normal"}, {value: 2, label: "Root"}]
     ,
-      type: "submit", caption: "Send", style: "primary anchor", disabled: true
+      type: "submit", label: "Send", style: "primary anchor", disabled: true
     ]
 
   # -- Events
