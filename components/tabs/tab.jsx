@@ -1,10 +1,8 @@
 /* global React */
 
-import { addons } from 'react/addons';
 import style from './style';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
 
   displayName: 'Tab',
 

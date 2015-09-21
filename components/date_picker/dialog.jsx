@@ -27,8 +27,8 @@ export default React.createClass({
       date: this.props.initialDate,
       display: 'months',
       actions: [
-        { caption: 'Cancel', type: 'flat accent', onClick: this.onDateCancel },
-        { caption: 'Ok', type: 'flat accent', onClick: this.onDateSelected }
+        { label: 'Cancel', type: 'flat accent', onClick: this.onDateCancel },
+        { label: 'Ok', type: 'flat accent', onClick: this.onDateSelected }
       ]
     };
   },

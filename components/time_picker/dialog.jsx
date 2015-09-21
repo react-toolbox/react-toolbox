@@ -31,8 +31,8 @@ export default React.createClass({
       display: 'hours',
       time: this.props.initialTime,
       actions: [
-        { caption: 'Cancel', type: 'flat accent', onClick: this.onTimeCancel },
-        { caption: 'Ok', type: 'flat accent', onClick: this.onTimeSelected }
+        { label: 'Cancel', type: 'flat accent', onClick: this.onTimeCancel },
+        { label: 'Ok', type: 'flat accent', onClick: this.onTimeSelected }
       ]
     };
   },

@@ -12,7 +12,7 @@ module.exports =
 
   entry:
     commons     : ['./components/commons.styl']
-    test        : ['webpack/hot/dev-server', './spec/index.cjsx']
+    test        : ['webpack/hot/dev-server', './spec/index.jsx']
     # test        : ['webpack/hot/dev-server', './spec/index.cjsx']
 
   output:

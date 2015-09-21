@@ -115,8 +115,6 @@ export default React.createClass({
     if (this.props.type === 'radio') className += ' radio';
     if (this.state.value && this.state.value.length > 0) className += ' valid';
 
-    console.log(this.state.touch);
-
     return (
       <div data-react-toolbox='input' className={className}>
         { this.renderInput() }

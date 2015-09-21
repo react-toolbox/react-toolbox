@@ -76,11 +76,7 @@ export default React.createClass({
         onClick: !tab.props.disabled ? this.onClick.bind(null, index) : null
       });
 
-      return React.addons.cloneWithProps(tab, {
-        active: active,
-        key: index,
-        tabIndex: index
-      });
+      return React.cloneElement(tab, {active: active, key: index, tabIndex: index });
     });
 
     return (
