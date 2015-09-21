@@ -20,10 +20,8 @@ module.exports = function (config) {
       resolve: { extensions: ['', '.jsx', '.cjsx', '.coffee', '.js', '.json', '.styl'] },
       module: {
         loaders: [
-          { test: /(\.js|\.jsx)$/, exclude: /(node_modules)/, loader: 'babel'},
-          { test: /\.cjsx$/, loader: 'coffee-jsx-loader'},
-          { test: /\.coffee$/, loader: 'coffee-jsx-loader'},
-          { test: /\.styl$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[hash:base64:5]!stylus-loader')}
+          { test: /(\.js|\.jsx)$/, exclude: /(node_modules)/, loader: 'babel' },
+          { test: /\.styl$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[hash:base64:5]!stylus-loader') }
         ]
       },
       watch: true,
