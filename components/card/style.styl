@@ -6,7 +6,6 @@ OFFSET                            = (SPACE / 1.25)
 :local(.navigation)
   padding                         : OFFSET = (OFFSET / 2)
   > *
-    pointer-events                : all
     padding-left                  : OFFSET
     padding-right                 : OFFSET
     box-shadow                    : none !important
@@ -33,16 +32,13 @@ OFFSET                            = (SPACE / 1.25)
   background                      : WHITE
 
   // -- Children
-  *:not(button)
-    pointer-events                : none
   > *:not(:local(.ripple)):not(:local(.navigation))
     padding                       : OFFSET
   &:not(.color):not(.image) > :local(.ripple)
-    background-color              : DIVIDER
+    background-color              : red
   &:not(.color) > *:not(figure), > *:not(:last-child)
     box-shadow                    : 0 1px darken(BACKGROUND, 5%)
   > :local(.figure)
-
 
   // -- Overrides
   &.touch
@@ -56,10 +52,11 @@ OFFSET                            = (SPACE / 1.25)
       color                       : WHITE
   &.loading
     cursor                        : none
+    pointer-events                : none
     -webkit-filter                : grayscale(100%)
     &, &:hover
       box-shadow                  : 0 0 0 1px DIVIDER
-    > :local(.ripple)
+    :local(.ripple)
       width                       : SIZE = (SIZE * 2)
       height                      : SIZE
   &.small > :local(.figure)
@@ -68,3 +65,6 @@ OFFSET                            = (SPACE / 1.25)
     height                        : SIZE
   &.wide
     width                         : (SIZE * 2)
+
+:local(.ripple)
+  background-color: #888

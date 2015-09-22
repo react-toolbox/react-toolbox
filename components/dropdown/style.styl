@@ -26,10 +26,6 @@
     cursor                        : pointer
     &.selected
       color                       : PRIMARY
-    > *
-      pointer-events              : none
-    > :local(.ripple)
-      background-color            : DIVIDER
 
 :local(.value)
   display                         : block
@@ -74,8 +70,6 @@
         opacity                   : 1
         transition                : opacity ANIMATION_DURATION ANIMATION_EASE
   &:not(.active)
-    > ul
-      pointer-events              : none
     > *, > * > li
       transition-delay            : ANIMATION_DURATION
 
@@ -99,3 +93,8 @@
     bottom                        : -(SPACE / 4)
     font-size                     : FONT_SIZE_TINY
     color                         : TEXT_SECONDARY
+
+:local(.ripple)
+  background-color                : DIVIDER
+  opacity                         : 1
+  z-index                         : Z_INDEX_LOW

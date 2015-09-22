@@ -19,11 +19,9 @@ var data = [
 | Name              | Type          | Default         | Description|
 |:-                 |:-:            | :-              |:-|
 | **className**     | String        |                 | Sets the class-styles of the Component.|
-| **colors**        | Object        |                 | JSON data representing all colors per key in the dropdown.||
 | **dataSource**    | Object        |                 | JSON data representing all items in the component.|
 | **disabled**      | Boolean       |                 | If true, component will be disabled.|
 | **error**         | String        |                 | Sets the error string.|
-| **exact**         | Bool          | true            | If true, component only accepts values from dataSource property..|
 | **label**         | String        |                 | The text string to use for the floating label element.|
 | **multiple**      | Bool          | true            | If true, component can hold multiple values.|
 | **onChange**      | Function      |                 | Callback function that is fired when the components's value changes.|
