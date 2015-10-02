@@ -26,7 +26,6 @@ var data = [
 | **multiple**      | Bool          | true            | If true, component can hold multiple values.|
 | **onChange**      | Function      |                 | Callback function that is fired when the components's value changes.|
 | **required**      | Boolean       |                 | If true, component needs has a value.|
-| **type**          | String        | "text"          | Type of the component, overwrite this property if you need set a different stylesheet.|
 | **value**         | String        |                 | Default value using JSON data.|
 
 ## Methods

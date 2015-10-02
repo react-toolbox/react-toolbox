@@ -1,7 +1,7 @@
 /* global React */
 
 // import Drawer from './components/drawer';
-// import Autocomplete from './components/autocomplete';
+import Autocomplete from './components/autocomplete';
 import Button from './components/button';
 // import Card from './components/card';
 // import Dialog from './components/dialog';
@@ -21,6 +21,7 @@ const Test = React.createClass({
     return (
       <app data-toolbox={true}>
         <h1>React Toolbox</h1>
+        <Autocomplete />
         <Button />
       </app>
     );

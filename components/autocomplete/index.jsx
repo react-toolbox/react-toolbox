@@ -1,11 +1,12 @@
 /* global React */
 
 import { addons } from 'react/addons';
-import css from './style';
 import utils from '../utils';
 import Input from '../input';
+import CSSModules from 'react-css-modules';
+import style from './style';
 
-export default React.createClass({
+const Autocomplete = React.createClass({
   mixins: [addons.PureRenderMixin],
 
   displayName: 'Autocomplete',
@@ -19,7 +20,6 @@ export default React.createClass({
     multiple: React.PropTypes.bool,
     onChange: React.PropTypes.func,
     required: React.PropTypes.bool,
-    type: React.PropTypes.string,
     value: React.PropTypes.any
   },
 
@@ -27,8 +27,7 @@ export default React.createClass({
     return {
       className: '',
       dataSource: {},
-      multiple: true,
-      type: 'text'
+      multiple: true
     };
   },
 
@@ -162,9 +161,9 @@ export default React.createClass({
   renderSelected () {
     if (this.props.multiple) {
       return (
-        <ul className={css.values} data-flex='horizontal wrap' onClick={this.handleUnselect}>
+        <ul data-flex='horizontal wrap' onClick={this.handleUnselect}>
           {[...this.state.values].map(([key, value]) => {
-            return (<li key={key} id={key}>{value}</li>);
+            return (<li styleName='value' key={key} id={key}>{value}</li>);
           })}
         </ul>
       );
@@ -172,32 +171,36 @@ export default React.createClass({
   },
 
   render () {
-    let className = `${css.root} ${this.props.className}`;
-    if (this.props.type) className += ` ${this.props.type}`;
-    if (this.state.focus) className += ' focus';
+    let suggestionsStyle = this.state.focus ? 'suggestions-visible' : 'suggestions';
+    let suggestions = [...this._getSuggestions()].map(([key, value]) => {
+      let styleName = this.state.active !== key ? 'suggestion' : 'suggestion-active';
+      return <li id={key} key={key} styleName={styleName}>{value}</li>;
+    });
 
     return (
-      <div data-react-toolbox='autocomplete' className={className}>
-        {this.props.label ? (<label>{this.props.label}</label>) : ''}
+      <div data-toolbox='autocomplete' styleName='container' className={this.props.className}>
+        {this.props.label ? (<label styleName='label'>{this.props.label}</label>) : ''}
         {this.renderSelected()}
-        <Input {...this.props} ref='input' label='' value=''
-               onBlur={this.handleBlur}
-               onChange={this.handleQueryChange}
-               onFocus={this.handleFocus}
-               onKeyUp={this.handleKeyPress} />
-        <ul ref='suggestions'
-            className={css.suggestions}
-            onMouseDown={this.handleSelect}
-            onMouseOver={this.handleHover}>
-          {[...this._getSuggestions()].map(([key, value]) => {
-            return (
-              <li id={key} key={key} className={this.state.active === key ? 'active' : ''}>
-                {value}
-              </li>
-            );
-          })}
+        <Input
+          {...this.props}
+          ref='input'
+          label=''
+          value=''
+          onBlur={this.handleBlur}
+          onChange={this.handleQueryChange}
+          onFocus={this.handleFocus}
+          onKeyUp={this.handleKeyPress} />
+        <ul
+          ref='suggestions'
+          styleName={suggestionsStyle}
+          onMouseDown={this.handleSelect}
+          onMouseOver={this.handleHover}
+        >
+          {suggestions}
         </ul>
       </div>
     );
   }
 });
+
+export default CSSModules(Autocomplete, style);
