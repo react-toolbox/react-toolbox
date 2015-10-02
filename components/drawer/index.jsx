@@ -1,9 +1,10 @@
 /* global React */
 
 import { addons } from 'react/addons';
-import css from './style';
+import CSSModules from 'react-css-modules';
+import style from './style.scss';
 
-export default React.createClass({
+const Drawer = React.createClass({
   mixins: [addons.PureRenderMixin],
 
   displayName: 'Drawer',
@@ -33,15 +34,13 @@ export default React.createClass({
   },
 
   render () {
-    let className = `${css.root} ${this.props.className}`;
-    if (this.props.type) className += ` ${this.props.type}`;
-    if (this.props.hideable) className += ' hideable';
-    if (this.state.active) className += ' active';
+    let styleName = 'drawer';
+    if (this.state.active) styleName += '-active';
 
     return (
-      <div className={className}>
-        <div className={css.overlay} onClick={this.handleOverlayClick}></div>
-        <aside className={css.container}>
+      <div styleName={`${styleName} ${this.props.type}`} className={this.props.className}>
+        <div styleName='overlay' onClick={this.handleOverlayClick}></div>
+        <aside styleName='content'>
           { this.props.children }
         </aside>
       </div>
@@ -56,3 +55,5 @@ export default React.createClass({
     this.setState({active: false});
   }
 });
+
+export default CSSModules(Drawer, style, { allowMultiple: true });

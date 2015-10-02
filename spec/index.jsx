@@ -1,8 +1,8 @@
 /* global React */
 
-// import Drawer from './components/drawer';
 import Autocomplete from './components/autocomplete';
 import Button from './components/button';
+import Drawer from './components/drawer';
 // import Card from './components/card';
 // import Dialog from './components/dialog';
 // import Dropdown from './components/dropdown';
@@ -19,10 +19,11 @@ const Test = React.createClass({
 
   render () {
     return (
-      <app data-toolbox={true}>
+      <app data-toolbox-app={true}>
         <h1>React Toolbox</h1>
         <Autocomplete />
         <Button />
+        <Drawer />
       </app>
     );
   }

@@ -35,10 +35,6 @@ const Button = React.createClass({
     return { loading: this.props.loading };
   },
 
-  handleClick (event) {
-    if (this.props.onClick) this.props.onClick(event, this);
-  },
-
   handleMouseDown (event) {
     this.refs.ripple.start(event);
   },
@@ -46,11 +42,12 @@ const Button = React.createClass({
   render () {
     return (
       <button
+        {...this.props}
+        type=''
+        label=''
         data-toolbox='button'
         styleName={this.props.type}
-        className={this.props.className}
         disabled={this.props.disabled || this.state.loading}
-        onClick={this.handleClick}
         onMouseDown={this.handleMouseDown}
       >
         { this.props.ripple ? <Ripple ref='ripple' loading={this.props.loading}/> : null }
