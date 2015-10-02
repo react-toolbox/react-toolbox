@@ -1,0 +1,22 @@
+@import "./colors";
+
+//-- Color configuration
+$color-primary: $palette-blue-500 !default;
+$color-primary-dark: $palette-blue-700 !default;
+$color-accent: $palette-pink-a200 !default;
+$color-primary-contrast: $color-dark-contrast !default;
+$color-accent-contrast: $color-dark-contrast !default;
+
+//-- Units and config
+$unit: 1rem;
+
+//-- Shadows
+$shadow-key-umbra-opacity: 0.2 !default;
+$shadow-key-penumbra-opacity: 0.14 !default;
+$shadow-ambient-shadow-opacity: 0.12 !default;
+
+//-- Animation
+$animation-curve-fast-out-slow-in: cubic-bezier(0.4, 0, 0.2, 1) !default;
+$animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1) !default;
+$animation-curve-fast-out-linear-in: cubic-bezier(0.4, 0, 1, 1) !default;
+$animation-curve-default: $animation-curve-fast-out-slow-in !default;

@@ -1,11 +1,12 @@
 /* global React */
 
 import { addons } from 'react/addons';
-import css from './style';
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
+import CSSModules from 'react-css-modules';
+import style from './style.scss';
 
-export default React.createClass({
+const Button = React.createClass({
   mixins: [addons.PureRenderMixin],
 
   displayName: 'Button',
@@ -14,6 +15,8 @@ export default React.createClass({
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     icon: React.PropTypes.string,
+    primary: React.PropTypes.bool,
+    accent: React.PropTypes.bool,
     label: React.PropTypes.string,
     loading: React.PropTypes.bool,
     ripple: React.PropTypes.bool,
@@ -36,22 +39,23 @@ export default React.createClass({
     if (this.props.onClick) this.props.onClick(event, this);
   },
 
-  render () {
-    let className = this.props.className;
-    if (this.props.type) className += ` ${this.props.type}`;
-    if (this.state.focused) className += ' focused';
+  handleMouseDown (event) {
+    this.refs.ripple.start(event);
+  },
 
+  render () {
     return (
       <button
-        className={css.root + ' ' + className}
-        data-flex='horizontal center'
-        data-react-toolbox='button'
+        data-toolbox='button'
+        styleName={this.props.type}
+        className={this.props.className}
         disabled={this.props.disabled || this.state.loading}
         onClick={this.handleClick}
+        onMouseDown={this.handleMouseDown}
       >
-        { this.props.icon ? <FontIcon value={this.props.icon}/> : null }
-        { this.props.label ? <abbr>{this.props.label}</abbr> : null }
-        { this.props.ripple ? <Ripple loading={this.props.loading}/> : null }
+        { this.props.ripple ? <Ripple ref='ripple' loading={this.props.loading}/> : null }
+        { this.props.icon ? <FontIcon styleName='icon' value={this.props.icon}/> : null }
+        { this.props.label ? <abbr styleName='label'>{this.props.label}</abbr> : null }
       </button>
     );
   },
@@ -60,3 +64,5 @@ export default React.createClass({
     this.setState({loading: value});
   }
 });
+
+export default CSSModules(Button, style);

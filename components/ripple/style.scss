@@ -1,0 +1,67 @@
+@import "../variables";
+
+//-- Variables
+$ripple-duration: 1.2s;
+$ripple-final-opacity: .3;
+$ripple-size: 15 * $unit;
+
+//-- Mixins
+%ripple {
+  position: absolute;
+  background-color: currentColor;
+  border-radius: 50%;
+  transition-timing-function: $animation-curve-linear-out-slow-in;
+  transition-duration: $ripple-duration;
+  transition-property: height, width;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+//-- Local Styles
+.wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.normal {
+  @extend %ripple;
+  width: 0;
+  height: 0;
+  opacity: $ripple-final-opacity;
+
+  &:not(.active) {
+    opacity: 0;
+    transition-property: opacity, height, width;
+
+    &.restarting {
+      transition-property: none;
+    }
+  }
+}
+
+.loading {
+  @extend %ripple;
+  top: 50%;
+  left: 50%;
+  width: $ripple-size;
+  height: $ripple-size;
+  opacity: 0;
+  animation-name: ripple;
+  animation-duration: $ripple-duration;
+  animation-timing-function: $animation-curve-linear-out-slow-in;
+  animation-iteration-count: infinite;
+}
+
+@keyframes ripple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: $ripple-final-opacity;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

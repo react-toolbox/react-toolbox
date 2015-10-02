@@ -1,22 +1,21 @@
 /* global React */
 
 import { addons } from 'react/addons';
-import style from './style';
+import CSSModules from 'react-css-modules';
+import style from './style.scss';
 
-export default React.createClass({
+const Ripple = React.createClass({
   mixins: [addons.PureRenderMixin],
 
   displayName: 'Ripple',
 
   propTypes: {
-    auto: React.PropTypes.bool,
     className: React.PropTypes.string,
     loading: React.PropTypes.bool
   },
 
   getDefaultProps () {
     return {
-      auto: true,
       className: '',
       loading: false
     };
@@ -33,6 +32,7 @@ export default React.createClass({
   },
 
   start ({ pageX, pageY }) {
+    document.addEventListener('mouseup', this.end);
     const {top, left, width} = this._getDescriptor(pageX, pageY);
     this.setState({active: false, restarting: true, width: 0}, () => {
       this.refs.ripple.getDOMNode().offsetWidth; //eslint-disable-line no-unused-expressions
@@ -41,6 +41,7 @@ export default React.createClass({
   },
 
   end () {
+    document.removeEventListener('mouseup', this.end);
     this.setState({active: false});
   },
 
@@ -55,23 +56,23 @@ export default React.createClass({
 
   render () {
     let { left, top, width } = this.state;
-    let className = `${style.ripple} ${this.props.className}`;
-    if (this.state.active) className += ' active';
-    if (this.state.restarting) className += ' restarting';
-    if (this.props.loading) className += ' loading';
+    let className = this.props.className;
+    let styleName = this.props.loading ? 'loading' : 'normal';
+    if (this.state.active) className += ` ${style.active}`;
+    if (this.state.restarting) className += ` ${style.restarting}`;
 
     return (
-      <span
-        className={style.root}
-        onMouseDown={this.props.auto ? this.start : null}
-        onMouseUp={this.end}>
-
+      <span styleName='wrapper'>
         <span
           ref="ripple"
+          data-toolbox='ripple'
           className={className}
+          styleName={styleName}
           style={{left: left, top: top, width: width, height: width}}>
         </span>
       </span>
     );
   }
 });
+
+export default CSSModules(Ripple, style);
