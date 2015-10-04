@@ -1,9 +1,9 @@
 @import "./colors";
 
 //-- Colors
-$color-divider                     = lighten(#B6B6B6, 75%)
-$color-background                  = #ffffff
-$color-white                       = #ffffff
+$color-divider                      : lighten(#B6B6B6, 75%);
+$color-background                   : #ffffff;
+$color-white                        : #ffffff;
 
 //-- Color Theme Configuration
 $color-primary                      : $palette-blue-500 !default;
@@ -13,15 +13,15 @@ $color-primary-contrast             : $color-dark-contrast !default;
 $color-accent-contrast              : $color-dark-contrast !default;
 
 // -- Fonts
-$font-family                        = "Roboto", "Helvetica Neue", "Helvetica", "sans-serif"
-$font-size                          = 16px
-$font-size-tiny                     = 80%
-$font-size-small                    = 90%
-$font-size-normal                   = 100%
-$font-size-big                      = 120%
-$font-weight-thin                   = 300
-$font-weight-normal                 = 400
-$font-weight-bold                   = 700
+$font-family                        : "Roboto", "Helvetica Neue", "Helvetica", "sans-serif";
+$font-size                          : 16px;
+$font-size-tiny                     : 80%;
+$font-size-small                    : 90%;
+$font-size-normal                   : 100%;
+$font-size-big                      : 120%;
+$font-weight-thin                   : 300;
+$font-weight-normal                 : 400;
+$font-weight-bold                   : 700;
 
 //-- Units and config
 $unit                               : 1rem;
