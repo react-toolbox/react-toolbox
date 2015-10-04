@@ -1,9 +1,9 @@
 /* global React */
 
 import { addons } from 'react/addons';
-import style from './style';
 import Navigation from '../navigation';
 import Ripple from '../ripple';
+import style from './style.scss';
 
 export default React.createClass({
   mixins: [addons.PureRenderMixin],

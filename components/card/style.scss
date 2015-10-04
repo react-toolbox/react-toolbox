@@ -1,0 +1,98 @@
+@import "../variables";
+@import "../mixins";
+
+$size                             = (5 * $unit);
+$offset                           = ($space / 1.25);
+
+:local(.navigation) {
+  padding                         : $offset = ($offset / 2);
+  > *
+    padding-left                  : $offset;
+    padding-right                 : $offset;
+    box-shadow                    : none !important;
+    &:hover {
+      background-color            : rgba(0,0,0,0.1) !important;
+    }
+}
+
+:local(.figure) {
+  display-flex()
+  flex-direction                  : column;
+  justify-content                 : flex-end;
+  flex-grow                       : 2;
+  min-height                      : ($size / 2);
+  background-size                 : cover;
+  > * {
+    font-weight                   : $font-weight-normal;
+  }
+}
+
+:local(.root) {
+  display-flex();
+  flex-direction                  : column;
+  position                        : relative;
+  overflow                        : hidden;
+  width                           : $size;
+  box-shadow                      : $zdepth-shadow-1;
+  background                      : $color-white;
+
+  // -- Children
+  > *:not(:local(.ripple)):not(:local(.navigation)) {
+    padding                       : $offset;
+  }
+  &:not(.color):not(.image) > :local(.ripple){
+    background-color              : $color-white;
+  }
+  &:not(.color) > *:not(figure), > *:not(:last-child){
+    box-shadow                    : 0 1px darken($color-background, 5%);
+  }
+
+  // @TODO: why?
+  > :local(.figure) {
+
+  }
+
+  // -- Overrides
+  &.touch {
+    cursor                        : pointer;
+    &:hover, &:active {
+      box-shadow                  : $zdepth-shadow-2;
+    }
+  }
+
+  &.image > :local(.figure) {
+    text-shadow                   : $zdepth-shadow-1;
+  }
+
+  &.image, &.color {
+    > :local(.figure) {
+      color                       : $color-white;
+    }
+  }
+  &.loading {
+    cursor                        : none;
+    pointer-events                : none;
+    -webkit-filter                : grayscale(100%);
+    &, &:hover {
+      box-shadow                  : 0 0 0 1px $color-divider;
+    }
+    :local(.ripple) {
+      width                       : $size = ($size * 2);
+      height                      : $size;
+    }
+  }
+  &.small > :local(.figure) {
+    min-height                    : 0px;
+  }
+  &.square {
+    height                        : $size;
+  }
+  &.wide {
+    width                         : ($size * 2);
+  }
+}
+
+:local(.ripple) {
+  // @TODO: Ask @javivelasco why we have a non-constant value
+  background-color                : #888;
+}

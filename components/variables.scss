@@ -1,32 +1,50 @@
 @import "./colors";
 
-//-- Color configuration
-$color-primary: $palette-blue-500 !default;
-$color-primary-dark: $palette-blue-700 !default;
-$color-accent: $palette-pink-a200 !default;
-$color-primary-contrast: $color-dark-contrast !default;
-$color-accent-contrast: $color-dark-contrast !default;
+//-- Colors
+$color-divider                     = lighten(#B6B6B6, 75%)
+$color-background                  = #ffffff
+$color-white                       = #ffffff
+
+//-- Color Theme Configuration
+$color-primary                      : $palette-blue-500 !default;
+$color-primary-dark                 : $palette-blue-700 !default;
+$color-accent                       : $palette-pink-a200 !default;
+$color-primary-contrast             : $color-dark-contrast !default;
+$color-accent-contrast              : $color-dark-contrast !default;
+
+// -- Fonts
+$font-family                        = "Roboto", "Helvetica Neue", "Helvetica", "sans-serif"
+$font-size                          = 16px
+$font-size-tiny                     = 80%
+$font-size-small                    = 90%
+$font-size-normal                   = 100%
+$font-size-big                      = 120%
+$font-weight-thin                   = 300
+$font-weight-normal                 = 400
+$font-weight-bold                   = 700
 
 //-- Units and config
-$unit: 1rem;
+$unit                               : 1rem;
+$space                              : ($unit * 0.29);
+$offset                             : ($space * 1.75);
 
 //-- Shadows
-$shadow-key-umbra-opacity: 0.2 !default;
-$shadow-key-penumbra-opacity: 0.14 !default;
-$shadow-ambient-shadow-opacity: 0.12 !default;
+$shadow-key-umbra-opacity           : 0.2 !default;
+$shadow-key-penumbra-opacity        : 0.14 !default;
+$shadow-ambient-shadow-opacity      : 0.12 !default;
 
 //-- Depth Shadows
-$zdepth-shadow-1: 0 1px 6px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.24);
-$zdepth-shadow-2: 0 3px 10px rgba(0,0,0,0.16), 0 3px 10px rgba(0,0,0,0.23);
-$zdepth-shadow-3: 0 10px 30px rgba(0,0,0,0.19), 0 6px 10px rgba(0,0,0,0.23);
-$zdepth-shadow-4: 0 14px 45px rgba(0,0,0,0.25), 0 10px 18px rgba(0,0,0,0.22);
-$zdepth-shadow-5: 0 19px 60px rgba(0,0,0,0.30), 0 15px 20px rgba(0,0,0,0.22);
+$zdepth-shadow-1                    : 0 1px 6px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.24);
+$zdepth-shadow-2                    : 0 3px 10px rgba(0,0,0,0.16), 0 3px 10px rgba(0,0,0,0.23);
+$zdepth-shadow-3                    : 0 10px 30px rgba(0,0,0,0.19), 0 6px 10px rgba(0,0,0,0.23);
+$zdepth-shadow-4                    : 0 14px 45px rgba(0,0,0,0.25), 0 10px 18px rgba(0,0,0,0.22);
+$zdepth-shadow-5                    : 0 19px 60px rgba(0,0,0,0.30), 0 15px 20px rgba(0,0,0,0.22);
 
 //-- Animation
-$animation-curve-fast-out-slow-in: cubic-bezier(0.4, 0, 0.2, 1) !default;
-$animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1) !default;
-$animation-curve-fast-out-linear-in: cubic-bezier(0.4, 0, 1, 1) !default;
-$animation-curve-default: $animation-curve-fast-out-slow-in !default;
+$animation-curve-fast-out-slow-in   : cubic-bezier(0.4, 0, 0.2, 1) !default;
+$animation-curve-linear-out-slow-in : cubic-bezier(0, 0, 0.2, 1) !default;
+$animation-curve-fast-out-linear-in : cubic-bezier(0.4, 0, 1, 1) !default;
+$animation-curve-default            : $animation-curve-fast-out-slow-in !default;
 
 //-- Input spaces
-$input-margin-bottom: $unit * .8;
+$input-margin-bottom                : $unit * .8;
