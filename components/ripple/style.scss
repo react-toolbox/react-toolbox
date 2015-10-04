@@ -33,7 +33,7 @@ $ripple-size: 15 * $unit;
 
   &:not(.active) {
     opacity: 0;
-    transition-property: opacity, height, width;
+    transition-property: height, width, opacity;
 
     &.restarting {
       transition-property: none;

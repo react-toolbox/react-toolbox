@@ -3,10 +3,9 @@
 import { addons } from 'react/addons';
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
-import CSSModules from 'react-css-modules';
 import style from './style.scss';
 
-const Button = React.createClass({
+export default React.createClass({
   mixins: [addons.PureRenderMixin],
 
   displayName: 'Button',
@@ -40,19 +39,22 @@ const Button = React.createClass({
   },
 
   render () {
+    let className = style[this.props.type];
+    if (this.props.className) className += ` ${this.props.className}`;
+
     return (
       <button
         {...this.props}
         type=''
         label=''
         data-toolbox='button'
-        styleName={this.props.type}
+        className={className}
         disabled={this.props.disabled || this.state.loading}
         onMouseDown={this.handleMouseDown}
       >
         { this.props.ripple ? <Ripple ref='ripple' loading={this.props.loading}/> : null }
-        { this.props.icon ? <FontIcon styleName='icon' value={this.props.icon}/> : null }
-        { this.props.label ? <abbr styleName='label'>{this.props.label}</abbr> : null }
+        { this.props.icon ? <FontIcon className={style.icon} value={this.props.icon}/> : null }
+        { this.props.label ? <abbr className={style.label}>{this.props.label}</abbr> : null }
       </button>
     );
   },
@@ -61,5 +63,3 @@ const Button = React.createClass({
     this.setState({loading: value});
   }
 });
-
-export default CSSModules(Button, style);

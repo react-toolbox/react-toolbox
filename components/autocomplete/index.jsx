@@ -3,10 +3,9 @@
 import { addons } from 'react/addons';
 import utils from '../utils';
 import Input from '../input';
-import CSSModules from 'react-css-modules';
 import style from './style';
 
-const Autocomplete = React.createClass({
+export default React.createClass({
   mixins: [addons.PureRenderMixin],
 
   displayName: 'Autocomplete',
@@ -163,27 +162,32 @@ const Autocomplete = React.createClass({
       return (
         <ul data-flex='horizontal wrap' onClick={this.handleUnselect}>
           {[...this.state.values].map(([key, value]) => {
-            return (<li styleName='value' key={key} id={key}>{value}</li>);
+            return (<li className={style.value} key={key} id={key}>{value}</li>);
           })}
         </ul>
       );
     }
   },
 
-  render () {
-    let suggestionsStyle = this.state.focus ? 'suggestions-visible' : 'suggestions';
-    let suggestions = [...this._getSuggestions()].map(([key, value]) => {
-      let styleName = this.state.active !== key ? 'suggestion' : 'suggestion-active';
-      return <li id={key} key={key} styleName={styleName}>{value}</li>;
+  renderSuggestions () {
+    return [...this._getSuggestions()].map(([key, value]) => {
+      let className = style[this.state.active !== key ? 'suggestion' : 'suggestion-active'];
+      return <li id={key} key={key} className={className}>{value}</li>;
     });
+  },
+
+  render () {
+    let containerClassName = style.container;
+    let suggestionsClassName = style[this.state.focus ? 'suggestions-active' : 'suggestions'];
+    if (this.props.className) containerClassName += ` ${this.props.className}`;
 
     return (
-      <div data-toolbox='autocomplete' styleName='container' className={this.props.className}>
-        {this.props.label ? (<label styleName='label'>{this.props.label}</label>) : ''}
+      <div data-toolbox='autocomplete' className={containerClassName}>
+        {this.props.label ? <label className={style.label}>{this.props.label}</label> : ''}
         {this.renderSelected()}
         <Input
-          {...this.props}
           ref='input'
+          {...this.props}
           label=''
           value=''
           onBlur={this.handleBlur}
@@ -192,15 +196,13 @@ const Autocomplete = React.createClass({
           onKeyUp={this.handleKeyPress} />
         <ul
           ref='suggestions'
-          styleName={suggestionsStyle}
+          className={suggestionsClassName}
           onMouseDown={this.handleSelect}
           onMouseOver={this.handleHover}
         >
-          {suggestions}
+          {this.renderSuggestions()}
         </ul>
       </div>
     );
   }
 });
-
-export default CSSModules(Autocomplete, style);

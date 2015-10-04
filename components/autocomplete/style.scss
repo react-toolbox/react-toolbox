@@ -48,7 +48,7 @@ $autocomplete-suggestion-active-background: unquote("rgb(#{$palette-grey-200})")
   transform: translateY(- $unit);
 }
 
-.suggestions-visible {
+.suggestions-active {
   @extend .suggestions;
   height: auto;
   box-shadow: $zdepth-shadow-1;

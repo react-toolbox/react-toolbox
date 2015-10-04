@@ -1,23 +1,26 @@
 /* global React */
 
 import { addons } from 'react/addons';
-import CSSModules from 'react-css-modules';
 import style from './style.scss';
 
-const Ripple = React.createClass({
+export default React.createClass({
   mixins: [addons.PureRenderMixin],
 
   displayName: 'Ripple',
 
   propTypes: {
+    centered: React.PropTypes.bool,
     className: React.PropTypes.string,
-    loading: React.PropTypes.bool
+    loading: React.PropTypes.bool,
+    spread: React.PropTypes.number
   },
 
   getDefaultProps () {
     return {
+      centered: false,
       className: '',
-      loading: false
+      loading: false,
+      spread: 2
     };
   },
 
@@ -46,33 +49,26 @@ const Ripple = React.createClass({
   },
 
   _getDescriptor (pageX, pageY) {
-    let { left, top, width } = this.getDOMNode().getBoundingClientRect();
+    let { left, top, height, width } = this.getDOMNode().getBoundingClientRect();
     return {
-      left: pageX - left,
-      top: pageY - top,
-      width: width * 2.5
+      left: this.props.centered ? width / 2 : pageX - left,
+      top: this.props.centered ? height / 2 : pageY - top,
+      width: width * this.props.spread
     };
   },
 
   render () {
     let { left, top, width } = this.state;
-    let className = this.props.className;
-    let styleName = this.props.loading ? 'loading' : 'normal';
+    let rippleStyle = {left: left, top: top, width: width, height: width};
+    let className = style[this.props.loading ? 'loading' : 'normal'];
     if (this.state.active) className += ` ${style.active}`;
     if (this.state.restarting) className += ` ${style.restarting}`;
+    if (this.props.className) className += ` ${this.props.className}`;
 
     return (
-      <span styleName='wrapper'>
-        <span
-          ref="ripple"
-          data-toolbox='ripple'
-          className={className}
-          styleName={styleName}
-          style={{left: left, top: top, width: width, height: width}}>
-        </span>
+      <span react-toolbox='ripple' className={style.wrapper}>
+        <span ref="ripple" role='ripple' className={className} style={rippleStyle} />
       </span>
     );
   }
 });
-
-export default CSSModules(Ripple, style);

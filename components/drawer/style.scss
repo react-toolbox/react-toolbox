@@ -22,8 +22,7 @@ $drawer-transition-delay: .1s;
   pointer-events: none;
 }
 
-.drawer-active {
-  @extend .drawer;
+.active {
   pointer-events: all;
 
   > .content {
@@ -42,7 +41,7 @@ $drawer-transition-delay: .1s;
     border-right: 1px solid $drawer-border-color;
   }
 
-  &:not(.drawer-active) > .content {
+  &:not(.active) > .content {
     transform: translateX(- $drawer-width);
   }
 }
@@ -53,7 +52,7 @@ $drawer-transition-delay: .1s;
     border-left: 1px solid $drawer-border-color;
   }
 
-  &:not(.drawer-active) > .content {
+  &:not(.active) > .content {
     transform: translateX($drawer-width);
   }
 }
