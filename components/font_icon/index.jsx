@@ -2,9 +2,8 @@
 
 import { addons } from 'react/addons';
 import style from './style';
-import CSSModules from 'react-css-modules';
 
-const FontIcon = React.createClass({
+export default React.createClass({
   mixins: [addons.PureRenderMixin],
 
   displayName: 'FontIcon',
@@ -27,15 +26,8 @@ const FontIcon = React.createClass({
   },
 
   render () {
-    return (
-      <span
-        data-toolbox='icon'
-        className={this.props.className}
-        styleName={this.props.value}
-        onClick={this.props.onClick}
-      />
-    );
+    let className = style[this.props.value];
+    if (this.props.className) className += ` ${this.props.className}`;
+    return <span data-toolbox='icon' className={className} onClick={this.props.onClick} />;
   }
 });
-
-export default CSSModules(FontIcon, style);
