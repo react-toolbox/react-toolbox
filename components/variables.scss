@@ -1,6 +1,13 @@
 @import "./colors";
 
 //-- Color configuration
+$color-divider: unquote("rgb(#{$palette-grey-200})") !default;
+$color-background: unquote("rgb(#{$color-white})") !default;
+$color-white: unquote("rgb(#{$color-white})") !default;
+
+$color-text: blue;
+$color-text-secondary: rgba(0, 0, 0, 0.541176);
+
 $color-primary: $palette-blue-500 !default;
 $color-primary-dark: $palette-blue-700 !default;
 $color-accent: $palette-pink-a200 !default;
@@ -9,6 +16,16 @@ $color-accent-contrast: $color-dark-contrast !default;
 
 //-- Units and config
 $unit: 1rem;
+
+// -- Fonts
+$font-size: 1.6 * $unit;
+$font-size-tiny: 1.2 * $unit;
+$font-size-small: 1.3 * $unit;
+$font-size-normal: $font-size;
+$font-size-big: 1.8 * $unit;
+$font-weight-thin: 300;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
 
 //-- Shadows
 $shadow-key-umbra-opacity: 0.2 !default;

@@ -1,98 +1,97 @@
 @import "../variables";
 @import "../mixins";
+$card-title-height: 17.6 * $unit;
+$card-width-normal: 32 * $unit;
+$card-width-large: 51.2 * $unit;
+$offset: 1.6 * $unit;
+$color-white: #fff;
 
-$size                             = (5 * $unit);
-$offset                           = ($space / 1.25);
-
-:local(.navigation) {
-  padding                         : $offset = ($offset / 2);
-  > *
-    padding-left                  : $offset;
-    padding-right                 : $offset;
-    box-shadow                    : none !important;
-    &:hover {
-      background-color            : rgba(0,0,0,0.1) !important;
-    }
+.figure {
+  position: relative;
+  display: flex;
+  min-height: $card-title-height;
+  flex-direction: column;
+  background-position: center center;
+  background-size: cover;
+  justify-content: flex-end;
+  > *:not(.overflow) {
+    z-index: 1;
+    font-weight: $font-weight-normal;
+  }
+  > .overflow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .75;
+  }
 }
 
-:local(.figure) {
-  display-flex()
-  flex-direction                  : column;
-  justify-content                 : flex-end;
-  flex-grow                       : 2;
-  min-height                      : ($size / 2);
-  background-size                 : cover;
+.text {
+  font-size: $font-size-small;
+  line-height: 1.8 * $unit;
+  color: $color-text-secondary;
+}
+
+.navigation {
+  $offset: ($offset / 2);
+  padding: $offset;
   > * {
-    font-weight                   : $font-weight-normal;
+    min-width: 0;
+    padding-right: $offset;
+    padding-left: $offset;
   }
 }
 
-:local(.root) {
-  display-flex();
-  flex-direction                  : column;
-  position                        : relative;
-  overflow                        : hidden;
-  width                           : $size;
-  box-shadow                      : $zdepth-shadow-1;
-  background                      : $color-white;
+.ripple {
+  background-color: $color-text-secondary;
+}
 
+.root {
+  @include shadow-2dp();
+  position: relative;
+  display: flex;
+  width: $card-width-normal;
+  flex-direction: column;
+  overflow: hidden;
+  vertical-align: top;
+  background: $color-background;
   // -- Children
-  > *:not(:local(.ripple)):not(:local(.navigation)) {
-    padding                       : $offset;
+  > *:not(.navigation) {
+    padding: $offset;
   }
-  &:not(.color):not(.image) > :local(.ripple){
-    background-color              : $color-white;
-  }
-  &:not(.color) > *:not(figure), > *:not(:last-child){
-    box-shadow                    : 0 1px darken($color-background, 5%);
-  }
-
-  // @TODO: why?
-  > :local(.figure) {
-
-  }
-
-  // -- Overrides
-  &.touch {
-    cursor                        : pointer;
-    &:hover, &:active {
-      box-shadow                  : $zdepth-shadow-2;
-    }
-  }
-
-  &.image > :local(.figure) {
-    text-shadow                   : $zdepth-shadow-1;
-  }
-
-  &.image, &.color {
-    > :local(.figure) {
-      color                       : $color-white;
-    }
-  }
-  &.loading {
-    cursor                        : none;
-    pointer-events                : none;
-    -webkit-filter                : grayscale(100%);
-    &, &:hover {
-      box-shadow                  : 0 0 0 1px $color-divider;
-    }
-    :local(.ripple) {
-      width                       : $size = ($size * 2);
-      height                      : $size;
-    }
-  }
-  &.small > :local(.figure) {
-    min-height                    : 0px;
-  }
-  &.square {
-    height                        : $size;
-  }
-  &.wide {
-    width                         : ($size * 2);
+  &:not(.color) > *:not(.figure), > *:not(:last-child) {
+    box-shadow: 0 1px $color-divider;
   }
 }
 
-:local(.ripple) {
-  // @TODO: Ask @javivelasco why we have a non-constant value
-  background-color                : #888;
+.touch {
+  cursor: pointer;
+}
+.contrast {
+  .figure {
+    color: $color-white;
+    text-shadow: 0;
+  }
+  .ripple {
+    background-color: $color-white;
+  }
+}
+.loading {
+  pointer-events: none;
+  cursor: none;
+
+  -webkit-filter: grayscale(100%);
+  .ripple {
+    width: 2 * $card-width-normal;
+    height: 2 * $card-width-normal;
+  }
+}
+.square {
+  height: $card-width-normal;
+}
+.wide {
+  width: $card-width-large;
 }
