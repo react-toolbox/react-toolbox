@@ -47,3 +47,10 @@ $animation-curve-default: $animation-curve-fast-out-slow-in !default;
 
 //-- Input spaces
 $input-margin-bottom: $unit * .8;
+
+//-- Indexes
+$z-index-higher: 200;
+$z-index-high: 100;
+$z-index-normal: 1;
+$z-index-low: -100;
+$z-index-lower: -200;
