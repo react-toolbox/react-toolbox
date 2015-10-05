@@ -51,7 +51,7 @@ $ripple-size: 15 * $unit;
   animation-name: ripple;
   animation-duration: $ripple-duration;
   animation-timing-function: $animation-curve-linear-out-slow-in;
-  animation-iteration-count: 1;
+  animation-iteration-count: infinite;
 }
 
 @keyframes ripple {
