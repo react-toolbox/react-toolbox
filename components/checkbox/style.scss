@@ -93,7 +93,11 @@ $checkbox-focus-color: unquote("rgba(#{$color-primary}, 0.26)") !default;
 }
 
 .disabled {
-  color: $checkbox-disabled-color;
+  @extend .field;
+
+  .text {
+    color: $checkbox-disabled-color;
+  }
 
   .check {
     cursor: auto;

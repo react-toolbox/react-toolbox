@@ -47,8 +47,8 @@ export default React.createClass({
 
   render () {
     let labelClassName = style[this.props.disabled ? 'disabled' : 'field'];
-    if (this.props.className) labelClassName += ` ${this.props.className}`;
     let checkboxClassName = style[this.state.checked ? 'checked' : 'check'];
+    if (this.props.className) labelClassName += ` ${this.props.className}`;
 
     return (
       <label react-toolbox='checkbox' className={labelClassName} onClick={this.handleClick}>
