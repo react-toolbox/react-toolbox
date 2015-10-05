@@ -1,10 +1,12 @@
 /* global React */
 
-import Autocomplete from './components/autocomplete';
+// import Autocomplete from './components/autocomplete';
 import Button from './components/button';
 import Card from './components/card';
 import Checkbox from './components/checkbox';
 import Drawer from './components/drawer';
+
+// import Card from './components/card';
 // import Dialog from './components/dialog';
 // import Dropdown from './components/dropdown';
 // import FontIcon from './components/font_icon';
@@ -22,10 +24,9 @@ const Test = React.createClass({
     return (
       <app data-toolbox-app={true}>
         <h1>React Toolbox</h1>
-        <Autocomplete />
+        <Checkbox />
         <Button />
         <Card />
-        <Checkbox />
         <Drawer />
       </app>
     );
