@@ -1,10 +1,13 @@
 @import "../variables";
 @import "../mixins";
+
+$card-color-white: unquote("rgb(#{$color-white})") !default;
 $card-title-height: 17.6 * $unit;
 $card-width-normal: 32 * $unit;
 $card-width-large: 51.2 * $unit;
+$card-text-overlay: unquote("rgba(#{$color-black}, 0.2)");
 $offset: 1.6 * $unit;
-$color-white: #fff;
+
 
 .figure {
   position: relative;
@@ -70,28 +73,48 @@ $color-white: #fff;
 .touch {
   cursor: pointer;
 }
+
 .contrast {
   .figure {
-    color: $color-white;
+    color: $card-color-white;
     text-shadow: 0;
   }
   .ripple {
-    background-color: $color-white;
+    background-color: $card-color-white;
   }
 }
+
 .loading {
   pointer-events: none;
   cursor: none;
-
-  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
   .ripple {
     width: 2 * $card-width-normal;
     height: 2 * $card-width-normal;
   }
 }
-.square {
-  height: $card-width-normal;
+
+.image {
+  &, .figure {
+    height: $card-width-normal;
+  }
+  .figure {
+    padding: 0;
+    > h2 {
+      padding: $offset;
+      font-size: $font-size-small;
+      font-weight: $font-weight-bold;
+      background-color: $card-text-overlay;
+    }
+  }
 }
+
+.event {
+  .figure {
+    justify-content: flex-start;
+  }
+}
+
 .wide {
   width: $card-width-large;
 }
