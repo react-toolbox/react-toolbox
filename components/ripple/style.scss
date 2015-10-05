@@ -1,28 +1,25 @@
 @import "../variables";
-
-//-- Variables
 $ripple-duration: 1.2s;
 $ripple-final-opacity: .3;
 $ripple-size: 15 * $unit;
 
-//-- Mixins
 %ripple {
   position: absolute;
+  pointer-events: none;
   background-color: currentColor;
   border-radius: 50%;
-  transition-timing-function: $animation-curve-linear-out-slow-in;
-  transition-duration: $ripple-duration;
-  transition-property: height, width;
-  transform: translateX(-50%) translateY(-50%);
+  transform: translate3d(-50%, -50%, 0);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
-//-- Local Styles
 .wrapper {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  pointer-events: none;
 }
 
 .normal {
@@ -30,6 +27,9 @@ $ripple-size: 15 * $unit;
   width: 0;
   height: 0;
   opacity: $ripple-final-opacity;
+  transition-timing-function: $animation-curve-linear-out-slow-in;
+  transition-duration: $ripple-duration;
+  transition-property: height, width;
 
   &:not(.active) {
     opacity: 0;
@@ -51,7 +51,7 @@ $ripple-size: 15 * $unit;
   animation-name: ripple;
   animation-duration: $ripple-duration;
   animation-timing-function: $animation-curve-linear-out-slow-in;
-  animation-iteration-count: infinite;
+  animation-iteration-count: 1;
 }
 
 @keyframes ripple {

@@ -53,7 +53,6 @@
     "normalize.css": "^3.0.3",
     "phantomjs-polyfill": "0.0.1",
     "postcss-loader": "^0.4.3",
-    "react-css-modules": "^3.2.3",
     "react-hot-loader": "^1.3.0",
     "sass-loader": "^2.0.1",
     "sinon": "git://github.com/cjohansen/Sinon.JS#sinon-2.0",
