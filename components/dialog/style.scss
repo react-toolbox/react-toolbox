@@ -1,0 +1,95 @@
+@import "../variables";
+@import "../mixins";
+$dialog-color-white: unquote("rgb(#{$color-white})") !default;
+$dialog-translateY: 4 * $unit;
+
+.root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  pointer-events: none;
+
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  > .content {
+    opacity: 0;
+    transform: translateY(-$dialog-translateY);
+  }
+}
+
+.active {
+  pointer-events: all;
+  .overlay {
+    opacity: $color-overlay-opacity;
+  }
+  .content {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $color-overlay;
+  opacity: 0;
+  transition-timing-function: $animation-curve-default;
+  transition-duration: $animation-duration;
+  transition-property: opacity;
+}
+
+.content {
+  display: flex;
+  max-width: 96vw;
+  max-height: 96vh;
+  flex-direction: column;
+  background-color: $dialog-color-white;
+  border-radius: $border-radius;
+  box-shadow: $zdepth-shadow-5;
+  transition-delay: $animation-delay;
+  transition-timing-function: $animation-curve-default;
+  transition-duration: $animation-duration;
+  transition-property: opacity, transform;
+  > h6 {
+    margin: $offset;
+  }
+  > *:not(section) {
+    flex-grow: 0;
+  }
+  > section {
+    margin: 0 $offset;
+    overflow-y: scroll;
+    color: $color-text-secondary;
+
+    flex-grow: 2;
+  }
+  > nav {
+    $offset: ($offset / 2);
+    margin: $offset;
+    text-align: right;
+    > * {
+      min-width: 0;
+      padding-right: $offset;
+      padding-left: $offset;
+    }
+  }
+}
+
+.small > .content {
+  width: 30vw;
+}
+.normal > .content {
+  width: 50vw;
+}
+.large > .content {
+  width: 96vw;
+}

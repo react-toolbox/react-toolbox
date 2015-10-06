@@ -1,9 +1,12 @@
 /* global React */
 
-import style from './style';
+import { addons } from 'react/addons';
 import Navigation from '../navigation';
+import style from './style.scss';
 
 export default React.createClass({
+  mixins: [addons.PureRenderMixin],
+
   displayName: 'Dialog',
 
   propTypes: {
@@ -17,7 +20,7 @@ export default React.createClass({
   getDefaultProps () {
     return {
       actions: [],
-      className: 'normal'
+      type: 'normal'
     };
   },
 
@@ -26,16 +29,18 @@ export default React.createClass({
   },
 
   render () {
-    let rootClass = style.root;
-    let containerClass = `${style.container} ${this.props.className}`;
-    if (this.state.active) rootClass += ' active';
-    if (this.props.type) containerClass += ` ${this.props.type}`;
+    let className = `${style.root} ${style[this.props.type]}`;
+    if (this.state.active) className += ` ${style.active}`;
+    if (this.props.className) className += ` ${this.props.className}`;
 
     return (
-      <div data-react-toolbox='dialog' data-flex='vertical center' className={rootClass}>
-        <div className={containerClass}>
-          { this.props.title ? <h1>{this.props.title}</h1> : null }
-          { this.props.children }
+      <div data-react-toolbox='dialog' className={className}>
+        <div className={style.overlay} />
+        <div className={style.content}>
+          { this.props.title ? <h6>{this.props.title}</h6> : null }
+          <section>
+            { this.props.children }
+          </section>
           { this.props.actions.length > 0 ? <Navigation actions={this.props.actions}/> : null }
         </div>
       </div>
