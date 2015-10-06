@@ -23,7 +23,6 @@ export default React.createClass({
     return (
       <section>
         <h2>Cards</h2>
-        <h3>Basic properties</h3>
         <Card title='Default Card' />
         <Card title='Default Card loading' loading />
         <Card type='wide' title='Wide card' />

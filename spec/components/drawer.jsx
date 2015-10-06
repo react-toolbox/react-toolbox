@@ -14,7 +14,7 @@ export default React.createClass({
     return (
       <section>
         <h2>Drawer</h2>
-        <p style={{marginBottom: '10px'}}>You can navigate using a drawer to the left or right. They can be auto-closable or not.</p>
+        <p>You can navigate using a drawer to the left or right. They can be auto-closable or not.</p>
 
         <Drawer ref='left' hideable={true}>
           <h2>Officia deserunt mollit.</h2>
@@ -28,7 +28,7 @@ export default React.createClass({
 
         <nav>
           <Button className='accent' label='Drawer left hideable' type='raised' onClick={this.onClick.bind(null, 'left', 'show')} />
-          <Button className='primary' style={{marginLeft: '20px'}} label='Drawer right' type='raised' onClick={this.onClick.bind(null, 'right', 'show')} />
+          <Button className='primary' label='Drawer right' type='raised' onClick={this.onClick.bind(null, 'right', 'show')} />
         </nav>
       </section>
     );
