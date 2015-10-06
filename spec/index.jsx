@@ -7,8 +7,6 @@ import Checkbox from './components/checkbox';
 import Dialog from './components/dialog';
 import Drawer from './components/drawer';
 import RadioGroup from './components/radio_group';
-// import Card from './components/card';
-// import Dialog from './components/dialog';
 // import Dropdown from './components/dropdown';
 // import FontIcon from './components/font_icon';
 // import Form from './components/form';

@@ -1,7 +1,7 @@
 /* global React */
 
 import { addons } from 'react/addons';
-import Navigation from '../navigation';
+import Button from '../button';
 import style from './style.scss';
 
 export default React.createClass({
@@ -28,6 +28,14 @@ export default React.createClass({
     return { active: this.props.active };
   },
 
+  renderActions () {
+    return this.props.actions.map((action, idx) => {
+      let className = style.button;
+      if (action.className) className += ` ${action.className}`;
+      return <Button key={idx} {...action} className={className} />;
+    });
+  },
+
   render () {
     let className = `${style.root} ${style[this.props.type]}`;
     if (this.state.active) className += ` ${style.active}`;
@@ -37,11 +45,13 @@ export default React.createClass({
       <div data-react-toolbox='dialog' className={className}>
         <div className={style.overlay} />
         <div className={style.content}>
-          { this.props.title ? <h6>{this.props.title}</h6> : null }
-          <section>
+          <section className={style.body}>
+            { this.props.title ? <h6 className={style.title}>{this.props.title}</h6> : null }
             { this.props.children }
           </section>
-          { this.props.actions.length > 0 ? <Navigation actions={this.props.actions}/> : null }
+          <nav className={style.navigation}>
+            { this.renderActions() }
+          </nav>
         </div>
       </div>
     );

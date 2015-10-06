@@ -8,14 +8,14 @@ export default React.createClass({
 
   getInitialState () {
     return {
-      actions: [{
-        label: 'Close', type: 'flat', className: 'primary', onClick: this.onClose
-      }]
+      title: 'Use Google\'s location service?',
+      actions: [
+        { label: 'Disagree', type: 'flat', className: 'primary', onClick: this.onClose },
+        { label: 'Agree', type: 'flat', className: 'primary', onClick: this.onClose }]
     };
   },
 
   onClose () {
-    console.log('a');
     this.refs.dialog.hide();
   },
 
@@ -29,14 +29,8 @@ export default React.createClass({
         <h5>Dialog</h5>
         <p>lorem ipsum...</p>
         <Button type='raised' label='Show Dialog' onClick={this.onShow} />
-
-        <Dialog
-          ref='dialog'
-          type='small'
-          title='Your profile'
-          actions={this.state.actions}
-        >
-          <p>Welcome to your first Dialog</p>
+        <Dialog ref='dialog' type='small' title={this.state.title} actions={this.state.actions}>
+          <p>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</p>
         </Dialog>
       </section>
     );

@@ -1,36 +1,29 @@
 @import "../variables";
 @import "../mixins";
+
+$dialog-color-title: unquote("rgb(#{$color-black})") !default;
 $dialog-color-white: unquote("rgb(#{$color-white})") !default;
-$dialog-translateY: 4 * $unit;
+$dialog-content-padding: 2.4 * $unit;
+$dialog-navigation-padding: .8 * $unit;
+$dialog-translate-y: 4 * $unit;
 
 .root {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 3;
+  z-index: $z-index-high;
   display: flex;
   width: 100vw;
   height: 100vh;
   flex-direction: column;
   pointer-events: none;
-
   justify-content: center;
   align-content: center;
   align-items: center;
+
   > .content {
     opacity: 0;
-    transform: translateY(-$dialog-translateY);
-  }
-}
-
-.active {
-  pointer-events: all;
-  .overlay {
-    opacity: $color-overlay-opacity;
-  }
-  .content {
-    opacity: 1;
-    transform: translateY(0%);
+    transform: translateY(-$dialog-translate-y);
   }
 }
 
@@ -59,37 +52,56 @@ $dialog-translateY: 4 * $unit;
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
   transition-property: opacity, transform;
-  > h6 {
-    margin: $offset;
-  }
-  > *:not(section) {
-    flex-grow: 0;
-  }
-  > section {
-    margin: 0 $offset;
-    overflow-y: scroll;
-    color: $color-text-secondary;
+}
 
-    flex-grow: 2;
+.title {
+  @include typo-title();
+  margin-bottom: 1.6 * $unit;
+  color: $dialog-color-title;
+  flex-grow: 0;
+}
+
+.body {
+  padding: $dialog-content-padding;
+  overflow-y: scroll;
+  color: $color-text-secondary;
+  flex-grow: 2;
+}
+
+.navigation {
+  padding: $dialog-navigation-padding;
+  text-align: right;
+  flex-grow: 0;
+}
+
+.button {
+  min-width: 0;
+  padding-right: $dialog-navigation-padding;
+  padding-left: $dialog-navigation-padding;
+  margin-left: $dialog-navigation-padding;
+}
+
+.active {
+  pointer-events: all;
+
+  > .overlay {
+    opacity: $color-overlay-opacity;
   }
-  > nav {
-    $offset: ($offset / 2);
-    margin: $offset;
-    text-align: right;
-    > * {
-      min-width: 0;
-      padding-right: $offset;
-      padding-left: $offset;
-    }
+
+  > .content {
+    opacity: 1;
+    transform: translateY(0%);
   }
 }
 
 .small > .content {
   width: 30vw;
 }
+
 .normal > .content {
   width: 50vw;
 }
+
 .large > .content {
   width: 96vw;
 }
