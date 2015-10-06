@@ -47,8 +47,6 @@ $button-floating-height-mini: $unit * 4;
 %squared {
   min-width: 9 * $unit;
   padding: 0 $unit * 1.2;
-  font-size: 1.4 * $unit;
-  text-transform: uppercase;
   border-radius: $border-radius;
 
   .icon {
@@ -66,7 +64,7 @@ $button-floating-height-mini: $unit * 4;
 
 //-- Local styles
 .label {
-  font-weight: 500;
+  @include typo-button();
   vertical-align: middle;
 }
 
