@@ -48,6 +48,10 @@ export default React.createClass({
     if (!this.props.disabled) this.refs.ripple.start(event);
   },
 
+  handleInputClick (event) {
+    events.pauseEvent(event);
+  },
+
   render () {
     let labelClassName = style[this.props.disabled ? 'disabled' : 'field'];
     let checkboxClassName = style[this.state.checked ? 'checked' : 'check'];
@@ -63,9 +67,10 @@ export default React.createClass({
           {...this.props}
           ref='input'
           type='checkbox'
+          checked={this.state.checked}
           className={style.input}
           onChange={this.handleChange}
-          checked={this.state.checked}
+          onClick={this.handleInputClick}
         />
         <span role='checkbox' className={checkboxClassName} onMouseDown={this.handleMouseDown}>
           <Ripple ref='ripple' role='ripple' className={style.ripple} spread={3} centered />

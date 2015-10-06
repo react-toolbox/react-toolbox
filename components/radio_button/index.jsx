@@ -30,19 +30,23 @@ export default React.createClass({
     };
   },
 
+  handleClick (event) {
+    events.pauseEvent(event);
+    if (!this.props.disabled) this.handleChange(event);
+  },
+
   handleChange (event) {
     if (!this.props.checked && this.props.onChange) {
       this.props.onChange(event, this);
     }
   },
 
-  handleClick (event) {
-    events.pauseEvent(event);
-    if (!this.props.disabled) this.handleChange(event);
-  },
-
   handleMouseDown (event) {
     if (!this.props.disabled) this.refs.ripple.start(event);
+  },
+
+  handleInputClick (event) {
+    events.pauseEvent(event);
   },
 
   render () {
@@ -58,6 +62,7 @@ export default React.createClass({
           type='radio'
           className={style.input}
           onChange={this.handleChange}
+          onClick={this.handleInputClick}
         />
         <span role='radio' className={radioClassName} onMouseDown={this.handleMouseDown}>
           <Ripple ref='ripple' role='ripple' className={style.ripple} spread={3} centered />

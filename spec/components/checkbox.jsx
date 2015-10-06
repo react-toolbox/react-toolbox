@@ -3,8 +3,8 @@
 import Checkbox from '../../components/checkbox';
 
 export default React.createClass({
-  handleChange () {
-    console.log('Changed!');
+  handleChange (event, instance) {
+    console.log('Changed!', instance.getValue());
   },
 
   handleFocus () {
