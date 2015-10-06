@@ -6,7 +6,8 @@ $checkbox-focus-size: $checkbox-size * 2.3;
 $checkbox-color: unquote("rgb(#{$color-primary})") !default;
 $checkbox-text-color: unquote("rgb(#{$color-black})") !default;
 $checkbox-disabled-color: unquote("rgba(#{$color-black}, 0.26)") !default;
-$checkbox-focus-color: unquote("rgba(#{$color-primary}, 0.26)") !default;
+$check-focus-color: unquote("rgba(#{$color-black}, 0.1)") !default;
+$checked-focus-color: unquote("rgba(#{$color-primary}, 0.26)") !default;
 
 .field {
   position: relative;
@@ -33,19 +34,25 @@ $checkbox-focus-color: unquote("rgba(#{$color-primary}, 0.26)") !default;
   overflow: hidden;
   opacity: 0;
 
-  &:focus:not(&:active) + .check:before {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: $z-index-low;
-    width: $checkbox-focus-size;
-    height: $checkbox-focus-size;
-    margin-top: - $checkbox-focus-size / 2;
-    margin-left: - $checkbox-focus-size / 2;
-    pointer-events: none;
-    content: "";
-    background-color: $checkbox-focus-color;
-    border-radius: 50%;
+  &:focus:not(&:active) {
+    + .check:before {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: $z-index-low;
+      width: $checkbox-focus-size;
+      height: $checkbox-focus-size;
+      margin-top: - $checkbox-focus-size / 2;
+      margin-left: - $checkbox-focus-size / 2;
+      pointer-events: none;
+      content: "";
+      background-color: $check-focus-color;
+      border-radius: 50%;
+    }
+
+    + .checked:before {
+      background-color: $checked-focus-color;
+    }
   }
 }
 

@@ -2,7 +2,7 @@
 
 import { addons } from 'react/addons';
 import Ripple from '../ripple';
-import style from './style.scss';
+import style from './style';
 import events from '../utils/events';
 
 export default React.createClass({
@@ -15,6 +15,7 @@ export default React.createClass({
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     label: React.PropTypes.string,
+    name: React.PropTypes.string,
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func,
     onFocus: React.PropTypes.func
@@ -22,6 +23,7 @@ export default React.createClass({
 
   getDefaultProps () {
     return {
+      checked: false,
       className: '',
       disabled: false
     };
@@ -32,8 +34,9 @@ export default React.createClass({
   },
 
   handleChange (event) {
-    this.setState({checked: !this.state.checked});
-    if (this.props.onChange) this.props.onChange(event, this);
+    this.setState({checked: !this.state.checked}, () => {
+      if (this.props.onChange) this.props.onChange(event, this);
+    });
   },
 
   handleClick (event) {
