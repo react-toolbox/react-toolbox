@@ -102,7 +102,10 @@ $radio-disabled-color: unquote("rgba(#{$color-black}, 0.26)") !default;
 
   .radio-checked {
     cursor: auto;
-    background-color: $radio-disabled-color;
-    border-color: transparent;
+    border-color: $radio-disabled-color;
+
+    &:before {
+      background-color: $radio-disabled-color;
+    }
   }
 }
