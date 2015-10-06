@@ -28,6 +28,11 @@ export default React.createClass({
   render () {
     let className = style[this.props.value];
     if (this.props.className) className += ` ${this.props.className}`;
-    return <span data-toolbox='icon' className={className} onClick={this.props.onClick} />;
+    return (
+      <span
+        data-react-toolbox='icon'
+        className={className}
+        onClick={this.props.onClick} />
+    );
   }
 });

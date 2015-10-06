@@ -209,6 +209,7 @@ export default React.createClass({
 
     return (
       <div
+        data-react-toolbox='slider'
         className={css.root + className}
         tabIndex='0'
         onFocus={this.onSliderFocus}

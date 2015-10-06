@@ -46,7 +46,7 @@ export default React.createClass({
   renderCircular () {
     return (
       <svg className={css.circle}>
-        <circle className={css.circlePath} style={this.circularStyle()} cx="30" cy="30" r="25" />
+        <circle className={css.circlePath} style={this.circularStyle()} cx='30' cy='30' r='25' />
       </svg>
     );
   },
@@ -66,8 +66,8 @@ export default React.createClass({
     const {buffer, value} = this.linearStyle();
     return (
       <div>
-        <span ref="buffer" data-ref="buffer" className={css.bufferBar} style={buffer}></span>
-        <span ref="value" data-ref="value" className={css.valueBar} style={value}></span>
+        <span ref='buffer' data-ref='buffer' className={css.bufferBar} style={buffer}></span>
+        <span ref='value' data-ref='value' className={css.valueBar} style={value}></span>
       </div>
     );
   },
@@ -80,12 +80,13 @@ export default React.createClass({
 
     return (
       <div
+        data-react-toolbox='progress-bar'
         className={className}
-        role="progressbar"
         aria-valuenow={this.props.value}
         aria-valuemin={this.props.min}
-        aria-valuemax={this.props.max}>
-          { this.props.type === 'circular' ? this.renderCircular() : this.renderLinear() }
+        aria-valuemax={this.props.max}
+      >
+        { this.props.type === 'circular' ? this.renderCircular() : this.renderLinear() }
       </div>
     );
   }

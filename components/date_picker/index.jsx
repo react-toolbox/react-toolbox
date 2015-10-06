@@ -46,16 +46,16 @@ export default React.createClass({
 
   render () {
     return (
-      <div>
+      <div data-react-toolbox='date-picker'>
         <Input
-            ref="input"
-            type="text"
+            ref='input'
+            type='text'
             disabled={true}
             onClick={this.openCalendarDialog}
-            placeholder="Pick up date"
+            placeholder='Pick up date'
             value={this.state.value ? this.formatDate(this.state.value) : null} />
         <CalendarDialog
-            ref="dialog"
+            ref='dialog'
             initialDate={this.state.value}
             onDateSelected={this.onDateSelected} />
       </div>

@@ -38,7 +38,7 @@ export default React.createClass({
     if (this.props.className) className += ` ${this.props.className}`;
 
     return (
-      <div className={className}>
+      <div data-react-toolbox='drawer' className={className}>
         <div className={style.overlay} onClick={this.handleOverlayClick}></div>
         <aside className={style.content}>
           { this.props.children }

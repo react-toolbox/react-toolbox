@@ -1,4 +1,4 @@
-/* global React */
+  /* global React */
 
 import { addons } from 'react/addons';
 import style from './style';

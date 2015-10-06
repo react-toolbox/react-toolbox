@@ -44,6 +44,7 @@ export default React.createClass({
 
     return (
       <button
+        data-react-toolbox='button'
         {...this.props}
         type=''
         label=''

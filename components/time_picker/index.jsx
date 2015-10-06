@@ -48,16 +48,16 @@ export default React.createClass({
 
   render () {
     return (
-      <div>
+      <div data-react-toolbox='time-picker'>
         <Input
-            ref="input"
-            type="text"
+            ref='input'
+            type='text'
             disabled={true}
             onClick={this.openTimeDialog}
-            placeholder="Pick up time"
+            placeholder='Pick up time'
             value={this.formatTime()} />
         <TimeDialog
-            ref="dialog"
+            ref='dialog'
             initialTime={this.state.value}
             format={this.props.format}
             onTimeSelected={this.onTimeSelected} />

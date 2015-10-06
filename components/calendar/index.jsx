@@ -97,7 +97,7 @@ export default React.createClass({
 
   renderMonths () {
     return (
-      <div className={this.state.direction}>
+      <div data-react-toolbox='calendar' className={this.state.direction}>
         <FontIcon className={css.prev} value='chevron_left' onClick={this.decrementViewMonth}/>
         <FontIcon className={css.next} value='chevron_right' onClick={this.incrementViewMonth}/>
         <CTG transitionName='slide-horizontal'>

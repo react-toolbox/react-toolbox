@@ -112,7 +112,7 @@ export default React.createClass({
 
   render () {
     return (
-      <div className={css.root}>
+      <div data-react-toolbox='clock' className={css.root}>
         <div ref="wrapper" className={css.wrapper} style={{height: this.state.radius * 2}}>
           { this.props.display === 'hours' ? this.renderHours() : '' }
           { this.props.display === 'minutes' ? this.renderMinutes() : '' }

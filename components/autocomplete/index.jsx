@@ -182,7 +182,7 @@ export default React.createClass({
     if (this.props.className) containerClassName += ` ${this.props.className}`;
 
     return (
-      <div data-toolbox='autocomplete' className={containerClassName}>
+      <div data-react-toolbox='autocomplete' className={containerClassName}>
         {this.props.label ? <label className={style.label}>{this.props.label}</label> : ''}
         {this.renderSelected()}
         <Input

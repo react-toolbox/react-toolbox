@@ -80,6 +80,7 @@ export default React.createClass({
 
     return (
       <div
+        data-react-toolbox='card'
         data-flex='vertical grow'
         data-react-toolbox='card'
         className={className}

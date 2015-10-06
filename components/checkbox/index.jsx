@@ -51,7 +51,11 @@ export default React.createClass({
     if (this.props.className) labelClassName += ` ${this.props.className}`;
 
     return (
-      <label react-toolbox='checkbox' className={labelClassName} onClick={this.handleClick}>
+      <label
+        data-react-toolbox='checkbox'
+        className={labelClassName}
+        onClick={this.handleClick}
+      >
         <input
           {...this.props}
           ref='input'
