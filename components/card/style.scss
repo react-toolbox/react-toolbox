@@ -98,7 +98,7 @@ $card-text-overlay: unquote("rgba(#{$color-black}, 0.2)");
   }
   .figure {
     padding: 0;
-    > h2 {
+    > h5 {
       padding: $offset;
       font-size: $font-size-small;
       font-weight: $font-weight-bold;

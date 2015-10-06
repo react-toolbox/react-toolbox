@@ -61,13 +61,39 @@ input:not([type="checkbox"]):not([type="radio"]), button {
 }
 
 //-- App wrapper to allow overlays to block scroll
-[data-toolbox-app] {
+[data-react-toolbox-app] {
   position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   overflow-y: scroll;
+}
+
+// -- Font sizes
+h1 {
+  font-size: 112px;
+  font-weight: 300;
+}
+h2 {
+  font-size: 56px;
+  font-weight: 400;
+}
+h3 {
+  font-size: 45px;
+  font-weight: 400;
+}
+h4 {
+  font-size: 34px;
+  font-weight: 400;
+}
+h5 {
+  font-size: 24px;
+  font-weight: 400;
+}
+h6 {
+  font-size: 20px;
+  font-weight: 500;
 }
 
 //-- Flex

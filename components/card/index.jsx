@@ -55,7 +55,7 @@ export default React.createClass({
       return (
         <figure className={style.figure} style={styleFigure}>
           { this.props.subtitle ? <small>{this.props.subtitle}</small> : null }
-          { this.props.title ? <h2>{this.props.title}</h2> : null }
+          { this.props.title ? <h5>{this.props.title}</h5> : null }
           { this.props.color ? <div className={style.overflow} style={styleOverflow}></div> : null }
         </figure>
       );
