@@ -20,14 +20,15 @@ $offset: 1.6 * $unit;
 $border-radius: 0.2 * $unit;
 
 // -- Fonts
-$font-size: 1.6 * $unit;
-$font-size-tiny: 1.2 * $unit;
-$font-size-small: 1.4 * $unit;
-$font-size-normal: $font-size;
-$font-size-big: 1.8 * $unit;
-$font-weight-thin: 300;
-$font-weight-normal: 400;
-$font-weight-bold: 700;
+$preferred-font: "Roboto", "Helvetica", "Arial", sans-serif !default;
+$font-size: 1.6 * $unit !default;
+$font-size-tiny: 1.2 * $unit !default;
+$font-size-small: 1.4 * $unit !default;
+$font-size-normal: $font-size !default;
+$font-size-big: 1.8 * $unit !default;
+$font-weight-thin: 300 !default;
+$font-weight-normal: 400 !default;
+$font-weight-bold: 700 !default;
 
 //-- Shadows
 $shadow-key-umbra-opacity: 0.2 !default;
