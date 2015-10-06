@@ -18,8 +18,9 @@ export default React.createClass({
   render () {
     return (
       <section>
-        <h2>Checkbox</h2>
+        <h5>Checkbox</h5>
         <p style={{marginBottom: '10px'}}>Lorem ipsum...</p>
+
         <Checkbox
           label="Checked checkbox"
           checked

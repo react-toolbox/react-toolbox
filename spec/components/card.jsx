@@ -15,14 +15,13 @@ export default React.createClass({
 
   render () {
     const text = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
-    const legend = 'Lorem Ipsum is simply dummy text';
     const actions = [
       { label: 'Save', icon: 'add', className: 'flat accent', onClick: this.onActionClick },
       { label: 'Close', className: 'flat', onClick: this.onActionClick }];
 
     return (
       <section>
-        <h2>Cards</h2>
+        <h5>Cards</h5>
         <Card title='Default Card' />
         <Card title='Default Card loading' loading />
         <Card type='wide' title='Wide card' />

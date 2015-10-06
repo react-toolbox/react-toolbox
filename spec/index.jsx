@@ -24,7 +24,7 @@ const Test = React.createClass({
   render () {
     return (
       <app data-react-toolbox-app>
-        <h1>React Toolbox</h1>
+        <h4>React Toolbox component spec</h4>
         <Button />
         <Card />
         <Checkbox />

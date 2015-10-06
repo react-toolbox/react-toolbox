@@ -1,5 +1,6 @@
 @import url('http://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
 @import "normalize.css";
+@import "./mixins";
 
 //-- App
 html {
@@ -70,30 +71,37 @@ input:not([type="checkbox"]):not([type="radio"]), button {
   overflow-y: scroll;
 }
 
-// -- Font sizes
+// -- Material design font sizes
+h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
+  @include typo-display-3($color-contrast: true);
+}
+
 h1 {
-  font-size: 112px;
-  font-weight: 300;
+  @include typo-display-3;
 }
+
 h2 {
-  font-size: 56px;
-  font-weight: 400;
+  @include typo-display-2;
 }
+
 h3 {
-  font-size: 45px;
-  font-weight: 400;
+  @include typo-display-1;
 }
+
 h4 {
-  font-size: 34px;
-  font-weight: 400;
+  @include typo-headline;
 }
+
 h5 {
-  font-size: 24px;
-  font-weight: 400;
+  @include typo-title;
 }
+
 h6 {
-  font-size: 20px;
-  font-weight: 500;
+  @include typo-subhead;
+}
+
+p {
+  @include typo-body-1;
 }
 
 //-- Flex

@@ -9,7 +9,7 @@ export default React.createClass({
   getInitialState () {
     return {
       actions: [{
-        label: 'Close', type: 'flat', className:'primary', onClick: this.onClose
+        label: 'Close', type: 'flat', className: 'primary', onClick: this.onClose
       }]
     };
   },
@@ -26,7 +26,7 @@ export default React.createClass({
   render () {
     return (
       <section>
-        <h2>Dialog</h2>
+        <h5>Dialog</h5>
         <p>lorem ipsum...</p>
         <Button type='raised' label='Show Dialog' onClick={this.onShow} />
 

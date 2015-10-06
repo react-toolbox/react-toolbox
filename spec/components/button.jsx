@@ -8,7 +8,7 @@ export default React.createClass({
   render () {
     return (
       <section>
-        <h2>Buttons</h2>
+        <h5>Buttons</h5>
         <p>lorem ipsum...</p>
         <Button type="raised" className="primary" label="Bookmark" icon="bookmark" />
         <Button type="flat" className="accent" label="Inbox" icon="inbox" />

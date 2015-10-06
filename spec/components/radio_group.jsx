@@ -19,7 +19,7 @@ export default React.createClass({
   render () {
     return (
       <section>
-        <h2>Radio Button</h2>
+        <h5>Radio Button</h5>
         <p style={{marginBottom: '10px'}}>Lorem ipsum...</p>
 
         <RadioGroup ref='group' name='comic' value='vvendetta' onChange={this.handleChange}>
