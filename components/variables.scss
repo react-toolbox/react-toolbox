@@ -3,7 +3,8 @@
 //-- Color configuration
 $color-divider: unquote("rgb(#{$palette-grey-200})") !default;
 $color-background: unquote("rgb(#{$color-white})") !default;
-
+$color-overlay: unquote("rgb(#{$color-black})");
+$color-overlay-opacity: 0.5;
 $color-text: unquote("rgb(#{$palette-grey-900})") !default;
 $color-text-secondary: unquote("rgb(#{$palette-grey-600})") !default;
 
@@ -15,6 +16,8 @@ $color-accent-contrast: $color-dark-contrast !default;
 
 //-- Units and config
 $unit: 1rem;
+$offset: 1.6 * $unit;
+$border-radius: 0.2 * $unit;
 
 // -- Fonts
 $font-size: 1.6 * $unit;
@@ -39,6 +42,8 @@ $zdepth-shadow-4: 0 14px 45px rgba(0,0,0,0.25), 0 10px 18px rgba(0,0,0,0.22);
 $zdepth-shadow-5: 0 19px 60px rgba(0,0,0,0.30), 0 15px 20px rgba(0,0,0,0.22);
 
 //-- Animation
+$animation-duration: .35s;
+$animation-delay: $animation-duration / 5;
 $animation-curve-fast-out-slow-in: cubic-bezier(0.4, 0, 0.2, 1) !default;
 $animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1) !default;
 $animation-curve-fast-out-linear-in: cubic-bezier(0.4, 0, 1, 1) !default;

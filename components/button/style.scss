@@ -49,7 +49,7 @@ $button-floating-height-mini: $unit * 4;
   padding: 0 $unit * 1.2;
   font-size: 1.4 * $unit;
   text-transform: uppercase;
-  border-radius: 3px;
+  border-radius: $border-radius;
 
   .icon {
     margin-right: $unit * .6;

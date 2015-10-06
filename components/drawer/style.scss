@@ -6,9 +6,6 @@ $drawer-width: 24 * $unit;
 $drawer-bg-color: unquote("rgb(#{$palette-grey-50})") !default;
 $drawer-text-color: unquote("rgb(#{$palette-grey-800})") !default;
 $drawer-border-color: unquote("rgb(#{$palette-grey-300})") !default;
-$drawer-overlay-color: unquote("rgb(#{$color-black})");
-$drawer-transition-duration: .2s;
-$drawer-transition-delay: .1s;
 
 //-- Local styles
 .drawer {
@@ -24,14 +21,13 @@ $drawer-transition-delay: .1s;
 
 .active {
   pointer-events: all;
-
   > .content {
-    transition-delay: $drawer-transition-delay;
+    transition-delay: $animation-delay;
     transform: translateX(0);
   }
 
   > .overlay {
-    opacity: .5;
+    opacity: $color-overlay-opacity;
   }
 }
 
@@ -60,10 +56,10 @@ $drawer-transition-delay: .1s;
 .overlay {
   width: 100%;
   height: 100%;
-  background-color: $drawer-overlay-color;
+  background-color: $color-overlay;
   opacity: 0;
   transition-timing-function: $animation-curve-default;
-  transition-duration: $drawer-transition-duration;
+  transition-duration: $animation-duration;
   transition-property: opacity;
 }
 
@@ -79,7 +75,7 @@ $drawer-transition-delay: .1s;
   background-color: $drawer-bg-color;
   transition-delay: 0s;
   transition-timing-function: $animation-curve-default;
-  transition-duration: $drawer-transition-duration;
+  transition-duration: $animation-duration;
   transition-property: transform;
   transform-style: preserve-3d;
   will-change: transform;
