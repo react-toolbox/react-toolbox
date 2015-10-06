@@ -4,6 +4,7 @@ import { addons } from 'react/addons';
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
 import style from './style.scss';
+import events from '../utils/events';
 
 export default React.createClass({
   mixins: [addons.PureRenderMixin],
@@ -35,6 +36,7 @@ export default React.createClass({
   },
 
   handleMouseDown (event) {
+    events.pauseEvent(event);
     this.refs.ripple.start(event);
   },
 

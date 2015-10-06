@@ -79,6 +79,10 @@ $button-floating-height-mini: $unit * 4;
     background: $button-flat-color-hover;
   }
 
+  &:focus:not(:active) {
+    background: $button-flat-color-hover;
+  }
+
   &[disabled] {
     @extend %disabled;
   }
@@ -130,12 +134,19 @@ $button-floating-height-mini: $unit * 4;
   &.raised, &.floating {
     color: $button-primary-color-contrast;
     background: $button-primary-color;
+
+    &:focus:not(:active) {
+      @include focus-shadow();
+    }
   }
 
   &.flat {
     color: $button-primary-color;
 
     &:hover {
+      background: $button-primary-color-hover;
+    }
+    &:focus:not(:active) {
       background: $button-primary-color-hover;
     }
   }
@@ -145,12 +156,20 @@ $button-floating-height-mini: $unit * 4;
   &.raised, &.floating {
     color: $button-accent-color-contrast;
     background-color: $button-accent-color;
+
+    &:focus:not(:active) {
+      @include focus-shadow();
+    }
   }
 
   &.flat {
     color: $button-accent-color;
 
     &:hover {
+      background: $button-accent-color-hover;
+    }
+
+    &:focus:not(:active) {
       background: $button-accent-color-hover;
     }
   }
