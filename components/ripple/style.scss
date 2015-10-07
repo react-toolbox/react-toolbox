@@ -47,13 +47,15 @@ $ripple-size: 15 * $unit;
   left: 50%;
   width: $ripple-size;
   height: $ripple-size;
-  opacity: 0;
+  opacity: $ripple-final-opacity;
   animation-name: ripple;
   animation-duration: $ripple-duration;
   animation-timing-function: $animation-curve-linear-out-slow-in;
   animation-iteration-count: infinite;
 }
 
+// The frames are this way to prevent a flicker in Safari
+// See https://goo.gl/5luFDk
 @keyframes ripple {
   0% {
     width: 0;
@@ -61,7 +63,15 @@ $ripple-size: 15 * $unit;
     opacity: $ripple-final-opacity;
   }
 
+  95% {
+    width: inherit;
+    height: inherit;
+    opacity: 0;
+  }
+
   100% {
+    width: 0;
+    height: 0;
     opacity: 0;
   }
 }
