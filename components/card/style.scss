@@ -15,10 +15,12 @@ $card-text-overlay: unquote("rgba(#{$color-black}, 0.2)");
   background-position: center center;
   background-size: cover;
   justify-content: flex-end;
+
   > *:not(.overflow) {
     z-index: 1;
     font-weight: $font-weight-normal;
   }
+
   > .overflow {
     position: absolute;
     top: 0;
@@ -39,6 +41,7 @@ $card-text-overlay: unquote("rgba(#{$color-black}, 0.2)");
 .navigation {
   $offset: ($offset / 2);
   padding: $offset;
+
   > * {
     min-width: 0;
     padding-right: $offset;
@@ -59,10 +62,12 @@ $card-text-overlay: unquote("rgba(#{$color-black}, 0.2)");
   overflow: hidden;
   vertical-align: top;
   background: $color-background;
+
   // -- Children
   > *:not(.navigation) {
     padding: $offset;
   }
+
   &:not(.color) > *:not(.figure), > *:not(:last-child) {
     box-shadow: 0 1px $color-divider;
   }
@@ -77,6 +82,7 @@ $card-text-overlay: unquote("rgba(#{$color-black}, 0.2)");
     color: $card-color-white;
     text-shadow: 0;
   }
+
   .ripple {
     background-color: $card-color-white;
   }
@@ -86,9 +92,12 @@ $card-text-overlay: unquote("rgba(#{$color-black}, 0.2)");
   pointer-events: none;
   cursor: none;
   filter: grayscale(100%);
+
   .ripple {
+    @include ripple-loading(cardloading, 2 * $card-width-normal, 2 * $card-width-normal);
     width: 2 * $card-width-normal;
     height: 2 * $card-width-normal;
+    animation-name: cardloading;
   }
 }
 
@@ -96,8 +105,10 @@ $card-text-overlay: unquote("rgba(#{$color-black}, 0.2)");
   &, .figure {
     height: $card-width-normal;
   }
+
   .figure {
     padding: 0;
+
     > h5 {
       padding: $offset;
       font-size: $font-size-small;

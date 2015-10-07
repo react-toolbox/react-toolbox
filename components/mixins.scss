@@ -253,3 +253,27 @@
   transition-timing-function: $animation-curve-default;
   transition-duration: $duration;
 }
+
+// The frames are this way to prevent a flicker in Safari
+// See https://goo.gl/5luFDk
+@mixin ripple-loading($name, $width, $height, $opacity: 0.3) {
+  @keyframes #{$name} {
+    0% {
+      width: 0;
+      height: 0;
+      opacity: $opacity;
+    }
+
+    95% {
+      width: $width;
+      height: $height;
+      opacity: 0;
+    }
+
+    100% {
+      width: 0;
+      height: 0;
+      opacity: 0;
+    }
+  }
+}

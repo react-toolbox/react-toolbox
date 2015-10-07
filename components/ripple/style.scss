@@ -1,4 +1,6 @@
 @import "../variables";
+@import "../mixins";
+
 $ripple-duration: 1.2s;
 $ripple-final-opacity: .3;
 $ripple-size: 15 * $unit;
@@ -11,6 +13,7 @@ $ripple-size: 15 * $unit;
   transform: translate3d(-50%, -50%, 0);
   transform-style: preserve-3d;
   backface-visibility: hidden;
+  will-change: width, height, opacity;
 }
 
 .wrapper {
@@ -43,6 +46,7 @@ $ripple-size: 15 * $unit;
 
 .loading {
   @extend %ripple;
+  @include ripple-loading(ripple, $ripple-size, $ripple-size);
   top: 50%;
   left: 50%;
   width: $ripple-size;
@@ -52,26 +56,4 @@ $ripple-size: 15 * $unit;
   animation-duration: $ripple-duration;
   animation-timing-function: $animation-curve-linear-out-slow-in;
   animation-iteration-count: infinite;
-}
-
-// The frames are this way to prevent a flicker in Safari
-// See https://goo.gl/5luFDk
-@keyframes ripple {
-  0% {
-    width: 0;
-    height: 0;
-    opacity: $ripple-final-opacity;
-  }
-
-  95% {
-    width: inherit;
-    height: inherit;
-    opacity: 0;
-  }
-
-  100% {
-    width: 0;
-    height: 0;
-    opacity: 0;
-  }
 }
