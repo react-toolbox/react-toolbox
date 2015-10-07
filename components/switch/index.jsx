@@ -1,7 +1,9 @@
 /* global React */
 
 import { addons } from 'react/addons';
+import Ripple from '../ripple';
 import style from './style';
+import events from '../utils/events';
 
 export default React.createClass({
   mixins: [addons.PureRenderMixin],
@@ -9,62 +11,90 @@ export default React.createClass({
   displayName: 'Switch',
 
   propTypes: {
+    checked: React.PropTypes.bool,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     label: React.PropTypes.string,
+    name: React.PropTypes.string,
+    onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func,
-    value: React.PropTypes.bool
+    onFocus: React.PropTypes.func
   },
 
   getDefaultProps () {
     return {
-      className: ''
+      checked: false,
+      className: '',
+      disabled: false
     };
   },
 
   getInitialState () {
-    return {
-      value: this.props.value
-    };
+    return { checked: this.props.checked };
   },
 
-  componentWillReceiveProps (next_props) {
-    if (next_props.value) {
-      this.setState({value: next_props.value});
-    }
+  handleChange (event) {
+    this.setState({checked: !this.state.checked}, () => {
+      if (this.props.onChange) this.props.onChange(event, this);
+    });
   },
 
-  onClick (event) {
-    if (!this.props.disabled) {
-      this.setState({value: !this.state.value});
-      setTimeout(() => {
-        if (this.props.onChange) this.props.onChange(event, this);
-      }, 10);
-    }
+  handleClick (event) {
+    events.pauseEvent(event);
+    if (!this.props.disabled) this.handleChange(event);
+  },
+
+  handleInputClick (event) {
+    events.pauseEvent(event);
+  },
+
+  handleMouseDown (event) {
+    if (!this.props.disabled) this.refs.ripple.start(event);
   },
 
   render () {
-    let className = `${style.root} ${this.props.className}`;
-    if (this.state.value) className += ' checked';
-    if (this.props.disabled) className += ' disabled';
+    let labelClassName = style[this.props.disabled ? 'disabled' : 'field'];
+    let switchClassName = style[this.state.checked ? 'switch-on' : 'switch-off'];
+    if (this.props.className) labelClassName += ` ${this.props.className}`;
 
     return (
-      <div
-        data-react-toolbox='switch'
-        className={className}
-        onClick={this.onClick}
+      <label
+        data-react-toolbox='checkbox'
+        className={labelClassName}
+        onClick={this.handleClick}
       >
-        <span></span>
-        { this.props.label ? <label>{this.props.label}</label> : null }
-      </div>
+        <input
+          {...this.props}
+          ref='input'
+          type='checkbox'
+          checked={this.state.checked}
+          className={style.input}
+          onChange={this.handleChange}
+          onClick={this.handleInputClick}
+        />
+        <span role='switch' className={switchClassName}>
+          <span role='thumb' className={style.thumb} onMouseDown={this.handleMouseDown}>
+            <Ripple ref='ripple' role='ripple' className={style.ripple} spread={2.4} centered />
+          </span>
+        </span>
+        { this.props.label ? <span className={style.text}>{this.props.label}</span> : null }
+      </label>
     );
   },
 
-  getValue () {
-    return this.state.value;
+  blur () {
+    this.refs.input.getDOMNode().blur();
   },
 
-  setValue (data) {
-    this.setState({value: data});
+  focus () {
+    this.refs.input.getDOMNode().focus();
+  },
+
+  getValue () {
+    return this.state.checked;
+  },
+
+  setValue (value) {
+    this.setState({checked: value});
   }
 });
