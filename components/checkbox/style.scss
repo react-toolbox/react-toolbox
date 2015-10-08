@@ -1,4 +1,5 @@
 @import "../variables";
+
 $checkbox-total-height: 1.8 * $unit;
 $checkbox-size: 1.8 * $unit;
 $checkbox-transition-duration: .2s;
@@ -34,8 +35,8 @@ $checked-focus-color: unquote("rgba(#{$color-primary}, 0.26)") !default;
   overflow: hidden;
   opacity: 0;
 
-  &:focus:not(&:active) {
-    + .check:before {
+  &:focus:not(&:active) + .check {
+    &:before {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -50,7 +51,7 @@ $checked-focus-color: unquote("rgba(#{$color-primary}, 0.26)") !default;
       border-radius: 50%;
     }
 
-    + .checked:before {
+    &.checked:before {
       background-color: $checked-focus-color;
     }
   }
@@ -63,33 +64,34 @@ $checked-focus-color: unquote("rgba(#{$color-primary}, 0.26)") !default;
   height: $checkbox-size;
   vertical-align: top;
   cursor: pointer;
-  border: 2px solid $checkbox-text-color;
+  border-color: $checkbox-text-color;
+  border-style: solid;
+  border-width: 2px;
   border-radius: 2px;
   transition-timing-function: $animation-curve-default;
   transition-duration: $checkbox-transition-duration;
   transition-property: background-color;
-}
 
-.checked {
-  @extend .check;
-  background-color: $checkbox-color;
-  border-color: $checkbox-color;
+  &.checked {
+    background-color: $checkbox-color;
+    border-color: $checkbox-color;
 
-  &:after {
-    position: absolute;
-    top: -.1 * $unit;
-    left: .4 * $unit;
-    width: .7 * $unit;
-    height: 1.2 * $unit;
-    content: "";
-    border-color: #fff;
-    border-style: solid;
-    border-top: 0;
-    border-right-width: 2px;
-    border-bottom-width: 2px;
-    border-left: 0;
-    transform: rotate(45deg);
-    animation: checkmark-expand 140ms ease-out forwards;
+    &:after {
+      position: absolute;
+      top: -.1 * $unit;
+      left: .4 * $unit;
+      width: .7 * $unit;
+      height: 1.2 * $unit;
+      content: "";
+      border-color: #fff;
+      border-style: solid;
+      border-top: 0;
+      border-right-width: 2px;
+      border-bottom-width: 2px;
+      border-left: 0;
+      transform: rotate(45deg);
+      animation: checkmark-expand 140ms ease-out forwards;
+    }
   }
 }
 
@@ -100,21 +102,19 @@ $checked-focus-color: unquote("rgba(#{$color-primary}, 0.26)") !default;
 }
 
 .disabled {
-  @extend .field;
-
-  .text {
+  > .text {
     color: $checkbox-disabled-color;
   }
 
-  .check {
+  > .check {
     cursor: auto;
     border-color: $checkbox-disabled-color;
-  }
 
-  .checked {
-    cursor: auto;
-    background-color: $checkbox-disabled-color;
-    border-color: transparent;
+    &.checked {
+      cursor: auto;
+      background-color: $checkbox-disabled-color;
+      border-color: transparent;
+    }
   }
 }
 
