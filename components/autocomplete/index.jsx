@@ -3,7 +3,7 @@
 import { addons } from 'react/addons';
 import utils from '../utils';
 import Input from '../input';
-import style from './style';
+import style from './style_test';
 
 export default React.createClass({
   mixins: [addons.PureRenderMixin],
@@ -171,14 +171,16 @@ export default React.createClass({
 
   renderSuggestions () {
     return [...this._getSuggestions()].map(([key, value]) => {
-      let className = style[this.state.active !== key ? 'suggestion' : 'suggestion-active'];
+      let className = style.suggestion;
+      if (this.state.active === key) className += ` ${style.active}`;
       return <li id={key} key={key} className={className}>{value}</li>;
     });
   },
 
   render () {
     let containerClassName = style.container;
-    let suggestionsClassName = style[this.state.focus ? 'suggestions-active' : 'suggestions'];
+    let suggestionsClassName = style.suggestions;
+    if (this.state.focus) suggestionsClassName += ` ${style.focus}`;
     if (this.props.className) containerClassName += ` ${this.props.className}`;
 
     return (
