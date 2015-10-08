@@ -3,7 +3,7 @@
 import { addons } from 'react/addons';
 import utils from '../utils';
 import Input from '../input';
-import style from './style_test';
+import style from './style';
 
 export default React.createClass({
   mixins: [addons.PureRenderMixin],
@@ -35,12 +35,17 @@ export default React.createClass({
       dataSource: this._indexDataSource(this.props.dataSource),
       focus: false,
       query: '',
-      values: new Map()
+      up: false,
+      values: new Map(),
+      width: undefined
     };
   },
 
   componentDidMount () {
     if (this.props.value) this.setValue(this.props.value);
+    this.setState({
+      width: React.findDOMNode(this).getBoundingClientRect().width
+    });
   },
 
   componentWillReceiveProps (props) {
@@ -75,8 +80,15 @@ export default React.createClass({
   },
 
   handleFocus () {
+    let client = event.target.getBoundingClientRect();
+    let screen_height = window.innerHeight || document.documentElement.offsetHeight;
+
     this.refs.suggestions.getDOMNode().scrollTop = 0;
-    this.setState({active: '', focus: true});
+    this.setState({
+      active: '',
+      up: client.top > ((screen_height / 2) + client.height),
+      focus: true
+    });
   },
 
   handleBlur () {
@@ -179,9 +191,12 @@ export default React.createClass({
 
   render () {
     let containerClassName = style.container;
+    if (this.props.className) containerClassName += ` ${this.props.className}`;
+
     let suggestionsClassName = style.suggestions;
     if (this.state.focus) suggestionsClassName += ` ${style.focus}`;
-    if (this.props.className) containerClassName += ` ${this.props.className}`;
+    if (this.state.up) suggestionsClassName += ` ${style.up}`;
+    let suggestionsStyle = {width: this.state.width};
 
     return (
       <div data-react-toolbox='autocomplete' className={containerClassName}>
@@ -201,6 +216,7 @@ export default React.createClass({
           className={suggestionsClassName}
           onMouseDown={this.handleSelect}
           onMouseOver={this.handleHover}
+          style={suggestionsStyle}
         >
           {this.renderSuggestions()}
         </ul>

@@ -1,11 +1,11 @@
 @import "../variables";
 @import "../mixins";
-
 $autocomplete-value-background: unquote("rgb(#{$color-primary})");
 $autocomplete-value-color: unquote("rgb(#{$color-primary-contrast})");
 $autocomplete-label-color: unquote("rgb(#{$color-primary})");
 $autocomplete-suggestions-background: unquote("rgb(#{$color-white})");
 $autocomplete-suggestion-active-background: unquote("rgb(#{$palette-grey-200})");
+$autocomplete-max-height-suggestions: 40vh;
 
 .container {
   position: relative;
@@ -14,7 +14,7 @@ $autocomplete-suggestion-active-background: unquote("rgb(#{$palette-grey-200})")
 .label {
   display: inline-block;
   margin-bottom: $unit * .5;
-  font-size: 1.3 * $unit;
+  font-size: $font-size-tiny;
   color: $autocomplete-label-color;
 }
 
@@ -22,7 +22,7 @@ $autocomplete-suggestion-active-background: unquote("rgb(#{$palette-grey-200})")
   display: inline-block;
   padding: $unit * .5 $unit;
   margin: 0 $unit $unit 0;
-  font-size: 1.4 * $unit;
+  font-size: $font-size-small;
   color: $autocomplete-value-color;
   cursor: pointer;
   background-color: $autocomplete-value-background;
@@ -33,34 +33,32 @@ $autocomplete-suggestion-active-background: unquote("rgb(#{$palette-grey-200})")
   position: absolute;
   z-index: 2;
   width: 100%;
-  max-height: 50vh;
-  margin-top: - $input-margin-bottom;
   overflow-x: hidden;
   overflow-y: scroll;
   background-color: $autocomplete-suggestions-background;
   transition-timing-function: $animation-curve-default;
-  transition-duration: .2s;
-  transition-property: height, box-shadow, opacity, transform;
-
+  transition-duration: $animation-duration;
+  transition-property: max-height;
+  box-shadow: $zdepth-shadow-1;
   &:not(.focus) {
-    height: 0;
-    box-shadow: none;
-    opacity: 0;
-    transform: translateY(- $unit);
+    max-height: 0;
+    visibility: hidden;
   }
-
   &.focus {
-    height: auto;
-    box-shadow: $zdepth-shadow-1;
-    opacity: 1;
-    transform: translateY(0%);
+    max-height: $autocomplete-max-height-suggestions;
+    visibility: visible;
+  }
+  &:not(.up) {
+    margin-top: - $input-margin-bottom;
+  }
+  &.up {
+    bottom: $input-margin-bottom;
   }
 }
 
 .suggestion {
   padding: $unit;
   cursor: pointer;
-
   &.active {
     background-color: $autocomplete-suggestion-active-background;
   }
