@@ -28,8 +28,8 @@ export default React.createClass({
 
     return (
       <section>
-        <h2>Autocomplete</h2>
-        <p style={{marginBottom: '5px'}}>You can have a multiple or simple autocomplete.</p>
+        <h5>Autocomplete</h5>
+        <p>You can have a multiple or simple autocomplete.</p>
 
         <Autocomplete
           ref="autocomplete_multiple"

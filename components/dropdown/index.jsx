@@ -1,8 +1,8 @@
 /* global React */
 
 import { addons } from 'react/addons';
-import style from './style';
 import Ripple from '../ripple';
+import style from './style';
 
 export default React.createClass({
   mixins: [addons.PureRenderMixin],
@@ -16,7 +16,6 @@ export default React.createClass({
     label: React.PropTypes.string,
     onChange: React.PropTypes.func,
     template: React.PropTypes.func,
-    type: React.PropTypes.string,
     value: React.PropTypes.string
   },
 
@@ -24,20 +23,21 @@ export default React.createClass({
     return {
       className: '',
       dataSource: [],
-      type: 'normal'
+      up: false
     };
   },
 
   getInitialState () {
     return {
       active: false,
-      selected: _selectValue(this.props.value, this.props.dataSource)
+      selected: _selectValue(this.props.value, this.props.dataSource),
+      width: undefined
     };
   },
 
   componentDidMount () {
     this.setState({
-      height: this.refs.values.getDOMNode().firstElementChild.getBoundingClientRect().height
+      width: React.findDOMNode(this).getBoundingClientRect().width
     });
   },
 
@@ -47,13 +47,17 @@ export default React.createClass({
     }
   },
 
-  onSelect () {
-    if (!this.props.disabled) {
-      this.setState({active: true});
-    }
+  handleClick (event) {
+    let client = event.target.getBoundingClientRect();
+    let screen_height = window.innerHeight || document.documentElement.offsetHeight;
+
+    this.setState({
+      active: true,
+      up: client.top > ((screen_height / 2) + client.height)
+    });
   },
 
-  onItem (id) {
+  handleClickValue (id) {
     if (!this.props.disabled) {
       let value = id.toString();
       for (let item of this.props.dataSource) {
@@ -68,24 +72,17 @@ export default React.createClass({
     }
   },
 
-  render () {
-    let stylesheet;
-    let className = `${style.root} ${this.props.className}`;
-    if (this.props.type) className += ` ${this.props.type}`;
-    if (this.props.disabled) className += ' disabled';
-    if (this.state.active === true) {
-      className += ' active';
-      stylesheet = { height: this.state.height * this.props.dataSource.length };
-    }
+  renderValues () {
+    let items = this.props.dataSource.map((item, index) => {
+      let className;
+      if (item.value === this.state.selected.value) className = ` ${style.selected}`;
 
-    const items = this.props.dataSource.map((item, index) => {
       return (
         <li
           key={index}
+          className={className}
           id={item.value}
-          onClick={this.onItem.bind(this, item.value)}
-          style={{position: 'relative'}}
-          className={ item.value === this.state.selected.value ? 'selected' : null}
+          onClick={this.handleClickValue.bind(this, item.value)}
         >
           { this.props.template ? this.props.template(item) : item.label }
           <Ripple className={style.ripple}/>
@@ -93,11 +90,25 @@ export default React.createClass({
       );
     });
 
+    let className = style.values;
+    if (this.state.up) className += ` ${style.up}`;
+    let valuesStyle = {width: this.state.width};
+
+    return (
+      <ul ref='values' className={className} style={valuesStyle}>{ items }</ul>
+    )
+  },
+
+  render () {
+    let className = style.root;
+    if (this.props.disabled) className += ` ${style.disabled}`;
+    if (this.state.active) className += ` ${style.active}`;
+
     return (
       <div data-react-toolbox='dropdown' className={className}>
-        {this.props.label ? <label>{this.props.label}</label> : null}
-        <ul ref='values' className={style.values} style={stylesheet}>{ items }</ul>
-        <div ref='value' className={style.value} onClick={this.onSelect}>
+        {this.props.label ? <label className={style.label}>{this.props.label}</label> : null}
+        { this.renderValues() }
+        <div ref='value' className={style.value} onClick={this.handleClick}>
           { this.props.template ? this.props.template(this.state.selected) : <span>{this.state.selected.label}</span> }
         </div>
       </div>
