@@ -1,7 +1,7 @@
 /* global React */
 
 import { addons } from 'react/addons';
-import css from './style';
+import style from './style';
 import prefixer from '../utils/prefixer';
 
 export default React.createClass({
@@ -45,8 +45,8 @@ export default React.createClass({
 
   renderCircular () {
     return (
-      <svg className={css.circle}>
-        <circle className={css.circlePath} style={this.circularStyle()} cx='30' cy='30' r='25' />
+      <svg className={style.circle}>
+        <circle className={style.path} style={this.circularStyle()} cx='30' cy='30' r='25' />
       </svg>
     );
   },
@@ -66,17 +66,17 @@ export default React.createClass({
     const {buffer, value} = this.linearStyle();
     return (
       <div>
-        <span ref='buffer' data-ref='buffer' className={css.bufferBar} style={buffer}></span>
-        <span ref='value' data-ref='value' className={css.valueBar} style={value}></span>
+        <span ref='buffer' data-ref='buffer' className={style.buffer} style={buffer}></span>
+        <span ref='value' data-ref='value' className={style.value} style={value}></span>
       </div>
     );
   },
 
   render () {
-    let className = this.props.type === 'linear' ? css.linearBar : css.circularBar;
+    let className = this.props.type === 'linear' ? style.linear : style.circular;
+    if (this.props.mode) className += ` ${style[this.props.mode]}`;
+    if (this.props.multicolor) className += ` ${style.multicolor}`;
     if (this.props.className) className += ` ${this.props.className}`;
-    if (this.props.mode) className += ` ${this.props.mode}`;
-    if (this.props.multicolor) className += ` multicolor`;
 
     return (
       <div
