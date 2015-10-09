@@ -207,6 +207,7 @@ export default React.createClass({
           {...this.props}
           label=''
           value=''
+          className={style.input}
           onBlur={this.handleBlur}
           onChange={this.handleQueryChange}
           onFocus={this.handleFocus}

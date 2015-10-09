@@ -1,5 +1,6 @@
 @import "../variables";
 @import "../mixins";
+
 $autocomplete-value-background: unquote("rgb(#{$color-primary})");
 $autocomplete-value-color: unquote("rgb(#{$color-primary-contrast})");
 $autocomplete-label-color: unquote("rgb(#{$color-primary})");
@@ -36,30 +37,39 @@ $autocomplete-max-height-suggestions: 40vh;
   overflow-x: hidden;
   overflow-y: scroll;
   background-color: $autocomplete-suggestions-background;
+  box-shadow: $zdepth-shadow-1;
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
   transition-property: max-height;
-  box-shadow: $zdepth-shadow-1;
+
   &:not(.focus) {
     max-height: 0;
     visibility: hidden;
   }
+
   &.focus {
     max-height: $autocomplete-max-height-suggestions;
     visibility: visible;
   }
+
   &:not(.up) {
-    margin-top: - $input-margin-bottom;
+    margin-top: 0;
   }
+
   &.up {
-    bottom: $input-margin-bottom;
+    bottom: 0;
   }
 }
 
 .suggestion {
   padding: $unit;
   cursor: pointer;
+
   &.active {
     background-color: $autocomplete-suggestion-active-background;
   }
+}
+
+.input {
+  padding-bottom: 0;
 }
