@@ -19,7 +19,6 @@ $dropdown-value-hover-background: unquote("rgb(#{$palette-grey-200})");
       opacity                     : 0.5;
     }
     > .values {
-      transform                   : translateY(0%);
       max-height                  : 40vh;
     }
   }
@@ -73,14 +72,12 @@ $dropdown-value-hover-background: unquote("rgb(#{$palette-grey-200})");
     }
   }
   &:not(.up) {
-    top: 1rem;
+    top: 0;
     bottom: auto;
-    transform                       : translateY(-$dropdown-input-height);
   }
   &.up {
     top: auto;
-    bottom: 1rem;
-    transform                       : translateY($dropdown-input-height);
+    bottom: 0;
   }
 }
 
