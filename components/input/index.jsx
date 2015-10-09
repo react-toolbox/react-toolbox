@@ -1,3 +1,8 @@
+// -- TODO
+// · Add support for icons
+// · Add a char counter
+// · Make textfield to grow as content grows
+
 /* global React */
 
 import { addons } from 'react/addons';

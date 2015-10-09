@@ -1,3 +1,8 @@
+// -- TODO
+// · Highlight coincidences
+// · Support templates as the dropdown component
+// · Inline autocomplete
+
 /* global React */
 
 import { addons } from 'react/addons';
