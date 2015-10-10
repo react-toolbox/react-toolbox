@@ -1,3 +1,8 @@
+// -- TODO
+// · Highlight coincidences
+// · Support templates as the dropdown component
+// · Inline autocomplete
+
 /* global React */
 
 import { addons } from 'react/addons';
@@ -207,6 +212,7 @@ export default React.createClass({
           {...this.props}
           label=''
           value=''
+          className={style.input}
           onBlur={this.handleBlur}
           onChange={this.handleQueryChange}
           onFocus={this.handleFocus}

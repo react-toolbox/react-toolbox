@@ -1,7 +1,12 @@
+// -- TODO
+// · Add support for icons
+// · Add a char counter
+// · Make textfield to grow as content grows
+
 /* global React */
 
 import { addons } from 'react/addons';
-import style from './style';
+import style from './style.scss';
 
 export default React.createClass({
   mixins: [addons.PureRenderMixin],
@@ -12,6 +17,7 @@ export default React.createClass({
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     error: React.PropTypes.string,
+    floating: React.PropTypes.bool,
     label: React.PropTypes.string,
     multiline: React.PropTypes.bool,
     onBlur: React.PropTypes.func,
@@ -27,6 +33,7 @@ export default React.createClass({
     return {
       className: '',
       disabled: false,
+      floating: true,
       multiline: false,
       required: false,
       type: 'text'
@@ -34,93 +41,55 @@ export default React.createClass({
   },
 
   getInitialState () {
-    return {
-      checked: this.props.value,
-      error: this.props.error,
-      touch: ['checkbox', 'radio'].indexOf(this.props.type) !== -1,
-      value: this.props.value,
-      focus: false,
-      valid: false
-    };
-  },
-
-  onBlur (event) {
-    this.setState({focus: false});
-    if (this.props.onBlur) this.props.onBlur(event, this);
+    return { value: this.props.value };
   },
 
   onChange (event) {
-    if (this.state.touch) {
-      this.setState({checked: event.target.checked, error: undefined});
-    } else {
-      this.setState({value: event.target.value, error: undefined});
-    }
-    if (this.props.onChange) this.props.onChange(event, this);
-  },
-
-  onFocus (event) {
-    this.setState({focus: true});
-    if (this.props.onFocus) this.props.onFocus(event, this);
-  },
-
-  onKeyPress (event) {
-    this.setState({focus: true});
-    if (this.props.onKeyPress) this.props.onKeyPress(event, this);
+    this.setState({value: event.target.value}, () => {
+      if (this.props.onChange) this.props.onChange(event, this);
+    });
   },
 
   renderInput () {
+    let className = style.input;
+    if (this.state.value && this.state.value.length > 0) className += ` ${style.filled}`;
+
     if (this.props.multiline) {
       return (
         <textarea
           ref='input'
           {...this.props}
+          className={className}
           onChange={this.onChange}
-          onKeyPress={this.onKeyPress}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
           value={this.state.value} />
-      );
-    } else if (this.props.type === 'file') {
-      return (
-        <input
-          ref='input'
-          {...this.props}
-          value={undefined}
-          onChange={this.onChange} />
       );
     } else {
       return (
         <input
           ref='input'
           {...this.props}
+          className={className}
           value={this.state.value}
-          checked={this.state.checked}
-          onBlur={this.onBlur}
-          onChange={this.onChange}
-          onFocus={this.onFocus}
-          onKeyPress={this.onKeyPress} />
+          onChange={this.onChange} />
       );
     }
   },
 
   render () {
-    let className = `${style.root} ${this.props.className}`;
-    if (this.props.type) className += ` ${this.props.type}`;
-    if (this.state.checked) className += ' checked';
-    if (this.props.disabled) className += ' disabled';
-    if (this.state.error) className += ' error';
-    if (this.state.focus) className += ' focus';
-    if (this.props.type === 'hidden') className += ' hidden';
-    if (this.state.touch) className += ' touch';
-    if (this.props.type === 'radio') className += ' radio';
-    if (this.state.value && this.state.value.length > 0) className += ' valid';
+    let className = style.root;
+    let labelClassName = style.label;
+    if (this.props.error) className += ` ${style.errored}`;
+    if (this.props.disabled) className += ` ${style.disabled}`;
+    if (this.props.className) className += ` ${this.props.className}`;
+    if (this.props.type === 'hidden') className += ` ${style.hidden}`;
+    if (!this.props.floating) labelClassName += ` ${style.fixed}`;
 
     return (
       <div data-react-toolbox='input' className={className}>
         { this.renderInput() }
-        <span className='bar'></span>
-        { this.props.label ? <label>{this.props.label}</label> : null }
-        { this.state.error ? <span className='error'>{this.state.error}</span> : null }
+        <span className={style.bar}></span>
+        { this.props.label ? <label className={labelClassName}>{this.props.label}</label> : null }
+        { this.props.error ? <span className={style.error}>{this.props.error}</span> : null }
       </div>
     );
   },
@@ -134,21 +103,10 @@ export default React.createClass({
   },
 
   getValue () {
-    if (this.props.type === 'file') {
-      return this.state.value;
-    } else if (this.refs.input) {
-      return this.refs.input.getDOMNode()[this.state.touch ? 'checked' : 'value'];
-    }
+    return this.state.value;
   },
 
-  setError (data = 'Unknown error') {
-    this.setState({error: this.props.error || data});
-  },
-
-  setValue (argData) {
-    let data = this.state.touch && argData === undefined ? false : argData;
-    let attributes = { value: data };
-    if (this.state.touch && data) attributes.checked = data;
-    this.setState(attributes);
+  setValue (value) {
+    this.setState({value: value});
   }
 });

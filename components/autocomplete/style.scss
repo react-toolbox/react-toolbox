@@ -65,3 +65,7 @@ $autocomplete-suggestion-color-active: unquote("rgb(#{$palette-grey-200})");
     background-color: $autocomplete-suggestion-color-active;
   }
 }
+
+.input {
+  padding-bottom: 0;
+}
