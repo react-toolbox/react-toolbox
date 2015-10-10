@@ -190,16 +190,16 @@ export default React.createClass({
   },
 
   render () {
-    let containerClassName = style.container;
-    if (this.props.className) containerClassName += ` ${this.props.className}`;
+    let className = style.root;
+    if (this.props.className) className += ` ${this.props.className}`;
+    if (this.state.focus) className += ` ${style.focus}`;
 
     let suggestionsClassName = style.suggestions;
-    if (this.state.focus) suggestionsClassName += ` ${style.focus}`;
     if (this.state.up) suggestionsClassName += ` ${style.up}`;
     let suggestionsStyle = {width: this.state.width};
 
     return (
-      <div data-react-toolbox='autocomplete' className={containerClassName}>
+      <div data-react-toolbox='autocomplete' className={className}>
         {this.props.label ? <label className={style.label}>{this.props.label}</label> : ''}
         {this.renderSelected()}
         <Input

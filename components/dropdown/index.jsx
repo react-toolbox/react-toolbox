@@ -101,6 +101,7 @@ export default React.createClass({
 
   render () {
     let className = style.root;
+    if (this.props.className) className += ` ${this.props.className}`;
     if (this.props.disabled) className += ` ${style.disabled}`;
     if (this.state.active) className += ` ${style.active}`;
 

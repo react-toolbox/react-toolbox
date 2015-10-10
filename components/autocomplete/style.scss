@@ -1,58 +1,60 @@
 @import "../variables";
 @import "../mixins";
-$autocomplete-value-background: unquote("rgb(#{$color-primary})");
-$autocomplete-value-color: unquote("rgb(#{$color-primary-contrast})");
-$autocomplete-label-color: unquote("rgb(#{$color-primary})");
-$autocomplete-suggestions-background: unquote("rgb(#{$color-white})");
-$autocomplete-suggestion-active-background: unquote("rgb(#{$palette-grey-200})");
-$autocomplete-max-height-suggestions: 40vh;
 
-.container {
+$autocomplete-color-primary: unquote("rgb(#{$color-primary})");
+$autocomplete-color-primary-contrast: unquote("rgb(#{$color-primary-contrast})");
+$autocomplete-color-white: unquote("rgb(#{$color-white})");
+$autocomplete-suggestion-color-active: unquote("rgb(#{$palette-grey-200})");
+
+.root {
   position: relative;
+  &.focus {
+    .label {
+      color: $autocomplete-color-primary;
+    }
+    .suggestions {
+      max-height: $items-overflow-max-height;
+      visibility: visible;
+      box-shadow: $zdepth-shadow-1;
+    }
+  }
 }
 
 .label {
-  display: inline-block;
-  margin-bottom: $unit * .5;
   font-size: $font-size-tiny;
-  color: $autocomplete-label-color;
+  color: $color-text-secondary;
+  transition: color $animation-duration $animation-curve-default;
 }
 
 .value {
   display: inline-block;
-  padding: $unit * .5 $unit;
-  margin: 0 $unit $unit 0;
-  font-size: $font-size-small;
-  color: $autocomplete-value-color;
+  padding: $unit * .5 $unit * .75;
+  margin: $unit * .25 $unit * .5 $unit * .25 0;
+  font-size: $font-size-tiny;
+  color: $autocomplete-color-primary-contrast;
   cursor: pointer;
-  background-color: $autocomplete-value-background;
+  background-color: $autocomplete-color-primary;
   border-radius: 3px;
 }
 
 .suggestions {
   position: absolute;
   z-index: 2;
-  width: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
-  background-color: $autocomplete-suggestions-background;
+  background-color: $autocomplete-color-white;
+  max-height: 0;
+  visibility: hidden;
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
-  transition-property: max-height;
-  box-shadow: $zdepth-shadow-1;
-  &:not(.focus) {
-    max-height: 0;
-    visibility: hidden;
-  }
-  &.focus {
-    max-height: $autocomplete-max-height-suggestions;
-    visibility: visible;
-  }
+  transition-property: max-height, box-shadow;
   &:not(.up) {
-    margin-top: - $input-margin-bottom;
+    bottom: auto;
+    margin-top: -$input-height / 3;
   }
   &.up {
-    bottom: $input-margin-bottom;
+    top: auto;
+    bottom: 0;
   }
 }
 
@@ -60,6 +62,6 @@ $autocomplete-max-height-suggestions: 40vh;
   padding: $unit;
   cursor: pointer;
   &.active {
-    background-color: $autocomplete-suggestion-active-background;
+    background-color: $autocomplete-suggestion-color-active;
   }
 }

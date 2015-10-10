@@ -1,74 +1,72 @@
 @import "../variables";
 @import "../mixins";
-
-$dropdown-input-height: 3 * $unit;
-$droppdown-background: unquote("rgb(#{$color-white})");
-$dropdown-value-background: unquote("rgb(#{$color-primary})");
-$dropdown-value-color: unquote("rgb(#{$color-primary-contrast})");
+$dropdown-color-white: unquote("rgb(#{$color-white})");
+$dropdown-color-primary: unquote("rgb(#{$color-primary})");
+$dropdown-color-primary-contrast: unquote("rgb(#{$color-primary-contrast})");
 $dropdown-value-hover-background: unquote("rgb(#{$palette-grey-200})");
 
 .root {
-  position                        : relative;
-  margin-bottom                   : $offset;
-  width                           : inherit;
-  color                           : $color-text;
-  border-bottom                   : 1px solid $color-divider;
-
-  &.active {
-    > .label, > .value {
-      opacity                     : 0.5;
-    }
+  position: relative;
+  width: inherit;
+  margin-bottom: $offset;
+  color: $color-text;
+  border-bottom: 1px solid $color-divider;
+  &:not(.active) {
     > .values {
-      max-height                  : 40vh;
+      max-height: 0;
+      visibility: hidden;
     }
   }
-
+  &.active {
+    > .label, > .value {
+      opacity: .5;
+    }
+    > .values {
+      max-height: $items-overflow-max-height;
+      visibility: visible;
+      box-shadow: $zdepth-shadow-1;
+    }
+  }
   &.disabled {
-    color                         : $color-text-secondary;
-    border-bottom-style           : dotted;
+    color: $color-text-secondary;
+    pointer-events: none;
+    border-bottom-style: dotted;
     > .value:after {
-      transform                   : scale(0);
+      transform: scale(0);
     }
   }
 }
 
 .label, .value {
-  transition: opacity $animation-duration $animation-curve-fast-out-slow-in;
+  transition: opacity $animation-duration $animation-curve-default;
 }
 
 .label {
-  position                        : relative;
-  font-size                       : $font-size-tiny;
-  color                           : $color-text-secondary;
+  font-size: $font-size-tiny;
+  color: $color-text-secondary;
 }
 
 .values {
-  z-index                         : 2;
-  position                        : absolute;
-  top                             : 0;
-  left                            : 0;
-  width                           : auto;
-  max-height                      : 0;
-  list-style                      : none;
-  overflow-x                      : hidden;
-  overflow-y                      : scroll;
-  width : auto;
-  background-color                : $droppdown-background;
-  border-radius                   : $border-radius;
-  box-shadow: $zdepth-shadow-1;
-  transition-property             : max-height, box-shadow, transform;
-  transition-duration             : $animation-duration;
-  transition-timing-function      : $animation-curve-fast-out-slow-in;
+  position: absolute;
+  z-index: 2;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  list-style: none;
+  background-color: $dropdown-color-white;
+  border-radius: $border-radius;
+  transition-timing-function: $animation-curve-default;
+  transition-duration: $animation-duration;
+  transition-property: max-height, box-shadow;
   > * {
-    position                      : relative;
-    padding                       : $unit;
-    overflow                      : hidden;
-    cursor                        : pointer;
+    position: relative;
+    padding: $unit;
+    overflow: hidden;
+    cursor: pointer;
     &:hover {
       background-color: $dropdown-value-hover-background;
     }
     &.selected {
-      color: $dropdown-value-background;
+      color: $dropdown-color-primary;
     }
   }
   &:not(.up) {
@@ -82,33 +80,32 @@ $dropdown-value-hover-background: unquote("rgb(#{$palette-grey-200})");
 }
 
 .value {
-  display                         : block;
+  display: block;
   > span {
-    height                        : $dropdown-input-height;
-    font-size                     : $font-size-normal;
-    line-height                   : $dropdown-input-height;
+    height: $input-height;
+    font-size: $font-size-normal;
+    line-height: $input-height;
   }
   > :not(span) {
-    margin                        : ($offset / 2) 0;
+    margin: ($offset / 2) 0;
   }
   &:after {
-    $size : ($dropdown-input-height / 7);
-    $border : $size solid transparent;
-    position                      : absolute;
-    content                       : "";
-    right                         : ($offset / 2);
-    bottom                        : $offset;
-    width                         : 0;
-    height                        : 0;
-    border-left                   : $border;
-    border-right                  : $border;
-    border-top                    : $size solid $color-divider;
-    transition                    : transform $animation-duration $animation-curve-fast-out-slow-in;
+    $size: ($input-height / 7);
+    $border: $size solid transparent;
+    position: absolute;
+    right: ($offset / 2);
+    bottom: $offset;
+    width: 0;
+    height: 0;
+    content: "";
+    border-top: $size solid $color-divider;
+    border-right: $border;
+    border-left: $border;
+    transition: transform $animation-duration $animation-curve-default;
   }
 }
 
 .ripple {
-  background-color                : $color-divider;
-  opacity                         : 1;
-  z-index                         : 0;
+  z-index: 0;
+  background-color: $color-divider;
 }

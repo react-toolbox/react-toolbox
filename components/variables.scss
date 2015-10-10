@@ -14,10 +14,14 @@ $color-accent: $palette-pink-a200 !default;
 $color-primary-contrast: $color-dark-contrast !default;
 $color-accent-contrast: $color-dark-contrast !default;
 
-//-- Units and config
+//-- Unit
 $unit: 1rem;
+
+// Sizes
+$input-height: 3.2 * $unit;
 $offset: 1.6 * $unit;
 $border-radius: 0.2 * $unit;
+$items-overflow-max-height: 45vh;
 
 // -- Fonts
 $preferred-font: "Roboto", "Helvetica", "Arial", sans-serif !default;

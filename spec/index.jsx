@@ -6,9 +6,9 @@ import Card from './components/card';
 import Checkbox from './components/checkbox';
 import Dialog from './components/dialog';
 import Drawer from './components/drawer';
+import Dropdown from './components/dropdown';
 import RadioGroup from './components/radio_group';
 import Switch from './components/switch';
-import Dropdown from './components/dropdown';
 // import FontIcon from './components/font_icon';
 // import Form from './components/form';
 // import Progress from './components/progress';
@@ -22,17 +22,17 @@ const Test = React.createClass({
   render () {
     return (
       <app data-react-toolbox-app>
-        <h1>React Toolbox </h1>
-        <h3>Component Spec</h3>
+        <h1>React Toolbox</h1>
+        <h3>Component Spec v0.10.9</h3>
         <Autocomplete />
         <Button />
         <Card />
         <Checkbox />
         <Dialog />
         <Drawer />
+        <Dropdown />
         <RadioGroup />
         <Switch />
-        <Dropdown />
       </app>
     );
   }
