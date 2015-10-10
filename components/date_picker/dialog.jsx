@@ -1,7 +1,7 @@
 /* global React */
 
 import { addons } from 'react/addons';
-import css from './style';
+import style from './style';
 import time from '../utils/time';
 import Calendar from '../calendar';
 import Dialog from '../dialog';
@@ -27,8 +27,8 @@ export default React.createClass({
       date: this.props.initialDate,
       display: 'months',
       actions: [
-        { label: 'Cancel', type: 'flat accent', onClick: this.onDateCancel },
-        { label: 'Ok', type: 'flat accent', onClick: this.onDateSelected }
+        { label: 'Cancel', className: 'primary', onClick: this.onDateCancel },
+        { label: 'Ok', className: 'primary', onClick: this.onDateSelected }
       ]
     };
   },
@@ -59,23 +59,24 @@ export default React.createClass({
   },
 
   render () {
-    const className = `display-${this.state.display}`;
+    const display = `display-${this.state.display}`;
+    const headerClassName = `${style.header} ${style[display]}`;
     return (
-      <Dialog ref="dialog" className={className} type={css.dialog} actions={this.state.actions}>
-          <header className={css.header}>
-            <span className={css.headerWeekday}>
+      <Dialog ref="dialog" type="custom" className={style.dialog} actions={this.state.actions}>
+          <header className={headerClassName}>
+            <span className={style.weekday}>
               {time.getFullDayOfWeek(this.state.date.getDay())}
             </span>
             <div onClick={this.displayMonths}>
-              <span className={css.headerMonth}>{time.getShortMonth(this.state.date)}</span>
-              <span className={css.headerDay}>{this.state.date.getDate()}</span>
+              <span className={style.month}>{time.getShortMonth(this.state.date)}</span>
+              <span className={style.day}>{this.state.date.getDate()}</span>
             </div>
-            <span className={css.headerYear} onClick={this.displayYears}>
+            <span className={style.year} onClick={this.displayYears}>
               {this.state.date.getFullYear()}
             </span>
           </header>
 
-          <div className={css.calendarWrapper}>
+          <div className={style.wrapper}>
             <Calendar
               ref="calendar"
               display={this.state.display}

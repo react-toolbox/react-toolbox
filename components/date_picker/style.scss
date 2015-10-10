@@ -1,0 +1,67 @@
+@import "../variables";
+
+$picker-dialog-width: 30 * $unit;
+$picker-header-color: unquote("rgb(#{$color-primary})") !default;
+$picker-header-color-contrast: unquote("rgb(#{$color-primary-contrast})") !default;
+$picker-header-color-dark: unquote("rgb(#{$color-primary-dark})") !default;
+$picker-inactive-opacity: .6;
+
+.dialog > [role="content"] {
+  width: $picker-dialog-width;
+
+  > [role="body"] {
+    padding: 0;
+  }
+}
+
+.header {
+  color: $picker-header-color-contrast;
+  text-align: center;
+  background-color: $picker-header-color;
+}
+
+.weekday {
+  display: block;
+  width: 100%;
+  font-size: 1.4 * $unit;
+  line-height: 2 * $unit;
+  background-color: $picker-header-color-dark;
+}
+
+.month {
+  display: block;
+  padding: $unit;
+  font-size: 1.8 * $unit;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.day {
+  display: block;
+  font-size: 5 * $unit;
+  line-height: 4 * $unit;
+  cursor: pointer;
+}
+
+.year {
+  display: block;
+  padding: $unit;
+  font-size: 1.8 * $unit;
+  cursor: pointer;
+}
+
+.wrapper {
+  padding: $unit .5 * $unit;
+}
+
+.display-years {
+  .day, .month {
+    opacity: $picker-inactive-opacity;
+  }
+}
+
+.display-months {
+  .year {
+    opacity: $picker-inactive-opacity;
+  }
+}

@@ -2,7 +2,7 @@
 
 import { addons } from 'react/addons';
 import Button from '../button';
-import style from './style.scss';
+import style from './style';
 
 export default React.createClass({
   mixins: [addons.PureRenderMixin],
@@ -43,13 +43,13 @@ export default React.createClass({
 
     return (
       <div data-react-toolbox='dialog' className={className}>
-        <div className={style.overlay} />
-        <div className={style.content}>
-          <section className={style.body}>
+        <div role='overlay' className={style.overlay} />
+        <div role='content' className={style.content}>
+          <section role='body' className={style.body}>
             { this.props.title ? <h6 className={style.title}>{this.props.title}</h6> : null }
             { this.props.children }
           </section>
-          <nav className={style.navigation}>
+          <nav role='navigation' className={style.navigation}>
             { this.renderActions() }
           </nav>
         </div>
