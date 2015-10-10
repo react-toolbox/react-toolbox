@@ -9,11 +9,11 @@ import Drawer from './components/drawer';
 import Input from './components/input';
 import Progress from './components/progress';
 import RadioGroup from './components/radio_group';
+import Slider from './components/slider';
 import Switch from './components/switch';
 // import Dropdown from './components/dropdown';
 // import FontIcon from './components/font_icon';
 // import Form from './components/form';
-// import Slider from './components/slider';
 // import Pickers from './components/pickers';
 // import Tabs from './components/tabs';
 
@@ -33,6 +33,7 @@ const Test = React.createClass({
         <Input />
         <Progress />
         <RadioGroup />
+        <Slider />
         <Switch />
       </app>
     );

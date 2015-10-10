@@ -45,7 +45,7 @@ export default React.createClass({
   },
 
   onChange (event) {
-    this.setState({value: this.refs.input.getDOMNode().value}, () => {
+    this.setState({value: event.target.value}, () => {
       if (this.props.onChange) this.props.onChange(event, this);
     });
   },

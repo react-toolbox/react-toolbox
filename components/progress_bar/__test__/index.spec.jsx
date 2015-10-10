@@ -1,4 +1,5 @@
 import expect from 'expect';
+import style from '../../progress_bar/style';
 import utils from '../../utils/testing';
 import ProgressBar from '../index';
 
@@ -56,8 +57,8 @@ describe('ProgressBar', function () {
 
     it('contains mode and className in its className', function () {
       progressBar = utils.shallowRenderComponent(ProgressBar, {mode: 'determinate', className: 'tight'});
-      expect(progressBar.props.className).toContain('determinate');
-      expect(progressBar.props.className).toContain('tight');
+      expect(progressBar.props.className).toContain(style.determinate);
+      expect(progressBar.props.className).toContain(style.tight);
     });
   });
 });

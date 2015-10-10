@@ -1,6 +1,6 @@
 @import "../variables";
 
-$progress-height: .5 * $unit;
+$progress-height: .4 * $unit;
 $progress-main-color: unquote("rgb(#{$color-primary})") !default;
 $progress-secondary-color: unquote("rgba(#{$color-primary-contrast}, 0.7)") !default;
 $circle-wrapper-width: 60;

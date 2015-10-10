@@ -17,10 +17,11 @@ module.exports = function (config) {
     reporters: ['dots'],
     preprocessors: {'tests.webpack.js': ['webpack']},
     webpack: {
-      resolve: { extensions: ['', '.jsx', '.cjsx', '.coffee', '.js', '.json', '.styl'] },
+      resolve: { extensions: ['', '.jsx', '.scss', '.js', '.json', '.styl'] },
       module: {
         loaders: [
           { test: /(\.js|\.jsx)$/, exclude: /(node_modules)/, loader: 'babel' },
+          { test: /(\.scss|\.css)$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!sass') },
           { test: /\.styl$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[hash:base64:5]!stylus-loader') }
         ]
       },
