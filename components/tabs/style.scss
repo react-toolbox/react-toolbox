@@ -1,0 +1,72 @@
+@import "../variables";
+
+$tab-text: $color-black !default;
+$tab-text-color: unquote("rgb(#{$tab-text})") !default;
+$tab-text-inactive-color: unquote("rgba(#{$tab-text}, 0.70)") !default;
+$tab-pointer-height: .2 * $unit;
+$tab-pointer-color: unquote("rgb(#{$color-primary})") !default;
+$tab-navigation-border-color: $color-divider;
+$tab-text-height: 1.4 * $unit;
+$tab-label-height: 4.8 * $unit;
+$tab-label-h-padding: 1.2 * $unit;
+$tab-label-v-padding: ($tab-label-height - $tab-text-height) / 2;
+$tab-label-disabled-opacity: .2;
+
+.root {
+  position: relative;
+}
+
+.navigation {
+  box-shadow: inset 0 -1px $tab-navigation-border-color;
+}
+
+.label {
+  padding: $tab-label-v-padding $tab-label-h-padding;
+  font-size: $tab-text-height;
+  font-weight: $font-weight-semi-bold;
+  line-height: 1;
+  color: $tab-text-inactive-color;
+  text-transform: uppercase;
+  transition-timing-function: $animation-curve-default;
+  transition-duration: $animation-duration;
+  transition-property: box-shadow, color;
+
+  &.active {
+    color: $tab-text-color;
+  }
+
+  &.disabled {
+    opacity: $tab-label-disabled-opacity;
+  }
+
+  &:not(.disabled) {
+    cursor: pointer;
+  }
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.pointer {
+  position: absolute;
+  width: 0;
+  height: $tab-pointer-height;
+  margin-top: - $tab-pointer-height;
+  background-color: $tab-pointer-color;
+  transition-timing-function: $animation-curve-default;
+  transition-duration: $animation-duration;
+  transition-property: left, width;
+}
+
+.tab {
+  padding: $tab-label-v-padding $tab-label-h-padding;
+
+  &:not(.active) {
+    display: none;
+  }
+
+  &.active {
+    display: block;
+  }
+}

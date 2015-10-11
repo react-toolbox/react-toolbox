@@ -14,9 +14,10 @@ import Progress from './components/progress';
 import RadioGroup from './components/radio_group';
 import Slider from './components/slider';
 import Switch from './components/switch';
+import Tabs from './components/tabs';
+
 // import FontIcon from './components/font_icon';
 // import Form from './components/form';
-// import Tabs from './components/tabs';
 
 const Test = React.createClass({
   displayName: 'App',
@@ -39,6 +40,7 @@ const Test = React.createClass({
         <RadioGroup />
         <Slider />
         <Switch />
+        <Tabs />
       </app>
     );
   }
