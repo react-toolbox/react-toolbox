@@ -1,5 +1,4 @@
 import React from 'react';
-
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 import FontIcon from '../font_icon';
@@ -32,12 +31,14 @@ export default React.createClass({
   },
 
   render () {
+    let className = style.root;
+    if (this.props.className) className += ` ${this.props.className}`;
     return (
       <a
         data-react-toolbox='link'
         data-flex='horizontal center'
-        href={`${this.props.route}`}
-        className={`${style.root} ${this.props.className}`}
+        href={this.props.route}
+        className={className}
         onClick={this.onClick}
       >
         { this.props.icon ? <FontIcon className={style.icon} value={this.props.icon} /> : null }
