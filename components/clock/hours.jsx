@@ -1,5 +1,4 @@
 import React from 'react';
-
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import utils from '../utils';
 import Face from './face';
@@ -29,9 +28,12 @@ export default React.createClass({
 
   onHandMove (degrees, radius) {
     let currentInner = radius < this.props.radius - this.props.spacing * 2;
-    this.props.onChange(this.valueFromDegrees(degrees));
     if (this.props.format === '24hr' && this.state.inner !== currentInner) {
-      this.setState({inner: currentInner});
+      this.setState({inner: currentInner}, () => {
+        this.props.onChange(this.valueFromDegrees(degrees));
+      });
+    } else {
+      this.props.onChange(this.valueFromDegrees(degrees));
     }
   },
 
@@ -60,7 +62,8 @@ export default React.createClass({
           numbers={innerNumbers}
           spacing={this.props.spacing}
           radius={innerRadius}
-          active={this.props.selected} />
+          active={this.props.selected}
+        />
       );
     }
   },
@@ -78,7 +81,8 @@ export default React.createClass({
             spacing={spacing}
             radius={radius}
             twoDigits={is24hr}
-            active={is24hr ? selected : (selected % 12 || 12)} />
+            active={is24hr ? selected : (selected % 12 || 12)}
+          />
           { this.renderInnerFace(radius - spacing * 2) }
           <Hand ref='hand'
             angle={selected * step}
@@ -86,7 +90,8 @@ export default React.createClass({
             onMove={this.onHandMove}
             onMoved={onHandMoved}
             origin={center}
-            step={step} />
+            step={step}
+          />
       </div>
     );
   }

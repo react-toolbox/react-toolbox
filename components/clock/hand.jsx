@@ -1,7 +1,6 @@
 import React from 'react';
-
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import css from './style';
+import style from './style';
 import utils from '../utils';
 
 export default React.createClass({
@@ -30,7 +29,7 @@ export default React.createClass({
   },
 
   componentDidMount () {
-    this.setState({knobWidth: this.refs.knob.getDOMNode().offsetWidth});
+    this.setState({knobWidth: this.refs.knob.offsetWidth});
   },
 
   getMouseEventMap () {
@@ -100,14 +99,15 @@ export default React.createClass({
   },
 
   render () {
-    let style = utils.prefixer({
+    const className = `${style.hand} ${this.props.className}`;
+    let handStyle = utils.prefixer({
       height: this.props.length - this.state.knobWidth / 2,
       transform: `rotate(${this.props.angle}deg)`
     });
 
     return (
-      <div className={css.hand + ' ' + this.props.className} style={style}>
-        <div ref='knob' className={css.knob}></div>
+      <div className={className} style={handStyle}>
+        <div ref='knob' className={style.knob}></div>
       </div>
     );
   }

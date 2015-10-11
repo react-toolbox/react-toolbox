@@ -1,5 +1,6 @@
 import React from 'react';
 import DatePicker from '../../components/date_picker';
+import TimePicker from '../../components/time_picker';
 
 export default React.createClass({
   displayName: 'PickersTest',
@@ -16,6 +17,9 @@ export default React.createClass({
 
         <DatePicker />
         <DatePicker value={datetime} />
+
+        <TimePicker />
+        <TimePicker value={datetime} />
       </section>
     );
   }

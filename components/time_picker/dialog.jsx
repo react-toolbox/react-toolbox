@@ -1,7 +1,6 @@
 import React from 'react';
-
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import css from './style';
+import style from './style';
 import time from '../utils/time';
 import Clock from '../clock';
 import Dialog from '../dialog';
@@ -31,8 +30,8 @@ export default React.createClass({
       display: 'hours',
       time: this.props.initialTime,
       actions: [
-        { label: 'Cancel', type: 'flat accent', onClick: this.onTimeCancel },
-        { label: 'Ok', type: 'flat accent', onClick: this.onTimeSelected }
+        { label: 'Cancel', className: style.button, onClick: this.onTimeCancel },
+        { label: 'Ok', className: style.button, onClick: this.onTimeSelected }
       ]
     };
   },
@@ -77,25 +76,28 @@ export default React.createClass({
 
   renderAMPMLabels () {
     if (this.props.format === 'ampm') {
-      return (<div className={css.ampm}>
-          <span className={css.am} onClick={this.toggleTimeMode}>AM</span>
-          <span className={css.pm} onClick={this.toggleTimeMode}>PM</span>
-        </div>);
+      return (
+        <div className={style.ampm}>
+          <span className={style.am} onClick={this.toggleTimeMode}>AM</span>
+          <span className={style.pm} onClick={this.toggleTimeMode}>PM</span>
+        </div>
+      );
     }
   },
 
   render () {
-    let className = ` display-${this.state.display}`;
-    className += ` format-${time.getTimeMode(this.state.time)}`;
+    const display = `display-${this.state.display}`;
+    const format = `format-${time.getTimeMode(this.state.time)}`;
+    const className = `${style.dialog} ${style[display]} ${style[format]}`;
 
     return (
-      <Dialog ref="dialog" className={className} type={css.dialog} actions={this.state.actions}>
-        <header className={css.header}>
-          <span className={css.hours} onClick={this.displayHours}>
+      <Dialog ref="dialog" className={className} type="custom" actions={this.state.actions}>
+        <header className={style.header}>
+          <span className={style.hours} onClick={this.displayHours}>
             { ('0' + this.formatHours()).slice(-2) }
           </span>
-          <span className={css.separator}>:</span>
-          <span className={css.minutes} onClick={this.displayMinutes}>
+          <span className={style.separator}>:</span>
+          <span className={style.minutes} onClick={this.displayMinutes}>
             { ('0' + this.state.time.getMinutes()).slice(-2) }
           </span>
           { this.renderAMPMLabels() }
@@ -105,7 +107,8 @@ export default React.createClass({
           display={this.state.display}
           format={this.props.format}
           initialTime={this.props.initialTime}
-          onChange={this.onClockChange} />
+          onChange={this.onClockChange}
+        />
       </Dialog>
     );
   }

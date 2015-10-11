@@ -1,7 +1,8 @@
 import React from 'react';
-
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import time from '../utils/time';
+import style from './style';
+import events from '../utils/events';
 import Input from '../input';
 import TimeDialog from './dialog';
 
@@ -32,7 +33,8 @@ export default React.createClass({
     this.setState({value: newTime});
   },
 
-  openTimeDialog () {
+  openTimeDialog (event) {
+    events.pauseEvent(event);
     this.refs.dialog.show();
   },
 
@@ -50,17 +52,20 @@ export default React.createClass({
     return (
       <div data-react-toolbox='time-picker'>
         <Input
-            ref='input'
-            type='text'
-            disabled={true}
-            onClick={this.openTimeDialog}
-            placeholder='Pick up time'
-            value={this.formatTime()} />
+          ref='input'
+          type='text'
+          className={style.input}
+          readOnly={true}
+          onMouseDown={this.openTimeDialog}
+          placeholder='Pick up time'
+          value={this.formatTime()}
+        />
         <TimeDialog
-            ref='dialog'
-            initialTime={this.state.value}
-            format={this.props.format}
-            onTimeSelected={this.onTimeSelected} />
+          ref='dialog'
+          initialTime={this.state.value}
+          format={this.props.format}
+          onTimeSelected={this.onTimeSelected}
+        />
       </div>
     );
   }
