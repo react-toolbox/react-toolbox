@@ -1,5 +1,4 @@
-/* global React */
-
+import React from 'react';
 import Dropdown from '../../components/dropdown';
 
 export default React.createClass({

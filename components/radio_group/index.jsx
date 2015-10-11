@@ -1,10 +1,9 @@
-/* global React */
-
-import { addons } from 'react/addons';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import RadioButton from '../radio_button';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'RadioGroup',
 

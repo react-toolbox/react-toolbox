@@ -1,5 +1,4 @@
-/* global React */
-
+import React from 'react';
 import Button from '../../components/button';
 import Dialog from '../../components/dialog';
 

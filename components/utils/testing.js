@@ -1,6 +1,5 @@
-/* global React */
-
-const TestUtils = React.addons.TestUtils;
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 
 module.exports = {
 

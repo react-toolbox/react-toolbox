@@ -1,11 +1,10 @@
-/* global React */
-
-import { addons } from 'react/addons';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 import prefixer from '../utils/prefixer';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     buffer: React.PropTypes.number,

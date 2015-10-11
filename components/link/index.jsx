@@ -1,11 +1,11 @@
-/* global React */
+import React from 'react';
 
-import { addons } from 'react/addons';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 import FontIcon from '../font_icon';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Link',
 

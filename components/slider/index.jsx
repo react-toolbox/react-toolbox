@@ -1,5 +1,5 @@
-/* global React */
-
+import React from 'react';
+import ReactDOM from 'react-dom';
 import style from './style';
 import utils from '../utils';
 import ProgressBar from '../progress_bar';
@@ -58,7 +58,7 @@ export default React.createClass({
   },
 
   onResize () {
-    const {left, right} = this.refs.progressbar.getDOMNode().getBoundingClientRect();
+    const {left, right} = ReactDOM.findDOMNode(this.refs.progressbar).getBoundingClientRect();
     this.setState({sliderStart: left, sliderLength: right - left});
   },
 
@@ -75,10 +75,10 @@ export default React.createClass({
   },
 
   onKeyDown (event) {
-    event.stopPropagation();
-    if (event.keyCode in [13, 27]) this.getDOMNode().blur();
+    if ([13, 27].indexOf(event.keyCode) !== -1) ReactDOM.findDOMNode(this).blur();
     if (event.keyCode === 38) this.addToValue(this.props.step);
     if (event.keyCode === 40) this.addToValue(-this.props.step);
+    if (event.keyCode !== 9) utils.events.pauseEvent(event);
   },
 
   onMouseDown (event) {

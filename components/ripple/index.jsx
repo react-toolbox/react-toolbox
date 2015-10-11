@@ -1,10 +1,10 @@
-/* global React */
-
-import { addons } from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style.scss';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Ripple',
 
@@ -38,7 +38,7 @@ export default React.createClass({
     document.addEventListener('mouseup', this.end);
     const {top, left, width} = this._getDescriptor(pageX, pageY);
     this.setState({active: false, restarting: true, width: 0}, () => {
-      this.refs.ripple.getDOMNode().offsetWidth; //eslint-disable-line no-unused-expressions
+      this.refs.ripple.offsetWidth; //eslint-disable-line no-unused-expressions
       this.setState({active: true, restarting: false, top: top, left: left, width: width});
     });
   },
@@ -49,7 +49,7 @@ export default React.createClass({
   },
 
   _getDescriptor (pageX, pageY) {
-    let { left, top, height, width } = this.getDOMNode().getBoundingClientRect();
+    let { left, top, height, width } = ReactDOM.findDOMNode(this).getBoundingClientRect();
     return {
       left: this.props.centered ? width / 2 : pageX - left,
       top: this.props.centered ? height / 2 : pageY - top,

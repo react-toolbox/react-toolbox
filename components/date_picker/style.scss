@@ -1,23 +1,24 @@
 @import "../variables";
 
-$picker-dialog-width: 30 * $unit;
-$picker-header-color: unquote("rgb(#{$color-primary})") !default;
-$picker-header-color-contrast: unquote("rgb(#{$color-primary-contrast})") !default;
-$picker-header-color-dark: unquote("rgb(#{$color-primary-dark})") !default;
-$picker-inactive-opacity: .6;
+$datepicker-primary: $color-primary;
+$datepicker-primary-contrast: $color-primary-contrast;
+$datepicker-primary-dark: $color-primary-dark;
+$datepicker-primary-color: unquote("rgb(#{$datepicker-primary})") !default;
+$datepicker-primary-hover-color: unquote("rgba(#{$datepicker-primary}, 0.20)") !default;
+$datepicker-primary-contrast-color: unquote("rgb(#{$datepicker-primary-contrast})") !default;
+$datepicker-primary-dark-color: unquote("rgb(#{$datepicker-primary-dark})") !default;
+$datepicker-dialog-width: 30 * $unit;
+$datepicker-inactive-opacity: .6;
 
-.dialog > [role="content"] {
-  width: $picker-dialog-width;
-
-  > [role="body"] {
-    padding: 0;
-  }
+.input > [role="input"] {
+  cursor: pointer;
 }
 
 .header {
-  color: $picker-header-color-contrast;
+  padding-bottom: $unit;
+  color: $datepicker-primary-contrast-color;
   text-align: center;
-  background-color: $picker-header-color;
+  background-color: $datepicker-primary-color;
 }
 
 .weekday {
@@ -25,7 +26,7 @@ $picker-inactive-opacity: .6;
   width: 100%;
   font-size: 1.4 * $unit;
   line-height: 2 * $unit;
-  background-color: $picker-header-color-dark;
+  background-color: $datepicker-primary-dark-color;
 }
 
 .month {
@@ -44,24 +45,44 @@ $picker-inactive-opacity: .6;
 }
 
 .year {
-  display: block;
-  padding: $unit;
+  display: inline-block;
+  margin-top: $unit;
   font-size: 1.8 * $unit;
   cursor: pointer;
 }
 
 .wrapper {
-  padding: $unit .5 * $unit;
+  padding: $unit .5 * $unit 0;
 }
 
 .display-years {
   .day, .month {
-    opacity: $picker-inactive-opacity;
+    opacity: $datepicker-inactive-opacity;
   }
 }
 
 .display-months {
   .year {
-    opacity: $picker-inactive-opacity;
+    opacity: $datepicker-inactive-opacity;
+  }
+}
+
+.dialog > [role="content"] {
+  width: $datepicker-dialog-width;
+
+  > [role="body"] {
+    padding: 0;
+  }
+
+  > [role="navigation"] > .button {
+    color: $datepicker-primary-color;
+
+    &:hover {
+      background: $datepicker-primary-hover-color;
+    }
+
+    &:focus:not(:active) {
+      background: $datepicker-primary-hover-color;
+    }
   }
 }

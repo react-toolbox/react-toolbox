@@ -1,6 +1,6 @@
-  /* global React */
+  import React from 'react';
 
-import { addons } from 'react/addons';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 
 function _pointerPosition (index = 0, navigation) {
@@ -13,7 +13,7 @@ function _pointerPosition (index = 0, navigation) {
 }
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Tabs',
 

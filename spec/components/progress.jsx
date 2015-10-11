@@ -1,5 +1,4 @@
-/* global React */
-
+import React from 'react';
 import ProgressBar from '../../components/progress_bar';
 
 export default React.createClass({

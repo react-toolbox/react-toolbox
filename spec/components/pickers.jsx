@@ -1,7 +1,5 @@
-/* global React */
-
+import React from 'react';
 import DatePicker from '../../components/date_picker';
-import TimePicker from '../../components/time_picker';
 
 export default React.createClass({
   displayName: 'PickersTest',
@@ -13,11 +11,11 @@ export default React.createClass({
 
     return (
       <section>
-        <h2>Pickers</h2>
+        <h5>Pickers</h5>
+        <p>Date pickers and time pickers with Material flavour.</p>
+
         <DatePicker />
         <DatePicker value={datetime} />
-        <TimePicker value={datetime} />
-        <TimePicker format="ampm" />
       </section>
     );
   }

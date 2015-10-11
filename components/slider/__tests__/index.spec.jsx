@@ -1,5 +1,4 @@
-/* global React */
-
+import React from 'react';
 import expect from 'expect';
 import sinon from 'sinon';
 import utils from '../../utils/testing';

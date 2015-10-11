@@ -1,12 +1,11 @@
-/* global React */
-
-import { addons } from 'react/addons';
-import css from './style';
-import utils from '../utils';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Day from './day';
+import style from './style';
+import utils from '../utils';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Month',
 
@@ -16,36 +15,38 @@ export default React.createClass({
     viewDate: React.PropTypes.object
   },
 
+  handleDayClick (day) {
+    if (this.props.onDayClick) this.props.onDayClick(day);
+  },
+
   renderWeeks () {
     return utils.range(0, 7).map(i => {
-      return (
-        <span key={`dw${i}`}>
-          { utils.time.getFullDayOfWeek(i).charAt(0) }
-        </span>
-      );
+      return <span key={i}>{ utils.time.getFullDayOfWeek(i).charAt(0) }</span>;
     });
   },
 
   renderDays () {
     return utils.range(1, utils.time.getDaysInMonth(this.props.viewDate) + 1).map(i => {
       return (
-        <Day key={`d${i}`}
+        <Day
+          key={i}
           day={i}
-          onClick={this.props.onDayClick}
+          onClick={this.handleDayClick.bind(this, i)}
           selectedDate={this.props.selectedDate}
-          viewDate={this.props.viewDate} />
+          viewDate={this.props.viewDate}
+        />
       );
     });
   },
 
   render () {
     return (
-      <div>
-        <span className={css.title}>
+      <div className={style.month}>
+        <span className={style.title}>
           { utils.time.getFullMonth(this.props.viewDate)} {this.props.viewDate.getFullYear() }
         </span>
-        <div className={css.week}>{ this.renderWeeks() }</div>
-        <div className={css.days}>{ this.renderDays() }</div>
+        <div className={style.week}>{ this.renderWeeks() }</div>
+        <div className={style.days}>{ this.renderDays() }</div>
       </div>
     );
   }

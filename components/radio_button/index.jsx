@@ -1,12 +1,11 @@
-/* global React */
-
-import { addons } from 'react/addons';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Ripple from '../ripple';
 import style from './style';
 import events from '../utils/events';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'RadioButton',
 
@@ -73,10 +72,10 @@ export default React.createClass({
   },
 
   blur () {
-    this.refs.input.getDOMNode().blur();
+    this.refs.input.blur();
   },
 
   focus () {
-    this.refs.input.getDOMNode().focus();
+    this.refs.input.focus();
   }
 });

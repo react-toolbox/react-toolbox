@@ -1,5 +1,6 @@
 @import "../variables";
 @import "../mixins";
+
 $radio-button-size: 1.6 * $unit !default;
 $radio-inner-margin: $radio-button-size / 4;
 $radio-inner-color: unquote("rgb(#{$color-primary})") !default;

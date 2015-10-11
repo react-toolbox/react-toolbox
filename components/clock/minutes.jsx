@@ -1,6 +1,6 @@
-/* global React */
+import React from 'react';
 
-import { addons } from 'react/addons';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import utils from '../utils';
 import Face from './face';
 import Hand from './hand';
@@ -9,7 +9,7 @@ const minutes = utils.range(0, 60, 5);
 const step = 360 / 60;
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Minutes',
 

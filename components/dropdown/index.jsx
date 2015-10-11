@@ -1,11 +1,23 @@
-/* global React */
-
-import { addons } from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Ripple from '../ripple';
 import style from './style';
 
+function _selectValue (value, dataSource) {
+  let item;
+  if (value) {
+    for (item of dataSource) {
+      if (item.value.toString() === value.toString()) break;
+    }
+    return item;
+  } else {
+    return dataSource[0];
+  }
+}
+
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Dropdown',
 
@@ -37,7 +49,7 @@ export default React.createClass({
 
   componentDidMount () {
     this.setState({
-      width: React.findDOMNode(this).getBoundingClientRect().width
+      width: ReactDOM.findDOMNode(this).getBoundingClientRect().width
     });
   },
 
@@ -94,9 +106,7 @@ export default React.createClass({
     if (this.state.up) className += ` ${style.up}`;
     let valuesStyle = {width: this.state.width};
 
-    return (
-      <ul ref='values' className={className} style={valuesStyle}>{ items }</ul>
-    )
+    return <ul ref='values' className={className} style={valuesStyle}>{ items }</ul>;
   },
 
   render () {
@@ -124,15 +134,3 @@ export default React.createClass({
     this.setState({selected: data});
   }
 });
-
-function _selectValue (value, dataSource) {
-  let item;
-  if (value) {
-    for (item of dataSource) {
-      if (item.value.toString() === value.toString()) break;
-    }
-    return item;
-  } else {
-    return dataSource[0];
-  }
-}

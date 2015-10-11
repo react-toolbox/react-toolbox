@@ -1,5 +1,4 @@
-/* global React */
-
+import React from 'react';
 import { Tabs } from '../../components/tabs';
 import { Tab } from '../../components/tabs';
 

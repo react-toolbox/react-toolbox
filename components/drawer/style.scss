@@ -1,13 +1,11 @@
 @import "../variables";
 @import "../mixins";
 
-//-- Variables
 $drawer-width: 24 * $unit;
 $drawer-bg-color: unquote("rgb(#{$palette-grey-50})") !default;
 $drawer-text-color: unquote("rgb(#{$palette-grey-800})") !default;
 $drawer-border-color: unquote("rgb(#{$palette-grey-300})") !default;
 
-//-- Local styles
 .drawer {
   position: fixed;
   top: 0;
@@ -21,6 +19,7 @@ $drawer-border-color: unquote("rgb(#{$palette-grey-300})") !default;
 
 .active {
   pointer-events: all;
+
   > .content {
     transition-delay: $animation-delay;
     transform: translateX(0);

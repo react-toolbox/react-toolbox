@@ -1,5 +1,4 @@
-/* global React */
-
+import React from 'react';
 import Switch from '../../components/switch';
 
 export default React.createClass({

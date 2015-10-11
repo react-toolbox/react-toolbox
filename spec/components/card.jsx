@@ -1,5 +1,4 @@
-/* global React */
-
+import React from 'react';
 import Card from '../../components/card';
 
 export default React.createClass({

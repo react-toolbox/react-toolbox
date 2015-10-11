@@ -1,18 +1,18 @@
-/* global React */
-
-// import Autocomplete from './components/autocomplete';
-// import Button from './components/button';
-// import Card from './components/card';
-// import Checkbox from './components/checkbox';
-// import Dialog from './components/dialog';
-// import Drawer from './components/drawer';
-// import Input from './components/input';
-// import Progress from './components/progress';
-// import RadioGroup from './components/radio_group';
-// import Slider from './components/slider';
-// import Switch from './components/switch';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Autocomplete from './components/autocomplete';
+import Button from './components/button';
+import Card from './components/card';
+import Checkbox from './components/checkbox';
+import Dialog from './components/dialog';
+import Drawer from './components/drawer';
+import Input from './components/input';
+import Progress from './components/progress';
+import RadioGroup from './components/radio_group';
+import Slider from './components/slider';
+import Switch from './components/switch';
 import Pickers from './components/pickers';
-// import Dropdown from './components/dropdown';
+import Dropdown from './components/dropdown';
 // import FontIcon from './components/font_icon';
 // import Form from './components/form';
 // import Tabs from './components/tabs';
@@ -25,11 +25,22 @@ const Test = React.createClass({
       <app data-react-toolbox-app>
         <h1>React Toolbox</h1>
         <h3>Component Spec v0.10.9</h3>
+        <Autocomplete />
+        <Button />
+        <Card />
+        <Checkbox />
+        <Dialog />
+        <Drawer />
+        <Dropdown />
+        <Input />
         <Pickers />
+        <Progress />
+        <RadioGroup />
+        <Slider />
+        <Switch />
       </app>
     );
   }
 });
 
-
-React.render(<Test/>, document.body);
+ReactDOM.render(<Test/>, document.getElementById('toolbox-test'));

@@ -1,13 +1,12 @@
-/* global React */
-
-import { addons } from 'react/addons';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 import time from '../utils/time';
 import Calendar from '../calendar';
 import Dialog from '../dialog';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'CalendarDialog',
 
@@ -27,8 +26,8 @@ export default React.createClass({
       date: this.props.initialDate,
       display: 'months',
       actions: [
-        { label: 'Cancel', className: 'primary', onClick: this.onDateCancel },
-        { label: 'Ok', className: 'primary', onClick: this.onDateSelected }
+        { label: 'Cancel', className: style.button, onClick: this.onDateCancel },
+        { label: 'Ok', className: style.button, onClick: this.onDateSelected }
       ]
     };
   },
@@ -61,6 +60,7 @@ export default React.createClass({
   render () {
     const display = `display-${this.state.display}`;
     const headerClassName = `${style.header} ${style[display]}`;
+
     return (
       <Dialog ref="dialog" type="custom" className={style.dialog} actions={this.state.actions}>
           <header className={headerClassName}>
@@ -81,7 +81,7 @@ export default React.createClass({
               ref="calendar"
               display={this.state.display}
               onChange={this.onCalendarChange}
-              selectedDate={this.props.date} />
+              selectedDate={this.state.date} />
           </div>
       </Dialog>
     );

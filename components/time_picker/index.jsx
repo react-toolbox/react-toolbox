@@ -1,12 +1,12 @@
-/* global React */
+import React from 'react';
 
-import { addons } from 'react/addons';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import time from '../utils/time';
 import Input from '../input';
 import TimeDialog from './dialog';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'TimePicker',
 

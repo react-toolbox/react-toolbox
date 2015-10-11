@@ -1,12 +1,13 @@
-/* global React */
-
-import { addons } from 'react/addons';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import style from './style';
 import time from '../utils/time';
+import events from '../utils/events';
 import CalendarDialog from './dialog';
 import Input from '../input';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'DatePicker',
 
@@ -27,7 +28,8 @@ export default React.createClass({
     };
   },
 
-  openCalendarDialog () {
+  openCalendarDialog (event) {
+    events.pauseEvent(event);
     this.refs.dialog.show();
   },
 
@@ -46,18 +48,21 @@ export default React.createClass({
 
   render () {
     return (
-      <div data-react-toolbox='date-picker'>
+      <div data-toolbox='date-picker'>
         <Input
-            ref='input'
-            type='text'
-            disabled={true}
-            onClick={this.openCalendarDialog}
-            placeholder='Pick up date'
-            value={this.state.value ? this.formatDate(this.state.value) : null} />
+          ref='input'
+          type='text'
+          readOnly={true}
+          className={style.input}
+          onMouseDown={this.openCalendarDialog}
+          placeholder='Pick up date'
+          value={this.state.value ? this.formatDate(this.state.value) : null}
+        />
         <CalendarDialog
-            ref='dialog'
-            initialDate={this.state.value}
-            onDateSelected={this.onDateSelected} />
+          ref='dialog'
+          initialDate={this.state.value}
+          onDateSelected={this.onDateSelected}
+        />
       </div>
     );
   }

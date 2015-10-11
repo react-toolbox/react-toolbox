@@ -1,6 +1,6 @@
-/* global React */
+import React from 'react';
 
-import { addons } from 'react/addons';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import utils from '../utils';
 import Face from './face';
 import Hand from './hand';
@@ -10,7 +10,7 @@ const innerNumbers = [12, ...utils.range(1, 12)];
 const step = 360 / 12;
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Hours',
 

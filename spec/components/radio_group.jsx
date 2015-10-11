@@ -1,5 +1,4 @@
-/* global React */
-
+import React from 'react';
 import RadioGroup from '../../components/radio_group';
 import RadioButton from '../../components/radio_button';
 

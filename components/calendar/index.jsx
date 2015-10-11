@@ -1,15 +1,15 @@
-/* global React */
-
-import { addons } from 'react/addons';
-import css from './style';
-import utils from '../utils';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
+import { SlideLeft, SlideRight } from '../animations';
 import FontIcon from '../font_icon';
+import Ripple from '../ripple';
 import Month from './month';
-
-const { CSSTransitionGroup: CTG } = React.addons;
+import style from './style';
+import utils from '../utils';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Calendar',
 
@@ -40,26 +40,27 @@ export default React.createClass({
     }
   },
 
-  onDayClick (event) {
-    let newDate = utils.time.setDay(this.state.viewDate, parseInt(event.target.textContent));
+  onDayClick (day) {
+    let newDate = utils.time.setDay(this.state.viewDate, day);
     this.setState({selectedDate: newDate});
     if (this.props.onChange) this.props.onChange(newDate);
   },
 
-  onYearClick (event) {
-    let newDate = utils.time.setYear(this.state.selectedDate, parseInt(event.target.textContent));
+  onYearClick (year) {
+    let newDate = utils.time.setYear(this.state.selectedDate, year);
     this.setState({selectedDate: newDate, viewDate: newDate});
     if (this.props.onChange) this.props.onChange(newDate);
   },
 
   scrollToActive () {
-    this.refs.years.getDOMNode().scrollTop =
-      this.refs.activeYear.getDOMNode().offsetTop -
-      this.refs.years.getDOMNode().offsetHeight / 2 +
-      this.refs.activeYear.getDOMNode().offsetHeight / 2;
+    this.refs.years.scrollTop =
+      this.refs.activeYear.offsetTop -
+      this.refs.years.offsetHeight / 2 +
+      this.refs.activeYear.offsetHeight / 2;
   },
 
   incrementViewMonth () {
+    this.refs.rippleRight.start(event);
     this.setState({
       direction: 'right',
       viewDate: utils.time.addMonths(this.state.viewDate, 1)
@@ -67,6 +68,7 @@ export default React.createClass({
   },
 
   decrementViewMonth () {
+    this.refs.rippleLeft.start(event);
     this.setState({
       direction: 'left',
       viewDate: utils.time.addMonths(this.state.viewDate, -1)
@@ -75,9 +77,9 @@ export default React.createClass({
 
   renderYear (year) {
     let props = {
-      className: year === this.state.viewDate.getFullYear() ? 'active' : '',
-      key: `year-${year}`,
-      onClick: this.onYearClick
+      className: year === this.state.viewDate.getFullYear() ? style.active : '',
+      key: year,
+      onClick: this.onYearClick.bind(this, year)
     };
 
     if (year === this.state.viewDate.getFullYear()) {
@@ -89,31 +91,36 @@ export default React.createClass({
 
   renderYears () {
     return (
-      <ul ref="years" className={css.years}>
+      <ul ref="years" className={style.years}>
         { utils.range(1900, 2100).map(i => { return this.renderYear(i); })}
       </ul>
     );
   },
 
   renderMonths () {
+    let animation = this.state.direction === 'left' ? SlideLeft : SlideRight;
     return (
-      <div data-react-toolbox='calendar' className={this.state.direction}>
-        <FontIcon className={css.prev} value='chevron_left' onClick={this.decrementViewMonth}/>
-        <FontIcon className={css.next} value='chevron_right' onClick={this.incrementViewMonth}/>
-        <CTG transitionName='slide-horizontal'>
+      <div data-react-toolbox='calendar'>
+        <FontIcon className={style.prev} value='chevron-left' onMouseDown={this.decrementViewMonth}>
+          <Ripple ref='rippleLeft' className={style.ripple} spread={1.2} centered />
+        </FontIcon>
+        <FontIcon className={style.next} value='chevron-right' onMouseDown={this.incrementViewMonth}>
+          <Ripple ref='rippleRight' className={style.ripple} spread={1.2} centered />
+        </FontIcon>
+        <CSSTransitionGroup transitionName={animation} transitionEnterTimeout={350} transitionLeaveTimeout={350}>
           <Month
             key={this.state.viewDate.getMonth()}
             viewDate={this.state.viewDate}
             selectedDate={this.state.selectedDate}
             onDayClick={this.onDayClick} />
-        </CTG>
+        </CSSTransitionGroup>
       </div>
     );
   },
 
   render () {
     return (
-      <div className={css.root}>
+      <div className={style.root}>
         { this.props.display === 'months' ? this.renderMonths() : this.renderYears() }
       </div>
     );

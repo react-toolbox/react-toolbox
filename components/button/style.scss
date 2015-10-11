@@ -1,7 +1,6 @@
 @import "../variables";
 @import "../mixins";
 
-//-- Variables
 $button-default-text-color: unquote("rgb(#{$color-black})") !default;
 $button-flat-color-hover: unquote("rgba(#{$color-black}, 0.26)") !default;
 $button-disabled-text-color: unquote("rgba(#{$color-black}, 0.26)") !default;
@@ -18,7 +17,6 @@ $button-height: $unit * 3.6;
 $button-floating-height: $unit * 5.6;
 $button-floating-height-mini: $unit * 4;
 
-//-- Mixins and commons
 %button {
   position: relative;
   z-index: 1;
@@ -97,6 +95,10 @@ $button-floating-height-mini: $unit * 4;
     @include shadow-4dp();
   }
 
+  &:focus:not(:active) {
+    @include focus-shadow();
+  }
+
   &[disabled] {
     @extend %disabled;
     @include shadow-2dp();
@@ -117,6 +119,10 @@ $button-floating-height-mini: $unit * 4;
     @include shadow-4dp();
   }
 
+  &:focus:not(:active) {
+    @include focus-shadow();
+  }
+
   &[disabled] {
     @extend %disabled;
     @include shadow-2dp();
@@ -128,15 +134,10 @@ $button-floating-height-mini: $unit * 4;
   }
 }
 
-//-- Global modifiers
 :global(.primary):not([disabled]) {
   &.raised, &.floating {
     color: $button-primary-color-contrast;
     background: $button-primary-color;
-
-    &:focus:not(:active) {
-      @include focus-shadow();
-    }
   }
 
   &.flat {
@@ -145,6 +146,7 @@ $button-floating-height-mini: $unit * 4;
     &:hover {
       background: $button-primary-color-hover;
     }
+
     &:focus:not(:active) {
       background: $button-primary-color-hover;
     }
@@ -155,10 +157,6 @@ $button-floating-height-mini: $unit * 4;
   &.raised, &.floating {
     color: $button-accent-color-contrast;
     background-color: $button-accent-color;
-
-    &:focus:not(:active) {
-      @include focus-shadow();
-    }
   }
 
   &.flat {

@@ -1,15 +1,9 @@
-// -- TODO
-// · Add support for icons
-// · Add a char counter
-// · Make textfield to grow as content grows
-
-/* global React */
-
-import { addons } from 'react/addons';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style.scss';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Input',
 
@@ -58,6 +52,7 @@ export default React.createClass({
       return (
         <textarea
           ref='input'
+          role='input'
           {...this.props}
           className={className}
           onChange={this.onChange}
@@ -67,6 +62,7 @@ export default React.createClass({
       return (
         <input
           ref='input'
+          role='input'
           {...this.props}
           className={className}
           value={this.state.value}
@@ -95,11 +91,11 @@ export default React.createClass({
   },
 
   blur () {
-    this.refs.input.getDOMNode().blur();
+    this.refs.input.blur();
   },
 
   focus () {
-    this.refs.input.getDOMNode().focus();
+    this.refs.input.focus();
   },
 
   getValue () {

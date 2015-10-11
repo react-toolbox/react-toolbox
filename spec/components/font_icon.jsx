@@ -1,5 +1,4 @@
-/* global React */
-
+import React from 'react';
 import FontIcon from '../../components/font_icon';
 
 export default React.createClass({

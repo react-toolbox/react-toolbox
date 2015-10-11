@@ -8,10 +8,12 @@ $autocomplete-suggestion-color-active: unquote("rgb(#{$palette-grey-200})");
 
 .root {
   position: relative;
+
   &.focus {
     .label {
       color: $autocomplete-color-primary;
     }
+
     .suggestions {
       max-height: $items-overflow-max-height;
       visibility: visible;
@@ -40,18 +42,19 @@ $autocomplete-suggestion-color-active: unquote("rgb(#{$palette-grey-200})");
 .suggestions {
   position: absolute;
   z-index: 2;
+  max-height: 0;
   overflow-x: hidden;
   overflow-y: scroll;
-  background-color: $autocomplete-color-white;
-  max-height: 0;
   visibility: hidden;
+  background-color: $autocomplete-color-white;
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
   transition-property: max-height, box-shadow;
+
   &:not(.up) {
     bottom: auto;
-    margin-top: -$input-height / 3;
   }
+
   &.up {
     top: auto;
     bottom: 0;
@@ -61,6 +64,7 @@ $autocomplete-suggestion-color-active: unquote("rgb(#{$palette-grey-200})");
 .suggestion {
   padding: $unit;
   cursor: pointer;
+
   &.active {
     background-color: $autocomplete-suggestion-color-active;
   }

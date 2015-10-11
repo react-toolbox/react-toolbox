@@ -1,17 +1,12 @@
-// -- TODO
-// · Highlight coincidences
-// · Support templates as the dropdown component
-// · Inline autocomplete
-
-/* global React */
-
-import { addons } from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import utils from '../utils';
 import Input from '../input';
 import style from './style';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Autocomplete',
 
@@ -49,7 +44,7 @@ export default React.createClass({
   componentDidMount () {
     if (this.props.value) this.setValue(this.props.value);
     this.setState({
-      width: React.findDOMNode(this).getBoundingClientRect().width
+      width: ReactDOM.findDOMNode(this).getBoundingClientRect().width
     });
   },
 
@@ -88,7 +83,7 @@ export default React.createClass({
     let client = event.target.getBoundingClientRect();
     let screen_height = window.innerHeight || document.documentElement.offsetHeight;
 
-    this.refs.suggestions.getDOMNode().scrollTop = 0;
+    this.refs.suggestions.scrollTop = 0;
     this.setState({
       active: '',
       up: client.top > ((screen_height / 2) + client.height),
