@@ -1,5 +1,4 @@
 import React from 'react';
-
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 import Button from '../button';
@@ -27,8 +26,8 @@ export default React.createClass({
   },
 
   render () {
-    let className = `${style.root} ${this.props.className}`;
-    if (this.props.type) className += ` ${this.props.type}`;
+    let className = `${style[this.props.type]}`;
+    if (this.props.className) className += ` ${this.props.className}`;
 
     const buttons = this.props.actions.map((action, index) => {
       return <Button key={index} {...action} />;
