@@ -1,12 +1,11 @@
-/* global React */
-
-import { addons } from 'react/addons';
-import style from './style';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Navigation from '../navigation';
 import Ripple from '../ripple';
+import style from './style.scss';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Card',
 
@@ -15,7 +14,6 @@ export default React.createClass({
     color: React.PropTypes.string,
     image: React.PropTypes.string,
     text: React.PropTypes.string,
-    legend: React.PropTypes.string,
     loading: React.PropTypes.bool,
     onClick: React.PropTypes.func,
     title: React.PropTypes.string,
@@ -36,42 +34,66 @@ export default React.createClass({
     };
   },
 
-  onClick (event) {
+  handleMouseDown (event) {
     if (this.props.onClick) {
       event.preventDefault();
+      this.refs.ripple.start(event);
       this.props.onClick(event, this);
     }
   },
 
-  renderHeading () {
-    let headingStyle = {};
-    if (this.props.image) headingStyle.backgroundImage = `url(${this.props.image})`;
-    if (this.props.color) headingStyle.backgroundColor = this.props.color;
+  renderTitle () {
+    let styleFigure = {}, styleOverflow = {};
+    if (this.props.image) styleFigure.backgroundImage = `url(${this.props.image})`;
+    if (this.props.color) {
+      styleFigure.backgroundColor = this.props.color;
+      styleOverflow.backgroundColor = this.props.color;
+    }
+
     if (this.props.title || this.props.image) {
       return (
-        <figure className={style.figure} style={headingStyle}>
+        <figure className={style.figure} style={styleFigure}>
           { this.props.subtitle ? <small>{this.props.subtitle}</small> : null }
-          { this.props.title ? <h2>{this.props.title}</h2> : null }
+          { this.props.title ? <h5>{this.props.title}</h5> : null }
+          { this.props.color ? <div className={style.overflow} style={styleOverflow}></div> : null }
         </figure>
+      );
+    }
+  },
+
+  renderActions () {
+    if (this.props.actions) {
+      return (
+        <Navigation className={style.navigation} actions={this.props.actions} />
       );
     }
   },
 
   render () {
     let className = `${style.root} ${this.props.className}`;
-    if (this.props.type) className += ` ${this.props.type}`;
-    if (this.props.onClick) className += ' touch';
-    if (this.props.image) className += ' image';
-    if (this.props.color) className += ' color';
-    if (this.state.loading) className += ' loading';
+    if (this.props.type) className += ` ${style[this.props.type]}`;
+    if (this.props.onClick) className += ` ${style.touch}`;
+    if (this.props.image || this.props.color) className += ` ${style.contrast}`;
+    if (this.props.color) className += ` ${style.color}`;
+    if (this.state.loading) className += ` ${style.loading}`;
 
     return (
-      <div data-react-toolbox='card' className={className} onMouseDown={this.onClick}>
-        { this.renderHeading() }
-        { this.props.text ? <p>{this.props.text}</p> : null }
-        { this.props.legend ? <small>{this.props.legend}</small> : null}
-        { this.props.actions ? <Navigation className={style.navigation} actions={this.props.actions} /> : null }
-        { <Ripple ref="ripple" className={style.ripple} loading={this.state.loading} /> }
+      <div
+        data-react-toolbox='card'
+        data-flex='vertical grow'
+        data-react-toolbox='card'
+        className={className}
+        onMouseDown={this.handleMouseDown}
+      >
+        { this.renderTitle() }
+        { this.props.text ? <p className={style.text}>{this.props.text}</p> : null }
+        { this.renderActions() }
+        <Ripple
+          ref='ripple'
+          className={style.ripple}
+          loading={this.state.loading}
+          spread={2.5}
+        />
       </div>
     );
   },

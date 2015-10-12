@@ -1,11 +1,10 @@
-/* global React */
-
-import { addons } from 'react/addons';
-import css from './style';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import style from './style';
 import time from '../utils/time';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Day',
 
@@ -33,7 +32,7 @@ export default React.createClass({
 
   render () {
     return (
-      <div className={this.isSelected() ? `${css.day} active` : css.day} style={this.dayStyle()}>
+      <div className={this.isSelected() ? `${style.day} ${style.active}` : style.day} style={this.dayStyle()}>
           <span onClick={this.props.onClick}>{this.props.day}</span>
       </div>
     );

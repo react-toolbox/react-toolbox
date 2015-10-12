@@ -1,5 +1,4 @@
-/* global React */
-
+import React from 'react';
 import style from './style';
 
 export default React.createClass({
@@ -32,9 +31,9 @@ export default React.createClass({
 
   render () {
     let className = `${style.tab} ${this.props.className}`;
-    if (this.props.active) className += ' active';
-    if (this.props.disabled) className += ' disabled';
-    if (this.props.hidden) className += ' hidden';
+    if (this.props.active) className += ` ${style.active}`;
+    if (this.props.disabled) className += ` ${style.disabled}`;
+    if (this.props.hidden) className += ` ${style.hidden}`;
 
     return (
       <section

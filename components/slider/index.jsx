@@ -1,6 +1,6 @@
-/* global React */
-
-import css from './style';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import style from './style';
 import utils from '../utils';
 import ProgressBar from '../progress_bar';
 import Input from '../input';
@@ -58,7 +58,7 @@ export default React.createClass({
   },
 
   onResize () {
-    const {left, right} = this.refs.progressbar.getDOMNode().getBoundingClientRect();
+    const {left, right} = ReactDOM.findDOMNode(this.refs.progressbar).getBoundingClientRect();
     this.setState({sliderStart: left, sliderLength: right - left});
   },
 
@@ -70,15 +70,15 @@ export default React.createClass({
     utils.events.removeEventsFromDocument(this.getKeyboardEvents());
   },
 
-  onInputChange (event) {
-    this.setState({value: this.trimValue(event.target.value) });
+  onInputChange () {
+    this.setState({value: this.trimValue(this.refs.input.getValue()) });
   },
 
   onKeyDown (event) {
-    event.stopPropagation();
-    if (event.keyCode in [13, 27]) this.getDOMNode().blur();
+    if ([13, 27].indexOf(event.keyCode) !== -1) ReactDOM.findDOMNode(this).blur();
     if (event.keyCode === 38) this.addToValue(this.props.step);
     if (event.keyCode === 40) this.addToValue(-this.props.step);
+    if (event.keyCode !== 9) utils.events.pauseEvent(event);
   },
 
   onMouseDown (event) {
@@ -176,10 +176,10 @@ export default React.createClass({
   renderSnaps () {
     if (this.props.snaps) {
       return (
-        <div ref='snaps' className={css.snaps}>
+        <div ref='snaps' className={style.snaps}>
           {
             utils.range(0, (this.props.max - this.props.min) / this.props.step).map(i => {
-              return (<div key={`span-${i}`} className={css.snap}></div>);
+              return (<div key={`span-${i}`} className={style.snap}></div>);
             })
           }
         </div>
@@ -192,7 +192,7 @@ export default React.createClass({
       return (
         <Input
           ref='input'
-          className={css.input}
+          className={style.input}
           onChange={this.onInputChange}
           value={this.valueForInput(this.state.value)} />
       );
@@ -202,38 +202,39 @@ export default React.createClass({
   render () {
     let knobStyles = utils.prefixer({transform: `translateX(${this.knobOffset()}px)`});
     let className = this.props.className;
-    if (this.props.editable) className += ' editable';
-    if (this.props.pinned) className += ' pinned';
-    if (this.state.pressed) className += ' pressed';
-    if (this.state.value === this.props.min) className += ' ring';
+    if (this.props.editable) className += ` ${style.editable}`;
+    if (this.props.pinned) className += ` ${style.pinned}`;
+    if (this.state.pressed) className += ` ${style.pressed}`;
+    if (this.state.value === this.props.min) className += ` ${style.ring}`;
 
     return (
       <div
-        className={css.root + className}
+        data-react-toolbox='slider'
+        className={style.root + className}
         tabIndex='0'
         onFocus={this.onSliderFocus}
         onBlur={this.onSliderBlur} >
 
         <div
           ref='slider'
-          className={css.container}
+          className={style.container}
           onTouchStart={this.onTouchStart}
           onMouseDown={this.onMouseDown} >
 
           <div
             ref='knob'
-            className={css.knob}
+            className={style.knob}
             style={knobStyles}
             onMouseDown={this.onMouseDown}
             onTouchStart={this.onTouchStart} >
-              <div className={css.knobInner} data-value={parseInt(this.state.value)}></div>
+              <div className={style.innerknob} data-value={parseInt(this.state.value)}></div>
           </div>
 
-          <div className={css.progress}>
+          <div className={style.progress}>
             <ProgressBar
               ref='progressbar'
               mode='determinate'
-              className={css.progressInner}
+              className={style.innerprogress}
               value={this.state.value}
               max={this.props.max}
               min={this.props.min}/>

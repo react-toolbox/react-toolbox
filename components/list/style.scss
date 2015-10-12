@@ -1,0 +1,25 @@
+@import "../variables";
+
+$list-color: unquote("rgb(#{$color-black})") !default;
+$list-background: unquote("rgb(#{$color-white})") !default;
+
+.root {
+  list-style: none;
+
+  &, a {
+    color: $list-color;
+  }
+
+  > li {
+    overflow: hidden;
+    background-color: $list-background;
+    box-shadow: $zdepth-shadow-1;
+    transition-timing-function: $animation-curve-default;
+    transition-duration: $animation-duration;
+    transition-property: box-shadow;
+
+    &:hover {
+      box-shadow: $zdepth-shadow-2;
+    }
+  }
+}

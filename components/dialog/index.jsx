@@ -1,9 +1,11 @@
-/* global React */
-
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import Button from '../button';
 import style from './style';
-import Navigation from '../navigation';
 
 export default React.createClass({
+  mixins: [PureRenderMixin],
+
   displayName: 'Dialog',
 
   propTypes: {
@@ -17,7 +19,7 @@ export default React.createClass({
   getDefaultProps () {
     return {
       actions: [],
-      className: 'normal'
+      type: 'normal'
     };
   },
 
@@ -25,18 +27,30 @@ export default React.createClass({
     return { active: this.props.active };
   },
 
+  renderActions () {
+    return this.props.actions.map((action, idx) => {
+      let className = style.button;
+      if (action.className) className += ` ${action.className}`;
+      return <Button key={idx} {...action} className={className} />;
+    });
+  },
+
   render () {
-    let rootClass = style.root;
-    let containerClass = `${style.container} ${this.props.className}`;
-    if (this.state.active) rootClass += ' active';
-    if (this.props.type) containerClass += ` ${this.props.type}`;
+    let className = `${style.root} ${style[this.props.type]}`;
+    if (this.state.active) className += ` ${style.active}`;
+    if (this.props.className) className += ` ${this.props.className}`;
 
     return (
-      <div data-react-toolbox='dialog' data-flex='vertical center' className={rootClass}>
-        <div className={containerClass}>
-          { this.props.title ? <h1>{this.props.title}</h1> : null }
-          { this.props.children }
-          { this.props.actions.length > 0 ? <Navigation actions={this.props.actions}/> : null }
+      <div data-react-toolbox='dialog' className={className}>
+        <div role='overlay' className={style.overlay} />
+        <div role='content' className={style.content}>
+          <section role='body' className={style.body}>
+            { this.props.title ? <h6 className={style.title}>{this.props.title}</h6> : null }
+            { this.props.children }
+          </section>
+          <nav role='navigation' className={style.navigation}>
+            { this.renderActions() }
+          </nav>
         </div>
       </div>
     );

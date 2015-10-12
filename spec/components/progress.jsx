@@ -1,5 +1,4 @@
-/* global React */
-
+import React from 'react';
 import ProgressBar from '../../components/progress_bar';
 
 export default React.createClass({
@@ -43,14 +42,13 @@ export default React.createClass({
   render () {
     return (
       <section>
-        <h2>Progress bars</h2>
-
-        <p>Determinate</p>
-        <ProgressBar mode="determinate" value={this.state.progress} buffer={this.state.buffer}/>
-        <p>Indeterminate...</p>
-        <ProgressBar mode="indeterminate"/>
-        <p>Circular</p>
-        <ProgressBar type="circular" mode="indeterminate"/>
+        <h5>Progress bars</h5>
+        <p style={{margin: '10px auto'}}>Determinate</p>
+        <ProgressBar mode='determinate' value={this.state.progress} buffer={this.state.buffer}/>
+        <p style={{margin: '10px auto'}}>Indeterminate...</p>
+        <ProgressBar mode='indeterminate'/>
+        <p style={{margin: '10px auto'}}>Circular</p>
+        <ProgressBar type='circular' mode='indeterminate'/>
       </section>
     );
   }

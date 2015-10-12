@@ -1,10 +1,9 @@
-/* global React */
-
-import { addons } from 'react/addons';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'FontIcon',
 
@@ -19,19 +18,13 @@ export default React.createClass({
     };
   },
 
-  onClick (event) {
-    if (this.props.onClick) {
-      this.props.onClick(event);
-    }
-  },
-
   render () {
+    let className = style[this.props.value];
+    if (this.props.className) className += ` ${this.props.className}`;
     return (
-      <span
-        data-react-toolbox='icon'
-        className={`${style.root} ${this.props.className} ${this.props.value}`}
-        onClick={this.props.onClick}
-      />
+      <span data-react-toolbox='icon' {...this.props} className={className}>
+        {this.props.children}
+      </span>
     );
   }
 });

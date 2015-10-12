@@ -1,12 +1,12 @@
-/* global React */
-
-import { addons } from 'react/addons';
-import css from './style';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
+import style from './style.scss';
+import events from '../utils/events';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Button',
 
@@ -14,6 +14,8 @@ export default React.createClass({
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     icon: React.PropTypes.string,
+    primary: React.PropTypes.bool,
+    accent: React.PropTypes.bool,
     label: React.PropTypes.string,
     loading: React.PropTypes.bool,
     ripple: React.PropTypes.bool,
@@ -32,26 +34,29 @@ export default React.createClass({
     return { loading: this.props.loading };
   },
 
-  handleClick (event) {
-    if (this.props.onClick) this.props.onClick(event, this);
+  handleMouseDown (event) {
+    events.pauseEvent(event);
+    this.refs.ripple.start(event);
   },
 
   render () {
-    let className = this.props.className;
-    if (this.props.type) className += ` ${this.props.type}`;
-    if (this.state.focused) className += ' focused';
+    let className = style[this.props.type];
+    if (this.props.className) className += ` ${this.props.className}`;
 
     return (
       <button
-        className={css.root + ' ' + className}
-        data-flex='horizontal center'
         data-react-toolbox='button'
+        {...this.props}
+        type=''
+        label=''
+        data-toolbox='button'
+        className={className}
         disabled={this.props.disabled || this.state.loading}
-        onClick={this.handleClick}
+        onMouseDown={this.handleMouseDown}
       >
-        { this.props.icon ? <FontIcon value={this.props.icon}/> : null }
-        { this.props.label ? <abbr>{this.props.label}</abbr> : null }
-        { this.props.ripple ? <Ripple loading={this.props.loading}/> : null }
+        { this.props.ripple ? <Ripple ref='ripple' loading={this.props.loading}/> : null }
+        { this.props.icon ? <FontIcon className={style.icon} value={this.props.icon}/> : null }
+        { this.props.label ? <abbr className={style.label}>{this.props.label}</abbr> : null }
       </button>
     );
   },

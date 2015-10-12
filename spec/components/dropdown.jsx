@@ -1,5 +1,4 @@
-/* global React */
-
+import React from 'react';
 import Dropdown from '../../components/dropdown';
 
 export default React.createClass({
@@ -44,7 +43,7 @@ export default React.createClass({
   render () {
     return (
       <section>
-        <h2>Dropdown</h2>
+        <h5>Dropdown</h5>
         <p>lorem ipsum...</p>
         <Dropdown dataSource={this.state.countries} label="Countries" onChange={this.onChange}/>
         <Dropdown dataSource={this.state.countries} disabled={true} onChange={this.onChange}/>

@@ -1,12 +1,12 @@
-/* global React */
-
-import { addons } from 'react/addons';
-import css from './style';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import utils from '../utils';
 import Input from '../input';
+import style from './style';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Autocomplete',
 
@@ -19,7 +19,6 @@ export default React.createClass({
     multiple: React.PropTypes.bool,
     onChange: React.PropTypes.func,
     required: React.PropTypes.bool,
-    type: React.PropTypes.string,
     value: React.PropTypes.any
   },
 
@@ -27,8 +26,7 @@ export default React.createClass({
     return {
       className: '',
       dataSource: {},
-      multiple: true,
-      type: 'text'
+      multiple: true
     };
   },
 
@@ -37,12 +35,17 @@ export default React.createClass({
       dataSource: this._indexDataSource(this.props.dataSource),
       focus: false,
       query: '',
-      values: new Map()
+      up: false,
+      values: new Map(),
+      width: undefined
     };
   },
 
   componentDidMount () {
     if (this.props.value) this.setValue(this.props.value);
+    this.setState({
+      width: ReactDOM.findDOMNode(this).getBoundingClientRect().width
+    });
   },
 
   componentWillReceiveProps (props) {
@@ -77,8 +80,15 @@ export default React.createClass({
   },
 
   handleFocus () {
-    this.refs.suggestions.getDOMNode().scrollTop = 0;
-    this.setState({active: '', focus: true});
+    let client = event.target.getBoundingClientRect();
+    let screen_height = window.innerHeight || document.documentElement.offsetHeight;
+
+    this.refs.suggestions.scrollTop = 0;
+    this.setState({
+      active: '',
+      up: client.top > ((screen_height / 2) + client.height),
+      focus: true
+    });
   },
 
   handleBlur () {
@@ -162,40 +172,54 @@ export default React.createClass({
   renderSelected () {
     if (this.props.multiple) {
       return (
-        <ul className={css.values} data-flex='horizontal wrap' onClick={this.handleUnselect}>
+        <ul data-flex='horizontal wrap' onClick={this.handleUnselect}>
           {[...this.state.values].map(([key, value]) => {
-            return (<li key={key} id={key}>{value}</li>);
+            return (<li className={style.value} key={key} id={key}>{value}</li>);
           })}
         </ul>
       );
     }
   },
 
+  renderSuggestions () {
+    return [...this._getSuggestions()].map(([key, value]) => {
+      let className = style.suggestion;
+      if (this.state.active === key) className += ` ${style.active}`;
+      return <li id={key} key={key} className={className}>{value}</li>;
+    });
+  },
+
   render () {
-    let className = `${css.root} ${this.props.className}`;
-    if (this.props.type) className += ` ${this.props.type}`;
-    if (this.state.focus) className += ' focus';
+    let className = style.root;
+    if (this.props.className) className += ` ${this.props.className}`;
+    if (this.state.focus) className += ` ${style.focus}`;
+
+    let suggestionsClassName = style.suggestions;
+    if (this.state.up) suggestionsClassName += ` ${style.up}`;
+    let suggestionsStyle = {width: this.state.width};
 
     return (
       <div data-react-toolbox='autocomplete' className={className}>
-        {this.props.label ? (<label>{this.props.label}</label>) : ''}
+        {this.props.label ? <label className={style.label}>{this.props.label}</label> : ''}
         {this.renderSelected()}
-        <Input {...this.props} ref='input' label='' value=''
-               onBlur={this.handleBlur}
-               onChange={this.handleQueryChange}
-               onFocus={this.handleFocus}
-               onKeyUp={this.handleKeyPress} />
-        <ul ref='suggestions'
-            className={css.suggestions}
-            onMouseDown={this.handleSelect}
-            onMouseOver={this.handleHover}>
-          {[...this._getSuggestions()].map(([key, value]) => {
-            return (
-              <li id={key} key={key} className={this.state.active === key ? 'active' : ''}>
-                {value}
-              </li>
-            );
-          })}
+        <Input
+          ref='input'
+          {...this.props}
+          label=''
+          value=''
+          className={style.input}
+          onBlur={this.handleBlur}
+          onChange={this.handleQueryChange}
+          onFocus={this.handleFocus}
+          onKeyUp={this.handleKeyPress} />
+        <ul
+          ref='suggestions'
+          className={suggestionsClassName}
+          onMouseDown={this.handleSelect}
+          onMouseOver={this.handleHover}
+          style={suggestionsStyle}
+        >
+          {this.renderSuggestions()}
         </ul>
       </div>
     );

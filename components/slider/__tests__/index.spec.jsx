@@ -1,14 +1,13 @@
-/* global React */
-
 import expect from 'expect';
 import sinon from 'sinon';
 import utils from '../../utils/testing';
+import style from '../../slider/style';
 import ProgressBar from '../../progress_bar';
 import Input from '../../input';
 import Slider from '../index';
+import TestUtils from 'react-addons-test-utils';
 
 describe('Slider', function () {
-  const TestUtils = React.addons.TestUtils;
   let props, state, slider, progress, input;
 
   describe('#positionToValue', function () {
@@ -109,10 +108,10 @@ describe('Slider', function () {
 
     it('contains the proper number of snaps when snapped', function () {
       slider = utils.shallowRenderComponent(Slider, {editable: true, pinned: true});
-      expect(slider.props.className).toContain('ring');
-      expect(slider.props.className).toContain('pinned');
+      expect(slider.props.className).toContain(style.ring);
+      expect(slider.props.className).toContain(style.pinned);
       slider = utils.shallowRenderComponent(Slider, {editable: true, value: 50});
-      expect(slider.props.className).toNotContain('ring');
+      expect(slider.props.className).toNotContain(style.ring);
     });
   });
 

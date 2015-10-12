@@ -1,13 +1,12 @@
-/* global React */
-
-import { addons } from 'react/addons';
-import css from './style';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import style from './style';
 import time from '../utils/time';
 import Hours from './hours';
 import Minutes from './minutes';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Clock',
 
@@ -80,7 +79,7 @@ export default React.createClass({
   },
 
   calculateShape () {
-    let { top, left, width } = this.refs.wrapper.getDOMNode().getBoundingClientRect();
+    let { top, left, width } = this.refs.wrapper.getBoundingClientRect();
     this.setState({
       center: { x: left + width / 2, y: top + width / 2 },
       radius: width / 2
@@ -95,7 +94,8 @@ export default React.createClass({
         onChange={this.onHourChange}
         radius={this.state.radius}
         selected={this.state.time.getHours()}
-        spacing={this.state.radius * 0.16} />
+        spacing={this.state.radius * 0.18}
+      />
     );
   },
 
@@ -106,14 +106,15 @@ export default React.createClass({
         onChange={this.onMinuteChange}
         radius={this.state.radius}
         selected={this.state.time.getMinutes()}
-        spacing={this.state.radius * 0.16} />
+        spacing={this.state.radius * 0.18}
+      />
     );
   },
 
   render () {
     return (
-      <div className={css.root}>
-        <div ref="wrapper" className={css.wrapper} style={{height: this.state.radius * 2}}>
+      <div data-react-toolbox='clock' className={style.root}>
+        <div ref="wrapper" className={style.wrapper} style={{height: this.state.radius * 2}}>
           { this.props.display === 'hours' ? this.renderHours() : '' }
           { this.props.display === 'minutes' ? this.renderMinutes() : '' }
         </div>

@@ -1,11 +1,10 @@
-/* global React */
-
-import { addons } from 'react/addons';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 import FontIcon from '../font_icon';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Link',
 
@@ -25,20 +24,16 @@ export default React.createClass({
     };
   },
 
-  onClick (event) {
-    if (this.props.onClick) {
-      this.props.onClick(event, this);
-    }
-  },
-
   render () {
+    let className = style.root;
+    if (this.props.className) className += ` ${this.props.className}`;
     return (
       <a
+        {...this.props}
         data-react-toolbox='link'
         data-flex='horizontal center'
-        href={`${this.props.route}`}
-        className={`${style.root} ${this.props.className}`}
-        onClick={this.onClick}
+        href={this.props.route}
+        className={className}
       >
         { this.props.icon ? <FontIcon className={style.icon} value={this.props.icon} /> : null }
         { this.props.label ? <abbr>{this.props.label}</abbr> : null }

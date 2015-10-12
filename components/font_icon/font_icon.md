@@ -10,4 +10,4 @@ var FontIcon  = require('react-toolbox/components/font_icon');
 
 | Name              | Type          | Default         | Description|
 |:-                 |:-:            | :-              |:-|
-| **value**         | String        |                 | The keyString for the icon you want representate.|
+| **value**         | String        |                 | The keyString for the icon you want be displayed.|

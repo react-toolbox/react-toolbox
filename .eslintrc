@@ -55,7 +55,7 @@
     "max-statements": [0, 10],
     "new-parens": [2],
     "new-cap": [2, {
-      "capIsNewExceptions": ["ToInteger", "ToObject", "ToPrimitive", "ToUint32"]
+      "capIsNewExceptions": ["CSSModules", "ToInteger", "ToObject", "ToPrimitive", "ToUint32"]
     }],
     "newline-after-var": [0],
     "no-alert": [2],

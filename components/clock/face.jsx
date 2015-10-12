@@ -1,10 +1,9 @@
-/* global React */
-
-import { addons } from 'react/addons';
-import css from './style';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import style from './style';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Face',
 
@@ -33,10 +32,14 @@ export default React.createClass({
   },
 
   renderNumber (number, idx) {
+    let className = style.number;
+    if (number === this.props.active) className += ` ${style.active}`;
     return (
-      <span className={css.number + (number === this.props.active ? ' active' : '')}
-            style={this.numberStyle(this.props.radius - this.props.spacing, idx + 1)}
-            key={number}>
+      <span
+        className={className}
+        style={this.numberStyle(this.props.radius - this.props.spacing, idx + 1)}
+        key={number}
+      >
         { this.props.twoDigits ? ('0' + number).slice(-2) : number }
       </span>
     );
@@ -44,11 +47,13 @@ export default React.createClass({
 
   render () {
     return (
-      <div ref="root"
-           className={css.face}
-           onTouchStart={this.props.onTouchStart}
-           onMouseDown={this.props.onMouseDown}
-           style={this.faceStyle()}>
+      <div
+        ref="root"
+        className={style.face}
+        onTouchStart={this.props.onTouchStart}
+        onMouseDown={this.props.onMouseDown}
+        style={this.faceStyle()}
+      >
         { this.props.numbers.map(this.renderNumber)}
       </div>
     );

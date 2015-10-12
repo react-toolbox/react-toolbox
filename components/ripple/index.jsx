@@ -1,24 +1,26 @@
-/* global React */
-
-import { addons } from 'react/addons';
-import style from './style';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import style from './style.scss';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Ripple',
 
   propTypes: {
-    auto: React.PropTypes.bool,
+    centered: React.PropTypes.bool,
     className: React.PropTypes.string,
-    loading: React.PropTypes.bool
+    loading: React.PropTypes.bool,
+    spread: React.PropTypes.number
   },
 
   getDefaultProps () {
     return {
-      auto: true,
+      centered: false,
       className: '',
-      loading: false
+      loading: false,
+      spread: 2
     };
   },
 
@@ -33,44 +35,39 @@ export default React.createClass({
   },
 
   start ({ pageX, pageY }) {
+    document.addEventListener('mouseup', this.end);
     const {top, left, width} = this._getDescriptor(pageX, pageY);
     this.setState({active: false, restarting: true, width: 0}, () => {
-      this.refs.ripple.getDOMNode().offsetWidth; //eslint-disable-line no-unused-expressions
+      this.refs.ripple.offsetWidth; //eslint-disable-line no-unused-expressions
       this.setState({active: true, restarting: false, top: top, left: left, width: width});
     });
   },
 
   end () {
+    document.removeEventListener('mouseup', this.end);
     this.setState({active: false});
   },
 
   _getDescriptor (pageX, pageY) {
-    let { left, top, width } = this.getDOMNode().getBoundingClientRect();
+    let { left, top, height, width } = ReactDOM.findDOMNode(this).getBoundingClientRect();
     return {
-      left: pageX - left,
-      top: pageY - top,
-      width: width * 2.5
+      left: this.props.centered ? width / 2 : pageX - left,
+      top: this.props.centered ? height / 2 : pageY - top,
+      width: width * this.props.spread
     };
   },
 
   render () {
     let { left, top, width } = this.state;
-    let className = `${style.ripple} ${this.props.className}`;
-    if (this.state.active) className += ' active';
-    if (this.state.restarting) className += ' restarting';
-    if (this.props.loading) className += ' loading';
+    let rippleStyle = {left: left, top: top, width: width, height: width};
+    let className = style[this.props.loading ? 'loading' : 'normal'];
+    if (this.state.active) className += ` ${style.active}`;
+    if (this.state.restarting) className += ` ${style.restarting}`;
+    if (this.props.className) className += ` ${this.props.className}`;
 
     return (
-      <span
-        className={style.root}
-        onMouseDown={this.props.auto ? this.start : null}
-        onMouseUp={this.end}>
-
-        <span
-          ref="ripple"
-          className={className}
-          style={{left: left, top: top, width: width, height: width}}>
-        </span>
+      <span data-react-toolbox='ripple' className={style.wrapper}>
+        <span ref="ripple" role='ripple' className={className} style={rippleStyle} />
       </span>
     );
   }

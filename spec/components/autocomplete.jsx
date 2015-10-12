@@ -1,5 +1,4 @@
-/* global React */
-
+import React from 'react';
 import Autocomplete from '../../components/autocomplete';
 
 export default React.createClass({
@@ -28,8 +27,8 @@ export default React.createClass({
 
     return (
       <section>
-        <h2>Autocomplete</h2>
-        <p>lorem ipsum...</p>
+        <h5>Autocomplete</h5>
+        <p>You can have a multiple or simple autocomplete.</p>
 
         <Autocomplete
           ref="autocomplete_multiple"

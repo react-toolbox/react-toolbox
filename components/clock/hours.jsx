@@ -1,16 +1,16 @@
-/* global React */
-
-import { addons } from 'react/addons';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import utils from '../utils';
 import Face from './face';
 import Hand from './hand';
 
 const outerNumbers = [0, ...utils.range(13, 24)];
 const innerNumbers = [12, ...utils.range(1, 12)];
+const innerSpacing = 1.7;
 const step = 360 / 12;
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Hours',
 
@@ -28,10 +28,13 @@ export default React.createClass({
   },
 
   onHandMove (degrees, radius) {
-    let currentInner = radius < this.props.radius - this.props.spacing * 2;
-    this.props.onChange(this.valueFromDegrees(degrees));
+    let currentInner = radius < this.props.radius - this.props.spacing * innerSpacing;
     if (this.props.format === '24hr' && this.state.inner !== currentInner) {
-      this.setState({inner: currentInner});
+      this.setState({inner: currentInner}, () => {
+        this.props.onChange(this.valueFromDegrees(degrees));
+      });
+    } else {
+      this.props.onChange(this.valueFromDegrees(degrees));
     }
   },
 
@@ -60,7 +63,8 @@ export default React.createClass({
           numbers={innerNumbers}
           spacing={this.props.spacing}
           radius={innerRadius}
-          active={this.props.selected} />
+          active={this.props.selected}
+        />
       );
     }
   },
@@ -78,15 +82,17 @@ export default React.createClass({
             spacing={spacing}
             radius={radius}
             twoDigits={is24hr}
-            active={is24hr ? selected : (selected % 12 || 12)} />
-          { this.renderInnerFace(radius - spacing * 2) }
+            active={is24hr ? selected : (selected % 12 || 12)}
+          />
+          { this.renderInnerFace(radius - spacing * innerSpacing) }
           <Hand ref='hand'
             angle={selected * step}
-            length={(this.state.inner ? radius - spacing * 2 : radius) - spacing}
+            length={(this.state.inner ? radius - spacing * innerSpacing : radius) - spacing}
             onMove={this.onHandMove}
             onMoved={onHandMoved}
             origin={center}
-            step={step} />
+            step={step}
+          />
       </div>
     );
   }

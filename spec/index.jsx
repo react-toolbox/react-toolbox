@@ -1,17 +1,19 @@
-/* global React */
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import Drawer from './components/drawer';
 import Autocomplete from './components/autocomplete';
 import Button from './components/button';
 import Card from './components/card';
+import Checkbox from './components/checkbox';
 import Dialog from './components/dialog';
+import Drawer from './components/drawer';
 import Dropdown from './components/dropdown';
-import FontIcon from './components/font_icon';
-import Form from './components/form';
+import Input from './components/input';
+import Pickers from './components/pickers';
 import Progress from './components/progress';
+import RadioGroup from './components/radio_group';
 import Slider from './components/slider';
 import Switch from './components/switch';
-import Pickers from './components/pickers';
 import Tabs from './components/tabs';
 
 const Test = React.createClass({
@@ -19,24 +21,26 @@ const Test = React.createClass({
 
   render () {
     return (
-      <app data-toolbox={true}>
-        <h1>React-Toolbox <small>New way for create</small></h1>
-          <Drawer />
-          <Autocomplete />
-          <Button />
-          <Card />
-          <Dialog />
-          <Dropdown />
-          <FontIcon />
-          <Form />
-          <Progress />
-          <Slider />
-          <Switch />
-          <Tabs />
-          <Pickers />
+      <app data-react-toolbox-app>
+        <h1>React Toolbox</h1>
+        <h3>Component Spec v0.10.9</h3>
+        <Autocomplete />
+        <Button />
+        <Card />
+        <Checkbox />
+        <Dialog />
+        <Drawer />
+        <Dropdown />
+        <Input />
+        <Pickers />
+        <Progress />
+        <RadioGroup />
+        <Slider />
+        <Switch />
+        <Tabs />
       </app>
     );
   }
 });
 
-React.render(<Test/>, document.body);
+ReactDOM.render(<Test/>, document.getElementById('toolbox-test'));

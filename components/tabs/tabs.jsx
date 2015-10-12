@@ -1,19 +1,9 @@
-/* global React */
-
-import { addons } from 'react/addons';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 
-function _pointerPosition (index = 0, navigation) {
-  const label = navigation.children[index].getBoundingClientRect();
-  return {
-    top: `${navigation.getBoundingClientRect().height}px`,
-    left: `${label.left}px`,
-    width: `${label.width}px`
-  };
-}
-
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'Tabs',
 
@@ -39,7 +29,7 @@ export default React.createClass({
 
   componentDidMount () {
     this.setState({
-      pointer: _pointerPosition(this.state.index, this.refs.navigation.getDOMNode())
+      pointer: this._pointerPosition(this.state.index, this.refs.navigation)
     });
   },
 
@@ -47,27 +37,45 @@ export default React.createClass({
     const index = next_props.index || this.state.index;
     this.setState({
       index: index,
-      pointer: _pointerPosition(index, this.refs.navigation.getDOMNode())
+      pointer: this._pointerPosition(index, this.refs.navigation)
     });
+  },
+
+  _pointerPosition (index = 0, navigation) {
+    const startPoint = this.refs.tabs.getBoundingClientRect().left;
+    const label = navigation.children[index].getBoundingClientRect();
+
+    return {
+      top: `${navigation.getBoundingClientRect().height}px`,
+      left: `${label.left - startPoint}px`,
+      width: `${label.width}px`
+    };
   },
 
   onClick (index) {
     this.setState({
       index: index,
-      pointer: _pointerPosition(index, this.refs.navigation.getDOMNode())
+      pointer: this._pointerPosition(index, this.refs.navigation)
     });
     if (this.props.onChange) this.props.onChange(this);
   },
 
+  renderLabels (labels) {
+    return labels.map((props) => {
+      return <label {...props}>{ props.label }</label>;
+    });
+  },
+
   render () {
     let labels = [];
+
     const tabs = this.props.children.map((tab, index) => {
       let active = this.state.index === index;
+      let className = `${style.label} ${tab.props.className}`;
 
-      let className = tab.props.className;
-      if (active) className += ' active';
-      if (tab.props.disabled) className += ' disabled';
-      if (tab.props.hidden) className += ' hidden';
+      if (active) className += ` ${style.active}`;
+      if (tab.props.disabled) className += ` ${style.disabled}`;
+      if (tab.props.hidden) className += ` ${style.hidden}`;
 
       labels.push({
         className: className,
@@ -79,16 +87,15 @@ export default React.createClass({
       return React.cloneElement(tab, {active: active, key: index, tabIndex: index });
     });
 
+    let className = style.root;
+    if (this.props.className) className += ` ${this.props.className}`;
+
     return (
-      <div
-        data-react-toolbox='tabs'
-        className={style.root + ' ' + this.props.className}
-        data-flex='vertical'
-      >
-        <nav ref='navigation' data-flex='horizontal'>
-          { labels.map((props) => { return <label {...props}>{props.label}</label>; }) }
+      <div data-react-toolbox='tabs' ref='tabs' className={className} data-flex='vertical'>
+        <nav className={style.navigation} ref='navigation' data-flex='horizontal'>
+          { this.renderLabels(labels) }
         </nav>
-        <span className={style.pointer} style={this.state.pointer}></span>
+        <span className={style.pointer} style={this.state.pointer} />
         { tabs }
       </div>
     );

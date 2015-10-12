@@ -1,7 +1,5 @@
-/* global React */
-
-import { Tabs } from '../../components/tabs';
-import { Tab } from '../../components/tabs';
+import React from 'react';
+import { Tabs, Tab } from '../../components/tabs';
 
 export default React.createClass({
   displayName: 'TabsTest',
@@ -9,13 +7,15 @@ export default React.createClass({
   render () {
     return (
       <section>
-        <h2>Tabs</h2>
-        <Tabs>
-          <Tab label='Primary'><small>primary</small></Tab>
-          <Tab label='Secondary'><small>secondary</small></Tab>
-          <Tab label='Third' disabled><small>third</small></Tab>
-          <Tab label='Fourth' hidden><small>Fourth</small></Tab>
-          <Tab label='Fifth'><small>Fifth</small></Tab>
+      <h5>Tabs</h5>
+      <p>This tabs can be disabled or hidden</p>
+
+      <Tabs>
+          <Tab label='Primary'><small>Primary content</small></Tab>
+          <Tab label='Secondary'><small>Secondary content</small></Tab>
+          <Tab label='Third' disabled><small>Disabled content</small></Tab>
+          <Tab label='Fourth' hidden><small>Fourth content hidden</small></Tab>
+          <Tab label='Fifth'><small>Fifth content</small></Tab>
         </Tabs>
       </section>
     );

@@ -1,17 +1,16 @@
-/* global React */
-
-import { addons } from 'react/addons';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   displayName: 'List',
 
   propTypes: {
     className: React.PropTypes.string,
     dataSource: React.PropTypes.array,
-    ItemFactory: React.PropTypes.func,
+    template: React.PropTypes.func,
     onClick: React.PropTypes.func,
     type: React.PropTypes.string
   },
@@ -38,7 +37,7 @@ export default React.createClass({
     const items = this.props.dataSource.map((data, index) => {
       return (
         <li key={index} onClick={this.onClick.bind(null, data, index)}>
-          {this.props.itemFactory(data, index)}
+          {this.props.template(data, index)}
         </li>
       );
     });

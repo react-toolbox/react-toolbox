@@ -1,4 +1,4 @@
-/* global React */
+import React from 'react';
 
 // React-Toolbox full dependency way:
 // import {Button, Form} from 'react-toolbox'

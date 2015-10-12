@@ -1,0 +1,34 @@
+@import "../variables";
+
+.icon {
+  margin-right: $unit;
+  font-size: 1.8 * $unit;
+}
+
+.root {
+  position: relative;
+  overflow: hidden;
+  transition: opacity $animation-duration $animation-curve-default;
+
+  &:not(.active) {
+    font-weight: $font-weight-thin;
+    opacity: .5;
+  }
+
+  &:hover, &:active {
+    opacity: 1;
+  }
+
+  > * {
+    vertical-align: middle;
+  }
+
+  > abbr {
+    text-transform: capitalize;
+  }
+
+  > small {
+    font-size: $font-size-tiny;
+    text-align: center;
+  }
+}

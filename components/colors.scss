@@ -1,0 +1,163 @@
+//-- Color definitions taken from Material Design Lite
+$palette-indigo:
+"232,234,246"
+"197,202,233"
+"159,168,218"
+"121,134,203"
+"92,107,192"
+"63,81,181"
+"57,73,171"
+"48,63,159"
+"40,53,147"
+"26,35,126"
+"140,158,255"
+"83,109,254"
+"61,90,254"
+"48,79,254";
+
+$palette-indigo-50: nth($palette-indigo, 1);
+$palette-indigo-100: nth($palette-indigo, 2);
+$palette-indigo-200: nth($palette-indigo, 3);
+$palette-indigo-300: nth($palette-indigo, 4);
+$palette-indigo-400: nth($palette-indigo, 5);
+$palette-indigo-500: nth($palette-indigo, 6);
+$palette-indigo-600: nth($palette-indigo, 7);
+$palette-indigo-700: nth($palette-indigo, 8);
+$palette-indigo-800: nth($palette-indigo, 9);
+$palette-indigo-900: nth($palette-indigo, 10);
+$palette-indigo-a100: nth($palette-indigo, 11);
+$palette-indigo-a200: nth($palette-indigo, 12);
+$palette-indigo-a400: nth($palette-indigo, 13);
+$palette-indigo-a700: nth($palette-indigo, 14);
+
+$palette-pink:
+"252,228,236"
+"248,187,208"
+"244,143,177"
+"240,98,146"
+"236,64,122"
+"233,30,99"
+"216,27,96"
+"194,24,91"
+"173,20,87"
+"136,14,79"
+"255,128,171"
+"255,64,129"
+"245,0,87"
+"197,17,98";
+
+$palette-pink-50: nth($palette-pink, 1);
+$palette-pink-100: nth($palette-pink, 2);
+$palette-pink-200: nth($palette-pink, 3);
+$palette-pink-300: nth($palette-pink, 4);
+$palette-pink-400: nth($palette-pink, 5);
+$palette-pink-500: nth($palette-pink, 6);
+$palette-pink-600: nth($palette-pink, 7);
+$palette-pink-700: nth($palette-pink, 8);
+$palette-pink-800: nth($palette-pink, 9);
+$palette-pink-900: nth($palette-pink, 10);
+$palette-pink-a100: nth($palette-pink, 11);
+$palette-pink-a200: nth($palette-pink, 12);
+$palette-pink-a400: nth($palette-pink, 13);
+$palette-pink-a700: nth($palette-pink, 14);
+
+$palette-grey:
+"250,250,250"
+"245,245,245"
+"238,238,238"
+"224,224,224"
+"189,189,189"
+"158,158,158"
+"117,117,117"
+"97,97,97"
+"66,66,66"
+"33,33,33";
+
+$palette-grey-50: nth($palette-grey, 1);
+$palette-grey-100: nth($palette-grey, 2);
+$palette-grey-200: nth($palette-grey, 3);
+$palette-grey-300: nth($palette-grey, 4);
+$palette-grey-400: nth($palette-grey, 5);
+$palette-grey-500: nth($palette-grey, 6);
+$palette-grey-600: nth($palette-grey, 7);
+$palette-grey-700: nth($palette-grey, 8);
+$palette-grey-800: nth($palette-grey, 9);
+$palette-grey-900: nth($palette-grey, 10);
+
+$palette-blue:
+"227,242,253"
+"187,222,251"
+"144,202,249"
+"100,181,246"
+"66,165,245"
+"33,150,243"
+"30,136,229"
+"25,118,210"
+"21,101,192"
+"13,71,161"
+"130,177,255"
+"68,138,255"
+"41,121,255"
+"41,98,255";
+
+$palette-blue-50: nth($palette-blue, 1);
+$palette-blue-100: nth($palette-blue, 2);
+$palette-blue-200: nth($palette-blue, 3);
+$palette-blue-300: nth($palette-blue, 4);
+$palette-blue-400: nth($palette-blue, 5);
+$palette-blue-500: nth($palette-blue, 6);
+$palette-blue-600: nth($palette-blue, 7);
+$palette-blue-700: nth($palette-blue, 8);
+$palette-blue-800: nth($palette-blue, 9);
+$palette-blue-900: nth($palette-blue, 10);
+$palette-blue-a100: nth($palette-blue, 11);
+$palette-blue-a200: nth($palette-blue, 12);
+$palette-blue-a400: nth($palette-blue, 13);
+$palette-blue-a700: nth($palette-blue, 14);
+
+$palette-light-blue:
+"225,245,254"
+"179,229,252"
+"129,212,250"
+"79,195,247"
+"41,182,246"
+"3,169,244"
+"3,155,229"
+"2,136,209"
+"2,119,189"
+"1,87,155"
+"128,216,255"
+"64,196,255"
+"0,176,255"
+"0,145,234";
+
+$palette-blue-grey:
+"236,239,241"
+"207,216,220"
+"176,190,197"
+"144,164,174"
+"120,144,156"
+"96,125,139"
+"84,110,122"
+"69,90,100"
+"55,71,79"
+"38,50,56";
+
+$palette-blue-grey-50: nth($palette-blue-grey, 1);
+$palette-blue-grey-100: nth($palette-blue-grey, 2);
+$palette-blue-grey-200: nth($palette-blue-grey, 3);
+$palette-blue-grey-300: nth($palette-blue-grey, 4);
+$palette-blue-grey-400: nth($palette-blue-grey, 5);
+$palette-blue-grey-500: nth($palette-blue-grey, 6);
+$palette-blue-grey-600: nth($palette-blue-grey, 7);
+$palette-blue-grey-700: nth($palette-blue-grey, 8);
+$palette-blue-grey-800: nth($palette-blue-grey, 9);
+$palette-blue-grey-900: nth($palette-blue-grey, 10);
+
+$color-black: "0,0,0";
+$color-white: "255,255,255";
+
+//-- The two possible colors for overlayed text.
+$styleguide-generate-template: false !default;
+$color-dark-contrast: $color-white !default;
+$color-light-contrast: $color-black !default;

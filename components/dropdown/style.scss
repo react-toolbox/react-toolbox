@@ -1,0 +1,111 @@
+@import "../variables";
+@import "../mixins";
+$dropdown-color-white: unquote("rgb(#{$color-white})");
+$dropdown-color-primary: unquote("rgb(#{$color-primary})");
+$dropdown-color-primary-contrast: unquote("rgb(#{$color-primary-contrast})");
+$dropdown-value-hover-background: unquote("rgb(#{$palette-grey-200})");
+
+.root {
+  position: relative;
+  width: inherit;
+  margin-bottom: $offset;
+  color: $color-text;
+  border-bottom: 1px solid $color-divider;
+  &:not(.active) {
+    > .values {
+      max-height: 0;
+      visibility: hidden;
+    }
+  }
+  &.active {
+    > .label, > .value {
+      opacity: .5;
+    }
+    > .values {
+      max-height: $items-overflow-max-height;
+      visibility: visible;
+      box-shadow: $zdepth-shadow-1;
+    }
+  }
+  &.disabled {
+    color: $color-text-secondary;
+    pointer-events: none;
+    border-bottom-style: dotted;
+    > .value:after {
+      transform: scale(0);
+    }
+  }
+}
+
+.label, .value {
+  transition: opacity $animation-duration $animation-curve-default;
+}
+
+.label {
+  font-size: $font-size-tiny;
+  color: $color-text-secondary;
+}
+
+.values {
+  position: absolute;
+  z-index: 2;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  list-style: none;
+  background-color: $dropdown-color-white;
+  border-radius: $border-radius;
+  transition-timing-function: $animation-curve-default;
+  transition-duration: $animation-duration;
+  transition-property: max-height, box-shadow;
+  > * {
+    position: relative;
+    padding: $unit;
+    overflow: hidden;
+    cursor: pointer;
+    &:hover {
+      background-color: $dropdown-value-hover-background;
+    }
+    &.selected {
+      color: $dropdown-color-primary;
+    }
+  }
+  &:not(.up) {
+    top: 0;
+    bottom: auto;
+  }
+  &.up {
+    top: auto;
+    bottom: 0;
+  }
+}
+
+.value {
+  display: block;
+  > span {
+    height: $input-height;
+    font-size: $font-size-normal;
+    line-height: $input-height;
+  }
+  > :not(span) {
+    margin: ($offset / 2) 0;
+  }
+  &:after {
+    $size: ($input-height / 7);
+    $border: $size solid transparent;
+    position: absolute;
+    right: ($offset / 2);
+    bottom: $offset;
+    width: 0;
+    height: 0;
+    content: "";
+    border-top: $size solid $color-divider;
+    border-right: $border;
+    border-left: $border;
+    transition: transform $animation-duration $animation-curve-default;
+  }
+}
+
+.ripple {
+  z-index: 0;
+  background-color: $color-divider;
+}
