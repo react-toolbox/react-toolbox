@@ -6,7 +6,7 @@ var environment = process.env.NODE_ENV;
 module.exports = {
   cache: true,
   resolve: {
-    extensions: ['', '.jsx', '.scss', '.js', '.json', '.styl']
+    extensions: ['', '.jsx', '.scss', '.js', '.json']
   },
   context: __dirname,
   entry: {
@@ -27,8 +27,7 @@ module.exports = {
     noParse: [node_modules + '/react/dist/*.js'],
     loaders: [
       { test: /(\.js|\.jsx)$/, exclude: /(node_modules)/, loaders: ['babel'] },
-      { test: /(\.scss|\.css)$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!sass') },
-      { test: /\.styl$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!stylus-loader') }
+      { test: /(\.scss|\.css)$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!sass') }
     ]
   },
   postcss: [require('autoprefixer-core')],

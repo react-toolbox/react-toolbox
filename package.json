@@ -61,7 +61,6 @@
     "sass-loader": "^2.0.1",
     "sinon": "git://github.com/cjohansen/Sinon.JS#sinon-2.0",
     "style-loader": "^0.12.3",
-    "stylus-loader": "^1.2.0",
     "webpack": "^1.12.0",
     "webpack-dev-server": "*"
   },
