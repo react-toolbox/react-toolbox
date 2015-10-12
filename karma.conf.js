@@ -11,7 +11,6 @@ module.exports = function (config) {
     files: [
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
       './node_modules/babel-core/browser-polyfill.js',
-      './node_modules/react/dist/react-with-addons.js',
       'tests.webpack.js'
     ],
     reporters: ['dots'],

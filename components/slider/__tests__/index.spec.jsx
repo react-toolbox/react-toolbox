@@ -1,4 +1,3 @@
-import React from 'react';
 import expect from 'expect';
 import sinon from 'sinon';
 import utils from '../../utils/testing';
@@ -6,9 +5,9 @@ import style from '../../slider/style';
 import ProgressBar from '../../progress_bar';
 import Input from '../../input';
 import Slider from '../index';
+import TestUtils from 'react-addons-test-utils';
 
 describe('Slider', function () {
-  const TestUtils = React.addons.TestUtils;
   let props, state, slider, progress, input;
 
   describe('#positionToValue', function () {
