@@ -17,6 +17,7 @@ var Input = require('react-toolbox/components/input');
 | **error**         | String        |                 | Sets the error string.|
 | **label**         | String        |                 | The text string to use for the floating label element.|
 | **multiline**     | Boolean       | false           | If true, a textarea element will be rendered. The textarea also grows and shrinks according to the number of lines.|
+| **icon**          | String        |                 | Icon String key.|
 | **onBlur**        | Function      |                 | Callback function that is fired when components is blured.|
 | **onChange**      | Function      |                 | Callback function that is fired when the components's value changes.|
 | **onFocus**       | Function      |                 | Callback function that is fired when components is focused.|

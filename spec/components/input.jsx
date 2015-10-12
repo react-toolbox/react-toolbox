@@ -9,10 +9,12 @@ export default React.createClass({
       <section>
         <h5>Inputs</h5>
         <p>lorem ipsum...</p>
-        <Input type="text" label="Firstname" icon="bookmark" />
-        <Input type="email" label="Label fixed" icon="bookmark" floating={false} />
-        <Input type="text" label="Phone Number" icon="bookmark" />
-        <Input type="text" label="Disabled field" disabled />
+        <Input type='text' label='Firstname' />
+        <Input type='email' label='Label fixed' floating={false} />
+        <Input type='text' label='Phone Number' />
+        <Input type='text' label='Disabled field' disabled />
+        <Input type='tel' label='With icon' icon='phone' />
+        <Input type='email' label='With icon' icon='email' />
       </section>
     );
   }

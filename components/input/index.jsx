@@ -1,6 +1,7 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style.scss';
+import FontIcon from '../font_icon';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
@@ -12,6 +13,7 @@ export default React.createClass({
     disabled: React.PropTypes.bool,
     error: React.PropTypes.string,
     floating: React.PropTypes.bool,
+    icon: React.PropTypes.string,
     label: React.PropTypes.string,
     multiline: React.PropTypes.bool,
     onBlur: React.PropTypes.func,
@@ -73,16 +75,19 @@ export default React.createClass({
 
   render () {
     let className = style.root;
-    let labelClassName = style.label;
     if (this.props.error) className += ` ${style.errored}`;
     if (this.props.disabled) className += ` ${style.disabled}`;
     if (this.props.className) className += ` ${this.props.className}`;
     if (this.props.type === 'hidden') className += ` ${style.hidden}`;
+    if (this.props.icon) className += ` ${style.with_icon}`;
+
+    let labelClassName = style.label;
     if (!this.props.floating) labelClassName += ` ${style.fixed}`;
 
     return (
       <div data-react-toolbox='input' className={className}>
         { this.renderInput() }
+        { this.props.icon ? <FontIcon className={style.icon} value={this.props.icon} /> : null }
         <span className={style.bar}></span>
         { this.props.label ? <label className={labelClassName}>{this.props.label}</label> : null }
         { this.props.error ? <span className={style.error}>{this.props.error}</span> : null }
