@@ -19,7 +19,7 @@ export default React.createClass({
         <DatePicker value={datetime} />
 
         <TimePicker />
-        <TimePicker value={datetime} />
+        <TimePicker value={datetime} format='ampm' />
       </section>
     );
   }

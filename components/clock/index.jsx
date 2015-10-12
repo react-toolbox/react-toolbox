@@ -94,7 +94,7 @@ export default React.createClass({
         onChange={this.onHourChange}
         radius={this.state.radius}
         selected={this.state.time.getHours()}
-        spacing={this.state.radius * 0.16}
+        spacing={this.state.radius * 0.18}
       />
     );
   },
@@ -106,7 +106,7 @@ export default React.createClass({
         onChange={this.onMinuteChange}
         radius={this.state.radius}
         selected={this.state.time.getMinutes()}
-        spacing={this.state.radius * 0.16}
+        spacing={this.state.radius * 0.18}
       />
     );
   },
