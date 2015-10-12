@@ -16,9 +16,6 @@ import Slider from './components/slider';
 import Switch from './components/switch';
 import Tabs from './components/tabs';
 
-// import FontIcon from './components/font_icon';
-// import Form from './components/form';
-
 const Test = React.createClass({
   displayName: 'App',
 
