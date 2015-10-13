@@ -1,0 +1,13 @@
+@import "../mixins";
+@import "../variables";
+
+$dropdown-color-white: unquote("rgb(#{$color-white})");
+
+.root {
+  background-color: $dropdown-color-white;
+  padding: ($offset / 2) 0;
+  list-style: none;
+  box-shadow: $zdepth-shadow-1;
+  border-radius: $border-radius;
+  width: 22.5vw;
+}

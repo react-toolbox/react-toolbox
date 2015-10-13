@@ -9,6 +9,7 @@ import Dialog from './components/dialog';
 import Drawer from './components/drawer';
 import Dropdown from './components/dropdown';
 import Input from './components/input';
+import Menu from './components/menu';
 import Pickers from './components/pickers';
 import Progress from './components/progress';
 import RadioGroup from './components/radio_group';
@@ -32,6 +33,7 @@ const Test = React.createClass({
         <Drawer />
         <Dropdown />
         <Input />
+        <Menu />
         <Pickers />
         <Progress />
         <RadioGroup />

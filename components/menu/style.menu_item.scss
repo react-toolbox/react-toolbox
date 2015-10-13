@@ -1,0 +1,34 @@
+@import "../mixins";
+@import "../variables";
+
+$menu-item-hover-background: unquote("rgb(#{$palette-grey-200})");
+$menu-item-icon-font-size: 2.4 * $unit;
+$menu-item-icon-size: 1.6 * $menu-item-icon-font-size;
+
+.root {
+  padding: ($offset / 1.5) $offset;
+  color: $color-text;
+  display: flex;
+  align-items: center;
+
+  &:not(.disabled) {
+    &:hover {
+      background-color: $menu-item-hover-background;
+      cursor: pointer;
+    }
+  }
+
+  &.disabled {
+    opacity: 0.5;
+  }
+}
+
+.icon {
+  font-size: $menu-item-icon-font-size !important;
+  width: $menu-item-icon-size;
+}
+
+.caption {
+  flex-grow: 1;
+  font-size: $font-size-normal;
+}

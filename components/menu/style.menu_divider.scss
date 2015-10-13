@@ -1,0 +1,9 @@
+@import "../mixins";
+@import "../variables";
+
+.root {
+  height: 1px;
+  background-color: $color-divider;
+  width: 100%;
+  display: block;
+}
