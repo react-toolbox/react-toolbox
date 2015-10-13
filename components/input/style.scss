@@ -1,5 +1,6 @@
 @import "../variables";
 @import "../mixins";
+
 $input-padding: 2 * $unit;
 $input-field-height: 1.6 * $unit;
 $input-field-padding: .8 * $unit;
@@ -19,14 +20,15 @@ $input-icon-size: 2 * $input-icon-font-size;
 .root {
   position: relative;
   padding: $input-padding 0;
-  &.with_icon {
+
+  &.with-icon {
     margin-left: $input-icon-size;
   }
 }
 
 .icon {
   position: absolute;
-  top: $offset ;
+  top: $offset;
   left: -$input-icon-size;
   display: block;
   width: $input-icon-size;
@@ -48,23 +50,28 @@ $input-icon-size: 2 * $input-icon-font-size;
   border: 0;
   border-bottom: 1px solid $input-text-bottom-border-color;
   outline: none;
+
   &:focus {
     ~ .bar:before, ~ .bar:after {
       width: 50%;
     }
+
     ~ .label:not(.fixed) {
       color: $input-text-highlight-color;
     }
+
     ~ .icon {
       color: $input-text-highlight-color;
     }
   }
+
   &:focus, &.filled {
     ~ .label:not(.fixed) {
       top: $input-focus-label-top;
       font-size: $input-label-font-size;
     }
   }
+
   &.filled ~ .label.fixed {
     display: none;
   }
@@ -87,6 +94,7 @@ $input-icon-size: 2 * $input-icon-font-size;
   position: relative;
   display: block;
   width: 100%;
+
   &:before, &:after {
     @include material-animation-default();
     position: absolute;
@@ -97,9 +105,11 @@ $input-icon-size: 2 * $input-icon-font-size;
     background-color: $input-text-highlight-color;
     transition-property: width, background-color;
   }
+
   &:before {
     left: 50%;
   }
+
   &:after {
     right: 50%;
   }
@@ -118,12 +128,15 @@ $input-icon-size: 2 * $input-icon-font-size;
 
 .errored {
   padding-bottom: 0;
+
   > .input {
     border-bottom-color: $input-text-error-color;
+
     &:focus {
       ~ .label:not(.fixed) {
         color: $input-text-error-color;
       }
+
       ~ .bar:before, ~ .bar:after {
         background-color: $input-text-error-color;
       }

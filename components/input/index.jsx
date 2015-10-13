@@ -75,13 +75,12 @@ export default React.createClass({
 
   render () {
     let className = style.root;
+    let labelClassName = style.label;
     if (this.props.error) className += ` ${style.errored}`;
     if (this.props.disabled) className += ` ${style.disabled}`;
     if (this.props.className) className += ` ${this.props.className}`;
     if (this.props.type === 'hidden') className += ` ${style.hidden}`;
-    if (this.props.icon) className += ` ${style.with_icon}`;
-
-    let labelClassName = style.label;
+    if (this.props.icon) className += ` ${style['with-icon']}`;
     if (!this.props.floating) labelClassName += ` ${style.fixed}`;
 
     return (
