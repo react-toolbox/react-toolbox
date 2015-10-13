@@ -1,6 +1,5 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import Ripple from '../ripple';
 import style from './style.menu';
 
 export default React.createClass({

@@ -6,26 +6,24 @@ $menu-item-icon-font-size: 2.4 * $unit;
 $menu-item-icon-size: 1.6 * $menu-item-icon-font-size;
 
 .root {
-  padding: ($offset / 1.5) $offset;
-  color: $color-text;
   display: flex;
   align-items: center;
-
+  padding: ($offset / 1.5) $offset;
+  color: $color-text;
   &:not(.disabled) {
     &:hover {
-      background-color: $menu-item-hover-background;
       cursor: pointer;
+      background-color: $menu-item-hover-background;
     }
   }
-
   &.disabled {
-    opacity: 0.5;
+    opacity: .5;
   }
 }
 
 .icon {
-  font-size: $menu-item-icon-font-size !important;
   width: $menu-item-icon-size;
+  font-size: $menu-item-icon-font-size !important;
 }
 
 .caption {

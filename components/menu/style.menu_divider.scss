@@ -2,8 +2,8 @@
 @import "../variables";
 
 .root {
+  display: block;
+  width: 100%;
   height: 1px;
   background-color: $color-divider;
-  width: 100%;
-  display: block;
 }

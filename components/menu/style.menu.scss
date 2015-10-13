@@ -4,10 +4,10 @@
 $dropdown-color-white: unquote("rgb(#{$color-white})");
 
 .root {
-  background-color: $dropdown-color-white;
+  width: 22.5vw;
   padding: ($offset / 2) 0;
   list-style: none;
-  box-shadow: $zdepth-shadow-1;
+  background-color: $dropdown-color-white;
   border-radius: $border-radius;
-  width: 22.5vw;
+  box-shadow: $zdepth-shadow-1;
 }

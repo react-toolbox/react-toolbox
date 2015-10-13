@@ -22,7 +22,7 @@ export default React.createClass({
     };
   },
 
-  handleClick (event) {
+  handleClick () {
     console.log('menuitem.handleClick');
   },
 
