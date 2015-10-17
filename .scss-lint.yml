@@ -96,6 +96,9 @@ linters:
     severity: warning
     exclude: []
     order: [
+      "$variable",
+      "$extend",
+      "$include",
       "position",
       "top",
       "right",
@@ -116,9 +119,11 @@ linters:
       "flex",
       "flex-direction",
       "flex-flow",
+      "flex-grow",
       "flex-order",
       "flex-pack",
       "flex-align",
+      "align-items",
       "padding",
       "padding-top",
       "padding-right",
@@ -374,7 +379,8 @@ linters:
       "-moz-animation-direction",
       "-ms-animation-direction",
       "-o-animation-direction",
-      "animation-direction"
+      "animation-direction",
+      "will-change"
     ]
 
   PropertySpelling:

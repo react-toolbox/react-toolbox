@@ -30,6 +30,13 @@ module.exports = {
     return NaN;
   },
 
+  getViewport () {
+    return {
+      height: window.innerHeight || document.documentElement.offsetHeight,
+      width: window.innerWidth || document.documentElement.offsetWidth
+    };
+  },
+
   events: require('./events'),
   prefixer: require('./prefixer'),
   time: require('./time'),

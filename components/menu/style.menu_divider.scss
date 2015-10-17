@@ -1,9 +1,12 @@
 @import "../mixins";
 @import "../variables";
 
+$menu-divider-height: (4.8 * $unit) / 4;
+
 .root {
   display: block;
   width: 100%;
   height: 1px;
+  margin: $menu-divider-height 0;
   background-color: $color-divider;
 }

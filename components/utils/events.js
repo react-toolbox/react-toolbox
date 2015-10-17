@@ -31,6 +31,15 @@ module.exports = {
     for (let key in eventMap) {
       document.removeEventListener(key, eventMap[key], false);
     }
-  }
+  },
+
+  targetIsDescendant (event, parent) {
+    let node = event.target;
+    while (node !== null) {
+      if (node === parent) return true;
+      node = node.parentNode;
+    }
+    return false;
+  },
 
 };

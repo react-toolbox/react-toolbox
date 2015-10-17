@@ -4,20 +4,29 @@
 $menu-item-hover-background: unquote("rgb(#{$palette-grey-200})");
 $menu-item-icon-font-size: 2.4 * $unit;
 $menu-item-icon-size: 1.6 * $menu-item-icon-font-size;
+$menu-item-height: 4.8 * $unit;
+$menu-item-padding: 1.6 * $unit;
+$menu-item-font-size: 1.6 * $unit;
 
 .root {
+  position: relative;
   display: flex;
+  height: $menu-item-height;
   align-items: center;
-  padding: ($offset / 1.5) $offset;
+  padding: 0 $menu-item-padding;
+  overflow: hidden;
+  font-size: $menu-item-font-size;
   color: $color-text;
-  &:not(.disabled) {
-    &:hover {
-      cursor: pointer;
-      background-color: $menu-item-hover-background;
-    }
+  &:not(.disabled):hover {
+    cursor: pointer;
+    background-color: $menu-item-hover-background;
   }
   &.disabled {
+    pointer-events: none;
     opacity: .5;
+  }
+  &.selected {
+    font-weight: 500;
   }
 }
 
@@ -29,4 +38,12 @@ $menu-item-icon-size: 1.6 * $menu-item-icon-font-size;
 .caption {
   flex-grow: 1;
   font-size: $font-size-normal;
+}
+
+.shortcut {
+  margin-left: $menu-item-padding;
+}
+
+.ripple {
+  opacity: .15;
 }
