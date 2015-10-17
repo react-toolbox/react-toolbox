@@ -8,6 +8,7 @@ import Checkbox from './components/checkbox';
 import Dialog from './components/dialog';
 import Drawer from './components/drawer';
 import Dropdown from './components/dropdown';
+import IconMenu from './components/icon_menu';
 import Input from './components/input';
 import Menu from './components/menu';
 import Pickers from './components/pickers';
@@ -32,6 +33,7 @@ const Test = React.createClass({
         <Dialog />
         <Drawer />
         <Dropdown />
+        <IconMenu />
         <Input />
         <Menu />
         <Pickers />

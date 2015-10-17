@@ -19,11 +19,13 @@ export default React.createClass({
   propTypes: {
     active: React.PropTypes.bool,
     className: React.PropTypes.string,
+    onHide: React.PropTypes.func,
     onSelect: React.PropTypes.func,
+    onShow: React.PropTypes.func,
+    outline: React.PropTypes.bool,
     position: React.PropTypes.string,
     ripple: React.PropTypes.bool,
     selectable: React.PropTypes.bool,
-    outline: React.PropTypes.bool,
     value: React.PropTypes.any
   },
 
@@ -31,9 +33,9 @@ export default React.createClass({
     return {
       active: false,
       outline: true,
+      position: POSITION.STATIC,
       ripple: true,
-      selectable: true,
-      position: POSITION.STATIC
+      selectable: true
     };
   },
 
@@ -79,7 +81,10 @@ export default React.createClass({
 
   componentDidUpdate (prevProps, prevState) {
     if (prevState.active && !this.state.active) {
+      if (this.props.onHide) this.props.onHide();
       utils.events.removeEventsFromDocument({click: this.handleDocumentClick});
+    } else if (!prevState.active && this.state.active && this.props.onShow) {
+      this.props.onShow();
     }
   },
 
@@ -93,7 +98,7 @@ export default React.createClass({
     const {top, left, height, width} = ReactDOM.findDOMNode(this).parentNode.getBoundingClientRect();
     const {height: wh, width: ww} = utils.getViewport();
     const toTop = top < ((wh / 2) - height / 2);
-    const toLeft = left > ((ww / 2) - width / 2);
+    const toLeft = left < ((ww / 2) - width / 2);
     return `${toTop ? 'top' : 'bottom'}-${toLeft ? 'left' : 'right'}`;
   },
 
@@ -124,7 +129,7 @@ export default React.createClass({
     let { value, onClick } = item.props;
     this.setState({value: value, active: false, rippled: this.props.ripple}, () => {
       if (onClick) onClick();
-      if (this.props.onSelect) this.props.onSelect({}, this);
+      if (this.props.onSelect) this.props.onSelect(value, this);
     });
   },
 

@@ -1,0 +1,18 @@
+@import "../variables";
+
+.root {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.icon {
+  font-size: 2.3 * $unit;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.ripple {
+  opacity: .1;
+  transition-duration: 650ms;
+}
