@@ -41,6 +41,7 @@ strong, sub, sup, table, tbody, td, tfoot, th, thead, time, tr, ul, var, video {
 
 h1, h2, h3, h4, h5, h6, label, p, button, abbr, a, span, small {
   font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
   text-size-adjust: 100%;
 }
 

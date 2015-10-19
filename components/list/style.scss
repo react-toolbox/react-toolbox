@@ -1,25 +1,146 @@
 @import "../variables";
 
-$list-color: unquote("rgb(#{$color-black})") !default;
-$list-background: unquote("rgb(#{$color-white})") !default;
+$list-vertical-padding: .8 * $unit;
+$list-horizontal-padding: 1.6 * $unit;
+$list-content-left-spacing: 7.2 * $unit;
+$list-subheader-height: 4.8 * $unit;
+$list-subheader-font-size: 1.4 * $unit;
+$list-subheader-font-weight: 500;
+$list-divider-height: .1 * $unit;
+$list-item-min-height: 4.8 * $unit;
+$list-item-min-height-legend: 7.2 * $unit;
+$list-item-hover-color: unquote("rgb(#{$palette-grey-200})");
+$list-item-legend-margin-top: .3 * $unit;
+$list-item-icon-font-size: 2.4 * $unit;
+$list-item-icon-size: 1.8 * $unit;
+$list-item-right-icon-margin: $list-content-left-spacing - $list-horizontal-padding - $list-item-icon-size;
+$list-item-avatar-height: 4 * $unit;
+$list-item-avatar-margin: .8 * $unit;
 
-.root {
+.list {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  padding: $list-vertical-padding 0;
+  text-align: left;
+  white-space: nowrap;
   list-style: none;
+}
 
-  &, a {
-    color: $list-color;
+.subheader {
+  padding-left: $list-horizontal-padding;
+  margin: - $list-vertical-padding 0 0;
+  font-size: $list-subheader-font-size;
+  font-weight: $list-subheader-font-weight;
+  line-height: $list-subheader-height;
+  color: $color-text-secondary;
+}
+
+.divider {
+  height: $list-divider-height;
+  margin: - $list-divider-height 0 0;
+  background-color: $color-divider;
+  border: none;
+  &.inset {
+    margin-right: $list-horizontal-padding;
+    margin-left: $list-content-left-spacing;
   }
+  .list + & {
+    margin-top: - $list-vertical-padding;
+  }
+  .item ~ & {
+    margin: $list-vertical-padding 0;
+  }
+}
 
-  > li {
-    overflow: hidden;
-    background-color: $list-background;
-    box-shadow: $zdepth-shadow-1;
-    transition-timing-function: $animation-curve-default;
-    transition-duration: $animation-duration;
-    transition-property: box-shadow;
-
-    &:hover {
-      box-shadow: $zdepth-shadow-2;
+.item {
+  position: relative;
+  display: flex;
+  min-height: $list-item-min-height;
+  align-items: center;
+  padding: 0 $list-horizontal-padding;
+  overflow: hidden;
+  color: $color-text;
+  &.selectable:not(.disabled):hover {
+    cursor: pointer;
+    background-color: $list-item-hover-color;
+  }
+  &.with-legend {
+    height: $list-item-min-height-legend;
+  }
+  > .checkbox {
+    display: flex;
+    width: 100%;
+    min-height: $list-item-min-height;
+    align-items: center;
+    margin: 0;
+    cursor: pointer;
+    > [role='checkbox'] {
+      margin-right: $list-item-right-icon-margin;
     }
+    > [role='label'] {
+      padding-left: 0;
+    }
+  }
+  &.disabled {
+    pointer-events: none;
+    &:not(.checkbox-item) {
+      opacity: .5;
+    }
+    > .checkbox > [role='label'] {
+      opacity: .5;
+    }
+  }
+}
+
+.ripple {
+  opacity: .1;
+}
+
+.text {
+  flex-grow: 1;
+}
+
+.caption {
+  display: block;
+  font-size: 1.6 * $unit;
+  color: $color-text;
+}
+
+.legend {
+  display: block;
+  padding-top: $list-item-legend-margin-top;
+  font-size: 1.4 * $unit;
+  color: $color-text-secondary;
+  white-space: normal;
+}
+
+.avatar {
+  display: flex;
+  width: $list-item-avatar-height;
+  height: $list-item-avatar-height;
+  margin: $list-item-avatar-margin $list-horizontal-padding $list-item-avatar-margin 0;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.right, .left {
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  &.icon {
+    font-size: $list-item-icon-font-size;
+    color: $color-text-secondary;
+  }
+}
+
+.right {
+  margin-left: $list-horizontal-padding;
+}
+
+.left {
+  &.icon {
+    width: 1.8 * $unit;
+    margin-right: $list-item-right-icon-margin;
   }
 }
