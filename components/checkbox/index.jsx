@@ -13,7 +13,7 @@ export default React.createClass({
     checked: React.PropTypes.bool,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
-    label: React.PropTypes.string,
+    label: React.PropTypes.any,
     name: React.PropTypes.string,
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func,
@@ -76,7 +76,7 @@ export default React.createClass({
         <span role='checkbox' className={checkboxClassName} onMouseDown={this.handleMouseDown}>
           <Ripple ref='ripple' role='ripple' className={style.ripple} spread={3} centered />
         </span>
-        { this.props.label ? <span className={style.text}>{this.props.label}</span> : null }
+        { this.props.label ? <span role='label' className={style.text}>{this.props.label}</span> : null }
       </label>
     );
   },

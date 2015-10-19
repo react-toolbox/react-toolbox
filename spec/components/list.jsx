@@ -1,52 +1,118 @@
+/*eslint-disable no-unused-vars*/
 import React from 'react';
-import List from '../../components/list';
+import { ListCheckbox, ListSubHeader, List, ListItem, ListDivider } from '../../components/list';
 
-export default React.createClass({
-  displayName: 'ListTest',
+const listStyle = {
+  border: '1px solid #EEE',
+  display: 'inline-block',
+  minWidth: 340
+};
 
-  getInitialState () {
-    return {
-      countries: [
-        { value: 'ES-es', label: 'Spain', img: 'http://' },
-        { value: 'TH-th', label: 'Thailand', img: 'http://' },
-        { value: 'EN-gb', label: 'England', img: 'http://' },
-        { value: 'EN-en', label: 'USA', img: 'http://' },
-        { value: 'FR-fr', label: 'France', img: 'http://' }
-      ],
-      selected: 'TH-th'
-    };
-  },
-
-  onChange (dropdown) {
-    console.log('[DROPDOWN]', dropdown.getValue());
-  },
-
-  customDropdownItem (data) {
-    const style = {
-      width: 32,
-      height: 32,
-      backgroundColor: '#ccc',
-      marginRight: 8
-    };
-
-    return (
-      <div data-flex="horizontal grow" data-flex-content="center">
-        <img src={data.img} data-flex-grow="min" style={style} />
-        <div data-flex-grow="max" data-flex="vertical" >
-          <strong>{data.label}</strong>
-          <small>{data.value}</small>
-        </div>
+const ListTest = () => {
+  return (
+    <section>
+      <h5>With simple text and icons</h5>
+      <p>This list can be used inside a Drawer for a list of options or as navigation.</p>
+      <div style={listStyle}>
+        <List selectable ripple>
+          <ListSubHeader caption='Contacts' />
+          <ListItem caption='Inbox' leftIcon='inbox' />
+          <ListItem caption='Outbox' leftIcon='send' />
+          <ListItem caption='Trash' leftIcon='delete' />
+          <ListItem caption='Spam' leftIcon='report' />
+        </List>
       </div>
-    );
-  },
 
-  render () {
-    return (
-      <section>
-        <h5>List</h5>
-        <p>lorem ipsum...</p>
-        <List dataSource={this.state.countries} value={this.state.selected} template={this.customDropdownItem} onChange={this.onChange}/>
-      </section>
-    );
-  }
-});
+      <h5>Two text lines, avatar and right icon</h5>
+      <p>Useful for a list of contacts or similar.</p>
+      <div style={listStyle}>
+        <List selectable ripple>
+          <ListSubHeader caption='Contacts' />
+          <ListItem
+            avatar='https://pbs.twimg.com/profile_images/614407428/s6pTalMzZs-nusCGWqoV.0_400x400.jpeg'
+            caption='Alfonso Rocha'
+            legend='Product Manager at Fon'
+            rightIcon='star'
+          />
+          <ListItem
+            avatar='https://pbs.twimg.com/profile_images/459485216499720192/ufS4YGOY_400x400.png'
+            caption='Javi Velasco'
+            legend='Frontend engineer at Socialbro'
+            rightIcon='star'
+          />
+          <ListItem
+            avatar='https://pbs.twimg.com/profile_images/651611834131222528/rKYHs2bd_400x400.jpg'
+            caption='Javi Jiménez'
+            legend='Frontend engineer at MediaSmart'
+            rightIcon='star'
+          />
+          <ListItem
+            avatar='https://pbs.twimg.com/profile_images/477103691506282499/bsIaPEiM_400x400.jpeg'
+            caption='Tobias Van Schneider'
+            legend='Designer at Spotify'
+            rightIcon='star'
+          />
+        </List>
+      </div>
+
+      <h5>Two line options and checkbox items</h5>
+      <p>It can be used to embed little checkboxes in the list. These behave as checkboxes.</p>
+      <div style={listStyle}>
+        <List>
+          <ListSubHeader caption='General' />
+          <ListItem caption='Profile Photo' legend='Change your Google+ profile photo' />
+          <ListItem disabled caption='Show your status' legend='Your status is visible to everyone you use with' />
+        </List>
+        <ListDivider />
+        <List>
+          <ListSubHeader caption='Hangout notifications' />
+          <ListCheckbox caption='Notifications' legend='Allow notifications' />
+          <ListCheckbox checked caption='Sound' legend='Hangouts message' />
+          <ListCheckbox disabled caption='Video sounds' legend='Hangouts video call' />
+        </List>
+      </div>
+
+      <h5>Avatar, sinle text and icon</h5>
+      <p>Similar to a previous one but only with one text line</p>
+      <div style={listStyle}>
+        <List>
+          <ListItem
+            avatar='https://pbs.twimg.com/profile_images/614407428/s6pTalMzZs-nusCGWqoV.0_400x400.jpeg'
+            caption='Alfonso Rocha'
+            rightIcon='mail'
+          />
+          <ListItem
+            avatar='https://pbs.twimg.com/profile_images/459485216499720192/ufS4YGOY_400x400.png'
+            caption='Javi Velasco'
+            rightIcon='mail'
+          />
+          <ListItem
+            avatar='https://pbs.twimg.com/profile_images/651611834131222528/rKYHs2bd_400x400.jpg'
+            caption='Javi Jiménez'
+            rightIcon='mail'
+          />
+          <ListItem
+            avatar='https://pbs.twimg.com/profile_images/477103691506282499/bsIaPEiM_400x400.jpeg'
+            caption='Tobias Van Schneider'
+            rightIcon='mail'
+          />
+        </List>
+      </div>
+
+      <h5>Simple with just one text line</h5>
+      <p>The most simple list.</p>
+      <div style={listStyle}>
+        <List>
+          <ListItem caption='Alfonso Rocha' />
+          <ListItem caption='Javi Velasco' />
+          <ListItem caption='Javi Jiménez' />
+          <ListItem caption='Tobias Van Schneider' />
+          <ListDivider />
+          <ListItem caption='Other people' />
+        </List>
+      </div>
+    </section>
+  );
+};
+
+export default ListTest;
