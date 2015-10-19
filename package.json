@@ -3,14 +3,18 @@
   "version": "0.10.9",
   "description": "A set of complementary tools to ReactJS.",
   "homepage": "http://zetapath.com",
-  "author": "Javi Jimenez Villar <hi@soyjavi.com> (http://soyjavi.com/)",
+  "author": " <hi@soyjavi.com> ()",
+  "author": "React Toolbox Team (http://github.com/react-toolbox)",
+  "contributors": [
+    {"name": "Javi Jimenez Villar", "url": "http://soyjavi.com/", "email": "hi@soyjavi.com"},
+    {"name": "Javi Velasco Arjona", "url": "http://javivelasco.com/", "email": "javier.velasco86@gmail.com"}
+  ],
   "main": "./components",
   "directories": {
     "react-toolbox": "./react-toolbox/components"
   },
   "scripts": {
-    "start": "npm run build & npm run server",
-    "server": "webpack-dev-server --hot",
+    "start": "npm run build & webpack-dev-server --hot",
     "build": "webpack",
     "watch": "webpack --watch",
     "deploy": "NODE_ENV=production webpack -p",
