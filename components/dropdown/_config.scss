@@ -4,3 +4,4 @@ $dropdown-color-primary: unquote("rgb(#{$color-primary})");
 $dropdown-color-primary-contrast: unquote("rgb(#{$color-primary-contrast})");
 $dropdown-value-hover-background: unquote("rgb(#{$palette-grey-200})");
 $dropdown-overflow-max-height: 45vh;
+$dropdown-value-border-radius: .2 * $unit;

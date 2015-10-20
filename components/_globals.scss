@@ -1,10 +1,10 @@
 //-- Color configuration
 $color-divider: unquote("rgb(#{$palette-grey-200})") !default;
 $color-background: unquote("rgb(#{$color-white})") !default;
-$color-overlay: unquote("rgb(#{$color-black})");
-$color-overlay-opacity: 0.5;
 $color-text: unquote("rgb(#{$palette-grey-900})") !default;
 $color-text-secondary: unquote("rgb(#{$palette-grey-600})") !default;
+$color-overlay: unquote("rgb(#{$color-black})");
+$color-overlay-opacity: 0.5;
 
 $color-primary: $palette-blue-500 !default;
 $color-primary-dark: $palette-blue-700 !default;
@@ -15,7 +15,6 @@ $color-accent-contrast: $color-dark-contrast !default;
 
 //-- Sizing
 $unit: 1rem;
-$border-radius: 0.2 * $unit;
 
 // -- Fonts
 $preferred-font: "Roboto", "Helvetica", "Arial", sans-serif !default;

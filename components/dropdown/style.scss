@@ -50,7 +50,7 @@
   overflow-y: scroll;
   list-style: none;
   background-color: $dropdown-color-white;
-  border-radius: $border-radius;
+  border-radius: $dropdown-value-border-radius;
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
   transition-property: max-height, box-shadow;

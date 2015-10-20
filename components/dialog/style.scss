@@ -10,11 +10,11 @@
   width: 100vw;
   height: 100vh;
   flex-direction: column;
+  align-items: center;
   pointer-events: none;
+
   justify-content: center;
   align-content: center;
-  align-items: center;
-
   > .content {
     opacity: 0;
     transform: translateY(-$dialog-translate-y);
@@ -40,7 +40,7 @@
   max-height: 96vh;
   flex-direction: column;
   background-color: $dialog-color-white;
-  border-radius: $border-radius;
+  border-radius: $dialog-border-radius;
   box-shadow: $zdepth-shadow-5;
   transition-delay: $animation-delay;
   transition-timing-function: $animation-curve-default;
@@ -50,22 +50,22 @@
 
 .title {
   @include typo-title();
+  flex-grow: 0;
   margin-bottom: 1.6 * $unit;
   color: $dialog-color-title;
-  flex-grow: 0;
 }
 
 .body {
+  flex-grow: 2;
   padding: $dialog-content-padding;
   overflow-y: scroll;
   color: $color-text-secondary;
-  flex-grow: 2;
 }
 
 .navigation {
+  flex-grow: 0;
   padding: $dialog-navigation-padding;
   text-align: right;
-  flex-grow: 0;
 }
 
 .button {
@@ -77,11 +77,9 @@
 
 .active {
   pointer-events: all;
-
   > .overlay {
     opacity: $color-overlay-opacity;
   }
-
   > .content {
     opacity: 1;
     transform: translateY(0%);

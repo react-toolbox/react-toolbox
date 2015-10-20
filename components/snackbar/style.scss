@@ -13,7 +13,7 @@
   margin-top: $snackbar-vertical-offset;
   color: $snackbar-color;
   background-color: $snackbar-background-color;
-  border-radius: $border-radius;
+  border-radius: $snackbar-border-radius;
   transition: all $animation-duration $animation-curve-default $animation-duration;
   &.accept .button {
     color: green;
