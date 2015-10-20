@@ -3,12 +3,10 @@
 
 .root {
   position: relative;
-
   &.focus {
     .label {
       color: $autocomplete-color-primary;
     }
-
     .suggestions {
       max-height: $autocomplete-overflow-max-height;
       visibility: visible;
@@ -25,31 +23,29 @@
 
 .value {
   display: inline-block;
-  padding: $unit * .5 $unit * .75;
-  margin: $unit * .25 $unit * .5 $unit * .25 0;
+  padding: $autocomplete-value-padding;
+  margin: $autocomplete-value-margin;
   font-size: $font-size-tiny;
   color: $autocomplete-color-primary-contrast;
   cursor: pointer;
   background-color: $autocomplete-color-primary;
-  border-radius: 3px;
+  border-radius: $autocomplete-value-border-radius;
 }
 
 .suggestions {
   position: absolute;
-  z-index: 2;
+  z-index: $z-index-high;
   max-height: 0;
   overflow-x: hidden;
   overflow-y: scroll;
   visibility: hidden;
-  background-color: $autocomplete-color-white;
+  background-color: $autocomplete-suggestions-background;
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
   transition-property: max-height, box-shadow;
-
   &:not(.up) {
     bottom: auto;
   }
-
   &.up {
     top: auto;
     bottom: 0;
@@ -57,11 +53,10 @@
 }
 
 .suggestion {
-  padding: $unit;
+  padding: $autocomplete-suggestion-padding;
   cursor: pointer;
-
   &.active {
-    background-color: $autocomplete-suggestion-color-active;
+    background-color: $autocomplete-suggestion-active-background;
   }
 }
 
