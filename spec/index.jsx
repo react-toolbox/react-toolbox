@@ -16,6 +16,7 @@ import Menu from './components/menu';
 import Pickers from './components/pickers';
 import Progress from './components/progress';
 import RadioGroup from './components/radio_group';
+import Snackbar from './components/snackbar';
 import Slider from './components/slider';
 import Switch from './components/switch';
 import Tabs from './components/tabs';
@@ -25,23 +26,8 @@ const App = () => {
     <app data-react-toolbox-app>
       <h1>React Toolbox</h1>
       <h3>Component Spec v0.10.20</h3>
-      <Autocomplete />
-      <Button />
-      <Card />
-      <Checkbox />
-      <Dialog />
-      <Drawer />
-      <Dropdown />
-      <IconMenu />
-      <Input />
-      <List />
-      <Menu />
-      <Pickers />
-      <Progress />
-      <RadioGroup />
-      <Slider />
-      <Switch />
-      <Tabs />
+
+      <Snackbar />
     </app>
   );
 };
