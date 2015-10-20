@@ -27,7 +27,24 @@ const App = () => {
       <h1>React Toolbox</h1>
       <h3>Component Spec v0.10.20</h3>
 
+      <Autocomplete />
+      <Button />
+      <Card />
+      <Checkbox />
+      <Dialog />
+      <Drawer />
+      <Dropdown />
+      <IconMenu />
+      <Input />
+      <List />
+      <Menu />
+      <Pickers />
+      <Progress />
+      <RadioGroup />
+      <Slider />
       <Snackbar />
+      <Switch />
+      <Tabs />
     </app>
   );
 };
