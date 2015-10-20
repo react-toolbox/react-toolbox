@@ -35,10 +35,6 @@ export default class TimePicker extends React.Component {
     }
   }
 
-  getValue () {
-    return this.state.value;
-  }
-
   render () {
     return (
       <div data-react-toolbox='time-picker'>
@@ -59,5 +55,13 @@ export default class TimePicker extends React.Component {
         />
       </div>
     );
+  }
+
+  getValue () {
+    return this.state.value;
+  }
+
+  setValue (value) {
+    this.setState({value: value});
   }
 };

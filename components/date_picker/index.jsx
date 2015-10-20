@@ -33,10 +33,6 @@ export default class DatePicker extends React.Component {
     return `${date.getDate()} ${time.getFullMonth(date)} ${date.getFullYear()}`;
   }
 
-  getValue () {
-    return this.state.value;
-  }
-
   render () {
     return (
       <div data-toolbox='date-picker'>
@@ -56,5 +52,13 @@ export default class DatePicker extends React.Component {
         />
       </div>
     );
+  }
+
+  getValue () {
+    return this.state.value;
+  }
+
+  setValue (value) {
+    this.setState({value: value});
   }
 };

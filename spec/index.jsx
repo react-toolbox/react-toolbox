@@ -24,7 +24,7 @@ const App = () => {
   return (
     <app data-react-toolbox-app>
       <h1>React Toolbox</h1>
-      <h3>Component Spec v0.10.9</h3>
+      <h3>Component Spec v0.10.20</h3>
       <Autocomplete />
       <Button />
       <Card />
