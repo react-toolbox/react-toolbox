@@ -19,19 +19,15 @@
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
   transition-property: box-shadow, color;
-
   &.active {
     color: $tab-text-color;
   }
-
   &.disabled {
     opacity: $tab-label-disabled-opacity;
   }
-
   &:not(.disabled) {
     cursor: pointer;
   }
-
   &.hidden {
     display: none;
   }
@@ -50,11 +46,9 @@
 
 .tab {
   padding: $tab-label-v-padding $tab-label-h-padding;
-
   &:not(.active) {
     display: none;
   }
-
   &.active {
     display: block;
   }
