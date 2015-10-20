@@ -1,8 +1,8 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import utils from '../../utils';
 import Day from './day';
 import style from './style';
-import utils from '../utils';
 
 export default React.createClass({
   mixins: [PureRenderMixin],

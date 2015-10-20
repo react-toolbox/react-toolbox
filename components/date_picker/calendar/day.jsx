@@ -1,7 +1,7 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import time from '../../utils/time';
 import style from './style';
-import time from '../utils/time';
 
 export default React.createClass({
   mixins: [PureRenderMixin],

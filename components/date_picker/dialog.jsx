@@ -2,7 +2,7 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 import time from '../utils/time';
-import Calendar from '../calendar';
+import Calendar from './calendar';
 import Dialog from '../dialog';
 
 export default React.createClass({
