@@ -1,6 +1,5 @@
 import React from 'react';
 import style from './style';
-
 import Button from '../button';
 import FontIcon from '../font_icon';
 
@@ -33,9 +32,9 @@ export default React.createClass({
     if (this.props.action) {
       return (
         <Button
-          label={this.props.action}
-          type='flat'
+          kind='flat'
           className={style.button}
+          label={this.props.action}
           onClick={this.handleClick}
         />
       );
@@ -69,5 +68,4 @@ export default React.createClass({
       }, this.props.timeout * 1000);
     }
   }
-
 });

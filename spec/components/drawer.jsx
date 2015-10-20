@@ -26,8 +26,8 @@ export default React.createClass({
         </Drawer>
 
         <nav>
-          <Button className='accent' label='Drawer left hideable' type='raised' onClick={this.onClick.bind(null, 'left', 'show')} />
-          <Button className='primary' label='Drawer right' type='raised' onClick={this.onClick.bind(null, 'right', 'show')} />
+          <Button accent label='Drawer left hideable' kind='raised' onClick={this.onClick.bind(null, 'left', 'show')} />
+          <Button primary label='Drawer right' kind='raised' onClick={this.onClick.bind(null, 'right', 'show')} />
         </nav>
       </section>
     );

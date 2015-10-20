@@ -3,10 +3,10 @@
 
 %button {
   position: relative;
-  z-index: 1;
   display: inline-block;
   height: $button-height;
   flex-direction: row;
+  align-items: center;
   overflow: hidden;
   color: $button-default-text-color;
   text-align: center;
@@ -16,24 +16,21 @@
   border: 0;
   outline: none;
   transition: box-shadow .2s $animation-curve-fast-out-linear-in,
-                background-color .2s $animation-curve-default,
-                color .2s $animation-curve-default;
+              background-color .2s $animation-curve-default,
+              color .2s $animation-curve-default;
   align-content: center;
-  align-items: center;
   justify-content: center;
-
   &::-moz-focus-inner {
     border: 0;
   }
 }
 
 %squared {
-  min-width: 9 * $unit;
-  padding: 0 $unit * 1.2;
-  border-radius: $border-radius;
-
+  min-width: $button-squared-min-width;
+  padding: $button-squared-padding;
+  border-radius: $button-border-radius;
   .icon {
-    margin-right: $unit * .6;
+    margin-right: $button-squared-icon-margin;
     font-size: 120%;
     vertical-align: middle;
   }
@@ -45,7 +42,6 @@
   cursor: auto;
 }
 
-//-- Local styles
 .label {
   @include typo-button();
   line-height: $button-height;
@@ -55,15 +51,12 @@
   @extend %button;
   @extend %squared;
   background: transparent;
-
   &:hover {
     background: $button-flat-color-hover;
   }
-
   &:focus:not(:active) {
     background: $button-flat-color-hover;
   }
-
   &[disabled] {
     @extend %disabled;
   }
@@ -74,15 +67,12 @@
   @extend %squared;
   @include shadow-2dp();
   background: $button-solid-background-color;
-
   &:active {
     @include shadow-4dp();
   }
-
   &:focus:not(:active) {
     @include focus-shadow();
   }
-
   &[disabled] {
     @extend %disabled;
     @include shadow-2dp();
@@ -94,76 +84,64 @@
   @extend %button;
   width: $button-floating-height;
   height: $button-floating-height;
-  font-size: $unit * 2.4;
+  font-size: $button-floating-font-size;
   background: $button-solid-background-color;
   border-radius: 50%;
-  box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, .12), 0 1px 1px 0 rgba(0, 0, 0, .24);
-
+  box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, .12),
+              0 1px 1px 0 rgba(0, 0, 0, .24);
   &:active {
     @include shadow-4dp();
   }
-
   &:focus:not(:active) {
     @include focus-shadow();
   }
-
   &[disabled] {
     @extend %disabled;
     @include shadow-2dp();
     background-color: $button-solid-disabled-background-color;
   }
-
   .icon {
     line-height: $button-floating-height;
   }
 }
 
-:global(.primary):not([disabled]) {
+.primary:not([disabled]) {
   &.raised, &.floating {
     color: $button-primary-color-contrast;
     background: $button-primary-color;
   }
-
   &.flat {
     color: $button-primary-color;
-
     &:hover {
       background: $button-primary-color-hover;
     }
-
     &:focus:not(:active) {
       background: $button-primary-color-hover;
     }
   }
 }
 
-:global(.accent):not([disabled]) {
+.accent:not([disabled]) {
   &.raised, &.floating {
     color: $button-accent-color-contrast;
     background-color: $button-accent-color;
   }
-
   &.flat {
     color: $button-accent-color;
-
     &:hover {
       background: $button-accent-color-hover;
     }
-
     &:focus:not(:active) {
       background: $button-accent-color-hover;
     }
   }
 }
 
-:global(.mini) {
-  &.floating {
-    width: $button-floating-height-mini;
-    height: $button-floating-height-mini;
-    font-size: ($button-floating-height-mini / 2.25);
-
-    .icon {
-      line-height: $button-floating-height-mini;
-    }
+.mini.floating {
+  width: $button-floating-height-mini;
+  height: $button-floating-height-mini;
+  font-size: $button-floating-mini-font-size;
+  .icon {
+    line-height: $button-floating-height-mini;
   }
 }

@@ -5,33 +5,33 @@ import Ripple from '../ripple';
 import style from './style.scss';
 import events from '../utils/events';
 
-export default React.createClass({
+const Button = React.createClass({
   mixins: [PureRenderMixin],
 
-  displayName: 'Button',
-
   propTypes: {
+    accent: React.PropTypes.bool,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     icon: React.PropTypes.string,
-    primary: React.PropTypes.bool,
-    accent: React.PropTypes.bool,
+    kind: React.PropTypes.string,
     label: React.PropTypes.string,
     loading: React.PropTypes.bool,
+    mini: React.PropTypes.bool,
+    primary: React.PropTypes.bool,
     ripple: React.PropTypes.bool,
     type: React.PropTypes.string
   },
 
   getDefaultProps () {
     return {
+      accent: false,
       className: '',
-      ripple: true,
-      type: 'flat'
+      kind: 'flat',
+      loading: false,
+      mini: false,
+      primary: false,
+      ripple: true
     };
-  },
-
-  getInitialState () {
-    return { loading: this.props.loading };
   },
 
   handleMouseDown (event) {
@@ -40,28 +40,28 @@ export default React.createClass({
   },
 
   render () {
-    let className = style[this.props.type];
+    let className = style[this.props.kind];
+    if (!this.props.primary && !this.props.accent) className += ` ${style.primary}`;
     if (this.props.className) className += ` ${this.props.className}`;
+    if (this.props.primary) className += ` ${style.primary}`;
+    if (this.props.accent) className += ` ${style.accent}`;
+    if (this.props.mini) className += ` ${style.mini}`;
 
     return (
       <button
-        data-react-toolbox='button'
         {...this.props}
-        type=''
         label=''
-        data-toolbox='button'
         className={className}
-        disabled={this.props.disabled || this.state.loading}
+        data-react-toolbox='button'
         onMouseDown={this.handleMouseDown}
+        disabled={this.props.disabled || this.props.loading}
       >
         { this.props.ripple ? <Ripple ref='ripple' loading={this.props.loading}/> : null }
         { this.props.icon ? <FontIcon className={style.icon} value={this.props.icon}/> : null }
         { this.props.label ? <abbr className={style.label}>{this.props.label}</abbr> : null }
       </button>
     );
-  },
-
-  loading (value) {
-    this.setState({loading: value});
   }
 });
+
+export default Button;

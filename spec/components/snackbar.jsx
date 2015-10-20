@@ -19,7 +19,7 @@ export default React.createClass({
       <section>
         <h5>Snackbars & Toasts</h5>
         <p>lorem ipsum...</p>
-        <Button label='Show snackbar' onClick={this.handleSnackbar} type='raised' />
+        <Button label='Show snackbar' kind='raised' onClick={this.handleSnackbar} />
         <Snackbar
           ref='snackbar'
           action='Dismiss'
