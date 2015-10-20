@@ -1,0 +1,5 @@
+$dialog-color-title: unquote("rgb(#{$color-black})") !default;
+$dialog-color-white: unquote("rgb(#{$color-white})") !default;
+$dialog-content-padding: 2.4 * $unit;
+$dialog-navigation-padding: .8 * $unit;
+$dialog-translate-y: 4 * $unit;

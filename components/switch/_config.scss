@@ -1,0 +1,20 @@
+$switch-color: unquote("rgb(#{$color-primary})") !default;
+$switch-text-color: unquote("rgb(#{$color-black})") !default;
+$switch-thumb-off-color: unquote("rgb(#{$palette-grey-50})") !default;
+$switch-track-on-color: unquote("rgba(#{$color-primary}, 0.5)") !default;
+$switch-track-off-color: unquote("rgba(#{$color-black}, 0.26)") !default;
+$switch-off-ripple-color: unquote("rgba(#{$color-black}, 0.4)") !default;
+$switch-on-focus-color: unquote("rgba(#{$color-primary}, 0.26)") !default;
+$switch-off-focus-color: unquote("rgba(#{$color-black}, 0.1)") !default;
+$switch-disabled-thumb-color: unquote("rgb(#{$palette-grey-400})") !default;
+$switch-disabled-track-color: unquote("rgba(#{$color-black}, 0.12)") !default;
+$switch-disabled-text-color: unquote("rgba(#{$color-black}, 0.26)") !default;
+
+$switch-total-height: 2.4 * $unit !default;
+$switch-track-length: 3.6 * $unit !default;
+$switch-track-height: 1.4 * $unit !default;
+$switch-thumb-size: 2 * $unit !default;
+$switch-thumb-on-color: $switch-color !default;
+$switch-focus-init-size: .8 * $unit !default;
+$switch-focus-size: $switch-total-height * 2 !default;
+$switch-focus-diff: ($switch-focus-size - $switch-focus-init-size) / 2;

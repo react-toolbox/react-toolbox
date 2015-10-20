@@ -1,0 +1,9 @@
+$calendar-primary: $color-primary;
+$calendar-primary-contrast: $color-primary-contrast;
+$calendar-primary-color: unquote("rgb(#{$calendar-primary})") !default;
+$calendar-primary-contrast-color: unquote("rgb(#{$calendar-primary-contrast})") !default;
+$calendar-primary-hover-color: unquote("rgba(#{$calendar-primary}, 0.21)") !default;
+$calendar-arrows-color: unquote("rgb(#{$palette-grey-600})") !default;
+$calendar-row-height: 3 * $unit;
+$calendar-day-padding: .2 * $unit;
+$calendar-total-height: $calendar-row-height * 8 + $calendar-day-padding * 12;

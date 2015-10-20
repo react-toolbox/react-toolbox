@@ -1,21 +1,5 @@
-@import "../variables";
-
-$list-vertical-padding: .8 * $unit;
-$list-horizontal-padding: 1.6 * $unit;
-$list-content-left-spacing: 7.2 * $unit;
-$list-subheader-height: 4.8 * $unit;
-$list-subheader-font-size: 1.4 * $unit;
-$list-subheader-font-weight: 500;
-$list-divider-height: .1 * $unit;
-$list-item-min-height: 4.8 * $unit;
-$list-item-min-height-legend: 7.2 * $unit;
-$list-item-hover-color: unquote("rgb(#{$palette-grey-200})");
-$list-item-legend-margin-top: .3 * $unit;
-$list-item-icon-font-size: 2.4 * $unit;
-$list-item-icon-size: 1.8 * $unit;
-$list-item-right-icon-margin: $list-content-left-spacing - $list-horizontal-padding - $list-item-icon-size;
-$list-item-avatar-height: 4 * $unit;
-$list-item-avatar-margin: .8 * $unit;
+@import "../base";
+@import "./config";
 
 .list {
   position: relative;

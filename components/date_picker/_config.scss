@@ -1,0 +1,9 @@
+$datepicker-primary: $color-primary;
+$datepicker-primary-contrast: $color-primary-contrast;
+$datepicker-primary-dark: $color-primary-dark;
+$datepicker-primary-color: unquote("rgb(#{$datepicker-primary})") !default;
+$datepicker-primary-hover-color: unquote("rgba(#{$datepicker-primary}, 0.20)") !default;
+$datepicker-primary-contrast-color: unquote("rgb(#{$datepicker-primary-contrast})") !default;
+$datepicker-primary-dark-color: unquote("rgb(#{$datepicker-primary-dark})") !default;
+$datepicker-dialog-width: 30 * $unit;
+$datepicker-inactive-opacity: .6;

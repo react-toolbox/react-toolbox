@@ -1,0 +1,9 @@
+$checkbox-total-height: 1.8 * $unit;
+$checkbox-size: 1.8 * $unit;
+$checkbox-transition-duration: .2s;
+$checkbox-focus-size: $checkbox-size * 2.3;
+$checkbox-color: unquote("rgb(#{$color-primary})") !default;
+$checkbox-text-color: unquote("rgb(#{$color-black})") !default;
+$checkbox-disabled-color: unquote("rgba(#{$color-black}, 0.26)") !default;
+$check-focus-color: unquote("rgba(#{$color-black}, 0.1)") !default;
+$checked-focus-color: unquote("rgba(#{$color-primary}, 0.26)") !default;

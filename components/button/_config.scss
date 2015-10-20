@@ -1,0 +1,15 @@
+$button-default-text-color: unquote("rgb(#{$color-black})") !default;
+$button-flat-color-hover: unquote("rgba(#{$color-black}, 0.26)") !default;
+$button-disabled-text-color: unquote("rgba(#{$color-black}, 0.26)") !default;
+$button-solid-background-color: unquote("rgba(#{$palette-grey-500}, 0.20)") !default;
+$button-solid-disabled-background-color: unquote("rgba(#{$color-black}, 0.12)") !default;
+$button-primary-color: unquote("rgb(#{$color-primary})") !default;
+$button-primary-color-contrast: unquote("rgb(#{$color-primary-contrast})") !default;
+$button-primary-color-hover: unquote("rgba(#{$color-primary}, 0.20)") !default;
+$button-accent-color: unquote("rgb(#{$color-accent})") !default;
+$button-accent-color-hover: unquote("rgba(#{$color-accent}, 0.20)") !default;
+$button-accent-color-active: unquote("rgba(#{$color-accent}, 0.40)") !default;
+$button-accent-color-contrast: unquote("rgb(#{$color-primary-contrast})") !default;
+$button-height: $unit * 3.6;
+$button-floating-height: $unit * 5.6;
+$button-floating-height-mini: $unit * 4;

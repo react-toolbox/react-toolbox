@@ -1,0 +1,6 @@
+$progress-height: .4 * $unit;
+$progress-main-color: unquote("rgb(#{$color-primary})") !default;
+$progress-secondary-color: unquote("rgba(#{$color-primary-contrast}, 0.7)") !default;
+$circle-wrapper-width: 60;
+$circle-radius: 25;
+$scale-ratio: $circle-radius / 20;

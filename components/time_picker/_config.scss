@@ -1,0 +1,10 @@
+$timepicker-primary: $color-primary;
+$timepicker-primary-contrast: $color-primary-contrast;
+$timepicker-primary-dark: $color-primary-dark;
+$timepicker-primary-color: unquote("rgb(#{$timepicker-primary})") !default;
+$timepicker-primary-hover-color: unquote("rgba(#{$timepicker-primary}, 0.20)") !default;
+$timepicker-primary-contrast-color: unquote("rgb(#{$timepicker-primary-contrast})") !default;
+$timepicker-primary-dark-color: unquote("rgb(#{$timepicker-primary-dark})") !default;
+$timepicker-ampm-height: 2.2 * $unit;
+$timepicker-ampm-width: 4 * $unit;
+$timepicker-dialog-width: 30 * $unit;

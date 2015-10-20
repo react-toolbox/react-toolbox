@@ -1,9 +1,5 @@
-@import "../variables";
-@import "../mixins";
-$dropdown-color-white: unquote("rgb(#{$color-white})");
-$dropdown-color-primary: unquote("rgb(#{$color-primary})");
-$dropdown-color-primary-contrast: unquote("rgb(#{$color-primary-contrast})");
-$dropdown-value-hover-background: unquote("rgb(#{$palette-grey-200})");
+@import "../base";
+@import "./config";
 
 .root {
   position: relative;

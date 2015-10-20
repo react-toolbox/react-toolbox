@@ -1,8 +1,5 @@
-@import "../variables";
-
-$navigation-space: $unit;
-$navigation-color: unquote("rgb(#{$color-black})") !default;
-$navigation-background: unquote("rgb(#{$color-white})") !default;
+@import "../base";
+@import "./config";
 
 .horizontal {
   > * {

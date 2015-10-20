@@ -1,12 +1,5 @@
-@import "../mixins";
-@import "../variables";
-
-$menu-item-hover-background: unquote("rgb(#{$palette-grey-200})");
-$menu-item-icon-font-size: 2.4 * $unit;
-$menu-item-icon-size: 1.6 * $menu-item-icon-font-size;
-$menu-item-height: 4.8 * $unit;
-$menu-item-padding: 1.6 * $unit;
-$menu-item-font-size: 1.6 * $unit;
+@import "../base";
+@import "./config";
 
 .root {
   position: relative;

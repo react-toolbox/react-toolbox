@@ -1,0 +1,12 @@
+$clock-primary: $color-primary;
+$clock-primary-contrast: $color-primary-contrast;
+$clock-primary-dark: $color-primary-dark;
+$clock-primary-color: unquote("rgb(#{$clock-primary})") !default;
+$clock-primary-hover-color: unquote("rgba(#{$clock-primary}, 0.20)") !default;
+$clock-primary-contrast-color: unquote("rgb(#{$clock-primary-contrast})") !default;
+$clock-primary-dark-color: unquote("rgb(#{$clock-primary-dark})") !default;
+$clock-number-size: 2 * $unit;
+$clock-hand-width: .4 * $unit;
+$clock-hand-dot-size: 1 * $unit;
+$clock-knob-size: 3.4 * $unit;
+$clock-knob-small-size: 1.2 * $unit;

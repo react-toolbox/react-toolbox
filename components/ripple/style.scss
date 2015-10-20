@@ -1,9 +1,5 @@
-@import "../variables";
-@import "../mixins";
-
-$ripple-duration: 1.2s;
-$ripple-final-opacity: .3;
-$ripple-size: 15 * $unit;
+@import "../base";
+@import "./config";
 
 %ripple {
   position: absolute;

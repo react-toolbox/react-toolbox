@@ -1,11 +1,5 @@
-@import "../mixins";
-@import "../variables";
-
-$menu-expand-duration: .3s !default;
-$menu-fade-duration: .2s !default;
-$menu-ripple-delay: .3s !default;
-$menu-background-color: unquote("rgb(#{$color-white})");
-$menu-padding: .8 * $unit 0;
+@import "../base";
+@import "./config";
 
 .root {
   position: relative;

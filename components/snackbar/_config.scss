@@ -1,0 +1,5 @@
+$snackbar-background-color: $color-text !default;
+$snackbar-color: unquote("rgb(#{$color-white})") !default;
+$snackbar-horizontal-offset: 2.4 * $unit;
+$snackbar-vertical-offset: 1.4 * $unit;
+$snackbar-button-offset: 4.8 * $unit;
