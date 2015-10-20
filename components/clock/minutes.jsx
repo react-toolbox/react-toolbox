@@ -34,8 +34,8 @@ export default class Minutes extends React.Component {
     return (
       <div>
         <Face
-          onTouchStart={this.onTouchStart}
-          onMouseDown={this.onMouseDown}
+          onTouchStart={::this.onTouchStart}
+          onMouseDown={::this.onMouseDown}
           numbers={minutes}
           spacing={this.props.spacing}
           radius={this.props.radius}
@@ -46,7 +46,7 @@ export default class Minutes extends React.Component {
           className={minutes.indexOf(this.props.selected) === -1 ? style.small : ''}
           angle={this.props.selected * step}
           length={this.props.radius - this.props.spacing}
-          onMove={this.onHandMove}
+          onMove={::this.onHandMove}
           origin={this.props.center}
           step={step}
         />

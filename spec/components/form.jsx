@@ -33,10 +33,10 @@ export default class FormTest extends React.Component {
         <Form
           attributes={this.state.attributes}
           storage="example-form"
-          onChange={this.onEvent.bind(null, 'change')}
-          onError={this.onEvent.bind(null, 'error')}
-          onValid={this.onEvent.bind(null, 'valid')}
-          onSubmit={this.onEvent.bind(null, 'submit')} />
+          onChange={::this.onEvent('change')}
+          onError={::this.onEvent('error')}
+          onValid={::this.onEvent('valid')}
+          onSubmit={::this.onEvent('submit')} />
       </section>
     );
   }

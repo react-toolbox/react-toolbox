@@ -70,7 +70,7 @@ export default class Calendar extends React.Component {
     let props = {
       className: year === this.state.viewDate.getFullYear() ? style.active : '',
       key: year,
-      onClick: this.onYearClick.bind(this, year)
+      onClick: ::this.onYearClick(year)
     };
 
     if (year === this.state.viewDate.getFullYear()) {
@@ -103,7 +103,7 @@ export default class Calendar extends React.Component {
             key={this.state.viewDate.getMonth()}
             viewDate={this.state.viewDate}
             selectedDate={this.state.selectedDate}
-            onDayClick={this.onDayClick} />
+            onDayClick={::this.onDayClick} />
         </CSSTransitionGroup>
       </div>
     );

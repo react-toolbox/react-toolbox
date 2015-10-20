@@ -41,10 +41,10 @@ export default class DropdownTest extends React.Component {
       <section>
         <h5>Dropdown</h5>
         <p>lorem ipsum...</p>
-        <Dropdown dataSource={this.state.countries} label="Countries" onChange={this.onChange}/>
-        <Dropdown dataSource={this.state.countries} disabled={true} onChange={this.onChange}/>
-        <Dropdown dataSource={this.state.countries} value={this.state.selected} onChange={this.onChange}/>
-        <Dropdown dataSource={this.state.countries} value={this.state.selected} template={this.customDropdownItem} onChange={this.onChange}/>
+        <Dropdown dataSource={this.state.countries} label="Countries" onChange={::this.onChange}/>
+        <Dropdown dataSource={this.state.countries} disabled={true} onChange={::this.onChange}/>
+        <Dropdown dataSource={this.state.countries} value={this.state.selected} onChange={::this.onChange}/>
+        <Dropdown dataSource={this.state.countries} value={this.state.selected} template={this.customDropdownItem} onChange={::this.onChange}/>
       </section>
     );
   }

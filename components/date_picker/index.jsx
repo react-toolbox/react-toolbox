@@ -48,7 +48,7 @@ export default class DatePicker extends React.Component {
         <CalendarDialog
           ref='dialog'
           initialDate={this.state.value}
-          onDateSelected={this.onDateSelected}
+          onDateSelected={::this.onDateSelected}
         />
       </div>
     );

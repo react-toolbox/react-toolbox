@@ -59,12 +59,13 @@
     "karma-chrome-launcher": "^0.2.0",
     "karma-cli": "^0.1.0",
     "karma-mocha": "^0.2.0",
-    "karma-phantomjs-launcher": "~0.1",
+    "karma-phantomjs-launcher": "^0.2.1",
     "karma-webpack": "^1.7.0",
     "mocha": "^2.3.3",
     "node-libs-browser": "^0.5.2",
     "node-sass": "^3.3.3",
     "normalize.css": "^3.0.3",
+    "phantomjs": "^1.9.18",
     "phantomjs-polyfill": "0.0.1",
     "postcss-loader": "^0.4.3",
     "react-addons-test-utils": "^0.14.0",
@@ -73,7 +74,7 @@
     "sinon": "git://github.com/cjohansen/Sinon.JS#sinon-2.0",
     "style-loader": "^0.12.3",
     "webpack": "^1.12.0",
-    "webpack-dev-server": "*"
+    "webpack-dev-server": "^1.12.1"
   },
   "repository": "github:react-toolbox/react-toolbox"
 }

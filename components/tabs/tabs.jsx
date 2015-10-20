@@ -72,7 +72,7 @@ export default class Tabs extends React.Component {
         className: className,
         label: tab.props.label,
         key: index,
-        onClick: !tab.props.disabled ? this.onClick.bind(null, index) : null
+        onClick: !tab.props.disabled ? ::this.onClick(index) : null
       });
 
       return React.cloneElement(tab, {active: active, key: index, tabIndex: index });

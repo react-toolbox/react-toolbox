@@ -18,8 +18,8 @@ export default class CalendarDialog extends React.Component {
     date: this.props.initialDate,
     display: 'months',
     actions: [
-      { label: 'Cancel', className: style.button, onClick: this.onDateCancel },
-      { label: 'Ok', className: style.button, onClick: this.onDateSelected }
+      { label: 'Cancel', className: style.button, onClick: ::this.onDateCancel },
+      { label: 'Ok', className: style.button, onClick: ::this.onDateSelected }
     ]
   };
 
@@ -71,7 +71,7 @@ export default class CalendarDialog extends React.Component {
             <Calendar
               ref="calendar"
               display={this.state.display}
-              onChange={this.onCalendarChange}
+              onChange={::this.onCalendarChange}
               selectedDate={this.state.date} />
           </div>
       </Dialog>

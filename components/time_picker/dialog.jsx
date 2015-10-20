@@ -22,8 +22,8 @@ export default class TimePickerDialog extends React.Component {
     display: 'hours',
     time: this.props.initialTime,
     actions: [
-      { label: 'Cancel', className: style.button, onClick: this.onTimeCancel },
-      { label: 'Ok', className: style.button, onClick: this.onTimeSelected }
+      { label: 'Cancel', className: style.button, onClick: ::this.onTimeCancel },
+      { label: 'Ok', className: style.button, onClick: ::this.onTimeSelected }
     ]
   };
 
@@ -98,7 +98,7 @@ export default class TimePickerDialog extends React.Component {
           display={this.state.display}
           format={this.props.format}
           initialTime={this.props.initialTime}
-          onChange={this.onClockChange}
+          onChange={::this.onClockChange}
         />
       </Dialog>
     );

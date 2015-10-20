@@ -20,12 +20,12 @@ export default class DrawerTest extends React.Component {
         </Drawer>
 
         <Drawer ref='right' type='right'>
-          <Button label='Close' onClick={this.onClick.bind(null, 'right', 'hide')} />
+          <Button label='Close' onClick={::this.onClick('right', 'hide')} />
         </Drawer>
 
         <nav>
-          <Button className='accent' label='Drawer left hideable' type='raised' onClick={this.onClick.bind(null, 'left', 'show')} />
-          <Button className='primary' label='Drawer right' type='raised' onClick={this.onClick.bind(null, 'right', 'show')} />
+          <Button className='accent' label='Drawer left hideable' type='raised' onClick={::this.onClick('left', 'show')} />
+          <Button className='primary' label='Drawer right' type='raised' onClick={::this.onClick('right', 'show')} />
         </nav>
       </section>
     );

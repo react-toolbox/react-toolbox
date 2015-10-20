@@ -50,7 +50,7 @@ export default class Input extends React.Component {
           role='input'
           {...this.props}
           className={className}
-          onChange={this.onChange}
+          onChange={::this.onChange}
           value={this.state.value} />
       );
     } else {
@@ -61,7 +61,7 @@ export default class Input extends React.Component {
           {...this.props}
           className={className}
           value={this.state.value}
-          onChange={this.onChange} />
+          onChange={::this.onChange} />
       );
     }
   }

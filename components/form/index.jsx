@@ -75,23 +75,23 @@ export default class Form extends React.Component {
     let className = `${style.root} ${this.props.className}`;
     const attributes = this.state.attributes.map((attribute, index) => {
       if (attribute.type === 'autocomplete') {
-        return <Autocomplete key={index} {...attribute} onChange={this.onChange}/>;
+        return <Autocomplete key={index} {...attribute} onChange={::this.onChange}/>;
       } else if (attribute.type === 'submit') {
-        return <Button key={index} {...attribute} type='square' ref='submit' onClick={this.onSubmit}/>;
+        return <Button key={index} {...attribute} type='square' ref='submit' onClick={::this.onSubmit}/>;
       } else if (attribute.type === 'checkbox') {
-        return <Checkbox key={index} {...attribute} onChange={this.onChange}/>;
+        return <Checkbox key={index} {...attribute} onChange={::this.onChange}/>;
       } else if (attribute.type === 'date_picker') {
-        return <DatePicker key={index} {...attribute} onChange={this.onChange}/>;
+        return <DatePicker key={index} {...attribute} onChange={::this.onChange}/>;
       } else if (attribute.type === 'dropdown') {
-        return <Dropdown key={index} {...attribute} onChange={this.onChange}/>;
+        return <Dropdown key={index} {...attribute} onChange={::this.onChange}/>;
       } else if (attribute.type === 'radio_group') {
-        return <RadioGroup key={index} {...attribute} onChange={this.onChange}/>;
+        return <RadioGroup key={index} {...attribute} onChange={::this.onChange}/>;
       } else if (attribute.type === 'slider') {
-        return <Slider key={index} {...attribute} onChange={this.onChange}/>;
+        return <Slider key={index} {...attribute} onChange={::this.onChange}/>;
       } else if (attribute.type === 'switch') {
-        return <Switch key={index} {...attribute} onChange={this.onChange}/>;
+        return <Switch key={index} {...attribute} onChange={::this.onChange}/>;
       } else if (attribute.type === 'time_picker') {
-        return <TimePicker key={index} {...attribute} onChange={this.onChange}/>;
+        return <TimePicker key={index} {...attribute} onChange={::this.onChange}/>;
       } else {
         return <Input key={index} {...attribute} />;
       }
@@ -101,8 +101,8 @@ export default class Form extends React.Component {
       <form
         data-react-toolbox='form'
         className={className}
-        onChange={this.onChange}
-        onSubmit={this.onSubmit}
+        onChange={::this.onChange}
+        onSubmit={::this.onSubmit}
       >
         { attributes }
         { this.props.children }

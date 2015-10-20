@@ -27,15 +27,15 @@ export default class Hand extends React.Component {
 
   getMouseEventMap () {
     return {
-      mousemove: this.onMouseMove,
-      mouseup: this.onMouseUp
+      mousemove: ::this.onMouseMove,
+      mouseup: ::this.onMouseUp
     };
   }
 
   getTouchEventMap () {
     return {
-      touchmove: this.onTouchMove,
-      touchend: this.onTouchEnd
+      touchmove: ::this.onTouchMove,
+      touchend: ::this.onTouchEnd
     };
   }
 

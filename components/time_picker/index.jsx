@@ -51,7 +51,7 @@ export default class TimePicker extends React.Component {
           ref='dialog'
           initialTime={this.state.value}
           format={this.props.format}
-          onTimeSelected={this.onTimeSelected}
+          onTimeSelected={::this.onTimeSelected}
         />
       </div>
     );
