@@ -1,0 +1,58 @@
+@import "../variables";
+@import "../mixins";
+$snackbar-background-color: $color-text !default;
+$snackbar-color: unquote("rgb(#{$color-white})") !default;
+$snackbar-horizontal-offset: 2.4 * $unit;
+$snackbar-vertical-offset: 1.4 * $unit;
+$snackbar-button-offset: 4.8 * $unit;
+
+.root {
+  position: fixed;
+  bottom: 0;
+  left: $snackbar-horizontal-offset;
+  right: $snackbar-horizontal-offset;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  padding: $snackbar-vertical-offset $snackbar-horizontal-offset;
+  margin-top: $snackbar-vertical-offset;
+  color: $snackbar-color;
+  background-color: $snackbar-background-color;
+  border-radius: $border-radius;
+  transition: all $animation-duration $animation-curve-default $animation-duration;
+  &.accept .button {
+    color: green;
+  }
+  &.warning .button {
+    color: orange;
+  }
+  &.cancel .button {
+    color: red;
+  }
+  &:not(.active) {
+    transform: translateY(100%);
+  }
+  &.active {
+    transform: translateY(0%);
+  }
+}
+
+.icon {
+  margin-right: $snackbar-vertical-offset;
+}
+
+.label {
+  flex-grow: 1;
+  font-size: $font-size-small;
+}
+
+.button {
+  min-width: inherit;
+  height: inherit;
+  padding: 0;
+  margin-left: $snackbar-button-offset;
+  color: white;
+  > abbr {
+    line-height: inherit;
+  }
+}
