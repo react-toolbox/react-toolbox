@@ -33,13 +33,12 @@
 }
 
 .navigation {
-  $offset: ($offset / 2);
-  padding: $offset;
+  padding: $card-navigation-offset;
 
   > * {
     min-width: 0;
-    padding-right: $offset;
-    padding-left: $offset;
+    padding-right: $card-navigation-offset;
+    padding-left: $card-navigation-offset;
   }
 }
 
@@ -59,7 +58,7 @@
 
   // -- Children
   > *:not(.navigation) {
-    padding: $offset;
+    padding: $card-offset;
   }
 
   &:not(.color) > *:not(.figure), > *:not(:last-child) {
@@ -104,7 +103,7 @@
     padding: 0;
 
     > h5 {
-      padding: $offset;
+      padding: $card-offset;
       font-size: $font-size-small;
       font-weight: $font-weight-bold;
       background-color: $card-text-overlay;

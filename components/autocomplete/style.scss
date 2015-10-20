@@ -10,7 +10,7 @@
     }
 
     .suggestions {
-      max-height: $items-overflow-max-height;
+      max-height: $autocomplete-overflow-max-height;
       visibility: visible;
       box-shadow: $zdepth-shadow-1;
     }

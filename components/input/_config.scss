@@ -1,7 +1,7 @@
 $input-padding: 2 * $unit;
-$input-field-height: 1.6 * $unit;
 $input-field-padding: .8 * $unit;
 $input-field-font-size: 1.6 * $unit;
+$input-field-height: $input-field-padding * 2 + $input-field-font-size;
 $input-label-font-size: 1.2 * $unit;
 $input-focus-label-top: .6 * $unit;
 $input-text-background-color: transparent !default;
@@ -13,3 +13,4 @@ $input-text-disabled-text-color: $input-text-label-color !default;
 $input-text-error-color: unquote("rgb(222, 50, 38)") !default;
 $input-icon-font-size: 2.4 * $unit;
 $input-icon-size: 2 * $input-icon-font-size;
+$input-icon-offset: 1.6 * $unit;

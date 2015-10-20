@@ -1,10 +1,11 @@
 @import "../base";
 @import "./config";
+@import "../input/config";
 
 .root {
   position: relative;
   width: inherit;
-  margin-bottom: $offset;
+  margin-bottom: $dropdown-offset;
   color: $color-text;
   border-bottom: 1px solid $color-divider;
   &:not(.active) {
@@ -18,7 +19,7 @@
       opacity: .5;
     }
     > .values {
-      max-height: $items-overflow-max-height;
+      max-height: $dropdown-overflow-max-height;
       visibility: visible;
       box-shadow: $zdepth-shadow-1;
     }
@@ -78,19 +79,20 @@
 .value {
   display: block;
   > span {
-    height: $input-height;
-    font-size: $font-size-normal;
-    line-height: $input-height;
+    display: inline-block;
+    height: $input-field-height;
+    font-size: $input-field-font-size;
+    line-height: $input-field-height;
   }
   > :not(span) {
-    margin: ($offset / 2) 0;
+    margin: ($dropdown-offset / 2) 0;
   }
   &:after {
-    $size: ($input-height / 7);
+    $size: ($input-field-height / 7);
     $border: $size solid transparent;
     position: absolute;
-    right: ($offset / 2);
-    bottom: $offset;
+    right: ($dropdown-offset / 2);
+    bottom: $dropdown-offset;
     width: 0;
     height: 0;
     content: "";
