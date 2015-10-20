@@ -6,15 +6,13 @@
   display: flex;
   min-height: $card-title-height;
   flex-direction: column;
+  justify-content: flex-end;
   background-position: center center;
   background-size: cover;
-  justify-content: flex-end;
-
   > *:not(.overflow) {
-    z-index: 1;
+    z-index: $z-index-normal;
     font-weight: $font-weight-normal;
   }
-
   > .overflow {
     position: absolute;
     top: 0;
@@ -28,13 +26,12 @@
 
 .text {
   font-size: $font-size-small;
-  line-height: 1.8 * $unit;
+  line-height: $font-size-big;
   color: $color-text-secondary;
 }
 
 .navigation {
   padding: $card-navigation-offset;
-
   > * {
     min-width: 0;
     padding-right: $card-navigation-offset;
@@ -55,12 +52,9 @@
   overflow: hidden;
   vertical-align: top;
   background: $color-background;
-
-  // -- Children
   > *:not(.navigation) {
     padding: $card-offset;
   }
-
   &:not(.color) > *:not(.figure), > *:not(:last-child) {
     box-shadow: 0 1px $color-divider;
   }
@@ -75,7 +69,6 @@
     color: $card-color-white;
     text-shadow: 0;
   }
-
   .ripple {
     background-color: $card-color-white;
   }
@@ -85,7 +78,6 @@
   pointer-events: none;
   cursor: none;
   filter: grayscale(100%);
-
   .ripple {
     @include ripple-loading(cardloading, 2 * $card-width-normal, 2 * $card-width-normal);
     width: 2 * $card-width-normal;
@@ -98,10 +90,8 @@
   &, .figure {
     height: $card-width-normal;
   }
-
   .figure {
     padding: 0;
-
     > h5 {
       padding: $card-offset;
       font-size: $font-size-small;

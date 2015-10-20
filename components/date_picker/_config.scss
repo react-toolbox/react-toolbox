@@ -7,3 +7,9 @@ $datepicker-primary-contrast-color: unquote("rgb(#{$datepicker-primary-contrast}
 $datepicker-primary-dark-color: unquote("rgb(#{$datepicker-primary-dark})") !default;
 $datepicker-dialog-width: 30 * $unit;
 $datepicker-inactive-opacity: .6;
+$datepicker-weekday-line-height: 2 * $unit;
+$datepicker-weekday-font-size: $font-size-small;
+$datepicker-month-font-size: $font-size-big;
+$datepicker-day-font-size: 5 * $unit;
+$datepicker-day-line-height: 4 * $unit;
+$datepicker-year-font-size: 1.8 * $unit;

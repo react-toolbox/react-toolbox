@@ -15,30 +15,30 @@
 .weekday {
   display: block;
   width: 100%;
-  font-size: 1.4 * $unit;
-  line-height: 2 * $unit;
+  font-size: $datepicker-weekday-font-size;
+  line-height: $datepicker-weekday-line-height;
   background-color: $datepicker-primary-dark-color;
 }
 
 .month {
   display: block;
   padding: $unit;
-  font-size: 1.8 * $unit;
+  font-size: $datepicker-month-font-size;
   text-transform: uppercase;
   cursor: pointer;
 }
 
 .day {
   display: block;
-  font-size: 5 * $unit;
-  line-height: 4 * $unit;
-  cursor: pointer;
+  font-size: $datepicker-day-font-size;
+  line-height: $datepicker-day-line-height;
+  cursor: pointer;;
 }
 
 .year {
   display: inline-block;
   margin-top: $unit;
-  font-size: 1.8 * $unit;
+  font-size: $datepicker-year-font-size;
   cursor: pointer;
 }
 
@@ -60,18 +60,14 @@
 
 .dialog > [role="content"] {
   width: $datepicker-dialog-width;
-
   > [role="body"] {
     padding: 0;
   }
-
   > [role="navigation"] > .button {
     color: $datepicker-primary-color;
-
     &:hover {
       background: $datepicker-primary-hover-color;
     }
-
     &:focus:not(:active) {
       background: $datepicker-primary-hover-color;
     }
