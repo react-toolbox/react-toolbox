@@ -123,6 +123,7 @@ linters:
       "flex-order",
       "flex-pack",
       "flex-align",
+      "align-content",
       "align-items",
       "justify-content",
       "padding",

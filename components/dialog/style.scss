@@ -10,11 +10,10 @@
   width: 100vw;
   height: 100vh;
   flex-direction: column;
-  align-items: center;
-  pointer-events: none;
-
-  justify-content: center;
   align-content: center;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
   > .content {
     opacity: 0;
     transform: translateY(-$dialog-translate-y);
