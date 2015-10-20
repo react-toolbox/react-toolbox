@@ -15,7 +15,7 @@ import List from './components/list';
 import Menu from './components/menu';
 import Pickers from './components/pickers';
 import Progress from './components/progress';
-import RadioGroup from './components/radio_group';
+import Radio from './components/radio';
 import Snackbar from './components/snackbar';
 import Slider from './components/slider';
 import Switch from './components/switch';
@@ -40,7 +40,7 @@ const App = () => {
       <Menu />
       <Pickers />
       <Progress />
-      <RadioGroup />
+      <Radio />
       <Slider />
       <Snackbar />
       <Switch />

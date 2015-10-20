@@ -1,6 +1,5 @@
 import React from 'react';
-import RadioGroup from '../../components/radio_group';
-import RadioButton from '../../components/radio_button';
+import { RadioGroup, RadioButton } from '../../components/radio';
 
 export default React.createClass({
   handleChange (event, instance) {
