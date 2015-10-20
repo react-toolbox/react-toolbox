@@ -1,4 +1,5 @@
 @import "../base";
+@import "./config";
 
 .root {
   position: relative;
@@ -7,12 +8,12 @@
 }
 
 .icon {
-  font-size: 2.3 * $unit;
+  font-size: $menu-icon-size;
   vertical-align: middle;
   cursor: pointer;
 }
 
 .ripple {
   opacity: .1;
-  transition-duration: 650ms;
+  transition-duration: $menu-icon-ripple-duration;
 }
