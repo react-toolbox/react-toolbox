@@ -4,22 +4,14 @@ import Snackbar from '../../components/snackbar';
 
 export default React.createClass({
 
-  displayName: 'ButtonTest',
+  displayName: 'SnackbarTest',
 
-  getInitialState () {
-    return {
-      snackbar: false,
-      toast: false
-    };
-  },
-
-  handleClick (event) {
-    console.log('handleClick', event);
-    this.setState({ active: false });
+  handleClick (event, snackbar) {
+    console.log('handleClick', event, snackbar);
   },
 
   handleSnackbar () {
-    this.setState({ active: true });
+    this.refs.snackbar.show();
   },
 
   render () {
@@ -29,10 +21,11 @@ export default React.createClass({
         <p>lorem ipsum...</p>
         <Button label='Show snackbar' onClick={this.handleSnackbar} type='raised' />
         <Snackbar
-          action={{label: 'Push', onClick: this.handleClick}}
-          active={this.state.active}
+          ref='snackbar'
+          action='Dismiss'
           icon='question-answer'
           label='Snackbar action cancel'
+          onClick={this.handleClick}
           type='cancel'
         />
       </section>
