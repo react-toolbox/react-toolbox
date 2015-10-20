@@ -5,7 +5,7 @@
   position: relative;
   display: block;
   height: $switch-total-height;
-  margin-bottom: 1.5 * $unit;
+  margin-bottom: $switch-field-margin-bottom;
   white-space: nowrap;
   vertical-align: middle;
 }
@@ -13,7 +13,7 @@
 .text {
   display: inline-block;
   padding-left: $unit;
-  font-size: 1.4 * $unit;
+  font-size: $switch-font-size;
   line-height: $switch-total-height;
   color: $switch-text-color;
   white-space: nowrap;
@@ -45,13 +45,12 @@
 .ripple {
   background-color: $switch-color;
   opacity: .3;
-  transition-duration: 650ms;
+  transition-duration: $switch-ripple-duration;
 }
 
 .switch-on {
   @extend %switch;
   background: $switch-track-on-color;
-
   .thumb {
     @include shadow-3dp();
     left: $switch-track-length - $switch-thumb-size;
@@ -62,13 +61,11 @@
 .switch-off {
   @extend %switch;
   background: $switch-track-off-color;
-
   .thumb {
     @include shadow-2dp();
     left: 0;
     background: $switch-thumb-off-color;
   }
-
   .ripple {
     background: $switch-off-ripple-color;
   }
@@ -93,14 +90,12 @@
   height: 0;
   overflow: hidden;
   opacity: 0;
-
   &:focus:not(:active) {
     + .switch-on > .thumb:before {
       @extend %thumb-focus;
       background-color: $switch-on-focus-color;
       box-shadow: 0 0 0 $switch-focus-diff $switch-on-focus-color;
     }
-
     + .switch-off > .thumb:before {
       @extend %thumb-focus;
       background-color: $switch-off-focus-color;
@@ -111,16 +106,13 @@
 
 .disabled {
   @extend .field;
-
   .text {
     color: $switch-disabled-text-color;
   }
-
   .switch-on, .switch-off {
     cursor: auto;
     background: $switch-disabled-track-color;
   }
-
   .thumb {
     cursor: auto;
     background-color: $switch-disabled-thumb-color;
