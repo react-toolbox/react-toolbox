@@ -3,10 +3,15 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 import Autocomplete from '../autocomplete';
-import Dropdown from '../dropdown';
 import Button from '../button';
+import Checkbox from '../checkbox';
+import DatePicker from '../date_picker';
+import Dropdown from '../dropdown';
 import Input from '../input';
+import RadioGroup from '../radio_group';
+import Slider from '../slider';
 import Switch from '../switch';
+import TimePicker from '../time_picker';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
@@ -78,14 +83,24 @@ export default React.createClass({
   render () {
     let className = `${style.root} ${this.props.className}`;
     const attributes = this.state.attributes.map((attribute, index) => {
-      if (attribute.type === 'submit') {
-        return <Button key={index} {...attribute} type='square' ref='submit' onClick={this.onSubmit}/>;
-      } else if (attribute.type === 'autocomplete') {
+      if (attribute.type === 'autocomplete') {
         return <Autocomplete key={index} {...attribute} onChange={this.onChange}/>;
+      } else if (attribute.type === 'submit') {
+        return <Button key={index} {...attribute} type='square' ref='submit' onClick={this.onSubmit}/>;
+      } else if (attribute.type === 'checkbox') {
+        return <Checkbox key={index} {...attribute} onChange={this.onChange}/>;
+      } else if (attribute.type === 'date_picker') {
+        return <DatePicker key={index} {...attribute} onChange={this.onChange}/>;
       } else if (attribute.type === 'dropdown') {
         return <Dropdown key={index} {...attribute} onChange={this.onChange}/>;
+      } else if (attribute.type === 'radio_group') {
+        return <RadioGroup key={index} {...attribute} onChange={this.onChange}/>;
+      } else if (attribute.type === 'slider') {
+        return <Slider key={index} {...attribute} onChange={this.onChange}/>;
       } else if (attribute.type === 'switch') {
         return <Switch key={index} {...attribute} onChange={this.onChange}/>;
+      } else if (attribute.type === 'time_picker') {
+        return <TimePicker key={index} {...attribute} onChange={this.onChange}/>;
       } else {
         return <Input key={index} {...attribute} />;
       }
