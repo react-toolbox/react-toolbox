@@ -1,7 +1,7 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
-import time from '../utils/time';
+import time from '../../utils/time';
 import Hours from './hours';
 import Minutes from './minutes';
 

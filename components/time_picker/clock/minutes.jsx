@@ -1,6 +1,6 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import utils from '../utils';
+import utils from '../../utils';
 import style from './style';
 import Face from './face';
 import Hand from './hand';
