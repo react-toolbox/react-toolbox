@@ -1,4 +1,5 @@
-$drawer-width: 24 * $unit;
-$drawer-bg-color: unquote("rgb(#{$palette-grey-50})") !default;
-$drawer-text-color: unquote("rgb(#{$palette-grey-800})") !default;
+$drawer-background-color: unquote("rgb(#{$palette-grey-50})") !default;
 $drawer-border-color: unquote("rgb(#{$palette-grey-300})") !default;
+$drawer-overlay-color: $color-overlay;
+$drawer-text-color: unquote("rgb(#{$palette-grey-800})") !default;
+$drawer-width: 24 * $unit;

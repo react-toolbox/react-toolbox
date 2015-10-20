@@ -255,6 +255,7 @@
       "-ms-transition-property",
       "-o-transition-property",
       "transition-property",
+      "transform-style",
       "-webkit-transform",
       "-moz-transform",
       "-ms-transform",
