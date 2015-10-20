@@ -42,10 +42,6 @@ export default React.createClass({
     return `${date.getDate()} ${time.getFullMonth(date)} ${date.getFullYear()}`;
   },
 
-  getValue () {
-    return this.state.value;
-  },
-
   render () {
     return (
       <div data-toolbox='date-picker'>
@@ -65,5 +61,13 @@ export default React.createClass({
         />
       </div>
     );
+  },
+
+  getValue () {
+    return this.state.value;
+  },
+
+  setValue (value) {
+    this.setState({value: value});
   }
 });

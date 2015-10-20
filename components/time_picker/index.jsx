@@ -44,10 +44,6 @@ export default React.createClass({
     }
   },
 
-  getValue () {
-    return this.state.value;
-  },
-
   render () {
     return (
       <div data-react-toolbox='time-picker'>
@@ -68,5 +64,13 @@ export default React.createClass({
         />
       </div>
     );
+  },
+
+  getValue () {
+    return this.state.value;
+  },
+
+  setValue (value) {
+    this.setState({value: value});
   }
 });
