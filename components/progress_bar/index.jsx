@@ -4,7 +4,10 @@ import style from './style';
 import prefixer from '../utils/prefixer';
 
 export default React.createClass({
+
   mixins: [PureRenderMixin],
+
+  displayName: 'ProgressBar',
 
   propTypes: {
     buffer: React.PropTypes.number,
