@@ -49,6 +49,7 @@
       "flex-pack",
       "flex-align",
       "align-items",
+      "justify-content",
       "padding",
       "padding-top",
       "padding-right",
