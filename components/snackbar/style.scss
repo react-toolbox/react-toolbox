@@ -1,0 +1,17 @@
+@import "../variables";
+@import "../mixins";
+$snackbar-background-color: $color-overlay;
+$snackbar-color: unquote("rgb(#{$color-white})");
+
+.root {
+  padding: $offset;
+  margin-top: $offset;
+  background-color: $snackbar-background-color;
+  color: $snackbar-color;
+  border-radius: $border-radius;
+  display: flex;
+}
+
+.icon {
+  margin-right: $offset;
+}
