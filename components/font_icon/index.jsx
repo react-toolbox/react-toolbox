@@ -1,30 +1,23 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
+const FontIcon = props  => {
+  let className = style[props.value];
+  if (props.className) className += ` ${props.className}`;
+  return (
+    <span data-react-toolbox='icon' {...props} className={className}>
+      {props.children}
+    </span>
+  );
+};
 
-  displayName: 'FontIcon',
+FontIcon.propTypes = {
+  className: React.PropTypes.string,
+  value: React.PropTypes.string
+};
 
-  propTypes: {
-    className: React.PropTypes.string,
-    value: React.PropTypes.string
-  },
+FontIcon.defaultProps = {
+  className: ''
+};
 
-  getDefaultProps () {
-    return {
-      className: ''
-    };
-  },
-
-  render () {
-    let className = style[this.props.value];
-    if (this.props.className) className += ` ${this.props.className}`;
-    return (
-      <span data-react-toolbox='icon' {...this.props} className={className}>
-        {this.props.children}
-      </span>
-    );
-  }
-});
+export default FontIcon;

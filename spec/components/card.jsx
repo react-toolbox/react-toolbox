@@ -1,16 +1,14 @@
 import React from 'react';
 import Card from '../../components/card';
 
-export default React.createClass({
-  displayName: 'CardTest',
-
+export default class CardTest extends React.Component {
   onClick () {
     console.log('onClick', arguments);
-  },
+  }
 
   onActionClick () {
     console.log('onClick', arguments);
-  },
+  }
 
   render () {
     const text = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
@@ -36,4 +34,4 @@ export default React.createClass({
       </section>
     );
   }
-});
+};

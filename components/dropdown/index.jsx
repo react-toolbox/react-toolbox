@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Ripple from '../ripple';
 import style from './style';
 
@@ -16,12 +15,8 @@ function _selectValue (value, dataSource) {
   }
 }
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Dropdown',
-
-  propTypes: {
+export default class Dropdown extends React.Component {
+  static propTypes = {
     className: React.PropTypes.string,
     dataSource: React.PropTypes.array,
     disabled: React.PropTypes.bool,
@@ -29,35 +24,31 @@ export default React.createClass({
     onChange: React.PropTypes.func,
     template: React.PropTypes.func,
     value: React.PropTypes.string
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      className: '',
-      dataSource: [],
-      up: false
-    };
-  },
+  static defaultProps = {
+    className: '',
+    dataSource: [],
+    up: false
+  };
 
-  getInitialState () {
-    return {
-      active: false,
-      selected: _selectValue(this.props.value, this.props.dataSource),
-      width: undefined
-    };
-  },
+  state = {
+    active: false,
+    selected: _selectValue(this.props.value, this.props.dataSource),
+    width: undefined
+  };
 
   componentDidMount () {
     this.setState({
       width: ReactDOM.findDOMNode(this).getBoundingClientRect().width
     });
-  },
+  }
 
   componentDidUpdate (prev_props, prev_state) {
     if (this.props.onChange && prev_state.selected !== this.state.selected && prev_state.active) {
       this.props.onChange(this);
     }
-  },
+  }
 
   handleClick (event) {
     let client = event.target.getBoundingClientRect();
@@ -67,7 +58,7 @@ export default React.createClass({
       active: true,
       up: client.top > ((screen_height / 2) + client.height)
     });
-  },
+  }
 
   handleClickValue (id) {
     if (!this.props.disabled) {
@@ -82,7 +73,7 @@ export default React.createClass({
         }
       }
     }
-  },
+  }
 
   renderValues () {
     let items = this.props.dataSource.map((item, index) => {
@@ -107,7 +98,7 @@ export default React.createClass({
     let valuesStyle = {width: this.state.width};
 
     return <ul ref='values' className={className} style={valuesStyle}>{ items }</ul>;
-  },
+  }
 
   render () {
     let className = style.root;
@@ -124,13 +115,13 @@ export default React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
   getValue () {
     return this.state.selected.value;
-  },
+  }
 
   setValue (data) {
     this.setState({selected: data});
   }
-});
+};

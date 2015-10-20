@@ -7,16 +7,14 @@ import React from 'react';
 import Button from 'react-toolbox/components/button';
 import Form from 'react-toolbox/components/form';
 
-const App = React.createClass({
-  getInitialState () {
-    return {
-      fields: [
-        { ref: 'username', label: 'Your username', required: true},
-        { ref: 'password', type: 'password', label: 'Your password', required: true},
-        { type: 'submit', label: 'Login', disabled: true}
-      ]
-    };
-  },
+class App extends React.Component {
+  state = {
+    fields: [
+      { ref: 'username', label: 'Your username', required: true},
+      { ref: 'password', type: 'password', label: 'Your password', required: true},
+      { type: 'submit', label: 'Login', disabled: true}
+    ]
+  };
 
   render () {
     return (
@@ -28,6 +26,6 @@ const App = React.createClass({
       </app>
     );
   }
-});
+}
 
 React.render(<App />, document.body);

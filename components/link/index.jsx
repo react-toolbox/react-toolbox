@@ -1,44 +1,37 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 import FontIcon from '../font_icon';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
+const Link = props => {
+  let className = style.root;
+  if (props.className) className += ` ${props.className}`;
+  return (
+    <a
+      {...props}
+      data-react-toolbox='link'
+      data-flex='horizontal center'
+      href={props.route}
+      className={className}
+    >
+      { props.icon ? <FontIcon className={style.icon} value={props.icon} /> : null }
+      { props.label ? <abbr>{props.label}</abbr> : null }
+      { props.count && parseInt(props.count) !== 0 ? <small>{props.count}</small> : null}
+    </a>
+  );
+};
 
-  displayName: 'Link',
+Link.propTypes = {
+  label: React.PropTypes.string,
+  className: React.PropTypes.string,
+  count: React.PropTypes.number,
+  icon: React.PropTypes.string,
+  onClick: React.PropTypes.func,
+  route: React.PropTypes.string
+};
 
-  propTypes: {
-    label: React.PropTypes.string,
-    className: React.PropTypes.string,
-    count: React.PropTypes.number,
-    icon: React.PropTypes.string,
-    onClick: React.PropTypes.func,
-    route: React.PropTypes.string
-  },
+Link.defaultProps = {
+  attributes: '',
+  className: ''
+};
 
-  getDefaultProps () {
-    return {
-      attributes: '',
-      className: ''
-    };
-  },
-
-  render () {
-    let className = style.root;
-    if (this.props.className) className += ` ${this.props.className}`;
-    return (
-      <a
-        {...this.props}
-        data-react-toolbox='link'
-        data-flex='horizontal center'
-        href={this.props.route}
-        className={className}
-      >
-        { this.props.icon ? <FontIcon className={style.icon} value={this.props.icon} /> : null }
-        { this.props.label ? <abbr>{this.props.label}</abbr> : null }
-        { this.props.count && parseInt(this.props.count) !== 0 ? <small>{this.props.count}</small> : null}
-      </a>
-    );
-  }
-});
+export default Link;

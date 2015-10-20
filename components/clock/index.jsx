@@ -1,48 +1,39 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 import time from '../utils/time';
 import Hours from './hours';
 import Minutes from './minutes';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Clock',
-
-  propTypes: {
+export default class Clock extends React.Component {
+  static propTypes = {
     className: React.PropTypes.string,
     display: React.PropTypes.oneOf(['hours', 'minutes']),
     format: React.PropTypes.oneOf(['24hr', 'ampm']),
     initialTime: React.PropTypes.object,
     onChange: React.PropTypes.func
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      className: '',
-      display: 'hours',
-      format: '24hr',
-      initialTime: new Date()
-    };
-  },
+  static defaultProps = {
+    className: '',
+    display: 'hours',
+    format: '24hr',
+    initialTime: new Date()
+  };
 
-  getInitialState () {
-    return {
-      center: {x: null, y: null},
-      radius: 0,
-      time: this.props.initialTime
-    };
-  },
+  state = {
+    center: {x: null, y: null},
+    radius: 0,
+    time: this.props.initialTime
+  };
 
   componentDidMount () {
     window.addEventListener('resize', this.calculateShape);
     this.calculateShape();
-  },
+  }
 
   componentWillUnmount () {
     window.removeEventListener('resize', this.calculateShape);
-  },
+  }
 
   onHourChange (hours) {
     if (this.state.time.getHours() !== hours) {
@@ -50,7 +41,7 @@ export default React.createClass({
       this.setState({time: newTime});
       if (this.props.onChange) this.props.onChange(newTime);
     }
-  },
+  }
 
   onMinuteChange (minutes) {
     if (this.state.time.getMinutes() !== minutes) {
@@ -58,13 +49,13 @@ export default React.createClass({
       this.setState({time: newTime});
       if (this.props.onChange) this.props.onChange(newTime);
     }
-  },
+  }
 
   toggleTimeMode () {
     const newTime = time.toggleTimeMode(this.state.time);
     this.setState({time: newTime});
     if (this.props.onChange) this.props.onChange(newTime);
-  },
+  }
 
   adaptHourToFormat (hour) {
     if (this.props.format === 'ampm') {
@@ -76,7 +67,7 @@ export default React.createClass({
     } else {
       return hour;
     }
-  },
+  }
 
   calculateShape () {
     let { top, left, width } = this.refs.wrapper.getBoundingClientRect();
@@ -84,7 +75,7 @@ export default React.createClass({
       center: { x: left + width / 2, y: top + width / 2 },
       radius: width / 2
     });
-  },
+  }
 
   renderHours () {
     return (
@@ -97,7 +88,7 @@ export default React.createClass({
         spacing={this.state.radius * 0.18}
       />
     );
-  },
+  }
 
   renderMinutes () {
     return (
@@ -109,7 +100,7 @@ export default React.createClass({
         spacing={this.state.radius * 0.18}
       />
     );
-  },
+  }
 
   render () {
     return (
@@ -121,4 +112,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+};

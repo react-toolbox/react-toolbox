@@ -1,16 +1,11 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
 import style from './style.scss';
 import events from '../utils/events';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Button',
-
-  propTypes: {
+export default class Button extends React.Component {
+  static propTypes = {
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     icon: React.PropTypes.string,
@@ -20,24 +15,22 @@ export default React.createClass({
     loading: React.PropTypes.bool,
     ripple: React.PropTypes.bool,
     type: React.PropTypes.string
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      className: '',
-      ripple: true,
-      type: 'flat'
-    };
-  },
+  static defaultProps = {
+    className: '',
+    ripple: true,
+    type: 'flat'
+  };
 
-  getInitialState () {
-    return { loading: this.props.loading };
-  },
+  state = {
+    loading: this.props.loading
+  };
 
   handleMouseDown (event) {
     events.pauseEvent(event);
     this.refs.ripple.start(event);
-  },
+  }
 
   render () {
     let className = style[this.props.type];
@@ -59,9 +52,9 @@ export default React.createClass({
         { this.props.label ? <abbr className={style.label}>{this.props.label}</abbr> : null }
       </button>
     );
-  },
+  }
 
   loading (value) {
     this.setState({loading: value});
   }
-});
+};

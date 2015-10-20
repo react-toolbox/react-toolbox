@@ -2,12 +2,10 @@ import React from 'react';
 import Button from '../../components/button';
 import Drawer from '../../components/drawer';
 
-export default React.createClass({
-  displayName: 'DrawerTest',
-
+export default class DrawerTest extends React.Component {
   onClick (ref, method) {
     this.refs[ref][method]();
-  },
+  }
 
   render () {
     return (
@@ -32,4 +30,4 @@ export default React.createClass({
       </section>
     );
   }
-});
+};

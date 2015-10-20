@@ -1,12 +1,10 @@
 import React from 'react';
 import Switch from '../../components/switch';
 
-export default React.createClass({
-  displayName: 'SwitchTest',
-
+export default class SwitchTest extends React.Component {
   onChange (event, instance) {
     console.log('[Switch] Changed', instance.getValue());
-  },
+  }
 
   render () {
     return (
@@ -19,4 +17,4 @@ export default React.createClass({
       </section>
     );
   }
-});
+};

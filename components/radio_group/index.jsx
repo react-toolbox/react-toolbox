@@ -1,36 +1,29 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import RadioButton from '../radio_button';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'RadioGroup',
-
-  propTypes: {
+export default class RadioGroup extends React.Component {
+  static propTypes = {
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     name: React.PropTypes.string,
     onChange: React.PropTypes.func,
     value: React.PropTypes.any
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      className: '',
-      disabled: false
-    };
-  },
+  static defaultProps = {
+    className: '',
+    disabled: false
+  };
 
-  getInitialState () {
-    return { value: this.props.value };
-  },
+  state = {
+    value: this.props.value
+  };
 
   handleChange (value, event) {
     this.setState({value: value}, () => {
       if (this.props.onChange) this.props.onChange(event, this);
     });
-  },
+  }
 
   renderRadioButtons () {
     return React.Children.map(this.props.children, (radio, idx) => {
@@ -46,7 +39,7 @@ export default React.createClass({
         />
       );
     });
-  },
+  }
 
   render () {
     return (
@@ -54,13 +47,13 @@ export default React.createClass({
         {this.renderRadioButtons()}
       </div>
     );
-  },
+  }
 
   getValue () {
     return this.state.value;
-  },
+  }
 
   setValue (value) {
     this.setState({value: value});
   }
-});
+};

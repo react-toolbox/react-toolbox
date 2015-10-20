@@ -1,20 +1,13 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Face',
-
-  getDefaultProps () {
-    return {
-      active: null,
-      numbers: [],
-      radius: 0,
-      twoDigits: false
-    };
-  },
+export default class Face extends React.Component {
+  static defaultProps = {
+    active: null,
+    numbers: [],
+    radius: 0,
+    twoDigits: false
+  };
 
   numberStyle (rad, num) {
     return {
@@ -22,14 +15,14 @@ export default React.createClass({
       left: (rad + rad * Math.sin(360 * (Math.PI / 180) / 12 * (num - 1)) + this.props.spacing),
       top: (rad - rad * Math.cos(360 * (Math.PI / 180) / 12 * (num - 1)) + this.props.spacing)
     };
-  },
+  }
 
   faceStyle () {
     return {
       height: this.props.radius * 2,
       width: this.props.radius * 2
     };
-  },
+  }
 
   renderNumber (number, idx) {
     let className = style.number;
@@ -43,7 +36,7 @@ export default React.createClass({
         { this.props.twoDigits ? ('0' + number).slice(-2) : number }
       </span>
     );
-  },
+  }
 
   render () {
     return (
@@ -58,4 +51,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+};

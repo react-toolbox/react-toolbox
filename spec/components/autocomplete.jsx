@@ -1,25 +1,21 @@
 import React from 'react';
 import Autocomplete from '../../components/autocomplete';
 
-export default React.createClass({
-  displayName: 'AutocompleteTest',
-
-  getInitialState () {
-    return {
-      countries: ['Spain', 'England', 'USA', 'Thailand', 'Tongo', 'Slovenia'],
-      countries_obj: {
-        'ES-es': 'Spain',
-        'TH-th': 'Thailand',
-        'EN-gb': 'England',
-        'EN-en': 'USA'
-      }
-    };
-  },
+export default class AutocompleteTest extends React.Component {
+  state = {
+    countries: ['Spain', 'England', 'USA', 'Thailand', 'Tongo', 'Slovenia'],
+    countries_obj: {
+      'ES-es': 'Spain',
+      'TH-th': 'Thailand',
+      'EN-gb': 'England',
+      'EN-en': 'USA'
+    }
+  };
 
   onAutocompleteValues () {
     console.log(this.refs.autocomplete_multiple.getValue());
     console.log(this.refs.autocomplete_simple.getValue());
-  },
+  }
 
   render () {
     const countries_selected = ['USA', 'Tongo'];
@@ -47,4 +43,4 @@ export default React.createClass({
       </section>
     );
   }
-});
+};

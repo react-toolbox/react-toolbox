@@ -1,43 +1,35 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
 import style from './style.menu_item';
 
-export default React.createClass({
-
-  mixins: [PureRenderMixin],
-
-  displayName: 'MenuItem',
-
-  propTypes: {
+export default class MenuItem extends React.Component {
+  static propTypes = {
     caption: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     icon: React.PropTypes.string,
     ripple: React.PropTypes.bool,
     shortcut: React.PropTypes.string,
     selected: React.PropTypes.bool
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      disabled: false,
-      ripple: false,
-      selected: false
-    };
-  },
+  static defaultProps = {
+    disabled: false,
+    ripple: false,
+    selected: false
+  };
 
   handleClick (event) {
     if (this.props.onClick && !this.props.disabled) {
       this.props.onClick(event, this);
     }
-  },
+  }
 
   handleMouseDown (event) {
     if (this.props.ripple && !this.props.disabled) {
       this.refs.ripple.start(event);
     }
-  },
+  }
 
   render () {
     let className = style.root;
@@ -59,4 +51,4 @@ export default React.createClass({
       </li>
     );
   }
-});
+};

@@ -1,50 +1,41 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 import time from '../utils/time';
 import events from '../utils/events';
 import CalendarDialog from './dialog';
 import Input from '../input';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'DatePicker',
-
-  propTypes: {
+export default class DatePicker extends React.Component {
+  static propTypes = {
     className: React.PropTypes.string,
     value: React.PropTypes.object
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      className: ''
-    };
-  },
+  static defaultProps = {
+    className: ''
+  };
 
-  getInitialState () {
-    return {
-      value: this.props.value
-    };
-  },
+  state = {
+    value: this.props.value
+  };
 
   openCalendarDialog (event) {
     events.pauseEvent(event);
     this.refs.dialog.show();
-  },
+  }
 
   onDateSelected (value) {
     this.refs.input.setValue(this.formatDate(value));
     this.setState({value: value});
-  },
+  }
 
   formatDate (date) {
     return `${date.getDate()} ${time.getFullMonth(date)} ${date.getFullYear()}`;
-  },
+  }
 
   getValue () {
     return this.state.value;
-  },
+  }
 
   render () {
     return (
@@ -66,4 +57,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+};

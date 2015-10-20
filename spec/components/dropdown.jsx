@@ -1,25 +1,21 @@
 import React from 'react';
 import Dropdown from '../../components/dropdown';
 
-export default React.createClass({
-  displayName: 'DropdownTest',
-
-  getInitialState () {
-    return {
-      countries: [
-        { value: 'ES-es', label: 'Spain', img: 'http://' },
-        { value: 'TH-th', label: 'Thailand', img: 'http://' },
-        { value: 'EN-gb', label: 'England', img: 'http://' },
-        { value: 'EN-en', label: 'USA', img: 'http://' },
-        { value: 'FR-fr', label: 'France', img: 'http://' }
-      ],
-      selected: 'TH-th'
-    };
-  },
+export default class DropdownTest extends React.Component {
+  state = {
+    countries: [
+      { value: 'ES-es', label: 'Spain', img: 'http://' },
+      { value: 'TH-th', label: 'Thailand', img: 'http://' },
+      { value: 'EN-gb', label: 'England', img: 'http://' },
+      { value: 'EN-en', label: 'USA', img: 'http://' },
+      { value: 'FR-fr', label: 'France', img: 'http://' }
+    ],
+    selected: 'TH-th'
+  };
 
   onChange (dropdown) {
     console.log('[DROPDOWN]', dropdown.getValue());
-  },
+  }
 
   customDropdownItem (data) {
     const style = {
@@ -38,7 +34,7 @@ export default React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
   render () {
     return (
@@ -52,4 +48,4 @@ export default React.createClass({
       </section>
     );
   }
-});
+};

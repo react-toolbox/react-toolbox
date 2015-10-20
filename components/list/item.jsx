@@ -1,14 +1,11 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import FontIcon from '../font_icon';
 import ListItemContent from './content';
 import Ripple from '../ripple';
 import style from './style';
 
-const ListItem = React.createClass({
-  mixins: [PureRenderMixin],
-
-  propTypes: {
+export default class ListItem extends React.Component {
+  static propTypes = {
     avatar: React.PropTypes.string,
     caption: React.PropTypes.string.isRequired,
     disabled: React.PropTypes.bool,
@@ -17,27 +14,25 @@ const ListItem = React.createClass({
     rightIcon: React.PropTypes.string,
     ripple: React.PropTypes.bool,
     selectable: React.PropTypes.bool
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      disabled: false,
-      ripple: false,
-      selectable: false
-    };
-  },
+  static defaultProps = {
+    disabled: false,
+    ripple: false,
+    selectable: false
+  };
 
   handleClick (event) {
     if (this.props.onClick && !this.props.disabled) {
       this.props.onClick(event);
     }
-  },
+  }
 
   handleMouseDown (event) {
     if (this.refs.ripple && !this.props.disabled) {
       this.refs.ripple.start(event);
     }
-  },
+  }
 
   render () {
     let className = style.item;
@@ -60,6 +55,4 @@ const ListItem = React.createClass({
       </li>
     );
   }
-});
-
-export default ListItem;
+};

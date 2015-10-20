@@ -1,5 +1,4 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import utils from '../utils';
 import style from './style';
 import Face from './face';
@@ -8,34 +7,28 @@ import Hand from './hand';
 const minutes = utils.range(0, 60, 5);
 const step = 360 / 60;
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Minutes',
-
-  propTypes: {
+export default class Minutes extends React.Component {
+  static propTypes = {
     selected: React.PropTypes.number,
     onChange: React.PropTypes.func
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      selected: 0,
-      onChange: null
-    };
-  },
+  static defaultProps = {
+    selected: 0,
+    onChange: null
+  };
 
   onHandMove (degrees) {
     this.props.onChange(degrees / step);
-  },
+  }
 
   onMouseDown (event) {
     this.refs.hand.mouseStart(event);
-  },
+  }
 
   onTouchStart (event) {
     this.refs.hand.touchStart(event);
-  },
+  }
 
   render () {
     return (
@@ -60,4 +53,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+};

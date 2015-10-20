@@ -2,25 +2,21 @@ import React from 'react';
 import Button from '../../components/button';
 import Dialog from '../../components/dialog';
 
-export default React.createClass({
-  displayName: 'DialogTest',
-
-  getInitialState () {
-    return {
-      title: 'Use Google\'s location service?',
-      actions: [
-        { label: 'Disagree', type: 'flat', className: 'primary', onClick: this.onClose },
-        { label: 'Agree', type: 'flat', className: 'primary', onClick: this.onClose }]
-    };
-  },
+export default class DialogTest extends React.Component {
+  state = {
+    title: 'Use Google\'s location service?',
+    actions: [
+      { label: 'Disagree', type: 'flat', className: 'primary', onClick: this.onClose },
+      { label: 'Agree', type: 'flat', className: 'primary', onClick: this.onClose }]
+  };
 
   onClose () {
     this.refs.dialog.hide();
-  },
+  }
 
   onShow () {
     this.refs.dialog.show();
-  },
+  }
 
   render () {
     return (
@@ -34,4 +30,4 @@ export default React.createClass({
       </section>
     );
   }
-});
+};

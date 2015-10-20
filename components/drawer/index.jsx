@@ -1,35 +1,28 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style.scss';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Drawer',
-
-  propTypes: {
+export default class Drawer extends React.Component {
+  static propTypes = {
     active: React.PropTypes.bool,
     className: React.PropTypes.string,
     hideable: React.PropTypes.bool,
     type: React.PropTypes.string
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      className: '',
-      type: 'left'
-    };
-  },
+  static defaultProps = {
+    className: '',
+    type: 'left'
+  };
 
-  getInitialState () {
-    return { active: this.props.active };
-  },
+  state = {
+    active: this.props.active
+  };
 
   handleOverlayClick () {
     if (this.props.hideable) {
       this.setState({active: false});
     }
-  },
+  }
 
   render () {
     let className = `${style.drawer} ${style[this.props.type]}`;
@@ -44,13 +37,13 @@ export default React.createClass({
         </aside>
       </div>
     );
-  },
+  }
 
   show () {
     this.setState({active: true});
-  },
+  }
 
   hide () {
     this.setState({active: false});
   }
-});
+};
