@@ -6,8 +6,8 @@
   pointer-events: none;
   background-color: currentColor;
   border-radius: 50%;
-  transform: translate3d(-50%, -50%, 0);
   transform-style: preserve-3d;
+  transform: translate3d(-50%, -50%, 0);
   backface-visibility: hidden;
   will-change: width, height, opacity;
 }
@@ -29,11 +29,9 @@
   transition-timing-function: $animation-curve-linear-out-slow-in;
   transition-duration: $ripple-duration;
   transition-property: height, width;
-
   &:not(.active) {
     opacity: 0;
     transition-property: height, width, opacity;
-
     &.restarting {
       transition-property: none;
     }

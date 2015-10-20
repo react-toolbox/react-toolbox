@@ -382,6 +382,7 @@ linters:
       "-ms-animation-direction",
       "-o-animation-direction",
       "animation-direction",
+      "backface-visibility",
       "will-change"
     ]
 
