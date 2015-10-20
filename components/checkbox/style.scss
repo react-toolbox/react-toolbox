@@ -5,7 +5,7 @@
   position: relative;
   display: block;
   height: $checkbox-size;
-  margin-bottom: 1.5 * $unit;
+  margin-bottom: $checkbox-field-margin-bottom;
   white-space: nowrap;
   vertical-align: middle;
 }
@@ -13,7 +13,7 @@
 .text {
   display: inline-block;
   padding-left: $unit;
-  font-size: 1.4 * $unit;
+  font-size: $checkbox-text-font-size;
   line-height: $checkbox-size;
   color: $checkbox-text-color;
   white-space: nowrap;
@@ -25,7 +25,6 @@
   height: 0;
   overflow: hidden;
   opacity: 0;
-
   &:focus:not(&:active) + .check {
     &:before {
       position: absolute;
@@ -38,12 +37,11 @@
       margin-left: - $checkbox-focus-size / 2;
       pointer-events: none;
       content: "";
-      background-color: $check-focus-color;
+      background-color: $checkbox-focus-color;
       border-radius: 50%;
     }
-
     &.checked:before {
-      background-color: $checked-focus-color;
+      background-color: $checkbox-focus-checked-color;
     }
   }
 }
@@ -62,11 +60,9 @@
   transition-timing-function: $animation-curve-default;
   transition-duration: $checkbox-transition-duration;
   transition-property: background-color;
-
   &.checked {
     background-color: $checkbox-color;
     border-color: $checkbox-color;
-
     &:after {
       position: absolute;
       top: -.1 * $unit;
@@ -74,7 +70,7 @@
       width: .7 * $unit;
       height: 1.2 * $unit;
       content: "";
-      border-color: #fff;
+      border-color: $color-background;
       border-style: solid;
       border-top: 0;
       border-right-width: 2px;
@@ -89,18 +85,16 @@
 .ripple {
   background-color: $checkbox-color;
   opacity: .3;
-  transition-duration: 650ms;
+  transition-duration: $checkbox-ripple-duration;
 }
 
 .disabled {
   > .text {
     color: $checkbox-disabled-color;
   }
-
   > .check {
     cursor: auto;
     border-color: $checkbox-disabled-color;
-
     &.checked {
       cursor: auto;
       background-color: $checkbox-disabled-color;
