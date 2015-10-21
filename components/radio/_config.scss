@@ -1,3 +1,4 @@
+$radio-field-margin-bottom: 1.5 * $unit;
 $radio-button-size: 1.6 * $unit !default;
 $radio-inner-margin: $radio-button-size / 4;
 $radio-inner-color: unquote("rgb(#{$color-primary})") !default;
@@ -5,3 +6,4 @@ $radio-focus-color: unquote("rgba(#{$color-black}, 0.1)") !default;
 $radio-checked-focus-color: unquote("rgba(#{$color-primary}, 0.26)") !default;
 $radio-text-color: unquote("rgb(#{$color-black})") !default;
 $radio-disabled-color: unquote("rgba(#{$color-black}, 0.26)") !default;
+$radio-text-font-size: 1.4 * $unit;
