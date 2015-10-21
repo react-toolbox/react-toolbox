@@ -1,7 +1,9 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import Button from '../../components/button';
 import Drawer from '../../components/drawer';
 
+@autobind
 export default class DrawerTest extends React.Component {
   onClick (ref, method) {
     this.refs[ref][method]();
@@ -20,12 +22,12 @@ export default class DrawerTest extends React.Component {
         </Drawer>
 
         <Drawer ref='right' type='right'>
-          <Button label='Close' onClick={::this.onClick('right', 'hide')} />
+          <Button label='Close' onClick={this.onClick.bind(this, 'right', 'hide')} />
         </Drawer>
 
         <nav>
-          <Button accent label='Drawer left hideable' kind='raised' onClick={::this.onClick('left', 'show')} />
-          <Button primary label='Drawer right' kind='raised' onClick={::this.onClick('right', 'show')} />
+          <Button accent label='Drawer left hideable' kind='raised' onClick={this.onClick.bind(this, 'left', 'show')} />
+          <Button primary label='Drawer right' kind='raised' onClick={this.onClick.bind(this, 'right', 'show')} />
         </nav>
       </section>
     );

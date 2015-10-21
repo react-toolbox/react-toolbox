@@ -1,6 +1,8 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import Autocomplete from '../../components/autocomplete';
 
+@autobind
 export default class AutocompleteTest extends React.Component {
   state = {
     countries: ['Spain', 'England', 'USA', 'Thailand', 'Tongo', 'Slovenia'],
@@ -29,7 +31,7 @@ export default class AutocompleteTest extends React.Component {
         <Autocomplete
           ref="autocomplete_multiple"
           label="Choose a country"
-          onChange={::this.onAutocompleteValues}
+          onChange={this.onAutocompleteValues}
           placeholder="Elements is up to you..."
           dataSource={this.state.countries}
           value={countries_selected}/>
@@ -37,7 +39,7 @@ export default class AutocompleteTest extends React.Component {
         <Autocomplete
           ref="autocomplete_simple"
           multiple={false}
-          onChange={::this.onAutocompleteValues}
+          onChange={this.onAutocompleteValues}
           dataSource={this.state.countries_obj}
           value={countries_obj_selected}/>
       </section>

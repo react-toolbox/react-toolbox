@@ -1,8 +1,10 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import style from './style';
 import Button from '../button';
 import FontIcon from '../font_icon';
 
+@autobind
 export default class Slider extends React.Component {
   static propTypes = {
     action: React.PropTypes.string,
@@ -31,7 +33,7 @@ export default class Slider extends React.Component {
           kind='flat'
           className={style.button}
           label={this.props.action}
-          onClick={::this.handleClick}
+          onClick={this.handleClick}
         />
       );
     }

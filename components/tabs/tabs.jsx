@@ -1,6 +1,8 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import style from './style';
 
+@autobind
 export default class Tabs extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
@@ -72,7 +74,7 @@ export default class Tabs extends React.Component {
         className: className,
         label: tab.props.label,
         key: index,
-        onClick: !tab.props.disabled ? ::this.onClick(index) : null
+        onClick: !tab.props.disabled ? this.onClick.bind(this, index) : null
       });
 
       return React.cloneElement(tab, {active: active, key: index, tabIndex: index });

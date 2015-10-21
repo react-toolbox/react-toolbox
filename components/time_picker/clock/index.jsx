@@ -1,9 +1,11 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import style from './style';
 import time from '../../utils/time';
 import Hours from './hours';
 import Minutes from './minutes';
 
+@autobind
 export default class Clock extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
@@ -82,7 +84,7 @@ export default class Clock extends React.Component {
       <Hours
         center={this.state.center}
         format={this.props.format}
-        onChange={::this.onHourChange}
+        onChange={this.onHourChange}
         radius={this.state.radius}
         selected={this.state.time.getHours()}
         spacing={this.state.radius * 0.18}
@@ -94,7 +96,7 @@ export default class Clock extends React.Component {
     return (
       <Minutes
         center={this.state.center}
-        onChange={::this.onMinuteChange}
+        onChange={this.onMinuteChange}
         radius={this.state.radius}
         selected={this.state.time.getMinutes()}
         spacing={this.state.radius * 0.18}

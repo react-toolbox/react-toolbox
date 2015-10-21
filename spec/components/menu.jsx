@@ -1,6 +1,8 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import { Menu, MenuItem, MenuDivider } from '../../components/menu';
 
+@autobind
 export default class MenuTest extends React.Component {
   handleSelect (e, instance) {
     console.log('Menu selection changed!!, now its', instance.getValue());

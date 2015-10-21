@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import autobind from 'autobind-decorator'
 import style from './style.scss';
 
+@autobind
 export default class Ripple extends React.Component {
   static propTypes = {
     centered: React.PropTypes.bool,

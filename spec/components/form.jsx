@@ -1,6 +1,8 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import Form from '../../components/form';
 
+@autobind
 export default class FormTest extends React.Component {
   state = {
     attributes: [
@@ -33,10 +35,10 @@ export default class FormTest extends React.Component {
         <Form
           attributes={this.state.attributes}
           storage="example-form"
-          onChange={::this.onEvent('change')}
-          onError={::this.onEvent('error')}
-          onValid={::this.onEvent('valid')}
-          onSubmit={::this.onEvent('submit')} />
+          onChange={this.onEvent.bind(this, 'change')}
+          onError={this.onEvent.bind(this, 'error')}
+          onValid={this.onEvent.bind(this, 'valid')}
+          onSubmit={this.onEvent.bind(this, 'submit')} />
       </section>
     );
   }

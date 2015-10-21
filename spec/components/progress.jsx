@@ -1,6 +1,8 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import ProgressBar from '../../components/progress_bar';
 
+@autobind
 export default class ProgressBarTest extends React.Component {
   state = {
     progress: 0,

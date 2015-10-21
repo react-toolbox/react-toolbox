@@ -1,4 +1,5 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import utils from '../../utils';
 import style from './style';
 import Face from './face';
@@ -7,6 +8,7 @@ import Hand from './hand';
 const minutes = utils.range(0, 60, 5);
 const step = 360 / 60;
 
+@autobind
 export default class Minutes extends React.Component {
   static propTypes = {
     selected: React.PropTypes.number,
@@ -34,8 +36,8 @@ export default class Minutes extends React.Component {
     return (
       <div>
         <Face
-          onTouchStart={::this.onTouchStart}
-          onMouseDown={::this.onMouseDown}
+          onTouchStart={this.onTouchStart}
+          onMouseDown={this.onMouseDown}
           numbers={minutes}
           spacing={this.props.spacing}
           radius={this.props.radius}
@@ -46,7 +48,7 @@ export default class Minutes extends React.Component {
           className={minutes.indexOf(this.props.selected) === -1 ? style.small : ''}
           angle={this.props.selected * step}
           length={this.props.radius - this.props.spacing}
-          onMove={::this.onHandMove}
+          onMove={this.onHandMove}
           origin={this.props.center}
           step={step}
         />

@@ -1,8 +1,10 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import Ripple from '../ripple';
 import style from './style';
 import events from '../utils/events';
 
+@autobind
 export default class RadioButton extends React.Component {
   static propTypes = {
     checked: React.PropTypes.bool,

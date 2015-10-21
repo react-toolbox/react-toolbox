@@ -1,8 +1,10 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import Navigation from '../navigation';
 import Ripple from '../ripple';
 import style from './style.scss';
 
+@autobind
 export default class Card extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,

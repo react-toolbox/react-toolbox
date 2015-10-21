@@ -1,6 +1,8 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import style from './style.scss';
 
+@autobind
 export default class Drawer extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,

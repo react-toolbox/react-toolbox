@@ -1,4 +1,5 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import utils from '../../utils';
 import Face from './face';
 import Hand from './hand';
@@ -8,6 +9,7 @@ const innerNumbers = [12, ...utils.range(1, 12)];
 const innerSpacing = 1.7;
 const step = 360 / 12;
 
+@autobind
 export default class Hours extends React.Component {
   static propTypes = {
     format: React.PropTypes.oneOf(['24hr', 'ampm']),
@@ -51,8 +53,8 @@ export default class Hours extends React.Component {
     if (this.props.format === '24hr') {
       return (
         <Face
-          onTouchStart={::this.onTouchStart}
-          onMouseDown={::this.onMouseDown}
+          onTouchStart={this.onTouchStart}
+          onMouseDown={this.onMouseDown}
           numbers={innerNumbers}
           spacing={this.props.spacing}
           radius={innerRadius}
@@ -69,8 +71,8 @@ export default class Hours extends React.Component {
     return (
       <div>
           <Face
-            onTouchStart={::this.onTouchStart}
-            onMouseDown={::this.onMouseDown}
+            onTouchStart={this.onTouchStart}
+            onMouseDown={this.onMouseDown}
             numbers={is24hr ? outerNumbers : innerNumbers}
             spacing={spacing}
             radius={radius}
@@ -81,7 +83,7 @@ export default class Hours extends React.Component {
           <Hand ref='hand'
             angle={selected * step}
             length={(this.state.inner ? radius - spacing * innerSpacing : radius) - spacing}
-            onMove={::this.onHandMove}
+            onMove={this.onHandMove}
             onMoved={onHandMoved}
             origin={center}
             step={step}

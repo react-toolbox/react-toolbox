@@ -1,9 +1,11 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import style from './style';
 import time from '../utils/time';
 import Clock from './clock';
 import Dialog from '../dialog';
 
+@autobind
 export default class TimePickerDialog extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
@@ -22,8 +24,8 @@ export default class TimePickerDialog extends React.Component {
     display: 'hours',
     time: this.props.initialTime,
     actions: [
-      { label: 'Cancel', className: style.button, onClick: ::this.onTimeCancel },
-      { label: 'Ok', className: style.button, onClick: ::this.onTimeSelected }
+      { label: 'Cancel', className: style.button, onClick: this.onTimeCancel },
+      { label: 'Ok', className: style.button, onClick: this.onTimeSelected }
     ]
   };
 
@@ -98,7 +100,7 @@ export default class TimePickerDialog extends React.Component {
           display={this.state.display}
           format={this.props.format}
           initialTime={this.props.initialTime}
-          onChange={::this.onClockChange}
+          onChange={this.onClockChange}
         />
       </Dialog>
     );

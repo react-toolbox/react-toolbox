@@ -1,7 +1,9 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import Button from '../button';
 import style from './style';
 
+@autobind
 export default class Dialog extends React.Component {
   static propTypes = {
     actions: React.PropTypes.array,

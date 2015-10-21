@@ -1,6 +1,8 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import { RadioGroup, RadioButton } from '../../components/radio';
 
+@autobind
 export default class RadioGroupTest extends React.Component {
   handleChange (event, instance) {
     console.log('Changed!', { comic: instance.getValue()});

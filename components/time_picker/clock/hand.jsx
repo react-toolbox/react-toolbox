@@ -1,7 +1,9 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import style from './style';
 import utils from '../../utils';
 
+@autobind
 export default class Hand extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
@@ -27,15 +29,15 @@ export default class Hand extends React.Component {
 
   getMouseEventMap () {
     return {
-      mousemove: ::this.onMouseMove,
-      mouseup: ::this.onMouseUp
+      mousemove: this.onMouseMove,
+      mouseup: this.onMouseUp
     };
   }
 
   getTouchEventMap () {
     return {
-      touchmove: ::this.onTouchMove,
-      touchend: ::this.onTouchEnd
+      touchmove: this.onTouchMove,
+      touchend: this.onTouchEnd
     };
   }
 

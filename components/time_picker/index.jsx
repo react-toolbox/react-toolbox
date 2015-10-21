@@ -1,10 +1,12 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import time from '../utils/time';
 import style from './style';
 import events from '../utils/events';
 import Input from '../input';
 import TimeDialog from './dialog';
 
+@autobind
 export default class TimePicker extends React.Component {
   static propTypes = {
     format: React.PropTypes.oneOf(['24hr', 'ampm']),

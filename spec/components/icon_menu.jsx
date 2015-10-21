@@ -1,6 +1,8 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import { MenuItem, IconMenu } from '../../components/menu';
 
+@autobind
 export default class IconMenuTest extends React.Component {
   handleShow () {
     console.log('Showing menu...');

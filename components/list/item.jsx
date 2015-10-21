@@ -1,9 +1,11 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import FontIcon from '../font_icon';
 import ListItemContent from './content';
 import Ripple from '../ripple';
 import style from './style';
 
+@autobind
 export default class ListItem extends React.Component {
   static propTypes = {
     avatar: React.PropTypes.string,

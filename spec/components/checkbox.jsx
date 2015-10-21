@@ -1,6 +1,8 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import Checkbox from '../../components/checkbox';
 
+@autobind
 export default class CheckboxTest extends React.Component {
   handleChange (event, instance) {
     console.log('Changed!', instance.getValue());

@@ -1,6 +1,8 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import RadioButton from './radio_button';
 
+@autobind
 export default class RadioGroup extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,

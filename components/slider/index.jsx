@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import autobind from 'autobind-decorator'
 import style from './style';
 import utils from '../utils';
 import ProgressBar from '../progress_bar';
 import Input from '../input';
 
+@autobind
 export default class Slider extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
@@ -36,12 +38,12 @@ export default class Slider extends React.Component {
   };
 
   componentDidMount () {
-    window.addEventListener('resize', ::this.onResize);
+    window.addEventListener('resize', this.onResize);
     this.onResize();
   }
 
   componentWillUnmount () {
-    window.removeEventListener('resize', ::this.onResize);
+    window.removeEventListener('resize', this.onResize);
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -106,21 +108,21 @@ export default class Slider extends React.Component {
 
   getMouseEventMap () {
     return {
-      mousemove: ::this.onMouseMove,
-      mouseup: ::this.onMouseUp
+      mousemove: this.onMouseMove,
+      mouseup: this.onMouseUp
     };
   }
 
   getTouchEventMap () {
     return {
-      touchmove: ::this.onTouchMove,
-      touchend: ::this.onTouchEnd
+      touchmove: this.onTouchMove,
+      touchend: this.onTouchEnd
     };
   }
 
   getKeyboardEvents () {
     return {
-      keydown: ::this.onKeyDown
+      keydown: this.onKeyDown
     };
   }
 
@@ -187,7 +189,7 @@ export default class Slider extends React.Component {
         <Input
           ref='input'
           className={style.input}
-          onChange={::this.onInputChange}
+          onChange={this.onInputChange}
           value={this.valueForInput(this.state.value)} />
       );
     }
@@ -206,21 +208,21 @@ export default class Slider extends React.Component {
         data-react-toolbox='slider'
         className={style.root + className}
         tabIndex='0'
-        onFocus={::this.onSliderFocus}
-        onBlur={::this.onSliderBlur} >
+        onFocus={this.onSliderFocus}
+        onBlur={this.onSliderBlur} >
 
         <div
           ref='slider'
           className={style.container}
-          onTouchStart={::this.onTouchStart}
-          onMouseDown={::this.onMouseDown} >
+          onTouchStart={this.onTouchStart}
+          onMouseDown={this.onMouseDown} >
 
           <div
             ref='knob'
             className={style.knob}
             style={knobStyles}
-            onMouseDown={::this.onMouseDown}
-            onTouchStart={::this.onTouchStart} >
+            onMouseDown={this.onMouseDown}
+            onTouchStart={this.onTouchStart} >
               <div className={style.innerknob} data-value={parseInt(this.state.value)}></div>
           </div>
 

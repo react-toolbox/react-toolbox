@@ -1,4 +1,5 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import ReactDOM from 'react-dom';
 import Ripple from '../ripple';
 import style from './style';
@@ -15,6 +16,7 @@ function _selectValue (value, dataSource) {
   }
 }
 
+@autobind
 export default class Dropdown extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,

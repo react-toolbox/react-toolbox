@@ -1,9 +1,11 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
 import style from './style.scss';
 import events from '../utils/events';
 
+@autobind
 export default class Button extends React.Component {
   static propTypes = {
     accent: React.PropTypes.bool,

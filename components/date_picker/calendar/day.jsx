@@ -1,7 +1,9 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import time from '../../utils/time';
 import style from './style';
 
+@autobind
 export default class Day extends React.Component {
   static propTypes = {
     day: React.PropTypes.number,

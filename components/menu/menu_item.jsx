@@ -1,8 +1,10 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
 import style from './style.menu_item';
 
+@autobind
 export default class MenuItem extends React.Component {
   static propTypes = {
     caption: React.PropTypes.string,

@@ -1,7 +1,9 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import ListItem from './item';
 import style from './style';
 
+@autobind
 export default class List extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,

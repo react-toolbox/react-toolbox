@@ -1,9 +1,11 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import FontIcon from '../font_icon';
 import Menu from './menu';
 import Ripple from '../ripple';
 import style from './style.icon_menu';
 
+@autobind
 export default class IconMenu extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,

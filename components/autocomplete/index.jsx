@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import autobind from 'autobind-decorator'
 import utils from '../utils';
 import Input from '../input';
 import style from './style';
 
+@autobind
 export default class Autocomplete extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,

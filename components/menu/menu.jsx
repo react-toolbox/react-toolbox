@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import autobind from 'autobind-decorator'
 import MenuItem from './menu_item';
 import utils from '../utils';
 import style from './style.menu';
@@ -13,6 +14,7 @@ const POSITION = {
   BOTTOM_RIGHT: 'bottom-right'
 };
 
+@autobind
 export default class Menu extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,

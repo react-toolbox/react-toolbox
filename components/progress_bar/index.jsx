@@ -1,7 +1,9 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import style from './style';
 import prefixer from '../utils/prefixer';
 
+@autobind
 export default class progressBar extends React.Component {
   static propTypes = {
     buffer: React.PropTypes.number,

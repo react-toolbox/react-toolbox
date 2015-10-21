@@ -1,6 +1,8 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import Navigation from '../../components/navigation';
 
+@autobind
 export default class NavigationTest extends React.Component {
   state = {
     routes: [

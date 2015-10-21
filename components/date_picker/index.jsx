@@ -1,10 +1,12 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import style from './style';
 import time from '../utils/time';
 import events from '../utils/events';
 import CalendarDialog from './dialog';
 import Input from '../input';
 
+@autobind
 export default class DatePicker extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
@@ -48,7 +50,7 @@ export default class DatePicker extends React.Component {
         <CalendarDialog
           ref='dialog'
           initialDate={this.state.value}
-          onDateSelected={::this.onDateSelected}
+          onDateSelected={this.onDateSelected}
         />
       </div>
     );
