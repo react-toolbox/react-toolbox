@@ -3,7 +3,7 @@ import style from './style';
 import Button from '../button';
 import FontIcon from '../font_icon';
 
-class Slider extends React.Component {
+class Snackbar extends React.Component {
   static propTypes = {
     action: React.PropTypes.string,
     icon: React.PropTypes.string,
@@ -65,4 +65,4 @@ class Slider extends React.Component {
   }
 }
 
-export default Slider;
+export default Snackbar;
