@@ -91,8 +91,8 @@ export default React.createClass({
     if (this.props.className) className += ` ${this.props.className}`;
 
     return (
-      <div data-react-toolbox='tabs' ref='tabs' className={className} data-flex='vertical'>
-        <nav className={style.navigation} ref='navigation' data-flex='horizontal'>
+      <div data-react-toolbox='tabs' ref='tabs' className={className}>
+        <nav className={style.navigation} ref='navigation'>
           { this.renderLabels(labels) }
         </nav>
         <span className={style.pointer} style={this.state.pointer} />

@@ -172,7 +172,7 @@ export default React.createClass({
   renderSelected () {
     if (this.props.multiple) {
       return (
-        <ul data-flex='horizontal wrap' onClick={this.handleUnselect}>
+        <ul className={style.values} onClick={this.handleUnselect}>
           {[...this.state.values].map(([key, value]) => {
             return (<li className={style.value} key={key} id={key}>{value}</li>);
           })}

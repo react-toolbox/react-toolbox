@@ -21,6 +21,11 @@
   transition: color $animation-duration $animation-curve-default;
 }
 
+.values {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 .value {
   display: inline-block;
   padding: $autocomplete-value-padding;

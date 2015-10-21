@@ -39,7 +39,6 @@ export default React.createClass({
       <section
         data-react-toolbox='tab'
         className={className}
-        data-flex='vertical'
         tabIndex={this.props.tabIndex}
       >
         { this.props.children }

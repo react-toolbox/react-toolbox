@@ -3,9 +3,13 @@
 
 .root {
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .navigation {
+  display: flex;
+  flex-direction: row;
   box-shadow: inset 0 -1px $tab-navigation-border-color;
 }
 
@@ -45,6 +49,8 @@
 }
 
 .tab {
+  display: flex;
+  flex-direction: column;
   padding: $tab-label-v-padding $tab-label-h-padding;
   &:not(.active) {
     display: none;

@@ -31,7 +31,6 @@ export default React.createClass({
       <a
         {...this.props}
         data-react-toolbox='link'
-        data-flex='horizontal center'
         href={this.props.route}
         className={className}
       >
