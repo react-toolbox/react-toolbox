@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 import { SlideLeft, SlideRight } from '../../animations';
 import FontIcon from '../../font_icon';
@@ -118,4 +118,4 @@ export default class Calendar extends React.Component {
       </div>
     );
   }
-};
+}

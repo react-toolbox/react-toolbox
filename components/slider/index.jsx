@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import style from './style';
 import utils from '../utils';
 import ProgressBar from '../progress_bar';
@@ -250,4 +250,4 @@ export default class Slider extends React.Component {
   setValue (value) {
     this.setState({value: value});
   }
-};
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import utils from '../../utils';
 import Face from './face';
 import Hand from './hand';
@@ -91,4 +91,4 @@ export default class Hours extends React.Component {
       </div>
     );
   }
-};
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import style from './style';
 
 @autobind
@@ -49,4 +49,4 @@ export default class Tab extends React.Component {
       this.props.onActive(this);
     }
   }
-};
+}

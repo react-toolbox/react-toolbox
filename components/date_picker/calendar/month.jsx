@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import utils from '../../utils';
 import Day from './day';
 import style from './style';
@@ -47,4 +47,4 @@ export default class Month extends React.Component {
       </div>
     );
   }
-};
+}

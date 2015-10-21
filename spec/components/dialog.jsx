@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import Button from '../../components/button';
 import Dialog from '../../components/dialog';
 
@@ -32,4 +32,4 @@ export default class DialogTest extends React.Component {
       </section>
     );
   }
-};
+}

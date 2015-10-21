@@ -4,17 +4,17 @@ import FontIcon from '../font_icon';
 
 const Link = props => {
   let className = style.root;
-  if (this.props.className) className += ` ${this.props.className}`;
+  if (props.className) className += ` ${props.className}`;
   return (
     <a
-      {...this.props}
+      {...props}
       data-react-toolbox='link'
-      href={this.props.route}
+      href={props.route}
       className={className}
     >
-      { this.props.icon ? <FontIcon className={style.icon} value={this.props.icon} /> : null }
-      { this.props.label ? <abbr>{this.props.label}</abbr> : null }
-      { this.props.count && parseInt(this.props.count) !== 0 ? <small>{this.props.count}</small> : null}
+      { props.icon ? <FontIcon className={style.icon} value={props.icon} /> : null }
+      { props.label ? <abbr>{props.label}</abbr> : null }
+      { props.count && parseInt(props.count) !== 0 ? <small>{props.count}</small> : null}
     </a>
   );
 };

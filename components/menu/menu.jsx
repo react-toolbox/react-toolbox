@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import MenuItem from './menu_item';
 import utils from '../utils';
 import style from './style.menu';
@@ -171,4 +171,4 @@ export default class Menu extends React.Component {
   hide () {
     this.setState({active: false});
   }
-};
+}

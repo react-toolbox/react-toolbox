@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './style';
 
-const FontIcon = props  => {
+const FontIcon = props => {
   let className = style[props.value];
   if (props.className) className += ` ${props.className}`;
   return (

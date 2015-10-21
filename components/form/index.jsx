@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import style from './style';
 import Autocomplete from '../autocomplete';
 import Button from '../button';
@@ -29,7 +29,7 @@ export default class Form extends React.Component {
     className: ''
   };
 
-  state =  {
+  state = {
     attributes: this.storage(this.props)
   };
 
@@ -163,4 +163,4 @@ export default class Form extends React.Component {
       }
     }
   }
-};
+}

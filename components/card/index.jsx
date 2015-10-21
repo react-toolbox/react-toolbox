@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import Navigation from '../navigation';
 import Ripple from '../ripple';
 import style from './style.scss';
@@ -93,4 +93,4 @@ export default class Card extends React.Component {
   loading (value) {
     this.setState({loading: value});
   }
-};
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import Autocomplete from '../../components/autocomplete';
 
 @autobind
@@ -45,4 +45,4 @@ export default class AutocompleteTest extends React.Component {
       </section>
     );
   }
-};
+}

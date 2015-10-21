@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import Card from '../../components/card';
 
 @autobind
@@ -36,4 +36,4 @@ export default class CardTest extends React.Component {
       </section>
     );
   }
-};
+}

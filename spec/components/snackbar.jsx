@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import Button from '../../components/button';
 import Snackbar from '../../components/snackbar';
 

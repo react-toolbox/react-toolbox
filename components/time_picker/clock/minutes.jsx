@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import utils from '../../utils';
 import style from './style';
 import Face from './face';
@@ -55,4 +55,4 @@ export default class Minutes extends React.Component {
       </div>
     );
   }
-};
+}

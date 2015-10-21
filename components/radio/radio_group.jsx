@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import RadioButton from './radio_button';
 
 @autobind
@@ -58,4 +58,4 @@ export default class RadioGroup extends React.Component {
   setValue (value) {
     this.setState({value: value});
   }
-};
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import Ripple from '../ripple';
 import style from './style';
 import events from '../utils/events';
@@ -91,4 +91,4 @@ export default class Checkbox extends React.Component {
   setValue (value) {
     this.setState({checked: value});
   }
-};
+}

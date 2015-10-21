@@ -1,3 +1,4 @@
+/*eslint-disable no-unused-vars*/
 import React from 'react';
 import FontIcon from '../../components/font_icon';
 

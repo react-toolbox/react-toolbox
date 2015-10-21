@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import Switch from '../../components/switch';
 
 @autobind
@@ -19,4 +19,4 @@ export default class SwitchTest extends React.Component {
       </section>
     );
   }
-};
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import FontIcon from '../font_icon';
 import Menu from './menu';
 import Ripple from '../ripple';
@@ -65,4 +65,4 @@ export default class IconMenu extends React.Component {
       </div>
     );
   }
-};
+}

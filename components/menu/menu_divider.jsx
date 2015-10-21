@@ -1,3 +1,4 @@
+/*eslint-disable no-unused-vars*/
 import React from 'react';
 import style from './style.menu_divider';
 

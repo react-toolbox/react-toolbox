@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import time from '../utils/time';
 import style from './style';
 import events from '../utils/events';
@@ -66,4 +66,4 @@ export default class TimePicker extends React.Component {
   setValue (value) {
     this.setState({value: value});
   }
-};
+}

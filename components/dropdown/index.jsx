@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import ReactDOM from 'react-dom';
 import Ripple from '../ripple';
 import style from './style';
@@ -126,4 +126,4 @@ export default class Dropdown extends React.Component {
   setValue (data) {
     this.setState({selected: data});
   }
-};
+}

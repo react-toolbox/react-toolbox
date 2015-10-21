@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import utils from '../utils';
 import Input from '../input';
 import style from './style';
@@ -217,4 +217,4 @@ export default class Autocomplete extends React.Component {
       </div>
     );
   }
-};
+}

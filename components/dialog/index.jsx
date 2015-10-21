@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import Button from '../button';
 import style from './style';
 
@@ -58,4 +58,4 @@ export default class Dialog extends React.Component {
   hide () {
     this.setState({active: false});
   }
-};
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import style from './style';
 import time from '../utils/time';
 import Clock from './clock';
@@ -105,4 +105,4 @@ export default class TimePickerDialog extends React.Component {
       </Dialog>
     );
   }
-};
+}

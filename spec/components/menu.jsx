@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import { Menu, MenuItem, MenuDivider } from '../../components/menu';
 
 @autobind
@@ -30,4 +30,4 @@ export default class MenuTest extends React.Component {
       </section>
     );
   }
-};
+}

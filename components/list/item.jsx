@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import FontIcon from '../font_icon';
 import ListItemContent from './content';
 import Ripple from '../ripple';
@@ -57,4 +57,4 @@ export default class ListItem extends React.Component {
       </li>
     );
   }
-};
+}

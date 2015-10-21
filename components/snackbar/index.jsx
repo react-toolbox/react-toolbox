@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import style from './style';
 import Button from '../button';
 import FontIcon from '../font_icon';
@@ -66,4 +66,4 @@ export default class Slider extends React.Component {
       }, this.props.timeout * 1000);
     }
   }
-};
+}

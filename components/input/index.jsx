@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import style from './style.scss';
 import FontIcon from '../font_icon';
 
@@ -104,4 +104,4 @@ export default class Input extends React.Component {
   setValue (value) {
     this.setState({value: value});
   }
-};
+}

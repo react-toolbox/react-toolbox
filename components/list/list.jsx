@@ -1,5 +1,5 @@
 import React from 'react';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import ListItem from './item';
 import style from './style';
 
@@ -40,4 +40,4 @@ export default class List extends React.Component {
       </ul>
     );
   }
-};
+}
