@@ -1,18 +1,20 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import { RadioGroup, RadioButton } from '../../components/radio';
 
-export default React.createClass({
+@autobind
+export default class RadioGroupTest extends React.Component {
   handleChange (event, instance) {
     console.log('Changed!', { comic: instance.getValue()});
-  },
+  }
 
   handleFocus () {
     console.log('Focused V for a Vendetta');
-  },
+  }
 
   handleBlur () {
     console.log('Blurred Watchmen');
-  },
+  }
 
   render () {
     return (
@@ -29,4 +31,4 @@ export default React.createClass({
       </section>
     );
   }
-});
+};

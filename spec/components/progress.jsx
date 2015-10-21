@@ -1,19 +1,17 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import ProgressBar from '../../components/progress_bar';
 
-export default React.createClass({
-  displayName: 'ProgressBarTest',
-
-  getInitialState () {
-    return {
-      progress: 0,
-      buffer: 10
-    };
-  },
+@autobind
+export default class ProgressBarTest extends React.Component {
+  state = {
+    progress: 0,
+    buffer: 10
+  };
 
   componentWillMount () {
     this.simulateProgress();
-  },
+  }
 
   simulateProgress () {
     setTimeout(() => {
@@ -25,19 +23,19 @@ export default React.createClass({
       }
       this.simulateProgress();
     }, (Math.random() * 1 + 1) * 1000);
-  },
+  }
 
   increaseProgress () {
     this.setState({
       progress: Math.random() * 30 + this.state.progress
     });
-  },
+  }
 
   increaseBuffer () {
     this.setState({
       buffer: Math.random() * (100 - this.state.progress) + this.state.progress
     });
-  },
+  }
 
   render () {
     return (
@@ -52,4 +50,4 @@ export default React.createClass({
       </section>
     );
   }
-});
+};

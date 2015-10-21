@@ -1,18 +1,17 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import Button from '../../components/button';
 import Snackbar from '../../components/snackbar';
 
-export default React.createClass({
-
-  displayName: 'SnackbarTest',
-
+@autobind
+export default class SnackbarTest extends React.Component {
   handleClick (event, snackbar) {
     console.log('handleClick', event, snackbar);
-  },
+  }
 
   handleSnackbar () {
     this.refs.snackbar.show();
-  },
+  }
 
   render () {
     return (
@@ -31,4 +30,4 @@ export default React.createClass({
       </section>
     );
   }
-});
+}

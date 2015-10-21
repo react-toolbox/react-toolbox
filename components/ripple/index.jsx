@@ -1,38 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import autobind from 'autobind-decorator'
 import style from './style.scss';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Ripple',
-
-  propTypes: {
+@autobind
+export default class Ripple extends React.Component {
+  static propTypes = {
     centered: React.PropTypes.bool,
     className: React.PropTypes.string,
     loading: React.PropTypes.bool,
     spread: React.PropTypes.number
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      centered: false,
-      className: '',
-      loading: false,
-      spread: 2
-    };
-  },
+  static defaultProps = {
+    centered: false,
+    className: '',
+    loading: false,
+    spread: 2
+  };
 
-  getInitialState () {
-    return {
-      active: false,
-      restarting: false,
-      top: null,
-      left: null,
-      width: null
-    };
-  },
+  state = {
+    active: false,
+    restarting: false,
+    top: null,
+    left: null,
+    width: null
+  };
 
   start ({ pageX, pageY }) {
     document.addEventListener('mouseup', this.end);
@@ -41,12 +34,12 @@ export default React.createClass({
       this.refs.ripple.offsetWidth; //eslint-disable-line no-unused-expressions
       this.setState({active: true, restarting: false, top: top, left: left, width: width});
     });
-  },
+  }
 
   end () {
     document.removeEventListener('mouseup', this.end);
     this.setState({active: false});
-  },
+  }
 
   _getDescriptor (pageX, pageY) {
     let { left, top, height, width } = ReactDOM.findDOMNode(this).getBoundingClientRect();
@@ -55,7 +48,7 @@ export default React.createClass({
       top: this.props.centered ? height / 2 : pageY - top,
       width: width * this.props.spread
     };
-  },
+  }
 
   render () {
     let { left, top, width } = this.state;
@@ -71,4 +64,4 @@ export default React.createClass({
       </span>
     );
   }
-});
+};

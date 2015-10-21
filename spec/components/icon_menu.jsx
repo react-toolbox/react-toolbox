@@ -1,24 +1,24 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import { MenuItem, IconMenu } from '../../components/menu';
 
-export default React.createClass({
-  displayName: 'IconMenuTest',
-
+@autobind
+export default class IconMenuTest extends React.Component {
   handleShow () {
     console.log('Showing menu...');
-  },
+  }
 
   handleHide () {
     console.log('Hiding menu...');
-  },
+  }
 
   handleSelect (value, instance) {
     console.log('Option selected', value, instance);
-  },
+  }
 
   handleItem () {
     console.log('Refresh clicked');
-  },
+  }
 
   render () {
     return (
@@ -43,4 +43,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+};

@@ -1,14 +1,13 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import autobind from 'autobind-decorator'
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
 import style from './style.scss';
 import events from '../utils/events';
 
-const Button = React.createClass({
-  mixins: [PureRenderMixin],
-
-  propTypes: {
+@autobind
+export default class Button extends React.Component {
+  static propTypes = {
     accent: React.PropTypes.bool,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -20,24 +19,22 @@ const Button = React.createClass({
     primary: React.PropTypes.bool,
     ripple: React.PropTypes.bool,
     type: React.PropTypes.string
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      accent: false,
-      className: '',
-      kind: 'flat',
-      loading: false,
-      mini: false,
-      primary: false,
-      ripple: true
-    };
-  },
+  static defaultProps = {
+    accent: false,
+    className: '',
+    kind: 'flat',
+    loading: false,
+    mini: false,
+    primary: false,
+    ripple: true
+  };
 
   handleMouseDown (event) {
     events.pauseEvent(event);
     this.refs.ripple.start(event);
-  },
+  }
 
   render () {
     let className = style[this.props.kind];
@@ -62,6 +59,4 @@ const Button = React.createClass({
       </button>
     );
   }
-});
-
-export default Button;
+}

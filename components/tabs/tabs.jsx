@@ -1,37 +1,30 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import autobind from 'autobind-decorator'
 import style from './style';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Tabs',
-
-  propTypes: {
+@autobind
+export default class Tabs extends React.Component {
+  static propTypes = {
     className: React.PropTypes.string,
     index: React.PropTypes.number.isRequired,
     onChange: React.PropTypes.func
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      className: '',
-      index: 0
-    };
-  },
+  static defaultProps = {
+    className: '',
+    index: 0
+  };
 
-  getInitialState () {
-    return {
-      index: this.props.index,
-      pointer: {}
-    };
-  },
+  state = {
+    index: this.props.index,
+    pointer: {}
+  };
 
   componentDidMount () {
     this.setState({
       pointer: this._pointerPosition(this.state.index, this.refs.navigation)
     });
-  },
+  }
 
   componentWillReceiveProps (next_props) {
     const index = next_props.index || this.state.index;
@@ -39,7 +32,7 @@ export default React.createClass({
       index: index,
       pointer: this._pointerPosition(index, this.refs.navigation)
     });
-  },
+  }
 
   _pointerPosition (index = 0, navigation) {
     const startPoint = this.refs.tabs.getBoundingClientRect().left;
@@ -50,7 +43,7 @@ export default React.createClass({
       left: `${label.left - startPoint}px`,
       width: `${label.width}px`
     };
-  },
+  }
 
   onClick (index) {
     this.setState({
@@ -58,13 +51,13 @@ export default React.createClass({
       pointer: this._pointerPosition(index, this.refs.navigation)
     });
     if (this.props.onChange) this.props.onChange(this);
-  },
+  }
 
   renderLabels (labels) {
     return labels.map((props) => {
       return <label {...props}>{ props.label }</label>;
     });
-  },
+  }
 
   render () {
     let labels = [];
@@ -81,7 +74,7 @@ export default React.createClass({
         className: className,
         label: tab.props.label,
         key: index,
-        onClick: !tab.props.disabled ? this.onClick.bind(null, index) : null
+        onClick: !tab.props.disabled ? this.onClick.bind(this, index) : null
       });
 
       return React.cloneElement(tab, {active: active, key: index, tabIndex: index });
@@ -99,7 +92,7 @@ export default React.createClass({
         { tabs }
       </div>
     );
-  },
+  }
 
   active (value) {
     this.setState({active: value});
@@ -107,4 +100,4 @@ export default React.createClass({
       this.props.onActive(this);
     }
   }
-});
+};

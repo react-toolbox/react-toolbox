@@ -1,12 +1,12 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import Switch from '../../components/switch';
 
-export default React.createClass({
-  displayName: 'SwitchTest',
-
+@autobind
+export default class SwitchTest extends React.Component {
   onChange (event, instance) {
     console.log('[Switch] Changed', instance.getValue());
-  },
+  }
 
   render () {
     return (
@@ -19,4 +19,4 @@ export default React.createClass({
       </section>
     );
   }
-});
+};

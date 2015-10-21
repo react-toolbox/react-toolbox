@@ -1,15 +1,12 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import autobind from 'autobind-decorator'
 import Navigation from '../navigation';
 import Ripple from '../ripple';
 import style from './style.scss';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Card',
-
-  propTypes: {
+@autobind
+export default class Card extends React.Component {
+  static propTypes = {
     className: React.PropTypes.string,
     color: React.PropTypes.string,
     image: React.PropTypes.string,
@@ -18,21 +15,17 @@ export default React.createClass({
     onClick: React.PropTypes.func,
     title: React.PropTypes.string,
     type: React.PropTypes.string
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      className: '',
-      loading: false,
-      type: 'default'
-    };
-  },
+  static defaultProps = {
+    className: '',
+    loading: false,
+    type: 'default'
+  };
 
-  getInitialState () {
-    return {
-      loading: this.props.loading
-    };
-  },
+  state = {
+    loading: this.props.loading
+  };
 
   handleMouseDown (event) {
     if (this.props.onClick) {
@@ -40,7 +33,7 @@ export default React.createClass({
       this.refs.ripple.start(event);
       this.props.onClick(event, this);
     }
-  },
+  }
 
   renderTitle () {
     let styleFigure = {}, styleOverflow = {};
@@ -59,7 +52,7 @@ export default React.createClass({
         </figure>
       );
     }
-  },
+  }
 
   renderActions () {
     if (this.props.actions) {
@@ -67,7 +60,7 @@ export default React.createClass({
         <Navigation className={style.navigation} actions={this.props.actions} />
       );
     }
-  },
+  }
 
   render () {
     let className = style.root;
@@ -95,9 +88,9 @@ export default React.createClass({
         />
       </div>
     );
-  },
+  }
 
   loading (value) {
     this.setState({loading: value});
   }
-});
+};

@@ -1,15 +1,12 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import autobind from 'autobind-decorator'
 import Ripple from '../ripple';
 import style from './style';
 import events from '../utils/events';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'RadioButton',
-
-  propTypes: {
+@autobind
+export default class RadioButton extends React.Component {
+  static propTypes = {
     checked: React.PropTypes.bool,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -19,34 +16,32 @@ export default React.createClass({
     onChange: React.PropTypes.func,
     onFocus: React.PropTypes.func,
     value: React.PropTypes.any
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      checked: false,
-      className: '',
-      disabled: false
-    };
-  },
+  static defaultProps = {
+    checked: false,
+    className: '',
+    disabled: false
+  };
 
   handleClick (event) {
     events.pauseEvent(event);
     if (!this.props.disabled) this.handleChange(event);
-  },
+  }
 
   handleChange (event) {
     if (!this.props.checked && this.props.onChange) {
       this.props.onChange(event, this);
     }
-  },
+  }
 
   handleMouseDown (event) {
     if (!this.props.disabled) this.refs.ripple.start(event);
-  },
+  }
 
   handleInputClick (event) {
     events.pauseEvent(event);
-  },
+  }
 
   render () {
     let labelClassName = style[this.props.disabled ? 'disabled' : 'field'];
@@ -69,13 +64,13 @@ export default React.createClass({
         { this.props.label ? <span className={style.text}>{this.props.label}</span> : null }
       </label>
     );
-  },
+  }
 
   blur () {
     this.refs.input.blur();
-  },
+  }
 
   focus () {
     this.refs.input.focus();
   }
-});
+};

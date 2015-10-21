@@ -1,5 +1,5 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import autobind from 'autobind-decorator'
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 import { SlideLeft, SlideRight } from '../../animations';
 import FontIcon from '../../font_icon';
@@ -8,56 +8,49 @@ import utils from '../../utils';
 import Month from './month';
 import style from './style';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Calendar',
-
-  propTypes: {
+@autobind
+export default class Calendar extends React.Component {
+  static propTypes = {
     display: React.PropTypes.oneOf(['months', 'years']),
     onChange: React.PropTypes.func,
     selectedDate: React.PropTypes.object,
     viewDate: React.PropTypes.object
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      display: 'months',
-      selectedDate: new Date()
-    };
-  },
+  static defaultProps = {
+    display: 'months',
+    selectedDate: new Date()
+  };
 
-  getInitialState () {
-    return {
-      selectedDate: this.props.selectedDate,
-      viewDate: this.props.selectedDate
-    };
-  },
+  state = {
+    selectedDate: this.props.selectedDate,
+    viewDate: this.props.selectedDate
+  };
 
   componentDidUpdate () {
     if (this.refs.activeYear) {
       this.scrollToActive();
     }
-  },
+  }
 
   onDayClick (day) {
     let newDate = utils.time.setDay(this.state.viewDate, day);
     this.setState({selectedDate: newDate});
     if (this.props.onChange) this.props.onChange(newDate);
-  },
+  }
 
   onYearClick (year) {
     let newDate = utils.time.setYear(this.state.selectedDate, year);
     this.setState({selectedDate: newDate, viewDate: newDate});
     if (this.props.onChange) this.props.onChange(newDate);
-  },
+  }
 
   scrollToActive () {
     this.refs.years.scrollTop =
       this.refs.activeYear.offsetTop -
       this.refs.years.offsetHeight / 2 +
       this.refs.activeYear.offsetHeight / 2;
-  },
+  }
 
   incrementViewMonth () {
     this.refs.rippleRight.start(event);
@@ -65,7 +58,7 @@ export default React.createClass({
       direction: 'right',
       viewDate: utils.time.addMonths(this.state.viewDate, 1)
     });
-  },
+  }
 
   decrementViewMonth () {
     this.refs.rippleLeft.start(event);
@@ -73,7 +66,7 @@ export default React.createClass({
       direction: 'left',
       viewDate: utils.time.addMonths(this.state.viewDate, -1)
     });
-  },
+  }
 
   renderYear (year) {
     let props = {
@@ -87,7 +80,7 @@ export default React.createClass({
     }
 
     return (<li {...props}>{ year }</li>);
-  },
+  }
 
   renderYears () {
     return (
@@ -95,7 +88,7 @@ export default React.createClass({
         { utils.range(1900, 2100).map(i => { return this.renderYear(i); })}
       </ul>
     );
-  },
+  }
 
   renderMonths () {
     let animation = this.state.direction === 'left' ? SlideLeft : SlideRight;
@@ -116,7 +109,7 @@ export default React.createClass({
         </CSSTransitionGroup>
       </div>
     );
-  },
+  }
 
   render () {
     return (
@@ -125,4 +118,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+};

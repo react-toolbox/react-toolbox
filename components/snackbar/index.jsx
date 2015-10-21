@@ -1,32 +1,30 @@
 import React from 'react';
+import autobind from 'autobind-decorator'
 import style from './style';
 import Button from '../button';
 import FontIcon from '../font_icon';
 
-export default React.createClass({
-  displayName: 'Slider',
-
-  propTypes: {
+@autobind
+export default class Slider extends React.Component {
+  static propTypes = {
     action: React.PropTypes.string,
     icon: React.PropTypes.string,
     label: React.PropTypes.string,
     onClick: React.PropTypes.func,
     timeout: React.PropTypes.number,
     type: React.PropTypes.string
-  },
+  };
 
-  getInitialState () {
-    return {
-      active: false
-    };
-  },
+  state = {
+    active: false
+  };
 
   handleClick (event) {
     this.setState({active: false});
     if (this.props.onClick) {
       this.props.onClick(event, this);
     }
-  },
+  }
 
   renderButton () {
     if (this.props.action) {
@@ -39,7 +37,7 @@ export default React.createClass({
         />
       );
     }
-  },
+  }
 
   render () {
     let className = `${style.root} ${style[this.props.type]}`;
@@ -53,12 +51,12 @@ export default React.createClass({
         { this.renderButton() }
       </div>
     );
-  },
+  }
 
   // -- Extends
   hide () {
     this.setState({active: false});
-  },
+  }
 
   show () {
     this.setState({active: true});
@@ -68,4 +66,4 @@ export default React.createClass({
       }, this.props.timeout * 1000);
     }
   }
-});
+};

@@ -1,48 +1,41 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 import Button from '../button';
 import Link from '../link';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
+const Navigation = props => {
+  let className = `${style[props.type]}`;
+  if (props.className) className += ` ${props.className}`;
 
-  displayName: 'Navigation',
+  const buttons = props.actions.map((action, index) => {
+    return <Button key={index} {...action} />;
+  });
 
-  propTypes: {
-    actions: React.PropTypes.array,
-    className: React.PropTypes.string,
-    routes: React.PropTypes.array,
-    type: React.PropTypes.string
-  },
+  const links = props.routes.map((route, index) => {
+    return <Link key={index} {...route} />;
+  });
 
-  getDefaultProps () {
-    return {
-      actions: [],
-      className: '',
-      type: 'default',
-      routes: []
-    };
-  },
+  return (
+    <nav data-react-toolbox='navigation' className={className}>
+      { links }
+      { buttons }
+      { props.children }
+    </nav>
+  );
+};
 
-  render () {
-    let className = `${style[this.props.type]}`;
-    if (this.props.className) className += ` ${this.props.className}`;
+Navigation.propTypes = {
+  actions: React.PropTypes.array,
+  className: React.PropTypes.string,
+  routes: React.PropTypes.array,
+  type: React.PropTypes.string
+};
 
-    const buttons = this.props.actions.map((action, index) => {
-      return <Button key={index} {...action} />;
-    });
+Navigation.defaultProps = {
+  actions: [],
+  className: '',
+  type: 'default',
+  routes: []
+};
 
-    const links = this.props.routes.map((route, index) => {
-      return <Link key={index} {...route} />;
-    });
-
-    return (
-      <nav data-react-toolbox='navigation' className={className}>
-        { links }
-        { buttons }
-        { this.props.children }
-      </nav>
-    );
-  }
-});
+export default Navigation;

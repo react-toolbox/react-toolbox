@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import autobind from 'autobind-decorator'
 import MenuItem from './menu_item';
 import utils from '../utils';
 import style from './style.menu';
@@ -13,10 +14,9 @@ const POSITION = {
   BOTTOM_RIGHT: 'bottom-right'
 };
 
-export default React.createClass({
-  displayName: 'Menu',
-
-  propTypes: {
+@autobind
+export default class Menu extends React.Component {
+  static propTypes = {
     active: React.PropTypes.bool,
     className: React.PropTypes.string,
     onHide: React.PropTypes.func,
@@ -27,38 +27,34 @@ export default React.createClass({
     ripple: React.PropTypes.bool,
     selectable: React.PropTypes.bool,
     value: React.PropTypes.any
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      active: false,
-      outline: true,
-      position: POSITION.STATIC,
-      ripple: true,
-      selectable: true
-    };
-  },
+  static defaultProps = {
+    active: false,
+    outline: true,
+    position: POSITION.STATIC,
+    ripple: true,
+    selectable: true
+  };
 
-  getInitialState () {
-    return {
-      active: this.props.active,
-      rippled: false,
-      value: this.props.value
-    };
-  },
+  state = {
+    active: this.props.active,
+    rippled: false,
+    value: this.props.value
+  };
 
   componentDidMount () {
     const { width, height } = this.refs.menu.getBoundingClientRect();
     const position = this.props.position === POSITION.AUTO ? this.calculatePosition() : this.props.position;
     this.setState({position: position, width: width, height: height});
-  },
+  }
 
   componentWillReceiveProps (nextProps) {
     if (this.props.position !== nextProps.position) {
       const position = nextProps.position === POSITION.AUTO ? this.calculatePosition() : nextProps.position;
       this.setState({ position: position });
     }
-  },
+  }
 
   shouldComponentUpdate (nextProps, nextState) {
     if (!this.state.active && nextState.active && this.props.position === POSITION.AUTO) {
@@ -71,13 +67,13 @@ export default React.createClass({
       }
     }
     return true;
-  },
+  }
 
   componentWillUpdate (prevState, nextState) {
     if (!prevState.active && nextState.active) {
       utils.events.addEventsToDocument({click: this.handleDocumentClick});
     }
-  },
+  }
 
   componentDidUpdate (prevProps, prevState) {
     if (prevState.active && !this.state.active) {
@@ -86,13 +82,13 @@ export default React.createClass({
     } else if (!prevState.active && this.state.active && this.props.onShow) {
       this.props.onShow();
     }
-  },
+  }
 
   handleDocumentClick (event) {
     if (this.state.active && !utils.events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
       this.setState({active: false, rippled: false});
     }
-  },
+  }
 
   calculatePosition () {
     const {top, left, height, width} = ReactDOM.findDOMNode(this).parentNode.getBoundingClientRect();
@@ -100,13 +96,13 @@ export default React.createClass({
     const toTop = top < ((wh / 2) - height / 2);
     const toLeft = left < ((ww / 2) - width / 2);
     return `${toTop ? 'top' : 'bottom'}-${toLeft ? 'left' : 'right'}`;
-  },
+  }
 
   getRootStyle () {
     if (this.state.position !== POSITION.STATIC) {
       return { width: this.state.width, height: this.state.height };
     }
-  },
+  }
 
   getMenuStyle () {
     const { width, height, position } = this.state;
@@ -123,7 +119,7 @@ export default React.createClass({
         return { clip: `rect(0 0 0 0)` };
       }
     }
-  },
+  }
 
   handleSelect (item) {
     let { value, onClick } = item.props;
@@ -131,7 +127,7 @@ export default React.createClass({
       if (onClick) onClick();
       if (this.props.onSelect) this.props.onSelect(value, this);
     });
-  },
+  }
 
   renderItems () {
     return React.Children.map(this.props.children, (item) => {
@@ -145,7 +141,7 @@ export default React.createClass({
         return React.cloneElement(item);
       }
     });
-  },
+  }
 
   render () {
     const outlineStyle = { width: this.state.width, height: this.state.height };
@@ -162,17 +158,17 @@ export default React.createClass({
         </ul>
       </div>
     );
-  },
+  }
 
   getValue () {
     return this.state.value;
-  },
+  }
 
   show () {
     this.setState({active: true});
-  },
+  }
 
   hide () {
     this.setState({active: false});
   }
-});
+};
