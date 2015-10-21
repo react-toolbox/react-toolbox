@@ -1,13 +1,13 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import ProgressBar from '../../components/progress_bar';
 
-@autobind
-export default class ProgressBarTest extends React.Component {
-  state = {
-    progress: 0,
-    buffer: 10
-  };
+const initialState = {
+  progress: 0,
+  buffer: 10
+};
+
+class ProgressBarTest extends React.Component {
+  state = initialState;
 
   componentWillMount () {
     this.simulateProgress();
@@ -19,7 +19,7 @@ export default class ProgressBarTest extends React.Component {
         this.increaseProgress();
         if (this.state.progress > this.state.buffer) this.increaseBuffer();
       } else {
-        this.replaceState(this.getInitialState());
+        this.setState(initialState);
       }
       this.simulateProgress();
     }, (Math.random() * 1 + 1) * 1000);
@@ -51,3 +51,5 @@ export default class ProgressBarTest extends React.Component {
     );
   }
 }
+
+export default ProgressBarTest;

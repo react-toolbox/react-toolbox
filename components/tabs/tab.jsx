@@ -1,9 +1,7 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import style from './style';
 
-@autobind
-export default class Tab extends React.Component {
+class Tab extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,
     className: React.PropTypes.string,
@@ -50,3 +48,5 @@ export default class Tab extends React.Component {
     }
   }
 }
+
+export default Tab;

@@ -2,7 +2,7 @@ import React from 'react';
 import style from './style';
 import FontIcon from '../font_icon';
 
-const Link = props => {
+const Link = (props) => {
   let className = style.root;
   if (props.className) className += ` ${props.className}`;
   return (

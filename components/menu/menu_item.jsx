@@ -1,11 +1,9 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
 import style from './style.menu_item';
 
-@autobind
-export default class MenuItem extends React.Component {
+class MenuItem extends React.Component {
   static propTypes = {
     caption: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -21,17 +19,17 @@ export default class MenuItem extends React.Component {
     selected: false
   };
 
-  handleClick (event) {
+  handleClick = (event) => {
     if (this.props.onClick && !this.props.disabled) {
       this.props.onClick(event, this);
     }
-  }
+  };
 
-  handleMouseDown (event) {
+  handleMouseDown = (event) => {
     if (this.props.ripple && !this.props.disabled) {
       this.refs.ripple.start(event);
     }
-  }
+  };
 
   render () {
     let className = style.root;
@@ -54,3 +52,5 @@ export default class MenuItem extends React.Component {
     );
   }
 }
+
+export default MenuItem;

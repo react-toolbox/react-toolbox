@@ -1,10 +1,8 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import style from './style';
 import utils from '../../utils';
 
-@autobind
-export default class Hand extends React.Component {
+class Hand extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     angle: React.PropTypes.number,
@@ -29,33 +27,33 @@ export default class Hand extends React.Component {
 
   getMouseEventMap () {
     return {
-      mousemove: this.onMouseMove,
-      mouseup: this.onMouseUp
+      mousemove: this.handleMouseMove,
+      mouseup: this.handleMouseUp
     };
   }
 
   getTouchEventMap () {
     return {
-      touchmove: this.onTouchMove,
-      touchend: this.onTouchEnd
+      touchmove: this.handleTouchMove,
+      touchend: this.handleTouchEnd
     };
   }
 
-  onMouseMove (event) {
+  handleMouseMove = (event) => {
     this.move(utils.events.getMousePosition(event));
-  }
+  };
 
-  onTouchMove (event) {
+  handleTouchMove = (event) => {
     this.move(utils.events.getTouchPosition(event));
-  }
+  };
 
-  onMouseUp () {
+  handleMouseUp = () => {
     this.end(this.getMouseEventMap());
-  }
+  };
 
-  onTouchEnd () {
+  handleTouchEnd = () => {
     this.end(this.getTouchEventMap());
-  }
+  };
 
   mouseStart (event) {
     utils.events.addEventsToDocument(this.getMouseEventMap());
@@ -107,3 +105,5 @@ export default class Hand extends React.Component {
     );
   }
 }
+
+export default Hand;

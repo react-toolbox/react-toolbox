@@ -1,5 +1,4 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import utils from '../../utils';
 import Face from './face';
 import Hand from './hand';
@@ -9,8 +8,7 @@ const innerNumbers = [12, ...utils.range(1, 12)];
 const innerSpacing = 1.7;
 const step = 360 / 12;
 
-@autobind
-export default class Hours extends React.Component {
+class Hours extends React.Component {
   static propTypes = {
     format: React.PropTypes.oneOf(['24hr', 'ampm']),
     onChange: React.PropTypes.func,
@@ -22,7 +20,7 @@ export default class Hours extends React.Component {
     inner: this.props.format === '24hr' && this.props.selected > 0 && this.props.selected <= 12
   };
 
-  onHandMove (degrees, radius) {
+  handleHandMove = (degrees, radius) => {
     let currentInner = radius < this.props.radius - this.props.spacing * innerSpacing;
     if (this.props.format === '24hr' && this.state.inner !== currentInner) {
       this.setState({inner: currentInner}, () => {
@@ -31,15 +29,15 @@ export default class Hours extends React.Component {
     } else {
       this.props.onChange(this.valueFromDegrees(degrees));
     }
-  }
+  };
 
-  onMouseDown (event) {
+  handleMouseDown = (event) => {
     this.refs.hand.mouseStart(event);
-  }
+  };
 
-  onTouchStart (event) {
+  handleTouchStart = (event) => {
     this.refs.hand.touchStart(event);
-  }
+  };
 
   valueFromDegrees (degrees) {
     if (this.props.format === 'ampm' || this.props.format === '24hr' && this.state.inner) {
@@ -53,8 +51,8 @@ export default class Hours extends React.Component {
     if (this.props.format === '24hr') {
       return (
         <Face
-          onTouchStart={this.onTouchStart}
-          onMouseDown={this.onMouseDown}
+          onTouchStart={this.handleTouchStart}
+          onMouseDown={this.handleMouseDown}
           numbers={innerNumbers}
           spacing={this.props.spacing}
           radius={innerRadius}
@@ -71,8 +69,8 @@ export default class Hours extends React.Component {
     return (
       <div>
           <Face
-            onTouchStart={this.onTouchStart}
-            onMouseDown={this.onMouseDown}
+            onTouchStart={this.handleTouchStart}
+            onMouseDown={this.handleMouseDown}
             numbers={is24hr ? outerNumbers : innerNumbers}
             spacing={spacing}
             radius={radius}
@@ -83,7 +81,7 @@ export default class Hours extends React.Component {
           <Hand ref='hand'
             angle={selected * step}
             length={(this.state.inner ? radius - spacing * innerSpacing : radius) - spacing}
-            onMove={this.onHandMove}
+            onMove={this.handleHandMove}
             onMoved={onHandMoved}
             origin={center}
             step={step}
@@ -92,3 +90,5 @@ export default class Hours extends React.Component {
     );
   }
 }
+
+export default Hours;

@@ -1,20 +1,18 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import Checkbox from '../../components/checkbox';
 
-@autobind
-export default class CheckboxTest extends React.Component {
-  handleChange (event, instance) {
+class CheckboxTest extends React.Component {
+  handleChange = (event, instance) => {
     console.log('Changed!', instance.getValue());
-  }
+  };
 
-  handleFocus () {
+  handleFocus = () => {
     console.log('Focused');
-  }
+  };
 
-  handleBlur () {
+  handleBlur = () => {
     console.log('Blur');
-  }
+  };
 
   render () {
     return (
@@ -47,3 +45,5 @@ export default class CheckboxTest extends React.Component {
     );
   }
 }
+
+export default CheckboxTest;

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import autobind from 'autobind-decorator';
 import MenuItem from './menu_item';
 import utils from '../utils';
 import style from './style.menu';
@@ -14,8 +13,7 @@ const POSITION = {
   BOTTOM_RIGHT: 'bottom-right'
 };
 
-@autobind
-export default class Menu extends React.Component {
+class Menu extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,
     className: React.PropTypes.string,
@@ -84,11 +82,19 @@ export default class Menu extends React.Component {
     }
   }
 
-  handleDocumentClick (event) {
+  handleDocumentClick = (event) => {
     if (this.state.active && !utils.events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
       this.setState({active: false, rippled: false});
     }
-  }
+  };
+
+  handleSelect = (item) => {
+    let { value, onClick } = item.props;
+    this.setState({value: value, active: false, rippled: this.props.ripple}, () => {
+      if (onClick) onClick();
+      if (this.props.onSelect) this.props.onSelect(value, this);
+    });
+  };
 
   calculatePosition () {
     const {top, left, height, width} = ReactDOM.findDOMNode(this).parentNode.getBoundingClientRect();
@@ -119,14 +125,6 @@ export default class Menu extends React.Component {
         return { clip: `rect(0 0 0 0)` };
       }
     }
-  }
-
-  handleSelect (item) {
-    let { value, onClick } = item.props;
-    this.setState({value: value, active: false, rippled: this.props.ripple}, () => {
-      if (onClick) onClick();
-      if (this.props.onSelect) this.props.onSelect(value, this);
-    });
   }
 
   renderItems () {
@@ -172,3 +170,5 @@ export default class Menu extends React.Component {
     this.setState({active: false});
   }
 }
+
+export default Menu;

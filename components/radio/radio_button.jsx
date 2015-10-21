@@ -1,11 +1,9 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import Ripple from '../ripple';
 import style from './style';
 import events from '../utils/events';
 
-@autobind
-export default class RadioButton extends React.Component {
+class RadioButton extends React.Component {
   static propTypes = {
     checked: React.PropTypes.bool,
     className: React.PropTypes.string,
@@ -24,24 +22,24 @@ export default class RadioButton extends React.Component {
     disabled: false
   };
 
-  handleClick (event) {
+  handleClick = (event) => {
     events.pauseEvent(event);
     if (!this.props.disabled) this.handleChange(event);
-  }
+  };
 
-  handleChange (event) {
+  handleChange = (event) => {
     if (!this.props.checked && this.props.onChange) {
       this.props.onChange(event, this);
     }
-  }
+  };
 
-  handleMouseDown (event) {
+  handleMouseDown = (event) => {
     if (!this.props.disabled) this.refs.ripple.start(event);
-  }
+  };
 
-  handleInputClick (event) {
+  handleInputClick = (event) => {
     events.pauseEvent(event);
-  }
+  };
 
   render () {
     let labelClassName = style[this.props.disabled ? 'disabled' : 'field'];
@@ -74,3 +72,5 @@ export default class RadioButton extends React.Component {
     this.refs.input.focus();
   }
 }
+
+export default RadioButton;

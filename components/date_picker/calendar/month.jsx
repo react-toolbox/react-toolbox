@@ -1,20 +1,18 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import utils from '../../utils';
 import Day from './day';
 import style from './style';
 
-@autobind
-export default class Month extends React.Component {
+class Month extends React.Component {
   static propTypes = {
     onDayClick: React.PropTypes.func,
     selectedDate: React.PropTypes.object,
     viewDate: React.PropTypes.object
   };
 
-  handleDayClick (day) {
+  handleDayClick = (day) => {
     if (this.props.onDayClick) this.props.onDayClick(day);
-  }
+  };
 
   renderWeeks () {
     return utils.range(0, 7).map(i => {
@@ -40,7 +38,8 @@ export default class Month extends React.Component {
     return (
       <div className={style.month}>
         <span className={style.title}>
-          { utils.time.getFullMonth(this.props.viewDate)} {this.props.viewDate.getFullYear() }
+          { utils.time.getFullMonth(this.props.viewDate)}
+          { this.props.viewDate.getFullYear() }
         </span>
         <div className={style.week}>{ this.renderWeeks() }</div>
         <div className={style.days}>{ this.renderDays() }</div>
@@ -48,3 +47,5 @@ export default class Month extends React.Component {
     );
   }
 }
+
+export default Month;

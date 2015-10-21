@@ -1,9 +1,7 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import Autocomplete from '../../components/autocomplete';
 
-@autobind
-export default class AutocompleteTest extends React.Component {
+class AutocompleteTest extends React.Component {
   state = {
     countries: ['Spain', 'England', 'USA', 'Thailand', 'Tongo', 'Slovenia'],
     countries_obj: {
@@ -14,10 +12,10 @@ export default class AutocompleteTest extends React.Component {
     }
   };
 
-  onAutocompleteValues () {
+  onAutocompleteValues = () => {
     console.log(this.refs.autocomplete_multiple.getValue());
     console.log(this.refs.autocomplete_simple.getValue());
-  }
+  };
 
   render () {
     const countries_selected = ['USA', 'Tongo'];
@@ -46,3 +44,5 @@ export default class AutocompleteTest extends React.Component {
     );
   }
 }
+
+export default AutocompleteTest;

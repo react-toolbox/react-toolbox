@@ -1,12 +1,10 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import Card from '../../components/card';
 
-@autobind
-export default class CardTest extends React.Component {
-  onClick () {
+class CardTest extends React.Component {
+  onClick = () => {
     console.log('onClick', arguments);
-  }
+  };
 
   onActionClick () {
     console.log('onClick', arguments);
@@ -15,8 +13,8 @@ export default class CardTest extends React.Component {
   render () {
     const text = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
     const actions = [
-      { label: 'Save', icon: 'add', className: 'flat accent', onClick: this.onActionClick },
-      { label: 'Close', className: 'flat', onClick: this.onActionClick }];
+      { label: 'Save', icon: 'add', className: 'flat accent', onClick: this.onActionClick.bind(this) },
+      { label: 'Close', className: 'flat', onClick: this.onActionClick.bind(this) }];
 
     return (
       <section>
@@ -37,3 +35,5 @@ export default class CardTest extends React.Component {
     );
   }
 }
+
+export default CardTest;

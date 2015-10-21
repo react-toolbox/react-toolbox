@@ -1,9 +1,7 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import style from './style.scss';
 
-@autobind
-export default class Drawer extends React.Component {
+class Drawer extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,
     className: React.PropTypes.string,
@@ -20,11 +18,11 @@ export default class Drawer extends React.Component {
     active: this.props.active
   };
 
-  handleOverlayClick () {
+  handleOverlayClick = () => {
     if (this.props.hideable) {
       this.setState({active: false});
     }
-  }
+  };
 
   render () {
     let className = `${style.drawer} ${style[this.props.type]}`;
@@ -49,3 +47,5 @@ export default class Drawer extends React.Component {
     this.setState({active: false});
   }
 }
+
+export default Drawer;

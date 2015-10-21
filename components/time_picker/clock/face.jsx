@@ -1,9 +1,7 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import style from './style';
 
-@autobind
-export default class Face extends React.Component {
+class Face extends React.Component {
   static defaultProps = {
     active: null,
     numbers: [],
@@ -49,8 +47,10 @@ export default class Face extends React.Component {
         onMouseDown={this.props.onMouseDown}
         style={this.faceStyle()}
       >
-        { this.props.numbers.map(this.renderNumber)}
+        { this.props.numbers.map(this.renderNumber.bind(this))}
       </div>
     );
   }
 }
+
+export default Face;

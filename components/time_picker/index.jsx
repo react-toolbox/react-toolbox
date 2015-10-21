@@ -1,13 +1,11 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import time from '../utils/time';
 import style from './style';
 import events from '../utils/events';
 import Input from '../input';
 import TimeDialog from './dialog';
 
-@autobind
-export default class TimePicker extends React.Component {
+class TimePicker extends React.Component {
   static propTypes = {
     format: React.PropTypes.oneOf(['24hr', 'ampm']),
     value: React.PropTypes.object
@@ -21,15 +19,15 @@ export default class TimePicker extends React.Component {
     value: this.props.value
   };
 
-  onTimeSelected (newTime) {
+  onTimeSelected = (newTime) => {
     this.refs.input.setValue(time.formatTime(newTime, this.props.format));
     this.setState({value: newTime});
-  }
+  };
 
-  openTimeDialog (event) {
+  openTimeDialog = (event) => {
     events.pauseEvent(event);
     this.refs.dialog.show();
-  }
+  };
 
   formatTime () {
     if (this.state.value) {
@@ -67,3 +65,5 @@ export default class TimePicker extends React.Component {
     this.setState({value: value});
   }
 }
+
+export default TimePicker;

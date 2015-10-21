@@ -1,9 +1,7 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import style from './style';
 
-@autobind
-export default class Tabs extends React.Component {
+class Tabs extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     index: React.PropTypes.number.isRequired,
@@ -45,13 +43,13 @@ export default class Tabs extends React.Component {
     };
   }
 
-  onClick (index) {
+  handleClick = (index) => {
     this.setState({
       index: index,
       pointer: this._pointerPosition(index, this.refs.navigation)
     });
     if (this.props.onChange) this.props.onChange(this);
-  }
+  };
 
   renderLabels (labels) {
     return labels.map((props) => {
@@ -74,7 +72,7 @@ export default class Tabs extends React.Component {
         className: className,
         label: tab.props.label,
         key: index,
-        onClick: !tab.props.disabled ? this.onClick.bind(this, index) : null
+        onClick: !tab.props.disabled ? this.handleClick.bind(this, index) : null
       });
 
       return React.cloneElement(tab, {active: active, key: index, tabIndex: index });
@@ -101,3 +99,5 @@ export default class Tabs extends React.Component {
     }
   }
 }
+
+export default Tabs;

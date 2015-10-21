@@ -1,10 +1,9 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import ReactDOM from 'react-dom';
 import Ripple from '../ripple';
 import style from './style';
 
-function _selectValue (value, dataSource) {
+const _selectValue = (value, dataSource) => {
   let item;
   if (value) {
     for (item of dataSource) {
@@ -14,10 +13,9 @@ function _selectValue (value, dataSource) {
   } else {
     return dataSource[0];
   }
-}
+};
 
-@autobind
-export default class Dropdown extends React.Component {
+class Dropdown extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     dataSource: React.PropTypes.array,
@@ -52,7 +50,7 @@ export default class Dropdown extends React.Component {
     }
   }
 
-  handleClick (event) {
+  handleClick = (event) => {
     let client = event.target.getBoundingClientRect();
     let screen_height = window.innerHeight || document.documentElement.offsetHeight;
 
@@ -60,22 +58,19 @@ export default class Dropdown extends React.Component {
       active: true,
       up: client.top > ((screen_height / 2) + client.height)
     });
-  }
+  };
 
-  handleClickValue (id) {
+  handleClickValue = (id) => {
     if (!this.props.disabled) {
       let value = id.toString();
       for (let item of this.props.dataSource) {
         if (item.value.toString() === value) {
-          this.setState({
-            active: false,
-            selected: item
-          });
+          this.setState({active: false, selected: item});
           break;
         }
       }
     }
-  }
+  };
 
   renderValues () {
     let items = this.props.dataSource.map((item, index) => {
@@ -127,3 +122,5 @@ export default class Dropdown extends React.Component {
     this.setState({selected: data});
   }
 }
+
+export default Dropdown;

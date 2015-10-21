@@ -1,12 +1,10 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import style from './style';
 import time from '../utils/time';
 import Calendar from './calendar';
 import Dialog from '../dialog';
 
-@autobind
-export default class CalendarDialog extends React.Component {
+class CalendarDialog extends React.Component {
   static propTypes = {
     initialDate: React.PropTypes.object,
     onDateSelected: React.PropTypes.func
@@ -20,14 +18,22 @@ export default class CalendarDialog extends React.Component {
     date: this.props.initialDate,
     display: 'months',
     actions: [
-      { label: 'Cancel', className: style.button, onClick: this.onDateCancel },
-      { label: 'Ok', className: style.button, onClick: this.onDateSelected }
+      { label: 'Cancel', className: style.button, onClick: this.onDateCancel.bind(this) },
+      { label: 'Ok', className: style.button, onClick: this.onDateSelected.bind(this) }
     ]
   };
 
-  onCalendarChange (date) {
+  handleCalendarChange = (date) => {
     this.setState({date: date, display: 'months'});
-  }
+  };
+
+  displayMonths = () => {
+    this.setState({display: 'months'});
+  };
+
+  displayYears = () => {
+    this.setState({display: 'years'});
+  };
 
   onDateCancel () {
     this.refs.dialog.hide();
@@ -40,14 +46,6 @@ export default class CalendarDialog extends React.Component {
 
   show () {
     this.refs.dialog.show();
-  }
-
-  displayMonths () {
-    this.setState({display: 'months'});
-  }
-
-  displayYears () {
-    this.setState({display: 'years'});
   }
 
   render () {
@@ -73,10 +71,12 @@ export default class CalendarDialog extends React.Component {
             <Calendar
               ref="calendar"
               display={this.state.display}
-              onChange={this.onCalendarChange}
+              onChange={this.handleCalendarChange}
               selectedDate={this.state.date} />
           </div>
       </Dialog>
     );
   }
 }
+
+export default CalendarDialog;

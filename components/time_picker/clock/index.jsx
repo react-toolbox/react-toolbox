@@ -1,12 +1,10 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import style from './style';
 import time from '../../utils/time';
 import Hours from './hours';
 import Minutes from './minutes';
 
-@autobind
-export default class Clock extends React.Component {
+class Clock extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     display: React.PropTypes.oneOf(['hours', 'minutes']),
@@ -29,29 +27,37 @@ export default class Clock extends React.Component {
   };
 
   componentDidMount () {
-    window.addEventListener('resize', this.calculateShape);
-    this.calculateShape();
+    window.addEventListener('resize', this.handleCalculateShape);
+    this.handleCalculateShape();
   }
 
   componentWillUnmount () {
-    window.removeEventListener('resize', this.calculateShape);
+    window.removeEventListener('resize', this.handleCalculateShape);
   }
 
-  onHourChange (hours) {
+  handleHourChange = (hours) => {
     if (this.state.time.getHours() !== hours) {
       const newTime = time.setHours(this.state.time, this.adaptHourToFormat(hours));
       this.setState({time: newTime});
       if (this.props.onChange) this.props.onChange(newTime);
     }
-  }
+  };
 
-  onMinuteChange (minutes) {
+  handleMinuteChange = (minutes) => {
     if (this.state.time.getMinutes() !== minutes) {
       const newTime = time.setMinutes(this.state.time, minutes);
       this.setState({time: newTime});
       if (this.props.onChange) this.props.onChange(newTime);
     }
-  }
+  };
+
+  handleCalculateShape = () => {
+    let { top, left, width } = this.refs.wrapper.getBoundingClientRect();
+    this.setState({
+      center: { x: left + width / 2, y: top + width / 2 },
+      radius: width / 2
+    });
+  };
 
   toggleTimeMode () {
     const newTime = time.toggleTimeMode(this.state.time);
@@ -71,20 +77,12 @@ export default class Clock extends React.Component {
     }
   }
 
-  calculateShape () {
-    let { top, left, width } = this.refs.wrapper.getBoundingClientRect();
-    this.setState({
-      center: { x: left + width / 2, y: top + width / 2 },
-      radius: width / 2
-    });
-  }
-
   renderHours () {
     return (
       <Hours
         center={this.state.center}
         format={this.props.format}
-        onChange={this.onHourChange}
+        onChange={this.handleHourChange}
         radius={this.state.radius}
         selected={this.state.time.getHours()}
         spacing={this.state.radius * 0.18}
@@ -96,7 +94,7 @@ export default class Clock extends React.Component {
     return (
       <Minutes
         center={this.state.center}
-        onChange={this.onMinuteChange}
+        onChange={this.handleMinuteChange}
         radius={this.state.radius}
         selected={this.state.time.getMinutes()}
         spacing={this.state.radius * 0.18}
@@ -115,3 +113,5 @@ export default class Clock extends React.Component {
     );
   }
 }
+
+export default Clock;

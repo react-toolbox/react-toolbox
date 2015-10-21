@@ -1,10 +1,8 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import style from './style.scss';
 import FontIcon from '../font_icon';
 
-@autobind
-export default class Input extends React.Component {
+class Input extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -35,11 +33,11 @@ export default class Input extends React.Component {
     value: this.props.value
   };
 
-  onChange (event) {
+  onChange = (event) => {
     this.setState({value: event.target.value}, () => {
       if (this.props.onChange) this.props.onChange(event, this);
     });
-  }
+  };
 
   renderInput () {
     let className = style.input;
@@ -105,3 +103,5 @@ export default class Input extends React.Component {
     this.setState({value: value});
   }
 }
+
+export default Input;

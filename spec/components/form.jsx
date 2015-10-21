@@ -1,9 +1,7 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import Form from '../../components/form';
 
-@autobind
-export default class FormTest extends React.Component {
+class FormTest extends React.Component {
   state = {
     attributes: [
       { ref: 'name', label: 'Your Name', required: true, storage: true},
@@ -22,9 +20,9 @@ export default class FormTest extends React.Component {
     ]
   };
 
-  onEvent (type, event, form) {
+  handleEvent = (type, event, form) => {
     console.log(`[FORM.${type}]`, form.getValue());
-  }
+  };
 
   render () {
     return (
@@ -35,11 +33,13 @@ export default class FormTest extends React.Component {
         <Form
           attributes={this.state.attributes}
           storage="example-form"
-          onChange={this.onEvent.bind(this, 'change')}
-          onError={this.onEvent.bind(this, 'error')}
-          onValid={this.onEvent.bind(this, 'valid')}
-          onSubmit={this.onEvent.bind(this, 'submit')} />
+          onChange={this.handleEvent.bind(this, 'change')}
+          onError={this.handleEvent.bind(this, 'error')}
+          onValid={this.handleEvent.bind(this, 'valid')}
+          onSubmit={this.handleEvent.bind(this, 'submit')} />
       </section>
     );
   }
 }
+
+export default FormTest;

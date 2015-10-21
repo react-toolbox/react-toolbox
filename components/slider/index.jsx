@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import autobind from 'autobind-decorator';
 import style from './style';
 import utils from '../utils';
 import ProgressBar from '../progress_bar';
 import Input from '../input';
 
-@autobind
-export default class Slider extends React.Component {
+class Slider extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     editable: React.PropTypes.bool,
@@ -38,12 +36,12 @@ export default class Slider extends React.Component {
   };
 
   componentDidMount () {
-    window.addEventListener('resize', this.onResize);
-    this.onResize();
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
   }
 
   componentWillUnmount () {
-    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('resize', this.handleResize);
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -53,76 +51,76 @@ export default class Slider extends React.Component {
     }
   }
 
-  onResize () {
+  handleResize = () => {
     const {left, right} = ReactDOM.findDOMNode(this.refs.progressbar).getBoundingClientRect();
     this.setState({sliderStart: left, sliderLength: right - left});
-  }
+  };
 
-  onSliderFocus () {
+  handleSliderFocus = () => {
     utils.events.addEventsToDocument(this.getKeyboardEvents());
-  }
+  };
 
-  onSliderBlur () {
+  handleSliderBlur = () => {
     utils.events.removeEventsFromDocument(this.getKeyboardEvents());
-  }
+  };
 
-  onInputChange () {
+  handleInputChange = () => {
     this.setState({value: this.trimValue(this.refs.input.getValue()) });
-  }
+  };
 
-  onKeyDown (event) {
+  handleKeyDown = (event) => {
     if ([13, 27].indexOf(event.keyCode) !== -1) ReactDOM.findDOMNode(this).blur();
     if (event.keyCode === 38) this.addToValue(this.props.step);
     if (event.keyCode === 40) this.addToValue(-this.props.step);
     if (event.keyCode !== 9) utils.events.pauseEvent(event);
-  }
+  };
 
-  onMouseDown (event) {
+  handleMouseDown = (event) => {
     utils.events.addEventsToDocument(this.getMouseEventMap());
     this.start(utils.events.getMousePosition(event));
     utils.events.pauseEvent(event);
-  }
+  };
 
-  onTouchStart (event) {
+  handleTouchStart = (event) => {
     this.start(utils.events.getTouchPosition(event));
     utils.events.addEventsToDocument(this.getTouchEventMap());
     utils.events.pauseEvent(event);
-  }
+  };
 
-  onMouseMove (event) {
+  handleMouseMove = (event) => {
     utils.events.pauseEvent(event);
     this.move(utils.events.getMousePosition(event));
-  }
+  };
 
-  onTouchMove (event) {
+  handleTouchMove = (event) => {
     this.move(utils.events.getTouchPosition(event));
-  }
+  };
 
-  onMouseUp () {
+  handleMouseUp = () => {
     this.end(this.getMouseEventMap());
-  }
+  };
 
-  onTouchEnd () {
+  handleTouchEnd = () => {
     this.end(this.getTouchEventMap());
-  }
+  };
 
   getMouseEventMap () {
     return {
-      mousemove: this.onMouseMove,
-      mouseup: this.onMouseUp
+      mousemove: this.handleMouseMove,
+      mouseup: this.handleMouseUp
     };
   }
 
   getTouchEventMap () {
     return {
-      touchmove: this.onTouchMove,
-      touchend: this.onTouchEnd
+      touchmove: this.handleTouchMove,
+      touchend: this.handleTouchEnd
     };
   }
 
   getKeyboardEvents () {
     return {
-      keydown: this.onKeyDown
+      keydown: this.handleKeyDown
     };
   }
 
@@ -189,7 +187,7 @@ export default class Slider extends React.Component {
         <Input
           ref='input'
           className={style.input}
-          onChange={this.onInputChange}
+          onChange={this.handleInputChange}
           value={this.valueForInput(this.state.value)} />
       );
     }
@@ -208,21 +206,21 @@ export default class Slider extends React.Component {
         data-react-toolbox='slider'
         className={style.root + className}
         tabIndex='0'
-        onFocus={this.onSliderFocus}
-        onBlur={this.onSliderBlur} >
+        onFocus={this.handleSliderFocus}
+        onBlur={this.handleSliderBlur} >
 
         <div
           ref='slider'
           className={style.container}
-          onTouchStart={this.onTouchStart}
-          onMouseDown={this.onMouseDown} >
+          onTouchStart={this.handleTouchStart}
+          onMouseDown={this.handleMouseDown} >
 
           <div
             ref='knob'
             className={style.knob}
             style={knobStyles}
-            onMouseDown={this.onMouseDown}
-            onTouchStart={this.onTouchStart} >
+            onMouseDown={this.handleMouseDown}
+            onTouchStart={this.handleTouchStart} >
               <div className={style.innerknob} data-value={parseInt(this.state.value)}></div>
           </div>
 
@@ -251,3 +249,5 @@ export default class Slider extends React.Component {
     this.setState({value: value});
   }
 }
+
+export default Slider;

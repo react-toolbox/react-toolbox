@@ -1,12 +1,10 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import FontIcon from '../font_icon';
 import Menu from './menu';
 import Ripple from '../ripple';
 import style from './style.icon_menu';
 
-@autobind
-export default class IconMenu extends React.Component {
+class IconMenu extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     icon: React.PropTypes.string,
@@ -27,16 +25,16 @@ export default class IconMenu extends React.Component {
     selectable: false
   };
 
-  handleButtonClick () {
+  handleButtonClick = () => {
     this.refs.menu.show();
     if (this.props.onClick) this.props.onClick();
-  }
+  };
 
-  handleMouseDown (event) {
+  handleMouseDown = (event) => {
     if (this.props.iconRipple) {
       this.refs.ripple.start(event);
     }
-  }
+  };
 
   render () {
     let className = style.root;
@@ -66,3 +64,5 @@ export default class IconMenu extends React.Component {
     );
   }
 }
+
+export default IconMenu;

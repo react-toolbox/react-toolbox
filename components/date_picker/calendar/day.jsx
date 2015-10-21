@@ -1,10 +1,8 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import time from '../../utils/time';
 import style from './style';
 
-@autobind
-export default class Day extends React.Component {
+class Day extends React.Component {
   static propTypes = {
     day: React.PropTypes.number,
     onClick: React.PropTypes.func,
@@ -28,10 +26,15 @@ export default class Day extends React.Component {
   }
 
   render () {
+    const className = this.isSelected() ? `${style.day} ${style.active}` : style.day;
     return (
-      <div className={this.isSelected() ? `${style.day} ${style.active}` : style.day} style={this.dayStyle()}>
-          <span onClick={this.props.onClick}>{this.props.day}</span>
+      <div className={className} style={this.dayStyle()}>
+          <span onClick={this.props.onClick}>
+            {this.props.day}
+          </span>
       </div>
     );
   }
 }
+
+export default Day;

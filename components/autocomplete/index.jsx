@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import autobind from 'autobind-decorator';
-import utils from '../utils';
 import Input from '../input';
 import style from './style';
+import utils from '../utils';
 
-@autobind
-export default class Autocomplete extends React.Component {
+class Autocomplete extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     dataSource: React.PropTypes.any,
@@ -51,14 +49,14 @@ export default class Autocomplete extends React.Component {
     this.refs.input.setValue(state.query);
   }
 
-  handleQueryChange () {
+  handleQueryChange = () => {
     const query = this.refs.input.getValue();
     if (this.state.query !== query) {
       this.setState({query: query});
     }
-  }
+  };
 
-  handleKeyPress (event) {
+  handleKeyPress = (event) => {
     if (event.which === 13 && this.state.active) {
       this._selectOption(this.state.active);
     }
@@ -70,9 +68,9 @@ export default class Autocomplete extends React.Component {
       if (index >= suggestionsKeys.length) index = 0;
       this.setState({active: suggestionsKeys[index]});
     }
-  }
+  };
 
-  handleFocus () {
+  handleFocus = () => {
     let client = event.target.getBoundingClientRect();
     let screen_height = window.innerHeight || document.documentElement.offsetHeight;
 
@@ -82,23 +80,79 @@ export default class Autocomplete extends React.Component {
       up: client.top > ((screen_height / 2) + client.height),
       focus: true
     });
-  }
+  };
 
-  handleBlur () {
+  handleBlur = () => {
     if (this.state.focus) this.setState({focus: false});
-  }
+  };
 
-  handleHover (event) {
+  handleHover = (event) => {
     this.setState({active: event.target.getAttribute('id')});
-  }
+  };
 
-  handleSelect (event) {
+  handleSelect = (event) => {
     utils.events.pauseEvent(event);
     this._selectOption(event.target.getAttribute('id'));
+  };
+
+  handleUnselect = (event) => {
+    this._unselectOption(event.target.getAttribute('id'));
+  };
+
+  renderSelected () {
+    if (this.props.multiple) {
+      return (
+        <ul className={style.values} onClick={this.handleUnselect}>
+          {[...this.state.values].map(([key, value]) => {
+            return (<li className={style.value} key={key} id={key}>{value}</li>);
+          })}
+        </ul>
+      );
+    }
   }
 
-  handleUnselect (event) {
-    this._unselectOption(event.target.getAttribute('id'));
+  renderSuggestions () {
+    return [...this._getSuggestions()].map(([key, value]) => {
+      let className = style.suggestion;
+      if (this.state.active === key) className += ` ${style.active}`;
+      return <li id={key} key={key} className={className}>{value}</li>;
+    });
+  }
+
+  render () {
+    let className = style.root;
+    if (this.props.className) className += ` ${this.props.className}`;
+    if (this.state.focus) className += ` ${style.focus}`;
+
+    let suggestionsClassName = style.suggestions;
+    if (this.state.up) suggestionsClassName += ` ${style.up}`;
+    let suggestionsStyle = {width: this.state.width};
+
+    return (
+      <div data-react-toolbox='autocomplete' className={className}>
+        {this.props.label ? <label className={style.label}>{this.props.label}</label> : ''}
+        {this.renderSelected()}
+        <Input
+          ref='input'
+          {...this.props}
+          label=''
+          value=''
+          className={style.input}
+          onBlur={this.handleBlur}
+          onChange={this.handleQueryChange}
+          onFocus={this.handleFocus}
+          onKeyUp={this.handleKeyPress} />
+        <ul
+          ref='suggestions'
+          className={suggestionsClassName}
+          onMouseDown={this.handleSelect}
+          onMouseOver={this.handleHover}
+          style={suggestionsStyle}
+        >
+          {this.renderSuggestions()}
+        </ul>
+      </div>
+    );
   }
 
   _indexDataSource (data = {}) {
@@ -161,60 +215,6 @@ export default class Autocomplete extends React.Component {
   setError (data) {
     this.input.setError(data);
   }
-
-  renderSelected () {
-    if (this.props.multiple) {
-      return (
-        <ul className={style.values} onClick={this.handleUnselect}>
-          {[...this.state.values].map(([key, value]) => {
-            return (<li className={style.value} key={key} id={key}>{value}</li>);
-          })}
-        </ul>
-      );
-    }
-  }
-
-  renderSuggestions () {
-    return [...this._getSuggestions()].map(([key, value]) => {
-      let className = style.suggestion;
-      if (this.state.active === key) className += ` ${style.active}`;
-      return <li id={key} key={key} className={className}>{value}</li>;
-    });
-  }
-
-  render () {
-    let className = style.root;
-    if (this.props.className) className += ` ${this.props.className}`;
-    if (this.state.focus) className += ` ${style.focus}`;
-
-    let suggestionsClassName = style.suggestions;
-    if (this.state.up) suggestionsClassName += ` ${style.up}`;
-    let suggestionsStyle = {width: this.state.width};
-
-    return (
-      <div data-react-toolbox='autocomplete' className={className}>
-        {this.props.label ? <label className={style.label}>{this.props.label}</label> : ''}
-        {this.renderSelected()}
-        <Input
-          ref='input'
-          {...this.props}
-          label=''
-          value=''
-          className={style.input}
-          onBlur={this.handleBlur}
-          onChange={this.handleQueryChange}
-          onFocus={this.handleFocus}
-          onKeyUp={this.handleKeyPress} />
-        <ul
-          ref='suggestions'
-          className={suggestionsClassName}
-          onMouseDown={this.handleSelect}
-          onMouseOver={this.handleHover}
-          style={suggestionsStyle}
-        >
-          {this.renderSuggestions()}
-        </ul>
-      </div>
-    );
-  }
 }
+
+export default Autocomplete;

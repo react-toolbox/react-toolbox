@@ -1,12 +1,10 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import FontIcon from '../font_icon';
 import ListItemContent from './content';
 import Ripple from '../ripple';
 import style from './style';
 
-@autobind
-export default class ListItem extends React.Component {
+class ListItem extends React.Component {
   static propTypes = {
     avatar: React.PropTypes.string,
     caption: React.PropTypes.string.isRequired,
@@ -24,17 +22,17 @@ export default class ListItem extends React.Component {
     selectable: false
   };
 
-  handleClick (event) {
+  handleClick = (event) => {
     if (this.props.onClick && !this.props.disabled) {
       this.props.onClick(event);
     }
-  }
+  };
 
-  handleMouseDown (event) {
+  handleMouseDown = (event) => {
     if (this.refs.ripple && !this.props.disabled) {
       this.refs.ripple.start(event);
     }
-  }
+  };
 
   render () {
     let className = style.item;
@@ -58,3 +56,5 @@ export default class ListItem extends React.Component {
     );
   }
 }
+
+export default ListItem;

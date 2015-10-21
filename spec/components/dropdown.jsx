@@ -1,9 +1,7 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import Dropdown from '../../components/dropdown';
 
-@autobind
-export default class DropdownTest extends React.Component {
+class DropdownTest extends React.Component {
   state = {
     countries: [
       { value: 'ES-es', label: 'Spain', img: 'http://' },
@@ -15,9 +13,9 @@ export default class DropdownTest extends React.Component {
     selected: 'TH-th'
   };
 
-  onChange (dropdown) {
+  handleChange = (dropdown) => {
     console.log('[DROPDOWN]', dropdown.getValue());
-  }
+  };
 
   customDropdownItem (data) {
     const style = {
@@ -43,11 +41,13 @@ export default class DropdownTest extends React.Component {
       <section>
         <h5>Dropdown</h5>
         <p>lorem ipsum...</p>
-        <Dropdown dataSource={this.state.countries} label="Countries" onChange={this.onChange}/>
-        <Dropdown dataSource={this.state.countries} disabled={true} onChange={this.onChange}/>
-        <Dropdown dataSource={this.state.countries} value={this.state.selected} onChange={this.onChange}/>
-        <Dropdown dataSource={this.state.countries} value={this.state.selected} template={this.customDropdownItem} onChange={this.onChange}/>
+        <Dropdown dataSource={this.state.countries} label="Countries" onChange={this.handleChange}/>
+        <Dropdown dataSource={this.state.countries} disabled={true} onChange={this.handleChange}/>
+        <Dropdown dataSource={this.state.countries} value={this.state.selected} onChange={this.handleChange}/>
+        <Dropdown dataSource={this.state.countries} value={this.state.selected} template={this.customDropdownItem} onChange={this.handleChange}/>
       </section>
     );
   }
 }
+
+export default DropdownTest;

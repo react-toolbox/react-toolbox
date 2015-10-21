@@ -1,5 +1,4 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import style from './style';
 import Autocomplete from '../autocomplete';
 import Button from '../button';
@@ -12,8 +11,7 @@ import Slider from '../slider';
 import Switch from '../switch';
 import TimePicker from '../time_picker';
 
-@autobind
-export default class Form extends React.Component {
+class Form extends React.Component {
   static propTypes = {
     attributes: React.PropTypes.array,
     className: React.PropTypes.string,
@@ -41,14 +39,14 @@ export default class Form extends React.Component {
     }
   }
 
-  onSubmit (event) {
+  onSubmit = (event) => {
     event.preventDefault();
     if (this.props.onSubmit) {
       this.props.onSubmit(event, this);
     }
-  }
+  };
 
-  onChange (event) {
+  onChange = (event) => {
     let is_valid = true;
     let value = this.getValue();
     for (let attr of this.state.attributes) {
@@ -70,7 +68,7 @@ export default class Form extends React.Component {
       if (this.refs.submit) this.refs.submit.getDOMNode().setAttribute('disabled', true);
       if (this.props.onError) this.props.onError(event, this);
     }
-  }
+  };
 
   render () {
     let className = `${style.root} ${this.props.className}`;
@@ -164,3 +162,5 @@ export default class Form extends React.Component {
     }
   }
 }
+
+export default Form;

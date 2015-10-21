@@ -1,13 +1,11 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
-import style from './style';
-import time from '../utils/time';
-import events from '../utils/events';
 import CalendarDialog from './dialog';
 import Input from '../input';
+import events from '../utils/events';
+import time from '../utils/time';
+import style from './style';
 
-@autobind
-export default class DatePicker extends React.Component {
+class DatePicker extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     value: React.PropTypes.object
@@ -21,15 +19,15 @@ export default class DatePicker extends React.Component {
     value: this.props.value
   };
 
-  openCalendarDialog (event) {
+  handleMouseDown = (event) => {
     events.pauseEvent(event);
     this.refs.dialog.show();
-  }
+  };
 
-  onDateSelected (value) {
+  handleDateSelected = (value) => {
     this.refs.input.setValue(this.formatDate(value));
     this.setState({value: value});
-  }
+  };
 
   formatDate (date) {
     return `${date.getDate()} ${time.getFullMonth(date)} ${date.getFullYear()}`;
@@ -43,14 +41,14 @@ export default class DatePicker extends React.Component {
           type='text'
           readOnly={true}
           className={style.input}
-          onMouseDown={this.openCalendarDialog}
+          onMouseDown={this.handleMouseDown}
           placeholder='Pick up date'
           value={this.state.value ? this.formatDate(this.state.value) : null}
         />
         <CalendarDialog
           ref='dialog'
           initialDate={this.state.value}
-          onDateSelected={this.onDateSelected}
+          onDateSelected={this.handleDateSelected}
         />
       </div>
     );
@@ -64,3 +62,5 @@ export default class DatePicker extends React.Component {
     this.setState({value: value});
   }
 }
+
+export default DatePicker;

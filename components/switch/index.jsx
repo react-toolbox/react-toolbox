@@ -1,11 +1,9 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import Ripple from '../ripple';
 import style from './style';
 import events from '../utils/events';
 
-@autobind
-export default class Switch extends React.Component {
+class Switch extends React.Component {
   static propTypes = {
     checked: React.PropTypes.bool,
     className: React.PropTypes.string,
@@ -27,24 +25,24 @@ export default class Switch extends React.Component {
     checked: this.props.checked
   };
 
-  handleChange (event) {
+  handleChange = (event) => {
     this.setState({checked: !this.state.checked}, () => {
       if (this.props.onChange) this.props.onChange(event, this);
     });
-  }
+  };
 
-  handleClick (event) {
+  handleClick = (event) => {
     events.pauseEvent(event);
     if (!this.props.disabled) this.handleChange(event);
-  }
+  };
 
-  handleInputClick (event) {
+  handleInputClick = (event) => {
     events.pauseEvent(event);
-  }
+  };
 
-  handleMouseDown (event) {
+  handleMouseDown = (event) => {
     if (!this.props.disabled) this.refs.ripple.start(event);
-  }
+  };
 
   render () {
     let labelClassName = style[this.props.disabled ? 'disabled' : 'field'];
@@ -92,3 +90,5 @@ export default class Switch extends React.Component {
     this.setState({checked: value});
   }
 }
+
+export default Switch;

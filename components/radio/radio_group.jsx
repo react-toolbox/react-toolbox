@@ -1,9 +1,7 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import RadioButton from './radio_button';
 
-@autobind
-export default class RadioGroup extends React.Component {
+class RadioGroup extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -21,11 +19,11 @@ export default class RadioGroup extends React.Component {
     value: this.props.value
   };
 
-  handleChange (value, event) {
+  handleChange = (value, event) => {
     this.setState({value: value}, () => {
       if (this.props.onChange) this.props.onChange(event, this);
     });
-  }
+  };
 
   renderRadioButtons () {
     return React.Children.map(this.props.children, (radio, idx) => {
@@ -59,3 +57,5 @@ export default class RadioGroup extends React.Component {
     this.setState({value: value});
   }
 }
+
+export default RadioGroup;

@@ -1,12 +1,10 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
 import style from './style.scss';
 import events from '../utils/events';
 
-@autobind
-export default class Button extends React.Component {
+class Button extends React.Component {
   static propTypes = {
     accent: React.PropTypes.bool,
     className: React.PropTypes.string,
@@ -31,7 +29,7 @@ export default class Button extends React.Component {
     ripple: true
   };
 
-  handleMouseDown (event) {
+  handleMouseDown = (event) => {
     events.pauseEvent(event);
     this.refs.ripple.start(event);
   }
@@ -60,3 +58,5 @@ export default class Button extends React.Component {
     );
   }
 }
+
+export default Button;

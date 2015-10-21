@@ -1,15 +1,13 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 import { SlideLeft, SlideRight } from '../../animations';
 import FontIcon from '../../font_icon';
 import Ripple from '../../ripple';
-import utils from '../../utils';
 import Month from './month';
+import utils from '../../utils';
 import style from './style';
 
-@autobind
-export default class Calendar extends React.Component {
+class Calendar extends React.Component {
   static propTypes = {
     display: React.PropTypes.oneOf(['months', 'years']),
     onChange: React.PropTypes.func,
@@ -33,18 +31,6 @@ export default class Calendar extends React.Component {
     }
   }
 
-  onDayClick (day) {
-    let newDate = utils.time.setDay(this.state.viewDate, day);
-    this.setState({selectedDate: newDate});
-    if (this.props.onChange) this.props.onChange(newDate);
-  }
-
-  onYearClick (year) {
-    let newDate = utils.time.setYear(this.state.selectedDate, year);
-    this.setState({selectedDate: newDate, viewDate: newDate});
-    if (this.props.onChange) this.props.onChange(newDate);
-  }
-
   scrollToActive () {
     this.refs.years.scrollTop =
       this.refs.activeYear.offsetTop -
@@ -52,15 +38,27 @@ export default class Calendar extends React.Component {
       this.refs.activeYear.offsetHeight / 2;
   }
 
-  incrementViewMonth () {
+  handleDayClick = (day) => {
+    let newDate = utils.time.setDay(this.state.viewDate, day);
+    this.setState({selectedDate: newDate});
+    if (this.props.onChange) this.props.onChange(newDate);
+  };
+
+  handleYearClick = (year) => {
+    let newDate = utils.time.setYear(this.state.selectedDate, year);
+    this.setState({selectedDate: newDate, viewDate: newDate});
+    if (this.props.onChange) this.props.onChange(newDate);
+  };
+
+  incrementViewMonth = () => {
     this.refs.rippleRight.start(event);
     this.setState({
       direction: 'right',
       viewDate: utils.time.addMonths(this.state.viewDate, 1)
     });
-  }
+  };
 
-  decrementViewMonth () {
+  decrementViewMonth = () => {
     this.refs.rippleLeft.start(event);
     this.setState({
       direction: 'left',
@@ -72,20 +70,20 @@ export default class Calendar extends React.Component {
     let props = {
       className: year === this.state.viewDate.getFullYear() ? style.active : '',
       key: year,
-      onClick: this.onYearClick.bind(this, year)
+      onClick: this.handleYearClick.bind(this, year)
     };
 
     if (year === this.state.viewDate.getFullYear()) {
       props.ref = 'activeYear';
     }
 
-    return (<li {...props}>{ year }</li>);
+    return <li {...props}>{ year }</li>;
   }
 
   renderYears () {
     return (
       <ul ref="years" className={style.years}>
-        { utils.range(1900, 2100).map(i => { return this.renderYear(i); })}
+        { utils.range(1900, 2100).map((i) => { return this.renderYear(i); })}
       </ul>
     );
   }
@@ -105,7 +103,7 @@ export default class Calendar extends React.Component {
             key={this.state.viewDate.getMonth()}
             viewDate={this.state.viewDate}
             selectedDate={this.state.selectedDate}
-            onDayClick={this.onDayClick} />
+            onDayClick={this.handleDayClick} />
         </CSSTransitionGroup>
       </div>
     );
@@ -119,3 +117,5 @@ export default class Calendar extends React.Component {
     );
   }
 }
+
+export default Calendar;

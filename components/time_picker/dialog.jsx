@@ -1,12 +1,10 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import style from './style';
 import time from '../utils/time';
 import Clock from './clock';
 import Dialog from '../dialog';
 
-@autobind
-export default class TimePickerDialog extends React.Component {
+class TimePickerDialog extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     initialTime: React.PropTypes.object,
@@ -24,14 +22,26 @@ export default class TimePickerDialog extends React.Component {
     display: 'hours',
     time: this.props.initialTime,
     actions: [
-      { label: 'Cancel', className: style.button, onClick: this.onTimeCancel },
-      { label: 'Ok', className: style.button, onClick: this.onTimeSelected }
+      { label: 'Cancel', className: style.button, onClick: this.onTimeCancel.bind(this) },
+      { label: 'Ok', className: style.button, onClick: this.onTimeSelected.bind(this) }
     ]
   };
 
-  onClockChange (newTime) {
+  handleClockChange = (newTime) => {
     this.setState({time: newTime});
-  }
+  };
+
+  displayMinutes = () => {
+    this.setState({display: 'minutes'});
+  };
+
+  displayHours = () => {
+    this.setState({display: 'hours'});
+  };
+
+  toggleTimeMode = () => {
+    this.refs.clock.toggleTimeMode();
+  };
 
   onTimeCancel () {
     this.refs.dialog.hide();
@@ -42,21 +52,9 @@ export default class TimePickerDialog extends React.Component {
     this.refs.dialog.hide();
   }
 
-  displayMinutes () {
-    this.setState({display: 'minutes'});
-  }
-
-  displayHours () {
-    this.setState({display: 'hours'});
-  }
-
-  toggleTimeMode () {
-    this.refs.clock.toggleTimeMode();
-  }
-
   show () {
     this.refs.dialog.show();
-    setTimeout(this.refs.clock.calculateShape, 1000);
+    setTimeout(this.refs.clock.handleCalculateShape, 1000);
   }
 
   formatHours () {
@@ -100,9 +98,11 @@ export default class TimePickerDialog extends React.Component {
           display={this.state.display}
           format={this.props.format}
           initialTime={this.props.initialTime}
-          onChange={this.onClockChange}
+          onChange={this.handleClockChange}
         />
       </Dialog>
     );
   }
 }
+
+export default TimePickerDialog;

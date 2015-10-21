@@ -1,11 +1,9 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import Navigation from '../navigation';
 import Ripple from '../ripple';
 import style from './style.scss';
 
-@autobind
-export default class Card extends React.Component {
+class Card extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     color: React.PropTypes.string,
@@ -23,17 +21,13 @@ export default class Card extends React.Component {
     type: 'default'
   };
 
-  state = {
-    loading: this.props.loading
-  };
-
-  handleMouseDown (event) {
+  handleMouseDown = (event) => {
     if (this.props.onClick) {
       event.preventDefault();
       this.refs.ripple.start(event);
       this.props.onClick(event, this);
     }
-  }
+  };
 
   renderTitle () {
     let styleFigure = {}, styleOverflow = {};
@@ -68,7 +62,7 @@ export default class Card extends React.Component {
     if (this.props.onClick) className += ` ${style.touch}`;
     if (this.props.image || this.props.color) className += ` ${style.contrast}`;
     if (this.props.color) className += ` ${style.color}`;
-    if (this.state.loading) className += ` ${style.loading}`;
+    if (this.props.loading) className += ` ${style.loading}`;
     if (this.props.className) className += ` ${this.props.className}`;
 
     return (
@@ -83,14 +77,12 @@ export default class Card extends React.Component {
         <Ripple
           ref='ripple'
           className={style.ripple}
-          loading={this.state.loading}
+          loading={this.props.loading}
           spread={2.5}
         />
       </div>
     );
   }
-
-  loading (value) {
-    this.setState({loading: value});
-  }
 }
+
+export default Card;

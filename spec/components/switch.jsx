@@ -1,12 +1,10 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import Switch from '../../components/switch';
 
-@autobind
-export default class SwitchTest extends React.Component {
-  onChange (event, instance) {
+class SwitchTest extends React.Component {
+  handleChange = (event, instance) => {
     console.log('[Switch] Changed', instance.getValue());
-  }
+  };
 
   render () {
     return (
@@ -14,9 +12,11 @@ export default class SwitchTest extends React.Component {
         <h5>Switches</h5>
         <p style={{marginBottom: '10px'}}>This is more beautiful than the old fashion checkboxes...</p>
         <Switch label="Push notifications" />
-        <Switch checked label="Mail notifications" onChange={this.onChange} />
+        <Switch checked label="Mail notifications" onChange={this.handleChange} />
         <Switch disabled label="Nothing, thanks"/>
       </section>
     );
   }
 }
+
+export default SwitchTest;

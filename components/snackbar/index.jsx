@@ -1,11 +1,9 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import style from './style';
 import Button from '../button';
 import FontIcon from '../font_icon';
 
-@autobind
-export default class Slider extends React.Component {
+class Slider extends React.Component {
   static propTypes = {
     action: React.PropTypes.string,
     icon: React.PropTypes.string,
@@ -19,12 +17,12 @@ export default class Slider extends React.Component {
     active: false
   };
 
-  handleClick (event) {
+  handleClick = (event) => {
     this.setState({active: false});
     if (this.props.onClick) {
       this.props.onClick(event, this);
     }
-  }
+  };
 
   renderButton () {
     if (this.props.action) {
@@ -53,7 +51,6 @@ export default class Slider extends React.Component {
     );
   }
 
-  // -- Extends
   hide () {
     this.setState({active: false});
   }
@@ -67,3 +64,5 @@ export default class Slider extends React.Component {
     }
   }
 }
+
+export default Slider;

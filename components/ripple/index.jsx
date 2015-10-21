@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import autobind from 'autobind-decorator';
 import style from './style.scss';
 
-@autobind
-export default class Ripple extends React.Component {
+class Ripple extends React.Component {
   static propTypes = {
     centered: React.PropTypes.bool,
     className: React.PropTypes.string,
@@ -27,19 +25,19 @@ export default class Ripple extends React.Component {
     width: null
   };
 
-  start ({ pageX, pageY }) {
-    document.addEventListener('mouseup', this.end);
+  start = ({ pageX, pageY }) => {
+    document.addEventListener('mouseup', this.handleEnd);
     const {top, left, width} = this._getDescriptor(pageX, pageY);
     this.setState({active: false, restarting: true, width: 0}, () => {
       this.refs.ripple.offsetWidth; //eslint-disable-line no-unused-expressions
       this.setState({active: true, restarting: false, top: top, left: left, width: width});
     });
-  }
+  };
 
-  end () {
-    document.removeEventListener('mouseup', this.end);
+  handleEnd = () => {
+    document.removeEventListener('mouseup', this.handleEnd);
     this.setState({active: false});
-  }
+  };
 
   _getDescriptor (pageX, pageY) {
     let { left, top, height, width } = ReactDOM.findDOMNode(this).getBoundingClientRect();
@@ -65,3 +63,5 @@ export default class Ripple extends React.Component {
     );
   }
 }
+
+export default Ripple;

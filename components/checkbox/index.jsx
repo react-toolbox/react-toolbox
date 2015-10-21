@@ -1,11 +1,9 @@
 import React from 'react';
-import autobind from 'autobind-decorator';
 import Ripple from '../ripple';
-import style from './style';
 import events from '../utils/events';
+import style from './style';
 
-@autobind
-export default class Checkbox extends React.Component {
+class Checkbox extends React.Component {
   static propTypes = {
     checked: React.PropTypes.bool,
     className: React.PropTypes.string,
@@ -27,31 +25,31 @@ export default class Checkbox extends React.Component {
     checked: this.props.checked
   };
 
-  handleChange (event) {
+  handleChange = (event) => {
     this.setState({checked: !this.state.checked}, () => {
       if (this.props.onChange) this.props.onChange(event, this);
     });
-  }
+  };
 
-  handleClick (event) {
+  handleClick = (event) => {
     events.pauseEvent(event);
     if (!this.props.disabled) this.handleChange(event);
-  }
+  };
 
-  handleMouseDown (event) {
+  handleMouseDown = (event) => {
     if (!this.props.disabled) this.refs.ripple.start(event);
-  }
+  };
 
-  handleInputClick (event) {
+  handleInputClick = (event) => {
     events.pauseEvent(event);
-  }
+  };
 
   render () {
     let fieldClassName = style.field;
     let checkboxClassName = style.check;
+    if (this.state.checked) checkboxClassName += ` ${style.checked}`;
     if (this.props.disabled) fieldClassName += ` ${style.disabled}`;
     if (this.props.className) fieldClassName += ` ${this.props.className}`;
-    if (this.state.checked) checkboxClassName += ` ${style.checked}`;
 
     return (
       <label
@@ -63,8 +61,8 @@ export default class Checkbox extends React.Component {
           {...this.props}
           ref='input'
           type='checkbox'
-          checked={this.state.checked}
           className={style.input}
+          checked={this.state.checked}
           onChange={this.handleChange}
           onClick={this.handleInputClick}
         />
@@ -92,3 +90,5 @@ export default class Checkbox extends React.Component {
     this.setState({checked: value});
   }
 }
+
+export default Checkbox;
