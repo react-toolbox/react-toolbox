@@ -4,18 +4,17 @@ import FontIcon from '../font_icon';
 
 const Link = props => {
   let className = style.root;
-  if (props.className) className += ` ${props.className}`;
+  if (this.props.className) className += ` ${this.props.className}`;
   return (
     <a
-      {...props}
+      {...this.props}
       data-react-toolbox='link'
-      data-flex='horizontal center'
-      href={props.route}
+      href={this.props.route}
       className={className}
     >
-      { props.icon ? <FontIcon className={style.icon} value={props.icon} /> : null }
-      { props.label ? <abbr>{props.label}</abbr> : null }
-      { props.count && parseInt(props.count) !== 0 ? <small>{props.count}</small> : null}
+      { this.props.icon ? <FontIcon className={style.icon} value={this.props.icon} /> : null }
+      { this.props.label ? <abbr>{this.props.label}</abbr> : null }
+      { this.props.count && parseInt(this.props.count) !== 0 ? <small>{this.props.count}</small> : null}
     </a>
   );
 };
@@ -33,5 +32,3 @@ Link.defaultProps = {
   attributes: '',
   className: ''
 };
-
-export default Link;

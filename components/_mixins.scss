@@ -1,5 +1,3 @@
-@import "./variables";
-
 //-- Typography
 @mixin typo-preferred-font($use-preferred: true) {
   @if $use-preferred {

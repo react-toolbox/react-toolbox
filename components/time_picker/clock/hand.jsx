@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './style';
-import utils from '../utils';
+import utils from '../../utils';
 
 export default class Hand extends React.Component {
   static propTypes = {

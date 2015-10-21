@@ -1,11 +1,11 @@
 import React from 'react';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
-import { SlideLeft, SlideRight } from '../animations';
-import FontIcon from '../font_icon';
-import Ripple from '../ripple';
+import { SlideLeft, SlideRight } from '../../animations';
+import FontIcon from '../../font_icon';
+import Ripple from '../../ripple';
+import utils from '../../utils';
 import Month from './month';
 import style from './style';
-import utils from '../utils';
 
 export default class Calendar extends React.Component {
   static propTypes = {

@@ -1,7 +1,7 @@
 import React from 'react';
+import utils from '../../utils';
 import Day from './day';
 import style from './style';
-import utils from '../utils';
 
 export default class Month extends React.Component {
   static propTypes = {

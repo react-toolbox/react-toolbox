@@ -1,0 +1,9 @@
+$autocomplete-color-primary-contrast: unquote("rgb(#{$color-primary-contrast})");
+$autocomplete-color-primary: unquote("rgb(#{$color-primary})");
+$autocomplete-overflow-max-height: 45vh;
+$autocomplete-suggestion-active-background: unquote("rgb(#{$palette-grey-200})");
+$autocomplete-suggestion-padding: $unit;
+$autocomplete-suggestions-background: unquote("rgb(#{$color-white})");
+$autocomplete-value-border-radius: .2 * $unit;
+$autocomplete-value-margin: $unit * .25 $unit * .5 $unit * .25 0;
+$autocomplete-value-padding: $unit * .5 $unit * .75;

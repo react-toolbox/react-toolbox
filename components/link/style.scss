@@ -1,4 +1,4 @@
-@import "../variables";
+@import "../base";
 
 .icon {
   margin-right: $unit;
@@ -7,26 +7,26 @@
 
 .root {
   position: relative;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   transition: opacity $animation-duration $animation-curve-default;
-
   &:not(.active) {
     font-weight: $font-weight-thin;
     opacity: .5;
   }
-
   &:hover, &:active {
     opacity: 1;
   }
-
   > * {
     vertical-align: middle;
   }
-
   > abbr {
     text-transform: capitalize;
   }
-
   > small {
     font-size: $font-size-tiny;
     text-align: center;

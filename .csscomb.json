@@ -48,7 +48,9 @@
       "flex-order",
       "flex-pack",
       "flex-align",
+      "align-content",
       "align-items",
+      "justify-content",
       "padding",
       "padding-top",
       "padding-right",
@@ -255,6 +257,7 @@
       "-ms-transition-property",
       "-o-transition-property",
       "transition-property",
+      "transform-style",
       "-webkit-transform",
       "-moz-transform",
       "-ms-transform",
@@ -305,6 +308,7 @@
       "-ms-animation-direction",
       "-o-animation-direction",
       "animation-direction",
+      "backface-visibility",
       "will-change"
     ]
   ]

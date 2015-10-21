@@ -1,0 +1,7 @@
+$card-color-white: unquote("rgb(#{$color-white})") !default;
+$card-title-height: 17.6 * $unit;
+$card-width-normal: 32 * $unit;
+$card-width-large: 51.2 * $unit;
+$card-offset: 1.6 * $unit;
+$card-navigation-offset: $card-offset / 2;
+$card-text-overlay: unquote("rgba(#{$color-black}, 0.2)");

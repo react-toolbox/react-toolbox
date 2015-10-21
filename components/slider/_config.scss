@@ -1,0 +1,12 @@
+$slider-main-color: unquote("rgb(#{$color-primary})") !default;
+$slider-main-color-contrast: unquote("rgb(#{$color-primary-contrast})") !default;
+$slider-snap-color: unquote("rgb(#{$color-black})") !default;
+$slider-knob-size: 3.2 * $unit;
+$slider-inner-knob-size: 1.2 * $unit;
+$slider-snap-size: .2 * $unit;
+$slider-input-width: 5 * $unit;
+$slider-bar-height: .2 * $unit;
+$slider-pin-size: 2.6 * $unit;
+$slider-pin-elevation: 1.7 * $unit;
+$slider-side-separation: 1 * $unit;
+$slider-empty-knob-border: .2 * $unit;

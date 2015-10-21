@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './style';
 import time from '../utils/time';
-import Calendar from '../calendar';
+import Calendar from './calendar';
 import Dialog from '../dialog';
 
 export default class CalendarDialog extends React.Component {

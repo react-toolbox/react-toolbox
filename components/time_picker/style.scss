@@ -1,15 +1,5 @@
-@import "../variables";
-
-$timepicker-primary: $color-primary;
-$timepicker-primary-contrast: $color-primary-contrast;
-$timepicker-primary-dark: $color-primary-dark;
-$timepicker-primary-color: unquote("rgb(#{$timepicker-primary})") !default;
-$timepicker-primary-hover-color: unquote("rgba(#{$timepicker-primary}, 0.20)") !default;
-$timepicker-primary-contrast-color: unquote("rgb(#{$timepicker-primary-contrast})") !default;
-$timepicker-primary-dark-color: unquote("rgb(#{$timepicker-primary-dark})") !default;
-$timepicker-ampm-height: 2.2 * $unit;
-$timepicker-ampm-width: 4 * $unit;
-$timepicker-dialog-width: 30 * $unit;
+@import "../base";
+@import "./config";
 
 .input > [role="input"] {
   cursor: pointer;
@@ -18,8 +8,8 @@ $timepicker-dialog-width: 30 * $unit;
 .header {
   position: relative;
   width: 100%;
-  padding: 10px;
-  font-size: 52px;
+  padding: $timepicker-header-padding;
+  font-size: $timepicker-header-font-size;
   color: $timepicker-primary-contrast-color;
   text-align: center;
   background: $timepicker-primary-color;
@@ -32,18 +22,18 @@ $timepicker-dialog-width: 30 * $unit;
 }
 
 .separator {
-  margin: 0 5px;
+  margin: 0 $timepicker-header-padding / 2;
   opacity: .6;
 }
 
 .ampm {
   position: absolute;
   top: 50%;
-  right: 20px;
+  right: 2 * $unit;
   width: $timepicker-ampm-width;
   height: $timepicker-ampm-height * 2;
   margin-top: - $timepicker-ampm-height;
-  font-size: 16px;
+  font-size: $timepicker-ampm-font-size;
   line-height: $timepicker-ampm-height;
   text-align: center;
 }
@@ -57,24 +47,19 @@ $timepicker-dialog-width: 30 * $unit;
 .dialog {
   > [role="content"] {
     width: $timepicker-dialog-width;
-
     > [role="body"] {
       padding: 0;
     }
-
     > [role="navigation"] > .button {
       color: $timepicker-primary-color;
-
       &:hover {
         background: $timepicker-primary-hover-color;
       }
-
       &:focus:not(:active) {
         background: $timepicker-primary-hover-color;
       }
     }
   }
-
   &.display-hours .hours, &.display-minutes .minutes, &.format-am .am,
   &.format-pm .pm {
     opacity: 1;

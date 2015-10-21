@@ -24,8 +24,8 @@ export default class DrawerTest extends React.Component {
         </Drawer>
 
         <nav>
-          <Button className='accent' label='Drawer left hideable' type='raised' onClick={::this.onClick('left', 'show')} />
-          <Button className='primary' label='Drawer right' type='raised' onClick={::this.onClick('right', 'show')} />
+          <Button accent label='Drawer left hideable' kind='raised' onClick={::this.onClick('left', 'show')} />
+          <Button primary label='Drawer right' kind='raised' onClick={::this.onClick('right', 'show')} />
         </nav>
       </section>
     );

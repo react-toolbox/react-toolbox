@@ -1,8 +1,5 @@
-@import "../variables";
-
-$navigation-space: $unit;
-$navigation-color: unquote("rgb(#{$color-black})") !default;
-$navigation-background: unquote("rgb(#{$color-white})") !default;
+@import "../base";
+@import "./config";
 
 .horizontal {
   > * {
@@ -11,7 +8,6 @@ $navigation-background: unquote("rgb(#{$color-white})") !default;
     font-size: $font-size-normal;
     font-weight: $font-weight-normal;
     color: $navigation-color;
-
     > small {
       padding: 0 $navigation-space;
       margin-left: $navigation-space;
@@ -29,11 +25,9 @@ $navigation-background: unquote("rgb(#{$color-white})") !default;
     padding: 0 $navigation-space;
     line-height: $unit;
     transition-property: box-shadow, opacity;
-
     &.active {
       box-shadow: inset 10 * $unit 0 $navigation-background;
     }
-
     > small {
       float: right;
       opacity: .5;

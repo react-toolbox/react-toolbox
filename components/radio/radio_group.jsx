@@ -1,5 +1,5 @@
 import React from 'react';
-import RadioButton from '../radio_button';
+import RadioButton from './radio_button';
 
 export default class RadioGroup extends React.Component {
   static propTypes = {

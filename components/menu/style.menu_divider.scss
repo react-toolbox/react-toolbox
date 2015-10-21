@@ -1,7 +1,5 @@
-@import "../mixins";
-@import "../variables";
-
-$menu-divider-height: (4.8 * $unit) / 4;
+@import "../base";
+@import "./config";
 
 .root {
   display: block;

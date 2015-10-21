@@ -1,21 +1,5 @@
-@import "../variables";
-
-$list-vertical-padding: .8 * $unit;
-$list-horizontal-padding: 1.6 * $unit;
-$list-content-left-spacing: 7.2 * $unit;
-$list-subheader-height: 4.8 * $unit;
-$list-subheader-font-size: 1.4 * $unit;
-$list-subheader-font-weight: 500;
-$list-divider-height: .1 * $unit;
-$list-item-min-height: 4.8 * $unit;
-$list-item-min-height-legend: 7.2 * $unit;
-$list-item-hover-color: unquote("rgb(#{$palette-grey-200})");
-$list-item-legend-margin-top: .3 * $unit;
-$list-item-icon-font-size: 2.4 * $unit;
-$list-item-icon-size: 1.8 * $unit;
-$list-item-right-icon-margin: $list-content-left-spacing - $list-horizontal-padding - $list-item-icon-size;
-$list-item-avatar-height: 4 * $unit;
-$list-item-avatar-margin: .8 * $unit;
+@import "../base";
+@import "./config";
 
 .list {
   position: relative;
@@ -40,7 +24,7 @@ $list-item-avatar-margin: .8 * $unit;
   height: $list-divider-height;
   margin: - $list-divider-height 0 0;
   background-color: $color-divider;
-  border: none;
+  border: 0;
   &.inset {
     margin-right: $list-horizontal-padding;
     margin-left: $list-content-left-spacing;
@@ -68,20 +52,6 @@ $list-item-avatar-margin: .8 * $unit;
   &.with-legend {
     height: $list-item-min-height-legend;
   }
-  > .checkbox {
-    display: flex;
-    width: 100%;
-    min-height: $list-item-min-height;
-    align-items: center;
-    margin: 0;
-    cursor: pointer;
-    > [role='checkbox'] {
-      margin-right: $list-item-right-icon-margin;
-    }
-    > [role='label'] {
-      padding-left: 0;
-    }
-  }
   &.disabled {
     pointer-events: none;
     &:not(.checkbox-item) {
@@ -90,6 +60,21 @@ $list-item-avatar-margin: .8 * $unit;
     > .checkbox > [role='label'] {
       opacity: .5;
     }
+  }
+}
+
+.checkbox {
+  display: flex;
+  width: 100%;
+  min-height: $list-item-min-height;
+  align-items: center;
+  margin: 0;
+  cursor: pointer;
+  > [role='checkbox'] {
+    margin-right: $list-item-right-icon-margin;
+  }
+  > [role='label'] {
+    padding-left: 0;
   }
 }
 
@@ -103,14 +88,14 @@ $list-item-avatar-margin: .8 * $unit;
 
 .caption {
   display: block;
-  font-size: 1.6 * $unit;
+  font-size: $font-size-normal;
   color: $color-text;
 }
 
 .legend {
   display: block;
   padding-top: $list-item-legend-margin-top;
-  font-size: 1.4 * $unit;
+  font-size: $font-size-small;
   color: $color-text-secondary;
   white-space: normal;
 }
@@ -140,7 +125,7 @@ $list-item-avatar-margin: .8 * $unit;
 
 .left {
   &.icon {
-    width: 1.8 * $unit;
+    width: $list-item-icon-size;
     margin-right: $list-item-right-icon-margin;
   }
 }

@@ -1,14 +1,11 @@
-@import "../variables";
-@import "../mixins";
-$dropdown-color-white: unquote("rgb(#{$color-white})");
-$dropdown-color-primary: unquote("rgb(#{$color-primary})");
-$dropdown-color-primary-contrast: unquote("rgb(#{$color-primary-contrast})");
-$dropdown-value-hover-background: unquote("rgb(#{$palette-grey-200})");
+@import "../base";
+@import "./config";
+@import "../input/config";
 
 .root {
   position: relative;
   width: inherit;
-  margin-bottom: $offset;
+  margin-bottom: $dropdown-offset;
   color: $color-text;
   border-bottom: 1px solid $color-divider;
   &:not(.active) {
@@ -22,7 +19,7 @@ $dropdown-value-hover-background: unquote("rgb(#{$palette-grey-200})");
       opacity: .5;
     }
     > .values {
-      max-height: $items-overflow-max-height;
+      max-height: $dropdown-overflow-max-height;
       visibility: visible;
       box-shadow: $zdepth-shadow-1;
     }
@@ -53,7 +50,7 @@ $dropdown-value-hover-background: unquote("rgb(#{$palette-grey-200})");
   overflow-y: scroll;
   list-style: none;
   background-color: $dropdown-color-white;
-  border-radius: $border-radius;
+  border-radius: $dropdown-value-border-radius;
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
   transition-property: max-height, box-shadow;
@@ -82,19 +79,20 @@ $dropdown-value-hover-background: unquote("rgb(#{$palette-grey-200})");
 .value {
   display: block;
   > span {
-    height: $input-height;
-    font-size: $font-size-normal;
-    line-height: $input-height;
+    display: inline-block;
+    height: $input-field-height;
+    font-size: $input-field-font-size;
+    line-height: $input-field-height;
   }
   > :not(span) {
-    margin: ($offset / 2) 0;
+    margin: ($dropdown-offset / 2) 0;
   }
   &:after {
-    $size: ($input-height / 7);
+    $size: ($input-field-height / 7);
     $border: $size solid transparent;
     position: absolute;
-    right: ($offset / 2);
-    bottom: $offset;
+    right: ($dropdown-offset / 2);
+    bottom: $dropdown-offset;
     width: 0;
     height: 0;
     content: "";

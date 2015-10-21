@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './style';
-import time from '../utils/time';
+import time from '../../utils/time';
 import Hours from './hours';
 import Minutes from './minutes';
 

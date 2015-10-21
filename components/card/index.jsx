@@ -61,17 +61,16 @@ export default class Card extends React.Component {
   }
 
   render () {
-    let className = `${style.root} ${this.props.className}`;
+    let className = style.root;
     if (this.props.type) className += ` ${style[this.props.type]}`;
     if (this.props.onClick) className += ` ${style.touch}`;
     if (this.props.image || this.props.color) className += ` ${style.contrast}`;
     if (this.props.color) className += ` ${style.color}`;
     if (this.state.loading) className += ` ${style.loading}`;
+    if (this.props.className) className += ` ${this.props.className}`;
 
     return (
       <div
-        data-react-toolbox='card'
-        data-flex='vertical grow'
         data-react-toolbox='card'
         className={className}
         onMouseDown={this.handleMouseDown}

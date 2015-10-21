@@ -34,7 +34,6 @@ export default class Tab extends React.Component {
       <section
         data-react-toolbox='tab'
         className={className}
-        data-flex='vertical'
         tabIndex={this.props.tabIndex}
       >
         { this.props.children }
