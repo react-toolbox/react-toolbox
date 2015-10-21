@@ -14,7 +14,7 @@ export default class SwitchTest extends React.Component {
         <h5>Switches</h5>
         <p style={{marginBottom: '10px'}}>This is more beautiful than the old fashion checkboxes...</p>
         <Switch label="Push notifications" />
-        <Switch checked label="Mail notifications" onChange={::this.onChange} />
+        <Switch checked label="Mail notifications" onChange={this.onChange} />
         <Switch disabled label="Nothing, thanks"/>
       </section>
     );

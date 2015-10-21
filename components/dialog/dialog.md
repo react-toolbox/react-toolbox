@@ -3,9 +3,9 @@
 ```
 var Dialog  = require('react-toolbox/components/dialog');
 var actions = [
-  { caption: "Cancel", style: "transparent", onClick: ::this.onClose }
+  { caption: "Cancel", style: "transparent", onClick: this.onClose }
 ,
-  { caption: "Save", style: "transparent", onClick: ::this.onSave }
+  { caption: "Save", style: "transparent", onClick: this.onSave }
 ]
 
 <Dialog title='Hello World' actions={actions}>
