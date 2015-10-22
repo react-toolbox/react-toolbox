@@ -15,6 +15,7 @@
       "email": "javier.velasco86@gmail.com"
     }
   ],
+  "style": "commons.scss",
   "main": "./components",
   "directories": {
     "react-toolbox": "./react-toolbox/components"
@@ -39,9 +40,8 @@
     "components"
   ],
   "license": "MIT",
-  "dependencies": {
+  "peerDependencies": {
     "react": "^0.14",
-    "react-addons-css-transition-group": "^0.14.0",
     "react-dom": "^0.14.0"
   },
   "devDependencies": {
@@ -67,6 +67,9 @@
     "normalize.css": "^3.0.3",
     "phantomjs-polyfill": "0.0.1",
     "postcss-loader": "^0.4.3",
+    "react": "^0.14",
+    "react-dom": "^0.14.0",
+    "react-addons-css-transition-group": "^0.14.0",
     "react-addons-test-utils": "^0.14.0",
     "react-hot-loader": "^1.3.0",
     "sass-loader": "^2.0.1",

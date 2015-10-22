@@ -1,7 +1,6 @@
 module.exports = {
   Autocomplete: require('./autocomplete'),
   Button: require('./button'),
-  Calendar: require('./calendar'),
   Card: require('./card'),
   Checkbox: require('./checkbox'),
   DatePicker: require('./date_picker'),
@@ -23,7 +22,8 @@ module.exports = {
   IconMenu: require('./menu/icon_menu'),
   Navigation: require('./navigation'),
   ProgressBar: require('./progress_bar'),
-  RadioGroup: require('./radio_group'),
+  RadioGroup: require('./radio/radio_button'),
+  RadioButton: require('./radio/radio_group'),
   Ripple: require('./ripple'),
   Slider: require('./slider'),
   Switch: require('./switch'),
