@@ -21,10 +21,9 @@
     "react-toolbox": "./react-toolbox/components"
   },
   "scripts": {
-    "start": "npm run build & webpack-dev-server --hot",
+    "start": "webpack-dev-server --hot",
     "build": "webpack",
-    "watch": "webpack --watch",
-    "lint": "eslint ./components/**/*.jsx",
+    "eslint": "eslint ./components/**/*.jsx",
     "deploy": "NODE_ENV=production webpack -p",
     "test": "karma start",
     "test:watch": "karma start --no-single-run"
