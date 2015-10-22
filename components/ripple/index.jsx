@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import style from './style.scss';
+import style from './style';
 
 class Ripple extends React.Component {
   static propTypes = {

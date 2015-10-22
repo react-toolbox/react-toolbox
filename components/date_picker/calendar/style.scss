@@ -67,7 +67,7 @@
   flex-wrap: wrap;
 }
 
-:local(.day) {
+.day {
   flex: 0 0 (100% / 7);
   padding: $calendar-day-padding;
   > span {

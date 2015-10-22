@@ -1,7 +1,7 @@
 import React from 'react';
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
-import style from './style.scss';
+import style from './style';
 import events from '../utils/events';
 
 class Button extends React.Component {

@@ -21,10 +21,15 @@
     "react-toolbox": "./react-toolbox/components"
   },
   "scripts": {
-    "start": "webpack-dev-server --hot",
-    "build": "webpack",
-    "eslint": "eslint ./components/**/*.jsx",
+    "start": "npm run build & webpack-dev-server --hot",
+    "build": "npm run clean && webpack",
+    "watch": "webpack --watch",
+    "lint": "eslint ./components/**/*.jsx",
     "deploy": "NODE_ENV=production webpack -p",
+    "babel": "babel --stage 0 --optional es7.classProperties ./components --out-dir ./lib",
+    "sass": "sass --update components:lib --sourcemap=none",
+    "dist": "npm run babel && npm run sass",
+    "clean": "rm -rf dist",
     "test": "karma start",
     "test:watch": "karma start --no-single-run"
   },

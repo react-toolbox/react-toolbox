@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from '../navigation';
 import Ripple from '../ripple';
-import style from './style.scss';
+import style from './style';
 
 class Card extends React.Component {
   static propTypes = {

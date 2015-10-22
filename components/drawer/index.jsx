@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './style.scss';
+import style from './style';
 
 class Drawer extends React.Component {
   static propTypes = {

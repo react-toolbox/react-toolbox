@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './style.scss';
+import style from './style';
 import FontIcon from '../font_icon';
 
 class Input extends React.Component {
