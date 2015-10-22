@@ -32,7 +32,7 @@ class Button extends React.Component {
   handleMouseDown = (event) => {
     events.pauseEvent(event);
     this.refs.ripple.start(event);
-  }
+  };
 
   render () {
     let className = style[this.props.kind];

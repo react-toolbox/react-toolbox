@@ -3,7 +3,7 @@ import Checkbox from '../checkbox';
 import ListItemContent from './content';
 import style from './style';
 
-const ListCheckbox = props => {
+const ListCheckbox = (props) => {
   let className = `${style.item} ${style['checkbox-item']}`;
   if (props.legend) className += ` ${style['with-legend']}`;
   if (props.disabled) className += ` ${style.disabled}`;

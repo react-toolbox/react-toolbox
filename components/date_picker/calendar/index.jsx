@@ -64,7 +64,7 @@ class Calendar extends React.Component {
       direction: 'left',
       viewDate: utils.time.addMonths(this.state.viewDate, -1)
     });
-  }
+  };
 
   renderYear (year) {
     let props = {
