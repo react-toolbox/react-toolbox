@@ -5,10 +5,8 @@ import utils from '../utils';
 import ProgressBar from '../progress_bar';
 import Input from '../input';
 
-export default React.createClass({
-  displayName: 'Slider',
-
-  propTypes: {
+class Slider extends React.Component {
+  static propTypes = {
     className: React.PropTypes.string,
     editable: React.PropTypes.bool,
     max: React.PropTypes.number,
@@ -18,160 +16,156 @@ export default React.createClass({
     snaps: React.PropTypes.bool,
     step: React.PropTypes.number,
     value: React.PropTypes.number
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      className: '',
-      editable: false,
-      max: 100,
-      min: 0,
-      pinned: false,
-      snaps: false,
-      step: 0.01,
-      value: 0
-    };
-  },
+  static defaultProps = {
+    className: '',
+    editable: false,
+    max: 100,
+    min: 0,
+    pinned: false,
+    snaps: false,
+    step: 0.01,
+    value: 0
+  };
 
-  getInitialState () {
-    return {
-      sliderStart: 0,
-      sliderLength: 0,
-      value: this.props.value
-    };
-  },
+  state = {
+    sliderStart: 0,
+    sliderLength: 0,
+    value: this.props.value
+  };
 
   componentDidMount () {
-    window.addEventListener('resize', this.onResize);
-    this.onResize();
-  },
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+  }
 
   componentWillUnmount () {
-    window.removeEventListener('resize', this.onResize);
-  },
+    window.removeEventListener('resize', this.handleResize);
+  }
 
   componentDidUpdate (prevProps, prevState) {
     if (prevState.value !== this.state.value) {
       if (this.props.onChange) this.props.onChange(this);
       if (this.refs.input) this.refs.input.setValue(this.valueForInput(this.state.value));
     }
-  },
+  }
 
-  onResize () {
+  handleResize = () => {
     const {left, right} = ReactDOM.findDOMNode(this.refs.progressbar).getBoundingClientRect();
     this.setState({sliderStart: left, sliderLength: right - left});
-  },
+  };
 
-  onSliderFocus () {
+  handleSliderFocus = () => {
     utils.events.addEventsToDocument(this.getKeyboardEvents());
-  },
+  };
 
-  onSliderBlur () {
+  handleSliderBlur = () => {
     utils.events.removeEventsFromDocument(this.getKeyboardEvents());
-  },
+  };
 
-  onInputChange () {
+  handleInputChange = () => {
     this.setState({value: this.trimValue(this.refs.input.getValue()) });
-  },
+  };
 
-  onKeyDown (event) {
+  handleKeyDown = (event) => {
     if ([13, 27].indexOf(event.keyCode) !== -1) ReactDOM.findDOMNode(this).blur();
     if (event.keyCode === 38) this.addToValue(this.props.step);
     if (event.keyCode === 40) this.addToValue(-this.props.step);
     if (event.keyCode !== 9) utils.events.pauseEvent(event);
-  },
+  };
 
-  onMouseDown (event) {
+  handleMouseDown = (event) => {
     utils.events.addEventsToDocument(this.getMouseEventMap());
     this.start(utils.events.getMousePosition(event));
     utils.events.pauseEvent(event);
-  },
+  };
 
-  onTouchStart (event) {
+  handleTouchStart = (event) => {
     this.start(utils.events.getTouchPosition(event));
     utils.events.addEventsToDocument(this.getTouchEventMap());
     utils.events.pauseEvent(event);
-  },
+  };
 
-  onMouseMove (event) {
+  handleMouseMove = (event) => {
     utils.events.pauseEvent(event);
     this.move(utils.events.getMousePosition(event));
-  },
+  };
 
-  onTouchMove (event) {
+  handleTouchMove = (event) => {
     this.move(utils.events.getTouchPosition(event));
-  },
+  };
 
-  onMouseUp () {
+  handleMouseUp = () => {
     this.end(this.getMouseEventMap());
-  },
+  };
 
-  onTouchEnd () {
+  handleTouchEnd = () => {
     this.end(this.getTouchEventMap());
-  },
+  };
 
   getMouseEventMap () {
     return {
-      mousemove: this.onMouseMove,
-      mouseup: this.onMouseUp
+      mousemove: this.handleMouseMove,
+      mouseup: this.handleMouseUp
     };
-  },
+  }
 
   getTouchEventMap () {
     return {
-      touchmove: this.onTouchMove,
-      touchend: this.onTouchEnd
+      touchmove: this.handleTouchMove,
+      touchend: this.handleTouchEnd
     };
-  },
+  }
 
   getKeyboardEvents () {
     return {
-      keydown: this.onKeyDown
+      keydown: this.handleKeyDown
     };
-  },
+  }
 
   start (position) {
     this.setState({pressed: true, value: this.positionToValue(position)});
-  },
+  }
 
   move (position) {
     this.setState({value: this.positionToValue(position)});
-  },
+  }
 
   end (revents) {
     utils.events.removeEventsFromDocument(revents);
     this.setState({pressed: false});
-  },
+  }
 
   positionToValue (position) {
     let { sliderStart: start, sliderLength: length } = this.state;
     let { max, min } = this.props;
     return this.trimValue((position.x - start) / length * (max - min) + min);
-  },
+  }
 
   trimValue (value) {
     if (value < this.props.min) return this.props.min;
     if (value > this.props.max) return this.props.max;
     return utils.round(value, this.stepDecimals());
-  },
+  }
 
   stepDecimals () {
     return (this.props.step.toString().split('.')[1] || []).length;
-  },
+  }
 
   addToValue (value) {
     this.setState({value: this.trimValue(this.state.value + value)});
-  },
+  }
 
   valueForInput (value) {
     const decimals = this.stepDecimals();
     return decimals > 0 ? value.toFixed(decimals) : value.toString();
-  },
+  }
 
   knobOffset () {
     let { max, min } = this.props;
     return this.state.sliderLength * (this.state.value - min) / (max - min);
-  },
+  }
 
   renderSnaps () {
     if (this.props.snaps) {
@@ -185,7 +179,7 @@ export default React.createClass({
         </div>
       );
     }
-  },
+  }
 
   renderInput () {
     if (this.props.editable) {
@@ -193,11 +187,11 @@ export default React.createClass({
         <Input
           ref='input'
           className={style.input}
-          onChange={this.onInputChange}
+          onChange={this.handleInputChange}
           value={this.valueForInput(this.state.value)} />
       );
     }
-  },
+  }
 
   render () {
     let knobStyles = utils.prefixer({transform: `translateX(${this.knobOffset()}px)`});
@@ -212,21 +206,21 @@ export default React.createClass({
         data-react-toolbox='slider'
         className={style.root + className}
         tabIndex='0'
-        onFocus={this.onSliderFocus}
-        onBlur={this.onSliderBlur} >
+        onFocus={this.handleSliderFocus}
+        onBlur={this.handleSliderBlur} >
 
         <div
           ref='slider'
           className={style.container}
-          onTouchStart={this.onTouchStart}
-          onMouseDown={this.onMouseDown} >
+          onTouchStart={this.handleTouchStart}
+          onMouseDown={this.handleMouseDown} >
 
           <div
             ref='knob'
             className={style.knob}
             style={knobStyles}
-            onMouseDown={this.onMouseDown}
-            onTouchStart={this.onTouchStart} >
+            onMouseDown={this.handleMouseDown}
+            onTouchStart={this.handleTouchStart} >
               <div className={style.innerknob} data-value={parseInt(this.state.value)}></div>
           </div>
 
@@ -245,13 +239,15 @@ export default React.createClass({
         { this.renderInput() }
       </div>
     );
-  },
+  }
 
   getValue () {
     return this.state.value;
-  },
+  }
 
   setValue (value) {
     this.setState({value: value});
   }
-});
+}
+
+export default Slider;

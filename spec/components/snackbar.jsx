@@ -2,17 +2,14 @@ import React from 'react';
 import Button from '../../components/button';
 import Snackbar from '../../components/snackbar';
 
-export default React.createClass({
-
-  displayName: 'SnackbarTest',
-
-  handleClick (event, snackbar) {
+class SnackbarTest extends React.Component {
+  handleClick = (event, snackbar) => {
     console.log('handleClick', event, snackbar);
-  },
+  };
 
-  handleSnackbar () {
+  handleSnackbar = () => {
     this.refs.snackbar.show();
-  },
+  };
 
   render () {
     return (
@@ -31,4 +28,6 @@ export default React.createClass({
       </section>
     );
   }
-});
+}
+
+export default SnackbarTest;

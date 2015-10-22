@@ -1,24 +1,22 @@
 import React from 'react';
 import { MenuItem, IconMenu } from '../../components/menu';
 
-export default React.createClass({
-  displayName: 'IconMenuTest',
-
-  handleShow () {
+class IconMenuTest extends React.Component {
+  handleShow = () => {
     console.log('Showing menu...');
-  },
+  };
 
-  handleHide () {
+  handleHide = () => {
     console.log('Hiding menu...');
-  },
+  };
 
-  handleSelect (value, instance) {
+  handleSelect = (value, instance) => {
     console.log('Option selected', value, instance);
-  },
+  };
 
-  handleItem () {
+  handleItem = () => {
     console.log('Refresh clicked');
-  },
+  };
 
   render () {
     return (
@@ -43,4 +41,6 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+export default IconMenuTest;

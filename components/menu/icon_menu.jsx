@@ -4,10 +4,8 @@ import Menu from './menu';
 import Ripple from '../ripple';
 import style from './style.icon_menu';
 
-export default React.createClass({
-  displayName: 'IconMenu',
-
-  propTypes: {
+class IconMenu extends React.Component {
+  static propTypes = {
     className: React.PropTypes.string,
     icon: React.PropTypes.string,
     iconRipple: React.PropTypes.bool,
@@ -16,29 +14,27 @@ export default React.createClass({
     onSelect: React.PropTypes.func,
     position: React.PropTypes.string,
     selectable: React.PropTypes.bool
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      className: '',
-      icon: 'more-vert',
-      iconRipple: true,
-      menuRipple: true,
-      position: 'auto',
-      selectable: false
-    };
-  },
+  static defaultProps = {
+    className: '',
+    icon: 'more-vert',
+    iconRipple: true,
+    menuRipple: true,
+    position: 'auto',
+    selectable: false
+  };
 
-  handleButtonClick () {
+  handleButtonClick = () => {
     this.refs.menu.show();
     if (this.props.onClick) this.props.onClick();
-  },
+  };
 
-  handleMouseDown (event) {
+  handleMouseDown = (event) => {
     if (this.props.iconRipple) {
       this.refs.ripple.start(event);
     }
-  },
+  };
 
   render () {
     let className = style.root;
@@ -67,4 +63,6 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+export default IconMenu;

@@ -1,16 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
-import utils from '../utils';
 import Input from '../input';
 import style from './style';
+import utils from '../utils';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Autocomplete',
-
-  propTypes: {
+class Autocomplete extends React.Component {
+  static propTypes = {
     className: React.PropTypes.string,
     dataSource: React.PropTypes.any,
     disabled: React.PropTypes.bool,
@@ -20,52 +15,48 @@ export default React.createClass({
     onChange: React.PropTypes.func,
     required: React.PropTypes.bool,
     value: React.PropTypes.any
-  },
+  };
 
-  getDefaultProps () {
-    return {
+  static defaultProps = {
       className: '',
       dataSource: {},
       multiple: true
-    };
-  },
+  };
 
-  getInitialState () {
-    return {
-      dataSource: this._indexDataSource(this.props.dataSource),
-      focus: false,
-      query: '',
-      up: false,
-      values: new Map(),
-      width: undefined
-    };
-  },
+  state = {
+    dataSource: this._indexDataSource(this.props.dataSource),
+    focus: false,
+    query: '',
+    up: false,
+    values: new Map(),
+    width: undefined
+  };
 
   componentDidMount () {
     if (this.props.value) this.setValue(this.props.value);
     this.setState({
       width: ReactDOM.findDOMNode(this).getBoundingClientRect().width
     });
-  },
+  }
 
   componentWillReceiveProps (props) {
     if (props.dataSource) {
       this.setState({dataSource: this._indexDataSource(props.dataSource)});
     }
-  },
+  }
 
   componentWillUpdate (props, state) {
     this.refs.input.setValue(state.query);
-  },
+  }
 
-  handleQueryChange () {
+  handleQueryChange = () => {
     const query = this.refs.input.getValue();
     if (this.state.query !== query) {
       this.setState({query: query});
     }
-  },
+  };
 
-  handleKeyPress (event) {
+  handleKeyPress = (event) => {
     if (event.which === 13 && this.state.active) {
       this._selectOption(this.state.active);
     }
@@ -77,9 +68,9 @@ export default React.createClass({
       if (index >= suggestionsKeys.length) index = 0;
       this.setState({active: suggestionsKeys[index]});
     }
-  },
+  };
 
-  handleFocus () {
+  handleFocus = () => {
     let client = event.target.getBoundingClientRect();
     let screen_height = window.innerHeight || document.documentElement.offsetHeight;
 
@@ -89,85 +80,24 @@ export default React.createClass({
       up: client.top > ((screen_height / 2) + client.height),
       focus: true
     });
-  },
+  };
 
-  handleBlur () {
+  handleBlur = () => {
     if (this.state.focus) this.setState({focus: false});
-  },
+  };
 
-  handleHover (event) {
+  handleHover = (event) => {
     this.setState({active: event.target.getAttribute('id')});
-  },
+  };
 
-  handleSelect (event) {
+  handleSelect = (event) => {
     utils.events.pauseEvent(event);
     this._selectOption(event.target.getAttribute('id'));
-  },
+  };
 
-  handleUnselect (event) {
+  handleUnselect = (event) => {
     this._unselectOption(event.target.getAttribute('id'));
-  },
-
-  _indexDataSource (data = {}) {
-    if (data.length) {
-      return new Map(data.map((item) => [item, item]));
-    } else {
-      return new Map(Object.keys(data).map((key) => [key, data[key]]));
-    }
-  },
-
-  _getSuggestions () {
-    let query = this.state.query.toLowerCase().trim() || '';
-    let suggestions = new Map();
-    for (let [key, value] of this.state.dataSource) {
-      if (!this.state.values.has(key) && value.toLowerCase().trim().startsWith(query)) {
-        suggestions.set(key, value);
-      }
-    }
-    return suggestions;
-  },
-
-  _selectOption (key) {
-    let { values, dataSource } = this.state;
-    let query = !this.props.multiple ? dataSource.get(key) : '';
-    values = new Map(values);
-
-    if (!this.props.multiple) values.clear();
-    values.set(key, dataSource.get(key));
-
-    this.setState({focus: false, query: query, values: values}, () => {
-      this.refs.input.blur();
-      if (this.props.onChange) this.props.onChange(this);
-    });
-  },
-
-  _unselectOption (key) {
-    if (key) {
-      let values = new Map(this.state.values);
-      values.delete(key);
-      this.setState({focus: false, values: values}, () => {
-        if (this.props.onChange) this.props.onChange(this);
-      });
-    }
-  },
-
-  getValue () {
-    let values = [...this.state.values.keys()];
-    return this.props.multiple ? values : (values.length > 0 ? values[0] : null);
-  },
-
-  setValue (dataParam = []) {
-    let values = new Map();
-    let data = (typeof dataParam === 'string') ? [dataParam] : dataParam;
-    for (let [key, value] of this.state.dataSource) {
-      if (data.indexOf(key) !== -1) values.set(key, value);
-    }
-    this.setState({values: values, query: this.props.multiple ? '' : values.get(data[0])});
-  },
-
-  setError (data) {
-    this.input.setError(data);
-  },
+  };
 
   renderSelected () {
     if (this.props.multiple) {
@@ -179,7 +109,7 @@ export default React.createClass({
         </ul>
       );
     }
-  },
+  }
 
   renderSuggestions () {
     return [...this._getSuggestions()].map(([key, value]) => {
@@ -187,7 +117,7 @@ export default React.createClass({
       if (this.state.active === key) className += ` ${style.active}`;
       return <li id={key} key={key} className={className}>{value}</li>;
     });
-  },
+  }
 
   render () {
     let className = style.root;
@@ -224,4 +154,67 @@ export default React.createClass({
       </div>
     );
   }
-});
+
+  _indexDataSource (data = {}) {
+    if (data.length) {
+      return new Map(data.map((item) => [item, item]));
+    } else {
+      return new Map(Object.keys(data).map((key) => [key, data[key]]));
+    }
+  }
+
+  _getSuggestions () {
+    let query = this.state.query.toLowerCase().trim() || '';
+    let suggestions = new Map();
+    for (let [key, value] of this.state.dataSource) {
+      if (!this.state.values.has(key) && value.toLowerCase().trim().startsWith(query)) {
+        suggestions.set(key, value);
+      }
+    }
+    return suggestions;
+  }
+
+  _selectOption (key) {
+    let { values, dataSource } = this.state;
+    let query = !this.props.multiple ? dataSource.get(key) : '';
+    values = new Map(values);
+
+    if (!this.props.multiple) values.clear();
+    values.set(key, dataSource.get(key));
+
+    this.setState({focus: false, query: query, values: values}, () => {
+      this.refs.input.blur();
+      if (this.props.onChange) this.props.onChange(this);
+    });
+  }
+
+  _unselectOption (key) {
+    if (key) {
+      let values = new Map(this.state.values);
+      values.delete(key);
+      this.setState({focus: false, values: values}, () => {
+        if (this.props.onChange) this.props.onChange(this);
+      });
+    }
+  }
+
+  getValue () {
+    let values = [...this.state.values.keys()];
+    return this.props.multiple ? values : (values.length > 0 ? values[0] : null);
+  }
+
+  setValue (dataParam = []) {
+    let values = new Map();
+    let data = (typeof dataParam === 'string') ? [dataParam] : dataParam;
+    for (let [key, value] of this.state.dataSource) {
+      if (data.indexOf(key) !== -1) values.set(key, value);
+    }
+    this.setState({values: values, query: this.props.multiple ? '' : values.get(data[0])});
+  }
+
+  setError (data) {
+    this.input.setError(data);
+  }
+}
+
+export default Autocomplete;

@@ -1,70 +1,61 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 import time from '../utils/time';
 import Clock from './clock';
 import Dialog from '../dialog';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'TimePickerDialog',
-
-  propTypes: {
+class TimePickerDialog extends React.Component {
+  static propTypes = {
     className: React.PropTypes.string,
     initialTime: React.PropTypes.object,
     format: React.PropTypes.oneOf(['24hr', 'ampm']),
     onTimeSelected: React.PropTypes.func
-  },
+  };
 
-  getDefaultProps () {
-    return {
+  static defaultProps = {
       className: '',
       initialTime: new Date(),
       format: '24hr'
-    };
-  },
+  };
 
-  getInitialState () {
-    return {
-      display: 'hours',
-      time: this.props.initialTime,
-      actions: [
-        { label: 'Cancel', className: style.button, onClick: this.onTimeCancel },
-        { label: 'Ok', className: style.button, onClick: this.onTimeSelected }
-      ]
-    };
-  },
+  state = {
+    display: 'hours',
+    time: this.props.initialTime,
+    actions: [
+      { label: 'Cancel', className: style.button, onClick: this.onTimeCancel.bind(this) },
+      { label: 'Ok', className: style.button, onClick: this.onTimeSelected.bind(this) }
+    ]
+  };
 
-  onClockChange (newTime) {
+  handleClockChange = (newTime) => {
     this.setState({time: newTime});
-  },
+  };
+
+  displayMinutes = () => {
+    this.setState({display: 'minutes'});
+  };
+
+  displayHours = () => {
+    this.setState({display: 'hours'});
+  };
+
+  toggleTimeMode = () => {
+    this.refs.clock.toggleTimeMode();
+  };
 
   onTimeCancel () {
     this.refs.dialog.hide();
-  },
+  }
 
   onTimeSelected () {
     if (this.props.onTimeSelected) this.props.onTimeSelected(this.state.time);
     this.refs.dialog.hide();
-  },
-
-  displayMinutes () {
-    this.setState({display: 'minutes'});
-  },
-
-  displayHours () {
-    this.setState({display: 'hours'});
-  },
-
-  toggleTimeMode () {
-    this.refs.clock.toggleTimeMode();
-  },
+  }
 
   show () {
     this.refs.dialog.show();
-    setTimeout(this.refs.clock.calculateShape, 1000);
-  },
+    setTimeout(this.refs.clock.handleCalculateShape, 1000);
+  }
 
   formatHours () {
     if (this.props.format === 'ampm') {
@@ -72,7 +63,7 @@ export default React.createClass({
     } else {
       return this.state.time.getHours();
     }
-  },
+  }
 
   renderAMPMLabels () {
     if (this.props.format === 'ampm') {
@@ -83,7 +74,7 @@ export default React.createClass({
         </div>
       );
     }
-  },
+  }
 
   render () {
     const display = `display-${this.state.display}`;
@@ -107,9 +98,11 @@ export default React.createClass({
           display={this.state.display}
           format={this.props.format}
           initialTime={this.props.initialTime}
-          onChange={this.onClockChange}
+          onChange={this.handleClockChange}
         />
       </Dialog>
     );
   }
-});
+}
+
+export default TimePickerDialog;

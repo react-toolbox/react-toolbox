@@ -1,5 +1,4 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import utils from '../../utils';
 import Face from './face';
 import Hand from './hand';
@@ -9,25 +8,19 @@ const innerNumbers = [12, ...utils.range(1, 12)];
 const innerSpacing = 1.7;
 const step = 360 / 12;
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Hours',
-
-  propTypes: {
+class Hours extends React.Component {
+  static propTypes = {
     format: React.PropTypes.oneOf(['24hr', 'ampm']),
     onChange: React.PropTypes.func,
     onHandMoved: React.PropTypes.func,
     selected: React.PropTypes.number
-  },
+  };
 
-  getInitialState () {
-    return {
-      inner: this.props.format === '24hr' && this.props.selected > 0 && this.props.selected <= 12
-    };
-  },
+  state = {
+    inner: this.props.format === '24hr' && this.props.selected > 0 && this.props.selected <= 12
+  };
 
-  onHandMove (degrees, radius) {
+  handleHandMove = (degrees, radius) => {
     let currentInner = radius < this.props.radius - this.props.spacing * innerSpacing;
     if (this.props.format === '24hr' && this.state.inner !== currentInner) {
       this.setState({inner: currentInner}, () => {
@@ -36,15 +29,15 @@ export default React.createClass({
     } else {
       this.props.onChange(this.valueFromDegrees(degrees));
     }
-  },
+  };
 
-  onMouseDown (event) {
+  handleMouseDown = (event) => {
     this.refs.hand.mouseStart(event);
-  },
+  };
 
-  onTouchStart (event) {
+  handleTouchStart = (event) => {
     this.refs.hand.touchStart(event);
-  },
+  };
 
   valueFromDegrees (degrees) {
     if (this.props.format === 'ampm' || this.props.format === '24hr' && this.state.inner) {
@@ -52,14 +45,14 @@ export default React.createClass({
     } else {
       return outerNumbers[degrees / step];
     }
-  },
+  }
 
   renderInnerFace (innerRadius) {
     if (this.props.format === '24hr') {
       return (
         <Face
-          onTouchStart={this.onTouchStart}
-          onMouseDown={this.onMouseDown}
+          onTouchStart={this.handleTouchStart}
+          onMouseDown={this.handleMouseDown}
           numbers={innerNumbers}
           spacing={this.props.spacing}
           radius={innerRadius}
@@ -67,7 +60,7 @@ export default React.createClass({
         />
       );
     }
-  },
+  }
 
   render () {
     const { format, selected, radius, spacing, center, onHandMoved } = this.props;
@@ -76,8 +69,8 @@ export default React.createClass({
     return (
       <div>
           <Face
-            onTouchStart={this.onTouchStart}
-            onMouseDown={this.onMouseDown}
+            onTouchStart={this.handleTouchStart}
+            onMouseDown={this.handleMouseDown}
             numbers={is24hr ? outerNumbers : innerNumbers}
             spacing={spacing}
             radius={radius}
@@ -88,7 +81,7 @@ export default React.createClass({
           <Hand ref='hand'
             angle={selected * step}
             length={(this.state.inner ? radius - spacing * innerSpacing : radius) - spacing}
-            onMove={this.onHandMove}
+            onMove={this.handleHandMove}
             onMoved={onHandMoved}
             origin={center}
             step={step}
@@ -96,4 +89,6 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+export default Hours;

@@ -2,12 +2,10 @@ import React from 'react';
 import Button from '../../components/button';
 import Drawer from '../../components/drawer';
 
-export default React.createClass({
-  displayName: 'DrawerTest',
-
-  onClick (ref, method) {
+class DrawerTest extends React.Component {
+  handleClick = (ref, method) => {
     this.refs[ref][method]();
-  },
+  };
 
   render () {
     return (
@@ -22,14 +20,16 @@ export default React.createClass({
         </Drawer>
 
         <Drawer ref='right' type='right'>
-          <Button label='Close' onClick={this.onClick.bind(null, 'right', 'hide')} />
+          <Button label='Close' onClick={this.handleClick.bind(this, 'right', 'hide')} />
         </Drawer>
 
         <nav>
-          <Button accent label='Drawer left hideable' kind='raised' onClick={this.onClick.bind(null, 'left', 'show')} />
-          <Button primary label='Drawer right' kind='raised' onClick={this.onClick.bind(null, 'right', 'show')} />
+          <Button accent label='Drawer left hideable' kind='raised' onClick={this.handleClick.bind(this, 'left', 'show')} />
+          <Button primary label='Drawer right' kind='raised' onClick={this.handleClick.bind(this, 'right', 'show')} />
         </nav>
       </section>
     );
   }
-});
+}
+
+export default DrawerTest;

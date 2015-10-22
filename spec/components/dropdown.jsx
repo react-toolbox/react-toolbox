@@ -1,25 +1,21 @@
 import React from 'react';
 import Dropdown from '../../components/dropdown';
 
-export default React.createClass({
-  displayName: 'DropdownTest',
+class DropdownTest extends React.Component {
+  state = {
+    countries: [
+      { value: 'ES-es', label: 'Spain', img: 'http://' },
+      { value: 'TH-th', label: 'Thailand', img: 'http://' },
+      { value: 'EN-gb', label: 'England', img: 'http://' },
+      { value: 'EN-en', label: 'USA', img: 'http://' },
+      { value: 'FR-fr', label: 'France', img: 'http://' }
+    ],
+    selected: 'TH-th'
+  };
 
-  getInitialState () {
-    return {
-      countries: [
-        { value: 'ES-es', label: 'Spain', img: 'http://' },
-        { value: 'TH-th', label: 'Thailand', img: 'http://' },
-        { value: 'EN-gb', label: 'England', img: 'http://' },
-        { value: 'EN-en', label: 'USA', img: 'http://' },
-        { value: 'FR-fr', label: 'France', img: 'http://' }
-      ],
-      selected: 'TH-th'
-    };
-  },
-
-  onChange (dropdown) {
+  handleChange = (dropdown) => {
     console.log('[DROPDOWN]', dropdown.getValue());
-  },
+  };
 
   customDropdownItem (data) {
     const style = {
@@ -38,18 +34,20 @@ export default React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
   render () {
     return (
       <section>
         <h5>Dropdown</h5>
         <p>lorem ipsum...</p>
-        <Dropdown dataSource={this.state.countries} label="Countries" onChange={this.onChange}/>
-        <Dropdown dataSource={this.state.countries} disabled={true} onChange={this.onChange}/>
-        <Dropdown dataSource={this.state.countries} value={this.state.selected} onChange={this.onChange}/>
-        <Dropdown dataSource={this.state.countries} value={this.state.selected} template={this.customDropdownItem} onChange={this.onChange}/>
+        <Dropdown dataSource={this.state.countries} label="Countries" onChange={this.handleChange}/>
+        <Dropdown dataSource={this.state.countries} disabled={true} onChange={this.handleChange}/>
+        <Dropdown dataSource={this.state.countries} value={this.state.selected} onChange={this.handleChange}/>
+        <Dropdown dataSource={this.state.countries} value={this.state.selected} template={this.customDropdownItem} onChange={this.handleChange}/>
       </section>
     );
   }
-});
+}
+
+export default DropdownTest;

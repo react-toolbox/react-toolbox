@@ -1,25 +1,20 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ListItem from './item';
 import style from './style';
 
-const List = React.createClass({
-  mixins: [PureRenderMixin],
-
-  propTypes: {
+class List extends React.Component {
+  static propTypes = {
     className: React.PropTypes.string,
     onClick: React.PropTypes.func,
     ripple: React.PropTypes.bool,
     selectable: React.PropTypes.bool
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      className: '',
-      ripple: false,
-      selectable: false
-    };
-  },
+  static defaultProps = {
+    className: '',
+    ripple: false,
+    selectable: false
+  };
 
   renderItems () {
     return React.Children.map(this.props.children, (item) => {
@@ -32,7 +27,7 @@ const List = React.createClass({
         return React.cloneElement(item);
       }
     });
-  },
+  }
 
   render () {
     let className = style.list;
@@ -43,6 +38,6 @@ const List = React.createClass({
       </ul>
     );
   }
-});
+}
 
 export default List;

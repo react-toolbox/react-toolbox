@@ -1,18 +1,18 @@
 import React from 'react';
 import { RadioGroup, RadioButton } from '../../components/radio';
 
-export default React.createClass({
-  handleChange (event, instance) {
+class RadioGroupTest extends React.Component {
+  handleChange = (event, instance) => {
     console.log('Changed!', { comic: instance.getValue()});
-  },
+  };
 
-  handleFocus () {
+  handleFocus = () => {
     console.log('Focused V for a Vendetta');
-  },
+  };
 
-  handleBlur () {
+  handleBlur = () => {
     console.log('Blurred Watchmen');
-  },
+  };
 
   render () {
     return (
@@ -29,4 +29,6 @@ export default React.createClass({
       </section>
     );
   }
-});
+}
+
+export default RadioGroupTest;

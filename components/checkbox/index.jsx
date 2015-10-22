@@ -1,15 +1,10 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Ripple from '../ripple';
-import style from './style';
 import events from '../utils/events';
+import style from './style';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Checkbox',
-
-  propTypes: {
+class Checkbox extends React.Component {
+  static propTypes = {
     checked: React.PropTypes.bool,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -18,45 +13,43 @@ export default React.createClass({
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func,
     onFocus: React.PropTypes.func
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      checked: false,
-      className: '',
-      disabled: false
-    };
-  },
+  static defaultProps = {
+    checked: false,
+    className: '',
+    disabled: false
+  };
 
-  getInitialState () {
-    return { checked: this.props.checked };
-  },
+  state = {
+    checked: this.props.checked
+  };
 
-  handleChange (event) {
+  handleChange = (event) => {
     this.setState({checked: !this.state.checked}, () => {
       if (this.props.onChange) this.props.onChange(event, this);
     });
-  },
+  };
 
-  handleClick (event) {
+  handleClick = (event) => {
     events.pauseEvent(event);
     if (!this.props.disabled) this.handleChange(event);
-  },
+  };
 
-  handleMouseDown (event) {
+  handleMouseDown = (event) => {
     if (!this.props.disabled) this.refs.ripple.start(event);
-  },
+  };
 
-  handleInputClick (event) {
+  handleInputClick = (event) => {
     events.pauseEvent(event);
-  },
+  };
 
   render () {
     let fieldClassName = style.field;
     let checkboxClassName = style.check;
+    if (this.state.checked) checkboxClassName += ` ${style.checked}`;
     if (this.props.disabled) fieldClassName += ` ${style.disabled}`;
     if (this.props.className) fieldClassName += ` ${this.props.className}`;
-    if (this.state.checked) checkboxClassName += ` ${style.checked}`;
 
     return (
       <label
@@ -68,8 +61,8 @@ export default React.createClass({
           {...this.props}
           ref='input'
           type='checkbox'
-          checked={this.state.checked}
           className={style.input}
+          checked={this.state.checked}
           onChange={this.handleChange}
           onClick={this.handleInputClick}
         />
@@ -79,21 +72,23 @@ export default React.createClass({
         { this.props.label ? <span role='label' className={style.text}>{this.props.label}</span> : null }
       </label>
     );
-  },
+  }
 
   blur () {
     this.refs.input.blur();
-  },
+  }
 
   focus () {
     this.refs.input.focus();
-  },
+  }
 
   getValue () {
     return this.state.checked;
-  },
+  }
 
   setValue (value) {
     this.setState({checked: value});
   }
-});
+}
+
+export default Checkbox;

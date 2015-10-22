@@ -1,31 +1,24 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Button from '../button';
 import style from './style';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Dialog',
-
-  propTypes: {
+class Dialog extends React.Component {
+  static propTypes = {
     actions: React.PropTypes.array,
     active: React.PropTypes.bool,
     className: React.PropTypes.string,
     title: React.PropTypes.string,
     type: React.PropTypes.string
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      actions: [],
-      type: 'normal'
-    };
-  },
+  static defaultProps = {
+    actions: [],
+    type: 'normal'
+  };
 
-  getInitialState () {
-    return { active: this.props.active };
-  },
+  state = {
+    active: this.props.active
+  };
 
   renderActions () {
     return this.props.actions.map((action, idx) => {
@@ -33,7 +26,7 @@ export default React.createClass({
       if (action.className) className += ` ${action.className}`;
       return <Button key={idx} {...action} className={className} />;
     });
-  },
+  }
 
   render () {
     let className = `${style.root} ${style[this.props.type]}`;
@@ -54,13 +47,15 @@ export default React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
   show () {
     this.setState({active: true});
-  },
+  }
 
   hide () {
     this.setState({active: false});
   }
-});
+}
+
+export default Dialog;

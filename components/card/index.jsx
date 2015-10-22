@@ -1,15 +1,10 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Navigation from '../navigation';
 import Ripple from '../ripple';
 import style from './style.scss';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Card',
-
-  propTypes: {
+class Card extends React.Component {
+  static propTypes = {
     className: React.PropTypes.string,
     color: React.PropTypes.string,
     image: React.PropTypes.string,
@@ -18,29 +13,21 @@ export default React.createClass({
     onClick: React.PropTypes.func,
     title: React.PropTypes.string,
     type: React.PropTypes.string
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      className: '',
-      loading: false,
-      type: 'default'
-    };
-  },
+  static defaultProps = {
+    className: '',
+    loading: false,
+    type: 'default'
+  };
 
-  getInitialState () {
-    return {
-      loading: this.props.loading
-    };
-  },
-
-  handleMouseDown (event) {
+  handleMouseDown = (event) => {
     if (this.props.onClick) {
       event.preventDefault();
       this.refs.ripple.start(event);
       this.props.onClick(event, this);
     }
-  },
+  };
 
   renderTitle () {
     let styleFigure = {}, styleOverflow = {};
@@ -59,7 +46,7 @@ export default React.createClass({
         </figure>
       );
     }
-  },
+  }
 
   renderActions () {
     if (this.props.actions) {
@@ -67,7 +54,7 @@ export default React.createClass({
         <Navigation className={style.navigation} actions={this.props.actions} />
       );
     }
-  },
+  }
 
   render () {
     let className = style.root;
@@ -75,7 +62,7 @@ export default React.createClass({
     if (this.props.onClick) className += ` ${style.touch}`;
     if (this.props.image || this.props.color) className += ` ${style.contrast}`;
     if (this.props.color) className += ` ${style.color}`;
-    if (this.state.loading) className += ` ${style.loading}`;
+    if (this.props.loading) className += ` ${style.loading}`;
     if (this.props.className) className += ` ${this.props.className}`;
 
     return (
@@ -90,14 +77,12 @@ export default React.createClass({
         <Ripple
           ref='ripple'
           className={style.ripple}
-          loading={this.state.loading}
+          loading={this.props.loading}
           spread={2.5}
         />
       </div>
     );
-  },
-
-  loading (value) {
-    this.setState({loading: value});
   }
-});
+}
+
+export default Card;

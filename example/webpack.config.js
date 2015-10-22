@@ -26,7 +26,7 @@ module.exports = {
   module: {
     noParse: [node_modules + '/react/dist/*.js'],
     loaders: [
-      { test: /(\.js|\.jsx)$/, exclude: /(node_modules)/, loader: 'babel?optional=runtime'},
+      { test: /(\.js|\.jsx)$/, exclude: /(node_modules)/, loader: 'babel?optional=runtime&stage=0&loose=all'},
       { test: /\.cjsx$/, loader: 'coffee-jsx-loader'},
       { test: /\.coffee$/, loader: 'coffee-jsx-loader'},
       { test: /\.styl$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!stylus-loader!')}

@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Ripple from '../ripple';
 import style from './style';
 
-function _selectValue (value, dataSource) {
+const _selectValue = (value, dataSource) => {
   let item;
   if (value) {
     for (item of dataSource) {
@@ -14,14 +13,10 @@ function _selectValue (value, dataSource) {
   } else {
     return dataSource[0];
   }
-}
+};
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Dropdown',
-
-  propTypes: {
+class Dropdown extends React.Component {
+  static propTypes = {
     className: React.PropTypes.string,
     dataSource: React.PropTypes.array,
     disabled: React.PropTypes.bool,
@@ -29,37 +24,33 @@ export default React.createClass({
     onChange: React.PropTypes.func,
     template: React.PropTypes.func,
     value: React.PropTypes.string
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      className: '',
-      dataSource: [],
-      up: false
-    };
-  },
+  static defaultProps = {
+    className: '',
+    dataSource: [],
+    up: false
+  };
 
-  getInitialState () {
-    return {
-      active: false,
-      selected: _selectValue(this.props.value, this.props.dataSource),
-      width: undefined
-    };
-  },
+  state = {
+    active: false,
+    selected: _selectValue(this.props.value, this.props.dataSource),
+    width: undefined
+  };
 
   componentDidMount () {
     this.setState({
       width: ReactDOM.findDOMNode(this).getBoundingClientRect().width
     });
-  },
+  }
 
   componentDidUpdate (prev_props, prev_state) {
     if (this.props.onChange && prev_state.selected !== this.state.selected && prev_state.active) {
       this.props.onChange(this);
     }
-  },
+  }
 
-  handleClick (event) {
+  handleClick = (event) => {
     let client = event.target.getBoundingClientRect();
     let screen_height = window.innerHeight || document.documentElement.offsetHeight;
 
@@ -67,22 +58,19 @@ export default React.createClass({
       active: true,
       up: client.top > ((screen_height / 2) + client.height)
     });
-  },
+  };
 
-  handleClickValue (id) {
+  handleClickValue = (id) => {
     if (!this.props.disabled) {
       let value = id.toString();
       for (let item of this.props.dataSource) {
         if (item.value.toString() === value) {
-          this.setState({
-            active: false,
-            selected: item
-          });
+          this.setState({active: false, selected: item});
           break;
         }
       }
     }
-  },
+  };
 
   renderValues () {
     let items = this.props.dataSource.map((item, index) => {
@@ -107,7 +95,7 @@ export default React.createClass({
     let valuesStyle = {width: this.state.width};
 
     return <ul ref='values' className={className} style={valuesStyle}>{ items }</ul>;
-  },
+  }
 
   render () {
     let className = style.root;
@@ -124,13 +112,15 @@ export default React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
   getValue () {
     return this.state.selected.value;
-  },
+  }
 
   setValue (data) {
     this.setState({selected: data});
   }
-});
+}
+
+export default Dropdown;

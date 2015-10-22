@@ -1,14 +1,9 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style.scss';
 import FontIcon from '../font_icon';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Input',
-
-  propTypes: {
+class Input extends React.Component {
+  static propTypes = {
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     error: React.PropTypes.string,
@@ -23,28 +18,26 @@ export default React.createClass({
     required: React.PropTypes.bool,
     type: React.PropTypes.string,
     value: React.PropTypes.any
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      className: '',
-      disabled: false,
-      floating: true,
-      multiline: false,
-      required: false,
-      type: 'text'
-    };
-  },
+  static defaultProps = {
+    className: '',
+    disabled: false,
+    floating: true,
+    multiline: false,
+    required: false,
+    type: 'text'
+  };
 
-  getInitialState () {
-    return { value: this.props.value };
-  },
+  state = {
+    value: this.props.value
+  };
 
-  onChange (event) {
+  onChange = (event) => {
     this.setState({value: event.target.value}, () => {
       if (this.props.onChange) this.props.onChange(event, this);
     });
-  },
+  };
 
   renderInput () {
     let className = style.input;
@@ -71,7 +64,7 @@ export default React.createClass({
           onChange={this.onChange} />
       );
     }
-  },
+  }
 
   render () {
     let className = style.root;
@@ -92,21 +85,23 @@ export default React.createClass({
         { this.props.error ? <span className={style.error}>{this.props.error}</span> : null }
       </div>
     );
-  },
+  }
 
   blur () {
     this.refs.input.blur();
-  },
+  }
 
   focus () {
     this.refs.input.focus();
-  },
+  }
 
   getValue () {
     return this.state.value;
-  },
+  }
 
   setValue (value) {
     this.setState({value: value});
   }
-});
+}
+
+export default Input;

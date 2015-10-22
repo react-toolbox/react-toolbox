@@ -1,11 +1,8 @@
 import React from 'react';
 import style from './style';
 
-export default React.createClass({
-
-  displayName: 'Tab',
-
-  propTypes: {
+class Tab extends React.Component {
+  static propTypes = {
     active: React.PropTypes.bool,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -13,21 +10,19 @@ export default React.createClass({
     label: React.PropTypes.string.isRequired,
     onActive: React.PropTypes.func,
     tabIndex: React.PropTypes.number
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      className: ''
-    };
-  },
+  static defaultProps = {
+    className: ''
+  };
 
   componentDidMount () {
     this.active(this.props.active);
-  },
+  }
 
   componentWillReceiveProps (next_props) {
     if (next_props.active) this.active(next_props.active);
-  },
+  }
 
   render () {
     let className = `${style.tab} ${this.props.className}`;
@@ -44,7 +39,7 @@ export default React.createClass({
         { this.props.children }
       </section>
     );
-  },
+  }
 
   active (value) {
     this.setState({active: value});
@@ -52,4 +47,6 @@ export default React.createClass({
       this.props.onActive(this);
     }
   }
-});
+}
+
+export default Tab;

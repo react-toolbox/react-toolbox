@@ -1,16 +1,14 @@
 import React from 'react';
 import { Menu, MenuItem, MenuDivider } from '../../components/menu';
 
-export default React.createClass({
-  displayName: 'MenuTest',
-
-  handleSelect (e, instance) {
+class MenuTest extends React.Component {
+  handleSelect = (e, instance) => {
     console.log('Menu selection changed!!, now its', instance.getValue());
-  },
+  };
 
-  handleItemClick () {
+  handleItemClick = () => {
     console.log('This item is so special that has a special handler');
-  },
+  };
 
   render () {
     return (
@@ -30,4 +28,6 @@ export default React.createClass({
       </section>
     );
   }
-});
+}
+
+export default MenuTest;

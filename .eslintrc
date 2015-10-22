@@ -1,4 +1,5 @@
 {
+  "parser": "babel-eslint",
   "env": {
     "browser": true,
     "node": true,
@@ -10,7 +11,7 @@
     "jsx": true,
     "templateStrings": true,
     "superInFunctions": false,
-    "classes": false,
+    "classes": true,
     "modules": [2]
   },
 

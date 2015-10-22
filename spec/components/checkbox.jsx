@@ -1,18 +1,18 @@
 import React from 'react';
 import Checkbox from '../../components/checkbox';
 
-export default React.createClass({
-  handleChange (event, instance) {
+class CheckboxTest extends React.Component {
+  handleChange = (event, instance) => {
     console.log('Changed!', instance.getValue());
-  },
+  };
 
-  handleFocus () {
+  handleFocus = () => {
     console.log('Focused');
-  },
+  };
 
-  handleBlur () {
+  handleBlur = () => {
     console.log('Blur');
-  },
+  };
 
   render () {
     return (
@@ -44,4 +44,6 @@ export default React.createClass({
       </section>
     );
   }
-});
+}
+
+export default CheckboxTest;

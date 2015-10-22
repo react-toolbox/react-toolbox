@@ -1,6 +1,4 @@
 import React from 'react';
-
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import style from './style';
 import Autocomplete from '../autocomplete';
 import Button from '../button';
@@ -13,12 +11,8 @@ import Slider from '../slider';
 import Switch from '../switch';
 import TimePicker from '../time_picker';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  displayName: 'Form',
-
-  propTypes: {
+class Form extends React.Component {
+  static propTypes = {
     attributes: React.PropTypes.array,
     className: React.PropTypes.string,
     onChange: React.PropTypes.func,
@@ -26,20 +20,16 @@ export default React.createClass({
     onSubmit: React.PropTypes.func,
     onValid: React.PropTypes.func,
     storage: React.PropTypes.string
-  },
+  };
 
-  getDefaultProps () {
-    return {
-      attributes: [],
-      className: ''
-    };
-  },
+  static defaultProps = {
+    attributes: [],
+    className: ''
+  };
 
-  getInitialState () {
-    return {
-      attributes: this.storage(this.props)
-    };
-  },
+  state = {
+    attributes: this.storage(this.props)
+  };
 
   componentWillReceiveProps (next_props) {
     if (next_props.attributes) {
@@ -47,16 +37,16 @@ export default React.createClass({
       this.setState({attributes: attributes});
       this.setValue(attributes.map((item) => { return item; }));
     }
-  },
+  }
 
-  onSubmit (event) {
+  onSubmit = (event) => {
     event.preventDefault();
     if (this.props.onSubmit) {
       this.props.onSubmit(event, this);
     }
-  },
+  };
 
-  onChange (event) {
+  onChange = (event) => {
     let is_valid = true;
     let value = this.getValue();
     for (let attr of this.state.attributes) {
@@ -78,7 +68,7 @@ export default React.createClass({
       if (this.refs.submit) this.refs.submit.getDOMNode().setAttribute('disabled', true);
       if (this.props.onError) this.props.onError(event, this);
     }
-  },
+  };
 
   render () {
     let className = `${style.root} ${this.props.className}`;
@@ -117,7 +107,7 @@ export default React.createClass({
         { this.props.children }
       </form>
     );
-  },
+  }
 
   storage (props, value) {
     let key = `react-toolbox-form-${props.storage}`;
@@ -137,7 +127,7 @@ export default React.createClass({
     }
 
     return props.attributes;
-  },
+  }
 
   getValue () {
     let value = {};
@@ -162,7 +152,7 @@ export default React.createClass({
     }
 
     return value;
-  },
+  }
 
   setValue (data = {}) {
     for (let field of data) {
@@ -171,4 +161,6 @@ export default React.createClass({
       }
     }
   }
-});
+}
+
+export default Form;
