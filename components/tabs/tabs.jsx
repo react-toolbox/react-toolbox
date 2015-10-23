@@ -19,25 +19,25 @@ class Tabs extends React.Component {
   };
 
   componentDidMount () {
-    this.setState({
-      pointer: this._pointerPosition(this.state.index, this.refs.navigation)
-    });
+    setTimeout(() => {
+      this.setState({pointer: this._pointerPosition(this.state.index)});
+    }, 20);
   }
 
   componentWillReceiveProps (next_props) {
     const index = next_props.index || this.state.index;
     this.setState({
-      index: index,
-      pointer: this._pointerPosition(index, this.refs.navigation)
+      index,
+      pointer: this._pointerPosition(index)
     });
   }
 
-  _pointerPosition (index = 0, navigation) {
+  _pointerPosition (index = 0) {
     const startPoint = this.refs.tabs.getBoundingClientRect().left;
-    const label = navigation.children[index].getBoundingClientRect();
+    const label = this.refs.navigation.children[index].getBoundingClientRect();
 
     return {
-      top: `${navigation.getBoundingClientRect().height}px`,
+      top: `${this.refs.navigation.getBoundingClientRect().height}px`,
       left: `${label.left - startPoint}px`,
       width: `${label.width}px`
     };
@@ -45,8 +45,8 @@ class Tabs extends React.Component {
 
   handleClick = (index) => {
     this.setState({
-      index: index,
-      pointer: this._pointerPosition(index, this.refs.navigation)
+      index,
+      pointer: this._pointerPosition(index)
     });
     if (this.props.onChange) this.props.onChange(this);
   };
@@ -58,10 +58,10 @@ class Tabs extends React.Component {
   }
 
   render () {
-    let labels = [];
+    const labels = [];
 
     const tabs = this.props.children.map((tab, index) => {
-      let active = this.state.index === index;
+      const active = this.state.index === index;
       let className = `${style.label} ${tab.props.className}`;
 
       if (active) className += ` ${style.active}`;
@@ -69,13 +69,13 @@ class Tabs extends React.Component {
       if (tab.props.hidden) className += ` ${style.hidden}`;
 
       labels.push({
-        className: className,
+        className,
         label: tab.props.label,
         key: index,
         onClick: !tab.props.disabled ? this.handleClick.bind(this, index) : null
       });
 
-      return React.cloneElement(tab, {active: active, key: index, tabIndex: index });
+      return React.cloneElement(tab, { active, key: index, tabIndex: index });
     });
 
     let className = style.root;

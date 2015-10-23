@@ -138,8 +138,8 @@ class Slider extends React.Component {
   }
 
   positionToValue (position) {
-    let { sliderStart: start, sliderLength: length } = this.state;
-    let { max, min } = this.props;
+    const { sliderStart: start, sliderLength: length } = this.state;
+    const { max, min } = this.props;
     return this.trimValue((position.x - start) / length * (max - min) + min);
   }
 
@@ -163,7 +163,7 @@ class Slider extends React.Component {
   }
 
   knobOffset () {
-    let { max, min } = this.props;
+    const { max, min } = this.props;
     return this.state.sliderLength * (this.state.value - min) / (max - min);
   }
 
@@ -194,7 +194,7 @@ class Slider extends React.Component {
   }
 
   render () {
-    let knobStyles = utils.prefixer({transform: `translateX(${this.knobOffset()}px)`});
+    const knobStyles = utils.prefixer({transform: `translateX(${this.knobOffset()}px)`});
     let className = this.props.className;
     if (this.props.editable) className += ` ${style.editable}`;
     if (this.props.pinned) className += ` ${style.pinned}`;
@@ -246,7 +246,7 @@ class Slider extends React.Component {
   }
 
   setValue (value) {
-    this.setState({value: value});
+    this.setState({value});
   }
 }
 

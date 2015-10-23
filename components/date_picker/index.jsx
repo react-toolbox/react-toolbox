@@ -26,7 +26,7 @@ class DatePicker extends React.Component {
 
   handleDateSelected = (value) => {
     this.refs.input.setValue(this.formatDate(value));
-    this.setState({value: value});
+    this.setState({value});
   };
 
   formatDate (date) {
@@ -59,7 +59,7 @@ class DatePicker extends React.Component {
   }
 
   setValue (value) {
-    this.setState({value: value});
+    this.setState({value});
   }
 }
 

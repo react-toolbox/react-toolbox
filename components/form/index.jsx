@@ -33,8 +33,8 @@ class Form extends React.Component {
 
   componentWillReceiveProps (next_props) {
     if (next_props.attributes) {
-      let attributes = this.storage(next_props);
-      this.setState({attributes: attributes});
+      const attributes = this.storage(next_props);
+      this.setState({attributes});
       this.setValue(attributes.map((item) => { return item; }));
     }
   }
@@ -48,8 +48,8 @@ class Form extends React.Component {
 
   onChange = (event) => {
     let is_valid = true;
-    let value = this.getValue();
-    for (let attr of this.state.attributes) {
+    const value = this.getValue();
+    for (const attr of this.state.attributes) {
       if (attr.required && value[attr.ref] !== undefined && value[attr.ref].trim() === '') {
         is_valid = false;
         console.log('NOT VALUD');
@@ -71,7 +71,7 @@ class Form extends React.Component {
   };
 
   render () {
-    let className = `${style.root} ${this.props.className}`;
+    const className = `${style.root} ${this.props.className}`;
     const attributes = this.state.attributes.map((attribute, index) => {
       if (attribute.type === 'autocomplete') {
         return <Autocomplete key={index} {...attribute} onChange={this.onChange}/>;
@@ -110,16 +110,16 @@ class Form extends React.Component {
   }
 
   storage (props, value) {
-    let key = `react-toolbox-form-${props.storage}`;
+    const key = `react-toolbox-form-${props.storage}`;
     if (value) {
-      let store = {};
-      for (let attr of props.attributes) {
+      const store = {};
+      for (const attr of props.attributes) {
         if (attr.storage) store[attr.ref] = value[attr.ref];
       }
       window.localStorage.setItem(key, JSON.stringify(store));
     } else if (props.storage) {
-      let store = JSON.parse(window.localStorage.getItem(key) || {});
-      for (let input of props.attributes) {
+      const store = JSON.parse(window.localStorage.getItem(key) || {});
+      for (const input of props.attributes) {
         if (store && store[input.ref]) {
           input.value = store[input.ref];
         }
@@ -130,15 +130,15 @@ class Form extends React.Component {
   }
 
   getValue () {
-    let value = {};
-    for (let ref of Object.keys(this.refs)) {
-      let el = this.refs[ref];
+    const value = {};
+    for (const ref of Object.keys(this.refs)) {
+      const el = this.refs[ref];
       if (el.getValue) {
         if (ref.indexOf('.') === -1) {
           value[ref] = el.getValue();
         } else {
           let parent = value;
-          let hierarchy = ref.split('.');
+          const hierarchy = ref.split('.');
           hierarchy.forEach((attr, index) => {
             if (index === hierarchy.length - 1) {
               parent[attr] = el.getValue();
@@ -155,7 +155,7 @@ class Form extends React.Component {
   }
 
   setValue (data = {}) {
-    for (let field of data) {
+    for (const field of data) {
       if (this.refs[field.ref].setValue) {
         this.refs[field.ref].setValue(field.value);
       }

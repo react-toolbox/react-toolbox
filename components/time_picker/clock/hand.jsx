@@ -67,8 +67,8 @@ class Hand extends React.Component {
   }
 
   getPositionRadius (position) {
-    let x = this.props.origin.x - position.x;
-    let y = this.props.origin.y - position.y;
+    const x = this.props.origin.x - position.x;
+    const y = this.props.origin.y - position.y;
     return Math.sqrt(x * x + y * y);
   }
 
@@ -86,14 +86,14 @@ class Hand extends React.Component {
   }
 
   move (position) {
-    let degrees = this.trimAngleToValue(this.positionToAngle(position));
-    let radius = this.getPositionRadius(position);
+    const degrees = this.trimAngleToValue(this.positionToAngle(position));
+    const radius = this.getPositionRadius(position);
     if (this.props.onMove) this.props.onMove(degrees === 360 ? 0 : degrees, radius);
   }
 
   render () {
     const className = `${style.hand} ${this.props.className}`;
-    let handStyle = utils.prefixer({
+    const handStyle = utils.prefixer({
       height: this.props.length - this.state.knobWidth / 2,
       transform: `rotate(${this.props.angle}deg)`
     });

@@ -29,8 +29,8 @@ class Ripple extends React.Component {
     document.addEventListener('mouseup', this.handleEnd);
     const {top, left, width} = this._getDescriptor(pageX, pageY);
     this.setState({active: false, restarting: true, width: 0}, () => {
-      this.refs.ripple.offsetWidth; //eslint-disable-line no-unused-expressions
-      this.setState({active: true, restarting: false, top: top, left: left, width: width});
+      this.refs.ripple.offsetWidth;  //eslint-disable-line no-unused-expressions
+      this.setState({active: true, restarting: false, top, left, width});
     });
   };
 
@@ -40,7 +40,7 @@ class Ripple extends React.Component {
   };
 
   _getDescriptor (pageX, pageY) {
-    let { left, top, height, width } = ReactDOM.findDOMNode(this).getBoundingClientRect();
+    const { left, top, height, width } = ReactDOM.findDOMNode(this).getBoundingClientRect();
     return {
       left: this.props.centered ? width / 2 : pageX - left,
       top: this.props.centered ? height / 2 : pageY - top,
@@ -49,8 +49,8 @@ class Ripple extends React.Component {
   }
 
   render () {
-    let { left, top, width } = this.state;
-    let rippleStyle = {left: left, top: top, width: width, height: width};
+    const { left, top, width } = this.state;
+    const rippleStyle = {left, top, width, height: width};
     let className = style[this.props.loading ? 'loading' : 'normal'];
     if (this.state.active) className += ` ${style.active}`;
     if (this.state.restarting) className += ` ${style.restarting}`;

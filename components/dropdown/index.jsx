@@ -51,8 +51,8 @@ class Dropdown extends React.Component {
   }
 
   handleClick = (event) => {
-    let client = event.target.getBoundingClientRect();
-    let screen_height = window.innerHeight || document.documentElement.offsetHeight;
+    const client = event.target.getBoundingClientRect();
+    const screen_height = window.innerHeight || document.documentElement.offsetHeight;
 
     this.setState({
       active: true,
@@ -62,8 +62,8 @@ class Dropdown extends React.Component {
 
   handleClickValue = (id) => {
     if (!this.props.disabled) {
-      let value = id.toString();
-      for (let item of this.props.dataSource) {
+      const value = id.toString();
+      for (const item of this.props.dataSource) {
         if (item.value.toString() === value) {
           this.setState({active: false, selected: item});
           break;
@@ -73,7 +73,7 @@ class Dropdown extends React.Component {
   };
 
   renderValues () {
-    let items = this.props.dataSource.map((item, index) => {
+    const items = this.props.dataSource.map((item, index) => {
       let className;
       if (item.value === this.state.selected.value) className = ` ${style.selected}`;
 
@@ -92,7 +92,7 @@ class Dropdown extends React.Component {
 
     let className = style.values;
     if (this.state.up) className += ` ${style.up}`;
-    let valuesStyle = {width: this.state.width};
+    const valuesStyle = {width: this.state.width};
 
     return <ul ref='values' className={className} style={valuesStyle}>{ items }</ul>;
   }

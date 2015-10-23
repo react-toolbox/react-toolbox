@@ -43,7 +43,7 @@ class RadioButton extends React.Component {
 
   render () {
     let labelClassName = style[this.props.disabled ? 'disabled' : 'field'];
-    let radioClassName = style[this.props.checked ? 'radio-checked' : 'radio'];
+    const radioClassName = style[this.props.checked ? 'radio-checked' : 'radio'];
     if (this.props.className) labelClassName += ` ${this.props.className}`;
 
     return (

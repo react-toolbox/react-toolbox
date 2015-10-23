@@ -24,7 +24,7 @@ class CalendarDialog extends React.Component {
   };
 
   handleCalendarChange = (date) => {
-    this.setState({date: date, display: 'months'});
+    this.setState({date, display: 'months'});
   };
 
   displayMonths = () => {

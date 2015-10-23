@@ -30,7 +30,8 @@ class Card extends React.Component {
   };
 
   renderTitle () {
-    let styleFigure = {}, styleOverflow = {};
+    const styleFigure = {};
+    const styleOverflow = {};
     if (this.props.image) styleFigure.backgroundImage = `url(${this.props.image})`;
     if (this.props.color) {
       styleFigure.backgroundColor = this.props.color;

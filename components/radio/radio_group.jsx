@@ -20,7 +20,7 @@ class RadioGroup extends React.Component {
   };
 
   handleChange = (value, event) => {
-    this.setState({value: value}, () => {
+    this.setState({ value }, () => {
       if (this.props.onChange) this.props.onChange(event, this);
     });
   };
@@ -54,7 +54,7 @@ class RadioGroup extends React.Component {
   }
 
   setValue (value) {
-    this.setState({value: value});
+    this.setState({ value });
   }
 }
 

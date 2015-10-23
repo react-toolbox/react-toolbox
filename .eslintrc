@@ -1,5 +1,4 @@
 {
-  "parser": "babel-eslint",
   "env": {
     "browser": true,
     "node": true,
@@ -12,8 +11,10 @@
     "templateStrings": true,
     "superInFunctions": false,
     "classes": true,
-    "modules": [2]
+    "modules": true
   },
+
+  "parser": "babel-eslint",
 
   "plugins": [
     "react"
@@ -29,6 +30,7 @@
     "comma-spacing": [2],
     "comma-style": [2, "last"],
     "complexity": [0, 11],
+    "constructor-super": [2],
     "consistent-return": [2],
     "consistent-this": [0, "that"],
     "curly": [2, "multi-line"],
@@ -140,6 +142,7 @@
     "no-sparse-arrays": [2],
     "no-sync": [0],
     "no-ternary": [0],
+    "no-this-before-super": [2],
     "no-throw-literal": [2],
     "no-trailing-spaces": [2],
     "no-undef": [2],
@@ -152,7 +155,8 @@
       "vars": "all",
       "args": "after-used"
     }],
-    "no-use-before-define": [2],
+    "no-use-before-define": [2, "nofunc"],
+    "no-var": [2],
     "no-void": [0],
     "no-warning-comments": [0, {
       "terms": ["todo", "fixme", "xxx"],
@@ -163,6 +167,7 @@
     "operator-assignment": [0, "always"],
     "operator-linebreak": [2, "after"],
     "padded-blocks": [0],
+    "prefer-const": [2],
     "quote-props": [0],
     "radix": [0],
     "semi": [2],
