@@ -1,4 +1,5 @@
 import React from 'react';
+import '../components/commons';
 import Autocomplete from './components/autocomplete';
 import Button from './components/button';
 import Card from './components/card';
