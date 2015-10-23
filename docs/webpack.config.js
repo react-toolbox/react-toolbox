@@ -1,13 +1,23 @@
-var pkg = require('./package.json');
-var path = require('path');
-var node_modules = __dirname + '/node_modules';
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var environment = process.env.NODE_ENV;
+const path = require('path');
+const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
+const devServer = 'http://0.0.0.0:3000';
 
 module.exports = {
-  cache: true,
+  context: __dirname,
+  devtool: '#eval-source-map',
+  entry: [
+    'webpack-dev-server/client?' + devServer,
+    'webpack/hot/only-dev-server',
+    './app/index.jsx'
+  ],
+  output: {
+    path: path.join(__dirname, 'build'),
+    filename: 'docs.js',
+    publicPath: '/build/'
+  },
   resolve: {
-    extensions: ['', '.jsx', '.scss', '.css', '.js', '.json'],
+    extensions: ['', '.jsx', '.scss', '.js', '.json'],
     alias: {
       'react-toolbox': path.resolve(__dirname + './../components')
     },
@@ -18,27 +28,24 @@ module.exports = {
       path.resolve(__dirname, './../node_modules')
     ]
   },
-  context: __dirname,
-  entry: {
-    commons: [path.resolve(__dirname, './../components/commons')],
-    test: ['webpack/hot/dev-server', './app/index.jsx']
-  },
-  output: {
-    path: environment === 'production' ? './dist' : './build',
-    filename: pkg.name + '.[name].js',
-    publicPath: '/build/'
-  },
-  devServer: {
-    host: '0.0.0.0',
-    port: 3000,
-    inline: true
-  },
   module: {
     loaders: [
-      { test: /(\.js|\.jsx)$/, exclude: [node_modules], loaders: ['babel'] },
-      { test: /(\.scss|\.css)$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!sass') }
+      {
+        test: /(\.js|\.jsx)$/,
+        exclude: /(node_modules)/,
+        loader: 'react-hot!babel'
+      }, {
+        test: /(\.scss|\.css)$/,
+        loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass'
+      }
     ]
   },
-  postcss: [require('autoprefixer-core')],
-  plugins: [new ExtractTextPlugin(pkg.name + '.[name].css', {allChunks: true})]
+  postcss: [autoprefixer],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('development')
+    })
+  ]
 };
