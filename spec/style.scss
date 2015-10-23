@@ -1,0 +1,16 @@
+.app {
+  padding: 1.6rem;
+  > h1, > h3 {
+    line-height: 100%;
+  }
+  h5 {
+    margin-top: 3.2rem;
+  }
+  p {
+    margin-bottom: 1rem;
+  }
+  [data-react-toolbox='card'] {
+    display: inline-block;
+    margin: 1.6rem 1.6rem 0 0;
+  }
+}

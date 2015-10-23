@@ -1,5 +1,6 @@
+/*eslint-disable no-unused-vars*/
 import React from 'react';
-import '../components/commons';
+import commons from '../components/commons';
 import Autocomplete from './components/autocomplete';
 import Button from './components/button';
 import Card from './components/card';
@@ -18,10 +19,11 @@ import Snackbar from './components/snackbar';
 import Slider from './components/slider';
 import Switch from './components/switch';
 import Tabs from './components/tabs';
+import style from './style';
 
 const App = () => {
-  return(
-    <app data-react-toolbox-app>
+  return (
+    <app className={`${commons.app} ${style.app}`}>
       <h1>React Toolbox</h1>
       <h3>Component Spec v0.10.20</h3>
 

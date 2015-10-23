@@ -29,7 +29,7 @@ class Ripple extends React.Component {
     document.addEventListener('mouseup', this.handleEnd);
     const {top, left, width} = this._getDescriptor(pageX, pageY);
     this.setState({active: false, restarting: true, width: 0}, () => {
-      this.refs.ripple.offsetWidth;
+      this.refs.ripple.offsetWidth;  //eslint-disable-line no-unused-expressions
       this.setState({active: true, restarting: false, top, left, width});
     });
   };
@@ -49,8 +49,8 @@ class Ripple extends React.Component {
   }
 
   render () {
-    const { left, top, width, height} = this.state;
-    const rippleStyle = {left, top, width, height};
+    const { left, top, width } = this.state;
+    const rippleStyle = {left, top, width, height: width};
     let className = style[this.props.loading ? 'loading' : 'normal'];
     if (this.state.active) className += ` ${style.active}`;
     if (this.state.restarting) className += ` ${style.restarting}`;

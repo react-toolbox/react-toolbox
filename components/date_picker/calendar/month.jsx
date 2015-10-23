@@ -38,8 +38,7 @@ class Month extends React.Component {
     return (
       <div className={style.month}>
         <span className={style.title}>
-          { utils.time.getFullMonth(this.props.viewDate)}
-          { this.props.viewDate.getFullYear() }
+          { utils.time.getFullMonth(this.props.viewDate)} { this.props.viewDate.getFullYear() }
         </span>
         <div className={style.week}>{ this.renderWeeks() }</div>
         <div className={style.days}>{ this.renderDays() }</div>

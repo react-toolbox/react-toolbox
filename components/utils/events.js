@@ -40,6 +40,6 @@ module.exports = {
       node = node.parentNode;
     }
     return false;
-  },
+  }
 
 };

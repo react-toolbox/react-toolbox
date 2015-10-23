@@ -19,25 +19,25 @@ class Tabs extends React.Component {
   };
 
   componentDidMount () {
-    this.setState({
-      pointer: this._pointerPosition(this.state.index, this.refs.navigation)
-    });
+    setTimeout(() => {
+      this.setState({pointer: this._pointerPosition(this.state.index)});
+    }, 20);
   }
 
   componentWillReceiveProps (next_props) {
     const index = next_props.index || this.state.index;
     this.setState({
       index,
-      pointer: this._pointerPosition(index, this.refs.navigation)
+      pointer: this._pointerPosition(index)
     });
   }
 
-  _pointerPosition (index = 0, navigation) {
+  _pointerPosition (index = 0) {
     const startPoint = this.refs.tabs.getBoundingClientRect().left;
-    const label = navigation.children[index].getBoundingClientRect();
+    const label = this.refs.navigation.children[index].getBoundingClientRect();
 
     return {
-      top: `${navigation.getBoundingClientRect().height}px`,
+      top: `${this.refs.navigation.getBoundingClientRect().height}px`,
       left: `${label.left - startPoint}px`,
       width: `${label.width}px`
     };
@@ -46,7 +46,7 @@ class Tabs extends React.Component {
   handleClick = (index) => {
     this.setState({
       index,
-      pointer: this._pointerPosition(index, this.refs.navigation)
+      pointer: this._pointerPosition(index)
     });
     if (this.props.onChange) this.props.onChange(this);
   };

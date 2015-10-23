@@ -1,6 +1,4 @@
-'use strict';
-
-const webpack = require('webpack')
+const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {

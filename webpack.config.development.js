@@ -1,9 +1,6 @@
-'use strict';
-
-const path = require('path')
-const webpack = require('webpack')
+const path = require('path');
+const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
-
 const devServer = 'http://0.0.0.0:8080';
 
 module.exports = {
@@ -16,7 +13,7 @@ module.exports = {
   ],
   output: {
     path: path.join(__dirname, 'build'),
-    filename: 'index.js',
+    filename: 'spec.js',
     publicPath: '/build/'
   },
   resolve: {
