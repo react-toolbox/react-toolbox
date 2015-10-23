@@ -71,6 +71,7 @@
     "react-addons-test-utils": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-hot-loader": "^1.3.0",
+    "rimraf": "^2.4.3",
     "sass-loader": "^2.0.1",
     "sinon": "git://github.com/cjohansen/Sinon.JS#sinon-2.0",
     "style-loader": "^0.12.3",
