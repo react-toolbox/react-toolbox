@@ -49,7 +49,7 @@ class Ripple extends React.Component {
   }
 
   render () {
-    const { left, top, width } = this.state;
+    const { left, top, width, height} = this.state;
     const rippleStyle = {left, top, width, height};
     let className = style[this.props.loading ? 'loading' : 'normal'];
     if (this.state.active) className += ` ${style.active}`;
