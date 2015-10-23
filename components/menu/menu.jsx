@@ -44,13 +44,13 @@ class Menu extends React.Component {
   componentDidMount () {
     const { width, height } = this.refs.menu.getBoundingClientRect();
     const position = this.props.position === POSITION.AUTO ? this.calculatePosition() : this.props.position;
-    this.setState({position: position, width: width, height: height});
+    this.setState({ position, width, height });
   }
 
   componentWillReceiveProps (nextProps) {
     if (this.props.position !== nextProps.position) {
       const position = nextProps.position === POSITION.AUTO ? this.calculatePosition() : nextProps.position;
-      this.setState({ position: position });
+      this.setState({ position });
     }
   }
 
@@ -58,7 +58,7 @@ class Menu extends React.Component {
     if (!this.state.active && nextState.active && this.props.position === POSITION.AUTO) {
       const position = this.calculatePosition();
       if (this.state.position !== position) {
-        this.setState({position: position, active: false}, () => {
+        this.setState({ position, active: false }, () => {
           setTimeout(() => {this.setState({active: true}); }, 20);
         });
         return false;
@@ -89,8 +89,8 @@ class Menu extends React.Component {
   };
 
   handleSelect = (item) => {
-    let { value, onClick } = item.props;
-    this.setState({value: value, active: false, rippled: this.props.ripple}, () => {
+    const { value, onClick } = item.props;
+    this.setState({ value, active: false, rippled: this.props.ripple }, () => {
       if (onClick) onClick();
       if (this.props.onSelect) this.props.onSelect(value, this);
     });

@@ -1,10 +1,9 @@
-/*eslint-disable no-unused-vars*/
 import React from 'react';
 import DatePicker from '../../components/date_picker';
 import TimePicker from '../../components/time_picker';
 
 const PickersTest = () => {
-  let datetime = new Date(1995, 11, 17);
+  const datetime = new Date(1995, 11, 17);
   datetime.setHours(17);
   datetime.setMinutes(28);
 

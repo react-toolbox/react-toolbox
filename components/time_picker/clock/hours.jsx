@@ -21,7 +21,7 @@ class Hours extends React.Component {
   };
 
   handleHandMove = (degrees, radius) => {
-    let currentInner = radius < this.props.radius - this.props.spacing * innerSpacing;
+    const currentInner = radius < this.props.radius - this.props.spacing * innerSpacing;
     if (this.props.format === '24hr' && this.state.inner !== currentInner) {
       this.setState({inner: currentInner}, () => {
         this.props.onChange(this.valueFromDegrees(degrees));

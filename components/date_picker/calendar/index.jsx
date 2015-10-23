@@ -39,13 +39,13 @@ class Calendar extends React.Component {
   }
 
   handleDayClick = (day) => {
-    let newDate = utils.time.setDay(this.state.viewDate, day);
+    const newDate = utils.time.setDay(this.state.viewDate, day);
     this.setState({selectedDate: newDate});
     if (this.props.onChange) this.props.onChange(newDate);
   };
 
   handleYearClick = (year) => {
-    let newDate = utils.time.setYear(this.state.selectedDate, year);
+    const newDate = utils.time.setYear(this.state.selectedDate, year);
     this.setState({selectedDate: newDate, viewDate: newDate});
     if (this.props.onChange) this.props.onChange(newDate);
   };
@@ -67,7 +67,7 @@ class Calendar extends React.Component {
   };
 
   renderYear (year) {
-    let props = {
+    const props = {
       className: year === this.state.viewDate.getFullYear() ? style.active : '',
       key: year,
       onClick: this.handleYearClick.bind(this, year)
@@ -89,7 +89,7 @@ class Calendar extends React.Component {
   }
 
   renderMonths () {
-    let animation = this.state.direction === 'left' ? SlideLeft : SlideRight;
+    const animation = this.state.direction === 'left' ? SlideLeft : SlideRight;
     return (
       <div data-react-toolbox='calendar'>
         <FontIcon className={style.prev} value='chevron-left' onMouseDown={this.decrementViewMonth}>

@@ -1,7 +1,7 @@
-var pkg = require('./package.json');
-var node_modules = __dirname + '/node_modules';
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var environment = process.env.NODE_ENV;
+const pkg = require('./package.json');
+const node_modules = __dirname + '/node_modules';
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const environment = process.env.NODE_ENV;
 
 module.exports = {
   cache: true,

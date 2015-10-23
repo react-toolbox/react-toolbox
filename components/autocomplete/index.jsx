@@ -52,7 +52,7 @@ class Autocomplete extends React.Component {
   handleQueryChange = () => {
     const query = this.refs.input.getValue();
     if (this.state.query !== query) {
-      this.setState({query: query});
+      this.setState({query});
     }
   };
 
@@ -71,8 +71,8 @@ class Autocomplete extends React.Component {
   };
 
   handleFocus = () => {
-    let client = event.target.getBoundingClientRect();
-    let screen_height = window.innerHeight || document.documentElement.offsetHeight;
+    const client = event.target.getBoundingClientRect();
+    const screen_height = window.innerHeight || document.documentElement.offsetHeight;
 
     this.refs.suggestions.scrollTop = 0;
     this.setState({
@@ -126,7 +126,7 @@ class Autocomplete extends React.Component {
 
     let suggestionsClassName = style.suggestions;
     if (this.state.up) suggestionsClassName += ` ${style.up}`;
-    let suggestionsStyle = {width: this.state.width};
+    const suggestionsStyle = {width: this.state.width};
 
     return (
       <div data-react-toolbox='autocomplete' className={className}>
@@ -164,9 +164,9 @@ class Autocomplete extends React.Component {
   }
 
   _getSuggestions () {
-    let query = this.state.query.toLowerCase().trim() || '';
-    let suggestions = new Map();
-    for (let [key, value] of this.state.dataSource) {
+    const query = this.state.query.toLowerCase().trim() || '';
+    const suggestions = new Map();
+    for (const [key, value] of this.state.dataSource) {
       if (!this.state.values.has(key) && value.toLowerCase().trim().startsWith(query)) {
         suggestions.set(key, value);
       }
@@ -175,14 +175,15 @@ class Autocomplete extends React.Component {
   }
 
   _selectOption (key) {
-    let { values, dataSource } = this.state;
-    let query = !this.props.multiple ? dataSource.get(key) : '';
+    const { dataSource } = this.state;
+    let { values } = this.state;
+    const query = !this.props.multiple ? dataSource.get(key) : '';
     values = new Map(values);
 
     if (!this.props.multiple) values.clear();
     values.set(key, dataSource.get(key));
 
-    this.setState({focus: false, query: query, values: values}, () => {
+    this.setState({focus: false, query, values}, () => {
       this.refs.input.blur();
       if (this.props.onChange) this.props.onChange(this);
     });
@@ -190,26 +191,26 @@ class Autocomplete extends React.Component {
 
   _unselectOption (key) {
     if (key) {
-      let values = new Map(this.state.values);
+      const values = new Map(this.state.values);
       values.delete(key);
-      this.setState({focus: false, values: values}, () => {
+      this.setState({focus: false, values}, () => {
         if (this.props.onChange) this.props.onChange(this);
       });
     }
   }
 
   getValue () {
-    let values = [...this.state.values.keys()];
+    const values = [...this.state.values.keys()];
     return this.props.multiple ? values : (values.length > 0 ? values[0] : null);
   }
 
   setValue (dataParam = []) {
-    let values = new Map();
-    let data = (typeof dataParam === 'string') ? [dataParam] : dataParam;
-    for (let [key, value] of this.state.dataSource) {
+    const values = new Map();
+    const data = (typeof dataParam === 'string') ? [dataParam] : dataParam;
+    for (const [key, value] of this.state.dataSource) {
       if (data.indexOf(key) !== -1) values.set(key, value);
     }
-    this.setState({values: values, query: this.props.multiple ? '' : values.get(data[0])});
+    this.setState({values, query: this.props.multiple ? '' : values.get(data[0])});
   }
 
   setError (data) {
