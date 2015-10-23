@@ -24,6 +24,7 @@
       "$variable",
       "$extend",
       "$include",
+      "composes",
       "position",
       "top",
       "right",

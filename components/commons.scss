@@ -1,8 +1,17 @@
 @import url('http://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
-@import "normalize.css";
+@import "~normalize.css";
 @import "./base";
 
 //-- App
+.app {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
 html {
   font-size: 62.5%;
 }
@@ -60,16 +69,6 @@ input:not([type="checkbox"]):not([type="radio"]), button {
   appearance: none;
   -webkit-touch-callout: none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-}
-
-//-- App wrapper to allow overlays to block scroll
-[data-react-toolbox-app] {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow-y: scroll;
 }
 
 // -- Material design font sizes

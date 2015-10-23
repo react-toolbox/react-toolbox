@@ -52,7 +52,7 @@ class Clock extends React.Component {
   };
 
   handleCalculateShape = () => {
-    let { top, left, width } = this.refs.wrapper.getBoundingClientRect();
+    const { top, left, width } = this.refs.wrapper.getBoundingClientRect();
     this.setState({
       center: { x: left + width / 2, y: top + width / 2 },
       radius: width / 2

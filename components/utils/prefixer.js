@@ -19,7 +19,7 @@ function getPrefixes (property, value) {
 function prefixer (style) {
   let _style = style;
 
-  for (let property in properties) {
+  for (const property in properties) {
     if (style[property]) {
       _style = Object.assign(_style, getPrefixes(property, style[property]));
     }

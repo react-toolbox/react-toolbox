@@ -46,7 +46,7 @@ class Switch extends React.Component {
 
   render () {
     let labelClassName = style[this.props.disabled ? 'disabled' : 'field'];
-    let switchClassName = style[this.state.checked ? 'switch-on' : 'switch-off'];
+    const switchClassName = style[this.state.checked ? 'switch-on' : 'switch-off'];
     if (this.props.className) labelClassName += ` ${this.props.className}`;
 
     return (

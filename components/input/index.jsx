@@ -100,7 +100,7 @@ class Input extends React.Component {
   }
 
   setValue (value) {
-    this.setState({value: value});
+    this.setState({value});
   }
 }
 

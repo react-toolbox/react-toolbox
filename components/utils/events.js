@@ -22,13 +22,13 @@ module.exports = {
   },
 
   addEventsToDocument (eventMap) {
-    for (let key in eventMap) {
+    for (const key in eventMap) {
       document.addEventListener(key, eventMap[key], false);
     }
   },
 
   removeEventsFromDocument (eventMap) {
-    for (let key in eventMap) {
+    for (const key in eventMap) {
       document.removeEventListener(key, eventMap[key], false);
     }
   },
@@ -40,6 +40,6 @@ module.exports = {
       node = node.parentNode;
     }
     return false;
-  },
+  }
 
 };

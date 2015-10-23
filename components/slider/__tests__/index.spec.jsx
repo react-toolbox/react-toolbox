@@ -157,7 +157,7 @@ describe('Slider', function () {
     });
 
     it('calls onChange callback when the value is changed', function () {
-      let onChangeSpy = sinon.spy();
+      const onChangeSpy = sinon.spy();
       slider = utils.renderComponent(Slider, {onChange: onChangeSpy}, {sliderStart: 0, sliderLength: 1000});
       TestUtils.Simulate.mouseDown(slider.refs.slider, { pageX: 900 });
       expect(onChangeSpy.called).toEqual(true);

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   Autocomplete: require('./autocomplete'),
   Button: require('./button'),
   Card: require('./card'),
