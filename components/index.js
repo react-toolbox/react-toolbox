@@ -1,33 +1,37 @@
-export default {
-  Autocomplete: require('./autocomplete'),
-  Button: require('./button'),
-  Card: require('./card'),
-  Checkbox: require('./checkbox'),
-  DatePicker: require('./date_picker'),
-  Dialog: require('./dialog'),
-  Drawer: require('./drawer'),
-  Dropdown: require('./dropdown'),
-  FontIcon: require('./font_icon'),
-  Form: require('./form'),
-  Input: require('./input'),
-  Link: require('./link'),
-  List: require('./list/list'),
-  ListItem: require('./list/item'),
-  ListDivider: require('./list/divider'),
-  ListCheckbox: require('./list/checkbox'),
-  ListSubHeader: require('./list/subheader'),
-  Menu: require('./menu/menu'),
-  MenuItem: require('./menu/menu_item'),
-  MenuDivider: require('./menu/menu_divider'),
-  IconMenu: require('./menu/icon_menu'),
-  Navigation: require('./navigation'),
-  ProgressBar: require('./progress_bar'),
-  RadioGroup: require('./radio/radio_button'),
-  RadioButton: require('./radio/radio_group'),
-  Ripple: require('./ripple'),
-  Slider: require('./slider'),
-  Switch: require('./switch'),
-  Tab: require('./tabs/tab'),
-  Tabs: require('./tabs/tabs'),
-  TimePicker: require('./time_picker')
-};
+import Autocomplete from './autocomplete';
+import Button from './button';
+import Card from './card';
+import Checkbox from './checkbox';
+import DatePicker from './date_picker';
+import Dialog from './dialog';
+import Drawer from './drawer';
+import Dropdown from './dropdown';
+import FontIcon from './font_icon';
+import Form from './form';
+import Input from './input';
+import Link from './link';
+import List from './list/list';
+import ListItem from './list/item';
+import ListDivider from './list/divider';
+import ListCheckbox from './list/checkbox';
+import ListSubHeader from './list/subheader';
+import Menu from './menu/menu';
+import MenuItem from './menu/menu_item';
+import MenuDivider from './menu/menu_divider';
+import IconMenu from './menu/icon_menu';
+import Navigation from './navigation';
+import ProgressBar from './progress_bar';
+import RadioGroup from './radio/radio_button';
+import RadioButton from './radio/radio_group';
+import Ripple from './ripple';
+import Slider from './slider';
+import Switch from './switch';
+import Tab from './tabs/tab';
+import Tabs from './tabs/tabs';
+import TimePicker from './time_picker';
+
+export default { Autocomplete, Button, Card, Checkbox, DatePicker, Dialog,
+  Drawer, Dropdown, FontIcon, Form, Input, Link, List, ListItem, ListDivider,
+  ListCheckbox, ListSubHeader, Menu, MenuItem, MenuDivider, IconMenu,
+  Navigation, ProgressBar, RadioGroup, RadioButton, Ripple, Slider, Switch,
+  Tab, Tabs, TimePicker };

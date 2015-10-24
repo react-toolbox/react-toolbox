@@ -1,9 +1,9 @@
 # Aside
 
 ```
-var Autocomplete = require('react-toolbox/components/autocomplete');
+import Autocomplete from 'react-toolbox/components/autocomplete';
 
-var data = [
+const data = [
    { '1': 'Never' },
    { '2': 'Every Night' },
    { '3': 'Weeknights' },
