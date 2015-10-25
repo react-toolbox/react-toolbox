@@ -1,0 +1,24 @@
+@import "../globals";
+
+$editor-width: 50%;
+
+.playground {
+  display: flex;
+  padding: 2 * $unit;
+}
+
+.vertical {
+  flex-direction: column;
+}
+
+.horizontal {
+  flex-direction: row;
+
+  > .editor {
+    width: $editor-width;
+  }
+
+  > .preview {
+    width: 100% - $editor-width;
+  }
+}

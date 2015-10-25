@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
-const devServer = 'http://0.0.0.0:3000';
+const devServer = 'http://0.0.0.0:8080';
 
 module.exports = {
   context: __dirname,
@@ -9,7 +9,7 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?' + devServer,
     'webpack/hot/only-dev-server',
-    './app/index.jsx'
+    './app/app.jsx'
   ],
   output: {
     path: path.join(__dirname, 'build'),
@@ -37,6 +37,10 @@ module.exports = {
       }, {
         test: /(\.scss|\.css)$/,
         loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass'
+      }, {
+        test: /(\.txt)$/,
+        loader: 'raw-loader',
+        include: path.resolve(__dirname, './app/examples')
       }
     ]
   },
