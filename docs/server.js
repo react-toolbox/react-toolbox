@@ -10,6 +10,7 @@ const devServer = {
 new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
   historyApiFallback: false,
+  hot: true,
   stats: {
     colors: true
   }

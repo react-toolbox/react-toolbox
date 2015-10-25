@@ -2,8 +2,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import babel from 'babel-core/browser';
+import ReactToolbox from 'react-toolbox';
 import style from './style';
-import Toolbox from 'react-toolbox';
 
 const ERROR_TIMEOUT = 500;
 
@@ -17,7 +17,7 @@ const Preview = React.createClass({
   getDefaultProps () {
     return {
       className: '',
-      scope: Object.assign({ React }, Toolbox)
+      scope: Object.assign({ React }, ReactToolbox)
     };
   },
 

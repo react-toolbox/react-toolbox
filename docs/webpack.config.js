@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const devServer = 'http://0.0.0.0:8080';
 
 module.exports = {
@@ -24,8 +25,8 @@ module.exports = {
     modulesDirectories: [
       'node_modules',
       path.resolve(__dirname, './node_modules'),
-      path.resolve(__dirname, './../components'),
-      path.resolve(__dirname, './../node_modules')
+      path.resolve(__dirname, './../node_modules'),
+      path.resolve(__dirname, './../components')
     ]
   },
   module: {
@@ -36,16 +37,17 @@ module.exports = {
         loader: 'react-hot!babel'
       }, {
         test: /(\.scss|\.css)$/,
-        loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass'
+        loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass')
       }, {
         test: /(\.txt)$/,
-        loader: 'raw-loader',
+        loader: 'raw',
         include: path.resolve(__dirname, './app/examples')
       }
     ]
   },
   postcss: [autoprefixer],
   plugins: [
+    new ExtractTextPlugin('docs.css', {allChunks: true}),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
