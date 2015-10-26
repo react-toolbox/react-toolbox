@@ -2,20 +2,19 @@ const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const devServer = 'http://0.0.0.0:8080';
 
 module.exports = {
   context: __dirname,
   devtool: '#eval-source-map',
   entry: [
-    'webpack-dev-server/client?' + devServer,
+    'webpack-dev-server/client?http://0.0.0.0:8080',
     'webpack/hot/only-dev-server',
     './app/app.jsx'
   ],
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'docs.js',
-    publicPath: '/build/'
+    publicPath: '/'
   },
   resolve: {
     extensions: ['', '.jsx', '.scss', '.js', '.json'],

@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const config = require('./webpack.config');
+const config = require('./webpack.config.development');
 const devServer = {
   host: '0.0.0.0',
   port: 8080,
@@ -8,6 +8,7 @@ const devServer = {
 };
 
 new WebpackDevServer(webpack(config), {
+  contentBase: 'www',
   publicPath: config.output.publicPath,
   historyApiFallback: false,
   hot: true,
