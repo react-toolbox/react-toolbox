@@ -1,16 +1,16 @@
 /*eslint-disable no-unused-vars*/
 import React from 'react';
 import ReactDOM from 'react-dom';
-import style from 'react-toolbox/commons';
-import code from './examples/example.txt';
-import Playground from './components/playground';
+import Router from 'react-router';
+import AppRoutes from './app-routes';
+import createHashHistory from 'history/lib/createHashHistory';
 
-const App = () => {
+const Docs = () => {
   return (
-    <app className={style.app}>
-      <Playground codeText={code} />
-    </app>
+    <Router history={createHashHistory({queryKey: false})}>
+      {AppRoutes}
+    </Router>
   );
 };
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+ReactDOM.render(<Docs/>, document.getElementById('app'));

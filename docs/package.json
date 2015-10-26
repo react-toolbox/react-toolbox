@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "codemirror": "^5.8.0",
+    "history": "^1.12.6",
     "react": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "react-dom": "^0.14.0",
+    "react-router": "^1.0.0-rc3"
   },
   "devDependencies": {
     "autoprefixer": "^6.0.3",

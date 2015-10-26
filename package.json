@@ -17,7 +17,7 @@
   ],
   "main": "./lib",
   "scripts": {
-    "start": "node ./server",
+    "start": "UV_THREADPOOL_SIZE=100 node ./server",
     "babel": "babel ./components --out-dir ./lib",
     "build": "npm run lint && npm run babel && npm run sass",
     "clean": "rimraf ./lib",
