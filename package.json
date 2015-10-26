@@ -66,6 +66,7 @@
     "node-libs-browser": "^0.5.2",
     "node-sass": "^3.3.3",
     "normalize.css": "^3.0.3",
+    "object-assign": "^4.0.1",
     "phantomjs-polyfill": "0.0.1",
     "postcss-loader": "^0.7.0",
     "react": "^0.14",
