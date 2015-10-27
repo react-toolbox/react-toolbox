@@ -1,6 +1,7 @@
 /*eslint-disable no-unused-vars*/
 import React from 'react';
 import commons from '../components/commons';
+import style from './style';
 import Autocomplete from './components/autocomplete';
 import Button from './components/button';
 import Card from './components/card';
@@ -19,7 +20,6 @@ import Snackbar from './components/snackbar';
 import Slider from './components/slider';
 import Switch from './components/switch';
 import Tabs from './components/tabs';
-import style from './style';
 
 const App = () => {
   return (

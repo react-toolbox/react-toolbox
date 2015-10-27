@@ -1,7 +1,7 @@
 import expect from 'expect';
-import style from '../../progress_bar/style';
 import utils from '../../utils/testing';
 import ProgressBar from '../index';
+import style from '../../progress_bar/style';
 
 describe('ProgressBar', function () {
   let progressBar;
