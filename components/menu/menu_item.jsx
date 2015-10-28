@@ -6,6 +6,7 @@ import style from './style.menu_item';
 class MenuItem extends React.Component {
   static propTypes = {
     caption: React.PropTypes.string,
+    className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     icon: React.PropTypes.string,
     ripple: React.PropTypes.bool,
@@ -14,6 +15,7 @@ class MenuItem extends React.Component {
   };
 
   static defaultProps = {
+    className: '',
     disabled: false,
     ripple: false,
     selected: false
@@ -33,9 +35,9 @@ class MenuItem extends React.Component {
 
   render () {
     let className = style.root;
-    if (this.props.className) className += ` ${this.props.className}`;
     if (this.props.selected) className += ` ${style.selected}`;
     if (this.props.disabled) className += ` ${style.disabled}`;
+    if (this.props.className) className += ` ${this.props.className}`;
 
     return (
       <li

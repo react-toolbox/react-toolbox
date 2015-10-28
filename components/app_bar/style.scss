@@ -8,7 +8,19 @@
   padding: 0 $appbar-h-padding;
   color: $appbar-contrast;
   background: $appbar-color;
-  box-shadow: 0 2px 5px rgba(0,0,0,.26);
+
+  &:not(.flat) {
+    z-index: $z-index-higher;
+    box-shadow: 0 2px 5px rgba(0,0,0,.26);
+  }
+
+  &.fixed {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: $z-index-higher;
+  }
 
   a {
     color: $appbar-contrast;

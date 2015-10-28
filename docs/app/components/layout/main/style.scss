@@ -1,6 +1,5 @@
-@import "~react-toolbox/base";
-@import "~react-toolbox/app_bar/config";
 @import "../../globals";
+@import "~react-toolbox/app_bar/config";
 @import "./config";
 
 .appbar {
@@ -9,8 +8,8 @@
 }
 
 .brand {
-  position: relative;
   @include typo-title;
+  position: relative;
   display: inline-block;
   padding-top: $appbar-brand-v-padding;
   padding-bottom: $appbar-brand-v-padding;
@@ -43,4 +42,28 @@
       }
     }
   }
+}
+
+.content-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.drawer {
+  max-width: 22 * $unit;
+  min-height: 100%;
+  margin-top: $appbar-height;
+  border-right: 1px solid $color-divider;
+}
+
+.drawer-option {
+  padding-left: $appbar-h-padding;
+}
+
+.content {
+  z-index: $z-index-low;
+  flex-grow: 1;
+  padding: .8 * $unit $appbar-h-padding;
+  margin-top: $appbar-height;
+  background-color: $color-content;
 }

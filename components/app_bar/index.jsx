@@ -4,6 +4,8 @@ import style from './style';
 const AppBar = (props) => {
   let className = style.appbar;
   if (props.className) className += ` ${props.className}`;
+  if (props.fixed) className += ` ${style.fixed}`;
+  if (props.flat) className += ` ${style.flat}`;
 
   return (
     <header className={className}>
@@ -13,11 +15,15 @@ const AppBar = (props) => {
 };
 
 AppBar.propTypes = {
-  className: React.PropTypes.string
+  className: React.PropTypes.string,
+  fixed: React.PropTypes.bool,
+  flat: React.PropTypes.bool
 };
 
 AppBar.defaultProps = {
-  className: ''
+  className: '',
+  fixed: false,
+  flat: false
 };
 
 export default AppBar;
