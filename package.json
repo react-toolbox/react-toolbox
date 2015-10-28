@@ -1,13 +1,13 @@
 {
   "name": "react-toolbox",
-  "version": "0.10.20",
+  "version": "0.10.28",
   "description": "A set of complementary tools to ReactJS.",
   "author": "React Toolbox Team (http://github.com/react-toolbox)",
   "contributors": [
     {
       "name": "Javi Jimenez Villar",
       "url": "http://soyjavi.com/",
-      "email": "hi@soyjavi.com"
+      "email": "javi.jimenez.villar@gmail.com"
     },
     {
       "name": "Javi Velasco Arjona",
@@ -17,7 +17,7 @@
   ],
   "main": "./lib",
   "scripts": {
-    "start": "UV_THREADPOOL_SIZE=100 node ./server",
+    "start": "node ./server",
     "babel": "babel ./components --out-dir ./lib",
     "build": "npm run lint && npm run babel && npm run sass",
     "clean": "rimraf ./lib",
