@@ -1,0 +1,46 @@
+@import "~react-toolbox/base";
+@import "~react-toolbox/app_bar/config";
+@import "../../globals";
+@import "./config";
+
+.appbar {
+  composes: appbar from "react-toolbox/app_bar/style";
+  background: $color-primary-dark;
+}
+
+.brand {
+  position: relative;
+  @include typo-title;
+  display: inline-block;
+  padding-top: $appbar-brand-v-padding;
+  padding-bottom: $appbar-brand-v-padding;
+  padding-left: $appbar-title-distance;
+  font-weight: 400;
+  color: $color-primary-contrast;
+  > .logo {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: $appbar-brand-logo-size;
+    height: $appbar-brand-logo-size;
+    margin-top: - $appbar-brand-logo-size / 2;
+    fill: $color-primary-contrast;
+  }
+}
+
+.navigation {
+  flex-grow: 1;
+  text-align: right;
+  > ul {
+    list-style: none;
+    > li {
+      display: inline-block;
+      > a {
+        @include typo-menu;
+        display: inline-block;
+        padding: 2.5 * $unit $appbar-h-padding;
+        color: $color-primary-contrast;
+      }
+    }
+  }
+}

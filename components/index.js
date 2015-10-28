@@ -1,4 +1,6 @@
 export default {
+  App: require('./app'),
+  AppBar: require('./app_bar'),
   Autocomplete: require('./autocomplete'),
   Button: require('./button'),
   Card: require('./card'),

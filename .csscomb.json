@@ -310,7 +310,8 @@
       "-o-animation-direction",
       "animation-direction",
       "backface-visibility",
-      "will-change"
+      "will-change",
+      "fill"
     ]
   ]
 }

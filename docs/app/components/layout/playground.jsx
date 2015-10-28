@@ -1,7 +1,7 @@
 /*eslint-disable no-unused-vars*/
 import React from 'react';
-import code from '../examples/example.txt';
-import Playground from '../components/playground';
+import code from '../../examples/example.txt';
+import Playground from '../playground';
 
 const Components = () => {
   return (

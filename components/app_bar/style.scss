@@ -1,0 +1,16 @@
+@import "../base";
+@import "./config";
+
+.appbar {
+  display: flex;
+  height: $appbar-height;
+  align-items: center;
+  padding: 0 $appbar-h-padding;
+  color: $appbar-contrast;
+  background: $appbar-color;
+  box-shadow: 0 2px 5px rgba(0,0,0,.26);
+
+  a {
+    color: $appbar-contrast;
+  }
+}

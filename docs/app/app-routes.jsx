@@ -1,16 +1,19 @@
-/*eslint-disable no-unused-vars*/
 import React from 'react';
-import Layout from './pages/layout';
-import Home from './pages/home';
-import Playground from './pages/playground';
-import Components from './pages/components';
+import { App } from 'react-toolbox';
 import { Route, IndexRoute } from 'react-router';
 
+import Home from './components/layout/home';
+import Main from './components/layout/main';
+import Playground from './components/layout/playground';
+import Components from './components/layout/components';
+
 const Routes = (
-  <Route path="/" component={Layout}>
-    <Route path="home" component={Home} />
-    <Route path="components" component={Components} />
-    <Route path="playground" component={Playground} />
+  <Route component={App}>
+    <Route path="/" component={Home} />
+    <Route component={Main}>
+      <Route path="/components" component={Components} />
+      <Route path="/playground" component={Playground} />
+    </Route>
     <IndexRoute component={Home}/>
   </Route>
 );
