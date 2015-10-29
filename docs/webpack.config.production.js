@@ -45,7 +45,7 @@ module.exports = {
   },
   postcss: [autoprefixer],
   plugins: [
-    new ExtractTextPlugin('docs.css', {allChunks: true}),
+    new ExtractTextPlugin('docs.css', { allChunks: true }),
     new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false }
     }),
