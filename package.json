@@ -59,6 +59,7 @@
     "eslint-plugin-react": "^3.3.1",
     "expect": "^1.8.0",
     "express": "^4.13.3",
+    "extract-text-webpack-plugin": "^0.8.2",
     "karma": "^0.13.3",
     "karma-chrome-launcher": "^0.2.0",
     "karma-cli": "^0.1.0",

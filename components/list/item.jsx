@@ -55,7 +55,7 @@ class ListItem extends React.Component {
 
   render () {
     return (
-      <li onClick={this.handleClick} onMouseDown={this.handleMouseDown}>
+      <li className={style['list-item']} onClick={this.handleClick} onMouseDown={this.handleMouseDown}>
         { this.props.to ? <a href={this.props.to}>{this.renderContent()}</a> : this.renderContent() }
       </li>
     );
