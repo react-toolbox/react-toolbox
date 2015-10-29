@@ -11,16 +11,24 @@ const MainDrawer = () => {
       <ListItem
         key={key}
         caption={ToolboxComponent.name}
-        className={style.draweroption}
+        className={style.drawer_item}
         to={ToolboxComponent.path}
       />
     );
   });
 
   return (
-    <List className={style.drawer} ripple>
-      { DrawerItems }
-    </List>
+    <aside className={style.drawer}>
+      <List className={style.drawer_list} ripple>
+        { DrawerItems }
+      </List>
+      <footer className={style.drawer_footer}>
+        <span>React Toolbox ©</span>
+        <span>
+          <a href=''>Privacy</a> & <a href=''>Terms</a>
+        </span>
+      </footer>
+    </aside>
   );
 };
 

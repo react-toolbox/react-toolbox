@@ -55,15 +55,40 @@
 }
 
 .drawer {
+  z-index: 1;
+  display: flex;
+  min-width: 22 * $unit;
   max-width: 22 * $unit;
-  max-height: 100%;
-  overflow-y: scroll;
-  // border-right: 1px solid $color-divider;
+  flex-direction: column;
+  background-color: #fff;
   box-shadow: $drawer-shadow;
 }
 
-.draweroption {
-  padding-left: $appbar-h-padding;
+.drawer_list {
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+.drawer_item {
+  padding: $drawer-v-offset $drawer-h-offset;
+  > span > span {
+    font-size: $font-size-small;
+    font-weight: $font-weight-bold;
+  }
+}
+
+.drawer_footer {
+  flex-grow: 0;
+  padding: $drawer-h-offset;
+  font-size: $font-size-tiny;
+  color: $color-text-secondary;
+  border-top: $drawer-footer-border;
+  > span {
+    display: block;
+    margin-bottom: ($drawer-h-offset / 2);
+    > a {
+      color: $color-primary-dark;
+    }
+  }
 }
 
 .documentation {
@@ -78,6 +103,7 @@
   }
   h1 {
     font-size: $documentation-h1-size;
+    text-transform: capitalize;
     + p {
       font-size: $font-size-big;
     }

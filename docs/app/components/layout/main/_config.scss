@@ -3,7 +3,10 @@ $appbar-brand-v-padding: ($appbar-height - $appbar-brand-height) / 2;
 $appbar-brand-logo-size: $appbar-height - 2.6 * $unit;
 $appbar-shadow: 0 1px rgba(255,255,255,0.75);
 
+$drawer-h-offset: 2.4 * $unit;
+$drawer-v-offset: 1.2 * $unit;
 $drawer-shadow: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);
+$drawer-footer-border: solid 1px rgb(224, 224, 224);
 
 $documentation-h1-size: 3.4 * $unit;
 $documentation-h2-size: 2.4 * $unit;
