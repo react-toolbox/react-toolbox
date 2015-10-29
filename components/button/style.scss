@@ -11,6 +11,7 @@
   color: $button-default-text-color;
   text-align: center;
   text-decoration: none;
+  overflow: hidden;
   white-space: nowrap;
   cursor: pointer;
   border: 0;
@@ -102,6 +103,10 @@
   }
   .icon {
     line-height: $button-floating-height;
+  }
+
+  [data-react-toolbox="ripple"] {
+    border-radius: 50%;
   }
 }
 
