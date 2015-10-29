@@ -1,5 +1,6 @@
 @import "../../globals";
 @import "~react-toolbox/app_bar/config";
+@import "~react-toolbox/button/config";
 @import "./config";
 
 .appbar {
@@ -30,6 +31,7 @@
 .navigation {
   flex-grow: 1;
   text-align: right;
+  padding-right: $button-floating-height;
   > ul {
     list-style: none;
     > li {
@@ -64,4 +66,10 @@
   flex-grow: 1;
   padding: .8 * $unit $appbar-h-padding;
   background-color: $color-content;
+}
+
+.playground_button {
+  position: absolute;
+  right: $button-floating-height / 2;
+  bottom: -($button-floating-height / 2);
 }

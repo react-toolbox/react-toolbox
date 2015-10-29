@@ -1,10 +1,14 @@
 /*eslint-disable no-unused-vars*/
 import React from 'react';
-import { AppBar } from 'react-toolbox';
+import { AppBar, Button } from 'react-toolbox';
 import { Link } from 'react-router';
 import Logo from '../../logo';
 import Navigation from '../../navigation';
 import style from './style';
+
+const handlerPlayGroundClick = (event) => {
+  window.location = '/#/playground';
+};
 
 const MainAppBar = () => {
   return (
@@ -13,6 +17,7 @@ const MainAppBar = () => {
         <Logo className={style.logo} /> React Toolbox
       </Link>
       <Navigation className={style.navigation}/>
+      <Button accent className={style.playground_button} icon='code' kind='floating' onClick={handlerPlayGroundClick} />
     </AppBar>
   );
 };
