@@ -11,6 +11,7 @@ class Drawer extends React.Component {
 
   static defaultProps = {
     className: '',
+    hideable: true,
     type: 'left'
   };
 

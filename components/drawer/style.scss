@@ -29,7 +29,7 @@
     border-right: 1px solid $drawer-border-color;
   }
   &:not(.active) > .content {
-    transform: translateX(- $drawer-width);
+    transform: translateX(- 100%);
   }
 }
 
@@ -39,7 +39,7 @@
     border-left: 1px solid $drawer-border-color;
   }
   &:not(.active) > .content {
-    transform: translateX($drawer-width);
+    transform: translateX(100%);
   }
 }
 
