@@ -30,8 +30,8 @@
 
 .navigation {
   flex-grow: 1;
-  text-align: right;
   padding-right: $button-floating-height;
+  text-align: right;
   > ul {
     list-style: none;
     > li {
@@ -48,13 +48,15 @@
 
 .mainwrapper {
   display: flex;
-  min-height: 100vh;
-  margin-top: $appbar-height;
+  max-height: 100vh;
+  padding-top: $appbar-height;
+  overflow: hidden;
 }
 
 .drawer {
   max-width: 22 * $unit;
-  min-height: 100%;
+  max-height: 100%;
+  overflow-y: scroll;
   border-right: 1px solid $color-divider;
 }
 
@@ -63,8 +65,10 @@
 }
 
 .documentation {
+  max-height: 100%;
   flex-grow: 1;
   padding: .8 * $unit $appbar-h-padding;
+  overflow-y: scroll;
   background-color: $color-content;
 }
 
