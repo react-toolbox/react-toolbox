@@ -1,8 +1,9 @@
-$editor-height: 25 * $unit;
+$editor-height: 51.2 * $unit;
 $editor-padding: $unit;
 
 div.CodeMirror {
   height: $editor-height;
+  flex-grow: 1;
 }
 
 .CodeMirror-lines {
