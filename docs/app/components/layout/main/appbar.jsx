@@ -1,4 +1,3 @@
-/*eslint-disable no-unused-vars*/
 import React from 'react';
 import { AppBar, Button } from 'react-toolbox';
 import { Link } from 'react-router';
@@ -6,7 +5,7 @@ import Logo from '../../logo';
 import Navigation from '../../navigation';
 import style from './style';
 
-const handlerPlayGroundClick = (event) => {
+const handlerPlayGroundClick = () => {
   window.location = '/#/playground';
 };
 
@@ -23,4 +22,3 @@ const MainAppBar = () => {
 };
 
 export default MainAppBar;
-

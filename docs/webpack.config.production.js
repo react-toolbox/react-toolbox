@@ -7,17 +7,13 @@ const TransferWebpackPlugin = require('transfer-webpack-plugin');
 
 module.exports = {
   context: __dirname,
-  devtool: '#eval-source-map',
-  entry: ['./app/app.jsx'],
+  entry: ['./app/index.jsx'],
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'docs.js'
   },
-  devServer: {
-    contentBase: '/build'
-  },
   resolve: {
-    extensions: ['', '.jsx', '.scss', '.js', '.json'],
+    extensions: ['', '.jsx', '.scss', '.js', '.json', '.md'],
     alias: {
       'react-toolbox': path.resolve(__dirname + './../components')
     },
@@ -33,20 +29,23 @@ module.exports = {
       {
         test: /(\.js|\.jsx)$/,
         exclude: /(node_modules)/,
-        loader: 'react-hot!babel'
+        loader: 'babel'
       }, {
         test: /(\.scss|\.css)$/,
-        loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass')
+        loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass')
       }, {
         test: /(\.txt)$/,
         loader: 'raw',
         include: path.resolve(__dirname, './app/examples')
+      }, {
+        test: /(\.md)$/,
+        loader: 'html!markdown'
       }
     ]
   },
   postcss: [autoprefixer],
   plugins: [
-    new ExtractTextPlugin('docs.css', {allChunks: true}),
+    new ExtractTextPlugin('docs.css', { allChunks: true }),
     new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false }
     }),
@@ -54,8 +53,13 @@ module.exports = {
         inject: false,
         template: path.resolve(__dirname, './www/index.html')
     }),
-    new TransferWebpackPlugin([
-      { from: 'www/images', to: 'images' }
-    ], path.resolve(__dirname, './'))
+    new TransferWebpackPlugin([{
+      from: 'www/images',
+      to: 'images'
+    }], path.resolve(__dirname, './')),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    })
   ]
 };

@@ -1,4 +1,3 @@
-/*eslint-disable no-unused-vars*/
 import React from 'react';
 import { App } from 'react-toolbox';
 import { Route, IndexRoute } from 'react-router';
@@ -7,7 +6,7 @@ import Main from './components/layout/main';
 import Playground from './components/layout/main/playground';
 import Component from './components/layout/main/component';
 
-const Routes = (
+const routes = (
   <Route component={App}>
     <Route path="/" component={Home} />
     <Route component={Main}>
@@ -18,4 +17,4 @@ const Routes = (
   </Route>
 );
 
-export default Routes;
+export default routes;

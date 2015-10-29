@@ -1,4 +1,3 @@
-/*eslint-disable no-unused-vars*/
 import React from 'react';
 import ToolboxComponents from './components';
 import style from './style';

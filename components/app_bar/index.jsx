@@ -2,7 +2,7 @@ import React from 'react';
 import style from './style';
 
 const AppBar = (props) => {
-  let className = style.appbar;
+  let className = style.root;
   if (props.className) className += ` ${props.className}`;
   if (props.fixed) className += ` ${style.fixed}`;
   if (props.flat) className += ` ${style.flat}`;

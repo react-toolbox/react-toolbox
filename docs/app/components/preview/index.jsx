@@ -1,4 +1,3 @@
-/*eslint-disable no-eval*/
 import React from 'react';
 import ReactDOM from 'react-dom';
 import babel from 'babel-core/browser';
@@ -71,6 +70,8 @@ const Preview = React.createClass({
 
     try {
       const compiledCode = this.compileCode();
+
+      /*eslint-disable no-eval*/
       const Component = eval(compiledCode).apply(null, scope);
       ReactDOM.render(Component, mountNode);
       if (this.state.error) {
