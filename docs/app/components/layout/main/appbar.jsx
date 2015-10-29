@@ -5,7 +5,7 @@ import Logo from '../../logo';
 import Navigation from '../../navigation';
 import style from './style';
 
-const handlerPlayGroundClick = (event) => {
+const handlerPlayGroundClick = () => {
   window.location = '/#/playground';
 };
 
