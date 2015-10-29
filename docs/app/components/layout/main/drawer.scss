@@ -1,0 +1,49 @@
+@import "../../globals";
+
+$drawer-h-offset: 2.4 * $unit;
+$drawer-v-offset: 1.2 * $unit;
+$drawer-shadow: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);
+$drawer-footer-border: solid 1px rgb(224, 224, 224);
+$drawer-width: 22 * $unit;
+
+.root {
+  z-index: $z-index-normal;
+  display: flex;
+  min-width: $drawer-width;
+  max-width: $drawer-width;
+  flex-direction: column;
+  background-color: $color-background;
+  box-shadow: $drawer-shadow;
+}
+
+.list {
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+.item {
+  padding: $drawer-v-offset $drawer-h-offset;
+  > span > span {
+    font-size: $font-size-small;
+    font-weight: $font-weight-semi-bold;
+  }
+}
+
+.active {
+  background: $color-divider;
+}
+
+.footer {
+  flex-grow: 0;
+  padding: $drawer-h-offset;
+  font-size: $font-size-tiny;
+  color: $color-text-secondary;
+  border-top: $drawer-footer-border;
+  > span {
+    display: block;
+    margin-bottom: ($drawer-h-offset / 2);
+    > a {
+      color: $color-primary-dark;
+    }
+  }
+}

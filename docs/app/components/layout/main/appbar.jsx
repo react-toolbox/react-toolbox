@@ -3,7 +3,7 @@ import { AppBar, Button } from 'react-toolbox';
 import { Link } from 'react-router';
 import Logo from '../../logo';
 import Navigation from '../../navigation';
-import style from './style';
+import style from './appbar.scss';
 
 const handlerPlayGroundClick = () => {
   window.location = '/#/playground';
@@ -16,7 +16,13 @@ const MainAppBar = () => {
         <Logo className={style.logo} /> React Toolbox
       </Link>
       <Navigation className={style.navigation}/>
-      <Button accent className={style.playground_button} icon='code' kind='floating' onClick={handlerPlayGroundClick} />
+      <Button
+        accent
+        className={style['playground-button']}
+        icon='code'
+        kind='floating'
+        onClick={handlerPlayGroundClick}
+      />
     </AppBar>
   );
 };

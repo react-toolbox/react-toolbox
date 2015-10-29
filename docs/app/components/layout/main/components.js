@@ -26,116 +26,116 @@ export default {
   app_bar: {
     name: 'App Bar',
     docs: AppBar,
-    path: '/#/components/app_bar'
+    path: '/components/app_bar'
   },
   autocomplete: {
     name: 'Autocomplete',
     docs: Autocomplete,
-    path: '/#/components/autocomplete'
+    path: '/components/autocomplete'
   },
   button: {
     name: 'Button',
     docs: Button,
-    path: '/#/components/button'
+    path: '/components/button'
   },
   card: {
     name: 'Card',
     docs: Card,
-    path: '/#/components/card'
+    path: '/components/card'
   },
   checkbox: {
     name: 'Checkbox',
     docs: Checkbox,
-    path: '/#/components/checkbox'
+    path: '/components/checkbox'
   },
   date_picker: {
     name: 'Date Picker',
     docs: DatePicker,
-    path: '/#/components/date_picker'
+    path: '/components/date_picker'
   },
   dialog: {
     name: 'Dialog',
     docs: Dialog,
-    path: '/#/components/dialog'
+    path: '/components/dialog'
   },
   drawer: {
     name: 'Drawer',
     docs: Drawer,
-    path: '/#/components/drawer'
+    path: '/components/drawer'
   },
   dropdown: {
     name: 'Dropdown',
     docs: Dropdown,
-    path: '/#/components/dropdown'
+    path: '/components/dropdown'
   },
   font_icon: {
     name: 'Font Icon',
     docs: FontIcon,
-    path: '/#/components/font_icon'
+    path: '/components/font_icon'
   },
   form: {
     name: 'Form',
     docs: Form,
-    path: '/#/components/form'
+    path: '/components/form'
   },
   input: {
     name: 'Input',
     docs: Input,
-    path: '/#/components/input'
+    path: '/components/input'
   },
   link: {
     name: 'Link',
     docs: Link,
-    path: '/#/components/link'
+    path: '/components/link'
   },
   list: {
     name: 'List',
     docs: List,
-    path: '/#/components/list'
+    path: '/components/list'
   },
   menu: {
     name: 'Menu',
     docs: Menu,
-    path: '/#/components/menu'
+    path: '/components/menu'
   },
   navigation: {
     name: 'Navigation',
     docs: Navigation,
-    path: '/#/components/navigation'
+    path: '/components/navigation'
   },
   progress_bar: {
     name: 'Progress Bar',
     docs: ProgressBar,
-    path: '/#/components/progress_bar'
+    path: '/components/progress_bar'
   },
   radio_group: {
     name: 'Radio Group',
     docs: RadioGroup,
-    path: '/#/components/radio_group'
+    path: '/components/radio_group'
   },
   slider: {
     name: 'Slider',
     docs: Slider,
-    path: '/#/components/slider'
+    path: '/components/slider'
   },
   snackbar: {
     name: 'Snackbar',
     docs: Snackbar,
-    path: '/#/components/snackbar'
+    path: '/components/snackbar'
   },
   switch: {
     name: 'Switch',
     docs: Switch,
-    path: '/#/components/switch'
+    path: '/components/switch'
   },
   tabs: {
     name: 'Tabs',
     docs: Tabs,
-    path: '/#/components/tabs'
+    path: '/components/tabs'
   },
   time_picker: {
     name: 'Time Picker',
     docs: TimePicker,
-    path: '/#/components/time_picker'
+    path: '/components/time_picker'
   }
 };

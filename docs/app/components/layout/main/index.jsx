@@ -7,7 +7,7 @@ const Main = (props) => {
   return (
     <div>
       <MainAppBar />
-      <section className={style.mainwrapper}>
+      <section className={style.content}>
         <MainDrawer />
         { props.children }
       </section>
