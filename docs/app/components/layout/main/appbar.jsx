@@ -22,4 +22,3 @@ const MainAppBar = () => {
 };
 
 export default MainAppBar;
-
