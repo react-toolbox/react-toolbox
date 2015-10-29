@@ -6,6 +6,7 @@
 .appbar {
   composes: appbar from "react-toolbox/app_bar/style";
   background: $color-primary-dark;
+  box-shadow: $appbar-shadow;
 }
 
 .brand {
@@ -57,7 +58,8 @@
   max-width: 22 * $unit;
   max-height: 100%;
   overflow-y: scroll;
-  border-right: 1px solid $color-divider;
+  // border-right: 1px solid $color-divider;
+  box-shadow: $drawer-shadow;
 }
 
 .draweroption {
@@ -67,9 +69,56 @@
 .documentation {
   max-height: 100%;
   flex-grow: 1;
-  padding: .8 * $unit $appbar-h-padding;
   overflow-y: scroll;
+  font-size: $font-size-normal;
+  color: $color-text;
   background-color: $color-content;
+  > *:not(pre) {
+    margin: $documentation-v-offset $documentation-h-offset;
+  }
+  h1 {
+    font-size: $documentation-h1-size;
+    + p {
+      font-size: $font-size-big;
+    }
+  }
+  h2 {
+    font-size: $documentation-h2-size;
+  }
+  h3, h4, h5, h6 {
+    font-size: inherit;
+    font-weight: $font-weight-bold;
+  }
+  h1, h2 {
+    padding-top: $documentation-v-offset;
+    color: $color-primary-dark;
+  }
+  p {
+    font-size: inherit;
+    &:first-child {
+      background-color: red;
+    }
+  }
+  pre {
+    padding: $documentation-v-offset $documentation-h-offset;
+    font-family: $documentation-code-font-family;
+    font-size: $documentation-code-font-size;
+    background-color: $documentation-code-background;
+  }
+  table {
+    width: auto;
+    background-color: white;
+    // tr {
+    //   padding: 0 (4.0 * $unit);
+    // }
+    thead th {
+      font-size: $font-size-tiny;
+      color: $color-text;
+    }
+    th, td {
+      padding: $unit;
+    }
+  }
 }
 
 .playground_button {

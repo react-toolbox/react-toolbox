@@ -1,5 +1,7 @@
 # Button
 
+A button clearly communicates what action will occur when the user touches it. It consists of text, an image, or both, designed in accordance with your app’s color theme.
+
 ```
 var Button = require('react-toolbox/components/button');
 <Button className="accent" label="Flat button" />

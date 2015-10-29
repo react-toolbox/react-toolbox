@@ -1,4 +1,4 @@
-# Aside
+# Autocomplete
 
 ```
 var Autocomplete = require('react-toolbox/components/autocomplete');
