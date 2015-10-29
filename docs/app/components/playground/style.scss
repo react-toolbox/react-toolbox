@@ -1,10 +1,14 @@
 @import "../globals";
 
 $editor-width: 50%;
+$preview-background: #fff;
 
 .playground {
   display: flex;
-  padding: 2 * $unit;
+  > * {
+    flex-grow: 1;
+  }
+  background: red;
 }
 
 .vertical {
@@ -13,12 +17,11 @@ $editor-width: 50%;
 
 .horizontal {
   flex-direction: row;
-
   > .editor {
     width: $editor-width;
   }
 
   > .preview {
-    width: 100% - $editor-width;
+    background: $preview-background;
   }
 }
