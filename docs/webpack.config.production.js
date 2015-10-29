@@ -12,11 +12,8 @@ module.exports = {
     path: path.join(__dirname, 'build'),
     filename: 'docs.js'
   },
-  devServer: {
-    contentBase: '/build'
-  },
   resolve: {
-    extensions: ['', '.jsx', '.scss', '.js', '.json'],
+    extensions: ['', '.jsx', '.scss', '.js', '.json', '.md'],
     alias: {
       'react-toolbox': path.resolve(__dirname + './../components')
     },
@@ -40,6 +37,9 @@ module.exports = {
         test: /(\.txt)$/,
         loader: 'raw',
         include: path.resolve(__dirname, './app/examples')
+      }, {
+        test: /(\.md)$/,
+        loader: 'html!markdown'
       }
     ]
   },

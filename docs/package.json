@@ -5,7 +5,7 @@
   "author": "React Toolbox Team (http://github.com/react-toolbox)",
   "scripts": {
     "start": "node ./server",
-    "build": "NODE_ENV=production webpack --config ./webpack.config.production"
+    "build": "NODE_ENV=production UV_THREADPOOL_SIZE=100 webpack --config ./webpack.config.production"
   },
   "dependencies": {
     "codemirror": "^5.8.0",
