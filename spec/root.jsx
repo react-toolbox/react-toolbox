@@ -1,6 +1,5 @@
-/*eslint-disable no-unused-vars*/
 import React from 'react';
-import commons from '../components/commons';
+import App from '../components/app';
 import Autocomplete from './components/autocomplete';
 import Button from './components/button';
 import Card from './components/card';
@@ -21,32 +20,30 @@ import Switch from './components/switch';
 import Tabs from './components/tabs';
 import style from './style';
 
-const App = () => {
-  return (
-    <app className={`${commons.app} ${style.app}`}>
-      <h1>React Toolbox</h1>
-      <h3>Component Spec v0.10.20</h3>
+const Root = () => (
+  <App className={style.app}>
+    <h1>React Toolbox</h1>
+    <h3>Component Spec v0.10.20</h3>
 
-      <Autocomplete />
-      <Button />
-      <Card />
-      <Checkbox />
-      <Dialog />
-      <Drawer />
-      <Dropdown />
-      <IconMenu />
-      <Input />
-      <List />
-      <Menu />
-      <Pickers />
-      <Progress />
-      <Radio />
-      <Slider />
-      <Snackbar />
-      <Switch />
-      <Tabs />
-    </app>
-  );
-};
+    <Autocomplete />
+    <Button />
+    <Card />
+    <Checkbox />
+    <Dialog />
+    <Drawer />
+    <Dropdown />
+    <IconMenu />
+    <Input />
+    <List />
+    <Menu />
+    <Pickers />
+    <Progress />
+    <Radio />
+    <Slider />
+    <Snackbar />
+    <Switch />
+    <Tabs />
+  </App>
+);
 
-export default App;
+export default Root;

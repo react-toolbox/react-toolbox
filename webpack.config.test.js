@@ -7,7 +7,7 @@ module.exports = {
       {
         test: /(\.js|\.jsx)$/,
         exclude: /(node_modules)/,
-        loader: 'react-hot!babel'
+        loader: 'babel'
       }, {
         test: /(\.scss|\.css)$/,
         loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass'

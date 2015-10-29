@@ -1,14 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
-const devServer = 'http://0.0.0.0:8080';
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   context: __dirname,
   devtool: '#eval-source-map',
   entry: [
-    'webpack-dev-server/client?' + devServer,
-    'webpack/hot/only-dev-server',
+    'webpack-hot-middleware/client',
     './spec/index.jsx'
   ],
   output: {
@@ -24,17 +23,18 @@ module.exports = {
       {
         test: /(\.js|\.jsx)$/,
         exclude: /(node_modules)/,
-        loader: 'react-hot!babel'
+        loader: 'babel'
       }, {
         test: /(\.scss|\.css)$/,
-        loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass'
+        loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass')
       }
     ]
   },
   postcss: [autoprefixer],
   plugins: [
+    new ExtractTextPlugin('spec.css', { allChunks: true }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
     })

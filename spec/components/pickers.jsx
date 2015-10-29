@@ -1,4 +1,3 @@
-/*eslint-disable no-unused-vars*/
 import React from 'react';
 import DatePicker from '../../components/date_picker';
 import TimePicker from '../../components/time_picker';

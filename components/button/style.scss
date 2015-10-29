@@ -7,7 +7,6 @@
   height: $button-height;
   flex-direction: row;
   align-items: center;
-  overflow: hidden;
   color: $button-default-text-color;
   text-align: center;
   text-decoration: none;
@@ -107,6 +106,7 @@
 
   [data-react-toolbox="ripple"] {
     border-radius: 50%;
+    overflow: hidden;
   }
 }
 

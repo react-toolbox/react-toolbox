@@ -128,10 +128,10 @@ export default {
     docs: Switch,
     path: '/#/components/switch'
   },
-  snackbar: {
+  tabs: {
     name: 'Tabs',
     docs: Tabs,
-    path: '/#/components/snackbar'
+    path: '/#/components/tabs'
   },
   time_picker: {
     name: 'Time Picker',

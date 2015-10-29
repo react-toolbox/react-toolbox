@@ -32,7 +32,7 @@
   .list + & {
     margin-top: - $list-vertical-padding;
   }
-  .item ~ & {
+  .list-item ~ & {
     margin: $list-vertical-padding 0;
   }
 }
