@@ -1,4 +1,3 @@
-/*eslint-disable no-unused-vars*/
 import React from 'react';
 import Playground from '../../playground';
 import code from '../../../examples/example.txt';

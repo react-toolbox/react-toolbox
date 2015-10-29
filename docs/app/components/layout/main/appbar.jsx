@@ -1,4 +1,3 @@
-/*eslint-disable no-unused-vars*/
 import React from 'react';
 import { AppBar } from 'react-toolbox';
 import { Link } from 'react-router';

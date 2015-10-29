@@ -3,7 +3,7 @@
 @import "./config";
 
 .appbar {
-  composes: appbar from "react-toolbox/app_bar/style";
+  composes: root from "react-toolbox/app_bar/style";
   background: $color-primary-dark;
 }
 
