@@ -17,7 +17,7 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
-    extensions: ['', '.jsx', '.scss', '.js', '.json'],
+    extensions: ['', '.jsx', '.scss', '.js', '.json', '.md'],
     alias: {
       'react-toolbox': path.resolve(__dirname + './../components')
     },
@@ -41,6 +41,9 @@ module.exports = {
         test: /(\.txt)$/,
         loader: 'raw',
         include: path.resolve(__dirname, './app/examples')
+      }, {
+        test: /(\.md)$/,
+        loader: 'html!markdown'
       }
     ]
   },

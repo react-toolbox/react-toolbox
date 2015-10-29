@@ -44,26 +44,24 @@
   }
 }
 
-.content-wrapper {
+.mainwrapper {
   display: flex;
   min-height: 100vh;
+  margin-top: $appbar-height;
 }
 
 .drawer {
   max-width: 22 * $unit;
   min-height: 100%;
-  margin-top: $appbar-height;
   border-right: 1px solid $color-divider;
 }
 
-.drawer-option {
+.draweroption {
   padding-left: $appbar-h-padding;
 }
 
-.content {
-  z-index: $z-index-low;
+.documentation {
   flex-grow: 1;
   padding: .8 * $unit $appbar-h-padding;
-  margin-top: $appbar-height;
   background-color: $color-content;
 }

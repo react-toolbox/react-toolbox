@@ -13,7 +13,8 @@ class ListItem extends React.Component {
     legend: React.PropTypes.string,
     rightIcon: React.PropTypes.string,
     ripple: React.PropTypes.bool,
-    selectable: React.PropTypes.bool
+    selectable: React.PropTypes.bool,
+    to: React.PropTypes.string
   };
 
   static defaultProps = {
@@ -34,24 +35,28 @@ class ListItem extends React.Component {
     }
   };
 
-  render () {
+  renderContent () {
     let className = style.item;
     if (this.props.legend) className += ` ${style['with-legend']}`;
     if (this.props.disabled) className += ` ${style.disabled}`;
-    if (this.props.selectable) className += ` ${style.selectable}`;
     if (this.props.className) className += ` ${this.props.className}`;
+    if (this.props.selectable) className += ` ${style.selectable}`;
 
     return (
-      <li
-        className={className}
-        onClick={this.handleClick}
-        onMouseDown={this.handleMouseDown}
-      >
+      <span className={className}>
         { this.props.leftIcon ? <FontIcon className={`${style.icon} ${style.left}`} value={this.props.leftIcon} /> : null }
         { this.props.avatar ? <img className={style.avatar} src={this.props.avatar} /> : null }
         <ListItemContent caption={this.props.caption} legend={this.props.legend} />
         { this.props.ripple ? <Ripple ref='ripple' className={style.ripple} spread={2} /> : null }
         { this.props.rightIcon ? <FontIcon className={`${style.icon} ${style.right}`} value={this.props.rightIcon} /> : null }
+      </span>
+    );
+  }
+
+  render () {
+    return (
+      <li onClick={this.handleClick} onMouseDown={this.handleMouseDown}>
+        { this.props.to ? <a href={this.props.to}>{this.renderContent()}</a> : this.renderContent() }
       </li>
     );
   }

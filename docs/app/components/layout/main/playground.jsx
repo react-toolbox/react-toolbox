@@ -1,9 +1,9 @@
 /*eslint-disable no-unused-vars*/
 import React from 'react';
-import code from '../../examples/example.txt';
-import Playground from '../playground';
+import Playground from '../../playground';
+import code from '../../../examples/example.txt';
 
-const Components = () => {
+const PlaygroundArea = () => {
   return (
     <section>
       <p>Here should be the playground</p>
@@ -12,4 +12,4 @@ const Components = () => {
   );
 };
 
-export default Components;
+export default PlaygroundArea;
