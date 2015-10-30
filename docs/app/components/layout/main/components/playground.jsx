@@ -8,7 +8,9 @@ class Playground extends React.Component {
     className: React.PropTypes.string
   };
 
-  state = { code: codeText };
+  state = {
+    code: codeText
+  };
 
   handleCodeChange = (code) => {
     this.setState({code});
@@ -17,10 +19,14 @@ class Playground extends React.Component {
   render () {
     return (
       <aside className={this.props.className}>
-        <Editor codeText={this.state.code} onChange={this.handleCodeChange} />
+        <Editor ref='editor' codeText={this.state.code} onChange={this.handleCodeChange} />
         <Preview code={this.state.code} />
       </aside>
     );
+  }
+
+  loadCode (code) {
+    this.refs.editor.setCode(code);
   }
 }
 

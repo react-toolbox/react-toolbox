@@ -56,6 +56,11 @@ class Editor extends React.Component {
       </div>
     );
   }
+
+  setCode (code) {
+    this.editor.getDoc().setValue(code);
+    this.handleChange();
+  }
 }
 
 export default Editor;

@@ -2,13 +2,23 @@
 
 A button clearly communicates what action will occur when the user touches it. It consists of text, an image, or both, designed in accordance with your app’s color theme.
 
+<!-- example -->
 ```
-var Button = require('react-toolbox/components/button');
-<Button className="accent" label="Flat button" />
-<Button className="primary" type="raised" label="Raised" />
-<Button className="accent" type="raised" label="Raised" icon="assignment_turned_in" />
-<Button className="primary" type="floating" icon="add" />
-<Button className="accent mini" type="floating" icon="add" />
+class Test extends React.Component {
+  render () {
+    return (
+      <div>
+        <Button label="Flat button" />
+        <Button kind="raised" label="Raised" />
+        <Button kind="raised" label="Raised accent" accent icon="favorite" />
+        <Button className="primary" kind="floating" icon="add" />
+        <Button mini kind="floating" icon="add" accent />
+      </div>
+    );
+  }
+}
+
+return <Test />;
 ```
 
 ## Properties
