@@ -1,9 +1,9 @@
 import React from 'react';
 import { AppBar, Button } from 'react-toolbox';
 import { Link } from 'react-router';
-import Logo from '../../logo';
-import Navigation from '../../navigation';
-import PlaygroundArea from './playground_area';
+import Logo from '../../../logo';
+import Navigation from '../../../navigation';
+import PlaygroundArea from '../playground_area';
 import style from './appbar.scss';
 
 class MainAppBar extends React.Component {

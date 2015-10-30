@@ -1,15 +1,15 @@
 import React from 'react';
-import ToolboxComponents from './components';
 import { History } from 'react-router';
 import { List, ListItem } from 'react-toolbox';
-import style from './drawer.scss';
+import style from './drawer_components.scss';
+import components from '../modules/components';
 
 const MainDrawer = React.createClass({
   mixins: [History],
 
   renderDrawerItems () {
-    return Object.keys(ToolboxComponents).map((key) => {
-      const ToolboxComponent = ToolboxComponents[key];
+    return Object.keys(components).map((key) => {
+      const ToolboxComponent = components[key];
       const to = this.context.history.createHref(ToolboxComponent.path);
       let className = style.item;
       if (this.context.history.isActive(ToolboxComponent.path)) {

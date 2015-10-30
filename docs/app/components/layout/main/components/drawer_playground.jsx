@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Drawer } from 'react-toolbox';
-import style from './playground_area.scss';
+import style from './drawer_playground.scss';
 import Playground from '../../playground';
-import code from '../../../examples/example.txt';
+import code from '../../../../examples/example.txt';
 
 class PlaygroundArea extends React.Component {
   render () {

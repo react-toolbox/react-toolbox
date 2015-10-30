@@ -1,14 +1,14 @@
 import React from 'react';
-import MainAppBar from './appbar';
-import MainDrawer from './drawer';
+import Appbar from './components/appbar';
+import DrawerComponents from './components/drawer_components';
 import style from './style';
 
 const Main = (props) => {
   return (
     <div>
-      <MainAppBar />
+      <Appbar />
       <section className={style.content}>
-        <MainDrawer />
+        <DrawerComponents />
         { props.children }
       </section>
     </div>
