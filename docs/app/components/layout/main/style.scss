@@ -1,6 +1,7 @@
 @import "../../globals";
 @import "~react-toolbox/app_bar/config";
 
+$appbar-height: 11.2 * $unit;
 .content {
   display: flex;
   max-height: 100vh;
