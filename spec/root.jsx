@@ -1,5 +1,6 @@
 import React from 'react';
 import App from '../components/app';
+import AppBar from '../components/app_bar';
 import Autocomplete from './components/autocomplete';
 import Button from './components/button';
 import Card from './components/card';
@@ -22,8 +23,10 @@ import style from './style';
 
 const Root = () => (
   <App className={style.app}>
-    <h1>React Toolbox</h1>
-    <h3>Component Spec v0.10.20</h3>
+    <AppBar fixed flat className={style['app-bar']}>
+      <h1>React Toolbox</h1>
+      <span>Component Spec v0.10.20</span>
+    </AppBar>
 
     <Autocomplete />
     <Button />
