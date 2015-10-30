@@ -12,15 +12,22 @@ $preview-background: #fff;
 
 .vertical {
   flex-direction: column;
+  > .editor {
+    height: 60%;
+  }
+
+  > .preview {
+    height: 40%;
+  }
 }
 
 .horizontal {
   flex-direction: row;
   > .editor {
-    width: $editor-width;
+    width: 60%;
   }
 
   > .preview {
-    background: $preview-background;
+    width: 40%;
   }
 }

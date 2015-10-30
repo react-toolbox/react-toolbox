@@ -1,6 +1,6 @@
 import React from 'react';
-import Editor from '../editor';
-import Preview from '../preview';
+import Editor from './components/editor';
+import Preview from './components/preview';
 import style from './style';
 
 class Playground extends React.Component {
@@ -10,7 +10,7 @@ class Playground extends React.Component {
   };
 
   static defaultProps = {
-    layout: 'horizontal'
+    layout: 'vertical'
   };
 
   state = {

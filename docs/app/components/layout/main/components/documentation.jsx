@@ -1,9 +1,9 @@
 import React from 'react';
-import ToolboxComponents from './components';
-import style from './component.scss';
+import components from '../modules/components';
+import style from './documentation.scss';
 
 const Component = (props) => {
-  const html = { __html: ToolboxComponents[props.params.component].docs };
+  const html = { __html: components[props.params.component].docs };
   return (
     <div
       className={style.documentation}

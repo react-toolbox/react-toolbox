@@ -5,11 +5,7 @@ import code from '../../../examples/example.txt';
 const PlaygroundArea = () => {
   return (
     <section>
-      <h1>Playground</h1>
-      <p>
-        lorem ipsum...
-      </p>
-      <Playground codeText={code} />
+      <Playground codeText={code} layout='horizontal'/>
     </section>
   );
 };

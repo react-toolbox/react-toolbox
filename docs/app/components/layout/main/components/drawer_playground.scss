@@ -1,0 +1,17 @@
+@import "../../../globals";
+$drawer-shadow: 0 -4px 5px 0 rgba(0,0,0,.14),0 -1px 10px 0 rgba(0,0,0,.12), 0 -2px 4px -1px rgba(0,0,0,.2);
+// $drawer-shadow: 0 -10px red;
+.root {
+  z-index: $z-index-high;
+  background-color: $color-background;
+  transition: all $animation-duration $animation-ease;
+  &:not(.active) {
+    min-width: 0vw;
+    max-width: 0vw;
+  }
+  &.active {
+    min-width: 50vw;
+    max-width: 50vw;
+    box-shadow: $drawer-shadow;
+  }
+}
