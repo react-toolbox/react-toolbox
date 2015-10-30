@@ -12,7 +12,7 @@ $appbar-height: 11.2 * $unit;
 }
 
 .playground_button {
-  z-index: 1980;
+  z-index: $z-index-higher;
   position: absolute;
   right: $button-floating-height / 2;
   top: $appbar-height - ($button-floating-height / 2);

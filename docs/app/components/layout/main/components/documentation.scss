@@ -5,8 +5,6 @@ $documentation-h2-size: 2.4 * $unit;
 $documentation-h-offset: 4 * $unit;
 $documentation-v-offset: ($documentation-h-offset / 2);
 $documentation-code-background: rgba(0, 0, 0, .0588235);
-$documentation-code-font-family: Consolas, Monaco, 'Andale Mono', monospace;
-$documentation-code-font-size: 13px;
 
 .documentation {
   max-height: 100%;
@@ -44,8 +42,8 @@ $documentation-code-font-size: 13px;
   }
   pre {
     padding: $documentation-v-offset $documentation-h-offset;
-    font-family: $documentation-code-font-family;
-    font-size: $documentation-code-font-size;
+    font-family: $code-font-family;
+    font-size: $code-font-size;
     background-color: $documentation-code-background;
   }
   table {

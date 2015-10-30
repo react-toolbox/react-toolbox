@@ -6,10 +6,11 @@ $drawer-footer-border: solid 1px rgb(224, 224, 224);
 $drawer-width: 22 * $unit;
 
 .root {
-  z-index: $z-index-normal;
+  z-index: $z-index-high;
   display: flex;
   flex-direction: column;
   background-color: $color-background;
+  transition: all $animation-duration $animation-ease;
   &:not(.active_drawer) {
     min-width: 0;
     max-width: 0;
@@ -44,6 +45,7 @@ $drawer-width: 22 * $unit;
   font-size: $font-size-tiny;
   color: $color-text-secondary;
   border-top: $drawer-footer-border;
+  overflow: hidden;
   > span {
     display: block;
     margin-bottom: ($drawer-h-offset / 2);
