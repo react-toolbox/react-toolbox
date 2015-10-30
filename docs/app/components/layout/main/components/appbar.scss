@@ -1,6 +1,5 @@
 @import "../../../globals";
 @import "~react-toolbox/app_bar/config";
-@import "~react-toolbox/button/config";
 $appbar-height: 11.2 * $unit;
 $appbar-logo-size: 3.6 * $unit;
 $appbar-shadow: 0 1px rgba(255,255,255,.75);
@@ -35,10 +34,4 @@ $appbar-shadow: 0 1px rgba(255,255,255,.75);
       }
     }
   }
-}
-
-.playground-button {
-  position: absolute;
-  right: $button-floating-height / 2;
-  bottom: -($button-floating-height / 2);
 }

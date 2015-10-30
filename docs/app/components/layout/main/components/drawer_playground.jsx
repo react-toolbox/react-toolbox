@@ -1,26 +1,19 @@
 import React from 'react';
-import { Button, Drawer } from 'react-toolbox';
 import style from './drawer_playground.scss';
-import Playground from '../../playground';
+import Playground from '../../../playground';
 import code from '../../../../examples/example.txt';
 
 class PlaygroundArea extends React.Component {
   render () {
+    let className = style.root;
+    if (this.props.active) className += ` ${style.active}`;
+
     return (
-      <Drawer className={style.drawer} ref='drawer' type='right'>
-        <Button label='Close' onClick={this.hide} />
+      <aside className={className}>
         <Playground codeText={code} layout='vertical' />
-      </Drawer>
+      </aside>
     );
   }
-
-  show = () => {
-    this.refs.drawer.show();
-  };
-
-  hide = () => {
-    this.refs.drawer.hide();
-  };
 }
 
 export default PlaygroundArea;

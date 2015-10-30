@@ -7,6 +7,10 @@ import components from '../modules/components';
 const MainDrawer = React.createClass({
   mixins: [History],
 
+  propTypes: {
+    active: React.PropTypes.bool
+  },
+
   renderDrawerItems () {
     return Object.keys(components).map((key) => {
       const ToolboxComponent = components[key];
@@ -29,8 +33,11 @@ const MainDrawer = React.createClass({
   },
 
   render () {
+    let className = style.root;
+    if (this.props.active) className += ` ${style.active_drawer}`;
+
     return (
-      <aside className={style.root}>
+      <aside className={className}>
         <List className={style.list} selectable>
           { this.renderDrawerItems() }
         </List>

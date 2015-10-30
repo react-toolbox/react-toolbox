@@ -1,10 +1,19 @@
 @import "../../globals";
 @import "~react-toolbox/app_bar/config";
+@import "~react-toolbox/button/config";
 
 $appbar-height: 11.2 * $unit;
+
 .content {
   display: flex;
   max-height: 100vh;
   padding-top: $appbar-height;
   overflow: hidden;
+}
+
+.playground_button {
+  z-index: 1980;
+  position: absolute;
+  right: $button-floating-height / 2;
+  top: $appbar-height - ($button-floating-height / 2);
 }

@@ -1,5 +1,4 @@
 @import "../../../globals";
-
 $drawer-h-offset: 2.4 * $unit;
 $drawer-v-offset: 1.2 * $unit;
 $drawer-shadow: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);
@@ -9,11 +8,17 @@ $drawer-width: 22 * $unit;
 .root {
   z-index: $z-index-normal;
   display: flex;
-  min-width: $drawer-width;
-  max-width: $drawer-width;
   flex-direction: column;
   background-color: $color-background;
-  box-shadow: $drawer-shadow;
+  &:not(.active_drawer) {
+    min-width: 0;
+    max-width: 0;
+  }
+  &.active_drawer {
+    min-width: $drawer-width;
+    max-width: $drawer-width;
+    box-shadow: $drawer-shadow;
+  }
 }
 
 .list {
