@@ -1,4 +1,4 @@
-@import "../../../globals";
+@import "../globals";
 
 $documentation-h1-size: 3.4 * $unit;
 $documentation-h2-size: 2.4 * $unit;
@@ -6,13 +6,13 @@ $documentation-h-offset: 4 * $unit;
 $documentation-v-offset: ($documentation-h-offset / 2);
 $documentation-code-background: rgba(0, 0, 0, .0588235);
 
-.documentation {
+.markdown {
   max-height: 100%;
+  display: block;
   flex-grow: 1;
   overflow-y: scroll;
   font-size: $font-size-normal;
   color: $color-text;
-  background-color: $color-content;
   > *:not(pre) {
     margin: $documentation-v-offset $documentation-h-offset;
   }

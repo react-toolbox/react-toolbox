@@ -10,7 +10,7 @@
   background: $appbar-color;
 
   &:not(.flat) {
-    z-index: $z-index-higher;
+    z-index: $z-index-high;
     box-shadow: 0 2px 5px rgba(0,0,0,.26);
   }
 
@@ -19,7 +19,7 @@
     top: 0;
     right: 0;
     left: 0;
-    z-index: $z-index-higher;
+    z-index: $z-index-high;
   }
 
   a {

@@ -1,10 +1,10 @@
 import React from 'react';
 import { History } from 'react-router';
 import { List, ListItem } from 'react-toolbox';
-import style from './drawer_components.scss';
 import components from '../modules/components';
+import style from './navigation.scss';
 
-const MainDrawer = React.createClass({
+const MainNavigation = React.createClass({
   mixins: [History],
 
   propTypes: {
@@ -34,7 +34,7 @@ const MainDrawer = React.createClass({
 
   render () {
     let className = style.root;
-    if (this.props.active) className += ` ${style.active_drawer}`;
+    if (this.props.className) className += ` ${this.props.className}`;
 
     return (
       <aside className={className}>
@@ -52,4 +52,4 @@ const MainDrawer = React.createClass({
   }
 });
 
-export default MainDrawer;
+export default MainNavigation;

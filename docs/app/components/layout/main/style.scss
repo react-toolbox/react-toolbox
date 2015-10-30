@@ -1,19 +1,72 @@
-@import "../../globals";
+@import "./config";
 @import "~react-toolbox/app_bar/config";
 @import "~react-toolbox/button/config";
 
-$appbar-height: 11.2 * $unit;
-
-.content {
-  display: flex;
-  max-height: 100vh;
-  padding-top: $appbar-height;
-  overflow: hidden;
+.appbar {
+  padding-right: 8 * $unit;
 }
 
-.playground_button {
-  z-index: $z-index-higher;
-  position: absolute;
-  right: $button-floating-height / 2;
+.playground-button {
+  position: fixed;
   top: $appbar-height - ($button-floating-height / 2);
+  right: $button-floating-height / 2;
+  z-index: $z-index-higher;
+}
+
+.documentation {
+  position: fixed;
+  top: $appbar-height;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transition: all $animation-duration $animation-ease;
+}
+
+.navigation {
+  position: fixed;
+  top: $appbar-height;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-high;
+  box-shadow: $documentation-left-shadow;
+  transition: all $animation-duration $animation-ease;
+}
+
+.playground {
+  position: fixed;
+  top: $appbar-height;
+  right: 0;
+  bottom: 0;
+  z-index: $z-index-high;
+  width: $playground-width;
+  background: $color-background;
+  box-shadow: $documentation-right-shadow;
+  transition: all $animation-duration $animation-ease;
+}
+
+.root {
+  &:not(.with-playground) {
+    > .playground {
+      right: - $playground-width;
+    }
+    > .documentation {
+      padding-right: 0;
+      padding-left: $navigation-width;
+    }
+    > .navigation {
+      transform: translateX(0);
+    }
+  }
+  &.with-playground {
+    > .playground {
+      right: 0;
+    }
+    > .documentation {
+      padding-right: $playground-width;
+      padding-left: 0;
+    }
+    > .navigation {
+      transform: translateX(- 100%);
+    }
+  }
 }
