@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Button } from 'react-toolbox';
+import { Button } from 'react-toolbox';
 import Appbar from './components/appbar';
 import DrawerComponents from './components/drawer_components';
 import DrawerPlayground from './components/drawer_playground';
@@ -12,7 +12,7 @@ class Main extends React.Component {
   };
 
   handlerPlayGroundClick = () => {
-    this.setState({ playground: !this.state.playground})
+    this.setState({ playground: !this.state.playground });
   }
 
   render () {
