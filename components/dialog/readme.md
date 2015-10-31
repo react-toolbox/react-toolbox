@@ -36,7 +36,7 @@ class DialogTest extends React.Component {
 ## Properties
 
 | Name              | Type          | Default         | Description|
-|:-                 |:-:            | :-              |:-|
+|:-----|:-----:|:-----|:-----|
 | actions       | Array         |    `[]`         | A array of objects representing the buttons for the dialog navigation area. The properties will be transferred to the buttons.|
 | active        | Boolean       |  `false`        | If true, the dialog will be active by default.|
 | className     | String        |     `''`        | Sets a class to give customized styles to the dialog.|
