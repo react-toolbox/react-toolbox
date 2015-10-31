@@ -1,0 +1,41 @@
+@import "../config";
+
+.root {
+  display: flex;
+  width: $navigation-width;
+  flex-direction: column;
+  background-color: $color-background;
+}
+
+.list {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.item {
+  padding: $navigation-v-padding $navigation-h-padding;
+  > span > span {
+    font-size: $font-size-small;
+    font-weight: $font-weight-semi-bold;
+  }
+}
+
+.active {
+  background: $color-divider;
+}
+
+.footer {
+  flex-grow: 0;
+  padding: $navigation-h-padding;
+  overflow: hidden;
+  font-size: $font-size-tiny;
+  color: $color-text-secondary;
+  border-top: $navigation-footer-border;
+  > span {
+    display: block;
+    margin-bottom: ($navigation-h-padding / 2);
+    > a {
+      color: $color-primary-dark;
+    }
+  }
+}

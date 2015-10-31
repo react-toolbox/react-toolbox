@@ -1,0 +1,11 @@
+const ButtonsTest = () => (
+  <div>
+    <Button label="Flat button" />
+    <Button kind="raised" label="Raised" />
+    <Button kind="raised" label="Raised accent" accent icon="favorite" />
+    <Button className="primary" kind="floating" icon="add" />
+    <Button mini kind="floating" icon="add" accent />
+  </div>
+);
+
+return <ButtonsTest />

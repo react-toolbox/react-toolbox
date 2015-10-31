@@ -1,3 +1,4 @@
+// Documentation files
 import AppBar from 'react-toolbox/app_bar/readme';
 import Autocomplete from 'react-toolbox/autocomplete/readme';
 import Button from 'react-toolbox/button/readme';
@@ -22,6 +23,10 @@ import Switch from 'react-toolbox/switch/readme';
 import Tabs from 'react-toolbox/tabs/readme';
 import TimePicker from 'react-toolbox/time_picker/readme';
 
+// Examples for the Playground
+import ButtonExample1 from './examples/button_example_1.txt';
+import AutocompleteExample1 from './examples/autocomplete_example_1.txt';
+
 export default {
   app_bar: {
     name: 'App Bar',
@@ -31,12 +36,14 @@ export default {
   autocomplete: {
     name: 'Autocomplete',
     docs: Autocomplete,
-    path: '/components/autocomplete'
+    path: '/components/autocomplete',
+    examples: [AutocompleteExample1]
   },
   button: {
     name: 'Button',
     docs: Button,
-    path: '/components/button'
+    path: '/components/button',
+    examples: [ButtonExample1]
   },
   card: {
     name: 'Card',

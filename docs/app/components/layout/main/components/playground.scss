@@ -1,0 +1,8 @@
+@import "../config";
+
+.root {
+  width: $playground-width;
+  height: 100%;
+  overflow-y: auto;
+  background-color: $color-background;
+}

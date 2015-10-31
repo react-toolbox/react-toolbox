@@ -1,0 +1,19 @@
+const countries = {
+  'EN-gb': 'England',
+  'ES-es': 'Spain',
+  'TH-th': 'Thailand',
+  'EN-en': 'USA'
+};
+
+const selected = ['ES-es', 'EN-gb'];
+
+const AutocompleteTest = () => (
+  <Autocomplete
+    label="Choose a country"
+    placeholder="Elements is up to you..."
+    dataSource={countries}
+    value={selected}
+  />
+)
+
+return <AutocompleteTest />

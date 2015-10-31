@@ -52,7 +52,6 @@ class Form extends React.Component {
     for (const attr of this.state.attributes) {
       if (attr.required && value[attr.ref] !== undefined && value[attr.ref].trim() === '') {
         is_valid = false;
-        console.log('NOT VALUD');
         if (this.refs[attr.ref].setError) this.refs[attr.ref].setError('Requited field');
         break;
       }

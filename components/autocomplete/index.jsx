@@ -212,10 +212,6 @@ class Autocomplete extends React.Component {
     }
     this.setState({values, query: this.props.multiple ? '' : values.get(data[0])});
   }
-
-  setError (data) {
-    this.input.setError(data);
-  }
 }
 
 export default Autocomplete;

@@ -6,16 +6,13 @@ import { createHashHistory } from 'history';
 
 import Home from './components/layout/home';
 import Main from './components/layout/main';
-import Playground from './components/layout/playground';
-import Documentation from './components/layout/main/components/documentation';
 
 ReactDOM.render((
-  <Router history={createHashHistory()}>
+  <Router history={createHashHistory({queryKey: false})}>
     <Route component={App}>
       <Route path="/" component={Home} />
-      <Route component={Main}>
-        <Route path="/components/:component" component={Documentation} />
-        <Route path="/playground" component={Playground} />
+      <Route path="/components" component={Main}>
+        <Route path=":component" />
       </Route>
       <IndexRoute component={Home}/>
     </Route>

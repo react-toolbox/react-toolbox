@@ -1,37 +1,93 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Button } from 'react-toolbox';
-import Appbar from './components/appbar';
-import DrawerComponents from './components/drawer_components';
-import DrawerPlayground from './components/drawer_playground';
+import Appbar from '../../../components/appbar';
+import Markdown from '../../../components/markdown';
+import Playground from './components/playground';
+import MainNavigation from './components/navigation';
+import BaseDocs from './modules/components.md';
+import components from './modules/components.js';
 import style from './style';
 
+const LoadExampleButton = (props) => {
+  return (
+    <Button
+      accent
+      icon='code'
+      label='Load in playground'
+      onClick={props.onClick}
+    />
+  );
+};
+
 class Main extends React.Component {
+  LOAD_EXAMPLE_CLASS = 'js-load-in-playground';
 
   state = {
     playground: false
   };
 
+<<<<<<< HEAD
   handlerPlayGroundClick = () => {
     this.setState({ playground: !this.state.playground });
+=======
+  componentDidMount () {
+    this.renderExampleLoaders();
+  }
+
+  componentDidUpdate () {
+    this.renderExampleLoaders();
+  }
+
+  handlePlayGroundClick = () => {
+    this.setState({ playground: !this.state.playground});
+  };
+
+  handlePlaygroundLoad = (code) => {
+    this.refs.playground.loadCode(code);
+    this.setState({playground: true});
+  };
+
+  renderExampleLoaders () {
+    const examples = document.getElementsByClassName(this.LOAD_EXAMPLE_CLASS);
+    Array.prototype.forEach.call(examples, (exampleNode, idx) => {
+      const exampleCode = components[this.props.params.component].examples[idx];
+      ReactDOM.render(
+        <LoadExampleButton onClick={this.handlePlaygroundLoad.bind(this, exampleCode)} />,
+        exampleNode
+      );
+    });
+  }
+
+  resolveMarkdown () {
+    const PLACEHOLDER = /<!-- example -->/g;
+    const NODE = `<span class='${style['load-button']} ${this.LOAD_EXAMPLE_CLASS}'></span>`;
+    if (this.props.params.component) {
+      return components[this.props.params.component].docs.replace(PLACEHOLDER, NODE);
+    } else {
+      return BaseDocs;
+    }
+>>>>>>> master
   }
 
   render () {
-    console.log('aaa', this.state.playground);
+    let className = style.root;
+    const docs = this.resolveMarkdown();
+    if (this.state.playground) className += ` ${style['with-playground']}`;
+
     return (
-      <div>
-        <Appbar />
+      <div className={className}>
+        <Appbar className={style.appbar}/>
         <Button
           accent
-          className={style.playground_button}
+          className={style['playground-button']}
           icon={this.state.playground ? 'close' : 'code'}
           kind='floating'
-          onClick={this.handlerPlayGroundClick}
+          onClick={this.handlePlayGroundClick}
         />
-        <section className={style.content}>
-          <DrawerComponents active={!this.state.playground}/>
-          { this.props.children }
-          <DrawerPlayground active={this.state.playground} />
-        </section>
+        <MainNavigation className={style.navigation} />
+        <Markdown className={style.documentation} markdown={docs}/>
+        <Playground ref='playground' className={style.playground} />
       </div>
     );
   }
