@@ -20,7 +20,7 @@ const TestButtons = () => (
 ## Properties
 
 | Name      | Type      | Default         | Description|
-|:-         |:-:        | :-              |:-|
+|:-         |:-:        |:-              |:-|
 | accent    | `Bool`    | `false` | Indicates if the button should have accent color.|
 | className | `String`  | `''` | Set a class to style the Component.|
 | disabled  | `Boolean` | `false` | If true, component will be disabled.|
