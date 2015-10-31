@@ -41,7 +41,7 @@ class Main extends React.Component {
 
   handlePlaygroundLoad = (code) => {
     this.refs.playground.loadCode(code);
-    this.setState({ playground: !this.state.playground});
+    this.setState({playground: true});
   };
 
   renderExampleLoaders () {

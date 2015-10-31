@@ -1,51 +1,64 @@
 # Autocomplete
 
+An input field with a set of predeterminated values and labels. When it's focused it shows a list of hints that are filtered as the user types content. They can be simple or multiple depending on the amount of values that can be selected. The opening direction is determinated at opening time depending on the current position.
+
+<!-- example -->
 ```
-var Autocomplete = require('react-toolbox/components/autocomplete');
+import Autocomplete from 'react-toolbox/autocomplete';
 
-var data = [
-   { '1': 'Never' },
-   { '2': 'Every Night' },
-   { '3': 'Weeknights' },
-   { '4': 'Weekends' },
-   { '5': 'Weekly' },
-];
+const countries = {
+  'EN-gb': 'England',
+  'ES-es': 'Spain',
+  'TH-th': 'Thailand',
+  'EN-en': 'USA'
+};
 
-<Autocomplete label="Period" dataSource={data} value='4' />
+const selected = ['ES-es', 'EN-gb'];
+
+const AutocompleteTest = () => (
+  <Autocomplete
+    label="Choose a country"
+    placeholder="Elements is up to you..."
+    dataSource={countries}
+    value={selected}
+  />
+)
 ```
 
 ## Properties
 
 | Name              | Type          | Default         | Description|
 |:-                 |:-:            | :-              |:-|
-| **className**     | String        |                 | Sets the class-styles of the Component.|
-| **dataSource**    | Object        |                 | JSON data representing all items in the component.|
-| **disabled**      | Boolean       |                 | If true, component will be disabled.|
-| **error**         | String        |                 | Sets the error string.|
-| **label**         | String        |                 | The text string to use for the floating label element.|
-| **multiple**      | Bool          | true            | If true, component can hold multiple values.|
-| **onChange**      | Function      |                 | Callback function that is fired when the components's value changes.|
-| **required**      | Boolean       |                 | If true, component needs has a value.|
-| **value**         | String        |                 | Default value using JSON data.|
+| className     | `String`      | `''`            | Sets a class to style of the Component.|
+| dataSource    | `Object` or `Array`   |           | Object of key/values or array representing all items suggested.|
+| disabled      | `Bool`        |  `false`         | If true, component will be disabled.|
+| error         | `String`      |         | Sets the error string for the internal input element.|
+| label         | `String`      |         | The text string to use for the floating label element.|
+| multiple      | `Bool`        | `true`          | If true, component can hold multiple values.|
+| onChange      | `Function`    |                 | Callback function that is fired when the components's value changes.|
+| required      | `Boolean`     |                 | If true, component input is set as required.|
+| value         | `String` or `Array`    |        | Default value to initialize the component.|
 
 ## Methods
 
-#### getValue
-Returns the value of the input.
+This component has state to control how is it rendered and the values currently selected. It exposes the following instance methods:
 
-```
-input_instance.getValue();
-```
+- `getValue` is used to retrieve the current value.
+- `setValue` to force a new value.
 
-#### setValue
-Sets the value of the input element.
+## Customization
 
-```
-input_instance.setValue(newValue);
-```
+The component has a complex structure that can be customized by giving a custom `className` and targeting `react-toolbox` data attributes. The structure is similar to:
 
-#### setError
-
-```
-input_instance.setError("Something is wrong...");
+```html
+<div data-react-toolbox="autocomplete">
+  <label data-role="label"></label>
+  <ul data-role="selections">
+    <li data=role="selection"></li>
+  </ul>
+  <input data-role="input" />
+  <ul data-role="suggestions">
+    <li data=role="suggestion"></li>
+  </ul>
+</div>
 ```

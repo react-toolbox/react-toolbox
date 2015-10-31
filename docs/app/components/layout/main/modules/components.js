@@ -25,6 +25,7 @@ import TimePicker from 'react-toolbox/time_picker/readme';
 
 // Examples for the Playground
 import ButtonExample1 from './examples/button_example_1.txt';
+import AutocompleteExample1 from './examples/autocomplete_example_1.txt';
 
 export default {
   app_bar: {
@@ -35,7 +36,8 @@ export default {
   autocomplete: {
     name: 'Autocomplete',
     docs: Autocomplete,
-    path: '/components/autocomplete'
+    path: '/components/autocomplete',
+    examples: [AutocompleteExample1]
   },
   button: {
     name: 'Button',
