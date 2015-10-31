@@ -39,13 +39,13 @@ class DialogTest extends React.Component {
 |:-                 |:-:            | :-              |:-|
 | actions       | Array         |    `[]`         | A array of objects representing the buttons for the dialog navigation area. The properties will be transferred to the buttons.|
 | active        | Boolean       |  `false`        | If true, the dialog will be active by default.|
-| className     | String        |     `''`        | Sets a class to give customized styles to the time picker.|
+| className     | String        |     `''`        | Sets a class to give customized styles to the dialog.|
 | title         | String        |                 | The text string to use as standar title of the dialog.|
 | type          | String        |  `normal`       | Used to determine the size of the dialog. It can be `small`, `normal` or `large`. |
 
 ## Methods
 
-The Dialog has state to determine if it is being shown or not. It exposes method to show and hide:
+The Dialog has state to determine if it is being shown or not. It exposes methods to show and hide:
 
 - `show` is used to show the dialog.
 - `hide` is used to hide the dialog.
