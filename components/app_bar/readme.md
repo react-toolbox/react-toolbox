@@ -18,7 +18,7 @@ Coming soon, the `AppBar` component will support arbitrary content attributes fo
 ## Properties
 
 | Name          | Type    | Default  | Description|
-|:-             |:-:      | :-       |:-|
-| **className** | String  | `''`     | Set a class for the root component.|
-| **flat**      | Bool    | `false`  | If true, the AppBar shows a shadow.|
-| **fixed**     | Bool    | `false`  | Determine if the bar should have position `fixed` or `relative`.|
+|:-----|:-----|:-----|:-----|
+| `className` | `String`  | `''`     | Set a class for the root component.|
+| `flat`      | `Bool`    | `false`  | If true, the AppBar shows a shadow.|
+| `fixed`     | `Bool`    | `false`  | Determine if the bar should have position `fixed` or `relative`.|

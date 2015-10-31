@@ -28,16 +28,16 @@ const AutocompleteTest = () => (
 ## Properties
 
 | Name              | Type          | Default         | Description|
-|:-                 |:-:            | :-              |:-|
-| className     | `String`      | `''`            | Sets a class to style of the Component.|
-| dataSource    | `Object` or `Array`   |           | Object of key/values or array representing all items suggested.|
-| disabled      | `Bool`        |  `false`         | If true, component will be disabled.|
-| error         | `String`      |         | Sets the error string for the internal input element.|
-| label         | `String`      |         | The text string to use for the floating label element.|
-| multiple      | `Bool`        | `true`          | If true, component can hold multiple values.|
-| onChange      | `Function`    |                 | Callback function that is fired when the components's value changes.|
-| required      | `Boolean`     |                 | If true, component input is set as required.|
-| value         | `String` or `Array`    |        | Default value to initialize the component.|
+|:-----|:-----|:-----|:-----|
+| `className`     | `String`      | `''`            | Sets a class to style of the Component.|
+| `dataSource`    | `Object` or `Array`   |           | Object of key/values or array representing all items suggested.|
+| `disabled`      | `Bool`        |  `false`         | If true, component will be disabled.|
+| `error`         | `String`      |         | Sets the error string for the internal input element.|
+| `label`         | `String`      |         | The text string to use for the floating label element.|
+| `multiple`      | `Bool`        | `true`          | If true, component can hold multiple values.|
+| `onChange`      | `Function`    |                 | Callback function that is fired when the components's value changes.|
+| `required`      | `Boolean`     |                 | If true, component input is set as required.|
+| `value`         | `String` or `Array`    |        | Default value to initialize the component.|
 
 ## Methods
 

@@ -15,9 +15,9 @@ const DatePickerTest = () => (
 ## Properties
 
 | Name          | Type    | Default         | Description|
-| ------------- |:-------:|:--------------- |:---------- |
-| className     | String        |     `''`            | Sets a class to give customized styles to the time picker.|
-| value         | Date    |                 | Date object with the currently selected date. |
+|:-----|:-----|:-----|:-----|
+| `className`     | `String`        |     `''`            | Sets a class to give customized styles to the time picker.|
+| `value`         | `Date`    |                 | Date object with the currently selected date. |
 
 ## Methods
 

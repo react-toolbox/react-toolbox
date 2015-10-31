@@ -28,11 +28,11 @@ class DrawerTest extends React.Component {
 ## Properties
 
 | Name              | Type          | Default         | Description|
-|:-                 |:-:            | :-              |:-|
-| active        | Boolean       |  `false`        | If true, the drawer will be active by default.|
-| className     | String        |     `''`        | Sets a class to give customized styles to the drawer.|
-| hideable      | Bool          | `true`           | If true, the drawer will be hidden by clicking the overlay.|
-| type          | String        | `left`          | Type of drawer. It can be left or right to display the drawer on the left or right side of the screen.|
+|:-----|:-----|:-----|:-----|
+| `active`        | `Boolean`       |  `false`        | If true, the drawer will be active by default.|
+| `className`     | `String`        |     `''`        | Sets a class to give customized styles to the drawer.|
+| `hideable`      | `Bool`          | `true`           | If true, the drawer will be hidden by clicking the overlay.|
+| `type`          | `String`        | `left`          | Type of drawer. It can be left or right to display the drawer on the left or right side of the screen.|
 
 ## Methods
 
