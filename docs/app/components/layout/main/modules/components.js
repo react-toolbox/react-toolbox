@@ -31,6 +31,7 @@ import CheckboxExample1 from './examples/checkbox_example_1.txt';
 import DatePickerExample1 from './examples/datepicker_example_1.txt';
 import DialogExample1 from './examples/dialog_example_1.txt';
 import DrawerExample1 from './examples/drawer_example_1.txt';
+import DrodpownExample1 from './examples/dropdown_example_1.txt';
 import TimePickerTest from './examples/timepicker_example_1.txt';
 
 export default {
@@ -84,7 +85,8 @@ export default {
   dropdown: {
     name: 'Dropdown',
     docs: Dropdown,
-    path: '/components/dropdown'
+    path: '/components/dropdown',
+    examples: [DrodpownExample1]
   },
   font_icon: {
     name: 'Font Icon',
