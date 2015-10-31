@@ -27,10 +27,6 @@ class Main extends React.Component {
     playground: false
   };
 
-<<<<<<< HEAD
-  handlerPlayGroundClick = () => {
-    this.setState({ playground: !this.state.playground });
-=======
   componentDidMount () {
     this.renderExampleLoaders();
   }
@@ -67,7 +63,6 @@ class Main extends React.Component {
     } else {
       return BaseDocs;
     }
->>>>>>> master
   }
 
   render () {
