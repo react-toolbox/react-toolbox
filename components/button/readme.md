@@ -1,43 +1,34 @@
 # Button
 
-A button clearly communicates what action will occur when the user touches it. It consists of text, an image, or both, designed in accordance with your app’s color theme.
+A [button](https://www.google.com/design/spec/components/buttons.html) clearly communicates what action will occur when the user touches it. It consists of text, an image, or both, designed in accordance with your app’s color theme.
 
 <!-- example -->
 ```
-class Test extends React.Component {
-  render () {
-    return (
-      <div>
-        <Button label="Flat button" />
-        <Button kind="raised" label="Raised" />
-        <Button kind="raised" label="Raised accent" accent icon="favorite" />
-        <Button className="primary" kind="floating" icon="add" />
-        <Button mini kind="floating" icon="add" accent />
-      </div>
-    );
-  }
-}
+import Button from 'react-toolbox/button';
 
-return <Test />;
+const TestButtons = () => (
+  <div>
+    <Button label="Flat button" />
+    <Button kind="raised" label="Raised" />
+    <Button kind="raised" label="Raised accent" accent icon="favorite" />
+    <Button className="primary" kind="floating" icon="add" />
+    <Button mini kind="floating" icon="add" accent />
+  </div>
+);
 ```
 
 ## Properties
 
-| Name              | Type          | Default         | Description|
-|:-                 |:-:            | :-              |:-|
-| **className**     | String        |                 | Set the class-styles of the Component.|
-| **disabled**      | Boolean       |                 | If true, component will be disabled.|
-| **icon**          | String        |                 | Default value using JSON data.|
-| **label**         | String        |                 | The text string to use for the floating label element.|
-| **loading**       | Boolean       |                 | If true, component will be disabled and show a loading animation.|
-| **ripple**        | Boolean       |                 | If true, component will have a ripple effect on click.|
-| **type**          | String        | "flat"          | Type of the component, overwrite this property if you need set a different stylesheet.|
-
-## Methods
-
-#### loading
-If true, component will be disabled and show a loading animation.
-
-```
-input_instance.loading(true);
-```
+| Name      | Type      | Default         | Description|
+|:-         |:-:        | :-              |:-|
+| accent    | `Bool`    | `false` | Indicates if the button should have accent color.|
+| className | `String`  | `''` | Set a class to style the Component.|
+| disabled  | `Boolean` | `false` | If true, component will be disabled.|
+| icon      | `String`  |  | Value of the icon (See icon component). |
+| kind      | `String`  | `flat`  | Type of the component, overwrite this property if you need set a different stylesheet.|
+| label     | `String`  |  | The text string to use for the name of the button.|
+| loading   | `Boolean`  | `false` | If true, component will be disabled and show a loading animation.|
+| mini  | `Boolean` | `false`  | To be used with floating button. If true the button will be smaller.|
+| onClick  | `Function` |  | Callback called when the button is clicked.|
+| primary  | `false` | | If true, component will have the primary color.|
+| ripple  | `Boolean`  | `true`    | If true, component will have a ripple effect on click.|
