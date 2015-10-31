@@ -29,6 +29,7 @@ import AutocompleteExample1 from './examples/autocomplete_example_1.txt';
 import CardExample1 from './examples/card_example_1.txt';
 import CheckboxExample1 from './examples/checkbox_example_1.txt';
 import DatePickerExample1 from './examples/datepicker_example_1.txt';
+import TimePickerTest from './examples/timepicker_example_1.txt';
 
 export default {
   app_bar: {
@@ -149,6 +150,7 @@ export default {
   time_picker: {
     name: 'Time Picker',
     docs: TimePicker,
-    path: '/components/time_picker'
+    path: '/components/time_picker',
+    examples: [TimePickerTest]
   }
 };

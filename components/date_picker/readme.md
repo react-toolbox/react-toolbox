@@ -16,7 +16,7 @@ const DatePickerTest = () => (
 
 | Name          | Type    | Default         | Description|
 | ------------- |:-------:|:--------------- |:---------- |
-| className     | String        |     `''`            | Sets a class to give customized styles to the checkbox field.|
+| className     | String        |     `''`            | Sets a class to give customized styles to the time picker.|
 | value         | Date    |                 | Date object with the currently selected date. |
 
 ## Methods
