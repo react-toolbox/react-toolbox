@@ -1,40 +1,52 @@
 # Dialog
 
-```
-var Dialog  = require('react-toolbox/components/dialog');
-var actions = [
-  { caption: "Cancel", style: "transparent", onClick: this.onClose }
-,
-  { caption: "Save", style: "transparent", onClick: this.onSave }
-]
+[Dialogs](https://www.google.com/design/spec/components/dialogs.html) contain text and UI controls focused on a specific task. They inform users about critical information, require users to make decisions, or involve multiple tasks. You would need an additional component to take actions and display or hide the dialog.
 
-<Dialog title='Hello World' actions={actions}>
-  /* -- more content -- */
-</Dialog>
+<!-- example -->
+```
+import Dialog from 'react-toolbox/dialog';
+
+class DialogTest extends React.Component {
+  showDialog = () => {
+    this.refs.dialog.show();
+  };
+
+  closeDialog = () => {
+    this.refs.dialog.hide();
+  };
+
+  actions = [
+    { label: "Cancel", onClick: this.closeDialog },
+    { label: "Save", onClick: this.closeDialog }
+  ];
+
+  render () {
+    return (
+      <div>
+        <Button label='Show my dialog' onClick={this.showDialog} />
+        <Dialog ref='dialog' title='My awesome dialog' actions={this.actions}>
+          <p>Here you can add arbitrary content. Components like Pickers are using dialogs now.</p>
+        </Dialog>
+      </div>
+    );
+  }
+}
 ```
 
 ## Properties
 
 | Name              | Type          | Default         | Description|
 |:-                 |:-:            | :-              |:-|
-| **actions**       | Array         |                 | A array of actions callbacks for the component.|
-| **active**        | Boolean       |                 | If true, component will be shows.|
-| **className**     | String        | "normal"        | Set the class-styles of the Component.|
-| **title**         | String        |                 | The text string to use for the title of the component.|
-| **type**          | String        |                 | Type of the component, overwrite this property if you need set a different stylesheet.|
+| actions       | Array         |    `[]`         | A array of objects representing the buttons for the dialog navigation area. The properties will be transferred to the buttons.|
+| active        | Boolean       |  `false`        | If true, the dialog will be active by default.|
+| className     | String        |     `''`        | Sets a class to give customized styles to the time picker.|
+| title         | String        |                 | The text string to use as standar title of the dialog.|
+| type          | String        |  `normal`       | Used to determine the size of the dialog. It can be `small`, `normal` or `large`. |
 
 ## Methods
 
-#### show
-Shows the dialog.
+The Dialog has state to determine if it is being shown or not. It exposes method to show and hide:
 
-```
-dialog_instance.show();
-```
+- `show` is used to show the dialog.
+- `hide` is used to hide the dialog.
 
-#### hide
-Hides the dialog.
-
-```
-dialog_instance.hide();
-```

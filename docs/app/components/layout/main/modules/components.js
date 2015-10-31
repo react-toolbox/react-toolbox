@@ -29,6 +29,7 @@ import AutocompleteExample1 from './examples/autocomplete_example_1.txt';
 import CardExample1 from './examples/card_example_1.txt';
 import CheckboxExample1 from './examples/checkbox_example_1.txt';
 import DatePickerExample1 from './examples/datepicker_example_1.txt';
+import DialogExample1 from './examples/dialog_example_1.txt';
 import TimePickerTest from './examples/timepicker_example_1.txt';
 
 export default {
@@ -70,7 +71,8 @@ export default {
   dialog: {
     name: 'Dialog',
     docs: Dialog,
-    path: '/components/dialog'
+    path: '/components/dialog',
+    examples: [DialogExample1]
   },
   drawer: {
     name: 'Drawer',
