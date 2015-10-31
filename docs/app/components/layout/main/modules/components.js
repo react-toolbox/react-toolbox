@@ -9,7 +9,6 @@ import Dialog from 'react-toolbox/dialog/readme';
 import Drawer from 'react-toolbox/drawer/readme';
 import Dropdown from 'react-toolbox/dropdown/readme';
 import FontIcon from 'react-toolbox/font_icon/readme';
-import Form from 'react-toolbox/form/readme';
 import Input from 'react-toolbox/input/readme';
 import Link from 'react-toolbox/link/readme';
 import List from 'react-toolbox/list/readme';
@@ -94,11 +93,6 @@ export default {
     docs: FontIcon,
     path: '/components/font_icon',
     examples: [FontIconExample1]
-  },
-  form: {
-    name: 'Form',
-    docs: Form,
-    path: '/components/form'
   },
   input: {
     name: 'Input',
