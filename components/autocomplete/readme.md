@@ -1,6 +1,6 @@
 # Autocomplete
 
-An input field with a set of predeterminated values and labels. When it's focused it shows a list of hints that are filtered as the user types content. They can be simple or multiple depending on the amount of values that can be selected. The opening direction is determinated at opening time depending on the current position.
+An input field with a set of predeterminated labeled values. When it's focused it shows a list of hints that are filtered by label as the user types. They can be simple or multiple depending on the amount of values that can be selected. The opening direction is determinated at opening time depending on the current position.
 
 <!-- example -->
 ```
@@ -46,9 +46,9 @@ This component has state to control how is it rendered and the values currently 
 - `getValue` is used to retrieve the current value.
 - `setValue` to force a new value.
 
-## Customization
+## Structure
 
-The component has a complex structure that can be customized by giving a custom `className` and targeting `react-toolbox` data attributes. The structure is similar to:
+The component has a complex structure that can be customized by giving a custom `className` and targeting `data-role` attributes. The structure is similar to:
 
 ```html
 <div data-react-toolbox="autocomplete">

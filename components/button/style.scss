@@ -16,10 +16,11 @@
   border: 0;
   outline: none;
   transition: box-shadow .2s $animation-curve-fast-out-linear-in,
-              background-color .2s $animation-curve-default,
-              color .2s $animation-curve-default;
+                background-color .2s $animation-curve-default,
+                color .2s $animation-curve-default;
   align-content: center;
   justify-content: center;
+
   &::-moz-focus-inner {
     border: 0;
   }
@@ -105,8 +106,8 @@
   }
 
   [data-react-toolbox="ripple"] {
-    border-radius: 50%;
     overflow: hidden;
+    border-radius: 50%;
   }
 }
 

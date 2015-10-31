@@ -32,3 +32,17 @@ const TestButtons = () => (
 | onClick  | `Function` |  | Callback called when the button is clicked.|
 | primary  | `false` | | If true, component will have the primary color.|
 | ripple  | `Boolean`  | `true`    | If true, component will have a ripple effect on click.|
+
+Also, any additional properties will be directly transferred to the `button` tag.
+
+## Structure
+
+The inner markup depends on the given properties. It can result in:
+
+```
+<button data-react-toolbox="button">
+  <span data-react-toolbox="ripple"></span>
+  <span data-react-toolbox="icon"></span>
+  <abbr>Raised accent</abbr>
+</button>
+```

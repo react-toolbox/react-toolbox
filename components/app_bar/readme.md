@@ -6,14 +6,14 @@ The app bar is a special kind of toolbar that’s used for branding, navigation,
 import AppBar from 'react-toolbox/app_bar';
 
 const AppBarTest = () => (
-  <AppBar className="my-site-bar" fixed flat>
+  <AppBar fixed flat>
     <a href="/home">React Toolbox Docs</a>
     <Navigation />
   </AppBar>
 );
 ```
 
-Coming soon, the `AppBar` component will support arbitrary content attributes for left and right content and a title.
+Coming soon, the `AppBar` component will support arbitrary content attributes for left and right content and a title, for now it's just a wrapper.
 
 ## Properties
 
