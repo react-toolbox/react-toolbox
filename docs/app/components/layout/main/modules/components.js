@@ -28,6 +28,7 @@ import ButtonExample1 from './examples/button_example_1.txt';
 import AutocompleteExample1 from './examples/autocomplete_example_1.txt';
 import CardExample1 from './examples/card_example_1.txt';
 import CheckboxExample1 from './examples/checkbox_example_1.txt';
+import DatePickerExample1 from './examples/datepicker_example_1.txt';
 
 export default {
   app_bar: {
@@ -62,7 +63,8 @@ export default {
   date_picker: {
     name: 'Date Picker',
     docs: DatePicker,
-    path: '/components/date_picker'
+    path: '/components/date_picker',
+    examples: [DatePickerExample1]
   },
   dialog: {
     name: 'Dialog',

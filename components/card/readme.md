@@ -36,21 +36,3 @@ const TestCards = () => (
 | text          | String        |                 | Sets a complementary text display as a card description.|
 | title         | String        |           | Sets the title of the card.|
 | type          | String        | `default`          | Type of the component to display general modifications. It can be `wide` for a larger card, `image` if it's an image card or `event` which shows just a title on top. |
-
-## Structure
-
-This can generate different structures depending on the props. A complicated one can be as follows:
-
-```html
-<div data-react-toolbox="card">
-  <figure>
-    <h5 data-role='title'>Title</h5>
-    <small data-role='subtitle'>Subtitle</small>
-  </figure>
-  <p data-role='text'>Description</p>
-  <nav data-role='actions'>
-    <button data-react-toolbox="button">...</button>
-    <button data-react-toolbox="button">...</button>
-  </nav>
-</div>
-```

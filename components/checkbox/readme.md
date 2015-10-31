@@ -15,16 +15,6 @@ const TestCheckbox = () => (
 );
 ```
 
-## Methods
-
-This component has state to control its value and how is it rendered. It exposes the following instance methods:
-
-- `getValue` is used to retrieve the current value.
-- `setValue` to force a new value.
-- `blur` to blur the input.
-- `focus` to focus the input.
-
-
 ## Properties
 
 | Name              | Type          | Default         | Description|
@@ -37,6 +27,15 @@ This component has state to control its value and how is it rendered. It exposes
 | onBlur       | Function       |                | Callback called when the checkbox is blurred.|
 | onChange       | Function       |                | Callback called when the checkbox value is changed.|
 | onFocus       | Function       |                | Callback called when the checkbox is focused |
+
+## Methods
+
+This component has state to control its value and how is it rendered. It exposes the following instance methods:
+
+- `getValue` is used to retrieve the current value.
+- `setValue` to force a new value.
+- `blur` to blur the input.
+- `focus` to focus the input.
 
 ## Structure
 
