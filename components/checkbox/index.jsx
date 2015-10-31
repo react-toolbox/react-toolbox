@@ -66,10 +66,10 @@ class Checkbox extends React.Component {
           onChange={this.handleChange}
           onClick={this.handleInputClick}
         />
-        <span role='checkbox' className={checkboxClassName} onMouseDown={this.handleMouseDown}>
-          <Ripple ref='ripple' role='ripple' className={style.ripple} spread={3} centered />
+        <span data-role='checkbox' className={checkboxClassName} onMouseDown={this.handleMouseDown}>
+          <Ripple ref='ripple' data-role='ripple' className={style.ripple} spread={3} centered />
         </span>
-        { this.props.label ? <span role='label' className={style.text}>{this.props.label}</span> : null }
+        { this.props.label ? <span data-role='label' className={style.text}>{this.props.label}</span> : null }
       </label>
     );
   }

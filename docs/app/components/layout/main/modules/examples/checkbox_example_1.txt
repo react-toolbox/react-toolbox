@@ -1,0 +1,9 @@
+const TestCheckbox = () => (
+  <div>
+    <Checkbox label="Checked option" checked />
+    <Checkbox label="Unchecked option" />
+    <Checkbox label="Disabled checkbox" checked disabled />
+  </div>
+);
+
+return <TestCheckbox />;

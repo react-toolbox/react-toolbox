@@ -27,6 +27,7 @@ import TimePicker from 'react-toolbox/time_picker/readme';
 import ButtonExample1 from './examples/button_example_1.txt';
 import AutocompleteExample1 from './examples/autocomplete_example_1.txt';
 import CardExample1 from './examples/card_example_1.txt';
+import CheckboxExample1 from './examples/checkbox_example_1.txt';
 
 export default {
   app_bar: {
@@ -55,7 +56,8 @@ export default {
   checkbox: {
     name: 'Checkbox',
     docs: Checkbox,
-    path: '/components/checkbox'
+    path: '/components/checkbox',
+    examples: [CheckboxExample1]
   },
   date_picker: {
     name: 'Date Picker',
