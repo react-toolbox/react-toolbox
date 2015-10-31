@@ -3,7 +3,7 @@
 A [card](https://www.google.com/design/spec/components/cards.html) is a piece of paper with unique related data that serves as an entry point to more detailed information. For example, a card could contain a photo, text, and a link about a single subject.
 
 <!-- example -->
-```
+```jsx
 import Card from 'react-toolbox/card';
 
 const actions = [
@@ -41,7 +41,7 @@ const TestCards = () => (
 
 This can generate different structures depending on the props. A complicated one can be as follows:
 
-```
+```html
 <div data-react-toolbox="card">
   <figure>
     <h5 data-role='title'>Title</h5>

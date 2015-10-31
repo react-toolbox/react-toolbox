@@ -3,7 +3,7 @@
 An input field with a set of predeterminated labeled values. When it's focused it shows a list of hints that are filtered by label as the user types. They can be simple or multiple depending on the amount of values that can be selected. The opening direction is determinated at opening time depending on the current position.
 
 <!-- example -->
-```
+```jsx
 import Autocomplete from 'react-toolbox/autocomplete';
 
 const countries = {

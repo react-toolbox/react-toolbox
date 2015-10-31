@@ -3,7 +3,7 @@
 A [button](https://www.google.com/design/spec/components/buttons.html) clearly communicates what action will occur when the user touches it. It consists of text, an image, or both, designed in accordance with your app’s color theme.
 
 <!-- example -->
-```
+```jsx
 import Button from 'react-toolbox/button';
 
 const TestButtons = () => (
@@ -39,7 +39,7 @@ Also, any additional properties will be directly transferred to the `button` tag
 
 The inner markup depends on the given properties. It can result in:
 
-```
+```html
 <button data-react-toolbox="button">
   <span data-react-toolbox="ripple"></span>
   <span data-react-toolbox="icon"></span>

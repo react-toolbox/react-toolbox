@@ -2,7 +2,7 @@
 
 The app bar is a special kind of toolbar that’s used for branding, navigation, search, and actions. Usually it contains controls on the right and left side and a title with the current section or app name. You should give the content with children elements.
 
-```javascript
+```jsx
 import AppBar from 'react-toolbox/app_bar';
 
 const AppBarTest = () => (
