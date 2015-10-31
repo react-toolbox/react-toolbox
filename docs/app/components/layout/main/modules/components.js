@@ -26,6 +26,7 @@ import TimePicker from 'react-toolbox/time_picker/readme';
 // Examples for the Playground
 import ButtonExample1 from './examples/button_example_1.txt';
 import AutocompleteExample1 from './examples/autocomplete_example_1.txt';
+import CardExample1 from './examples/card_example_1.txt';
 
 export default {
   app_bar: {
@@ -48,7 +49,8 @@ export default {
   card: {
     name: 'Card',
     docs: Card,
-    path: '/components/card'
+    path: '/components/card',
+    examples: [CardExample1]
   },
   checkbox: {
     name: 'Checkbox',

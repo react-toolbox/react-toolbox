@@ -38,7 +38,7 @@ const MainNavigation = React.createClass({
 
     return (
       <aside className={className}>
-        <List className={style.list} selectable>
+        <List className={style.list} selectable ripple>
           { this.renderDrawerItems() }
         </List>
         <footer className={style.footer}>
