@@ -41,6 +41,7 @@ import ProgressBarExample1 from './examples/progressbar_example_1.txt';
 import RadioExample1 from './examples/radio_example_1.txt';
 import SliderExample1 from './examples/slider_example_1.txt';
 import SnackbarExample1 from './examples/snackbar_example_1.txt';
+import SwitchExample1 from './examples/switch_example_1.txt';
 import TimePickerTest from './examples/timepicker_example_1.txt';
 
 export default {
@@ -160,7 +161,8 @@ export default {
   switch: {
     name: 'Switch',
     docs: Switch,
-    path: '/components/switch'
+    path: '/components/switch',
+    examples: [SwitchExample1]
   },
   tabs: {
     name: 'Tabs',

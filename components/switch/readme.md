@@ -1,34 +1,29 @@
 # Switch
 
-```
-var Switch = require('react-toolbox/components/switch');
+On/off switches toggle the state of a single settings option. The option that the switch controls, as well as the state it’s in, should be made clear from the corresponding inline label. Switches take on the same visual properties of the radio button.
 
-<Switch value={true} />
-<Switch label='Online users' disabled/>
+<!-- example -->
+```
+import Switch from 'react-toolbox/switch';
+
+const SwitchTest = () => (
+  <fieldset>
+    <Switch label="Push notifications" />
+    <Switch checked label="Mail notifications" />
+    <Switch disabled label="Nothing, thanks"/>
+  </fieldset>
+);
 ```
 
 ## Properties
 
 | Name              | Type          | Default         | Description|
-|:-                 |:-:            | :-              |:-|
-| **className**     | String        |                 | Sets the class-styles of the Component.|
-| **disabled**      | Boolean       | false           | If true, component will be disabled.|
-| **label**         | String        |                 | The text string to use for the floating label element.|
-| **onChange**      | Function      |                 | Callback function that is fired when the components's value changes.|
-| **value**         | String        |                 | Default value using JSON data.|
-
-## Methods
-
-#### getValue
-Returns the value of the input.
-
-```
-switch_instance.getValue();
-```
-
-#### setValue
-Sets the value of the input element.
-
-```
-switch_instance.setValue(newValue);
-```
+|:-----|:-----|:-----|:-----|
+| `checked`      | `Boolean`   | `false` | If true, the switch will be enabled.|
+| `className`    | `String`   | `''`  | Sets a class to give custom styles to the switch.|
+| `disabled`     | `Boolean`  | `false`  | If true, component will be disabled.|
+| `label`        | `String`   |       | The text string to use for the floating label element.|
+| `name`         | `String`   |        | The text string used as name of the input.|
+| `onBlur`       | `Function` |        | Callback function that is fired when when the switch is blurred.|
+| `onChange`     | `Function` |        | Callback function that is fired when the components's value changes.|
+| `onFocus`      | `Function`  |        | Callback function fire when the switch is focused.|
