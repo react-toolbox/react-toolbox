@@ -1,4 +1,5 @@
 @import "../globals";
+@import "../mixins";
 
 $documentation-h1-size: 3.4 * $unit;
 $documentation-h2-size: 2.4 * $unit;
@@ -39,12 +40,17 @@ $documentation-code-background: rgba(0, 0, 0, .0588235);
     &:first-child {
       background-color: red;
     }
+    a {
+      color: $color-text;
+      text-decoration: underline;
+    }
   }
   pre {
     padding: $documentation-v-offset $documentation-h-offset;
-    font-family: $code-font-family;
-    font-size: $code-font-size;
     background-color: $documentation-code-background;
+  }
+  code {
+    @include code-typography;
   }
   table {
     width: auto;
