@@ -1,1 +1,34 @@
-return <TimePicker />;
+// React Toolbox Playground
+// -------------------------------------------------------------------
+// Use this area to try components. You will find next to each example
+// in the documentation a button to load the code in the playground.
+// Remember that you can leave the playground and keep your progress
+// but loading new examples will smash your changes!
+
+class Welcome extends React.Component {
+  hideDialog = () => {
+    this.refs.dialog.hide();
+  };
+
+  showDialog = () => {
+    this.refs.dialog.show();
+  };
+
+  actions = [{
+    label: 'Great!',
+    onClick: this.hideDialog
+  }];
+
+  render () {
+    return (
+      <section>
+        <Button label="Let's start!" onClick={this.showDialog} />
+        <Dialog ref="dialog" type="small" actions={this.actions} title="Welcome to React Toolbox">
+          <p>Enjoy Beautiful React Material Design Components!</p>
+        </Dialog>
+      </section>
+    );
+  }
+}
+
+return <Welcome />;
