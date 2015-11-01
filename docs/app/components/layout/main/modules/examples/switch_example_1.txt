@@ -1,0 +1,9 @@
+const SwitchTest = () => (
+  <fieldset>
+    <Switch label="Push notifications" />
+    <Switch checked label="Mail notifications" />
+    <Switch disabled label="Nothing, thanks"/>
+  </fieldset>
+);
+
+return <SwitchTest />;
