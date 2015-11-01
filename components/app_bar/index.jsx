@@ -8,7 +8,7 @@ const AppBar = (props) => {
   if (props.flat) className += ` ${style.flat}`;
 
   return (
-    <header className={className}>
+    <header className={className} data-react-toolbox='app-bar'>
       {props.children}
     </header>
   );

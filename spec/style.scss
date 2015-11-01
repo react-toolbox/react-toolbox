@@ -1,5 +1,5 @@
 .app {
-  padding: 1.6rem;
+  padding: 5.5rem 1.6rem;
   > h1, > h3 {
     line-height: 100%;
   }
@@ -12,5 +12,13 @@
   [data-react-toolbox='card'] {
     display: inline-block;
     margin: 1.6rem 1.6rem 0 0;
+  }
+}
+
+.app-bar {
+  padding: 1.6rem;
+  justify-content: center;
+  > span {
+    margin-left: 1rem;
   }
 }
