@@ -40,6 +40,14 @@ class Tab extends React.Component {
       </section>
     );
   }
+
+
+  active (value) {
+    this.setState({active: value});
+    if (this.props.onActive && value) {
+      this.props.onActive(this);
+    }
+  }
 }
 
 export default Tab;
