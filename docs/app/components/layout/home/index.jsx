@@ -12,7 +12,7 @@ import readme from './modules/readme.md';
 const Home = () => {
   return (
     <article>
-      <header className={style.hero}>
+      <header className={style.header}>
         <Logo className={style.logo} />
         <h2 className={style.title}>React Toolbox</h2>
         <h4 className={style.subtitle}>Bootstrap your application with beautiful Material Design Components</h4>
@@ -25,8 +25,8 @@ const Home = () => {
           { authors.map((author, index) => { return <Card key={index} {...author} />; }) }
         </ul>
       </section>
-      <footer>
-        Copyright
+      <footer className={style.footer}>
+        <small>React Toolbox ©</small>
       </footer>
     </article>
   );
