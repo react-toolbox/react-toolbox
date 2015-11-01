@@ -7,6 +7,10 @@ $documentation-h-offset: 4 * $unit;
 $documentation-v-offset: ($documentation-h-offset / 2);
 $documentation-code-background: rgba(0, 0, 0, .0588235);
 
+:global {
+  @import "~highlight.js/styles/github";
+}
+
 .markdown {
   max-height: 100%;
   display: block;
@@ -37,9 +41,6 @@ $documentation-code-background: rgba(0, 0, 0, .0588235);
   }
   p {
     font-size: inherit;
-    &:first-child {
-      background-color: red;
-    }
     a {
       color: $color-text;
       text-decoration: underline;

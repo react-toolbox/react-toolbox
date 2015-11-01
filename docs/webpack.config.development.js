@@ -42,7 +42,7 @@ module.exports = {
         include: path.resolve(__dirname, './app/components/layout/main/modules')
       }, {
         test: /(\.md)$/,
-        loader: 'html!markdown'
+        loader: 'html!highlight!markdown'
       }
     ]
   },
