@@ -1,6 +1,6 @@
 const links = [
-  { href: 'http://', icon: 'person', label: 'Profile' },
-    { href: 'http://', icon: 'inbox', label: 'Inbox'}
+  { href: '#/components/navigation', icon: 'person', label: 'Profile' },
+    { href: '#/components/navigation', icon: 'inbox', label: 'Inbox'}
 ];
 
 const actions = [
