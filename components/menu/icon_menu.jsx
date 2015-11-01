@@ -11,6 +11,8 @@ class IconMenu extends React.Component {
     iconRipple: React.PropTypes.bool,
     menuRipple: React.PropTypes.bool,
     onClick: React.PropTypes.func,
+    onHide: React.PropTypes.func,
+    onShow: React.PropTypes.func,
     onSelect: React.PropTypes.func,
     position: React.PropTypes.string,
     selectable: React.PropTypes.bool

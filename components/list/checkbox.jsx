@@ -38,6 +38,7 @@ ListCheckbox.propTypes = {
 };
 
 ListCheckbox.defaultProps = {
+  checked: false,
   disabled: false
 };
 

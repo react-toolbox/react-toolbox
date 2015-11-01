@@ -32,6 +32,14 @@ import DialogExample1 from './examples/dialog_example_1.txt';
 import DrawerExample1 from './examples/drawer_example_1.txt';
 import DrodpownExample1 from './examples/dropdown_example_1.txt';
 import FontIconExample1 from './examples/font_icon_example_1.txt';
+import InputExample1 from './examples/input_example_1.txt';
+import LinkExample1 from './examples/link_example_1.txt';
+import ListExample1 from './examples/list_example_1.txt';
+import MenuExample1 from './examples/menu_example_1.txt';
+import NavigationExample1 from './examples/navigation_example_1.txt';
+import ProgressBarExample1 from './examples/progressbar_example_1.txt';
+import RadioExample1 from './examples/radio_example_1.txt';
+import SliderExample1 from './examples/slider_example_1.txt';
 import TimePickerTest from './examples/timepicker_example_1.txt';
 
 export default {
@@ -97,42 +105,50 @@ export default {
   input: {
     name: 'Input',
     docs: Input,
-    path: '/components/input'
+    path: '/components/input',
+    examples: [InputExample1]
   },
   link: {
     name: 'Link',
     docs: Link,
-    path: '/components/link'
+    path: '/components/link',
+    examples: [LinkExample1]
   },
   list: {
     name: 'List',
     docs: List,
-    path: '/components/list'
+    path: '/components/list',
+    examples: [ListExample1]
   },
   menu: {
     name: 'Menu',
     docs: Menu,
-    path: '/components/menu'
+    path: '/components/menu',
+    examples: [MenuExample1]
   },
   navigation: {
     name: 'Navigation',
     docs: Navigation,
-    path: '/components/navigation'
+    path: '/components/navigation',
+    examples: [NavigationExample1]
   },
   progress_bar: {
     name: 'Progress Bar',
     docs: ProgressBar,
-    path: '/components/progress_bar'
+    path: '/components/progress_bar',
+    examples: [ProgressBarExample1]
   },
   radio_group: {
-    name: 'Radio Group',
+    name: 'Radio Buttons',
     docs: RadioGroup,
-    path: '/components/radio_group'
+    path: '/components/radio_group',
+    examples: [RadioExample1]
   },
   slider: {
     name: 'Slider',
     docs: Slider,
-    path: '/components/slider'
+    path: '/components/slider',
+    examples: [SliderExample1]
   },
   snackbar: {
     name: 'Snackbar',

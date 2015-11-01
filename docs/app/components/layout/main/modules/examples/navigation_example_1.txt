@@ -1,0 +1,18 @@
+const links = [
+  { href: 'http://', icon: 'person', label: 'Profile' },
+    { href: 'http://', icon: 'inbox', label: 'Inbox'}
+];
+
+const actions = [
+  { label: 'Alarm', kind: 'raised', icon: 'access-alarm'},
+  { label: 'Location', kind: 'raised', accent: true, icon: 'room'}
+];
+
+const NavigationTest = () => (
+  <div>
+    <Navigation type='horizontal' actions={actions} />
+    <Navigation type='horizontal' routes={links} />
+  </div>
+);
+
+return <NavigationTest />;

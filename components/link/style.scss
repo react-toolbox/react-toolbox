@@ -13,9 +13,10 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  line-height: 1.5;
+  cursor: pointer;
   transition: opacity $animation-duration $animation-curve-default;
   &:not(.active) {
-    font-weight: $font-weight-thin;
     opacity: .5;
   }
   &:hover, &:active {
@@ -28,6 +29,7 @@
     text-transform: capitalize;
   }
   > small {
+    margin-left: .8 * $unit;
     font-size: $font-size-tiny;
     text-align: center;
   }

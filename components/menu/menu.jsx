@@ -162,6 +162,10 @@ class Menu extends React.Component {
     return this.state.value;
   }
 
+  setValue (value) {
+    this.setState({value: value});
+  }
+
   show () {
     this.setState({active: true});
   }

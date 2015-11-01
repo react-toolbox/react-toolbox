@@ -3,7 +3,7 @@
 [Dialogs](https://www.google.com/design/spec/components/dialogs.html) contain text and UI controls focused on a specific task. They inform users about critical information, require users to make decisions, or involve multiple tasks. You would need an additional component to take actions and display or hide the dialog.
 
 <!-- example -->
-```
+```jsx
 import Dialog from 'react-toolbox/dialog';
 
 class DialogTest extends React.Component {

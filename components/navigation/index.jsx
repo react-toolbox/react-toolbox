@@ -8,11 +8,11 @@ const Navigation = props => {
   if (props.className) className += ` ${props.className}`;
 
   const buttons = props.actions.map((action, index) => {
-    return <Button key={index} {...action} />;
+    return <Button className={style.button} key={index} {...action} />;
   });
 
   const links = props.routes.map((route, index) => {
-    return <Link key={index} {...route} />;
+    return <Link className={style.link} key={index} {...route} />;
   });
 
   return (
@@ -28,13 +28,13 @@ Navigation.propTypes = {
   actions: React.PropTypes.array,
   className: React.PropTypes.string,
   routes: React.PropTypes.array,
-  type: React.PropTypes.string
+  type: React.PropTypes.oneOf(['vertical', 'horizontal'])
 };
 
 Navigation.defaultProps = {
   actions: [],
   className: '',
-  type: 'default',
+  type: 'horizontal',
   routes: []
 };
 
