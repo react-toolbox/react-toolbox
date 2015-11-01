@@ -6,6 +6,7 @@ import utils from '../utils';
 
 class Autocomplete extends React.Component {
   static propTypes = {
+    auto: React.PropTypes.bool,
     className: React.PropTypes.string,
     dataSource: React.PropTypes.any,
     disabled: React.PropTypes.bool,
@@ -18,6 +19,7 @@ class Autocomplete extends React.Component {
   };
 
   static defaultProps = {
+      auto: true,
       className: '',
       dataSource: {},
       multiple: true
@@ -73,13 +75,10 @@ class Autocomplete extends React.Component {
   handleFocus = () => {
     const client = event.target.getBoundingClientRect();
     const screen_height = window.innerHeight || document.documentElement.offsetHeight;
+    const up = this.props.auto ? client.top > ((screen_height / 2) + client.height) : false;
 
     this.refs.suggestions.scrollTop = 0;
-    this.setState({
-      active: '',
-      up: client.top > ((screen_height / 2) + client.height),
-      focus: true
-    });
+    this.setState({active: '', up: up, focus: true});
   };
 
   handleBlur = () => {

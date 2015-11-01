@@ -29,6 +29,7 @@ const AutocompleteTest = () => (
 
 | Name              | Type          | Default         | Description|
 |:-----|:-----|:-----|:-----|
+| `auto`        | `Boolean`       |  `true`        | If true, the autocomplete will open to the best possible direction |
 | `className`     | `String`      | `''`            | Sets a class to style of the Component.|
 | `dataSource`    | `Object` or `Array`   |           | Object of key/values or array representing all items suggested.|
 | `disabled`      | `Bool`        |  `false`         | If true, component will be disabled.|
