@@ -1,0 +1,10 @@
+const RadioTest = () => (
+  <RadioGroup name='comic' value='vvendetta'>
+    <RadioButton label='The Walking Dead' value='thewalkingdead'/>
+    <RadioButton label='From Hell' value='fromhell' disabled/>
+    <RadioButton label='V for a Vendetta' value='vvendetta'/>
+    <RadioButton label='Watchmen' value='watchmen'/>
+  </RadioGroup>
+);
+
+return <RadioTest />;

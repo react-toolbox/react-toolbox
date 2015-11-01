@@ -38,6 +38,7 @@ import ListExample1 from './examples/list_example_1.txt';
 import MenuExample1 from './examples/menu_example_1.txt';
 import NavigationExample1 from './examples/navigation_example_1.txt';
 import ProgressBarExample1 from './examples/progressbar_example_1.txt';
+import RadioExample1 from './examples/radio_example_1.txt';
 import TimePickerTest from './examples/timepicker_example_1.txt';
 
 export default {
@@ -137,9 +138,10 @@ export default {
     examples: [ProgressBarExample1]
   },
   radio_group: {
-    name: 'Radio Group',
+    name: 'Radio Buttons',
     docs: RadioGroup,
-    path: '/components/radio_group'
+    path: '/components/radio_group',
+    examples: [RadioExample1]
   },
   slider: {
     name: 'Slider',
