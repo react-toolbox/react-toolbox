@@ -35,19 +35,18 @@
 .playground {
   position: fixed;
   top: $appbar-height;
-  right: 0;
   bottom: 0;
   z-index: $z-index-high;
   width: $playground-width;
   background: $color-background;
   box-shadow: $documentation-right-shadow;
-  transition: all $animation-duration $animation-ease;
+  transition: right $animation-duration $animation-ease;
 }
 
 .root {
   &:not(.with-playground) {
     > .playground {
-      right: - $playground-width;
+      right: - ($playground-width * 1.1);
     }
     > .documentation {
       padding-right: 0;

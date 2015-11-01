@@ -1,12 +1,16 @@
 @import "../config";
 
-.editor {
+
+.editor, .preview {
   position: absolute;
-  top: 0;
   right: 0;
-  bottom: 60%;
-  left: 0;
   overflow-y: scroll;
+}
+
+.editor {
+  top: 0;
+  bottom: 50%;
+  left: 0;
   div:global(.CodeMirror) {
     display: flex;
     height: 100%;
@@ -18,12 +22,8 @@
 }
 
 .preview {
-  position: absolute;
-  top: 40%;
-  right: 0;
+  top: 50%;
   bottom: 0;
   left: 0;
   display: flex;
-  overflow-y: scroll;
-  border-top: 1px solid $color-divider;
 }
