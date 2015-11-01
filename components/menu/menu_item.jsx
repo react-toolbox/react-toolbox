@@ -5,7 +5,7 @@ import style from './style.menu_item';
 
 class MenuItem extends React.Component {
   static propTypes = {
-    caption: React.PropTypes.string,
+    caption: React.PropTypes.string.isRequired,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     icon: React.PropTypes.string,
