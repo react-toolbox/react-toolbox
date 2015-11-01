@@ -1,50 +1,44 @@
 # Tabs
 
-```javascript
-Tabs = require('../../components/tabs').Tabs
-Tab  = require('../../components/tabs').Tab
+Tabs make it easy to explore and switch between different views or functional aspects of an app or to browse categorized data sets. For now we are using tabs along with content so it's not possible to render just the tab headers with event listeners. In the future we will add this feature but for now you can compose your tabs with content:
 
-<Tabs>
-  <Tab label='Primary'>
-    <small>primary</small>
-  </Tab>
-  <Tab label='Secondary'>
-    <small>secondary</small>
-  </Tab>
-  <Tab label='Third' disabled>
-    <small>third</small>
-  </Tab>
-  <Tab label='Fourth' hidden>
-    <small>fourth</small>
-  </Tab>
-</Tabs>
+<!-- example -->
+```jsx
+import {Tab, Tabs} from 'react-toolbox';
+
+const TabsExample = () => (
+  <Tabs>
+    <Tab label='Primary'><small>Primary content</small></Tab>
+    <Tab label='Secondary'><small>Secondary content</small></Tab>
+    <Tab label='Third' disabled><small>Disabled content</small></Tab>
+    <Tab label='Fourth' hidden><small>Fourth content hidden</small></Tab>
+    <Tab label='Fifth'><small>Fifth content</small></Tab>
+  </Tabs>
+);
 ```
 
+## Tabs
 
-## Properties <Tabs>
-| Name              | Type          | Default         | Description|
-|:-                 |:-:            | :-              |:-|
-| **className**     | String        | `''`            | Additional class name to provide custom styling.|
-| **index**         | Number        | `0`             | Current <Tab> |
-| **onChange**      | Function      |                 | Callback function that is fired when the tab changes.
-
-## Properties <Tab>
+This component acts as the wrapper and the main controller of the content that is being displayed. It gets some properties that can be spread to the children.
 
 | Name              | Type          | Default         | Description|
-|:-                 |:-:            | :-              |:-|
-| **active**        | Boolean       | `false`         | If true, the current component is visible.|
-| **className**     | String        | `''`            | Additional class name to provide custom styling.|
-| **disabled**      | Boolean       | `false`         | If true, the current component is not clickable.|
-| **hidden**        | Boolean       | `false`         | If true, the current component is not visible.|
-| **label**         | String        |                 | Label for navigation|
-| **onActive**      | Function      |                 | Callback function that is fired when the tab is activated. |
-| **tabIndex**      | Number        |                 | Sets the tabindex html attribute.|
+|:-----|:-----|:-----|:-----|
+| `className`     | `String`        | `''`            | Additional class name to provide custom styling.|
+| `index`         | `Number`        | `0`             | Current <Tab> |
+| `onChange`      | `Function`      |                 | Callback function that is fired when the tab changes.
 
-## Methods <Tab>
+The tabs component has state to hold the currently activated tab and exposes a method to change it manually called `active`. You can call this method with the index value of the child you want to activate.
 
-#### active
-Active/Deactive a determinate instance of the <Tab> component.
+## Tab
 
-```
-tab_instance.active(true);
-```
+Represent a single tab element and it should include some properties to describe the tab itself and get children elements as content.
+
+| Name              | Type          | Default         | Description|
+|:-----|:-----|:-----|:-----|
+| `active`        | `Boolean`       | `false`         | If true, the current component is visible.|
+| `className`     | `String`        | `''`            | Additional class name to provide custom styling.|
+| `disabled`      | `Boolean`       | `false`         | If true, the current component is not clickable.|
+| `hidden`        | `Boolean`       | `false`         | If true, the current component is not visible.|
+| `label`         | `String`        |                 | Label text for navigation header |
+| `onActive`      | `Function`      |                 | Callback function that is fired when the tab is activated. |
+| `tabIndex`      | `Number`        |                 | Sets the tabindex html attribute.|
