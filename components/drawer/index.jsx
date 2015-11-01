@@ -6,7 +6,7 @@ class Drawer extends React.Component {
     active: React.PropTypes.bool,
     className: React.PropTypes.string,
     hideable: React.PropTypes.bool,
-    type: React.PropTypes.string
+    type: React.PropTypes.oneOf(['left', 'right'])
   };
 
   static defaultProps = {

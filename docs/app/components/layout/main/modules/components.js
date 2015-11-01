@@ -9,7 +9,6 @@ import Dialog from 'react-toolbox/dialog/readme';
 import Drawer from 'react-toolbox/drawer/readme';
 import Dropdown from 'react-toolbox/dropdown/readme';
 import FontIcon from 'react-toolbox/font_icon/readme';
-import Form from 'react-toolbox/form/readme';
 import Input from 'react-toolbox/input/readme';
 import Link from 'react-toolbox/link/readme';
 import List from 'react-toolbox/list/readme';
@@ -26,6 +25,16 @@ import TimePicker from 'react-toolbox/time_picker/readme';
 // Examples for the Playground
 import ButtonExample1 from './examples/button_example_1.txt';
 import AutocompleteExample1 from './examples/autocomplete_example_1.txt';
+import CardExample1 from './examples/card_example_1.txt';
+import CheckboxExample1 from './examples/checkbox_example_1.txt';
+import DatePickerExample1 from './examples/datepicker_example_1.txt';
+import DialogExample1 from './examples/dialog_example_1.txt';
+import DrawerExample1 from './examples/drawer_example_1.txt';
+import DrodpownExample1 from './examples/dropdown_example_1.txt';
+import FontIconExample1 from './examples/font_icon_example_1.txt';
+import InputExample1 from './examples/input_example_1.txt';
+import TimePickerTest from './examples/timepicker_example_1.txt';
+import LinkExample1 from './examples/link_example_1.txt';
 
 export default {
   app_bar: {
@@ -48,52 +57,56 @@ export default {
   card: {
     name: 'Card',
     docs: Card,
-    path: '/components/card'
+    path: '/components/card',
+    examples: [CardExample1]
   },
   checkbox: {
     name: 'Checkbox',
     docs: Checkbox,
-    path: '/components/checkbox'
+    path: '/components/checkbox',
+    examples: [CheckboxExample1]
   },
   date_picker: {
     name: 'Date Picker',
     docs: DatePicker,
-    path: '/components/date_picker'
+    path: '/components/date_picker',
+    examples: [DatePickerExample1]
   },
   dialog: {
     name: 'Dialog',
     docs: Dialog,
-    path: '/components/dialog'
+    path: '/components/dialog',
+    examples: [DialogExample1]
   },
   drawer: {
     name: 'Drawer',
     docs: Drawer,
-    path: '/components/drawer'
+    path: '/components/drawer',
+    examples: [DrawerExample1]
   },
   dropdown: {
     name: 'Dropdown',
     docs: Dropdown,
-    path: '/components/dropdown'
+    path: '/components/dropdown',
+    examples: [DrodpownExample1]
   },
   font_icon: {
     name: 'Font Icon',
     docs: FontIcon,
-    path: '/components/font_icon'
-  },
-  form: {
-    name: 'Form',
-    docs: Form,
-    path: '/components/form'
+    path: '/components/font_icon',
+    examples: [FontIconExample1]
   },
   input: {
     name: 'Input',
     docs: Input,
-    path: '/components/input'
+    path: '/components/input',
+    examples: [InputExample1]
   },
   link: {
     name: 'Link',
     docs: Link,
-    path: '/components/link'
+    path: '/components/link',
+    examples: [LinkExample1]
   },
   list: {
     name: 'List',
@@ -143,6 +156,7 @@ export default {
   time_picker: {
     name: 'Time Picker',
     docs: TimePicker,
-    path: '/components/time_picker'
+    path: '/components/time_picker',
+    examples: [TimePickerTest]
   }
 };

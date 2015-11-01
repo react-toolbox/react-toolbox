@@ -32,28 +32,29 @@ class Button extends React.Component {
   handleMouseDown = (event) => {
     events.pauseEvent(event);
     this.refs.ripple.start(event);
+    if (this.props.onMouseDown) this.props.onMouseDown(event);
   };
 
   render () {
     let className = style[this.props.kind];
-    if (!this.props.primary && !this.props.accent) className += ` ${style.primary}`;
+    const {label, icon, loading, ripple, primary, accent, mini, kind, ...others} = this.props;
     if (this.props.className) className += ` ${this.props.className}`;
-    if (this.props.primary) className += ` ${style.primary}`;
-    if (this.props.accent) className += ` ${style.accent}`;
-    if (this.props.mini) className += ` ${style.mini}`;
+    if (!primary && !accent) className += ` ${style.primary}`;
+    if (primary) className += ` ${style.primary}`;
+    if (accent) className += ` ${style.accent}`;
+    if (mini) className += ` ${style.mini}`;
 
     return (
       <button
-        {...this.props}
-        label=''
+        {...others}
         className={className}
         data-react-toolbox='button'
         onMouseDown={this.handleMouseDown}
         disabled={this.props.disabled || this.props.loading}
       >
-        { this.props.ripple ? <Ripple ref='ripple' loading={this.props.loading}/> : null }
-        { this.props.icon ? <FontIcon className={style.icon} value={this.props.icon}/> : null }
-        { this.props.label ? <abbr className={style.label}>{this.props.label}</abbr> : null }
+        { ripple ? <Ripple ref='ripple' loading={loading}/> : null }
+        { icon ? <FontIcon className={style.icon} value={icon}/> : null }
+        { label ? <abbr className={style.label}>{label}</abbr> : null }
       </button>
     );
   }

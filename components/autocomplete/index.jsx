@@ -99,12 +99,18 @@ class Autocomplete extends React.Component {
     this._unselectOption(event.target.getAttribute('id'));
   };
 
+  renderLabel () {
+    if (this.props.label) {
+      return <label data-role='label' className={style.label}>{this.props.label}</label>;
+    }
+  }
+
   renderSelected () {
     if (this.props.multiple) {
       return (
-        <ul className={style.values} onClick={this.handleUnselect}>
+        <ul className={style.values} data-role='selections' onClick={this.handleUnselect}>
           {[...this.state.values].map(([key, value]) => {
-            return (<li className={style.value} key={key} id={key}>{value}</li>);
+            return <li key={key} id={key} data-role='selection' className={style.value}>{value}</li>;
           })}
         </ul>
       );
@@ -115,7 +121,7 @@ class Autocomplete extends React.Component {
     return [...this._getSuggestions()].map(([key, value]) => {
       let className = style.suggestion;
       if (this.state.active === key) className += ` ${style.active}`;
-      return <li id={key} key={key} className={className}>{value}</li>;
+      return <li id={key} key={key} data-role='suggestion' className={className}>{value}</li>;
     });
   }
 
@@ -130,13 +136,14 @@ class Autocomplete extends React.Component {
 
     return (
       <div data-react-toolbox='autocomplete' className={className}>
-        {this.props.label ? <label className={style.label}>{this.props.label}</label> : ''}
+        {this.renderLabel()}
         {this.renderSelected()}
         <Input
           ref='input'
           {...this.props}
           label=''
           value=''
+          data-role='input'
           className={style.input}
           onBlur={this.handleBlur}
           onChange={this.handleQueryChange}
@@ -144,6 +151,7 @@ class Autocomplete extends React.Component {
           onKeyUp={this.handleKeyPress} />
         <ul
           ref='suggestions'
+          data-role='suggestions'
           className={suggestionsClassName}
           onMouseDown={this.handleSelect}
           onMouseOver={this.handleHover}

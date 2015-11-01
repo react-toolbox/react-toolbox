@@ -18,7 +18,7 @@ class Editor extends React.Component {
     lineNumbers: false,
     readOnly: false,
     tabSize: 2,
-    theme: 'solarized-light'
+    theme: 'monokai'
   };
 
   componentDidMount () {

@@ -1,26 +1,12 @@
 @import "../globals";
 @import "../mixins";
 
-$documentation-code-background: rgba(0, 0, 0, .0588235);
-
 .editor {
   position: relative;
 
   :global {
     @import "~codemirror/lib/codemirror";
-    @import "solarized";
+    @import "monokai";
     @import "custom";
-  }
-
-  &:before {
-    display: block;
-    width: 100%;
-    padding: 3px 7px;
-    font-size: $font-size-tiny;
-    font-weight: $font-weight-bold;
-    font-family: $code-font-family;
-    color: $color-text;
-    content: "React Toolbox Virtual Console";
-    background-color: rgba(0,0,0,0.1);
   }
 }

@@ -5,20 +5,20 @@ import style from './style';
 
 class Card extends React.Component {
   static propTypes = {
+    actions: React.PropTypes.array,
     className: React.PropTypes.string,
     color: React.PropTypes.string,
     image: React.PropTypes.string,
-    text: React.PropTypes.string,
     loading: React.PropTypes.bool,
     onClick: React.PropTypes.func,
+    text: React.PropTypes.string,
     title: React.PropTypes.string,
-    type: React.PropTypes.string
+    type: React.PropTypes.oneOf(['wide', 'event', 'image'])
   };
 
   static defaultProps = {
     className: '',
-    loading: false,
-    type: 'default'
+    loading: false
   };
 
   handleMouseDown = (event) => {
@@ -41,8 +41,8 @@ class Card extends React.Component {
     if (this.props.title || this.props.image) {
       return (
         <figure className={style.figure} style={styleFigure}>
-          { this.props.subtitle ? <small>{this.props.subtitle}</small> : null }
-          { this.props.title ? <h5>{this.props.title}</h5> : null }
+          { this.props.title ? <h5 data-role='title'>{this.props.title}</h5> : null }
+          { this.props.subtitle ? <small data-role='subtitle'>{this.props.subtitle}</small> : null }
           { this.props.color ? <div className={style.overflow} style={styleOverflow}></div> : null }
         </figure>
       );
@@ -52,7 +52,7 @@ class Card extends React.Component {
   renderActions () {
     if (this.props.actions) {
       return (
-        <Navigation className={style.navigation} actions={this.props.actions} />
+        <Navigation data-role='actions' className={style.navigation} actions={this.props.actions} />
       );
     }
   }
@@ -73,7 +73,7 @@ class Card extends React.Component {
         onMouseDown={this.handleMouseDown}
       >
         { this.renderTitle() }
-        { this.props.text ? <p className={style.text}>{this.props.text}</p> : null }
+        { this.props.text ? <p data-role='text' className={style.text}>{this.props.text}</p> : null }
         { this.renderActions() }
         <Ripple
           ref='ripple'

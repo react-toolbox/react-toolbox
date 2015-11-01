@@ -7,6 +7,7 @@
   width: inherit;
   margin-bottom: $dropdown-offset;
   color: $color-text;
+  cursor: pointer;
   border-bottom: 1px solid $color-divider;
   &:not(.active) {
     > .values {
@@ -27,15 +28,12 @@
   &.disabled {
     color: $color-text-secondary;
     pointer-events: none;
+    cursor: normal;
     border-bottom-style: dotted;
     > .value:after {
       transform: scale(0);
     }
   }
-}
-
-.label, .value {
-  transition: opacity $animation-duration $animation-curve-default;
 }
 
 .label {

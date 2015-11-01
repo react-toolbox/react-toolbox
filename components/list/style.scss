@@ -57,7 +57,7 @@
     &:not(.checkbox-item) {
       opacity: .5;
     }
-    > .checkbox > [role='label'] {
+    > .checkbox > [data-role='label'] {
       opacity: .5;
     }
   }
@@ -70,10 +70,10 @@
   align-items: center;
   margin: 0;
   cursor: pointer;
-  > [role='checkbox'] {
+  > [data-role='checkbox'] {
     margin-right: $list-item-right-icon-margin;
   }
-  > [role='label'] {
+  > [data-role='label'] {
     padding-left: 0;
   }
 }

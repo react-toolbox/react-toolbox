@@ -1,19 +1,28 @@
 # Link
 
-```
-var Link = require('react-toolbox/components/link');
+The link is a very simple component that acts mostly as a wrapper for the HTML anchor. It's not included in Material Design Specification but we provide it as an easy way to create links with icons and counters. Let's see an example:
 
-<Link route='http://google.com' label='Go to Google.com' />
-<Link route='/profile/soyjavi' icon='user' />
+<!-- example -->
+```jsx
+import Link from 'react-toolbox/link';
+
+const LinksTest = () => (
+  <nav>
+    <Link href="/#/components/link" label="Work" count={4} icon='business' />
+    <Link href="/#/components/link" label="Blog" icon='speaker-notes' />
+    <Link href="/#/components/link" label="Explore" icon='explore' />
+  </nav>
+);
 ```
 
 ## Properties
 
+You can add as many properties as you want to be directly transferred to the output anchor element. Apart from them you have the following properties:
+
 | Name              | Type          | Default         | Description|
-|:-                 |:-:            | :-              |:-|
-| **label**       | String        | "normal"        | he text string to use for the floating label element.|
-| **className**     | String        |                 | Sets the class-styles of the Component.|
-| **count**         | Number        |                 | Sets a count number behind label property.|
-| **icon**          | String        |                 | Sets a <FontIcon/> sub-component.|
-| **onClick**       | Function      |                 | Dispatch event when user clicks on component.|
-| **route**         | String        |                 | URL String|
+|:-----|:-----|:-----|:-----|
+| `label`       | `String`        |         | The text string used for the text content of the link.|
+| `className`     | `String`      | `''`            | Sets a custom class name to add styles to the link.|
+| `count`         | `Number`        |                 | Sets a count number useful to display in the page how many times was visited for example.|
+| `icon`          | `String`        |                 | An icon key string to include a `FontIcon` component in front of the text.|
+

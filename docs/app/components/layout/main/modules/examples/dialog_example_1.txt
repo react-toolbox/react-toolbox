@@ -1,0 +1,27 @@
+class DialogTest extends React.Component {
+  showDialog = () => {
+    this.refs.dialog.show();
+  };
+
+  closeDialog = () => {
+    this.refs.dialog.hide();
+  };
+
+  actions = [
+    { label: "Cancel", onClick: this.closeDialog },
+    { label: "Save", onClick: this.closeDialog }
+  ];
+
+  render () {
+    return (
+      <div>
+        <Button label='Show my dialog' onClick={this.showDialog} />
+        <Dialog ref='dialog' title='My awesome dialog' type='small' actions={this.actions}>
+          <p>Here you can add arbitrary content. Components like Pickers are using dialogs now.</p>
+        </Dialog>
+      </div>
+    );
+  }
+}
+
+return <DialogTest />;

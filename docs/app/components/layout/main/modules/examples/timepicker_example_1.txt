@@ -1,0 +1,9 @@
+let selectedTime = new Date();
+selectedTime.setHours(17);
+selectedTime.setMinutes(28);
+
+const TimePickerTest = () => (
+  <TimePicker value={selectedTime} />
+);
+
+return <TimePickerTest />

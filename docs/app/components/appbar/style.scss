@@ -2,6 +2,7 @@
 @import "./config";
 
 .appbar {
+  z-index: $z-index-higher;
   display: flex;
   min-height: $appbar-height;
   flex-direction: row;

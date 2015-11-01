@@ -17,8 +17,9 @@ const _selectValue = (value, dataSource) => {
 
 class Dropdown extends React.Component {
   static propTypes = {
+    auto: React.PropTypes.bool,
     className: React.PropTypes.string,
-    dataSource: React.PropTypes.array,
+    dataSource: React.PropTypes.array.isRequired,
     disabled: React.PropTypes.bool,
     label: React.PropTypes.string,
     onChange: React.PropTypes.func,
@@ -27,14 +28,15 @@ class Dropdown extends React.Component {
   };
 
   static defaultProps = {
+    auto: true,
     className: '',
-    dataSource: [],
-    up: false
+    disabled: false
   };
 
   state = {
     active: false,
     selected: _selectValue(this.props.value, this.props.dataSource),
+    up: false,
     width: undefined
   };
 
@@ -53,11 +55,8 @@ class Dropdown extends React.Component {
   handleClick = (event) => {
     const client = event.target.getBoundingClientRect();
     const screen_height = window.innerHeight || document.documentElement.offsetHeight;
-
-    this.setState({
-      active: true,
-      up: client.top > ((screen_height / 2) + client.height)
-    });
+    const up = this.props.auto ? client.top > ((screen_height / 2) + client.height) : false;
+    this.setState({ active: true, up: up });
   };
 
   handleClickValue = (id) => {
@@ -91,8 +90,8 @@ class Dropdown extends React.Component {
     });
 
     let className = style.values;
-    if (this.state.up) className += ` ${style.up}`;
     const valuesStyle = {width: this.state.width};
+    if (this.state.up) className += ` ${style.up}`;
 
     return <ul ref='values' className={className} style={valuesStyle}>{ items }</ul>;
   }

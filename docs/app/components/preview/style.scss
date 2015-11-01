@@ -11,7 +11,7 @@ $preview-error-color: #fff;
 
 .content {
   flex-grow: 1;
-  padding: $unit;
+  margin: 2 * $unit;
 }
 
 .error {

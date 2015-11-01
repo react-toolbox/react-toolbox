@@ -13,6 +13,7 @@ class Dialog extends React.Component {
 
   static defaultProps = {
     actions: [],
+    active: false,
     type: 'normal'
   };
 

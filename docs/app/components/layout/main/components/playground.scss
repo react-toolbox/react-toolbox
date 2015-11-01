@@ -1,8 +1,29 @@
 @import "../config";
 
-.root {
-  width: $playground-width;
-  height: 100%;
-  overflow-y: auto;
-  background-color: $color-background;
+
+.editor, .preview {
+  position: absolute;
+  right: 0;
+  overflow-y: scroll;
+}
+
+.editor {
+  top: 0;
+  bottom: 50%;
+  left: 0;
+  div:global(.CodeMirror) {
+    display: flex;
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+}
+
+.preview {
+  top: 50%;
+  bottom: 0;
+  left: 0;
+  display: flex;
 }

@@ -1,0 +1,7 @@
+const selectedDate = new Date(1995, 11, 17);
+
+const DatePickerTest = () => (
+  <DatePicker value={selectedDate} />
+);
+
+return <DatePickerTest />;
