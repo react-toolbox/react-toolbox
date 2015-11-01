@@ -13,6 +13,7 @@ const LoadExampleButton = (props) => {
   return (
     <Button
       accent
+      kind='raised'
       icon='code'
       label='Load in playground'
       onClick={props.onClick}
@@ -21,7 +22,7 @@ const LoadExampleButton = (props) => {
 };
 
 class Main extends React.Component {
-  LOAD_EXAMPLE_CLASS = 'js-load-in-playground';
+  LOAD_EXAMPLE_CLASS = 'js-load-in-playground playground-button';
 
   state = {
     playground: false

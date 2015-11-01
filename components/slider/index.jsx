@@ -51,9 +51,11 @@ class Slider extends React.Component {
     }
   }
 
-  handleResize = () => {
+  handleResize = (callback) => {
     const {left, right} = ReactDOM.findDOMNode(this.refs.progressbar).getBoundingClientRect();
-    this.setState({sliderStart: left, sliderLength: right - left});
+    this.setState({sliderStart: left, sliderLength: right - left}, () => {
+      if (callback) callback();
+    });
   };
 
   handleSliderFocus = () => {
@@ -76,6 +78,7 @@ class Slider extends React.Component {
   };
 
   handleMouseDown = (event) => {
+
     utils.events.addEventsToDocument(this.getMouseEventMap());
     this.start(utils.events.getMousePosition(event));
     utils.events.pauseEvent(event);
@@ -125,7 +128,9 @@ class Slider extends React.Component {
   }
 
   start (position) {
-    this.setState({pressed: true, value: this.positionToValue(position)});
+    this.handleResize(() => {
+      this.setState({pressed: true, value: this.positionToValue(position)});
+    });
   }
 
   move (position) {

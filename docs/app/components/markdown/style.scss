@@ -5,16 +5,20 @@ $documentation-h1-size: 3.4 * $unit;
 $documentation-h2-size: 2.4 * $unit;
 $documentation-h-offset: 4 * $unit;
 $documentation-v-offset: ($documentation-h-offset / 2);
-$documentation-code-background: rgba(0, 0, 0, .0588235);
+$documentation-code-background: rgba(0, 0, 0, .05);
+$documentation-playground-button-height: 3 * $unit;
+$documentation-playground-button-font-size: 1.2 * $unit;
+$documentation-table-font-size: 1.4 * $unit;
 
 :global {
-  @import "~highlight.js/styles/github";
+  @import "~highlight.js/styles/github-gist";
 }
 
 .markdown {
-  max-height: 100%;
   display: block;
+  max-height: 100%;
   flex-grow: 1;
+  margin-bottom: 4 * $unit;
   overflow-y: scroll;
   font-size: $font-size-normal;
   color: $color-text;
@@ -23,10 +27,6 @@ $documentation-code-background: rgba(0, 0, 0, .0588235);
   }
   h1 {
     font-size: $documentation-h1-size;
-    text-transform: capitalize;
-    + p {
-      font-size: $font-size-big;
-    }
   }
   h2 {
     font-size: $documentation-h2-size;
@@ -41,27 +41,55 @@ $documentation-code-background: rgba(0, 0, 0, .0588235);
   }
   p {
     font-size: inherit;
+    line-height: 1.5;
     a {
       color: $color-text;
       text-decoration: underline;
     }
   }
+  code {
+    @include code-typography;
+    padding: .3 * $unit .5 * $unit;
+    background-color: $documentation-code-background;
+    border-radius: 2px;
+  }
   pre {
+    @include code-typography;
     padding: $documentation-v-offset $documentation-h-offset;
     background-color: $documentation-code-background;
   }
-  code {
-    @include code-typography;
+  > :global(.playground-button) {
+    display: block;
+    text-align: left;
+    > button {
+      height: $documentation-playground-button-height;
+      > abbr {
+        font-size: $documentation-playground-button-font-size;
+        line-height: $documentation-playground-button-height;
+      }
+    }
+  }
+  ul {
+    margin-left: 7 * $unit;
+
+    -webkit-font-smoothing: antialiased;
+            font-smoothing: antialiased;
+    > li {
+      margin-bottom: $unit;
+    }
   }
   table {
     width: auto;
-    background-color: white;
+    font-size: $documentation-table-font-size;
     thead th {
-      font-size: $font-size-tiny;
-      color: $color-text;
+      -webkit-font-smoothing: antialiased;
+              font-smoothing: antialiased;
     }
     th, td {
       padding: $unit;
+
+      -webkit-font-smoothing: antialiased;
+              font-smoothing: antialiased;
     }
   }
 }
