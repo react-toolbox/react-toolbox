@@ -2,8 +2,8 @@
 @import "./config";
 
 .horizontal {
-  margin-top: $navigation-space;
-  margin-bottom: $navigation-space;
+  padding-top: $navigation-space;
+  padding-bottom: $navigation-space;
 
   > .link, > .button {
     display: inline-block;
@@ -23,8 +23,8 @@
 }
 
 .vertical {
-  margin-top: $navigation-space;
-  margin-bottom: $navigation-space;
+  padding-top: $navigation-space;
+  padding-bottom: $navigation-space;
 
   > .link, > .button {
     display: block;

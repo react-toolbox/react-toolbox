@@ -39,6 +39,7 @@ import MenuExample1 from './examples/menu_example_1.txt';
 import NavigationExample1 from './examples/navigation_example_1.txt';
 import ProgressBarExample1 from './examples/progressbar_example_1.txt';
 import RadioExample1 from './examples/radio_example_1.txt';
+import SliderExample1 from './examples/slider_example_1.txt';
 import TimePickerTest from './examples/timepicker_example_1.txt';
 
 export default {
@@ -146,7 +147,8 @@ export default {
   slider: {
     name: 'Slider',
     docs: Slider,
-    path: '/components/slider'
+    path: '/components/slider',
+    examples: [SliderExample1]
   },
   snackbar: {
     name: 'Snackbar',
