@@ -37,6 +37,7 @@ import LinkExample1 from './examples/link_example_1.txt';
 import ListExample1 from './examples/list_example_1.txt';
 import MenuExample1 from './examples/menu_example_1.txt';
 import NavigationExample1 from './examples/navigation_example_1.txt';
+import ProgressBarExample1 from './examples/progressbar_example_1.txt';
 import TimePickerTest from './examples/timepicker_example_1.txt';
 
 export default {
@@ -132,7 +133,8 @@ export default {
   progress_bar: {
     name: 'Progress Bar',
     docs: ProgressBar,
-    path: '/components/progress_bar'
+    path: '/components/progress_bar',
+    examples: [ProgressBarExample1]
   },
   radio_group: {
     name: 'Radio Group',
