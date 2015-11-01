@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { Card, Button } from 'react-toolbox';
 import Logo from '../../logo';
 import Navigation from '../../navigation';
@@ -27,9 +28,9 @@ const Home = () => (
         our components, so fun!
       </p>
 
-      <a href='/#/components'>
+      <Link to='/components'>
         <Button label='Try it now!' kind='raised' accent />
-      </a>
+      </Link>
     </section>
 
     <section className={`${style.content} ${style['second-content']}`}>

@@ -18,7 +18,7 @@ $documentation-table-font-size: 1.4 * $unit;
   display: block;
   max-height: 100%;
   flex-grow: 1;
-  margin-bottom: 4 * $unit;
+  padding-bottom: 4 * $unit;
   overflow-y: scroll;
   font-size: $font-size-normal;
   color: $color-text;
