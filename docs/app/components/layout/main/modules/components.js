@@ -32,6 +32,7 @@ import DialogExample1 from './examples/dialog_example_1.txt';
 import DrawerExample1 from './examples/drawer_example_1.txt';
 import DrodpownExample1 from './examples/dropdown_example_1.txt';
 import FontIconExample1 from './examples/font_icon_example_1.txt';
+import InputExample1 from './examples/input_example_1.txt';
 import TimePickerTest from './examples/timepicker_example_1.txt';
 
 export default {
@@ -97,7 +98,8 @@ export default {
   input: {
     name: 'Input',
     docs: Input,
-    path: '/components/input'
+    path: '/components/input',
+    examples: [InputExample1]
   },
   link: {
     name: 'Link',

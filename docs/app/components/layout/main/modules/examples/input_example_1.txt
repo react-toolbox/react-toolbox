@@ -1,0 +1,10 @@
+const InputTest = () => (
+  <div>
+    <Input type='text' label='Your fullname' icon='account-box' value='Tony Stark' />
+    <Input type='tel' label='Telephone number' icon='phone' />
+    <Input type='email' label='Email address' icon='email' />
+    <Input type='text' label='Disabled field' disabled />
+  </div>
+);
+
+return <InputTest />;
