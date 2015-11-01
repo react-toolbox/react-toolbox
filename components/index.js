@@ -27,6 +27,7 @@ import RadioGroup from './radio/radio_group';
 import RadioButton from './radio/radio_button';
 import Ripple from './ripple';
 import Slider from './slider';
+import Snackbar from './snackbar';
 import Switch from './switch';
 import Tab from './tabs/tab';
 import Tabs from './tabs/tabs';
@@ -36,4 +37,4 @@ export default { App, AppBar, Autocomplete, Button, Card, Checkbox, DatePicker,
   Dialog, Drawer, Dropdown, FontIcon, Form, Input, Link, List, ListItem,
   ListDivider, ListCheckbox, ListSubHeader, Menu, MenuItem, MenuDivider,
   IconMenu, Navigation, ProgressBar, RadioGroup, RadioButton, Ripple, Slider,
-  Switch, Tab, Tabs, TimePicker };
+  Snackbar, Switch, Tab, Tabs, TimePicker };
