@@ -9,6 +9,7 @@ const selected = ['ES-es', 'EN-gb'];
 
 const AutocompleteTest = () => (
   <Autocomplete
+    auto={false}
     label="Choose a country"
     placeholder="Elements is up to you..."
     dataSource={countries}
