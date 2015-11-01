@@ -1,23 +1,34 @@
 # Navigation
 
-```
-var Navigation = require('react-toolbox/components/navigation');
-var routes = [
-  {route:'/profile/soyjavi', icon='user'},
-  {route:'http://google.com', caption='Go to Google.com'},
-];
-var actions = [
- {caption: "Primary", style: "primary", icon: "access_alarm"}
+This component is intended to be a common wrapper for a group of links or buttons. It sets a minimal layout, semantic markup and spacing for each of those elements.
+
+<!-- example -->
+```jsx
+import Navigation from 'react-toolbox/navigation';
+
+const links = [
+  { href: 'http://', icon: 'person', label: 'Profile' },
+  { href: 'http://', icon: 'inbox', label: 'Inbox'}
 ];
 
-<Navigation routes={routes} actions={actions} />
+const actions = [
+  { label: 'Alarm', kind: 'raised', icon: 'access-alarm'},
+  { label: 'Location', kind: 'raised', accent: true, icon: 'room'}
+];
+
+const NavigationTest = () => (
+  <div>
+    <Navigation type='horizontal' actions={actions} />
+    <Navigation type='horizontal' routes={links} />
+  </div>
+);
 ```
 
 ## Properties
 
 | Name              | Type          | Default         | Description|
-|:-                 |:-:            | :-              |:-|
-| **actions**       | Array         |                 | Array of actions callbacks using <Button/> component definition.|
-| **className**     | String        |                 | Sets the class-styles of the Component.|
-| **routes**        | Array         |                 | Array of URL String using <Link/> component definition. |
-| **type**          | String        | "normal"        | Type of the component, overwrite this property if you need set a different stylesheet.|
+|:-----|:-----|:-----|:-----|
+| `actions`      | `Array`         |                 | Array of objects that represent buttons so the keys will be transferred as properties to those.|
+| `className`     | `String`        |                 | Set a custom class styles to style the navigation.|
+| `routes`        | `Array`         |                 | Array of objects similar to actions but that will be rendered as `<Link/>` component definition. |
+| `type`          | `String`        | `horizontal`        | Type of the navigation, it can be vertical or horizontal.|

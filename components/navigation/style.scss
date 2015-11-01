@@ -2,7 +2,10 @@
 @import "./config";
 
 .horizontal {
-  > * {
+  margin-top: $navigation-space;
+  margin-bottom: $navigation-space;
+
+  > .link, > .button {
     display: inline-block;
     margin-right: $navigation-space;
     font-size: $font-size-normal;
@@ -20,7 +23,10 @@
 }
 
 .vertical {
-  > * {
+  margin-top: $navigation-space;
+  margin-bottom: $navigation-space;
+
+  > .link, > .button {
     display: block;
     padding: 0 $navigation-space;
     line-height: $unit;
@@ -33,8 +39,4 @@
       opacity: .5;
     }
   }
-}
-
-.default {
-  @extend .horizontal;
 }

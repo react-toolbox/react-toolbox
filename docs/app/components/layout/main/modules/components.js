@@ -36,6 +36,7 @@ import InputExample1 from './examples/input_example_1.txt';
 import LinkExample1 from './examples/link_example_1.txt';
 import ListExample1 from './examples/list_example_1.txt';
 import MenuExample1 from './examples/menu_example_1.txt';
+import NavigationExample1 from './examples/navigation_example_1.txt';
 import TimePickerTest from './examples/timepicker_example_1.txt';
 
 export default {
@@ -125,7 +126,8 @@ export default {
   navigation: {
     name: 'Navigation',
     docs: Navigation,
-    path: '/components/navigation'
+    path: '/components/navigation',
+    examples: [NavigationExample1]
   },
   progress_bar: {
     name: 'Progress Bar',
