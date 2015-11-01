@@ -1,0 +1,27 @@
+class SnackbarTest extends React.Component {
+  handleClick = () => {
+    this.refs.snackbar.show();
+  };
+
+  handleSnackbarClick = () => {
+    this.refs.snackbar.hide();
+  };
+
+  render () {
+    return (
+      <section>
+        <Button label='Show Snackbar' kind='raised' onClick={this.handleClick} />
+        <Snackbar
+          action='Nice'
+          icon='question-answer'
+          label='A new developer started using React Toolbox'
+          onClick={this.handleSnackbarClick}
+          ref='snackbar'
+          type='accept'
+      />
+      </section>
+    );
+  }
+}
+
+return <SnackbarTest />;

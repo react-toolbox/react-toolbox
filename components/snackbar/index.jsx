@@ -6,8 +6,9 @@ import FontIcon from '../font_icon';
 class Snackbar extends React.Component {
   static propTypes = {
     action: React.PropTypes.string,
+    className: React.PropTypes.string,
     icon: React.PropTypes.string,
-    label: React.PropTypes.string,
+    label: React.PropTypes.string.isRequired,
     onClick: React.PropTypes.func,
     timeout: React.PropTypes.number,
     type: React.PropTypes.string
