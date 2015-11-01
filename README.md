@@ -25,11 +25,11 @@ Once you have the workflow ready, you can just require and use the components:
 import React from 'react';
 import Button from 'react-toolbox/button';
 
-const Button = () => (
+const CustomButton = () => (
   <Button label="Hello world" kind="raised" accent />
 );
 
-export default Button;
+export default CustomButton;
 ```
 
 The previous code creates a React button component based on React toolbox button. It's important to notice that requiring a module from the exposed root of the package will try to import the **ES6 JSX** and **SASS** of the component. If you want to still use CSS Modules but avoiding [Babel](https://babeljs.io/) and [SASS](http://sass-lang.com/) you will need to require from `react-toolbox/lib`.
