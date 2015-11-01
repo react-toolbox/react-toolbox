@@ -1,6 +1,6 @@
 # Tabs
 
-Tabs make it easy to explore and switch between different views or functional aspects of an app or to browse categorized data sets. For now we are using tabs along with content so it's not possible to render just the tab headers with event listeners. In the future we will add this feature but for now you can compose your tabs with content:
+[Tabs](https://www.google.com/design/spec/components/tabs.html) make it easy to explore and switch between different views or functional aspects of an app or to browse categorized data sets. For now we are using tabs along with content so it's not possible to render just the tab headers with event listeners. In the future we will add this feature but for now you can compose your tabs with content:
 
 <!-- example -->
 ```jsx
