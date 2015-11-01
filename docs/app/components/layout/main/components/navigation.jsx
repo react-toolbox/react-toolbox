@@ -43,9 +43,6 @@ const MainNavigation = React.createClass({
         </List>
         <footer className={style.footer}>
           <span>React Toolbox ©</span>
-          <span>
-            <a href=''>Privacy</a> & <a href=''>Terms</a>
-          </span>
         </footer>
       </aside>
     );

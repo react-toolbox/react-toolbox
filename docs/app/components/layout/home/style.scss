@@ -4,60 +4,60 @@
 $content-offset: 4.8 * $unit;
 $content-width: 740px;
 
-.hero {
+.header {
   padding: 0 calc((100% - #{$hero-max-width}) / 2);
   color: $hero-text-color;
   text-align: center;
   background: linear-gradient(45deg, $hero-gradient-dark 0%, $hero-gradient-light 100%);
   background-position: top right;
   background-size: 120%;
-}
 
-.logo {
-  width: $hero-logo-size;
-  height: $hero-logo-size;
-  margin-top: $hero-item-spacing;
-  opacity: $hero-logo-opacity;
-  fill: $hero-text-color;
-}
+  .logo {
+    width: $hero-logo-size;
+    height: $hero-logo-size;
+    margin-top: $hero-item-spacing;
+    opacity: $hero-logo-opacity;
+    fill: $hero-text-color;
+  }
 
-.title {
-  @include typo-display-2;
-  margin-top: $hero-item-spacing;
-}
+  .title {
+    @include typo-display-3;
+    margin-top: $hero-item-spacing;
+  }
 
-.subtitle {
-  @include typo-headline;
-  margin-top: 10px;
-  font-weight: 400;
-  line-height: 1.2;
-  opacity: $hero-text-secondary-opacity;
-}
+  .subtitle {
+    @include typo-headline;
+    margin-top: 10px;
+    font-weight: 400;
+    line-height: 1.2;
+    opacity: $hero-text-secondary-opacity;
+  }
 
-.navigation > ul {
-  margin-top: $hero-item-spacing;
-  list-style: none;
-  li {
-    position: relative;
-    display: inline-block;
-    &:not(:last-child) > a:after {
-      display: inline-block;
-      margin: 0 10px;
-      font-size: 50px;
-      vertical-align: middle;
-      content: "·";
-    }
-    > a {
-      @include typo-title;
+  .navigation > ul {
+    margin-top: $hero-item-spacing;
+    list-style: none;
+    li {
       position: relative;
       display: inline-block;
-      font-weight: 400;
-      line-height: 1.2;
-      color: $hero-text-color;
-      vertical-align: middle;
-      opacity: $hero-text-secondary-opacity;
-      &:hover {
-        opacity: 1;
+      &:not(:last-child) > a:after {
+        display: inline-block;
+        margin: 0 10px;
+        font-size: 50px;
+        vertical-align: middle;
+        content: "·";
+      }
+      > a {
+        @include typo-title;
+        position: relative;
+        display: inline-block;
+        font-weight: 400;
+        line-height: 1.2;
+        color: $hero-text-color;
+        vertical-align: middle;
+        opacity: $hero-text-secondary-opacity;
+        &:hover {
+          opacity: 1;
+        }
       }
     }
   }
@@ -74,12 +74,17 @@ $content-width: 740px;
     max-width: $content-width;
     margin: 0 ($content-offset / 4);
   }
+  .authors {
+    display: flex;
+    justify-content: center;
+    > * {
+      margin: 0 $unit;
+    }
+  }
 }
 
-.authors {
-  display: flex;
-  justify-content: center;
-  > * {
-    margin: 0 $unit;
-  }
+.footer {
+  background-color: darken($color-content, 2.5%);
+  text-align: center;
+  padding: $unit 0;
 }
