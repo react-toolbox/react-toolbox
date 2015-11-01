@@ -5,7 +5,7 @@ A [list component](https://www.google.com/design/spec/components/lists.html) con
 Lists are best suited to presenting a homogeneous data type or sets of data types, such as images and text, optimized for reading comprehension with the goal of differentiating between like data types or qualities within a single data type. You can compose lists based on subcomponents.
 
 <!-- example -->
-```
+```jsx
 import { List, ListItem, ListSubHeader, ListDivider, ListCheckbox } from 'react-toobox';
 
 const ListTest = () => (
