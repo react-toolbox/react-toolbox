@@ -5,7 +5,6 @@ import style from './style';
 class List extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
-    onClick: React.PropTypes.func,
     ripple: React.PropTypes.bool,
     selectable: React.PropTypes.bool
   };

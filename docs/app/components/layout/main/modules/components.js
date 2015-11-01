@@ -33,8 +33,9 @@ import DrawerExample1 from './examples/drawer_example_1.txt';
 import DrodpownExample1 from './examples/dropdown_example_1.txt';
 import FontIconExample1 from './examples/font_icon_example_1.txt';
 import InputExample1 from './examples/input_example_1.txt';
-import TimePickerTest from './examples/timepicker_example_1.txt';
 import LinkExample1 from './examples/link_example_1.txt';
+import ListExample1 from './examples/list_example_1.txt';
+import TimePickerTest from './examples/timepicker_example_1.txt';
 
 export default {
   app_bar: {
@@ -111,7 +112,8 @@ export default {
   list: {
     name: 'List',
     docs: List,
-    path: '/components/list'
+    path: '/components/list',
+    examples: [ListExample1]
   },
   menu: {
     name: 'Menu',
