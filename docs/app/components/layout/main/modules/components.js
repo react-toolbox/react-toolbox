@@ -34,6 +34,7 @@ import DrodpownExample1 from './examples/dropdown_example_1.txt';
 import FontIconExample1 from './examples/font_icon_example_1.txt';
 import InputExample1 from './examples/input_example_1.txt';
 import TimePickerTest from './examples/timepicker_example_1.txt';
+import LinkExample1 from './examples/link_example_1.txt';
 
 export default {
   app_bar: {
@@ -104,7 +105,8 @@ export default {
   link: {
     name: 'Link',
     docs: Link,
-    path: '/components/link'
+    path: '/components/link',
+    examples: [LinkExample1]
   },
   list: {
     name: 'List',
