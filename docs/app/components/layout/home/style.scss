@@ -2,6 +2,7 @@
 @import "./config";
 
 $content-offset: 4.8 * $unit;
+$content-width: 740px;
 
 .hero {
   padding: 0 calc((100% - #{$hero-max-width}) / 2);
@@ -67,10 +68,11 @@ $content-offset: 4.8 * $unit;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: $color-content;
   > * {
-    min-width: 700px;
-    max-width: 700px;
-    margin: ($content-offset / 4) auto;
+    min-width: $content-width;
+    max-width: $content-width;
+    margin: 0 ($content-offset / 4);
   }
 }
 

@@ -1,10 +1,13 @@
 import React from 'react';
 import { Card } from 'react-toolbox';
-import style from './style';
+
 import Logo from '../../logo';
 import Navigation from '../../navigation';
+import Markdown from '../../markdown';
 
+import style from './style';
 import authors from './modules/authors';
+import readme from './modules/readme.md';
 
 const Home = () => {
   return (
@@ -16,7 +19,7 @@ const Home = () => {
         <Navigation className={style.navigation} />
       </header>
       <section className={style.content}>
-        <h2>Authors</h2>
+        <Markdown className={style.documentation} markdown={readme}/>
 
         <ul className={style.authors}>
           { authors.map((author, index) => { return <Card key={index} {...author} />; }) }
