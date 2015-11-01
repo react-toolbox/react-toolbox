@@ -1,5 +1,0 @@
-build
-dist/**/*.css
-dist/**/*.js
-node_modules
-npm-debug.log
