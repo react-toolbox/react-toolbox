@@ -56,8 +56,7 @@ module.exports = {
     new TransferWebpackPlugin([{
       from: 'www/images',
       to: 'images'
-    }], path.resolve(__dirname, './')),
-    new TransferWebpackPlugin([{
+    }, {
       from: 'www/CNAME',
       to: '.'
     }], path.resolve(__dirname, './')),
