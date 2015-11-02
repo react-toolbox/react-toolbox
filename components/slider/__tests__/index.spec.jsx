@@ -120,6 +120,7 @@ describe('Slider', function () {
       props = { min: -500, max: 500 };
       state = { sliderStart: 0, sliderLength: 1000 };
       slider = utils.renderComponent(Slider, props, state);
+      slider.handleResize = (event, callback) => { callback(); };
     });
 
     it('sets pressed state when knob is clicked', function () {
@@ -132,29 +133,31 @@ describe('Slider', function () {
       expect(slider.state.pressed).toEqual(true);
     });
 
-    // it('sets a proper value when the slider is clicked', function () {
-    //   TestUtils.Simulate.mouseDown(slider.refs.slider, { pageX: 200 });
-    //   expect(slider.state.value).toEqual(-300);
-    // });
+    it('sets a proper value when the slider is clicked', function () {
+      TestUtils.Simulate.mouseDown(slider.refs.slider, { pageX: 200 });
+      expect(slider.state.value).toEqual(-300);
+    });
 
-    // it('sets a proper value when the slider is touched', function () {
-    //   TestUtils.Simulate.touchStart(slider.refs.slider, {touches: [{pageX: 200, pageY: 0}]});
-    //   expect(slider.state.value).toEqual(-300);
-    // });
+    it('sets a proper value when the slider is touched', function () {
+      TestUtils.Simulate.touchStart(slider.refs.slider, {touches: [{pageX: 200, pageY: 0}]});
+      expect(slider.state.value).toEqual(-300);
+    });
 
-    it('changes its value when input changes', function () {
+    it('changes input value when slider changes', function () {
+      slider = utils.renderComponent(Slider, {editable: true}, {sliderStart: 0, sliderLength: 1000});
+      slider.handleResize = (event, callback) => { callback(); };
+      input = TestUtils.findRenderedComponentWithType(slider, Input);
+      TestUtils.Simulate.mouseDown(slider.refs.slider, { pageX: 900 });
+      expect(input.state.value).toEqual(90);
+    });
+
+    it('changes its value when input is blurred', function () {
       slider = utils.renderComponent(Slider, {editable: true, value: 50});
       input = TestUtils.findRenderedComponentWithType(slider, Input);
       TestUtils.Simulate.change(input.refs.input, {target: {value: '80'}});
+      TestUtils.Simulate.blur(input.refs.input);
       expect(slider.state.value).toEqual(80);
     });
-
-    // it('changes input value when slider changes', function () {
-    //   slider = utils.renderComponent(Slider, {editable: true}, {sliderStart: 0, sliderLength: 1000});
-    //   input = TestUtils.findRenderedComponentWithType(slider, Input);
-    //   TestUtils.Simulate.mouseDown(slider.refs.slider, { pageX: 900 });
-    //   expect(input.state.value).toEqual(90);
-    // });
 
     it('calls onChange callback when the value is changed', function () {
       const onChangeSpy = sinon.spy();

@@ -51,11 +51,10 @@ class Slider extends React.Component {
     }
   }
 
-  handleResize = (callback) => {
+  handleResize = (event, callback) => {
     const {left, right} = ReactDOM.findDOMNode(this.refs.progressbar).getBoundingClientRect();
-    this.setState({sliderStart: left, sliderLength: right - left}, () => {
-      if (callback) callback();
-    });
+    const cb = callback || () => {};
+    this.setState({sliderStart: left, sliderLength: right - left}, cb);
   };
 
   handleSliderFocus = () => {
@@ -66,19 +65,20 @@ class Slider extends React.Component {
     utils.events.removeEventsFromDocument(this.getKeyboardEvents());
   };
 
-  handleInputChange = () => {
+  handleInputBlur = () => {
     this.setState({value: this.trimValue(this.refs.input.getValue()) });
   };
 
   handleKeyDown = (event) => {
-    if ([13, 27].indexOf(event.keyCode) !== -1) ReactDOM.findDOMNode(this).blur();
+    if ([13, 27].indexOf(event.keyCode) !== -1) {
+      this.refs.input.blur();
+      ReactDOM.findDOMNode(this).blur();
+    }
     if (event.keyCode === 38) this.addToValue(this.props.step);
     if (event.keyCode === 40) this.addToValue(-this.props.step);
-    if (event.keyCode !== 9) utils.events.pauseEvent(event);
   };
 
   handleMouseDown = (event) => {
-
     utils.events.addEventsToDocument(this.getMouseEventMap());
     this.start(utils.events.getMousePosition(event));
     utils.events.pauseEvent(event);
@@ -128,7 +128,7 @@ class Slider extends React.Component {
   }
 
   start (position) {
-    this.handleResize(() => {
+    this.handleResize(null, () => {
       this.setState({pressed: true, value: this.positionToValue(position)});
     });
   }
@@ -192,7 +192,7 @@ class Slider extends React.Component {
         <Input
           ref='input'
           className={style.input}
-          onChange={this.handleInputChange}
+          onBlur={this.handleInputBlur}
           value={this.valueForInput(this.state.value)} />
       );
     }
