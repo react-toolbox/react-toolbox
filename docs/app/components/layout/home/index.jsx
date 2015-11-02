@@ -12,6 +12,15 @@ const Home = () => (
       <Logo className={style.logo} />
       <h2 className={style.title}>React Toolbox</h2>
       <h4 className={style.subtitle}>Bootstrap your application with beautiful Material Design Components</h4>
+
+      <div className={style.github}>
+        <div class="github">
+          <iframe src="https://ghbtns.com/github-btn.html?user=react-toolbox&amp;repo=react-toolbox&amp;type=star&amp;count=true" frameborder="0" scrolling="0"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=react-toolbox&amp;repo=react-toolbox&amp;type=watch&amp;count=true&amp;v=2" frameborder="0" scrolling="0"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=react-toolbox&amp;repo=react-toolbox&amp;type=fork&amp;count=true" frameborder="0" scrolling="0"></iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=react-toolbox&amp;type=follow&amp;count=true" frameborder="0" scrolling="0"></iframe>
+        </div>
+      </div>
       <Navigation className={style.navigation} />
     </header>
 

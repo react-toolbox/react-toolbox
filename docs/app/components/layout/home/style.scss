@@ -29,6 +29,17 @@ $content-width: 740px;
     line-height: 1.2;
     opacity: $hero-text-secondary-opacity;
   }
+  .github {
+    margin-top: $content-offset;
+    text-align: center;
+    iframe {
+      height: 2 * $unit;
+      width: 12.8 * $unit;
+      &:last-child {
+        width: 20 * $unit;
+      }
+    }
+  }
   .navigation > ul {
     margin-top: $hero-item-spacing;
     list-style: none;
