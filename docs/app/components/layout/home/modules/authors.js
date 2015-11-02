@@ -1,7 +1,7 @@
 export default [
   {
     title: 'Javi Velasco',
-    subtitle: '@javivelasco',
+    subtitle: 'javivelasco',
     actions: [
       { label: 'Github' },
       { label: 'Twitter' }
@@ -12,7 +12,7 @@ export default [
   },
   {
     title: 'Javi Jimenez',
-    subtitle: '@soyjavi',
+    subtitle: 'soyjavi',
     actions: [
       { label: 'Github' },
       { label: 'Twitter' }

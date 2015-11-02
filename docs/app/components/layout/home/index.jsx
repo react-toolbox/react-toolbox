@@ -10,16 +10,13 @@ const Home = () => (
   <article>
     <header className={style.header}>
       <div className={style.github}>
-        <div class="github">
-          <iframe src="https://ghbtns.com/github-btn.html?user=react-toolbox&amp;repo=react-toolbox&amp;type=star&amp;count=true" frameborder="0" scrolling="0"></iframe>
-          <iframe src="https://ghbtns.com/github-btn.html?user=react-toolbox&amp;repo=react-toolbox&amp;type=fork&amp;count=true" frameborder="0" scrolling="0"></iframe>
-        </div>
+        <iframe src='https://ghbtns.com/github-btn.html?user=react-toolbox&amp;repo=react-toolbox&amp;type=star&amp;count=true' frameBorder='0' scrolling='0' />
+        <iframe src='https://ghbtns.com/github-btn.html?user=react-toolbox&amp;repo=react-toolbox&amp;type=fork&amp;count=true' frameBorder='0' scrolling='0' />
       </div>
 
       <Logo className={style.logo} />
       <h2 className={style.title}>React Toolbox</h2>
       <h4 className={style.subtitle}>Bootstrap your application with beautiful Material Design Components</h4>
-
       <Navigation className={style.navigation} />
     </header>
 
@@ -44,7 +41,15 @@ const Home = () => (
     <section className={`${style.content}`}>
       <h3>About the authors</h3>
       <ul className={style.authors}>
-        { authors.map((author, index) => { return <Card key={index} {...author} />; }) }
+      {
+        authors.map((author, index) => {
+          author.actions.map((action) => {
+            let url = `https:\\\\${ action.label }.com\\${ author.subtitle }`;
+            action.onClick = () => { window.open(url.toLowerCase(), '_blank') };
+          });
+          return <Card key={index} {...author} />;
+        })
+      }
       </ul>
     </section>
 

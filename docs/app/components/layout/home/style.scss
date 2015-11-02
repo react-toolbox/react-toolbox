@@ -29,7 +29,7 @@ $content-width: 740px;
     opacity: $hero-text-secondary-opacity;
   }
   .github {
-    position: absolute;
+    position: fixed;
     top: 2 * $unit;
     left: 2 * $unit;
     text-align: center;
@@ -37,9 +37,6 @@ $content-width: 740px;
       display: inline-block;
       width: 10 * $unit;
       height: 2 * $unit;
-      &:last-child {
-        width: 20 * $unit;
-      }
     }
   }
   .navigation > ul {
@@ -127,6 +124,11 @@ $content-width: 740px;
 }
 
 @media all and (max-width: 768px) {
+  .header {
+    .github {
+      position: absolute;
+    }
+  }
   .content {
     padding: $content-offset / 2;
     > .authors {
