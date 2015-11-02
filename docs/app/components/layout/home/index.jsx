@@ -44,8 +44,8 @@ const Home = () => (
       {
         authors.map((author, index) => {
           author.actions.map((action) => {
-            let url = `https:\\\\${ action.label }.com\\${ author.subtitle }`;
-            action.onClick = () => { window.open(url.toLowerCase(), '_blank') };
+            const url = `https:\\\\${ action.label }.com\\${ author.subtitle }`;
+            action.onClick = () => { window.open(url.toLowerCase(), '_blank'); };
           });
           return <Card key={index} {...author} />;
         })
