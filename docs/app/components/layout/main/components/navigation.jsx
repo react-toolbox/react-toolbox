@@ -42,7 +42,7 @@ const MainNavigation = React.createClass({
           { this.renderDrawerItems() }
         </List>
         <footer className={style.footer}>
-          <span>React Toolbox ©</span>
+          <span>React Toolbox © 2015</span>
         </footer>
       </aside>
     );
