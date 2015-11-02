@@ -57,8 +57,7 @@ module.exports = {
       from: 'www/images',
       to: 'images'
     }, {
-      from: 'www/CNAME',
-      to: '.'
+      from: 'www/other'
     }], path.resolve(__dirname, './')),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
