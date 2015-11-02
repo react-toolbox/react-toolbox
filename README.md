@@ -32,7 +32,7 @@ const CustomButton = () => (
 export default CustomButton;
 ```
 
-The previous code creates a React button component based on React toolbox button. It's important to notice that requiring a module from the exposed root of the package will import the **ES6 JSX** and **SASS** of the component. If you want to still use CSS Modules but avoiding [Babel](https://babeljs.io/) and [SASS](http://sass-lang.com/) you can require from `react-toolbox/lib`.
+The previous code creates a React button component based on React toolbox button. It's important to notice that requiring a module from the exposed root of the package will import the **SASS** of the component. 
 
 We encourage you to work with webpack but if you want to use React Toolbox in an old fashioned way you must generate a build with all the css and javascript and include it in your `index.html`. Then you can use the components exposed in the `window` object.
 
