@@ -33,8 +33,8 @@ const Home = () => (
       </Link>
     </section>
 
-    <section className={`${style.content} ${style['second-content']}`}>
-      <h3 className={style['authors-title']}>About the authors</h3>
+    <section className={`${style.content}`}>
+      <h3>About the authors</h3>
       <ul className={style.authors}>
         { authors.map((author, index) => { return <Card key={index} {...author} />; }) }
       </ul>
@@ -42,7 +42,7 @@ const Home = () => (
 
     <footer className={style.footer}>
       <p>React Toolbox © 2015</p>
-      <p>Crafted with Love between Spain and Thailand</p>
+      <small>Crafted with <span className={style.love}>ღ</span> between Spain and Thailand</small>
     </footer>
   </article>
 );

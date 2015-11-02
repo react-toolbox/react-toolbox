@@ -65,8 +65,11 @@ $content-width: 740px;
   align-items: center;
   padding: $content-offset 0;
   background-color: $color-content;
-
   flex-wrap: wrap;
+  &:nth-child(3) {
+    background-color: darken($color-content, 5%);
+  }
+
   > .authors {
     display: flex;
     align-items: flex-start;
@@ -89,15 +92,11 @@ $content-width: 740px;
     font-size: 2 * $unit;
     color: $hero-gradient-dark;
   }
-}
-
-.authors-title {
-  margin-bottom: $content-offset / 2;
-  font-size: 2.4 * $unit;
-}
-
-.second-content {
-  background: darken($color-content, 5%);
+  > h3 {
+    color: $color-primary-dark;
+    margin-bottom: $content-offset / 2;
+    font-size: 2.4 * $unit;
+  }
 }
 
 .footer {
@@ -105,4 +104,31 @@ $content-width: 740px;
   color: $color-content;
   text-align: center;
   background-color: $color-text;
+  .love {
+    color: $color-accent;
+    font-size: $font-size-normal;
+  }
+  small {
+    color: rgba(255,255,255,0.5)
+  }
 }
+
+$content-width: 100%;
+@media all and (max-width: 768px) {
+  .content {
+    margin: 0 (2 * $unit);
+    > .authors {
+      flex-direction: column;
+      > * {
+        margin: $unit 0;
+      }
+    }
+    > p {
+      max-width: $content-width;
+    }
+  }
+  .second-content {
+    background-color: transparent;
+  }
+}
+
