@@ -1,6 +1,5 @@
 @import "../../globals";
 @import "./config";
-
 $content-offset: 4.8 * $unit;
 $content-width: 740px;
 
@@ -14,7 +13,7 @@ $content-width: 740px;
   .logo {
     width: $hero-logo-size;
     height: $hero-logo-size;
-    margin-top: $hero-item-spacing;
+    margin-top: $hero-item-spacing + $github-buttons-height;
     opacity: $hero-logo-opacity;
     fill: $hero-text-color;
   }
@@ -30,11 +29,14 @@ $content-width: 740px;
     opacity: $hero-text-secondary-opacity;
   }
   .github {
-    margin-top: $content-offset;
+    position: absolute;
+    top: 2 * $unit;
+    left: 2 * $unit;
     text-align: center;
     iframe {
+      display: inline-block;
+      width: 10 * $unit;
       height: 2 * $unit;
-      width: 12.8 * $unit;
       &:last-child {
         width: 20 * $unit;
       }
@@ -74,13 +76,13 @@ $content-width: 740px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: $content-offset 0;
+  padding: $content-offset;
   background-color: $color-content;
+
   flex-wrap: wrap;
   &:nth-child(3) {
     background-color: darken($color-content, 5%);
   }
-
   > .authors {
     display: flex;
     align-items: flex-start;
@@ -104,9 +106,9 @@ $content-width: 740px;
     color: $hero-gradient-dark;
   }
   > h3 {
-    color: $color-primary-dark;
     margin-bottom: $content-offset / 2;
     font-size: 2.4 * $unit;
+    color: $color-primary-dark;
   }
 }
 
@@ -116,18 +118,17 @@ $content-width: 740px;
   text-align: center;
   background-color: $color-text;
   .love {
-    color: $color-accent;
     font-size: $font-size-normal;
+    color: $color-accent;
   }
   small {
-    color: rgba(255,255,255,0.5)
+    color: rgba(255,255,255,.5);
   }
 }
 
-$content-width: 100%;
 @media all and (max-width: 768px) {
   .content {
-    margin: 0 (2 * $unit);
+    padding: $content-offset / 2;
     > .authors {
       flex-direction: column;
       > * {
@@ -135,11 +136,11 @@ $content-width: 100%;
       }
     }
     > p {
-      max-width: $content-width;
+      max-width: 100%;
     }
   }
+
   .second-content {
     background-color: transparent;
   }
 }
-
