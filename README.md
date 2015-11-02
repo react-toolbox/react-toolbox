@@ -1,9 +1,9 @@
 # React Toolbox
 
 [![Build Status](https://travis-ci.org/react-toolbox/react-toolbox.svg?branch=master)](https://travis-ci.org/react-toolbox/react-toolbox) 
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/soyjavi/react-toolbox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/react-toolbox/react-toolbox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge)
 
-*Current version: [0.7.29]()*
+*Current version: [0.11.2]()*
 
 React Toolbox is a set of [React](http://facebook.github.io/react/) components that implement [Google's Material Design specification](https://www.google.com/design/spec/material-design/introduction.html). It's powered by [CSS Modules](https://github.com/css-modules/css-modules) and integrates harmfully with your [Webpack](http://webpack.github.io/) workflow. You can take a tour through our documentation website and try the components live!
 
