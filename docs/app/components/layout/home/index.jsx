@@ -28,7 +28,7 @@ const Home = () => (
       <p>
         React Toolbox is a set of React components that implements Google Material Design specification.
         It's built on top of some the trendiest proposals like CSS Modules (written in SASS), Webpack and ES6.
-        The library integrates harmfuly with your Webpack workflow and it's easily customizable and very flexible.
+        The library harmoniously integrates with your Webpack workflow and it's easily customizable and very flexible.
       </p>
 
       <p>
