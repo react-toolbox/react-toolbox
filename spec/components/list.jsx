@@ -39,7 +39,7 @@ const ListTest = () => (
           rightIcon='star'
         />
         <ListItem
-          avatar='https://pbs.twimg.com/profile_images/651611834131222528/rKYHs2bd_400x400.jpg'
+          avatar='https://avatars2.githubusercontent.com/u/559654?v=3&s=460'
           caption='Javi Jiménez'
           legend='Frontend engineer at MediaSmart'
           rightIcon='star'
@@ -85,7 +85,7 @@ const ListTest = () => (
           rightIcon='mail'
         />
         <ListItem
-          avatar='https://pbs.twimg.com/profile_images/651611834131222528/rKYHs2bd_400x400.jpg'
+          avatar='https://avatars2.githubusercontent.com/u/559654?v=3&s=460'
           caption='Javi Jiménez'
           rightIcon='mail'
         />
