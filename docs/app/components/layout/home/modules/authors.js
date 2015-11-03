@@ -6,7 +6,7 @@ export default [
       { label: 'Github' },
       { label: 'Twitter' }
     ],
-    image: 'https://avatars0.githubusercontent.com/u/1634922',
+    image: '/images/javivelasco.jpg',
     text: 'Software gardener • Film, music & comic lover • Frontend Engineer at SocialBro  • Any biographer in the room?',
     color: '#3f51b5'
   },
@@ -17,7 +17,7 @@ export default [
       { label: 'Github' },
       { label: 'Twitter' }
     ],
-    image: 'https://avatars2.githubusercontent.com/u/559654',
+    image: '/images/soyjavi.jpg',
     text: 'Creative Doer · A complicated #human who builds stuff · #author · #opensource lover · #traveller · with a dark past being CEO & CTO',
     color: '#3f51b5'
   }
