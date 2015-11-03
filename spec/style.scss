@@ -1,24 +1,48 @@
+$unit: 1rem;
+$offset: 1.8 * $unit;
 .app {
-  padding: 5.5rem 1.6rem;
-  > h1, > h3 {
-    line-height: 100%;
-  }
-  section > h5 {
-    margin-top: 3.2rem;
-  }
-  section > p {
-    margin-bottom: 1rem;
-  }
-  [data-react-toolbox='card'] {
-    display: inline-block;
-    margin: 1.6rem 1.6rem 0 0;
+  padding: (8.2 * $unit) $offset $offset $offset;
+  background-color: #f5f5f5;
+  section {
+    padding: $offset;
+    margin-bottom: $offset;
+    background-color: white;
+    box-shadow: 0 1px 2px rgba(0,0,0, 0.25);
+    > h5 {
+      color: rgb(48, 63, 159);
+      &:not(:first-child) {
+        margin-top: 2 * $offset;
+      }
+    }
+    > p {
+      margin: ($offset / 4) 0;
+      opacity: .6;
+    }
+    [data-react-toolbox='card'] {
+      display: inline-block;
+      margin: $offset $offset 0 0;
+    }
   }
 }
 
-.app-bar {
-  padding: 1.6rem;
-  justify-content: center;
-  > span {
-    margin-left: 1rem;
+.app_bar {
+  display: flex;
+  > h1 {
+    flex-grow: 1;
+    font-size: 1.8 * $unit;
+    font-weight: bold;
+    > small {
+      font-size: 1.8 * $unit;
+      font-weight: normal;
+    }
   }
+  > small {
+    padding: (.5 * $unit) (.8 * $unit);
+    font-size: 1.2 * $unit;
+    background-color: rgba(0,0,0, .25);
+  }
+}
+
+.logo {
+  // height: $unit;
 }

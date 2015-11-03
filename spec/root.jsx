@@ -18,14 +18,17 @@ import Radio from './components/radio';
 import Snackbar from './components/snackbar';
 import Slider from './components/slider';
 import Switch from './components/switch';
+import Table from './components/table';
 import Tabs from './components/tabs';
+
+// import Logo from '../docs/app/components/logo'
 import style from './style';
 
 const Root = () => (
   <App className={style.app}>
-    <AppBar fixed flat className={style['app-bar']}>
-      <h1>React Toolbox</h1>
-      <span>Component Spec v0.10.20</span>
+    <AppBar fixed flat className={style.app_bar}>
+      <h1>React Toolbox <small>Component Spec</small></h1>
+      <small>v0.11.2</small>
     </AppBar>
 
     <Autocomplete />
@@ -45,6 +48,7 @@ const Root = () => (
     <Slider />
     <Snackbar />
     <Switch />
+    <Table />
     <Tabs />
   </App>
 );
