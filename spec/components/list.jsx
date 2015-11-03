@@ -39,7 +39,7 @@ const ListTest = () => (
           rightIcon='star'
         />
         <ListItem
-          avatar='https://pbs.twimg.com/profile_images/651611834131222528/rKYHs2bd_400x400.jpg'
+          avatar='https://pbs.twimg.com/profile_images/637210415349506048/wMD-kiFh_400x400.jpg'
           caption='Javi Jiménez'
           legend='Frontend engineer at MediaSmart'
           rightIcon='star'
@@ -85,7 +85,7 @@ const ListTest = () => (
           rightIcon='mail'
         />
         <ListItem
-          avatar='https://pbs.twimg.com/profile_images/651611834131222528/rKYHs2bd_400x400.jpg'
+          avatar='https://pbs.twimg.com/profile_images/637210415349506048/wMD-kiFh_400x400.jpg'
           caption='Javi Jiménez'
           rightIcon='mail'
         />
