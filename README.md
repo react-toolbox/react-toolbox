@@ -41,11 +41,11 @@ We encourage you to work with webpack but if you want to use React Toolbox in an
 
 Since React Toolbox styles are written in CSS it's pretty easy to customize your components. We have several ways:
 
-### Via React Toolbox Loader (coming soon)
+### Via React Toolbox Loader
 
-Thanks to the power of SASS, all components in React Toolbox are configured from a variables file. The best way to customize your build is to create a custom configuration SASS file with the variables you want to modify during the build process.
+Thanks to the power of SASS, all components in React Toolbox are configured from a variables file. The best way to customize your build is to create a custom configuration SASS file overriding configuration variables like colors or sizes.
 
-With `react-toolbox-loader` so you can tell webpack where your configuration file is. It will prepend your configuration to each build belonging to RT components resulting in your customized CSS. More on this soon.
+With [toolbox-loader](https://github.com/react-toolbox/toolbox-loader) you can tell webpack where your configuration file is and it will prepend your config to each SASS build. This will result in your customized CSS for React Toolbox Components. For now you can browse the configuration files and override what you want. 
 
 ### Via `className` property
 
