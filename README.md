@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/react-toolbox/react-toolbox.svg?branch=master)](https://travis-ci.org/react-toolbox/react-toolbox) 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/react-toolbox/react-toolbox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge)
+[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://paypal.me/javivelasco)
 
 *Current version: [0.11.2]()*
 
