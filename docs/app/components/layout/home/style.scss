@@ -37,6 +37,7 @@ $content-width: 740px;
       display: inline-block;
       width: 10 * $unit;
       height: 2 * $unit;
+      vertical-align: top;
     }
   }
   .navigation > ul {
@@ -144,5 +145,26 @@ $content-width: 740px;
 
   .second-content {
     background-color: transparent;
+  }
+}
+
+.donate {
+  display: inline-block;
+  overflow: hidden;
+  font-size: 1.1 * $unit;
+  color: #fff;
+  vertical-align: top;
+  border-radius: 3px;
+  .legend {
+    display: inline-block;
+    padding: 0 .5 * $unit;
+    line-height: 2 * $unit;
+    background-color: #555;
+  }
+  .paypal {
+    display: inline-block;
+    padding: 0 .5 * $unit;
+    line-height: 2 * $unit;
+    background-color: #007ec6;
   }
 }
