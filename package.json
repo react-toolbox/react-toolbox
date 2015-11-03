@@ -83,6 +83,7 @@
     "sass-loader": "^3.0.0",
     "sinon": "git://github.com/cjohansen/Sinon.JS#sinon-2.0",
     "style-loader": "^0.13.0",
+    "toolbox-loader": "0.0.2",
     "webpack": "^1.12.0",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.4.1"

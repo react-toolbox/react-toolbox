@@ -39,6 +39,7 @@
     "redbox-react": "^1.1.1",
     "sass-loader": "^3.0.0",
     "style-loader": "^0.13.0",
+    "toolbox-loader": "0.0.2",
     "transfer-webpack-plugin": "^0.1.4",
     "webpack": "^1.12.0",
     "webpack-dev-middleware": "^1.2.0",

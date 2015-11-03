@@ -19,7 +19,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  transition: all $animation-duration $animation-ease;
+  transition: all $animation-duration $animation-curve-default;
 }
 
 .navigation {
@@ -29,7 +29,7 @@
   left: 0;
   z-index: $z-index-high;
   box-shadow: $documentation-left-shadow;
-  transition: all $animation-duration $animation-ease;
+  transition: all $animation-duration $animation-curve-default;
 }
 
 .playground {
@@ -40,7 +40,7 @@
   width: $playground-width;
   background: $color-background;
   box-shadow: $documentation-right-shadow;
-  transition: right $animation-duration $animation-ease;
+  transition: right $animation-duration $animation-curve-default;
 }
 
 .root {

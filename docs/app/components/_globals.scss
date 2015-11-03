@@ -1,11 +1,9 @@
 @import "~react-toolbox/base";
 
 $unit: 1rem;
-$color-primary-dark: #303f9f;
-$color-primary-light: #3f51b5;
-$color-primary-contrast: #fff;
+$color-primary-dark: unquote("rgb(#{$color-primary-dark})");
+$color-primary-light: unquote("rgb(#{$color-primary-light})");
+$color-primary-contrast: unquote("rgb(#{$color-primary-contrast})");
 $color-accent: unquote("rgb(#{$color-accent})");
 $color-divider: $color-divider;
 $color-content: #fafafa;
-$animation-duration: 250ms;
-$animation-ease: ease-in-out;
