@@ -29,6 +29,7 @@ $content-width: 740px;
     opacity: $hero-text-secondary-opacity;
   }
   .github {
+    z-index: $z-index-higher;
     position: fixed;
     top: 2 * $unit;
     left: 2 * $unit;
