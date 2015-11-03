@@ -4,6 +4,41 @@ import events from '../utils/events';
 import style from './style';
 
 class Checkbox extends React.Component {
+
+  static defaultProps = {
+    checked: false
+  }
+
+  state = {
+    checked: this.props.checked
+  }
+
+  onChange = (event) => {
+    this.setState({checked: !this.state.checked}, () => {
+      if (this.props.onChange) this.props.onChange(event, this);
+    });
+  };
+
+  render () {
+    return <PureCheckbox
+      {...this.props}
+      onChange={this.onChange.bind(this)}
+      checked={this.state.checked}
+      />;
+  }
+
+  getValue () {
+    return this.state.checked;
+  }
+
+  setValue (value) {
+    this.setState({checked: value});
+  }
+
+}
+
+export
+class PureCheckbox extends React.Component {
   static propTypes = {
     checked: React.PropTypes.bool,
     className: React.PropTypes.string,
@@ -21,19 +56,10 @@ class Checkbox extends React.Component {
     disabled: false
   };
 
-  state = {
-    checked: this.props.checked
-  };
-
-  handleChange = (event) => {
-    this.setState({checked: !this.state.checked}, () => {
-      if (this.props.onChange) this.props.onChange(event, this);
-    });
-  };
 
   handleClick = (event) => {
     events.pauseEvent(event);
-    if (!this.props.disabled) this.handleChange(event);
+    if (!this.props.disabled) this.props.onChange(event);
   };
 
   handleMouseDown = (event) => {
@@ -47,7 +73,7 @@ class Checkbox extends React.Component {
   render () {
     let fieldClassName = style.field;
     let checkboxClassName = style.check;
-    if (this.state.checked) checkboxClassName += ` ${style.checked}`;
+    if (this.props.checked) checkboxClassName += ` ${style.checked}`;
     if (this.props.disabled) fieldClassName += ` ${style.disabled}`;
     if (this.props.className) fieldClassName += ` ${this.props.className}`;
 
@@ -62,8 +88,6 @@ class Checkbox extends React.Component {
           ref='input'
           type='checkbox'
           className={style.input}
-          checked={this.state.checked}
-          onChange={this.handleChange}
           onClick={this.handleInputClick}
         />
         <span data-role='checkbox' className={checkboxClassName} onMouseDown={this.handleMouseDown}>
@@ -82,13 +106,6 @@ class Checkbox extends React.Component {
     this.refs.input.focus();
   }
 
-  getValue () {
-    return this.state.checked;
-  }
-
-  setValue (value) {
-    this.setState({checked: value});
-  }
 }
 
 export default Checkbox;
