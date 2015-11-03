@@ -1,0 +1,6 @@
+$table-row-height: 48px;
+$table-row-divider: solid 1px $color-divider;
+$table-row-offset: 1.8 * $unit;
+$table-text-color: rgba(0, 0, 0, 0.541176);
+$table-change-icon-size: 0.8 * $unit;
+$table-change-icon-color: unquote("rgb(#{$color-primary-dark})") !default;
