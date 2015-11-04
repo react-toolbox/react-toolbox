@@ -43,7 +43,7 @@ class Row extends React.Component {
   };
 
   handleSelectChange = (event, instance) => {
-    this.props.onSelect(event, instance.getValue(), this.props.data);
+    this.props.onSelect(event, instance.getValue(), this);
   };
 
   renderCell (key) {

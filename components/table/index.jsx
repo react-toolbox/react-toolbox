@@ -23,7 +23,8 @@ class Table extends React.Component {
 
   state = {
     dataSource: utils.cloneObject(this.props.dataSource),
-    selected: false
+    selected: false,
+    selected_rows: []
   };
 
   componentWillReceiveProps = (next_props) => {
@@ -41,9 +42,17 @@ class Table extends React.Component {
     }
   };
 
-  handleRowSelect = (event, selected, data) => {
-    if (selected && this.props.onSelect) {
-      this.props.onSelect(event, data);
+  handleRowSelect = (event, selected, instance) => {
+    if (this.props.onSelect) {
+      let selected_rows = this.state.selected_rows;
+      const index = instance.props.index;
+      if (selected) {
+        selected_rows.push(index);
+        this.props.onSelect(event, instance.props.data);
+      } else {
+        delete selected_rows[selected_rows.indexOf(index)];
+      }
+      this.setState({ selected_rows: selected_rows });
     }
   };
 
@@ -86,7 +95,7 @@ class Table extends React.Component {
               model={this.props.model}
               onChange={this.props.onChange ? this.handleRowChange : null}
               onSelect={this.props.onSelect ? this.handleRowSelect : null}
-              selected={this.state.selected}
+              selected={this.state.selected || this.state.selected_rows.indexOf(index) != -1}
             />
           )
         })
@@ -107,6 +116,14 @@ class Table extends React.Component {
 
   getValue () {
     return this.state.dataSource;
+  }
+
+  getSelected () {
+    let rows = [];
+    this.state.dataSource.map((row, index) => {
+      if (this.state.selected_rows.indexOf(index) != -1) rows.push(row)
+    });
+    return rows;
   }
 }
 
