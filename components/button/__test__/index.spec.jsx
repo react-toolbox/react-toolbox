@@ -17,7 +17,6 @@ describe('Button', function () {
 
     it('renders accent button with accent style', function () {
       button = utils.shallowRenderComponent(Button, { accent: true });
-      var expectedClassName = `${style.flat} ${style.accent}`;
 
       expect(button.props.className).toContain(style.flat);
       expect(button.props.className).toContain(style.accent);
