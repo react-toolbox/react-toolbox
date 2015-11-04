@@ -40,6 +40,10 @@ module.exports = {
     };
   },
 
+  cloneObject (object) {
+    return JSON.parse(JSON.stringify(object))
+  },
+
   events: require('./events'),
   prefixer: require('./prefixer'),
   time: require('./time'),

@@ -1,6 +1,9 @@
 import React from 'react';
+
 import App from '../components/app';
-import AppBar from '../components/app_bar';
+import AppBarToolbox from '../components/app_bar';
+import ButtonToolbox from '../components/button';
+
 import Autocomplete from './components/autocomplete';
 import Button from './components/button';
 import Card from './components/card';
@@ -18,15 +21,28 @@ import Radio from './components/radio';
 import Snackbar from './components/snackbar';
 import Slider from './components/slider';
 import Switch from './components/switch';
+import Table from './components/table';
 import Tabs from './components/tabs';
+
+// import Logo from '../docs/app/components/logo'
 import style from './style';
+
+const _hrefProject = () => {
+  window.href = 'http://react-toolbox';
+};
 
 const Root = () => (
   <App className={style.app}>
-    <AppBar fixed flat className={style['app-bar']}>
-      <h1>React Toolbox</h1>
-      <span>Component Spec v0.10.20</span>
-    </AppBar>
+    <AppBarToolbox fixed flat className={style.app_bar}>
+      <h1>React Toolbox <small>Spec 0.11.2</small></h1>
+      <ButtonToolbox
+        accent
+        className={style.github}
+        icon='web'
+        kind='floating'
+        onClick={_hrefProject}
+      />
+    </AppBarToolbox>
 
     <Autocomplete />
     <Button />
@@ -45,6 +61,7 @@ const Root = () => (
     <Slider />
     <Snackbar />
     <Switch />
+    <Table />
     <Tabs />
   </App>
 );
