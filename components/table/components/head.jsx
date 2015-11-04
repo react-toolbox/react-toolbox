@@ -25,9 +25,9 @@ class Head extends React.Component {
         <th className={style.selectable}>
           <Checkbox onChange={this.handleSelectChange}/>
         </th>
-      )
+      );
     }
-  };
+  }
 
   render () {
     return (
@@ -36,12 +36,12 @@ class Head extends React.Component {
         { this.renderCellSelectable() }
         {
           Object.keys(this.props.model).map((key) => {
-            return <th key={key}>{key}</th>
+            return (<th key={key}>{key}</th>);
           })
         }
         </tr>
       </thead>
-    )
+    );
   }
 }
 

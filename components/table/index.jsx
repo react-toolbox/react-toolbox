@@ -12,7 +12,7 @@ class Table extends React.Component {
     model: React.PropTypes.object,
     heading: React.PropTypes.bool,
     onChange: React.PropTypes.func,
-    onSelect: React.PropTypes.func,
+    onSelect: React.PropTypes.func
   };
 
   static defaultProps = {
@@ -34,7 +34,7 @@ class Table extends React.Component {
   };
 
   handleRowChange = (event, row, key, value) => {
-    let dataSource = this.state.dataSource;
+    const dataSource = this.state.dataSource;
     dataSource[row.props.index][key] = value;
     this.setState({ dataSource: dataSource });
     if (this.props.onChange) {
@@ -44,7 +44,7 @@ class Table extends React.Component {
 
   handleRowSelect = (event, selected, instance) => {
     if (this.props.onSelect) {
-      let selected_rows = this.state.selected_rows;
+      const selected_rows = this.state.selected_rows;
       const index = instance.props.index;
       if (selected) {
         selected_rows.push(index);
@@ -62,11 +62,11 @@ class Table extends React.Component {
 
   isChanged = (data, base) => {
     let changed = false;
-    Object.keys(data).map( (key, index) => {
+    Object.keys(data).map((key, index) => {
       if (data[key] !== base[key]) {
         changed = true;
       }
-    })
+    });
     return changed;
   };
 
@@ -77,9 +77,9 @@ class Table extends React.Component {
           model={this.props.model}
           onSelect={this.props.onSelect ? this.handleRowsSelect : null}
         />
-      )
+      );
     }
-  };
+  }
 
   renderBody () {
     return (
@@ -95,13 +95,13 @@ class Table extends React.Component {
               model={this.props.model}
               onChange={this.props.onChange ? this.handleRowChange : null}
               onSelect={this.props.onSelect ? this.handleRowSelect : null}
-              selected={this.state.selected || this.state.selected_rows.indexOf(index) != -1}
+              selected={this.state.selected || this.state.selected_rows.indexOf(index) !== -1}
             />
-          )
+          );
         })
       }
       </tbody>
-    )
+    );
   }
 
   render () {
@@ -119,9 +119,9 @@ class Table extends React.Component {
   }
 
   getSelected () {
-    let rows = [];
+    const rows = [];
     this.state.dataSource.map((row, index) => {
-      if (this.state.selected_rows.indexOf(index) != -1) rows.push(row)
+      if (this.state.selected_rows.indexOf(index) !== -1) rows.push(row);
     });
     return rows;
   }

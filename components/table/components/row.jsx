@@ -16,10 +16,11 @@ const _castType = (type) => {
 };
 
 const _castValue = (value, type) => {
+  let cast = value;
   if (value && type === Date) {
-    value = new Date(value).toISOString().slice(0, 10);
+    cast = new Date(value).toISOString().slice(0, 10);
   }
-  return value;
+  return cast;
 };
 
 class Row extends React.Component {
@@ -38,7 +39,7 @@ class Row extends React.Component {
     className: ''
   };
 
-  handleInputChange = (key, event, component) => {
+  handleInputChange = (key, event) => {
     this.props.onChange(event, this, key, event.target.value);
   };
 
@@ -58,9 +59,9 @@ class Row extends React.Component {
           value={value}
           onChange={this.handleInputChange.bind(null, key)}
         />
-      )
+      );
     } else {
-      return value
+      return value;
     }
   }
 
@@ -70,7 +71,7 @@ class Row extends React.Component {
         <th className={style.selectable}>
           <Checkbox onChange={this.handleSelectChange} checked={this.props.selected}/>
         </th>
-      )
+      );
     }
   }
 
@@ -85,11 +86,11 @@ class Row extends React.Component {
       { this.renderCellSelectable() }
       {
         Object.keys(this.props.model).map((key) => {
-          return ( <td key={key}>{this.renderCell(key)}</td> )
+          return (<td key={key}>{this.renderCell(key)}</td>);
         })
       }
       </tr>
-    )
+    );
   }
 }
 
