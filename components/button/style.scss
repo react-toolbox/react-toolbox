@@ -21,6 +21,9 @@
   align-content: center;
   justify-content: center;
 
+  &:hover > [data-react-toolbox='tooltip'] {
+    transform: scale(1);
+  }
   &::-moz-focus-inner {
     border: 0;
   }
