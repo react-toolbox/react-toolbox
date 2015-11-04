@@ -22,7 +22,8 @@ class Table extends React.Component {
   };
 
   state = {
-    dataSource: utils.cloneObject(this.props.dataSource)
+    dataSource: utils.cloneObject(this.props.dataSource),
+    selected: false
   };
 
   componentWillReceiveProps = (next_props) => {
@@ -32,7 +33,6 @@ class Table extends React.Component {
   };
 
   handleRowChange = (event, row, key, value) => {
-    console.log('handleRowChange', arguments);
     let dataSource = this.state.dataSource;
     dataSource[row.props.index][key] = value;
     this.setState({ dataSource: dataSource });
@@ -47,8 +47,8 @@ class Table extends React.Component {
     }
   };
 
-  handleRowsSelect = (event) => {
-    console.info('handleRowsSelect', arguments);
+  handleRowsSelect = (event, selected) => {
+    this.setState({ selected: selected });
   };
 
   isChanged = (data, base) => {
@@ -86,7 +86,7 @@ class Table extends React.Component {
               model={this.props.model}
               onChange={this.props.onChange ? this.handleRowChange : null}
               onSelect={this.props.onSelect ? this.handleRowSelect : null}
-              selected={false}
+              selected={this.state.selected}
             />
           )
         })
