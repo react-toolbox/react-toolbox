@@ -23,29 +23,3 @@
     padding: 0 $table-row-offset;
   }
 }
-
-.row {
-  transition: background-color $animation-duration $animation-curve-default;
-  &:hover {
-    background-color: $table-row-highlight;
-  }
-  &:last-child {
-    border-color: transparent;
-  }
-  > td {
-    > input {
-      display: block;
-      width: 100%;
-      background-color: transparent;
-      border: none;
-    }
-  }
-}
-
-.editable > * {
-  cursor: pointer;
-}
-
-.changed {
-  // @TODO: We've to create a style for changed rows.
-}

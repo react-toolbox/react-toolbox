@@ -2,6 +2,7 @@ import React from 'react';
 import Head from './components/head';
 import Row from './components/row';
 import style from './style';
+import utils from '../utils';
 
 class Table extends React.Component {
 
@@ -11,7 +12,7 @@ class Table extends React.Component {
     model: React.PropTypes.object,
     heading: React.PropTypes.bool,
     onChange: React.PropTypes.func,
-    onSelect: React.PropTypes.func
+    onSelect: React.PropTypes.func,
   };
 
   static defaultProps = {
@@ -21,12 +22,12 @@ class Table extends React.Component {
   };
 
   state = {
-    dataSource: _clone(this.props.dataSource)
+    dataSource: utils.cloneObject(this.props.dataSource)
   };
 
   componentWillReceiveProps = (next_props) => {
     if (next_props.dataSource) {
-      this.setState({dataSource: _clone(next_props.datasSource)});
+      this.setState({dataSource: utils.cloneObject(next_props.datasSource)});
     }
   };
 
@@ -40,10 +41,14 @@ class Table extends React.Component {
     }
   };
 
-  handleClick = (event, data) => {
-    if (this.props.onSelect) {
+  handleRowSelect = (event, selected, data) => {
+    if (selected && this.props.onSelect) {
       this.props.onSelect(event, data);
     }
+  };
+
+  handleRowsSelect = (event) => {
+    console.info('handleRowsSelect', arguments);
   };
 
   isChanged = (data, base) => {
@@ -56,29 +61,46 @@ class Table extends React.Component {
     return changed;
   };
 
-  render () {
-    let className = `${this.props.className} ${style.root}`;
+  renderHead () {
+    if (this.props.heading) {
+      return (
+        <Head
+          model={this.props.model}
+          onSelect={this.props.onSelect ? this.handleRowsSelect : null}
+        />
+      )
+    }
+  };
 
+  renderBody () {
+    return (
+      <tbody>
+      {
+        this.state.dataSource.map((data, index) => {
+          return (
+            <Row
+              key={index}
+              index={index}
+              changed={this.isChanged(data, this.props.dataSource[index])}
+              data={data}
+              model={this.props.model}
+              onChange={this.props.onChange ? this.handleRowChange : null}
+              onSelect={this.props.onSelect ? this.handleRowSelect : null}
+              selected={false}
+            />
+          )
+        })
+      }
+      </tbody>
+    )
+  }
+
+  render () {
+    const className = `${this.props.className} ${style.root}`;
     return (
       <table data-component-table className={className}>
-        { this.props.heading ? <Head model={this.props.model} /> : null }
-        <tbody>
-          {
-            this.state.dataSource.map((data, index) => {
-              return (
-                <Row
-                  key={index}
-                  index={index}
-                  changed={this.isChanged(data, this.props.dataSource[index])}
-                  data={data}
-                  model={this.props.model}
-                  onChange={this.props.onChange ? this.handleRowChange : null}
-                  onClick={this.handleClick}
-                />
-              )
-            })
-          }
-        </tbody>
+        { this.renderHead() }
+        { this.renderBody() }
       </table>
     );
   }
@@ -89,7 +111,3 @@ class Table extends React.Component {
 }
 
 export default Table;
-
-let _clone = (object) => {
-  return JSON.parse(JSON.stringify(object))
-}

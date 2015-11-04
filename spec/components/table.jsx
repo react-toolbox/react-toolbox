@@ -27,8 +27,8 @@ class TableTest extends React.Component {
     console.log('handleTableChange', instance.getValue(), row);
   };
 
-  handleTableSelect = (event, row) => {
-    console.log('handleTableSelect', row);
+  handleTableRowSelect = (event, row) => {
+    console.log('handleTableRowSelect', row);
   };
 
   render () {
@@ -40,7 +40,7 @@ class TableTest extends React.Component {
           model={UserModel}
           dataSource={users}
           onChange={this.handleTableChange}
-          onSelect={this.handleTableSelect}
+          onSelect={this.handleTableRowSelect}
         />
       </section>
     );
