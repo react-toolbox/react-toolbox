@@ -21,9 +21,9 @@ const UserModel = {
 };
 
 const users = [
-  {name: 'Javi Jimenez', twitter: '@soyjavi', birthdate: Date(1980, 4, 10), cats: 1}
+  {name: 'Javi Jimenez', twitter: '@soyjavi', birthdate: new Date(1980, 3, 11), cats: 1}
 ,
-  {name: 'Javi Velasco', twitter: '@javivelasco', birthdate: Date(1987, 4, 10), dogs: 1, active: true}
+  {name: 'Javi Velasco', twitter: '@javivelasco', birthdate: new Date(1987, 1, 1), dogs: 1, active: true}
 ];
 
 const TableTest = () => (
