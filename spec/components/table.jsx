@@ -12,13 +12,15 @@ const UserModel = {
 ,
   dogs: {type: Number}
 ,
-  active: {type: Boolean}
+  owner: {type: Boolean}
 };
 
 const users = [
   {name: 'Javi Jimenez', twitter: '@soyjavi', birthdate: new Date(1980, 3, 11), cats: 1}
 ,
   {name: 'Javi Velasco', twitter: '@javivelasco', birthdate: new Date(1987, 1, 1), dogs: 1, active: true}
+,
+  {name: 'chinorro'}
 ];
 
 class TableTest extends React.Component {
@@ -27,8 +29,8 @@ class TableTest extends React.Component {
     console.log('handleTableChange', instance.getValue(), row);
   };
 
-  handleTableRowSelect = (event, row) => {
-    console.log('handleTableRowSelect', row);
+  handleTableRowSelect = (event, row, instance) => {
+    console.log('handleTableRowSelect', row, this.refs.table.getSelected());
   };
 
   render () {
@@ -37,6 +39,7 @@ class TableTest extends React.Component {
         <h5>Table</h5>
         <p style={{marginBottom: '10px'}}>Organized data.</p>
         <Table
+          ref='table'
           model={UserModel}
           dataSource={users}
           onChange={this.handleTableChange}

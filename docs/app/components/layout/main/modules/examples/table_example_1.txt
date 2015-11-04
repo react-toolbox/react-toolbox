@@ -18,8 +18,12 @@ const users = [
   {name: 'Javi Velasco', twitter: '@javivelasco', birthdate: new Date(1987, 1, 1), dogs: 1, active: true}
 ];
 
+const handleSelect = (event, row, instance) => {
+  alert(row.twitter);
+};
+
 const TableTest = () => (
-  <Table model={UserModel} dataSource={users} />
+  <Table model={UserModel} dataSource={users} onSelect={handleSelect} />
 )
 
 return <TableTest />
