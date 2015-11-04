@@ -19,6 +19,7 @@ import RadioGroup from 'react-toolbox/radio/readme';
 import Slider from 'react-toolbox/slider/readme';
 import Snackbar from 'react-toolbox/snackbar/readme';
 import Switch from 'react-toolbox/switch/readme';
+import Table from 'react-toolbox/table/readme';
 import Tabs from 'react-toolbox/tabs/readme';
 import TimePicker from 'react-toolbox/time_picker/readme';
 
@@ -42,6 +43,7 @@ import RadioExample1 from './examples/radio_example_1.txt';
 import SliderExample1 from './examples/slider_example_1.txt';
 import SnackbarExample1 from './examples/snackbar_example_1.txt';
 import SwitchExample1 from './examples/switch_example_1.txt';
+import TableExample1 from './examples/table_example_1.txt';
 import TabsExample1 from './examples/tabs_example_1.txt';
 import TimePickerExample1 from './examples/timepicker_example_1.txt';
 
@@ -170,6 +172,12 @@ export default {
     docs: Tabs,
     path: '/components/tabs',
     examples: [TabsExample1]
+  },
+  table: {
+    name: 'Table',
+    docs: Table,
+    path: '/components/table',
+    examples: [TableExample1]
   },
   time_picker: {
     name: 'Time Picker',
