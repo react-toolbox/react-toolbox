@@ -2,24 +2,17 @@ import React from 'react';
 import Table from '../../components/table';
 
 const UserModel = {
-  name: {type: String}
-,
-  twitter: {type: String}
-,
-  birthdate: {type: Date}
-,
-  cats: {type: Number}
-,
-  dogs: {type: Number}
-,
+  name: {type: String},
+  twitter: {type: String},
+  birthdate: {type: Date},
+  cats: {type: Number},
+  dogs: {type: Number},
   owner: {type: Boolean}
 };
 
 const users = [
-  {name: 'Javi Jimenez', twitter: '@soyjavi', birthdate: new Date(1980, 3, 11), cats: 1}
-,
-  {name: 'Javi Velasco', twitter: '@javivelasco', birthdate: new Date(1987, 1, 1), dogs: 1, active: true}
-,
+  {name: 'Javi Jimenez', twitter: '@soyjavi', birthdate: new Date(1980, 3, 11), cats: 1},
+  {name: 'Javi Velasco', twitter: '@javivelasco', birthdate: new Date(1987, 1, 1), dogs: 1, active: true},
   {name: 'chinorro'}
 ];
 
@@ -29,7 +22,7 @@ class TableTest extends React.Component {
     console.log('handleTableChange', instance.getValue(), row);
   };
 
-  handleTableRowSelect = (event, row, instance) => {
+  handleTableRowSelect = (event, row) => {
     console.log('handleTableRowSelect', row, this.refs.table.getSelected());
   };
 

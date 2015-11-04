@@ -62,7 +62,7 @@ class Table extends React.Component {
 
   isChanged = (data, base) => {
     let changed = false;
-    Object.keys(data).map((key, index) => {
+    Object.keys(data).map((key) => {
       if (data[key] !== base[key]) {
         changed = true;
       }

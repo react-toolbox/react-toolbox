@@ -41,7 +41,7 @@ module.exports = {
   },
 
   cloneObject (object) {
-    return JSON.parse(JSON.stringify(object))
+    return JSON.parse(JSON.stringify(object));
   },
 
   events: require('./events'),
