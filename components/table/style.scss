@@ -4,15 +4,13 @@
 .root {
   width: 100%;
   font-size: $font-size-tiny;
-  color: $color-text;
+  color: $table-text-color;
   text-align: left;
   tr {
     height: $table-row-height;
     line-height: $table-row-height;
     border-bottom: $table-row-divider;
-    &:hover {
-      background-color: $color-divider;
-    }
+
   }
   th {
     font-weight: $font-weight-bold;
@@ -27,6 +25,10 @@
 }
 
 .row {
+  transition: background-color $animation-duration $animation-curve-default;
+  &:hover {
+    background-color: $table-row-highlight;
+  }
   &:last-child {
     border-color: transparent;
   }
@@ -45,18 +47,5 @@
 }
 
 .changed {
-  td:first-child:before {
-    position: absolute;
-    top: ($table-row-height / 2.5);
-    left: ($table-row-height / 10);
-    width: $table-change-icon-size;
-    height: $table-change-icon-size;
-    font-size: 50%;
-    line-height: $font-size-small;
-    background-color: $table-change-icon-color;
-    color: white;
-    text-align: center;
-    content: " ";
-    border-radius: 50%;
-  }
+  // @TODO: We've to create a style for changed rows.
 }
