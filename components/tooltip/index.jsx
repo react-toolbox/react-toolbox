@@ -20,7 +20,7 @@ class Tooltip extends React.Component {
     if (node) {
       const parent = node.parentNode.getBoundingClientRect();
       node.style.top = `${parent.top + parent.height}px`;
-      node.style.left = `${parent.left + (parent.width / 2) - (node.offsetWidth / 2)}px`;
+      node.style.left = `${parent.left + parseInt((parent.width / 2) - (node.offsetWidth / 2))}px`;
     }
   };
 

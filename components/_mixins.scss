@@ -276,9 +276,23 @@
   }
 }
 
-@mixin show-tooltip($duration) {
+@mixin tooltip-hover() {
+  @include tooltip-animation()
   &:hover > [data-react-toolbox='tooltip'] {
-    transition: transform $duration $animation-curve-default;
-    transform: scale(1);
+    animation-name: tooltip-animation;
+  }
+}
+
+@mixin tooltip-animation {
+  @keyframes tooltip-animation {
+    0% {
+      transform: scale(0);
+    }
+    10%, 99% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
   }
 }

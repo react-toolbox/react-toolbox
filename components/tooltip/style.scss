@@ -1,4 +1,5 @@
 @import "../base";
+@import "../mixins";
 @import "./config";
 
 .root {
@@ -18,12 +19,16 @@
   border-radius: $tooltip-border-radius;
   transform: scale(0);
   transform-origin: top center;
-  // transition: transform $tooltip-animation-duration $animation-curve-default;
+  animation-duration: $tooltip-animation-duration;
+  animation-timing-function: $animation-curve-default;
+  animation-iteration-count: 1;
+  animation-direction: forwards;
   &.active {
-    transform: scale(1);
+    animation-name: tooltip-animation;
   }
   &.large {
     font-size: $font-size-small;
     padding: 2 * $tooltip-padding;
   }
+  @include tooltip-animation()
 }

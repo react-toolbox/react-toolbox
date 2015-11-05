@@ -1,7 +1,6 @@
 @import "../base";
 @import "../mixins";
 @import "./config";
-@import "../tooltip/config";
 
 %button {
   position: relative;
@@ -23,7 +22,7 @@
   align-content: center;
   justify-content: center;
 
-  @include show-tooltip($tooltip-animation-duration)
+  @include tooltip-hover()
   &::-moz-focus-inner {
     border: 0;
   }
