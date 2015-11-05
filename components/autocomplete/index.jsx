@@ -73,7 +73,7 @@ class Autocomplete extends React.Component {
   };
 
   handleFocus = () => {
-    const client = event.target.getBoundingClientRect();
+    const client = ReactDOM.findDOMNode(this.refs.input).getBoundingClientRect();
     const screen_height = window.innerHeight || document.documentElement.offsetHeight;
     const up = this.props.auto ? client.top > ((screen_height / 2) + client.height) : false;
 
