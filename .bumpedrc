@@ -22,15 +22,14 @@ plugins:
     'Generating CHANGELOG file':
       plugin: 'bumped-changelog'
 
-    'Committing the new version':
+    'Publishing CHANGELOG at Github':
       plugin: 'bumped-terminal'
-      command: 'git add . && git commit -m "$newVersion releases"'
+      command: 'git add CHANGELOG.md && git commit CHANGELOG.md -m "$newVersion release" && git push origin master'
 
-    'Publishing at Github':
+    'Publishing tag at Github':
       plugin: 'bumped-terminal'
-      command: 'git tag $newVersion && git push --tags && git push origin master'
+      command: 'git tag $newVersion && git push origin $newVersion'
 
     'Publishing at NPM':
       plugin: 'bumped-terminal'
       command: 'npm publish'
-
