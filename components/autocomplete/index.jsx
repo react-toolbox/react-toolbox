@@ -4,6 +4,26 @@ import Input from '../input';
 import style from './style';
 import utils from '../utils';
 
+const valuesToMap = (values, source) => {
+  const valueMap = new Map();
+  for (const [k, v] of source) {
+    if (values.indexOf(k) !== -1) valueMap.set(k, v);
+  }
+  return valueMap;
+};
+
+const valueToMap = (value, source) => {
+  return valuesToMap([value], source);
+};
+
+const dataSourceToMap = (source = {}) => {
+  if (source.hasOwnProperty(length)) {
+    return new Map(source.map((item) => [item, item]));
+  } else {
+    return new Map(Object.keys(source).map((key) => [key, source[key]]));
+  }
+};
+
 class Autocomplete extends React.Component {
   static propTypes = {
     auto: React.PropTypes.bool,
@@ -26,7 +46,6 @@ class Autocomplete extends React.Component {
   };
 
   state = {
-    dataSource: this._indexDataSource(this.props.dataSource),
     focus: false,
     query: '',
     up: false,
@@ -39,12 +58,6 @@ class Autocomplete extends React.Component {
     this.setState({
       width: ReactDOM.findDOMNode(this).getBoundingClientRect().width
     });
-  }
-
-  componentWillReceiveProps (props) {
-    if (props.dataSource) {
-      this.setState({dataSource: this._indexDataSource(props.dataSource)});
-    }
   }
 
   componentWillUpdate (props, state) {
@@ -172,8 +185,9 @@ class Autocomplete extends React.Component {
 
   _getSuggestions () {
     const query = this.state.query.toLowerCase().trim() || '';
+    const sourceMap = dataSourceToMap(this.props.dataSource);
     const suggestions = new Map();
-    for (const [key, value] of this.state.dataSource) {
+    for (const [key, value] of sourceMap) {
       if (!this.state.values.has(key) && value.toLowerCase().trim().startsWith(query)) {
         suggestions.set(key, value);
       }
@@ -182,13 +196,13 @@ class Autocomplete extends React.Component {
   }
 
   _selectOption (key) {
-    const { dataSource } = this.state;
+    const dataMap = dataSourceToMap(this.props.dataSource);
     let { values } = this.state;
-    const query = !this.props.multiple ? dataSource.get(key) : '';
+    const query = !this.props.multiple ? dataMap.get(key) : '';
     values = new Map(values);
 
     if (!this.props.multiple) values.clear();
-    values.set(key, dataSource.get(key));
+    values.set(key, dataMap.get(key));
 
     this.setState({focus: false, query, values}, () => {
       this.refs.input.blur();
@@ -212,12 +226,17 @@ class Autocomplete extends React.Component {
   }
 
   setValue (dataParam = []) {
-    const values = new Map();
-    const data = (typeof dataParam === 'string') ? [dataParam] : dataParam;
-    for (const [key, value] of this.state.dataSource) {
-      if (data.indexOf(key) !== -1) values.set(key, value);
+    const sourceMap = dataSourceToMap(this.props.dataSource);
+    let values, query;
+
+    if (this.props.multiple) {
+      values = valuesToMap(dataParam, sourceMap);
+      query = '';
+    } else {
+      values = valueToMap(dataParam, sourceMap);
+      query = sourceMap.get(dataParam);
     }
-    this.setState({values, query: this.props.multiple ? '' : values.get(data[0])});
+    this.setState({values, query});
   }
 }
 
