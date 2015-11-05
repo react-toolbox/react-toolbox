@@ -275,3 +275,10 @@
     }
   }
 }
+
+@mixin show-tooltip($duration) {
+  &:hover > [data-react-toolbox='tooltip'] {
+    transition: transform $duration $animation-curve-default;
+    transform: scale(1);
+  }
+}

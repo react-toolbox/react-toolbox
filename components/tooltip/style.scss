@@ -18,11 +18,12 @@
   border-radius: $tooltip-border-radius;
   transform: scale(0);
   transform-origin: top center;
-  transition: transform $tooltip-animation-duration $animation-curve-default;
+  // transition: transform $tooltip-animation-duration $animation-curve-default;
   &.active {
     transform: scale(1);
   }
   &.large {
     font-size: $font-size-small;
+    padding: 2 * $tooltip-padding;
   }
 }

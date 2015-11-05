@@ -1,5 +1,7 @@
 @import "../base";
+@import "../mixins";
 @import "./config";
+@import "../tooltip/config";
 
 %button {
   position: relative;
@@ -21,9 +23,7 @@
   align-content: center;
   justify-content: center;
 
-  &:hover > [data-react-toolbox='tooltip'] {
-    transform: scale(1);
-  }
+  @include show-tooltip($tooltip-animation-duration)
   &::-moz-focus-inner {
     border: 0;
   }
