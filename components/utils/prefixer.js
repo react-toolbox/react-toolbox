@@ -16,12 +16,21 @@ function getPrefixes (property, value) {
   }, {});
 }
 
-function prefixer (style) {
-  let _style = style;
+function addPrefixesTo (style, property, value) {
+  const vendor = getPrefixes(property, value);
+  for (const prefix in vendor) {
+    style[prefix] = vendor[prefix];
+  }
 
-  for (const property in properties) {
-    if (style[property]) {
-      _style = Object.assign(_style, getPrefixes(property, style[property]));
+  return style;
+}
+
+function prefixer (style) {
+  const _style = {};
+  for (const property in style) {
+    _style[property] = style[property];
+    if (properties[property]) {
+      addPrefixesTo(_style, property, style[property]);
     }
   }
 
