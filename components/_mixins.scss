@@ -275,24 +275,3 @@
     }
   }
 }
-
-@mixin tooltip-hover() {
-  @include tooltip-animation()
-  &:hover > [data-react-toolbox='tooltip'] {
-    animation-name: tooltip-animation;
-  }
-}
-
-@mixin tooltip-animation {
-  @keyframes tooltip-animation {
-    0% {
-      transform: scale(0);
-    }
-    10%, 99% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0);
-    }
-  }
-}

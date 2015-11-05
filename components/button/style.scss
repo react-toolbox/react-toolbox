@@ -22,9 +22,11 @@
   align-content: center;
   justify-content: center;
 
-  @include tooltip-hover()
   &::-moz-focus-inner {
     border: 0;
+  }
+  > * {
+    pointer-events: none;
   }
 }
 

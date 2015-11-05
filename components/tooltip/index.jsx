@@ -15,19 +15,30 @@ class Tooltip extends React.Component {
     className: ''
   };
 
+  state = {
+    active: this.props.active
+  };
+
   componentDidMount = () => {
     const node = ReactDOM.findDOMNode(this);
-    if (node) {
-      const parent = node.parentNode.getBoundingClientRect();
-      node.style.top = `${parent.top + parent.height}px`;
-      node.style.left = `${parent.left + parseInt((parent.width / 2) - (node.offsetWidth / 2))}px`;
+    const parent = node.parentNode;
+    if (parent) {
+      parent.onmouseover = () => {
+        const position = parent.getBoundingClientRect();
+        node.style.top = `${position.top + position.height}px`;
+        node.style.left = `${position.left + parseInt((position.width / 2) - (node.offsetWidth / 2))}px`;
+        if (!this.state.active) this.setState({ active: true});
+      };
+      parent.onmouseout = () => {
+        if (this.state.active) this.setState({ active: false});
+      };
     }
   };
 
   render () {
     let className = style.root;
     if (this.props.className) className += ` ${this.props.className}`;
-    if (this.props.active) className += ` ${style.active}`;
+    if (this.state.active) className += ` ${style.active}`;
 
     return (
       <span data-react-toolbox='tooltip' className={className}>
