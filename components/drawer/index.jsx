@@ -1,52 +1,32 @@
 import React from 'react';
 import style from './style';
 
-class Drawer extends React.Component {
-  static propTypes = {
-    active: React.PropTypes.bool,
-    className: React.PropTypes.string,
-    hideable: React.PropTypes.bool,
-    type: React.PropTypes.oneOf(['left', 'right'])
-  };
+const Drawer = (props) => {
+  let className = `${style.drawer} ${style[props.type]}`;
+  if (props.active) className += ` ${style.active}`;
+  if (props.className) className += ` ${props.className}`;
 
-  static defaultProps = {
-    className: '',
-    hideable: true,
-    type: 'left'
-  };
+  return (
+    <div data-react-toolbox='drawer' className={className}>
+      <div className={style.overlay} onClick={props.onOverlayClick}></div>
+      <aside className={style.content}>
+        { props.children }
+      </aside>
+    </div>
+  );
+};
 
-  state = {
-    active: this.props.active
-  };
+Drawer.propTypes = {
+  active: React.PropTypes.bool,
+  className: React.PropTypes.string,
+  onOverlayClick: React.PropTypes.func,
+  type: React.PropTypes.oneOf(['left', 'right'])
+};
 
-  handleOverlayClick = () => {
-    if (this.props.hideable) {
-      this.setState({active: false});
-    }
-  };
-
-  render () {
-    let className = `${style.drawer} ${style[this.props.type]}`;
-    if (this.state.active) className += ` ${style.active}`;
-    if (this.props.className) className += ` ${this.props.className}`;
-
-    return (
-      <div data-react-toolbox='drawer' className={className}>
-        <div className={style.overlay} onClick={this.handleOverlayClick}></div>
-        <aside className={style.content}>
-          { this.props.children }
-        </aside>
-      </div>
-    );
-  }
-
-  show () {
-    this.setState({active: true});
-  }
-
-  hide () {
-    this.setState({active: false});
-  }
-}
+Drawer.defaultProps = {
+  active: false,
+  className: '',
+  type: 'left'
+};
 
 export default Drawer;
