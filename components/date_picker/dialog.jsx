@@ -15,6 +15,7 @@ class CalendarDialog extends React.Component {
   };
 
   state = {
+    active: false,
     date: this.props.initialDate,
     display: 'months',
     actions: [
@@ -36,16 +37,16 @@ class CalendarDialog extends React.Component {
   };
 
   onDateCancel () {
-    this.refs.dialog.hide();
+    this.setState({active: false});
   }
 
   onDateSelected () {
     if (this.props.onDateSelected) this.props.onDateSelected(this.state.date);
-    this.refs.dialog.hide();
+    this.setState({active: false});
   }
 
   show () {
-    this.refs.dialog.show();
+    this.setState({active: true});
   }
 
   render () {
@@ -53,7 +54,7 @@ class CalendarDialog extends React.Component {
     const headerClassName = `${style.header} ${style[display]}`;
 
     return (
-      <Dialog ref="dialog" type="custom" className={style.dialog} actions={this.state.actions}>
+      <Dialog active={this.state.active} type="custom" className={style.dialog} actions={this.state.actions}>
           <header className={headerClassName}>
             <span className={style.weekday}>
               {time.getFullDayOfWeek(this.state.date.getDay())}

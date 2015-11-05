@@ -13,12 +13,13 @@ class TimePickerDialog extends React.Component {
   };
 
   static defaultProps = {
-      className: '',
-      initialTime: new Date(),
-      format: '24hr'
+    className: '',
+    initialTime: new Date(),
+    format: '24hr'
   };
 
   state = {
+    active: false,
     display: 'hours',
     time: this.props.initialTime,
     actions: [
@@ -44,16 +45,16 @@ class TimePickerDialog extends React.Component {
   };
 
   onTimeCancel () {
-    this.refs.dialog.hide();
+    this.setState({active: false});
   }
 
   onTimeSelected () {
     if (this.props.onTimeSelected) this.props.onTimeSelected(this.state.time);
-    this.refs.dialog.hide();
+    this.setState({active: false});
   }
 
   show () {
-    this.refs.dialog.show();
+    this.setState({active: true});
     setTimeout(this.refs.clock.handleCalculateShape, 1000);
   }
 
@@ -82,7 +83,7 @@ class TimePickerDialog extends React.Component {
     const className = `${style.dialog} ${style[display]} ${style[format]}`;
 
     return (
-      <Dialog ref="dialog" className={className} type="custom" actions={this.state.actions}>
+      <Dialog className={className} active={this.state.active} type="custom" actions={this.state.actions}>
         <header className={style.header}>
           <span className={style.hours} onClick={this.displayHours}>
             { ('0' + this.formatHours()).slice(-2) }

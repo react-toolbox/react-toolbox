@@ -7,7 +7,7 @@ $offset: 1.8 * $unit;
 .app {
   padding: (8.2 * $unit) $offset $offset $offset;
   background-color: #f5f5f5;
-  section {
+  > section {
     padding: $offset;
     margin-bottom: $offset;
     background-color: white;
@@ -36,7 +36,7 @@ $offset: 1.8 * $unit;
   z-index: $z-index-higher;
 }
 
-.app_bar {
+.appbar {
   display: flex;
   > h1 {
     flex-grow: 1;

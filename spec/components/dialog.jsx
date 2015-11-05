@@ -4,27 +4,32 @@ import Dialog from '../../components/dialog';
 
 class DialogTest extends React.Component {
   state = {
-    title: 'Use Google\'s location service?',
-    actions: [
-      { label: 'Disagree', type: 'flat', className: 'primary', onClick: this.onClose.bind(this) },
-      { label: 'Agree', type: 'flat', className: 'primary', onClick: this.onClose.bind(this) }]
+    active: false
   };
 
-  onClose () {
-    this.refs.dialog.hide();
+  handleToggle = () => {
+    this.setState({
+      active: !this.state.active
+    });
   }
 
-  onShow () {
-    this.refs.dialog.show();
-  }
+  actions = [
+    { label: 'Disagree', type: 'flat', className: 'primary', onClick: this.handleToggle },
+    { label: 'Agree', type: 'flat', className: 'primary', onClick: this.handleToggle }
+  ];
 
   render () {
     return (
       <section>
         <h5>Dialog</h5>
         <p>lorem ipsum...</p>
-        <Button kind='raised' label='Show Dialog' onClick={this.onShow.bind(this)} />
-        <Dialog ref='dialog' type='small' title={this.state.title} actions={this.state.actions}>
+        <Button kind='raised' label='Show Dialog' onClick={this.handleToggle} />
+        <Dialog
+          actions={this.actions}
+          active={this.state.active}
+          title="Use Google\'s location service?"
+          onOverlayClick={this.handleToggle}
+        >
           <p>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</p>
         </Dialog>
       </section>

@@ -1,22 +1,27 @@
 class DialogTest extends React.Component {
-  showDialog = () => {
-    this.refs.dialog.show();
+  state = {
+    active: false
   };
 
-  closeDialog = () => {
-    this.refs.dialog.hide();
-  };
+  handleToggle = () => {
+    this.setState({active: !this.state.active});
+  }
 
   actions = [
-    { label: "Cancel", onClick: this.closeDialog },
-    { label: "Save", onClick: this.closeDialog }
+    { label: "Cancel", onClick: this.handleToggle },
+    { label: "Save", onClick: this.handleToggle }
   ];
 
   render () {
     return (
       <div>
-        <Button label='Show my dialog' onClick={this.showDialog} />
-        <Dialog ref='dialog' title='My awesome dialog' type='small' actions={this.actions}>
+        <Button label='Show my dialog' onClick={this.handleToggle} />
+        <Dialog
+          actions={this.actions}
+          active={this.state.active}
+          title='My awesome dialog'
+          onOverlayClick={this.handleToggle}
+        >
           <p>Here you can add arbitrary content. Components like Pickers are using dialogs now.</p>
         </Dialog>
       </div>

@@ -6,25 +6,25 @@
 // but loading new examples will smash your changes!
 
 class Welcome extends React.Component {
-  hideDialog = () => {
-    this.refs.dialog.hide();
+  state = {
+    active: false
   };
 
-  showDialog = () => {
-    this.refs.dialog.show();
-  };
+  handleToggle = () => {
+    this.setState({active: !this.state.active});
+  }
 
   actions = [{
     label: 'Great!',
-    onClick: this.hideDialog
+    onClick: this.handleToggle
   }];
 
   render () {
     return (
       <section>
-        <Button label="Let's start!" onClick={this.showDialog} />
-        <Dialog ref="dialog" type="small" actions={this.actions} title="Welcome to React Toolbox">
-          <p>Enjoy Beautiful React Material Design Components!</p>
+        <Button label="Let's start!" onClick={this.handleToggle} />
+        <Dialog actions={this.actions} active={this.state.active} title='My awesome dialog' type="small">
+          <p>Here you can add arbitrary content. Components like Pickers are using dialogs now.</p>
         </Dialog>
       </section>
     );
