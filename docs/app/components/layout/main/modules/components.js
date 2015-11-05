@@ -21,6 +21,7 @@ import Snackbar from 'react-toolbox/snackbar/readme';
 import Switch from 'react-toolbox/switch/readme';
 import Table from 'react-toolbox/table/readme';
 import Tabs from 'react-toolbox/tabs/readme';
+import Tooltip from 'react-toolbox/tooltip/readme';
 import TimePicker from 'react-toolbox/time_picker/readme';
 
 // Examples for the Playground
@@ -45,6 +46,7 @@ import SnackbarExample1 from './examples/snackbar_example_1.txt';
 import SwitchExample1 from './examples/switch_example_1.txt';
 import TableExample1 from './examples/table_example_1.txt';
 import TabsExample1 from './examples/tabs_example_1.txt';
+import TooltipExample1 from './examples/tooltip_example_1.txt';
 import TimePickerExample1 from './examples/timepicker_example_1.txt';
 
 export default {
@@ -167,17 +169,23 @@ export default {
     path: '/components/switch',
     examples: [SwitchExample1]
   },
+  table: {
+    name: 'Table',
+    docs: Table,
+    path: '/components/table',
+    examples: [TableExample1]
+  },
   tabs: {
     name: 'Tabs',
     docs: Tabs,
     path: '/components/tabs',
     examples: [TabsExample1]
   },
-  table: {
-    name: 'Table',
-    docs: Table,
-    path: '/components/table',
-    examples: [TableExample1]
+  tooltip: {
+    name: 'Tooltip',
+    docs: Tooltip,
+    path: '/components/tooltip',
+    examples: [TooltipExample1]
   },
   time_picker: {
     name: 'Time Picker',

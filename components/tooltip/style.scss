@@ -4,7 +4,7 @@
 
 .root {
   position: fixed;
-  z-index: $z-index-high;
+  z-index: $z-index-higher;
   display: inline-block;
   max-width: $tooltip-max-width;
   margin-top: 10px;
