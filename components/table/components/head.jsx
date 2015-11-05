@@ -31,7 +31,7 @@ class Head extends React.Component {
 
   render () {
     return (
-      <thead data-component-table-head className={this.props.className}>
+      <thead data-react-toolbox-table='head' className={this.props.className}>
         <tr>
         { this.renderCellSelectable() }
         {

@@ -82,7 +82,7 @@ class Row extends React.Component {
     if (this.props.selected) className += ` ${style.selected}`;
 
     return (
-      <tr data-component-table-row className={className}>
+      <tr data-react-toolbox-table='row' className={className}>
       { this.renderCellSelectable() }
       {
         Object.keys(this.props.model).map((key) => {

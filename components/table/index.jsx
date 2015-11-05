@@ -107,7 +107,7 @@ class Table extends React.Component {
   render () {
     const className = `${this.props.className} ${style.root}`;
     return (
-      <table data-component-table className={className}>
+      <table data-react-toolbox='table' className={className}>
         { this.renderHead() }
         { this.renderBody() }
       </table>
