@@ -5,18 +5,16 @@ import style from './style';
 class Tooltip extends React.Component {
 
   static propTypes = {
-    active: React.PropTypes.bool,
     className: React.PropTypes.string,
     label: React.PropTypes.string
   };
 
   static defaultProps = {
-    active: false,
     className: ''
   };
 
   state = {
-    active: this.props.active
+    active: false
   };
 
   componentDidMount = () => {

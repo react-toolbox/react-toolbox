@@ -12,7 +12,7 @@ const TooltipTest = () => (
     <Button kind='floating' primary disabled icon='add' tooltip='Floating can not show' />
     <Input tooltip='lorem ipsum...'/>
     <p>
-      Lorem ipsum dolor sit amet, <strong>consectetur<Tooltip label='This is a auto show tooltip' active /></strong> adipiscing elit.
+      Lorem ipsum dolor sit amet, <strong>consectetur<Tooltip label='This is a auto show tooltip' /></strong> adipiscing elit.
     </p>
   </section>
 );
