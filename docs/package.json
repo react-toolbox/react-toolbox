@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./server",
     "build": "NODE_ENV=production UV_THREADPOOL_SIZE=100 webpack --config ./webpack.config.production",
-    "deploy": "npm run build && gh-pages -d build"
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "codemirror": "^5.8.0",
