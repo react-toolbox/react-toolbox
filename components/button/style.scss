@@ -1,4 +1,5 @@
 @import "../base";
+@import "../mixins";
 @import "./config";
 
 %button {
@@ -23,6 +24,9 @@
 
   &::-moz-focus-inner {
     border: 0;
+  }
+  > * {
+    pointer-events: none;
   }
 }
 
