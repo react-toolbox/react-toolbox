@@ -41,7 +41,6 @@ class Tab extends React.Component {
     );
   }
 
-
   active (value) {
     this.setState({active: value});
     if (this.props.onActive && value) {

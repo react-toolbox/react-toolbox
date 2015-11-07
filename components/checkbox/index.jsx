@@ -26,12 +26,12 @@ class Checkbox extends React.Component {
     if (!this.props.disabled) this.props.onChange(event);
   };
 
-  handleMouseDown = (event) => {
-    if (!this.props.disabled) this.refs.ripple.start(event);
-  };
-
   handleInputClick = (event) => {
     events.pauseEvent(event);
+  };
+
+  handleMouseDown = (event) => {
+    if (!this.props.disabled) this.refs.ripple.start(event);
   };
 
   render () {

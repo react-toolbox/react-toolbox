@@ -29,8 +29,8 @@ class Snackbar extends React.Component {
     if (this.props.action) {
       return (
         <Button
-          kind='flat'
           className={style.button}
+          kind='flat'
           label={this.props.action}
           onClick={this.handleClick}
         />

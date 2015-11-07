@@ -47,10 +47,25 @@ class Menu extends React.Component {
     this.setState({ position, width, height });
   }
 
+  componentDidUpdate (prevProps, prevState) {
+    if (prevState.active && !this.state.active) {
+      if (this.props.onHide) this.props.onHide();
+      utils.events.removeEventsFromDocument({click: this.handleDocumentClick});
+    } else if (!prevState.active && this.state.active && this.props.onShow) {
+      this.props.onShow();
+    }
+  }
+
   componentWillReceiveProps (nextProps) {
     if (this.props.position !== nextProps.position) {
       const position = nextProps.position === POSITION.AUTO ? this.calculatePosition() : nextProps.position;
       this.setState({ position });
+    }
+  }
+
+  componentWillUpdate (prevState, nextState) {
+    if (!prevState.active && nextState.active) {
+      utils.events.addEventsToDocument({click: this.handleDocumentClick});
     }
   }
 
@@ -65,21 +80,6 @@ class Menu extends React.Component {
       }
     }
     return true;
-  }
-
-  componentWillUpdate (prevState, nextState) {
-    if (!prevState.active && nextState.active) {
-      utils.events.addEventsToDocument({click: this.handleDocumentClick});
-    }
-  }
-
-  componentDidUpdate (prevProps, prevState) {
-    if (prevState.active && !this.state.active) {
-      if (this.props.onHide) this.props.onHide();
-      utils.events.removeEventsFromDocument({click: this.handleDocumentClick});
-    } else if (!prevState.active && this.state.active && this.props.onShow) {
-      this.props.onShow();
-    }
   }
 
   handleDocumentClick = (event) => {
@@ -104,12 +104,6 @@ class Menu extends React.Component {
     return `${toTop ? 'top' : 'bottom'}-${toLeft ? 'left' : 'right'}`;
   }
 
-  getRootStyle () {
-    if (this.state.position !== POSITION.STATIC) {
-      return { width: this.state.width, height: this.state.height };
-    }
-  }
-
   getMenuStyle () {
     const { width, height, position } = this.state;
     if (position !== POSITION.STATIC) {
@@ -124,6 +118,12 @@ class Menu extends React.Component {
       } else if (position === POSITION.TOP_LEFT) {
         return { clip: `rect(0 0 0 0)` };
       }
+    }
+  }
+
+  getRootStyle () {
+    if (this.state.position !== POSITION.STATIC) {
+      return { width: this.state.width, height: this.state.height };
     }
   }
 
@@ -151,7 +151,7 @@ class Menu extends React.Component {
     return (
       <div className={className} style={this.getRootStyle()}>
         { this.props.outline ? <div className={style.outline} style={outlineStyle}></div> : null }
-        <ul ref="menu" className={style.menu} style={this.getMenuStyle()}>
+        <ul ref='menu' className={style.menu} style={this.getMenuStyle()}>
           { this.renderItems() }
         </ul>
       </div>

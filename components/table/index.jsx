@@ -90,10 +90,10 @@ class Table extends React.Component {
         this.state.dataSource.map((data, index) => {
           return (
             <Row
-              key={index}
-              index={index}
               changed={this.isChanged(data, this.props.dataSource[index])}
               data={data}
+              index={index}
+              key={index}
               model={this.props.model}
               onChange={this.props.onChange ? this.handleRowChange : null}
               onSelect={this.props.onSelect ? this.handleRowSelect : null}

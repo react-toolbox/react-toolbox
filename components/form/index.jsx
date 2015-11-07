@@ -75,7 +75,7 @@ class Form extends React.Component {
       if (attribute.type === 'autocomplete') {
         return <Autocomplete key={index} {...attribute} onChange={this.onChange}/>;
       } else if (attribute.type === 'submit') {
-        return <Button key={index} {...attribute} type='square' ref='submit' onClick={this.onSubmit}/>;
+        return <Button key={index} {...attribute} ref='submit' onClick={this.onSubmit} type='square' />;
       } else if (attribute.type === 'checkbox') {
         return <Checkbox key={index} {...attribute} onChange={this.onChange}/>;
       } else if (attribute.type === 'date_picker') {
