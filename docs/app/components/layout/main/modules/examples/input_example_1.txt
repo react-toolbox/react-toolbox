@@ -1,10 +1,22 @@
-const InputTest = () => (
-  <div>
-    <Input type='text' label='Your fullname' icon='account-box' value='Tony Stark' />
-    <Input type='tel' label='Telephone number' icon='phone' />
-    <Input type='email' label='Email address' icon='email' />
-    <Input type='text' label='Disabled field' disabled />
-  </div>
-);
+class InputTest extends React.Component {
+  state = { name: '', phone: '', email: '' };
+
+  handleChange = (name, event) => {
+    const newState = {};
+    newState[`${name}`] = event.target.value;
+    this.setState(newState);
+  };
+
+  render () {
+    return (
+      <section>
+        <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange.bind(this, 'name')} />
+        <Input type='text' label='Disabled field' disabled />
+        <Input type='email' label='Email address' icon='email' />
+        <Input type='tel' label='Phone' name='phone' icon='phone' value={this.state.withIcon} onChange={this.handleChange.bind(this, 'phone')} />
+      </section>
+    );
+  }
+}
 
 return <InputTest />;

@@ -6,15 +6,26 @@ Although we are calling then Inputs they actually correspond to Material Design 
 ```jsx
 import Input from 'react-toolbox/input';
 
-const InputTest = () => (
-  <div>
-    <Input type='text' label='Firstname' />
-    <Input type='email' label='Label fixed' floating={false} />
-    <Input type='text' label='Disabled field' disabled />
-    <Input type='tel' label='With icon' icon='phone' />
-    <Input type='email' label='With icon' icon='email' />
-  </div>
-);
+class InputTest extends React.Component {
+  state = { name: '', phone: '', email: '' };
+
+  handleChange = (name, event) => {
+    const newState = {};
+    newState[`${name}`] = event.target.value;
+    this.setState(newState);
+  };
+
+  render () {
+    return (
+      <section>
+        <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange.bind(this, 'name')} />
+        <Input type='text' label='Disabled field' disabled />
+        <Input type='email' label='Email address' icon='email' />
+        <Input type='tel' label='Phone' name='phone' icon='phone' value={this.state.withIcon} onChange={this.handleChange.bind(this, 'phone')} />
+      </section>
+    );
+  }
+}
 ```
 
 ## Properties
@@ -34,13 +45,11 @@ const InputTest = () => (
 | `onKeyPress`    | `Function`      |                 | Callback function that is fired when a key is pressed.|
 | `required`      | `Boolean`       | `false`         | If true, the html input has a required value.|
 | `type`          | `String`        | `text`        | Type of the input element. It can be a valid HTML5 input type|
-| `value`         | `String`        |                 | Initial value of the input element.|
+| `value`         | `String`        |              | Current value of the input element.|
 
 ## Methods
 
-The input component has a state to control its value. It exposes instance methods to retrieve and set the current value and to control the input state:
+The input is stateless but it includes two methods to be able to communicate with the DOM input node:
 
-- `getValue` is used to retrieve the current value.
-- `setValue` to force a new value.
 - `blur` to blur the input field.
 - `focus` to focus the input field.
