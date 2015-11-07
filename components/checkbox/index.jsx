@@ -21,24 +21,9 @@ class Checkbox extends React.Component {
     disabled: false
   };
 
-  state = {
-    checked: this.props.checked
-  };
-
-  componentWillReceiveProps = (next_props) => {
-    console.log('componentWillReceiveProps', next_props.checked);
-    // this.setState({ checked: next_props.checked });
-  };
-
-  handleChange = (event) => {
-    this.setState({checked: !this.state.checked}, () => {
-      if (this.props.onChange) this.props.onChange(event, this);
-    });
-  };
-
   handleClick = (event) => {
     events.pauseEvent(event);
-    if (!this.props.disabled) this.handleChange(event);
+    if (!this.props.disabled) this.props.onChange(event);
   };
 
   handleInputClick = (event) => {
@@ -52,7 +37,7 @@ class Checkbox extends React.Component {
   render () {
     let fieldClassName = style.field;
     let checkboxClassName = style.check;
-    if (this.state.checked) checkboxClassName += ` ${style.checked}`;
+    if (this.props.checked) checkboxClassName += ` ${style.checked}`;
     if (this.props.disabled) fieldClassName += ` ${style.disabled}`;
     if (this.props.className) fieldClassName += ` ${this.props.className}`;
 
@@ -64,12 +49,10 @@ class Checkbox extends React.Component {
       >
         <input
           {...this.props}
+          className={style.input}
+          onClick={this.handleInputClick}
           ref='input'
           type='checkbox'
-          checked={this.state.checked}
-          className={style.input}
-          onChange={this.handleChange}
-          onClick={this.handleInputClick}
         />
         <span data-role='checkbox' className={checkboxClassName} onMouseDown={this.handleMouseDown}>
           <Ripple ref='ripple' data-role='ripple' className={style.ripple} spread={3} centered />
@@ -85,14 +68,6 @@ class Checkbox extends React.Component {
 
   focus () {
     this.refs.input.focus();
-  }
-
-  getValue () {
-    return this.state.checked;
-  }
-
-  setValue (value) {
-    this.setState({checked: value});
   }
 }
 
