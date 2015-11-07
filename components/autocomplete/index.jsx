@@ -51,13 +51,6 @@ class Autocomplete extends React.Component {
     this.refs.input.setValue(state.query);
   }
 
-  handleQueryChange = () => {
-    const query = this.refs.input.getValue();
-    if (this.state.query !== query) {
-      this.setState({query});
-    }
-  };
-
   handleKeyPress = (event) => {
     if (event.which === 13 && this.state.active) {
       this._selectOption(this.state.active);
@@ -72,6 +65,10 @@ class Autocomplete extends React.Component {
     }
   };
 
+  handleBlur = () => {
+    if (this.state.focus) this.setState({focus: false});
+  };
+
   handleFocus = () => {
     const client = ReactDOM.findDOMNode(this.refs.input).getBoundingClientRect();
     const screen_height = window.innerHeight || document.documentElement.offsetHeight;
@@ -81,12 +78,15 @@ class Autocomplete extends React.Component {
     this.setState({active: '', up: up, focus: true});
   };
 
-  handleBlur = () => {
-    if (this.state.focus) this.setState({focus: false});
-  };
-
   handleHover = (event) => {
     this.setState({active: event.target.getAttribute('id')});
+  };
+
+  handleQueryChange = () => {
+    const query = this.refs.input.getValue();
+    if (this.state.query !== query) {
+      this.setState({query});
+    }
   };
 
   handleSelect = (event) => {
@@ -138,16 +138,17 @@ class Autocomplete extends React.Component {
         {this.renderLabel()}
         {this.renderSelected()}
         <Input
-          ref='input'
-          {...this.props}
-          label=''
-          value=''
           data-role='input'
+          {...this.props}
+          ref='input'
           className={style.input}
+          label=''
           onBlur={this.handleBlur}
           onChange={this.handleQueryChange}
           onFocus={this.handleFocus}
-          onKeyUp={this.handleKeyPress} />
+          onKeyUp={this.handleKeyPress}
+          value=''
+        />
         <ul
           ref='suggestions'
           data-role='suggestions'
@@ -162,14 +163,6 @@ class Autocomplete extends React.Component {
     );
   }
 
-  _indexDataSource (data = {}) {
-    if (data.length) {
-      return new Map(data.map((item) => [item, item]));
-    } else {
-      return new Map(Object.keys(data).map((key) => [key, data[key]]));
-    }
-  }
-
   _getSuggestions () {
     const query = this.state.query.toLowerCase().trim() || '';
     const suggestions = new Map();
@@ -179,6 +172,14 @@ class Autocomplete extends React.Component {
       }
     }
     return suggestions;
+  }
+
+  _indexDataSource (data = {}) {
+    if (data.length) {
+      return new Map(data.map((item) => [item, item]));
+    } else {
+      return new Map(Object.keys(data).map((key) => [key, data[key]]));
+    }
   }
 
   _selectOption (key) {

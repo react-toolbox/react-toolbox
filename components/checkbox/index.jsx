@@ -41,12 +41,12 @@ class Checkbox extends React.Component {
     if (!this.props.disabled) this.handleChange(event);
   };
 
-  handleMouseDown = (event) => {
-    if (!this.props.disabled) this.refs.ripple.start(event);
-  };
-
   handleInputClick = (event) => {
     events.pauseEvent(event);
+  };
+
+  handleMouseDown = (event) => {
+    if (!this.props.disabled) this.refs.ripple.start(event);
   };
 
   render () {
@@ -66,8 +66,8 @@ class Checkbox extends React.Component {
           {...this.props}
           ref='input'
           type='checkbox'
-          className={style.input}
           checked={this.state.checked}
+          className={style.input}
           onChange={this.handleChange}
           onClick={this.handleInputClick}
         />

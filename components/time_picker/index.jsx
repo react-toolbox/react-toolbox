@@ -40,17 +40,17 @@ class TimePicker extends React.Component {
       <div data-react-toolbox='time-picker'>
         <Input
           ref='input'
-          type='text'
           className={style.input}
-          readOnly={true}
           onMouseDown={this.openTimeDialog}
           placeholder='Pick up time'
+          readOnly={true}
+          type='text'
           value={this.formatTime()}
         />
         <TimeDialog
           ref='dialog'
-          initialTime={this.state.value}
           format={this.props.format}
+          initialTime={this.state.value}
           onTimeSelected={this.onTimeSelected}
         />
       </div>

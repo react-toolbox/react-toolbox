@@ -19,14 +19,14 @@ class DatePicker extends React.Component {
     value: this.props.value
   };
 
-  handleMouseDown = (event) => {
-    events.pauseEvent(event);
-    this.refs.dialog.show();
-  };
-
   handleDateSelected = (value) => {
     this.refs.input.setValue(this.formatDate(value));
     this.setState({value});
+  };
+
+  handleMouseDown = (event) => {
+    events.pauseEvent(event);
+    this.refs.dialog.show();
   };
 
   formatDate (date) {
@@ -38,11 +38,11 @@ class DatePicker extends React.Component {
       <div data-toolbox='date-picker'>
         <Input
           ref='input'
-          type='text'
-          readOnly={true}
           className={style.input}
           onMouseDown={this.handleMouseDown}
           placeholder='Pick up date'
+          readOnly={true}
+          type='text'
           value={this.state.value ? this.formatDate(this.state.value) : null}
         />
         <CalendarDialog

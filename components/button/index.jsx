@@ -48,9 +48,9 @@ class Button extends React.Component {
 
     return (
       <button
+        data-react-toolbox='button'
         {...others}
         className={className}
-        data-react-toolbox='button'
         onMouseDown={this.handleMouseDown}
         disabled={this.props.disabled || this.props.loading}
       >

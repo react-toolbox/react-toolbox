@@ -50,12 +50,12 @@ class Dialog extends React.Component {
     );
   }
 
-  show () {
-    this.setState({active: true});
-  }
-
   hide () {
     this.setState({active: false});
+  }
+
+  show () {
+    this.setState({active: true});
   }
 }
 
