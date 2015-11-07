@@ -16,7 +16,7 @@ const Preview = React.createClass({
   getDefaultProps () {
     return {
       className: '',
-      scope: Object.assign({ React }, ReactToolbox)
+      scope: { React, ...ReactToolbox }
     };
   },
 
