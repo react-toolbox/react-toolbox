@@ -105,7 +105,7 @@ class Clock extends React.Component {
   render () {
     return (
       <div data-react-toolbox='clock' className={style.root}>
-        <div ref="wrapper" className={style.wrapper} style={{height: this.state.radius * 2}}>
+        <div ref='wrapper' className={style.wrapper} style={{height: this.state.radius * 2}}>
           { this.props.display === 'hours' ? this.renderHours() : '' }
           { this.props.display === 'minutes' ? this.renderMinutes() : '' }
         </div>

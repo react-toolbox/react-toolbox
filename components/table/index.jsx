@@ -42,10 +42,11 @@ class Table extends React.Component {
     }
   };
 
-  handleRowSelect = (event, selected, instance) => {
+  handleRowSelect = (event, instance) => {
     if (this.props.onSelect) {
-      const selected_rows = this.state.selected_rows;
       const index = instance.props.index;
+      const selected_rows = this.state.selected_rows;
+      const selected = selected_rows.indexOf(index) === -1;
       if (selected) {
         selected_rows.push(index);
         this.props.onSelect(event, instance.props.data);
@@ -56,8 +57,8 @@ class Table extends React.Component {
     }
   };
 
-  handleRowsSelect = (event, selected) => {
-    this.setState({ selected: selected });
+  handleRowsSelect = (event) => {
+    this.setState({ selected: !this.state.selected });
   };
 
   isChanged = (data, base) => {
@@ -76,6 +77,7 @@ class Table extends React.Component {
         <Head
           model={this.props.model}
           onSelect={this.props.onSelect ? this.handleRowsSelect : null}
+          selected={this.state.selected}
         />
       );
     }
@@ -88,10 +90,10 @@ class Table extends React.Component {
         this.state.dataSource.map((data, index) => {
           return (
             <Row
-              key={index}
-              index={index}
               changed={this.isChanged(data, this.props.dataSource[index])}
               data={data}
+              index={index}
+              key={index}
               model={this.props.model}
               onChange={this.props.onChange ? this.handleRowChange : null}
               onSelect={this.props.onSelect ? this.handleRowSelect : null}

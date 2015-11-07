@@ -58,11 +58,11 @@ class Switch extends React.Component {
         <input
           {...this.props}
           ref='input'
-          type='checkbox'
           checked={this.state.checked}
           className={style.input}
           onChange={this.handleChange}
           onClick={this.handleInputClick}
+          type='checkbox'
         />
         <span role='switch' className={switchClassName}>
           <span role='thumb' className={style.thumb} onMouseDown={this.handleMouseDown}>

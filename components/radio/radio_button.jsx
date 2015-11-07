@@ -22,23 +22,23 @@ class RadioButton extends React.Component {
     disabled: false
   };
 
-  handleClick = (event) => {
-    events.pauseEvent(event);
-    if (!this.props.disabled) this.handleChange(event);
-  };
-
   handleChange = (event) => {
     if (!this.props.checked && this.props.onChange) {
       this.props.onChange(event, this);
     }
   };
 
-  handleMouseDown = (event) => {
-    if (!this.props.disabled) this.refs.ripple.start(event);
+  handleClick = (event) => {
+    events.pauseEvent(event);
+    if (!this.props.disabled) this.handleChange(event);
   };
 
   handleInputClick = (event) => {
     events.pauseEvent(event);
+  };
+
+  handleMouseDown = (event) => {
+    if (!this.props.disabled) this.refs.ripple.start(event);
   };
 
   render () {
@@ -51,10 +51,10 @@ class RadioButton extends React.Component {
         <input
           {...this.props}
           ref='input'
-          type='radio'
           className={style.input}
           onChange={this.handleChange}
           onClick={this.handleInputClick}
+          type='radio'
         />
         <span role='radio' className={radioClassName} onMouseDown={this.handleMouseDown}>
           <Ripple ref='ripple' role='ripple' className={style.ripple} spread={3} centered />

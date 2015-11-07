@@ -82,7 +82,7 @@ class TimePickerDialog extends React.Component {
     const className = `${style.dialog} ${style[display]} ${style[format]}`;
 
     return (
-      <Dialog ref="dialog" className={className} type="custom" actions={this.state.actions}>
+      <Dialog ref='dialog' className={className} type='custom' actions={this.state.actions}>
         <header className={style.header}>
           <span className={style.hours} onClick={this.displayHours}>
             { ('0' + this.formatHours()).slice(-2) }
@@ -94,7 +94,7 @@ class TimePickerDialog extends React.Component {
           { this.renderAMPMLabels() }
         </header>
         <Clock
-          ref="clock"
+          ref='clock'
           display={this.state.display}
           format={this.props.format}
           initialTime={this.props.initialTime}

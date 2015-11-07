@@ -53,7 +53,7 @@ class CalendarDialog extends React.Component {
     const headerClassName = `${style.header} ${style[display]}`;
 
     return (
-      <Dialog ref="dialog" type="custom" className={style.dialog} actions={this.state.actions}>
+      <Dialog ref='dialog' type='custom' className={style.dialog} actions={this.state.actions}>
           <header className={headerClassName}>
             <span className={style.weekday}>
               {time.getFullDayOfWeek(this.state.date.getDay())}
@@ -69,7 +69,7 @@ class CalendarDialog extends React.Component {
 
           <div className={style.wrapper}>
             <Calendar
-              ref="calendar"
+              ref='calendar'
               display={this.state.display}
               onChange={this.handleCalendarChange}
               selectedDate={this.state.date} />

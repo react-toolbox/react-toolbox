@@ -47,22 +47,24 @@ class Input extends React.Component {
     if (this.props.multiline) {
       return (
         <textarea
-          ref='input'
           role='input'
           {...this.props}
+          ref='input'
           className={className}
           onChange={this.onChange}
-          value={this.state.value} />
+          value={this.state.value}
+        />
       );
     } else {
       return (
         <input
-          ref='input'
           role='input'
           {...this.props}
+          ref='input'
           className={className}
+          onChange={this.onChange}
           value={this.state.value}
-          onChange={this.onChange} />
+        />
       );
     }
   }

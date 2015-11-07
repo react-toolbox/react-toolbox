@@ -37,14 +37,6 @@ class ProgressBar extends React.Component {
     }
   }
 
-  renderCircular () {
-    return (
-      <svg className={style.circle}>
-        <circle className={style.path} style={this.circularStyle()} cx='30' cy='30' r='25' />
-      </svg>
-    );
-  }
-
   linearStyle () {
     if (this.props.mode !== 'indeterminate') {
       return {
@@ -54,6 +46,14 @@ class ProgressBar extends React.Component {
     } else {
       return {};
     }
+  }
+
+  renderCircular () {
+    return (
+      <svg className={style.circle}>
+        <circle className={style.path} style={this.circularStyle()} cx='30' cy='30' r='25' />
+      </svg>
+    );
   }
 
   renderLinear () {
@@ -75,10 +75,10 @@ class ProgressBar extends React.Component {
     return (
       <div
         data-react-toolbox='progress-bar'
-        className={className}
         aria-valuenow={this.props.value}
         aria-valuemin={this.props.min}
         aria-valuemax={this.props.max}
+        className={className}
       >
         { this.props.type === 'circular' ? this.renderCircular() : this.renderLinear() }
       </div>
