@@ -69,6 +69,7 @@
     "mocha": "^2.3.3",
     "node-sass": "^3.3.3",
     "normalize.css": "^3.0.3",
+    "object.assign": "^4.0.3",
     "phantomjs": "^1.9.18",
     "phantomjs-polyfill": "0.0.1",
     "postcss-loader": "^0.7.0",
