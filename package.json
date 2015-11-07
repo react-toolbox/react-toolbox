@@ -88,5 +88,8 @@
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.4.1"
   },
-  "repository": "github:react-toolbox/react-toolbox"
+  "repository": "github:react-toolbox/react-toolbox",
+  "dependencies": {
+    "object.assign": "^4.0.3"
+  }
 }

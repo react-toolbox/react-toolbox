@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import babel from 'babel-core/browser';
 import ReactToolbox from 'react-toolbox';
+import assignPolyfill from 'object.assign/polyfill';
 import style from './style';
+
+const assign = assignPolyfill();
 
 const ERROR_TIMEOUT = 500;
 
@@ -16,7 +19,7 @@ const Preview = React.createClass({
   getDefaultProps () {
     return {
       className: '',
-      scope: Object.assign({ React }, ReactToolbox)
+      scope: assign({ React }, ReactToolbox)
     };
   },
 
