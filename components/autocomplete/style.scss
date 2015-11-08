@@ -1,8 +1,10 @@
 @import "../base";
 @import "./config";
+@import "../input/config";
 
 .root {
   position: relative;
+  padding: $unit 0;
   &.focus {
     .label {
       color: $autocomplete-color-primary;
@@ -11,6 +13,11 @@
       max-height: $autocomplete-overflow-max-height;
       visibility: visible;
       box-shadow: $zdepth-shadow-1;
+    }
+  }
+  &.errored {
+    .suggestions {
+      margin-top: - $input-error-height;
     }
   }
 }
@@ -24,6 +31,7 @@
 .values {
   flex-direction: row;
   flex-wrap: wrap;
+  padding-bottom: $unit / 2;
 }
 
 .value {
@@ -40,6 +48,7 @@
 .suggestions {
   position: absolute;
   z-index: $z-index-high;
+  width: 100%;
   max-height: 0;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -52,7 +61,6 @@
     bottom: auto;
   }
   &.up {
-    top: auto;
     bottom: 0;
   }
 }
@@ -66,5 +74,6 @@
 }
 
 .input {
+  padding-top: 0;
   padding-bottom: 0;
 }
