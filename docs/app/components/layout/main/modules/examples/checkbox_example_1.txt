@@ -1,9 +1,36 @@
-const TestCheckbox = () => (
-  <div>
-    <Checkbox label="Checked option" checked />
-    <Checkbox label="Unchecked option" />
-    <Checkbox label="Disabled checkbox" checked disabled />
-  </div>
-);
+class TestCheckbox extends React.Component {
+  state = {
+    check1: true,
+    check2: false
+  };
+
+  handleChange = (field) => {
+    const newState = {};
+    newState[field] = !this.state[field];
+    this.setState(newState);
+  };
+
+  render () {
+    return (
+      <div>
+        <Checkbox
+          checked={this.state.check1}
+          label="Checked option"
+          onChange={this.handleChange.bind(this, 'check1')}
+        />
+        <Checkbox
+          checked={this.state.check2}
+          label="Unchecked option"
+          onChange={this.handleChange.bind(this, 'check2')}
+        />
+        <Checkbox
+          checked
+          disabled
+          label="Disabled checkbox"
+        />
+      </div>
+    );
+  }
+}
 
 return <TestCheckbox />;

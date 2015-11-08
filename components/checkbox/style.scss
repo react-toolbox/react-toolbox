@@ -25,12 +25,11 @@
   height: 0;
   overflow: hidden;
   opacity: 0;
-  &:focus:not(&:active) + .check {
+  &:focus ~ .check {
     &:before {
       position: absolute;
       top: 50%;
       left: 50%;
-      z-index: $z-index-low;
       width: $checkbox-focus-size;
       height: $checkbox-focus-size;
       margin-top: - $checkbox-focus-size / 2;

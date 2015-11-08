@@ -48,10 +48,10 @@ class Checkbox extends React.Component {
         onClick={this.handleClick}
       >
         <input
+          ref='input'
           {...this.props}
           className={style.input}
           onClick={this.handleInputClick}
-          ref='input'
           type='checkbox'
         />
         <span data-role='checkbox' className={checkboxClassName} onMouseDown={this.handleMouseDown}>
