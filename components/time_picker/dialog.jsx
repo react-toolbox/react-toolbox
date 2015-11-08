@@ -95,7 +95,7 @@ class TimePickerDialog extends React.Component {
           { this.renderAMPMLabels() }
         </header>
         <Clock
-          ref="clock"
+          ref='clock'
           display={this.state.display}
           format={this.props.format}
           initialTime={this.props.initialTime}

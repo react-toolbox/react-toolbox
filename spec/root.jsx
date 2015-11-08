@@ -23,6 +23,7 @@ import Slider from './components/slider';
 import Switch from './components/switch';
 import Table from './components/table';
 import Tabs from './components/tabs';
+import Tooltip from './components/tooltip';
 
 // import Logo from '../docs/app/components/logo'
 import style from './style';
@@ -63,6 +64,7 @@ const Root = () => (
     <Switch />
     <Table />
     <Tabs />
+    <Tooltip />
   </App>
 );
 

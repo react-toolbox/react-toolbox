@@ -20,10 +20,10 @@ const Link = (props) => {
 };
 
 Link.propTypes = {
-  label: React.PropTypes.string,
   className: React.PropTypes.string,
   count: React.PropTypes.number,
-  icon: React.PropTypes.string
+  icon: React.PropTypes.string,
+  label: React.PropTypes.string
 };
 
 Link.defaultProps = {

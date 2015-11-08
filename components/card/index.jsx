@@ -29,6 +29,14 @@ class Card extends React.Component {
     }
   };
 
+  renderActions () {
+    if (this.props.actions) {
+      return (
+        <Navigation data-role='actions' className={style.navigation} actions={this.props.actions} />
+      );
+    }
+  }
+
   renderTitle () {
     const styleFigure = {};
     const styleOverflow = {};
@@ -45,14 +53,6 @@ class Card extends React.Component {
           { this.props.subtitle ? <small data-role='subtitle'>{this.props.subtitle}</small> : null }
           { this.props.color ? <div className={style.overflow} style={styleOverflow}></div> : null }
         </figure>
-      );
-    }
-  }
-
-  renderActions () {
-    if (this.props.actions) {
-      return (
-        <Navigation data-role='actions' className={style.navigation} actions={this.props.actions} />
       );
     }
   }

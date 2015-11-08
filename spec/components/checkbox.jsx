@@ -2,8 +2,17 @@ import React from 'react';
 import Checkbox from '../../components/checkbox';
 
 class CheckboxTest extends React.Component {
-  handleChange = (event, instance) => {
-    console.log('Changed!', instance.getValue());
+
+  state = {
+    checkbox_1: true,
+    checkbox_2: false,
+    checkbox_3: true
+  };
+
+  handleChange = (key) => {
+    const state = this.state;
+    state[key] = !state[key];
+    this.setState(state);
   };
 
   handleFocus = () => {
@@ -21,23 +30,24 @@ class CheckboxTest extends React.Component {
         <p style={{marginBottom: '10px'}}>Lorem ipsum...</p>
 
         <Checkbox
+          checked={this.state.checkbox_1}
           label="Checked checkbox"
-          checked
-          onChange={this.handleChange}
+          onChange={this.handleChange.bind(this, 'checkbox_1')}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
         />
         <Checkbox
+          checked={this.state.checkbox_2}
           label="Not checked biatch"
-          onChange={this.handleChange}
+          onChange={this.handleChange.bind(this, 'checkbox_2')}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
         />
         <Checkbox
+          checked={this.state.checkbox_3}
           label="Disabled checkbox"
-          checked
           disabled
-          onChange={this.handleChange}
+          onChange={this.handleChange.bind(this, 'checkbox_3')}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
         />

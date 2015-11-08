@@ -1,6 +1,7 @@
 import React from 'react';
 import style from './style';
 import FontIcon from '../font_icon';
+import Tooltip from '../tooltip';
 
 class Input extends React.Component {
   static propTypes = {
@@ -56,6 +57,7 @@ class Input extends React.Component {
         <span className={style.bar}></span>
         { this.props.label ? <label className={labelClassName}>{this.props.label}</label> : null }
         { this.props.error ? <span className={style.error}>{this.props.error}</span> : null }
+        { this.props.tooltip ? <Tooltip label={this.props.tooltip}/> : null }
       </div>
     );
   }

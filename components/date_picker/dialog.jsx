@@ -70,7 +70,7 @@ class CalendarDialog extends React.Component {
 
           <div className={style.wrapper}>
             <Calendar
-              ref="calendar"
+              ref='calendar'
               display={this.state.display}
               onChange={this.handleCalendarChange}
               selectedDate={this.state.date} />

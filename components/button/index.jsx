@@ -1,6 +1,7 @@
 import React from 'react';
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
+import Tooltip from '../tooltip';
 import style from './style';
 import events from '../utils/events';
 
@@ -16,6 +17,7 @@ class Button extends React.Component {
     mini: React.PropTypes.bool,
     primary: React.PropTypes.bool,
     ripple: React.PropTypes.bool,
+    tooltip: React.PropTypes.string,
     type: React.PropTypes.string
   };
 
@@ -37,7 +39,7 @@ class Button extends React.Component {
 
   render () {
     let className = style[this.props.kind];
-    const {label, icon, loading, ripple, primary, accent, mini, kind, ...others} = this.props;
+    const {label, icon, loading, ripple, primary, accent, mini, kind, tooltip, ...others} = this.props;
     if (this.props.className) className += ` ${this.props.className}`;
     if (!primary && !accent) className += ` ${style.primary}`;
     if (primary) className += ` ${style.primary}`;
@@ -46,15 +48,16 @@ class Button extends React.Component {
 
     return (
       <button
+        data-react-toolbox='button'
         {...others}
         className={className}
-        data-react-toolbox='button'
         onMouseDown={this.handleMouseDown}
         disabled={this.props.disabled || this.props.loading}
       >
         { ripple ? <Ripple ref='ripple' loading={loading}/> : null }
         { icon ? <FontIcon className={style.icon} value={icon}/> : null }
         { label ? <abbr className={style.label}>{label}</abbr> : null }
+        { tooltip ? <Tooltip label={tooltip}/> : null }
       </button>
     );
   }

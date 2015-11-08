@@ -1,0 +1,26 @@
+# Tooltip
+
+A tooltip is Useful for show information on hover in any kind of component. Out of the box react-toolbox offers you a property `tooltip` in the component `<Button>`.
+
+<!-- example -->
+```jsx
+import Button from 'react-toolbox/button';
+import Tooltip from 'react-toolbox/tooltip';
+
+const TooltipTest = () => (
+  <div>
+    <p>
+      Lorem ipsum dolor sit amet, <strong>consectetur<Tooltip label='This is a auto show tooltip' /></strong> adipiscing elit.
+    </p>
+    
+    <Button label='Button with tooltip' kind='raised' accent tooltip='This is a tooltip by property' />
+  </div>
+);
+```
+
+## Properties
+
+| Name      | Type      | Default         | Description|
+|:-----|:-----|:-----|:-----|
+| `className` | `String`  | `''` | Set a class to style the Component.|
+| `label`     | `String`  |  | The text string to use for the tooltip.|

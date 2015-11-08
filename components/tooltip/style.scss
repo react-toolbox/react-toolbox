@@ -1,0 +1,45 @@
+@import "../base";
+@import "../mixins";
+@import "./config";
+
+.root {
+  position: fixed;
+  z-index: $z-index-higher;
+  display: inline-block;
+  max-width: $tooltip-max-width;
+  margin-top: 10px;
+  padding: $tooltip-padding;
+  font-size: $font-size-tiny;
+  font-size: $tooltip-font-size;
+  font-weight: $font-weight-bold;
+  line-height: $font-size-small;
+  color: $tooltip-color;
+  text-align: center;
+  background: $tooltip-background;
+  border-radius: $tooltip-border-radius;
+  transform: scale(0);
+  transform-origin: top center;
+  animation-duration: $tooltip-animation-duration;
+  animation-timing-function: $animation-curve-default;
+  animation-iteration-count: 1;
+  animation-direction: forwards;
+  &.active {
+    animation-name: tooltip-animation;
+  }
+  &.large {
+    font-size: $font-size-small;
+    padding: 2 * $tooltip-padding;
+  }
+
+  @keyframes tooltip-animation {
+    0% {
+      transform: scale(0);
+    }
+    10%, 99% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+}

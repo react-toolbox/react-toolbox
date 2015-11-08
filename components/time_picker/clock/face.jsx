@@ -41,7 +41,7 @@ class Face extends React.Component {
   render () {
     return (
       <div
-        ref="root"
+        ref='root'
         className={style.face}
         onTouchStart={this.props.onTouchStart}
         onMouseDown={this.props.onMouseDown}

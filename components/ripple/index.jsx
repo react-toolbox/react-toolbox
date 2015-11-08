@@ -19,10 +19,15 @@ class Ripple extends React.Component {
 
   state = {
     active: false,
+    left: null,
     restarting: false,
     top: null,
-    left: null,
     width: null
+  };
+
+  handleEnd = () => {
+    document.removeEventListener('mouseup', this.handleEnd);
+    this.setState({active: false});
   };
 
   start = ({ pageX, pageY }) => {
@@ -32,11 +37,6 @@ class Ripple extends React.Component {
       this.refs.ripple.offsetWidth;  //eslint-disable-line no-unused-expressions
       this.setState({active: true, restarting: false, top, left, width});
     });
-  };
-
-  handleEnd = () => {
-    document.removeEventListener('mouseup', this.handleEnd);
-    this.setState({active: false});
   };
 
   _getDescriptor (pageX, pageY) {
@@ -58,7 +58,7 @@ class Ripple extends React.Component {
 
     return (
       <span data-react-toolbox='ripple' className={style.wrapper}>
-        <span ref="ripple" role='ripple' className={className} style={rippleStyle} />
+        <span ref='ripple' role='ripple' className={className} style={rippleStyle} />
       </span>
     );
   }
