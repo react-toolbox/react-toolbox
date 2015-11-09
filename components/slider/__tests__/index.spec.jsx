@@ -8,7 +8,7 @@ import Slider from '../index';
 import TestUtils from 'react-addons-test-utils';
 
 describe('Slider', function () {
-  let props, state, slider, progress, input;
+  let props, state, slider, progress, input, onChange;
 
   describe('#positionToValue', function () {
     before(function () {
@@ -74,21 +74,6 @@ describe('Slider', function () {
     });
   });
 
-  describe('#getValue', function () {
-    it('retrieves the current value', function () {
-      slider = utils.renderComponent(Slider, {value: 10});
-      expect(slider.getValue()).toEqual(slider.state.value);
-    });
-  });
-
-  describe('#setValue', function () {
-    it('set the current value', function () {
-      slider = utils.renderComponent(Slider, {value: 10});
-      slider.setValue(50);
-      expect(slider.state.value).toEqual(50);
-    });
-  });
-
   describe('#render', function () {
     it('contains a linear progress bar with proper properties', function () {
       slider = utils.renderComponent(Slider, {min: 100, max: 1000, value: 140});
@@ -116,8 +101,9 @@ describe('Slider', function () {
   });
 
   describe('#events', function () {
-    before(function () {
-      props = { min: -500, max: 500 };
+    beforeEach(function () {
+      onChange = sinon.spy();
+      props = { min: -500, max: 500, onChange: onChange };
       state = { sliderStart: 0, sliderLength: 1000 };
       slider = utils.renderComponent(Slider, props, state);
       slider.handleResize = (event, callback) => { callback(); };
@@ -135,28 +121,32 @@ describe('Slider', function () {
 
     it('sets a proper value when the slider is clicked', function () {
       TestUtils.Simulate.mouseDown(slider.refs.slider, { pageX: 200 });
-      expect(slider.state.value).toEqual(-300);
+      expect(onChange.called).toEqual(true);
+      expect(onChange.getCall(0).args[0]).toEqual(-300);
     });
 
     it('sets a proper value when the slider is touched', function () {
       TestUtils.Simulate.touchStart(slider.refs.slider, {touches: [{pageX: 200, pageY: 0}]});
-      expect(slider.state.value).toEqual(-300);
+      expect(onChange.called).toEqual(true);
+      expect(onChange.getCall(0).args[0]).toEqual(-300);
     });
 
     it('changes input value when slider changes', function () {
-      slider = utils.renderComponent(Slider, {editable: true}, {sliderStart: 0, sliderLength: 1000});
+      slider = utils.renderComponent(Slider, {editable: true, onChange}, {sliderStart: 0, sliderLength: 1000});
       slider.handleResize = (event, callback) => { callback(); };
       input = TestUtils.findRenderedComponentWithType(slider, Input);
       TestUtils.Simulate.mouseDown(slider.refs.slider, { pageX: 900 });
-      expect(input.state.value).toEqual(90);
+      expect(onChange.called).toEqual(true);
+      expect(onChange.getCall(0).args[0]).toEqual(90);
     });
 
     it('changes its value when input is blurred', function () {
-      slider = utils.renderComponent(Slider, {editable: true, value: 50});
+      slider = utils.renderComponent(Slider, {editable: true, value: 50, onChange});
       input = TestUtils.findRenderedComponentWithType(slider, Input);
       TestUtils.Simulate.change(input.refs.input, {target: {value: '80'}});
       TestUtils.Simulate.blur(input.refs.input);
-      expect(slider.state.value).toEqual(80);
+      expect(onChange.called).toEqual(true);
+      expect(onChange.getCall(0).args[0]).toEqual(80);
     });
 
     it('calls onChange callback when the value is changed', function () {
