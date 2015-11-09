@@ -1,0 +1,35 @@
+files: [
+  'package.json'
+]
+
+plugins:
+
+  prerelease:
+
+    'Linting config files':
+      plugin: 'bumped-finepack'
+
+    'Linting projects files':
+      plugin: 'bumped-terminal'
+      command: 'npm run lint'
+
+    'Preparing build':
+      plugin: 'bumped-terminal'
+      command: 'npm run prepublish'
+
+  postrelease:
+
+    'Generating CHANGELOG file':
+      plugin: 'bumped-changelog'
+
+    'Publishing CHANGELOG at Github':
+      plugin: 'bumped-terminal'
+      command: 'git add CHANGELOG.md && git commit CHANGELOG.md -m "$newVersion release" && git push origin master'
+
+    'Publishing tag at Github':
+      plugin: 'bumped-terminal'
+      command: 'git tag $newVersion && git push origin $newVersion'
+
+    'Publishing at NPM':
+      plugin: 'bumped-terminal'
+      command: 'npm publish'
