@@ -36,20 +36,18 @@ class Slider extends React.Component {
     sliderStart: 0
   };
 
-  componentDidMount () {
-    window.addEventListener('resize', this.handleResize);
-    this.handleResize();
-  }
-
   shouldComponentUpdate (nextProps, nextState) {
     if (!this.state.inputFocused && nextState.inputFocused) return false;
-
     if (this.state.inputFocused && this.props.value !== nextProps.value) {
       this.setState({inputValue: this.valueForInput(nextProps.value)});
       return false;
-    } else {
-      return true;
     }
+    return true;
+  }
+
+  componentDidMount () {
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
   }
 
   componentWillUnmount () {
@@ -129,13 +127,8 @@ class Slider extends React.Component {
   };
 
   addToValue (increment) {
-    let value;
-    if (this.state.inputFocused) {
-      value = this.trimValue(parseFloat(this.state.inputValue) + increment);
-    } else {
-      value = this.trimValue(this.props.value + increment);
-    }
-
+    let value = this.state.inputFocused ? parseFloat(this.state.inputValue) : this.props.value;
+    value = this.trimValue(value + increment);
     if (value !== this.props.value) this.props.onChange(value);
   }
 
@@ -161,7 +154,7 @@ class Slider extends React.Component {
 
   end (revents) {
     utils.events.removeEventsFromDocument(revents);
-    this.setState({pressed: false});
+    this.setState({ pressed: false });
   }
 
   knobOffset () {
@@ -206,26 +199,17 @@ class Slider extends React.Component {
     if (this.props.snaps) {
       return (
         <div ref='snaps' className={style.snaps}>
-          {
-            utils.range(0, (this.props.max - this.props.min) / this.props.step).map(i => {
-              return (<div key={`span-${i}`} className={style.snap}></div>);
-            })
-          }
+          { utils.range(0, (this.props.max - this.props.min) / this.props.step).map(i => {
+              return <div key={`span-${i}`} className={style.snap}></div>;
+            }) }
         </div>
       );
     }
   }
 
-  currentValueForInput () {
-    if (this.state.inputFocused) {
-      return this.state.inputValue;
-    } else {
-      return this.valueForInput(this.props.value);
-    }
-  }
-
   renderInput () {
     if (this.props.editable) {
+      const value = this.state.inputFocused ? this.state.inputValue : this.valueForInput(this.props.value);
       return (
         <Input
           ref='input'
@@ -233,7 +217,7 @@ class Slider extends React.Component {
           onFocus={this.handleInputFocus}
           onChange={this.handleInputChange}
           onBlur={this.handleInputBlur}
-          value={this.currentValueForInput()}
+          value={value}
         />
       );
     }
@@ -245,6 +229,7 @@ class Slider extends React.Component {
     if (this.props.editable) className += ` ${style.editable}`;
     if (this.props.pinned) className += ` ${style.pinned}`;
     if (this.state.pressed) className += ` ${style.pressed}`;
+    console.log(this.props.value, this.props.min);
     if (this.props.value === this.props.min) className += ` ${style.ring}`;
 
     return (

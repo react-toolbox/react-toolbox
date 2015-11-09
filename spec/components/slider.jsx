@@ -3,7 +3,6 @@ import Slider from '../../components/slider';
 
 class SliderTest extends React.Component {
   state = {
-    slider1: null,
     slider2: 5,
     slider3: 1
   };
