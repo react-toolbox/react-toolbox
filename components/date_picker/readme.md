@@ -17,11 +17,5 @@ const DatePickerTest = () => (
 | Name          | Type    | Default         | Description|
 |:-----|:-----|:-----|:-----|
 | `className`     | `String`        |     `''`            | Sets a class to give customized styles to the time picker.|
+| `onChange`       | `Function`       |                | Callback called when the picker value is changed.|
 | `value`         | `Date`    |                 | Date object with the currently selected date. |
-
-## Methods
-
-The DatePicker is a very easy component from the top level API but quite complex inside. It has state to keep the currently viewed date and the currently selected value.
-
-- `getValue` is used to retrieve the current value.
-- `setValue` to force a new value.
