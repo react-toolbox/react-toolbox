@@ -4,7 +4,7 @@
 
 <!-- example -->
 ```jsx
-import Slider from 'react-toolbox/slider';
+import Slider from 'react-toolbox/lib/slider';
 
 const SliderTest = () => (
   <section>

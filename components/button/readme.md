@@ -4,7 +4,7 @@ A [button](https://www.google.com/design/spec/components/buttons.html) clearly c
 
 <!-- example -->
 ```jsx
-import Button from 'react-toolbox/button';
+import Button from 'react-toolbox/lib/button';
 
 const TestButtons = () => (
   <div>

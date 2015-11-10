@@ -4,7 +4,7 @@ The link is a very simple component that acts mostly as a wrapper for the HTML a
 
 <!-- example -->
 ```jsx
-import Link from 'react-toolbox/link';
+import Link from 'react-toolbox/lib/link';
 
 const LinksTest = () => (
   <nav>

@@ -4,7 +4,7 @@ A [card](https://www.google.com/design/spec/components/cards.html) is a piece of
 
 <!-- example -->
 ```jsx
-import Card from 'react-toolbox/card';
+import Card from 'react-toolbox/lib/card';
 
 const actions = [
   { label: 'Play', icon: 'play-arrow'},
