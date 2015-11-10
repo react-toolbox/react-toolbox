@@ -11,6 +11,8 @@ const InputTest = () => (
     <Input type='text' label='Disabled field' disabled />
     <Input type='tel' label='With icon' icon='phone' />
     <Input type='email' label='With icon' icon='email' />
+    <Input type='date' label='Date' />
+    <Input type='time' label='Time' />
   </section>
 );
 
