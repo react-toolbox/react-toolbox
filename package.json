@@ -21,12 +21,32 @@
     "lint": "eslint ./ --ext .js,.jsx",
     "babel": "babel ./components --out-dir ./lib",
     "sass": "cpx './components/**/*.scss' ./lib",
-    "build": "NODE_ENV=production npm run babel && npm run sass",
+    "build": "better-npm-run build",
     "clean": "rimraf ./lib",
     "prebuild": "npm run clean",
     "prepublish": "npm run build",
-    "test": "NODE_ENV=test karma start",
-    "test:watch": "NODE_ENV=test karma start --no-single-run"
+    "test": "better-npm-run test",
+    "test:watch": "better-npm-run test:watch"
+  },
+  "betterScripts":{
+    "build": {
+      "command": "npm run babel && npm run sass",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "test": {
+      "command": "karma start",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    },
+    "test:watch":{
+      "command": "karma start --no-single-run",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    }
   },
   "bugs": {
     "url": "https://github.com/react-toolbox/react-toolbox/issues",
@@ -54,6 +74,7 @@
     "babel-loader": "^5.3.2",
     "babel-plugin-react-transform": "^1.1.1",
     "core-js": "^1.2.6",
+    "better-npm-run": "^0.0.3",
     "cpx": "^1.2.1",
     "css-loader": "^0.21.0",
     "eslint": "^1.7.3",
@@ -84,7 +105,7 @@
     "sass-loader": "^3.0.0",
     "sinon": "git://github.com/sinonjs/sinon.git#b672042043517b9f84e14ed0fb8265126168778a",
     "style-loader": "^0.13.0",
-    "toolbox-loader": "0.0.2",
+    "toolbox-loader": "0.0.3",
     "webpack": "^1.12.0",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.4.1"
