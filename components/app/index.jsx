@@ -8,7 +8,7 @@ const App = (props) => {
   }
 
   return (
-    <div className={className} data-react-toolbox='app'>
+    <div data-react-toolbox='app' className={className}>
       {props.children}
     </div>
   );

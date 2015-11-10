@@ -24,10 +24,10 @@ class Autocomplete extends React.Component {
   };
 
   static defaultProps = {
-      className: '',
-      direction: 'auto',
-      multiple: true,
-      source: {}
+    className: '',
+    direction: 'auto',
+    multiple: true,
+    source: {}
   };
 
   state = {
@@ -59,8 +59,7 @@ class Autocomplete extends React.Component {
   };
 
   handleQueryChange = (event) => {
-    const query = event.target.value;
-    this.setState({query});
+    this.setState({event: event.target.value});
   };
 
   handleQueryFocus = () => {
@@ -185,8 +184,8 @@ class Autocomplete extends React.Component {
         <Input
           ref='input'
           {...this.props}
-          label=''
           className={style.input}
+          label=''
           onBlur={this.handleQueryBlur}
           onChange={this.handleQueryChange}
           onFocus={this.handleQueryFocus}

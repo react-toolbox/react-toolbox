@@ -51,8 +51,8 @@ class Button extends React.Component {
         data-react-toolbox='button'
         {...others}
         className={className}
-        onMouseDown={this.handleMouseDown}
         disabled={this.props.disabled || this.props.loading}
+        onMouseDown={this.handleMouseDown}
       >
         { ripple ? <Ripple ref='ripple' loading={loading}/> : null }
         { icon ? <FontIcon className={style.icon} value={icon}/> : null }
