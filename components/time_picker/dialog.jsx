@@ -6,30 +6,32 @@ import Dialog from '../dialog';
 
 class TimePickerDialog extends React.Component {
   static propTypes = {
+    active: React.PropTypes.bool,
     className: React.PropTypes.string,
     initialTime: React.PropTypes.object,
     format: React.PropTypes.oneOf(['24hr', 'ampm']),
-    onTimeSelected: React.PropTypes.func
+    onCancel: React.PropTypes.func,
+    onSelect: React.PropTypes.func
   };
 
   static defaultProps = {
+    active: false,
     className: '',
     initialTime: new Date(),
     format: '24hr'
   };
 
   state = {
-    active: false,
     display: 'hours',
     time: this.props.initialTime,
     actions: [
-      { label: 'Cancel', className: style.button, onClick: this.onTimeCancel.bind(this) },
-      { label: 'Ok', className: style.button, onClick: this.onTimeSelected.bind(this) }
+      { label: 'Cancel', className: style.button, onClick: this.handleCancel.bind(this) },
+      { label: 'Ok', className: style.button, onClick: this.handleSelect.bind(this) }
     ]
   };
 
-  handleClockChange = (newTime) => {
-    this.setState({time: newTime});
+  handleClockChange = (value) => {
+    this.setState({time: value});
   };
 
   displayMinutes = () => {
@@ -44,18 +46,12 @@ class TimePickerDialog extends React.Component {
     this.refs.clock.toggleTimeMode();
   };
 
-  onTimeCancel () {
-    this.setState({active: false});
+  handleCancel () {
+    if (this.props.onCancel) this.props.onCancel();
   }
 
-  onTimeSelected () {
-    if (this.props.onTimeSelected) this.props.onTimeSelected(this.state.time);
-    this.setState({active: false});
-  }
-
-  show () {
-    this.setState({active: true});
-    setTimeout(this.refs.clock.handleCalculateShape, 1000);
+  handleSelect () {
+    if (this.props.onSelect) this.props.onSelect(this.state.time);
   }
 
   formatHours () {
@@ -83,7 +79,7 @@ class TimePickerDialog extends React.Component {
     const className = `${style.dialog} ${style[display]} ${style[format]}`;
 
     return (
-      <Dialog className={className} active={this.state.active} type="custom" actions={this.state.actions}>
+      <Dialog className={className} active={this.props.active} type="custom" actions={this.state.actions}>
         <header className={style.header}>
           <span className={style.hours} onClick={this.displayHours}>
             { ('0' + this.formatHours()).slice(-2) }

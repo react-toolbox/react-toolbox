@@ -8,8 +8,12 @@ datetime.setMinutes(28);
 
 class PickersTest extends React.Component {
 
-  handleDatePickerChange = (value) => {
-    console.log('handleDatePickerChange', value);
+  handleDatePickerChange = (date) => {
+    console.log('handleDatePickerChange', date);
+  };
+
+  handleTimePickerChange = (time) => {
+    console.log('handleTimePickerChange', time);
   };
 
   render () {
@@ -21,7 +25,7 @@ class PickersTest extends React.Component {
         <DatePicker onChange={this.handleDatePickerChange}/>
         <DatePicker value={datetime} />
 
-        <TimePicker />
+        <TimePicker onChange={this.handleTimePickerChange}/>
         <TimePicker value={datetime} format='ampm' />
       </section>
     );

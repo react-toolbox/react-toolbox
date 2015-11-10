@@ -16,17 +16,22 @@ class TimePicker extends React.Component {
   };
 
   state = {
-    value: this.props.value
+    value: this.props.value,
+    dialog: false
   };
 
-  onTimeSelected = (newTime) => {
-    this.refs.input.setValue(time.formatTime(newTime, this.props.format));
-    this.setState({value: newTime});
+  handleTimeCancel = () => {
+    this.setState({dialog: false});
   };
 
-  openTimeDialog = (event) => {
+  handleTimeChange = (value) => {
+    this.setState({dialog: false, value: value});
+    if (this.props.onChange) this.props.onChange(value);
+  };
+
+  handleMouseDown = (event) => {
     events.pauseEvent(event);
-    this.refs.dialog.show();
+    this.setState({dialog: true});
   };
 
   formatTime () {
@@ -41,7 +46,7 @@ class TimePicker extends React.Component {
         <Input
           ref='input'
           className={style.input}
-          onMouseDown={this.openTimeDialog}
+          onMouseDown={this.handleMouseDown}
           placeholder='Pick up time'
           readOnly={true}
           type='text'
@@ -49,20 +54,14 @@ class TimePicker extends React.Component {
         />
         <TimeDialog
           ref='dialog'
+          active={this.state.dialog}
           format={this.props.format}
           initialTime={this.state.value}
-          onTimeSelected={this.onTimeSelected}
+          onCancel={this.handleTimeCancel}
+          onSelect={this.handleTimeChange}
         />
       </div>
     );
-  }
-
-  getValue () {
-    return this.state.value;
-  }
-
-  setValue (value) {
-    this.setState({value});
   }
 }
 
