@@ -8,57 +8,56 @@ class TimePickerDialog extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,
     className: React.PropTypes.string,
-    initialTime: React.PropTypes.object,
     format: React.PropTypes.oneOf(['24hr', 'ampm']),
-    onCancel: React.PropTypes.func,
-    onSelect: React.PropTypes.func
+    onDismiss: React.PropTypes.func,
+    onSelect: React.PropTypes.func,
+    value: React.PropTypes.object
   };
 
   static defaultProps = {
     active: false,
     className: '',
-    initialTime: new Date(),
-    format: '24hr'
+    format: '24hr',
+    value: new Date()
   };
 
   state = {
     display: 'hours',
-    time: this.props.initialTime,
-    actions: [
-      { label: 'Cancel', className: style.button, onClick: this.handleCancel.bind(this) },
-      { label: 'Ok', className: style.button, onClick: this.handleSelect.bind(this) }
-    ]
+    displayTime: this.props.value
   };
+
+  componentWillUpdate (nextProps) {
+    if (!this.props.active && nextProps.active) {
+      setTimeout(this.refs.clock.handleCalculateShape, 1000);
+    }
+  }
 
   handleClockChange = (value) => {
-    this.setState({time: value});
+    this.setState({displayTime: value});
   };
 
-  displayMinutes = () => {
-    this.setState({display: 'minutes'});
-  };
-
-  displayHours = () => {
-    this.setState({display: 'hours'});
+  handleSelect = () => {
+    this.props.onSelect(this.state.displayTime);
   };
 
   toggleTimeMode = () => {
-    this.refs.clock.toggleTimeMode();
+    this.setState({displayTime: time.toggleTimeMode(this.state.displayTime)});
   };
 
-  handleCancel () {
-    if (this.props.onCancel) this.props.onCancel();
-  }
+  switchDisplay = (display) => {
+    this.setState({display});
+  };
 
-  handleSelect () {
-    if (this.props.onSelect) this.props.onSelect(this.state.time);
-  }
+  actions = [
+    { label: 'Cancel', className: style.button, onClick: this.props.onDismiss },
+    { label: 'Ok', className: style.button, onClick: this.handleSelect }
+  ];
 
   formatHours () {
     if (this.props.format === 'ampm') {
-      return this.state.time.getHours() % 12 || 12;
+      return this.state.displayTime.getHours() % 12 || 12;
     } else {
-      return this.state.time.getHours();
+      return this.state.displayTime.getHours();
     }
   }
 
@@ -75,18 +74,17 @@ class TimePickerDialog extends React.Component {
 
   render () {
     const display = `display-${this.state.display}`;
-    const format = `format-${time.getTimeMode(this.state.time)}`;
+    const format = `format-${time.getTimeMode(this.state.displayTime)}`;
     const className = `${style.dialog} ${style[display]} ${style[format]}`;
-
     return (
-      <Dialog className={className} active={this.props.active} type="custom" actions={this.state.actions}>
+      <Dialog active={this.props.active} className={className} actions={this.actions}>
         <header className={style.header}>
-          <span className={style.hours} onClick={this.displayHours}>
+          <span className={style.hours} onClick={this.switchDisplay.bind(this, 'hours')}>
             { ('0' + this.formatHours()).slice(-2) }
           </span>
           <span className={style.separator}>:</span>
-          <span className={style.minutes} onClick={this.displayMinutes}>
-            { ('0' + this.state.time.getMinutes()).slice(-2) }
+          <span className={style.minutes} onClick={this.switchDisplay.bind(this, 'minutes')}>
+            { ('0' + this.state.displayTime.getMinutes()).slice(-2) }
           </span>
           { this.renderAMPMLabels() }
         </header>
@@ -94,7 +92,7 @@ class TimePickerDialog extends React.Component {
           ref='clock'
           display={this.state.display}
           format={this.props.format}
-          initialTime={this.props.initialTime}
+          time={this.state.displayTime}
           onChange={this.handleClockChange}
         />
       </Dialog>

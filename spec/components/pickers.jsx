@@ -7,13 +7,19 @@ datetime.setHours(17);
 datetime.setMinutes(28);
 
 class PickersTest extends React.Component {
+  state = {
+    time1: undefined,
+    time2: datetime
+  };
 
   handleDatePickerChange = (date) => {
     console.log('handleDatePickerChange', date);
   };
 
-  handleTimePickerChange = (time) => {
-    console.log('handleTimePickerChange', time);
+  handleTimeChange = (item, value) => {
+    const newState = {};
+    newState[item] = value;
+    this.setState(newState);
   };
 
   render () {
@@ -25,8 +31,8 @@ class PickersTest extends React.Component {
         <DatePicker onChange={this.handleDatePickerChange}/>
         <DatePicker value={datetime} />
 
-        <TimePicker onChange={this.handleTimePickerChange}/>
-        <TimePicker value={datetime} format='ampm' />
+        <TimePicker value={this.state.time1} onChange={this.handleTimeChange.bind(this, 'time1')} />
+        <TimePicker value={this.state.time2} format='ampm' onChange={this.handleTimeChange.bind(this, 'time2')} />
       </section>
     );
   }
