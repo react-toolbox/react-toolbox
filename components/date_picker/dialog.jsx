@@ -6,26 +6,30 @@ import Dialog from '../dialog';
 
 class CalendarDialog extends React.Component {
   static propTypes = {
+    active: React.PropTypes.bool,
     initialDate: React.PropTypes.object,
-    onDateSelected: React.PropTypes.func
+    onCancel: React.PropTypes.func,
+    onChange: React.PropTypes.func,
+    onSelect: React.PropTypes.func
   };
 
   static defaultProps = {
+    active: false,
     initialDate: new Date()
   };
 
   state = {
-    active: false,
     date: this.props.initialDate,
     display: 'months',
     actions: [
-      { label: 'Cancel', className: style.button, onClick: this.onDateCancel.bind(this) },
-      { label: 'Ok', className: style.button, onClick: this.onDateSelected.bind(this) }
+      { label: 'Cancel', className: style.button, onClick: this.handleCancel.bind(this) },
+      { label: 'Ok', className: style.button, onClick: this.handleSelect.bind(this) }
     ]
   };
 
   handleCalendarChange = (date) => {
     this.setState({date, display: 'months'});
+    if (this.props.onChange) this.props.onChange(date);
   };
 
   displayMonths = () => {
@@ -36,17 +40,12 @@ class CalendarDialog extends React.Component {
     this.setState({display: 'years'});
   };
 
-  onDateCancel () {
-    this.setState({active: false});
+  handleCancel () {
+    if (this.props.onCancel) this.props.onCancel(this.state.date);
   }
 
-  onDateSelected () {
-    if (this.props.onDateSelected) this.props.onDateSelected(this.state.date);
-    this.setState({active: false});
-  }
-
-  show () {
-    this.setState({active: true});
+  handleSelect () {
+    if (this.props.onSelect) this.props.onSelect(this.state.date);
   }
 
   render () {
@@ -54,7 +53,7 @@ class CalendarDialog extends React.Component {
     const headerClassName = `${style.header} ${style[display]}`;
 
     return (
-      <Dialog active={this.state.active} type="custom" className={style.dialog} actions={this.state.actions}>
+      <Dialog active={this.props.active} type="custom" className={style.dialog} actions={this.state.actions}>
           <header className={headerClassName}>
             <span className={style.weekday}>
               {time.getFullDayOfWeek(this.state.date.getDay())}

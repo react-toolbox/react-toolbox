@@ -2,23 +2,31 @@ import React from 'react';
 import DatePicker from '../../components/date_picker';
 import TimePicker from '../../components/time_picker';
 
-const PickersTest = () => {
-  const datetime = new Date(1995, 11, 17);
-  datetime.setHours(17);
-  datetime.setMinutes(28);
+const datetime = new Date(1995, 11, 17);
+datetime.setHours(17);
+datetime.setMinutes(28);
 
-  return (
-    <section>
-      <h5>Pickers</h5>
-      <p>Date pickers and time pickers with Material flavour.</p>
+class PickersTest extends React.Component {
 
-      <DatePicker />
-      <DatePicker value={datetime} />
+  handleDatePickerChange = (value) => {
+    console.log('handleDatePickerChange', value);
+  };
 
-      <TimePicker />
-      <TimePicker value={datetime} format='ampm' />
-    </section>
-  );
-};
+  render () {
+    return (
+      <section>
+        <h5>Pickers</h5>
+        <p>Date pickers and time pickers with Material flavour.</p>
+
+        <DatePicker onChange={this.handleDatePickerChange}/>
+        <DatePicker value={datetime} />
+
+        <TimePicker />
+        <TimePicker value={datetime} format='ampm' />
+      </section>
+    );
+  }
+
+}
 
 export default PickersTest;

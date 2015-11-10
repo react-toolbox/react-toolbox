@@ -8,6 +8,7 @@ import style from './style';
 class DatePicker extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
+    onChange: React.PropTypes.func,
     value: React.PropTypes.object
   };
 
@@ -16,17 +17,22 @@ class DatePicker extends React.Component {
   };
 
   state = {
-    value: this.props.value
+    value: this.props.value,
+    dialog: false
   };
 
-  handleDateSelected = (value) => {
-    this.refs.input.setValue(this.formatDate(value));
-    this.setState({value});
+  handleCalendarCancel = () => {
+    this.setState({dialog: false});
+  };
+
+  handleCalendarChange = (value) => {
+    this.setState({dialog: false, value: value});
+    if (this.props.onChange) this.props.onChange(value);
   };
 
   handleMouseDown = (event) => {
     events.pauseEvent(event);
-    this.refs.dialog.show();
+    this.setState({dialog: true});
   };
 
   formatDate (date) {
@@ -47,19 +53,14 @@ class DatePicker extends React.Component {
         />
         <CalendarDialog
           ref='dialog'
+          active={this.state.dialog}
           initialDate={this.state.value}
-          onDateSelected={this.handleDateSelected}
+          onCancel={this.handleCalendarCancel}
+          onChange={this.handleCalendarChange}
+          onSelect={this.handleCalendarChange}
         />
       </div>
     );
-  }
-
-  getValue () {
-    return this.state.value;
-  }
-
-  setValue (value) {
-    this.setState({value});
   }
 }
 
