@@ -4,7 +4,7 @@ The [navigation drawer](https://www.google.com/design/spec/patterns/navigation-d
 
 <!-- example -->
 ```jsx
-import Drawer from 'react-toolbox/drawer';
+import Drawer from 'react-toolbox/lib/drawer';
 
 class DrawerTest extends React.Component {
   handleClick = () => {

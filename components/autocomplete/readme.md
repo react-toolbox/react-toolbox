@@ -4,7 +4,7 @@ An input field with a set of predeterminated labeled values. When it's focused i
 
 <!-- example -->
 ```jsx
-import Autocomplete from 'react-toolbox/autocomplete';
+import Autocomplete from 'react-toolbox/lib/autocomplete';
 
 const countries = {
   'EN-gb': 'England',

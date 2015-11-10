@@ -4,7 +4,7 @@ A [dialog](https://www.google.com/design/spec/components/pickers.html#pickers-da
 
 <!-- example -->
 ```jsx
-import DatePicker from 'react-toolbox/date_picker';
+import DatePicker from 'react-toolbox/lib/date_picker';
 
 const selectedDate = new Date(1995, 11, 17);
 const DatePickerTest = () => (

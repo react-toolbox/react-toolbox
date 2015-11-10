@@ -18,7 +18,7 @@ Once you have the workflow ready, you can just require and use the components:
 
 ```jsx
 import React from 'react';
-import Button from 'react-toolbox/button';
+import Button from 'react-toolbox/lib/button';
 
 const CustomButton = () => (
   <Button label="Hello world" kind="raised" accent />

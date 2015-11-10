@@ -4,7 +4,7 @@ The font icon component is used to represent an icon from the [Google Material D
 
 <!-- example -->
 ```jsx
-import FontIcon from 'react-toolbox/font_icon';
+import FontIcon from 'react-toolbox/lib/font_icon';
 
 const FontIcons = () => (
   <span>

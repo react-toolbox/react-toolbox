@@ -4,7 +4,7 @@
 
 <!-- example -->
 ```jsx
-import Checkbox from 'react-toolbox/checkbox';
+import Checkbox from 'react-toolbox/lib/checkbox';
 
 const TestCheckbox = () => (
   <div>

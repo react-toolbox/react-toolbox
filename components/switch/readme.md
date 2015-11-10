@@ -4,7 +4,7 @@ On/off switches toggle the state of a single settings option. The option that th
 
 <!-- example -->
 ```jsx
-import Switch from 'react-toolbox/switch';
+import Switch from 'react-toolbox/lib/switch';
 
 const SwitchTest = () => (
   <fieldset>

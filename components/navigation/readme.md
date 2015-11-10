@@ -4,7 +4,7 @@ This component is intended to be a common wrapper for a group of links or button
 
 <!-- example -->
 ```jsx
-import Navigation from 'react-toolbox/navigation';
+import Navigation from 'react-toolbox/lib/navigation';
 
 const links = [
   { href: 'http://', icon: 'person', label: 'Profile' },
