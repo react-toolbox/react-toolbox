@@ -27,9 +27,9 @@ class CalendarDialog extends React.Component {
     ]
   };
 
-  handleCalendarChange = (date) => {
-    this.setState({date, display: 'months'});
-    if (this.props.onChange) this.props.onChange(date);
+  handleCalendarChange = (value) => {
+    this.setState({date: value, display: 'months'});
+    if (this.props.onChange) this.props.onChange(value);
   };
 
   displayMonths = () => {
@@ -41,7 +41,7 @@ class CalendarDialog extends React.Component {
   };
 
   handleCancel () {
-    if (this.props.onCancel) this.props.onCancel(this.state.date);
+    if (this.props.onCancel) this.props.onCancel();
   }
 
   handleSelect () {
