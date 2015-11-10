@@ -12,7 +12,7 @@ const Home = () => (
       <div className={style.github}>
         <iframe src='https://ghbtns.com/github-btn.html?user=react-toolbox&amp;repo=react-toolbox&amp;type=star&amp;count=true' frameBorder='0' scrolling='0' />
         <iframe src='https://ghbtns.com/github-btn.html?user=react-toolbox&amp;repo=react-toolbox&amp;type=fork&amp;count=true' frameBorder='0' scrolling='0' />
-        <a className={style.donate} href='https://www.paypal.com/javivelasco' target='_blank'>
+        <a className={style.donate} href='https://www.paypal.me/javivelasco' target='_blank'>
           <span className={style.legend}>support</span>
           <span className={style.paypal}>paypal</span>
         </a>
