@@ -20,16 +20,13 @@ class Tabs extends React.Component {
 
   componentDidMount () {
     setTimeout(() => {
-      this.setState({pointer: this._pointerPosition(this.state.index)});
+      this.setState({pointer: this._pointerPosition(this.props.index)});
     }, 20);
   }
 
   componentWillReceiveProps (next_props) {
     const index = next_props.index || this.state.index;
-    this.setState({
-      index,
-      pointer: this._pointerPosition(index)
-    });
+    this.setState({ index, pointer: this._pointerPosition(index) });
   }
 
   _pointerPosition (index = 0) {
@@ -48,7 +45,7 @@ class Tabs extends React.Component {
       index,
       pointer: this._pointerPosition(index)
     });
-    if (this.props.onChange) this.props.onChange(this);
+    if (this.props.onChange) this.props.onChange(index);
   };
 
   renderLabels (labels) {
@@ -90,13 +87,6 @@ class Tabs extends React.Component {
         { tabs }
       </div>
     );
-  }
-
-  active (value) {
-    this.setState({active: value});
-    if (this.props.onActive && value) {
-      this.props.onActive(this);
-    }
   }
 }
 
