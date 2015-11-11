@@ -229,7 +229,6 @@ class Slider extends React.Component {
     if (this.props.editable) className += ` ${style.editable}`;
     if (this.props.pinned) className += ` ${style.pinned}`;
     if (this.state.pressed) className += ` ${style.pressed}`;
-    console.log(this.props.value, this.props.min);
     if (this.props.value === this.props.min) className += ` ${style.ring}`;
 
     return (
