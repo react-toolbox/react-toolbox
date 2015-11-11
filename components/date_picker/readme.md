@@ -6,16 +6,35 @@ A [dialog](https://www.google.com/design/spec/components/pickers.html#pickers-da
 ```jsx
 import DatePicker from 'react-toolbox/lib/date_picker';
 
-const selectedDate = new Date(1995, 11, 17);
-const DatePickerTest = () => (
-  <DatePicker value={selectedDate} />
-);
+const datetime = new Date(1995, 11, 17);
+datetime.setHours(17);
+datetime.setMinutes(28);
+
+class DatePickerTest extends React.Component {
+  state = {
+    date2: datetime
+  };
+
+  handleChange = (item, value) => {
+    const newState = {};
+    newState[item] = value;
+    this.setState(newState);
+  };
+
+  render () {
+    return (
+      <section>
+        <DatePicker value={this.state.date1} onChange={this.handleChange.bind(this, 'date1')} />
+        <DatePicker value={this.state.date2} onChange={this.handleChange.bind(this, 'date2')} />
+      </section>
+    );
+  }
+}
 ```
 
 ## Properties
 
 | Name          | Type    | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `className`     | `String`        |     `''`            | Sets a class to give customized styles to the time picker.|
 | `onChange`       | `Function`       |                | Callback called when the picker value is changed.|
 | `value`         | `Date`    |                 | Date object with the currently selected date. |

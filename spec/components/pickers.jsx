@@ -32,7 +32,6 @@ class PickersTest extends React.Component {
       </section>
     );
   }
-
 }
 
 export default PickersTest;

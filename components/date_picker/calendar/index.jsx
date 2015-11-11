@@ -21,7 +21,6 @@ class Calendar extends React.Component {
   };
 
   state = {
-    selectedDate: this.props.selectedDate,
     viewDate: this.props.selectedDate
   };
 
@@ -39,15 +38,13 @@ class Calendar extends React.Component {
   }
 
   handleDayClick = (day) => {
-    const newDate = utils.time.setDay(this.state.viewDate, day);
-    this.setState({selectedDate: newDate});
-    if (this.props.onChange) this.props.onChange(newDate);
+    this.props.onChange(utils.time.setDay(this.state.viewDate, day));
   };
 
   handleYearClick = (year) => {
-    const newDate = utils.time.setYear(this.state.selectedDate, year);
-    this.setState({selectedDate: newDate, viewDate: newDate});
-    if (this.props.onChange) this.props.onChange(newDate);
+    const viewDate = utils.time.setYear(this.props.selectedDate, year);
+    this.setState({viewDate});
+    this.props.onChange(viewDate);
   };
 
   incrementViewMonth = () => {
@@ -102,7 +99,7 @@ class Calendar extends React.Component {
           <Month
             key={this.state.viewDate.getMonth()}
             viewDate={this.state.viewDate}
-            selectedDate={this.state.selectedDate}
+            selectedDate={this.props.selectedDate}
             onDayClick={this.handleDayClick} />
         </CSSTransitionGroup>
       </div>

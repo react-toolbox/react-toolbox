@@ -7,13 +7,8 @@ import style from './style';
 
 class DatePicker extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string,
     onChange: React.PropTypes.func,
     value: React.PropTypes.object
-  };
-
-  static defaultProps = {
-    className: ''
   };
 
   state = {
