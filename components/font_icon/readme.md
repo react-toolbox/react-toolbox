@@ -9,7 +9,7 @@ import FontIcon from 'react-toolbox/lib/font_icon';
 const FontIcons = () => (
   <span>
     <FontIcon value='add' />
-    <FontIcon value='favorite' />
+    <FontIcon value='add-circle-outline' />
     <FontIcon value='star' />
   </span>
 );
