@@ -19,12 +19,9 @@ plugins:
 
   postrelease:
 
-    'Generating CHANGELOG file':
-      plugin: 'bumped-changelog'
-
-    'Publishing CHANGELOG at Github':
+    'Commiting new version':
       plugin: 'bumped-terminal'
-      command: 'git add CHANGELOG.md && git commit CHANGELOG.md -m "$newVersion release" && git push origin master'
+      command: 'git add package.json && git commit package.json -m "$newVersion release" && git push origin master'
 
     'Publishing tag at Github':
       plugin: 'bumped-terminal'
