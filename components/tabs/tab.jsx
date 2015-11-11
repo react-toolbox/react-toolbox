@@ -17,7 +17,7 @@ class Tab extends React.Component {
   };
 
   componentDidMount () {
-    this.active(this.props.active);
+    if (this.props.active) this.active(this.props.active);
   }
 
   componentWillReceiveProps (next_props) {
