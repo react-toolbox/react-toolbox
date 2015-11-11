@@ -41,10 +41,3 @@ const TableTest = () => (
 | `heading`       | `Bool`        | `true`          | If true, component will show a heading using model field names.|
 | `onChange`      | `Function`    |                 | Callback function that is fired when the components's value changes.|
 | `onSelect`      | `Function`    |                 | Callback function when  selects a determinate row.|
-
-## Methods
-
-This component has state to control how is it rendered and the values currently selected. It exposes the following instance methods:
-
-- `getValue` is used to retrieve the current dataSource.
-- `getSelected` is used to retrieve the current rows selected.

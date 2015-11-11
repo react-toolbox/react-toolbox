@@ -22,9 +22,9 @@ class Table extends React.Component {
   };
 
   state = {
+    all: false,
     dataSource: utils.cloneObject(this.props.dataSource),
-    selected: false,
-    selected_rows: []
+    selected_index: []
   };
 
   componentWillReceiveProps = (next_props) => {
@@ -36,29 +36,29 @@ class Table extends React.Component {
   handleRowChange = (event, row, key, value) => {
     const dataSource = this.state.dataSource;
     dataSource[row.props.index][key] = value;
-    this.setState({ dataSource: dataSource });
+    this.setState({ dataSource });
     if (this.props.onChange) {
-      this.props.onChange(event, this, row);
+      this.props.onChange(event, dataSource[row.props.index], dataSource);
     }
   };
 
   handleRowSelect = (event, instance) => {
-    if (this.props.onSelect) {
-      const index = instance.props.index;
-      const selected_rows = this.state.selected_rows;
-      const selected = selected_rows.indexOf(index) === -1;
-      if (selected) {
-        selected_rows.push(index);
-        this.props.onSelect(event, instance.props.data);
-      } else {
-        delete selected_rows[selected_rows.indexOf(index)];
-      }
-      this.setState({ selected_rows: selected_rows });
+    const index = instance.props.index;
+    const selected_index = this.state.selected_index;
+    const selected = selected_index.indexOf(index) === -1;
+    if (selected) {
+      selected_index.push(index);
+    } else {
+      delete selected_index[selected_index.indexOf(index)];
     }
+    this.setState({ selected_index: selected_index });
+    this.props.onSelect(event, this.getSelected());
   };
 
   handleRowsSelect = (event) => {
-    this.setState({ selected: !this.state.selected });
+    const all = !this.state.all;
+    this.setState({ all });
+    this.props.onSelect(event, this.getSelected(all));
   };
 
   isChanged = (data, base) => {
@@ -71,13 +71,21 @@ class Table extends React.Component {
     return changed;
   };
 
+  getSelected = (all = false) => {
+    const rows = [];
+    this.state.dataSource.map((row, index) => {
+      if (all || this.state.selected_index.indexOf(index) !== -1) rows.push(row);
+    });
+    return rows;
+  }
+
   renderHead () {
     if (this.props.heading) {
       return (
         <Head
           model={this.props.model}
           onSelect={this.props.onSelect ? this.handleRowsSelect : null}
-          selected={this.state.selected}
+          selected={this.state.all}
         />
       );
     }
@@ -97,7 +105,7 @@ class Table extends React.Component {
               model={this.props.model}
               onChange={this.props.onChange ? this.handleRowChange : null}
               onSelect={this.props.onSelect ? this.handleRowSelect : null}
-              selected={this.state.selected || this.state.selected_rows.indexOf(index) !== -1}
+              selected={this.state.all || this.state.selected_index.indexOf(index) !== -1}
             />
           );
         })
@@ -114,18 +122,6 @@ class Table extends React.Component {
         { this.renderBody() }
       </table>
     );
-  }
-
-  getValue () {
-    return this.state.dataSource;
-  }
-
-  getSelected () {
-    const rows = [];
-    this.state.dataSource.map((row, index) => {
-      if (this.state.selected_rows.indexOf(index) !== -1) rows.push(row);
-    });
-    return rows;
   }
 }
 
