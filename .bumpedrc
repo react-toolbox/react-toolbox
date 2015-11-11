@@ -19,6 +19,10 @@ plugins:
 
   postrelease:
 
+    'Commiting new version':
+      plugin: 'bumped-terminal'
+      command: 'git add package.json && git commit package.json -m "$newVersion release" && git push origin master'
+
     'Publishing tag at Github':
       plugin: 'bumped-terminal'
       command: 'git tag $newVersion && git push origin $newVersion'
