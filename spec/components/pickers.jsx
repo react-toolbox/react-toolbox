@@ -8,15 +8,11 @@ datetime.setMinutes(28);
 
 class PickersTest extends React.Component {
   state = {
-    time1: undefined,
+    date2: datetime,
     time2: datetime
   };
 
-  handleDatePickerChange = (date) => {
-    console.log('handleDatePickerChange', date);
-  };
-
-  handleTimeChange = (item, value) => {
+  handleChange = (item, value) => {
     const newState = {};
     newState[item] = value;
     this.setState(newState);
@@ -28,11 +24,11 @@ class PickersTest extends React.Component {
         <h5>Pickers</h5>
         <p>Date pickers and time pickers with Material flavour.</p>
 
-        <DatePicker onChange={this.handleDatePickerChange}/>
-        <DatePicker value={datetime} />
+        <DatePicker value={this.state.date1} onChange={this.handleChange.bind(this, 'date1')} />
+        <DatePicker value={this.state.date2} onChange={this.handleChange.bind(this, 'date2')} />
 
-        <TimePicker value={this.state.time1} onChange={this.handleTimeChange.bind(this, 'time1')} />
-        <TimePicker value={this.state.time2} format='ampm' onChange={this.handleTimeChange.bind(this, 'time2')} />
+        <TimePicker value={this.state.time1} onChange={this.handleChange.bind(this, 'time1')} />
+        <TimePicker value={this.state.time2} format='ampm' onChange={this.handleChange.bind(this, 'time2')} />
       </section>
     );
   }

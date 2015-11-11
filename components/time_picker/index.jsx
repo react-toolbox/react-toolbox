@@ -7,12 +7,14 @@ import TimeDialog from './dialog';
 
 class TimePicker extends React.Component {
   static propTypes = {
+    className: React.PropTypes.string,
     format: React.PropTypes.oneOf(['24hr', 'ampm']),
     onChange: React.PropTypes.func,
     value: React.PropTypes.object
   };
 
   static defaultProps = {
+    className: '',
     format: '24hr'
   };
 
@@ -30,7 +32,7 @@ class TimePicker extends React.Component {
   };
 
   handleSelect = (value) => {
-    this.props.onChange(value);
+    if (this.props.onChange) this.props.onChange(value);
     this.setState({active: false});
   };
 
