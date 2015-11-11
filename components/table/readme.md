@@ -4,7 +4,7 @@ The Table component is an enhanced version of the standard HTML `<table>`. A dat
 
 <!-- example -->
 ```jsx
-import Table from 'react-toolbox/table';
+import Table from 'react-toolbox/lib/table';
 
 const UserModel = {
   name: {type: String}

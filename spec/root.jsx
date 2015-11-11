@@ -35,7 +35,7 @@ const _hrefProject = () => {
 const Root = () => (
   <App className={style.app}>
     <AppBarToolbox fixed flat className={style.appbar}>
-      <h1>React Toolbox <small>Spec 0.11.2</small></h1>
+      <h1>React Toolbox <small>Spec 0.11.4</small></h1>
       <ButtonToolbox
         accent
         className={style.github}

@@ -4,7 +4,7 @@ The Dropdown selects an option between multiple selections. The element displays
 
 <!-- example -->
 ```jsx
-import Dropdown from 'react-toolbox/dropdown';
+import Dropdown from 'react-toolbox/lib/dropdown';
 
 const countries: [
   { value: 'EN-gb', label: 'England' },

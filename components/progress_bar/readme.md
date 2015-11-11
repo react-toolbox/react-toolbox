@@ -4,7 +4,7 @@ Minimize visual changes that occur while your app loads content by representing 
 
 <!-- example -->
 ```jsx
-import ProgressBar from 'react-toolbox/progress_bar';
+import ProgressBar from 'react-toolbox/lib/progress_bar';
 
 const ProgressTest = () => (
   <div>

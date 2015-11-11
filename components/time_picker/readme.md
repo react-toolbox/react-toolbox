@@ -4,7 +4,7 @@ A [dialog picker](https://www.google.com/design/spec/components/pickers.html#pic
 
 <!-- example -->
 ```jsx
-import TimePicker from 'react-toolbox/time_picker';
+import TimePicker from 'react-toolbox/lib/time_picker';
 
 let selectedTime = new Date();
 selectedTime.setHours(17);

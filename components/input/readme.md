@@ -4,7 +4,7 @@ Although we are calling then Inputs they actually correspond to Material Design 
 
 <!-- example -->
 ```jsx
-import Input from 'react-toolbox/input';
+import Input from 'react-toolbox/lib/input';
 
 class InputTest extends React.Component {
   state = { name: '', phone: '', email: '' };

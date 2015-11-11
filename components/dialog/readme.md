@@ -4,7 +4,7 @@
 
 <!-- example -->
 ```jsx
-import Dialog from 'react-toolbox/dialog';
+import Dialog from 'react-toolbox/lib/dialog';
 
 class DialogTest extends React.Component {
   state = { 

@@ -68,9 +68,9 @@ class Row extends React.Component {
   renderCellSelectable () {
     if (this.props.onSelect) {
       return (
-        <th className={style.selectable}>
+        <td className={style.selectable}>
           <Checkbox onChange={this.handleSelectChange} checked={this.props.selected}/>
-        </th>
+        </td>
       );
     }
   }
