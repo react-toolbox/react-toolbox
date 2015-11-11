@@ -65,8 +65,6 @@ const Root = () => (
     <Table />
     <Tabs />
     <Tooltip />
-
-    <Pickers />
   </App>
 );
 
