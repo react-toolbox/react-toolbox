@@ -1,20 +1,24 @@
 import React from 'react';
 import Dropdown from '../../components/dropdown';
 
+const countries = [
+  { value: 'EN-gb', label: 'England', img: 'http://' },
+  { value: 'ES-es', label: 'Spain', img: 'http://' },
+  { value: 'TH-th', label: 'Thailand', img: 'http://' },
+  { value: 'EN-en', label: 'USA', img: 'http://' },
+  { value: 'FR-fr', label: 'France', img: 'http://' }
+];
+
 class DropdownTest extends React.Component {
   state = {
-    countries: [
-      { value: 'ES-es', label: 'Spain', img: 'http://' },
-      { value: 'TH-th', label: 'Thailand', img: 'http://' },
-      { value: 'EN-gb', label: 'England', img: 'http://' },
-      { value: 'EN-en', label: 'USA', img: 'http://' },
-      { value: 'FR-fr', label: 'France', img: 'http://' }
-    ],
-    selected: 'TH-th'
+    dropdown1: 'ES-es',
+    dropdown4: 'TH-th'
   };
 
-  handleChange = (dropdown) => {
-    console.log('[DROPDOWN]', dropdown.getValue());
+  handleChange = (dropdown, value) => {
+    const newState = {};
+    newState[dropdown] = value;
+    this.setState(newState);
   };
 
   customDropdownItem (data) {
@@ -41,10 +45,31 @@ class DropdownTest extends React.Component {
       <section>
         <h5>Dropdown</h5>
         <p>lorem ipsum...</p>
-        <Dropdown dataSource={this.state.countries} label="Countries" onChange={this.handleChange}/>
-        <Dropdown dataSource={this.state.countries} disabled={true} onChange={this.handleChange}/>
-        <Dropdown dataSource={this.state.countries} value={this.state.selected} onChange={this.handleChange}/>
-        <Dropdown dataSource={this.state.countries} value={this.state.selected} template={this.customDropdownItem} onChange={this.handleChange}/>
+
+        <Dropdown
+          onChange={this.handleChange.bind(this, 'dropdown1')}
+          source={countries}
+          template={this.customDropdownItem}
+          value={this.state.dropdown1}
+        />
+
+        <Dropdown
+          label="Countries"
+          onChange={this.handleChange.bind(this, 'dropdown2')}
+          source={countries}
+        />
+
+        <Dropdown
+          onChange={this.handleChange.bind(this, 'dropdown4')}
+          source={countries}
+          value={this.state.dropdown4}
+        />
+
+        <Dropdown
+          source={countries}
+          disabled={true}
+          onChange={this.handleChange.bind(this, 'dropdown3')}
+        />
       </section>
     );
   }
