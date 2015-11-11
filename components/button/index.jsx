@@ -33,7 +33,7 @@ class Button extends React.Component {
 
   handleMouseDown = (event) => {
     events.pauseEvent(event);
-    this.refs.ripple.start(event);
+    if (this.refs.ripple) this.refs.ripple.start(event);
     if (this.props.onMouseDown) this.props.onMouseDown(event);
   };
 
