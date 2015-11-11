@@ -15,7 +15,8 @@ class IconMenu extends React.Component {
     onShow: React.PropTypes.func,
     onSelect: React.PropTypes.func,
     position: React.PropTypes.string,
-    selectable: React.PropTypes.bool
+    selectable: React.PropTypes.bool,
+    selected: React.PropTypes.any
   };
 
   static defaultProps = {
@@ -58,6 +59,7 @@ class IconMenu extends React.Component {
           position={this.props.position}
           ripple={this.props.menuRipple}
           selectable={this.props.selectable}
+          selected={this.props.selected}
         >
           { this.props.children }
         </Menu>

@@ -2,6 +2,10 @@ import React from 'react';
 import { MenuItem, IconMenu } from '../../components/menu';
 
 class IconMenuTest extends React.Component {
+  state = {
+    selected: undefined
+  };
+
   handleShow = () => {
     console.log('Showing menu...');
   };
@@ -10,8 +14,9 @@ class IconMenuTest extends React.Component {
     console.log('Hiding menu...');
   };
 
-  handleSelect = (value, instance) => {
-    console.log('Option selected', value, instance);
+  handleSelect = (value) => {
+    console.log('Option selected', value);
+    this.setState({selected: value});
   };
 
   handleItem = () => {
@@ -20,7 +25,7 @@ class IconMenuTest extends React.Component {
 
   render () {
     return (
-      <div>
+      <section>
         <h5>Icon Menus</h5>
         <p>Although a menu can be used indepently with any component, we are providing a common use case with the icon menu.</p>
         <IconMenu
@@ -31,14 +36,15 @@ class IconMenuTest extends React.Component {
           onShow={this.handleShow}
           onHide={this.handleHide}
           onSelect={this.handleSelect}
-          selectable={false}
+          selectable={true}
+          selected={this.state.selected}
         >
           <MenuItem onClick={this.handleItem} value='refresh' caption='Refresh' />
           <MenuItem value='help' caption='Help & Feedback' />
           <MenuItem value='settings' caption='Settings' />
           <MenuItem value='signout' caption='Sign out' disabled />
         </IconMenu>
-      </div>
+      </section>
     );
   }
 }
