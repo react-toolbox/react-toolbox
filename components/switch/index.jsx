@@ -10,7 +10,9 @@ class Switch extends React.Component {
     disabled: React.PropTypes.bool,
     label: React.PropTypes.string,
     name: React.PropTypes.string,
-    onChange: React.PropTypes.func
+    onBlur: React.PropTypes.func,
+    onChange: React.PropTypes.func,
+    onFocus: React.PropTypes.func
   };
 
   static defaultProps = {
