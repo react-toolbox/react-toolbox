@@ -15,14 +15,8 @@ class RadioGroup extends React.Component {
     disabled: false
   };
 
-  state = {
-    value: this.props.value
-  };
-
-  handleChange = (value, event) => {
-    this.setState({ value }, () => {
-      if (this.props.onChange) this.props.onChange(event, this);
-    });
+  handleChange = (value) => {
+    if (this.props.onChange) this.props.onChange(value);
   };
 
   renderRadioButtons () {
@@ -30,7 +24,7 @@ class RadioGroup extends React.Component {
       return (
         <RadioButton
           {...radio.props}
-          checked={radio.props.value === this.state.value}
+          checked={radio.props.value === this.props.value}
           disabled={this.props.disabled || radio.props.disabled}
           key={idx}
           label={radio.props.label}
@@ -47,14 +41,6 @@ class RadioGroup extends React.Component {
         {this.renderRadioButtons()}
       </div>
     );
-  }
-
-  getValue () {
-    return this.state.value;
-  }
-
-  setValue (value) {
-    this.setState({ value });
   }
 }
 
