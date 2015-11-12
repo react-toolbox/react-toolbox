@@ -1,3 +1,4 @@
+import './utils/polyfills'; // Import polyfills for IE11
 import App from './app';
 import AppBar from './app_bar';
 import Autocomplete from './autocomplete';
