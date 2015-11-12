@@ -10,9 +10,7 @@ class Switch extends React.Component {
     disabled: React.PropTypes.bool,
     label: React.PropTypes.string,
     name: React.PropTypes.string,
-    onBlur: React.PropTypes.func,
-    onChange: React.PropTypes.func,
-    onFocus: React.PropTypes.func
+    onChange: React.PropTypes.func
   };
 
   static defaultProps = {
@@ -21,19 +19,9 @@ class Switch extends React.Component {
     disabled: false
   };
 
-  state = {
-    checked: this.props.checked
-  };
-
   handleChange = (event) => {
-    this.setState({checked: !this.state.checked}, () => {
-      if (this.props.onChange) this.props.onChange(event, this);
-    });
-  };
-
-  handleClick = (event) => {
     events.pauseEvent(event);
-    if (!this.props.disabled) this.handleChange(event);
+    if (this.props.onChange && !this.props.disabled) this.props.onChange(event);
   };
 
   handleInputClick = (event) => {
@@ -46,19 +34,19 @@ class Switch extends React.Component {
 
   render () {
     let labelClassName = style[this.props.disabled ? 'disabled' : 'field'];
-    const switchClassName = style[this.state.checked ? 'switch-on' : 'switch-off'];
+    const switchClassName = style[this.props.checked ? 'on' : 'off'];
     if (this.props.className) labelClassName += ` ${this.props.className}`;
 
     return (
       <label
         data-react-toolbox='checkbox'
         className={labelClassName}
-        onClick={this.handleClick}
+        onClick={this.handleChange}
       >
         <input
           {...this.props}
           ref='input'
-          checked={this.state.checked}
+          checked={this.props.checked}
           className={style.input}
           onChange={this.handleChange}
           onClick={this.handleInputClick}
@@ -80,14 +68,6 @@ class Switch extends React.Component {
 
   focus () {
     this.refs.input.focus();
-  }
-
-  getValue () {
-    return this.state.checked;
-  }
-
-  setValue (value) {
-    this.setState({checked: value});
   }
 }
 
