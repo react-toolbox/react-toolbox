@@ -57,7 +57,7 @@ class Table extends React.Component {
     }
   };
 
-  handleRowsSelect = (event) => {
+  handleRowsSelect = () => {
     this.setState({ selected: !this.state.selected });
   };
 
