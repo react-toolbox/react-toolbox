@@ -15,10 +15,6 @@ class Snackbar extends React.Component {
     type: React.PropTypes.string
   };
 
-  handleClick = (event) => {
-    this.props.onClick(event, this);
-  };
-
   componentDidUpdate () {
     if (this.props.active && this.props.timeout) {
       setTimeout(() => {
@@ -34,7 +30,7 @@ class Snackbar extends React.Component {
           className={style.button}
           kind='flat'
           label={this.props.action}
-          onClick={this.props.onClick ? this.handleClick : null}
+          onClick={this.props.onClick}
         />
       );
     }
