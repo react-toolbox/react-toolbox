@@ -21,32 +21,12 @@
     "lint": "eslint ./ --ext .js,.jsx",
     "babel": "babel ./components --out-dir ./lib",
     "sass": "cpx './components/**/*.scss' ./lib",
-    "build": "better-npm-run build",
+    "build": "cross-env NODE_ENV=production npm run babel && npm run sass",
     "clean": "rimraf ./lib",
     "prebuild": "npm run clean",
     "prepublish": "npm run build",
-    "test": "better-npm-run test",
-    "test:watch": "better-npm-run test:watch"
-  },
-  "betterScripts":{
-    "build": {
-      "command": "npm run babel && npm run sass",
-      "env": {
-        "NODE_ENV": "production"
-      }
-    },
-    "test": {
-      "command": "karma start",
-      "env": {
-        "NODE_ENV": "test"
-      }
-    },
-    "test:watch":{
-      "command": "karma start --no-single-run",
-      "env": {
-        "NODE_ENV": "test"
-      }
-    }
+    "test": "cross-env NODE_ENV=test karma start",
+    "test:watch": "cross-env NODE_ENV=test karma start --no-single-run"
   },
   "bugs": {
     "url": "https://github.com/react-toolbox/react-toolbox/issues",
@@ -74,7 +54,7 @@
     "babel-loader": "^5.3.2",
     "babel-plugin-react-transform": "^1.1.1",
     "core-js": "^1.2.6",
-    "better-npm-run": "^0.0.3",
+    "cross-env": "^1.0.4",
     "cpx": "^1.2.1",
     "css-loader": "^0.21.0",
     "eslint": "^1.7.3",
