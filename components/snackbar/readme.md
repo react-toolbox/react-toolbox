@@ -42,13 +42,6 @@ class SnackbarTest extends React.Component {
 | `icon` | `String`  |       | String key for an icon displayed in left side of the snackbar.|
 | `label` | `String`  |       | Text to display in the content.|
 | `onClick` | `Function`  |       | Callback function that will be called when the button action is clicked.|
+| `onTimeout` | `Function`  |       | Callback function when finish the set timeout.|
 | `timeout` | `Number`  |       | Amount of time after the Snackbar will be automatically hidden.|
 | `type` | `String`  |       | Indicates the action type. Can be `accept`, `warning` or `cancel`|
-
-## Methods
-
-The Snackbar, in a similar way to the Dialog and Drawer holds state to check whether it's being displayed or not. It exposes methods to hide and show it manually:
-
-- `hide` used to hide the Snackbar.
-- `show` used to show the Snackbar.
-

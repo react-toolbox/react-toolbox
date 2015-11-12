@@ -10,20 +10,22 @@ class Snackbar extends React.Component {
     icon: React.PropTypes.string,
     label: React.PropTypes.string.isRequired,
     onClick: React.PropTypes.func,
+    onTimeout: React.PropTypes.func,
     timeout: React.PropTypes.number,
     type: React.PropTypes.string
   };
 
-  state = {
-    active: false
+  handleClick = (event) => {
+    this.props.onClick(event, this);
   };
 
-  handleClick = (event) => {
-    this.setState({active: false});
-    if (this.props.onClick) {
-      this.props.onClick(event, this);
+  componentDidUpdate () {
+    if (this.props.active && this.props.timeout) {
+      setTimeout(() => {
+        this.props.onTimeout(event, this);
+      }, this.props.timeout * 1000);
     }
-  };
+  }
 
   renderButton () {
     if (this.props.action) {
@@ -32,7 +34,7 @@ class Snackbar extends React.Component {
           className={style.button}
           kind='flat'
           label={this.props.action}
-          onClick={this.handleClick}
+          onClick={this.props.onClick ? this.handleClick : null}
         />
       );
     }
@@ -40,7 +42,7 @@ class Snackbar extends React.Component {
 
   render () {
     let className = `${style.root} ${style[this.props.type]}`;
-    if (this.state.active) className += ` ${style.active}`;
+    if (this.props.active) className += ` ${style.active}`;
     if (this.props.className) className += ` ${this.props.className}`;
 
     return (
@@ -50,19 +52,6 @@ class Snackbar extends React.Component {
         { this.renderButton() }
       </div>
     );
-  }
-
-  hide () {
-    this.setState({active: false});
-  }
-
-  show () {
-    this.setState({active: true});
-    if (this.props.timeout) {
-      setTimeout(() => {
-        this.setState({ active: false });
-      }, this.props.timeout * 1000);
-    }
   }
 }
 
