@@ -56,7 +56,9 @@ class Table extends React.Component {
   };
 
   handleRowsSelect = () => {
-    this.setState({ selected: !this.state.selected });
+    const all = !this.state.all;
+    this.setState({ all });
+    this.props.onSelect(event, this.getSelected(all));
   };
 
   isChanged = (data, base) => {
