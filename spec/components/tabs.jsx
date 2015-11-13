@@ -4,16 +4,15 @@ import { Tabs, Tab } from '../../components/tabs';
 class TabsTest extends React.Component {
 
   state = {
-    active: 1
+    index: 1
   };
 
-  handleTabChange = (active) => {
-    this.setState({active});
-    console.log('change active');
+  handleTabChange = (index) => {
+    this.setState({index});
   };
 
   handleActive = () => {
-    console.log('special one activated');
+    console.log('Special one activated');
   };
 
   render () {
@@ -22,7 +21,7 @@ class TabsTest extends React.Component {
         <h5>Tabs</h5>
         <p>This tabs can be disabled or hidden</p>
 
-        <Tabs active={this.state.active} onChange={this.handleTabChange}>
+        <Tabs index={this.state.index} onChange={this.handleTabChange}>
           <Tab label='Primary'>
             <small>Primary content</small>
           </Tab>

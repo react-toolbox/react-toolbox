@@ -24,7 +24,7 @@ This component acts as the wrapper and the main controller of the content that i
 | Name              | Type          | Default         | Description|
 |:-----|:-----|:-----|:-----|
 | `className`     | `String`        | `''`            | Additional class name to provide custom styling.|
-| `active`         | `Number`        | `0`             | Current <Tab> |
+| `index`         | `Number`        | `0`             | Current <Tab> |
 | `onChange`      | `Function`      |                 | Callback function that is fired when the tab changes.
 
 ## Tab

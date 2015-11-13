@@ -5,13 +5,13 @@ import style from './style';
 
 class Tabs extends React.Component {
   static propTypes = {
-    active: React.PropTypes.number,
+    index: React.PropTypes.number,
     className: React.PropTypes.string,
     onChange: React.PropTypes.func
   };
 
   static defaultProps = {
-    active: 0
+    index: 0
   };
 
   state = {
@@ -19,12 +19,12 @@ class Tabs extends React.Component {
   };
 
   componentWillReceiveProps (nextProps) {
-    this.updatePointer(nextProps.active);
+    this.updatePointer(nextProps.index);
   }
 
   componentDidMount () {
     setTimeout(() => {
-      this.updatePointer(this.props.active);
+      this.updatePointer(this.props.index);
     }, 100);
   }
 
@@ -67,7 +67,7 @@ class Tabs extends React.Component {
     return headers.map((item, idx) => {
       return React.cloneElement(item, {
         key: idx,
-        active: this.props.active === idx,
+        active: this.props.index === idx,
         onClick: this.handleHeaderClick.bind(this, idx, item)
       });
     });
@@ -77,7 +77,7 @@ class Tabs extends React.Component {
     return contents.map((item, idx) => {
       return React.cloneElement(item, {
         key: idx,
-        active: this.props.active === idx,
+        active: this.props.index === idx,
         tabIndex: idx
       });
     });
