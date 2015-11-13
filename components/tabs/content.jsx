@@ -5,7 +5,6 @@ class TabContent extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,
     className: React.PropTypes.string,
-    onActive: React.PropTypes.func,
     tabIndex: React.PropTypes.number
   };
 
@@ -13,12 +12,6 @@ class TabContent extends React.Component {
     active: false,
     className: ''
   };
-
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.active && this.props.onActive) {
-      this.props.onActive();
-    }
-  }
 
   render () {
     let className = style.tab;

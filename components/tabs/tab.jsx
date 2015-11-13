@@ -19,6 +19,12 @@ class TabHeader extends React.Component {
     hidden: false
   };
 
+  componentDidUpdate (prevProps) {
+    if (!prevProps.active && this.props.active && this.props.onActive) {
+      this.props.onActive();
+    }
+  }
+
   handleClick = () => {
     if (!this.props.disabled && this.props.onClick) {
       this.props.onClick();

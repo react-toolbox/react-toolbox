@@ -40,8 +40,7 @@ class Tabs extends React.Component {
       if (item.type === Tab) {
         headers.push(item);
         if (item.props.children) {
-          const {onActive, children} = item.props;
-          contents.push(<Content onActive={onActive} children={children}/>);
+          contents.push(<Content children={item.props.children}/>);
         }
       } else if (item.type === Content) {
         contents.push(item);
