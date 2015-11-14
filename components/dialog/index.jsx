@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '../button';
+import Overlay from '../overlay';
 import style from './style';
 
 const Dialog = (props) => {
@@ -14,9 +15,8 @@ const Dialog = (props) => {
   if (props.className) className += ` ${props.className}`;
 
   return (
-    <div data-react-toolbox='dialog' className={className}>
-      <div role='overlay' className={style.overlay} onClick={props.onOverlayClick} />
-      <div role='content' className={style.content}>
+    <Overlay active={props.active} onClick={props.onOverlayClick}>
+      <div className={className}>
         <section role='body' className={style.body}>
           { props.title ? <h6 className={style.title}>{props.title}</h6> : null }
           { props.children }
@@ -25,7 +25,7 @@ const Dialog = (props) => {
           { actions }
         </nav>
       </div>
-    </div>
+    </Overlay>
   );
 };
 

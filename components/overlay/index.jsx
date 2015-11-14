@@ -5,7 +5,8 @@ import style from './style';
 class Overlay extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,
-    className: React.PropTypes.string
+    className: React.PropTypes.string,
+    onClick: React.PropTypes.func
   };
 
   static defaultProps = {
@@ -33,7 +34,7 @@ class Overlay extends React.Component {
     if (this.props.active) className += ` ${style.active}`;
     ReactDOM.render(
       <div className={className}>
-        <div className={style.overlay}></div>
+        <div className={style.overlay} onClick={this.props.onClick}></div>
         {this.props.children}
       </div>
     , this.node);
