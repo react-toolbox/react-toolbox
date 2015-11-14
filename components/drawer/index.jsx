@@ -1,18 +1,20 @@
 import React from 'react';
+import Overlay from '../overlay';
 import style from './style';
 
 const Drawer = (props) => {
-  let className = `${style.drawer} ${style[props.type]}`;
+  let className = `${style.root} ${style[props.type]}`;
   if (props.active) className += ` ${style.active}`;
   if (props.className) className += ` ${props.className}`;
 
   return (
-    <div data-react-toolbox='drawer' className={className}>
-      <div className={style.overlay} onClick={props.onOverlayClick}></div>
-      <aside className={style.content}>
-        { props.children }
-      </aside>
-    </div>
+    <Overlay active={props.active} onClick={props.onOverlayClick}>
+      <div data-react-toolbox='drawer' className={className}>
+        <aside className={style.content}>
+          { props.children }
+        </aside>
+      </div>
+    </Overlay>
   );
 };
 
