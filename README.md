@@ -1,6 +1,6 @@
 # React Toolbox
 
-![Last version](https://img.shields.io/github/tag/react-toolbox/react-toolbox.svg?style=flat-square)
+[![npm version](https://img.shields.io/npm/v/react-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/react-toolbox)
 [![Build Status](http://img.shields.io/travis/react-toolbox/react-toolbox/master.svg?style=flat-square)](https://travis-ci.org/react-toolbox/react-toolbox)
 [![NPM Status](http://img.shields.io/npm/dm/react-toolbox.svg?style=flat-square)](https://www.npmjs.org/package/react-toolbox)
 [![react-toolbox channel on discord](https://img.shields.io/badge/discord-%23react--toolbox%20%40%20reactiflux-61dafb.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bW2GqFj)
