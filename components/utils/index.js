@@ -44,6 +44,21 @@ module.exports = {
     return JSON.parse(JSON.stringify(object));
   },
 
+  inputTypeForPrototype (prototype) {
+    if (prototype === Date) return 'date';
+    if (prototype === Number) return 'number';
+    if (prototype === Boolean) return 'checkbox';
+    return 'text';
+  },
+
+  prepareValueForInput (value, type) {
+    if (type === 'date') return new Date(value).toISOString().slice(0, 10);
+    if (type === 'checkbox') {
+      return value ? 'on' : null;
+    }
+    return value;
+  },
+
   events: require('./events'),
   prefixer: require('./prefixer'),
   time: require('./time'),

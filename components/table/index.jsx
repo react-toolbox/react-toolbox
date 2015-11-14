@@ -1,121 +1,78 @@
 import React from 'react';
-import Head from './components/head';
-import Row from './components/row';
+import TableHead from './head';
+import TableRow from './row';
 import style from './style';
-import utils from '../utils';
 
 class Table extends React.Component {
-
   static propTypes = {
     className: React.PropTypes.string,
-    dataSource: React.PropTypes.array,
-    model: React.PropTypes.object,
     heading: React.PropTypes.bool,
+    model: React.PropTypes.object,
     onChange: React.PropTypes.func,
-    onSelect: React.PropTypes.func
+    onSelect: React.PropTypes.func,
+    selected: React.PropTypes.array,
+    source: React.PropTypes.array
   };
 
   static defaultProps = {
     className: '',
-    dataSource: [],
-    heading: true
+    heading: true,
+    selected: [],
+    source: []
   };
 
-  state = {
-    all: false,
-    dataSource: utils.cloneObject(this.props.dataSource),
-    selected_index: []
-  };
-
-  componentWillReceiveProps = (next_props) => {
-    if (next_props.dataSource) {
-      this.setState({dataSource: utils.cloneObject(next_props.datasSource)});
+  handleFullSelect = () => {
+    if (this.props.onSelect) {
+      const {source, selected} = this.props;
+      const newSelected = source.length === selected.length ? [] : source.map((i, idx) => idx);
+      this.props.onSelect(newSelected);
     }
   };
 
-  handleRowChange = (event, row, key, value) => {
-    const dataSource = this.state.dataSource;
-    dataSource[row.props.index][key] = value;
-    this.setState({ dataSource });
+  handleRowSelect = (index) => {
+    if (this.props.onSelect) {
+      const position = this.props.selected.indexOf(index);
+      const newSelected = [...this.props.selected];
+      if (position !== -1) newSelected.splice(position, 1); else newSelected.push(index);
+      this.props.onSelect(newSelected);
+    }
+  };
+
+  handleRowChange = (index, key, value) => {
     if (this.props.onChange) {
-      this.props.onChange(event, dataSource[row.props.index], dataSource);
+      this.props.onChange(index, key, value);
     }
   };
-
-  handleRowSelect = (event, instance) => {
-    const index = instance.props.index;
-    const selected_index = this.state.selected_index;
-    const selected = selected_index.indexOf(index) === -1;
-    if (selected) {
-      selected_index.push(index);
-    } else {
-      delete selected_index[selected_index.indexOf(index)];
-    }
-    this.setState({ selected_index: selected_index });
-    this.props.onSelect(event, this.getSelected());
-  };
-
-  handleRowsSelect = () => {
-    const all = !this.state.all;
-    this.setState({ all });
-    this.props.onSelect(event, this.getSelected(all));
-  };
-
-  isChanged = (data, base) => {
-    let changed = false;
-    Object.keys(data).map((key) => {
-      if (data[key] !== base[key]) {
-        changed = true;
-      }
-    });
-    return changed;
-  };
-
-  getSelected = (all = false) => {
-    const rows = [];
-    this.state.dataSource.map((row, index) => {
-      if (all || this.state.selected_index.indexOf(index) !== -1) rows.push(row);
-    });
-    return rows;
-  }
 
   renderHead () {
     if (this.props.heading) {
-      return (
-        <Head
-          model={this.props.model}
-          onSelect={this.props.onSelect ? this.handleRowsSelect : null}
-          selected={this.state.all}
-        />
-      );
+      const {model, selected, source} = this.props;
+      const isSelected = selected.length === source.length;
+      return <TableHead model={model} onSelect={this.handleFullSelect} selected={isSelected} />;
     }
   }
 
   renderBody () {
-    return (
-      <tbody>
-      {
-        this.state.dataSource.map((data, index) => {
-          return (
-            <Row
-              changed={this.isChanged(data, this.props.dataSource[index])}
-              data={data}
-              index={index}
-              key={index}
-              model={this.props.model}
-              onChange={this.props.onChange ? this.handleRowChange : null}
-              onSelect={this.props.onSelect ? this.handleRowSelect : null}
-              selected={this.state.all || this.state.selected_index.indexOf(index) !== -1}
-            />
-          );
-        })
-      }
-      </tbody>
-    );
+    const rows = this.props.source.map((data, idx) => {
+      return (
+        <TableRow
+          data={data}
+          index={idx}
+          key={idx}
+          model={this.props.model}
+          onChange={this.props.onChange ? this.handleRowChange.bind(this, idx) : null}
+          onSelect={this.handleRowSelect.bind(this, idx)}
+          selected={this.props.selected.indexOf(idx) !== -1}
+        />
+      );
+    });
+
+    return <tbody>{rows}</tbody>;
   }
 
   render () {
-    const className = `${this.props.className} ${style.root}`;
+    let className = style.root;
+    if (this.props.className) className += ` ${this.props.className}`;
     return (
       <table data-react-toolbox='table' className={className}>
         { this.renderHead() }
