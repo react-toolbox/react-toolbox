@@ -17,6 +17,7 @@ class Overlay extends React.Component {
   componentDidMount () {
     this.app = document.getElementById('react-toolbox-app') || document.body;
     this.node = document.createElement('div');
+    this.node.setAttribute('data-react-toolbox', 'overlay');
     this.app.appendChild(this.node);
     this.handleRender();
   }
@@ -32,10 +33,11 @@ class Overlay extends React.Component {
 
   handleRender () {
     let className = style.root;
-    let overlayStyle = {};
+    const overlayStyle = {};
+
     if (this.props.active) {
-      className += ` ${style.active}`;
-      if (this.props.opacity) overlayStyle.opacity = this.props.opacity;
+      if (this.props.opacity > 0) className += ` ${style.active}`;
+      overlayStyle.opacity = this.props.opacity;
     }
     if (this.props.className) className += ` ${className}`;
 
