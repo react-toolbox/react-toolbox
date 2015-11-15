@@ -72,5 +72,16 @@ The project is being initially developed and maintained by [Javier Velasco](http
 
 To work in the project you'd need a `node` version with ES6 syntax. Although the project is built using Babel we use some ES6 features in the development server. Also, the packages has been tested with `node 4.2.1`. Consider using [nvm](https://github.com/creationix/nvm) or [n](https://github.com/tj/n) to handle different node versions!
 
+To start documentation site locally:
+
+```
+git clone https://github.com/react-toolbox/react-toolbox.git
+cd docs/
+npm install 
+npm start
+```
+
+Local documentation will be available at http://localhost:8081/
+
 ## License 
 This project is licensed under the terms of the [MIT license](https://github.com/react-toolbox/react-toolbox/blob/master/LICENSE).
