@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import Overlay from '../overlay';
 import style from './style';
 
-class Tooltip extends React.Component {
+const HIDE_TIMEOUT = 300;
 
+class Tooltip extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     label: React.PropTypes.string
@@ -18,23 +19,32 @@ class Tooltip extends React.Component {
     active: false
   };
 
-  componentDidMount = () => {
+  componentDidMount () {
+    this.parent = ReactDOM.findDOMNode(this).parentNode;
+    if (this.parent) {
+      this.parent.onmouseover = this.handleParentMouseOver;
+      this.parent.onmouseout = this.handleParentMouseOut;
+    }
+  }
+
+  handleParentMouseOver = () => {
+    if (this.deferred) clearTimeout(this.deferred);
+
     const node = ReactDOM.findDOMNode(this.refs.tooltip);
-    const parent = ReactDOM.findDOMNode(this).parentNode;
+    const parentStyle = this.parent.currentStyle || window.getComputedStyle(this.parent);
+    const offset = parseFloat(parentStyle['margin-bottom']) + parseFloat(parentStyle['padding-bottom']);
+    const position = this.parent.getBoundingClientRect();
 
-    if (parent) {
-      parent.onmouseover = () => {
-        const parentStyle = parent.currentStyle || window.getComputedStyle(parent);
-        const offset = parseFloat(parentStyle['margin-bottom']) + parseFloat(parentStyle['padding-bottom']);
-        const position = parent.getBoundingClientRect();
+    node.style.top = `${position.top + position.height - offset}px`;
+    node.style.left = `${position.left + parseInt((position.width / 2) - (node.offsetWidth / 2))}px`;
+    if (!this.state.active) this.setState({ active: true});
+  };
 
-        node.style.top = `${position.top + position.height - offset}px`;
-        node.style.left = `${position.left + parseInt((position.width / 2) - (node.offsetWidth / 2))}px`;
-        if (!this.state.active) this.setState({ active: true});
-      };
-      parent.onmouseout = () => {
-        if (this.state.active) this.setState({ active: false});
-      };
+  handleParentMouseOut = () => {
+    if (this.state.active) {
+      this.deferred = setTimeout(() => {
+        this.setState({ active: false});
+      }, HIDE_TIMEOUT);
     }
   };
 
