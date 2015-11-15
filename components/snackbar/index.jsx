@@ -1,16 +1,19 @@
 import React from 'react';
-import style from './style';
 import Button from '../button';
 import FontIcon from '../font_icon';
+import Overlay from '../overlay';
+import style from './style';
 
 class Snackbar extends React.Component {
   static propTypes = {
     action: React.PropTypes.string,
+    active: React.PropTypes.bool,
     className: React.PropTypes.string,
     icon: React.PropTypes.string,
     label: React.PropTypes.string.isRequired,
     onClick: React.PropTypes.func,
     onTimeout: React.PropTypes.func,
+    onOverlayClick: React.PropTypes.func,
     timeout: React.PropTypes.number,
     type: React.PropTypes.string
   };
@@ -42,11 +45,13 @@ class Snackbar extends React.Component {
     if (this.props.className) className += ` ${this.props.className}`;
 
     return (
-      <div data-react-toolbox='snackbar' className={className}>
-        { this.props.icon ? <FontIcon value={this.props.icon} className={style.icon} /> : null }
-        <span className={style.label}>{this.props.label}</span>
-        { this.renderButton() }
-      </div>
+      <Overlay active={this.props.active} onClick={this.props.onOverlayClick} opacity={0}>
+        <div data-react-toolbox='snackbar' className={className}>
+          { this.props.icon ? <FontIcon value={this.props.icon} className={style.icon} /> : null }
+          <span className={style.label}>{this.props.label}</span>
+          { this.renderButton() }
+        </div>
+      </Overlay>
     );
   }
 }
