@@ -27,6 +27,10 @@
   > * {
     pointer-events: none;
   }
+
+  [data-react-toolbox="ripple"] {
+    overflow: hidden;
+  }
 }
 
 %squared {
@@ -106,11 +110,6 @@
   }
   .icon {
     line-height: $button-floating-height;
-  }
-
-  [data-react-toolbox="ripple"] {
-    overflow: hidden;
-    border-radius: 50%;
   }
 }
 
