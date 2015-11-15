@@ -111,6 +111,9 @@
   .icon {
     line-height: $button-floating-height;
   }
+  [data-react-toolbox="ripple"] {
+    border-radius: 50%;
+  }
 }
 
 .primary:not([disabled]) {
