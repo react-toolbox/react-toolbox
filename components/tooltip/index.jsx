@@ -22,8 +22,10 @@ class Tooltip extends React.Component {
     const parent = node.parentNode;
     if (parent) {
       parent.onmouseover = () => {
+        const parentStyle =  parent.currentStyle || window.getComputedStyle(parent);
+        const offset = parseFloat(parentStyle['margin-bottom']) + parseFloat(parentStyle['padding-bottom']);
         const position = parent.getBoundingClientRect();
-        node.style.top = `${position.top + position.height}px`;
+        node.style.top = `${position.top + position.height - offset}px`;
         node.style.left = `${position.left + parseInt((position.width / 2) - (node.offsetWidth / 2))}px`;
         if (!this.state.active) this.setState({ active: true});
       };
