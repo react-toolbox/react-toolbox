@@ -13,7 +13,6 @@ class Snackbar extends React.Component {
     label: React.PropTypes.string.isRequired,
     onClick: React.PropTypes.func,
     onTimeout: React.PropTypes.func,
-    onOverlayClick: React.PropTypes.func,
     timeout: React.PropTypes.number,
     type: React.PropTypes.string
   };
@@ -45,7 +44,7 @@ class Snackbar extends React.Component {
     if (this.props.className) className += ` ${this.props.className}`;
 
     return (
-      <Overlay active={this.props.active} onClick={this.props.onOverlayClick} opacity={0}>
+      <Overlay active={this.props.active} opacity={0}>
         <div data-react-toolbox='snackbar' className={className}>
           { this.props.icon ? <FontIcon value={this.props.icon} className={style.icon} /> : null }
           <span className={style.label}>{this.props.label}</span>
