@@ -37,7 +37,7 @@ The previous code creates a React button component based on React toolbox button
 
 We encourage you to work with webpack but if you want to use React Toolbox in an old fashioned way you must generate a build with all the css and javascript and include it in your `index.html`. Then you can use the components exposed in the `window` object.
 
-## The `App` component
+## App component
 
 There are some components in React Toolbox that requires special positioning. For example, `Dialog` and `Drawer` components block the scroll showing a fixed positioned overlay. To handle these cases, React Toolbox needs some styling in your root node. This can be achieved wrapping your app with a non intrusive `App` wrapper component:
 
