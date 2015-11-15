@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Overlay from '../overlay';
 import style from './style';
 
-const HIDE_TIMEOUT = 300;
+const HIDE_TIMEOUT = 100;
 
 class Tooltip extends React.Component {
   static propTypes = {
@@ -19,32 +18,35 @@ class Tooltip extends React.Component {
     active: false
   };
 
-  componentDidMount () {
-    this.parent = ReactDOM.findDOMNode(this).parentNode;
-    if (this.parent) {
-      this.parent.onmouseover = this.handleParentMouseOver;
-      this.parent.onmouseout = this.handleParentMouseOut;
+  componentDidMount = () => {
+    const parent = ReactDOM.findDOMNode(this).parentNode;
+
+    if (parent.style.position !== 'relative' && parent.style.position !== 'absolute'){
+      parent.style.position = 'relative';
     }
-  }
+
+    parent.onmouseover = this.handleParentMouseOver;
+    parent.onmouseout = this.handleParentMouseOut;
+  };
 
   handleParentMouseOver = () => {
-    if (this.deferred) clearTimeout(this.deferred);
+    if (this.deferredHide) clearTimeout(this.deferredHide);
 
-    const node = ReactDOM.findDOMNode(this.refs.tooltip);
-    const parentStyle = this.parent.currentStyle || window.getComputedStyle(this.parent);
+    const node = ReactDOM.findDOMNode(this);
+    const parent = node.parentNode;
+    const parentStyle = parent.currentStyle || window.getComputedStyle(parent);
     const offset = parseFloat(parentStyle['margin-bottom']) + parseFloat(parentStyle['padding-bottom']);
-    const position = this.parent.getBoundingClientRect();
+    const position = parent.getBoundingClientRect();
 
-    node.style.top = `${position.top + position.height - offset}px`;
-    node.style.left = `${position.left + parseInt((position.width / 2) - (node.offsetWidth / 2))}px`;
+    node.style.top = `${position.height - offset}px`;
+    node.style.left = `${parseInt((position.width / 2) - (node.offsetWidth / 2))}px`;
     if (!this.state.active) this.setState({ active: true});
   };
 
   handleParentMouseOut = () => {
     if (this.state.active) {
-      this.deferred = setTimeout(() => {
-        this.setState({ active: false});
-      }, HIDE_TIMEOUT);
+      this.deferredHide = setTimeout(() => { this.setState({active: false}); }, HIDE_TIMEOUT);
+      console.log(this.deferredHide);
     }
   };
 
@@ -54,11 +56,9 @@ class Tooltip extends React.Component {
     if (this.state.active) className += ` ${style.active}`;
 
     return (
-      <Overlay active={this.state.active} opacity={0}>
-        <span ref='tooltip' data-react-toolbox='tooltip' className={className}>
-          {this.props.label}
-        </span>
-      </Overlay>
+      <span data-react-toolbox='tooltip' className={className}>
+        {this.props.label}
+      </span>
     );
   }
 }

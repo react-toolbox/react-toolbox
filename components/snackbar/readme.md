@@ -43,7 +43,6 @@ class SnackbarTest extends React.Component {
 | `icon` | `String`  |       | String key for an icon displayed in left side of the snackbar.|
 | `label` | `String`  |       | Text to display in the content.|
 | `onClick` | `Function`  |       | Callback function that will be called when the button action is clicked.|
-| `onOverlayClick`   | `Function`   |             | Callback to be invoked when the dialog overlay is clicked.|
 | `onTimeout` | `Function`  |       | Callback function when finish the set timeout.|
 | `timeout` | `Number`  |       | Amount of time after the Snackbar will be automatically hidden.|
 | `type` | `String`  |       | Indicates the action type. Can be `accept`, `warning` or `cancel`|

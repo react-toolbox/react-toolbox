@@ -3,13 +3,12 @@
 @import "./config";
 
 .root {
-  position: fixed;
+  position: absolute;
   z-index: $z-index-higher;
-  display: inline-block;
+  display: block;
   max-width: $tooltip-max-width;
   padding: $tooltip-padding;
   margin: $tooltip-margin 0;
-  font-size: $font-size-tiny;
   font-size: $tooltip-font-size;
   font-weight: $font-weight-bold;
   line-height: $font-size-small;
