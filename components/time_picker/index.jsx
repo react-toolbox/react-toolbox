@@ -7,62 +7,57 @@ import TimeDialog from './dialog';
 
 class TimePicker extends React.Component {
   static propTypes = {
+    className: React.PropTypes.string,
     format: React.PropTypes.oneOf(['24hr', 'ampm']),
+    onChange: React.PropTypes.func,
     value: React.PropTypes.object
   };
 
   static defaultProps = {
+    className: '',
     format: '24hr'
   };
 
   state = {
-    value: this.props.value
+    active: false
   };
 
-  onTimeSelected = (newTime) => {
-    this.refs.input.setValue(time.formatTime(newTime, this.props.format));
-    this.setState({value: newTime});
+  handleDismiss = () => {
+    this.setState({active: false});
   };
 
-  openTimeDialog = (event) => {
+  handleInputMouseDown = (event) => {
     events.pauseEvent(event);
-    this.refs.dialog.show();
+    this.setState({active: true});
   };
 
-  formatTime () {
-    if (this.state.value) {
-      return time.formatTime(this.state.value, this.props.format);
-    }
-  }
+  handleSelect = (value) => {
+    if (this.props.onChange) this.props.onChange(value);
+    this.setState({active: false});
+  };
 
   render () {
+    const { value, format } = this.props;
+    const formattedTime = value ? time.formatTime(value, format) : null;
     return (
       <div data-react-toolbox='time-picker'>
         <Input
-          ref='input'
           className={style.input}
-          onMouseDown={this.openTimeDialog}
+          onMouseDown={this.handleInputMouseDown}
           placeholder='Pick up time'
           readOnly={true}
           type='text'
-          value={this.formatTime()}
+          value={formattedTime}
         />
         <TimeDialog
-          ref='dialog'
-          format={this.props.format}
-          initialTime={this.state.value}
-          onTimeSelected={this.onTimeSelected}
+          active={this.state.active}
+          format={format}
+          onDismiss={this.handleDismiss}
+          onSelect={this.handleSelect}
+          value={this.props.value}
         />
       </div>
     );
-  }
-
-  getValue () {
-    return this.state.value;
-  }
-
-  setValue (value) {
-    this.setState({value});
   }
 }
 

@@ -24,7 +24,7 @@ class Menu extends React.Component {
     position: React.PropTypes.string,
     ripple: React.PropTypes.bool,
     selectable: React.PropTypes.bool,
-    value: React.PropTypes.any
+    selected: React.PropTypes.any
   };
 
   static defaultProps = {
@@ -37,8 +37,7 @@ class Menu extends React.Component {
 
   state = {
     active: this.props.active,
-    rippled: false,
-    value: this.props.value
+    rippled: false
   };
 
   componentDidMount () {
@@ -90,9 +89,9 @@ class Menu extends React.Component {
 
   handleSelect = (item) => {
     const { value, onClick } = item.props;
-    this.setState({ value, active: false, rippled: this.props.ripple }, () => {
+    this.setState({ active: false, rippled: this.props.ripple }, () => {
       if (onClick) onClick();
-      if (this.props.onSelect) this.props.onSelect(value, this);
+      if (this.props.onSelect) this.props.onSelect(value);
     });
   };
 
@@ -132,7 +131,7 @@ class Menu extends React.Component {
       if (item.type === MenuItem) {
         return React.cloneElement(item, {
           ripple: item.props.ripple || this.props.ripple,
-          selected: item.props.value && this.props.selectable && item.props.value === this.state.value,
+          selected: item.props.value && this.props.selectable && item.props.value === this.props.selected,
           onClick: this.handleSelect.bind(this, item)
         });
       } else {
@@ -156,14 +155,6 @@ class Menu extends React.Component {
         </ul>
       </div>
     );
-  }
-
-  getValue () {
-    return this.state.value;
-  }
-
-  setValue (value) {
-    this.setState({value: value});
   }
 
   show () {

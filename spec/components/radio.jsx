@@ -2,8 +2,13 @@ import React from 'react';
 import { RadioGroup, RadioButton } from '../../components/radio';
 
 class RadioGroupTest extends React.Component {
-  handleChange = (event, instance) => {
-    console.log('Changed!', { comic: instance.getValue()});
+  state = {
+    value: 'vvendetta'
+  };
+
+  handleChange = (value) => {
+    console.log('Changed!', { comic: value});
+    this.setState({value});
   };
 
   handleFocus = () => {
@@ -20,7 +25,7 @@ class RadioGroupTest extends React.Component {
         <h5>Radio Button</h5>
         <p style={{marginBottom: '10px'}}>Lorem ipsum...</p>
 
-        <RadioGroup ref='group' name='comic' value='vvendetta' onChange={this.handleChange}>
+        <RadioGroup name='comic' value={this.state.value} onChange={this.handleChange}>
           <RadioButton label='The Walking Dead' value='thewalkingdead'/>
           <RadioButton label='From Hell' value='fromhell' disabled/>
           <RadioButton label='V for a Vendetta' value='vvendetta' onFocus={this.handleFocus}/>

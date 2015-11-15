@@ -45,19 +45,17 @@
 }
 
 .dialog {
-  > [role="content"] {
-    width: $timepicker-dialog-width;
-    > [role="body"] {
-      padding: 0;
+  width: $timepicker-dialog-width;
+  > [role="body"] {
+    padding: 0;
+  }
+  > [role="navigation"] > .button {
+    color: $timepicker-primary-color;
+    &:hover {
+      background: $timepicker-primary-hover-color;
     }
-    > [role="navigation"] > .button {
-      color: $timepicker-primary-color;
-      &:hover {
-        background: $timepicker-primary-hover-color;
-      }
-      &:focus:not(:active) {
-        background: $timepicker-primary-hover-color;
-      }
+    &:focus:not(:active) {
+      background: $timepicker-primary-hover-color;
     }
   }
   &.display-hours .hours, &.display-minutes .minutes, &.format-am .am,

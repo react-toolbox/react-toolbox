@@ -30,30 +30,46 @@ class Slider extends React.Component {
   };
 
   state = {
-    sliderStart: 0,
+    inputFocused: false,
+    inputValue: null,
     sliderLength: 0,
-    value: this.props.value
+    sliderStart: 0
   };
+
+  shouldComponentUpdate (nextProps, nextState) {
+    if (!this.state.inputFocused && nextState.inputFocused) return false;
+    if (this.state.inputFocused && this.props.value !== nextProps.value) {
+      this.setState({inputValue: this.valueForInput(nextProps.value)});
+      return false;
+    }
+    return true;
+  }
 
   componentDidMount () {
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
   }
 
-  componentDidUpdate (prevProps, prevState) {
-    if (prevState.value !== this.state.value) {
-      if (this.props.onChange) this.props.onChange(this);
-      if (this.refs.input) this.refs.input.setValue(this.valueForInput(this.state.value));
-    }
-  }
-
   componentWillUnmount () {
     window.removeEventListener('resize', this.handleResize);
   }
 
+  handleInputFocus = () => {
+    this.setState({
+      inputFocused: true,
+      inputValue: this.valueForInput(this.props.value)
+    });
+  };
+
+  handleInputChange = (event) => {
+    this.setState({inputValue: event.target.value});
+  };
 
   handleInputBlur = () => {
-    this.setState({value: this.trimValue(this.refs.input.getValue()) });
+    const value = this.state.inputValue || 0;
+    this.setState({inputFocused: false, inputValue: null}, () => {
+      this.props.onChange(this.trimValue(value));
+    });
   };
 
   handleKeyDown = (event) => {
@@ -66,6 +82,7 @@ class Slider extends React.Component {
   };
 
   handleMouseDown = (event) => {
+    if (this.state.inputFocused) this.refs.input.blur();
     utils.events.addEventsToDocument(this.getMouseEventMap());
     this.start(utils.events.getMousePosition(event));
     utils.events.pauseEvent(event);
@@ -103,13 +120,16 @@ class Slider extends React.Component {
   };
 
   handleTouchStart = (event) => {
+    if (this.state.inputFocused) this.refs.input.blur();
     this.start(utils.events.getTouchPosition(event));
     utils.events.addEventsToDocument(this.getTouchEventMap());
     utils.events.pauseEvent(event);
   };
 
-  addToValue (value) {
-    this.setState({value: this.trimValue(this.state.value + value)});
+  addToValue (increment) {
+    let value = this.state.inputFocused ? parseFloat(this.state.inputValue) : this.props.value;
+    value = this.trimValue(value + increment);
+    if (value !== this.props.value) this.props.onChange(value);
   }
 
   getKeyboardEvents () {
@@ -134,16 +154,17 @@ class Slider extends React.Component {
 
   end (revents) {
     utils.events.removeEventsFromDocument(revents);
-    this.setState({pressed: false});
+    this.setState({ pressed: false });
   }
 
   knobOffset () {
     const { max, min } = this.props;
-    return this.state.sliderLength * (this.state.value - min) / (max - min);
+    return this.state.sliderLength * (this.props.value - min) / (max - min);
   }
 
   move (position) {
-    this.setState({value: this.positionToValue(position)});
+    const newValue = this.positionToValue(position);
+    if (newValue !== this.props.value) this.props.onChange(newValue);
   }
 
   positionToValue (position) {
@@ -154,7 +175,8 @@ class Slider extends React.Component {
 
   start (position) {
     this.handleResize(null, () => {
-      this.setState({pressed: true, value: this.positionToValue(position)});
+      this.setState({pressed: true});
+      this.props.onChange(this.positionToValue(position));
     });
   }
 
@@ -177,11 +199,9 @@ class Slider extends React.Component {
     if (this.props.snaps) {
       return (
         <div ref='snaps' className={style.snaps}>
-          {
-            utils.range(0, (this.props.max - this.props.min) / this.props.step).map(i => {
-              return (<div key={`span-${i}`} className={style.snap}></div>);
-            })
-          }
+          { utils.range(0, (this.props.max - this.props.min) / this.props.step).map(i => {
+              return <div key={`span-${i}`} className={style.snap}></div>;
+            }) }
         </div>
       );
     }
@@ -189,12 +209,16 @@ class Slider extends React.Component {
 
   renderInput () {
     if (this.props.editable) {
+      const value = this.state.inputFocused ? this.state.inputValue : this.valueForInput(this.props.value);
       return (
         <Input
           ref='input'
           className={style.input}
+          onFocus={this.handleInputFocus}
+          onChange={this.handleInputChange}
           onBlur={this.handleInputBlur}
-          value={this.valueForInput(this.state.value)} />
+          value={value}
+        />
       );
     }
   }
@@ -205,15 +229,15 @@ class Slider extends React.Component {
     if (this.props.editable) className += ` ${style.editable}`;
     if (this.props.pinned) className += ` ${style.pinned}`;
     if (this.state.pressed) className += ` ${style.pressed}`;
-    if (this.state.value === this.props.min) className += ` ${style.ring}`;
+    if (this.props.value === this.props.min) className += ` ${style.ring}`;
 
     return (
       <div
-        data-react-toolbox='slider'
         className={style.root + className}
-        tabIndex='0'
+        data-react-toolbox='slider'
         onBlur={this.handleSliderBlur}
         onFocus={this.handleSliderFocus}
+        tabIndex='0'
       >
         <div
           ref='slider'
@@ -228,7 +252,7 @@ class Slider extends React.Component {
             onTouchStart={this.handleTouchStart}
             style={knobStyles}
           >
-            <div className={style.innerknob} data-value={parseInt(this.state.value)}></div>
+            <div className={style.innerknob} data-value={parseInt(this.props.value)}></div>
           </div>
 
           <div className={style.progress}>
@@ -238,7 +262,7 @@ class Slider extends React.Component {
               max={this.props.max}
               min={this.props.min}
               mode='determinate'
-              value={this.state.value}
+              value={this.props.value}
             />
             { this.renderSnaps() }
           </div>
@@ -247,14 +271,6 @@ class Slider extends React.Component {
         { this.renderInput() }
       </div>
     );
-  }
-
-  getValue () {
-    return this.state.value;
-  }
-
-  setValue (value) {
-    this.setState({value});
   }
 }
 

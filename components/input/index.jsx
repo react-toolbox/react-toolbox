@@ -30,42 +30,13 @@ class Input extends React.Component {
     type: 'text'
   };
 
-  state = {
-    value: this.props.value
-  };
-
-  onChange = (event) => {
-    this.setState({value: event.target.value}, () => {
-      if (this.props.onChange) this.props.onChange(event, this);
-    });
-  };
-
   renderInput () {
     let className = style.input;
-    if (this.state.value && this.state.value.length > 0) className += ` ${style.filled}`;
-
+    if (this.props.value && this.props.value.length > 0) className += ` ${style.filled}`;
     if (this.props.multiline) {
-      return (
-        <textarea
-          role='input'
-          {...this.props}
-          ref='input'
-          className={className}
-          onChange={this.onChange}
-          value={this.state.value}
-        />
-      );
+      return <textarea ref='input' role='input' {...this.props} className={className} />;
     } else {
-      return (
-        <input
-          role='input'
-          {...this.props}
-          ref='input'
-          className={className}
-          onChange={this.onChange}
-          value={this.state.value}
-        />
-      );
+      return <input ref='input' role='input' {...this.props} className={className} />;
     }
   }
 
@@ -97,14 +68,6 @@ class Input extends React.Component {
 
   focus () {
     this.refs.input.focus();
-  }
-
-  getValue () {
-    return this.state.value;
-  }
-
-  setValue (value) {
-    this.setState({value});
   }
 }
 

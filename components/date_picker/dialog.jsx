@@ -6,70 +6,60 @@ import Dialog from '../dialog';
 
 class CalendarDialog extends React.Component {
   static propTypes = {
-    initialDate: React.PropTypes.object,
-    onDateSelected: React.PropTypes.func
+    active: React.PropTypes.bool,
+    onDismiss: React.PropTypes.func,
+    onSelect: React.PropTypes.func,
+    value: React.PropTypes.object
   };
 
   static defaultProps = {
-    initialDate: new Date()
+    active: false,
+    value: new Date()
   };
 
   state = {
-    date: this.props.initialDate,
-    display: 'months',
-    actions: [
-      { label: 'Cancel', className: style.button, onClick: this.onDateCancel.bind(this) },
-      { label: 'Ok', className: style.button, onClick: this.onDateSelected.bind(this) }
-    ]
+    date: this.props.value,
+    display: 'months'
   };
 
-  handleCalendarChange = (date) => {
-    this.setState({date, display: 'months'});
+  handleCalendarChange = (value) => {
+    this.setState({date: value, display: 'months'});
   };
 
-  displayMonths = () => {
-    this.setState({display: 'months'});
+  handleSelect = () => {
+    if (this.props.onSelect) this.props.onSelect(this.state.date);
   };
 
-  displayYears = () => {
-    this.setState({display: 'years'});
+  handleSwitchDisplay = (display) => {
+    this.setState({ display });
   };
 
-  onDateCancel () {
-    this.refs.dialog.hide();
-  }
-
-  onDateSelected () {
-    if (this.props.onDateSelected) this.props.onDateSelected(this.state.date);
-    this.refs.dialog.hide();
-  }
-
-  show () {
-    this.refs.dialog.show();
-  }
+  actions = [
+    { label: 'Cancel', className: style.button, onClick: this.props.onDismiss },
+    { label: 'Ok', className: style.button, onClick: this.handleSelect }
+  ];
 
   render () {
     const display = `display-${this.state.display}`;
     const headerClassName = `${style.header} ${style[display]}`;
 
     return (
-      <Dialog ref='dialog' type='custom' className={style.dialog} actions={this.state.actions}>
+      <Dialog active={this.props.active} type="custom" className={style.dialog} actions={this.actions}>
           <header className={headerClassName}>
             <span className={style.weekday}>
               {time.getFullDayOfWeek(this.state.date.getDay())}
             </span>
-            <div onClick={this.displayMonths}>
+            <div onClick={this.handleSwitchDisplay.bind(this, 'months')}>
               <span className={style.month}>{time.getShortMonth(this.state.date)}</span>
               <span className={style.day}>{this.state.date.getDate()}</span>
             </div>
-            <span className={style.year} onClick={this.displayYears}>
+            <span className={style.year} onClick={this.handleSwitchDisplay.bind(this, 'years')}>
               {this.state.date.getFullYear()}
             </span>
           </header>
 
           <div className={style.wrapper}>
             <Calendar
-              ref='calendar'
               display={this.state.display}
               onChange={this.handleCalendarChange}
               selectedDate={this.state.date} />

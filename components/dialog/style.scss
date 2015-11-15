@@ -2,38 +2,6 @@
 @import "./config";
 
 .root {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: $z-index-high;
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  > .content {
-    opacity: 0;
-    transform: translateY(-$dialog-translate-y);
-  }
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: $color-overlay;
-  opacity: 0;
-  transition-timing-function: $animation-curve-default;
-  transition-duration: $animation-duration;
-  transition-property: opacity;
-}
-
-.content {
   display: flex;
   max-width: 96vw;
   max-height: 96vh;
@@ -41,10 +9,28 @@
   background-color: $dialog-color-white;
   border-radius: $dialog-border-radius;
   box-shadow: $zdepth-shadow-5;
+  opacity: 0;
   transition-delay: $animation-delay;
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
   transition-property: opacity, transform;
+  transform: translateY(-$dialog-translate-y);
+  &.active {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+.small {
+  width: 30vw;
+}
+
+.normal {
+  width: 50vw;
+}
+
+.large {
+  width: 96vw;
 }
 
 .title {
@@ -72,27 +58,4 @@
   padding-right: $dialog-navigation-padding;
   padding-left: $dialog-navigation-padding;
   margin-left: $dialog-navigation-padding;
-}
-
-.active {
-  pointer-events: all;
-  > .overlay {
-    opacity: $color-overlay-opacity;
-  }
-  > .content {
-    opacity: 1;
-    transform: translateY(0%);
-  }
-}
-
-.small > .content {
-  width: 30vw;
-}
-
-.normal > .content {
-  width: 50vw;
-}
-
-.large > .content {
-  width: 96vw;
 }

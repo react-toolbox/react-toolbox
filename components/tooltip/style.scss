@@ -3,13 +3,12 @@
 @import "./config";
 
 .root {
-  position: fixed;
+  position: absolute;
   z-index: $z-index-higher;
-  display: inline-block;
+  display: block;
   max-width: $tooltip-max-width;
-  margin-top: 10px;
   padding: $tooltip-padding;
-  font-size: $font-size-tiny;
+  margin: $tooltip-margin 0;
   font-size: $tooltip-font-size;
   font-weight: $font-weight-bold;
   line-height: $font-size-small;
@@ -27,10 +26,9 @@
     animation-name: tooltip-animation;
   }
   &.large {
-    font-size: $font-size-small;
     padding: 2 * $tooltip-padding;
+    font-size: $font-size-small;
   }
-
   @keyframes tooltip-animation {
     0% {
       transform: scale(0);

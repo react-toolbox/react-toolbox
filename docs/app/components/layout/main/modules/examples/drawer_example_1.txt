@@ -1,13 +1,17 @@
 class DrawerTest extends React.Component {
-  handleClick = () => {
-    this.refs.drawer.show();
+  state = {
+    active: false
+  };
+
+  handleToggle = () => {
+    this.setState({active: !this.state.active});
   };
 
   render () {
     return (
       <div>
-        <Button kind='raised' accent label='Show Drawer' onClick={this.handleClick} />
-        <Drawer ref='drawer' hideable>
+        <Button kind='raised' accent label='Show Drawer' onClick={this.handleToggle} />
+        <Drawer active={this.state.active} onOverlayClick={this.handleToggle}>
           <h5>This is your Drawer.</h5>
           <p>You can embed any content you want, for example a Menu.</p>
         </Drawer>

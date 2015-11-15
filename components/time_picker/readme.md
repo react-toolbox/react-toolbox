@@ -21,11 +21,5 @@ const TimePickerTest = () => (
 |:-----|:-----|:-----|:-----|
 | `className`  | `String`    |     `''`            | Sets a class to give customized styles.|
 | `format`    | `String`  | `24hr`          | Format to display the clock. It can be `24hr` or `ampm`.|
+| `onChange`       | `Function`       |                | Callback called when the picker value is changed.|
 | `value`     | `Date`    |   | Datetime object with currrently selected time |
-
-## Methods
-
-The TimePicker is a very easy component from the top level API but quite complex inside. It has state to keep the the currently selected value.
-
-- `getValue` is used to retrieve the current value.
-- `setValue` to force a new value.

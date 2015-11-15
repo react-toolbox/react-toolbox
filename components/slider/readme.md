@@ -6,16 +6,31 @@
 ```jsx
 import Slider from 'react-toolbox/lib/slider';
 
-const SliderTest = () => (
-  <section>
-    <p>Default slider</p>
-    <Slider />
-    <p>With steps, initial value and editable</p>
-    <Slider value={5} min={0} max={10} editable />
-    <p>Pinned and with snaps</p>
-    <Slider pinned snaps value={1} min={0} max={10} step={1} editable />
-  </section>
-);
+class SliderTest extends React.Component {
+  state = {
+    slider2: 5,
+    slider3: 1
+  };
+
+  handleChange = (slider, value) => {
+    const newState = {};
+    newState[slider] = value;
+    this.setState(newState);
+  };
+
+  render () {
+    return (
+      <section>
+        <p>Normal slider</p>
+        <Slider value={this.state.slider1} onChange={this.handleChange.bind(this, 'slider1')} />
+        <p>With steps, initial value and editable</p>
+        <Slider min={0} max={10} editable value={this.state.slider2} onChange={this.handleChange.bind(this, 'slider2')} />
+        <p>Pinned and with snaps</p>
+        <Slider pinned snaps min={0} max={10} step={1} editable value={this.state.slider3} onChange={this.handleChange.bind(this, 'slider3')} />
+      </section>
+    );
+  }
+}
 ```
 
 ## Properties
@@ -26,14 +41,8 @@ const SliderTest = () => (
 | `editable`  | `Boolean` | `false`   | If true, an input is shown and the user can set the slider from keyboard value.|
 | `max`       | `Number`  | `100`     | Maximum value permitted.|
 | `min`       | `Number`  | `0`       | Minimum value permitted.|
+| `onChange`   | `Function` |   | Callback function that will be invoked when the slider value changes.|
 | `pinned`    | `Boolean` | `false`   | If true, a pin with numeric value label is shown when the slider thumb is pressed. Use for settings for which users need to know the exact value of the setting.|
 | `snaps`     | `Boolean` | `false` | If true, the slider thumb snaps to tick marks evenly spaced based on the step property value.|
 | `step`      | `Number`  | `0.01`    | Amount to vary the value when the knob is moved or increase/decrease is called.|
-| `value`     | `Number`  | `0`       | Value of the current value.|
-
-## Methods
-
-Since the slider is able to keep a value it needs state and exposes methods to retrieve and set the current value as usual.
-
-- `getValue` is used to retrieve the current value.
-- `setValue` to force a new value.
+| `value`     | `Number`  | `0`       | Current valud of the slider.|

@@ -7,59 +7,49 @@ import style from './style';
 
 class DatePicker extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string,
+    onChange: React.PropTypes.func,
     value: React.PropTypes.object
   };
 
-  static defaultProps = {
-    className: ''
-  };
-
   state = {
-    value: this.props.value
+    active: false
   };
 
-  handleDateSelected = (value) => {
-    this.refs.input.setValue(this.formatDate(value));
-    this.setState({value});
+  handleDismiss = () => {
+    this.setState({active: false});
   };
 
-  handleMouseDown = (event) => {
+  handleInputMouseDown = (event) => {
     events.pauseEvent(event);
-    this.refs.dialog.show();
+    this.setState({active: true});
   };
 
-  formatDate (date) {
-    return `${date.getDate()} ${time.getFullMonth(date)} ${date.getFullYear()}`;
-  }
+  handleSelect = (value) => {
+    if (this.props.onChange) this.props.onChange(value);
+    this.setState({active: false});
+  };
 
   render () {
+    const { value } = this.props;
+    const date = value ? `${value.getDate()} ${time.getFullMonth(value)} ${value.getFullYear()}` : null;
     return (
       <div data-toolbox='date-picker'>
         <Input
-          ref='input'
           className={style.input}
-          onMouseDown={this.handleMouseDown}
+          onMouseDown={this.handleInputMouseDown}
           placeholder='Pick up date'
           readOnly={true}
           type='text'
-          value={this.state.value ? this.formatDate(this.state.value) : null}
+          value={date}
         />
         <CalendarDialog
-          ref='dialog'
-          initialDate={this.state.value}
-          onDateSelected={this.handleDateSelected}
+          active={this.state.active}
+          onDismiss={this.handleDismiss}
+          onSelect={this.handleSelect}
+          value={this.props.value}
         />
       </div>
     );
-  }
-
-  getValue () {
-    return this.state.value;
-  }
-
-  setValue (value) {
-    this.setState({value});
   }
 }
 

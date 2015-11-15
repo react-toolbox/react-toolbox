@@ -7,24 +7,24 @@
 import Dialog from 'react-toolbox/lib/dialog';
 
 class DialogTest extends React.Component {
-  showDialog = () => {
-    this.refs.dialog.show();
+  state = { 
+    active: false 
   };
 
-  closeDialog = () => {
-    this.refs.dialog.hide();
-  };
+  handleToggle = () => {
+    this.setState({active: !this.state.active});
+  }
 
   actions = [
-    { label: "Cancel", onClick: this.closeDialog },
-    { label: "Save", onClick: this.closeDialog }
+    { label: "Cancel", onClick: this.handleToggle },
+    { label: "Save", onClick: this.handleToggle }
   ];
 
   render () {
     return (
       <div>
-        <Button label='Show my dialog' onClick={this.showDialog} />
-        <Dialog ref='dialog' title='My awesome dialog' actions={this.actions}>
+        <Button label='Show my dialog' onClick={this.handleToggle} />
+        <Dialog actions={this.actions} active={this.state.active} title='My awesome dialog'>
           <p>Here you can add arbitrary content. Components like Pickers are using dialogs now.</p>
         </Dialog>
       </div>
@@ -37,16 +37,9 @@ class DialogTest extends React.Component {
 
 | Name              | Type          | Default         | Description|
 |:-----|:-----|:-----|:-----|
+| `active`        | `Boolean`       |  `false`        | If true, the dialog will be active.|
 | `actions`       | `Array`         |    `[]`         | A array of objects representing the buttons for the dialog navigation area. The properties will be transferred to the buttons.|
-| `active`        | `Boolean`       |  `false`        | If true, the dialog will be active by default.|
 | `className`     | `String`        |     `''`        | Sets a class to give customized styles to the dialog.|
+| `onOverlayClick`   | `Function`   |             | Callback to be invoked when the dialog overlay is clicked.|
 | `title`         | `String`        |                 | The text string to use as standar title of the dialog.|
 | `type`          | `String`        |  `normal`       | Used to determine the size of the dialog. It can be `small`, `normal` or `large`. |
-
-## Methods
-
-The Dialog has state to determine if it is being shown or not. It exposes methods to show and hide:
-
-- `show` is used to show the dialog.
-- `hide` is used to hide the dialog.
-

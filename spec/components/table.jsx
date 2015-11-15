@@ -12,18 +12,23 @@ const UserModel = {
 
 const users = [
   {name: 'Javi Jimenez', twitter: '@soyjavi', birthdate: new Date(1980, 3, 11), cats: 1},
-  {name: 'Javi Velasco', twitter: '@javivelasco', birthdate: new Date(1987, 1, 1), dogs: 1, active: true},
-  {name: 'chinorro'}
+  {name: 'Javi Velasco', twitter: '@javivelasco', birthdate: new Date(1987, 1, 1), dogs: 1, owner: true}
 ];
 
 class TableTest extends React.Component {
-
-  handleTableChange = (event, instance, row) => {
-    console.log('handleTableChange', instance.getValue(), row);
+  state = {
+    selected: [],
+    source: users
   };
 
-  handleTableRowSelect = (event, row) => {
-    console.log('handleTableRowSelect', row, this.refs.table.getSelected());
+  handleChange = (row, key, value) => {
+    const source = this.state.source;
+    source[row][key] = value;
+    this.setState({source});
+  };
+
+  handleSelect = (selected) => {
+    this.setState({selected});
   };
 
   render () {
@@ -32,11 +37,11 @@ class TableTest extends React.Component {
         <h5>Table</h5>
         <p style={{marginBottom: '10px'}}>Organized data.</p>
         <Table
-          ref='table'
           model={UserModel}
-          dataSource={users}
-          onChange={this.handleTableChange}
-          onSelect={this.handleTableRowSelect}
+          onChange={this.handleChange}
+          onSelect={this.handleSelect}
+          selected={this.state.selected}
+          source={this.state.source}
         />
       </section>
     );

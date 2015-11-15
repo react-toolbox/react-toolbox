@@ -6,31 +6,58 @@
 ```jsx
 import Checkbox from 'react-toolbox/lib/checkbox';
 
-const TestCheckbox = () => (
-  <div>
-    <Checkbox label="Checked option" checked />
-    <Checkbox label="Unchecked option" />
-    <Checkbox label="Disabled checkbox" checked disabled />
-  </div>
-);
+class TestCheckbox extends React.Component {
+  state = {
+    check1: true,
+    check2: false
+  };
+
+  handleChange = (field) => {
+    const newState = {};
+    newState[field] = !this.state[field];
+    this.setState(newState);
+  };
+
+  render () {
+    return (
+      <div>
+        <Checkbox 
+          checked={this.state.check1} 
+          label="Checked option" 
+          onChange={this.handleChange.bind(this, 'check1')} 
+        />
+        <Checkbox 
+          checked={this.state.check2} 
+          label="Unchecked option" 
+          onChange={this.handleChange.bind(this, 'check2')}
+        />
+        <Checkbox 
+          checked 
+          disabled 
+          label="Disabled checkbox" 
+        />
+      </div>
+    );
+  } 
+}
 ```
 
 ## Properties
 
 | Name              | Type          | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `checked`       | `Bool`        |   `false`        | If true, the checkbox will be checked.|
+| `checked`       | `Bool`        |   `false`        | Value for the checkbox, can be `true` or `false`. |
 | `className`     | `String`        |     `''`            | Sets a class to give customized styles to the checkbox field.|
 | `disabled`         | `Bool`        |     `false`          | If true, the checkbox shown as disabled and is not possible to modify it.|
-| `label`         | `String`        |                 | Text label to attach next to the checkbox element.|
-| `name`       | `String`       | `false`                | The name of the field to set in the input checkbox.|
+| `label`         | `String`        |              | Text label to attach next to the checkbox element.|
+| `name`       | `String`       | `false`         | The name of the field to set in the input checkbox.|
 | `onBlur`       | `Function`       |                | Callback called when the checkbox is blurred.|
 | `onChange`       | `Function`       |                | Callback called when the checkbox value is changed.|
 | `onFocus`       | `Function`       |                | Callback called when the checkbox is focused |
 
 ## Methods
 
-This component has state to control its value and how is it rendered. It exposes the following instance methods:
+This component exposes methods to communicate with the `input` DOM component:
 
 - `blur` to blur the input.
 - `focus` to focus the input.

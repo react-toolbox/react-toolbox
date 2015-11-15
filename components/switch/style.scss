@@ -48,7 +48,7 @@
   transition-duration: $switch-ripple-duration;
 }
 
-.switch-on {
+.on {
   @extend %switch;
   background: $switch-track-on-color;
   .thumb {
@@ -58,7 +58,7 @@
   }
 }
 
-.switch-off {
+.off {
   @extend %switch;
   background: $switch-track-off-color;
   .thumb {

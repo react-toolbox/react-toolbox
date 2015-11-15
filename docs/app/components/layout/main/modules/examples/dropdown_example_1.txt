@@ -1,6 +1,6 @@
 class DropdownTest extends React.Component {
   state = {
-    selected: null
+    selected: 3
   };
 
   albums = [
@@ -9,6 +9,10 @@ class DropdownTest extends React.Component {
     { value: 3, artist: 'Kendrick Lamar', album: 'Good Kid Maad City', img: 'https://cdn.shopify.com/s/files/1/0131/9332/products/0bd4b1846ba3890f574810dbeddddf8c.500x500x1_grande.png?v=1425070323' },
     { value: 4, artist: 'Pixies', album: 'Doolittle', img: 'http://www.resident-music.com/image/cache/data/Emilys_Packshots/Pixies/Pixies_Doolittlke-500x500.jpg' }
   ];
+
+  handleChange = (value) => {
+    this.setState({selected: value});
+  };
 
   customItem (item) {
     const style = {
@@ -33,7 +37,8 @@ class DropdownTest extends React.Component {
     return (
       <Dropdown
         auto={false}
-        dataSource={this.albums}
+        source={this.albums}
+        onChange={this.handleChange}
         label='Select your favorite album'
         template={this.customItem}
         value={this.state.selected}

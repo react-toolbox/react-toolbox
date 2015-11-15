@@ -11,7 +11,6 @@
   color: $button-default-text-color;
   text-align: center;
   text-decoration: none;
-  overflow: hidden;
   white-space: nowrap;
   cursor: pointer;
   border: 0;
@@ -27,6 +26,10 @@
   }
   > * {
     pointer-events: none;
+  }
+
+  [data-react-toolbox="ripple"] {
+    overflow: hidden;
   }
 }
 
@@ -107,11 +110,6 @@
   }
   .icon {
     line-height: $button-floating-height;
-  }
-
-  [data-react-toolbox="ripple"] {
-    overflow: hidden;
-    border-radius: 50%;
   }
 }
 

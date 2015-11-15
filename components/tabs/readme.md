@@ -27,8 +27,6 @@ This component acts as the wrapper and the main controller of the content that i
 | `index`         | `Number`        | `0`             | Current <Tab> |
 | `onChange`      | `Function`      |                 | Callback function that is fired when the tab changes.
 
-The tabs component has state to hold the currently activated tab and exposes a method to change it manually called `active`. You can call this method with the index value of the child you want to activate.
-
 ## Tab
 
 Represent a single tab element and it should include some properties to describe the tab itself and get children elements as content.
@@ -41,4 +39,3 @@ Represent a single tab element and it should include some properties to describe
 | `hidden`        | `Boolean`       | `false`         | If true, the current component is not visible.|
 | `label`         | `String`        |                 | Label text for navigation header |
 | `onActive`      | `Function`      |                 | Callback function that is fired when the tab is activated. |
-| `tabIndex`      | `Number`        |                 | Sets the tabindex html attribute.|

@@ -1,7 +1,26 @@
-const selectedDate = new Date(1995, 11, 17);
+const datetime = new Date(1995, 11, 17);
+datetime.setHours(17);
+datetime.setMinutes(28);
 
-const DatePickerTest = () => (
-  <DatePicker value={selectedDate} />
-);
+class DatePickerTest extends React.Component {
+  state = {
+    date2: datetime
+  };
+
+  handleChange = (item, value) => {
+    const newState = {};
+    newState[item] = value;
+    this.setState(newState);
+  };
+
+  render () {
+    return (
+      <section>
+        <DatePicker value={this.state.date1} onChange={this.handleChange.bind(this, 'date1')} />
+        <DatePicker value={this.state.date2} onChange={this.handleChange.bind(this, 'date2')} />
+      </section>
+    );
+  }
+}
 
 return <DatePickerTest />;

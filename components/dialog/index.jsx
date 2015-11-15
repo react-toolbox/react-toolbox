@@ -1,62 +1,47 @@
 import React from 'react';
 import Button from '../button';
+import Overlay from '../overlay';
 import style from './style';
 
-class Dialog extends React.Component {
-  static propTypes = {
-    actions: React.PropTypes.array,
-    active: React.PropTypes.bool,
-    className: React.PropTypes.string,
-    title: React.PropTypes.string,
-    type: React.PropTypes.string
-  };
+const Dialog = (props) => {
+  const actions = props.actions.map((action, idx) => {
+    let className = style.button;
+    if (action.className) className += ` ${action.className}`;
+    return <Button key={idx} {...action} className={className} />;
+  });
 
-  static defaultProps = {
-    actions: [],
-    active: false,
-    type: 'normal'
-  };
+  let className = `${style.root} ${style[props.type]}`;
+  if (props.active) className += ` ${style.active}`;
+  if (props.className) className += ` ${props.className}`;
 
-  state = {
-    active: this.props.active
-  };
-
-  renderActions () {
-    return this.props.actions.map((action, idx) => {
-      let className = style.button;
-      if (action.className) className += ` ${action.className}`;
-      return <Button key={idx} {...action} className={className} />;
-    });
-  }
-
-  render () {
-    let className = `${style.root} ${style[this.props.type]}`;
-    if (this.state.active) className += ` ${style.active}`;
-    if (this.props.className) className += ` ${this.props.className}`;
-
-    return (
+  return (
+    <Overlay active={props.active} onClick={props.onOverlayClick}>
       <div data-react-toolbox='dialog' className={className}>
-        <div role='overlay' className={style.overlay} />
-        <div role='content' className={style.content}>
-          <section role='body' className={style.body}>
-            { this.props.title ? <h6 className={style.title}>{this.props.title}</h6> : null }
-            { this.props.children }
-          </section>
-          <nav role='navigation' className={style.navigation}>
-            { this.renderActions() }
-          </nav>
-        </div>
+        <section role='body' className={style.body}>
+          { props.title ? <h6 className={style.title}>{props.title}</h6> : null }
+          { props.children }
+        </section>
+        <nav role='navigation' className={style.navigation}>
+          { actions }
+        </nav>
       </div>
-    );
-  }
+    </Overlay>
+  );
+};
 
-  hide () {
-    this.setState({active: false});
-  }
+Dialog.propTypes = {
+  actions: React.PropTypes.array,
+  active: React.PropTypes.bool,
+  className: React.PropTypes.string,
+  onOverlayClick: React.PropTypes.func,
+  title: React.PropTypes.string,
+  type: React.PropTypes.string
+};
 
-  show () {
-    this.setState({active: true});
-  }
-}
+Dialog.defaultProps = {
+  actions: [],
+  active: false,
+  type: 'normal'
+};
 
 export default Dialog;

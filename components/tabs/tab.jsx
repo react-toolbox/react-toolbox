@@ -1,52 +1,49 @@
 import React from 'react';
 import style from './style';
 
-class Tab extends React.Component {
+class TabHeader extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     hidden: React.PropTypes.bool,
-    label: React.PropTypes.string.isRequired,
+    label: React.PropTypes.any.isRequired,
     onActive: React.PropTypes.func,
-    tabIndex: React.PropTypes.number
+    onClick: React.PropTypes.func
   };
 
   static defaultProps = {
-    className: ''
+    active: false,
+    className: '',
+    disabled: false,
+    hidden: false
   };
 
-  componentDidMount () {
-    this.active(this.props.active);
+  componentDidUpdate (prevProps) {
+    if (!prevProps.active && this.props.active && this.props.onActive) {
+      this.props.onActive();
+    }
   }
 
-  componentWillReceiveProps (next_props) {
-    if (next_props.active) this.active(next_props.active);
-  }
+  handleClick = () => {
+    if (!this.props.disabled && this.props.onClick) {
+      this.props.onClick();
+    }
+  };
 
   render () {
-    let className = `${style.tab} ${this.props.className}`;
+    let className = style.label;
     if (this.props.active) className += ` ${style.active}`;
-    if (this.props.disabled) className += ` ${style.disabled}`;
     if (this.props.hidden) className += ` ${style.hidden}`;
+    if (this.props.disabled) className += ` ${style.disabled}`;
+    if (this.props.className) className += ` ${this.props.className}`;
 
     return (
-      <section
-        data-react-toolbox='tab'
-        className={className}
-        tabIndex={this.props.tabIndex}
-      >
-        { this.props.children }
-      </section>
+      <label className={className} onClick={this.handleClick}>
+        {this.props.label}
+      </label>
     );
-  }
-
-  active (value) {
-    this.setState({active: value});
-    if (this.props.onActive && value) {
-      this.props.onActive(this);
-    }
   }
 }
 
-export default Tab;
+export default TabHeader;

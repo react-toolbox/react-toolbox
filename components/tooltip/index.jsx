@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import style from './style';
 
-class Tooltip extends React.Component {
+const HIDE_TIMEOUT = 100;
 
+class Tooltip extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     label: React.PropTypes.string
@@ -18,18 +19,34 @@ class Tooltip extends React.Component {
   };
 
   componentDidMount = () => {
+    const parent = ReactDOM.findDOMNode(this).parentNode;
+
+    if (parent.style.position !== 'relative' && parent.style.position !== 'absolute'){
+      parent.style.position = 'relative';
+    }
+
+    parent.onmouseover = this.handleParentMouseOver;
+    parent.onmouseout = this.handleParentMouseOut;
+  };
+
+  handleParentMouseOver = () => {
+    if (this.deferredHide) clearTimeout(this.deferredHide);
+
     const node = ReactDOM.findDOMNode(this);
     const parent = node.parentNode;
-    if (parent) {
-      parent.onmouseover = () => {
-        const position = parent.getBoundingClientRect();
-        node.style.top = `${position.top + position.height}px`;
-        node.style.left = `${position.left + parseInt((position.width / 2) - (node.offsetWidth / 2))}px`;
-        if (!this.state.active) this.setState({ active: true});
-      };
-      parent.onmouseout = () => {
-        if (this.state.active) this.setState({ active: false});
-      };
+    const parentStyle = parent.currentStyle || window.getComputedStyle(parent);
+    const offset = parseFloat(parentStyle['margin-bottom']) + parseFloat(parentStyle['padding-bottom']);
+    const position = parent.getBoundingClientRect();
+
+    node.style.top = `${position.height - offset}px`;
+    node.style.left = `${parseInt((position.width / 2) - (node.offsetWidth / 2))}px`;
+    if (!this.state.active) this.setState({ active: true});
+  };
+
+  handleParentMouseOut = () => {
+    if (this.state.active) {
+      this.deferredHide = setTimeout(() => { this.setState({active: false}); }, HIDE_TIMEOUT);
+      console.log(this.deferredHide);
     }
   };
 

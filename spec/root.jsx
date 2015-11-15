@@ -1,9 +1,8 @@
+/* global VERSION */
 import React from 'react';
-
 import App from '../components/app';
 import AppBarToolbox from '../components/app_bar';
 import ButtonToolbox from '../components/button';
-
 import Autocomplete from './components/autocomplete';
 import Button from './components/button';
 import Card from './components/card';
@@ -24,8 +23,6 @@ import Switch from './components/switch';
 import Table from './components/table';
 import Tabs from './components/tabs';
 import Tooltip from './components/tooltip';
-
-// import Logo from '../docs/app/components/logo'
 import style from './style';
 
 const _hrefProject = () => {
@@ -34,8 +31,8 @@ const _hrefProject = () => {
 
 const Root = () => (
   <App className={style.app}>
-    <AppBarToolbox fixed flat className={style.app_bar}>
-      <h1>React Toolbox <small>Spec 0.11.4</small></h1>
+    <AppBarToolbox fixed flat className={style.appbar}>
+      <h1>React Toolbox <small>Spec {VERSION}</small></h1>
       <ButtonToolbox
         accent
         className={style.github}

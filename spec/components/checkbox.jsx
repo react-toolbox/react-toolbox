@@ -2,7 +2,6 @@ import React from 'react';
 import Checkbox from '../../components/checkbox';
 
 class CheckboxTest extends React.Component {
-
   state = {
     checkbox_1: true,
     checkbox_2: false,
