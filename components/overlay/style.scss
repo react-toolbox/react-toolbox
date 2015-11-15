@@ -31,7 +31,4 @@
 
 .active {
   pointer-events: all;
-  > .overlay {
-    opacity: $overlay-opacity;
-  }
 }
