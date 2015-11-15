@@ -16,7 +16,7 @@ const Dialog = (props) => {
 
   return (
     <Overlay active={props.active} onClick={props.onOverlayClick}>
-      <div className={className}>
+      <div data-react-toolbox='dialog' className={className}>
         <section role='body' className={style.body}>
           { props.title ? <h6 className={style.title}>{props.title}</h6> : null }
           { props.children }
