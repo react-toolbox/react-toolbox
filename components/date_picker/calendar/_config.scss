@@ -8,6 +8,7 @@ $calendar-arrows-font-size: 2 * $unit;
 $calendar-arrows-ripple-duration: 450ms;
 $calendar-year-font-size: 2.4;
 $calendar-day-font-size: 1.3 * $unit;
+$calendar-day-disable-opacity: 0.25;
 $calendar-row-height: 3 * $unit;
 $calendar-day-padding: .2 * $unit;
 $calendar-total-height: $calendar-row-height * 8 + $calendar-day-padding * 12;

@@ -5,6 +5,8 @@ import style from './style';
 
 class Month extends React.Component {
   static propTypes = {
+    maxDate: React.PropTypes.object,
+    minDate: React.PropTypes.object,
     onDayClick: React.PropTypes.func,
     selectedDate: React.PropTypes.object,
     viewDate: React.PropTypes.object
@@ -22,11 +24,15 @@ class Month extends React.Component {
 
   renderDays () {
     return utils.range(1, utils.time.getDaysInMonth(this.props.viewDate) + 1).map(i => {
+      const date = new Date(this.props.viewDate.getFullYear(), this.props.viewDate.getMonth(), i);
+      const disabled = utils.time.dateOutOfRange(date, this.props.minDate, this.props.maxDate);
+
       return (
         <Day
           key={i}
           day={i}
-          onClick={this.handleDayClick.bind(this, i)}
+          disabled={disabled}
+          onClick={!disabled ? this.handleDayClick.bind(this, i) : null}
           selectedDate={this.props.selectedDate}
           viewDate={this.props.viewDate}
         />

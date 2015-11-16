@@ -6,40 +6,23 @@
 }
 
 .header {
-  padding-bottom: $unit;
+  padding: 1.6 * $unit 2 * $unit;
   color: $datepicker-primary-contrast-color;
-  text-align: center;
   background-color: $datepicker-primary-color;
-}
-
-.weekday {
-  display: block;
-  width: 100%;
-  font-size: $datepicker-weekday-font-size;
-  line-height: $datepicker-weekday-line-height;
-  background-color: $datepicker-primary-dark-color;
-}
-
-.month {
-  display: block;
-  padding: $unit;
-  font-size: $datepicker-month-font-size;
-  text-transform: uppercase;
   cursor: pointer;
-}
-
-.day {
-  display: block;
-  font-size: $datepicker-day-font-size;
-  line-height: $datepicker-day-line-height;
-  cursor: pointer;;
 }
 
 .year {
   display: inline-block;
-  margin-top: $unit;
   font-size: $datepicker-year-font-size;
-  cursor: pointer;
+  transition: opacity, font-size $animation-duration $animation-curve-default;
+}
+
+.date {
+  display: block;
+  font-weight: $font-weight-semi-bold;
+  text-transform: capitalize;
+  transition: opacity $animation-duration $animation-curve-default;
 }
 
 .wrapper {
@@ -47,8 +30,11 @@
 }
 
 .display-years {
-  .day, .month {
+  .date {
     opacity: $datepicker-inactive-opacity;
+  }
+  .year {
+    font-size: $font-size-normal;
   }
 }
 

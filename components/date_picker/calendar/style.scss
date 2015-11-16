@@ -50,11 +50,10 @@
 .week {
   display: flex;
   height: $calendar-row-height;
+  flex-wrap: wrap;
   font-size: $calendar-day-font-size;
   line-height: $calendar-row-height;
   opacity: .5;
-
-  flex-wrap: wrap;
   > span {
     flex: 0 0 (100% / 7);
   }
@@ -62,9 +61,8 @@
 
 .days {
   display: flex;
-  font-size: $calendar-day-font-size;
-
   flex-wrap: wrap;
+  font-size: $calendar-day-font-size;
 }
 
 .day {
@@ -75,16 +73,21 @@
     width: $calendar-row-height;
     height: $calendar-row-height;
     line-height: $calendar-row-height;
-    cursor: pointer;
     border-radius: 50%;
   }
-  &:hover:not(.active) > span {
+  &:hover:not(.active):not(.disabled) > span {
     color: $calendar-primary-contrast-color;
     background: $calendar-primary-hover-color;
   }
   &.active > span {
     color: $calendar-primary-contrast-color;
     background: $calendar-primary-color;
+  }
+  &:hover:not(.disabled) > span {
+    cursor: pointer;
+  }
+  &.disabled {
+    opacity: $calendar-day-disable-opacity;
   }
 }
 
