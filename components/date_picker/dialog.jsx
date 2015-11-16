@@ -21,14 +21,13 @@ class CalendarDialog extends React.Component {
 
   state = {
     date: this.props.value,
-    display: 'months',
-    year: this.props.value.getFullYear()
+    display: 'months'
   };
 
   handleCalendarChange = (value) => {
-    const state = {display: 'months', year: value.getFullYear()};
-    if (!time.dateOutOfRange(value, this.props.minDate, this.props.maxDate)) {
-      state.date = value;
+    const state = {display: 'months', date: value};
+    if (time.dateOutOfRange(value, this.props.minDate, this.props.maxDate)) {
+      state.date = this.props.maxDate || this.props.minDate;
     }
     this.setState(state);
   };
@@ -61,7 +60,7 @@ class CalendarDialog extends React.Component {
               <span className={style.day}>{this.state.date.getDate()}</span>
             </div>
             <span className={style.year} onClick={this.handleSwitchDisplay.bind(this, 'years')}>
-              {this.state.year}
+              {this.state.date.getFullYear()}
             </span>
           </header>
 
