@@ -7,7 +7,9 @@
   display: inline-block;
   height: $button-height;
   flex-direction: row;
+  align-content: center;
   align-items: center;
+  justify-content: center;
   color: $button-default-text-color;
   text-align: center;
   text-decoration: none;
@@ -16,18 +18,29 @@
   border: 0;
   outline: none;
   transition: box-shadow .2s $animation-curve-fast-out-linear-in,
-                background-color .2s $animation-curve-default,
-                color .2s $animation-curve-default;
-  align-content: center;
-  justify-content: center;
-
+              background-color .2s $animation-curve-default,
+              color .2s $animation-curve-default;
   &::-moz-focus-inner {
     border: 0;
+  }
+  > span {
+    @include typo-button();
+    display: inline-block;
+    line-height: $button-height;
+    vertical-align: middle;
+  }
+  > svg {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-right: .5 * $unit;
+    font-size: 120%;
+    vertical-align: middle;
+    fill: currentColor;
   }
   > * {
     pointer-events: none;
   }
-
   [data-react-toolbox="ripple"] {
     overflow: hidden;
   }
@@ -48,11 +61,6 @@
   color: $button-disabled-text-color;
   pointer-events: none;
   cursor: auto;
-}
-
-.label {
-  @include typo-button();
-  line-height: $button-height;
 }
 
 .flat {

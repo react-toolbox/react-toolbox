@@ -39,26 +39,28 @@ class Button extends React.Component {
 
   render () {
     let className = style[this.props.kind];
-    const {label, icon, loading, ripple, primary, accent, mini, kind, tooltip, ...others} = this.props;
+    const {label, icon, loading, ripple, primary, accent, mini, kind, tooltip, href, ...others} = this.props;
+    const element = href ? 'a' : 'button';
+
     if (this.props.className) className += ` ${this.props.className}`;
     if (!primary && !accent) className += ` ${style.primary}`;
     if (primary) className += ` ${style.primary}`;
     if (accent) className += ` ${style.accent}`;
     if (mini) className += ` ${style.mini}`;
 
-    return (
-      <button
-        data-react-toolbox='button'
-        {...others}
-        className={className}
-        disabled={this.props.disabled || this.props.loading}
-        onMouseDown={this.handleMouseDown}
-      >
-        { ripple ? <Ripple ref='ripple' loading={loading}/> : null }
-        { icon ? <FontIcon className={style.icon} value={icon}/> : null }
-        { label ? <abbr className={style.label}>{label}</abbr> : null }
-        { tooltip ? <Tooltip label={tooltip}/> : null }
-      </button>
+    const props = {
+      ...others,
+      href,
+      className,
+      disabled: this.props.disabled || this.props.loading,
+      onMouseDown: this.handleMouseDown
+    };
+
+    return React.createElement(element, props,
+      ripple ? <Ripple ref='ripple' loading={loading}/> : null,
+      tooltip ? <Tooltip label={tooltip}/> : null,
+      icon ? <FontIcon className={style.icon} value={icon}/> : null,
+      label ? label : this.props.children
     );
   }
 }
