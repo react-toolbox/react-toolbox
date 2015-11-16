@@ -1,8 +1,8 @@
 import React from 'react';
-import style from './style';
-import time from '../utils/time';
 import Calendar from './calendar';
 import Dialog from '../dialog';
+import style from './style';
+import time from '../utils/time';
 
 class CalendarDialog extends React.Component {
   static propTypes = {
@@ -21,11 +21,16 @@ class CalendarDialog extends React.Component {
 
   state = {
     date: this.props.value,
-    display: 'months'
+    display: 'months',
+    year: this.props.value.getFullYear()
   };
 
   handleCalendarChange = (value) => {
-    this.setState({date: value, display: 'months'});
+    const state = {display: 'months', year: value.getFullYear()};
+    if (!time.dateOutOfRange(value, this.props.minDate, this.props.maxDate)) {
+      state.date = value;
+    }
+    this.setState(state);
   };
 
   handleSelect = () => {
@@ -56,7 +61,7 @@ class CalendarDialog extends React.Component {
               <span className={style.day}>{this.state.date.getDate()}</span>
             </div>
             <span className={style.year} onClick={this.handleSwitchDisplay.bind(this, 'years')}>
-              {this.state.date.getFullYear()}
+              {this.state.year}
             </span>
           </header>
 

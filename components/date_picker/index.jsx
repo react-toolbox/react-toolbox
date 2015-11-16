@@ -1,9 +1,9 @@
 import React from 'react';
 import CalendarDialog from './dialog';
-import Input from '../input';
 import events from '../utils/events';
-import time from '../utils/time';
+import Input from '../input';
 import style from './style';
+import time from '../utils/time';
 
 class DatePicker extends React.Component {
   static propTypes = {

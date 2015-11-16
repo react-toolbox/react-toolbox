@@ -24,21 +24,15 @@ class Month extends React.Component {
 
   renderDays () {
     return utils.range(1, utils.time.getDaysInMonth(this.props.viewDate) + 1).map(i => {
-      let active = true;
-
-      if (this.props.minDate || this.props.maxDate) {
-        const date = new Date(this.props.viewDate.getFullYear(), this.props.viewDate.getMonth(), i);
-        if (this.props.minDate && !(date >= this.props.minDate)) active = false;
-        if (this.props.maxDate && !(date <= this.props.maxDate)) active = false;
-        console.log('day', i, date, this.props.minDate, active);
-      }
+      const date = new Date(this.props.viewDate.getFullYear(), this.props.viewDate.getMonth(), i);
+      const disabled = utils.time.dateOutOfRange(date, this.props.minDate, this.props.maxDate);
 
       return (
         <Day
           key={i}
           day={i}
-          disabled={!active}
-          onClick={active ? this.handleDayClick.bind(this, i) : null}
+          disabled={disabled}
+          onClick={!disabled ? this.handleDayClick.bind(this, i) : null}
           selectedDate={this.props.selectedDate}
           viewDate={this.props.viewDate}
         />
@@ -47,7 +41,6 @@ class Month extends React.Component {
   }
 
   render () {
-    console.info('max/min', this.props.maxDate, this.props.minDate);
     return (
       <div className={style.month}>
         <span className={style.title}>

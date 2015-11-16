@@ -172,6 +172,10 @@ module.exports = {
     if (hours.length < 2) hours = '0' + hours;
     if (mins.length < 2) mins = '0' + mins;
     return hours + ':' + mins;
+  },
+
+  dateOutOfRange (date, minDate, maxDate) {
+    return ((minDate && !(date >= minDate)) || (maxDate && !(date <= maxDate)));
   }
 
 };
