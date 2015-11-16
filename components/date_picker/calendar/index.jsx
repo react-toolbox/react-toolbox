@@ -10,6 +10,8 @@ import style from './style';
 class Calendar extends React.Component {
   static propTypes = {
     display: React.PropTypes.oneOf(['months', 'years']),
+    maxDate: React.PropTypes.object,
+    minDate: React.PropTypes.object,
     onChange: React.PropTypes.func,
     selectedDate: React.PropTypes.object,
     viewDate: React.PropTypes.object
@@ -98,6 +100,8 @@ class Calendar extends React.Component {
         <CSSTransitionGroup transitionName={animation} transitionEnterTimeout={350} transitionLeaveTimeout={350}>
           <Month
             key={this.state.viewDate.getMonth()}
+            maxDate={this.props.maxDate}
+            minDate={this.props.minDate}
             viewDate={this.state.viewDate}
             selectedDate={this.props.selectedDate}
             onDayClick={this.handleDayClick} />

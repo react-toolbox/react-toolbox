@@ -7,6 +7,8 @@ import style from './style';
 
 class DatePicker extends React.Component {
   static propTypes = {
+    maxDate: React.PropTypes.object,
+    minDate: React.PropTypes.object,
     onChange: React.PropTypes.func,
     value: React.PropTypes.object
   };
@@ -32,6 +34,7 @@ class DatePicker extends React.Component {
   render () {
     const { value } = this.props;
     const date = value ? `${value.getDate()} ${time.getFullMonth(value)} ${value.getFullYear()}` : null;
+
     return (
       <div data-toolbox='date-picker'>
         <Input
@@ -44,6 +47,8 @@ class DatePicker extends React.Component {
         />
         <CalendarDialog
           active={this.state.active}
+          maxDate={this.props.maxDate}
+          minDate={this.props.minDate}
           onDismiss={this.handleDismiss}
           onSelect={this.handleSelect}
           value={this.props.value}

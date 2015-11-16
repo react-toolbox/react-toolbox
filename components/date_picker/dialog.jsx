@@ -7,6 +7,8 @@ import Dialog from '../dialog';
 class CalendarDialog extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,
+    maxDate: React.PropTypes.object,
+    minDate: React.PropTypes.object,
     onDismiss: React.PropTypes.func,
     onSelect: React.PropTypes.func,
     value: React.PropTypes.object
@@ -61,6 +63,8 @@ class CalendarDialog extends React.Component {
           <div className={style.wrapper}>
             <Calendar
               display={this.state.display}
+              maxDate={this.props.maxDate}
+              minDate={this.props.minDate}
               onChange={this.handleCalendarChange}
               selectedDate={this.state.date} />
           </div>

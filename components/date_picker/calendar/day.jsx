@@ -5,6 +5,7 @@ import style from './style';
 class Day extends React.Component {
   static propTypes = {
     day: React.PropTypes.number,
+    disabled: React.PropTypes.bool,
     onClick: React.PropTypes.func,
     selectedDate: React.PropTypes.object,
     viewDate: React.PropTypes.object
@@ -26,7 +27,9 @@ class Day extends React.Component {
   }
 
   render () {
-    const className = this.isSelected() ? `${style.day} ${style.active}` : style.day;
+    let className = this.isSelected() ? `${style.day} ${style.active}` : style.day;
+    if (this.props.disabled) className += ` ${style.disabled}`;
+
     return (
       <div className={className} style={this.dayStyle()}>
           <span onClick={this.props.onClick}>
