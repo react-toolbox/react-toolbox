@@ -5,9 +5,9 @@ const FontIcon = props => {
   let className = style[props.value];
   if (props.className) className += ` ${props.className}`;
   return (
-    <span data-react-toolbox='icon' {...props} className={className}>
+    <i data-react-toolbox='icon' {...props} className={className}>
       {props.children}
-    </span>
+    </i>
   );
 };
 
