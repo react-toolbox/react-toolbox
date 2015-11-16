@@ -11,7 +11,7 @@ const ButtonTest = () => (
   <section>
     <h5>Buttons</h5>
     <p>lorem ipsum...</p>
-    <Button href='http://github.com/javivelasco' target='_blank' kind='raised'>
+    <Button href='http://github.com/javivelasco' target='_blank' kind='raised' accent>
       <GithubIcon /> Github Profile
     </Button>
     <Button kind='raised' primary label='Bookmark' icon='bookmark' />
