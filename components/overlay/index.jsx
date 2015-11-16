@@ -15,7 +15,7 @@ class Overlay extends React.Component {
   };
 
   componentDidMount () {
-    this.app = document.getElementById('react-toolbox-app') || document.body;
+    this.app = document.querySelector('[data-react-toolbox="app"]') || document.body;
     this.node = document.createElement('div');
     this.node.setAttribute('data-react-toolbox', 'overlay');
     this.app.appendChild(this.node);
