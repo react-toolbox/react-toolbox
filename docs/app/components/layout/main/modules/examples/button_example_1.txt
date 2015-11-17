@@ -6,14 +6,23 @@ const GithubIcon = () => (
 
 const ButtonsTest = () => (
   <div>
-    <Button href='http://github.com/javivelasco' target='_blank' kind='raised'>
-      <GithubIcon /> Github Profile
+    <Button href='http://github.com/javivelasco' target='_blank' raised>
+      <GithubIcon /> Github
     </Button>
-    <Button label="Flat button" />
-    <Button kind="raised" label="Raised" />
-    <Button kind="raised" label="Raised accent" accent icon="favorite" />
-    <Button className="primary" kind="floating" icon="add" />
-    <Button mini kind="floating" icon="add" accent />
+    <Button icon='bookmark' label='Bookmark' accent />
+    <Button icon='bookmark' label='Bookmark' raised primary />
+    <Button icon='inbox' label='Inbox' flat />
+    <Button icon='add' floating />
+    <Button icon='add' floating primary />
+    <Button icon='add' floating primary disabled />
+    <Button icon='add' floating accent mini />
+    <Button icon='mood' toggle />
+    <Button toggle primary>
+      <GithubIcon />
+    </Button>
+    <Button icon='add' label='Add this' flat primary />
+    <Button icon='add' label='Add this' flat disabled />
+    <Button icon='bookmark' label='Bookmark' raised primary loading />
   </div>
 );
 

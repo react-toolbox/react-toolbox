@@ -37,7 +37,7 @@ const Root = () => (
         accent
         className={style.github}
         icon='web'
-        kind='floating'
+        floating
         onClick={_hrefProject}
       />
     </AppBarToolbox>

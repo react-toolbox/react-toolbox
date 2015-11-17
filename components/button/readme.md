@@ -14,14 +14,20 @@ const GithubIcon = () => (
 
 const TestButtons = () => (
   <div>
-    <Button href='http://github.com/javivelasco' target='_blank' kind='raised' accent>
-      <GithubIcon /> Github Profile
+    <Button href='http://github.com/javivelasco' target='_blank' raised>
+      <GithubIcon /> Github
     </Button>
-    <Button label="Flat button" />
-    <Button kind="raised" label="Raised" />
-    <Button kind="raised" label="Raised accent" accent icon="favorite" />
-    <Button className="primary" kind="floating" icon="add" />
-    <Button mini kind="floating" icon="add" accent />
+    <Button icon='bookmark' label='Bookmark' accent />
+    <Button icon='bookmark' label='Bookmark' raised primary />
+    <Button icon='inbox' label='Inbox' flat />
+    <Button icon='add' floating />
+    <Button icon='add' floating accent mini />
+    <Button icon='mood' toggle />
+    <Button toggle primary>
+      <GithubIcon />
+    </Button>
+    <Button icon='add' label='Add this' flat primary />
+    <Button icon='add' label='Add this' flat disabled />
   </div>
 );
 ```
@@ -30,16 +36,22 @@ const TestButtons = () => (
 
 | Name      | Type      | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `accent`    | `Bool`    | `false` | Indicates if the button should have accent color.|
+| `accent`    | `Boolean`   | `false` | Indicates if the button should have accent color.|
 | `className` | `String`  | `''` | Set a class to style the Component.|
 | `disabled`  | `Boolean` | `false` | If true, component will be disabled.|
+| `flat`      | `Boolean`  | `false` | If true, the button will have a flat look. |
+| `floating`  | `Boolean`  | `false` | If true, the button will have a floating look. |
 | `icon`      | `String`  |  | Value of the icon (See icon component). |
-| `kind`      | `String`  | `flat`  | Type of the component, overwrite this property if you need set a different stylesheet.|
 | `label`     | `String`  |  | The text string to use for the name of the button.|
 | `loading`   | `Boolean`  | `false` | If true, component will be disabled and show a loading animation.|
 | `mini`  | `Boolean` | `false`  | To be used with floating button. If true the button will be smaller.|
 | `onClick`  | `Function` |  | Callback called when the button is clicked.|
-| `primary`  | `false` | | If true, component will have the primary color.|
+| `primary`  | `false` | `false` | Indicates if the button should have primary color.|
+| `raised`   | `Boolean`  | `false` | If true, the button will have a raised look. |
 | `ripple`  | `Boolean`  | `true`    | If true, component will have a ripple effect on click.|
+| `toggle`   | `Boolean`  | `false` | If true, the button will have a toggle icon look. |
+| `tooptip`   | `String`  |  | The value will be shown as a tooltip when the button is hovered. |
+
+By default it will have neutral colors and a flat aspect even though the `flat` property is `false` by default. Also, some properties exclude others, for example a button cannot be `flat` and `raised` at the same time. 
 
 The `Button` component also accept children so if you want to provide a custom component and text instead of a `label` and `icon` you can do it too. Just check the examples.

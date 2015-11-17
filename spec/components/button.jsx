@@ -11,17 +11,22 @@ const ButtonTest = () => (
   <section>
     <h5>Buttons</h5>
     <p>lorem ipsum...</p>
-    <Button href='http://github.com/javivelasco' target='_blank' kind='raised' accent>
-      <GithubIcon /> Github Profile
+
+    <Button href='http://github.com/javivelasco' target='_blank' raised>
+      <GithubIcon /> Github
     </Button>
-    <Button kind='raised' primary label='Bookmark' icon='bookmark' />
-    <Button kind='flat' accent label='Inbox' icon='inbox' />
-    <Button kind='floating' primary icon='add' />
-    <Button kind='floating' primary disabled icon='add' />
-    <Button kind='floating' accent mini icon='add' />
-    <Button kind='flat' primary icon='add' label='Add this' />
-    <Button kind='raised' primary label='Bookmark' icon='bookmark' loading />
-    <Button kind='flat' disabled icon='add' label='Add this' />
+    <Button icon='bookmark' label='Bookmark' accent />
+    <Button icon='bookmark' label='Bookmark' raised primary />
+    <Button icon='inbox' label='Inbox' flat />
+    <Button icon='add' floating />
+    <Button icon='add' floating primary />
+    <Button icon='add' floating primary disabled />
+    <Button icon='add' floating accent mini />
+    <Button icon='mood' toggle />
+    <Button toggle primary><GithubIcon /></Button>
+    <Button icon='add' label='Add this' flat primary />
+    <Button icon='add' label='Add this' flat disabled />
+    <Button icon='bookmark' label='Bookmark' raised primary loading />
   </section>
 );
 

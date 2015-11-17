@@ -18,7 +18,7 @@ class DrawerTest extends React.Component {
   render () {
     return (
       <div>
-        <Button kind='raised' accent label='Show Drawer' onClick={this.handleToggle} />
+        <Button label='Show Drawer' raised accent onClick={this.handleToggle} />
         <Drawer active={this.state.active} onOverlayClick={this.handleToggle}>
           <h5>This is your Drawer.</h5>
           <p>You can embed any content you want, for example a Menu.</p>

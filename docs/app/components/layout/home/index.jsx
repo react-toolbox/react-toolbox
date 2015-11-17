@@ -50,7 +50,7 @@ const Home = () => (
       </p>
 
       <Link to='/components'>
-        <Button label='Try it now!' kind='raised' accent />
+        <Button label='Try it now!' raised accent />
       </Link>
     </section>
 

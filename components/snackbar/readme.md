@@ -18,7 +18,7 @@ class SnackbarTest extends React.Component {
   render () {
     return (
       <section>
-        <Button label='Show Snackbar' kind='raised' onClick={this.handleClick} />
+        <Button label='Show Snackbar' raised onClick={this.handleClick} />
         <Snackbar
           action='Nice'
           icon='question-answer'

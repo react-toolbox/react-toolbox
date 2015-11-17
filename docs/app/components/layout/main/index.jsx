@@ -12,8 +12,8 @@ import style from './style';
 const LoadExampleButton = (props) => {
   return (
     <Button
+      raised
       accent
-      kind='raised'
       icon='code'
       label='Load in playground'
       onClick={props.onClick}
@@ -76,9 +76,9 @@ class Main extends React.Component {
         <Appbar className={style.appbar}/>
         <Button
           accent
+          floating
           className={style['playground-button']}
           icon={this.state.playground ? 'close' : 'code'}
-          kind='floating'
           onClick={this.handlePlayGroundClick}
         />
         <MainNavigation className={style.navigation} />
