@@ -4,7 +4,7 @@
   "description": "Documentation for React Toolbox",
   "author": "React Toolbox Team (http://github.com/react-toolbox)",
   "scripts": {
-    "start": "node ./server",
+    "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
     "build": "cross-env NODE_ENV=production UV_THREADPOOL_SIZE=100 webpack --config ./webpack.config.production --colors --profile --progress",
     "deploy": "gh-pages -d build"
   },
