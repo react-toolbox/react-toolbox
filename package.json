@@ -27,7 +27,9 @@
     "prebuild": "npm run clean",
     "prepublish": "npm run build",
     "test": "cross-env NODE_ENV=test karma start",
-    "test:watch": "cross-env NODE_ENV=test karma start --no-single-run"
+    "test:watch": "cross-env NODE_ENV=test karma start --no-single-run",
+    "release": "bumped release",
+    "patch": "bumped release patch"
   },
   "bugs": {
     "url": "https://github.com/react-toolbox/react-toolbox/issues",
