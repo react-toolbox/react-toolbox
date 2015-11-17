@@ -12,8 +12,8 @@ const links = [
 ];
 
 const actions = [
-  { label: 'Alarm', kind: 'raised', icon: 'access-alarm'},
-  { label: 'Location', kind: 'raised', accent: true, icon: 'room'}
+  { label: 'Alarm', raised: true, icon: 'access-alarm'},
+  { label: 'Location', raised: true, accent: true, icon: 'room'}
 ];
 
 const NavigationTest = () => (

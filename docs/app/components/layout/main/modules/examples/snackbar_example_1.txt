@@ -20,7 +20,7 @@ class SnackbarTest extends React.Component {
   render () {
     return (
       <section>
-        <Button label='Show snackbar' kind='raised' onClick={this.handleClick} />
+        <Button label='Show snackbar' raised primary onClick={this.handleClick} />
         <Snackbar
           action='Dismiss'
           active={this.state.active}

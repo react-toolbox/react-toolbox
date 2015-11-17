@@ -15,8 +15,8 @@ class DialogTest extends React.Component {
   }
 
   actions = [
-    { label: 'Disagree', type: 'flat', className: 'primary', onClick: this.handleToggle },
-    { label: 'Agree', type: 'flat', className: 'primary', onClick: this.handleToggle }
+    { label: 'Disagree', primary: true, onClick: this.handleToggle },
+    { label: 'Agree', primary: true, onClick: this.handleToggle }
   ];
 
   render () {
@@ -24,7 +24,7 @@ class DialogTest extends React.Component {
       <section>
         <h5>Dialog</h5>
         <p>lorem ipsum...</p>
-        <Button kind='raised' label='Show Dialog' onClick={this.handleToggle} />
+        <Button label='Show Dialog' raised primary onClick={this.handleToggle} />
         <Dialog
           actions={this.actions}
           active={this.state.active}

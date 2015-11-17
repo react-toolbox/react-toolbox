@@ -7,7 +7,9 @@
   display: inline-block;
   height: $button-height;
   flex-direction: row;
+  align-content: center;
   align-items: center;
+  justify-content: center;
   color: $button-default-text-color;
   text-align: center;
   text-decoration: none;
@@ -16,18 +18,28 @@
   border: 0;
   outline: none;
   transition: box-shadow .2s $animation-curve-fast-out-linear-in,
-                background-color .2s $animation-curve-default,
-                color .2s $animation-curve-default;
-  align-content: center;
-  justify-content: center;
-
+              background-color .2s $animation-curve-default,
+              color .2s $animation-curve-default;
   &::-moz-focus-inner {
     border: 0;
+  }
+  > span:not(.tooltip) {
+    @include typo-button();
+    display: inline-block;
+    line-height: $button-height;
+    vertical-align: middle;
+  }
+  > svg {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    font-size: 120%;
+    vertical-align: middle;
+    fill: currentColor;
   }
   > * {
     pointer-events: none;
   }
-
   [data-react-toolbox="ripple"] {
     overflow: hidden;
   }
@@ -42,17 +54,15 @@
     font-size: 120%;
     vertical-align: middle;
   }
+  > svg {
+    margin-right: .5 * $unit;
+  }
 }
 
 %disabled {
   color: $button-disabled-text-color;
   pointer-events: none;
   cursor: auto;
-}
-
-.label {
-  @include typo-button();
-  line-height: $button-height;
 }
 
 .flat {
@@ -67,6 +77,33 @@
   }
   &[disabled] {
     @extend %disabled;
+  }
+}
+
+.toggle {
+  @extend %button;
+  @extend %toggle;
+  width: $button-height;
+  background: transparent;
+  border-radius: 50%;
+  &:hover {
+    background: $button-flat-color-hover;
+  }
+  &:focus:not(:active) {
+    background: $button-flat-color-hover;
+  }
+  &[disabled] {
+    @extend %disabled;
+  }
+  .icon {
+    font-size: 120%;
+    vertical-align: middle;
+  }
+  .icon {
+    line-height: $button-height;
+  }
+  [data-react-toolbox="ripple"] {
+    border-radius: 50%;
   }
 }
 
@@ -121,7 +158,7 @@
     color: $button-primary-color-contrast;
     background: $button-primary-color;
   }
-  &.flat {
+  &.flat, &.toggle {
     color: $button-primary-color;
     &:hover {
       background: $button-primary-color-hover;
@@ -137,13 +174,29 @@
     color: $button-accent-color-contrast;
     background-color: $button-accent-color;
   }
-  &.flat {
+  &.flat, &.toggle {
     color: $button-accent-color;
     &:hover {
       background: $button-accent-color-hover;
     }
     &:focus:not(:active) {
       background: $button-accent-color-hover;
+    }
+  }
+}
+
+.neutral:not([disabled]) {
+  &.raised, &.floating {
+    color: $button-neutral-color-contrast;
+    background-color: $button-neutral-color;
+  }
+  &.flat, &.toggle {
+    color: $button-neutral-color-contrast;
+    &:hover {
+      background: $button-neutral-color-hover;
+    }
+    &:focus:not(:active) {
+      background: $button-neutral-color-hover;
     }
   }
 }

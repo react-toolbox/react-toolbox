@@ -7,12 +7,11 @@ describe('Button', function () {
   let button;
 
   describe('#render', function () {
-
-    it('uses flat and primary styles by default', function () {
+    it('uses flat and neutral styles by default', function () {
       button = utils.shallowRenderComponent(Button);
 
       expect(button.props.className).toContain(style.flat);
-      expect(button.props.className).toContain(style.primary);
+      expect(button.props.className).toContain(style.neutral);
     });
 
     it('renders accent button with accent style', function () {
@@ -22,11 +21,11 @@ describe('Button', function () {
       expect(button.props.className).toContain(style.accent);
     });
 
-    it('1 renders mini button with mini style', function () {
-      button = utils.shallowRenderComponent(Button, { mini: true });
+    it('renders mini button with mini style', function () {
+      button = utils.shallowRenderComponent(Button, { floating: true, mini: true });
 
-      expect(button.props.className).toContain(style.flat);
-      expect(button.props.className).toContain(style.primary);
+      expect(button.props.className).toContain(style.floating);
+      expect(button.props.className).toContain(style.neutral);
       expect(button.props.className).toContain(style.mini);
     });
 

@@ -10,7 +10,7 @@ import Tooltip from 'react-toolbox/lib/tooltip';
 const TooltipTest = () => (
   <div>
     <p>Lorem ipsum dolor sit amet, <strong>consectetur<Tooltip label='This is a auto show tooltip' /></strong> adipiscing elit.</p>
-    <Button label='Button with tooltip' kind='raised' accent tooltip='This is a tooltip by property' />
+    <Button label='Button with tooltip' raised accent tooltip='This is a tooltip by property' />
   </div>
 );
 ```

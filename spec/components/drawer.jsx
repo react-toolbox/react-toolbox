@@ -29,12 +29,12 @@ class DrawerTest extends React.Component {
         </Drawer>
 
         <Drawer active={this.state.rightActive} type='right'>
-          <Button label='Close' onClick={this.handleToggleRight} />
+          <Button primary label='Close' onClick={this.handleToggleRight} />
         </Drawer>
 
         <nav>
-          <Button accent label='Drawer left' kind='raised' onClick={this.handleToggleLeft} />
-          <Button primary label='Drawer right' kind='raised' onClick={this.handleToggleRight} />
+          <Button label='Drawer left' raised primary onClick={this.handleToggleLeft} />
+          <Button label='Drawer right' raised accent onClick={this.handleToggleRight} />
         </nav>
       </section>
     );

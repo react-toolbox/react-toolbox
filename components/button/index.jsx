@@ -10,13 +10,16 @@ class Button extends React.Component {
     accent: React.PropTypes.bool,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
+    flat: React.PropTypes.bool,
+    floating: React.PropTypes.bool,
     icon: React.PropTypes.string,
-    kind: React.PropTypes.string,
     label: React.PropTypes.string,
     loading: React.PropTypes.bool,
     mini: React.PropTypes.bool,
     primary: React.PropTypes.bool,
+    raised: React.PropTypes.bool,
     ripple: React.PropTypes.bool,
+    toggle: React.PropTypes.bool,
     tooltip: React.PropTypes.string,
     type: React.PropTypes.string
   };
@@ -24,11 +27,14 @@ class Button extends React.Component {
   static defaultProps = {
     accent: false,
     className: '',
-    kind: 'flat',
+    flat: false,
+    floating: false,
     loading: false,
     mini: false,
     primary: false,
-    ripple: true
+    raised: false,
+    ripple: true,
+    toggle: false
   };
 
   handleMouseDown = (event) => {
@@ -38,27 +44,29 @@ class Button extends React.Component {
   };
 
   render () {
-    let className = style[this.props.kind];
-    const {label, icon, loading, ripple, primary, accent, mini, kind, tooltip, ...others} = this.props;
+    const {accent, flat, floating, href, icon, label, loading, mini,
+           primary, raised, ripple, toggle, tooltip, ...others} = this.props;
+    const element = href ? 'a' : 'button';
+    const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
+    const shape = flat ? 'flat' : raised ? 'raised' : floating ? 'floating' : toggle ? 'toggle' : 'flat';
+    let className = `${style[shape]} ${style[level]}`;
+
     if (this.props.className) className += ` ${this.props.className}`;
-    if (!primary && !accent) className += ` ${style.primary}`;
-    if (primary) className += ` ${style.primary}`;
-    if (accent) className += ` ${style.accent}`;
     if (mini) className += ` ${style.mini}`;
 
-    return (
-      <button
-        data-react-toolbox='button'
-        {...others}
-        className={className}
-        disabled={this.props.disabled || this.props.loading}
-        onMouseDown={this.handleMouseDown}
-      >
-        { ripple ? <Ripple ref='ripple' loading={loading}/> : null }
-        { icon ? <FontIcon className={style.icon} value={icon}/> : null }
-        { label ? <abbr className={style.label}>{label}</abbr> : null }
-        { tooltip ? <Tooltip label={tooltip}/> : null }
-      </button>
+    const props = {
+      ...others,
+      href,
+      className,
+      disabled: this.props.disabled || this.props.loading,
+      onMouseDown: this.handleMouseDown
+    };
+
+    return React.createElement(element, props,
+      ripple ? <Ripple ref='ripple' loading={loading}/> : null,
+      tooltip ? <Tooltip className={style.tooltip} label={tooltip}/> : null,
+      icon ? <FontIcon className={style.icon} value={icon}/> : null,
+      label ? label : this.props.children
     );
   }
 }

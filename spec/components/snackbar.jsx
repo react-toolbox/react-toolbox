@@ -27,7 +27,7 @@ class SnackbarTest extends React.Component {
       <section>
         <h5>Snackbars & Toasts</h5>
         <p>lorem ipsum...</p>
-        <Button label='Show snackbar' kind='raised' onClick={this.handleClick} />
+        <Button label='Show snackbar' primary raised onClick={this.handleClick} />
         <Snackbar
           action='Dismiss'
           active={this.state.active}
