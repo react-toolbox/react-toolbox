@@ -1,15 +1,14 @@
 import React, { PropTypes, Component } from 'react';
 import ClassNames from '../decorators/ClassNames';
-import styles from './style';
+import style from './style';
 
-@ClassNames(styles)
-class Card extends Component {
+@ClassNames(style)
+class CardActions extends Component {
 
   static propTypes = {
     children: PropTypes.any,
     className: PropTypes.string,
-    classNames: PropTypes.func,
-    raised: PropTypes.bool
+    classNames: PropTypes.func
   }
 
   render () {
@@ -17,23 +16,17 @@ class Card extends Component {
       children,
       className,
       classNames,
-      raised,
       ...otherProps
     } = this.props;
 
-    const classes = classNames('card', {
-      'raised': raised
-    }, className);
+    const classes = classNames('cardActions', className);
 
     return (
-      <div
-        data-react-toolbox="card"
-        className={classes}
-      >
+      <div className={classes} {...otherProps}>
         {children}
       </div>
     );
   }
 }
 
-export default Card;
+export default CardActions;

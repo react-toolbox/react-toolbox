@@ -1,112 +1,122 @@
 @import "../base";
 @import "./config";
 
-.figure {
-  position: relative;
+.card {
+  // Box Model
   display: flex;
-  min-height: $card-title-height;
   flex-direction: column;
-  justify-content: flex-end;
-  background-position: center center;
-  background-size: cover;
-  > *:not(.overflow) {
-    z-index: $z-index-normal;
-    font-weight: $font-weight-normal;
+  border-radius: 2px;
+  overflow: hidden;
+
+  // Fonts
+  font-size: $card-font-size;
+
+  // Colors
+  background: $card-background-color;
+
+  // Elevation
+  @include shadow-2dp();
+
+  // Raised Elevation as per spec
+  &.raised {
+    @include shadow-8dp();
   }
-  > .overflow {
+}
+
+.cardMedia {
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  height: 0;
+
+  &.wide {
+    width: 100%;
+    padding-top: 56.25%;
+  }
+
+  &.square {
+    width: 100%;
+    padding-top: 100%;
+  }
+
+  .content {
+    // Positioning
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
+
+    // Box Model
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
-    opacity: .75;
   }
 }
 
-.text {
-  font-size: $font-size-small;
-  line-height: $font-size-big;
-  color: $color-text-secondary;
-}
-
-.navigation {
-  padding: $card-navigation-offset;
-  > * {
-    min-width: 0;
-    padding-right: $card-navigation-offset;
-    padding-left: $card-navigation-offset;
-  }
-}
-
-.ripple {
-  background-color: $color-text-secondary;
-}
-
-.root {
-  @include shadow-2dp();
-  position: relative;
+.cardTitle {
   display: flex;
-  width: $card-width-normal;
-  flex-direction: column;
-  overflow: hidden;
-  vertical-align: top;
-  background: $color-background;
-  > *:not(.navigation) {
-    padding: $card-offset;
-  }
-  &:not(.color) > *:not(.figure), > *:not(:last-child) {
-    box-shadow: 0 1px $color-divider;
-  }
-}
+  align-items: center;
 
-.touch {
-  cursor: pointer;
-}
+  .avatar {
+    margin-right: 13px;
+  }
 
-.contrast {
-  .figure {
-    color: $card-color-white;
-    text-shadow: 0;
+  .subtitle {
+    color: $color-text-secondary;
   }
-  .ripple {
-    background-color: $card-color-white;
-  }
-}
 
-.loading {
-  pointer-events: none;
-  cursor: none;
-  filter: grayscale(100%);
-  .ripple {
-    @include ripple-loading(cardloading, 2 * $card-width-normal, 2 * $card-width-normal);
-    width: 2 * $card-width-normal;
-    height: 2 * $card-width-normal;
-    animation-name: cardloading;
-  }
-}
+  &.large {
+    padding: $card-padding-lg $card-padding ($card-padding - 2px);
 
-.image {
-  &, .figure {
-    height: $card-width-normal;
+    .title {
+      @include typo-headline();
+      line-height: 1.25;
+    }
   }
-  .figure {
-    padding: 0;
-    > h5 {
-      padding: $card-offset;
-      font-size: $font-size-small;
-      font-weight: $font-weight-bold;
-      background-color: $card-text-overlay;
+
+  &.small {
+    padding: $card-padding;
+
+    .title {
+      @include typo-body-2(false, true);
+      line-height: 1.4;
+    }
+    .subtitle {
+      font-weight: 500;
+      line-height: 1.4;
     }
   }
 }
 
-.event {
-  .figure {
-    justify-content: flex-start;
+.cardTitle, .cardText {
+  padding: ($card-padding - 2px) $card-padding;
+
+  &:last-child {
+    padding-bottom: $card-padding-lg;
+  }
+
+  & + .cardText {
+    padding-top: 0;
   }
 }
 
-.wide {
-  width: $card-width-large;
+.cardActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: $card-padding-sm $card-padding-sm;
+
+  button[data-react-toolbox="button"] {
+    min-width: 0;
+    margin: 0 $card-padding-sm/2;
+
+    &:first-child {
+      margin-left: $card-padding-sm;
+    }
+
+    &:last-child {
+      margin-right: $card-padding-sm;
+    }
+  }
 }
