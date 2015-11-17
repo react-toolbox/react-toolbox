@@ -1,5 +1,3 @@
-process.env.UV_THREADPOOL_SIZE = 100;
-
 const path = require('path');
 const express = require('express');
 const webpack = require('webpack');

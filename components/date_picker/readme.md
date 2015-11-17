@@ -40,4 +40,5 @@ class DatePickerTest extends React.Component {
 | `maxDate`         | `Date`    |                 | Date object with the maximum selectable date. |
 | `minDate`         | `Date`    |                 | Date object with the minimum selectable date. |
 | `onChange`       | `Function`       |                | Callback called when the picker value is changed.|
+| `placeholder`     | `String`        |             | The text string to use like a input placeholder.|
 | `value`         | `Date`    |                 | Date object with the currently selected date. |
