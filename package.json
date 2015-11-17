@@ -18,7 +18,7 @@
   ],
   "main": "./lib",
   "scripts": {
-    "start": "node ./server",
+    "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
     "lint": "eslint ./ --ext .js,.jsx",
     "babel": "babel ./components --out-dir ./lib",
     "sass": "cpx './components/**/*.scss' ./lib",
