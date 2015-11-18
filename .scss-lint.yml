@@ -1,5 +1,7 @@
 scss_files: "./components/**/*.scss"
 
+exclude: "./node_modules"
+
 linters:
   BangFormat:
     enabled: true

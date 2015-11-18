@@ -1,6 +1,9 @@
+$snackbar-color-cancel: unquote("rgb(#{$palette-red-500})") !default;
+$snackbar-color-accept: unquote("rgb(#{$palette-green-500})") !default;
+$snackbar-color-warning: unquote("rgb(#{$palette-lime-a200})") !default;
 $snackbar-background-color: $color-text !default;
-$snackbar-border-radius: .2 * $unit;
-$snackbar-button-offset: 4.8 * $unit;
+$snackbar-border-radius: .2 * $unit !default;
+$snackbar-button-offset: 4.8 * $unit !default;
 $snackbar-color: unquote("rgb(#{$color-white})") !default;
-$snackbar-horizontal-offset: 2.4 * $unit;
-$snackbar-vertical-offset: 1.4 * $unit;
+$snackbar-horizontal-offset: 2.4 * $unit !default;
+$snackbar-vertical-offset: 1.4 * $unit !default;

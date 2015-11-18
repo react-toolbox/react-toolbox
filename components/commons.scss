@@ -138,9 +138,9 @@ body[data-flex] {
 }
 
 [data-flex*="center"] {
-  justify-content: center;
   align-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 [data-flex-justify="start"] {

@@ -8,7 +8,6 @@
   height: $progress-height;
   overflow: hidden;
   background: $color-divider;
-
   &.indeterminate .value {
     transform-origin: center center;
     animation: linear-indeterminate-bar 1s linear infinite;
@@ -33,7 +32,7 @@
 
 .buffer {
   background-image: linear-gradient(to right, $progress-secondary-color, $progress-secondary-color),
-                      linear-gradient(to right, $progress-main-color, $progress-main-color);
+  linear-gradient(to right, $progress-main-color, $progress-main-color);
 }
 
 .circular {
@@ -42,21 +41,19 @@
   width: $circle-wrapper-width * 1px;
   height: $circle-wrapper-width * 1px;
   transform: rotate(-90deg);
-
   &.indeterminate {
     .circle {
       animation: circular-indeterminate-bar-rotate 2s linear infinite;
     }
-
     .path {
       animation: circular-indeterminate-bar-dash 1.5s ease-in-out infinite;
+
       stroke-dasharray: $scale-ratio * 1, $scale-ratio * 200;
       stroke-dashoffset: 0;
     }
-
     &.multicolor .path {
       animation: circular-indeterminate-bar-dash 1.5s ease-in-out infinite,
-                       colors (1.5s * 4) ease-in-out infinite;
+      colors (1.5s * 4) ease-in-out infinite;
     }
   }
 }
@@ -68,13 +65,14 @@
 
 .path {
   transition: stroke-dasharray $animation-duration $animation-curve-default;
+  fill: none;
+
   stroke-dasharray: 0, $scale-ratio * 200;
   stroke-dashoffset: 0;
   stroke-linecap: round;
   stroke-miterlimit: 20;
   stroke-width: 4;
   stroke: $progress-main-color;
-  fill: none;
 }
 
 @keyframes linear-indeterminate-bar {

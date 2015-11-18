@@ -36,7 +36,7 @@ class Overlay extends React.Component {
     const overlayStyle = {};
 
     if (this.props.active) {
-      if (this.props.opacity > 0) className += ` ${style.active}`;
+      className += ` ${style.active}`;
       overlayStyle.opacity = this.props.opacity;
     }
     if (this.props.className) className += ` ${className}`;

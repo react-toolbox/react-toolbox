@@ -18,7 +18,7 @@
   "space-before-opening-brace": 1,
   "strip-spaces": true,
   "unitless-zero": true,
-  "vendor-prefix-align": true,
+  "vendor-prefix-align": false,
   "sort-order": [
     [
       "$variable",
