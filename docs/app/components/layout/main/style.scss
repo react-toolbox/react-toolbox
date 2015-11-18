@@ -70,9 +70,7 @@
   }
 }
 
-/*
-  don't hide navigation when playground is open if screen width > 1200px
-*/
+// don't hide navigation when playground is open if screen width > 1200px
 @media screen and (min-width: 1200px) {
   .root {
     &:not(.with-playground) {
