@@ -49,7 +49,6 @@ class Main extends React.Component {
     const examples = document.getElementsByClassName(this.LOAD_EXAMPLE_CLASS);
     Array.prototype.forEach.call(examples, (exampleNode, idx) => {
       const exampleCode = components[this.props.params.component].examples[idx];
-      this.refs.playground.loadCode(exampleCode);
       ReactDOM.render(
         <LoadExampleButton onClick={this.handlePlaygroundLoad.bind(this, exampleCode)} />,
         exampleNode
