@@ -41,7 +41,7 @@
     pointer-events: none;
   }
   [data-react-toolbox="ripple"] {
-    overflow: hidden;
+    @include rounded-overflow();
   }
 }
 
