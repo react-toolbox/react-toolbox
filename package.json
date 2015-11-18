@@ -19,7 +19,7 @@
   "main": "./lib",
   "scripts": {
     "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
-    "lint": "eslint ./ --ext .js,.jsx && scss-lint",
+    "lint": "eslint ./ --ext .js,.jsx",
     "babel": "babel ./components --out-dir ./lib",
     "sass": "cpx './components/**/*.scss' ./lib",
     "build": "cross-env NODE_ENV=production npm run babel && npm run sass",
@@ -86,7 +86,6 @@
     "redbox-react": "^1.1.1",
     "rimraf": "^2.4.3",
     "sass-loader": "^3.0.0",
-    "scss-lint": "0.0.0",
     "sinon": "git://github.com/sinonjs/sinon.git#b672042043517b9f84e14ed0fb8265126168778a",
     "style-loader": "^0.13.0",
     "toolbox-loader": "0.0.2",
