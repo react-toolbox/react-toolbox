@@ -1,6 +1,6 @@
-$slider-main-color: unquote("rgb(#{$color-primary})") !default;
-$slider-main-color-contrast: unquote("rgb(#{$color-primary-contrast})") !default;
-$slider-snap-color: unquote("rgb(#{$color-black})") !default;
+$slider-main-color: $color-primary !default;
+$slider-main-color-contrast: $color-primary-contrast !default;
+$slider-snap-color: $color-black !default;
 $slider-knob-size: 3.2 * $unit;
 $slider-inner-knob-size: 1.2 * $unit;
 $slider-snap-size: .2 * $unit;
