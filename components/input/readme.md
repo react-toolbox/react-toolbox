@@ -38,6 +38,7 @@ class InputTest extends React.Component {
 | `icon`         | `String`        |                 | Name of an icon to use as a label for the input.|
 | `floating`     | `Boolean`       | `true`         | Indicates if the label is floating in the input field or not.|
 | `label`         | `String`        |             | The text string to use for the floating label element.|
+| `maxLength`     | `number`       |             |Specifies the maximum number of characters allowed in the component.|
 | `multiline`     | `Boolean`       | `false`        | If true, a textarea element will be rendered. The textarea also grows and shrinks according to the number of lines.|
 | `onBlur`        | `Function`      |                 | Callback function that is fired when components is blured.|
 | `onChange`      | `Function`      |                 | Callback function that is fired when the components's value changes.|

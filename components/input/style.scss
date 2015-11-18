@@ -90,11 +90,23 @@
   }
 }
 
-.error {
-  display: block;
+.underline {
+  display: flex;
+  margin-bottom: - $input-underline-height;
   font-size: $input-label-font-size;
-  line-height: $input-error-height;
-  color: $input-text-error-color;
+  line-height: $input-underline-height;
+  color: $input-text-label-color;
+  .error, .counter {
+    flex-grow: 1;
+  }
+}
+
+.error {
+  text-align: left;
+}
+
+.counter {
+  text-align: right;
 }
 
 .disabled > .input {
@@ -114,6 +126,9 @@
         background-color: $input-text-error-color;
       }
     }
+  }
+  > .underline {
+    color: $input-text-error-color;
   }
 }
 

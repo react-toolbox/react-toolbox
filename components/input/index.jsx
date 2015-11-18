@@ -11,6 +11,7 @@ class Input extends React.Component {
     floating: React.PropTypes.bool,
     icon: React.PropTypes.string,
     label: React.PropTypes.string,
+    maxLength: React.PropTypes.number,
     multiline: React.PropTypes.bool,
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func,
@@ -40,6 +41,16 @@ class Input extends React.Component {
     }
   }
 
+  renderUnderline () {
+    const error = this.props.error ? <span className={style.error}>{this.props.error}</span> : null;
+    let counter = null;
+    if (this.props.maxLength) {
+      const length = this.props.value ? this.props.value.length : 0;
+      if (length > 0) counter = <span className={style.counter}>{length} / {this.props.maxLength}</span>;
+    }
+    if (error || counter) return <span className={style.underline}>{error}{counter}</span>;
+  }
+
   render () {
     let className = style.root;
     let labelClassName = style.label;
@@ -56,7 +67,7 @@ class Input extends React.Component {
         { this.props.icon ? <FontIcon className={style.icon} value={this.props.icon} /> : null }
         <span className={style.bar}></span>
         { this.props.label ? <label className={labelClassName}>{this.props.label}</label> : null }
-        { this.props.error ? <span className={style.error}>{this.props.error}</span> : null }
+        { this.renderUnderline() }
         { this.props.tooltip ? <Tooltip label={this.props.tooltip}/> : null }
       </div>
     );
