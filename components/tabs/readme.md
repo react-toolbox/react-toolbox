@@ -21,17 +21,13 @@ class TabsTest extends React.Component {
 
   render () {
     return (
-      <section>
-        <h5>Tabs</h5>
-        <p>This tabs can be disabled or hidden</p>
-        <Tabs index={this.state.index} onChange={this.handleTabChange}>
-          <Tab label='Primary'><small>Primary content</small></Tab>
-          <Tab label='Secondary' onActive={this.handleActive}><small>Secondary content</small></Tab>
-          <Tab label='Third' disabled><small>Disabled content</small></Tab>
-          <Tab label='Fourth' hidden><small>Fourth content hidden</small></Tab>
-          <Tab label='Fifth'><small>Fifth content</small></Tab>
-        </Tabs>
-      </section>
+      <Tabs index={this.state.index} onChange={this.handleTabChange}>
+        <Tab label='Primary'><small>Primary content</small></Tab>
+        <Tab label='Secondary' onActive={this.handleActive}><small>Secondary content</small></Tab>
+        <Tab label='Third' disabled><small>Disabled content</small></Tab>
+        <Tab label='Fourth' hidden><small>Fourth content hidden</small></Tab>
+        <Tab label='Fifth'><small>Fifth content</small></Tab>
+      </Tabs>
     );
   }
 }
