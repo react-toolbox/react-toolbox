@@ -17,7 +17,7 @@
   }
   &.errored {
     .suggestions {
-      margin-top: - $input-error-height;
+      margin-top: - $input-underline-height;
     }
   }
 }
