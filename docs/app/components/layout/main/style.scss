@@ -70,6 +70,38 @@
   }
 }
 
+/*
+  don't hide navigation when playground is open if screen width > 1200px
+*/
+@media screen and (min-width: 1200px) {
+  .root {
+    &:not(.with-playground) {
+      > .playground {
+        right: - ($playground-width * 1.1);
+      }
+      > .documentation {
+        padding-right: 0;
+        padding-left: $navigation-width;
+      }
+      > .navigation {
+        transform: translateX(0);
+      }
+    }
+    &.with-playground {
+      > .playground {
+        right: 0;
+      }
+      > .documentation {
+        padding-right: $playground-width;
+        padding-left: $navigation-width;
+      }
+      > .navigation {
+        transform: translateX(0);
+      }
+    }
+  }
+}
+
 .load-button {
   display: inline-block;
 }
