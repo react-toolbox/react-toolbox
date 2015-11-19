@@ -25,13 +25,13 @@ class Ripple extends React.Component {
     width: null
   };
 
-  handleEnd = () => {
-    document.removeEventListener('mouseup', this.handleEnd);
+  handleEnd = (touch = false) => {
+    document.removeEventListener(touch ? 'touchend' : 'mouseup', this.handleEnd);
     this.setState({active: false});
   };
 
-  start = ({ pageX, pageY }) => {
-    document.addEventListener('mouseup', this.handleEnd);
+  start = ({ pageX, pageY }, touch = false) => {
+    document.addEventListener(touch ? 'touchend' : 'mouseup', this.handleEnd.bind(this, touch));
     const {top, left, width} = this._getDescriptor(pageX, pageY);
     this.setState({active: false, restarting: true, width: 0}, () => {
       this.refs.ripple.offsetWidth;  //eslint-disable-line no-unused-expressions
