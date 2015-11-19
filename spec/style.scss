@@ -1,4 +1,7 @@
-@import "../components/base";
+$import-normalize: false;
+$import-flex-attributes: true;
+
+@import "../components/commons";
 @import "../components/app_bar/config";
 @import "../components/button/config";
 

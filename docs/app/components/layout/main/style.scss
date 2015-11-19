@@ -19,7 +19,8 @@
   right: 0;
   bottom: 0;
   left: 0;
-  transition: all $animation-duration $animation-curve-default;
+  z-index: $z-index-normal;
+  transition: padding $animation-duration $animation-curve-default;
 }
 
 .navigation {
@@ -29,24 +30,25 @@
   left: 0;
   z-index: $z-index-high;
   box-shadow: $documentation-left-shadow;
-  transition: all $animation-duration $animation-curve-default;
+  transition: transform $animation-duration $animation-curve-default;
 }
 
 .playground {
   position: fixed;
   top: $appbar-height;
+  right: 0;
   bottom: 0;
   z-index: $z-index-high;
   width: $playground-width;
   background: $color-background;
   box-shadow: $documentation-right-shadow;
-  transition: right $animation-duration $animation-curve-default;
+  transition: transform $animation-duration $animation-curve-default;
 }
 
 .root {
   &:not(.with-playground) {
     > .playground {
-      right: - ($playground-width * 1.1);
+      transform: translateX(100%);
     }
     > .documentation {
       padding-right: 0;
@@ -58,7 +60,7 @@
   }
   &.with-playground {
     > .playground {
-      right: 0;
+      transform: translateY(0);
     }
     > .documentation {
       padding-right: $playground-width;

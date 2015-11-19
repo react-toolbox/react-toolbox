@@ -1,6 +1,6 @@
 {
   "name": "react-toolbox",
-  "version": "0.12.7",
+  "version": "0.12.11",
   "homepage": "www.react-toolbox.com",
   "description": "A set of React components implementing Google's Material Design specification with the power of CSS Modules.",
   "author": "React Toolbox Team (http://github.com/react-toolbox)",
@@ -19,7 +19,7 @@
   "main": "./lib",
   "scripts": {
     "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
-    "lint": "eslint ./ --ext .js,.jsx && scss-lint",
+    "lint": "eslint ./ --ext .js,.jsx",
     "babel": "babel ./components --out-dir ./lib",
     "sass": "cpx './components/**/*.scss' ./lib",
     "build": "cross-env NODE_ENV=production npm run babel && npm run sass",
@@ -58,8 +58,8 @@
     "babel-plugin-react-transform": "^1.1.1",
     "classnames-minimal": "^1.0.0",
     "core-js": "^1.2.6",
-    "cross-env": "^1.0.4",
     "cpx": "^1.2.1",
+    "cross-env": "^1.0.4",
     "css-loader": "^0.21.0",
     "eslint": "^1.7.3",
     "eslint-plugin-react": "^3.3.1",

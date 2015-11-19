@@ -60,7 +60,7 @@
     background-color: $radio-inner-color;
     border-radius: 50%;
     transition-property: transform;
-    transform: scale3d(0, 0, 0);
+    transform: scale(0);
   }
 }
 
@@ -68,7 +68,7 @@
   @extend .radio;
   border: .2 * $unit solid $radio-inner-color;
   &:before {
-    transform: scale3d(1, 1, 1);
+    transform: scale(1);
   }
 }
 

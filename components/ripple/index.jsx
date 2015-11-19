@@ -25,13 +25,13 @@ class Ripple extends React.Component {
     width: null
   };
 
-  handleEnd = () => {
-    document.removeEventListener('mouseup', this.handleEnd);
+  handleEnd = (touch = false) => {
+    document.removeEventListener(touch ? 'touchend' : 'mouseup', this.handleEnd);
     this.setState({active: false});
   };
 
-  start = ({ pageX, pageY }) => {
-    document.addEventListener('mouseup', this.handleEnd);
+  start = ({ pageX, pageY }, touch = false) => {
+    document.addEventListener(touch ? 'touchend' : 'mouseup', this.handleEnd.bind(this, touch));
     const {top, left, width} = this._getDescriptor(pageX, pageY);
     this.setState({active: false, restarting: true, width: 0}, () => {
       this.refs.ripple.offsetWidth;  //eslint-disable-line no-unused-expressions
@@ -42,8 +42,8 @@ class Ripple extends React.Component {
   _getDescriptor (pageX, pageY) {
     const { left, top, height, width } = ReactDOM.findDOMNode(this).getBoundingClientRect();
     return {
-      left: this.props.centered ? width / 2 : pageX - left,
-      top: this.props.centered ? height / 2 : pageY - top,
+      left: this.props.centered ? width / 2 : pageX - left + window.scrollX,
+      top: this.props.centered ? height / 2 : pageY - top + window.scrollY,
       width: width * this.props.spread
     };
   }
