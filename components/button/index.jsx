@@ -43,6 +43,12 @@ class Button extends React.Component {
     if (this.props.onMouseDown) this.props.onMouseDown(event);
   };
 
+  handleTouchStart = (event) => {
+    events.pauseEvent(event);
+    if (this.refs.ripple) this.refs.ripple.start(event.touches[0], true);
+    if (this.props.onTouchStart) this.props.onTouchStart(event);
+  };
+
   render () {
     const {accent, flat, floating, href, icon, label, loading, mini,
            primary, raised, ripple, toggle, tooltip, ...others} = this.props;
@@ -59,7 +65,8 @@ class Button extends React.Component {
       href,
       className,
       disabled: this.props.disabled || this.props.loading,
-      onMouseDown: this.handleMouseDown
+      onMouseDown: this.handleMouseDown,
+      onTouchStart: this.handleTouchStart
     };
 
     return React.createElement(element, props,
