@@ -59,7 +59,7 @@ class Autocomplete extends React.Component {
   };
 
   handleQueryChange = (event) => {
-    this.setState({event: event.target.value});
+    this.setState({query: event.target.value});
   };
 
   handleQueryFocus = () => {
