@@ -7,10 +7,7 @@
   pointer-events: none;
   background-color: currentColor;
   border-radius: 50%;
-  transform-style: preserve-3d;
-  transform: translate3d(-50%, -50%, 0);
-  backface-visibility: hidden;
-  will-change: width, height, opacity;
+  transform-origin: 50% 50%;
 }
 
 .wrapper {
@@ -25,18 +22,24 @@
 
 .normal {
   @extend %ripple;
-  width: 0;
-  height: 0;
-  opacity: $ripple-final-opacity;
-  transition-timing-function: $animation-curve-linear-out-slow-in;
   transition-duration: $ripple-duration;
-  transition-property: height, width;
-  &:not(.active) {
+
+  &.restarting {
+    transform: translate3d(-50%, -50%, 0) scale(0);
+    transition-property: none;
+    opacity: $ripple-final-opacity;
+  }
+
+  &.active {
+    transform: translate3d(-50%, -50%, 0) scale(1);
+    transition-property: transform;
+    opacity: $ripple-final-opacity;
+  }
+
+  &:not(.active):not(.restarting) {
+    transform: translate3d(-50%, -50%, 0) scale(1);
+    transition-property: opacity, transform;
     opacity: 0;
-    transition-property: height, width, opacity;
-    &.restarting {
-      transition-property: none;
-    }
   }
 }
 
