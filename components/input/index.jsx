@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames-minimal';
+import classNames from 'classnames';
 import style from './style';
 import FontIcon from '../font_icon';
 import Tooltip from '../tooltip';
