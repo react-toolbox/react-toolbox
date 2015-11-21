@@ -1,4 +1,4 @@
-//-- Typography
+// scss-lint:disable VendorPrefix
 @mixin typo-preferred-font($use-preferred: true) {
   @if $use-preferred {
     font-family: $preferred-font;
@@ -262,21 +262,18 @@
 @mixin ripple-loading($name, $width, $height, $opacity: 0.3) {
   @keyframes #{$name} {
     0% {
-      width: 0;
-      height: 0;
       opacity: $opacity;
+      transform: translate3d(-50%, -50%, 0) scale(0);
     }
 
     95% {
-      width: $width;
-      height: $height;
       opacity: 0;
+      transform: translate3d(-50%, -50%, 0) scale(1);
     }
 
     100% {
-      width: 0;
-      height: 0;
       opacity: 0;
+      transform: translate3d(-50%, -50%, 0) scale(0);
     }
   }
 }

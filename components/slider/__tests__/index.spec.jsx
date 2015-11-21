@@ -103,7 +103,7 @@ describe('Slider', function () {
   describe('#events', function () {
     beforeEach(function () {
       onChange = sinon.spy();
-      props = { min: -500, max: 500, onChange: onChange };
+      props = { min: -500, max: 500, onChange };
       state = { sliderStart: 0, sliderLength: 1000 };
       slider = utils.renderComponent(Slider, props, state);
       slider.handleResize = (event, callback) => { callback(); };

@@ -3,6 +3,7 @@
 @import "./config";
 
 %button {
+  @include typo-button();
   position: relative;
   display: inline-block;
   height: $button-height;
@@ -24,7 +25,6 @@
     border: 0;
   }
   > span:not(.tooltip) {
-    @include typo-button();
     display: inline-block;
     line-height: $button-height;
     vertical-align: middle;
@@ -41,7 +41,7 @@
     pointer-events: none;
   }
   [data-react-toolbox="ripple"] {
-    overflow: hidden;
+    @include rounded-overflow();
   }
 }
 
@@ -97,10 +97,8 @@
   }
   .icon {
     font-size: 120%;
-    vertical-align: middle;
-  }
-  .icon {
     line-height: $button-height;
+    vertical-align: middle;
   }
   [data-react-toolbox="ripple"] {
     border-radius: 50%;

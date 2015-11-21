@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import prefixer from '../utils/prefixer';
 import style from './style';
 
 class Ripple extends React.Component {
@@ -25,32 +26,41 @@ class Ripple extends React.Component {
     width: null
   };
 
-  handleEnd = (touch = false) => {
-    document.removeEventListener(touch ? 'touchend' : 'mouseup', this.handleEnd);
+  handleEnd = () => {
+    document.removeEventListener(this.touch ? 'touchend' : 'mouseup', this.handleEnd);
     this.setState({active: false});
   };
 
-  start = ({ pageX, pageY }, touch = false) => {
-    document.addEventListener(touch ? 'touchend' : 'mouseup', this.handleEnd.bind(this, touch));
+  start = ({pageX, pageY}, touch = false) => {
+    this.touch = touch;
+    document.addEventListener(this.touch ? 'touchend' : 'mouseup', this.handleEnd);
     const {top, left, width} = this._getDescriptor(pageX, pageY);
-    this.setState({active: false, restarting: true, width: 0}, () => {
+    this.setState({active: false, restarting: true, top, left, width}, () => {
       this.refs.ripple.offsetWidth;  //eslint-disable-line no-unused-expressions
-      this.setState({active: true, restarting: false, top, left, width});
+      this.setState({active: true, restarting: false});
     });
   };
 
   _getDescriptor (pageX, pageY) {
-    const { left, top, height, width } = ReactDOM.findDOMNode(this).getBoundingClientRect();
+    const {left, top, height, width} = ReactDOM.findDOMNode(this).getBoundingClientRect();
     return {
-      left: this.props.centered ? width / 2 : pageX - left + window.scrollX,
-      top: this.props.centered ? height / 2 : pageY - top + window.scrollY,
+      left: this.props.centered ? 0 : pageX - left - width / 2 + window.scrollX,
+      top: this.props.centered ? 0 : pageY - top - height / 2 + window.scrollY,
       width: width * this.props.spread
     };
   }
 
   render () {
     const { left, top, width } = this.state;
-    const rippleStyle = {left, top, width, height: width};
+    const scale = this.state.restarting ? 0 : 1;
+    let rippleStyle = {width, height: width};
+
+    if (!this.props.loading) {
+      rippleStyle = prefixer({
+        transform: `translate3d(${-width / 2 + left}px, ${-width / 2 + top}px, 0) scale(${scale})`
+      }, rippleStyle);
+    }
+
     let className = style[this.props.loading ? 'loading' : 'normal'];
     if (this.state.active) className += ` ${style.active}`;
     if (this.state.restarting) className += ` ${style.restarting}`;

@@ -17,6 +17,7 @@
   "parser": "babel-eslint",
 
   "plugins": [
+    "babel",
     "react"
   ],
 
@@ -168,6 +169,7 @@
     "operator-linebreak": [2, "after"],
     "padded-blocks": [0],
     "prefer-const": [2],
+    "prefer-spread": [2],
     "quote-props": [0],
     "radix": [0],
     "semi": [2],
@@ -210,6 +212,7 @@
     }],
     "react/jsx-uses-react": [2],
     "react/jsx-uses-vars": [2],
-    "react/react-in-jsx-scope": [2]
+    "react/react-in-jsx-scope": [2],
+    "babel/object-shorthand": [2]
   }
 }

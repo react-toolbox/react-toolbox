@@ -51,8 +51,9 @@ class Button extends React.Component {
   };
 
   render () {
-    const {accent, flat, floating, href, icon, label, loading, mini,
-           primary, raised, ripple, toggle, tooltip, tooltipDelay, ...others} = this.props;
+    const {accent, flat, floating, href, icon, label,
+           loading, mini, primary, raised, ripple, toggle,
+           tooltip, tooltipDelay, ...others} = this.props;  //eslint-disable-line no-redeclare
     const element = href ? 'a' : 'button';
     const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
     const shape = flat ? 'flat' : raised ? 'raised' : floating ? 'floating' : toggle ? 'toggle' : 'flat';
