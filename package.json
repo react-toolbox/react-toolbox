@@ -1,6 +1,6 @@
 {
   "name": "react-toolbox",
-  "version": "0.12.12",
+  "version": "0.12.13",
   "homepage": "http://www.react-toolbox.com",
   "description": "A set of React components implementing Google's Material Design specification with the power of CSS Modules.",
   "author": "React Toolbox Team (http://github.com/react-toolbox)",
