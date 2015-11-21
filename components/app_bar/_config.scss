@@ -1,5 +1,5 @@
-$appbar-color: unquote("rgb(#{$color-primary-dark})") !default;
-$appbar-contrast: unquote("rgb(#{$color-primary-contrast})") !default;
+$appbar-color: $color-primary-dark !default;
+$appbar-contrast: $color-primary-contrast !default;
 $appbar-title-total-distance: 8 * $unit;
 $appbar-height: 6.4 * $unit;
 $appbar-h-padding: 2.4 * $unit;
