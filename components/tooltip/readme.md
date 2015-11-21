@@ -20,4 +20,5 @@ const TooltipTest = () => (
 | Name      | Type      | Default         | Description|
 |:-----|:-----|:-----|:-----|
 | `className` | `String`  | `''` | Set a class to style the Component.|
+| `delay`     | `Number`  |  | Amount of time in miliseconds before the tooltip is visible.|
 | `label`     | `String`  |  | The text string to use for the tooltip.|

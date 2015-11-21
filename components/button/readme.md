@@ -51,6 +51,7 @@ const TestButtons = () => (
 | `ripple`  | `Boolean`  | `true`    | If true, component will have a ripple effect on click.|
 | `toggle`   | `Boolean`  | `false` | If true, the button will have a toggle icon look. |
 | `tooptip`   | `String`  |  | The value will be shown as a tooltip when the button is hovered. |
+| `tooltipDelay`     | `Number`  |  | Amount of time in milliseconds before the tooltip is visible.|
 
 By default it will have neutral colors and a flat aspect even though the `flat` property is `false` by default. Also, some properties exclude others, for example a button cannot be `flat` and `raised` at the same time. 
 

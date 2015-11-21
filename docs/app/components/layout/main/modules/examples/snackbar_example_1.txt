@@ -26,7 +26,7 @@ class SnackbarTest extends React.Component {
           active={this.state.active}
           icon='question-answer'
           label='Snackbar action cancel'
-          timeout={2}
+          timeout={2000}
           onClick={this.handleSnackbarClick}
           onTimeout={this.handleSnackbarTimeout}
           type='cancel'

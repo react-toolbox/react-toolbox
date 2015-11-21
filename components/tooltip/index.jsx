@@ -7,11 +7,13 @@ const HIDE_TIMEOUT = 100;
 class Tooltip extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
+    delay: React.PropTypes.number,
     label: React.PropTypes.string
   };
 
   static defaultProps = {
-    className: ''
+    className: '',
+    delay: 0
   };
 
   state = {
@@ -30,17 +32,18 @@ class Tooltip extends React.Component {
   };
 
   handleParentMouseOver = () => {
-    if (this.deferredHide) clearTimeout(this.deferredHide);
+    setTimeout(() => {
+      if (this.deferredHide) clearTimeout(this.deferredHide);
+      const node = ReactDOM.findDOMNode(this);
+      const parent = node.parentNode;
+      const parentStyle = parent.currentStyle || window.getComputedStyle(parent);
+      const offset = parseFloat(parentStyle['margin-bottom']) + parseFloat(parentStyle['padding-bottom']);
+      const position = parent.getBoundingClientRect();
 
-    const node = ReactDOM.findDOMNode(this);
-    const parent = node.parentNode;
-    const parentStyle = parent.currentStyle || window.getComputedStyle(parent);
-    const offset = parseFloat(parentStyle['margin-bottom']) + parseFloat(parentStyle['padding-bottom']);
-    const position = parent.getBoundingClientRect();
-
-    node.style.top = `${position.height - offset}px`;
-    node.style.left = `${parseInt((position.width / 2) - (node.offsetWidth / 2))}px`;
-    if (!this.state.active) this.setState({ active: true});
+      node.style.top = `${position.height - offset}px`;
+      node.style.left = `${parseInt((position.width / 2) - (node.offsetWidth / 2))}px`;
+      if (!this.state.active) this.setState({ active: true});
+    }, this.props.delay);
   };
 
   handleParentMouseOut = () => {

@@ -18,6 +18,8 @@ class Input extends React.Component {
     onFocus: React.PropTypes.func,
     onKeyPress: React.PropTypes.func,
     required: React.PropTypes.bool,
+    tooltip: React.PropTypes.string,
+    tooltipDelay: React.PropTypes.number,
     type: React.PropTypes.string,
     value: React.PropTypes.any
   };
@@ -68,7 +70,7 @@ class Input extends React.Component {
         <span className={style.bar}></span>
         { this.props.label ? <label className={labelClassName}>{this.props.label}</label> : null }
         { this.renderUnderline() }
-        { this.props.tooltip ? <Tooltip label={this.props.tooltip}/> : null }
+        { this.props.tooltip ? <Tooltip label={this.props.tooltip} delay={this.props.tooltipDelay}/> : null }
       </div>
     );
   }

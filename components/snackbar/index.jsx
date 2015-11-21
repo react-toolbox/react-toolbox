@@ -21,7 +21,7 @@ class Snackbar extends React.Component {
     if (this.props.active && this.props.timeout) {
       setTimeout(() => {
         this.props.onTimeout(event, this);
-      }, this.props.timeout * 1000);
+      }, this.props.timeout);
     }
   }
 
