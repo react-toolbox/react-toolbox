@@ -10,6 +10,7 @@ class Table extends React.Component {
     model: React.PropTypes.object,
     onChange: React.PropTypes.func,
     onSelect: React.PropTypes.func,
+    selectable: React.PropTypes.bool,
     selected: React.PropTypes.array,
     source: React.PropTypes.array
   };
@@ -17,6 +18,7 @@ class Table extends React.Component {
   static defaultProps = {
     className: '',
     heading: true,
+    selectable: true,
     selected: [],
     source: []
   };
@@ -46,9 +48,16 @@ class Table extends React.Component {
 
   renderHead () {
     if (this.props.heading) {
-      const {model, selected, source} = this.props;
+      const {model, selected, source, selectable} = this.props;
       const isSelected = selected.length === source.length;
-      return <TableHead model={model} onSelect={this.handleFullSelect} selected={isSelected} />;
+      return (
+        <TableHead
+          model={model}
+          onSelect={this.handleFullSelect}
+          selectable={selectable}
+          selected={isSelected}
+        />
+      );
     }
   }
 
@@ -60,8 +69,9 @@ class Table extends React.Component {
           index={idx}
           key={idx}
           model={this.props.model}
-          onChange={this.props.onChange ? this.handleRowChange.bind(this, idx) : null}
+          onChange={this.handleRowChange.bind(this, idx)}
           onSelect={this.handleRowSelect.bind(this, idx)}
+          selectable={this.props.selectable}
           selected={this.props.selected.indexOf(idx) !== -1}
         />
       );

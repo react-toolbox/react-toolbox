@@ -2,13 +2,13 @@ import React from 'react';
 import Checkbox from '../checkbox';
 import style from './style';
 
-const TableHead = ({model, onSelect, selected}) => {
+const TableHead = ({model, onSelect, selectable, selected}) => {
   let selectCell;
   const contentCells = Object.keys(model).map((key) => {
     return <th key={key}>{key}</th>;
   });
 
-  if (onSelect) {
+  if (selectable) {
     selectCell = (
       <th key='select' className={style.selectable}>
         <Checkbox onChange={onSelect} checked={selected} />
