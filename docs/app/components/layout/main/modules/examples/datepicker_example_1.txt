@@ -18,12 +18,17 @@ class DatePickerTest extends React.Component {
   render () {
     return (
       <section>
-        <DatePicker value={this.state.date1} onChange={this.handleChange.bind(this, 'date1')} />
-        <DatePicker 
-          maxDate={max_datetime}
+        <DatePicker
+          label='Birthdate'
+          onChange={this.handleChange.bind(this, 'date1')}
+          value={this.state.date1}
+        />
+
+        <DatePicker
+          label='Expiration date'
           minDate={min_datetime}
-          value={this.state.date2} 
-          onChange={this.handleChange.bind(this, 'date2')} 
+          onChange={this.handleChange.bind(this, 'date2')}
+          value={this.state.date2}
         />
       </section>
     );

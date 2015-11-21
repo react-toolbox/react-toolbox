@@ -11,7 +11,7 @@ selectedTime.setHours(17);
 selectedTime.setMinutes(28);
 
 const TimePickerTest = () => (
-  <TimePicker value={selectedTime} />
+  <TimePicker label='Finishing time' value={selectedTime} />
 );
 ```
 
@@ -21,5 +21,6 @@ const TimePickerTest = () => (
 |:-----|:-----|:-----|:-----|
 | `className`  | `String`    |     `''`            | Sets a class to give customized styles.|
 | `format`    | `String`  | `24hr`          | Format to display the clock. It can be `24hr` or `ampm`.|
+| `label`         | `String`        |             | The text string to use for the floating label element in the input component.|
 | `onChange`       | `Function`       |                | Callback called when the picker value is changed.|
 | `value`     | `Date`    |   | Datetime object with currrently selected time |

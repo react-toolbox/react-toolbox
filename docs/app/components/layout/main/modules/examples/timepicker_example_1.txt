@@ -3,7 +3,7 @@ selectedTime.setHours(17);
 selectedTime.setMinutes(28);
 
 const TimePickerTest = () => (
-  <TimePicker value={selectedTime} />
+  <TimePicker label='Finishing time' value={selectedTime} />
 );
 
 return <TimePickerTest />

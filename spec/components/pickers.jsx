@@ -27,16 +27,32 @@ class PickersTest extends React.Component {
         <h5>Pickers</h5>
         <p>Date pickers and time pickers with Material flavour.</p>
 
-        <DatePicker value={this.state.date1} onChange={this.handleChange.bind(this, 'date1')} />
         <DatePicker
-          maxDate={max_datetime}
-          minDate={min_datetime}
-          value={this.state.date2}
-          onChange={this.handleChange.bind(this, 'date2')}
+          label='Birthdate'
+          onChange={this.handleChange.bind(this, 'date1')}
+          value={this.state.date1}
         />
 
-        <TimePicker value={this.state.time1} onChange={this.handleChange.bind(this, 'time1')} />
-        <TimePicker value={this.state.time2} format='ampm' onChange={this.handleChange.bind(this, 'time2')} />
+        <DatePicker
+          label='Expiration date'
+          maxDate={max_datetime}
+          minDate={min_datetime}
+          onChange={this.handleChange.bind(this, 'date2')}
+          value={this.state.date2}
+        />
+
+        <TimePicker
+          label='Start time'
+          onChange={this.handleChange.bind(this, 'time1')}
+          value={this.state.time1}
+        />
+
+        <TimePicker
+          format='ampm'
+          label='Finishing time'
+          onChange={this.handleChange.bind(this, 'time2')}
+          value={this.state.time2}
+        />
       </section>
     );
   }

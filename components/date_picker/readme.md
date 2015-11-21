@@ -25,8 +25,8 @@ class DatePickerTest extends React.Component {
   render () {
     return (
       <section>
-        <DatePicker value={this.state.date1} onChange={this.handleChange.bind(this, 'date1')} />
-        <DatePicker minDate={min_datetime} value={this.state.date2} onChange={this.handleChange.bind(this, 'date2')} />
+        <DatePicker label='Birthdate' onChange={this.handleChange.bind(this, 'date1')} value={this.state.date1} />
+        <DatePicker label='Expiration date' minDate={min_datetime} onChange={this.handleChange.bind(this, 'date2')} value={this.state.date2} />
       </section>
     );
   }
@@ -37,6 +37,7 @@ class DatePickerTest extends React.Component {
 
 | Name          | Type    | Default         | Description|
 |:-----|:-----|:-----|:-----|
+| `label`         | `String`        |             | The text string to use for the floating label element in the input component.|
 | `maxDate`         | `Date`    |                 | Date object with the maximum selectable date. |
 | `minDate`         | `Date`    |                 | Date object with the minimum selectable date. |
 | `onChange`       | `Function`       |                | Callback called when the picker value is changed.|

@@ -9,6 +9,7 @@ class TimePicker extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     format: React.PropTypes.oneOf(['24hr', 'ampm']),
+    label: React.PropTypes.string,
     onChange: React.PropTypes.func,
     value: React.PropTypes.object
   };
@@ -43,8 +44,8 @@ class TimePicker extends React.Component {
       <div data-react-toolbox='time-picker'>
         <Input
           className={style.input}
+          label={this.props.label}
           onMouseDown={this.handleInputMouseDown}
-          placeholder='Pick up time'
           readOnly={true}
           type='text'
           value={formattedTime}
