@@ -25,8 +25,8 @@ function addPrefixesTo (style, property, value) {
   return style;
 }
 
-function prefixer (style) {
-  const _style = {};
+function prefixer (style, defaultValue = {}) {
+  const _style = defaultValue;
   for (const property in style) {
     _style[property] = style[property];
     if (properties[property]) {

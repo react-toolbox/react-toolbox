@@ -1,12 +1,8 @@
 @import "./base";
+@import "~normalize.css";
 
-$import-normalize: true !default;
 $import-font: true !default;
 $import-flex-attributes: false !default;
-
-@if $import-normalize == true {
-  @import "~normalize.css";
-}
 
 @if $import-font == true {
   @import url($font-roboto-url);

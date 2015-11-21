@@ -3,6 +3,8 @@
 
 %ripple {
   position: absolute;
+  top: 50%;
+  left: 50%;
   z-index: $z-index-high;
   pointer-events: none;
   background-color: currentColor;
@@ -23,31 +25,23 @@
 .normal {
   @extend %ripple;
   transition-duration: $ripple-duration;
-
   &.restarting {
-    transform: translate3d(-50%, -50%, 0) scale(0);
+    opacity: $ripple-final-opacity;
     transition-property: none;
-    opacity: $ripple-final-opacity;
   }
-
   &.active {
-    transform: translate3d(-50%, -50%, 0) scale(1);
-    transition-property: transform;
     opacity: $ripple-final-opacity;
+    transition-property: transform;
   }
-
   &:not(.active):not(.restarting) {
-    transform: translate3d(-50%, -50%, 0) scale(1);
-    transition-property: opacity, transform;
     opacity: 0;
+    transition-property: opacity, transform;
   }
 }
 
 .loading {
   @extend %ripple;
   @include ripple-loading(ripple, $ripple-size, $ripple-size);
-  top: 50%;
-  left: 50%;
   width: $ripple-size;
   height: $ripple-size;
   opacity: $ripple-final-opacity;

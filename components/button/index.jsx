@@ -70,7 +70,7 @@ class Button extends React.Component {
     };
 
     return React.createElement(element, props,
-      ripple ? <Ripple ref='ripple' loading={loading}/> : null,
+      ripple ? <Ripple ref='ripple' loading={loading} /> : null,
       tooltip ? <Tooltip className={style.tooltip} label={tooltip}/> : null,
       icon ? <FontIcon className={style.icon} value={icon}/> : null,
       label ? label : this.props.children
