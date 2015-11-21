@@ -39,7 +39,7 @@ const Preview = React.createClass({
 
   setTimeout () {
     clearTimeout(this.timeoutID);
-    this.timeoutID = setTimeout.apply(null, arguments);
+    this.timeoutID = setTimeout(...arguments);
   },
 
   compileCode () {
@@ -72,7 +72,7 @@ const Preview = React.createClass({
       const compiledCode = this.compileCode();
 
       /*eslint-disable no-eval*/
-      const Component = eval(compiledCode).apply(null, scope);
+      const Component = eval(compiledCode)(...scope);
       ReactDOM.render(Component, mountNode);
       if (this.state.error) {
         this.setState({error: null});
