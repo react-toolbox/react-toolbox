@@ -45,6 +45,8 @@ class InputTest extends React.Component {
 | `onFocus`       | `Function`      |                 | Callback function that is fired when components is focused.|
 | `onKeyPress`    | `Function`      |                 | Callback function that is fired when a key is pressed.|
 | `required`      | `Boolean`       | `false`         | If true, the html input has a required value.|
+| `tooptip`   | `String`  |  | The value will be shown as a tooltip when the button is hovered. |
+| `tooltipDelay`     | `Number`  |  | Amount of time in milliseconds before the tooltip is visible.|
 | `type`          | `String`        | `text`        | Type of the input element. It can be a valid HTML5 input type|
 | `value`         | `String`        |              | Current value of the input element.|
 

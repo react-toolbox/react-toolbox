@@ -21,6 +21,7 @@ class Button extends React.Component {
     ripple: React.PropTypes.bool,
     toggle: React.PropTypes.bool,
     tooltip: React.PropTypes.string,
+    tooltipDelay: React.PropTypes.number,
     type: React.PropTypes.string
   };
 
@@ -51,7 +52,7 @@ class Button extends React.Component {
 
   render () {
     const {accent, flat, floating, href, icon, label, loading, mini,
-           primary, raised, ripple, toggle, tooltip, ...others} = this.props;
+           primary, raised, ripple, toggle, tooltip, tooltipDelay, ...others} = this.props;
     const element = href ? 'a' : 'button';
     const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
     const shape = flat ? 'flat' : raised ? 'raised' : floating ? 'floating' : toggle ? 'toggle' : 'flat';
@@ -71,7 +72,7 @@ class Button extends React.Component {
 
     return React.createElement(element, props,
       ripple ? <Ripple ref='ripple' loading={loading}/> : null,
-      tooltip ? <Tooltip className={style.tooltip} label={tooltip}/> : null,
+      tooltip ? <Tooltip className={style.tooltip} delay={tooltipDelay} label={tooltip}/> : null,
       icon ? <FontIcon className={style.icon} value={icon}/> : null,
       label ? label : this.props.children
     );
