@@ -44,6 +44,7 @@ const demos = [
     component: (
       <Card className={style.card}>
         <CardTitle
+          className="my-custom-class"
           avatar="https://placeimg.com/80/80/animals"
           title="Avatar Card"
           subtitle="An awesome basic card"

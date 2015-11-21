@@ -22,8 +22,7 @@ class Avatar extends Component {
       PropTypes.string,
       PropTypes.element
     ]),
-    primary: PropTypes.bool,
-    size: PropTypes.number.required
+    primary: PropTypes.bool
   }
 
   static defaultProps = {

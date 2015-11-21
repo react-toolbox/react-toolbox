@@ -1,15 +1,13 @@
 import React, { PropTypes, Component } from 'react';
-import ClassNames from '../decorators/ClassNames';
+import ClassNames from 'classnames';
 import style from './style';
 
-@ClassNames(style)
 class CardMedia extends Component {
 
   static propTypes = {
     aspectRatio: PropTypes.oneOf([ 'wide', 'square' ]),
     children: PropTypes.node,
     className: PropTypes.string,
-    classNames: PropTypes.func,
     color: PropTypes.string,
     image: PropTypes.oneOfType([
       PropTypes.string,
@@ -22,13 +20,14 @@ class CardMedia extends Component {
       aspectRatio,
       children,
       className,
-      classNames,
       color,
       image,
       ...otherProps
     } = this.props;
 
-    const classes = classNames('cardMedia', aspectRatio, className);
+    const classes = ClassNames(style.cardMedia, {
+      [style[aspectRatio]]: aspectRatio
+    }, className);
 
     const bgStyle = {
       backgroundColor: color ? color : undefined,

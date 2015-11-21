@@ -1,25 +1,22 @@
 import React, { PropTypes, Component } from 'react';
-import ClassNames from '../decorators/ClassNames';
+import ClassNames from 'classnames';
 import style from './style';
 
-@ClassNames(style)
 class CardText extends Component {
 
   static propTypes = {
     children: PropTypes.any,
-    className: PropTypes.string,
-    classNames: PropTypes.func
+    className: PropTypes.string
   }
 
   render () {
     const {
       children,
       className,
-      classNames,
       ...otherProps
     } = this.props;
 
-    const classes = classNames('cardText', className);
+    const classes = ClassNames(style.cardText, className);
 
     return (
       <div className={classes} {...otherProps}>
