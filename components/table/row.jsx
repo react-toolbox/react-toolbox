@@ -1,6 +1,6 @@
 import React from 'react';
 import Checkbox from '../checkbox';
-import utils from '../utils';
+import utils from '../utils/utils';
 import style from './style';
 
 class TableRow extends React.Component {

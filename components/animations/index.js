@@ -1,4 +1,4 @@
-module.exports = {
-  SlideLeft: require('./slide-left'),
-  SlideRight: require('./slide-right')
-};
+import SlideLeft from './slide-left';
+import SlideRight from './slide-right';
+
+export default {SlideLeft, SlideRight};

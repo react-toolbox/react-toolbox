@@ -252,11 +252,6 @@
   transition-duration: $duration;
 }
 
-@mixin rounded-overflow() {
-  overflow: hidden;
-  -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
-}
-
 // The frames are this way to prevent a flicker in Safari
 // See https://goo.gl/5luFDk
 @mixin ripple-loading($name, $width, $height, $opacity: 0.3) {

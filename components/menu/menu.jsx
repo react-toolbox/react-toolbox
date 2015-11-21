@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MenuItem from './menu_item';
-import utils from '../utils';
+import { events, utils } from '../utils';
 import style from './style.menu';
 
 const POSITION = {
@@ -49,7 +49,7 @@ class Menu extends React.Component {
   componentDidUpdate (prevProps, prevState) {
     if (prevState.active && !this.state.active) {
       if (this.props.onHide) this.props.onHide();
-      utils.events.removeEventsFromDocument({click: this.handleDocumentClick});
+      events.removeEventsFromDocument({click: this.handleDocumentClick});
     } else if (!prevState.active && this.state.active && this.props.onShow) {
       this.props.onShow();
     }
@@ -64,7 +64,7 @@ class Menu extends React.Component {
 
   componentWillUpdate (prevState, nextState) {
     if (!prevState.active && nextState.active) {
-      utils.events.addEventsToDocument({click: this.handleDocumentClick});
+      events.addEventsToDocument({click: this.handleDocumentClick});
     }
   }
 
@@ -82,7 +82,7 @@ class Menu extends React.Component {
   }
 
   handleDocumentClick = (event) => {
-    if (this.state.active && !utils.events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
+    if (this.state.active && !events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
       this.setState({active: false, rippled: false});
     }
   };

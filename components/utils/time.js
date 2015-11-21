@@ -1,5 +1,4 @@
-module.exports = {
-
+export default {
   getDaysInMonth (d) {
     const resultDate = this.getFirstDayOfMonth(d);
     resultDate.setMonth(resultDate.getMonth() + 1);
@@ -177,5 +176,4 @@ module.exports = {
   dateOutOfRange (date, minDate, maxDate) {
     return ((minDate && !(date >= minDate)) || (maxDate && !(date <= maxDate)));
   }
-
 };

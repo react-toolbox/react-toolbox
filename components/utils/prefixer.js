@@ -37,4 +37,4 @@ function prefixer (style, defaultValue = {}) {
   return _style;
 }
 
-module.exports = prefixer;
+export default prefixer;

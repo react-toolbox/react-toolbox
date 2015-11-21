@@ -1,4 +1,4 @@
-module.exports = {
-  Tabs: require('./tabs'),
-  Tab: require('./tab')
-};
+import Tabs from './tabs';
+import Tab from './tab';
+
+export default { Tabs, Tab };

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Input from '../input';
+import events from '../utils/events';
 import style from './style';
-import utils from '../utils';
 
 const POSITION = {
   AUTO: 'auto',
@@ -129,7 +129,7 @@ class Autocomplete extends React.Component {
   }
 
   select (key, event) {
-    utils.events.pauseEvent(event);
+    events.pauseEvent(event);
     const values = this.values(this.props.value);
     this.handleChange([key, ...values.keys()]);
   }

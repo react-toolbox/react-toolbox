@@ -99,7 +99,7 @@ class ListTest extends React.Component {
           </List>
         </div>
 
-        <h5>Avatar, sinle text and icon</h5>
+        <h5>Avatar, single text and icon</h5>
         <p>Similar to a previous one but only with one text line</p>
         <div style={listStyle}>
           <List>

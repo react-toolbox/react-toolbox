@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import style from './style';
-import utils from '../utils';
+import events from '../utils/events';
+import prefixer from '../utils/prefixer';
+import utils from '../utils/utils';
 import ProgressBar from '../progress_bar';
 import Input from '../input';
 
@@ -83,14 +85,14 @@ class Slider extends React.Component {
 
   handleMouseDown = (event) => {
     if (this.state.inputFocused) this.refs.input.blur();
-    utils.events.addEventsToDocument(this.getMouseEventMap());
-    this.start(utils.events.getMousePosition(event));
-    utils.events.pauseEvent(event);
+    events.addEventsToDocument(this.getMouseEventMap());
+    this.start(events.getMousePosition(event));
+    events.pauseEvent(event);
   };
 
   handleMouseMove = (event) => {
-    utils.events.pauseEvent(event);
-    this.move(utils.events.getMousePosition(event));
+    events.pauseEvent(event);
+    this.move(events.getMousePosition(event));
   };
 
   handleMouseUp = () => {
@@ -104,11 +106,11 @@ class Slider extends React.Component {
   };
 
   handleSliderBlur = () => {
-    utils.events.removeEventsFromDocument(this.getKeyboardEvents());
+    events.removeEventsFromDocument(this.getKeyboardEvents());
   };
 
   handleSliderFocus = () => {
-    utils.events.addEventsToDocument(this.getKeyboardEvents());
+    events.addEventsToDocument(this.getKeyboardEvents());
   };
 
   handleTouchEnd = () => {
@@ -116,14 +118,14 @@ class Slider extends React.Component {
   };
 
   handleTouchMove = (event) => {
-    this.move(utils.events.getTouchPosition(event));
+    this.move(events.getTouchPosition(event));
   };
 
   handleTouchStart = (event) => {
     if (this.state.inputFocused) this.refs.input.blur();
-    this.start(utils.events.getTouchPosition(event));
-    utils.events.addEventsToDocument(this.getTouchEventMap());
-    utils.events.pauseEvent(event);
+    this.start(events.getTouchPosition(event));
+    events.addEventsToDocument(this.getTouchEventMap());
+    events.pauseEvent(event);
   };
 
   addToValue (increment) {
@@ -153,7 +155,7 @@ class Slider extends React.Component {
   }
 
   end (revents) {
-    utils.events.removeEventsFromDocument(revents);
+    events.removeEventsFromDocument(revents);
     this.setState({ pressed: false });
   }
 
@@ -224,7 +226,7 @@ class Slider extends React.Component {
   }
 
   render () {
-    const knobStyles = utils.prefixer({transform: `translateX(${this.knobOffset()}px)`});
+    const knobStyles = prefixer({transform: `translateX(${this.knobOffset()}px)`});
     let className = this.props.className;
     if (this.props.editable) className += ` ${style.editable}`;
     if (this.props.pinned) className += ` ${style.pinned}`;

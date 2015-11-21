@@ -1,5 +1,5 @@
 import React from 'react';
-import utils from '../../utils';
+import utils from '../../utils/utils';
 import Face from './face';
 import Hand from './hand';
 

@@ -3,7 +3,7 @@ import Input from '../../components/input';
 
 class InputTest extends React.Component {
   state = {
-    normal: 'hello world',
+    normal: 'Tony Stark',
     fixedLabel: '',
     withIcon: ''
   };

@@ -1,6 +1,8 @@
 import React from 'react';
 import style from './style';
-import utils from '../../utils';
+import events from '../../utils/events';
+import prefixer from '../../utils/prefixer';
+import utils from '../../utils/utils';
 
 class Hand extends React.Component {
   static propTypes = {
@@ -40,11 +42,11 @@ class Hand extends React.Component {
   }
 
   handleMouseMove = (event) => {
-    this.move(utils.events.getMousePosition(event));
+    this.move(events.getMousePosition(event));
   };
 
   handleTouchMove = (event) => {
-    this.move(utils.events.getTouchPosition(event));
+    this.move(events.getTouchPosition(event));
   };
 
   handleMouseUp = () => {
@@ -56,14 +58,14 @@ class Hand extends React.Component {
   };
 
   mouseStart (event) {
-    utils.events.addEventsToDocument(this.getMouseEventMap());
-    this.move(utils.events.getMousePosition(event));
+    events.addEventsToDocument(this.getMouseEventMap());
+    this.move(events.getMousePosition(event));
   }
 
   touchStart (event) {
-    utils.events.addEventsToDocument(this.getTouchEventMap());
-    this.move(utils.events.getTouchPosition(event));
-    utils.events.pauseEvent(event);
+    events.addEventsToDocument(this.getTouchEventMap());
+    this.move(events.getTouchPosition(event));
+    events.pauseEvent(event);
   }
 
   getPositionRadius (position) {
@@ -80,9 +82,9 @@ class Hand extends React.Component {
     return utils.angle360FromPositions(this.props.origin.x, this.props.origin.y, position.x, position.y);
   }
 
-  end (events) {
+  end (evts) {
     if (this.props.onMoved) this.props.onMoved();
-    utils.events.removeEventsFromDocument(events);
+    events.removeEventsFromDocument(evts);
   }
 
   move (position) {
@@ -93,7 +95,7 @@ class Hand extends React.Component {
 
   render () {
     const className = `${style.hand} ${this.props.className}`;
-    const handStyle = utils.prefixer({
+    const handStyle = prefixer({
       height: this.props.length - this.state.knobWidth / 2,
       transform: `rotate(${this.props.angle}deg)`
     });

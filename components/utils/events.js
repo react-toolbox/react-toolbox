@@ -1,5 +1,4 @@
-module.exports = {
-
+export default {
   getMousePosition (event) {
     return {
       x: event.pageX,
@@ -41,5 +40,4 @@ module.exports = {
     }
     return false;
   }
-
 };

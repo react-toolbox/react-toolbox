@@ -4,7 +4,8 @@ import { SlideLeft, SlideRight } from '../../animations';
 import FontIcon from '../../font_icon';
 import Ripple from '../../ripple';
 import Month from './month';
-import utils from '../../utils';
+import time from '../../utils/time';
+import utils from '../../utils/utils';
 import style from './style';
 
 class Calendar extends React.Component {
@@ -40,11 +41,11 @@ class Calendar extends React.Component {
   }
 
   handleDayClick = (day) => {
-    this.props.onChange(utils.time.setDay(this.state.viewDate, day));
+    this.props.onChange(time.setDay(this.state.viewDate, day));
   };
 
   handleYearClick = (year) => {
-    const viewDate = utils.time.setYear(this.props.selectedDate, year);
+    const viewDate = time.setYear(this.props.selectedDate, year);
     this.setState({viewDate});
     this.props.onChange(viewDate);
   };
@@ -53,7 +54,7 @@ class Calendar extends React.Component {
     this.refs.rippleRight.start(event);
     this.setState({
       direction: 'right',
-      viewDate: utils.time.addMonths(this.state.viewDate, 1)
+      viewDate: time.addMonths(this.state.viewDate, 1)
     });
   };
 
@@ -61,7 +62,7 @@ class Calendar extends React.Component {
     this.refs.rippleLeft.start(event);
     this.setState({
       direction: 'left',
-      viewDate: utils.time.addMonths(this.state.viewDate, -1)
+      viewDate: time.addMonths(this.state.viewDate, -1)
     });
   };
 
