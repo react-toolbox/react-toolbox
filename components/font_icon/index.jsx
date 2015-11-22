@@ -1,23 +1,26 @@
 import React from 'react';
-import style from './style';
+import ClassNames from 'classnames';
 
-const FontIcon = props => {
-  let className = style[props.value];
-  if (props.className) className += ` ${props.className}`;
+const FontIcon = ({
+  children,
+  className,
+  value,
+  ...otherProps
+}) => {
+
+  const classes = ClassNames('material-icons', className);
+
   return (
-    <i data-react-toolbox='icon' {...props} className={className}>
-      {props.children}
-    </i>
+    <span className={classes} {...otherProps} >
+      {value ? value : children}
+    </span>
   );
 };
 
 FontIcon.propTypes = {
+  children: React.PropTypes.string,
   className: React.PropTypes.string,
   value: React.PropTypes.string
-};
-
-FontIcon.defaultProps = {
-  className: ''
 };
 
 export default FontIcon;
