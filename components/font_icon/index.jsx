@@ -23,8 +23,4 @@ FontIcon.propTypes = {
   value: React.PropTypes.string
 };
 
-FontIcon.defaultProps = {
-  className: ''
-};
-
 export default FontIcon;
