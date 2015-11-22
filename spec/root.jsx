@@ -42,26 +42,9 @@ const Root = () => (
       />
     </AppBarToolbox>
 
-    <Autocomplete />
-    <Button />
+
     <Card />
-    <Checkbox />
-    <Dialog />
-    <Drawer />
-    <Dropdown />
-    <IconMenu />
-    <Input />
-    <List />
-    <Menu />
-    <Pickers />
-    <Progress />
-    <Radio />
-    <Slider />
-    <Snackbar />
-    <Switch />
-    <Table />
-    <Tabs />
-    <Tooltip />
+
   </App>
 );
 

@@ -184,19 +184,38 @@
 }
 
 .neutral:not([disabled]) {
-  &.raised, &.floating {
-    color: $button-neutral-color-contrast;
-    background-color: $button-neutral-color;
-  }
-  &.flat, &.toggle {
-    color: $button-neutral-color-contrast;
-    &:hover {
-      background: $button-neutral-color-hover;
+  &:not(.inverse) {
+    &.raised, &.floating {
+      color: $button-neutral-color-contrast;
+      background-color: $button-neutral-color;
     }
-    &:focus:not(:active) {
-      background: $button-neutral-color-hover;
+    &.flat, &.toggle {
+      color: $button-neutral-color-contrast;
+      &:hover {
+        background: $button-neutral-color-hover;
+      }
+      &:focus:not(:active) {
+        background: $button-neutral-color-hover;
+      }
     }
   }
+
+  &.inverse {
+    &.raised, &.floating {
+      color: $button-neutral-color;
+      background-color: $button-neutral-color-contrast;
+    }
+    &.flat, &.toggle {
+      color: $button-neutral-color;
+      &:hover {
+        background: $button-neutral-color-hover;
+      }
+      &:focus:not(:active) {
+        background: $button-neutral-color-hover;
+      }
+    }
+  }
+
 }
 
 .mini.floating {
