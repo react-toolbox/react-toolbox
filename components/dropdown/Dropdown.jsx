@@ -52,7 +52,7 @@ class Dropdown extends React.Component {
     const className = item.value === this.props.value ? style.selected : null;
     return (
       <li key={idx} className={className} onMouseDown={this.handleSelect.bind(this, item.value)}>
-        { this.props.template ? this.props.template(item) : item.label }
+        {this.props.template ? this.props.template(item) : item.label}
       </li>
     );
   }
@@ -67,14 +67,14 @@ class Dropdown extends React.Component {
 
     return (
       <div data-react-toolbox='dropdown' className={className}>
-        { this.props.label ? <label className={style.label}>{this.props.label}</label> : null }
+        {this.props.label ? <label className={style.label}>{this.props.label}</label> : null}
 
         <ul ref='values' className={style.values}>
-          { this.props.source.map(this.renderItem.bind(this)) }
+          {this.props.source.map(this.renderItem.bind(this))}
         </ul>
 
         <div ref='value' className={style.value} onClick={this.handleClick}>
-          { this.props.template ? this.props.template(selected) : <span>{selected.label}</span> }
+          {this.props.template ? this.props.template(selected) : <span>{selected.label}</span>}
         </div>
       </div>
     );

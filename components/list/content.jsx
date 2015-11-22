@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './style';
 
-const ListItemContent = ({ caption, legend }) => (
+const ListItemContent = ({caption, legend}) => (
   <span className={style.text}>
     <span className={style.caption}>{caption}</span>
     <span className={style.legend}>{legend}</span>

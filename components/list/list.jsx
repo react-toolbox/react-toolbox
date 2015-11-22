@@ -1,9 +1,10 @@
 import React from 'react';
-import ListItem from './item';
+import ListItem from './Item';
 import style from './style';
 
 class List extends React.Component {
   static propTypes = {
+    children: React.PropTypes.node,
     className: React.PropTypes.string,
     ripple: React.PropTypes.bool,
     selectable: React.PropTypes.bool

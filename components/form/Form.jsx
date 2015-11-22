@@ -14,6 +14,7 @@ import TimePicker from '../time_picker';
 class Form extends React.Component {
   static propTypes = {
     attributes: React.PropTypes.array,
+    children: React.PropTypes.node,
     className: React.PropTypes.string,
     onChange: React.PropTypes.func,
     onError: React.PropTypes.func,
@@ -69,45 +70,6 @@ class Form extends React.Component {
     }
   };
 
-  render () {
-    const className = `${style.root} ${this.props.className}`;
-    const attributes = this.state.attributes.map((attribute, index) => {
-      if (attribute.type === 'autocomplete') {
-        return <Autocomplete key={index} {...attribute} onChange={this.onChange}/>;
-      } else if (attribute.type === 'submit') {
-        return <Button key={index} {...attribute} ref='submit' onClick={this.onSubmit} type='square' />;
-      } else if (attribute.type === 'checkbox') {
-        return <Checkbox key={index} {...attribute} onChange={this.onChange}/>;
-      } else if (attribute.type === 'date_picker') {
-        return <DatePicker key={index} {...attribute} onChange={this.onChange}/>;
-      } else if (attribute.type === 'dropdown') {
-        return <Dropdown key={index} {...attribute} onChange={this.onChange}/>;
-      } else if (attribute.type === 'radio_group') {
-        return <RadioGroup key={index} {...attribute} onChange={this.onChange}/>;
-      } else if (attribute.type === 'slider') {
-        return <Slider key={index} {...attribute} onChange={this.onChange}/>;
-      } else if (attribute.type === 'switch') {
-        return <Switch key={index} {...attribute} onChange={this.onChange}/>;
-      } else if (attribute.type === 'time_picker') {
-        return <TimePicker key={index} {...attribute} onChange={this.onChange}/>;
-      } else {
-        return <Input key={index} {...attribute} />;
-      }
-    });
-
-    return (
-      <form
-        data-react-toolbox='form'
-        className={className}
-        onChange={this.onChange}
-        onSubmit={this.onSubmit}
-      >
-        { attributes }
-        { this.props.children }
-      </form>
-    );
-  }
-
   storage (props, value) {
     const key = `react-toolbox-form-${props.storage}`;
     if (value) {
@@ -159,6 +121,45 @@ class Form extends React.Component {
         this.refs[field.ref].setValue(field.value);
       }
     }
+  }
+
+  render () {
+    const className = `${style.root} ${this.props.className}`;
+    const attributes = this.state.attributes.map((attribute, index) => {
+      if (attribute.type === 'autocomplete') {
+        return <Autocomplete key={index} {...attribute} onChange={this.onChange}/>;
+      } else if (attribute.type === 'submit') {
+        return <Button key={index} {...attribute} ref='submit' onClick={this.onSubmit} type='square' />;
+      } else if (attribute.type === 'checkbox') {
+        return <Checkbox key={index} {...attribute} onChange={this.onChange}/>;
+      } else if (attribute.type === 'date_picker') {
+        return <DatePicker key={index} {...attribute} onChange={this.onChange}/>;
+      } else if (attribute.type === 'dropdown') {
+        return <Dropdown key={index} {...attribute} onChange={this.onChange}/>;
+      } else if (attribute.type === 'radio_group') {
+        return <RadioGroup key={index} {...attribute} onChange={this.onChange}/>;
+      } else if (attribute.type === 'slider') {
+        return <Slider key={index} {...attribute} onChange={this.onChange}/>;
+      } else if (attribute.type === 'switch') {
+        return <Switch key={index} {...attribute} onChange={this.onChange}/>;
+      } else if (attribute.type === 'time_picker') {
+        return <TimePicker key={index} {...attribute} onChange={this.onChange}/>;
+      } else {
+        return <Input key={index} {...attribute} />;
+      }
+    });
+
+    return (
+      <form
+        data-react-toolbox='form'
+        className={className}
+        onChange={this.onChange}
+        onSubmit={this.onSubmit}
+      >
+        {attributes}
+        {this.props.children}
+      </form>
+    );
   }
 }
 

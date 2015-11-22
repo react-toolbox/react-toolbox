@@ -9,9 +9,10 @@ class MenuItem extends React.Component {
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     icon: React.PropTypes.string,
+    onClick: React.PropTypes.func,
     ripple: React.PropTypes.bool,
-    shortcut: React.PropTypes.string,
-    selected: React.PropTypes.bool
+    selected: React.PropTypes.bool,
+    shortcut: React.PropTypes.string
   };
 
   static defaultProps = {
@@ -46,10 +47,10 @@ class MenuItem extends React.Component {
         onClick={this.handleClick}
         onMouseDown={this.handleMouseDown}
       >
-        { this.props.icon ? <FontIcon value={this.props.icon} className={style.icon}/> : null }
+        {this.props.icon ? <FontIcon value={this.props.icon} className={style.icon}/> : null}
         <span className={style.caption}>{this.props.caption}</span>
-        { this.props.shortcut ? <small className={style.shortcut}>{this.props.shortcut}</small> : null }
-        { this.props.ripple ? <Ripple ref='ripple' className={style.ripple} spread={2.5} /> : null }
+        {this.props.shortcut ? <small className={style.shortcut}>{this.props.shortcut}</small> : null}
+        {this.props.ripple ? <Ripple ref='ripple' className={style.ripple} spread={2.5} /> : null}
       </li>
     );
   }

@@ -11,6 +11,7 @@ class Card extends React.Component {
     image: React.PropTypes.string,
     loading: React.PropTypes.bool,
     onClick: React.PropTypes.func,
+    subtitle: React.PropTypes.string,
     text: React.PropTypes.string,
     title: React.PropTypes.string,
     type: React.PropTypes.oneOf(['wide', 'event', 'image'])
@@ -49,9 +50,9 @@ class Card extends React.Component {
     if (this.props.title || this.props.image) {
       return (
         <figure className={style.figure} style={styleFigure}>
-          { this.props.title ? <h5 data-role='title'>{this.props.title}</h5> : null }
-          { this.props.subtitle ? <small data-role='subtitle'>{this.props.subtitle}</small> : null }
-          { this.props.color ? <div className={style.overflow} style={styleOverflow}></div> : null }
+          {this.props.title ? <h5 data-role='title'>{this.props.title}</h5> : null}
+          {this.props.subtitle ? <small data-role='subtitle'>{this.props.subtitle}</small> : null}
+          {this.props.color ? <div className={style.overflow} style={styleOverflow}></div> : null}
         </figure>
       );
     }
@@ -72,9 +73,9 @@ class Card extends React.Component {
         className={className}
         onMouseDown={this.handleMouseDown}
       >
-        { this.renderTitle() }
-        { this.props.text ? <p data-role='text' className={style.text}>{this.props.text}</p> : null }
-        { this.renderActions() }
+        {this.renderTitle()}
+        {this.props.text ? <p data-role='text' className={style.text}>{this.props.text}</p> : null}
+        {this.renderActions()}
         <Ripple
           ref='ripple'
           className={style.ripple}

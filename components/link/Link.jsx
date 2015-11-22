@@ -12,9 +12,9 @@ const Link = (props) => {
       data-react-toolbox='link'
       className={className}
     >
-      { props.icon ? <FontIcon className={style.icon} value={props.icon} /> : null }
-      { props.label ? <abbr>{props.label}</abbr> : null }
-      { props.count && parseInt(props.count) !== 0 ? <small>{props.count}</small> : null}
+      {props.icon ? <FontIcon className={style.icon} value={props.icon} /> : null}
+      {props.label ? <abbr>{props.label}</abbr> : null}
+      {props.count && parseInt(props.count) !== 0 ? <small>{props.count}</small> : null}
     </a>
   );
 };

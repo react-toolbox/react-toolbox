@@ -1,9 +1,9 @@
 import React from 'react';
-import CSSTransitionGroup from 'react-addons-css-transition-group';
+import CssTransitionGroup from 'react-addons-css-transition-group';
 import { SlideLeft, SlideRight } from '../../animations';
 import FontIcon from '../../font_icon';
 import Ripple from '../../ripple';
-import Month from './month';
+import Month from './Month';
 import time from '../../utils/time';
 import utils from '../../utils/utils';
 import style from './style';
@@ -77,13 +77,13 @@ class Calendar extends React.Component {
       props.ref = 'activeYear';
     }
 
-    return <li {...props}>{ year }</li>;
+    return <li {...props}>{year}</li>;
   }
 
   renderYears () {
     return (
       <ul ref="years" className={style.years}>
-        { utils.range(1900, 2100).map((i) => { return this.renderYear(i); })}
+        {utils.range(1900, 2100).map((i) => { return this.renderYear(i); })}
       </ul>
     );
   }
@@ -98,7 +98,7 @@ class Calendar extends React.Component {
         <FontIcon className={style.next} value='chevron-right' onMouseDown={this.incrementViewMonth}>
           <Ripple ref='rippleRight' className={style.ripple} spread={1.2} centered />
         </FontIcon>
-        <CSSTransitionGroup transitionName={animation} transitionEnterTimeout={350} transitionLeaveTimeout={350}>
+        <CssTransitionGroup transitionName={animation} transitionEnterTimeout={350} transitionLeaveTimeout={350}>
           <Month
             key={this.state.viewDate.getMonth()}
             maxDate={this.props.maxDate}
@@ -106,7 +106,7 @@ class Calendar extends React.Component {
             viewDate={this.state.viewDate}
             selectedDate={this.props.selectedDate}
             onDayClick={this.handleDayClick} />
-        </CSSTransitionGroup>
+        </CssTransitionGroup>
       </div>
     );
   }
@@ -114,7 +114,7 @@ class Calendar extends React.Component {
   render () {
     return (
       <div className={style.root}>
-        { this.props.display === 'months' ? this.renderMonths() : this.renderYears() }
+        {this.props.display === 'months' ? this.renderMonths() : this.renderYears()}
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import time from '../../utils/time';
 import utils from '../../utils/utils';
-import Day from './day';
+import Day from './Day';
 import style from './style';
 
 class Month extends React.Component {
@@ -19,7 +19,7 @@ class Month extends React.Component {
 
   renderWeeks () {
     return utils.range(0, 7).map(i => {
-      return <span key={i}>{ time.getFullDayOfWeek(i).charAt(0) }</span>;
+      return <span key={i}>{time.getFullDayOfWeek(i).charAt(0)}</span>;
     });
   }
 
@@ -45,10 +45,10 @@ class Month extends React.Component {
     return (
       <div className={style.month}>
         <span className={style.title}>
-          { time.getFullMonth(this.props.viewDate)} { this.props.viewDate.getFullYear() }
+          {time.getFullMonth(this.props.viewDate)} {this.props.viewDate.getFullYear()}
         </span>
-        <div className={style.week}>{ this.renderWeeks() }</div>
-        <div className={style.days}>{ this.renderDays() }</div>
+        <div className={style.week}>{this.renderWeeks()}</div>
+        <div className={style.days}>{this.renderDays()}</div>
       </div>
     );
   }

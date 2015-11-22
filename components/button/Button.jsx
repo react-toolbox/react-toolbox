@@ -8,10 +8,12 @@ import events from '../utils/events';
 class Button extends React.Component {
   static propTypes = {
     accent: React.PropTypes.bool,
+    children: React.PropTypes.node,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     flat: React.PropTypes.bool,
     floating: React.PropTypes.bool,
+    href: React.PropTypes.string,
     icon: React.PropTypes.string,
     label: React.PropTypes.string,
     loading: React.PropTypes.bool,

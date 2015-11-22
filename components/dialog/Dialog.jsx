@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../button';
 import Overlay from '../overlay';
-import style from './style';
+import style from './style.scss';
 
 const Dialog = (props) => {
   const actions = props.actions.map((action, idx) => {
@@ -18,11 +18,11 @@ const Dialog = (props) => {
     <Overlay active={props.active} onClick={props.onOverlayClick}>
       <div data-react-toolbox='dialog' className={className}>
         <section role='body' className={style.body}>
-          { props.title ? <h6 className={style.title}>{props.title}</h6> : null }
-          { props.children }
+          {props.title ? <h6 className={style.title}>{props.title}</h6> : null}
+          {props.children}
         </section>
         <nav role='navigation' className={style.navigation}>
-          { actions }
+          {actions}
         </nav>
       </div>
     </Overlay>
@@ -32,6 +32,7 @@ const Dialog = (props) => {
 Dialog.propTypes = {
   actions: React.PropTypes.array,
   active: React.PropTypes.bool,
+  children: React.PropTypes.node,
   className: React.PropTypes.string,
   onOverlayClick: React.PropTypes.func,
   title: React.PropTypes.string,

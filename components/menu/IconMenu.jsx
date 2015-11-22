@@ -1,19 +1,20 @@
 import React from 'react';
 import FontIcon from '../font_icon';
-import Menu from './menu';
+import Menu from './Menu';
 import Ripple from '../ripple';
 import style from './style.icon_menu';
 
 class IconMenu extends React.Component {
   static propTypes = {
+    children: React.PropTypes.node,
     className: React.PropTypes.string,
     icon: React.PropTypes.string,
     iconRipple: React.PropTypes.bool,
     menuRipple: React.PropTypes.bool,
     onClick: React.PropTypes.func,
     onHide: React.PropTypes.func,
-    onShow: React.PropTypes.func,
     onSelect: React.PropTypes.func,
+    onShow: React.PropTypes.func,
     position: React.PropTypes.string,
     selectable: React.PropTypes.bool,
     selected: React.PropTypes.any
@@ -61,9 +62,9 @@ class IconMenu extends React.Component {
           selectable={this.props.selectable}
           selected={this.props.selected}
         >
-          { this.props.children }
+          {this.props.children}
         </Menu>
-        { this.props.iconRipple ? <Ripple ref='ripple' className={style.ripple} spread={2.4} centered /> : null }
+        {this.props.iconRipple ? <Ripple ref='ripple' className={style.ripple} spread={2.4} centered /> : null}
       </div>
     );
   }

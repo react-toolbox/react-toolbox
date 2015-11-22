@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MenuItem from './menu_item';
+import MenuItem from './MenuItem';
 import { events, utils } from '../utils';
 import style from './style.menu';
 
@@ -16,6 +16,7 @@ const POSITION = {
 class Menu extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,
+    children: React.PropTypes.node,
     className: React.PropTypes.string,
     onHide: React.PropTypes.func,
     onSelect: React.PropTypes.func,
@@ -46,25 +47,10 @@ class Menu extends React.Component {
     this.setState({ position, width, height });
   }
 
-  componentDidUpdate (prevProps, prevState) {
-    if (prevState.active && !this.state.active) {
-      if (this.props.onHide) this.props.onHide();
-      events.removeEventsFromDocument({click: this.handleDocumentClick});
-    } else if (!prevState.active && this.state.active && this.props.onShow) {
-      this.props.onShow();
-    }
-  }
-
   componentWillReceiveProps (nextProps) {
     if (this.props.position !== nextProps.position) {
       const position = nextProps.position === POSITION.AUTO ? this.calculatePosition() : nextProps.position;
       this.setState({ position });
-    }
-  }
-
-  componentWillUpdate (prevState, nextState) {
-    if (!prevState.active && nextState.active) {
-      events.addEventsToDocument({click: this.handleDocumentClick});
     }
   }
 
@@ -79,6 +65,21 @@ class Menu extends React.Component {
       }
     }
     return true;
+  }
+
+  componentWillUpdate (prevState, nextState) {
+    if (!prevState.active && nextState.active) {
+      events.addEventsToDocument({click: this.handleDocumentClick});
+    }
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (prevState.active && !this.state.active) {
+      if (this.props.onHide) this.props.onHide();
+      events.removeEventsFromDocument({click: this.handleDocumentClick});
+    } else if (!prevState.active && this.state.active && this.props.onShow) {
+      this.props.onShow();
+    }
   }
 
   handleDocumentClick = (event) => {
@@ -149,20 +150,12 @@ class Menu extends React.Component {
 
     return (
       <div className={className} style={this.getRootStyle()}>
-        { this.props.outline ? <div className={style.outline} style={outlineStyle}></div> : null }
+        {this.props.outline ? <div className={style.outline} style={outlineStyle}></div> : null}
         <ul ref='menu' className={style.menu} style={this.getMenuStyle()}>
-          { this.renderItems() }
+          {this.renderItems()}
         </ul>
       </div>
     );
-  }
-
-  show () {
-    this.setState({active: true});
-  }
-
-  hide () {
-    this.setState({active: false});
   }
 }
 

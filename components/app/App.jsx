@@ -3,6 +3,7 @@ import style from './style';
 
 class App extends React.Component {
   static propTypes = {
+    children: React.PropTypes.node,
     className: React.PropTypes.string
   };
 

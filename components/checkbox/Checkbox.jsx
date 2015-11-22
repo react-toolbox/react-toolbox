@@ -38,6 +38,14 @@ class Checkbox extends React.Component {
     }
   };
 
+  blur () {
+    this.refs.input.blur();
+  }
+
+  focus () {
+    this.refs.input.focus();
+  }
+
   render () {
     let fieldClassName = style.field;
     let checkboxClassName = style.check;
@@ -61,17 +69,9 @@ class Checkbox extends React.Component {
         <span data-role='checkbox' className={checkboxClassName} onMouseDown={this.handleMouseDown}>
           <Ripple ref='ripple' data-role='ripple' className={style.ripple} spread={3} centered />
         </span>
-        { this.props.label ? <span data-role='label' className={style.text}>{this.props.label}</span> : null }
+        {this.props.label ? <span data-role='label' className={style.text}>{this.props.label}</span> : null}
       </label>
     );
-  }
-
-  blur () {
-    this.refs.input.blur();
-  }
-
-  focus () {
-    this.refs.input.focus();
   }
 }
 

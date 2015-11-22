@@ -11,7 +11,7 @@ const Drawer = (props) => {
     <Overlay active={props.active} onClick={props.onOverlayClick}>
       <div data-react-toolbox='drawer' className={className}>
         <aside className={style.content}>
-          { props.children }
+          {props.children}
         </aside>
       </div>
     </Overlay>
@@ -20,6 +20,7 @@ const Drawer = (props) => {
 
 Drawer.propTypes = {
   active: React.PropTypes.bool,
+  children: React.PropTypes.node,
   className: React.PropTypes.string,
   onOverlayClick: React.PropTypes.func,
   type: React.PropTypes.oneOf(['left', 'right'])

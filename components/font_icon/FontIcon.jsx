@@ -12,6 +12,7 @@ const FontIcon = props => {
 };
 
 FontIcon.propTypes = {
+  children: React.PropTypes.any,
   className: React.PropTypes.string,
   value: React.PropTypes.string
 };

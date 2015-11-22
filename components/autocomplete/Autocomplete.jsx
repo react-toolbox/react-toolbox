@@ -87,7 +87,7 @@ class Autocomplete extends React.Component {
     if (this.props.direction === 'auto') {
       const client = ReactDOM.findDOMNode(this.refs.input).getBoundingClientRect();
       const screen_height = window.innerHeight || document.documentElement.offsetHeight;
-      const up = this.props.auto ? client.top > ((screen_height / 2) + client.height) : false;
+      const up = client.top > ((screen_height / 2) + client.height);
       return up ? 'up' : 'down';
     } else {
       return this.props.direction;
@@ -179,8 +179,8 @@ class Autocomplete extends React.Component {
 
     return (
       <div data-react-toolbox='autocomplete' className={className}>
-        { this.props.label ? <label className={style.label}>{this.props.label}</label> : null }
-        { this.renderSelected() }
+        {this.props.label ? <label className={style.label}>{this.props.label}</label> : null}
+        {this.renderSelected()}
         <Input
           ref='input'
           {...this.props}
@@ -192,7 +192,7 @@ class Autocomplete extends React.Component {
           onKeyUp={this.handleQueryKeyUp}
           value={this.state.query}
         />
-        { this.renderSuggestions() }
+        {this.renderSuggestions()}
       </div>
     );
   }

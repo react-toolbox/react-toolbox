@@ -15,6 +15,7 @@ const AppBar = (props) => {
 };
 
 AppBar.propTypes = {
+  children: React.PropTypes.node,
   className: React.PropTypes.string,
   fixed: React.PropTypes.bool,
   flat: React.PropTypes.bool

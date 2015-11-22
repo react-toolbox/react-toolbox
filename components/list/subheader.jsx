@@ -8,7 +8,8 @@ const ListSubHeader = (props) => {
 };
 
 ListSubHeader.propTypes = {
-  caption: React.PropTypes.string
+  caption: React.PropTypes.string,
+  className: React.PropTypes.string
 };
 
 export default ListSubHeader;

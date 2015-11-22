@@ -1,6 +1,6 @@
 import React from 'react';
 import Calendar from './calendar';
-import Dialog from '../dialog';
+import Dialog from '../Dialog';
 import style from './style';
 import time from '../utils/time';
 

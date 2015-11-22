@@ -54,6 +54,14 @@ class Input extends React.Component {
     if (error || counter) return <span className={style.underline}>{error}{counter}</span>;
   }
 
+  blur () {
+    this.refs.input.blur();
+  }
+
+  focus () {
+    this.refs.input.focus();
+  }
+
   render () {
     const className = classNames({
       [style.root]: true,
@@ -71,22 +79,14 @@ class Input extends React.Component {
 
     return (
       <div data-react-toolbox='input' className={className}>
-        { this.renderInput() }
-        { this.props.icon ? <FontIcon className={style.icon} value={this.props.icon} /> : null }
+        {this.renderInput()}
+        {this.props.icon ? <FontIcon className={style.icon} value={this.props.icon} /> : null}
         <span className={style.bar}></span>
-        { this.props.label ? <label className={labelClassName}>{this.props.label}</label> : null }
-        { this.renderUnderline() }
-        { this.props.tooltip ? <Tooltip label={this.props.tooltip} delay={this.props.tooltipDelay}/> : null }
+        {this.props.label ? <label className={labelClassName}>{this.props.label}</label> : null}
+        {this.renderUnderline()}
+        {this.props.tooltip ? <Tooltip label={this.props.tooltip} delay={this.props.tooltipDelay}/> : null}
       </div>
     );
-  }
-
-  blur () {
-    this.refs.input.blur();
-  }
-
-  focus () {
-    this.refs.input.focus();
   }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import CalendarDialog from './dialog';
+import CalendarDialog from './DatePickerDialog';
 import events from '../utils/events';
 import Input from '../input';
 import style from './style';
@@ -42,7 +42,7 @@ class DatePicker extends React.Component {
           className={style.input}
           onMouseDown={this.handleInputMouseDown}
           label={this.props.label}
-          readOnly={true}
+          readOnly
           type='text'
           value={date}
         />
