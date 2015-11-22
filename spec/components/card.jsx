@@ -165,6 +165,46 @@ const avatar = [
   }
 ];
 
+const horizontal = [
+  {
+    name: 'Alternative Layout Example',
+    component: (
+      <Card className={style.card}>
+        <div className={style.cardRow}>
+          <CardTitle
+            title="Title goes here"
+            subtitle="Subtitle here"
+          />
+          <CardMedia
+            className={style.media}
+            image="https://placeimg.com/400/400/nature"
+          />
+        </div>
+        <CardActions>
+          <Button label="Action 1" />
+          <Button label="Action 2" />
+        </CardActions>
+      </Card>
+    )
+  }, {
+    name: 'Another Variation',
+    component: (
+      <Card>
+        <div className={style.cardRow}>
+          <CardTitle
+            title="Title goes here"
+            subtitle="Subtitle here"
+          />
+          <CardMedia
+            className={style.mediaLarge}
+            image="https://placeimg.com/400/400/nature"
+          />
+        </div>
+      </Card>
+    )
+  }
+];
+
 const small = [
   {
     name: 'Small Media Card',
@@ -184,23 +224,20 @@ const small = [
       </Card>
     )
   }, {
-    name: 'Alternative Layout Example',
+    name: 'Small Media Controls',
     component: (
-      <Card className={style.card}>
-        <div className={style.cardRow}>
-          <CardTitle
-            title="Title goes here"
-            subtitle="Subtitle here"
-          />
-          <CardMedia
-            className={style.media}
-            image="https://placeimg.com/400/400/nature"
-          />
-        </div>
-        <CardActions>
-          <Button label="Action 1" />
-          <Button label="Action 2" />
-        </CardActions>
+      <Card style={{width: '140px'}}>
+        <CardMedia
+          contentOverlay
+          aspectRatio="square"
+          image="https://placeimg.com/280/280/people"
+        >
+          <CardActions style={{justifyContent: 'center'}}>
+            <Button inverse toggle icon="fast-rewind" />
+            <Button inverse toggle icon="play-arrow" />
+            <Button inverse toggle icon="fast-forward" />
+          </CardActions>
+        </CardMedia>
       </Card>
     )
   }
@@ -227,6 +264,12 @@ class CardTest extends React.Component {
 
         <DemoList>
           {avatar.map((demo, i) => (
+            <DemoListItem key={i} {...demo}/>
+          ))}
+        </DemoList>
+
+        <DemoList>
+          {horizontal.map((demo, i) => (
             <DemoListItem key={i} {...demo}/>
           ))}
         </DemoList>
