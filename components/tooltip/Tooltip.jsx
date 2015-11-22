@@ -49,7 +49,6 @@ class Tooltip extends React.Component {
   handleParentMouseOut = () => {
     if (this.state.active) {
       this.deferredHide = setTimeout(() => { this.setState({active: false}); }, HIDE_TIMEOUT);
-      console.log(this.deferredHide);
     }
   };
 

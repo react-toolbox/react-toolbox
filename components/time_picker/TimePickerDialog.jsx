@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './style';
 import time from '../utils/time';
-import Clock from './clock';
+import Clock from './Clock';
 import Dialog from '../dialog';
 
 class TimePickerDialog extends React.Component {

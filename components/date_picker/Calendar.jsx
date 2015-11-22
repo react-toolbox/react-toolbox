@@ -1,12 +1,12 @@
 import React from 'react';
 import CssTransitionGroup from 'react-addons-css-transition-group';
-import { SlideLeft, SlideRight } from '../../animations';
-import FontIcon from '../../font_icon';
-import Ripple from '../../ripple';
-import Month from './Month';
-import time from '../../utils/time';
-import utils from '../../utils/utils';
-import style from './style';
+import { SlideLeft, SlideRight } from '../animations';
+import FontIcon from '../font_icon';
+import Ripple from '../ripple';
+import CalendarMonth from './CalendarMonth';
+import time from '../utils/time';
+import utils from '../utils/utils';
+import style from './style.calendar';
 
 class Calendar extends React.Component {
   static propTypes = {
@@ -99,13 +99,14 @@ class Calendar extends React.Component {
           <Ripple ref='rippleRight' className={style.ripple} spread={1.2} centered />
         </FontIcon>
         <CssTransitionGroup transitionName={animation} transitionEnterTimeout={350} transitionLeaveTimeout={350}>
-          <Month
+          <CalendarMonth
             key={this.state.viewDate.getMonth()}
             maxDate={this.props.maxDate}
             minDate={this.props.minDate}
             viewDate={this.state.viewDate}
             selectedDate={this.props.selectedDate}
-            onDayClick={this.handleDayClick} />
+            onDayClick={this.handleDayClick}
+          />
         </CssTransitionGroup>
       </div>
     );

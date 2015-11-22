@@ -1,5 +1,5 @@
 import React from 'react';
-import CalendarDialog from './DatePickerDialog';
+import DatePickerDialog from './DatePickerDialog';
 import events from '../utils/events';
 import Input from '../input';
 import style from './style';
@@ -46,7 +46,7 @@ class DatePicker extends React.Component {
           type='text'
           value={date}
         />
-        <CalendarDialog
+        <DatePickerDialog
           active={this.state.active}
           maxDate={this.props.maxDate}
           minDate={this.props.minDate}

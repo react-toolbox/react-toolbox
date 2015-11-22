@@ -1,8 +1,8 @@
 import React from 'react';
-import time from '../../utils/time';
-import utils from '../../utils/utils';
-import Day from './Day';
-import style from './style';
+import CalendarDay from './CalendarDay';
+import time from '../utils/time';
+import utils from '../utils/utils';
+import style from './style.calendar';
 
 class Month extends React.Component {
   static propTypes = {
@@ -29,7 +29,7 @@ class Month extends React.Component {
       const disabled = time.dateOutOfRange(date, this.props.minDate, this.props.maxDate);
 
       return (
-        <Day
+        <CalendarDay
           key={i}
           day={i}
           disabled={disabled}

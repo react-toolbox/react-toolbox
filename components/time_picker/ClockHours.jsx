@@ -1,7 +1,7 @@
 import React from 'react';
-import utils from '../../utils/utils';
-import Face from './Face';
-import Hand from './Hand';
+import utils from '../utils/utils';
+import Face from './ClockFace';
+import Hand from './ClockHand';
 
 const outerNumbers = [0, ...utils.range(13, 24)];
 const innerNumbers = [12, ...utils.range(1, 12)];

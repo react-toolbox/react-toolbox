@@ -1,8 +1,8 @@
 import React from 'react';
-import style from './style';
-import events from '../../utils/events';
-import prefixer from '../../utils/prefixer';
-import utils from '../../utils/utils';
+import style from './style.clock';
+import events from '../utils/events';
+import prefixer from '../utils/prefixer';
+import utils from '../utils/utils';
 
 class Hand extends React.Component {
   static propTypes = {

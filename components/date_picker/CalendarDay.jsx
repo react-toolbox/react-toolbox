@@ -1,6 +1,6 @@
 import React from 'react';
-import time from '../../utils/time';
-import style from './style';
+import time from '../utils/time';
+import style from './style.calendar';
 
 class Day extends React.Component {
   static propTypes = {

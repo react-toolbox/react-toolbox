@@ -1,8 +1,8 @@
 import React from 'react';
-import utils from '../../utils/utils';
-import style from './style';
-import Face from './Face';
-import Hand from './Hand';
+import utils from '../utils/utils';
+import style from './style.clock';
+import Face from './ClockFace';
+import Hand from './ClockHand';
 
 const minutes = utils.range(0, 60, 5);
 const step = 360 / 60;

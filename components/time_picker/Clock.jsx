@@ -1,8 +1,8 @@
 import React from 'react';
-import style from './style';
-import time from '../../utils/time';
-import Hours from './Hours';
-import Minutes from './Minutes';
+import style from './style.clock';
+import time from '../utils/time';
+import Hours from './ClockHours';
+import Minutes from './ClockMinutes';
 
 class Clock extends React.Component {
   static propTypes = {
