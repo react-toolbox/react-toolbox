@@ -21,8 +21,15 @@ const LoadExampleButton = (props) => {
   );
 };
 
+LoadExampleButton.propTypes = {
+  onClick: React.PropTypes.func
+};
+
 class Main extends React.Component {
-  LOAD_EXAMPLE_CLASS = 'js-load-in-playground playground-button';
+  static propTypes = {
+    onClick: React.PropTypes.func,
+    params: React.PropTypes.object
+  };
 
   state = {
     playground: false
@@ -35,6 +42,8 @@ class Main extends React.Component {
   componentDidUpdate () {
     this.renderExampleLoaders();
   }
+
+  LOAD_EXAMPLE_CLASS = 'js-load-in-playground playground-button';
 
   handlePlayGroundClick = () => {
     this.setState({ playground: !this.state.playground});

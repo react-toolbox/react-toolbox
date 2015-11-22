@@ -17,6 +17,10 @@ class Playground extends React.Component {
     this.setState({code});
   };
 
+  loadCode (code) {
+    this.refs.editor.setCode(code);
+  }
+
   render () {
     return (
       <aside className={this.props.className}>
@@ -32,10 +36,6 @@ class Playground extends React.Component {
         />
       </aside>
     );
-  }
-
-  loadCode (code) {
-    this.refs.editor.setCode(code);
   }
 }
 

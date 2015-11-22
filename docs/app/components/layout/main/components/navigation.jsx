@@ -5,11 +5,12 @@ import components from '../modules/components';
 import style from './navigation.scss';
 
 const MainNavigation = React.createClass({
-  mixins: [History],
-
   propTypes: {
-    active: React.PropTypes.bool
+    active: React.PropTypes.bool,
+    className: React.PropTypes.string
   },
+
+  mixins: [History],
 
   renderDrawerItems () {
     return Object.keys(components).map((key) => {
@@ -39,7 +40,7 @@ const MainNavigation = React.createClass({
     return (
       <aside className={className}>
         <List className={style.list} selectable ripple>
-          { this.renderDrawerItems() }
+          {this.renderDrawerItems()}
         </List>
         <footer className={style.footer}>
           <span>React Toolbox © 2015</span>

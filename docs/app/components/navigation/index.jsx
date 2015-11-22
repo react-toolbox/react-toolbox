@@ -14,14 +14,14 @@ const Navigation = (props) => {
 };
 
 Navigation.propTypes = {
-  className: React.PropTypes.string,
-  activeClassName: React.PropTypes.string
+  activeClassName: React.PropTypes.string,
+  className: React.PropTypes.string
 };
 
 
 Navigation.defaultProps = {
-  className: '',
-  activeClassName: ''
+  activeClassName: '',
+  className: ''
 };
 
 export default Navigation;

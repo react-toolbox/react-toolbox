@@ -6,6 +6,7 @@ import 'codemirror/mode/javascript/javascript';
 class Editor extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
+    codeText: React.PropTypes.string,
     lineNumbers: React.PropTypes.bool,
     onChange: React.PropTypes.func,
     readOnly: React.PropTypes.bool,
@@ -47,6 +48,11 @@ class Editor extends React.Component {
     }
   };
 
+  setCode (code) {
+    this.editor.getDoc().setValue(code);
+    this.handleChange();
+  }
+
   render () {
     let className = style.editor;
     if (this.props.className) className += ` ${this.props.className}`;
@@ -55,11 +61,6 @@ class Editor extends React.Component {
         <textarea ref="editor" defaultValue={this.props.codeText} />
       </div>
     );
-  }
-
-  setCode (code) {
-    this.editor.getDoc().setValue(code);
-    this.handleChange();
   }
 }
 
