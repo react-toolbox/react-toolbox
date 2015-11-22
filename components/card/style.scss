@@ -7,6 +7,7 @@
   flex-direction: column;
   border-radius: 2px;
   overflow: hidden;
+  width: 100%;
 
   // Fonts
   font-size: $card-font-size;
@@ -30,13 +31,19 @@
   background-position: center center;
   height: 0;
 
-  &.wide {
+  &.wide, &.square {
     width: 100%;
+
+    .content > iframe, .content > video, .content > img {
+      max-width: 100%;
+    }
+  }
+
+  &.wide {
     padding-top: 56.25%;
   }
 
   &.square {
-    width: 100%;
     padding-top: 100%;
   }
 
@@ -52,6 +59,7 @@
     justify-content: flex-end;
     width: 100%;
     height: 100%;
+    overflow: hidden;
   }
 
   .contentOverlay {
@@ -120,7 +128,7 @@
   justify-content: flex-start;
   padding: $card-padding-sm $card-padding-sm;
 
-  button[data-react-toolbox="button"] {
+  button {
     min-width: 0;
     margin: 0 $card-padding-sm/2;
     padding: 0 $card-padding-sm;
@@ -134,9 +142,4 @@
     }
   }
 
-  .cardMedia & {
-    button[data-react-toolbox="button"] {
-
-    }
-  }
 }

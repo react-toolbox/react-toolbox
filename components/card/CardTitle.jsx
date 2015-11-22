@@ -35,12 +35,12 @@ const CardTitle = (props) => {
         </div>
       )}
       <div>
-        {(title || children) && (
-          <h5 className={style.title}>
-            {title ? title : children}
-          </h5>
+        {title && <h5 className={style.title}>{title}</h5>}
+        {children && typeof children === 'string' && (
+          <h5 className={style.title}>{children}</h5>
         )}
         {subtitle && <p className={style.subtitle}>{subtitle}</p>}
+        {children && typeof children !== 'string' && children}
       </div>
     </div>
   );
@@ -51,8 +51,11 @@ CardTitle.propTypes = {
     PropTypes.string,
     PropTypes.element
   ]),
-  // children: PropTypes.string,
-  // className: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element
+  ]),
+  className: PropTypes.string,
   subtitle: PropTypes.string,
   title: PropTypes.string
 };

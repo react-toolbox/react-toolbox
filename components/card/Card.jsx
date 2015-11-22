@@ -14,11 +14,7 @@ const Card = ({
   }, className);
 
   return (
-    <div
-      data-react-toolbox="card"
-      className={classes}
-      {...otherProps}
-    >
+    <div className={classes} {...otherProps}>
       {children}
     </div>
   );

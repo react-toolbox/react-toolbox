@@ -1,5 +1,5 @@
-$card-color-white: unquote("rgb(#{$color-white})") !default;
-$card-text-overlay: unquote("rgba(#{$color-black}, 0.3)");
+$card-color-white: $color-white !default;
+$card-text-overlay: rgba($color-black, 0.35) !default;
 
 $card-background-color: $card-color-white;
 

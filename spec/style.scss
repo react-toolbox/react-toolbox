@@ -1,4 +1,4 @@
-@import "../components/base";
+@import "../components/commons";
 @import "../components/app_bar/config";
 @import "../components/button/config";
 
@@ -54,7 +54,7 @@ $offset: 1.8 * $unit;
 }
 
 .primary {
-  background-color: unquote("rgb(#{$color-primary})");
+  background-color: $color-primary;
 }
 
 .demoList {
@@ -91,4 +91,16 @@ $offset: 1.8 * $unit;
 
 .card {
   width: 345px;
+}
+
+.cardRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  .media {
+    width: 80px;
+    height: 80px;
+    margin: 16px 16px 0 0;
+  }
 }
