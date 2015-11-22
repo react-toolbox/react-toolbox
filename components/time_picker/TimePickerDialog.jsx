@@ -78,13 +78,13 @@ class TimePickerDialog extends React.Component {
       <Dialog active={this.props.active} className={className} actions={this.actions}>
         <header className={style.header}>
           <span className={style.hours} onClick={this.switchDisplay.bind(this, 'hours')}>
-            { ('0' + this.formatHours()).slice(-2) }
+            {('0' + this.formatHours()).slice(-2)}
           </span>
           <span className={style.separator}>:</span>
           <span className={style.minutes} onClick={this.switchDisplay.bind(this, 'minutes')}>
-            { ('0' + this.state.displayTime.getMinutes()).slice(-2) }
+            {('0' + this.state.displayTime.getMinutes()).slice(-2)}
           </span>
-          { this.renderAMPMLabels() }
+          {this.renderAMPMLabels()}
         </header>
         <Clock
           ref='clock'

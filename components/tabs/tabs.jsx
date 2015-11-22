@@ -1,12 +1,13 @@
 import React from 'react';
-import Tab from './tab';
-import Content from './content';
+import Tab from './Tab';
+import TabContent from './TabContent';
 import style from './style';
 
 class Tabs extends React.Component {
   static propTypes = {
-    index: React.PropTypes.number,
+    children: React.PropTypes.node,
     className: React.PropTypes.string,
+    index: React.PropTypes.number,
     onChange: React.PropTypes.func
   };
 
@@ -18,14 +19,14 @@ class Tabs extends React.Component {
     pointer: {}
   };
 
-  componentWillReceiveProps (nextProps) {
-    this.updatePointer(nextProps.index);
-  }
-
   componentDidMount () {
     setTimeout(() => {
       this.updatePointer(this.props.index);
     }, 100);
+  }
+
+  componentWillReceiveProps (nextProps) {
+    this.updatePointer(nextProps.index);
   }
 
   handleHeaderClick = (idx) => {
@@ -40,9 +41,9 @@ class Tabs extends React.Component {
       if (item.type === Tab) {
         headers.push(item);
         if (item.props.children) {
-          contents.push(<Content children={item.props.children}/>);
+          contents.push(<TabContent children={item.props.children}/>);
         }
-      } else if (item.type === Content) {
+      } else if (item.type === TabContent) {
         contents.push(item);
       }
     });

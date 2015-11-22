@@ -6,10 +6,13 @@ import utils from '../../utils/utils';
 
 class Hand extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string,
     angle: React.PropTypes.number,
+    className: React.PropTypes.string,
+    length: React.PropTypes.number,
     onMove: React.PropTypes.func,
-    onMoved: React.PropTypes.func
+    onMoved: React.PropTypes.func,
+    origin: React.PropTypes.object,
+    step: React.PropTypes.number
   };
 
   static defaultProps = {

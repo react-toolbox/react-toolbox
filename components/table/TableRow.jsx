@@ -6,6 +6,7 @@ import style from './style';
 class TableRow extends React.Component {
   static propTypes = {
     data: React.PropTypes.object,
+    model: React.PropTypes.object,
     onChange: React.PropTypes.func,
     onSelect: React.PropTypes.func,
     selectable: React.PropTypes.bool,
@@ -63,8 +64,8 @@ class TableRow extends React.Component {
 
     return (
       <tr data-react-toolbox-table='row' className={className}>
-        { this.renderSelectCell() }
-        { this.renderCells() }
+        {this.renderSelectCell()}
+        {this.renderCells()}
       </tr>
     );
   }

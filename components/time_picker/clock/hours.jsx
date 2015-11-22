@@ -1,7 +1,7 @@
 import React from 'react';
 import utils from '../../utils/utils';
-import Face from './face';
-import Hand from './hand';
+import Face from './Face';
+import Hand from './Hand';
 
 const outerNumbers = [0, ...utils.range(13, 24)];
 const innerNumbers = [12, ...utils.range(1, 12)];
@@ -10,10 +10,13 @@ const step = 360 / 12;
 
 class Hours extends React.Component {
   static propTypes = {
+    center: React.PropTypes.object,
     format: React.PropTypes.oneOf(['24hr', 'ampm']),
     onChange: React.PropTypes.func,
     onHandMoved: React.PropTypes.func,
-    selected: React.PropTypes.number
+    radius: React.PropTypes.number,
+    selected: React.PropTypes.number,
+    spacing: React.PropTypes.number
   };
 
   state = {
@@ -77,7 +80,7 @@ class Hours extends React.Component {
             twoDigits={is24hr}
             active={is24hr ? selected : (selected % 12 || 12)}
           />
-          { this.renderInnerFace(radius - spacing * innerSpacing) }
+          {this.renderInnerFace(radius - spacing * innerSpacing)}
           <Hand ref='hand'
             angle={selected * step}
             length={(this.state.inner ? radius - spacing * innerSpacing : radius) - spacing}

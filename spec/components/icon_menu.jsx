@@ -31,12 +31,12 @@ class IconMenuTest extends React.Component {
         <IconMenu
           icon='more-vert'
           position='auto'
-          iconRipple={true}
-          menuRipple={true}
+          iconRipple
+          menuRipple
           onShow={this.handleShow}
           onHide={this.handleHide}
           onSelect={this.handleSelect}
-          selectable={true}
+          selectable
           selected={this.state.selected}
         >
           <MenuItem onClick={this.handleItem} value='refresh' caption='Refresh' />

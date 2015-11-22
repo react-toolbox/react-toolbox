@@ -25,7 +25,7 @@ class DropdownTest extends React.Component {
   render () {
     return (
       <Dropdown
-        auto={true}
+        auto
         onChange={this.handleChange}
         source={countries}
         value={this.state.value}

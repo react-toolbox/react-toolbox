@@ -1,8 +1,9 @@
 import React from 'react';
-import RadioButton from './radio_button';
+import RadioButton from './RadioButton';
 
 class RadioGroup extends React.Component {
   static propTypes = {
+    children: React.PropTypes.node,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     name: React.PropTypes.string,

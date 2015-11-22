@@ -4,6 +4,7 @@ import style from './style';
 class TabContent extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,
+    children: React.PropTypes.node,
     className: React.PropTypes.string,
     tabIndex: React.PropTypes.number
   };

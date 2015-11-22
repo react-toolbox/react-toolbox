@@ -34,7 +34,7 @@ class List extends React.Component {
     if (this.props.className) className += ` ${this.props.className}`;
     return (
       <ul className={className}>
-        { this.renderItems() }
+        {this.renderItems()}
       </ul>
     );
   }

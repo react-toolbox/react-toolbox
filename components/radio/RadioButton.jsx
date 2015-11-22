@@ -41,6 +41,14 @@ class RadioButton extends React.Component {
     if (!this.props.disabled) this.refs.ripple.start(event);
   };
 
+  blur () {
+    this.refs.input.blur();
+  }
+
+  focus () {
+    this.refs.input.focus();
+  }
+
   render () {
     let labelClassName = style[this.props.disabled ? 'disabled' : 'field'];
     const radioClassName = style[this.props.checked ? 'radio-checked' : 'radio'];
@@ -59,17 +67,9 @@ class RadioButton extends React.Component {
         <span role='radio' className={radioClassName} onMouseDown={this.handleMouseDown}>
           <Ripple ref='ripple' role='ripple' className={style.ripple} spread={3} centered />
         </span>
-        { this.props.label ? <span className={style.text}>{this.props.label}</span> : null }
+        {this.props.label ? <span className={style.text}>{this.props.label}</span> : null}
       </label>
     );
-  }
-
-  blur () {
-    this.refs.input.blur();
-  }
-
-  focus () {
-    this.refs.input.focus();
   }
 }
 

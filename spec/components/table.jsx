@@ -40,7 +40,7 @@ class TableTest extends React.Component {
           model={UserModel}
           onChange={this.handleChange}
           onSelect={this.handleSelect}
-          selectable={true}
+          selectable
           selected={this.state.selected}
           source={this.state.source}
         />

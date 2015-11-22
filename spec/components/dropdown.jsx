@@ -67,7 +67,7 @@ class DropdownTest extends React.Component {
 
         <Dropdown
           source={countries}
-          disabled={true}
+          disabled
           onChange={this.handleChange.bind(this, 'dropdown3')}
         />
       </section>

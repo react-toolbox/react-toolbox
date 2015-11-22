@@ -3,6 +3,10 @@ import Button from '../../components/button';
 import Snackbar from '../../components/snackbar';
 
 class SnackbarTest extends React.Component {
+  state = {
+    active: false
+  };
+
   handleSnackbarClick = () => {
     this.setState({active: false});
   };
@@ -13,10 +17,6 @@ class SnackbarTest extends React.Component {
 
   handleClick = () => {
     this.setState({active: true});
-  };
-
-  state = {
-    active: false
   };
 
   render () {

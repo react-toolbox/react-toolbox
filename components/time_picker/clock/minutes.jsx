@@ -1,16 +1,19 @@
 import React from 'react';
 import utils from '../../utils/utils';
 import style from './style';
-import Face from './face';
-import Hand from './hand';
+import Face from './Face';
+import Hand from './Hand';
 
 const minutes = utils.range(0, 60, 5);
 const step = 360 / 60;
 
 class Minutes extends React.Component {
   static propTypes = {
+    center: React.PropTypes.object,
+    onChange: React.PropTypes.func,
+    radius: React.PropTypes.number,
     selected: React.PropTypes.number,
-    onChange: React.PropTypes.func
+    spacing: React.PropTypes.number
   };
 
   static defaultProps = {
@@ -39,7 +42,7 @@ class Minutes extends React.Component {
           numbers={minutes}
           spacing={this.props.spacing}
           radius={this.props.radius}
-          twoDigits={true}
+          twoDigits
           active={this.props.selected}
         />
         <Hand ref='hand'

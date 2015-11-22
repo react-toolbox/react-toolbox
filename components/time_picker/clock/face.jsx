@@ -2,6 +2,14 @@ import React from 'react';
 import style from './style';
 
 class Face extends React.Component {
+  static propTypes = {
+    active: React.PropTypes.number,
+    numbers: React.PropTypes.array,
+    radius: React.PropTypes.number,
+    spacing: React.PropTypes.number,
+    twoDigits: React.PropTypes.bool
+  };
+
   static defaultProps = {
     active: null,
     numbers: [],
@@ -33,7 +41,7 @@ class Face extends React.Component {
         style={this.numberStyle(this.props.radius - this.props.spacing, idx + 1)}
         key={number}
       >
-        { this.props.twoDigits ? ('0' + number).slice(-2) : number }
+        {this.props.twoDigits ? ('0' + number).slice(-2) : number}
       </span>
     );
   }
@@ -47,7 +55,7 @@ class Face extends React.Component {
         onMouseDown={this.props.onMouseDown}
         style={this.faceStyle()}
       >
-        { this.props.numbers.map(this.renderNumber.bind(this))}
+        {this.props.numbers.map(this.renderNumber.bind(this))}
       </div>
     );
   }

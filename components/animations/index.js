@@ -1,4 +1,2 @@
-import SlideLeft from './slide-left';
-import SlideRight from './slide-right';
-
-export default {SlideLeft, SlideRight};
+export SlideLeft from './slide-left';
+export SlideRight from './slide-right';
