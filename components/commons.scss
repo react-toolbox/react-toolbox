@@ -99,7 +99,7 @@ p {
   @include typo-body-1;
 }
 
-@if $import-flex-attributes == true {
+@if $import-flex-attributes != false {
   //-- Flex
   [data-flex] {
     display: flex;

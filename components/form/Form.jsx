@@ -6,7 +6,7 @@ import Checkbox from '../checkbox';
 import DatePicker from '../date_picker';
 import Dropdown from '../dropdown';
 import Input from '../input';
-import RadioGroup from '../radio/radio_group';
+import RadioGroup from '../radio/RadioGroup';
 import Slider from '../slider';
 import Switch from '../switch';
 import TimePicker from '../time_picker';

@@ -1,6 +1,6 @@
 import React from 'react';
 import Checkbox from '../checkbox';
-import ListItemContent from './Content';
+import ListItemContent from './ListItemContent';
 import style from './style';
 
 const ListCheckbox = (props) => {

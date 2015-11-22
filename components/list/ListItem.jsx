@@ -1,6 +1,6 @@
 import React from 'react';
 import FontIcon from '../font_icon';
-import ListItemContent from './Content';
+import ListItemContent from './ListItemContent';
 import Ripple from '../ripple';
 import style from './style';
 
