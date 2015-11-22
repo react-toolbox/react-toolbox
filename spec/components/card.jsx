@@ -155,7 +155,7 @@ const avatar = [
           <iframe width="1280" height="720" src="https://www.youtube.com/embed/sGbxmsDFVnE?rel=0&amp;showinfo=0" frameBorder="0" allowFullScreen></iframe>
         </CardMedia>
         <CardActions style={{ justifyContent: 'flex-end' }}>
-          <Button toggle icon="report-problem" />
+          <Button toggle icon="report_problem" />
           <Spacer/>
           <Button toggle icon="share" />
           <Button toggle icon="favorite" />
@@ -217,9 +217,9 @@ const small = [
           <CardTitle>Test</CardTitle>
         </CardMedia>
         <CardActions style={{justifyContent: 'center'}}>
-          <Button toggle icon="thumb-down" />
-          <Button toggle icon="thumb-up" />
-          <Button toggle icon="turned-in-not" />
+          <Button toggle icon="thumb_down" />
+          <Button toggle icon="thumb_up" />
+          <Button toggle icon="turned_in_not" />
         </CardActions>
       </Card>
     )
@@ -233,9 +233,9 @@ const small = [
           image="https://placeimg.com/280/280/people"
         >
           <CardActions style={{justifyContent: 'center'}}>
-            <Button inverse toggle icon="fast-rewind" />
-            <Button inverse toggle icon="play-arrow" />
-            <Button inverse toggle icon="fast-forward" />
+            <Button inverse toggle icon="fast_rewind" />
+            <Button inverse toggle icon="play_arrow" />
+            <Button inverse toggle icon="fast_forward" />
           </CardActions>
         </CardMedia>
       </Card>
