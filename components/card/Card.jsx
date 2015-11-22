@@ -1,36 +1,33 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import ClassNames from 'classnames';
 import style from './style';
 
-class Card extends Component {
+const Card = ({
+    children,
+    className,
+    raised,
+    ...otherProps
+  }) => {
 
-  static propTypes = {
-    children: PropTypes.any,
-    className: PropTypes.string,
-    raised: PropTypes.bool
-  }
+  const classes = ClassNames(style.card, {
+    [style.raised]: raised
+  }, className);
 
-  render () {
-    const {
-      children,
-      className,
-      raised,
-      ...otherProps
-    } = this.props;
+  return (
+    <div
+      data-react-toolbox="card"
+      className={classes}
+      {...otherProps}
+    >
+      {children}
+    </div>
+  );
+};
 
-    const classes = ClassNames(style.card, {
-      [style.raised]: raised
-    }, className);
-
-    return (
-      <div
-        data-react-toolbox="card"
-        className={classes}
-      >
-        {children}
-      </div>
-    );
-  }
-}
+Card.propTypes = {
+  children: PropTypes.any,
+  className: PropTypes.string,
+  raised: PropTypes.bool
+};
 
 export default Card;

@@ -53,18 +53,23 @@ $offset: 1.8 * $unit;
   // height: $unit;
 }
 
+.primary {
+  background-color: unquote("rgb(#{$color-primary})");
+}
+
 .demoList {
   margin: 20px 0;
   padding: 20px 0;
   list-style: none;
   display: flex;
+  flex-wrap: wrap;
   position: relative;
   justify-content: center;
   align-items: stretch;
 }
 
 .demoListItem {
-  margin: 0 30px;
+  margin: 0 30px 100px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

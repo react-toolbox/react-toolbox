@@ -1,9 +1,8 @@
 import React, { PropTypes, Component } from 'react';
-import ClassNames from '../decorators/ClassNames';
+import ClassNames from 'classnames';
 import FontIcon from '../font_icon'; // ewww! :P @TODO
 import style from './style';
 
-@ClassNames(style)
 class Avatar extends Component {
 
   static propTypes = {
@@ -13,7 +12,6 @@ class Avatar extends Component {
       PropTypes.node
     ]),
     className: PropTypes.string,
-    classNames: PropTypes.func,
     icon: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element
@@ -34,7 +32,6 @@ class Avatar extends Component {
       accent,
       children,
       className,
-      classNames,
       icon,
       primary,
       image,
@@ -43,10 +40,9 @@ class Avatar extends Component {
 
     let component;
 
-    const classes = classNames('avatar', {
-      accent,
-      primary
-    }, className);
+    const classes = ClassNames(style.avatar, [
+      primary ? style.primary : accent ? style.accent : null
+    ], className);
 
     if (typeof image === 'string') {
       component = <img className={style.avatarImg} src={image} />;

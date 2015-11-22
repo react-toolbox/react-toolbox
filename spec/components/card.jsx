@@ -25,6 +25,20 @@ const demos = [
       </Card>
     )
   }, {
+    name: 'Card Media Area',
+    component: (
+      <Card className={style.card}>
+        <CardMedia
+          aspectRatio="wide"
+          className={style.primary}
+        >
+          <CardTitle>Basic Card</CardTitle>
+        </CardMedia>
+        <CardTitle subtitle="You can also use a subtitle like this" />
+        <CardText>{dummyText}</CardText>
+      </Card>
+    )
+  }, {
     name: '16:9 Card Media',
     component: (
       <Card className={style.card}>
@@ -44,7 +58,6 @@ const demos = [
     component: (
       <Card className={style.card}>
         <CardTitle
-          className="my-custom-class"
           avatar="https://placeimg.com/80/80/animals"
           title="Avatar Card"
           subtitle="An awesome basic card"
@@ -57,6 +70,26 @@ const demos = [
           <Button icon="feedback" />
           <Button icon="favorite" />
         </CardActions>
+      </Card>
+    )
+  }, {
+    name: 'Square Media Card',
+    component: (
+      <Card className={style.card}>
+        <CardMedia
+          contentOverlay
+          aspectRatio="square"
+          image="https://placeimg.com/800/450/nature"
+        >
+          <CardTitle
+            title="Title goes here"
+            subtitle="Subtitle here"
+          />
+          <CardActions>
+            <Button label="Action 1" />
+            <Button label="Action 2" />
+          </CardActions>
+        </CardMedia>
       </Card>
     )
   }

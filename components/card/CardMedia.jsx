@@ -9,6 +9,7 @@ class CardMedia extends Component {
     children: PropTypes.node,
     className: PropTypes.string,
     color: PropTypes.string,
+    contentOverlay: PropTypes.bool,
     image: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.node
@@ -21,6 +22,7 @@ class CardMedia extends Component {
       children,
       className,
       color,
+      contentOverlay,
       image,
       ...otherProps
     } = this.props;
@@ -29,6 +31,10 @@ class CardMedia extends Component {
       [style[aspectRatio]]: aspectRatio
     }, className);
 
+    const innerClasses = ClassNames(style.content, {
+      [style.contentOverlay]: contentOverlay
+    });
+
     const bgStyle = {
       backgroundColor: color ? color : undefined,
       backgroundImage: typeof image === 'string' ? `url('${image}')` : undefined
@@ -36,7 +42,7 @@ class CardMedia extends Component {
 
     return (
       <div style={bgStyle} className={classes} {...otherProps}>
-        <div className={style.content}>
+        <div className={innerClasses}>
           {children}
         </div>
       </div>
