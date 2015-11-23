@@ -1,3 +1,4 @@
+/* eslint-disable no-redeclare */
 import React, { PropTypes, Component } from 'react';
 import ClassNames from 'classnames';
 import FontIcon from '../font_icon'; // ewww! :P @TODO
@@ -28,18 +29,8 @@ class Avatar extends Component {
   }
 
   render () {
-    const {
-      accent,
-      children,
-      className,
-      icon,
-      primary,
-      image,
-      ...otherProps
-    } = this.props;
-
     let component;
-
+    const { accent, children, className, icon, primary, image, ...other } = this.props;
     const classes = ClassNames(style.avatar, [
       primary ? style.primary : accent ? style.accent : null
     ], className);
@@ -52,11 +43,8 @@ class Avatar extends Component {
       component = <FontIcon value="icon" />;
     }
 
-    return (
-      <div className={classes}>{component ? component : children}</div>
-    );
+    return <div className={classes}>{component ? component : children}</div>;
   }
-
 }
 
 export default Avatar;
