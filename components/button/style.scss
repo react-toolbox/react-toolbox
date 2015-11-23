@@ -33,7 +33,6 @@
     display: inline-block;
     width: 1em;
     height: 1em;
-    font-size: 120%;
     vertical-align: middle;
     fill: currentColor;
   }
@@ -77,31 +76,6 @@
   }
   &[disabled] {
     @extend %disabled;
-  }
-}
-
-.toggle {
-  @extend %button;
-  @extend %toggle;
-  width: $button-height;
-  background: transparent;
-  border-radius: 50%;
-  &:hover {
-    background: $button-flat-color-hover;
-  }
-  &:focus:not(:active) {
-    background: $button-flat-color-hover;
-  }
-  &[disabled] {
-    @extend %disabled;
-  }
-  .icon {
-    font-size: 120%;
-    line-height: $button-height;
-    vertical-align: middle;
-  }
-  [data-react-toolbox="ripple"] {
-    border-radius: 50%;
   }
 }
 
@@ -151,6 +125,24 @@
   }
 }
 
+.toggle {
+  @extend %button;
+  width: $button-height;
+  background: transparent;
+  border-radius: 50%;
+  &[disabled] {
+    @extend %disabled;
+  }
+  > .icon {
+    font-size: $button-toggle-font-size;
+    line-height: $button-height;
+    vertical-align: middle;
+  }
+  [data-react-toolbox="ripple"] {
+    border-radius: 50%;
+  }
+}
+
 .primary:not([disabled]) {
   &.raised, &.floating {
     color: $button-primary-color-contrast;
@@ -158,12 +150,12 @@
   }
   &.flat, &.toggle {
     color: $button-primary-color;
-    &:hover {
-      background: $button-primary-color-hover;
-    }
     &:focus:not(:active) {
       background: $button-primary-color-hover;
     }
+  }
+  &.flat:hover {
+    background: $button-primary-color-hover;
   }
 }
 
@@ -174,12 +166,12 @@
   }
   &.flat, &.toggle {
     color: $button-accent-color;
-    &:hover {
-      background: $button-accent-color-hover;
-    }
     &:focus:not(:active) {
       background: $button-accent-color-hover;
     }
+  }
+  &.flat:hover {
+    background: $button-accent-color-hover;
   }
 }
 
@@ -191,12 +183,12 @@
     }
     &.flat, &.toggle {
       color: $button-neutral-color-contrast;
-      &:hover {
-        background: $button-neutral-color-hover;
-      }
       &:focus:not(:active) {
         background: $button-neutral-color-hover;
       }
+    }
+    &.flat:hover {
+      background: $button-neutral-color-hover;
     }
   }
 
@@ -207,15 +199,14 @@
     }
     &.flat, &.toggle {
       color: $button-neutral-color;
-      &:hover {
-        background: $button-neutral-color-hover;
-      }
       &:focus:not(:active) {
         background: $button-neutral-color-hover;
       }
     }
+    &.flat:hover {
+      background: $button-neutral-color-hover;
+    }
   }
-
 }
 
 .mini.floating {

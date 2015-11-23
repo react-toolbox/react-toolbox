@@ -22,7 +22,7 @@ class IconMenu extends React.Component {
 
   static defaultProps = {
     className: '',
-    icon: 'more-vert',
+    icon: 'more_vert',
     iconRipple: true,
     menuRipple: true,
     position: 'auto',

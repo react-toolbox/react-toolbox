@@ -1,5 +1,5 @@
 const MenuTest = () => (
-  <IconMenu icon='more-vert' position='top-left' menuRipple>
+  <IconMenu icon='more_vert' position='top-left' menuRipple>
     <MenuItem value='download' icon='get-app' caption='Download' />
     <MenuItem value='help' icon='favorite' caption='Favorite' />
     <MenuItem value='settings' icon='open-in-browser' caption='Open in app' />

@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../../components/button';
+import { Button, IconButton } from '../../components/button';
 
 const GithubIcon = () => (
   <svg viewBox="0 0 284 277">
@@ -22,8 +22,8 @@ const ButtonTest = () => (
     <Button icon='add' floating primary />
     <Button icon='add' floating primary disabled />
     <Button icon='add' floating accent mini />
-    <Button icon='mood' toggle />
-    <Button toggle primary><GithubIcon /></Button>
+    <IconButton icon='favorite' accent />
+    <IconButton primary><GithubIcon/></IconButton>
     <Button icon='add' label='Add this' flat primary />
     <Button icon='add' label='Add this' flat disabled />
     <Button icon='bookmark' label='Bookmark' raised primary loading />

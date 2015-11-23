@@ -92,10 +92,10 @@ class Calendar extends React.Component {
     const animation = this.state.direction === 'left' ? SlideLeft : SlideRight;
     return (
       <div data-react-toolbox='calendar'>
-        <FontIcon className={style.prev} value='chevron-left' onMouseDown={this.decrementViewMonth}>
+        <FontIcon className={style.prev} value='chevron_left' onMouseDown={this.decrementViewMonth}>
           <Ripple ref='rippleLeft' className={style.ripple} spread={1.2} centered />
         </FontIcon>
-        <FontIcon className={style.next} value='chevron-right' onMouseDown={this.incrementViewMonth}>
+        <FontIcon className={style.next} value='chevron_right' onMouseDown={this.incrementViewMonth}>
           <Ripple ref='rippleRight' className={style.ripple} spread={1.2} centered />
         </FontIcon>
         <CssTransitionGroup transitionName={animation} transitionEnterTimeout={350} transitionLeaveTimeout={350}>

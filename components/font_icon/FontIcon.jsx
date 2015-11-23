@@ -1,24 +1,18 @@
+/* eslint-disable no-redeclare */
 import React from 'react';
 import ClassNames from 'classnames';
 
-const FontIcon = ({
-  children,
-  className,
-  value,
-  ...otherProps
-}) => {
-
+const FontIcon = ({ children, className, value, ...other}) => {
   const classes = ClassNames('material-icons', className);
-
   return (
-    <span className={classes} {...otherProps} >
+    <span className={classes} {...other} >
       {value ? value : children}
     </span>
   );
 };
 
 FontIcon.propTypes = {
-  children: React.PropTypes.string,
+  children: React.PropTypes.any,
   className: React.PropTypes.string,
   value: React.PropTypes.string
 };

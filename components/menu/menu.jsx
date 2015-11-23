@@ -141,6 +141,14 @@ class Menu extends React.Component {
     });
   }
 
+  show () {
+    this.setState({active: true});
+  }
+
+  hide () {
+    this.setState({active: false});
+  }
+
   render () {
     const outlineStyle = { width: this.state.width, height: this.state.height };
     let className = `${style.root} ${style[this.state.position]}`;

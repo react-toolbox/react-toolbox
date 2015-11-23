@@ -7,7 +7,7 @@ A [Menu](https://www.google.com/design/spec/components/menus.html) is a temporar
 import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox';
  
 const MenuTest = () => (
-  <IconMenu icon='more-vert' position='top-left' menuRipple selectable>
+  <IconMenu icon='more_vert' position='top-left' menuRipple selectable>
     <MenuItem value='download' icon='get-app' caption='Download' />
     <MenuItem value='help' icon='favorite' caption='Favorite' />
     <MenuItem value='settings' icon='open-in-browser' caption='Open in app' />
@@ -47,7 +47,7 @@ As the most usual scenario will be to open the menu from a click in an Icon, we 
 | Name              | Type          | Default         | Description|
 |:-----|:-----|:-----|:-----|
 | `className`   | `String`    |  `''`    | Set a class to give custom styles to the icon wrapper.| 
-| `icon`    | `String`    | `more-vert`  | Icon font key string to display the opener icon. |
+| `icon`    | `String`    | `more_vert`  | Icon font key string to display the opener icon. |
 | `iconRipple`    | `String`    | `true`  | If true, the icon will show a ripple when is clicked. |
 | `menuRipple`    | `String`    | `true`  | Transferred to the `Menu` component. |
 | `onClick`    | `Function`    |    | Callback that will be called when the icon is clicked. |
