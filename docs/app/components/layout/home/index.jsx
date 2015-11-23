@@ -4,7 +4,7 @@ import { Card, Button } from 'react-toolbox';
 import Logo from '../../logo';
 import Navigation from '../../navigation';
 import style from './style';
-import authors from './modules/authors';
+import authors from './modules/authors.jsx';
 
 const Home = () => (
   <article>

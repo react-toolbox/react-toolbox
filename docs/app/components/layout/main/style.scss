@@ -2,6 +2,11 @@
 @import "~react-toolbox/app_bar/config";
 @import "~react-toolbox/button/config";
 
+hr {
+  margin: 4rem 0;
+  border-top: 1px solid $color-divider;
+}
+
 .appbar {
   padding-right: 8 * $unit;
 }

@@ -2,6 +2,10 @@ import React, { PropTypes, Component } from 'react';
 import ClassNames from 'classnames';
 import style from './style';
 
+/**
+ * Basic card content container. Good for
+ * small descriptions or other supplementary text.
+ */
 class CardText extends Component {
 
   static propTypes = {

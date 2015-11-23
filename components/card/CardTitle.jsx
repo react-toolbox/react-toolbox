@@ -3,16 +3,20 @@ import ClassNames from 'classnames';
 import { Avatar } from '../avatar';
 import style from './style';
 
-const CardTitle = (props) => {
-
-  const {
-    avatar,
-    children,
-    className,
-    subtitle,
-    title,
-    ...otherProps
-  } = props;
+/**
+ * A versatile title block that can be used in
+ * various places on the card, including the media
+ * area. This component can also display an avatar next
+ * to the title content.
+ */
+const CardTitle = ({
+  avatar,
+  children,
+  className,
+  subtitle,
+  title,
+  ...otherProps
+}) => {
 
   const classes = ClassNames(style.cardTitle, {
     [style.small]: avatar,
@@ -53,7 +57,8 @@ CardTitle.propTypes = {
   ]),
   children: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.element
+    PropTypes.element,
+    PropTypes.array
   ]),
   className: PropTypes.string,
   subtitle: PropTypes.string,
