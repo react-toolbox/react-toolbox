@@ -406,7 +406,7 @@ linters:
     enabled: false
 
   SelectorFormat:
-    enabled: true
+    enabled: false
     convention: hyphenated_lowercase # or 'BEM', or 'snake_case', or 'camel_case', or a regex pattern
 
   Shorthand:
