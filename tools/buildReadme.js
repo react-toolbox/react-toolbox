@@ -51,7 +51,9 @@ new Promise((resolve, reject) => {
 
   for (const componentName in fulfillments) {
     const reactAPI = fulfillments[componentName];
-    markdown = markdown.concat(GenerateMarkdown(componentName, reactAPI)).concat('\n\n');
+    markdown = markdown
+      .concat(GenerateMarkdown(componentName, reactAPI))
+      .concat('\n\n------------------------------------------------------------------\n\n');
   }
 
   return markdown;

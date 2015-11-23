@@ -1,24 +1,7 @@
-/**
- * Copyright (c) 2015, Facebook, Inc.
- * All rights reserved.
- *
- * Converted to ES6 by Nathan Marks <info@nathanmarks.io>
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
 
-// function stringOfLength (string, length) {
-//   let newString = '';
-//   for (let i = 0; i < length; i++) {
-//     newString += string;
-//   }
-//   return newString;
-// }
 
 function generateTitle (name) {
-  return `## ${name}`;
+  return `## ${name} \`<${name}/>\``;
 }
 
 function generateDesciption (description) {
@@ -28,19 +11,27 @@ function generateDesciption (description) {
 function generatePropType (type) {
   let values;
   if (Array.isArray(type.value)) {
-    values = '(' +
+    values = '(`' +
       type.value.map(function (typeValue) {
         return typeValue.name || typeValue.value;
-      }).join('|') +
-      ')';
+      }).join('`,`') +
+      '`)';
   } else {
     values = type.value;
   }
 
-  return '`' + type.name + (values ? values : '') + '`';
+  return `\`${type.name}\`${(values ? values : '')}`;
 }
 
 function generateProp (propName, prop) {
+  if (!prop.description) {
+    if (propName === 'className') {
+      prop.description = 'Additional class(es) for custom styling.';
+    } else if (propName === 'children') {
+      prop.description = 'Children to pass through the component.';
+    }
+  }
+
   return (
     `| \`${propName}\` ${prop.required ? '(required)' : ''}` +
     `| ${(prop.type ? generatePropType(prop.type) : '')} ` +
@@ -51,7 +42,7 @@ function generateProp (propName, prop) {
 }
 
 function generateProps (props) {
-  const title = '##### Props';
+  const title = '### Properties';
 
   return (
     `${title}\n` +

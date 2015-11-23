@@ -3,7 +3,7 @@ import ClassNames from 'classnames';
 import style from './style';
 
 /**
- * The base card component. This acts as the main card element
+ * The base card component. This acts as the main card container
  * that all subcomponents are placed within.
  */
 const Card = ({
@@ -25,9 +25,10 @@ const Card = ({
 };
 
 Card.propTypes = {
+  /** Child components, usually Card subcomponents. */
   children: PropTypes.any,
   className: PropTypes.string,
-  /** Increases the shadow depth */
+  /** Increases the shadow depth to appear elevated. */
   raised: PropTypes.bool
 };
 
