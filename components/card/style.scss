@@ -2,23 +2,14 @@
 @import "./config";
 
 .card {
-  // Box Model
   display: flex;
-  flex-direction: column;
-  border-radius: 2px;
-  overflow: hidden;
   width: 100%;
-
-  // Fonts
+  flex-direction: column;
+  overflow: hidden;
   font-size: $card-font-size;
-
-  // Colors
   background: $card-background-color;
-
-  // Elevation
+  border-radius: 2px;
   @include shadow-2dp();
-
-  // Raised Elevation as per spec
   &.raised {
     @include shadow-8dp();
   }
@@ -26,42 +17,35 @@
 
 .cardMedia {
   position: relative;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
   height: 0;
-
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
   &.wide, &.square {
     width: 100%;
-
     .content > iframe, .content > video, .content > img {
       max-width: 100%;
     }
   }
-
   &.wide {
     padding-top: 56.25%;
   }
-
   &.square {
     padding-top: 100%;
   }
-
   .content {
     // Positioning
     position: absolute;
     top: 0;
     left: 0;
-
     // Box Model
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
     width: 100%;
     height: 100%;
+    flex-direction: column;
+    justify-content: flex-end;
     overflow: hidden;
   }
-
   .contentOverlay {
     .cardTitle, .cardActions, .cardText {
       background-color: $card-text-overlay;
@@ -72,27 +56,21 @@
 .cardTitle {
   display: flex;
   align-items: center;
-
   .avatar {
     margin-right: 13px;
   }
-
   .subtitle {
     color: $color-text-secondary;
   }
-
   &.large {
     padding: $card-padding-lg $card-padding ($card-padding - 2px);
-
     .title {
       @include typo-headline();
       line-height: 1.25;
     }
   }
-
   &.small {
     padding: $card-padding;
-
     .title {
       @include typo-body-2(false, true);
       line-height: 1.4;
@@ -102,7 +80,6 @@
       line-height: 1.4;
     }
   }
-
   .cardMedia & {
     .title, .subtitle {
       color: $card-color-white;
@@ -112,11 +89,9 @@
 
 .cardTitle, .cardText {
   padding: ($card-padding - 2px) $card-padding;
-
   &:last-child {
     padding-bottom: $card-padding-lg;
   }
-
   & + .cardText {
     padding-top: 0;
   }
@@ -126,20 +101,16 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: $card-padding-sm $card-padding-sm;
-
+  padding: $card-padding-sm;
   button {
     min-width: 0;
-    margin: 0 $card-padding-sm/2;
     padding: 0 $card-padding-sm;
-
+    margin: 0 $card-padding-sm / 2;
     &:first-child {
       margin-left: 0;
     }
-
     &:last-child {
       margin-right: 0;
     }
   }
-
 }

@@ -1,23 +1,10 @@
+/* eslint-disable no-redeclare */
 import React, { PropTypes } from 'react';
 import ClassNames from 'classnames';
 import { Avatar } from '../avatar';
 import style from './style';
 
-/**
- * A versatile title block that can be used in
- * various places on the card, including the media
- * area. This component can also display an avatar next
- * to the title content.
- */
-const CardTitle = ({
-  avatar,
-  children,
-  className,
-  subtitle,
-  title,
-  ...otherProps
-}) => {
-
+const CardTitle = ({avatar, children, className, subtitle, title, ...other}) => {
   const classes = ClassNames(style.cardTitle, {
     [style.small]: avatar,
     [style.large]: !avatar
@@ -32,7 +19,7 @@ const CardTitle = ({
   }
 
   return (
-    <div className={classes} {...otherProps}>
+    <div className={classes} {...other}>
       {avatarComponent && (
         <div className={style.avatar}>
           {avatarComponent}
