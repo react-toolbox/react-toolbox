@@ -1,90 +1,35 @@
-import React from 'react';
-import Navigation from '../navigation';
-import Ripple from '../ripple';
+import React, { PropTypes } from 'react';
+import ClassNames from 'classnames';
 import style from './style';
 
-class Card extends React.Component {
-  static propTypes = {
-    actions: React.PropTypes.array,
-    className: React.PropTypes.string,
-    color: React.PropTypes.string,
-    image: React.PropTypes.string,
-    loading: React.PropTypes.bool,
-    onClick: React.PropTypes.func,
-    subtitle: React.PropTypes.string,
-    text: React.PropTypes.string,
-    title: React.PropTypes.string,
-    type: React.PropTypes.oneOf(['wide', 'event', 'image'])
-  };
+/**
+ * The base card component. This acts as the main card container
+ * that all subcomponents are placed within.
+ */
+const Card = ({
+    children,
+    className,
+    raised,
+    ...otherProps
+  }) => {
 
-  static defaultProps = {
-    className: '',
-    loading: false
-  };
+  const classes = ClassNames(style.card, {
+    [style.raised]: raised
+  }, className);
 
-  handleMouseDown = (event) => {
-    if (this.props.onClick) {
-      event.preventDefault();
-      this.refs.ripple.start(event);
-      this.props.onClick(event, this);
-    }
-  };
+  return (
+    <div className={classes} {...otherProps}>
+      {children}
+    </div>
+  );
+};
 
-  renderActions () {
-    if (this.props.actions) {
-      return (
-        <Navigation data-role='actions' className={style.navigation} actions={this.props.actions} />
-      );
-    }
-  }
-
-  renderTitle () {
-    const styleFigure = {};
-    const styleOverflow = {};
-    if (this.props.image) styleFigure.backgroundImage = `url(${this.props.image})`;
-    if (this.props.color) {
-      styleFigure.backgroundColor = this.props.color;
-      styleOverflow.backgroundColor = this.props.color;
-    }
-
-    if (this.props.title || this.props.image) {
-      return (
-        <figure className={style.figure} style={styleFigure}>
-          {this.props.title ? <h5 data-role='title'>{this.props.title}</h5> : null}
-          {this.props.subtitle ? <small data-role='subtitle'>{this.props.subtitle}</small> : null}
-          {this.props.color ? <div className={style.overflow} style={styleOverflow}></div> : null}
-        </figure>
-      );
-    }
-  }
-
-  render () {
-    let className = style.root;
-    if (this.props.type) className += ` ${style[this.props.type]}`;
-    if (this.props.onClick) className += ` ${style.touch}`;
-    if (this.props.image || this.props.color) className += ` ${style.contrast}`;
-    if (this.props.color) className += ` ${style.color}`;
-    if (this.props.loading) className += ` ${style.loading}`;
-    if (this.props.className) className += ` ${this.props.className}`;
-
-    return (
-      <div
-        data-react-toolbox='card'
-        className={className}
-        onMouseDown={this.handleMouseDown}
-      >
-        {this.renderTitle()}
-        {this.props.text ? <p data-role='text' className={style.text}>{this.props.text}</p> : null}
-        {this.renderActions()}
-        <Ripple
-          ref='ripple'
-          className={style.ripple}
-          loading={this.props.loading}
-          spread={2.5}
-        />
-      </div>
-    );
-  }
-}
+Card.propTypes = {
+  /** Child components, usually Card subcomponents. */
+  children: PropTypes.any,
+  className: PropTypes.string,
+  /** Increases the shadow depth to appear elevated. */
+  raised: PropTypes.bool
+};
 
 export default Card;

@@ -1,4 +1,5 @@
 import React from 'react';
+import ClassNames from 'classnames';
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
 import Tooltip from '../tooltip';
@@ -8,13 +9,12 @@ import events from '../utils/events';
 class Button extends React.Component {
   static propTypes = {
     accent: React.PropTypes.bool,
-    children: React.PropTypes.node,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     flat: React.PropTypes.bool,
     floating: React.PropTypes.bool,
-    href: React.PropTypes.string,
     icon: React.PropTypes.string,
+    inverse: React.PropTypes.bool,
     label: React.PropTypes.string,
     loading: React.PropTypes.bool,
     mini: React.PropTypes.bool,
@@ -53,21 +53,22 @@ class Button extends React.Component {
   };
 
   render () {
-    const {accent, flat, floating, href, icon, label,
+    const {accent, className, flat, floating, href, icon, inverse, label,
            loading, mini, primary, raised, ripple, toggle,
            tooltip, tooltipDelay, ...others} = this.props;  //eslint-disable-line no-redeclare
     const element = href ? 'a' : 'button';
     const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
     const shape = flat ? 'flat' : raised ? 'raised' : floating ? 'floating' : toggle ? 'toggle' : 'flat';
-    let className = `${style[shape]} ${style[level]}`;
 
-    if (this.props.className) className += ` ${this.props.className}`;
-    if (mini) className += ` ${style.mini}`;
+    const classes = ClassNames([ style[shape], style[level] ], {
+      [style.mini]: mini,
+      [style.inverse]: inverse
+    }, className);
 
     const props = {
       ...others,
       href,
-      className,
+      className: classes,
       disabled: this.props.disabled || this.props.loading,
       onMouseDown: this.handleMouseDown,
       onTouchStart: this.handleTouchStart
