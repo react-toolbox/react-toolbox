@@ -1,3 +1,4 @@
+/* eslint-disable no-redeclare */
 import React from 'react';
 import ClassNames from 'classnames';
 import FontIcon from '../font_icon';
@@ -9,10 +10,12 @@ import events from '../utils/events';
 class Button extends React.Component {
   static propTypes = {
     accent: React.PropTypes.bool,
+    children: React.PropTypes.node,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     flat: React.PropTypes.bool,
     floating: React.PropTypes.bool,
+    href: React.PropTypes.string,
     icon: React.PropTypes.string,
     inverse: React.PropTypes.bool,
     label: React.PropTypes.string,
@@ -55,7 +58,7 @@ class Button extends React.Component {
   render () {
     const {accent, className, flat, floating, href, icon, inverse, label,
            loading, mini, primary, raised, ripple, toggle,
-           tooltip, tooltipDelay, ...others} = this.props;  //eslint-disable-line no-redeclare
+           tooltip, tooltipDelay, ...others} = this.props;
     const element = href ? 'a' : 'button';
     const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
     const shape = flat ? 'flat' : raised ? 'raised' : floating ? 'floating' : toggle ? 'toggle' : 'flat';
