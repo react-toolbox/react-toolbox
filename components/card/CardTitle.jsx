@@ -1,4 +1,3 @@
-/* eslint-disable no-redeclare */
 import React, { PropTypes } from 'react';
 import ClassNames from 'classnames';
 import { Avatar } from '../avatar';

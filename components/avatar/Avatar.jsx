@@ -1,4 +1,3 @@
-/* eslint-disable no-redeclare */
 import React, { PropTypes, Component } from 'react';
 import ClassNames from 'classnames';
 import FontIcon from '../font_icon'; // ewww! :P @TODO
