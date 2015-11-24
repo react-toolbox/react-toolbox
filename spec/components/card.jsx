@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from '../../components/button';
-import {
-  Card,
+import Card, {
   CardActions,
   CardMedia,
   CardText,

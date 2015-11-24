@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import babel from 'babel-core/browser';
-import ReactToolbox from 'react-toolbox';
+import * as ReactToolbox from 'react-toolbox';
 import style from './style';
 
 const ERROR_TIMEOUT = 500;
@@ -48,7 +48,7 @@ const Preview = React.createClass({
         ${this.props.code}
       });`;
     return babel.transform(code, {
-      optional: ['es7.classProperties']
+      optional: ['es7.classProperties', 'es7.exportExtensions']
     }).code;
   },
 
