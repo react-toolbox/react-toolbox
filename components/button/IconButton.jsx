@@ -26,7 +26,6 @@ class Button extends React.Component {
     accent: false,
     className: '',
     primary: false,
-    raised: false,
     ripple: true
   };
 
@@ -41,10 +40,7 @@ class Button extends React.Component {
            primary, ripple, tooltip, tooltipDelay, ...others} = this.props;
     const element = href ? 'a' : 'button';
     const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
-
-    const classes = ClassNames([ style.toggle, style[level] ], {
-      [style.inverse]: inverse
-    }, className);
+    const classes = ClassNames([style.toggle, style[level]], {[style.inverse]: inverse}, className);
 
     const props = {
       ...others,

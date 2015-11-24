@@ -23,7 +23,12 @@ const ButtonTest = () => (
     <Button icon='add' floating primary disabled />
     <Button icon='add' floating accent mini />
     <IconButton icon='favorite' accent />
-    <IconButton primary><GithubIcon/></IconButton>
+    <IconButton icon='favorite' inverse />
+    <IconButton icon='favorite' />
+    <IconButton icon='favorite' disabled />
+    <IconButton primary tooltip='Bookmark Tooltip' tooltipDelay={1000}>
+      <GithubIcon/>
+    </IconButton>
     <Button icon='add' label='Add this' flat primary />
     <Button icon='add' label='Add this' flat disabled />
     <Button icon='bookmark' label='Bookmark' raised primary loading />

@@ -13,16 +13,11 @@ const ButtonsTest = () => (
     <Button icon='bookmark' label='Bookmark' raised primary />
     <Button icon='inbox' label='Inbox' flat />
     <Button icon='add' floating />
-    <Button icon='add' floating primary />
-    <Button icon='add' floating primary disabled />
     <Button icon='add' floating accent mini />
-    <Button icon='mood' toggle />
-    <Button toggle primary>
-      <GithubIcon />
-    </Button>
+    <IconButton icon='favorite' accent />
+    <IconButton primary><GithubIcon /></IconButton>
     <Button icon='add' label='Add this' flat primary />
     <Button icon='add' label='Add this' flat disabled />
-    <Button icon='bookmark' label='Bookmark' raised primary loading />
   </div>
 );
 

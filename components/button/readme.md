@@ -4,7 +4,7 @@ A [button](https://www.google.com/design/spec/components/buttons.html) clearly c
 
 <!-- example -->
 ```jsx
-import Button from 'react-toolbox/lib/button';
+import {Button, IconButton} from 'react-toolbox/lib/button';
 
 const GithubIcon = () => (
   <svg viewBox="0 0 284 277">
@@ -22,10 +22,8 @@ const TestButtons = () => (
     <Button icon='inbox' label='Inbox' flat />
     <Button icon='add' floating />
     <Button icon='add' floating accent mini />
-    <Button icon='mood' toggle />
-    <Button toggle primary>
-      <GithubIcon />
-    </Button>
+    <IconButton icon='favorite' accent />
+    <IconButton primary><GithubIcon /></IconButton>
     <Button icon='add' label='Add this' flat primary />
     <Button icon='add' label='Add this' flat disabled />
   </div>
@@ -42,17 +40,22 @@ const TestButtons = () => (
 | `flat`      | `Boolean`  | `false` | If true, the button will have a flat look. |
 | `floating`  | `Boolean`  | `false` | If true, the button will have a floating look. |
 | `icon`      | `String`  |  | Value of the icon (See icon component). |
+| `inverse`    | `Boolean`  |  | If true, the neutral colors are inverted. Useful to put a button over a dark background. |
 | `label`     | `String`  |  | The text string to use for the name of the button.|
 | `loading`   | `Boolean`  | `false` | If true, component will be disabled and show a loading animation.|
 | `mini`  | `Boolean` | `false`  | To be used with floating button. If true the button will be smaller.|
-| `onClick`  | `Function` |  | Callback called when the button is clicked.|
 | `primary`  | `false` | `false` | Indicates if the button should have primary color.|
 | `raised`   | `Boolean`  | `false` | If true, the button will have a raised look. |
 | `ripple`  | `Boolean`  | `true`    | If true, component will have a ripple effect on click.|
-| `toggle`   | `Boolean`  | `false` | If true, the button will have a toggle icon look. |
 | `tooptip`   | `String`  |  | The value will be shown as a tooltip when the button is hovered. |
 | `tooltipDelay`     | `Number`  |  | Amount of time in milliseconds before the tooltip is visible.|
 
 By default it will have neutral colors and a flat aspect even though the `flat` property is `false` by default. Also, some properties exclude others, for example a button cannot be `flat` and `raised` at the same time. 
 
 The `Button` component also accept children so if you want to provide a custom component and text instead of a `label` and `icon` you can do it too. Just check the examples.
+
+## Icon Button
+
+Icons are appropriate for toggle buttons that allow a single choice to be selected or deselected, such as adding or removing a star to an item. They are best located in app bars, toolbars, action buttons or toggles.
+
+We provide an `IconButton` component bundled with `Button` component. They share a similar API excluding aspect properties.

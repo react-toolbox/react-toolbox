@@ -23,7 +23,6 @@ class Button extends React.Component {
     primary: React.PropTypes.bool,
     raised: React.PropTypes.bool,
     ripple: React.PropTypes.bool,
-    toggle: React.PropTypes.bool,
     tooltip: React.PropTypes.string,
     tooltipDelay: React.PropTypes.number,
     type: React.PropTypes.string
@@ -38,8 +37,7 @@ class Button extends React.Component {
     mini: false,
     primary: false,
     raised: false,
-    ripple: true,
-    toggle: false
+    ripple: true
   };
 
   handleMouseDown = (event) => {
@@ -48,19 +46,13 @@ class Button extends React.Component {
     if (this.props.onMouseDown) this.props.onMouseDown(event);
   };
 
-  handleTouchStart = (event) => {
-    events.pauseEvent(event);
-    if (this.refs.ripple) this.refs.ripple.start(event.touches[0], true);
-    if (this.props.onTouchStart) this.props.onTouchStart(event);
-  };
-
   render () {
     const {accent, className, flat, floating, href, icon, inverse, label,
-           loading, mini, primary, raised, ripple, toggle,
+           loading, mini, primary, raised, ripple,
            tooltip, tooltipDelay, ...others} = this.props;
     const element = href ? 'a' : 'button';
     const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
-    const shape = flat ? 'flat' : raised ? 'raised' : floating ? 'floating' : toggle ? 'toggle' : 'flat';
+    const shape = flat ? 'flat' : raised ? 'raised' : floating ? 'floating' : 'flat';
 
     const classes = ClassNames([ style[shape], style[level] ], {
       [style.mini]: mini,
@@ -72,8 +64,7 @@ class Button extends React.Component {
       href,
       className: classes,
       disabled: this.props.disabled || this.props.loading,
-      onMouseDown: this.handleMouseDown,
-      onTouchStart: this.handleTouchStart
+      onMouseDown: this.handleMouseDown
     };
 
     return React.createElement(element, props,
