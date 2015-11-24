@@ -4,22 +4,34 @@ A [card](https://www.google.com/design/spec/components/cards.html) is a piece of
 
 <!-- example -->
 ```jsx
-import Card from 'react-toolbox/lib/card';
+import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 
-const actions = [
-  { label: 'Play', icon: 'play-arrow'},
-  { label: 'Close' }
-];
+const dummyText = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.';
 
 const TestCards = () => (
-  <Card
-    image='http://pitchfork-cdn.s3.amazonaws.com/longform/221/Deerhunter-Fading-Frontier640.jpg'
-    text='A Deerhunter album rollout usually coincides with some pithy and provocative statements from Bradford Cox on pop culture...'
-    title='Deerhunter - Fading Frontier'
-    color="rgba(0,0,0,.4)"
-    actions={actions}
-  />
+  <Card style={{width: '350px'}}>
+    <CardTitle
+      avatar="https://placeimg.com/80/80/animals"
+      title="Avatar style title"
+      subtitle="Subtitle here"
+    />
+    <CardMedia
+      aspectRatio="wide"
+      image="https://placeimg.com/800/450/nature"
+    />
+    <CardTitle
+      title="Title goes here"
+      subtitle="Subtitle here"
+    />
+    <CardText>{dummyText}</CardText>
+    <CardActions>
+      <Button label="Action 1" />
+      <Button label="Action 2" />
+    </CardActions>
+  </Card>
 );
+
+return <TestCards />;
 ```
 
 <!--component-docgen-start-->
