@@ -50,7 +50,7 @@ class Calendar extends React.Component {
     this.props.onChange(viewDate);
   };
 
-  incrementViewMonth = () => {
+  incrementViewMonth = (event) => {
     this.refs.rippleRight.start(event);
     this.setState({
       direction: 'right',
@@ -58,7 +58,7 @@ class Calendar extends React.Component {
     });
   };
 
-  decrementViewMonth = () => {
+  decrementViewMonth = (event) => {
     this.refs.rippleLeft.start(event);
     this.setState({
       direction: 'left',
