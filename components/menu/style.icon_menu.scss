@@ -8,12 +8,5 @@
 }
 
 .icon {
-  font-size: $menu-icon-size;
-  vertical-align: middle;
   cursor: pointer;
-}
-
-.ripple {
-  opacity: .1;
-  transition-duration: $menu-icon-ripple-duration;
 }

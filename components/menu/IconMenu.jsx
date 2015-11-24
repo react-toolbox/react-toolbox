@@ -1,7 +1,6 @@
 import React from 'react';
-import FontIcon from '../font_icon';
+import { IconButton } from '../button';
 import Menu from './Menu';
-import Ripple from '../ripple';
 import style from './style.icon_menu';
 
 class IconMenu extends React.Component {
@@ -34,23 +33,17 @@ class IconMenu extends React.Component {
     if (this.props.onClick) this.props.onClick();
   };
 
-  handleMouseDown = (event) => {
-    if (this.props.iconRipple) {
-      this.refs.ripple.start(event);
-    }
-  };
-
   render () {
     let className = style.root;
     if (this.props.className) className += ` ${this.props.className}`;
 
     return (
       <div className={className}>
-        <FontIcon
+        <IconButton
           className={style.icon}
+          icon={this.props.icon}
           onClick={this.handleButtonClick}
-          onMouseDown={this.handleMouseDown}
-          value={this.props.icon}
+          ripple={this.props.iconRipple}
         />
         <Menu
           ref='menu'
@@ -64,7 +57,6 @@ class IconMenu extends React.Component {
         >
           {this.props.children}
         </Menu>
-        {this.props.iconRipple ? <Ripple ref='ripple' className={style.ripple} spread={2.4} centered /> : null}
       </div>
     );
   }
