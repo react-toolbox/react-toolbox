@@ -1,39 +1,21 @@
 import React from 'react';
-import Button from '../../components/button';
-import Card, {
-  CardActions,
-  CardMedia,
-  CardText,
-  CardTitle
-} from '../../components/card';
+import Button, { IconButton } from '../../components/button';
+import Card, { CardActions, CardMedia, CardText, CardTitle } from '../../components/card';
 import style from '../style';
 
 const dummyText = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.';
 
-const Spacer = () => {
-  return (
-    <div style={{
-      display: 'flex',
-      flex: '1 1 auto'
-    }}/>
-  );
-};
-
-const DemoList = (props) => <ul className={style.demoList}>{props.children}</ul>;
-
-const DemoListItem = (props) => (
+const Spacer = () => <div style={{display: 'flex', flex: '1 1 auto'}}/>;
+const DemoList = ({children}) => <ul className={style.demoList}>{children}</ul>;
+const DemoListItem = ({component, name}) => (
   <li className={style.demoListItem}>
-    <div className={style.demo}>
-      {props.component}
-    </div>
-    <div className={style.demoName}>
-      {props.name}
-    </div>
+    <div className={style.demo}>{component}</div>
+    <div className={style.demoName}>{name}</div>
   </li>
 );
 
-const basic = [
-  {
+const cards = {
+  basic: [{
     name: 'Basic Card',
     component: (
       <Card className={style.card}>
@@ -63,11 +45,8 @@ const basic = [
         </CardActions>
       </Card>
     )
-  }
-];
-
-const media = [
-  {
+  }],
+  media: [{
     name: '16:9 Card Media Area',
     component: (
       <Card className={style.card}>
@@ -116,11 +95,8 @@ const media = [
         </CardMedia>
       </Card>
     )
-  }
-];
-
-const avatar = [
-  {
+  }],
+  avatar: [{
     name: 'Avatar Card Title',
     component: (
       <Card className={style.card}>
@@ -134,8 +110,8 @@ const avatar = [
           image="https://placeimg.com/800/450/nature"
         />
         <CardActions style={{ justifyContent: 'flex-end' }}>
-          <Button toggle icon="share" />
-          <Button toggle icon="favorite" />
+          <IconButton icon="share" />
+          <IconButton icon="favorite" />
         </CardActions>
       </Card>
     )
@@ -154,18 +130,15 @@ const avatar = [
           <iframe width="1280" height="720" src="https://www.youtube.com/embed/sGbxmsDFVnE?rel=0&amp;showinfo=0" frameBorder="0" allowFullScreen></iframe>
         </CardMedia>
         <CardActions style={{ justifyContent: 'flex-end' }}>
-          <Button toggle icon="report_problem" />
+          <IconButton icon="report_problem" />
           <Spacer/>
-          <Button toggle icon="share" />
-          <Button toggle icon="favorite" />
+          <IconButton icon="share" />
+          <IconButton icon="favorite" />
         </CardActions>
       </Card>
     )
-  }
-];
-
-const horizontal = [
-  {
+  }],
+  horizontal: [{
     name: 'Alternative Layout Example',
     component: (
       <Card className={style.card}>
@@ -201,11 +174,8 @@ const horizontal = [
         </div>
       </Card>
     )
-  }
-];
-
-const small = [
-  {
+  }],
+  small: [{
     name: 'Small Media Card',
     component: (
       <Card>
@@ -216,9 +186,9 @@ const small = [
           <CardTitle>Test</CardTitle>
         </CardMedia>
         <CardActions style={{justifyContent: 'center'}}>
-          <Button toggle icon="thumb_down" />
-          <Button toggle icon="thumb_up" />
-          <Button toggle icon="turned_in_not" />
+          <IconButton icon="thumb_down" />
+          <IconButton icon="thumb_up" />
+          <IconButton icon="turned_in_not" />
         </CardActions>
       </Card>
     )
@@ -232,55 +202,24 @@ const small = [
           image="https://placeimg.com/280/280/people"
         >
           <CardActions style={{justifyContent: 'center'}}>
-            <Button inverse toggle icon="fast_rewind" />
-            <Button inverse toggle icon="play_arrow" />
-            <Button inverse toggle icon="fast_forward" />
+            <IconButton inverse icon="fast_rewind" />
+            <IconButton inverse icon="play_arrow" />
+            <IconButton inverse icon="fast_forward" />
           </CardActions>
         </CardMedia>
       </Card>
     )
-  }
-];
+  }]
+};
 
-class CardTest extends React.Component {
-
-  render () {
-    return (
-      <div>
-        <h2>Cards</h2>
-
-        <DemoList>
-          {basic.map((demo, i) => (
-            <DemoListItem key={i} {...demo}/>
-          ))}
-        </DemoList>
-
-        <DemoList>
-          {media.map((demo, i) => (
-            <DemoListItem key={i} {...demo}/>
-          ))}
-        </DemoList>
-
-        <DemoList>
-          {avatar.map((demo, i) => (
-            <DemoListItem key={i} {...demo}/>
-          ))}
-        </DemoList>
-
-        <DemoList>
-          {horizontal.map((demo, i) => (
-            <DemoListItem key={i} {...demo}/>
-          ))}
-        </DemoList>
-
-        <DemoList>
-          {small.map((demo, i) => (
-            <DemoListItem key={i} {...demo}/>
-          ))}
-        </DemoList>
-      </div>
-    );
-  }
-}
+const CardTest = () => (
+  <div>
+    {Object.keys(cards).map((key) => (
+      <DemoList key={key}>
+        {cards[key].map((demo, i) => <DemoListItem key={key + i} {...demo} />)}
+      </DemoList>
+    ))}
+  </div>
+);
 
 export default CardTest;
