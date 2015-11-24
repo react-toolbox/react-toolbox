@@ -1,7 +1,7 @@
 import React from 'react';
 import CssTransitionGroup from 'react-addons-css-transition-group';
 import { SlideLeft, SlideRight } from '../animations';
-import FontIcon from '../font_icon';
+import { IconButton } from '../button';
 import Ripple from '../ripple';
 import CalendarMonth from './CalendarMonth';
 import time from '../utils/time';
@@ -50,19 +50,10 @@ class Calendar extends React.Component {
     this.props.onChange(viewDate);
   };
 
-  incrementViewMonth = () => {
-    this.refs.rippleRight.start(event);
+  changeViewMonth = (direction, step) => {
     this.setState({
-      direction: 'right',
-      viewDate: time.addMonths(this.state.viewDate, 1)
-    });
-  };
-
-  decrementViewMonth = () => {
-    this.refs.rippleLeft.start(event);
-    this.setState({
-      direction: 'left',
-      viewDate: time.addMonths(this.state.viewDate, -1)
+      direction,
+      viewDate: time.addMonths(this.state.viewDate, step)
     });
   };
 
@@ -92,12 +83,8 @@ class Calendar extends React.Component {
     const animation = this.state.direction === 'left' ? SlideLeft : SlideRight;
     return (
       <div data-react-toolbox='calendar'>
-        <FontIcon className={style.prev} value='chevron_left' onMouseDown={this.decrementViewMonth}>
-          <Ripple ref='rippleLeft' className={style.ripple} spread={1.2} centered />
-        </FontIcon>
-        <FontIcon className={style.next} value='chevron_right' onMouseDown={this.incrementViewMonth}>
-          <Ripple ref='rippleRight' className={style.ripple} spread={1.2} centered />
-        </FontIcon>
+        <IconButton className={style.prev} icon='chevron_left' onClick={this.changeViewMonth.bind(this, 'left', -1)} />
+        <IconButton className={style.next} icon='chevron_right' onClick={this.changeViewMonth.bind(this, 'right', 1)} />
         <CssTransitionGroup transitionName={animation} transitionEnterTimeout={350} transitionLeaveTimeout={350}>
           <CalendarMonth
             key={this.state.viewDate.getMonth()}

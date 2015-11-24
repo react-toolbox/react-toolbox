@@ -12,14 +12,9 @@
     position: absolute;
     top: 0;
     z-index: $z-index-high;
-    width: $calendar-row-height;
-    height: $calendar-row-height;
-    font-size: $calendar-arrows-font-size;
-    line-height: $calendar-row-height;
-    color: $calendar-arrows-color;
-    text-align: center;
     cursor: pointer;
     opacity: .7;
+    height: 3.6 * $unit;
   }
   .prev {
     left: 0;
@@ -30,7 +25,9 @@
 }
 
 .title {
+  display: inline-block;
   font-weight: 500;
+  line-height: 3.6 * $unit;
 }
 
 .years {
