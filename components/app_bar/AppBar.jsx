@@ -1,11 +1,12 @@
 import React from 'react';
+import ClassNames from 'classnames';
 import style from './style';
 
 const AppBar = (props) => {
-  let className = style.root;
-  if (props.className) className += ` ${props.className}`;
-  if (props.fixed) className += ` ${style.fixed}`;
-  if (props.flat) className += ` ${style.flat}`;
+  const className = ClassNames(style.root, {
+    [style.fixed]: props.fixed,
+    [style.flat]: props.flat
+  }, props.className);
 
   return (
     <header className={className} data-react-toolbox='app-bar'>

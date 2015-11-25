@@ -1,25 +1,19 @@
 import React from 'react';
 import style from './style';
 
-class App extends React.Component {
-  static propTypes = {
-    children: React.PropTypes.node,
-    className: React.PropTypes.string
-  };
+const App = ({className, children}) => (
+  <div data-react-toolbox='app' className={`${style.root} ${className}`}>
+    {children}
+  </div>
+);
 
-  static defaultProps = {
-    className: ''
-  };
+App.propTypes = {
+  children: React.PropTypes.node,
+  className: React.PropTypes.string
+};
 
-  render () {
-    let className = style.root;
-    if (this.props.className) className += ` ${this.props.className}`;
-    return (
-      <div data-react-toolbox='app' className={className}>
-        {this.props.children}
-      </div>
-    );
-  }
-}
+App.defaultProps = {
+  className: ''
+};
 
 export default App;
