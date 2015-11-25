@@ -59,7 +59,7 @@ class Form extends React.Component {
     return Object.keys(this.props.model).map((field, index) => {
       const properties = this.props.model[field];
       const Field = Component[properties.kind.toLowerCase()];
-      return <Field key={index} {...properties} onChange={this.onChange.bind(this, field)} />
+      return <Field key={index} {...properties} onChange={this.onChange.bind(this, field)} />;
     });
   }
 
