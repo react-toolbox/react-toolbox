@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ClassNames from 'classnames';
 import Input from '../input';
 import events from '../utils/events';
 import style from './style';
@@ -151,11 +152,8 @@ class Autocomplete extends React.Component {
   }
 
   renderSuggestions () {
-    let suggestionsClassName = style.suggestions;
-    if (this.state.direction === 'up') suggestionsClassName += ` ${style.up}`;
     const suggestions = [...this.suggestions()].map(([key, value]) => {
-      let className = style.suggestion;
-      if (this.state.active === key) className += ` ${style.active}`;
+      const className = ClassNames(style.suggestion, {[style.active]: this.state.active === key});
       return (
         <li
           key={key}
@@ -168,14 +166,15 @@ class Autocomplete extends React.Component {
       );
     });
 
-    return <ul ref='suggestions' className={suggestionsClassName}>{suggestions}</ul>;
+    const className = ClassNames(style.suggestions, {[style.up]: this.state.direction === 'up'});
+    return <ul ref='suggestions' className={className}>{suggestions}</ul>;
   }
 
   render () {
-    let className = style.root;
-    if (this.state.focus) className += ` ${style.focus}`;
-    if (this.props.error) className += ` ${style.errored}`;
-    if (this.props.className) className += ` ${this.props.className}`;
+    const className = ClassNames(style.root, {
+      [style.focus]: this.state.focus,
+      [style.errored]: this.props.error
+    }, this.props.className);
 
     return (
       <div data-react-toolbox='autocomplete' className={className}>
