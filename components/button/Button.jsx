@@ -64,7 +64,8 @@ class Button extends React.Component {
       href,
       className: classes,
       disabled: this.props.disabled || this.props.loading,
-      onMouseDown: this.handleMouseDown
+      onMouseDown: this.handleMouseDown,
+      'data-react-toolbox': 'button'
     };
 
     return React.createElement(element, props,
