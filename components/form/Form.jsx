@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Autocomplete from '../autocomplete';
 import Button from '../button';
 import Checkbox from '../checkbox';
