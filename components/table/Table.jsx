@@ -62,17 +62,17 @@ class Table extends React.Component {
   }
 
   renderBody () {
-    const rows = this.props.source.map((data, idx) => {
+    const rows = this.props.source.map((data, index) => {
       return (
         <TableRow
           data={data}
-          index={idx}
-          key={idx}
+          index={index}
+          key={index}
           model={this.props.model}
-          onChange={this.handleRowChange.bind(this, idx)}
-          onSelect={this.handleRowSelect.bind(this, idx)}
+          onChange={this.handleRowChange.bind(this, index)}
+          onSelect={this.handleRowSelect.bind(this, index)}
           selectable={this.props.selectable}
-          selected={this.props.selected.indexOf(idx) !== -1}
+          selected={this.props.selected.indexOf(index) !== -1}
         />
       );
     });
