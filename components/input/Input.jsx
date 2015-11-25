@@ -48,8 +48,7 @@ class Input extends React.Component {
       className,
       onChange: this.handleChange,
       ref: 'input',
-      role: 'input',
-      onMouseDown: this.handleMouseDown
+      role: 'input'
     });
   }
 

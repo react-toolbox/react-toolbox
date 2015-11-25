@@ -34,8 +34,8 @@ class TimePickerDialog extends React.Component {
     this.setState({displayTime: value});
   };
 
-  handleSelect = () => {
-    this.props.onSelect(this.state.displayTime);
+  handleSelect = (event) => {
+    this.props.onSelect(this.state.displayTime, event);
   };
 
   toggleTimeMode = () => {

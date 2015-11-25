@@ -32,8 +32,8 @@ class CalendarDialog extends React.Component {
     this.setState(state);
   };
 
-  handleSelect = () => {
-    if (this.props.onSelect) this.props.onSelect(this.state.date);
+  handleSelect = (event) => {
+    if (this.props.onSelect) this.props.onSelect(this.state.date, event);
   };
 
   handleSwitchDisplay = (display) => {
