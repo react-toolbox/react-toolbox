@@ -34,14 +34,23 @@ class Input extends React.Component {
     type: 'text'
   };
 
+  handleChange = (event) => {
+    if (this.props.onChange) this.props.onChange(event.target.value, event);
+  };
+
   renderInput () {
     let className = style.input;
     if (this.props.value && this.props.value.length > 0) className += ` ${style.filled}`;
-    if (this.props.multiline) {
-      return <textarea ref='input' role='input' {...this.props} className={className} />;
-    } else {
-      return <input ref='input' role='input' {...this.props} className={className} />;
-    }
+
+    const element = this.props.multiline ? 'textarea' : 'input';
+    return React.createElement(element, {
+      ...this.props,
+      className,
+      onChange: this.handleChange,
+      ref: 'input',
+      role: 'input',
+      onMouseDown: this.handleMouseDown
+    });
   }
 
   renderUnderline () {
