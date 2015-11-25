@@ -3,9 +3,9 @@ class SwitchTest extends React.Component {
     switch: [true, false, false]
   };
 
-  handleChange = (index) => {
+  handleChange = (index, value) => {
     const state = this.state.switch;
-    state[index] = !state[index];
+    state[index] = value;
     this.setState({switch: state});
   };
 

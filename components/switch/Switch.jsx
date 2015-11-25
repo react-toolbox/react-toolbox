@@ -23,7 +23,10 @@ class Switch extends React.Component {
 
   handleChange = (event) => {
     events.pauseEvent(event);
-    if (this.props.onChange && !this.props.disabled) this.props.onChange(event);
+    if (this.props.onChange && !this.props.disabled) {
+      const value = !this.refs.input.checked;
+      this.props.onChange(value, event);
+    }
   };
 
   handleInputClick = (event) => {
