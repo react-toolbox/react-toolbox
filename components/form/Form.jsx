@@ -48,11 +48,8 @@ class Form extends React.Component {
     if (this.props.onSubmit) this.props.onSubmit(event);
   };
 
-  onChange = (field, event) => {
-    if (this.props.onChange) {
-      const value = event.target.value;
-      this.props.onChange(field, value, event);
-    }
+  onChange = (field, value, event) => {
+    if (this.props.onChange) this.props.onChange(field, value, event);
   };
 
   renderFields () {
