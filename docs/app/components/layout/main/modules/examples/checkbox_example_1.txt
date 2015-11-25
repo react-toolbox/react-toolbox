@@ -5,9 +5,7 @@ class TestCheckbox extends React.Component {
   };
 
   handleChange = (field) => {
-    const newState = {};
-    newState[field] = !this.state[field];
-    this.setState(newState);
+    this.setState({ [key]: value });
   };
 
   render () {

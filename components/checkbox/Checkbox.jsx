@@ -24,7 +24,8 @@ class Checkbox extends React.Component {
   handleClick = (event) => {
     events.pauseEvent(event);
     if (!this.props.disabled && this.props.onChange) {
-      this.props.onChange(event);
+      const value = !this.refs.input.checked;
+      this.props.onChange(value, event);
     }
   };
 
