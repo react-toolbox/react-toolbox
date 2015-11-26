@@ -1,49 +1,28 @@
-import React, { PropTypes, Component } from 'react';
+import React from 'react';
 import ClassNames from 'classnames';
-import FontIcon from '../font_icon'; // ewww! :P @TODO
+import FontIcon from '../font_icon';
 import style from './style';
 
-class Avatar extends Component {
+const Avatar = ({children, className, icon, image, title, ...other}) => {
+  const classes = ClassNames(style.avatar, [], className);
+  const avatarStyle = {backgroundImage: typeof image === 'string' ? `url(${image})` : null};
 
-  static propTypes = {
-    accent: PropTypes.bool,
-    children: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.node
-    ]),
-    className: PropTypes.string,
-    icon: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.element
-    ]),
-    image: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.element
-    ]),
-    primary: PropTypes.bool
-  }
+  return (
+    <div className={classes} {...other}>
+      {typeof icon === 'string' ? <FontIcon className={style.letter} value={icon} /> : icon}
+      {typeof image === 'string' && title ? <span className={style.letter}>{title[0]}</span> : null}
+      {typeof image === 'string' ? <span className={style.image} style={avatarStyle} /> : null}
+      {children}
+    </div>
+  );
+};
 
-  static defaultProps = {
-    size: 40
-  }
-
-  render () {
-    let component;
-    const { accent, children, className, icon, primary, image, ...other } = this.props;
-    const classes = ClassNames(style.avatar, [
-      primary ? style.primary : accent ? style.accent : null
-    ], className);
-
-    if (typeof image === 'string') {
-      component = <img className={style.avatarImg} src={image} />;
-    } else if (typeof image === 'string') {
-      component = <img className={style.avatarImg} src={image} />;
-    } else if (typeof icon === 'string') {
-      component = <FontIcon value="icon" />;
-    }
-
-    return <div className={classes}>{component ? component : children}</div>;
-  }
-}
+Avatar.propTypes = {
+  children: React.PropTypes.node,
+  className: React.PropTypes.string,
+  icon: React.PropTypes.string,
+  image: React.PropTypes.string,
+  title: React.PropTypes.string
+};
 
 export default Avatar;
