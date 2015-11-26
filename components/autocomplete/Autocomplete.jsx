@@ -48,10 +48,10 @@ class Autocomplete extends React.Component {
     return true;
   }
 
-  handleChange = (keys) => {
+  handleChange = (keys, event) => {
     const key = this.props.multiple ? keys : keys[0];
     const query = this.query(key);
-    if (this.props.onChange) this.props.onChange(key);
+    if (this.props.onChange) this.props.onChange(key, event);
     this.setState({ focus: false, query }, () => { this.refs.input.blur(); });
   };
 
@@ -59,8 +59,8 @@ class Autocomplete extends React.Component {
     if (this.state.focus) this.setState({focus: false});
   };
 
-  handleQueryChange = (event) => {
-    this.setState({query: event.target.value});
+  handleQueryChange = (value) => {
+    this.setState({query: value});
   };
 
   handleQueryFocus = () => {
@@ -132,13 +132,13 @@ class Autocomplete extends React.Component {
   select (key, event) {
     events.pauseEvent(event);
     const values = this.values(this.props.value);
-    this.handleChange([key, ...values.keys()]);
+    this.handleChange([key, ...values.keys()], event);
   }
 
-  unselect (key) {
+  unselect (key, event) {
     const values = this.values(this.props.value);
     values.delete(key);
-    this.handleChange([...values.keys()]);
+    this.handleChange([...values.keys()], event);
   }
 
   renderSelected () {

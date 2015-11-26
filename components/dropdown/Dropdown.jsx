@@ -31,9 +31,9 @@ class Dropdown extends React.Component {
     this.setState({active: true, up});
   };
 
-  handleSelect = (item) => {
+  handleSelect = (item, event) => {
     if (!this.props.disabled && this.props.onChange) {
-      this.props.onChange(item);
+      this.props.onChange(item, event);
       this.setState({active: false});
     }
   };
