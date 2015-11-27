@@ -3,8 +3,8 @@
 
 .avatar {
   width: $avatar-size;
-  background-color: $avatar-background;
   height: $avatar-size;
+  background-color: $avatar-background;
   overflow: hidden;
   border-radius: 50%;
   position: relative;
@@ -15,6 +15,10 @@
     width: 1em;
     height: $avatar-size;
     fill: currentColor;
+  }
+  > img {
+    max-width: 100%;
+    height: auto;
   }
 }
 
