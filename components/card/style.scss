@@ -13,6 +13,9 @@
   &.raised {
     @include shadow-8dp();
   }
+  [data-react-toolbox="avatar"] {
+    display: block;
+  }
 }
 
 .cardMedia {

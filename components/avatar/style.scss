@@ -2,15 +2,16 @@
 @import "./config";
 
 .avatar {
+  position: relative;
+  display: inline-block;
   width: $avatar-size;
   height: $avatar-size;
-  background-color: $avatar-background;
   overflow: hidden;
-  border-radius: 50%;
-  position: relative;
+  font-size: $avatar-font-size;
   color: $avatar-color;
   text-align: center;
-  font-size: $avatar-font-size;
+  background-color: $avatar-background;
+  border-radius: 50%;
   > svg {
     width: 1em;
     height: $avatar-size;
