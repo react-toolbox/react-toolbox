@@ -1,6 +1,7 @@
 // Documentation files
 import AppBar from 'react-toolbox/app_bar/readme';
 import Autocomplete from 'react-toolbox/autocomplete/readme';
+import Avatar from 'react-toolbox/avatar/readme';
 import Button from 'react-toolbox/button/readme';
 import Card from 'react-toolbox/card/readme';
 import Checkbox from 'react-toolbox/checkbox/readme';
@@ -25,8 +26,9 @@ import Tooltip from 'react-toolbox/tooltip/readme';
 import TimePicker from 'react-toolbox/time_picker/readme';
 
 // Examples for the Playground
-import ButtonExample1 from './examples/button_example_1.txt';
 import AutocompleteExample1 from './examples/autocomplete_example_1.txt';
+import AvatarExample1 from './examples/avatar_example_1.txt';
+import ButtonExample1 from './examples/button_example_1.txt';
 import CardExample1 from './examples/card_example_1.txt';
 import CheckboxExample1 from './examples/checkbox_example_1.txt';
 import DatePickerExample1 from './examples/datepicker_example_1.txt';
@@ -60,6 +62,12 @@ export default {
     docs: Autocomplete,
     path: '/components/autocomplete',
     examples: [AutocompleteExample1]
+  },
+  avatar: {
+    name: 'Avatar',
+    docs: Avatar,
+    path: '/components/avatar',
+    examples: [AvatarExample1]
   },
   button: {
     name: 'Button',
