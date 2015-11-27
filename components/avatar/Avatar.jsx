@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import FontIcon from '../font_icon';
 import style from './style';
 
@@ -14,11 +14,11 @@ const Avatar = ({children, className, icon, image, title, ...other}) => {
 };
 
 Avatar.propTypes = {
-  children: React.PropTypes.node,
-  className: React.PropTypes.string,
-  icon: React.PropTypes.string,
-  image: React.PropTypes.string,
-  title: React.PropTypes.string
+  children: PropTypes.node,
+  className: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  image: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  title: PropTypes.string
 };
 
 export default Avatar;
