@@ -1,0 +1,11 @@
+.*rc
+.eslintignore
+.csscomb.json
+.*.yml
+.editorconfig
+karma.conf.js
+server.js
+tests.webpack.js
+webpack.config.*
+docs
+spec
