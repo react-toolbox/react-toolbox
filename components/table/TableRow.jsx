@@ -1,4 +1,5 @@
 import React from 'react';
+import ClassNames from 'classnames';
 import Checkbox from '../checkbox';
 import utils from '../utils/utils';
 import style from './style';
@@ -58,9 +59,10 @@ class TableRow extends React.Component {
   }
 
   render () {
-    let className = style.row;
-    if (this.props.onChange) className += ` ${style.editable}`;
-    if (this.props.selected) className += ` ${style.selected}`;
+    const className = ClassNames(style.row, {
+      [style.editable]: this.props.onChange,
+      [style.selected]: this.props.selected
+    });
 
     return (
       <tr data-react-toolbox-table='row' className={className}>
