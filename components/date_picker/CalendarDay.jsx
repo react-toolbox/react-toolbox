@@ -1,4 +1,5 @@
 import React from 'react';
+import ClassNames from 'classnames';
 import time from '../utils/time';
 import style from './style.calendar';
 
@@ -27,8 +28,10 @@ class Day extends React.Component {
   }
 
   render () {
-    let className = this.isSelected() ? `${style.day} ${style.active}` : style.day;
-    if (this.props.disabled) className += ` ${style.disabled}`;
+    const className = ClassNames(style.day, {
+      [style.active]: this.isSelected(),
+      [style.disabled]: this.props.disabled
+    });
 
     return (
       <div className={className} style={this.dayStyle()}>
