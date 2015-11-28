@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ClassNames from 'classnames';
 import prefixer from '../utils/prefixer';
 import style from './style';
 
@@ -61,10 +62,10 @@ class Ripple extends React.Component {
       }, rippleStyle);
     }
 
-    let className = style[this.props.loading ? 'loading' : 'normal'];
-    if (this.state.active) className += ` ${style.active}`;
-    if (this.state.restarting) className += ` ${style.restarting}`;
-    if (this.props.className) className += ` ${this.props.className}`;
+    const className = ClassNames(style[this.props.loading ? 'loading' : 'normal'], {
+      [style.active]: this.state.active,
+      [style.restarting]: this.state.restarting
+    }, this.props.className);
 
     return (
       <span data-react-toolbox='ripple' className={style.wrapper}>

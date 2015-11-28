@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ClassNames from 'classnames';
 import style from './style';
 import events from '../utils/events';
 import prefixer from '../utils/prefixer';
@@ -227,15 +228,16 @@ class Slider extends React.Component {
 
   render () {
     const knobStyles = prefixer({transform: `translateX(${this.knobOffset()}px)`});
-    let className = this.props.className;
-    if (this.props.editable) className += ` ${style.editable}`;
-    if (this.props.pinned) className += ` ${style.pinned}`;
-    if (this.state.pressed) className += ` ${style.pressed}`;
-    if (this.props.value === this.props.min) className += ` ${style.ring}`;
+    const className = ClassNames(style.root, {
+      [style.editable]: this.props.editable,
+      [style.pinned]: this.props.pinned,
+      [style.pressed]: this.state.pressed,
+      [style.ring]: this.props.value === this.props.min
+    }, this.props.className);
 
     return (
       <div
-        className={style.root + className}
+        className={className}
         data-react-toolbox='slider'
         onBlur={this.handleSliderBlur}
         onFocus={this.handleSliderFocus}
