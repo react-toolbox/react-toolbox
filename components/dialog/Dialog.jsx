@@ -1,18 +1,18 @@
 import React from 'react';
+import ClassNames from 'classnames';
 import Button from '../button';
 import Overlay from '../overlay';
 import style from './style.scss';
 
 const Dialog = (props) => {
   const actions = props.actions.map((action, idx) => {
-    let className = style.button;
-    if (action.className) className += ` ${action.className}`;
+    const className = ClassNames(style.button, {[action.className]: action.className});
     return <Button key={idx} {...action} className={className} />;
   });
 
-  let className = `${style.root} ${style[props.type]}`;
-  if (props.active) className += ` ${style.active}`;
-  if (props.className) className += ` ${props.className}`;
+  const className = ClassNames([ style.root, style[props.type] ], {
+    [style.active]: props.active
+  }, props.className);
 
   return (
     <Overlay active={props.active} onClick={props.onOverlayClick}>
