@@ -21,7 +21,7 @@ class SnackbarTest extends React.Component {
         <Button label='Show Snackbar' raised onClick={this.handleClick} />
         <Snackbar
           action='Nice'
-          icon='question-answer'
+          icon='question_answer'
           label='A new developer started using React Toolbox'
           onClick={this.handleSnackbarClick}
           ref='snackbar'

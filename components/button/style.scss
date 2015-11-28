@@ -130,20 +130,18 @@
 }
 
 .neutral:not([disabled]) {
-  &:not(.inverse) {
-    &.raised, &.floating {
-      color: $button-neutral-color-contrast;
-      background-color: $button-neutral-color;
-    }
-    &.flat, &.toggle {
-      color: $button-neutral-color-contrast;
-      &:focus:not(:active) {
-        background: $button-neutral-color-hover;
-      }
-    }
-    &.flat:hover {
+  &.raised, &.floating {
+    color: $button-neutral-color-contrast;
+    background-color: $button-neutral-color;
+  }
+  &.flat, &.toggle {
+    color: $button-neutral-color-contrast;
+    &:focus:not(:active) {
       background: $button-neutral-color-hover;
     }
+  }
+  &.flat:hover {
+    background: $button-neutral-color-hover;
   }
 
   &.inverse {

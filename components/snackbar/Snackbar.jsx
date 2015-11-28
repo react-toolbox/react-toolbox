@@ -1,4 +1,5 @@
 import React from 'react';
+import ClassNames from 'classnames';
 import Button from '../button';
 import FontIcon from '../font_icon';
 import Overlay from '../overlay';
@@ -25,29 +26,18 @@ class Snackbar extends React.Component {
     }
   }
 
-  renderButton () {
-    if (this.props.action) {
-      return (
-        <Button
-          className={style.button}
-          label={this.props.action}
-          onClick={this.props.onClick}
-        />
-      );
-    }
-  }
-
   render () {
-    let className = `${style.root} ${style[this.props.type]}`;
-    if (this.props.active) className += ` ${style.active}`;
-    if (this.props.className) className += ` ${this.props.className}`;
+    const {action, active, icon, label, onClick, type } = this.props;
+    const className = ClassNames([style.root, style[type]], {
+      [style.active]: active
+    }, this.props.className);
 
     return (
-      <Overlay active={this.props.active} opacity={0}>
+      <Overlay active={active} opacity={0}>
         <div data-react-toolbox='snackbar' className={className}>
-          {this.props.icon ? <FontIcon value={this.props.icon} className={style.icon} /> : null}
-          <span className={style.label}>{this.props.label}</span>
-          {this.renderButton()}
+          {icon ? <FontIcon value={icon} className={style.icon} /> : null}
+          <span className={style.label}>{label}</span>
+          {action ? <Button className={style.button} label={action} onClick={onClick}/> : null}
         </div>
       </Overlay>
     );
