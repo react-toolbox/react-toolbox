@@ -1,4 +1,5 @@
 import React from 'react';
+import ClassNames from 'classnames';
 import style from './style';
 import prefixer from '../utils/prefixer';
 
@@ -10,7 +11,7 @@ class ProgressBar extends React.Component {
     min: React.PropTypes.number,
     mode: React.PropTypes.string,
     multicolor: React.PropTypes.bool,
-    type: React.PropTypes.string,
+    type: React.PropTypes.oneOf(['linear', 'circular']),
     value: React.PropTypes.number
   };
 
@@ -67,10 +68,10 @@ class ProgressBar extends React.Component {
   }
 
   render () {
-    let className = this.props.type === 'linear' ? style.linear : style.circular;
-    if (this.props.mode) className += ` ${style[this.props.mode]}`;
-    if (this.props.multicolor) className += ` ${style.multicolor}`;
-    if (this.props.className) className += ` ${this.props.className}`;
+    const className = ClassNames(style[this.props.type], {
+      [style[this.props.mode]]: this.props.mode,
+      [style.multicolor]: this.props.multicolor
+    }, this.props.className);
 
     return (
       <div
