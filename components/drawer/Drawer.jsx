@@ -1,11 +1,12 @@
 import React from 'react';
+import ClassNames from 'classnames';
 import Overlay from '../overlay';
 import style from './style';
 
 const Drawer = (props) => {
-  let className = `${style.root} ${style[props.type]}`;
-  if (props.active) className += ` ${style.active}`;
-  if (props.className) className += ` ${props.className}`;
+  const className = ClassNames([style.root, style[props.type]], {
+    [style.active]: props.active
+  }, props.className);
 
   return (
     <Overlay active={props.active} onClick={props.onOverlayClick}>
