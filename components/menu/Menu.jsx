@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ClassNames from 'classnames';
 import MenuItem from './MenuItem';
 import { events, utils } from '../utils';
 import style from './style.menu';
@@ -151,10 +152,10 @@ class Menu extends React.Component {
 
   render () {
     const outlineStyle = { width: this.state.width, height: this.state.height };
-    let className = `${style.root} ${style[this.state.position]}`;
-    if (this.state.active) className += ` ${style.active}`;
-    if (this.state.rippled) className += ` ${style.rippled}`;
-    if (this.props.className) className += ` ${this.props.className}`;
+    const className = ClassNames([style.root, style[this.state.position]], {
+      [style.active]: this.state.active,
+      [style.rippled]: this.state.rippled
+    }, this.props.className);
 
     return (
       <div className={className} style={this.getRootStyle()}>
