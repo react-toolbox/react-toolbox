@@ -1,4 +1,5 @@
 import React from 'react';
+import ClassNames from 'classnames';
 import Ripple from '../ripple';
 import events from '../utils/events';
 import style from './style';
@@ -48,11 +49,13 @@ class Checkbox extends React.Component {
   }
 
   render () {
-    let fieldClassName = style.field;
-    let checkboxClassName = style.check;
-    if (this.props.checked) checkboxClassName += ` ${style.checked}`;
-    if (this.props.disabled) fieldClassName += ` ${style.disabled}`;
-    if (this.props.className) fieldClassName += ` ${this.props.className}`;
+    const fieldClassName = ClassNames(style.field, {
+      [style.disabled]: this.props.disabled
+    }, this.props.className);
+
+    const checkboxClassName = ClassNames(style.check, {
+      [style.checked]: this.props.checked
+    });
 
     return (
       <label
