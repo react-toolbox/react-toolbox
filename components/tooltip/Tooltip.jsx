@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ClassNames from 'classnames';
 import style from './style';
 
 const HIDE_TIMEOUT = 100;
@@ -53,9 +54,9 @@ class Tooltip extends React.Component {
   };
 
   render () {
-    let className = style.root;
-    if (this.props.className) className += ` ${this.props.className}`;
-    if (this.state.active) className += ` ${style.active}`;
+    const className = ClassNames(style.root, {
+      [style.active]: this.state.active
+    }, this.props.className);
 
     return (
       <span data-react-toolbox='tooltip' className={className}>
