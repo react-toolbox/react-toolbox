@@ -1,4 +1,5 @@
 import React from 'react';
+import ClassNames from 'classnames';
 import Ripple from '../ripple';
 import style from './style';
 import events from '../utils/events';
@@ -50,9 +51,8 @@ class RadioButton extends React.Component {
   }
 
   render () {
-    let labelClassName = style[this.props.disabled ? 'disabled' : 'field'];
+    const labelClassName = ClassNames(style[this.props.disabled ? 'disabled' : 'field'], this.props.className);
     const radioClassName = style[this.props.checked ? 'radio-checked' : 'radio'];
-    if (this.props.className) labelClassName += ` ${this.props.className}`;
 
     return (
       <label className={labelClassName} onClick={this.handleClick}>
