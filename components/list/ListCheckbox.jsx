@@ -5,7 +5,7 @@ import style from './style';
 
 const ListCheckbox = (props) => {
   let className = `${style.item} ${style['checkbox-item']}`;
-  if (props.legend) className += ` ${style['with-legend']}`;
+  if (props.legend) className += ` ${style.withLegend}`;
   if (props.disabled) className += ` ${style.disabled}`;
   if (props.className) className += ` ${props.className}`;
 
