@@ -109,3 +109,23 @@ $offset: 1.8 * $unit;
 .card {
   width: 345px;
 }
+
+.dropdownTemplate {
+  flex-direction: row;
+  display: flex;
+}
+
+.dropdownTemplateImage {
+  display: flex;
+  flex-grow: 0;
+  width: 32px;
+  height: 32px;
+  background-color: #ccc;
+  margin-right: 8px;
+}
+
+.dropdownTemplateContent {
+  display: flex;
+  flex-grow: 2;
+  flex-direction: column;
+}
