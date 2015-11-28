@@ -54,19 +54,19 @@ $offset: 1.8 * $unit;
 }
 
 .cards {
-  background-color: #f8f8f8;
   margin-top: 10px;
+  background-color: #f8f8f8;
   border: 1px solid #f4f4f4;
 }
 
 .cardsGroup {
-  padding: 20px;
-  list-style: none;
+  position: relative;
   display: flex;
   flex-wrap: wrap;
-  position: relative;
-  justify-content: center;
   align-items: stretch;
+  justify-content: center;
+  padding: 20px;
+  list-style: none;
 }
 
 .cardRow {
@@ -111,21 +111,21 @@ $offset: 1.8 * $unit;
 }
 
 .dropdownTemplate {
-  flex-direction: row;
   display: flex;
+  flex-direction: row;
 }
 
 .dropdownTemplateImage {
   display: flex;
-  flex-grow: 0;
   width: 32px;
   height: 32px;
-  background-color: #ccc;
+  flex-grow: 0;
   margin-right: 8px;
+  background-color: #ccc;
 }
 
 .dropdownTemplateContent {
   display: flex;
-  flex-grow: 2;
   flex-direction: column;
+  flex-grow: 2;
 }
