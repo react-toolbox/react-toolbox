@@ -6,11 +6,11 @@ import style from '../style';
 const dummyText = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.';
 
 const Spacer = () => <div style={{display: 'flex', flex: '1 1 auto'}}/>;
-const DemoList = ({children}) => <ul className={style.demoList}>{children}</ul>;
-const DemoListItem = ({component, name}) => (
-  <li className={style.demoListItem}>
-    <div className={style.demo}>{component}</div>
-    <div className={style.demoName}>{name}</div>
+const CardList = ({children}) => <ul className={style.cardsGroup}>{children}</ul>;
+const CardListItem = ({component, name}) => (
+  <li className={style.cardItem}>
+    <div className={style.cardItemContent}>{component}</div>
+    <div className={style.cardItemName}>{name}</div>
   </li>
 );
 
@@ -213,13 +213,18 @@ const cards = {
 };
 
 const CardTest = () => (
-  <div>
-    {Object.keys(cards).map((key) => (
-      <DemoList key={key}>
-        {cards[key].map((demo, i) => <DemoListItem key={key + i} {...demo} />)}
-      </DemoList>
-    ))}
-  </div>
+  <section>
+    <h5>Cards</h5>
+    <p>You have multiple options for cards. Combine different subcomponents to create your own:</p>
+
+    <div className={style.cards}>
+      {Object.keys(cards).map((key) => (
+        <CardList key={key}>
+          {cards[key].map((demo, i) => <CardListItem key={key + i} {...demo} />)}
+        </CardList>
+      ))}
+    </div>
+  </section>
 );
 
 export default CardTest;
