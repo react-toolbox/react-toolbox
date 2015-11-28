@@ -1,4 +1,5 @@
 import React from 'react';
+import ClassNames from 'classnames';
 import style from './style';
 
 class TabHeader extends React.Component {
@@ -32,11 +33,11 @@ class TabHeader extends React.Component {
   };
 
   render () {
-    let className = style.label;
-    if (this.props.active) className += ` ${style.active}`;
-    if (this.props.hidden) className += ` ${style.hidden}`;
-    if (this.props.disabled) className += ` ${style.disabled}`;
-    if (this.props.className) className += ` ${this.props.className}`;
+    const className = ClassNames(style.label, {
+      [style.active]: this.props.active,
+      [style.hidden]: this.props.hidden,
+      [style.disabled]: this.props.disabled
+    }, this.props.className);
 
     return (
       <label className={className} onClick={this.handleClick}>
