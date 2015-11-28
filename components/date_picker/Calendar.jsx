@@ -2,7 +2,6 @@ import React from 'react';
 import CssTransitionGroup from 'react-addons-css-transition-group';
 import { SlideLeft, SlideRight } from '../animations';
 import { IconButton } from '../button';
-import Ripple from '../ripple';
 import CalendarMonth from './CalendarMonth';
 import time from '../utils/time';
 import utils from '../utils/utils';
