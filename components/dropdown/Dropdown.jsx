@@ -1,4 +1,5 @@
 import React from 'react';
+import ClassNames from 'classnames';
 import style from './style';
 
 class Dropdown extends React.Component {
@@ -58,12 +59,12 @@ class Dropdown extends React.Component {
   }
 
   render () {
-    let className = style.root;
     const selected = this.getSelectedItem();
-    if (this.state.up) className += ` ${style.up}`;
-    if (this.state.active) className += ` ${style.active}`;
-    if (this.props.disabled) className += ` ${style.disabled}`;
-    if (this.props.className) className += ` ${this.props.className}`;
+    const className = ClassNames(style.root, {
+      [style.up]: this.state.up,
+      [style.active]: this.state.active,
+      [style.disabled]: this.props.disabled
+    }, this.props.className);
 
     return (
       <div data-react-toolbox='dropdown' className={className}>
