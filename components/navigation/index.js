@@ -1,1 +1,1 @@
-export default from './Navigation.jsx';
+export default from './Navigation';

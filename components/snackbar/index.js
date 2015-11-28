@@ -1,1 +1,1 @@
-export default from './Snackbar.jsx';
+export default from './Snackbar';

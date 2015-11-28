@@ -1,1 +1,1 @@
-export default from './Form.jsx';
+export default from './Form';

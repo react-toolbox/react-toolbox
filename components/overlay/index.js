@@ -1,1 +1,1 @@
-export default from './Overlay.jsx';
+export default from './Overlay';

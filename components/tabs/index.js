@@ -1,2 +1,2 @@
-export Tabs from './Tabs.jsx';
-export Tab from './Tab.jsx';
+export Tabs from './Tabs';
+export Tab from './Tab';

@@ -1,1 +1,1 @@
-export default from './Autocomplete.jsx';
+export default from './Autocomplete';

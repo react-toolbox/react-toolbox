@@ -1,1 +1,1 @@
-export default from './TimePicker.jsx';
+export default from './TimePicker';

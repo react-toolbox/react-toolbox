@@ -1,1 +1,1 @@
-export default from './Dialog.jsx';
+export default from './Dialog';

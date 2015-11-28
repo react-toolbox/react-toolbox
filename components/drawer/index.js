@@ -1,1 +1,1 @@
-export default from './Drawer.jsx';
+export default from './Drawer';
