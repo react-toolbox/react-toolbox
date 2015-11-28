@@ -42,7 +42,6 @@ const TestButtons = () => (
 | `icon`      | `String`  |  | Value of the icon (See icon component). |
 | `inverse`    | `Boolean`  |  | If true, the neutral colors are inverted. Useful to put a button over a dark background. |
 | `label`     | `String`  |  | The text string to use for the name of the button.|
-| `loading`   | `Boolean`  | `false` | If true, component will be disabled and show a loading animation.|
 | `mini`  | `Boolean` | `false`  | To be used with floating button. If true the button will be smaller.|
 | `primary`  | `false` | `false` | Indicates if the button should have primary color.|
 | `raised`   | `Boolean`  | `false` | If true, the button will have a raised look. |

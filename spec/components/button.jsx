@@ -26,7 +26,6 @@ const ButtonTest = () => (
     </IconButton>
     <Button icon='add' label='Add this' flat primary />
     <Button icon='add' label='Add this' flat disabled />
-    <Button icon='bookmark' label='Bookmark' raised primary loading />
   </section>
 );
 
