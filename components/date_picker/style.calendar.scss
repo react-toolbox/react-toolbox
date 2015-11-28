@@ -12,9 +12,9 @@
     position: absolute;
     top: 0;
     z-index: $z-index-high;
+    height: 3.6 * $unit;
     cursor: pointer;
     opacity: .7;
-    height: 3.6 * $unit;
   }
   .prev {
     left: 0;
