@@ -7,10 +7,10 @@ A [Menu](https://www.google.com/design/spec/components/menus.html) is a temporar
 import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox';
  
 const MenuTest = () => (
-  <IconMenu icon='more_vert' position='top-left' menuRipple selectable>
-    <MenuItem value='download' icon='get-app' caption='Download' />
+  <IconMenu icon='more_vert' position='top-left' menuRipple>
+    <MenuItem value='download' icon='get_app' caption='Download' />
     <MenuItem value='help' icon='favorite' caption='Favorite' />
-    <MenuItem value='settings' icon='open-in-browser' caption='Open in app' />
+    <MenuItem value='settings' icon='open_in_browser' caption='Open in app' />
     <MenuDivider />
     <MenuItem value='signout' icon='delete' caption='Delete' disabled />
   </IconMenu>

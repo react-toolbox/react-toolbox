@@ -1,5 +1,5 @@
 import React from 'react';
-import { MenuItem, IconMenu } from '../../components/menu';
+import { MenuItem, IconMenu, MenuDivider } from '../../components/menu';
 
 class IconMenuTest extends React.Component {
   state = {
@@ -42,6 +42,7 @@ class IconMenuTest extends React.Component {
           <MenuItem onClick={this.handleItem} value='refresh' caption='Refresh' />
           <MenuItem value='help' caption='Help & Feedback' />
           <MenuItem value='settings' caption='Settings' />
+          <MenuDivider />
           <MenuItem value='signout' caption='Sign out' disabled />
         </IconMenu>
       </section>
