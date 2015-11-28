@@ -54,7 +54,7 @@
   }
   &.disabled {
     pointer-events: none;
-    &:not(.checkbox-item) {
+    &:not(.checkboxItem) {
       opacity: .5;
     }
     > .checkbox > [data-role='label'] {

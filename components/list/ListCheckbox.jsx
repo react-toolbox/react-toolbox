@@ -1,13 +1,14 @@
 import React from 'react';
+import ClassNames from 'classnames';
 import Checkbox from '../checkbox';
 import ListItemContent from './ListItemContent';
 import style from './style';
 
 const ListCheckbox = (props) => {
-  let className = `${style.item} ${style['checkbox-item']}`;
-  if (props.legend) className += ` ${style.withLegend}`;
-  if (props.disabled) className += ` ${style.disabled}`;
-  if (props.className) className += ` ${props.className}`;
+  const className = ClassNames([style.item, style.checkboxItem], {
+    [style.withLegend]: props.legend,
+    [style.disabled]: props.disabled
+  }, props.className);
 
   return (
     <li className={className}>
