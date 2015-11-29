@@ -109,7 +109,6 @@
 }
 
 .errored {
-  padding-bottom: 0;
   > .input {
     border-bottom-color: $input-text-error-color;
     &:focus {
