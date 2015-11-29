@@ -121,7 +121,7 @@
       }
     }
   }
-  > .counter {
+  > .counter, > .label {
     color: $input-text-error-color;
   }
 }
