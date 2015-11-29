@@ -11,7 +11,6 @@ import Checkbox from './components/checkbox';
 import Dialog from './components/dialog';
 import Drawer from './components/drawer';
 import Dropdown from './components/dropdown';
-import Form from './components/form';
 import IconMenu from './components/icon_menu';
 import Input from './components/input';
 import List from './components/list';
@@ -52,7 +51,6 @@ const Root = () => (
     <Dialog />
     <Drawer />
     <Dropdown />
-    <Form />
     <IconMenu />
     <Input />
     <List />
