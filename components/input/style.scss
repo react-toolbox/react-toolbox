@@ -4,7 +4,7 @@
 .root {
   position: relative;
   padding: $input-padding 0;
-  &.with-icon {
+  &.withIcon {
     margin-left: $input-icon-size;
   }
 }
@@ -90,23 +90,17 @@
   }
 }
 
-.underline {
-  display: flex;
+.error, .counter {
   margin-bottom: - $input-underline-height;
   font-size: $input-label-font-size;
   line-height: $input-underline-height;
-  color: $input-text-label-color;
-  .error, .counter {
-    flex-grow: 1;
-  }
-}
-
-.error {
-  text-align: left;
+  color: $input-text-error-color;
 }
 
 .counter {
-  text-align: right;
+  position: absolute;
+  right: 0;
+  color: $input-text-label-color;
 }
 
 .disabled > .input {
@@ -127,7 +121,7 @@
       }
     }
   }
-  > .underline {
+  > .counter {
     color: $input-text-error-color;
   }
 }

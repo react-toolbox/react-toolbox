@@ -1,8 +1,8 @@
 import React from 'react';
-import classNames from 'classnames';
-import style from './style';
+import ClassNames from 'classnames';
 import FontIcon from '../font_icon';
 import Tooltip from '../tooltip';
+import style from './style';
 
 class Input extends React.Component {
   static propTypes = {
@@ -39,27 +39,17 @@ class Input extends React.Component {
   };
 
   renderInput () {
-    let className = style.input;
-    if (this.props.value && this.props.value.length > 0) className += ` ${style.filled}`;
+    const {multiline, value, ...others} = this.props;
+    const className = ClassNames(style.input, {[style.filled]: value});
 
-    const element = this.props.multiline ? 'textarea' : 'input';
-    return React.createElement(element, {
-      ...this.props,
+    return React.createElement(multiline ? 'textarea' : 'input', {
+      ...others,
       className,
       onChange: this.handleChange,
       ref: 'input',
-      role: 'input'
+      role: 'input',
+      value
     });
-  }
-
-  renderUnderline () {
-    const error = this.props.error ? <span className={style.error}>{this.props.error}</span> : null;
-    let counter = null;
-    if (this.props.maxLength) {
-      const length = this.props.value ? this.props.value.length : 0;
-      if (length > 0) counter = <span className={style.counter}>{length} / {this.props.maxLength}</span>;
-    }
-    if (error || counter) return <span className={style.underline}>{error}{counter}</span>;
   }
 
   blur () {
@@ -71,28 +61,26 @@ class Input extends React.Component {
   }
 
   render () {
-    const className = classNames({
-      [style.root]: true,
-      [style.errored]: this.props.error,
-      [style.disabled]: this.props.disabled,
-      [this.props.className]: this.props.className,
-      [style.hidden]: this.props.type === 'hidden',
-      [style['with-icon']]: this.props.icon
-    });
-
-    const labelClassName = classNames({
-      [style.label]: true,
-      [style.fixed]: !this.props.floating
-    });
+    const {disabled, error, icon, floating, label: labelText,
+           maxLength, tooltip, tooltipDelay, type, value} = this.props;
+    const length = maxLength && value ? value.length : 0;
+    const labelClassName = ClassNames(style.label, {[style.fixed]: !floating});
+    const className = ClassNames(style.root, {
+      [style.disabled]: disabled,
+      [style.errored]: error,
+      [style.hidden]: type === 'hidden',
+      [style.withIcon]: icon
+    }, this.props.className);
 
     return (
       <div data-react-toolbox='input' className={className}>
         {this.renderInput()}
-        {this.props.icon ? <FontIcon className={style.icon} value={this.props.icon} /> : null}
+        {icon ? <FontIcon className={style.icon} value={icon} /> : null}
         <span className={style.bar}></span>
-        {this.props.label ? <label className={labelClassName}>{this.props.label}</label> : null}
-        {this.renderUnderline()}
-        {this.props.tooltip ? <Tooltip label={this.props.tooltip} delay={this.props.tooltipDelay}/> : null}
+        {labelText ? <label className={labelClassName}>{labelText}</label> : null}
+        {error ? <span className={style.error}>{error}</span> : null}
+        {maxLength ? <span className={style.counter}>{length}/{maxLength}</span> : null}
+        {tooltip ? <Tooltip label={tooltip} delay={tooltipDelay}/> : null}
       </div>
     );
   }

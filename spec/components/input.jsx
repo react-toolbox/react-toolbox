@@ -8,9 +8,9 @@ class InputTest extends React.Component {
     withIcon: ''
   };
 
-  handleChange = (name, event) => {
+  handleChange = (name, value) => {
     const newState = {};
-    newState[`${name}`] = event.target.value;
+    newState[[name]] = value;
     this.setState(newState);
   };
 
