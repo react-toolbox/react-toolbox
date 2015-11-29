@@ -1,6 +1,6 @@
 # Font Icon
 
-The font icon component is used to represent an icon from the [Google Material Design](https://www.google.com/design/icons/) icon font. React Toolbox automatically includes the font for you so you just need to specify the name of the icon. The font icon is displayed with the current color so it can be inherited from the parent component.
+The font icon component is used to represent an icon from the [Google Material Design](https://www.google.com/design/icons/) icon font. React Toolbox does **not** provide the font icon for you. You'd need to get the icons using whatever method you want. We recommend to import the font and the associated CSS from Google Fonts as is specified [here](http://google.github.io/material-design-icons/#getting-icons).
 
 <!-- example -->
 ```jsx
