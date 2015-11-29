@@ -33,14 +33,20 @@ class Ripple extends React.Component {
   };
 
   start = ({pageX, pageY}, touch = false) => {
-    this.touch = touch;
-    document.addEventListener(this.touch ? 'touchend' : 'mouseup', this.handleEnd);
-    const {top, left, width} = this._getDescriptor(pageX, pageY);
-    this.setState({active: false, restarting: true, top, left, width}, () => {
-      this.refs.ripple.offsetWidth;  //eslint-disable-line no-unused-expressions
-      this.setState({active: true, restarting: false});
-    });
+    if (!this._isTouchRippleReceivingMouseEvent(touch)) {
+      this.touch = touch;
+      document.addEventListener(this.touch ? 'touchend' : 'mouseup', this.handleEnd);
+      const {top, left, width} = this._getDescriptor(pageX, pageY);
+      this.setState({active: false, restarting: true, top, left, width}, () => {
+        this.refs.ripple.offsetWidth;  //eslint-disable-line no-unused-expressions
+        this.setState({active: true, restarting: false});
+      });
+    }
   };
+
+  _isTouchRippleReceivingMouseEvent (touch) {
+    return this.touch && !touch;
+  }
 
   _getDescriptor (pageX, pageY) {
     const {left, top, height, width} = ReactDOM.findDOMNode(this).getBoundingClientRect();
