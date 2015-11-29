@@ -1,11 +1,11 @@
 import React from 'react';
 import ClassNames from 'classnames';
 import FontIcon from '../font_icon';
-import Tooltip from '../tooltip';
 import style from './style';
 
 class Input extends React.Component {
   static propTypes = {
+    children: React.PropTypes.any,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     error: React.PropTypes.string,
@@ -19,8 +19,6 @@ class Input extends React.Component {
     onFocus: React.PropTypes.func,
     onKeyPress: React.PropTypes.func,
     required: React.PropTypes.bool,
-    tooltip: React.PropTypes.string,
-    tooltipDelay: React.PropTypes.number,
     type: React.PropTypes.string,
     value: React.PropTypes.any
   };
@@ -61,10 +59,11 @@ class Input extends React.Component {
   }
 
   render () {
-    const {disabled, error, icon, floating, label: labelText,
-           maxLength, tooltip, tooltipDelay, type, value} = this.props;
+    const { children, disabled, error, floating, icon,
+            label: labelText, maxLength, multiline, type, value, ...others} = this.props;
     const length = maxLength && value ? value.length : 0;
     const labelClassName = ClassNames(style.label, {[style.fixed]: !floating});
+
     const className = ClassNames(style.root, {
       [style.disabled]: disabled,
       [style.errored]: error,
@@ -72,15 +71,24 @@ class Input extends React.Component {
       [style.withIcon]: icon
     }, this.props.className);
 
+    const InputElement = React.createElement(multiline ? 'textarea' : 'input', {
+      ...others,
+      className: ClassNames(style.input, {[style.filled]: value}),
+      onChange: this.handleChange,
+      ref: 'input',
+      role: 'input',
+      value
+    });
+
     return (
       <div data-react-toolbox='input' className={className}>
-        {this.renderInput()}
+        {InputElement}
         {icon ? <FontIcon className={style.icon} value={icon} /> : null}
         <span className={style.bar}></span>
         {labelText ? <label className={labelClassName}>{labelText}</label> : null}
         {error ? <span className={style.error}>{error}</span> : null}
         {maxLength ? <span className={style.counter}>{length}/{maxLength}</span> : null}
-        {tooltip ? <Tooltip label={tooltip} delay={tooltipDelay}/> : null}
+        {children}
       </div>
     );
   }

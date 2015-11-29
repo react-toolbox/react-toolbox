@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from '../../components/button';
 import Dialog from '../../components/dialog';
-import Tooltip from '../../components/tooltip';
 
 class DialogTest extends React.Component {
   state = {
@@ -31,7 +30,7 @@ class DialogTest extends React.Component {
           title="Use Google's location service?"
           onOverlayClick={this.handleToggle}
         >
-          <p>Let Google help apps <strong><Tooltip label='location' />determine location</strong>. This means sending anonymous location data to Google, even when no apps are running.</p>
+          <p>Let Google help apps <strong>determine location</strong>. This means sending anonymous location data to Google, even when no apps are running.</p>
         </Dialog>
       </section>
     );

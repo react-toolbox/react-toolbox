@@ -2,9 +2,7 @@ import React from 'react';
 import ClassNames from 'classnames';
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
-import Tooltip from '../tooltip';
 import style from './style';
-import events from '../utils/events';
 
 class Button extends React.Component {
   static propTypes = {
@@ -22,8 +20,6 @@ class Button extends React.Component {
     primary: React.PropTypes.bool,
     raised: React.PropTypes.bool,
     ripple: React.PropTypes.bool,
-    tooltip: React.PropTypes.string,
-    tooltipDelay: React.PropTypes.number,
     type: React.PropTypes.string
   };
 
@@ -39,15 +35,17 @@ class Button extends React.Component {
   };
 
   handleMouseDown = (event) => {
-    events.pauseEvent(event);
     if (this.refs.ripple) this.refs.ripple.start(event);
     if (this.props.onMouseDown) this.props.onMouseDown(event);
   };
 
+  handleMouseUp = () => {
+    this.refs.button.blur();
+  };
+
   render () {
-    const {accent, className, flat, floating, href, icon, inverse, label,
-           mini, primary, raised, ripple,
-           tooltip, tooltipDelay, ...others} = this.props;
+    const { accent, children, className, flat, floating, href, icon,
+            inverse, label, mini, primary, raised, ripple, ...others} = this.props;
     const element = href ? 'a' : 'button';
     const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
     const shape = flat ? 'flat' : raised ? 'raised' : floating ? 'floating' : 'flat';
@@ -60,17 +58,19 @@ class Button extends React.Component {
     const props = {
       ...others,
       href,
+      ref: 'button',
       className: classes,
       disabled: this.props.disabled,
       onMouseDown: this.handleMouseDown,
+      onMouseUp: this.handleMouseUp,
       'data-react-toolbox': 'button'
     };
 
     return React.createElement(element, props,
       ripple ? <Ripple ref='ripple' /> : null,
-      tooltip ? <Tooltip className={style.tooltip} delay={tooltipDelay} label={tooltip}/> : null,
       icon ? <FontIcon className={style.icon} value={icon}/> : null,
-      label ? label : this.props.children
+      label,
+      children
     );
   }
 }

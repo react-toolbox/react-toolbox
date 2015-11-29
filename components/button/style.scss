@@ -23,7 +23,7 @@
   &::-moz-focus-inner {
     border: 0;
   }
-  > span:not(.tooltip) {
+  > span:not([data-react-toolbox="tooltip"]) {
     display: inline-block;
     line-height: $button-height;
     vertical-align: middle;

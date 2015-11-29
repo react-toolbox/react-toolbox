@@ -1,69 +1,67 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ClassNames from 'classnames';
 import style from './style';
 
-const HIDE_TIMEOUT = 100;
-
-class Tooltip extends React.Component {
+const Tooltip = (ComposedComponent) => class extends React.Component {
   static propTypes = {
+    children: React.PropTypes.any,
     className: React.PropTypes.string,
-    delay: React.PropTypes.number,
-    label: React.PropTypes.string
+    onClick: React.PropTypes.func,
+    onMouseEnter: React.PropTypes.func,
+    onMouseLeave: React.PropTypes.func,
+    tooltip: React.PropTypes.string,
+    tooltipDelay: React.PropTypes.number,
+    tooltipHideOnClick: React.PropTypes.bool
   };
 
   static defaultProps = {
     className: '',
-    delay: 0
+    tooltipDelay: 0,
+    tooltipHideOnClick: true
   };
 
   state = {
     active: false
   };
 
-  componentDidMount = () => {
-    const parent = ReactDOM.findDOMNode(this).parentNode;
-
-    if (parent.style.position !== 'relative' && parent.style.position !== 'absolute'){
-      parent.style.position = 'relative';
-    }
-
-    parent.onmouseover = this.handleParentMouseOver;
-    parent.onmouseout = this.handleParentMouseOut;
+  handleMouseEnter = () => {
+    if (this.timeout) clearTimeout(this.timeout);
+    this.timeout = setTimeout(() =>this.setState({active: true}), this.props.tooltipDelay);
+    if (this.props.onMouseEnter) this.props.onMouseEnter();
   };
 
-  handleParentMouseOver = () => {
-    setTimeout(() => {
-      if (this.deferredHide) clearTimeout(this.deferredHide);
-      const node = ReactDOM.findDOMNode(this);
-      const parent = node.parentNode;
-      const parentStyle = parent.currentStyle || window.getComputedStyle(parent);
-      const offset = parseFloat(parentStyle['margin-bottom']) + parseFloat(parentStyle['padding-bottom']);
-      const position = parent.getBoundingClientRect();
-
-      node.style.top = `${position.height - offset}px`;
-      node.style.left = `${parseInt((position.width / 2) - (node.offsetWidth / 2))}px`;
-      if (!this.state.active) this.setState({ active: true});
-    }, this.props.delay);
+  handleMouseLeave = () => {
+    if (this.timeout) clearTimeout(this.timeout);
+    if (this.state.active) this.setState({active: false});
+    if (this.props.onMouseLeave) this.props.onMouseLeave();
   };
 
-  handleParentMouseOut = () => {
-    if (this.state.active) {
-      this.deferredHide = setTimeout(() => { this.setState({active: false}); }, HIDE_TIMEOUT);
-    }
-  };
+  handleClick = () => {
+    if (this.timeout) clearTimeout(this.timeout);
+    if (this.props.tooltipHideOnClick) this.setState({active: false});
+    if (this.props.onClick) this.props.onClick();
+  }
 
   render () {
-    const className = ClassNames(style.root, {
+    const {children, className, tooltip, tooltipDelay, tooltipHideOnClick, ...other} = this.props;
+    const composedClassName = ClassNames(style.root, className);
+    const tooltipClassName = ClassNames(style.tooltip, {
       [style.active]: this.state.active
-    }, this.props.className);
+    });
 
     return (
-      <span data-react-toolbox='tooltip' className={className}>
-        {this.props.label}
-      </span>
+      <ComposedComponent
+        {...other}
+        className={composedClassName}
+        onClick={this.handleClick}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+      >
+        {children ? children : null}
+        <span data-react-toolbox="tooltip" className={tooltipClassName}>{tooltip}</span>
+      </ComposedComponent>
     );
   }
-}
+};
 
 export default Tooltip;

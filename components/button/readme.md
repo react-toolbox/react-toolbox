@@ -46,8 +46,6 @@ const TestButtons = () => (
 | `primary`  | `false` | `false` | Indicates if the button should have primary color.|
 | `raised`   | `Boolean`  | `false` | If true, the button will have a raised look. |
 | `ripple`  | `Boolean`  | `true`    | If true, component will have a ripple effect on click.|
-| `tooptip`   | `String`  |  | The value will be shown as a tooltip when the button is hovered. |
-| `tooltipDelay`     | `Number`  |  | Amount of time in milliseconds before the tooltip is visible.|
 
 By default it will have neutral colors and a flat aspect even though the `flat` property is `false` by default. Also, some properties exclude others, for example a button cannot be `flat` and `raised` at the same time. 
 

@@ -3,7 +3,13 @@
 @import "./config";
 
 .root {
+  position: relative;
+}
+
+.tooltip {
   position: absolute;
+  top: 100%;
+  left: 50%;
   z-index: $z-index-higher;
   display: block;
   max-width: $tooltip-max-width;
@@ -17,28 +23,10 @@
   text-transform: none;
   background: $tooltip-background;
   border-radius: $tooltip-border-radius;
-  transform: scale(0);
-  transform-origin: top center;
-  animation-duration: $tooltip-animation-duration;
-  animation-timing-function: $animation-curve-default;
-  animation-iteration-count: 1;
-  animation-direction: forwards;
+  transition: $animation-curve-default $tooltip-animation-duration transform;
+  transform: scale(0) translateX(-50%);
+  transform-origin: top left;
   &.active {
-    animation-name: tooltip-animation;
-  }
-  &.large {
-    padding: 2 * $tooltip-padding;
-    font-size: $font-size-small;
-  }
-  @keyframes tooltip-animation {
-    0% {
-      transform: scale(0);
-    }
-    10%, 99% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0);
-    }
+    transform: scale(1) translateX(-50%);
   }
 }
