@@ -1,13 +1,6 @@
 @import "./base";
 @import "~normalize.css";
 
-$import-font: true !default;
-$import-flex-attributes: false !default;
-
-@if $import-font == true {
-  @import url($font-roboto-url);
-}
-
 html {
   font-size: 62.5%;
 }
