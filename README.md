@@ -33,9 +33,13 @@ const CustomButton = () => (
 export default CustomButton;
 ```
 
-The previous code creates a React button component based on React toolbox button. It's important to notice that requiring a module from the exposed root of the package will import the **SASS** of the component. 
+The previous code creates a React button component based on React toolbox button. It's important to notice that requiring a module from the exposed root of the package will import the **SASS** of the component.
 
-We encourage you to work with webpack but if you want to use React Toolbox in an old fashioned way you must generate a build with all the css and javascript and include it in your `index.html`. Then you can use the components exposed in the `window` object.
+## Roboto Font and Material Design Icons
+
+React Toolbox assumes that you are importing [Roboto Font](https://www.google.com/fonts/specimen/Roboto) and [Material Design Icons](https://www.google.com/design/icons/).
+
+In order to import the fonts for you, we'd need to include them in the CSS which is considered a bad practice. If you are not including them in your app yo to the linked sites and follow the instructions. 
 
 ## App component
 
@@ -88,7 +92,7 @@ If you browse the resulting markup you will see *data attributes* like `data-rol
 
 The project is being initially developed and maintained by [Javier Velasco](http://javivelasco.com) and [Javier Jiménez](http://soyjavi.com) and the [contribution scene](https://github.com/react-toolbox/react-toolbox/graphs/contributors) is just getting warm. We want to create reference components so any contribution is very welcome.
 
-To work in the project you'd need a `node` version with ES6 syntax. Although the project is built using Babel we use some ES6 features in the development server. Also, the packages has been tested with `node 4.2.1`. Consider using [nvm](https://github.com/creationix/nvm) or [n](https://github.com/tj/n) to handle different node versions!
+To work in the project you'd need a `node` version supporting ES6 syntax. Although the project is built using Babel we use some ES6 features in the development server. Also, the packages has been tested with `node 4.2.1`. Consider using [nvm](https://github.com/creationix/nvm) or [n](https://github.com/tj/n) to handle different node versions!
 
 To start documentation site locally you'd need to install dependencies from the main package and also dependencies from the docs subproject:
 
