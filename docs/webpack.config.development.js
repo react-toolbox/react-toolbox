@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const TransferWebpackPlugin = require('transfer-webpack-plugin');
 
 module.exports = {
   context: __dirname,
@@ -49,6 +50,10 @@ module.exports = {
   postcss: [autoprefixer],
   plugins: [
     new ExtractTextPlugin('docs.css', { allChunks: true }),
+    new TransferWebpackPlugin([{
+      from: 'www/images',
+      to: 'images'
+    }], path.resolve(__dirname, './')),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({

@@ -1,5 +1,7 @@
 @import "../../globals";
 @import "./config";
+
+$twitter-color: #55acee;
 $content-offset: 4.8 * $unit;
 $content-width: 740px;
 
@@ -29,10 +31,10 @@ $content-width: 740px;
     opacity: $hero-text-secondary-opacity;
   }
   .github {
-    z-index: $z-index-higher;
     position: fixed;
     top: 2 * $unit;
     left: 2 * $unit;
+    z-index: $z-index-higher;
     text-align: center;
     iframe {
       display: inline-block;
@@ -74,11 +76,10 @@ $content-width: 740px;
 .content {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
   padding: $content-offset;
   background-color: $color-content;
-
-  flex-wrap: wrap;
   &:nth-child(3) {
     background-color: darken($color-content, 5%);
   }
@@ -87,8 +88,12 @@ $content-width: 740px;
     align-items: flex-start;
     justify-content: center;
     > * {
+      max-width: 32 * $unit;
       flex: 1 auto;
       margin: 0 $unit;
+    }
+    .twitter {
+      color: $twitter-color;
     }
   }
   > p {
@@ -125,6 +130,27 @@ $content-width: 740px;
   }
 }
 
+.donate {
+  display: inline-block;
+  overflow: hidden;
+  font-size: 1.1 * $unit;
+  color: #fff;
+  vertical-align: top;
+  border-radius: 3px;
+  .legend {
+    display: inline-block;
+    padding: 0 .5 * $unit;
+    line-height: 2 * $unit;
+    background-color: #555;
+  }
+  .paypal {
+    display: inline-block;
+    padding: 0 .5 * $unit;
+    line-height: 2 * $unit;
+    background-color: #007ec6;
+  }
+}
+
 @media all and (max-width: 768px) {
   .header {
     .github {
@@ -146,26 +172,5 @@ $content-width: 740px;
 
   .second-content {
     background-color: transparent;
-  }
-}
-
-.donate {
-  display: inline-block;
-  overflow: hidden;
-  font-size: 1.1 * $unit;
-  color: #fff;
-  vertical-align: top;
-  border-radius: 3px;
-  .legend {
-    display: inline-block;
-    padding: 0 .5 * $unit;
-    line-height: 2 * $unit;
-    background-color: #555;
-  }
-  .paypal {
-    display: inline-block;
-    padding: 0 .5 * $unit;
-    line-height: 2 * $unit;
-    background-color: #007ec6;
   }
 }
