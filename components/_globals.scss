@@ -16,9 +16,14 @@ $color-accent-contrast: $color-dark-contrast !default;
 //-- Sizing
 $unit: 1rem;
 
+//-- Options
+$import-flex-attributes: false !default;
+
 // -- Fonts
 $font-roboto-url: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" !default;
 $font-icon-url: "https://fonts.googleapis.com/icon?family=Material+Icons" !default;
+$import-icon-font: true !default;
+$import-font: true !default;
 $preferred-font: "Roboto", "Helvetica", "Arial", sans-serif !default;
 $font-size: 1.6 * $unit !default;
 $font-size-tiny: 1.2 * $unit !default;

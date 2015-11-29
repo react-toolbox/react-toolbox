@@ -1,5 +1,8 @@
 @import "../base";
-@import url($font-icon-url);
+
+@if $import-icon-font == true {
+  @import url($font-icon-url);
+}
 
 %icon {
   display: inline-block;
