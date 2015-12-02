@@ -5,14 +5,21 @@ A [dialog picker](https://www.google.com/design/spec/components/pickers.html#pic
 <!-- example -->
 ```jsx
 import TimePicker from 'react-toolbox/lib/time_picker';
+let time = new Date();
+time.setHours(17);
+time.setMinutes(28);
 
-let selectedTime = new Date();
-selectedTime.setHours(17);
-selectedTime.setMinutes(28);
+class TimePickerTest extends React.Component {
+	state = {time};
 
-const TimePickerTest = () => (
-  <TimePicker label='Finishing time' value={selectedTime} />
-);
+  handleChange = (time) => {
+  	this.setState({time});
+  };
+
+  render () {
+  	return <TimePicker label='Finishing time' onChange={this.handleChange} value={this.state.time} />;
+  }
+}
 ```
 
 ## Properties
