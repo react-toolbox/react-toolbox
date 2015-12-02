@@ -77,6 +77,7 @@ class Input extends React.Component {
       onChange: this.handleChange,
       ref: 'input',
       role: 'input',
+      disabled,
       value
     });
 
