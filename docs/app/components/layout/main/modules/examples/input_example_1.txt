@@ -1,10 +1,8 @@
 class InputTest extends React.Component {
   state = { name: '', phone: '', email: '' };
 
-  handleChange = (name, event) => {
-    const newState = {};
-    newState[`${name}`] = event.target.value;
-    this.setState(newState);
+  handleChange = (name, value) => {
+    this.setState({...this.state, [name]: value});
   };
 
   render () {
