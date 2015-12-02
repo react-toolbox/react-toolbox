@@ -15,17 +15,30 @@ class DropdownTest extends React.Component {
   };
 
   customItem (item) {
-    const style = {
-      width: 36,
-      height: 36,
-      backgroundColor: '#ccc',
-      marginRight: 8
+    const containerStyle = {
+      display: 'flex',
+      flexDirection: 'row'
+    };
+
+    const imageStyle = {
+      display: 'flex',
+      width: '32px',
+      height: '32px',
+      flexGrow: 0,
+      marginRight: '8px',
+      backgroundColor: '#ccc'
+    };
+
+    const contentStyle = {
+      display: 'flex',
+      flexDirection: 'column',
+      flexGrow: 2
     };
 
     return (
-      <div data-flex="horizontal grow" data-flex-content="center">
-        <img src={item.img} data-flex-grow="min" style={style} />
-        <div data-flex-grow="max" data-flex="vertical" >
+      <div style={containerStyle}>
+        <img src={item.img} style={imageStyle}/>
+        <div style={contentStyle}>
           <strong>{item.artist}</strong>
           <small>{item.album}</small>
         </div>
@@ -48,4 +61,3 @@ class DropdownTest extends React.Component {
 }
 
 return <DropdownTest />;
-
