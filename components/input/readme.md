@@ -9,19 +9,17 @@ import Input from 'react-toolbox/lib/input';
 class InputTest extends React.Component {
   state = { name: '', phone: '', email: '' };
 
-  handleChange = (name, event) => {
-    const newState = {};
-    newState[`${name}`] = event.target.value;
-    this.setState(newState);
+  handleChange = (name, value) => {
+    this.setState({...this.state, [name]: value});
   };
 
   render () {
     return (
       <section>
-        <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange.bind(this, 'name')} />
+        <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange.bind(this, 'name')} maxLength={16 } />
         <Input type='text' label='Disabled field' disabled />
-        <Input type='email' label='Email address' icon='email' />
-        <Input type='tel' label='Phone' name='phone' icon='phone' value={this.state.withIcon} onChange={this.handleChange.bind(this, 'phone')} />
+        <Input type='email' label='Email address' icon='email' value={this.state.email} onChange={this.handleChange.bind(this, 'email')} />
+        <Input type='tel' label='Phone' name='phone' icon='phone' value={this.state.phone} onChange={this.handleChange.bind(this, 'phone')} />
       </section>
     );
   }
