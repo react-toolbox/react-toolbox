@@ -51,8 +51,8 @@ class Ripple extends React.Component {
   _getDescriptor (pageX, pageY) {
     const {left, top, height, width} = ReactDOM.findDOMNode(this).getBoundingClientRect();
     return {
-      left: this.props.centered ? 0 : pageX - left - width / 2 + window.scrollX,
-      top: this.props.centered ? 0 : pageY - top - height / 2 + window.scrollY,
+      left: this.props.centered ? 0 : pageX - left - width / 2 - window.scrollX,
+      top: this.props.centered ? 0 : pageY - top - height / 2 - window.scrollY,
       width: width * this.props.spread
     };
   }
