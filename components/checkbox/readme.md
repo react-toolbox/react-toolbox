@@ -7,36 +7,33 @@
 import Checkbox from 'react-toolbox/lib/checkbox';
 
 class TestCheckbox extends React.Component {
-  state = {
-    check1: true,
-    check2: false
-  };
+  state = { check1: true, check2: false };
 
   handleChange = (field, value) => {
-    this.setState({ [field]: value });
+    this.setState({...this.state, [field]: value});
   };
 
   render () {
     return (
       <div>
-        <Checkbox 
-          checked={this.state.check1} 
-          label="Checked option" 
-          onChange={this.handleChange.bind(this, 'check1')} 
+        <Checkbox
+          checked={this.state.check1}
+          label="Checked option"
+          onChange={this.handleChange.bind(this, 'check1')}
         />
-        <Checkbox 
-          checked={this.state.check2} 
-          label="Unchecked option" 
+        <Checkbox
+          checked={this.state.check2}
+          label="Unchecked option"
           onChange={this.handleChange.bind(this, 'check2')}
         />
-        <Checkbox 
-          checked 
-          disabled 
-          label="Disabled checkbox" 
+        <Checkbox
+          checked
+          disabled
+          label="Disabled checkbox"
         />
       </div>
     );
-  } 
+  }
 }
 ```
 
