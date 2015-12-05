@@ -78,6 +78,7 @@ class Input extends React.Component {
       ref: 'input',
       role: 'input',
       disabled,
+      type,
       value
     });
 
