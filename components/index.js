@@ -19,7 +19,7 @@ export List from './list/List';
 export ListItem from './list/ListItem';
 export ListDivider from './list/ListDivider';
 export ListCheckbox from './list/ListCheckbox';
-export ListSubHeader from './list/ListSubheader';
+export ListSubHeader from './list/ListSubHeader';
 export Menu from './menu/Menu';
 export MenuItem from './menu/MenuItem';
 export MenuDivider from './menu/MenuDivider';
