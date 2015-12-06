@@ -50,4 +50,4 @@ class IconButton extends React.Component {
   }
 }
 
-export default RippleDecorator(IconButton, {centered: true});
+export default RippleDecorator({centered: true})(IconButton);

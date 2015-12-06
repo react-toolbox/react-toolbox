@@ -11,8 +11,8 @@ const Check = ({checked, children, onMouseDown}) => {
   return <div data-role='checkbox' onMouseDown={onMouseDown} className={className}>{children}</div>;
 };
 
-export default RippleDecorator(Check, {
+export default RippleDecorator({
   className: style.ripple,
   spread: 2.6,
   centered: true
-});
+})(Check);

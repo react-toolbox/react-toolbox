@@ -66,4 +66,4 @@ class Button extends React.Component {
   }
 }
 
-export default RippleDecorator(Button, {centered: false});
+export default RippleDecorator({centered: false})(Button);
