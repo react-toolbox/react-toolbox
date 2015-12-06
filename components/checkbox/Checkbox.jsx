@@ -1,7 +1,6 @@
 import React from 'react';
 import ClassNames from 'classnames';
-import Ripple from '../ripple';
-import events from '../utils/events';
+import Check from './Check';
 import style from './style';
 
 class Checkbox extends React.Component {
@@ -22,21 +21,10 @@ class Checkbox extends React.Component {
     disabled: false
   };
 
-  handleClick = (event) => {
-    events.pauseEvent(event);
+  handleToggle = (event) => {
+    if (event.pageX !== 0 && event.pageY !== 0) this.blur();
     if (!this.props.disabled && this.props.onChange) {
-      const value = !this.refs.input.checked;
-      this.props.onChange(value, event);
-    }
-  };
-
-  handleInputClick = (event) => {
-    events.pauseEvent(event);
-  };
-
-  handleMouseDown = (event) => {
-    if (!this.props.disabled) {
-      this.refs.ripple.start(event);
+      this.props.onChange(!this.props.checked, event);
     }
   };
 
@@ -49,30 +37,22 @@ class Checkbox extends React.Component {
   }
 
   render () {
-    const fieldClassName = ClassNames(style.field, {
+    const { onChange, ...others } = this.props;
+    const className = ClassNames(style.field, {
       [style.disabled]: this.props.disabled
     }, this.props.className);
 
-    const checkboxClassName = ClassNames(style.check, {
-      [style.checked]: this.props.checked
-    });
-
     return (
-      <label
-        data-react-toolbox='checkbox'
-        className={fieldClassName}
-        onClick={this.handleClick}
-      >
+      <label data-react-toolbox='checkbox' className={className}>
         <input
-          ref='input'
-          {...this.props}
+          {...others}
           className={style.input}
-          onClick={this.handleInputClick}
+          onClick={this.handleToggle}
+          readOnly
+          ref='input'
           type='checkbox'
         />
-        <span data-role='checkbox' className={checkboxClassName} onMouseDown={this.handleMouseDown}>
-          <Ripple ref='ripple' data-role='ripple' className={style.ripple} spread={3} centered />
-        </span>
+        <Check checked={this.props.checked} disabled={this.props.disabled}/>
         {this.props.label ? <span data-role='label' className={style.text}>{this.props.label}</span> : null}
       </label>
     );

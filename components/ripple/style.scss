@@ -38,15 +38,3 @@
     transition-property: opacity, transform;
   }
 }
-
-.loading {
-  @extend %ripple;
-  @include ripple-loading(ripple, $ripple-size, $ripple-size);
-  width: $ripple-size;
-  height: $ripple-size;
-  opacity: $ripple-final-opacity;
-  animation-name: ripple;
-  animation-duration: $ripple-duration;
-  animation-timing-function: $animation-curve-linear-out-slow-in;
-  animation-iteration-count: infinite;
-}
