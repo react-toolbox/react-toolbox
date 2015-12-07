@@ -2,13 +2,14 @@ import React from 'react';
 import ClassNames from 'classnames';
 import FontIcon from '../font_icon';
 import ListItemContent from './ListItemContent';
-import Ripple from '../ripple';
+import RippleDecorator from '../ripple/RippleDecorator';
 import style from './style';
 
 class ListItem extends React.Component {
   static propTypes = {
     avatar: React.PropTypes.string,
     caption: React.PropTypes.string.isRequired,
+    children: React.PropTypes.any,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     leftIcon: React.PropTypes.string,
@@ -32,12 +33,6 @@ class ListItem extends React.Component {
     }
   };
 
-  handleMouseDown = (event) => {
-    if (this.refs.ripple && !this.props.disabled) {
-      this.refs.ripple.start(event);
-    }
-  };
-
   renderContent () {
     const className = ClassNames(style.item, {
       [style.withLegend]: this.props.legend,
@@ -50,7 +45,6 @@ class ListItem extends React.Component {
         {this.props.leftIcon ? <FontIcon className={`${style.icon} ${style.left}`} value={this.props.leftIcon} /> : null}
         {this.props.avatar ? <img className={style.avatar} src={this.props.avatar} /> : null}
         <ListItemContent caption={this.props.caption} legend={this.props.legend} />
-        {this.props.ripple ? <Ripple ref='ripple' className={style.ripple} spread={2} /> : null}
         {this.props.rightIcon ? <FontIcon className={`${style.icon} ${style.right}`} value={this.props.rightIcon} /> : null}
       </span>
     );
@@ -58,11 +52,15 @@ class ListItem extends React.Component {
 
   render () {
     return (
-      <li className={style['list-item']} onClick={this.handleClick} onMouseDown={this.handleMouseDown}>
+      <li className={style.listItem} onClick={this.handleClick} onMouseDown={this.props.onMouseDown}>
         {this.props.to ? <a href={this.props.to}>{this.renderContent()}</a> : this.renderContent()}
+        {this.props.children}
       </li>
     );
   }
 }
 
-export default ListItem;
+export default RippleDecorator({
+  className: style.ripple,
+  centered: false
+})(ListItem);

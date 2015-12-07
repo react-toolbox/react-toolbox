@@ -32,9 +32,14 @@
   .list + & {
     margin-top: - $list-vertical-padding;
   }
-  .list-item ~ & {
+  .listItem ~ & {
     margin: $list-vertical-padding 0;
   }
+}
+
+.listItem {
+  position: relative;
+  overflow: hidden;
 }
 
 .item {
@@ -79,7 +84,7 @@
 }
 
 .ripple {
-  opacity: .1;
+  color: $color-text-secondary;
 }
 
 .text {
