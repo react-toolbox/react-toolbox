@@ -19,7 +19,6 @@ class Button extends React.Component {
     mini: React.PropTypes.bool,
     primary: React.PropTypes.bool,
     raised: React.PropTypes.bool,
-    ripple: React.PropTypes.bool,
     type: React.PropTypes.string
   };
 
@@ -30,13 +29,7 @@ class Button extends React.Component {
     floating: false,
     mini: false,
     primary: false,
-    raised: false,
-    ripple: true
-  };
-
-  handleMouseDown = (event) => {
-    if (this.refs.ripple) this.refs.ripple.start(event);
-    if (this.props.onMouseDown) this.props.onMouseDown(event);
+    raised: false
   };
 
   handleMouseUp = () => {
@@ -45,7 +38,7 @@ class Button extends React.Component {
 
   render () {
     const { accent, children, className, flat, floating, href, icon,
-            inverse, label, mini, primary, raised, ripple, ...others} = this.props;
+            inverse, label, mini, primary, raised, ...others} = this.props;
     const element = href ? 'a' : 'button';
     const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
     const shape = flat ? 'flat' : raised ? 'raised' : floating ? 'floating' : 'flat';
@@ -61,13 +54,11 @@ class Button extends React.Component {
       ref: 'button',
       className: classes,
       disabled: this.props.disabled,
-      onMouseDown: this.handleMouseDown,
       onMouseUp: this.handleMouseUp,
       'data-react-toolbox': 'button'
     };
 
     return React.createElement(element, props,
-      ripple ? <Ripple ref='ripple' /> : null,
       icon ? <FontIcon className={style.icon} value={icon}/> : null,
       label,
       children
@@ -75,4 +66,4 @@ class Button extends React.Component {
   }
 }
 
-export default Button;
+export default Ripple({centered: false})(Button);

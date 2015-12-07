@@ -28,15 +28,12 @@
   margin: 0;
   border: 0;
   opacity: 0;
-
   appearance: none;
-  &:focus:not(&:active) {
-    + .radio {
-      box-shadow: 0 0 0 $unit $radio-focus-color;
-    }
-    + .radio-checked {
-      box-shadow: 0 0 0 $unit $radio-checked-focus-color;
-    }
+  &:focus ~ .radio {
+    box-shadow: 0 0 0 $unit $radio-focus-color;
+  }
+  &:focus ~ .radio-checked {
+    box-shadow: 0 0 0 $unit $radio-checked-focus-color;
   }
 }
 

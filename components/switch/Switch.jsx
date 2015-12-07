@@ -1,7 +1,6 @@
 import React from 'react';
-import Ripple from '../ripple';
+import Thumb from './Thumb';
 import style from './style';
-import events from '../utils/events';
 
 class Switch extends React.Component {
   static propTypes = {
@@ -21,20 +20,11 @@ class Switch extends React.Component {
     disabled: false
   };
 
-  handleChange = (event) => {
-    events.pauseEvent(event);
-    if (this.props.onChange && !this.props.disabled) {
-      const value = !this.refs.input.checked;
-      this.props.onChange(value, event);
+  handleToggle = (event) => {
+    if (event.pageX !== 0 && event.pageY !== 0) this.blur();
+    if (!this.props.disabled && this.props.onChange) {
+      this.props.onChange(!this.props.checked, event);
     }
-  };
-
-  handleInputClick = (event) => {
-    events.pauseEvent(event);
-  };
-
-  handleMouseDown = (event) => {
-    if (!this.props.disabled) this.refs.ripple.start(event);
   };
 
   blur () {
@@ -46,29 +36,24 @@ class Switch extends React.Component {
   }
 
   render () {
-    let labelClassName = style[this.props.disabled ? 'disabled' : 'field'];
+    let className = style[this.props.disabled ? 'disabled' : 'field'];
     const switchClassName = style[this.props.checked ? 'on' : 'off'];
-    if (this.props.className) labelClassName += ` ${this.props.className}`;
+    const { onChange, ...others } = this.props;
+    if (this.props.className) className += ` ${this.props.className}`;
 
     return (
-      <label
-        data-react-toolbox='checkbox'
-        className={labelClassName}
-        onClick={this.handleChange}
-      >
+      <label data-react-toolbox='checkbox' className={className}>
         <input
-          {...this.props}
-          ref='input'
+          {...others}
           checked={this.props.checked}
           className={style.input}
-          onChange={this.handleChange}
-          onClick={this.handleInputClick}
+          onClick={this.handleToggle}
+          readOnly
+          ref='input'
           type='checkbox'
         />
         <span role='switch' className={switchClassName}>
-          <span role='thumb' className={style.thumb} onMouseDown={this.handleMouseDown}>
-            <Ripple ref='ripple' role='ripple' className={style.ripple} spread={2.4} centered />
-          </span>
+          <Thumb disabled={this.props.disabled} />
         </span>
         {this.props.label ? <span className={style.text}>{this.props.label}</span> : null}
       </label>

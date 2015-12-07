@@ -1,8 +1,7 @@
 import React from 'react';
 import ClassNames from 'classnames';
-import Ripple from '../ripple';
+import Radio from './Radio';
 import style from './style';
-import events from '../utils/events';
 
 class RadioButton extends React.Component {
   static propTypes = {
@@ -23,23 +22,10 @@ class RadioButton extends React.Component {
     disabled: false
   };
 
-  handleChange = (event) => {
-    if (!this.props.checked && this.props.onChange) {
-      this.props.onChange(event, this);
-    }
-  };
-
   handleClick = (event) => {
-    events.pauseEvent(event);
-    if (!this.props.disabled) this.handleChange(event);
-  };
-
-  handleInputClick = (event) => {
-    events.pauseEvent(event);
-  };
-
-  handleMouseDown = (event) => {
-    if (!this.props.disabled) this.refs.ripple.start(event);
+    const {checked, disabled, onChange} = this.props;
+    if (event.pageX !== 0 && event.pageY !== 0) this.blur();
+    if (!disabled && !checked && onChange) onChange(event, this);
   };
 
   blur () {
@@ -51,22 +37,20 @@ class RadioButton extends React.Component {
   }
 
   render () {
-    const labelClassName = ClassNames(style[this.props.disabled ? 'disabled' : 'field'], this.props.className);
-    const radioClassName = style[this.props.checked ? 'radio-checked' : 'radio'];
+    const className = ClassNames(style[this.props.disabled ? 'disabled' : 'field'], this.props.className);
+    const { onChange, ...others } = this.props;
 
     return (
-      <label className={labelClassName} onClick={this.handleClick}>
+      <label className={className}>
         <input
-          {...this.props}
-          ref='input'
+          {...others}
           className={style.input}
-          onChange={this.handleChange}
-          onClick={this.handleInputClick}
+          onClick={this.handleClick}
+          readOnly
+          ref='input'
           type='radio'
         />
-        <span role='radio' className={radioClassName} onMouseDown={this.handleMouseDown}>
-          <Ripple ref='ripple' role='ripple' className={style.ripple} spread={3} centered />
-        </span>
+        <Radio checked={this.props.checked} disabled={this.props.disabled}/>
         {this.props.label ? <span className={style.text}>{this.props.label}</span> : null}
       </label>
     );
