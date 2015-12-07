@@ -1,7 +1,7 @@
 import React from 'react';
 import FontIcon from '../font_icon';
 import ClassNames from 'classnames';
-import RippleDecorator from '../ripple/RippleDecorator';
+import Ripple from '../ripple';
 import style from './style.menu_item';
 
 class MenuItem extends React.Component {
@@ -46,6 +46,6 @@ class MenuItem extends React.Component {
   }
 }
 
-export default RippleDecorator({
+export default Ripple({
   className: style.ripple
 })(MenuItem);

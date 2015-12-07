@@ -1,7 +1,7 @@
 import React from 'react';
 import ClassNames from 'classnames';
 import FontIcon from '../font_icon';
-import RippleDecorator from '../ripple/RippleDecorator';
+import Ripple from '../ripple';
 import style from './style';
 
 class Button extends React.Component {
@@ -66,4 +66,4 @@ class Button extends React.Component {
   }
 }
 
-export default RippleDecorator({centered: false})(Button);
+export default Ripple({centered: false})(Button);

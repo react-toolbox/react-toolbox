@@ -1,5 +1,5 @@
 import React from 'react';
-import RippleDecorator from '../ripple/RippleDecorator';
+import Ripple from '../ripple';
 import style from './style';
 
 const Radio = ({checked, children, onMouseDown}) => {
@@ -7,7 +7,7 @@ const Radio = ({checked, children, onMouseDown}) => {
   return <div data-role='radio' onMouseDown={onMouseDown} className={className}>{children}</div>;
 };
 
-export default RippleDecorator({
+export default Ripple({
   className: style.ripple,
   spread: 2.6,
   centered: true

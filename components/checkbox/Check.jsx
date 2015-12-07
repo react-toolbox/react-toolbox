@@ -1,6 +1,6 @@
 import React from 'react';
 import ClassNames from 'classnames';
-import RippleDecorator from '../ripple/RippleDecorator';
+import Ripple from '../ripple';
 import style from './style';
 
 const Check = ({checked, children, onMouseDown}) => {
@@ -11,7 +11,7 @@ const Check = ({checked, children, onMouseDown}) => {
   return <div data-role='checkbox' onMouseDown={onMouseDown} className={className}>{children}</div>;
 };
 
-export default RippleDecorator({
+export default Ripple({
   className: style.ripple,
   spread: 2.6,
   centered: true
