@@ -9,7 +9,7 @@ class CheckboxTest extends React.Component {
   };
 
   handleChange = (field, value) => {
-    this.setState({ [field]: value });
+    this.setState({...this.state, [field]: value});
   };
 
   handleFocus = () => {
