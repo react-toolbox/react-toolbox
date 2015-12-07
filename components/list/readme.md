@@ -59,9 +59,11 @@ Represents a list item that can have avatar, icons, title and subtitle, etc. It'
 | `disabled`   | `String`    |  `false`    | If true, the item is displayed as disabled and it's not clickable.| 
 | `leftIcon`    | `String`       |    | A string key of a font icon to display an icon in the left side of the item. |
 | `legend`   | `String`      |       | Secondary text to display under the caption.|
+| `onClick`   | `Function`      |       | Callback the is invoked when the item is clicked if it's not disabled. |
 | `rightIcon`  | `String`      |       | The same as the `leftIcon` but in this case the icon is displayed in the right side.|
 | `ripple` | `Boolean`      |   `false`  | If true, the item displays a ripple effect on click. By default it's inherited from the parent element.|
 | `selectable` | `Boolean`      |   `false`    | If true, the elements in the list will display a hover effect and a pointer cursor. Inherited from the parent |
+| `to` | `String`      |       | In case you want to provide the item as a link, you can pass this property to specify the href. |
 
 ## List Checkbox
 
