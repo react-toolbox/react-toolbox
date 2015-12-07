@@ -46,6 +46,7 @@ class RadioButton extends React.Component {
           {...others}
           className={style.input}
           onClick={this.handleClick}
+          readOnly
           ref='input'
           type='radio'
         />
