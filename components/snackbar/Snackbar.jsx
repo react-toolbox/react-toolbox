@@ -33,7 +33,7 @@ class Snackbar extends React.Component {
     }, this.props.className);
 
     return (
-      <Overlay active={active} opacity={0}>
+      <Overlay invisible>
         <div data-react-toolbox='snackbar' className={className}>
           {icon ? <FontIcon value={icon} className={style.icon} /> : null}
           <span className={style.label}>{label}</span>
