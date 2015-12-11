@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ClassNames from 'classnames';
 import style from './style';
 
 class Overlay extends React.Component {
@@ -7,12 +8,12 @@ class Overlay extends React.Component {
     active: React.PropTypes.bool,
     children: React.PropTypes.node,
     className: React.PropTypes.string,
-    onClick: React.PropTypes.func,
-    opacity: React.PropTypes.number
+    invisible: React.PropTypes.bool,
+    onClick: React.PropTypes.func
   };
 
   static defaultProps = {
-    opacity: 0.5
+    invisible: false
   };
 
   componentDidMount () {
@@ -33,22 +34,14 @@ class Overlay extends React.Component {
   }
 
   handleRender () {
-    let className = style.root;
-    const overlayStyle = {};
-
-    if (this.props.active) {
-      className += ` ${style.active}`;
-      overlayStyle.opacity = this.props.opacity;
-    }
-    if (this.props.className) className += ` ${className}`;
+    const className = ClassNames(style.root, {
+      [style.active]: this.props.active,
+      [style.invisible]: this.props.invisible
+    }, this.props.className);
 
     ReactDOM.render(
       <div className={className}>
-        <div
-          className={style.overlay}
-          onClick={this.props.onClick}
-          style={overlayStyle}
-        />
+        <div className={style.overlay} onClick={this.props.onClick} />
         {this.props.children}
       </div>
     , this.node);
