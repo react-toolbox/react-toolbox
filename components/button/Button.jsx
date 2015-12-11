@@ -17,6 +17,8 @@ class Button extends React.Component {
     inverse: React.PropTypes.bool,
     label: React.PropTypes.string,
     mini: React.PropTypes.bool,
+    onMouseLeave: React.PropTypes.func,
+    onMouseUp: React.PropTypes.func,
     primary: React.PropTypes.bool,
     raised: React.PropTypes.bool,
     type: React.PropTypes.string
@@ -34,6 +36,12 @@ class Button extends React.Component {
 
   handleMouseUp = () => {
     this.refs.button.blur();
+    if (this.props.onMouseUp) this.props.onMouseUp();
+  };
+
+  handleMouseLeave = () => {
+    this.refs.button.blur();
+    if (this.props.onMouseLeave) this.props.onMouseLeave();
   };
 
   render () {
@@ -55,6 +63,7 @@ class Button extends React.Component {
       className: classes,
       disabled: this.props.disabled,
       onMouseUp: this.handleMouseUp,
+      onMouseLeave: this.handleMouseLeave,
       'data-react-toolbox': 'button'
     };
 
