@@ -8,33 +8,33 @@ import Switch from 'react-toolbox/lib/switch';
 
 class SwitchTest extends React.Component {
   state = {
-    switch: [true, false, false]
+    switch_1: true,
+    switch_2: false,
+    switch_3: true
   };
 
-  handleChange = (index, value) => {
-    const state = this.state.switch;
-    state[index] = value;
-    this.setState({switch: state});
+  handleChange = (field, value) => {
+    this.setState({...this.state, [field]: value});
   };
 
   render () {
     return (
       <section>
         <Switch
-          checked={this.state.switch[0]}
+          checked={this.state.switch_1}
           label="Push notifications"
-          onChange={this.handleChange.bind(this, 0)}
+          onChange={this.handleChange.bind(this, 'switch_1')}
         />
         <Switch
-          checked={this.state.switch[1]}
+          checked={this.state.switch_2}
           label="Mail notifications"
-          onChange={this.handleChange.bind(this, 1)}
+          onChange={this.handleChange.bind(this, 'switch_2')}
         />
         <Switch
-          checked={this.state.switch[2]}
+          checked={this.state.switch_3}
           disabled
           label="Nothing, thanks"
-          onChange={this.handleChange.bind(this, 2)}
+          onChange={this.handleChange.bind(this, 'switch_3')}
         />
       </section>
     );
