@@ -5,21 +5,20 @@ This component is intended to be a common wrapper for a group of links or button
 <!-- example -->
 ```jsx
 import Navigation from 'react-toolbox/lib/navigation';
-
-const links = [
-  { href: 'http://', icon: 'person', label: 'Profile' },
-  { href: 'http://', icon: 'inbox', label: 'Inbox'}
-];
+import Link from 'react-toolbox/lib/link';
 
 const actions = [
-  { label: 'Alarm', raised: true, icon: 'access-alarm'},
+  { label: 'Alarm', raised: true, icon: 'access_alarm'},
   { label: 'Location', raised: true, accent: true, icon: 'room'}
 ];
 
 const NavigationTest = () => (
   <div>
     <Navigation type='horizontal' actions={actions} />
-    <Navigation type='horizontal' routes={links} />
+    <Navigation type='vertical'>
+      <Link href='http://' label='Inbox' icon='inbox' />
+      <Link href='http://' active label='Profile' icon='person' />
+    </Navigation>
   </div>
 );
 ```

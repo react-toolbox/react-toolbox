@@ -4,7 +4,10 @@ import style from './style';
 import FontIcon from '../font_icon';
 
 const Link = (props) => {
-  const className = ClassNames(style.root, props.className);
+  const className = ClassNames(style.root, {
+    [style.active]: props.active
+  }, props.className);
+
   return (
     <a {...props} data-react-toolbox='link'className={className}>
       {props.icon ? <FontIcon className={style.icon} value={props.icon} /> : null}
@@ -15,6 +18,7 @@ const Link = (props) => {
 };
 
 Link.propTypes = {
+  active: React.PropTypes.bool,
   className: React.PropTypes.string,
   count: React.PropTypes.number,
   icon: React.PropTypes.string,
@@ -22,6 +26,7 @@ Link.propTypes = {
 };
 
 Link.defaultProps = {
+  active: false,
   className: ''
 };
 
