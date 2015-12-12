@@ -54,10 +54,6 @@ class ProgressBar extends React.Component {
       return {};
     }
   }
-  
-  rangeStyle () {
-    
-  }
 
   renderCircular () {
     return (
