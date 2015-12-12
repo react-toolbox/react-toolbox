@@ -5,9 +5,14 @@
   padding: $clock-padding;
 }
 
-.wrapper {
+.placeholder {
   position: relative;
   z-index: $z-index-high;
+}
+
+.wrapper {
+  position: absolute;
+  width: 100%;
   background-color: $color-divider;
   border-radius: 50%;
 }

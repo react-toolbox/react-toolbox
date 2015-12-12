@@ -48,6 +48,7 @@
   width: $timepicker-dialog-width;
   > [role="body"] {
     padding: 0;
+    overflow-y: visible;
   }
   > [role="navigation"] > .button {
     color: $timepicker-primary-color;

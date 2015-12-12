@@ -42,6 +42,10 @@ class TimePickerDialog extends React.Component {
     this.setState({displayTime: time.toggleTimeMode(this.state.displayTime)});
   };
 
+  handleHandMoved = () => {
+    if (this.state.display === 'hours') this.setState({display: 'minutes'});
+  };
+
   switchDisplay = (display) => {
     this.setState({display});
   };
@@ -90,8 +94,9 @@ class TimePickerDialog extends React.Component {
           ref='clock'
           display={this.state.display}
           format={this.props.format}
-          time={this.state.displayTime}
           onChange={this.handleClockChange}
+          onHandMoved={this.handleHandMoved}
+          time={this.state.displayTime}
         />
       </Dialog>
     );
