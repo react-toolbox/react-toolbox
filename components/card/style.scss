@@ -20,12 +20,16 @@
 
 .cardMedia {
   position: relative;
-  height: 0;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
   &.wide, &.square {
+    height: 0;
     width: 100%;
+    .content {
+      position: absolute;
+      height: 100%;
+    }
     .content > iframe, .content > video, .content > img {
       max-width: 100%;
     }
@@ -37,12 +41,11 @@
     padding-top: 100%;
   }
   .content {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     display: flex;
     width: 100%;
-    height: 100%;
     flex-direction: column;
     justify-content: flex-end;
     overflow: hidden;
