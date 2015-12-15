@@ -40,6 +40,7 @@ class IconButton extends React.Component {
       className: classes,
       disabled: this.props.disabled,
       onMouseUp: this.handleMouseUp,
+      onMouseLeave: this.handleMouseUp,
       'data-react-toolbox': 'button'
     };
 
