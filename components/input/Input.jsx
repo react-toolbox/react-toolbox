@@ -79,7 +79,8 @@ class Input extends React.Component {
       role: 'input',
       disabled,
       type,
-      value
+      value,
+      maxLength
     });
 
     return (
