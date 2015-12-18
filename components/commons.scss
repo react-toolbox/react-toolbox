@@ -47,11 +47,6 @@ a {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-}
-
 input:not([type="checkbox"]):not([type="radio"]), button {
   outline: none;
   appearance: none;

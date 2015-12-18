@@ -8,7 +8,8 @@
   display: block;
   width: $drawer-width;
   height: 100%;
-  overflow-y: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
   color: $drawer-text-color;
   pointer-events: none;
   background-color: $drawer-background-color;

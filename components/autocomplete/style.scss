@@ -20,6 +20,10 @@
       margin-top: - $input-underline-height;
     }
   }
+  ul.suggestions::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+  }
 }
 
 .label {
@@ -51,7 +55,7 @@
   width: 100%;
   max-height: 0;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   visibility: hidden;
   background-color: $autocomplete-suggestions-background;
   transition-timing-function: $animation-curve-default;
