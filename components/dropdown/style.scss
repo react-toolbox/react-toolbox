@@ -42,6 +42,10 @@
     top: auto;
     bottom: 0;
   }
+  ul.values::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 }
 
 .label {
@@ -54,7 +58,7 @@
   z-index: 2;
   width: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   list-style: none;
   background-color: $dropdown-color-white;
   border-radius: $dropdown-value-border-radius;

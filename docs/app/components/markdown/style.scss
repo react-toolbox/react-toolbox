@@ -19,7 +19,7 @@ $documentation-table-font-size: 1.4 * $unit;
   max-height: 100%;
   flex-grow: 1;
   padding-bottom: 4 * $unit;
-  overflow-y: scroll;
+  overflow-y: auto;
   font-size: $font-size-normal;
   color: $color-text;
   > *:not(pre) {
