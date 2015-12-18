@@ -8,6 +8,7 @@
   line-height: $calendar-row-height;
   text-align: center;
   background: $calendar-primary-contrast-color;
+  overflow-x: hidden;
   .prev, .next {
     position: absolute;
     top: 0;
@@ -32,7 +33,8 @@
 
 .years {
   height: 100%;
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
   font-size: $font-size-big;
   > li {
     line-height: 2.4;
