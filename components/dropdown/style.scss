@@ -8,7 +8,7 @@
   margin-bottom: $dropdown-offset;
   color: $color-text;
   cursor: pointer;
-  border-bottom: 1px solid $color-divider;
+  border-bottom: 1px solid $input-text-bottom-border-color;
   &:not(.active) {
     > .values {
       max-height: 0;
@@ -96,7 +96,7 @@
     width: 0;
     height: 0;
     content: "";
-    border-top: $size solid $color-divider;
+    border-top: $size solid $input-text-bottom-border-color;
     border-right: $border;
     border-left: $border;
     transition: transform $animation-duration $animation-curve-default;
