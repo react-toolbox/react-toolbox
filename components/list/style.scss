@@ -39,7 +39,9 @@
 
 .listItem {
   position: relative;
-  overflow: hidden;
+  > [data-react-toolbox='ripple'] {
+    overflow: hidden;
+  }
 }
 
 .item {
@@ -48,7 +50,6 @@
   min-height: $list-item-min-height;
   align-items: center;
   padding: 0 $list-horizontal-padding;
-  overflow: hidden;
   color: $color-text;
   &.selectable:not(.disabled):hover {
     cursor: pointer;
