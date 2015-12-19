@@ -31,7 +31,10 @@ class IconButton extends React.Component {
     const {accent, children, className, href, icon, inverse, primary, ...others} = this.props;
     const element = href ? 'a' : 'button';
     const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
-    const classes = ClassNames([style.toggle, style[level]], {[style.inverse]: inverse}, className);
+    const classes = ClassNames([style.toggle], {
+      [style[level]]: className === '',
+      [style.inverse]: inverse
+    }, className);
 
     const props = {
       ...others,
