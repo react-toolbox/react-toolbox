@@ -4,11 +4,11 @@
 .root {
   position: relative;
   height: $calendar-total-height;
+  overflow: hidden;
   font-size: $font-size-small;
   line-height: $calendar-row-height;
   text-align: center;
   background: $calendar-primary-contrast-color;
-  overflow-x: hidden;
   .prev, .next {
     position: absolute;
     top: 0;
@@ -28,7 +28,7 @@
 .title {
   display: inline-block;
   font-weight: 500;
-  line-height: 3.6 * $unit;
+  line-height: $calendar-row-height;
 }
 
 .years {
