@@ -9,6 +9,7 @@
     "deploy": "gh-pages -d build"
   },
   "dependencies": {
+    "classnames": "^2.2.1",
     "codemirror": "^5.8.0",
     "history": "^1.12.6",
     "react": "^0.14.0",
