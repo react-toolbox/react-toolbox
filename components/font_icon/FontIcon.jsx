@@ -5,7 +5,8 @@ const FontIcon = ({ children, className, value, ...other}) => {
   const classes = ClassNames('material-icons', className);
   return (
     <span className={classes} {...other} >
-      {value ? value : children}
+      {value}
+      {children}
     </span>
   );
 };
