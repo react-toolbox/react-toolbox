@@ -43,7 +43,7 @@ class Month extends React.Component {
 
   render () {
     return (
-      <div className={style.month}>
+      <div data-react-toolbox='month' className={style.month}>
         <span className={style.title}>
           {time.getFullMonth(this.props.viewDate)} {this.props.viewDate.getFullYear()}
         </span>

@@ -34,10 +34,10 @@ class Day extends React.Component {
     });
 
     return (
-      <div className={className} style={this.dayStyle()}>
-          <span onClick={this.props.onClick}>
-            {this.props.day}
-          </span>
+      <div data-react-toolbox='day' className={className} style={this.dayStyle()}>
+        <span onClick={this.props.onClick}>
+          {this.props.day}
+        </span>
       </div>
     );
   }

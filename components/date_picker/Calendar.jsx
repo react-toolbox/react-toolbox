@@ -72,7 +72,7 @@ class Calendar extends React.Component {
 
   renderYears () {
     return (
-      <ul ref="years" className={style.years}>
+      <ul data-react-toolbox='years' ref="years" className={style.years}>
         {utils.range(1900, 2100).map((i) => { return this.renderYear(i); })}
       </ul>
     );

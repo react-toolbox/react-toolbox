@@ -1,4 +1,5 @@
 import React from 'react';
+import ClassNames from 'classnames';
 import Calendar from './Calendar';
 import Dialog from '../dialog';
 import style from './style';
@@ -7,6 +8,7 @@ import time from '../utils/time';
 class CalendarDialog extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,
+    className: React.PropTypes.string,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
     onDismiss: React.PropTypes.func,
@@ -16,6 +18,7 @@ class CalendarDialog extends React.Component {
 
   static defaultProps = {
     active: false,
+    className: '',
     value: new Date()
   };
 
@@ -47,10 +50,11 @@ class CalendarDialog extends React.Component {
 
   render () {
     const display = `display-${this.state.display}`;
-    const headerClassName = `${style.header} ${style[display]}`;
+    const className = ClassNames(style.dialog, this.props.className);
+    const headerClassName = ClassNames(style.header, style[display]);
 
     return (
-      <Dialog active={this.props.active} type="custom" className={style.dialog} actions={this.actions}>
+      <Dialog active={this.props.active} type="custom" className={className} actions={this.actions}>
           <header className={headerClassName}>
             <span className={style.year} onClick={this.handleSwitchDisplay.bind(this, 'years')}>
               {this.state.date.getFullYear()}
