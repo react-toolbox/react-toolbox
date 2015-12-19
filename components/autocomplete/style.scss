@@ -20,10 +20,6 @@
       margin-top: - $input-underline-height;
     }
   }
-  ul.suggestions::-webkit-scrollbar {
-    height: 0;
-    width: 0;
-  }
 }
 
 .label {
@@ -50,6 +46,7 @@
 }
 
 .suggestions {
+  @include no-webkit-scrollbar;
   position: absolute;
   z-index: $z-index-high;
   width: 100%;

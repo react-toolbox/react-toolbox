@@ -8,12 +8,9 @@
 }
 
 .list {
+  @include no-webkit-scrollbar;
   flex-grow: 1;
   overflow-y: auto;
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
 }
 
 .item {

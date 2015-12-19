@@ -251,3 +251,10 @@
   transition-timing-function: $animation-curve-default;
   transition-duration: $duration;
 }
+
+@mixin no-webkit-scrollbar {
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}

@@ -42,10 +42,6 @@
     top: auto;
     bottom: 0;
   }
-  ul.values::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
 }
 
 .label {
@@ -54,6 +50,7 @@
 }
 
 .values {
+  @include no-webkit-scrollbar;
   position: absolute;
   z-index: 2;
   width: 100%;

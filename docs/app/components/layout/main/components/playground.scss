@@ -1,13 +1,10 @@
 @import "../config";
 
 .editor, .preview {
+  @include no-webkit-scrollbar;
   position: absolute;
   right: 0;
   overflow-y: auto;
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
 }
 
 .editor {
