@@ -17,6 +17,7 @@ class Button extends React.Component {
     inverse: React.PropTypes.bool,
     label: React.PropTypes.string,
     mini: React.PropTypes.bool,
+    neutral: React.PropTypes.bool,
     onMouseLeave: React.PropTypes.func,
     onMouseUp: React.PropTypes.func,
     primary: React.PropTypes.bool,
@@ -30,6 +31,7 @@ class Button extends React.Component {
     flat: false,
     floating: false,
     mini: false,
+    neutral: true,
     primary: false,
     raised: false
   };
@@ -46,13 +48,13 @@ class Button extends React.Component {
 
   render () {
     const { accent, children, className, flat, floating, href, icon,
-            inverse, label, mini, primary, raised, ...others} = this.props;
+            inverse, label, mini, neutral, primary, raised, ...others} = this.props;
     const element = href ? 'a' : 'button';
     const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
     const shape = flat ? 'flat' : raised ? 'raised' : floating ? 'floating' : 'flat';
 
     const classes = ClassNames([style[shape]], {
-      [style[level]]: className === '',
+      [style[level]]: neutral,
       [style.mini]: mini,
       [style.inverse]: inverse
     }, className);

@@ -13,6 +13,7 @@ class IconButton extends React.Component {
     href: React.PropTypes.string,
     icon: React.PropTypes.string,
     inverse: React.PropTypes.bool,
+    neutral: React.PropTypes.bool,
     primary: React.PropTypes.bool,
     type: React.PropTypes.string
   };
@@ -20,6 +21,7 @@ class IconButton extends React.Component {
   static defaultProps = {
     accent: false,
     className: '',
+    neutral: true,
     primary: false
   };
 
@@ -28,11 +30,11 @@ class IconButton extends React.Component {
   };
 
   render () {
-    const {accent, children, className, href, icon, inverse, primary, ...others} = this.props;
+    const {accent, children, className, href, icon, inverse, neutral, primary, ...others} = this.props;
     const element = href ? 'a' : 'button';
     const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
     const classes = ClassNames([style.toggle], {
-      [style[level]]: className === '',
+      [style[level]]: neutral,
       [style.inverse]: inverse
     }, className);
 
