@@ -12,7 +12,13 @@ class ProgressBar extends React.Component {
     mode: React.PropTypes.string,
     multicolor: React.PropTypes.bool,
     type: React.PropTypes.oneOf(['linear', 'circular']),
-    value: React.PropTypes.number
+    value: React.PropTypes.oneOfType([
+      React.PropTypes.number,
+      React.PropTypes.shape({
+        from: React.PropTypes.number,
+        to: React.PropTypes.number
+      }),
+    ])
   };
 
   static defaultProps = {
@@ -66,6 +72,24 @@ class ProgressBar extends React.Component {
       </div>
     );
   }
+  
+  renderRange () {
+    let rangeStyle = prefixer({
+      transform: `translateX(${this.calculateRatio(this.props.value.from) * 100}%) 
+                  scaleX(${this.calculateRatio(this.props.value.to - this.props.value.from)})`
+    });
+    return (
+        <span ref='value' data-ref='value' className={style.value} style={rangeStyle}></span>
+    );
+  }
+  
+  renderInner () {
+    if (this.props.type === 'circular')
+      return this.renderCircular();
+    if (isNaN(this.props.value))
+      return this.renderRange();
+    return this.renderLinear();
+  }
 
   render () {
     const className = ClassNames(style[this.props.type], {
@@ -81,7 +105,7 @@ class ProgressBar extends React.Component {
         aria-valuemax={this.props.max}
         className={className}
       >
-        {this.props.type === 'circular' ? this.renderCircular() : this.renderLinear()}
+        {this.renderInner()}
       </div>
     );
   }

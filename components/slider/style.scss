@@ -16,7 +16,7 @@
 }
 
 .knob {
-  position: relative;
+  position: absolute;
   top: 0;
   left: 0;
   z-index: $z-index-higher;
@@ -158,7 +158,7 @@
         left: $slider-knob-size / 2 + ($slider-knob-size - $slider-empty-knob-border * 2) / 2;
         width: calc(100% - #{($slider-knob-size - $slider-empty-knob-border * 2) / 2});
       }
-      .innerknob {
+      .innerknob.pressed {
         width: 100%;
         height: 100%;
         transform: translateZ(0);
