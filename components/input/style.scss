@@ -111,6 +111,7 @@
 .errored {
   padding-bottom: 0;
   > .input {
+    margin-top: 1px;
     border-bottom-color: $input-text-error-color;
     &:focus {
       ~ .label:not(.fixed) {

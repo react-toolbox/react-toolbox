@@ -42,6 +42,7 @@ class DropdownTest extends React.Component {
 | `auto`        | `Boolean`       |  `true`        | If true, the dropdown will open up or down depending on the position in the screen .|
 | `className`     | `String`        |  `''`               | Set the class to give custom styles to the dropdown.
 | `disabled`      | `Boolean`       | `false`         | Set the component as disabled.
+| `error`         | `String`        |                 | Give an error string to display under the field.|
 | `label`         | `String`        |                 | The text string to use for the floating label element.
 | `onChange`      | `Function`      |                 | Callback function that is fired when the component's value changes.
 | `source`    | `Array`         |                 | Array of data objects with the data to represent in the dropdown.

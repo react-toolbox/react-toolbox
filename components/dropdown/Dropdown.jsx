@@ -1,5 +1,7 @@
 import React from 'react';
 import ClassNames from 'classnames';
+import Input from '../input';
+import events from '../utils/events';
 import style from './style';
 
 class Dropdown extends React.Component {
@@ -7,6 +9,7 @@ class Dropdown extends React.Component {
     auto: React.PropTypes.bool,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
+    error: React.PropTypes.string,
     label: React.PropTypes.string,
     onChange: React.PropTypes.func,
     source: React.PropTypes.array.isRequired,
@@ -25,7 +28,8 @@ class Dropdown extends React.Component {
     up: false
   };
 
-  handleClick = (event) => {
+  handleMouseDown = (event) => {
+    events.pauseEvent(event);
     const client = event.target.getBoundingClientRect();
     const screen_height = window.innerHeight || document.documentElement.offsetHeight;
     const up = this.props.auto ? client.top > ((screen_height / 2) + client.height) : false;
@@ -49,7 +53,24 @@ class Dropdown extends React.Component {
     }
   };
 
-  renderItem (item, idx) {
+  renderTemplateValue (selected) {
+    const className = ClassNames(style.field, {
+      [style.errored]: this.props.error,
+      [style.disabled]: this.props.disabled
+    });
+
+    return (
+      <div className={className} onMouseDown={this.handleMouseDown}>
+        <div className={`${style.templateValue} ${style.value}`}>
+          {this.props.template(selected)}
+        </div>
+        {this.props.label ? <label className={style.label}>{this.props.label}</label> : null}
+        {this.props.error ? <span className={style.error}>{this.props.error}</span> : null}
+      </div>
+    );
+  }
+
+  renderValue (item, idx) {
     const className = item.value === this.props.value ? style.selected : null;
     return (
       <li key={idx} className={className} onMouseDown={this.handleSelect.bind(this, item.value)}>
@@ -59,6 +80,7 @@ class Dropdown extends React.Component {
   }
 
   render () {
+    const {template, source, ...others} = this.props;
     const selected = this.getSelectedItem();
     const className = ClassNames(style.root, {
       [style.up]: this.state.up,
@@ -68,15 +90,18 @@ class Dropdown extends React.Component {
 
     return (
       <div data-react-toolbox='dropdown' className={className}>
-        {this.props.label ? <label className={style.label}>{this.props.label}</label> : null}
-
-        <ul ref='values' className={style.values}>
-          {this.props.source.map(this.renderItem.bind(this))}
+        <Input
+          {...others}
+          className={style.value}
+          onMouseDown={this.handleMouseDown}
+          readOnly
+          type={template ? 'hidden' : null}
+          value={selected.label}
+        />
+        {template ? this.renderTemplateValue(selected) : null}
+        <ul className={style.values} ref='values'>
+          {source.map(this.renderValue.bind(this))}
         </ul>
-
-        <div ref='value' className={style.value} onClick={this.handleClick}>
-          {this.props.template ? this.props.template(selected) : <span>{selected.label}</span>}
-        </div>
       </div>
     );
   }

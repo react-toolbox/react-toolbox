@@ -4,11 +4,6 @@
 
 .root {
   position: relative;
-  width: inherit;
-  margin-bottom: $dropdown-offset;
-  color: $color-text;
-  cursor: pointer;
-  border-bottom: 1px solid $input-text-bottom-border-color;
   &:not(.active) {
     > .values {
       max-height: 0;
@@ -25,15 +20,6 @@
       box-shadow: $zdepth-shadow-1;
     }
   }
-  &.disabled {
-    color: $color-text-secondary;
-    pointer-events: none;
-    cursor: normal;
-    border-bottom-style: dotted;
-    > .value:after {
-      transform: scale(0);
-    }
-  }
   &:not(.up) > .values {
     top: 0;
     bottom: auto;
@@ -42,19 +28,84 @@
     top: auto;
     bottom: 0;
   }
+  &.disabled {
+    pointer-events: none;
+    cursor: normal;
+  }
+}
+
+.value {
+  > input {
+    cursor: pointer;
+  }
+  &:after {
+    $size: ($input-field-height / 7);
+    $border: $size solid transparent;
+    position: absolute;
+    right: ($dropdown-offset / 2);
+    top: 50%;
+    width: 0;
+    height: 0;
+    content: "";
+    border-top: $size solid $input-text-bottom-border-color;
+    border-right: $border;
+    border-left: $border;
+    transition: transform $animation-duration $animation-curve-default;
+  }
+}
+.field {
+  position: relative;
+  padding: $input-padding 0;
+  cursor: pointer;
+  &.errored {
+    padding-bottom: 0;
+    > .label {
+      color: $input-text-error-color;
+    }
+    > .valueWrapper {
+      border-bottom: 1px solid $input-text-error-color;
+    }
+  }
+  &.disabled {
+    cursor: normal;
+    pointer-events: none;
+    > .templateValue {
+      opacity: .7;
+      border-bottom-style: dotted;
+    }
+  }
+}
+
+.templateValue {
+  border-bottom: 1px solid $input-text-bottom-border-color;
+  color: $color-text;
+  min-height: $input-field-height;
+  background-color: $input-text-background-color;
+  padding: $input-field-padding 0;
+  position: relative;
 }
 
 .label {
-  font-size: $font-size-tiny;
-  color: $color-text-secondary;
+  position: absolute;
+  left: 0;
+  font-size: $input-label-font-size;
+  line-height: $input-field-font-size;
+  color: $input-text-label-color;
+  top: $input-focus-label-top;
+}
+
+.error {
+  margin-bottom: - $input-underline-height;
+  font-size: $input-label-font-size;
+  line-height: $input-underline-height;
+  color: $input-text-error-color;
 }
 
 .values {
   @include no-webkit-scrollbar;
+  z-index: $z-index-high;
   position: absolute;
-  z-index: 2;
   width: 100%;
-  overflow-x: hidden;
   overflow-y: auto;
   list-style: none;
   background-color: $dropdown-color-white;
@@ -73,32 +124,5 @@
     &.selected {
       color: $dropdown-color-primary;
     }
-  }
-}
-
-.value {
-  display: block;
-  > span {
-    display: inline-block;
-    height: $input-field-height;
-    font-size: $input-field-font-size;
-    line-height: $input-field-height;
-  }
-  > :not(span) {
-    margin: ($dropdown-offset / 2) 0;
-  }
-  &:after {
-    $size: ($input-field-height / 7);
-    $border: $size solid transparent;
-    position: absolute;
-    right: ($dropdown-offset / 2);
-    bottom: $dropdown-offset;
-    width: 0;
-    height: 0;
-    content: "";
-    border-top: $size solid $input-text-bottom-border-color;
-    border-right: $border;
-    border-left: $border;
-    transition: transform $animation-duration $animation-curve-default;
   }
 }

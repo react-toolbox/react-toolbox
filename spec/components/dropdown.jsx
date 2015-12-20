@@ -41,6 +41,7 @@ class DropdownTest extends React.Component {
         <p>lorem ipsum...</p>
 
         <Dropdown
+          label="Country"
           onChange={this.handleChange.bind(this, 'dropdown1')}
           source={countries}
           template={this.customDropdownItem}
@@ -48,21 +49,17 @@ class DropdownTest extends React.Component {
         />
 
         <Dropdown
-          label="Countries"
-          onChange={this.handleChange.bind(this, 'dropdown2')}
-          source={countries}
-        />
-
-        <Dropdown
+          label="Country"
           onChange={this.handleChange.bind(this, 'dropdown4')}
           source={countries}
           value={this.state.dropdown4}
         />
 
         <Dropdown
-          source={countries}
           disabled
+          label="Country"
           onChange={this.handleChange.bind(this, 'dropdown3')}
+          source={countries}
         />
       </section>
     );
