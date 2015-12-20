@@ -37,6 +37,12 @@ class Autocomplete extends React.Component {
     query: this.query(this.props.value)
   };
 
+  componentWillReceiveProps (nextProps) {
+    if (!this.props.multiple) {
+      this.setState({query: nextProps.value});
+    }
+  }
+
   shouldComponentUpdate (nextProps, nextState) {
     if (!this.state.focus && nextState.focus && this.props.direction === POSITION.AUTO) {
       const direction = this.calculateDirection();
@@ -171,20 +177,20 @@ class Autocomplete extends React.Component {
   }
 
   render () {
+    const {error, label, ...other} = this.props;
     const className = ClassNames(style.root, {
-      [style.focus]: this.state.focus,
-      [style.errored]: this.props.error
+      [style.focus]: this.state.focus
     }, this.props.className);
 
     return (
       <div data-react-toolbox='autocomplete' className={className}>
-        {this.props.label ? <label className={style.label}>{this.props.label}</label> : null}
         {this.renderSelected()}
         <Input
+          {...other}
           ref='input'
-          {...this.props}
           className={style.input}
-          label=''
+          error={error}
+          label={label}
           onBlur={this.handleQueryBlur}
           onChange={this.handleQueryChange}
           onFocus={this.handleQueryFocus}

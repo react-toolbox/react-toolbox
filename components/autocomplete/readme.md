@@ -28,7 +28,6 @@ class AutocompleteTest extends React.Component {
         direction="down"
         label="Choose countries"
         onChange={this.handleChange}
-        placeholder="Pick multiple elements..."
         source={source}
         value={this.state.value}
       />

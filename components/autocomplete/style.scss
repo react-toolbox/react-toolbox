@@ -15,11 +15,6 @@
       box-shadow: $zdepth-shadow-1;
     }
   }
-  &.errored {
-    .suggestions {
-      margin-top: - $input-underline-height;
-    }
-  }
 }
 
 .label {
@@ -59,7 +54,7 @@
   transition-duration: $animation-duration;
   transition-property: max-height, box-shadow;
   &:not(.up) {
-    bottom: auto;
+    margin-top: - $input-padding;
   }
   &.up {
     bottom: 0;
@@ -75,6 +70,19 @@
 }
 
 .input {
-  padding-top: 0;
-  padding-bottom: 0;
+  position: relative;
+  &:after {
+    $size: ($input-field-height / 7);
+    $border: $size solid transparent;
+    position: absolute;
+    top: 50%;
+    right: $input-chevron-offset;
+    width: 0;
+    height: 0;
+    content: "";
+    border-top: $size solid $input-text-bottom-border-color;
+    border-right: $border;
+    border-left: $border;
+    transition: transform $animation-duration $animation-curve-default;
+  }
 }

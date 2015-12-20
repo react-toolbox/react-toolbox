@@ -25,9 +25,8 @@ class AutocompleteTest extends React.Component {
         <p>You can have a multiple or simple autocomplete.</p>
 
         <Autocomplete
-          label="Choose countries"
           onChange={this.handleMultipleChange}
-          placeholder="Pick multiple elements..."
+          label="Pick multiple elements..."
           source={countriesObject}
           value={this.state.multiple}
         />
