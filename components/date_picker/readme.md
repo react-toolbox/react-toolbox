@@ -12,14 +12,10 @@ datetime.setHours(17);
 datetime.setMinutes(28);
 
 class DatePickerTest extends React.Component {
-  state = {
-    date2: datetime
-  };
+  state = {date2: datetime};
 
   handleChange = (item, value) => {
-    const newState = {};
-    newState[item] = value;
-    this.setState(newState);
+    this.setState({...this.state, [item]: value});
   };
 
   render () {
