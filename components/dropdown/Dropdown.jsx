@@ -11,7 +11,9 @@ class Dropdown extends React.Component {
     disabled: React.PropTypes.bool,
     error: React.PropTypes.string,
     label: React.PropTypes.string,
+    onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func,
+    onFocus: React.PropTypes.func,
     source: React.PropTypes.array.isRequired,
     template: React.PropTypes.func,
     value: React.PropTypes.string
@@ -33,10 +35,12 @@ class Dropdown extends React.Component {
     const client = event.target.getBoundingClientRect();
     const screen_height = window.innerHeight || document.documentElement.offsetHeight;
     const up = this.props.auto ? client.top > ((screen_height / 2) + client.height) : false;
+    if (this.props.onFocus) this.props.onFocus();
     this.setState({active: true, up});
   };
 
   handleSelect = (item, event) => {
+    if (this.props.onBlur) this.props.onBlur();
     if (!this.props.disabled && this.props.onChange) {
       this.props.onChange(item, event);
       this.setState({active: false});
