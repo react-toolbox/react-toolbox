@@ -7,6 +7,7 @@ import time from '../utils/time';
 
 class DatePicker extends React.Component {
   static propTypes = {
+    error: React.PropTypes.string,
     label: React.PropTypes.string,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
@@ -40,6 +41,7 @@ class DatePicker extends React.Component {
       <div data-toolbox='date-picker'>
         <Input
           className={style.input}
+          error={this.props.error}
           onMouseDown={this.handleInputMouseDown}
           label={this.props.label}
           readOnly
