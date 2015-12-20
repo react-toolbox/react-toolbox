@@ -17,6 +17,7 @@ import Menu from 'react-toolbox/menu/readme';
 import Navigation from 'react-toolbox/navigation/readme';
 import ProgressBar from 'react-toolbox/progress_bar/readme';
 import RadioGroup from 'react-toolbox/radio/readme';
+import Ripple from 'react-toolbox/ripple/readme';
 import Slider from 'react-toolbox/slider/readme';
 import Snackbar from 'react-toolbox/snackbar/readme';
 import Switch from 'react-toolbox/switch/readme';
@@ -44,6 +45,7 @@ import NavigationExample1 from './examples/navigation_example_1.txt';
 import ProgressBarExample1 from './examples/progressbar_example_1.txt';
 import RadioExample1 from './examples/radio_example_1.txt';
 import SliderExample1 from './examples/slider_example_1.txt';
+import RippleExample1 from './examples/ripple_example_1.txt';
 import SnackbarExample1 from './examples/snackbar_example_1.txt';
 import SwitchExample1 from './examples/switch_example_1.txt';
 import TableExample1 from './examples/table_example_1.txt';
@@ -158,6 +160,12 @@ export default {
     docs: RadioGroup,
     path: '/components/radio_group',
     examples: [RadioExample1]
+  },
+  ripple: {
+    name: 'Ripple',
+    docs: Ripple,
+    path: '/components/ripple',
+    examples: [RippleExample1]
   },
   slider: {
     name: 'Slider',
