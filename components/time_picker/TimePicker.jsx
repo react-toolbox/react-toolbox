@@ -8,6 +8,7 @@ import TimePickerDialog from './TimePickerDialog';
 class TimePicker extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
+    error: React.PropTypes.string,
     format: React.PropTypes.oneOf(['24hr', 'ampm']),
     label: React.PropTypes.string,
     onChange: React.PropTypes.func,
@@ -44,6 +45,7 @@ class TimePicker extends React.Component {
       <div data-react-toolbox='time-picker'>
         <Input
           className={style.input}
+          error={this.props.error}
           label={this.props.label}
           onMouseDown={this.handleInputMouseDown}
           readOnly
