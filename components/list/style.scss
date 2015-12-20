@@ -108,9 +108,9 @@
 
 .avatar {
   display: flex;
-  flex: 0 0 auto;
   width: $list-item-avatar-height;
   height: $list-item-avatar-height;
+  flex: 0 0 auto;
   margin: $list-item-avatar-margin $list-horizontal-padding $list-item-avatar-margin 0;
   overflow: hidden;
   border-radius: 50%;
