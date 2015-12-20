@@ -7,6 +7,7 @@ import time from '../utils/time';
 
 class DatePicker extends React.Component {
   static propTypes = {
+    className: React.PropTypes.string,
     error: React.PropTypes.string,
     label: React.PropTypes.string,
     maxDate: React.PropTypes.object,
@@ -50,6 +51,7 @@ class DatePicker extends React.Component {
         />
         <DatePickerDialog
           active={this.state.active}
+          className={this.props.className}
           maxDate={this.props.maxDate}
           minDate={this.props.minDate}
           onDismiss={this.handleDismiss}

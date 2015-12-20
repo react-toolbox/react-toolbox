@@ -54,6 +54,7 @@ class TimePicker extends React.Component {
         />
         <TimePickerDialog
           active={this.state.active}
+          className={this.props.className}
           format={format}
           onDismiss={this.handleDismiss}
           onSelect={this.handleSelect}

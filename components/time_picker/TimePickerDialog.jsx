@@ -1,4 +1,5 @@
 import React from 'react';
+import ClassNames from 'classnames';
 import style from './style';
 import time from '../utils/time';
 import Clock from './Clock';
@@ -7,6 +8,7 @@ import Dialog from '../dialog';
 class TimePickerDialog extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,
+    className: React.PropTypes.string,
     format: React.PropTypes.oneOf(['24hr', 'ampm']),
     onDismiss: React.PropTypes.func,
     onSelect: React.PropTypes.func,
@@ -77,7 +79,7 @@ class TimePickerDialog extends React.Component {
   render () {
     const display = `display-${this.state.display}`;
     const format = `format-${time.getTimeMode(this.state.displayTime)}`;
-    const className = `${style.dialog} ${style[display]} ${style[format]}`;
+    const className = ClassNames([style.dialog, style[display], style[format]], this.props.className);
     return (
       <Dialog active={this.props.active} className={className} actions={this.actions}>
         <header className={style.header}>
