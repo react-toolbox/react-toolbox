@@ -5,6 +5,11 @@ import ListItemLegend from './ListItemLegend';
 import ReservedChildren from '../reserved_children/ReservedChildren';
 
 class ListItemMiddle extends React.Component {
+  static propTypes = {
+    caption: React.PropTypes.string,
+    legend: React.PropTypes.string,
+  };
+
   render () {
     const defaultCaption = <ListItemCaption> {this.props.caption} </ListItemCaption>;
     const defaultLegend = <ListItemLegend> {this.props.legend} </ListItemLegend>;
