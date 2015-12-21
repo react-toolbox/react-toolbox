@@ -1,6 +1,6 @@
 import React from 'react';
 import { ListCheckbox, ListSubHeader, List, ListItem, ListDivider } from '../../components/list';
-import { ListItemLeft, ListItemRight, ListItemCaption, ListItemLegend, ListItemAvatar } from '../../components/list';
+import { ListItemLeft, ListItemRight, ListItemCaption, ListItemLegend, ListItemAvatar, ListItemMiddle } from '../../components/list';
 
 const listStyle = {
   border: '1px solid #EEE',
@@ -148,17 +148,15 @@ class ListTest extends React.Component {
             <ListItem>
               <ListItemLeft> <span> left </span> </ListItemLeft>
               <ListItemAvatar> <img src='https://pbs.twimg.com/profile_images/614407428/s6pTalMzZs-nusCGWqoV.0_400x400.jpeg'/> </ListItemAvatar>
+              <ListItemMiddle>
+                <ListItemCaption> <span> custom caption </span> </ListItemCaption>
+                <ListItemLegend> <span> custom legend </span> </ListItemLegend> 
+              </ListItemMiddle>
               <ListItemRight> <span> right </span> </ListItemRight>
-              <ListItemCaption> <span> custom caption </span> </ListItemCaption>
-              <ListItemLegend> <span> custom legend </span> </ListItemLegend> 
             </ListItem> 
-            <ListItem
-              leftIcon='done'
-              rightIcon='delete'
-              caption='combine'
-              legend='with props'
-              >
+            <ListItem rightIcon='delete' legend='with props'>
               <ListItemLeft> <span> left </span> </ListItemLeft>
+              <ListItemMiddle caption='combine'/>
             </ListItem> 
           </List>
         </div>

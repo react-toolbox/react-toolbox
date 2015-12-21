@@ -5,6 +5,7 @@ export ListCheckbox from './ListCheckbox';
 export ListSubHeader from './ListSubHeader';
 export ListItemLeft from './ListItemLeft';
 export ListItemRight from './ListItemRight';
+export ListItemMiddle from './ListItemMiddle';
 export ListItemCaption from './ListItemCaption';
 export ListItemLegend from './ListItemLegend';
 export ListItemAvatar from './ListItemAvatar'
