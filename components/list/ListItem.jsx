@@ -7,6 +7,7 @@ import ListItemMiddle from './ListItemMiddle';
 import ListItemLeft from './ListItemLeft'
 import ListItemRight from './ListItemRight'
 import ListItemAvatar from './ListItemAvatar'
+import ReservedChildren from '../reserved_children/ReservedChildren'
 
 class ListItem extends React.Component {
   static propTypes = {
@@ -22,23 +23,6 @@ class ListItem extends React.Component {
     selectable: false
   };
 
-  reservedChildrenTypes = new Set([ListItemMiddle, ListItemLeft, ListItemRight, ListItemAvatar]);
-
-  isReservedChild (child) {
-    return child && this.reservedChildrenTypes.has(child.type);
-  }
-
-  reservedChildren () {
-    let children = {};
-    React.Children.forEach(this.props.children, (child) => {
-      if (this.isReservedChild(child)) {
-        children[child.type] = child;
-      }
-    });
-
-    return children;
-  }
-
   handleClick = (event) => {
     if (this.props.onClick && !this.props.disabled) {
       this.props.onClick(event);
@@ -47,17 +31,18 @@ class ListItem extends React.Component {
 
   render () {
     const {onClick, ripple, selectable, to, ...other} = this.props;
-    const content = <ListItemContent {...other} reservedChildren={this.reservedChildren()}/>;
+    const content = <ListItemContent {...other} reservedChildren={this.reservedChildrenByType()}/>;
     return (
       <li className={style.listItem} onClick={this.handleClick} onMouseDown={this.props.onMouseDown}>
         {this.props.to ? <a href={this.props.to}>{content}</a> : content}
-        {React.Children.toArray(this.props.children).filter((child) => !this.isReservedChild(child))}
+        {this.unreservedChildren()}
       </li>
     );
   }
 }
 
+const ListItemWithReservedChildren = ReservedChildren(ListItem, [ListItemMiddle, ListItemLeft, ListItemRight, ListItemAvatar]);
 export default Ripple({
   className: style.ripple,
   centered: false
-})(ListItem);
+})(ListItemWithReservedChildren);
