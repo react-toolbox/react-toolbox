@@ -3,6 +3,6 @@ import style from './style';
 
 const ListItemAvatar = ({children}) => {
   return <span className={style.avatar}> {children} </span>;
-}
+};
 
 export default ListItemAvatar;

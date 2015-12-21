@@ -152,16 +152,16 @@ class ListTest extends React.Component {
               </ListItemAvatar>
               <ListItemMiddle>
                 <ListItemCaption> <span> custom caption </span> </ListItemCaption>
-                <ListItemLegend> <span> custom legend </span> </ListItemLegend> 
+                <ListItemLegend> <span> custom legend </span> </ListItemLegend>
               </ListItemMiddle>
               <ListItemRight> <span> right </span> </ListItemRight>
-            </ListItem> 
+            </ListItem>
             <ListItem rightIcon='delete'>
               <ListItemLeft> <span> left </span> </ListItemLeft>
               <ListItemMiddle caption='combine'>
                 <ListItemLegend> with props </ListItemLegend>
               </ListItemMiddle>
-            </ListItem> 
+            </ListItem>
           </List>
         </div>
       </section>

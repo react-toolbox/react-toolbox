@@ -1,26 +1,24 @@
 import React from 'react';
-import ClassNames from 'classnames';
 import Ripple from '../ripple';
 import style from './style';
 import ListItemContent from './ListItemContent';
 import ListItemMiddle from './ListItemMiddle';
-import ListItemLeft from './ListItemLeft'
-import ListItemRight from './ListItemRight'
-import ListItemAvatar from './ListItemAvatar'
-import ReservedChildren from '../reserved_children/ReservedChildren'
+import ListItemLeft from './ListItemLeft';
+import ListItemRight from './ListItemRight';
+import ListItemAvatar from './ListItemAvatar';
+import ReservedChildren from '../reserved_children/ReservedChildren';
 
 class ListItem extends React.Component {
   static propTypes = {
+    disabled: React.PropTypes.bool,
     onClick: React.PropTypes.func,
     ripple: React.PropTypes.bool,
-    selectable: React.PropTypes.bool,
     to: React.PropTypes.string
   };
 
   static defaultProps = {
     disabled: false,
-    ripple: false,
-    selectable: false
+    ripple: false
   };
 
   handleClick = (event) => {
@@ -30,7 +28,7 @@ class ListItem extends React.Component {
   };
 
   render () {
-    const {onClick, ripple, selectable, to, ...other} = this.props;
+    const {onClick, ripple, to, ...other} = this.props;
     const content = <ListItemContent {...other} reservedChildren={this.reservedChildrenByType()}/>;
     return (
       <li className={style.listItem} onClick={this.handleClick} onMouseDown={this.props.onMouseDown}>

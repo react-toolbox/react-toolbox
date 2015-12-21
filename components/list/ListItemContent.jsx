@@ -3,9 +3,9 @@ import style from './style';
 import ClassNames from 'classnames';
 import FontIcon from '../font_icon';
 import ListItemMiddle from './ListItemMiddle';
-import ListItemLeft from './ListItemLeft'
-import ListItemRight from './ListItemRight'
-import ListItemAvatar from './ListItemAvatar'
+import ListItemLeft from './ListItemLeft';
+import ListItemRight from './ListItemRight';
+import ListItemAvatar from './ListItemAvatar';
 
 class ListItemContent extends React.Component {
   static propTypes = {
@@ -15,11 +15,17 @@ class ListItemContent extends React.Component {
     disabled: React.PropTypes.bool,
     leftIcon: React.PropTypes.string,
     legend: React.PropTypes.string,
+    reservedChildren: React.PropTypes.object,
     rightIcon: React.PropTypes.string,
-    reservedChildren: React.PropTypes.object
+    selectable: React.PropTypes.bool
   };
 
-  render() {
+  static defaultProps = {
+    disabled: false,
+    selectable: false
+  };
+
+  render () {
     const className = ClassNames(style.item, {
       [style.withLegend]: this.props.legend,
       [style.disabled]: this.props.disabled,
@@ -29,7 +35,7 @@ class ListItemContent extends React.Component {
     const defaultLeftElement = this.props.leftIcon ? <ListItemLeft><FontIcon value={this.props.leftIcon} /></ListItemLeft> : null;
     const defaultRightElement = this.props.rightIcon ? <ListItemRight><FontIcon value={this.props.rightIcon} /></ListItemRight> : null;
     const defaultMiddleElement = <ListItemMiddle caption={this.props.caption} legend={this.props.legend}/>;
-    const defaultAvatar = this.props.avatar? <ListItemAvatar> <img src={this.props.avatar} /> </ListItemAvatar> : null;
+    const defaultAvatar = this.props.avatar ? <ListItemAvatar> <img src={this.props.avatar} /> </ListItemAvatar> : null;
 
     return (
       <span className={className}>

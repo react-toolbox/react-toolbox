@@ -8,4 +8,4 @@ export ListItemRight from './ListItemRight';
 export ListItemMiddle from './ListItemMiddle';
 export ListItemCaption from './ListItemCaption';
 export ListItemLegend from './ListItemLegend';
-export ListItemAvatar from './ListItemAvatar'
+export ListItemAvatar from './ListItemAvatar';

@@ -9,7 +9,7 @@ const ReservedChildren = (ComposedComponent, reservedChildrenTypes) => {
     }
 
     reservedChildrenByType () {
-      let children = {};
+      const children = {};
       React.Children.forEach(this.props.children, (child) => {
         if (this.isReservedChild(child)) {
           children[child.type] = child;
@@ -20,12 +20,12 @@ const ReservedChildren = (ComposedComponent, reservedChildrenTypes) => {
     }
 
     unreservedChildren () {
-      let children = React.Children.toArray(this.props.children);
+      const children = React.Children.toArray(this.props.children);
 
-      return children.filter((child) => !this.isReservedChild(child))
+      return children.filter((child) => !this.isReservedChild(child));
     }
-  }
-}
+  };
+};
 
 
 export default ReservedChildren;
