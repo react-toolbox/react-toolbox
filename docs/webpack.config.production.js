@@ -27,18 +27,18 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /(\.js|\.jsx)$/,
+        test: /\.(js|jsx)$/,
         exclude: /(node_modules)/,
         loader: 'babel'
       }, {
-        test: /(\.scss|\.css)$/,
+        test: /\.(scss|css)$/,
         loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass!toolbox')
       }, {
-        test: /(\.txt)$/,
+        test: /\.(txt)$/,
         loader: 'raw',
         include: path.resolve(__dirname, './app/components/layout/main/modules')
       }, {
-        test: /(\.md)$/,
+        test: /\.(md)$/,
         loader: 'html?removeComments=false!highlight!markdown'
       }
     ]

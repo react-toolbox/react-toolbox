@@ -5,11 +5,11 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /(\.js|\.jsx)$/,
+        test: /\.(js|jsx)$/,
         exclude: /(node_modules)/,
         loader: 'babel'
       }, {
-        test: /(\.scss|\.css)$/,
+        test: /\.(scss|css)$/,
         loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass'
       }
     ]
