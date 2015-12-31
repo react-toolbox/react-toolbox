@@ -6,7 +6,7 @@ Lists are best suited to presenting a homogeneous data type or sets of data type
 
 <!-- example -->
 ```jsx
-import { List, ListItem, ListSubHeader, ListDivider, ListCheckbox } from 'react-toobox';
+import { List, ListItem, ListSubHeader, ListDivider, ListCheckbox } from 'react-toolbox';
 
 const ListTest = () => (
   <List selectable ripple>
