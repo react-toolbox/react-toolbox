@@ -34,7 +34,6 @@
     "html-webpack-plugin": "^1.6.2",
     "markdown-loader": "^0.1.7",
     "node-sass": "^3.3.3",
-    "normalize.css": "^3.0.3",
     "postcss-loader": "^0.7.0",
     "raw-loader": "^0.5.1",
     "react-transform-catch-errors": "^1.0.0",
