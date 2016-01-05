@@ -88,7 +88,7 @@ describe('Slider', function () {
     it('contains an input component if its editable', function () {
       slider = utils.renderComponent(Slider, {editable: true, value: 130});
       input = TestUtils.findRenderedComponentWithType(slider, Input);
-      expect(input.props.value).toEqual(slider.props.value);
+      expect(parseInt(input.props.value)).toEqual(slider.props.value);
     });
 
     it('contains the proper number of snaps when snapped', function () {

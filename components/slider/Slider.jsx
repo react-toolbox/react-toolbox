@@ -64,8 +64,8 @@ class Slider extends React.Component {
     });
   };
 
-  handleInputChange = (event) => {
-    this.setState({inputValue: event.target.value});
+  handleInputChange = (value) => {
+    this.setState({inputValue: value});
   };
 
   handleInputBlur = (event) => {
