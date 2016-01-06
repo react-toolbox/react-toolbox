@@ -23,8 +23,8 @@ module.exports = {
     loaders: [
       {
         test: /\.(js|jsx)$/,
-        loader: ['babel'],
-        include: path.join(__dirname, 'spec')
+        loader: 'babel',
+        exclude: /(node_modules)/
       }, {
         test: /\.(scss|css)$/,
         loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass?sourceMap')
