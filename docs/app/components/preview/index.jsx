@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import babel from 'babel-core/browser';
+import { transform } from 'babel-standalone';
 import * as ReactToolbox from 'react-toolbox';
 import style from './style';
 
@@ -47,8 +47,9 @@ const Preview = React.createClass({
       (function (${Object.keys(this.props.scope).join(', ')}, mountNode) {
         ${this.props.code}
       });`;
-    return babel.transform(code, {
-      optional: ['es7.classProperties', 'es7.exportExtensions']
+
+    return transform(code, {
+      presets: ['es2015', 'stage-0', 'react']
     }).code;
   },
 
