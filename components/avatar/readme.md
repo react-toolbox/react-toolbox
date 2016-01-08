@@ -16,7 +16,7 @@ const AvatarTest = () => (
   <div>
     <Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" />
     <Avatar icon={<GithubIcon />}/>
-    <Avatar><img src="https://placeimg.com/80/80/animals"/></Avatar>
+    <Avatar image="https://placeimg.com/80/80/animals" />
     <Avatar title="Javier" img="https://placeimg.com/80/80/animals"/>
     <Avatar style={{backgroundColor: 'yellowgreen'}}><GithubIcon /></Avatar>
   </div>
