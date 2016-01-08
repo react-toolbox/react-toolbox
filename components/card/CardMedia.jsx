@@ -13,7 +13,7 @@ class CardMedia extends Component {
       PropTypes.string,
       PropTypes.element
     ])
-  }
+  };
 
   render () {
     const { aspectRatio, children, className, color, contentOverlay, image, ...other } = this.props;

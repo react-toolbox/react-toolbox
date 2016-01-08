@@ -6,7 +6,7 @@ class CardActions extends Component {
   static propTypes = {
     children: PropTypes.any,
     className: PropTypes.string
-  }
+  };
 
   render () {
     const { children, className, ...other } = this.props;

@@ -14,7 +14,7 @@ class DrawerTest extends React.Component {
 
   handleToggleRight = () => {
     this.setState({rightActive: !this.state.rightActive});
-  }
+  };
 
   render () {
     return (

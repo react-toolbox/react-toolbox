@@ -40,7 +40,7 @@ const Tooltip = (ComposedComponent) => class extends React.Component {
     if (this.timeout) clearTimeout(this.timeout);
     if (this.props.tooltipHideOnClick) this.setState({active: false});
     if (this.props.onClick) this.props.onClick();
-  }
+  };
 
   render () {
     const {children, className, tooltip, tooltipDelay, tooltipHideOnClick, ...other} = this.props;

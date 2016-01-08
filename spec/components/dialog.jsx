@@ -11,7 +11,7 @@ class DialogTest extends React.Component {
     this.setState({
       active: !this.state.active
     });
-  }
+  };
 
   actions = [
     { label: 'Disagree', primary: true, onClick: this.handleToggle },
