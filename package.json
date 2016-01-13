@@ -29,7 +29,8 @@
     "test": "cross-env NODE_ENV=test karma start",
     "test:watch": "cross-env NODE_ENV=test karma start --no-single-run",
     "release": "bumped release",
-    "patch": "bumped release patch"
+    "patch": "bumped release patch",
+    "push": "git tag $newVersion && git push origin $newVersion"
   },
   "bugs": {
     "url": "https://github.com/react-toolbox/react-toolbox/issues",
@@ -72,6 +73,7 @@
     "expect": "^1.13.4",
     "express": "^4.13.3",
     "extract-text-webpack-plugin": "^0.9.1",
+    "git-dirty": "^1.0.0",
     "glob": "^6.0.2",
     "karma": "^0.13.15",
     "karma-chrome-launcher": "^0.2.2",
