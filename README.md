@@ -88,6 +88,10 @@ If you browse the resulting markup you will see *data attributes* like `data-rol
 }
 ```
 
+## TypeScript
+
+A TypeScript definition file `react-toolbox.d.ts` is available. It is referenced in `package.json` and should be picked up by the TypeScript compiler when importing from the npm package.
+
 ## Authors and Contributors
 
 The project is being initially developed and maintained by [Javier Velasco](http://javivelasco.com) and [Javier Jiménez](http://soyjavi.com) and the [contribution scene](https://github.com/react-toolbox/react-toolbox/graphs/contributors) is just getting warm. We want to create reference components so any contribution is very welcome.
