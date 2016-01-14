@@ -50,6 +50,7 @@
     "react-addons-css-transition-group": "^0.14.0",
     "normalize.css": "^3.0.3"
   },
+  "typings": "./react-toolbox.d.ts",
   "devDependencies": {
     "autoprefixer": "^6.0.3",
     "babel": "^5.8.23",
