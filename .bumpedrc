@@ -23,9 +23,13 @@ plugins:
       plugin: 'bumped-terminal'
       command: 'git add package.json && git commit package.json -m "$newVersion release" && git push origin master'
 
+    'Detecting problem before publish':
+      plugin: 'bumped-terminal'
+      command: 'git-dirty && npm run clean && rm -rf node_modules && npm install && npm test'
+
     'Publishing tag at Github':
       plugin: 'bumped-terminal'
-      command: 'git tag $newVersion && git push origin $newVersion'
+      command: 'npm run push'
 
     'Publishing at NPM':
       plugin: 'bumped-terminal'
