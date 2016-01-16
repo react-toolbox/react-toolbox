@@ -21,7 +21,7 @@
     "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
     "lint": "eslint ./ --ext .js,.jsx",
     "babel": "babel ./components --out-dir ./lib",
-    "sass": "cpx './components/**/*.scss' ./lib",
+    "sass": "cpx ./components/**/*.scss ./lib",
     "build": "cross-env NODE_ENV=production npm run babel && npm run sass",
     "clean": "rimraf ./lib",
     "prebuild": "npm run clean",
