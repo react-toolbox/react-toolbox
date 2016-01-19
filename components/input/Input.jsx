@@ -10,7 +10,7 @@ class Input extends React.Component {
     disabled: React.PropTypes.bool,
     error: React.PropTypes.string,
     floating: React.PropTypes.bool,
-    icon: React.PropTypes.string,
+    icon: React.PropTypes.any,
     label: React.PropTypes.string,
     maxLength: React.PropTypes.number,
     multiline: React.PropTypes.bool,
