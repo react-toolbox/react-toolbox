@@ -24,6 +24,7 @@ import Switch from './components/switch';
 import Table from './components/table';
 import Tabs from './components/tabs';
 import Tooltip from './components/tooltip';
+import Ripple from './components/ripple';
 import style from './style';
 
 const _hrefProject = () => {
@@ -64,6 +65,7 @@ const Root = () => (
     <Table />
     <Tabs />
     <Tooltip />
+    <Ripple />
   </App>
 );
 
