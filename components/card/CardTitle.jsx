@@ -47,8 +47,14 @@ CardTitle.propTypes = {
     PropTypes.array
   ]),
   className: PropTypes.string,
-  subtitle: PropTypes.string,
-  title: PropTypes.string
+  subtitle: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element
+  ]),
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element
+  ])
 };
 
 export default CardTitle;
