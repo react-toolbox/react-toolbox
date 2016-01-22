@@ -23,7 +23,7 @@ Link.propTypes = {
   children: React.PropTypes.node,
   className: React.PropTypes.string,
   count: React.PropTypes.number,
-  icon: React.PropTypes.string,
+  icon: React.PropTypes.any,
   label: React.PropTypes.string
 };
 

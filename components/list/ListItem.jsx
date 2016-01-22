@@ -12,10 +12,10 @@ class ListItem extends React.Component {
     children: React.PropTypes.any,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
-    leftIcon: React.PropTypes.string,
+    leftIcon: React.PropTypes.any,
     legend: React.PropTypes.string,
     onClick: React.PropTypes.func,
-    rightIcon: React.PropTypes.string,
+    rightIcon: React.PropTypes.any,
     ripple: React.PropTypes.bool,
     selectable: React.PropTypes.bool,
     to: React.PropTypes.string

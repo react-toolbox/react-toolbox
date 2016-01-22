@@ -3,7 +3,7 @@ import ClassNames from 'classnames';
 
 const FontIcon = ({ children, className, value, ...other}) => {
   const classes = ClassNames(
-    {'material-icons': !React.isValidElement(value)},
+    {'material-icons': typeof value === 'string'},
     className
   );
   return (
@@ -17,7 +17,10 @@ const FontIcon = ({ children, className, value, ...other}) => {
 FontIcon.propTypes = {
   children: React.PropTypes.any,
   className: React.PropTypes.string,
-  value: React.PropTypes.any
+  value: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.element
+  ])
 };
 
 FontIcon.defaultProps = {
