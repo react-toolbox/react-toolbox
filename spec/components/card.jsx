@@ -45,6 +45,21 @@ const cards = {
         </CardActions>
       </Card>
     )
+  }, {
+    name: 'Customized header',
+    component: (
+      <Card className={style.card}>
+        <CardTitle
+          title={<u>Title component</u>}
+          subtitle={<u>Subtitle component</u>}
+        />
+        <CardText>{dummyText}</CardText>
+        <CardActions>
+          <Button label="Action 1" />
+          <Button label="Action 2" />
+        </CardActions>
+      </Card>
+    )
   }],
   media: [{
     name: '16:9 Card Media Area',
