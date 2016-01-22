@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import ClassNames from 'classnames';
 import Input from '../input';
 import events from '../utils/events';
@@ -28,6 +29,18 @@ class Dropdown extends React.Component {
   state = {
     active: false,
     up: false
+  };
+
+  componentWillUpdate (prevState, nextState) {
+    if (!prevState.active && nextState.active) {
+      events.addEventsToDocument({click: this.handleDocumentClick});
+    }
+  }
+
+  handleDocumentClick = (event) => {
+    if (this.state.active && !events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
+      this.setState({active: false});
+    }
   };
 
   handleMouseDown = (event) => {
