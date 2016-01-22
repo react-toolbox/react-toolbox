@@ -64,3 +64,4 @@ export default Ripple({
   className: style.ripple,
   centered: false
 })(ListItem);
+export {ListItem as RawListItem};

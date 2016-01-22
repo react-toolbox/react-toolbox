@@ -2,7 +2,7 @@ import React from 'react';
 import Ripple from '../ripple';
 import style from './style';
 
-const Check = ({children, onMouseDown}) => (
+const Thumb = ({children, onMouseDown}) => (
   <span role='thumb' className={style.thumb} onMouseDown={onMouseDown}>{children}</span>
 );
 
@@ -10,4 +10,5 @@ export default Ripple({
   className: style.ripple,
   spread: 2.6,
   centered: true
-})(Check);
+})(Thumb);
+export {Thumb as RawThumb};
