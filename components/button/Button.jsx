@@ -79,4 +79,4 @@ class Button extends React.Component {
 }
 
 export default Ripple({centered: false})(Button);
-export { Button as RegularButton };
+export { Button as RawButton };

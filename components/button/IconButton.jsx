@@ -57,3 +57,4 @@ class IconButton extends React.Component {
 }
 
 export default Ripple({centered: true})(IconButton);
+export { IconButton as RawIconButton };

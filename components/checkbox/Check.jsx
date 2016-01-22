@@ -16,3 +16,4 @@ export default Ripple({
   spread: 2.6,
   centered: true
 })(Check);
+export {Check as RawCheck};

@@ -49,3 +49,4 @@ class MenuItem extends React.Component {
 export default Ripple({
   className: style.ripple
 })(MenuItem);
+export {MenuItem as RawMenuItem};
