@@ -28,9 +28,9 @@ class IconMenu extends React.Component {
     selectable: false
   };
 
-  handleButtonClick = () => {
+  handleButtonClick = (event) => {
     this.refs.menu.show();
-    if (this.props.onClick) this.props.onClick();
+    if (this.props.onClick) this.props.onClick(event);
   };
 
   render () {
