@@ -1,30 +1,24 @@
 import React from 'react';
-import ClassNames from 'classnames';
-import FontIcon from '../font_icon';
-import ListItemContent from './ListItemContent';
 import Ripple from '../ripple';
 import style from './style';
+import ListItemContent from './ListItemContent';
+import ListItemMiddle from './ListItemMiddle';
+import ListItemLeft from './ListItemLeft';
+import ListItemRight from './ListItemRight';
+import ListItemAvatar from './ListItemAvatar';
+import ReservedChildren from '../reserved_children/ReservedChildren';
 
 class ListItem extends React.Component {
   static propTypes = {
-    avatar: React.PropTypes.string,
-    caption: React.PropTypes.string.isRequired,
-    children: React.PropTypes.any,
-    className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
-    leftIcon: React.PropTypes.string,
-    legend: React.PropTypes.string,
     onClick: React.PropTypes.func,
-    rightIcon: React.PropTypes.string,
     ripple: React.PropTypes.bool,
-    selectable: React.PropTypes.bool,
     to: React.PropTypes.string
   };
 
   static defaultProps = {
     disabled: false,
-    ripple: false,
-    selectable: false
+    ripple: false
   };
 
   handleClick = (event) => {
@@ -33,34 +27,20 @@ class ListItem extends React.Component {
     }
   };
 
-  renderContent () {
-    const className = ClassNames(style.item, {
-      [style.withLegend]: this.props.legend,
-      [style.disabled]: this.props.disabled,
-      [style.selectable]: this.props.selectable
-    }, this.props.className);
-
-    return (
-      <span className={className}>
-        {this.props.leftIcon ? <FontIcon className={`${style.icon} ${style.left}`} value={this.props.leftIcon} /> : null}
-        {this.props.avatar ? <img className={style.avatar} src={this.props.avatar} /> : null}
-        <ListItemContent caption={this.props.caption} legend={this.props.legend} />
-        {this.props.rightIcon ? <FontIcon className={`${style.icon} ${style.right}`} value={this.props.rightIcon} /> : null}
-      </span>
-    );
-  }
-
   render () {
+    const {onClick, ripple, to, ...other} = this.props;
+    const content = <ListItemContent {...other} reservedChildren={this.reservedChildrenByType()}/>;
     return (
       <li className={style.listItem} onClick={this.handleClick} onMouseDown={this.props.onMouseDown}>
-        {this.props.to ? <a href={this.props.to}>{this.renderContent()}</a> : this.renderContent()}
-        {this.props.children}
+        {this.props.to ? <a href={this.props.to}>{content}</a> : content}
+        {this.unreservedChildren()}
       </li>
     );
   }
 }
 
+const ListItemWithReservedChildren = ReservedChildren(ListItem, [ListItemMiddle, ListItemLeft, ListItemRight, ListItemAvatar]);
 export default Ripple({
   className: style.ripple,
   centered: false
-})(ListItem);
+})(ListItemWithReservedChildren);

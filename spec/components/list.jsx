@@ -1,9 +1,11 @@
 import React from 'react';
 import { ListCheckbox, ListSubHeader, List, ListItem, ListDivider } from '../../components/list';
+import { ListItemLeft, ListItemRight, ListItemCaption, ListItemLegend, ListItemAvatar, ListItemMiddle } from '../../components/list';
 
 const listStyle = {
   border: '1px solid #EEE',
   display: 'inline-block',
+
   minWidth: 340
 };
 
@@ -136,6 +138,30 @@ class ListTest extends React.Component {
             <ListItem caption='Tobias Van Schneider' />
             <ListDivider />
             <ListItem caption='Other people' />
+          </List>
+        </div>
+
+        <h5>Customized list items</h5>
+        <p>Use custom components in the item</p>
+        <div style={listStyle}>
+          <List>
+            <ListItem>
+              <ListItemLeft> <span> left </span> </ListItemLeft>
+              <ListItemAvatar>
+                <img src='https://pbs.twimg.com/profile_images/614407428/s6pTalMzZs-nusCGWqoV.0_400x400.jpeg'/>
+              </ListItemAvatar>
+              <ListItemMiddle>
+                <ListItemCaption> <span> custom caption </span> </ListItemCaption>
+                <ListItemLegend> <span> custom legend </span> </ListItemLegend>
+              </ListItemMiddle>
+              <ListItemRight> <span> right </span> </ListItemRight>
+            </ListItem>
+            <ListItem rightIcon='delete'>
+              <ListItemLeft> <span> left </span> </ListItemLeft>
+              <ListItemMiddle caption='combine'>
+                <ListItemLegend> with props </ListItemLegend>
+              </ListItemMiddle>
+            </ListItem>
           </List>
         </div>
       </section>

@@ -1,7 +1,7 @@
 import React from 'react';
 import ClassNames from 'classnames';
 import Checkbox from '../checkbox';
-import ListItemContent from './ListItemContent';
+import ListItemMiddle from './ListItemMiddle';
 import style from './style';
 
 const ListCheckbox = (props) => {
@@ -16,7 +16,7 @@ const ListCheckbox = (props) => {
         checked={props.checked}
         className={style.checkbox}
         disabled={props.disabled}
-        label={<ListItemContent caption={props.caption} legend={props.legend} />}
+        label={<ListItemMiddle caption={props.caption} legend={props.legend} />}
         name={props.name}
         onBlur={props.onBlur}
         onChange={props.onChange}
