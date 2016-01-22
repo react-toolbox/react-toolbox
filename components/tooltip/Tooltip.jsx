@@ -24,22 +24,22 @@ const Tooltip = (ComposedComponent) => class extends React.Component {
     active: false
   };
 
-  handleMouseEnter = () => {
+  handleMouseEnter = (event) => {
     if (this.timeout) clearTimeout(this.timeout);
     this.timeout = setTimeout(() =>this.setState({active: true}), this.props.tooltipDelay);
-    if (this.props.onMouseEnter) this.props.onMouseEnter();
+    if (this.props.onMouseEnter) this.props.onMouseEnter(event);
   };
 
-  handleMouseLeave = () => {
+  handleMouseLeave = (event) => {
     if (this.timeout) clearTimeout(this.timeout);
     if (this.state.active) this.setState({active: false});
-    if (this.props.onMouseLeave) this.props.onMouseLeave();
+    if (this.props.onMouseLeave) this.props.onMouseLeave(event);
   };
 
-  handleClick = () => {
+  handleClick = (event) => {
     if (this.timeout) clearTimeout(this.timeout);
     if (this.props.tooltipHideOnClick) this.setState({active: false});
-    if (this.props.onClick) this.props.onClick();
+    if (this.props.onClick) this.props.onClick(event);
   };
 
   render () {

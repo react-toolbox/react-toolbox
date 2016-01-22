@@ -26,9 +26,9 @@ class TabHeader extends React.Component {
     }
   }
 
-  handleClick = () => {
+  handleClick = (event) => {
     if (!this.props.disabled && this.props.onClick) {
-      this.props.onClick();
+      this.props.onClick(event);
     }
   };
 

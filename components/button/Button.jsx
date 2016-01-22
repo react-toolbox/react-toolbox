@@ -36,14 +36,14 @@ class Button extends React.Component {
     raised: false
   };
 
-  handleMouseUp = () => {
+  handleMouseUp = (event) => {
     this.refs.button.blur();
-    if (this.props.onMouseUp) this.props.onMouseUp();
+    if (this.props.onMouseUp) this.props.onMouseUp(event);
   };
 
-  handleMouseLeave = () => {
+  handleMouseLeave = (event) => {
     this.refs.button.blur();
-    if (this.props.onMouseLeave) this.props.onMouseLeave();
+    if (this.props.onMouseLeave) this.props.onMouseLeave(event);
   };
 
   render () {
