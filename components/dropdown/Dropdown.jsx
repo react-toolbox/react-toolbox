@@ -37,6 +37,12 @@ class Dropdown extends React.Component {
     }
   }
 
+  componentDidUpdate (prevProps, prevState) {
+    if (prevState.active && !this.state.active) {
+      events.removeEventsFromDocument({click: this.handleDocumentClick});
+    }
+  }
+
   handleDocumentClick = (event) => {
     if (this.state.active && !events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
       this.setState({active: false});
