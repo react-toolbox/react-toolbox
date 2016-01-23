@@ -28,7 +28,7 @@ class InputTest extends React.Component {
         <Input type='text' value='Read only' readOnly label='Phone Number' />
         <Input type='text' label='Disabled field' disabled />
         <Input type='tel' value={this.state.withIcon} label='With icon' onChange={this.handleChange.bind(this, 'withIcon')} icon='phone' />
-        <Input type='tel' value={this.state.withCustomIcon} label='With custom icon' onChange={this.handleChange.bind(this, 'withCustomIcon')} icon={<span>A</span>} />
+        <Input type='tel' value={this.state.withCustomIcon} label='With custom icon' onChange={this.handleChange.bind(this, 'withCustomIcon')} icon={<span>P</span>} />
       </section>
     );
   }

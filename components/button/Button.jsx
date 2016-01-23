@@ -13,7 +13,7 @@ class Button extends React.Component {
     flat: React.PropTypes.bool,
     floating: React.PropTypes.bool,
     href: React.PropTypes.string,
-    icon: React.PropTypes.string,
+    icon: React.PropTypes.any,
     inverse: React.PropTypes.bool,
     label: React.PropTypes.string,
     mini: React.PropTypes.bool,
