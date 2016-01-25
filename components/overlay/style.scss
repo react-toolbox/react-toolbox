@@ -14,7 +14,15 @@
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  &.invisible > *:not(.overlay) {
+  &.invisible {
+    .overlay {
+      pointer-events: none;
+      //fixme: couldn't make it work with global/local section :(
+      opacity: 0!important;
+    }
+
+  }
+  > * {
     pointer-events: all;
   }
 }
@@ -26,15 +34,22 @@
   width: 100%;
   height: 100%;
   background-color: $overlay-color;
-  opacity: 0;
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
   transition-property: opacity;
+  opacity: $overlay-opacity;
 }
 
-.active {
-  pointer-events: all;
-  > .overlay {
-    opacity: $overlay-opacity;
+:global {
+  .rt-overlay-appear, .rt-overlay-leave.rt-overlay-leave-active {
+    :local(.overlay) {
+      opacity: 0;
+    }
+  }
+
+  .rt-overlay-appear.rt-overlay-appear-active, .rt-overlay-leave {
+    :local(.overlay) {
+      opacity: $overlay-opacity;
+    }
   }
 }

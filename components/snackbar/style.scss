@@ -26,11 +26,19 @@
   &.cancel .button {
     color: $snackbar-color-cancel;
   }
-  &:not(.active) {
-    transform: translateY(100%);
+}
+
+:global {
+  .rt-overlay-appear, .rt-overlay-leave.rt-overlay-leave-active {
+    :local(.root) {
+      transform: translateY(100%);
+    }
   }
-  &.active {
-    transform: translateY(0%);
+
+  .rt-overlay-appear.rt-overlay-appear-active, .rt-overlay-leave {
+    :local(.root) {
+      transform: translateY(0%);
+    }
   }
 }
 

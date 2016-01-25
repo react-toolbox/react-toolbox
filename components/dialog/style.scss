@@ -9,15 +9,27 @@
   background-color: $dialog-color-white;
   border-radius: $dialog-border-radius;
   box-shadow: $zdepth-shadow-5;
-  opacity: 0;
+  opacity: 1;
   transition-delay: $animation-delay;
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
   transition-property: opacity, transform;
-  transform: translateY(-$dialog-translate-y);
-  &.active {
-    opacity: 1;
-    transform: translateY(0%);
+  transform: translateY(0%);
+}
+
+:global {
+  .rt-overlay-appear, .rt-overlay-leave.rt-overlay-leave-active {
+    :local(.root) {
+      opacity: 0;
+      transform: translateY(-$dialog-translate-y);
+    }
+  }
+
+  .rt-overlay-appear.rt-overlay-appear-active, .rt-overlay-leave {
+    :local(.root) {
+      opacity: 1;
+      transform: translateY(0%);
+    }
   }
 }
 
