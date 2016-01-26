@@ -8,9 +8,7 @@ class SliderTest extends React.Component {
   };
 
   handleChange = (slider, value) => {
-    const newState = {};
-    newState[slider] = value;
-    this.setState(newState);
+    this.setState({...this.state, [slider]: value});
   };
 
   render () {
