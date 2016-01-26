@@ -1,5 +1,8 @@
 import React from 'react';
-import { ListCheckbox, ListSubHeader, List, ListItem, ListDivider } from '../../components/list';
+import { ListCheckbox, ListSubHeader, List, ListItem, ListDivider, ListItemText, ListItemContent } from '../../components/list';
+import Avatar from '../../components/avatar';
+import FontIcon from '../../components/font_icon';
+import {Button} from '../../components/button';
 
 const listStyle = {
   border: '1px solid #EEE',
@@ -136,6 +139,39 @@ class ListTest extends React.Component {
             <ListItem caption='Tobias Van Schneider' />
             <ListDivider />
             <ListItem caption='Other people' />
+          </List>
+        </div>
+
+        <h5> List with custom components </h5>
+        <p> Using custom components in list item </p>
+        <div style={listStyle}>
+          <List>
+            <ListItem leftIcon='send' rightIcon='done' caption='Reference item'/>
+            <ListItem rightIcon='done' caption='Item with custom left icons'>
+              <FontIcon value='send' />
+              <Avatar image='https://pbs.twimg.com/profile_images/459485216499720192/ufS4YGOY_400x400.png'/>
+            </ListItem>
+            <ListItem leftIcon='send'>
+              <ListItemContent caption='custom right icons' legend='ListItemContent acts as a divider'/>
+              <FontIcon value='done' />
+              <FontIcon value='undo' />
+            </ListItem>
+            <ListItem leftIcon='mail' rightIcon='create'>
+              <ListItemContent>
+                <ListItemText primary> Custom Caption </ListItemText>
+              </ListItemContent>
+            </ListItem>
+            <ListItem leftIcon='save' rightIcon='delete'>
+              <ListItemContent>
+                <ListItemText primary onClick={() => {console.log('clicked caption');}}>
+                  Custom caption with events
+                </ListItemText>
+                <ListItemText> Custom legend with correct height </ListItemText>
+              </ListItemContent>
+            </ListItem>
+            <ListItem caption='Item with a button'>
+              <Button icon='save' label='save'/>
+            </ListItem>
           </List>
         </div>
       </section>
