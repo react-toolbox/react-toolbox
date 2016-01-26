@@ -7,7 +7,7 @@ const FontIcon = ({ children, className, value, ...other}) => {
     className
   );
   return (
-    <span className={classes} {...other} >
+    <span className={classes} {...other} data-react-toolbox='font-icon'>
       {value}
       {children}
     </span>
