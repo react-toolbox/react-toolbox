@@ -14,7 +14,8 @@ const Ripple = (options = {}) => {
   const {
     centered: defaultCentered,
     className: defaultClassName,
-    spread: defaultSpread
+    spread: defaultSpread,
+    ...props
   } = {...defaults, ...options};
 
   return ComposedComponent => {
@@ -108,7 +109,7 @@ const Ripple = (options = {}) => {
           return (
             <ComposedComponent {...other} onMouseDown={this.handleMouseDown}>
               {children ? children : null}
-              <span data-react-toolbox='ripple' className={style.wrapper}>
+              <span data-react-toolbox='ripple' className={style.wrapper} {...props}>
                 <span ref='ripple' role='ripple' className={rippleClassName} style={rippleStyle} />
               </span>
             </ComposedComponent>
