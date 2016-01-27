@@ -105,8 +105,6 @@ const Ripple = (options = {}) => {
           const rippleStyle = prefixer({
               transform: `translate3d(${-width / 2 + left}px, ${-width / 2 + top}px, 0) scale(${scale})`
             }, {width, height: width});
-          // const shouldComponentRipplegcc
-
 
           return (
             <ComposedComponent {...other} onMouseDown={this.handleMouseDown}>
