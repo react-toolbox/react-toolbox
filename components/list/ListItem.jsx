@@ -1,30 +1,21 @@
 import React from 'react';
-import ClassNames from 'classnames';
-import FontIcon from '../font_icon';
 import ListItemContent from './ListItemContent';
+import ListItemLayout from './ListItemLayout';
 import Ripple from '../ripple';
 import style from './style';
 
 class ListItem extends React.Component {
   static propTypes = {
-    avatar: React.PropTypes.string,
-    caption: React.PropTypes.string.isRequired,
     children: React.PropTypes.any,
-    className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
-    leftIcon: React.PropTypes.any,
-    legend: React.PropTypes.string,
     onClick: React.PropTypes.func,
-    rightIcon: React.PropTypes.any,
     ripple: React.PropTypes.bool,
-    selectable: React.PropTypes.bool,
     to: React.PropTypes.string
   };
 
   static defaultProps = {
     disabled: false,
-    ripple: false,
-    selectable: false
+    ripple: false
   };
 
   handleClick = (event) => {
@@ -33,28 +24,41 @@ class ListItem extends React.Component {
     }
   };
 
-  renderContent () {
-    const className = ClassNames(style.item, {
-      [style.withLegend]: this.props.legend,
-      [style.disabled]: this.props.disabled,
-      [style.selectable]: this.props.selectable
-    }, this.props.className);
+  groupChildren () {
+    const children = {
+      leftActions: [],
+      rightActions: [],
+      ignored: []
+    };
 
-    return (
-      <span className={className}>
-        {this.props.leftIcon ? <FontIcon className={`${style.icon} ${style.left}`} value={this.props.leftIcon} /> : null}
-        {this.props.avatar ? <img className={style.avatar} src={this.props.avatar} /> : null}
-        <ListItemContent caption={this.props.caption} legend={this.props.legend} />
-        {this.props.rightIcon ? <FontIcon className={`${style.icon} ${style.right}`} value={this.props.rightIcon} /> : null}
-      </span>
-    );
+    React.Children.forEach(this.props.children, (child, i) => {
+      if (!React.isValidElement(child)) {
+        return;
+      }
+      if (child.props.listItemIgnore) {
+        children.ignored.push(child);
+        return;
+      }
+      if (child.type === ListItemContent) {
+        children.itemContent = child;
+        return;
+      }
+      const bucket = children.itemContent ? 'rightActions' : 'leftActions';
+      children[bucket].push({...child, key: i});
+    });
+
+    return children;
   }
 
   render () {
+    const {onMouseDown, to, onClick, ripple, ...other} = this.props;
+    const children = this.groupChildren();
+    const content = <ListItemLayout {...children} {...other}/>;
+
     return (
-      <li className={style.listItem} onClick={this.handleClick} onMouseDown={this.props.onMouseDown}>
-        {this.props.to ? <a href={this.props.to}>{this.renderContent()}</a> : this.renderContent()}
-        {this.props.children}
+      <li className={style.listItem} onClick={this.handleClick} onMouseDown={onMouseDown}>
+        {to ? <a href={this.props.to}>{content}</a> : content}
+        {children.ignored}
       </li>
     );
   }
@@ -62,6 +66,7 @@ class ListItem extends React.Component {
 
 export default Ripple({
   className: style.ripple,
-  centered: false
+  centered: false,
+  listItemIgnore: true
 })(ListItem);
 export {ListItem as RawListItem};
