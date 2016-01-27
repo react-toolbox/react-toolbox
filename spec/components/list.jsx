@@ -170,7 +170,7 @@ class ListTest extends React.Component {
               </ListItemContent>
             </ListItem>
             <ListItem caption='Item with a button'>
-              <Button icon='save' label='save' onMouseDown={e => e.stopPropagation()}/>
+              <Button icon='save' label='save' onClick={() => console.log('clicked button')}/>
             </ListItem>
             <ListItem caption='Item with overlayed click events' onClick={() => console.log('clicked row')}>
               <FontIcon value='send' onClick={() => console.log('clicked icon')}/>
