@@ -77,6 +77,7 @@ const Ripple = (options = {}) => {
       }
 
       handleMouseDown = (event) => {
+        console.log('ripple');
         if (!this.props.disabled) this.start(event);
         if (this.props.onMouseDown) this.props.onMouseDown(event);
       };
@@ -104,6 +105,7 @@ const Ripple = (options = {}) => {
           const rippleStyle = prefixer({
               transform: `translate3d(${-width / 2 + left}px, ${-width / 2 + top}px, 0) scale(${scale})`
             }, {width, height: width});
+          // const shouldComponentRipplegcc
 
 
           return (

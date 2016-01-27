@@ -145,7 +145,7 @@ class ListTest extends React.Component {
         <h5> List with custom components </h5>
         <p> Using custom components in list item </p>
         <div style={listStyle}>
-          <List>
+          <List ripple selectable>
             <ListItem leftIcon='send' rightIcon='done' caption='Reference item'/>
             <ListItem rightIcon='done' caption='Item with custom left icons'>
               <FontIcon value='send' />
@@ -170,7 +170,15 @@ class ListTest extends React.Component {
               </ListItemContent>
             </ListItem>
             <ListItem caption='Item with a button'>
-              <Button icon='save' label='save'/>
+              <Button icon='save' label='save' onMouseDown={e => e.stopPropagation()}/>
+            </ListItem>
+            <ListItem caption='Item with overlayed click events' onClick={() => console.log('clicked row')}>
+              <FontIcon value='send' onClick={() => console.log('clicked icon')}/>
+              <Avatar
+                image='https://pbs.twimg.com/profile_images/459485216499720192/ufS4YGOY_400x400.png'
+                onMouseDown={() => console.log('avatar mouse down, should see ripple')}
+                onClick={() => console.log('clicked avatar')}
+              />
             </ListItem>
           </List>
         </div>

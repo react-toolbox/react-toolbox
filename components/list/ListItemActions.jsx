@@ -1,5 +1,6 @@
 import React from 'react';
 import style from './style';
+import ListItemAction from './ListItemAction';
 
 const ListItemActions = ({type, children}) => {
   const validChildren = React.Children.toArray(children).filter(c => (
@@ -8,9 +9,7 @@ const ListItemActions = ({type, children}) => {
 
   return (
     <span className={style[type]}>
-      {validChildren.map((child, i) => {
-        return <span className={style.itemChild} key={i}> {child} </span>;
-      })}
+      {validChildren.map((action, i) => <ListItemAction key={i} action={action} />)}
     </span>
   );
 };
