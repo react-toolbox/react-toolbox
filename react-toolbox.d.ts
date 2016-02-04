@@ -1,7 +1,11 @@
-﻿// Type definitions for react-toolbox 0.14.0
+﻿// Type definitions for react-toolbox 0.14.1
 // Project: http://react-toolbox.com/
 // Definitions by: @xogeny (Michael M. Tiller), @hsrobflavorus (Robert Parker)
 /*  CHANGES
+    * 02/03/2016:
+        * Fixed for TypeScript 1.8.0 stricter var declaration requirements (move `declare var ...` inside each individual module).
+        * Removed triple-slash reference to React to fix npm install compatibility (you'll need to make sure you're referencing react.d.ts somewhere in your project!).
+        * Hopefully fixed the default exports where applicable
     * 01/13/2016: Minor changes, add a few missing props, add IconButton to react-toolbox/lib/button
     * 12/21/2015: Fix "import * as Input from 'react-toolbox/lib/input'" style imports, which now correctly import only the necessary component(s).
         * NOTE that you must use "import * as {Component Name}" not just "import {Component Name}" for this to work.
@@ -17,7 +21,6 @@
     MISSING COMPONENTS (Contributions welcome)
     * Ripple HOC
 */
-///<reference path='../react/react.d.ts' />
 
 declare namespace __RT {
     import React = __React;
@@ -388,7 +391,7 @@ declare namespace __RT {
     export class Checkbox extends React.Component<CheckboxProps, {}> {
         render(): React.DOMElement<any>;
     }
-    export interface DatePickerProps extends Changeable<Date> {
+    export interface DatePickerProps extends Props, Changeable<Date> {
         /**
          * Date object with the maximum selectable date.
          */
@@ -504,9 +507,17 @@ declare namespace __RT {
          */
         onFocus?: Function,
         /**
+         * Callback function that is fired when a key is pressed down.
+         */
+        onKeyDown?: Function,
+        /**
          * Callback function that is fired when a key is pressed.
          */
         onKeyPress?: Function,
+        /**
+         * Callback function that is fired when a key is released.
+         */
+        onKeyUp?: Function,
         /**
          * If true, the html input has a required value.
          * @default false
@@ -993,20 +1004,16 @@ declare namespace __RT {
     class Tab extends React.Component<TabProps, {}> {
         render(): React.DOMElement<any>;
     }
-    interface TimePickerProps extends Props {
+    interface TimePickerProps extends Props, Changeable<Date> {
         /**
          * Format to display the clock. It can be 24hr or ampm.
          * @default 24hr
          */
         format?: string,
         /**
-         * Callback called when the picker value is changed.
-         */
-        onChange?: Function,
-        /**
          * Datetime object with currrently selected time
          */
-        value: Date,
+        value?: Date,
     }
     class TimePicker extends React.Component<TimePickerProps, {}> {
         render(): React.DOMElement<any>;
@@ -1030,32 +1037,35 @@ declare namespace __RT {
         new (props?: P, context?: any): TooltipComponent<P, any>;
     }
 
-    function Tooltip<P> (componentClass: React.ComponentClass<P>): TooltipComponentClass<P>;
+    function Tooltip<P>(componentClass: React.ComponentClass<P>): TooltipComponentClass<P>;
 }
 
 declare var AppBar: typeof __RT.AppBar;
 declare module 'react-toolbox/lib/app_bar' {
-    export = AppBar;
+    export default AppBar;
 }
 declare var Autocomplete: typeof __RT.Autocomplete;
 declare module 'react-toolbox/lib/autocomplete' {
-    export = Autocomplete;
+    export default Autocomplete;
 }
 declare var Avatar: typeof __RT.Avatar;
 declare module 'react-toolbox/lib/avatar' {
-    export = Avatar;
+    export default Avatar;
 }
-declare var Button: typeof __RT.Button;
-declare var IconButton: typeof __RT.IconButton;
+
 declare module 'react-toolbox/lib/button' {
+    var Button: typeof __RT.Button;
+    var IconButton: typeof __RT.IconButton;
     export { Button, IconButton };
 }
-declare var Card: typeof __RT.Card;
-declare var CardActions: typeof __RT.CardActions;
-declare var CardMedia: typeof __RT.CardMedia;
-declare var CardText: typeof __RT.CardText;
-declare var CardTitle: typeof __RT.CardTitle;
+
 declare module 'react-toolbox/lib/card' {
+    var Card: typeof __RT.Card;
+    var CardActions: typeof __RT.CardActions;
+    var CardMedia: typeof __RT.CardMedia;
+    var CardText: typeof __RT.CardText;
+    var CardTitle: typeof __RT.CardTitle;
+
     export {
     Card,
     CardActions,
@@ -1066,42 +1076,43 @@ declare module 'react-toolbox/lib/card' {
 }
 declare var Checkbox: typeof __RT.Checkbox;
 declare module 'react-toolbox/lib/checkbox' {
-    export = Checkbox;
+    export default Checkbox;
 }
 declare var DatePicker: typeof __RT.DatePicker;
 declare module 'react-toolbox/lib/date_picker' {
-    export = DatePicker;
+    export default DatePicker;
 }
 declare var Dialog: typeof __RT.Dialog;
 declare module 'react-toolbox/lib/dialog' {
-    export = Dialog;
+    export default Dialog;
 }
 declare var Drawer: typeof __RT.Drawer;
 declare module 'react-toolbox/lib/drawer' {
-    export = Drawer;
+    export default Drawer;
 }
 declare var Dropdown: typeof __RT.Dropdown;
 declare module 'react-toolbox/lib/dropdown' {
-    export = Dropdown;
+    export default Dropdown;
 }
 declare var FontIcon: typeof __RT.FontIcon;
 declare module 'react-toolbox/lib/font_icon' {
-    export = FontIcon;
+    export default FontIcon;
 }
 declare var Input: typeof __RT.Input;
 declare module 'react-toolbox/lib/input' {
-    export = Input;
+    export default Input;
 }
 declare var Link: typeof __RT.Link;
 declare module 'react-toolbox/lib/link' {
-    export = Link;
+    export default Link;
 }
-declare var List: typeof __RT.List;
-declare var ListItem: typeof __RT.ListItem;
-declare var ListCheckbox: typeof __RT.ListCheckbox;
-declare var ListSubHeader: typeof __RT.ListSubHeader;
-declare var ListDivider: typeof __RT.ListDivider;
+
 declare module 'react-toolbox/lib/list' {
+    var List: typeof __RT.List;
+    var ListItem: typeof __RT.ListItem;
+    var ListCheckbox: typeof __RT.ListCheckbox;
+    var ListSubHeader: typeof __RT.ListSubHeader;
+    var ListDivider: typeof __RT.ListDivider;
     export {
     List,
     ListItem,
@@ -1110,11 +1121,12 @@ declare module 'react-toolbox/lib/list' {
     ListDivider
     }
 }
-declare var Menu: typeof __RT.Menu;
-declare var IconMenu: typeof __RT.IconMenu;
-declare var MenuItem: typeof __RT.MenuItem;
-declare var MenuDivider: typeof __RT.MenuDivider;
+
 declare module 'react-toolbox/lib/menu' {
+    var Menu: typeof __RT.Menu;
+    var IconMenu: typeof __RT.IconMenu;
+    var MenuItem: typeof __RT.MenuItem;
+    var MenuDivider: typeof __RT.MenuDivider;
     export {
     Menu,
     IconMenu,
@@ -1124,15 +1136,16 @@ declare module 'react-toolbox/lib/menu' {
 }
 declare var Navigation: typeof __RT.Navigation;
 declare module 'react-toolbox/lib/navigation' {
-    export = Navigation;
+    export default Navigation;
 }
 declare var ProgressBar: typeof __RT.ProgressBar;
 declare module 'react-toolbox/lib/progress_bar' {
-    export = ProgressBar;
+    export default ProgressBar;
 }
-declare var RadioGroup: typeof __RT.RadioGroup;
-declare var RadioButton: typeof __RT.RadioButton;
+
 declare module 'react-toolbox/lib/radio' {
+    var RadioGroup: typeof __RT.RadioGroup;
+    var RadioButton: typeof __RT.RadioButton;
     export {
     RadioGroup,
     RadioButton
@@ -1140,58 +1153,59 @@ declare module 'react-toolbox/lib/radio' {
 }
 declare var Slider: typeof __RT.Slider;
 declare module 'react-toolbox/lib/slider' {
-    export = Slider;
+    export default Slider;
 }
 declare var Snackbar: typeof __RT.Snackbar;
 declare module 'react-toolbox/lib/snackbar' {
-    export = Snackbar;
+    export default Snackbar;
 }
 declare var Switch: typeof __RT.Switch;
 declare module 'react-toolbox/lib/switch' {
-    export = Switch;
+    export default Switch;
 }
 declare var Table: typeof __RT.Table;
 declare module 'react-toolbox/lib/table' {
-    export = Table;
+    export default Table;
 }
-declare var Tab: typeof __RT.Tab;
-declare var Tabs: typeof __RT.Tabs;
+
 declare module 'react-toolbox/lib/tabs' {
+    var Tab: typeof __RT.Tab;
+    var Tabs: typeof __RT.Tabs;
     export { Tab, Tabs }
 }
 declare var TimePicker: typeof __RT.TimePicker;
 declare module 'react-toolbox/lib/time_picker' {
-    export = TimePicker;
+    export default TimePicker;
 }
 declare var Tooltip: typeof __RT.Tooltip;
 declare module 'react-toolbox/lib/tooltip' {
-    export = Tooltip;
+    export default Tooltip;
 }
 declare module 'react-toolbox' {
-    import * as AppBar from 'react-toolbox/lib/app_bar';
-    import * as Autocomplete from 'react-toolbox/lib/autocomplete';
-    import * as Avatar from 'react-toolbox/lib/avatar';
+    import AppBar from 'react-toolbox/lib/app_bar';
+    import Autocomplete from 'react-toolbox/lib/autocomplete';
+    import Avatar from 'react-toolbox/lib/avatar';
     import { Button }from 'react-toolbox/lib/button';
     import { Card, CardActions, CardMedia, CardText, CardTitle} from 'react-toolbox/lib/card';
-    import * as Checkbox from 'react-toolbox/lib/checkbox';
-    import * as DatePicker from 'react-toolbox/lib/date_picker';
-    import * as Dialog from 'react-toolbox/lib/dialog';
-    import * as Drawer from 'react-toolbox/lib/drawer';
-    import * as Dropdown from 'react-toolbox/lib/dropdown';
-    import * as FontIcon from 'react-toolbox/lib/font_icon';
-    import * as Input from 'react-toolbox/lib/input';
-    import * as Link from 'react-toolbox/lib/link';
+    import Checkbox from 'react-toolbox/lib/checkbox';
+    import DatePicker from 'react-toolbox/lib/date_picker';
+    import Dialog from 'react-toolbox/lib/dialog';
+    import Drawer from 'react-toolbox/lib/drawer';
+    import Dropdown from 'react-toolbox/lib/dropdown';
+    import FontIcon from 'react-toolbox/lib/font_icon';
+    import Input from 'react-toolbox/lib/input';
+    import Link from 'react-toolbox/lib/link';
     import {List, ListItem, ListCheckbox, ListSubHeader, ListDivider} from 'react-toolbox/lib/list';
     import {Menu, IconMenu, MenuItem, MenuDivider} from 'react-toolbox/lib/menu';
-    import * as Navigation from 'react-toolbox/lib/navigation';
-    import * as ProgressBar from 'react-toolbox/lib/progress_bar';
+    import Navigation from 'react-toolbox/lib/navigation';
+    import ProgressBar from 'react-toolbox/lib/progress_bar';
     import {RadioGroup, RadioButton} from 'react-toolbox/lib/radio';
-    import * as Slider from 'react-toolbox/lib/slider';
-    import * as Snackbar from 'react-toolbox/lib/snackbar';
-    import * as Switch from 'react-toolbox/lib/switch';
+    import Slider from 'react-toolbox/lib/slider';
+    import Snackbar from 'react-toolbox/lib/snackbar';
+    import Switch from 'react-toolbox/lib/switch';
     import { Tab, Tabs } from 'react-toolbox/lib/tabs';
-    import * as TimePicker from 'react-toolbox/lib/time_picker';
-    import * as Tooltip from 'react-toolbox/lib/tooltip';
+    import TimePicker from 'react-toolbox/lib/time_picker';
+    import Tooltip from 'react-toolbox/lib/tooltip';
 
     export {
     AppBar,
