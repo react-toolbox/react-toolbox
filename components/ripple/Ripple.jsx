@@ -14,7 +14,8 @@ const Ripple = (options = {}) => {
   const {
     centered: defaultCentered,
     className: defaultClassName,
-    spread: defaultSpread
+    spread: defaultSpread,
+    ...props
   } = {...defaults, ...options};
 
   return ComposedComponent => {
@@ -76,6 +77,7 @@ const Ripple = (options = {}) => {
       }
 
       handleMouseDown = (event) => {
+        console.log('ripple');
         if (!this.props.disabled) this.start(event);
         if (this.props.onMouseDown) this.props.onMouseDown(event);
       };
@@ -104,11 +106,10 @@ const Ripple = (options = {}) => {
               transform: `translate3d(${-width / 2 + left}px, ${-width / 2 + top}px, 0) scale(${scale})`
             }, {width, height: width});
 
-
           return (
             <ComposedComponent {...other} onMouseDown={this.handleMouseDown}>
               {children ? children : null}
-              <span data-react-toolbox='ripple' className={style.wrapper}>
+              <span data-react-toolbox='ripple' className={style.wrapper} {...props}>
                 <span ref='ripple' role='ripple' className={rippleClassName} style={rippleStyle} />
               </span>
             </ComposedComponent>

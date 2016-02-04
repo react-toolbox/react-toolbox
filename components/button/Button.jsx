@@ -13,7 +13,7 @@ class Button extends React.Component {
     flat: React.PropTypes.bool,
     floating: React.PropTypes.bool,
     href: React.PropTypes.string,
-    icon: React.PropTypes.string,
+    icon: React.PropTypes.any,
     inverse: React.PropTypes.bool,
     label: React.PropTypes.string,
     mini: React.PropTypes.bool,
@@ -36,14 +36,14 @@ class Button extends React.Component {
     raised: false
   };
 
-  handleMouseUp = () => {
+  handleMouseUp = (event) => {
     this.refs.button.blur();
-    if (this.props.onMouseUp) this.props.onMouseUp();
+    if (this.props.onMouseUp) this.props.onMouseUp(event);
   };
 
-  handleMouseLeave = () => {
+  handleMouseLeave = (event) => {
     this.refs.button.blur();
-    if (this.props.onMouseLeave) this.props.onMouseLeave();
+    if (this.props.onMouseLeave) this.props.onMouseLeave(event);
   };
 
   render () {
@@ -79,4 +79,4 @@ class Button extends React.Component {
 }
 
 export default Ripple({centered: false})(Button);
-export { Button as RegularButton };
+export { Button as RawButton };

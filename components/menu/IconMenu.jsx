@@ -7,7 +7,7 @@ class IconMenu extends React.Component {
   static propTypes = {
     children: React.PropTypes.node,
     className: React.PropTypes.string,
-    icon: React.PropTypes.string,
+    icon: React.PropTypes.any,
     iconRipple: React.PropTypes.bool,
     menuRipple: React.PropTypes.bool,
     onClick: React.PropTypes.func,
@@ -28,9 +28,9 @@ class IconMenu extends React.Component {
     selectable: false
   };
 
-  handleButtonClick = () => {
+  handleButtonClick = (event) => {
     this.refs.menu.show();
-    if (this.props.onClick) this.props.onClick();
+    if (this.props.onClick) this.props.onClick(event);
   };
 
   render () {

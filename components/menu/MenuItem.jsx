@@ -10,7 +10,7 @@ class MenuItem extends React.Component {
     children: React.PropTypes.any,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
-    icon: React.PropTypes.string,
+    icon: React.PropTypes.any,
     onClick: React.PropTypes.func,
     selected: React.PropTypes.bool,
     shortcut: React.PropTypes.string
@@ -49,3 +49,4 @@ class MenuItem extends React.Component {
 export default Ripple({
   className: style.ripple
 })(MenuItem);
+export {MenuItem as RawMenuItem};

@@ -9,10 +9,7 @@ class Checkbox extends React.Component {
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     label: React.PropTypes.any,
-    name: React.PropTypes.string,
-    onBlur: React.PropTypes.func,
-    onChange: React.PropTypes.func,
-    onFocus: React.PropTypes.func
+    onChange: React.PropTypes.func
   };
 
   static defaultProps = {

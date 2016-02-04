@@ -11,7 +11,7 @@ class IconButton extends React.Component {
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     href: React.PropTypes.string,
-    icon: React.PropTypes.string,
+    icon: React.PropTypes.any,
     inverse: React.PropTypes.bool,
     neutral: React.PropTypes.bool,
     primary: React.PropTypes.bool,
@@ -57,3 +57,4 @@ class IconButton extends React.Component {
 }
 
 export default Ripple({centered: true})(IconButton);
+export { IconButton as RawIconButton };

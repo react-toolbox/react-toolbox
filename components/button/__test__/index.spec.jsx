@@ -1,7 +1,7 @@
 import expect from 'expect';
 import style from '../../button/style';
 import utils from '../../utils/testing';
-import {RegularButton as Button} from '../Button';
+import {RawButton as Button} from '../Button';
 
 describe('Button', function () {
   let button;
