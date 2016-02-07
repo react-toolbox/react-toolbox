@@ -6,7 +6,7 @@ $offset: 1.8 * $unit;
 
 .app {
   @include no-webkit-scrollbar;
-  padding: (8.2 * $unit) $offset $offset;
+  padding: ($appbar-height + 2) $offset $offset;
   background-color: #f5f5f5;
   > section, > div > section {
     padding: $offset;
