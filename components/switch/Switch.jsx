@@ -42,7 +42,7 @@ class Switch extends React.Component {
     if (this.props.className) className += ` ${this.props.className}`;
 
     return (
-      <label data-react-toolbox='checkbox' className={className}>
+      <label data-react-toolbox='switch' className={className}>
         <input
           {...others}
           checked={this.props.checked}
@@ -52,7 +52,7 @@ class Switch extends React.Component {
           ref='input'
           type='checkbox'
         />
-        <span role='switch' className={switchClassName}>
+        <span className={switchClassName}>
           <Thumb disabled={this.props.disabled} />
         </span>
         {this.props.label ? <span className={style.text}>{this.props.label}</span> : null}
