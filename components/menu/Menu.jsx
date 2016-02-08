@@ -158,7 +158,7 @@ class Menu extends React.Component {
     }, this.props.className);
 
     return (
-      <div className={className} style={this.getRootStyle()}>
+      <div data-react-toolbox='menu' className={className} style={this.getRootStyle()}>
         {this.props.outline ? <div className={style.outline} style={outlineStyle}></div> : null}
         <ul ref='menu' className={style.menu} style={this.getMenuStyle()}>
           {this.renderItems()}
