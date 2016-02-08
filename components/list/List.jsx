@@ -33,7 +33,7 @@ class List extends React.Component {
     let className = style.list;
     if (this.props.className) className += ` ${this.props.className}`;
     return (
-      <ul className={className}>
+      <ul data-react-toolbox='list' className={className}>
         {this.renderItems()}
       </ul>
     );
