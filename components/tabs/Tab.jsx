@@ -40,7 +40,7 @@ class TabHeader extends React.Component {
     }, this.props.className);
 
     return (
-      <label className={className} onClick={this.handleClick}>
+      <label data-react-toolbox='tab' className={className} onClick={this.handleClick}>
         {this.props.label}
       </label>
     );
