@@ -1,0 +1,318 @@
+@import "../base";
+@import "./config";
+@import "./mixins";
+
+.root {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    overflow-y: hidden;
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    .navDrawer {
+        height: 100%;
+        width: 0px;
+        min-width: 0px;
+        overflow-y: hidden;
+        overflow-x: hidden;
+        transition-timing-function: $animation-curve-default;
+        transition-duration: $animation-duration;
+        transition-property: width, min-width;
+
+
+        .scrim {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: rgba($drawer-overlay-color, 0);
+            transition: background-color $animation-duration $animation-curve-default,
+                width 10ms linear $animation-duration;
+            z-index: $z-index-highest;
+        }
+
+        .drawerContent {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: stretch;
+            overflow-x: hidden;
+            overflow-y: hidden;
+
+            @include shadow-2dp();
+            background-color: $drawer-background-color;
+            border-right: 1px solid $drawer-border-color;
+            color: $drawer-text-color;
+
+            width: $navigation-drawer-mobile-width;
+            max-width: $navigation-drawer-max-mobile-width;
+
+            pointer-events: none;
+
+            transform: translateX(-100%);
+            transition: transform $animation-duration $animation-curve-default;
+
+            &.scrollY {
+                overflow-y: auto;
+            }
+        }
+
+        &.pinned {
+            width: $navigation-drawer-mobile-width;
+            max-width: $navigation-drawer-max-mobile-width;
+
+            @include open();
+        }
+
+        &.active {
+            &:not(.pinned) {
+                .scrim {
+                    width: 100%;
+                    background-color: rgba($drawer-overlay-color, $drawer-overlay-opacity);
+                    transition: background-color $animation-duration $animation-curve-default;
+                }
+
+                @include open();
+            }
+        }
+
+        // larger than mobile width drawer
+        @media screen and (min-width: $layout-breakpoint-xs) {
+
+            &.pinned {
+                width: $navigation-drawer-desktop-width;
+                max-width: $navigation-drawer-desktop-width;
+            }
+
+            .drawerContent {
+                width: $navigation-drawer-desktop-width;
+                max-width: $navigation-drawer-desktop-width;
+            }
+
+            &.wide {
+
+                &.pinned {
+                    width: $navigation-drawer-max-desktop-width;
+                    max-width: $navigation-drawer-max-desktop-width;
+                }
+
+                .drawerContent {
+                    width: $navigation-drawer-max-desktop-width;
+                    max-width: $navigation-drawer-max-desktop-width;
+                }
+            }
+        }
+
+        // permanent screen, ignore .active and make part of layout
+        @media screen and (min-width: $layout-breakpoint-sm) {
+            &.permanent-sm {
+                @include permanent();
+            }
+        }
+
+        @media screen and (min-width: $layout-breakpoint-md) {
+            &.permanent-md {
+                @include permanent();
+            }
+        }
+
+        @media screen and (min-width: $layout-breakpoint-lg) {
+            &.permanent-lg {
+                @include permanent();
+            }
+        }
+
+        @media screen and (min-width: $layout-breakpoint-xl) {
+            &.permanent-xl {
+                @include permanent();
+            }
+        }
+
+        @media screen and (min-width: $layout-breakpoint-xxl) {
+            &.permanent-xxl {
+                @include permanent();
+            }
+        }
+
+        @media screen and (min-width: $layout-breakpoint-xxxl) {
+            &.permanent-xxxl {
+                @include permanent();
+            }
+        }
+    }
+
+    & .root {
+        .scrim {
+            z-index: $z-index-highest - 1;
+        }
+        & .root {
+            .scrim {
+                z-index: $z-index-highest - 2;
+            }
+        }
+    }
+
+    .panel {
+        flex: 1;
+        height: 100%;
+        overflow-y: hidden;
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: stretch;
+
+        &.scrollY {
+            overflow-y: auto;
+        }
+    }
+
+    .sidebar {
+        height: 100%;
+        overflow-y: hidden;
+        overflow-x: hidden;
+        width: 0;
+        transition-timing-function: $animation-curve-default;
+        transition-duration: $animation-duration;
+        transition-property: width;
+
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: $z-index-highest - 1;
+
+        background-color: $drawer-background-color;
+        color: $drawer-text-color;
+
+        .sidebarContent {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: stretch;
+            height: 100%;
+
+            overflow-y: hidden;
+            &.scrollY {
+                overflow-y: auto;
+            }
+        }
+
+        $increments: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+
+        @each $increment in $increments {
+            &.width-#{$increment} {
+                $mobile: $standard-increment-mobile * $increment;
+                $desktop: $standard-increment-desktop * $increment;
+
+                .sidebarContent {
+                    min-width: 100%;
+                }
+
+                &.pinned {
+                    width: 100%;
+                }
+
+                @if $increment < 10 {
+                    @media screen and (min-width: $layout-breakpoint-xs) and (orientation: landscape) {
+                        position: relative;
+                        .sidebarContent {
+                            min-width: $mobile;
+                        }
+
+                        &.pinned {
+                            width: $mobile;
+                        }
+                    }
+
+                    @media screen and (min-width: $layout-breakpoint-xs) and (orientation: portrait) {
+                        position: relative;
+                        .sidebarContent {
+                            min-width: $desktop;
+                        }
+
+                        &.pinned {
+                            width: $desktop;
+                        }
+                    }
+                }
+
+                @if $increment < 11 {
+                    @media screen and (min-width: $layout-breakpoint-sm-tablet) {
+                        position: relative;
+
+                        .sidebarContent {
+                            min-width: $desktop;
+                        }
+
+                        &.pinned {
+                            width: $desktop;
+                        }
+                    }
+                }
+
+                @media screen and (min-width: $layout-breakpoint-sm) {
+                    position: relative;
+
+                    .sidebarContent {
+                        min-width: $desktop;
+                    }
+
+                    &.pinned {
+                        width: $desktop;
+                    }
+                }
+            }
+        }
+
+
+        $percentages: (25, 33, 50, 66, 75);
+        &.width-100 {
+            position: absolute;
+
+            .sidebarContent {
+                min-width: 100%;
+            }
+
+            &.pinned {
+                width: 100%;
+            }
+        }
+        @each $pct in $percentages {
+            &.width-#{$pct} {
+                position: absolute;
+
+                .sidebarContent {
+                    min-width: 100%;
+                }
+
+                &.pinned {
+                    width: 100%;
+                }
+            }
+        }
+        @media screen and (min-width: $layout-breakpoint-sm-tablet) {
+            @each $pct in $percentages {
+                &.width-#{$pct} {
+                    position: relative;
+
+                    .sidebarContent {
+                        min-width: $pct * 1%;
+                    }
+
+                    &.pinned {
+                        width: $pct * 1%;
+                    }
+                }
+            }
+        }
+    }
+}
