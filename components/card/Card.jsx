@@ -8,7 +8,7 @@ const Card = ({children, className, raised, ...other}) => {
   }, className);
 
   return (
-    <div className={classes} {...other}>
+    <div data-react-toolbox='card' className={classes} {...other}>
       {children}
     </div>
   );
