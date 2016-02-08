@@ -79,10 +79,10 @@ const CustomButton = () => (
 );
 ```
 
-If you browse the resulting markup you will see *data attributes* like `data-role="label"` so you can avoid styling directly tag names. You can now write your CSS:
+If you browse the resulting markup you will see *data attributes* like `data-react-toolbox="label"` so you can avoid styling directly tag names. You can now write your CSS:
 
 ```css
-.customized > [data-role="label"] {
+.customized > [data-react-toolbox="label"] {
   color: green;
   font-weight: bold;
 }

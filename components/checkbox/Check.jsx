@@ -8,7 +8,7 @@ const Check = ({checked, children, onMouseDown}) => {
     [style.checked]: checked
   });
 
-  return <div data-role='checkbox' onMouseDown={onMouseDown} className={className}>{children}</div>;
+  return <div data-react-toolbox='check' onMouseDown={onMouseDown} className={className}>{children}</div>;
 };
 
 export default Ripple({
