@@ -41,7 +41,7 @@ class RadioButton extends React.Component {
     const { onChange, ...others } = this.props;
 
     return (
-      <label className={className}>
+      <label data-react-toolbox='radio-button' className={className}>
         <input
           {...others}
           className={style.input}

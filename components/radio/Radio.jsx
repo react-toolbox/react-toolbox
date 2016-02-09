@@ -4,7 +4,7 @@ import style from './style';
 
 const Radio = ({checked, children, onMouseDown}) => {
   const className = style[checked ? 'radio-checked' : 'radio'];
-  return <div data-role='radio' onMouseDown={onMouseDown} className={className}>{children}</div>;
+  return <div data-react-toolbox='radio' onMouseDown={onMouseDown} className={className}>{children}</div>;
 };
 
 export default Ripple({

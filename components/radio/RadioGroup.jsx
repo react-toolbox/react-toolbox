@@ -38,7 +38,7 @@ class RadioGroup extends React.Component {
 
   render () {
     return (
-      <div className={this.props.className}>
+      <div data-react-toolbox='radio-group' className={this.props.className}>
         {this.renderRadioButtons()}
       </div>
     );

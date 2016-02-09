@@ -39,7 +39,7 @@ class DatePicker extends React.Component {
     const date = value ? `${value.getDate()} ${time.getFullMonth(value)} ${value.getFullYear()}` : null;
 
     return (
-      <div data-toolbox='date-picker'>
+      <div data-react-toolbox='date-picker'>
         <Input
           className={style.input}
           error={this.props.error}

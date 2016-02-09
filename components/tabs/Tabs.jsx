@@ -89,7 +89,7 @@ class Tabs extends React.Component {
     if (this.props.className) className += ` ${this.props.className}`;
 
     return (
-      <div ref='tabs' className={className}>
+      <div ref='tabs' data-react-toolbox='tabs' className={className}>
         <nav className={style.navigation} ref='navigation'>
           {this.renderHeaders(headers)}
         </nav>

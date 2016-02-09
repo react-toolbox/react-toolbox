@@ -50,7 +50,7 @@ class Checkbox extends React.Component {
           type='checkbox'
         />
         <Check checked={this.props.checked} disabled={this.props.disabled}/>
-        {this.props.label ? <span data-role='label' className={style.text}>{this.props.label}</span> : null}
+        {this.props.label ? <span data-react-toolbox='label' className={style.text}>{this.props.label}</span> : null}
       </label>
     );
   }

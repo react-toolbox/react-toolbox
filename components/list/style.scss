@@ -61,7 +61,7 @@
     &:not(.checkboxItem) {
       opacity: .5;
     }
-    > .checkbox > [data-role='label'] {
+    > .checkbox > [data-react-toolbox='label'] {
       opacity: .5;
     }
   }
@@ -133,10 +133,10 @@
   align-items: center;
   margin: 0;
   cursor: pointer;
-  > [data-role='checkbox'] {
+  > [data-react-toolbox='check'] {
     margin-right: $list-item-right-checkbox-margin;
   }
-  > [data-role='label'] {
+  > [data-react-toolbox='label'] {
     padding-left: 0;
   }
 }
