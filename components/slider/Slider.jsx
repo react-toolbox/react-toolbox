@@ -55,6 +55,9 @@ class Slider extends React.Component {
 
   componentWillUnmount () {
     window.removeEventListener('resize', this.handleResize);
+    events.removeEventsFromDocument(this.getMouseEventMap());
+    events.removeEventsFromDocument(this.getTouchEventMap());
+    events.removeEventsFromDocument(this.getKeyboardEvents());
   }
 
   handleInputFocus = () => {
