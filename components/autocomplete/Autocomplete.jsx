@@ -120,7 +120,7 @@ class Autocomplete extends React.Component {
  source () {
    const { source: src } = this.props;
    if (src.hasOwnProperty('length')) {
-     return new Map(src.map((item) => [item, item]));
+     return new Map(src.map((item) => Array.isArray(item) ? [...item] : [item, item]));
    } else {
      return new Map(Object.keys(src).map((key) => [key, src[key]]));
    }
