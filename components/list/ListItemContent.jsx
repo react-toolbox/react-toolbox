@@ -12,7 +12,7 @@ class ListItemContent extends React.Component {
     type: React.PropTypes.oneOf(types)
   };
 
-  type () {
+  getType () {
     const {type, children, caption, legend} = this.props;
 
     let count = React.Children.count(children);
@@ -25,7 +25,7 @@ class ListItemContent extends React.Component {
   render () {
     const {children, caption, legend} = this.props;
 
-    const className = `${style.itemContentRoot} ${style[this.type()]}`;
+    const className = `${style.itemContentRoot} ${style[this.getType()]}`;
 
     return (
       <span className={className}>
