@@ -17,7 +17,10 @@ class Dropdown extends React.Component {
     onFocus: React.PropTypes.func,
     source: React.PropTypes.array.isRequired,
     template: React.PropTypes.func,
-    value: React.PropTypes.string
+    value: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.number
+    ])
   };
 
   static defaultProps = {
