@@ -49,10 +49,11 @@ class IconButton extends React.Component {
       'data-react-toolbox': 'button'
     };
 
-    return React.createElement(element, props,
-      icon ? <FontIcon className={style.icon} value={icon}/> : null,
-      children
-    );
+    const iconComp = (typeof icon === 'string') ?
+        <FontIcon className={style.icon} value={icon}/> :
+        (icon || null);
+
+    return React.createElement(element, props, iconComp, children);
   }
 }
 
