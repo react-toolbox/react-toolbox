@@ -13,6 +13,7 @@ const ButtonTest = () => (
     <Button icon='bookmark' label='Bookmark' accent />
     <Button icon='bookmark' label='Bookmark' raised primary />
     <Button icon='inbox' label='Inbox' flat />
+    <Button icon={<GithubIcon />} label='Github' flat />
     <Button icon='add' floating />
     <Button icon='add' floating primary />
     <Button icon='add' floating primary disabled />
@@ -21,6 +22,7 @@ const ButtonTest = () => (
     <IconButton icon='favorite' inverse />
     <IconButton icon='favorite' />
     <IconButton icon='favorite' disabled />
+    <IconButton icon={<GithubIcon />} />
     <IconButton primary><GithubIcon/></IconButton>
     <Button icon='add' label='Add this' flat primary />
     <Button icon='add' label='Add this' flat disabled />
