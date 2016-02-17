@@ -69,7 +69,7 @@ class Table extends React.Component {
           index={index}
           key={index}
           model={this.props.model}
-          onChange={this.handleRowChange.bind(this, index)}
+          onChange={this.props.onChange ? this.handleRowChange.bind(this) : undefined}
           onSelect={this.handleRowSelect.bind(this, index)}
           selectable={this.props.selectable}
           selected={this.props.selected.indexOf(index) !== -1}

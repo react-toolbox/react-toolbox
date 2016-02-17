@@ -7,6 +7,7 @@ import style from './style';
 class TableRow extends React.Component {
   static propTypes = {
     data: React.PropTypes.object,
+    index: React.PropTypes.number,
     model: React.PropTypes.object,
     onChange: React.PropTypes.func,
     onSelect: React.PropTypes.func,
@@ -14,9 +15,10 @@ class TableRow extends React.Component {
     selected: React.PropTypes.bool
   };
 
-  handleInputChange = (key, type, event) => {
+  handleInputChange = (index, key, type, event) => {
     const value = type === 'checkbox' ? event.target.checked : event.target.value;
-    this.props.onChange(key, value);
+    const onChange = this.props.model[key].onChange || this.props.onChange;
+    onChange(index, key, value);
   };
 
   renderSelectCell () {
@@ -37,7 +39,13 @@ class TableRow extends React.Component {
 
   renderCell (key) {
     const value = this.props.data[key];
-    if (this.props.onChange) {
+
+    // if the value is a valid React element return it directly, since it
+    // cannot be edited and should not be converted to a string...
+    if (React.isValidElement(value)) { return value; }
+
+    const onChange = this.props.model[key].onChange || this.props.onChange;
+    if (onChange) {
       return this.renderInput(key, value);
     } else if (value) {
       return value.toString();
@@ -45,13 +53,14 @@ class TableRow extends React.Component {
   }
 
   renderInput (key, value) {
+    const index = this.props.index;
     const inputType = utils.inputTypeForPrototype(this.props.model[key].type);
     const inputValue = utils.prepareValueForInput(value, inputType);
     const checked = inputType === 'checkbox' && value ? true : null;
     return (
       <input
         checked={checked}
-        onChange={this.handleInputChange.bind(null, key, inputType)}
+        onChange={this.handleInputChange.bind(null, index, key, inputType)}
         type={inputType}
         value={inputValue}
       />
