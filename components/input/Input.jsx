@@ -36,20 +36,6 @@ class Input extends React.Component {
     if (this.props.onChange) this.props.onChange(event.target.value, event);
   };
 
-  renderInput () {
-    const {multiline, value, ...others} = this.props;
-    const className = ClassNames(style.input, {[style.filled]: value});
-
-    return React.createElement(multiline ? 'textarea' : 'input', {
-      ...others,
-      className,
-      onChange: this.handleChange,
-      ref: 'input',
-      role: 'input',
-      value
-    });
-  }
-
   blur () {
     this.refs.input.blur();
   }
