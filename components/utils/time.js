@@ -21,64 +21,64 @@ export default {
   getFullMonth (d) {
     const month = d.getMonth();
     switch (month) {
-      default: return 'Unknown';
-      case 0: return 'January';
-      case 1: return 'February';
-      case 2: return 'March';
-      case 3: return 'April';
-      case 4: return 'May';
-      case 5: return 'June';
-      case 6: return 'July';
-      case 7: return 'August';
-      case 8: return 'September';
-      case 9: return 'October';
-      case 10: return 'November';
-      case 11: return 'December';
+      default: return 'Неизвестный';
+      case 0: return 'Январь';
+      case 1: return 'Февраль';
+      case 2: return 'Март';
+      case 3: return 'Апрель';
+      case 4: return 'Май';
+      case 5: return 'Июнь';
+      case 6: return 'Июль';
+      case 7: return 'Август';
+      case 8: return 'Сентябрь';
+      case 9: return 'Октябрь';
+      case 10: return 'Ноябрь';
+      case 11: return 'Декабрь';
     }
   },
 
   getShortMonth (d) {
     const month = d.getMonth();
     switch (month) {
-      default: return 'Unknown';
-      case 0: return 'Jan';
-      case 1: return 'Feb';
-      case 2: return 'Mar';
-      case 3: return 'Apr';
-      case 4: return 'May';
-      case 5: return 'Jun';
-      case 6: return 'Jul';
-      case 7: return 'Aug';
-      case 8: return 'Sep';
-      case 9: return 'Oct';
-      case 10: return 'Nov';
-      case 11: return 'Dec';
+      default: return 'Неизвестный';
+      case 0: return 'Янв';
+      case 1: return 'Фев';
+      case 2: return 'Мар';
+      case 3: return 'Апр';
+      case 4: return 'Май';
+      case 5: return 'Июн';
+      case 6: return 'Июл';
+      case 7: return 'Авг';
+      case 8: return 'Сен';
+      case 9: return 'Окт';
+      case 10: return 'Ноя';
+      case 11: return 'Дек';
     }
   },
 
   getFullDayOfWeek (day) {
     switch (day) {
-      default: return 'Unknown';
-      case 0: return 'Sunday';
-      case 1: return 'Monday';
-      case 2: return 'Tuesday';
-      case 3: return 'Wednesday';
-      case 4: return 'Thursday';
-      case 5: return 'Friday';
-      case 6: return 'Saturday';
+      default: return 'Неизвестный';
+      case 0: return 'Воскресенье';
+      case 1: return 'Понедельник';
+      case 2: return 'Вторник';
+      case 3: return 'Среда';
+      case 4: return 'Четверг';
+      case 5: return 'Пятница';
+      case 6: return 'Суббота';
     }
   },
 
   getShortDayOfWeek (day) {
     switch (day) {
-      default: return 'Unknown';
-      case 0: return 'Sun';
-      case 1: return 'Mon';
-      case 2: return 'Tue';
-      case 3: return 'Wed';
-      case 4: return 'Thu';
-      case 5: return 'Fri';
-      case 6: return 'Sat';
+      default: return 'Неизвестный';
+      case 0: return 'Вс';
+      case 1: return 'Пн';
+      case 2: return 'Вт';
+      case 3: return 'Ср';
+      case 4: return 'Чт';
+      case 5: return 'Пт';
+      case 6: return 'Сб';
     }
   },
 
