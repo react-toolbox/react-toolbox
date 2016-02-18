@@ -13,7 +13,7 @@ const Dialog = (props) => {
   const className = ClassNames([ style.root, style[props.type] ], {
     [style.active]: props.active
   }, props.className);
-
+  const classNameNavigation = ClassNames([style.navigation], style[props.actionsPosition]);
   return (
     <Overlay active={props.active} onClick={props.onOverlayClick}>
       <div data-react-toolbox='dialog' className={className}>
@@ -21,7 +21,7 @@ const Dialog = (props) => {
           {props.title ? <h6 className={style.title}>{props.title}</h6> : null}
           {props.children}
         </section>
-        <nav role='navigation' className={style.navigation}>
+        <nav role='navigation' className={classNameNavigation}>
           {actions}
         </nav>
       </div>
@@ -31,6 +31,7 @@ const Dialog = (props) => {
 
 Dialog.propTypes = {
   actions: React.PropTypes.array,
+  actionsPosition: React.PropTypes.oneOf(['left', 'center', 'right']),
   active: React.PropTypes.bool,
   children: React.PropTypes.node,
   className: React.PropTypes.string,
@@ -41,6 +42,7 @@ Dialog.propTypes = {
 
 Dialog.defaultProps = {
   actions: [],
+  actionsPosition: 'right',
   active: false,
   type: 'normal'
 };
