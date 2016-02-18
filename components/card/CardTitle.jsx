@@ -3,11 +3,8 @@ import ClassNames from 'classnames';
 import { Avatar } from '../avatar';
 import style from './style';
 
-const CardTitle = ({avatar, children, className, subtitle, title, ...other}) => {
-  const classes = ClassNames(style.cardTitle, {
-    [style.small]: avatar,
-    [style.large]: !avatar
-  }, className);
+const CardTitle = ({avatar, children, className, size, subtitle, title, ...other}) => {
+  const classes = ClassNames([style.cardTitle, style[size]], className);
 
   let avatarComponent;
 
@@ -47,6 +44,7 @@ CardTitle.propTypes = {
     PropTypes.array
   ]),
   className: PropTypes.string,
+  size: PropTypes.oneOfType(['small', 'large']),
   subtitle: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element
