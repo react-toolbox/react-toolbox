@@ -41,14 +41,14 @@ class Input extends React.Component {
   renderInput () {
     const {multiline, value, valueLink, ...others} = this.props;
     const className = ClassNames(style.input, {[style.filled]: value});
-    let props = {
+    const props = {
       ...others,
       className,
       ref: 'input',
       role: 'input'
     };
     
-    if (valueLink) {
+    if (valueLink){
       props.valueLink = valueLink;
     }
     else {
