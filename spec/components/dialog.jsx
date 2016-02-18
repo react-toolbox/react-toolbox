@@ -26,6 +26,7 @@ class DialogTest extends React.Component {
         <Button label='Show Dialog' raised primary onClick={this.handleToggle} />
         <Dialog
           actions={this.actions}
+          actionsPosition="center"
           active={this.state.active}
           title="Use Google's location service?"
           onOverlayClick={this.handleToggle}
