@@ -20,7 +20,8 @@ class Input extends React.Component {
     onKeyPress: React.PropTypes.func,
     required: React.PropTypes.bool,
     type: React.PropTypes.string,
-    value: React.PropTypes.any
+    value: React.PropTypes.any,
+    valueLink: React.PropTypes.object
   };
 
   static defaultProps = {
@@ -29,7 +30,8 @@ class Input extends React.Component {
     floating: true,
     multiline: false,
     required: false,
-    type: 'text'
+    type: 'text',
+    valueLink: null
   };
 
   handleChange = (event) => {
@@ -37,17 +39,24 @@ class Input extends React.Component {
   };
 
   renderInput () {
-    const {multiline, value, ...others} = this.props;
+    const {multiline, value, valueLink, ...others} = this.props;
     const className = ClassNames(style.input, {[style.filled]: value});
-
-    return React.createElement(multiline ? 'textarea' : 'input', {
+    let props = {
       ...others,
       className,
-      onChange: this.handleChange,
       ref: 'input',
-      role: 'input',
-      value
-    });
+      role: 'input'
+    };
+    
+    if (valueLink) {
+      props.valueLink = valueLink;
+    }
+    else {
+      props.value = value;
+      props.onChange = this.handleChange;
+    }
+
+    return React.createElement(multiline ? 'textarea' : 'input', props);
   }
 
   blur () {
