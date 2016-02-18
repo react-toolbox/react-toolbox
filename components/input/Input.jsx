@@ -47,11 +47,10 @@ class Input extends React.Component {
       ref: 'input',
       role: 'input'
     };
-    
-    if (valueLink){
+
+    if (valueLink) {
       props.valueLink = valueLink;
-    }
-    else {
+    } else {
       props.value = value;
       props.onChange = this.handleChange;
     }
