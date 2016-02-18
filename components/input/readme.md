@@ -45,6 +45,7 @@ class InputTest extends React.Component {
 | `required`      | `Boolean`       | `false`         | If true, the html input has a required value.|
 | `type`          | `String`        | `text`        | Type of the input element. It can be a valid HTML5 input type|
 | `value`         | `String`        |              | Current value of the input element.|
+| `valueLink`     | `Object`        |             | Set two-way binding with state.|
 
 ## Methods
 
