@@ -70,8 +70,8 @@ class Menu extends React.Component {
     return true;
   }
 
-  componentWillUpdate (prevState, nextState) {
-    if (!prevState.active && nextState.active) {
+  componentWillUpdate (nextProps, nextState) {
+    if (!this.state.active && nextState.active) {
       events.addEventsToDocument({click: this.handleDocumentClick});
     }
   }
