@@ -30,7 +30,9 @@ class Clock extends React.Component {
 
   componentDidMount () {
     window.addEventListener('resize', this.handleCalculateShape);
-    this.handleCalculateShape();
+    setTimeout(() => {
+      this.handleCalculateShape();
+    });
   }
 
   componentWillUnmount () {
