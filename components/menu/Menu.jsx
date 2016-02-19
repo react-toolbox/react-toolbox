@@ -43,9 +43,11 @@ class Menu extends React.Component {
   };
 
   componentDidMount () {
-    const { width, height } = this.refs.menu.getBoundingClientRect();
-    const position = this.props.position === POSITION.AUTO ? this.calculatePosition() : this.props.position;
-    this.setState({ position, width, height });
+    setTimeout(() => {
+      const { width, height } = this.refs.menu.getBoundingClientRect();
+      const position = this.props.position === POSITION.AUTO ? this.calculatePosition() : this.props.position;
+      this.setState({ position, width, height });
+    });
   }
 
   componentWillReceiveProps (nextProps) {
