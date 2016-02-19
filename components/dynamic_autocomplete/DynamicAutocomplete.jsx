@@ -10,7 +10,7 @@ class DynamicAutocomplete extends React.Component {
         className: React.PropTypes.string,
         disabled: React.PropTypes.bool,
         error: React.PropTypes.string,
-		getSource: React.PropTypes.func
+		getSource: React.PropTypes.func,
         label: React.PropTypes.string,
         onSelectOption: React.PropTypes.func
     };
