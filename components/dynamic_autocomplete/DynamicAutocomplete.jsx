@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ClassNames from 'classnames';
 import Input from '../input';
 import events from '../utils/events';
@@ -11,9 +10,9 @@ class DynamicAutocomplete extends React.Component {
         className: React.PropTypes.string,
         disabled: React.PropTypes.bool,
         error: React.PropTypes.string,
+		getSource: React.PropTypes.func
         label: React.PropTypes.string,
-        onSelectOption: React.PropTypes.func,
-        getSource: React.PropTypes.func
+        onSelectOption: React.PropTypes.func
     };
 
     static defaultProps = {
@@ -39,13 +38,14 @@ class DynamicAutocomplete extends React.Component {
 
     handleQueryChange = (value) => {
         this.setState({query: value});
-        if(value !== '')
+        if (value !== ''){
             this.props.getSource(value).then(src => {
                 this.state.query !== '' ? this.setState({source: src}) : this.setState({source: null});
             });
-        else
+		}
+        else{
             this.setState({source: null});
-
+		}
     };
 
     handleQueryFocus = () => {
@@ -54,8 +54,7 @@ class DynamicAutocomplete extends React.Component {
     };
 
     handleQueryKeyUp = (event) => {
-        if (event.which === 13 && this.state.active)
-            this.select(this.state.active, event);
+        if (event.which === 13 && this.state.active) this.select(this.state.active, event);
         if (event.which === 27) this.refs.input.blur();
         if ([40, 38].indexOf(event.which) !== -1) {
             const suggestionsKeys = [...this.suggestions().keys()];
@@ -92,10 +91,10 @@ class DynamicAutocomplete extends React.Component {
                 </li>
             );
         });
-        return <ul ref='suggestions' className={ClassNames(style.suggestions)}>{suggestions}</ul>
+        return <ul ref='suggestions' className={ClassNames(style.suggestions)}>{suggestions}</ul>;
     }
 
-    render() {
+    render () {
         const {error, label, ...other} = this.props;
         const className = ClassNames(style.root, {
             [style.focus]: this.state.focus
