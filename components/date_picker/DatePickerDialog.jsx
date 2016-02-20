@@ -44,8 +44,8 @@ class CalendarDialog extends React.Component {
   };
 
   actions = [
-    { label: 'Cancel', className: style.button, onClick: this.props.onDismiss },
-    { label: 'Ok', className: style.button, onClick: this.handleSelect }
+    { label: 'Отмена', className: style.button, onClick: this.props.onDismiss },
+    { label: 'Ок', className: style.button, onClick: this.handleSelect }
   ];
 
   render () {

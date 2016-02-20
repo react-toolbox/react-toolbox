@@ -21,6 +21,7 @@ const cards = {
       <Card className={style.card}>
         <CardTitle
           title="Title goes here"
+          size="small"
           subtitle="Subtitle here"
         />
         <CardText>{dummyText}</CardText>
@@ -35,6 +36,7 @@ const cards = {
     component: (
       <Card raised className={style.card}>
         <CardTitle
+          size="small"
           title="Title goes here"
           subtitle="Subtitle here"
         />

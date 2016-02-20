@@ -9,6 +9,7 @@ class Button extends React.Component {
     accent: React.PropTypes.bool,
     children: React.PropTypes.node,
     className: React.PropTypes.string,
+    colorIcon: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     flat: React.PropTypes.bool,
     floating: React.PropTypes.bool,
@@ -28,6 +29,7 @@ class Button extends React.Component {
   static defaultProps = {
     accent: false,
     className: '',
+    colorIcon: '',
     flat: false,
     floating: false,
     mini: false,
@@ -47,7 +49,7 @@ class Button extends React.Component {
   };
 
   render () {
-    const { accent, children, className, flat, floating, href, icon,
+    const { accent, children, className, colorIcon, flat, floating, href, icon,
             inverse, label, mini, neutral, primary, raised, ...others} = this.props;
     const element = href ? 'a' : 'button';
     const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
@@ -71,7 +73,7 @@ class Button extends React.Component {
     };
 
     return React.createElement(element, props,
-      icon ? <FontIcon className={style.icon} value={icon}/> : null,
+      icon ? <FontIcon className={style.icon} value={icon} color={colorIcon}/> : null,
       label,
       children
     );
