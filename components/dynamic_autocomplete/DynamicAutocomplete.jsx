@@ -40,10 +40,13 @@ class DynamicAutocomplete extends React.Component {
         this.setState({query: value});
         if (value !== ''){
             this.props.getSource(value).then(src => {
-                this.state.query !== '' ? this.setState({source: src}) : this.setState({source: null});
+                if (this.state.query !== '') {
+					this.setState({source: src});
+				} else {
+					this.setState({source: null});
+				}
             });
-		}
-        else{
+		} else{
             this.setState({source: null});
 		}
     };
@@ -69,16 +72,16 @@ class DynamicAutocomplete extends React.Component {
         this.setState({active: key});
     };
 
-    suggestions() {
+    suggestions () {
         return this.state.source || new Map();
     }
 
-    select(key, event) {
+    select (key, event) {
         events.pauseEvent(event);
         this.handleChange(key, event);
     }
 
-    renderSuggestions() {
+    renderSuggestions () {
         const suggestions = [...this.suggestions()].map(([key, value]) => {
             const className = ClassNames(style.suggestion, {[style.active]: this.state.active === key});
             return (

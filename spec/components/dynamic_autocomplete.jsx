@@ -27,7 +27,7 @@ class DynamicAutocompleteTest extends React.Component {
                         resolve(new Map(Object.keys(source).map((key) => [key, source[key]])));
                     }
                 }
-            }
+            };
         });
     };
 
