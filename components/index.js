@@ -11,6 +11,7 @@ export DatePicker from './date_picker';
 export Dialog from './dialog';
 export Drawer from './drawer';
 export Dropdown from './dropdown';
+export DynamicAutocomplete from './DynamicAutocomplete';
 export FontIcon from './font_icon';
 export Form from './form';
 export Input from './input';
