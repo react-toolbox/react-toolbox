@@ -9,6 +9,7 @@ class MenuItem extends React.Component {
     caption: React.PropTypes.string.isRequired,
     children: React.PropTypes.any,
     className: React.PropTypes.string,
+    colorIcon: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     icon: React.PropTypes.any,
     onClick: React.PropTypes.func,
@@ -18,6 +19,7 @@ class MenuItem extends React.Component {
 
   static defaultProps = {
     className: '',
+    colorIcon: '',
     disabled: false,
     selected: false
   };
@@ -29,7 +31,7 @@ class MenuItem extends React.Component {
   };
 
   render () {
-    const {icon, caption, children, shortcut, selected, disabled, ...others} = this.props;
+    const {icon, caption, children, colorIcon, shortcut, selected, disabled, ...others} = this.props;
     const className = ClassNames(style.root, {
       [style.selected]: selected,
       [style.disabled]: disabled
@@ -37,7 +39,7 @@ class MenuItem extends React.Component {
 
     return (
       <li {...others} data-react-toolbox='menu-item' className={className} onClick={this.handleClick}>
-        {icon ? <FontIcon value={icon} className={style.icon}/> : null}
+        {icon ? <FontIcon value={icon} className={style.icon} colorIcon={colorIcon}/> : null}
         <span className={style.caption}>{caption}</span>
         {shortcut ? <small className={style.shortcut}>{shortcut}</small> : null}
         {children}
