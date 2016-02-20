@@ -46,7 +46,7 @@ class DynamicAutocomplete extends React.Component {
 					this.setState({source: null});
 				}
             });
-		} else{
+		} else {
             this.setState({source: null});
 		}
     };
