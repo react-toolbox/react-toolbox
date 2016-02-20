@@ -3,7 +3,7 @@ import ClassNames from 'classnames';
 
 const FontIcon = ({ children, className, value, ...other}) => {
   const classes = ClassNames(
-    {'material-icons': typeof value === 'string'},
+    'material-icons',
     className
   );
   return (
