@@ -78,16 +78,16 @@ class DynamicAutocomplete extends React.Component {
     this.setState({query: ''});
   };
 
-  suggestions() {
+  suggestions () {
     return this.state.source || new Map();
   }
 
-  select(key, event) {
+  select (key, event) {
     events.pauseEvent(event);
     this.handleChange(key, event);
   }
 
-  renderSuggestions() {
+  renderSuggestions () {
     const suggestions = [...this.suggestions()].map(([key, value]) => {
       const className = ClassNames(style.suggestion, {[style.active]: this.state.active === key});
       return (
@@ -107,7 +107,7 @@ class DynamicAutocomplete extends React.Component {
     );
   }
 
-  renderClearButton() {
+  renderClearButton () {
     if (this.props.clearButton && this.state.query !== '') {
       return (
         <IconButton
@@ -119,7 +119,7 @@ class DynamicAutocomplete extends React.Component {
     }
   }
 
-  render() {
+  render () {
     const {error, label, ...other} = this.props;
     const className = ClassNames(style.root, {
       [style.focus]: this.state.focus

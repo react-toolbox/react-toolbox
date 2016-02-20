@@ -31,7 +31,7 @@ class DynamicAutocompleteTest extends React.Component {
     });
   };
 
-  render() {
+  render () {
     return (
       <section>
         <h5>Dynamic Autocomplete</h5>
