@@ -40,8 +40,14 @@
   border-radius: $autocomplete-value-border-radius;
 }
 
+.clearButton {
+  position: absolute;
+  right: 1rem;
+  bottom: 2.5rem;
+}
+
 .wrapper {
-	position: relative;
+  position: relative;
 }
 
 .suggestions {

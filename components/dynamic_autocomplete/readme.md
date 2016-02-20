@@ -61,5 +61,6 @@ class DynamicAutocompleteTest extends React.Component {
 | `disabled`      | `Boolean`       | `false`         | Set the component as disabled.
 | `error`         | `String`        |                 | Give an error string to display under the field.|
 | `label`         | `String`        |                 | The text string to use for the floating label element.
-| `getSource`     | `Function`      |                 | Callback function that should return a promise and resolve with a Map. Map must be in the form: { "0" => { name: "", key: "", item: {} } name and keys are required and item is optional. Item allows all other attributes to be group.
-| `onSelectOption`      | `Function`      |                 | Callback function that is fired when the an item is clicked in the dropdown. This will return the object from the map e.g. { name: "", key: "", item: {} };
+| `getSource`     | `Function`      |                 | Callback function that should return a promise and resolve with a Map. Map must be in the form: `{ "0" => { name: "", key: "" }` name and keys are required and item is optional. Item allows all other attributes to be group.
+| `onSelectOption`      | `Function`      |                 | Callback function that is fired when the an item is clicked in the dropdown. This will return the object from the map e.g. `{ name: "", key: "" };`
+| `clearButton`   | `Boolean`      |                 | Display a clear button on the field.
