@@ -40,6 +40,10 @@
   border-radius: $autocomplete-value-border-radius;
 }
 
+.wrapper {
+	position: relative;
+}
+
 .suggestions {
   @include no-webkit-scrollbar;
   position: absolute;

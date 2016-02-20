@@ -94,7 +94,11 @@ class DynamicAutocomplete extends React.Component {
                 </li>
             );
         });
-        return <ul ref='suggestions' className={ClassNames(style.suggestions)}>{suggestions}</ul>;
+        return (
+            <div className={ClassNames(style.wrapper)}>
+                <ul ref='suggestions' className={ClassNames(style.suggestions)}>{suggestions}</ul>
+            </div>
+        );
     }
 
     render () {
