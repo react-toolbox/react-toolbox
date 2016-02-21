@@ -6,11 +6,11 @@
 [![react-toolbox channel on discord](https://img.shields.io/badge/discord-%23react--toolbox%20%40%20reactiflux-61dafb.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bW9FLzM)
 [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://paypal.me/javivelasco)
 
-React Toolbox is a set of [React](http://facebook.github.io/react/) components that implement [Google's Material Design specification](https://www.google.com/design/spec/material-design/introduction.html). It's powered by [CSS Modules](https://github.com/css-modules/css-modules) and harmoniously integrates with your [Webpack](http://webpack.github.io/) workflow. You can take a tour through our documentation website and try the components live!
+React Toolbox is a set of [React](http://facebook.github.io/react/) components that implement [Google's Material Design specification](https://www.google.com/design/spec/material-design/introduction.html). It's powered by [CSS Modules](https://github.com/css-modules/css-modules) and harmoniously integrates with your [webpack](http://webpack.github.io/) workflow. You can take a tour through our documentation website and try the components live!
 
 ## Installation
 
-React Toolbox can be installed as an [npm package](https://www.npmjs.org/package/react-toolbox);
+React Toolbox can be installed as an [npm package](https://www.npmjs.org/package/react-toolbox):
 
 ```
 npm install --save react-toolbox
@@ -18,7 +18,7 @@ npm install --save react-toolbox
 
 ## Usage
 
-Although there are other ways to use React Toolbox, the recommended way is to create a Webpack workflow with [Babel Loader](https://github.com/babel/babel-loader), [CSS Loader](https://github.com/webpack/css-loader) and [SASS Loader](https://github.com/jtangelder/sass-loader). A good starting point is [React Hot Webpack Boilerplate](https://github.com/gaearon/react-hot-boilerplate).
+Although there are other ways to use React Toolbox, the recommended way is to create a webpack workflow with [babel-loader](https://github.com/babel/babel-loader), [css-loader](https://github.com/webpack/css-loader) and [sass-loader](https://github.com/jtangelder/sass-loader). A good starting point is [React Hot Webpack Boilerplate](https://github.com/gaearon/react-hot-boilerplate).
 
 Once you have the workflow ready, you can just require and use the components:
 
@@ -33,17 +33,17 @@ const CustomButton = () => (
 export default CustomButton;
 ```
 
-The previous code creates a React button component based on React toolbox button. It's important to notice that requiring a module from the exposed root of the package will import the **SASS** of the component.
+The previous code creates a React button component based on React Toolbox button. It's important to notice that requiring a module from the exposed root of the package will also import the **SASS** of the component.
 
 ## Roboto Font and Material Design Icons
 
 React Toolbox assumes that you are importing [Roboto Font](https://www.google.com/fonts/specimen/Roboto) and [Material Design Icons](https://www.google.com/design/icons/).
 
-In order to import the fonts for you, we'd need to include them in the CSS which is considered a bad practice. If you are not including them in your app yo to the linked sites and follow the instructions. 
+In order to import the fonts for you, we'd need to include them in the CSS which is considered a bad practice. If you are not including them in your app, go to the linked sites and follow the instructions. 
 
 ## App component
 
-There are some components in React Toolbox that requires special positioning. For example, `Dialog` and `Drawer` components block the scroll showing a fixed positioned overlay. To handle these cases, React Toolbox needs some styling in your root node. This can be achieved wrapping your app with a non intrusive `App` wrapper component:
+There are some components in React Toolbox that require special positioning. For example, `Dialog` and `Drawer` components block the scroll showing a fixed positioned overlay. To handle these cases, React Toolbox needs some styling in your root node. This can be achieved by wrapping your app with a non intrusive `App` wrapper component:
 
 ```jsx
 import React from 'react';
@@ -61,7 +61,7 @@ ReactDOM.render(
 
 ## Customization
 
-Since React Toolbox styles are written in CSS it's pretty easy to customize your components. We have several ways:
+Since React Toolbox styles are written in CSS, it's pretty easy to customize your components. We have several ways:
 
 ### Via React Toolbox Loader
 
@@ -71,7 +71,7 @@ With [toolbox-loader](https://github.com/react-toolbox/toolbox-loader) you can t
 
 ### Via `className` property
 
-Generally each component will have a `className` prop so you can tell the class name you want to keep in the root node of the resulting markup. All markup is style with the lowest specificity level so you can just nest one level in your CSS and the result will be applied. Consider this example:
+Generally each component will have a `className` prop so you can pass the class name you want to keep in the root node of the resulting markup. All markup is styled with the lowest specificity level so you can just nest one level in your CSS and the result will be applied. Consider this example:
 
 ```jsx
 const CustomButton = () => (
@@ -79,7 +79,7 @@ const CustomButton = () => (
 );
 ```
 
-If you browse the resulting markup you will see *data attributes* like `data-react-toolbox="label"` so you can avoid styling directly tag names. You can now write your CSS:
+If you browse the resulting markup you will see *data attributes* like `data-react-toolbox="label"` so you can avoid directly styling tag names. You can now write your CSS:
 
 ```css
 .customized > [data-react-toolbox="label"] {
@@ -98,9 +98,9 @@ Note that to comply with the typings requirement, a triple-slash reference to `r
 
 The project is being initially developed and maintained by [Javier Velasco](http://javivelasco.com) and [Javier Jiménez](http://soyjavi.com) and the [contribution scene](https://github.com/react-toolbox/react-toolbox/graphs/contributors) is just getting warm. We want to create reference components so any contribution is very welcome.
 
-To work in the project you'd need a `node` version supporting ES6 syntax. Although the project is built using Babel we use some ES6 features in the development server. Also, the packages has been tested with `node 4.2.1`. Consider using [nvm](https://github.com/creationix/nvm) or [n](https://github.com/tj/n) to handle different node versions!
+To work in the project you'd need a `node` version supporting ES6 syntax. Although the project is built using Babel we use some ES6 features in the development server. Also, the package has been tested with `node 4.2.1`. Consider using [nvm](https://github.com/creationix/nvm) or [n](https://github.com/tj/n) to handle different node versions!
 
-To start documentation site locally you'd need to install dependencies from the main package and also dependencies from the docs subproject:
+To start the documentation site locally, you'll need to install the dependencies from both the main package and the docs subproject:
 
 ```
 git clone https://github.com/react-toolbox/react-toolbox.git
@@ -110,7 +110,8 @@ npm install
 npm start
 ```
 
-Local documentation will be available at http://localhost:8081/
+Local documentation will then be available at `http://localhost:8081/`.
 
-## License 
+## License
+
 This project is licensed under the terms of the [MIT license](https://github.com/react-toolbox/react-toolbox/blob/master/LICENSE).
