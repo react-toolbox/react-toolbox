@@ -15,7 +15,13 @@ const Dialog = (props) => {
   }, props.className);
 
   return (
-    <Overlay active={props.active} onClick={props.onOverlayClick}>
+    <Overlay
+      active={props.active}
+      onClick={props.onOverlayClick}
+      onMouseDown={props.onOverlayMouseDown}
+      onMouseUp={props.onOverlayMouseUp}
+      onMouseMove={props.onOverlayMouseMove}
+    >
       <div data-react-toolbox='dialog' className={className}>
         <section role='body' className={style.body}>
           {props.title ? <h6 className={style.title}>{props.title}</h6> : null}
@@ -35,6 +41,9 @@ Dialog.propTypes = {
   children: React.PropTypes.node,
   className: React.PropTypes.string,
   onOverlayClick: React.PropTypes.func,
+  onOverlayMouseDown: React.PropTypes.func,
+  onOverlayMouseUp: React.PropTypes.func,
+  onOverlayMouseMove: React.PropTypes.func,
   title: React.PropTypes.string,
   type: React.PropTypes.string
 };
