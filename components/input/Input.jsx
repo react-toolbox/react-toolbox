@@ -8,7 +8,7 @@ class Input extends React.Component {
     children: React.PropTypes.any,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
-    error: React.PropTypes.string,
+    error: React.PropTypes.node,
     floating: React.PropTypes.bool,
     icon: React.PropTypes.any,
     label: React.PropTypes.string,
