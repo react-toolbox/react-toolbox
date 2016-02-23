@@ -16,39 +16,18 @@ class Overlay extends React.Component {
     invisible: false
   };
 
-  componentDidMount () {
-    this.app = document.querySelector('[data-react-toolbox="app"]') || document.body;
-    this.node = document.createElement('div');
-    this.node.setAttribute('data-react-toolbox', 'overlay');
-    this.app.appendChild(this.node);
-    this.handleRender();
-  }
-
-  componentDidUpdate () {
-    this.handleRender();
-  }
-
-  componentWillUnmount () {
-    ReactDOM.unmountComponentAtNode(this.node);
-    this.app.removeChild(this.node);
-  }
-
-  handleRender () {
+  render () {
     const className = ClassNames(style.root, {
       [style.active]: this.props.active,
       [style.invisible]: this.props.invisible
     }, this.props.className);
 
-    ReactDOM.render(
+    return (
       <div className={className}>
         <div className={style.overlay} onClick={this.props.onClick} />
         {this.props.children}
       </div>
-    , this.node);
-  }
-
-  render () {
-    return React.DOM.noscript();
+    );
   }
 }
 

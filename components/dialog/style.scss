@@ -43,7 +43,7 @@
 .body {
   flex-grow: 2;
   padding: $dialog-content-padding;
-  overflow-y: auto;
+  overflow-y: visible;
   color: $color-text-secondary;
 }
 
