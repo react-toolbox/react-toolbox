@@ -1,0 +1,11 @@
+$tab-label-disabled-opacity: .2;
+$tab-label-h-padding: 1.2 * $unit;
+$tab-label-height: 4.8 * $unit;
+$tab-text-height: 1.4 * $unit;
+$tab-label-v-padding: ($tab-label-height - $tab-text-height) / 2;
+$tab-navigation-border-color: $color-divider;
+$tab-pointer-color: $color-primary !default;
+$tab-pointer-height: .2 * $unit;
+$tab-text: $color-black !default;
+$tab-text-color: $tab-text !default;
+$tab-text-inactive-color: rgba($tab-text, 0.70) !default;

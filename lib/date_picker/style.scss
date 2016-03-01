@@ -1,0 +1,61 @@
+@import "../base";
+@import "./config";
+
+.input > [role="input"] {
+  cursor: pointer;
+}
+
+.header {
+  padding: 1.6 * $unit 2 * $unit;
+  color: $datepicker-primary-contrast-color;
+  cursor: pointer;
+  background-color: $datepicker-primary-color;
+}
+
+.year {
+  display: inline-block;
+  font-size: $datepicker-year-font-size;
+  transition: opacity, font-size $animation-duration $animation-curve-default;
+}
+
+.date {
+  display: block;
+  font-weight: $font-weight-semi-bold;
+  text-transform: capitalize;
+  transition: opacity $animation-duration $animation-curve-default;
+}
+
+.wrapper {
+  padding: $unit .5 * $unit 0;
+}
+
+.display-years {
+  .date {
+    opacity: $datepicker-inactive-opacity;
+  }
+  .year {
+    font-size: $font-size-normal;
+  }
+}
+
+.display-months {
+  .year {
+    opacity: $datepicker-inactive-opacity;
+  }
+}
+
+.dialog {
+  width: $datepicker-dialog-width;
+  > [role="body"] {
+    padding: 0;
+  }
+  > [role="navigation"] > .button {
+    color: $datepicker-primary-color;
+    &:hover {
+      background: $datepicker-primary-hover-color;
+    }
+    &:focus:not(:active) {
+      background: $datepicker-primary-hover-color;
+    }
+  }
+}
