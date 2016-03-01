@@ -12,7 +12,11 @@ class Table extends React.Component {
     onSelect: React.PropTypes.func,
     selectable: React.PropTypes.bool,
     selected: React.PropTypes.array,
-    source: React.PropTypes.array
+    source: React.PropTypes.array,
+    body      : React.PropTypes.shape({
+      onChange: React.PropTypes.func,
+      onSelect: React.PropTypes.func
+    })
   };
 
   static defaultProps = {
@@ -61,6 +65,25 @@ class Table extends React.Component {
     }
   }
 
+  setActionChange = (index) => {
+    if (this.props.body) {
+      if (this.props.body.onChange === null || typeof this.props.onChange == 'function') {
+        return this.props.onChange;
+      }
+    }
+    return this.handleRowChange.bind(this, index);
+  };
+
+  setActionSelect = (index) => {
+    if (this.props.body) {
+      if (this.props.body.onSelect === null || typeof this.props.onSelect == 'function') {
+        return this.props.onSelect;
+      }
+    }
+    return this.handleRowSelect.bind(this, index);
+  };
+
+
   renderBody () {
     const rows = this.props.source.map((data, index) => {
       return (
@@ -69,8 +92,8 @@ class Table extends React.Component {
           index={index}
           key={index}
           model={this.props.model}
-          onChange={this.handleRowChange.bind(this, index)}
-          onSelect={this.handleRowSelect.bind(this, index)}
+          onChange={this.setActionChange(index)}
+          onSelect={this.setActionSelect(index)}
           selectable={this.props.selectable}
           selected={this.props.selected.indexOf(index) !== -1}
         />
