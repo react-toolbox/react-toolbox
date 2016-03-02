@@ -5,6 +5,10 @@ import style from './style';
 
 class Table extends React.Component {
   static propTypes = {
+    body: React.PropTypes.shape({
+      onChange: React.PropTypes.func,
+      onSelect: React.PropTypes.func
+    }),
     className: React.PropTypes.string,
     heading: React.PropTypes.bool,
     model: React.PropTypes.object,
@@ -12,11 +16,7 @@ class Table extends React.Component {
     onSelect: React.PropTypes.func,
     selectable: React.PropTypes.bool,
     selected: React.PropTypes.array,
-    source: React.PropTypes.array,
-    body      : React.PropTypes.shape({
-      onChange: React.PropTypes.func,
-      onSelect: React.PropTypes.func
-    })
+    source: React.PropTypes.array
   };
 
   static defaultProps = {
