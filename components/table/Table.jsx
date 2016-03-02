@@ -67,7 +67,7 @@ class Table extends React.Component {
 
   setActionChange = (index) => {
     if (this.props.body) {
-      if (this.props.body.onChange === null || typeof this.props.onChange == 'function') {
+      if (this.props.body.onChange === null || typeof this.props.onChange === 'function') {
         return this.props.onChange;
       }
     }
@@ -76,7 +76,7 @@ class Table extends React.Component {
 
   setActionSelect = (index) => {
     if (this.props.body) {
-      if (this.props.body.onSelect === null || typeof this.props.onSelect == 'function') {
+      if (this.props.body.onSelect === null || typeof this.props.onSelect === 'function') {
         return this.props.onSelect;
       }
     }
