@@ -141,7 +141,7 @@ class Menu extends React.Component {
       if (item.type === MenuItem) {
         return React.cloneElement(item, {
           ripple: item.props.ripple || this.props.ripple,
-          selected: item.props.value && this.props.selectable && item.props.value === this.props.selected,
+          selected: typeof item.props.value !== 'undefined' && this.props.selectable && item.props.value === this.props.selected,
           onClick: this.handleSelect.bind(this, item)
         });
       } else {
