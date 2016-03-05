@@ -77,7 +77,6 @@ const Ripple = (options = {}) => {
       }
 
       handleMouseDown = (event) => {
-        console.log('ripple');
         if (!this.props.disabled) this.start(event);
         if (this.props.onMouseDown) this.props.onMouseDown(event);
       };
