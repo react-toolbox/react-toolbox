@@ -20,9 +20,7 @@ class Tabs extends React.Component {
   };
 
   componentDidMount () {
-    setTimeout(() => {
-      this.updatePointer(this.props.index);
-    }, 100);
+    this.updatePointer(this.props.index);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -52,15 +50,17 @@ class Tabs extends React.Component {
   }
 
   updatePointer (idx) {
-    const startPoint = this.refs.tabs.getBoundingClientRect().left;
-    const label = this.refs.navigation.children[idx].getBoundingClientRect();
-    this.setState({
-      pointer: {
-        top: `${this.refs.navigation.getBoundingClientRect().height}px`,
-        left: `${label.left - startPoint}px`,
-        width: `${label.width}px`
-      }
-    });
+    setTimeout(() => {
+      const startPoint = this.refs.tabs.getBoundingClientRect().left;
+      const label = this.refs.navigation.children[idx].getBoundingClientRect();
+      this.setState({
+        pointer: {
+          top: `${this.refs.navigation.getBoundingClientRect().height}px`,
+          left: `${label.left - startPoint}px`,
+          width: `${label.width}px`
+        }
+      });
+    }, 20);
   }
 
   renderHeaders (headers) {
