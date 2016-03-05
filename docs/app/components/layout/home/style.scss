@@ -53,6 +53,7 @@ $content-width: 740px;
         display: inline-block;
         margin: 0 10px;
         font-size: 50px;
+        line-height: 60px;
         vertical-align: middle;
         content: "·";
       }
@@ -61,7 +62,7 @@ $content-width: 740px;
         position: relative;
         display: inline-block;
         font-weight: 400;
-        line-height: 1.2;
+        line-height: 60px;
         color: $hero-text-color;
         vertical-align: middle;
         opacity: $hero-text-secondary-opacity;
