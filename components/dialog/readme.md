@@ -41,5 +41,8 @@ class DialogTest extends React.Component {
 | `actions`       | `Array`         |    `[]`         | A array of objects representing the buttons for the dialog navigation area. The properties will be transferred to the buttons.|
 | `className`     | `String`        |     `''`        | Sets a class to give customized styles to the dialog.|
 | `onOverlayClick`   | `Function`   |             | Callback to be invoked when the dialog overlay is clicked.|
+| `onOverlayMouseDown` | `Function` |             | Callback called when the mouse button is pressed on the overlay. |
+| `onOverlayMouseUp` | `Function` |               | Callback called when the mouse button is released over the overlay. |
+| `onOverlayMouseMove` | `Function` |             | Callback called when the mouse is moving over the overlay. |
 | `title`         | `String`        |                 | The text string to use as standar title of the dialog.|
 | `type`          | `String`        |  `normal`       | Used to determine the size of the dialog. It can be `small`, `normal` or `large`. |
