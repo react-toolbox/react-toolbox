@@ -39,12 +39,14 @@ class Overlay extends React.Component {
       [style.invisible]: this.props.invisible
     }, this.props.className);
 
-    ReactDOM.render(
+    const overlay = (
       <div className={className}>
         <div className={style.overlay} onClick={this.props.onClick} />
         {this.props.children}
       </div>
-    , this.node);
+    );
+
+    ReactDOM.unstable_renderSubtreeIntoContainer(this, overlay, this.node);
   }
 
   render () {
