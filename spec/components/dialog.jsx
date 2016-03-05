@@ -66,7 +66,7 @@ class DialogChild extends React.Component {
   }
 
   render () {
-    return <span>This message comes from a parent {this.context.message}</span>;
+    return <p>This message comes from a parent: <strong>{this.context.message}</strong></p>;
   }
 }
 
