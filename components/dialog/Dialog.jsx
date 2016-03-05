@@ -15,7 +15,11 @@ const Dialog = (props) => {
   }, props.className);
 
   return (
-    <Overlay active={props.active} onClick={props.onOverlayClick}>
+    <Overlay
+      active={props.active}
+      onClick={props.onOverlayClick}
+      animationDuration={props.animationDuration + props.animationDelay}
+      >
       <div data-react-toolbox='dialog' className={className}>
         <section role='body' className={style.body}>
           {props.title ? <h6 className={style.title}>{props.title}</h6> : null}
@@ -32,6 +36,8 @@ const Dialog = (props) => {
 Dialog.propTypes = {
   actions: React.PropTypes.array,
   active: React.PropTypes.bool,
+  animationDelay: React.PropTypes.number,
+  animationDuration: React.PropTypes.number,
   children: React.PropTypes.node,
   className: React.PropTypes.string,
   onOverlayClick: React.PropTypes.func,
@@ -42,6 +48,8 @@ Dialog.propTypes = {
 Dialog.defaultProps = {
   actions: [],
   active: false,
+  animationDuration: 350,
+  animationDelay: 350 / 5,
   type: 'normal'
 };
 

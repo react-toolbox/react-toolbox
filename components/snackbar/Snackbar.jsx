@@ -9,6 +9,8 @@ class Snackbar extends React.Component {
   static propTypes = {
     action: React.PropTypes.string,
     active: React.PropTypes.bool,
+    animationDelay: React.PropTypes.number,
+    animationDuration: React.PropTypes.number,
     className: React.PropTypes.string,
     icon: React.PropTypes.any,
     label: React.PropTypes.string.isRequired,
@@ -16,6 +18,11 @@ class Snackbar extends React.Component {
     onTimeout: React.PropTypes.func,
     timeout: React.PropTypes.number,
     type: React.PropTypes.string
+  };
+
+  static defaultProps = {
+    animationDuration: 350,
+    animationDelay: 350
   };
 
   componentDidUpdate () {
@@ -27,13 +34,11 @@ class Snackbar extends React.Component {
   }
 
   render () {
-    const {action, active, icon, label, onClick, type } = this.props;
-    const className = ClassNames([style.root, style[type]], {
-      [style.active]: active
-    }, this.props.className);
+    const {action, active, icon, label, onClick, type, animationDuration, animationDelay} = this.props;
+    const className = ClassNames([style.root, style[type]], this.props.className);
 
     return (
-      <Overlay invisible>
+      <Overlay active={active} invisible animationDuration={animationDuration + animationDelay}>
         <div data-react-toolbox='snackbar' className={className}>
           {icon ? <FontIcon value={icon} className={style.icon} /> : null}
           <span className={style.label}>{label}</span>
