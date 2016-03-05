@@ -12,7 +12,6 @@ const countries = [
 
 class DropdownTest extends React.Component {
   state = {
-    dropdown1: 'ES-es',
     dropdown4: 'TH-th'
   };
 

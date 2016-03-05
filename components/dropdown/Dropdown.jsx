@@ -80,8 +80,6 @@ class Dropdown extends React.Component {
       for (const item of this.props.source) {
         if (item.value === this.props.value) return item;
       }
-    } else {
-      return this.props.source[0];
     }
   };
 
@@ -127,10 +125,10 @@ class Dropdown extends React.Component {
           className={style.value}
           onMouseDown={this.handleMouseDown}
           readOnly
-          type={template ? 'hidden' : null}
-          value={selected.label}
+          type={template && selected ? 'hidden' : null}
+          value={selected && selected.label}
         />
-        {template ? this.renderTemplateValue(selected) : null}
+      {template && selected ? this.renderTemplateValue(selected) : null}
         <ul className={style.values} ref='values'>
           {source.map(this.renderValue.bind(this))}
         </ul>
