@@ -138,7 +138,7 @@ class Menu extends React.Component {
 
   renderItems () {
     return React.Children.map(this.props.children, (item) => {
-      if (item === null) return item;
+      if (!item) return item;
       if (item.type === MenuItem) {
         return React.cloneElement(item, {
           ripple: item.props.ripple || this.props.ripple,
