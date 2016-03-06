@@ -152,7 +152,8 @@ class Menu extends React.Component {
   }
 
   show () {
-    this.setState({active: true});
+    const { width, height } = this.refs.menu.getBoundingClientRect();
+    this.setState({active: true, width, height});
   }
 
   hide () {
