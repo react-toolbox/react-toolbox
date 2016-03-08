@@ -47,9 +47,9 @@ $animation-curve-fast-out-linear-in: cubic-bezier(0.4, 0, 1, 1) !default;
 $animation-curve-default: $animation-curve-fast-out-slow-in !default;
 
 //-- Indexes
-$z-index-highest: 300;
-$z-index-higher: 200;
-$z-index-high: 100;
-$z-index-normal: 1;
-$z-index-low: -100;
-$z-index-lower: -200;
+$z-index-highest: 300 !default;
+$z-index-higher: 200 !default;
+$z-index-high: 100 !default;
+$z-index-normal: 1 !default;
+$z-index-low: -100 !default;
+$z-index-lower: -200 !default;
