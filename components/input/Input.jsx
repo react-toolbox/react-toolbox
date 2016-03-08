@@ -57,9 +57,11 @@ class Input extends React.Component {
       [style.withIcon]: icon
     }, this.props.className);
 
+    const valuePresent = value !== null && value !== undefined && value !== '' && !Number.isNaN(value);
+
     const InputElement = React.createElement(multiline ? 'textarea' : 'input', {
       ...others,
-      className: ClassNames(style.input, {[style.filled]: value}),
+      className: ClassNames(style.input, {[style.filled]: valuePresent}),
       onChange: this.handleChange,
       ref: 'input',
       role: 'input',
