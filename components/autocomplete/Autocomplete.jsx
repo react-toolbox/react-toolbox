@@ -142,9 +142,11 @@ class Autocomplete extends React.Component {
  }
 
  unselect (key, event) {
-   const values = this.values(this.props.value);
-   values.delete(key);
-   this.handleChange([...values.keys()], event);
+   if (!this.props.disabled) {
+     const values = this.values(this.props.value);
+     values.delete(key);
+     this.handleChange([...values.keys()], event);
+   }
  }
 
  renderSelected () {
