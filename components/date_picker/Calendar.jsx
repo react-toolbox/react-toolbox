@@ -40,13 +40,13 @@ class Calendar extends React.Component {
   }
 
   handleDayClick = (day) => {
-    this.props.onChange(time.setDay(this.state.viewDate, day));
+    this.props.onChange(time.setDay(this.state.viewDate, day), true);
   };
 
   handleYearClick = (year) => {
     const viewDate = time.setYear(this.props.selectedDate, year);
     this.setState({viewDate});
-    this.props.onChange(viewDate);
+    this.props.onChange(viewDate, false);
   };
 
   changeViewMonth = (direction, step) => {

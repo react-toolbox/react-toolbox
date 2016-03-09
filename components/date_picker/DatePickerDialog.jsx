@@ -8,6 +8,7 @@ import time from '../utils/time';
 class CalendarDialog extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,
+    autoOk: React.PropTypes.bool,
     className: React.PropTypes.string,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
@@ -27,12 +28,15 @@ class CalendarDialog extends React.Component {
     display: 'months'
   };
 
-  handleCalendarChange = (value) => {
+  handleCalendarChange = (value, dayClick) => {
     const state = {display: 'months', date: value};
     if (time.dateOutOfRange(value, this.props.minDate, this.props.maxDate)) {
       state.date = this.props.maxDate || this.props.minDate;
     }
     this.setState(state);
+    if (dayClick && this.props.autoOk && this.props.onSelect) {
+      this.props.onSelect(value);
+    }
   };
 
   handleSelect = (event) => {

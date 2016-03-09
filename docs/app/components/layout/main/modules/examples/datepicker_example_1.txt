@@ -29,6 +29,7 @@ class DatePickerTest extends React.Component {
 
         <DatePicker
           label='Formatted Date'
+          autoOk
           inputFormat={(value) => `${value.getDate()}/${value.getMonth()}/${value.getFullYear()}`}
           onChange={this.handleChange.bind(this, 'date3')}
           value={this.state.date3}
