@@ -9,12 +9,12 @@ class DatePicker extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     error: React.PropTypes.string,
+    inputFormat: React.PropTypes.func,
     label: React.PropTypes.string,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
     onChange: React.PropTypes.func,
-    value: React.PropTypes.object,
-    inputFormat: React.PropTypes.func
+    value: React.PropTypes.object
   };
 
   state = {

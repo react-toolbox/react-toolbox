@@ -179,7 +179,7 @@ const time = {
 
   formatDate (date) {
     return `${date.getDate()} ${time.getFullMonth(date)} ${date.getFullYear()}`;
-  },
+  }
 };
 
 export default time;
