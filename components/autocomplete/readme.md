@@ -19,7 +19,7 @@ class AutocompleteTest extends React.Component {
   }
 
   handleChange = (value) => {
-    this.setState({value: value});
+    this.setState({countries: value});
   };
 
   render () {
