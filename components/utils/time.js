@@ -1,4 +1,4 @@
-export default {
+const time = {
   getDaysInMonth (d) {
     const resultDate = this.getFirstDayOfMonth(d);
     resultDate.setMonth(resultDate.getMonth() + 1);
@@ -175,5 +175,11 @@ export default {
 
   dateOutOfRange (date, minDate, maxDate) {
     return ((minDate && !(date >= minDate)) || (maxDate && !(date <= maxDate)));
+  },
+
+  formatDate (date) {
+    return `${date.getDate()} ${time.getFullMonth(date)} ${date.getFullYear()}`;
   }
 };
+
+export default time;

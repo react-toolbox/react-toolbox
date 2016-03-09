@@ -9,6 +9,7 @@ class DatePicker extends React.Component {
   static propTypes = {
     className: React.PropTypes.string,
     error: React.PropTypes.string,
+    inputFormat: React.PropTypes.func,
     label: React.PropTypes.string,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
@@ -36,7 +37,8 @@ class DatePicker extends React.Component {
 
   render () {
     const { value } = this.props;
-    const date = value ? `${value.getDate()} ${time.getFullMonth(value)} ${value.getFullYear()}` : null;
+    const inputFormat = this.props.inputFormat || time.formatDate;
+    const date = value ? inputFormat(value) : null;
 
     return (
       <div data-react-toolbox='date-picker'>
