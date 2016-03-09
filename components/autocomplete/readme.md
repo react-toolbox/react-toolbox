@@ -15,11 +15,11 @@ const source = {
 
 class AutocompleteTest extends React.Component {
   state = { 
-    countries: ['EN-es', 'TH-th']
+    countries: ['ES-es', 'TH-th']
   }
 
   handleChange = (value) => {
-    this.setState({value: value});
+    this.setState({countries: value});
   };
 
   render () {
@@ -29,7 +29,7 @@ class AutocompleteTest extends React.Component {
         label="Choose countries"
         onChange={this.handleChange}
         source={source}
-        value={this.state.value}
+        value={this.state.countries}
       />
     );
   }
