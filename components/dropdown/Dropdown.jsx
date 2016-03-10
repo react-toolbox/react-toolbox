@@ -52,6 +52,11 @@ class Dropdown extends React.Component {
     }
   }
 
+  valueIsPresent () {
+    const value = this.props.value;
+    return value !== null && value !== undefined && value !== '' && !Number.isNaN(value);
+  }
+
   handleDocumentClick = (event) => {
     if (this.state.active && !events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
       this.setState({active: false});
@@ -76,7 +81,7 @@ class Dropdown extends React.Component {
   };
 
   getSelectedItem = () => {
-    if (this.props.value) {
+    if (this.valueIsPresent()) {
       for (const item of this.props.source) {
         if (item.value === this.props.value) return item;
       }
