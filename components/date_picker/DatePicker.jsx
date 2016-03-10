@@ -41,7 +41,7 @@ class DatePicker extends React.Component {
     return (
       <div data-react-toolbox='date-picker'>
         <Input
-          className={`${style.input} ${this.props.className}`}
+          className={`${style.input} ${this.props.inputClassName}`}
           error={this.props.error}
           onMouseDown={this.handleInputMouseDown}
           label={this.props.label}
@@ -51,7 +51,7 @@ class DatePicker extends React.Component {
         />
         <DatePickerDialog
           active={this.state.active}
-          className={this.props.dialogClassName}
+          className={this.props.className}
           maxDate={this.props.maxDate}
           minDate={this.props.minDate}
           onDismiss={this.handleDismiss}
