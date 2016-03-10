@@ -40,6 +40,9 @@
     ~ .label:not(.fixed) {
       color: $input-text-highlight-color;
     }
+    ~ .hint {
+      opacity: $input-hint-opacity;
+    }
     ~ .icon {
       color: $input-text-highlight-color;
     }
@@ -50,7 +53,7 @@
       font-size: $input-label-font-size;
     }
   }
-  &.filled ~ .label.fixed {
+  &.filled ~ .label.fixed, &.filled ~ .hint {
     display: none;
   }
 }
@@ -66,6 +69,23 @@
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
   transition-property: top, font-size, color;
+  &.fixed ~ .hint {
+    display: none
+  }
+}
+
+.hint {
+  position: absolute;
+  top: $input-padding + (1.5 * $input-field-padding);
+  left: 0;
+  font-size: $input-field-font-size;
+  line-height: $input-field-font-size;
+  color: $input-text-label-color;
+  pointer-events: none;
+  opacity: 0;
+  transition-timing-function: $animation-curve-default;
+  transition-duration: $animation-duration;
+  transition-property: opacity;
 }
 
 .bar {
