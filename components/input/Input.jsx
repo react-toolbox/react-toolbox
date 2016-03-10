@@ -79,7 +79,7 @@ class Input extends React.Component {
         {icon ? <FontIcon className={style.icon} value={icon} /> : null}
         <span className={style.bar}></span>
         {labelText ? <label className={labelClassName}>{labelText}</label> : null}
-        {hint ? <label className={style.hint}>{hint}</label> : null}
+        {hint ? <span className={style.hint}>{hint}</span> : null}
         {error ? <span className={style.error}>{error}</span> : null}
         {maxLength ? <span className={style.counter}>{length}/{maxLength}</span> : null}
         {children}
