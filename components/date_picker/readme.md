@@ -33,8 +33,8 @@ class DatePickerTest extends React.Component {
 
 | Name          | Type    | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `className`         | `String`        |             | This class will be applied to `Input` component of DatePicker. |
-| `dialogClassName` | `String`      |             | This class will be placed at the top of the `DatePickerDialog` component so you can provide custom styles. |
+| `className`         | `String`        |             | This class will be placed at the top of the `DatePickerDialog` component so you can provide custom styles.|
+| `inputClassName` | `String`      |             | This class will be applied to `Input` component of DatePicker. |
 | `label`         | `String`        |             | The text string to use for the floating label element in the input component.|
 | `maxDate`         | `Date`    |                 | Date object with the maximum selectable date. |
 | `minDate`         | `Date`    |                 | Date object with the minimum selectable date. |
