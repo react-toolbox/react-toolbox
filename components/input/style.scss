@@ -40,6 +40,9 @@
     ~ .label:not(.fixed) {
       color: $input-text-highlight-color;
     }
+    ~ .label > .required {
+      color: $input-text-required-color;
+    }
     ~ .icon {
       color: $input-text-highlight-color;
     }
@@ -124,6 +127,9 @@
   }
   > .counter, > .label {
     color: $input-text-error-color;
+  }
+  > .label > .required {
+    color: $input-text-required-color;
   }
 }
 
