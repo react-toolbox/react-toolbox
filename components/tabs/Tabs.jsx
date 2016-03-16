@@ -27,6 +27,10 @@ class Tabs extends React.Component {
     this.updatePointer(nextProps.index);
   }
 
+  componentWillUnmount () {
+    clearTimeout(this.pointerTimeout);
+  }
+
   handleHeaderClick = (idx) => {
     if (this.props.onChange) this.props.onChange(idx);
   };
@@ -50,7 +54,8 @@ class Tabs extends React.Component {
   }
 
   updatePointer (idx) {
-    setTimeout(() => {
+    clearTimeout(this.pointerTimeout);
+    this.pointerTimeout = setTimeout(() => {
       const startPoint = this.refs.tabs.getBoundingClientRect().left;
       const label = this.refs.navigation.children[idx].getBoundingClientRect();
       this.setState({
