@@ -149,7 +149,9 @@
     "no-undefined": [0],
     "no-underscore-dangle": [0],
     "no-unreachable": [2],
-    "no-unused-expressions": [2],
+    "no-unused-expressions": [2, {
+      "allowShortCircuit": true
+    }],
     "no-unused-vars": [1, {
       "vars": "all",
       "args": "after-used"
