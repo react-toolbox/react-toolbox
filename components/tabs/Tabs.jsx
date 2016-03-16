@@ -7,6 +7,7 @@ class Tabs extends React.Component {
   static propTypes = {
     children: React.PropTypes.node,
     className: React.PropTypes.string,
+    disableAnimatedBottomBorder: React.PropTypes.bool,
     index: React.PropTypes.number,
     onChange: React.PropTypes.func
   };
@@ -20,11 +21,13 @@ class Tabs extends React.Component {
   };
 
   componentDidMount () {
-    this.updatePointer(this.props.index);
+    !this.props.disableAnimatedBottomBorder &&
+      this.updatePointer(this.props.index);
   }
 
   componentWillReceiveProps (nextProps) {
-    this.updatePointer(nextProps.index);
+    !this.props.disableAnimatedBottomBorder &&
+      this.updatePointer(nextProps.index);
   }
 
   handleHeaderClick = (idx) => {
