@@ -5,6 +5,7 @@ import style from './style';
 class TabHeader extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,
+    activeClassName: React.PropTypes.string,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     hidden: React.PropTypes.bool,
@@ -36,7 +37,8 @@ class TabHeader extends React.Component {
     const className = ClassNames(style.label, {
       [style.active]: this.props.active,
       [style.hidden]: this.props.hidden,
-      [style.disabled]: this.props.disabled
+      [style.disabled]: this.props.disabled,
+      [this.props.activeClassName]: this.props.active
     }, this.props.className);
 
     return (
