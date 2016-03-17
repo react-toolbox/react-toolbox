@@ -10,6 +10,7 @@ class Input extends React.Component {
     disabled: React.PropTypes.bool,
     error: React.PropTypes.node,
     floating: React.PropTypes.bool,
+    hint: React.PropTypes.string,
     icon: React.PropTypes.any,
     label: React.PropTypes.string,
     maxLength: React.PropTypes.number,
@@ -25,6 +26,7 @@ class Input extends React.Component {
 
   static defaultProps = {
     className: '',
+    hint: '',
     disabled: false,
     floating: true,
     multiline: false,
@@ -45,7 +47,7 @@ class Input extends React.Component {
   }
 
   render () {
-    const { children, disabled, error, floating, icon,
+    const { children, disabled, error, floating, hint, icon,
             label: labelText, maxLength, multiline, type, value, ...others} = this.props;
     const length = maxLength && value ? value.length : 0;
     const labelClassName = ClassNames(style.label, {[style.fixed]: !floating});
@@ -77,6 +79,7 @@ class Input extends React.Component {
         {icon ? <FontIcon className={style.icon} value={icon} /> : null}
         <span className={style.bar}></span>
         {labelText ? <label className={labelClassName}>{labelText}</label> : null}
+        {hint ? <span className={style.hint}>{hint}</span> : null}
         {error ? <span className={style.error}>{error}</span> : null}
         {maxLength ? <span className={style.counter}>{length}/{maxLength}</span> : null}
         {children}

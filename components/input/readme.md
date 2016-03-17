@@ -20,6 +20,7 @@ class InputTest extends React.Component {
         <Input type='text' label='Disabled field' disabled />
         <Input type='email' label='Email address' icon='email' value={this.state.email} onChange={this.handleChange.bind(this, 'email')} />
         <Input type='tel' label='Phone' name='phone' icon='phone' value={this.state.phone} onChange={this.handleChange.bind(this, 'phone')} />
+        <Input type='text' value={this.state.withHintCustomIcon} label='With Hint Text Icon' hint='Hint Text' onChange={this.handleChange.bind(this, 'withHintCustomIcon')} icon={<span>J</span>} />
       </section>
     );
   }
@@ -33,6 +34,7 @@ class InputTest extends React.Component {
 | `className`     | `String`        |`''`              | Sets a class name to give custom styles.|
 | `disabled`      | `Boolean`       | `false`         | If true, component will be disabled.|
 | `error`         | `String`        |                 | Give an error string to display under the field.|
+| `hint`      | `String`        |`''`             | The text string to use for hint text element.|
 | `icon`         | `String`        |                 | Name of an icon to use as a label for the input.|
 | `floating`     | `Boolean`       | `true`         | Indicates if the label is floating in the input field or not.|
 | `label`         | `String`        |             | The text string to use for the floating label element.|
