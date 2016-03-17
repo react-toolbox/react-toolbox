@@ -49,9 +49,10 @@ Represent a single tab element and it should include some properties to describe
 
 | Name              | Type          | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `active`        | `Boolean`       | `false`         | If true, the current component is visible.|
-| `className`     | `String`        | `''`            | Additional class name to provide custom styling.|
-| `disabled`      | `Boolean`       | `false`         | If true, the current component is not clickable.|
-| `hidden`        | `Boolean`       | `false`         | If true, the current component is not visible.|
-| `label`         | `String`        |                 | Label text for navigation header |
-| `onActive`      | `Function`      |                 | Callback function that is fired when the tab is activated. |
+| `active`          | `Boolean`       | `false`         | If true, the current component is visible.|
+| `activeClassName` | `String`        | `''`            | Additional class name to provide custom styling for the active tab.|
+| `className`       | `String`        | `''`            | Additional class name to provide custom styling for each tab.|
+| `disabled`        | `Boolean`       | `false`         | If true, the current component is not clickable.|
+| `hidden`          | `Boolean`       | `false`         | If true, the current component is not visible.|
+| `label`           | `String`        |                 | Label text for navigation header |
+| `onActive`        | `Function`      |                 | Callback function that is fired when the tab is activated. |
