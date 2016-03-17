@@ -113,14 +113,6 @@
   > .input {
     margin-top: 1px;
     border-bottom-color: $input-text-error-color;
-    &:focus {
-      ~ .label:not(.fixed) {
-        color: $input-text-error-color;
-      }
-      ~ .bar:before, ~ .bar:after {
-        background-color: $input-text-error-color;
-      }
-    }
   }
   > .counter, > .label {
     color: $input-text-error-color;
