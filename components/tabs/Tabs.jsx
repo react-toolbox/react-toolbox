@@ -7,6 +7,7 @@ class Tabs extends React.Component {
   static propTypes = {
     children: React.PropTypes.node,
     className: React.PropTypes.string,
+    disableAnimatedBottomBorder: React.PropTypes.bool,
     index: React.PropTypes.number,
     onChange: React.PropTypes.func
   };
@@ -20,11 +21,17 @@ class Tabs extends React.Component {
   };
 
   componentDidMount () {
-    this.updatePointer(this.props.index);
+    !this.props.disableAnimatedBottomBorder &&
+      this.updatePointer(this.props.index);
   }
 
   componentWillReceiveProps (nextProps) {
-    this.updatePointer(nextProps.index);
+    !this.props.disableAnimatedBottomBorder &&
+      this.updatePointer(nextProps.index);
+  }
+
+  componentWillUnmount () {
+    clearTimeout(this.pointerTimeout);
   }
 
   handleHeaderClick = (idx) => {
@@ -50,7 +57,8 @@ class Tabs extends React.Component {
   }
 
   updatePointer (idx) {
-    setTimeout(() => {
+    clearTimeout(this.pointerTimeout);
+    this.pointerTimeout = setTimeout(() => {
       const startPoint = this.refs.tabs.getBoundingClientRect().left;
       const label = this.refs.navigation.children[idx].getBoundingClientRect();
       this.setState({

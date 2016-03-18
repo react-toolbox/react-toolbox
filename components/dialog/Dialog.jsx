@@ -42,8 +42,8 @@ Dialog.propTypes = {
   className: React.PropTypes.string,
   onOverlayClick: React.PropTypes.func,
   onOverlayMouseDown: React.PropTypes.func,
-  onOverlayMouseUp: React.PropTypes.func,
   onOverlayMouseMove: React.PropTypes.func,
+  onOverlayMouseUp: React.PropTypes.func,
   title: React.PropTypes.string,
   type: React.PropTypes.string
 };
