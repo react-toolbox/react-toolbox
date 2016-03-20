@@ -39,13 +39,13 @@ class Overlay extends React.Component {
     ReactDOM.unmountComponentAtNode(this.node);
     this.app.removeChild(this.node);
     if (this.escKeyListener) {
-      document.body.removeEventListener('keydown', this.handleEscKey)
+      document.body.removeEventListener('keydown', this.handleEscKey);
       this.escKeyListener = null;
     }
   }
 
   handleEscKey (e) {
-    if (this.props.active && this.props.onEscKeyDown && e.which == 27) {
+    if (this.props.active && this.props.onEscKeyDown && e.which === 27) {
       this.props.onEscKeyDown(e);
     }
   }
