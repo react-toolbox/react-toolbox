@@ -1,6 +1,6 @@
-$datepicker-primary: $color-primary;
-$datepicker-primary-contrast: $color-primary-contrast;
-$datepicker-primary-dark: $color-primary-dark;
+$datepicker-primary: $color-primary !default;
+$datepicker-primary-contrast: $color-primary-contrast !default;
+$datepicker-primary-dark: $color-primary-dark !default;
 $datepicker-primary-color: $datepicker-primary !default;
 $datepicker-primary-hover-color: rgba($datepicker-primary, 0.20) !default;
 $datepicker-primary-contrast-color: $datepicker-primary-contrast !default;
@@ -14,8 +14,8 @@ $datepicker-day-font-size: 5 * $unit;
 $datepicker-day-line-height: 4 * $unit;
 $datepicker-year-font-size: $font-size-small;
 
-$calendar-primary: $color-primary;
-$calendar-primary-contrast: $color-primary-contrast;
+$calendar-primary: $color-primary !default;
+$calendar-primary-contrast: $color-primary-contrast !default;
 $calendar-primary-color: $calendar-primary !default;
 $calendar-primary-contrast-color: $calendar-primary-contrast !default;
 $calendar-primary-hover-color: rgba($calendar-primary, 0.21) !default;

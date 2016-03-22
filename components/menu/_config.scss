@@ -1,10 +1,10 @@
 $menu-expand-duration: .3s !default;
 $menu-fade-duration: .2s !default;
 $menu-ripple-delay: .3s !default;
-$menu-background-color: $color-white;
+$menu-background-color: $color-white !default;
 $menu-padding: .8 * $unit 0;
 $menu-outline-border-radius: .2 * $unit;
-$menu-item-hover-background: $palette-grey-200;
+$menu-item-hover-background: $palette-grey-200 !default;
 $menu-item-selected-background: transparent !default;
 $menu-item-icon-font-size: 2.4 * $unit;
 $menu-item-icon-size: 1.6 * $menu-item-icon-font-size;
