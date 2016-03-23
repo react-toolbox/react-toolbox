@@ -110,7 +110,8 @@ class Autocomplete extends React.Component {
    const query = this.state.query.toLowerCase().trim() || '';
    const values = this.values();
    for (const [key, value] of this.source()) {
-     if (!values.has(key) && value.toLowerCase().trim().startsWith(query)) {
+     if (value.toLowerCase().trim().startsWith(query) &&
+         (!values.has(key) || !this.props.multiple)) {
        suggest.set(key, value);
      }
    }
