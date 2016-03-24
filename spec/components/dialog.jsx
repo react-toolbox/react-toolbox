@@ -30,6 +30,7 @@ class DialogTest extends React.Component {
             active={this.state.active}
             title="Use Google's location service?"
             onOverlayClick={this.handleToggle}
+            onEscKeyDown={this.handleToggle}
           >
             <p>Let Google help apps <strong>determine location</strong>. This means sending anonymous location data to Google, even when no apps are running.</p>
             <DialogChild />

@@ -21,6 +21,7 @@ const Dialog = (props) => {
       onMouseDown={props.onOverlayMouseDown}
       onMouseUp={props.onOverlayMouseUp}
       onMouseMove={props.onOverlayMouseMove}
+      onEscKeyDown={props.onEscKeyDown}
     >
       <div data-react-toolbox='dialog' className={className}>
         <section role='body' className={style.body}>
@@ -40,6 +41,7 @@ Dialog.propTypes = {
   active: React.PropTypes.bool,
   children: React.PropTypes.node,
   className: React.PropTypes.string,
+  onEscKeyDown: React.PropTypes.func,
   onOverlayClick: React.PropTypes.func,
   onOverlayMouseDown: React.PropTypes.func,
   onOverlayMouseMove: React.PropTypes.func,

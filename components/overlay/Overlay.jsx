@@ -9,7 +9,8 @@ class Overlay extends React.Component {
     children: React.PropTypes.node,
     className: React.PropTypes.string,
     invisible: React.PropTypes.bool,
-    onClick: React.PropTypes.func
+    onClick: React.PropTypes.func,
+    onEscKeyDown: React.PropTypes.func
   };
 
   static defaultProps = {
@@ -22,15 +23,31 @@ class Overlay extends React.Component {
     this.node.setAttribute('data-react-toolbox', 'overlay');
     this.app.appendChild(this.node);
     this.handleRender();
+    if (this.props.active) {
+      this.escKeyListener = document.body.addEventListener('keydown', this.handleEscKey.bind(this));
+    }
   }
 
   componentDidUpdate () {
     this.handleRender();
+    if (this.props.active && !this.escKeyListener) {
+      this.escKeyListener = document.body.addEventListener('keydown', this.handleEscKey.bind(this));
+    }
   }
 
   componentWillUnmount () {
     ReactDOM.unmountComponentAtNode(this.node);
     this.app.removeChild(this.node);
+    if (this.escKeyListener) {
+      document.body.removeEventListener('keydown', this.handleEscKey);
+      this.escKeyListener = null;
+    }
+  }
+
+  handleEscKey (e) {
+    if (this.props.active && this.props.onEscKeyDown && e.which === 27) {
+      this.props.onEscKeyDown(e);
+    }
   }
 
   handleRender () {
