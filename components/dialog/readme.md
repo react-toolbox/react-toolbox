@@ -44,5 +44,6 @@ class DialogTest extends React.Component {
 | `onOverlayMouseDown` | `Function` |             | Callback called when the mouse button is pressed on the overlay. |
 | `onOverlayMouseUp` | `Function` |               | Callback called when the mouse button is released over the overlay. |
 | `onOverlayMouseMove` | `Function` |             | Callback called when the mouse is moving over the overlay. |
+| `onEscKeyDown` | `Function` |             | Callback called when the ESC is pressed with the overlay active. |
 | `title`         | `String`        |                 | The text string to use as standar title of the dialog.|
 | `type`          | `String`        |  `normal`       | Used to determine the size of the dialog. It can be `small`, `normal` or `large`. |

@@ -35,7 +35,7 @@ class AutocompleteTest extends React.Component {
           label="Choose a country"
           multiple={false}
           onChange={this.handleSimpleChange}
-          placeholder="Elements up to you..."
+          hint="Elements up to you..."
           source={countriesArray}
           value={this.state.simple}
         />

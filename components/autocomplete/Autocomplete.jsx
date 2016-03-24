@@ -110,7 +110,8 @@ class Autocomplete extends React.Component {
     const query = this.state.query.toLowerCase().trim() || '';
     const values = this.values();
     for (const [key, value] of this.source()) {
-      if (!values.has(key) && value.toLowerCase().trim().startsWith(query)) {
+      if (value.toLowerCase().trim().startsWith(query) &&
+         (!values.has(key) || !this.props.multiple)) {
         suggest.set(key, value);
       }
     }
@@ -143,9 +144,9 @@ class Autocomplete extends React.Component {
 
   unselect (key, event) {
     if (!this.props.disabled) {
-     const values = this.values(this.props.value);
-     values.delete(key);
-     this.handleChange([...values.keys()], event);
+      const values = this.values(this.props.value);
+      values.delete(key);
+      this.handleChange([...values.keys()], event);
     }
   }
 
@@ -161,18 +162,18 @@ class Autocomplete extends React.Component {
 
   renderSuggestions () {
     const suggestions = [...this.suggestions()].map(([key, value]) => {
-    const className = ClassNames(style.suggestion, {[style.active]: this.state.active === key});
-    return (
-      <li
-        key={key}
-        className={className}
-        onMouseDown={this.select.bind(this, key)}
-        onMouseOver={this.handleSuggestionHover.bind(this, key)}
-      >
-        {value}
-      </li>
-    );
-   });
+      const className = ClassNames(style.suggestion, {[style.active]: this.state.active === key});
+      return (
+        <li
+          key={key}
+          className={className}
+          onMouseDown={this.select.bind(this, key)}
+          onMouseOver={this.handleSuggestionHover.bind(this, key)}
+        >
+          {value}
+        </li>
+      );
+    });
 
     const className = ClassNames(style.suggestions, {[style.up]: this.state.direction === 'up'});
     return <ul ref='suggestions' className={className}>{suggestions}</ul>;
@@ -181,7 +182,7 @@ class Autocomplete extends React.Component {
   render () {
     const {error, label, ...other} = this.props;
     const className = ClassNames(style.root, {
-     [style.focus]: this.state.focus
+      [style.focus]: this.state.focus
     }, this.props.className);
 
     return (
