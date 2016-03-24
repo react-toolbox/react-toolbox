@@ -7,6 +7,7 @@ import style from './style';
 class ListItem extends React.Component {
   static propTypes = {
     children: React.PropTypes.any,
+    className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     onClick: React.PropTypes.func,
     ripple: React.PropTypes.bool,
@@ -54,9 +55,11 @@ class ListItem extends React.Component {
     const {onMouseDown, to, onClick, ripple, ...other} = this.props;
     const children = this.groupChildren();
     const content = <ListItemLayout {...children} {...other}/>;
+    let className = style.listItem;
+    if (this.props.className) className += ` ${this.props.className}`;
 
     return (
-      <li className={style.listItem} onClick={this.handleClick} onMouseDown={onMouseDown}>
+      <li className={className} onClick={this.handleClick} onMouseDown={onMouseDown}>
         {to ? <a href={this.props.to}>{content}</a> : content}
         {children.ignored}
       </li>
