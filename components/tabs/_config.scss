@@ -3,7 +3,7 @@ $tab-label-h-padding: 1.2 * $unit;
 $tab-label-height: 4.8 * $unit;
 $tab-text-height: 1.4 * $unit;
 $tab-label-v-padding: ($tab-label-height - $tab-text-height) / 2;
-$tab-navigation-border-color: $color-divider;
+$tab-navigation-border-color: $color-divider !default;
 $tab-pointer-color: $color-primary !default;
 $tab-pointer-height: .2 * $unit;
 $tab-text: $color-black !default;
