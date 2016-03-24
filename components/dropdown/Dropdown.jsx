@@ -57,6 +57,12 @@ class Dropdown extends React.Component {
     return value !== null && value !== undefined && value !== '' && !Number.isNaN(value);
   }
 
+  close = () => {
+    if (this.state.active) {
+      this.setState({active: false});
+    }
+  }
+
   handleDocumentClick = (event) => {
     if (this.state.active && !events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
       this.setState({active: false});
