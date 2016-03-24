@@ -23,14 +23,14 @@ class InputTest extends React.Component {
         <Input
           type='text'
           value={this.state.normal}
-          label='Firstname' onChange={this.handleChange.bind(this, 'normal')}
+          label='First Name' onChange={this.handleChange.bind(this, 'normal')}
           maxLength={12}
         />
         <Input type='email' value={this.state.fixedLabel} label='Label fixed' floating={false} onChange={this.handleChange.bind(this, 'fixedLabel')} />
         <Input type='text' value='Read only' readOnly label='Phone Number' />
         <Input type='email' value={this.state.multilineHint} label='Description' hint='Enter Description' multiline onChange={this.handleChange.bind(this, 'multilineHint')} />
         <Input type='text' label='Disabled field' disabled />
-        <Input type='tel' value={this.state.withIcon} label='With icon' onChange={this.handleChange.bind(this, 'withIcon')} icon='phone' />
+        <Input type='tel' value={this.state.withIcon} required label='With icon' onChange={this.handleChange.bind(this, 'withIcon')} icon='phone' />
         <Input type='tel' value={this.state.withCustomIcon} label='With custom icon' onChange={this.handleChange.bind(this, 'withCustomIcon')} icon={<span>P</span>} />
         <Input type='text' value={this.state.withHintCustomIcon} label='With Hint Text Icon' hint='Hint Text' onChange={this.handleChange.bind(this, 'withHintCustomIcon')} icon={<span>J</span>} />
       </section>

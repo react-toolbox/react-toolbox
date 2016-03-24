@@ -48,7 +48,8 @@ class Input extends React.Component {
 
   render () {
     const { children, disabled, error, floating, hint, icon,
-            label: labelText, maxLength, multiline, type, value, ...others} = this.props;
+            label: labelText, maxLength, multiline, required,
+            type, value, ...others} = this.props;
     const length = maxLength && value ? value.length : 0;
     const labelClassName = ClassNames(style.label, {[style.fixed]: !floating});
 
@@ -68,6 +69,7 @@ class Input extends React.Component {
       ref: 'input',
       role: 'input',
       disabled,
+      required,
       type,
       value,
       maxLength
@@ -78,7 +80,11 @@ class Input extends React.Component {
         {InputElement}
         {icon ? <FontIcon className={style.icon} value={icon} /> : null}
         <span className={style.bar}></span>
-        {labelText ? <label className={labelClassName}>{labelText}</label> : null}
+        {labelText ?
+          <label className={labelClassName}>
+            {labelText}
+            {required ? <span className={style.required}> * </span> : null}
+          </label> : null}
         {hint ? <span className={style.hint}>{hint}</span> : null}
         {error ? <span className={style.error}>{error}</span> : null}
         {maxLength ? <span className={style.counter}>{length}/{maxLength}</span> : null}
