@@ -7,7 +7,7 @@ import time from '../utils/time';
 
 class DatePicker extends React.Component {
   static propTypes = {
-    autoOk: React.PropTypes.boolean,
+    autoOk: React.PropTypes.bool,
     className: React.PropTypes.string,
     error: React.PropTypes.string,
     inputFormat: React.PropTypes.func,
