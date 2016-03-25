@@ -26,8 +26,12 @@ const TooltipTest = () => (
 
 In any component you decorate with the Tooltip you'd get some additional props:
 
-| Name      | Type      | Default         | Description|
+| Name                  | Type          | Default       | Description|
 |:-----|:-----|:-----|:-----|
-| `tooltip`     | `String`  |  | The text string to use for the tooltip.|
-| `tooltipDelay`     | `Number`  |  | Amount of time in miliseconds spent before the tooltip is visible.|
-| `tooltipHideOnClick`     | `Boolean`  | `true` | If true, the Tooltip hides after a click in the host component. |
+| `className`           | `String`      | `''`          | Sets a class to give customized styles to the tooltip.|
+| `onClick`             | `Function`    |               | Callback to be invoked when Component is clicked.|
+| `onMouseEnter`        | `Function`    |               | Callback called when the mouse enters the Component.|
+| `onMouseLeave`        | `Function`    |               | Callback called when the mouse leaves the Component.|
+| `tooltip`             | `String`      |               | The text string to use for the tooltip.|
+| `tooltipDelay`        | `Number`      |               | Amount of time in miliseconds spent before the tooltip is visible.|
+| `tooltipHideOnClick`  | `Boolean`     | `true`        | If true, the Tooltip hides after a click in the host component.|
