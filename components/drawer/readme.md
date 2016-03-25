@@ -10,7 +10,7 @@ class DrawerTest extends React.Component {
   state = {
     active: false
   };
-  
+
   handleToggle = () => {
     this.setState({active: !this.state.active});
   };
@@ -33,7 +33,7 @@ class DrawerTest extends React.Component {
 
 | Name              | Type          | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `active`        | `Boolean`       |  `false`        | If true, the drawer will be visible.|
-| `className`     | `String`        |     `''`        | Sets a class to give customized styles to the drawer.|
-| `onOverlayClick` | `Function`     |            | Callback function to be invoked when the overlay is clicked.|
-| `type`          | `String`        | `left`          | Type of drawer. It can be left or right to display the drawer on the left or right side of the screen.|
+| `active`          | `Boolean`       | `false`       | If true, the drawer will be visible.|
+| `className`       | `String`        | `''`          | Sets a class to give customized styles to the drawer.|
+| `onOverlayClick`  | `Function`      |               | Callback function to be invoked when the overlay is clicked.|
+| `type`            | `String`        | `left`        | Type of drawer. It can be `left` or `right` to display the drawer on the left or right side of the screen.|
