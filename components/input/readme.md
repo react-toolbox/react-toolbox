@@ -40,7 +40,7 @@ class InputTest extends React.Component {
 | `label`         | `String`      |                 | The text string to use for the floating label element.|
 | `maxLength`     | `Number`      |                 |Specifies the maximum number of characters allowed in the component.|
 | `multiline`     | `Boolean`     | `false`         | If true, a textarea element will be rendered. The textarea also grows and shrinks according to the number of lines.|
-| `onBlur`        | `Function`    |                 | Callback function that is fired when component is blured.|
+| `onBlur`        | `Function`    |                 | Callback function that is fired when component is blurred.|
 | `onChange`      | `Function`    |                 | Callback function that is fired when the component's value changes.|
 | `onFocus`       | `Function`    |                 | Callback function that is fired when component is focused.|
 | `onKeyPress`    | `Function`    |                 | Callback function that is fired when a key is pressed.|
