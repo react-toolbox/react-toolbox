@@ -1,6 +1,6 @@
 # Button
 
-A [Button](https://www.google.com/design/spec/components/buttons.html) clearly communicates what action will occur when the user touches it. It consists of text, an image, or both, designed in accordance with your app’s color theme.
+A [button](https://www.google.com/design/spec/components/buttons.html) clearly communicates what action will occur when the user touches it. It consists of text, an image, or both, designed in accordance with your app’s color theme.
 
 <!-- example -->
 ```jsx
