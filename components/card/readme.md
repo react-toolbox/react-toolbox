@@ -46,9 +46,9 @@ that all subcomponents are placed within.
 ### Properties
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
-| `children` | `any` |  | Child components, usually Card subcomponents. |
-| `className` | `string` |  | Additional class(es) for custom styling. |
-| `raised` | `bool` |  | Increases the shadow depth to appear elevated. |
+| `children` | `Any` |  | Child components, usually Card subcomponents. |
+| `className` | `String` |  | Additional class(es) for custom styling. |
+| `raised` | `Boolean` |  | Increases the shadow depth to appear elevated. |
 
 ## CardTitle
 A versatile title block that can be used in
@@ -59,11 +59,11 @@ to the title content.
 ### Properties
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
-| `avatar` | `union`(`string`,`element`) |  |  |
-| `children` | `union`(`string`,`element`,`array`) |  | Children to pass through the component. |
-| `className` | `string` |  | Additional class(es) for custom styling. |
-| `subtitle` | `string` |  |  |
-| `title` | `string` |  |  |
+| `avatar` | `String` or `Element` |  | A string URL or Element to specify an avatar in the left side of the title. |
+| `children` | `String`, `Element` or `Array` |  | Children to pass through the component. |
+| `className` | `String` |  | Additional class(es) for custom styling. |
+| `subtitle` | `String` |  | Text used for the sub header of the card. |
+| `title` | `String` |  | Text used for the title of the card.  |
 
 ## CardMedia
 
@@ -75,11 +75,11 @@ color instead of an image.
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
 | `aspectRatio` | `enum`(`'wide'`,`'square'`) |  | Forces a 16:9 or 1:1 aspect ratio respectively. Unset, the media area will have a flexible height. |
-| `children` | `any` |  | Usually an image/video element or a `<CardTitle>` component. |
-| `className` | `string` |  | Additional class(es) for custom styling. |
-| `color` | `string` |  | Sets the background color |
-| `contentOverlay` | `bool` |  | Creates a dark overlay underneath the child components. |
-| `image` | `union`(`string`,`element`) |  | Can be used instead of children. Accepts an element or a URL string. |
+| `children` | `Any` |  | Usually an image/video element or a `<CardTitle>` component. |
+| `className` | `String` |  | Additional class(es) for custom styling. |
+| `color` | `String` |  | Sets the background color |
+| `contentOverlay` | `Boolean` |  | Creates a dark overlay underneath the child components. |
+| `image` | `String`, `Element` |  | Can be used instead of children. Accepts an element or a URL string. |
 
 ## CardText
 Basic card content container. Good for
@@ -88,8 +88,8 @@ small descriptions or other supplementary text.
 ### Properties
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
-| `children` | `any` |  | Children to pass through the component. |
-| `className` | `string` |  | Additional class(es) for custom styling. |
+| `children` | `Any` |  | Children to pass through the component. |
+| `className` | `String` |  | Additional class(es) for custom styling. |
 
 ## CardActions
 
@@ -101,5 +101,5 @@ typically placed at the bottom of the card.
 ### Properties
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
-| `children` | `any` |  | Children to pass through the component. |
-| `className` | `string` |  | Additional class(es) for custom styling. |
+| `children` | `Any` |  | Children to pass through the component. |
+| `className` | `String` |  | Additional class(es) for custom styling. |
