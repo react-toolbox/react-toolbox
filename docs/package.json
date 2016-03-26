@@ -9,7 +9,7 @@
     "deploy": "gh-pages -d build"
   },
   "dependencies": {
-    "babel-standalone": "^1.0.0",
+    "babel-standalone": "^6.7.4",
     "classnames": "^2.2.1",
     "codemirror": "^5.10.0",
     "history": "^1.17.0",
