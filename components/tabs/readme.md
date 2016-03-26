@@ -37,7 +37,7 @@ class TabsTest extends React.Component {
 
 This component acts as the wrapper and the main controller of the content that is being displayed. It gets some properties that can be spread to the children.
 
-| Name              | Type          | Default         | Description|
+| Name                          | Type            | Default         | Description|
 |:-----|:-----|:-----|:-----|
 | `className`                   | `String`        | `''`            | Additional class name to provide custom styling.|
 | `disableAnimatedBottomBorder` | `Boolean`       | `false`         | Disable the animation below the active tab.|
