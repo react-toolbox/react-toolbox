@@ -52,5 +52,5 @@ class SwitchTest extends React.Component {
 | `label`        | `String`   |       | The text string to use for the floating label element.|
 | `name`         | `String`   |        | The text string used as name of the input.|
 | `onBlur`       | `Function` |        | Callback function that is fired when when the switch is blurred.|
-| `onChange`     | `Function` |        | Callback function that is fired when the components's value changes.|
-| `onFocus`      | `Function`  |        | Callback function fire when the switch is focused.|
+| `onChange`     | `Function` |        | Callback function that is fired when the component's value changes.|
+| `onFocus`      | `Function`  |        | Callback function that is fired when the switch is focused.|

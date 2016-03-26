@@ -40,20 +40,21 @@ This component acts as the wrapper and the main controller of the content that i
 | Name              | Type          | Default         | Description|
 |:-----|:-----|:-----|:-----|
 | `className`                   | `String`        | `''`            | Additional class name to provide custom styling.|
+| `disableAnimatedBottomBorder` | `Boolean`       | `false`         | Disable the animation below the active tab.|
 | `index`                       | `Number`        | `0`             | Current <Tab> |
 | `onChange`                    | `Function`      |                 | Callback function that is fired when the tab changes.|
-| `disableAnimatedBottomBorder` | `Boolean`       | `false`         | Disable the animation below the active tab
 
 ## Tab
 
 Represent a single tab element and it should include some properties to describe the tab itself and get children elements as content.
 
-| Name              | Type          | Default         | Description|
+| Name              | Type            | Default         | Description|
 |:-----|:-----|:-----|:-----|
 | `active`          | `Boolean`       | `false`         | If true, the current component is visible.|
 | `activeClassName` | `String`        | `''`            | Additional class name to provide custom styling for the active tab.|
 | `className`       | `String`        | `''`            | Additional class name to provide custom styling for each tab.|
 | `disabled`        | `Boolean`       | `false`         | If true, the current component is not clickable.|
 | `hidden`          | `Boolean`       | `false`         | If true, the current component is not visible.|
-| `label`           | `String`        |                 | Label text for navigation header |
+| `label`           | `String`        |                 | Label text for navigation header. Required. |
 | `onActive`        | `Function`      |                 | Callback function that is fired when the tab is activated. |
+| `onClick`         | `Function`      |                 | Callback function that is fired when the tab is clicked. |

@@ -45,4 +45,4 @@ class SliderTest extends React.Component {
 | `pinned`    | `Boolean` | `false`   | If true, a pin with numeric value label is shown when the slider thumb is pressed. Use for settings for which users need to know the exact value of the setting.|
 | `snaps`     | `Boolean` | `false` | If true, the slider thumb snaps to tick marks evenly spaced based on the step property value.|
 | `step`      | `Number`  | `0.01`    | Amount to vary the value when the knob is moved or increase/decrease is called.|
-| `value`     | `Number`  | `0`       | Current valud of the slider.|
+| `value`     | `Number`  | `0`       | Current value of the slider.|
