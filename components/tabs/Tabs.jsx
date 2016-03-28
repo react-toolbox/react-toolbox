@@ -82,12 +82,14 @@ class Tabs extends React.Component {
   }
 
   renderContents (contents) {
-    return contents.map((item, idx) => {
-      return React.cloneElement(item, {
-        key: idx,
-        active: this.props.index === idx,
-        tabIndex: idx
-      });
+    const activeIdx = contents.findIndex((item, idx) => {
+      return this.props.index === idx;
+    });
+
+    return React.cloneElement(contents[activeIdx], {
+      key: activeIdx,
+      active: true,
+      tabIndex: activeIdx
     });
   }
 
