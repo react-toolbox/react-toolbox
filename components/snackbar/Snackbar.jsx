@@ -24,9 +24,9 @@ class Snackbar extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.active && nextProps.timeout) {
-      if(this.state.curTimeout) clearTimeout(this.state.curTimeout);
+      if (this.state.curTimeout) clearTimeout(this.state.curTimeout);
 
-      let curTimeout = setTimeout(() => {
+      const curTimeout = setTimeout(() => {
         nextProps.onTimeout();
         this.setState({
           curTimeout: null
