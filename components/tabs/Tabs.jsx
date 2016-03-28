@@ -9,6 +9,7 @@ class Tabs extends React.Component {
     className: React.PropTypes.string,
     disableAnimatedBottomBorder: React.PropTypes.bool,
     index: React.PropTypes.number,
+    tab: React.PropTypes.string,
     onChange: React.PropTypes.func
   };
 
@@ -22,12 +23,12 @@ class Tabs extends React.Component {
 
   componentDidMount () {
     !this.props.disableAnimatedBottomBorder &&
-      this.updatePointer(this.props.index);
+      this.updatePointer(this.props.index, this.props);
   }
 
   componentWillReceiveProps (nextProps) {
     !this.props.disableAnimatedBottomBorder &&
-      this.updatePointer(nextProps.index);
+      this.updatePointer(nextProps.index, nextProps);
   }
 
   componentWillUnmount () {
@@ -35,7 +36,8 @@ class Tabs extends React.Component {
   }
 
   handleHeaderClick = (idx) => {
-    if (this.props.onChange) this.props.onChange(idx);
+    if (this.props.onChange)
+      this.props.onChange(idx, this.props.children[idx].key);
   };
 
   parseChildren () {
@@ -46,7 +48,7 @@ class Tabs extends React.Component {
       if (item.type === Tab) {
         headers.push(item);
         if (item.props.children) {
-          contents.push(<TabContent children={item.props.children}/>);
+          contents.push(<TabContent key={item.key} children={item.props.children}/>);
         }
       } else if (item.type === TabContent) {
         contents.push(item);
@@ -56,7 +58,10 @@ class Tabs extends React.Component {
     return {headers, contents};
   }
 
-  updatePointer (idx) {
+  updatePointer (idx, props) {
+    if (props.tab)
+      idx = props.children.findIndex(c => c.key === props.tab);
+
     clearTimeout(this.pointerTimeout);
     this.pointerTimeout = setTimeout(() => {
       const startPoint = this.refs.tabs.getBoundingClientRect().left;
@@ -74,20 +79,26 @@ class Tabs extends React.Component {
   renderHeaders (headers) {
     return headers.map((item, idx) => {
       return React.cloneElement(item, {
-        key: idx,
-        active: this.props.index === idx,
+        key: item.key || idx,
+        active: this.props.tab
+          ? this.props.tab === item.key
+          : this.props.index === idx,
         onClick: this.handleHeaderClick.bind(this, idx, item)
       });
     });
   }
 
   renderContents (contents) {
-    return contents.map((item, idx) => {
-      return React.cloneElement(item, {
-        key: idx,
-        active: this.props.index === idx,
-        tabIndex: idx
-      });
+    var idx = contents.findIndex((item, idx) => {
+      return this.props.tab
+        ? this.props.tab === item.key
+        : this.props.index === idx;
+    });
+
+    return React.cloneElement(contents[idx], {
+      key: contents[idx].key || idx,
+      active: true,
+      tabIndex: idx
     });
   }
 
