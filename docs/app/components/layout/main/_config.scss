@@ -1,5 +1,7 @@
 @import "../../globals";
 
+$media-min-width: 1440px;
+$playground-max-width: $media-min-width / 2;
 $playground-width: 50%;
 $navigation-width: 22 * $unit;
 $navigation-h-padding: 2.4 * $unit;
