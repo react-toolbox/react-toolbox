@@ -14,6 +14,8 @@ class IconButton extends React.Component {
     icon: React.PropTypes.any,
     inverse: React.PropTypes.bool,
     neutral: React.PropTypes.bool,
+    onMouseLeave: React.PropTypes.func,
+    onMouseUp: React.PropTypes.func,
     primary: React.PropTypes.bool,
     type: React.PropTypes.string
   };
@@ -25,8 +27,14 @@ class IconButton extends React.Component {
     primary: false
   };
 
-  handleMouseUp = () => {
+  handleMouseUp = (event) => {
     this.refs.button.blur();
+    if (this.props.onMouseUp) this.props.onMouseUp(event);
+  };
+
+  handleMouseLeave = (event) => {
+    this.refs.button.blur();
+    if (this.props.onMouseLeave) this.props.onMouseLeave(event);
   };
 
   render () {
