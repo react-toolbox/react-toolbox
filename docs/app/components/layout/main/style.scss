@@ -80,3 +80,20 @@ hr {
 .load-button {
   display: inline-block;
 }
+
+@media(min-width: $media-min-width) {
+  .root {
+    .playground {
+      width: $playground-max-width;
+    }
+    &.with-playground {
+      > .documentation {
+        padding-right: $playground-max-width;
+        padding-left: $navigation-width;
+      }
+      > .navigation {
+        transform: translateX(0);
+      }
+    }
+  }
+}
