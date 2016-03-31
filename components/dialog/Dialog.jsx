@@ -2,7 +2,7 @@ import React from 'react';
 import ClassNames from 'classnames';
 import Button from '../button';
 import Overlay from '../overlay';
-import style from './style.scss';
+import style from './style';
 
 const Dialog = (props) => {
   const actions = props.actions.map((action, idx) => {
