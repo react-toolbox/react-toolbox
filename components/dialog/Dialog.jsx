@@ -28,9 +28,12 @@ const Dialog = (props) => {
           {props.title ? <h6 className={style.title}>{props.title}</h6> : null}
           {props.children}
         </section>
-        <nav role='navigation' className={style.navigation}>
-          {actions}
-        </nav>
+        {actions ?
+          <nav role='navigation' className={style.navigation}>
+            {actions}
+          </nav> :
+          null
+        }
       </div>
     </Overlay>
   );
