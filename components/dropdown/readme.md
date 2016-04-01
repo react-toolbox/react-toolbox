@@ -48,3 +48,4 @@ class DropdownTest extends React.Component {
 | `source`    | `Array`         |                 | Array of data objects with the data to represent in the dropdown.
 | `template`      | `Function`      |                 | Callback function that returns a JSX template to represent the element.
 | `value`         | `String`        |                 | Default value using JSON data.
+| `allowBlank`    | `Boolean`       | `true`            | If true the dropdown will preselect the first item if the supplied value matches none of the options' values
