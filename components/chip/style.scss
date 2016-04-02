@@ -1,0 +1,65 @@
+@import "../base";
+@import "../mixins";
+@import "./config";
+
+.chip {
+  display: inline-block;
+  background-color: $chip-background;
+  border-radius: $chip-height;
+  line-height: $chip-height;
+  padding: 0 $chip-padding;
+  margin-right: $chip-margin-right;
+}
+
+.contactChip {
+  padding-left: 0;
+
+  > [data-react-toolbox="avatar"] {
+    width: $chip-height;
+    height: $chip-height;
+    vertical-align: middle;
+    margin-right: $chip-icon-margin-right;
+
+    > span {
+      line-height: $chip-height;
+      font-size: $chip-icon-font-size;
+    }
+  }
+}
+
+.label {
+  color: $chip-label-color;
+  font-size: $chip-label-font-size;
+}
+
+.deletable {
+  padding-right: 0;
+  cursor: pointer;
+  &:hover {
+    background: $chip-background-hover;
+  }
+  &:active {
+    @include shadow-2dp();
+  }
+}
+
+.delete {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 $chip-remove-margin;
+  line-height: $chip-remove-line-height;
+  text-align: center;
+  width: $chip-remove-size;
+  height: $chip-remove-size;
+  border-radius: $chip-remove-size;
+  background: $chip-remove-background;
+  color: $chip-remove-color;
+
+  > [data-react-toolbox="font-icon"] {
+    font-size: $chip-remove-font-size;
+  }
+
+  &:hover {
+    background: $chip-remove-background-hover;
+  }
+}
