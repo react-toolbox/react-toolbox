@@ -1,0 +1,26 @@
+.enter, .leave {
+  position: absolute;
+  transition-timing-function: ease-in-out;
+  transition-duration: .35s;
+  transition-property: transform, opacity;
+}
+
+.enter {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+
+  &.enterActive {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.leave {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+
+  &.leaveActive {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+}

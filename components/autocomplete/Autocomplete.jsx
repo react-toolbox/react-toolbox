@@ -102,7 +102,7 @@ class Autocomplete extends React.Component {
  }
 
  query (key) {
-   return !this.props.multiple && this.props.value ? this.source().get(key) : '';
+   return !this.props.multiple && key ? this.source().get(key) : '';
  }
 
  suggestions () {
