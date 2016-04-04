@@ -1,0 +1,18 @@
+$list-vertical-padding: .8 * $unit !default;
+$list-horizontal-padding: 1.6 * $unit !default;
+$list-content-left-spacing: 7.2 * $unit !default;
+$list-subheader-height: 4.8 * $unit !default;
+$list-subheader-font-size: 1.4 * $unit !default;
+$list-subheader-font-weight: 500 !default;
+$list-divider-height: .1 * $unit !default;
+$list-item-min-height: 4.8 * $unit !default;
+$list-item-min-height-legend: 7.2 * $unit !default;
+$list-item-hover-color: $palette-grey-200 !default;
+$list-item-legend-margin-top: .3 * $unit !default;
+$list-item-icon-font-size: 2.4 * $unit !default;
+$list-item-icon-size: 1.8 * $unit !default;
+$list-item-right-icon-margin: $list-content-left-spacing - 2 * $list-horizontal-padding - $list-item-icon-size !default;
+$list-item-right-checkbox-margin: $list-item-right-icon-margin + $list-horizontal-padding !default;
+$list-item-avatar-height: 4 * $unit !default;
+$list-item-avatar-margin: .8 * $unit !default;
+$list-item-child-margin: .8 * $unit !default;
