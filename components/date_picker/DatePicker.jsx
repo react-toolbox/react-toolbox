@@ -44,7 +44,7 @@ class DatePicker extends React.Component {
     return (
       <div data-react-toolbox='date-picker'>
         <Input
-          className={style.input}
+          className={`${style.input} ${this.props.inputClassName}`}
           error={this.props.error}
           onMouseDown={this.handleInputMouseDown}
           label={this.props.label}

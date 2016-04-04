@@ -10,6 +10,7 @@ class CalendarDialog extends React.Component {
     active: React.PropTypes.bool,
     autoOk: React.PropTypes.bool,
     className: React.PropTypes.string,
+    inputClassName: React.PropTypes.string,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
     onDismiss: React.PropTypes.func,
