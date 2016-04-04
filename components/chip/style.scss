@@ -3,55 +3,48 @@
 @import "./config";
 
 .chip {
-  display: inline-block;
   background-color: $chip-background;
   border-radius: $chip-height;
+  color: $chip-color;
+  display: inline-block;
+  font-size: $chip-font-size;
   line-height: $chip-height;
-  padding: 0 $chip-padding;
   margin-right: $chip-margin-right;
-
-  color: $chip-label-color;
-  font-size: $chip-label-font-size;
+  padding: 0 $chip-padding;
 }
 
 .avatar {
   padding-left: 0;
 
   > [data-react-toolbox="avatar"] {
-    width: $chip-height;
     height: $chip-height;
-    vertical-align: middle;
     margin-right: $chip-icon-margin-right;
+    vertical-align: middle;
+    width: $chip-height;
 
     > span {
-      line-height: $chip-height;
       font-size: $chip-icon-font-size;
+      line-height: $chip-height;
     }
   }
 }
 
 .deletable {
   padding-right: 0;
-  cursor: pointer;
-  &:hover {
-    background: $chip-background-hover;
-  }
-  &:active {
-    @include shadow-2dp();
-  }
 }
 
 .delete {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 0 $chip-remove-margin;
-  line-height: $chip-remove-line-height;
-  text-align: center;
-  width: $chip-remove-size;
-  height: $chip-remove-size;
-  border-radius: $chip-remove-size;
   background: $chip-remove-background;
+  border-radius: $chip-remove-size;
   color: $chip-remove-color;
+  cursor: pointer;
+  display: inline-block;
+  height: $chip-remove-size;
+  line-height: $chip-remove-line-height;
+  margin: 0 $chip-remove-margin;
+  text-align: center;
+  vertical-align: middle;
+  width: $chip-remove-size;
 
   > [data-react-toolbox="font-icon"] {
     font-size: $chip-remove-font-size;
