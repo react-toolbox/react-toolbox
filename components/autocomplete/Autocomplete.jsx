@@ -154,7 +154,7 @@ class Autocomplete extends React.Component {
  renderSelected () {
    if (this.props.multiple) {
      const selectedItems = [...this.values()].map(([key, value]) => {
-       return <Chip key={key} className={style.value} onClick={this.unselect.bind(this, key)} label={value} deletable />;
+       return <Chip key={key} className={style.value} onDeleteClick={this.unselect.bind(this, key)} label={value} deletable />;
      });
 
      return <ul className={style.values}>{selectedItems}</ul>;

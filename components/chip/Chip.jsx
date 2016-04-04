@@ -3,7 +3,7 @@ import FontIcon from '../font_icon';
 import style from './style';
 import ClassNames from 'classnames';
 
-const Chip = ({className, deletable, avatar, label, ...other}) => {
+const Chip = ({className, deletable, avatar, label, onDeleteClick, ...other}) => {
   const classes = ClassNames(style.chip, {
       [style.deletable]: !!deletable,
       [style.contactChip]: !!avatar
@@ -15,7 +15,7 @@ const Chip = ({className, deletable, avatar, label, ...other}) => {
       <span className={style.label}>{label}</span>
       {
         deletable ? (
-          <span className={style.delete}>
+          <span className={style.delete} onClick={onDeleteClick}>
             <FontIcon value="close" />
           </span>
         ) : null
@@ -28,7 +28,8 @@ Chip.propTypes = {
   avatar: PropTypes.element,
   className: PropTypes.string,
   deletable: PropTypes.bool,
-  label: PropTypes.string
+  label: PropTypes.string,
+  onDeleteClick: PropTypes.func
 };
 
 Chip.defaultProps = {

@@ -29,9 +29,10 @@ const ChipTest = () => (
 
 ## Properties
 
-| Name          | Type        | Default         | Description|
-|:--------------|:------------|:----------------|:-----------|
-| `avatar`      | `element`   |                 | An `Avatar` component to use in a contact chip. |
-| `className`   | `String`    | `''`            | Additional class name to provide custom styling.|
-| `deletable`   | `Boolean`   | `false`         | If true, the chip will be rendered with a delete icon.|
-| `label`       | `String`    | `''`            | label for the chip. |
+| Name            | Type        | Default         | Description|
+|:----------------|:------------|:----------------|:-----------|
+| `avatar`        | `element`   |                 | An `Avatar` component to use in a contact chip. |
+| `className`     | `String`    | `''`            | Additional class name to provide custom styling.|
+| `deletable`     | `Boolean`   | `false`         | If true, the chip will be rendered with a delete icon.|
+| `label`         | `String`    | `''`            | label for the chip. |
+| `onDeleteClick` | `Function`  |                 | Callback to be invoked when the delete icon is clicked. |

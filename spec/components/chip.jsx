@@ -3,6 +3,16 @@ import Avatar from '../../components/avatar';
 import Chip from '../../components/chip';
 
 class ChipTest extends React.Component {
+  state = {
+    deleted: false
+  };
+
+  handleDeleteClick = () => {
+    this.setState({
+      deleted: true
+    });
+  };
+
   render () {
     return (
       <section>
@@ -10,7 +20,15 @@ class ChipTest extends React.Component {
         <p>Chips can be deletable and have an avatar.</p>
 
         <Chip label="Example Chip" />
-        <Chip label="Deletable Chip" deletable />
+        {
+          this.state.deleted ? null : (
+            <Chip
+              label="Deletable Chip"
+              deletable
+              onDeleteClick={this.handleDeleteClick}
+            />
+          )
+        }
         <Chip
           label="Avatar Chip"
           avatar={<Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" />}
