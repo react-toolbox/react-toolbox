@@ -19,16 +19,16 @@ const ChipTest = () => (
 
     <Chip deletable>Deletable Chip</Chip>
 
-    <Chip avatar>
+    <Chip>
       <Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" />
       <span>Avatar Chip</span>
     </Chip>
 
-    <Chip avatar>
+    <Chip>
       <Avatar title="A" /><span>Initial chip</span>
     </Chip>
 
-    <Chip avatar>
+    <Chip>
       <Avatar><img src="https://placeimg.com/80/80/animals"/></Avatar>
       <span>Image contact chip</span>
     </Chip>
@@ -40,7 +40,7 @@ const ChipTest = () => (
 
 | Name            | Type        | Default         | Description|
 |:----------------|:------------|:----------------|:-----------|
-| `avatar`        | `Boolean`   | `false`         | If true, the chip will include styles to accommodate an `Avatar`. |
+| `children`      | `Node`      |                 | Child components, usually `Avatar` and inline elements. |
 | `className`     | `String`    | `''`            | Additional class name to provide custom styling.|
 | `deletable`     | `Boolean`   | `false`         | If true, the chip will be rendered with a delete icon.|
 | `onDeleteClick` | `Function`  |                 | Callback to be invoked when the delete icon is clicked. |

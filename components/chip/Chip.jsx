@@ -30,7 +30,7 @@ const Chip = ({children, className, deletable, onDeleteClick, ...other}) => {
 };
 
 Chip.propTypes = {
-  children: PropTypes.string,
+  children: PropTypes.node,
   className: PropTypes.string,
   deletable: PropTypes.bool,
   onDeleteClick: PropTypes.func
