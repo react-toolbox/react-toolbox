@@ -16,7 +16,7 @@ $switch-thumb-size: 2 * $unit !default;
 $switch-thumb-on-color: $switch-color !default;
 $switch-focus-init-size: .8 * $unit !default;
 $switch-focus-size: $switch-total-height * 2 !default;
-$switch-focus-diff: ($switch-focus-size - $switch-focus-init-size) / 2;
+$switch-focus-diff: ($switch-focus-size - $switch-focus-init-size) / 2 !default;
 $switch-ripple-duration: 650ms !default;
 $switch-font-size: $font-size-small !default;
 $switch-field-margin-bottom: 1.5 * $unit !default;
