@@ -9,9 +9,12 @@
   line-height: $chip-height;
   padding: 0 $chip-padding;
   margin-right: $chip-margin-right;
+
+  color: $chip-label-color;
+  font-size: $chip-label-font-size;
 }
 
-.contactChip {
+.avatar {
   padding-left: 0;
 
   > [data-react-toolbox="avatar"] {
@@ -25,11 +28,6 @@
       font-size: $chip-icon-font-size;
     }
   }
-}
-
-.label {
-  color: $chip-label-color;
-  font-size: $chip-label-font-size;
 }
 
 .deletable {

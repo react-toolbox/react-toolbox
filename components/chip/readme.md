@@ -2,27 +2,36 @@
 
 Chips represent complex entities in small blocks, such as a contact. Chips can be used for various types of entities, including free form text, predefined text, rules, or contacts. Chips may also contain icons.
 
+To add an icon or contact image to a chip, include an `Avatar` element as the first child.
+
 <!-- example -->
 ```jsx
+import Avatar from 'react-toolbox/lib/avatar';
 import Chip from 'react-toolbox/lib/chip';
 
 const ChipTest = () => (
   <div>
-        <Chip label="Example Chip" />
-        <Chip label="Deletable Chip" deletable />
-        <Chip
-          label="Avatar Chip"
-          avatar={<Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" />}
-        />
-        <Chip
-          label="Initial chip"
-          avatar={<Avatar title="A" />}
-          deletable
-        />
-        <Chip
-          label="Image contact chip"
-          avatar={<Avatar><img src="https://placeimg.com/80/80/animals"/></Avatar>}
-        />
+    <Chip>Example chip</Chip>
+    <Chip>
+      <span style={{textDecoration: 'line-through'}}>Standard</span>
+      <strong>Custom</strong> chip <small>(custom markup)</small>
+    </Chip>
+
+    <Chip deletable>Deletable Chip</Chip>
+
+    <Chip avatar>
+      <Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" />
+      <span>Avatar Chip</span>
+    </Chip>
+
+    <Chip avatar>
+      <Avatar title="A" /><span>Initial chip</span>
+    </Chip>
+
+    <Chip avatar>
+      <Avatar><img src="https://placeimg.com/80/80/animals"/></Avatar>
+      <span>Image contact chip</span>
+    </Chip>
   </div>
 );
 ```
@@ -31,8 +40,7 @@ const ChipTest = () => (
 
 | Name            | Type        | Default         | Description|
 |:----------------|:------------|:----------------|:-----------|
-| `avatar`        | `element`   |                 | An `Avatar` component to use in a contact chip. |
+| `avatar`        | `Boolean`   | `false`         | If true, the chip will include styles to accommodate an `Avatar`. |
 | `className`     | `String`    | `''`            | Additional class name to provide custom styling.|
 | `deletable`     | `Boolean`   | `false`         | If true, the chip will be rendered with a delete icon.|
-| `label`         | `String`    | `''`            | label for the chip. |
 | `onDeleteClick` | `Function`  |                 | Callback to be invoked when the delete icon is clicked. |

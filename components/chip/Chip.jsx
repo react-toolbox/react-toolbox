@@ -3,16 +3,21 @@ import FontIcon from '../font_icon';
 import style from './style';
 import ClassNames from 'classnames';
 
-const Chip = ({className, deletable, avatar, label, onDeleteClick, ...other}) => {
+const Chip = ({children, className, deletable, onDeleteClick, ...other}) => {
+  let hasAvatar = false;
+  if (React.Children.count(children)) {
+    const firstChild = children[0];
+    hasAvatar = firstChild && firstChild.type && firstChild.type.name === 'Avatar';
+  }
+
   const classes = ClassNames(style.chip, {
       [style.deletable]: !!deletable,
-      [style.contactChip]: !!avatar
+      [style.avatar]: !!hasAvatar
   }, className);
 
   return (
     <div data-react-toolbox='chip' className={classes} {...other}>
-      {avatar ? avatar : null}
-      <span className={style.label}>{label}</span>
+      {typeof children === 'string' ? <span>{children}</span> : children}
       {
         deletable ? (
           <span className={style.delete} onClick={onDeleteClick}>
@@ -25,18 +30,15 @@ const Chip = ({className, deletable, avatar, label, onDeleteClick, ...other}) =>
 };
 
 Chip.propTypes = {
-  avatar: PropTypes.element,
+  children: PropTypes.string,
   className: PropTypes.string,
   deletable: PropTypes.bool,
-  label: PropTypes.string,
   onDeleteClick: PropTypes.func
 };
 
 Chip.defaultProps = {
-  avatar: null,
   className: '',
-  deletable: false,
-  label: ''
+  deletable: false
 };
 
 export default Chip;

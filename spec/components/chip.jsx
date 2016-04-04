@@ -19,32 +19,40 @@ class ChipTest extends React.Component {
         <h5>Chips</h5>
         <p>Chips can be deletable and have an avatar.</p>
 
-        <Chip label="Example Chip" />
+        <Chip>Example chip</Chip>
+        <Chip>
+          <span style={{textDecoration: 'line-through'}}>Standard</span>
+          <strong>Custom</strong> chip <small>(custom markup)</small>
+        </Chip>
+
         {
           this.state.deleted ? null : (
             <Chip
-              label="Deletable Chip"
               deletable
               onDeleteClick={this.handleDeleteClick}
-            />
+            >
+              Deletable Chip
+            </Chip>
           )
         }
-        <Chip
-          label="Avatar Chip"
-          avatar={<Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" />}
-        />
-        <Chip
-          label="Initial chip"
-          avatar={<Avatar title="A" />}
-          deletable
-        />
-        <Chip
-          label="Image contact chip"
-          avatar={<Avatar><img src="https://placeimg.com/80/80/animals"/></Avatar>}
-        />
+
+        <Chip>
+          <Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" />
+          <span>Avatar Chip</span>
+        </Chip>
+
+        <Chip>
+          <Avatar title="A" /><span>Initial chip</span>
+        </Chip>
+
+        <Chip>
+          <Avatar><img src="https://placeimg.com/80/80/animals"/></Avatar>
+          <span>Image contact chip</span>
+        </Chip>
       </section>
     );
   }
 }
 
 export default ChipTest;
+
