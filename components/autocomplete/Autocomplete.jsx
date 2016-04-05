@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import ClassNames from 'classnames';
 import Input from '../input';
 import events from '../utils/events';
+import Chip from '../chip';
 import style from './style';
 
 const POSITION = {
@@ -153,7 +154,16 @@ class Autocomplete extends React.Component {
  renderSelected () {
    if (this.props.multiple) {
      const selectedItems = [...this.values()].map(([key, value]) => {
-       return <li key={key} className={style.value} onClick={this.unselect.bind(this, key)}>{value}</li>;
+       return (
+         <Chip
+           key={key}
+           className={style.value}
+           deletable
+           onDeleteClick={this.unselect.bind(this, key)}
+         >
+           {value}
+         </Chip>
+       );
      });
 
      return <ul className={style.values}>{selectedItems}</ul>;

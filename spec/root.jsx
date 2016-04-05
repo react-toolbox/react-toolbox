@@ -8,6 +8,7 @@ import Autocomplete from './components/autocomplete';
 import Button from './components/button';
 import Card from './components/card';
 import Checkbox from './components/checkbox';
+import Chip from './components/chip';
 import Dialog from './components/dialog';
 import Drawer from './components/drawer';
 import Dropdown from './components/dropdown';
@@ -48,6 +49,7 @@ const Root = () => (
     <Button />
     <Card />
     <Checkbox />
+    <Chip />
     <Dialog />
     <Drawer />
     <Dropdown />
