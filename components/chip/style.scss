@@ -55,8 +55,7 @@
 
   .deleteX {
     fill: transparent;
-    stroke-linecap: round;
-    stroke-width: 3;
+    stroke-width: $chip-remove-stroke-width;
     stroke: $chip-remove-color;
   }
 }
