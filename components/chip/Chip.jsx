@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
-import FontIcon from '../font_icon';
-import style from './style';
 import ClassNames from 'classnames';
+import style from './style';
 
 const Chip = ({children, className, deletable, onDeleteClick, ...other}) => {
   let hasAvatar = false;
@@ -21,7 +20,9 @@ const Chip = ({children, className, deletable, onDeleteClick, ...other}) => {
       {
         deletable ? (
           <span className={style.delete} onClick={onDeleteClick}>
-            <FontIcon value="close" />
+            <svg viewBox="0 0 40 40" className={style.deleteIcon}>
+              <path className={style.deleteX} d="M 12,12 L 28,28 M 28,12 L 12,28" />
+            </svg>
           </span>
         ) : null
       }

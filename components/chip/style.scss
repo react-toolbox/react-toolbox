@@ -30,27 +30,33 @@
 }
 
 .deletable {
-  padding-right: 0;
+  padding-right: $chip-remove-size + 2 * $chip-remove-margin;
 }
 
 .delete {
-  background: $chip-remove-background;
-  border-radius: $chip-remove-size;
-  color: $chip-remove-color;
   cursor: pointer;
   display: inline-block;
   height: $chip-remove-size;
-  line-height: $chip-remove-line-height;
-  margin: 0 $chip-remove-margin;
-  text-align: center;
+  margin: $chip-remove-margin;
+  padding: $chip-remove-margin;
+  position: absolute;
   vertical-align: middle;
   width: $chip-remove-size;
+}
 
-  > [data-react-toolbox="font-icon"] {
-    font-size: $chip-remove-font-size;
-  }
+.delete:hover .deleteIcon {
+  background: $chip-remove-background-hover;
+}
 
-  &:hover {
-    background: $chip-remove-background-hover;
+.deleteIcon {
+  background: $chip-remove-background;
+  border-radius: $chip-remove-size;
+  vertical-align: top;
+
+  .deleteX {
+    fill: transparent;
+    stroke-linecap: round;
+    stroke-width: 3;
+    stroke: $chip-remove-color;
   }
 }
