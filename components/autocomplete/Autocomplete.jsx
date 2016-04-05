@@ -12,10 +12,16 @@ const POSITION = {
  UP: 'up'
 };
 
+const SELECTEDPOSITION = {
+  ABOVE: 'above',
+  BELOW: 'below'
+};
+
 class Autocomplete extends React.Component {
  static propTypes = {
    className: React.PropTypes.string,
    direction: React.PropTypes.oneOf(['auto', 'up', 'down']),
+   selectedPosition: React.PropTypes.oneOf(['above', 'below']),
    disabled: React.PropTypes.bool,
    error: React.PropTypes.string,
    label: React.PropTypes.string,
@@ -28,6 +34,7 @@ class Autocomplete extends React.Component {
  static defaultProps = {
    className: '',
    direction: 'auto',
+   selectedPosition: 'above',
    multiple: true,
    source: {}
  };
@@ -40,7 +47,7 @@ class Autocomplete extends React.Component {
 
  componentWillReceiveProps (nextProps) {
    if (!this.props.multiple) {
-     this.setState({query: this.query(nextProps.value)});
+     this.setState({query: nextProps.value});
    }
  }
 
@@ -197,7 +204,7 @@ class Autocomplete extends React.Component {
 
    return (
      <div data-react-toolbox='autocomplete' className={className}>
-       {this.renderSelected()}
+       {this.props.selectedPosition === 'above' ? this.renderSelected() : null}
        <Input
          {...other}
          ref='input'
@@ -211,6 +218,7 @@ class Autocomplete extends React.Component {
          value={this.state.query}
        />
        {this.renderSuggestions()}
+       {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
      </div>
    );
  }
