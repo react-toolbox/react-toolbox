@@ -1,0 +1,61 @@
+@import "../base";
+@import "../mixins";
+@import "./config";
+
+.chip {
+  background-color: $chip-background;
+  border-radius: $chip-height;
+  color: $chip-color;
+  display: inline-block;
+  font-size: $chip-font-size;
+  line-height: $chip-height;
+  margin-right: $chip-margin-right;
+  padding: 0 $chip-padding;
+}
+
+.avatar {
+  padding-left: 0;
+
+  > [data-react-toolbox="avatar"] {
+    height: $chip-height;
+    margin-right: $chip-icon-margin-right;
+    vertical-align: middle;
+    width: $chip-height;
+
+    > span {
+      font-size: $chip-icon-font-size;
+      line-height: $chip-height;
+    }
+  }
+}
+
+.deletable {
+  padding-right: $chip-remove-size + 2 * $chip-remove-margin;
+}
+
+.delete {
+  cursor: pointer;
+  display: inline-block;
+  height: $chip-remove-size;
+  margin: $chip-remove-margin;
+  padding: $chip-remove-margin;
+  position: absolute;
+  vertical-align: middle;
+  width: $chip-remove-size;
+}
+
+.delete:hover .deleteIcon {
+  background: $chip-remove-background-hover;
+}
+
+.deleteIcon {
+  background: $chip-remove-background;
+  border-radius: $chip-remove-size;
+  vertical-align: top;
+
+  .deleteX {
+    fill: transparent;
+    stroke-width: $chip-remove-stroke-width;
+    stroke: $chip-remove-color;
+  }
+}

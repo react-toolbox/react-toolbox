@@ -26,6 +26,7 @@ class AutocompleteTest extends React.Component {
     return (
       <Autocomplete
         direction="down"
+        selectedPosition="above"
         label="Choose countries"
         onChange={this.handleChange}
         source={source}
@@ -38,16 +39,17 @@ class AutocompleteTest extends React.Component {
 
 ## Properties
 
-| Name           | Type                   | Default         | Description|
+| Name                | Type                   | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `className`    | `String`               | `''`            | Sets a class to style of the Component.|
-| `direction`    | `String`               |  `auto`         | Determines the opening direction. It can be `auto`, `top` or `bottom`.|
-| `disabled`     | `Bool`                 |  `false`        | If true, component will be disabled.|
-| `error`        | `String`               |                 | Sets the error string for the internal input element.|
-| `label`        | `String`               |                 | The text string to use for the floating label element.|
-| `multiple`     | `Bool`                 | `true`          | If true, component can hold multiple values.|
-| `onChange`     | `Function`             |                 | Callback function that is fired when the components's value changes.|
-| `source`       | `Object` or `Array`    |                 | Object of key/values or array representing all items suggested. |
-| `value`        | `String` or `Array`    |                 | Value or array of values currently selected component.|
+| `className`         | `String`               | `''`            | Sets a class to style of the Component.|
+| `direction`         | `String`               |  `auto`         | Determines the opening direction. It can be `auto`, `top` or `bottom`.|
+| `disabled`          | `Bool`                 |  `false`        | If true, component will be disabled.|
+| `error`             | `String`               |                 | Sets the error string for the internal input element.|
+| `label`             | `String`               |                 | The text string to use for the floating label element.|
+| `multiple`          | `Bool`                 | `true`          | If true, component can hold multiple values.|
+| `onChange`          | `Function`             |                 | Callback function that is fired when the components's value changes.|
+| `source`            | `Object` or `Array`    |                 | Object of key/values or array representing all items suggested. |
+| `selectedPosition`  | `String`               |  `above`        | Determines if the selected list is shown above or below input. It can be `above` or `below`. |
+| `value`             | `String` or `Array`    |                 | Value or array of values currently selected component.|
 
 Additional properties will be passed to the Input Component so you can use `hint`, `name` ... etc.

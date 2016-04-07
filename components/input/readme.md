@@ -33,7 +33,7 @@ class InputTest extends React.Component {
 |:-----|:-----|:-----|:-----|
 | `className`     | `String`      | `''`            | Sets a class name to give custom styles.|
 | `disabled`      | `Boolean`     | `false`         | If true, component will be disabled.|
-| `error`         | `Node`        |                 | Give an error node to display under the field.|
+| `error`         | `String`      |                 | Give an error node to display under the field.|
 | `floating`      | `Boolean`     | `true`          | Indicates if the label is floating in the input field or not.|
 | `hint`          | `String`      | `''`            | The text string to use for hint text element.|
 | `icon`          | `Any`         |                 | Name of an icon to use as a label for the input.|

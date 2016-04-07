@@ -2,7 +2,7 @@ import React from 'react';
 import ClassNames from 'classnames';
 import Button from '../button';
 import Overlay from '../overlay';
-import style from './style.scss';
+import style from './style';
 
 const Dialog = (props) => {
   const actions = props.actions.map((action, idx) => {
@@ -28,9 +28,12 @@ const Dialog = (props) => {
           {props.title ? <h6 className={style.title}>{props.title}</h6> : null}
           {props.children}
         </section>
-        <nav role='navigation' className={style.navigation}>
-          {actions}
-        </nav>
+        {actions ?
+          <nav role='navigation' className={style.navigation}>
+            {actions}
+          </nav> :
+          null
+        }
       </div>
     </Overlay>
   );
