@@ -11,7 +11,10 @@ class IconButton extends React.Component {
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     href: React.PropTypes.string,
-    icon: React.PropTypes.any,
+    icon: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.element
+    ]),
     inverse: React.PropTypes.bool,
     neutral: React.PropTypes.bool,
     onMouseLeave: React.PropTypes.func,

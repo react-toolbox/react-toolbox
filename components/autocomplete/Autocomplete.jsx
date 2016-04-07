@@ -12,21 +12,16 @@ const POSITION = {
  UP: 'up'
 };
 
-const SELECTEDPOSITION = {
-  ABOVE: 'above',
-  BELOW: 'below'
-};
-
 class Autocomplete extends React.Component {
  static propTypes = {
    className: React.PropTypes.string,
    direction: React.PropTypes.oneOf(['auto', 'up', 'down']),
-   selectedPosition: React.PropTypes.oneOf(['above', 'below']),
    disabled: React.PropTypes.bool,
    error: React.PropTypes.string,
    label: React.PropTypes.string,
    multiple: React.PropTypes.bool,
    onChange: React.PropTypes.func,
+   selectedPosition: React.PropTypes.oneOf(['above', 'below']),
    source: React.PropTypes.any,
    value: React.PropTypes.any
  };

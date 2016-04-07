@@ -32,24 +32,24 @@ const TestButtons = () => (
 
 ## Properties
 
-| Name              | Type            | Default     | Description|
+| Name              | Type                  | Default     | Description|
 |:-----|:-----|:-----|:-----|
-| `accent`          | `Boolean`       | `false`     | Indicates if the button should have accent color.|
-| `className`       | `String`        | `''`        | Set a class to style the Component.|
-| `disabled`        | `Boolean`       | `false`     | If true, component will be disabled.|
-| `flat`            | `Boolean`       | `false`     | If true, the button will have a flat look. |
-| `floating`        | `Boolean`       | `false`     | If true, the button will have a floating look. |
-| `href`            | `String`        |             | Creates a link for the button. |
-| `icon`            | `Any`           |             | Value of the icon (See Font Icon Component). |
-| `inverse`         | `Boolean`       |             | If true, the neutral colors are inverted. Useful to put a button over a dark background. |
-| `label`           | `String`        |             | The text string to use for the name of the button.|
-| `mini`            | `Boolean`       | `false`     | To be used with floating button. If true, the button will be smaller.|
-| `neutral`         | `Boolean`       | `true`      | Set it to `false` if you don't want the neutral styles to be included.|
-| `onMouseLeave`    | `Function`      |             | Fires after the mouse leaves the Component.|
-| `onMouseUp`       | `Function`      |             | Fires after the mouse is released from the Component.|
-| `primary`         | `Boolean`       | `false`     | Indicates if the button should have primary color.|
-| `raised`          | `Boolean`       | `false`     | If true, the button will have a raised look. |
-| `ripple`          | `Boolean`       | `true`      | If true, component will have a ripple effect on click.|
+| `accent`          | `Boolean`             | `false`     | Indicates if the button should have accent color.|
+| `className`       | `String`              | `''`        | Set a class to style the Component.|
+| `disabled`        | `Boolean`             | `false`     | If true, component will be disabled.|
+| `flat`            | `Boolean`             | `false`     | If true, the button will have a flat look. |
+| `floating`        | `Boolean`             | `false`     | If true, the button will have a floating look. |
+| `href`            | `String`              |             | Creates a link for the button. |
+| `icon`            | `String` or `Element` |             | Value of the icon (See Font Icon Component). |
+| `inverse`         | `Boolean`             |             | If true, the neutral colors are inverted. Useful to put a button over a dark background. |
+| `label`           | `String`              |             | The text string to use for the name of the button.|
+| `mini`            | `Boolean`             | `false`     | To be used with floating button. If true, the button will be smaller.|
+| `neutral`         | `Boolean`             | `true`      | Set it to `false` if you don't want the neutral styles to be included.|
+| `onMouseLeave`    | `Function`            |             | Fires after the mouse leaves the Component.|
+| `onMouseUp`       | `Function`            |             | Fires after the mouse is released from the Component.|
+| `primary`         | `Boolean`             | `false`     | Indicates if the button should have primary color.|
+| `raised`          | `Boolean`             | `false`     | If true, the button will have a raised look. |
+| `ripple`          | `Boolean`             | `true`      | If true, component will have a ripple effect on click.|
 
 By default it will have neutral colors and a flat aspect even though the `flat` property is `false` by default. Also, some properties exclude others, for example a button cannot be `flat` and `raised` at the same time.
 

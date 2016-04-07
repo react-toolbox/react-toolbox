@@ -35,7 +35,7 @@ class CheckboxTest extends React.Component {
         />
         <Checkbox
           checked={this.state.checkbox_2}
-          label="Not checked biatch"
+          label="Not checked checkbox"
           onChange={this.handleChange.bind(this, 'checkbox_2')}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}

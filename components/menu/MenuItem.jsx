@@ -10,7 +10,10 @@ class MenuItem extends React.Component {
     children: React.PropTypes.any,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
-    icon: React.PropTypes.any,
+    icon: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.element
+    ]),
     onClick: React.PropTypes.func,
     selected: React.PropTypes.bool,
     shortcut: React.PropTypes.string

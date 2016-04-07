@@ -7,7 +7,10 @@ class IconMenu extends React.Component {
   static propTypes = {
     children: React.PropTypes.node,
     className: React.PropTypes.string,
-    icon: React.PropTypes.any,
+    icon: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.element
+    ]),
     iconRipple: React.PropTypes.bool,
     menuRipple: React.PropTypes.bool,
     onClick: React.PropTypes.func,

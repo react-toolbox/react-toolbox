@@ -45,33 +45,33 @@ The menu has state to keep a value with the currently selected item. It also exp
 
 As the most usual scenario will be to open the menu from a click in an Icon, we provide this subcomponent implementing this behavior. The `IconMenu` shows an icon and implements a `Menu` under the covers that is shown when is clicked. Some of its properties are transferred to the menu, others to the children:
 
-| Name            | Type          | Default         | Description|
+| Name            | Type                  | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `className`     | `String`      |  `''`           | Set a class to give custom styles to the icon wrapper.|
-| `icon`          | `Any`         | `more_vert`     | Icon font key string or Element to display the opener icon. |
-| `iconRipple`    | `Boolean`     | `true`          | If true, the icon will show a ripple when is clicked. |
-| `menuRipple`    | `Boolean`     | `true`          | Transferred to the `Menu` component. |
-| `onClick`       | `Function`    |                 | Callback that will be called when the icon is clicked. |
-| `onHide`        | `Function`    |                 | Callback that will be called when the menu is being hidden. |
-| `onSelect`      | `Function`    |                 | Callback that will be invoked when a menu item is selected. |
-| `onShow`        | `Function`    |                 | Callback that will be invoked when the menu is being shown. |
-| `position`      | `String`      | `auto`          | Determines the position of the menu. This property is transferred to the inner `Menu` component. |
-| `selectable`    | `Boolean`     | `false`         | If true, the menu will keep a value to highlight the active child item. |
-| `selected`      | `Any`         |                 | Used for selectable menus. Indicates the current selected value so the child item with this value can be highlighted. |
+| `className`     | `String`              |  `''`           | Set a class to give custom styles to the icon wrapper.|
+| `icon`          | `String` or `Element` | `more_vert`     | Icon font key string or Element to display the opener icon. |
+| `iconRipple`    | `Boolean`             | `true`          | If true, the icon will show a ripple when is clicked. |
+| `menuRipple`    | `Boolean`             | `true`          | Transferred to the `Menu` component. |
+| `onClick`       | `Function`            |                 | Callback that will be called when the icon is clicked. |
+| `onHide`        | `Function`            |                 | Callback that will be called when the menu is being hidden. |
+| `onSelect`      | `Function`            |                 | Callback that will be invoked when a menu item is selected. |
+| `onShow`        | `Function`            |                 | Callback that will be invoked when the menu is being shown. |
+| `position`      | `String`              | `auto`          | Determines the position of the menu. This property is transferred to the inner `Menu` component. |
+| `selectable`    | `Boolean`             | `false`         | If true, the menu will keep a value to highlight the active child item. |
+| `selected`      | `Any`                 |                 | Used for selectable menus. Indicates the current selected value so the child item with this value can be highlighted. |
 
 ## Menu Item
 
 The inner component for menus and describes the content of each option. It behaves in a similar way to List Items but simpler.
 
-| Name              | Type          | Default   | Description|
+| Name              | Type              | Default     | Description|
 |:-----|:-----|:-----|:-----|
-| `caption`     | `String`        |             | The text to include in the menu item. Required.|
-| `className`   | `String`        | `''`        | Set a class to give custom styles to the item.|
-| `disabled`    | `Boolean`       | `false`     | If true, the item will be displayed as disabled and is not selectable.|
-| `icon`        | `Any`           |             | Icon font key string or Element to display in the right side of the option. |
-| `onClick`     | `Function`      |             | Callback that will be called when Component is clicked. |
-| `selected`    | `Boolean`       | `false`     | Transferred from the `Menu` component for selectable menus. Indicates if it's the current active option. |
-| `shortcut`    | `String`        | `''`        | Displays shortcut text on the right side of the `caption` attribute. |
+| `caption`     | `String`              |             | The text to include in the menu item. Required.|
+| `className`   | `String`              | `''`        | Set a class to give custom styles to the item.|
+| `disabled`    | `Boolean`             | `false`     | If true, the item will be displayed as disabled and is not selectable.|
+| `icon`        | `String` or `Element` |             | Icon font key string or Element to display in the right side of the option. |
+| `onClick`     | `Function`            |             | Callback that will be called when Component is clicked. |
+| `selected`    | `Boolean`             | `false`     | Transferred from the `Menu` component for selectable menus. Indicates if it's the current active option. |
+| `shortcut`    | `String`              | `''`        | Displays shortcut text on the right side of the `caption` attribute. |
 
 ## Menu Divider
 

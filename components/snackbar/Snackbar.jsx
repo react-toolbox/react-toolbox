@@ -10,7 +10,10 @@ class Snackbar extends React.Component {
     action: React.PropTypes.string,
     active: React.PropTypes.bool,
     className: React.PropTypes.string,
-    icon: React.PropTypes.any,
+    icon: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.element
+    ]),
     label: React.PropTypes.string.isRequired,
     onClick: React.PropTypes.func,
     onTimeout: React.PropTypes.func,
