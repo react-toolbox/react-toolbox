@@ -19,8 +19,9 @@ class DialogTest extends React.Component {
         <Dialog
           actions={this.actions}
           active={this.state.active}
-          title='My awesome dialog'
+          onEscKeyDown={this.handleToggle}
           onOverlayClick={this.handleToggle}
+          title='My awesome dialog'
         >
           <p>Here you can add arbitrary content. Components like Pickers are using dialogs now.</p>
         </Dialog>

@@ -14,7 +14,9 @@
 }
 
 .item {
-  padding: $navigation-v-padding $navigation-h-padding;
+  a > span{
+    padding: $navigation-v-padding $navigation-h-padding;
+  }
   > span > span {
     font-size: $font-size-small;
     font-weight: $font-weight-semi-bold;

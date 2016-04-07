@@ -35,14 +35,14 @@ class SnackbarTest extends React.Component {
 
 ## Properties
 
-| Name          | Type    | Default   | Description|
+| Name          | Type                    | Default       | Description|
 |:-----|:-----|:-----|:-----|
-| `action`  | `String` |   | Label for the action component inside the Snackbar.|
-| `active`        | `Boolean`       |  `false`        | If true, the snackbar will be active.|
-| `className` | `String`  | `''`      | Additional class name to provide custom styling.|
-| `icon` | `String`  |       | String key for an icon displayed in left side of the snackbar.|
-| `label` | `String`  |       | Text to display in the content.|
-| `onClick` | `Function`  |       | Callback function that will be called when the button action is clicked.|
-| `onTimeout` | `Function`  |       | Callback function when finish the set timeout.|
-| `timeout` | `Number`  |       | Amount of time in milliseconds after the Snackbar will be automatically hidden.|
-| `type` | `String`  |       | Indicates the action type. Can be `accept`, `warning` or `cancel`|
+| `action`      | `String`                |               | Label for the action component inside the Snackbar.|
+| `active`      | `Boolean`               |  `false`      | If true, the snackbar will be active.|
+| `className`   | `String`                | `''`          | Additional class name to provide custom styling.|
+| `icon`        | `String` or `Element`   |               | String key for an icon or Element which will be displayed in left side of the snackbar.|
+| `label`       | `String`                |               | Text to display in the content. Required.|
+| `onClick`     | `Function`              |               | Callback function that will be called when the button action is clicked.|
+| `onTimeout`   | `Function`              |               | Callback function when finish the set timeout.|
+| `timeout`     | `Number`                |               | Amount of time in milliseconds after the Snackbar will be automatically hidden.|
+| `type`        | `String`                |               | Indicates the action type. Can be `accept`, `warning` or `cancel`|
