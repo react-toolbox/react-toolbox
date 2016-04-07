@@ -1,5 +1,5 @@
 class InputTest extends React.Component {
-  state = { name: '', phone: '', email: '' };
+  state = { name: '', phone: '', email: '', hint: '' };
 
   handleChange = (name, value) => {
     this.setState({...this.state, [name]: value});
@@ -12,6 +12,7 @@ class InputTest extends React.Component {
         <Input type='text' label='Disabled field' disabled />
         <Input type='email' label='Email address' icon='email' value={this.state.email} onChange={this.handleChange.bind(this, 'email')} />
         <Input type='tel' label='Phone' name='phone' icon='phone' value={this.state.phone} onChange={this.handleChange.bind(this, 'phone')} />
+        <Input type='text' value={this.state.hint} label='Required Field' hint='With Hint' required onChange={this.handleChange.bind(this, 'hint')} icon={<span>J</span>} />
       </section>
     );
   }

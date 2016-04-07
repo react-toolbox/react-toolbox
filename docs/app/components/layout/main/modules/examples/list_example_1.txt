@@ -36,6 +36,7 @@ class ListTest extends React.Component {
           legend='You will receive a notification when a new one is published'
           onChange={this.handleCheckboxChange}
         />
+        <ListDivider />
         <ListItem caption='Contact the publisher' leftIcon='send' />
         <ListItem caption='Remove this publication' leftIcon='delete' />
       </List>

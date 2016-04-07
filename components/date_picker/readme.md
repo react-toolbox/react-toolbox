@@ -32,14 +32,13 @@ class DatePickerTest extends React.Component {
 
 ## Properties
 
-| Name          | Type    | Default         | Description|
+| Name            | Type            | Default       | Description|
 |:-----|:-----|:-----|:-----|
-| `autoOk`         | `boolean`        |  false      | Automatically selects a date upon clicking on a day|
-| `className`         | `String`        |             | This class will be placed at the top of the `DatePickerDialog` component so you can provide custom styles.|
-| `label`         | `String`        |             | The text string to use for the floating label element in the input component.|
-| `maxDate`         | `Date`    |                 | Date object with the maximum selectable date. |
-| `minDate`         | `Date`    |                 | Date object with the minimum selectable date. |
-| `onChange`       | `Function`       |                | Callback called when the picker value is changed.|
-| `placeholder`     | `String`        |             | The text string to use like a input placeholder.|
-| `value`         | `Date`    |                 | Date object with the currently selected date. |
-| `inputFormat`         | `Function`    |                 | Function to format the date displayed on the input. |
+| `autoOk`        | `Boolean`       | `false`       | Automatically selects a date upon clicking on a day|
+| `className`     | `String`        |               | This class will be placed at the top of the `DatePickerDialog` component so you can provide custom styles.|
+| `inputFormat`   | `Function`      |               | Function to format the date displayed on the input. |
+| `label`         | `String`        |               | The text string to use for the floating label element in the input component.|
+| `maxDate`       | `Date`          |               | Date object with the maximum selectable date. |
+| `minDate`       | `Date`          |               | Date object with the minimum selectable date. |
+| `onChange`      | `Function`      |               | Callback called when the picker value is changed.|
+| `value`         | `Date`          |               | Date object with the currently selected date. |

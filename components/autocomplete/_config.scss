@@ -1,9 +1,7 @@
 $autocomplete-color-primary-contrast: $color-primary-contrast !default;
 $autocomplete-color-primary: $color-primary !default;
-$autocomplete-overflow-max-height: 45vh;
+$autocomplete-overflow-max-height: 45vh !default;
 $autocomplete-suggestion-active-background: $palette-grey-200 !default;
-$autocomplete-suggestion-padding: $unit;
+$autocomplete-suggestion-padding: $unit !default;
 $autocomplete-suggestions-background: $color-white !default;
-$autocomplete-value-border-radius: .2 * $unit;
-$autocomplete-value-margin: $unit * .25 $unit * .5 $unit * .25 0;
-$autocomplete-value-padding: $unit * .5 $unit * .75;
+$autocomplete-value-margin: $unit * .25 $unit * .5 $unit * .25 0 !default;

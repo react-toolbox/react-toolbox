@@ -10,7 +10,10 @@ class Snackbar extends React.Component {
     action: React.PropTypes.string,
     active: React.PropTypes.bool,
     className: React.PropTypes.string,
-    icon: React.PropTypes.any,
+    icon: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.element
+    ]),
     label: React.PropTypes.string.isRequired,
     onClick: React.PropTypes.func,
     onTimeout: React.PropTypes.func,
@@ -18,11 +21,24 @@ class Snackbar extends React.Component {
     type: React.PropTypes.string
   };
 
-  componentDidUpdate () {
-    if (this.props.active && this.props.timeout) {
-      setTimeout(() => {
-        this.props.onTimeout();
-      }, this.props.timeout);
+  state = {
+    curTimeout: null
+  };
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.active && nextProps.timeout) {
+      if (this.state.curTimeout) clearTimeout(this.state.curTimeout);
+
+      const curTimeout = setTimeout(() => {
+        nextProps.onTimeout();
+        this.setState({
+          curTimeout: null
+        });
+      }, nextProps.timeout);
+
+      this.setState({
+        curTimeout
+      });
     }
   }
 

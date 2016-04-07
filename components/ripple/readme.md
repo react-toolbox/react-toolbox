@@ -20,8 +20,8 @@ const RippleTest = () => <RippleLink href='#'>Test</RippleLink>;
 
 In any component you decorate with the Ripple you'd get some additional props:
 
-| Name      | Type      | Default         | Description|
+| Name          | Type        | Default     | Description|
 |:-----|:-----|:-----|:-----|
-| `centered`     | `Boolean`  | `false` | True in case you want a centered ripple.|
-| `className`     | `String`  | `''` | String to customize appearance (color and opacity for example).|
-| `spread`     | `Number`  | `2` | Factor to indicate how much should the ripple spread under the component. |
+| `centered`    | `Boolean`   | `false`     | True in case you want a centered ripple.|
+| `className`   | `String`    | `''`        | String to customize appearance (color and opacity for example).|
+| `spread`      | `Number`    | `2`         | Factor to indicate how much should the ripple spread under the component.|

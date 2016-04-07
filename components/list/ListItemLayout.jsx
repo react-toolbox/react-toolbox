@@ -33,17 +33,26 @@ const ListItemLayout = (props) => {
 };
 
 ListItemLayout.propTypes = {
-  avatar: React.PropTypes.string,
+  avatar: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.element
+  ]),
   caption: React.PropTypes.string,
   children: React.PropTypes.any,
   className: React.PropTypes.string,
   disabled: React.PropTypes.bool,
   itemContent: React.PropTypes.element,
   leftActions: React.PropTypes.array,
-  leftIcon: React.PropTypes.any,
+  leftIcon: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.element
+  ]),
   legend: React.PropTypes.string,
   rightActions: React.PropTypes.array,
-  rightIcon: React.PropTypes.any,
+  rightIcon: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.element
+  ]),
   selectable: React.PropTypes.bool,
   to: React.PropTypes.string
 };

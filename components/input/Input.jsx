@@ -8,10 +8,13 @@ class Input extends React.Component {
     children: React.PropTypes.any,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
-    error: React.PropTypes.node,
+    error: React.PropTypes.string,
     floating: React.PropTypes.bool,
     hint: React.PropTypes.string,
-    icon: React.PropTypes.any,
+    icon: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.element
+    ]),
     label: React.PropTypes.string,
     maxLength: React.PropTypes.number,
     multiline: React.PropTypes.bool,

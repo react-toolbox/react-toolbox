@@ -23,7 +23,10 @@ Link.propTypes = {
   children: React.PropTypes.node,
   className: React.PropTypes.string,
   count: React.PropTypes.number,
-  icon: React.PropTypes.any,
+  icon: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.element
+  ]),
   label: React.PropTypes.string
 };
 

@@ -1,6 +1,6 @@
 # Avatar
 
-Avatars can be used to represent people. For personal avatars, offer personalization options. As users may choose not to personalize an avatar, provide delightful defaults. When used with a specific logo, avatars can also be used to represent brand
+Avatars can be used to represent people. This offer users the ability to personalize their avatar or provide delightful defaults. When used with a specific logo, avatars can also be used to represent brand.
 
 <!-- example -->
 ```jsx
@@ -25,10 +25,10 @@ const AvatarTest = () => (
 
 ## Properties
 
-| Name      | Type      | Default         | Description|
+| Name          | Type                    | Default     | Description|
 |:-----|:-----|:-----|:-----|
-| `children`    | `Node`   | | Children for the avatar. You can pass an SVG for a custom icon or, for example, an image.|
-| `className` | `String`  | `''` | Set a class to style the Component.|
-| `icon`  | `String` or `Element` |  | A key to identify an Icon from Material Design Icons or a custom Icon Element.|
-| `image`      | `String` or `Element`  |  | An image source or an image element. |
-| `title`  | `String`  | `false` | A title for the image. If there is image, the first letter will be displayed as avatar. |
+| `children`    | `Node`                  |             | Children for the avatar. You can pass an SVG for a custom icon or, for example, an image.|
+| `className`   | `String`                | `''`        | Set a class to style the Component.|
+| `icon`        | `String` or `Element`   |             | A key to identify an Icon from Material Design Icons or a custom Icon Element.|
+| `image`       | `String` or `Element`   |             | An image source or an image element. |
+| `title`       | `String`                | `''`        | A title for the image. If no image is provided, the first letter will be displayed as the avatar. |

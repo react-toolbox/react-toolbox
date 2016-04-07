@@ -7,6 +7,7 @@ import style from './style';
 
 class Dropdown extends React.Component {
   static propTypes = {
+    allowBlank: React.PropTypes.bool,
     auto: React.PropTypes.bool,
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -26,6 +27,7 @@ class Dropdown extends React.Component {
   static defaultProps = {
     auto: true,
     className: '',
+    allowBlank: true,
     disabled: false
   };
 
@@ -50,11 +52,6 @@ class Dropdown extends React.Component {
     if (this.state.active) {
       events.removeEventsFromDocument({click: this.handleDocumentClick});
     }
-  }
-
-  valueIsPresent () {
-    const value = this.props.value;
-    return value !== null && value !== undefined && value !== '' && !Number.isNaN(value);
   }
 
   close = () => {
@@ -87,10 +84,11 @@ class Dropdown extends React.Component {
   };
 
   getSelectedItem = () => {
-    if (this.valueIsPresent()) {
-      for (const item of this.props.source) {
-        if (item.value === this.props.value) return item;
-      }
+    for (const item of this.props.source) {
+      if (item.value === this.props.value) return item;
+    }
+    if (!this.props.allowBlank) {
+      return this.props.source[0];
     }
   };
 

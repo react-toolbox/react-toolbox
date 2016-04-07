@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import ClassNames from 'classnames';
 import Input from '../input';
 import events from '../utils/events';
+import Chip from '../chip';
 import style from './style';
 
 const POSITION = {
@@ -20,6 +21,7 @@ class Autocomplete extends React.Component {
    label: React.PropTypes.string,
    multiple: React.PropTypes.bool,
    onChange: React.PropTypes.func,
+   selectedPosition: React.PropTypes.oneOf(['above', 'below']),
    source: React.PropTypes.any,
    value: React.PropTypes.any
  };
@@ -27,6 +29,7 @@ class Autocomplete extends React.Component {
  static defaultProps = {
    className: '',
    direction: 'auto',
+   selectedPosition: 'above',
    multiple: true,
    source: {}
  };
@@ -153,7 +156,16 @@ class Autocomplete extends React.Component {
  renderSelected () {
    if (this.props.multiple) {
      const selectedItems = [...this.values()].map(([key, value]) => {
-       return <li key={key} className={style.value} onClick={this.unselect.bind(this, key)}>{value}</li>;
+       return (
+         <Chip
+           key={key}
+           className={style.value}
+           deletable
+           onDeleteClick={this.unselect.bind(this, key)}
+         >
+           {value}
+         </Chip>
+       );
      });
 
      return <ul className={style.values}>{selectedItems}</ul>;
@@ -187,7 +199,7 @@ class Autocomplete extends React.Component {
 
    return (
      <div data-react-toolbox='autocomplete' className={className}>
-       {this.renderSelected()}
+       {this.props.selectedPosition === 'above' ? this.renderSelected() : null}
        <Input
          {...other}
          ref='input'
@@ -201,6 +213,7 @@ class Autocomplete extends React.Component {
          value={this.state.query}
        />
        {this.renderSuggestions()}
+       {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
      </div>
    );
  }

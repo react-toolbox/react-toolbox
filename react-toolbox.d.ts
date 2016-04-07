@@ -168,7 +168,7 @@ declare namespace __RT {
          */
         multiple?: boolean,
         /**
-         * 	Object of key/values or array representing all items suggested.
+         *  Object of key/values or array representing all items suggested.
          */
         source: Object | Array<any>,
         /**
@@ -177,7 +177,7 @@ declare namespace __RT {
          */
         type?: string,
         /**
-         * 	Value or array of values currently selected component.Current value of the input element.
+         *  Value or array of values currently selected component.Current value of the input element.
          */
         value?: string | Array<any>,
     }

@@ -50,13 +50,13 @@ class TableTest extends React.Component {
 
 ## Properties
 
-| Name              | Type          | Default         | Description|
+| Name              | Type            | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `className`     | `String`      | `''`            | Sets a custom class to style the Component.|
-| `heading`       | `Bool`        | `true`          | If true, component will show a heading using model field names.|
-| `model`         | `Object`      |                 | Object describing the data model that represents each object in the `source`.|
-| `onChange`      | `Function`    |                 | Callback function that is fired when an item in a row changes. If set, rows are editable. |
-| `onSelect`      | `Function`    |                 | Callback function invoked when the row selection changes.|
-| `selectable`    | `Bool`       | `true`           | If true, the header and each row will display a checkbox to allow the user to select them.|
-| `selected`    | `Array`       |                  | Array of indexes of the items in the source that should appear as selected.|
-| `source`    | `Array`       |                  | Array of objects representing each item to show.|
+| `className`       | `String`        | `''`            | Sets a custom class to style the Component.|
+| `heading`         | `Boolean`       | `true`          | If true, component will show a heading using model field names.|
+| `model`           | `Object`        |                 | Object describing the data model that represents each object in the `source`.|
+| `onChange`        | `Function`      |                 | Callback function that is fired when an item in a row changes. If set, rows are editable. |
+| `onSelect`        | `Function`      |                 | Callback function invoked when the row selection changes.|
+| `selectable`      | `Boolean`       | `true`          | If true, the header and each row will display a checkbox to allow the user to select them.|
+| `selected`        | `Array`         |                 | Array of indexes of the items in the source that should appear as selected.|
+| `source`          | `Array`         |                 | Array of objects representing each item to show.|

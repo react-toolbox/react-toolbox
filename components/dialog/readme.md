@@ -24,7 +24,13 @@ class DialogTest extends React.Component {
     return (
       <div>
         <Button label='Show my dialog' onClick={this.handleToggle} />
-        <Dialog actions={this.actions} active={this.state.active} title='My awesome dialog'>
+        <Dialog
+          actions={this.actions}
+          active={this.state.active}
+          onEscKeyDown={this.handleToggle}
+          onOverlayClick={this.handleToggle}
+          title='My awesome dialog'
+        >
           <p>Here you can add arbitrary content. Components like Pickers are using dialogs now.</p>
         </Dialog>
       </div>
@@ -35,15 +41,15 @@ class DialogTest extends React.Component {
 
 ## Properties
 
-| Name              | Type          | Default         | Description|
+| Name                    | Type            | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `active`        | `Boolean`       |  `false`        | If true, the dialog will be active.|
-| `actions`       | `Array`         |    `[]`         | A array of objects representing the buttons for the dialog navigation area. The properties will be transferred to the buttons.|
-| `className`     | `String`        |     `''`        | Sets a class to give customized styles to the dialog.|
-| `onOverlayClick`   | `Function`   |             | Callback to be invoked when the dialog overlay is clicked.|
-| `onOverlayMouseDown` | `Function` |             | Callback called when the mouse button is pressed on the overlay. |
-| `onOverlayMouseUp` | `Function` |               | Callback called when the mouse button is released over the overlay. |
-| `onOverlayMouseMove` | `Function` |             | Callback called when the mouse is moving over the overlay. |
-| `onEscKeyDown` | `Function` |             | Callback called when the ESC is pressed with the overlay active. |
-| `title`         | `String`        |                 | The text string to use as standar title of the dialog.|
-| `type`          | `String`        |  `normal`       | Used to determine the size of the dialog. It can be `small`, `normal` or `large`. |
+| `actions`               | `Array`         | `[]`            | A array of objects representing the buttons for the dialog navigation area. The properties will be transferred to the buttons.|
+| `active`                | `Boolean`       | `false`         | If true, the dialog will be active.|
+| `className`             | `String`        | `''`            | Sets a class to give customized styles to the dialog.|
+| `onEscKeyDown`          | `Function`      |                 | Callback called when the ESC key is pressed with the overlay active. |
+| `onOverlayClick`        | `Function`      |                 | Callback to be invoked when the dialog overlay is clicked.|
+| `onOverlayMouseDown`    | `Function`      |                 | Callback called when the mouse button is pressed on the overlay. |
+| `onOverlayMouseMove`    | `Function`      |                 | Callback called when the mouse is moving over the overlay. |
+| `onOverlayMouseUp`      | `Function`      |                 | Callback called when the mouse button is released over the overlay. |
+| `title`                 | `String`        |                 | The text string to use as standar title of the dialog.|
+| `type`                  | `String`        | `normal`        | Used to determine the size of the dialog. It can be `small`, `normal` or `large`. |

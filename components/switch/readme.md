@@ -44,13 +44,13 @@ class SwitchTest extends React.Component {
 
 ## Properties
 
-| Name              | Type          | Default         | Description|
+| Name              | Type          | Default       | Description|
 |:-----|:-----|:-----|:-----|
-| `checked`      | `Boolean`   | `false` | If true, the switch will be enabled.|
-| `className`    | `String`   | `''`  | Sets a class to give custom styles to the switch.|
-| `disabled`     | `Boolean`  | `false`  | If true, component will be disabled.|
-| `label`        | `String`   |       | The text string to use for the floating label element.|
-| `name`         | `String`   |        | The text string used as name of the input.|
-| `onBlur`       | `Function` |        | Callback function that is fired when when the switch is blurred.|
-| `onChange`     | `Function` |        | Callback function that is fired when the components's value changes.|
-| `onFocus`      | `Function`  |        | Callback function fire when the switch is focused.|
+| `checked`      | `Boolean`        | `false`       | If true, the switch will be enabled.|
+| `className`    | `String`         | `''`          | Sets a class to give custom styles to the switch.|
+| `disabled`     | `Boolean`        | `false`       | If true, component will be disabled.|
+| `label`        | `String`         |               | The text string to use for the floating label element.|
+| `name`         | `String`         |               | The text string used as name of the input.|
+| `onBlur`       | `Function`       |               | Callback function that is fired when when the switch is blurred.|
+| `onChange`     | `Function`       |               | Callback function that is fired when the component's value changes.|
+| `onFocus`      | `Function`       |               | Callback function that is fired when the switch is focused.|

@@ -25,9 +25,9 @@ const NavigationTest = () => (
 
 ## Properties
 
-| Name              | Type          | Default         | Description|
+| Name            | Type          | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `actions`      | `Array`         |                 | Array of objects that represent buttons so the keys will be transferred as properties to those.|
-| `className`     | `String`        |                 | Set a custom class styles to style the navigation.|
-| `routes`        | `Array`         |                 | Array of objects similar to actions but that will be rendered as `<Link/>` component definition. |
-| `type`          | `String`        | `horizontal`        | Type of the navigation, it can be vertical or horizontal.|
+| `actions`       | `Array`       |                 | Array of objects that will be represented as `<Button/>` so the keys will be transferred as properties the Button Component.|
+| `className`     | `String`      |                 | Set a custom class styles to style the navigation.|
+| `routes`        | `Array`       |                 | Array of objects similar to actions but that will be rendered as `<Link/>` component definition. |
+| `type`          | `String`      | `horizontal`    | Type of the navigation, it can be `vertical` or `horizontal`.|
