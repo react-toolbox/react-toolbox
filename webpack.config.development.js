@@ -17,7 +17,8 @@ module.exports = {
     publicPath: '/build/'
   },
   resolve: {
-    extensions: ['', '.jsx', '.scss', '.js', '.json']
+    extensions: ['', '.jsx', '.scss', '.js', '.json'],
+    packageMains: ['browser', 'web', 'browserify', 'main', 'style'] // support `style` main field for normalize.css@^4
   },
   module: {
     loaders: [
