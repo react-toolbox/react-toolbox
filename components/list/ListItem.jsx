@@ -52,7 +52,7 @@ class ListItem extends React.Component {
   }
 
   render () {
-    const {onMouseDown, to, onClick, ripple, ...other} = this.props;
+    const {onMouseDown, to, onClick, ripple, ...other} = this.props; //eslint-disable-line no-unused-vars
     const children = this.groupChildren();
     const content = <ListItemLayout {...children} {...other}/>;
     let className = style.listItem;

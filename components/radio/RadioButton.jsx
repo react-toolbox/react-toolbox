@@ -38,7 +38,7 @@ class RadioButton extends React.Component {
 
   render () {
     const className = ClassNames(style[this.props.disabled ? 'disabled' : 'field'], this.props.className);
-    const { onChange, ...others } = this.props;
+    const { onChange, ...others } = this.props; //eslint-disable-line no-unused-vars
 
     return (
       <label data-react-toolbox='radio-button' className={className}>

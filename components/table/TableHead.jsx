@@ -28,6 +28,7 @@ TableHead.propTypes = {
   className: React.PropTypes.string,
   model: React.PropTypes.object,
   onSelect: React.PropTypes.func,
+  selectable: React.PropTypes.bool,
   selected: React.PropTypes.bool
 };
 

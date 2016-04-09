@@ -125,7 +125,7 @@ class Menu extends React.Component {
       } else if (position === POSITION.BOTTOM_LEFT) {
         return { clip: `rect(${height}px 0 ${height}px 0)` };
       } else if (position === POSITION.TOP_LEFT) {
-        return { clip: `rect(0 0 0 0)` };
+        return { clip: 'rect(0 0 0 0)' };
       }
     }
   }

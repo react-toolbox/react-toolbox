@@ -87,10 +87,10 @@ const Ripple = (options = {}) => {
         } else {
           const {
             children,
-            ripple,
+            ripple, //eslint-disable-line no-unused-vars
             rippleClassName: className,
-            rippleCentered: centered,
-            rippleSpread: spread,
+            rippleCentered: centered, //eslint-disable-line no-unused-vars
+            rippleSpread: spread, //eslint-disable-line no-unused-vars
             ...other
           } = this.props;
 

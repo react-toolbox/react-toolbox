@@ -16,7 +16,7 @@ class ListItemContent extends React.Component {
     const {type, children, caption, legend} = this.props;
 
     let count = React.Children.count(children);
-    [caption, legend].forEach(s => count += s ? 1 : 0);
+    [caption, legend].forEach(s => { count += s ? 1 : 0; });
     const typeIndex = Math.min(count, types.length);
 
     return type || types[typeIndex];

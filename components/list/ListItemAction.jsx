@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import style from './style';
 
 const ListItemAction = ({action}) => {
@@ -13,6 +13,7 @@ const ListItemAction = ({action}) => {
 };
 
 ListItemAction.propTypes = {
+  action: PropTypes.object
 };
 
 ListItemAction.defaultProps = {

@@ -15,7 +15,8 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.jsx', '.scss', '.js', '.json']
+    extensions: ['', '.jsx', '.scss', '.js', '.json'],
+    packageMains: ['browser', 'web', 'browserify', 'main', 'style']
   },
   watch: true,
   postcss: [autoprefixer],

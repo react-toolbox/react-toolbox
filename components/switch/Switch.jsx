@@ -38,7 +38,7 @@ class Switch extends React.Component {
   render () {
     let className = style[this.props.disabled ? 'disabled' : 'field'];
     const switchClassName = style[this.props.checked ? 'on' : 'off'];
-    const { onChange, ...others } = this.props;
+    const { onChange, ...others } = this.props; //eslint-disable-line no-unused-vars
     if (this.props.className) className += ` ${this.props.className}`;
 
     return (
