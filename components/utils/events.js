@@ -1,23 +1,21 @@
 export default {
   getMousePosition (event) {
     return {
-      x: event.pageX,
-      y: event.pageY
+      x: event.pageX - window.scrollX,
+      y: event.pageY - window.scrollY
     };
   },
 
   getTouchPosition (event) {
     return {
-      x: event.touches[0].pageX,
-      y: event.touches[0].pageY
+      x: event.touches[0].pageX - window.scrollX,
+      y: event.touches[0].pageY - window.scrollY
     };
   },
 
   pauseEvent (event) {
     event.stopPropagation();
     event.preventDefault();
-    event.returnValue = false;
-    event.cancelBubble = true;
   },
 
   addEventsToDocument (eventMap) {

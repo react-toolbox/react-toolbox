@@ -26,8 +26,8 @@ class TimePickerDialog extends React.Component {
     displayTime: this.props.value
   };
 
-  componentWillUpdate (nextProps) {
-    if (!this.props.active && nextProps.active) {
+  componentDidUpdate (prevProps) {
+    if (!prevProps.active && this.props.active) {
       setTimeout(this.refs.clock.handleCalculateShape, 1000);
     }
   }
