@@ -96,7 +96,7 @@
     "build": "cross-env NODE_ENV=production npm run babel && npm run sass",
     "clean": "rimraf ./lib",
     "lint": "npm run lint:js && npm run lint:scss",
-    "lint:js": "eslint ./ --ext .js,.jsx",
+    "lint:js": "eslint ./ --ext .js",
     "lint:scss": "sass-lint ./components/**/*.scss -v -i ./components/slider/style.scss",
     "patch": "bumped release patch",
     "prebuild": "npm run clean",

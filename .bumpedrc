@@ -3,9 +3,7 @@ files: [
 ]
 
 plugins:
-
   prerelease:
-
     'Linting config files':
       plugin: 'bumped-finepack'
 
@@ -18,7 +16,6 @@ plugins:
       command: 'npm run prepublish'
 
   postrelease:
-
     'Commiting new version':
       plugin: 'bumped-terminal'
       command: 'git add package.json && git commit package.json -m "$newVersion release" && git push origin master'

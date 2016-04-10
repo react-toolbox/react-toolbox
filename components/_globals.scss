@@ -54,30 +54,28 @@ $z-index-normal: 1 !default;
 $z-index-low: -100 !default;
 $z-index-lower: -200 !default;
 
-
 //-- Breakpoints
 // height of app bar
 // https://www.google.com/design/spec/layout/metrics-keylines.html#metrics-keylines-keylines-spacing
-$standard-increment-mobile:                          (5.6 * $unit) !default;
-$standard-increment-desktop:                         (6.4 * $unit) !default;
+$standard-increment-mobile: (5.6 * $unit) !default;
+$standard-increment-desktop: (6.4 * $unit) !default;
 
 // https://www.google.com/design/spec/layout/metrics-keylines.html#metrics-keylines-baseline-grids
-$baseline-grid:                                      (0.8 * $unit) !default;
-$layout-gutter-width-sm:                      ($baseline-grid * 2) !default;
-$layout-gutter-width:                         ($baseline-grid * 3) !default;
-
+$baseline-grid: (0.8 * $unit) !default;
+$layout-gutter-width-sm: ($baseline-grid * 2) !default;
+$layout-gutter-width: ($baseline-grid * 3) !default;
 
 // https://www.google.com/design/spec/layout/responsive-ui.html#responsive-ui-breakpoints
 // 4 columns
-$layout-breakpoint-xxs:                               480px !default;
+$layout-breakpoint-xxs: 480px !default;
 // 8 columns
-$layout-breakpoint-xs:                                600px !default;
+$layout-breakpoint-xs: 600px !default;
 // 12 columns
-$layout-breakpoint-sm-tablet:                         720px !default;
-$layout-breakpoint-sm:                                840px !default;
-$layout-breakpoint-md:                                960px !default;
-$layout-breakpoint-lg-tablet:                        1024px !default;
-$layout-breakpoint-lg:                               1280px !default;
-$layout-breakpoint-xl:                               1440px !default;
-$layout-breakpoint-xxl:                              1600px !default;
-$layout-breakpoint-xxxl:                             1920px !default;
+$layout-breakpoint-sm-tablet: 720px !default;
+$layout-breakpoint-sm: 840px !default;
+$layout-breakpoint-md: 960px !default;
+$layout-breakpoint-lg-tablet: 1024px !default;
+$layout-breakpoint-lg: 1280px !default;
+$layout-breakpoint-xl: 1440px !default;
+$layout-breakpoint-xxl: 1600px !default;
+$layout-breakpoint-xxxl: 1920px !default;
