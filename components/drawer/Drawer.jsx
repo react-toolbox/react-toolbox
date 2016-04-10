@@ -1,5 +1,6 @@
 import React from 'react';
 import ClassNames from 'classnames';
+import ActivableRenderer from '../hoc/ActivableRenderer';
 import Overlay from '../overlay';
 import style from './style';
 
@@ -33,4 +34,4 @@ Drawer.defaultProps = {
   type: 'left'
 };
 
-export default Drawer;
+export default ActivableRenderer()(Drawer);
