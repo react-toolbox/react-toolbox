@@ -106,7 +106,9 @@ class Menu extends React.Component {
   };
 
   calculatePosition () {
-    const {top, left, height, width} = ReactDOM.findDOMNode(this).parentNode.getBoundingClientRect();
+    const parentNode = ReactDOM.findDOMNode(this).parentNode;
+    if (!parentNode) return;
+    const {top, left, height, width} = parentNode.getBoundingClientRect();
     const {height: wh, width: ww} = utils.getViewport();
     const toTop = top < ((wh / 2) - height / 2);
     const toLeft = left < ((ww / 2) - width / 2);
