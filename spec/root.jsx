@@ -13,6 +13,7 @@ import Drawer from './components/drawer';
 import Dropdown from './components/dropdown';
 import IconMenu from './components/icon_menu';
 import Input from './components/input';
+import Layout from './components/layout';
 import List from './components/list';
 import Menu from './components/menu';
 import Pickers from './components/pickers';
@@ -54,6 +55,7 @@ const Root = () => (
     <Dropdown />
     <IconMenu />
     <Input />
+    <Layout />
     <List />
     <Menu />
     <Pickers />

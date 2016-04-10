@@ -13,6 +13,7 @@ export Dropdown from './dropdown';
 export FontIcon from './font_icon';
 export Form from './form';
 export Input from './input';
+export { Layout, NavDrawer, Panel, Sidebar } from './layout';
 export Link from './link';
 export List from './list/List';
 export ListItem from './list/ListItem';
