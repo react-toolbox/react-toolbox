@@ -22,12 +22,13 @@ const ListItemLayout = (props) => {
     ...props.rightActions
   ];
   const content = props.itemContent || <ListItemContent caption={props.caption} legend={props.legend} />;
+  const emptyActions = (item) => !item[0] && !item[1];
 
   return (
     <span className={className}>
-      <ListItemActions type='left'>{leftActions}</ListItemActions>
+      {!emptyActions(leftActions) > 0 && <ListItemActions type='left'>{leftActions}</ListItemActions>}
       {content}
-      <ListItemActions type='right'>{rightActions}</ListItemActions>
+      {!emptyActions(leftActions) > 0 && <ListItemActions type='right'>{rightActions}</ListItemActions>}
     </span>
   );
 };

@@ -52,14 +52,14 @@ class ListItem extends React.Component {
   }
 
   render () {
-    const {onMouseDown, to, onClick, ripple, ...other} = this.props; //eslint-disable-line no-unused-vars
+    const {className, onMouseDown, to, onClick, ripple, ...other} = this.props; //eslint-disable-line no-unused-vars
     const children = this.groupChildren();
     const content = <ListItemLayout {...children} {...other}/>;
-    let className = style.listItem;
-    if (this.props.className) className += ` ${this.props.className}`;
+    let finalClassName = style.listItem;
+    if (className) finalClassName += ` ${className}`;
 
     return (
-      <li className={className} onClick={this.handleClick} onMouseDown={onMouseDown}>
+      <li className={finalClassName} onClick={this.handleClick} onMouseDown={onMouseDown}>
         {to ? <a href={this.props.to}>{content}</a> : content}
         {children.ignored}
       </li>
