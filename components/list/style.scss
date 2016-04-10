@@ -40,7 +40,7 @@
 
 .listItem {
   position: relative;
-  > [data-react-toolbox='ripple'] {
+  > [data-react-toolbox="ripple"] {
     overflow: hidden;
   }
 }
@@ -61,18 +61,18 @@
     &:not(.checkboxItem) {
       opacity: .5;
     }
-    > .checkbox > [data-react-toolbox='label'] {
+    > .checkbox > [data-react-toolbox="label"] {
       opacity: .5;
     }
   }
 }
 
 .left {
-  [data-react-toolbox='font-icon'] {
+  [data-react-toolbox="font-icon"] {
     width: $list-item-icon-size;
   }
   & :last-child {
-    > [data-react-toolbox='font-icon'] {
+    > [data-react-toolbox="font-icon"] {
       margin-right: $list-item-right-icon-margin;
     }
   }
@@ -103,7 +103,7 @@
     padding: 0;
   }
 
-  > [data-react-toolbox='font-icon'] {
+  > [data-react-toolbox="font-icon"] {
     font-size: $list-item-icon-font-size;
     color: $color-text-secondary;
   }
@@ -113,13 +113,12 @@
   display: block;
   flex-grow: 1;
   &.large {
-    height: $list-item-min-height-legend;
     display: flex;
+    height: $list-item-min-height-legend;
     flex-direction: column;
     justify-content: center;
   }
 }
-
 
 .checkbox {
   display: flex;
@@ -129,10 +128,10 @@
   align-items: center;
   margin: 0;
   cursor: pointer;
-  > [data-react-toolbox='check'] {
+  > [data-react-toolbox="check"] {
     margin-right: $list-item-right-checkbox-margin;
   }
-  > [data-react-toolbox='label'] {
+  > [data-react-toolbox="label"] {
     padding-left: 0;
   }
 }
@@ -145,9 +144,9 @@
   display: block;
 
   &:not(.primary) {
+    padding-top: $list-item-legend-margin-top;
     font-size: $font-size-small;
     color: $color-text-secondary;
-    padding-top: $list-item-legend-margin-top;
     white-space: normal;
   }
 

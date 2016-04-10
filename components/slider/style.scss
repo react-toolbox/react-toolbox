@@ -4,8 +4,8 @@
 .container {
   position: relative;
   width: calc(100% - #{$slider-knob-size});
-  height: $slider-knob-size;
   margin-right: $slider-knob-size;
+  height: $slider-knob-size;
   user-select: none;
   &:not(:last-child) {
     margin-right: $slider-side-separation + $slider-knob-size;

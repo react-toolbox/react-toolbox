@@ -5,9 +5,9 @@
 }
 
 .enterActive, .leaveActive {
+  transition: transform, opacity;
   transition-timing-function: $animation-curve-fast-out-slow-in;
   transition-duration: 500ms;
-  transition: transform, opacity;
 }
 
 .enter {
