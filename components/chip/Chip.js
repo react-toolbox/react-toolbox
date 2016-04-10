@@ -1,12 +1,13 @@
 import React, {PropTypes} from 'react';
 import ClassNames from 'classnames';
+import Avatar from '../avatar';
 import style from './style';
 
 const Chip = ({children, className, deletable, onDeleteClick, ...other}) => {
   let hasAvatar = false;
   if (React.Children.count(children)) {
     const firstChild = children[0];
-    hasAvatar = firstChild && firstChild.type && firstChild.type.name === 'Avatar';
+    hasAvatar = firstChild && firstChild.type && firstChild.type === Avatar;
   }
 
   const classes = ClassNames(style.chip, {
