@@ -21,13 +21,11 @@ class Tabs extends React.Component {
   };
 
   componentDidMount () {
-    !this.props.disableAnimatedBottomBorder &&
-      this.updatePointer(this.props.index);
+    !this.props.disableAnimatedBottomBorder && this.updatePointer(this.props.index);
   }
 
   componentWillReceiveProps (nextProps) {
-    !this.props.disableAnimatedBottomBorder &&
-      this.updatePointer(nextProps.index);
+    !this.props.disableAnimatedBottomBorder && this.updatePointer(nextProps.index);
   }
 
   componentWillUnmount () {

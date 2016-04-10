@@ -164,7 +164,7 @@
     "no-with": [2],
     "one-var": [0],
     "operator-assignment": [0, "always"],
-    "operator-linebreak": [2, "after"],
+    "operator-linebreak": [2, "before"],
     "padded-blocks": [0],
     "prefer-const": [2],
     "prefer-spread": [2],

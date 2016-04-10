@@ -1,5 +1,6 @@
 import React from 'react';
 import ClassNames from 'classnames';
+import ActivableRenderer from '../hoc/ActivableRenderer';
 import Button from '../button';
 import Overlay from '../overlay';
 import style from './style';
@@ -28,11 +29,11 @@ const Dialog = (props) => {
           {props.title ? <h6 className={style.title}>{props.title}</h6> : null}
           {props.children}
         </section>
-        {actions ?
-          <nav role='navigation' className={style.navigation}>
-            {actions}
-          </nav> :
-          null
+        {actions
+          ? <nav role='navigation' className={style.navigation}>
+              {actions}
+            </nav>
+          : null
         }
       </div>
     </Overlay>
@@ -59,4 +60,4 @@ Dialog.defaultProps = {
   type: 'normal'
 };
 
-export default Dialog;
+export default ActivableRenderer()(Dialog);

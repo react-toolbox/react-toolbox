@@ -1,5 +1,6 @@
 import React from 'react';
 import ClassNames from 'classnames';
+import ActivableRenderer from '../hoc/ActivableRenderer';
 import Button from '../button';
 import FontIcon from '../font_icon';
 import Overlay from '../overlay';
@@ -21,24 +22,13 @@ class Snackbar extends React.Component {
     type: React.PropTypes.string
   };
 
-  state = {
-    curTimeout: null
-  };
-
   componentWillReceiveProps (nextProps) {
     if (nextProps.active && nextProps.timeout) {
-      if (this.state.curTimeout) clearTimeout(this.state.curTimeout);
-
-      const curTimeout = setTimeout(() => {
+      if (this.curTimeout) clearTimeout(this.curTimeout);
+      this.curTimeout = setTimeout(() => {
         nextProps.onTimeout();
-        this.setState({
-          curTimeout: null
-        });
+        this.curTimeout = null;
       }, nextProps.timeout);
-
-      this.setState({
-        curTimeout
-      });
     }
   }
 
@@ -60,4 +50,4 @@ class Snackbar extends React.Component {
   }
 }
 
-export default Snackbar;
+export default ActivableRenderer()(Snackbar);
