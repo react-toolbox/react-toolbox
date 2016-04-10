@@ -84,11 +84,13 @@ class Tabs extends React.Component {
       return this.props.index === idx;
     });
 
-    return React.cloneElement(contents[activeIdx], {
-      key: activeIdx,
-      active: true,
-      tabIndex: activeIdx
-    });
+    if (contents && contents[activeIdx]) {
+      return React.cloneElement(contents[activeIdx], {
+        key: activeIdx,
+        active: true,
+        tabIndex: activeIdx
+      });
+    }
   }
 
   render () {
