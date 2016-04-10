@@ -52,7 +52,7 @@ class ListTest extends React.Component {
             <ListItem
               avatar='https://pbs.twimg.com/profile_images/693578804808278017/a5y4h8MN_400x400.png'
               caption='Javi Velasco'
-              legend='Frontend engineer at Socialbro'
+              legend='Frontend engineer at Audiense'
               rightIcon='star'
             />
             <ListItem

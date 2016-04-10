@@ -61,7 +61,7 @@ const Home = () => (
         <Card className={style.author}>
           <CardMedia aspectRatio='wide' image='/images/javivelasco.jpg' />
           <CardTitle title="Javi Velasco" subtitle="@javivelasco" />
-          <CardText>Software gardener • Film, music & comic lover • Frontend Engineer at SocialBro  • Any biographer in the room?</CardText>
+          <CardText>Software gardener • Film, music & comic lover • Frontend Engineer at Audiense  • Any biographer in the room?</CardText>
           <CardActions>
             <Button href='http://github.com/javivelasco' target='_blank'><GithubIcon /> Github</Button>
             <Button href='http://twitter.com/javivelasco' target='_blank' className={style.twitter}><TwitterIcon /> Twitter</Button>
