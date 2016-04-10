@@ -1,4 +1,4 @@
-export { default as Layout } from './Layout.jsx';
-export { default as Panel } from './Panel.jsx';
-export { default as NavDrawer } from './NavDrawer.jsx';
-export { default as Sidebar } from './Sidebar.jsx';
+export { default as Layout } from './Layout';
+export { default as Panel } from './Panel';
+export { default as NavDrawer } from './NavDrawer';
+export { default as Sidebar } from './Sidebar';
