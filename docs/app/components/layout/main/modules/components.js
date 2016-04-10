@@ -5,6 +5,7 @@ import Avatar from 'react-toolbox/avatar/readme';
 import Button from 'react-toolbox/button/readme';
 import Card from 'react-toolbox/card/readme';
 import Checkbox from 'react-toolbox/checkbox/readme';
+import Chip from 'react-toolbox/chip/readme';
 import DatePicker from 'react-toolbox/date_picker/readme';
 import Dialog from 'react-toolbox/dialog/readme';
 import Drawer from 'react-toolbox/drawer/readme';
@@ -32,6 +33,7 @@ import AutocompleteExample1 from './examples/autocomplete_example_1.txt';
 import AvatarExample1 from './examples/avatar_example_1.txt';
 import ButtonExample1 from './examples/button_example_1.txt';
 import CardExample1 from './examples/card_example_1.txt';
+import ChipExample1 from './examples/chip_example_1.txt';
 import CheckboxExample1 from './examples/checkbox_example_1.txt';
 import DatePickerExample1 from './examples/datepicker_example_1.txt';
 import DialogExample1 from './examples/dialog_example_1.txt';
@@ -84,6 +86,12 @@ export default {
     docs: Card,
     path: '/components/card',
     examples: [CardExample1]
+  },
+  chip: {
+    name: 'Chip',
+    docs: Chip,
+    path: '/components/chip',
+    examples: [ChipExample1]
   },
   checkbox: {
     name: 'Checkbox',
