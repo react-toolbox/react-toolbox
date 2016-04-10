@@ -36,6 +36,7 @@ class DatePickerTest extends React.Component {
 |:-----|:-----|:-----|:-----|
 | `autoOk`        | `Boolean`       | `false`       | Automatically selects a date upon clicking on a day|
 | `className`     | `String`        |               | This class will be placed at the top of the `DatePickerDialog` component so you can provide custom styles.|
+| `inputClassName`| `String`        |               | This class will be applied to `Input` component of `DatePicker`. |
 | `inputFormat`   | `Function`      |               | Function to format the date displayed on the input. |
 | `label`         | `String`        |               | The text string to use for the floating label element in the input component.|
 | `maxDate`       | `Date`          |               | Date object with the maximum selectable date. |

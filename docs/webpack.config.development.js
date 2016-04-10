@@ -9,7 +9,7 @@ module.exports = {
 	devtool: 'inline-source-map',
   entry: [
     'webpack-hot-middleware/client',
-    './app/index.jsx'
+    './app/index.js'
   ],
   output: {
     path: path.join(__dirname, 'build'),
@@ -17,7 +17,8 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
-    extensions: ['', '.jsx', '.scss', '.js', '.json', '.md'],
+    extensions: ['', '.scss', '.js', '.json', '.md'],
+    packageMains: ['browser', 'web', 'browserify', 'main', 'style'],
     alias: {
       'react-toolbox': path.resolve(__dirname + './../components')
     },
@@ -31,7 +32,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         exclude: /(node_modules)/,
         loader: 'babel'
       }, {

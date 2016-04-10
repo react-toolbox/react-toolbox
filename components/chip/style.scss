@@ -3,24 +3,24 @@
 @import "./config";
 
 .chip {
-  background-color: $chip-background;
-  border-radius: $chip-height;
-  color: $chip-color;
   display: inline-block;
+  padding: 0 $chip-padding;
+  margin-right: $chip-margin-right;
   font-size: $chip-font-size;
   line-height: $chip-height;
-  margin-right: $chip-margin-right;
-  padding: 0 $chip-padding;
+  color: $chip-color;
+  background-color: $chip-background;
+  border-radius: $chip-height;
 }
 
 .avatar {
   padding-left: 0;
 
   > [data-react-toolbox="avatar"] {
+    width: $chip-height;
     height: $chip-height;
     margin-right: $chip-icon-margin-right;
     vertical-align: middle;
-    width: $chip-height;
 
     > span {
       font-size: $chip-icon-font-size;
@@ -34,14 +34,14 @@
 }
 
 .delete {
-  cursor: pointer;
-  display: inline-block;
-  height: $chip-remove-size;
-  margin: $chip-remove-margin;
-  padding: $chip-remove-margin;
   position: absolute;
-  vertical-align: middle;
+  display: inline-block;
   width: $chip-remove-size;
+  height: $chip-remove-size;
+  padding: $chip-remove-margin;
+  margin: $chip-remove-margin;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 .delete:hover .deleteIcon {
@@ -49,9 +49,9 @@
 }
 
 .deleteIcon {
+  vertical-align: top;
   background: $chip-remove-background;
   border-radius: $chip-remove-size;
-  vertical-align: top;
 
   .deleteX {
     fill: transparent;

@@ -15,7 +15,7 @@ hr {
   position: fixed;
   top: $appbar-height - ($button-floating-height / 2);
   right: $button-floating-height / 2;
-  z-index: $z-index-higher;
+  z-index: $z-index-highest;
 }
 
 .documentation {

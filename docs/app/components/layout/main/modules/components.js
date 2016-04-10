@@ -11,6 +11,7 @@ import Drawer from 'react-toolbox/drawer/readme';
 import Dropdown from 'react-toolbox/dropdown/readme';
 import FontIcon from 'react-toolbox/font_icon/readme';
 import Input from 'react-toolbox/input/readme';
+import Layout from 'react-toolbox/layout/readme';
 import Link from 'react-toolbox/link/readme';
 import List from 'react-toolbox/list/readme';
 import Menu from 'react-toolbox/menu/readme';
@@ -38,6 +39,7 @@ import DrawerExample1 from './examples/drawer_example_1.txt';
 import DrodpownExample1 from './examples/dropdown_example_1.txt';
 import FontIconExample1 from './examples/font_icon_example_1.txt';
 import InputExample1 from './examples/input_example_1.txt';
+import LayoutExample1 from './examples/layout_example_1.txt';
 import LinkExample1 from './examples/link_example_1.txt';
 import ListExample1 from './examples/list_example_1.txt';
 import MenuExample1 from './examples/menu_example_1.txt';
@@ -124,6 +126,12 @@ export default {
     docs: Input,
     path: '/components/input',
     examples: [InputExample1]
+  },
+  layout: {
+    name: 'Layout',
+    docs: Layout,
+    path: '/components/layout',
+    examples: [LayoutExample1]
   },
   link: {
     name: 'Link',

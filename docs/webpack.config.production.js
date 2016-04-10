@@ -7,13 +7,14 @@ const TransferWebpackPlugin = require('transfer-webpack-plugin');
 
 module.exports = {
   context: __dirname,
-  entry: ['./app/index.jsx'],
+  entry: ['./app/index.js'],
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'docs.js'
   },
   resolve: {
-    extensions: ['', '.jsx', '.scss', '.js', '.json', '.md'],
+    extensions: ['', '.scss', '.js', '.json', '.md'],
+    packageMains: ['browser', 'web', 'browserify', 'main', 'style'],
     alias: {
       'react-toolbox': path.resolve(__dirname + './../components')
     },
@@ -27,7 +28,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         exclude: /(node_modules)/,
         loader: 'babel'
       }, {

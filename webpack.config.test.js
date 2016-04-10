@@ -5,7 +5,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         exclude: /(node_modules)/,
         loader: 'babel'
       }, {
@@ -15,7 +15,8 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.jsx', '.scss', '.js', '.json']
+    extensions: ['', '.scss', '.js', '.json'],
+    packageMains: ['browser', 'web', 'browserify', 'main', 'style']
   },
   watch: true,
   postcss: [autoprefixer],

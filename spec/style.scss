@@ -23,7 +23,7 @@ $offset: 1.8 * $unit;
       margin: ($offset / 4) 0;
       opacity: .6;
     }
-    [data-react-toolbox='card'] {
+    [data-react-toolbox="card"] {
       display: inline-block;
       margin: $offset $offset 0 0;
     }
@@ -38,6 +38,7 @@ $offset: 1.8 * $unit;
 }
 
 .appbar {
+  z-index: 999999 !important;
   display: flex;
   > h1 {
     flex-grow: 1;

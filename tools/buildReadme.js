@@ -14,7 +14,7 @@ const getComponentName = (filepath) => {
   return name;
 };
 
-const componentGlob = Path.join(process.argv[2], '/*.jsx');
+const componentGlob = Path.join(process.argv[2], '/*.js');
 
 new Promise((resolve, reject) => {
   Glob(componentGlob, (err, files) => {
