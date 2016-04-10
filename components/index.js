@@ -5,6 +5,7 @@ export Avatar from './avatar';
 export Button from './button/Button';
 export IconButton from './button/IconButton';
 export * from './card';
+export Chip from './chip';
 export Checkbox from './checkbox';
 export DatePicker from './date_picker';
 export Dialog from './dialog';
