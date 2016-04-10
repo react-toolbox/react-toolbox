@@ -73,11 +73,11 @@
     "phantomjs": "^2.1.7",
     "phantomjs-polyfill": "0.0.2",
     "postcss-loader": "^0.8.2",
-    "react": "^15.0.0",
-    "react-addons-css-transition-group": "^15.0.0",
-    "react-addons-test-utils": "^15.0.0",
+    "react": "^15.0.1",
+    "react-addons-css-transition-group": "^15.0.1",
+    "react-addons-test-utils": "^15.0.1",
     "react-docgen": "^2.8.1",
-    "react-dom": "^15.0.0",
+    "react-dom": "^15.0.1",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.4",
     "redbox-react": "^1.2.3",
@@ -108,9 +108,9 @@
   "peerDependencies": {
     "classnames": "^2.2.0",
     "normalize.css": "^4.0.0",
-    "react": "^0.14 || ^15.0.0",
-    "react-addons-css-transition-group": "^0.14.0 || ^15.0.0",
-    "react-dom": "^0.14.0 || ^15.0.0"
+    "react": "^0.14 || ^15.0.1",
+    "react-addons-css-transition-group": "^0.14.0 || ^15.0.1",
+    "react-dom": "^0.14.0 || ^15.0.1"
   },
   "typings": "./react-toolbox.d.ts"
 }

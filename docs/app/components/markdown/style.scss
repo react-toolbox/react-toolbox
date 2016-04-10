@@ -63,8 +63,9 @@ $documentation-table-font-size: 1.4 * $unit;
     text-align: left;
     > button {
       height: $documentation-playground-button-height;
+      font-size: $documentation-playground-button-font-size;
+      line-height: $documentation-playground-button-height;
       > span {
-        font-size: $documentation-playground-button-font-size;
         line-height: $documentation-playground-button-height;
       }
     }
