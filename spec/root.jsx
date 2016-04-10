@@ -1,6 +1,5 @@
 /* global VERSION */
 import React from 'react';
-import App from '../components/app';
 import AppBarToolbox from '../components/app_bar';
 import Avatar from './components/avatar';
 import ButtonToolbox from '../components/button';
@@ -32,7 +31,7 @@ const _hrefProject = () => {
 };
 
 const Root = () => (
-  <App className={style.app}>
+  <div className={style.app}>
     <AppBarToolbox fixed flat className={style.appbar}>
       <h1>React Toolbox <small>Spec {VERSION}</small></h1>
       <ButtonToolbox
@@ -66,7 +65,7 @@ const Root = () => (
     <Table />
     <Tabs />
     <Tooltip />
-  </App>
+  </div>
 );
 
 export default Root;

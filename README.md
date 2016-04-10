@@ -39,25 +39,7 @@ The previous code creates a React button component based on React Toolbox button
 
 React Toolbox assumes that you are importing [Roboto Font](https://www.google.com/fonts/specimen/Roboto) and [Material Design Icons](https://www.google.com/design/icons/).
 
-In order to import the fonts for you, we'd need to include them in the CSS which is considered a bad practice. If you are not including them in your app, go to the linked sites and follow the instructions. 
-
-## App component
-
-There are some components in React Toolbox that require special positioning. For example, `Dialog` and `Drawer` components block the scroll showing a fixed positioned overlay. To handle these cases, React Toolbox needs some styling in your root node. This can be achieved by wrapping your app with a non intrusive `App` wrapper component:
-
-```jsx
-import React from 'react';
-import ReactDOM from 'react-dom';
-import ToolboxApp from 'react-toolbox/lib/app';
-import App from './my-app';
-
-ReactDOM.render(
-  <ToolboxApp>
-    <App />
-  </ToolboxApp>
-, document.getElementById('app'));
-
-```
+In order to import the fonts for you, we'd need to include them in the CSS which is considered a bad practice. If you are not including them in your app, go to the linked sites and follow the instructions.
 
 ## Customization
 
@@ -67,7 +49,7 @@ Since React Toolbox styles are written in CSS, it's pretty easy to customize you
 
 Thanks to the power of SASS, all components in React Toolbox are configured from a variables file. The best way to customize your build is to create a custom configuration SASS file overriding configuration variables like colors or sizes.
 
-With [toolbox-loader](https://github.com/react-toolbox/toolbox-loader) you can tell webpack where your configuration file is and it will prepend your config to each SASS build. This will result in your customized CSS for React Toolbox Components. For now you can browse the configuration files and override what you want. 
+With [toolbox-loader](https://github.com/react-toolbox/toolbox-loader) you can tell webpack where your configuration file is and it will prepend your config to each SASS build. This will result in your customized CSS for React Toolbox Components. For now you can browse the configuration files and override what you want.
 
 ### Via `className` property
 
@@ -106,7 +88,7 @@ To start the documentation site locally, you'll need to install the dependencies
 git clone https://github.com/react-toolbox/react-toolbox.git
 npm install
 cd docs/
-npm install 
+npm install
 npm start
 ```
 

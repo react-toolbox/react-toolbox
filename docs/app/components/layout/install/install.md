@@ -35,24 +35,6 @@ React Toolbox assumes that you are importing [Roboto Font](https://www.google.co
 
 In order to import the fonts for you, we'd need to include them in the CSS which is considered a bad practice. If you are not including them in your app to the linked sites and follow the instructions.
 
-## App component
-
-There are some components in React Toolbox that requires special positioning. For example, `Dialog` and `Drawer` components block the scroll showing a fixed positioned overlay. To handle these cases, React Toolbox needs some styling in your root node. This can be achieved wrapping your app with a nonintrusive `App` wrapper component:
-
-```jsx
-import React from 'react';
-import ReactDOM from 'react-dom';
-import ToolboxApp from 'react-toolbox/lib/app';
-import App from './my-app';
-
-ReactDOM.render(
-  <ToolboxApp>
-    <App />
-  </ToolboxApp>
-, document.getElementById('app'));
-
-```
-
 ## Customization
 
 Since React Toolbox styles are written in CSS it's pretty easy to customize your components. We have several ways:
