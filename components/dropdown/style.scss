@@ -46,6 +46,7 @@
     right: $input-chevron-offset;
     width: 0;
     height: 0;
+    pointer-events: none;
     content: "";
     border-top: $size solid $input-text-bottom-border-color;
     border-right: $border;
