@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ClassNames from 'classnames';
 import Ripple from '../ripple';
 import style from './style';
@@ -9,6 +9,12 @@ const Check = ({checked, children, onMouseDown}) => {
   });
 
   return <div data-react-toolbox='check' onMouseDown={onMouseDown} className={className}>{children}</div>;
+};
+
+Check.propTypes = {
+  checked: PropTypes.bool,
+  children: PropTypes.any,
+  onMouseDown: PropTypes.func
 };
 
 export default Ripple({

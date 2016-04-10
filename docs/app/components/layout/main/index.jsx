@@ -9,17 +9,15 @@ import BaseDocs from './modules/components.md';
 import components from './modules/components.js';
 import style from './style';
 
-const LoadExampleButton = (props) => {
-  return (
-    <Button
-      raised
-      accent
-      icon='code'
-      label='Load in playground'
-      onClick={props.onClick}
-    />
-  );
-};
+const LoadExampleButton = (props) => (
+  <Button
+    accent
+    icon='code'
+    label="Load in playground"
+    onClick={props.onClick}
+    raised
+  />
+);
 
 LoadExampleButton.propTypes = {
   onClick: React.PropTypes.func

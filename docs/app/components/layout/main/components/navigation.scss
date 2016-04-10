@@ -14,10 +14,10 @@
 }
 
 .item {
-  a > span{
+  > span{
     padding: $navigation-v-padding $navigation-h-padding;
   }
-  > span > span {
+  [data-react-toolbox="list-item-text"] {
     font-size: $font-size-small;
     font-weight: $font-weight-semi-bold;
   }

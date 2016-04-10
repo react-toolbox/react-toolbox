@@ -81,7 +81,7 @@ const Home = () => (
     </section>
 
     <footer className={style.footer}>
-      <p>React Toolbox © 2015</p>
+      <p>React Toolbox © 2016</p>
       <small>Crafted with <span className={style.love}>ღ</span> between Spain and Thailand</small>
     </footer>
   </article>

@@ -50,7 +50,7 @@ class ListTest extends React.Component {
               rightIcon='star'
             />
             <ListItem
-              avatar='https://pbs.twimg.com/profile_images/459485216499720192/ufS4YGOY_400x400.png'
+              avatar='https://pbs.twimg.com/profile_images/693578804808278017/a5y4h8MN_400x400.png'
               caption='Javi Velasco'
               legend='Frontend engineer at Socialbro'
               rightIcon='star'
@@ -112,7 +112,7 @@ class ListTest extends React.Component {
               rightIcon='mail'
             />
             <ListItem
-              avatar='https://pbs.twimg.com/profile_images/459485216499720192/ufS4YGOY_400x400.png'
+              avatar='https://pbs.twimg.com/profile_images/693578804808278017/a5y4h8MN_400x400.png'
               caption='Javi Velasco'
               rightIcon='mail'
             />
@@ -149,7 +149,7 @@ class ListTest extends React.Component {
             <ListItem leftIcon='send' rightIcon='done' caption='Reference item'/>
             <ListItem rightIcon='done' caption='Item with custom left icons'>
               <FontIcon value='send' />
-              <Avatar image='https://pbs.twimg.com/profile_images/459485216499720192/ufS4YGOY_400x400.png'/>
+              <Avatar image='https://pbs.twimg.com/profile_images/693578804808278017/a5y4h8MN_400x400.png'/>
             </ListItem>
             <ListItem leftIcon='send'>
               <ListItemContent caption='custom right icons' legend='ListItemContent acts as a divider'/>
@@ -175,7 +175,7 @@ class ListTest extends React.Component {
             <ListItem caption='Item with overlayed click events' onClick={() => console.log('clicked row')}>
               <FontIcon value='send' onClick={() => console.log('clicked icon')}/>
               <Avatar
-                image='https://pbs.twimg.com/profile_images/459485216499720192/ufS4YGOY_400x400.png'
+                image='https://pbs.twimg.com/profile_images/693578804808278017/a5y4h8MN_400x400.png'
                 onMouseDown={() => console.log('avatar mouse down, should see ripple')}
                 onClick={() => console.log('clicked avatar')}
               />

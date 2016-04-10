@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import Button, { IconButton } from '../../components/button';
 import Card, { CardActions, CardMedia, CardText, CardTitle } from '../../components/card';

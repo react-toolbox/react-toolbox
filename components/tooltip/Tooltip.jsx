@@ -43,7 +43,7 @@ const Tooltip = (ComposedComponent) => class extends React.Component {
   };
 
   render () {
-    const {children, className, tooltip, tooltipDelay, tooltipHideOnClick, ...other} = this.props;
+    const {children, className, tooltip, tooltipDelay, tooltipHideOnClick, ...other} = this.props; //eslint-disable-line no-unused-vars
     const composedClassName = ClassNames(style.root, className);
     const tooltipClassName = ClassNames(style.tooltip, {
       [style.active]: this.state.active

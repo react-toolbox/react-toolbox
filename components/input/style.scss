@@ -50,7 +50,7 @@
       color: $input-text-highlight-color;
     }
   }
-  &:focus, &.filled, &[type='date'], &[type='time'] {
+  &:focus, &.filled, &[type="date"], &[type="time"] {
     ~ .label:not(.fixed) {
       top: $input-focus-label-top;
       font-size: $input-label-font-size;
@@ -73,7 +73,7 @@
   transition-duration: $animation-duration;
   transition-property: top, font-size, color;
   &.fixed ~ .hint {
-    display: none
+    display: none;
   }
 }
 

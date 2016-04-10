@@ -6,7 +6,7 @@ const ListItemText = ({className, primary, children, ...other}) => {
   const _className = ClassNames(style.itemText, {[style.primary]: primary}, className);
 
   return (
-    <span className={_className} {...other}>
+    <span data-react-toolbox="list-item-text" className={_className} {...other}>
       {children}
     </span>
   );

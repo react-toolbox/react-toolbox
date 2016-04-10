@@ -34,7 +34,7 @@ class Checkbox extends React.Component {
   }
 
   render () {
-    const { onChange, ...others } = this.props;
+    const { onChange, ...others } = this.props; //eslint-disable-line no-unused-vars
     const className = ClassNames(style.field, {
       [style.disabled]: this.props.disabled
     }, this.props.className);
