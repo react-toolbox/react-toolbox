@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import DatePickerDialog from './DatePickerDialog';
 import events from '../utils/events';
 import Input from '../input';
@@ -10,6 +11,7 @@ class DatePicker extends React.Component {
     autoOk: React.PropTypes.bool,
     className: React.PropTypes.string,
     error: React.PropTypes.string,
+    inputClassName: React.PropTypes.string,
     inputFormat: React.PropTypes.func,
     label: React.PropTypes.string,
     maxDate: React.PropTypes.object,
@@ -37,14 +39,14 @@ class DatePicker extends React.Component {
   };
 
   render () {
-    const { value } = this.props;
+    const { inputClassName, value } = this.props;
     const inputFormat = this.props.inputFormat || time.formatDate;
     const date = value ? inputFormat(value) : null;
 
     return (
       <div data-react-toolbox='date-picker'>
         <Input
-          className={style.input}
+          className={classnames(style.input, {[inputClassName]: inputClassName })}
           error={this.props.error}
           onMouseDown={this.handleInputMouseDown}
           label={this.props.label}

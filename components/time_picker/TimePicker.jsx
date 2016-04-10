@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import events from '../utils/events';
 import time from '../utils/time';
 import style from './style';
@@ -10,6 +11,7 @@ class TimePicker extends React.Component {
     className: React.PropTypes.string,
     error: React.PropTypes.string,
     format: React.PropTypes.oneOf(['24hr', 'ampm']),
+    inputClassName: React.PropTypes.string,
     label: React.PropTypes.string,
     onChange: React.PropTypes.func,
     value: React.PropTypes.object
@@ -39,12 +41,12 @@ class TimePicker extends React.Component {
   };
 
   render () {
-    const { value, format } = this.props;
+    const { value, format, inputClassName } = this.props;
     const formattedTime = value ? time.formatTime(value, format) : null;
     return (
       <div data-react-toolbox='time-picker'>
         <Input
-          className={style.input}
+          className={classnames(style.input, {[inputClassName]: inputClassName })}
           error={this.props.error}
           label={this.props.label}
           onMouseDown={this.handleInputMouseDown}
