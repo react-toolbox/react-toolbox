@@ -33,10 +33,9 @@ class Calendar extends React.Component {
   }
 
   scrollToActive () {
-    this.refs.years.scrollTop =
-      this.refs.activeYear.offsetTop -
-      this.refs.years.offsetHeight / 2 +
-      this.refs.activeYear.offsetHeight / 2;
+    this.refs.years.scrollTop = this.refs.activeYear.offsetTop
+      - this.refs.years.offsetHeight / 2
+      + this.refs.activeYear.offsetHeight / 2;
   }
 
   handleDayClick = (day) => {

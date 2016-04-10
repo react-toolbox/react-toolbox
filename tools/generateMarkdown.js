@@ -11,11 +11,11 @@ function generateDesciption (description) {
 function generatePropType (type) {
   let values;
   if (Array.isArray(type.value)) {
-    values = '(`' +
-      type.value.map(function (typeValue) {
+    values = '(`'
+      + type.value.map(function (typeValue) {
         return typeValue.name || typeValue.value;
-      }).join('`,`') +
-      '`)';
+      }).join('`,`')
+      + '`)';
   } else {
     values = type.value;
   }
@@ -33,11 +33,11 @@ function generateProp (propName, prop) {
   }
 
   return (
-    `| \`${propName}\` ${prop.required ? '(required)' : ''}` +
-    `| ${(prop.type ? generatePropType(prop.type) : '')} ` +
-    `| ${(prop.defaultValue ? `\`${prop.defaultValue}\`` : '')} ` +
-    `| ${(prop.description ? prop.description : '')} ` +
-    '|'
+      `| \`${propName}\` ${prop.required ? '(required)' : ''}`
+    + `| ${(prop.type ? generatePropType(prop.type) : '')} `
+    + `| ${(prop.defaultValue ? `\`${prop.defaultValue}\`` : '')} `
+    + `| ${(prop.description ? prop.description : '')} `
+    + '|'
   );
 }
 
@@ -45,20 +45,19 @@ function generateProps (props) {
   const title = '### Properties';
 
   return (
-    `${title}\n` +
-    '| Name | Type | Default | Description |\n' +
-    '|:-----|:-----|:-----|:-----|\n' +
-    Object.keys(props).sort().map(propName => {
+    `${title}\n`
+    + '| Name | Type | Default | Description |\n'
+    + '|:-----|:-----|:-----|:-----|\n'
+    + Object.keys(props).sort().map(propName => {
       return generateProp(propName, props[propName]);
     }).join('\n')
   );
 }
 
 function generateMarkdown (name, reactAPI) {
-  const markdownString =
-    generateTitle(name) + '\n' +
-    (reactAPI.description ? generateDesciption(reactAPI.description) + '\n' : '\n') +
-    generateProps(reactAPI.props);
+  const markdownString = generateTitle(name) + '\n'
+    + (reactAPI.description ? generateDesciption(reactAPI.description) + '\n' : '\n')
+    + generateProps(reactAPI.props);
 
   return markdownString;
 }
