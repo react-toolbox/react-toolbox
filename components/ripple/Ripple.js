@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ClassNames from 'classnames';
 import style from './style';
+import events from '../utils/events';
 import prefixer from '../utils/prefixer';
 
 const defaults = {
@@ -23,6 +24,7 @@ const Ripple = (options = {}) => {
       static propTypes = {
         children: React.PropTypes.any,
         disabled: React.PropTypes.bool,
+        onRippleEnded: React.PropTypes.func,
         ripple: React.PropTypes.bool,
         rippleCentered: React.PropTypes.bool,
         rippleClassName: React.PropTypes.string,
@@ -44,6 +46,20 @@ const Ripple = (options = {}) => {
         top: null,
         width: null
       };
+
+      componentDidMount () {
+        if (this.props.onRippleEnded) {
+          events.addEventListenerOnTransitionEnded(this.refs.ripple, (evt) => {
+            if (evt.propertyName === 'transform') this.props.onRippleEnded(evt);
+          });
+        }
+      }
+
+      componentWillUnmount () {
+        if (this.props.onRippleEnded) {
+          events.removeEventListenerOnTransitionEnded(this.refs.ripple);
+        }
+      }
 
       handleEnd = () => {
         document.removeEventListener(this.touch ? 'touchend' : 'mouseup', this.handleEnd);

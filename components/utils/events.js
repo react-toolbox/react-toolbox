@@ -37,5 +37,34 @@ export default {
       node = node.parentNode;
     }
     return false;
+  },
+
+  addEventListenerOnTransitionEnded (element, fn) {
+    const eventName = transitionEventNamesFor(element);
+    if (!eventName) return false;
+    element.addEventListener(eventName, fn);
+    return true;
+  },
+
+  removeEventListenerOnTransitionEnded (element) {
+    const eventName = transitionEventNamesFor(element);
+    if (!eventName) return false;
+    element.removeEventListener(eventName);
+    return true;
   }
 };
+
+const TRANSITIONS = {
+  'transition': 'transitionend',
+  'OTransition': 'oTransitionEnd',
+  'MozTransition': 'transitionend',
+  'WebkitTransition': 'webkitTransitionEnd'
+};
+
+function transitionEventNamesFor (element) {
+  for (const transition in TRANSITIONS) {
+    if (element.style[transition] !== undefined) {
+      return TRANSITIONS[transition];
+    }
+  }
+}

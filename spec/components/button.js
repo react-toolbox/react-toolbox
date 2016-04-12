@@ -10,7 +10,7 @@ const ButtonTest = () => (
     <Button href='http://github.com/javivelasco' target='_blank' raised>
       <GithubIcon /> Github
     </Button>
-    <Button icon='bookmark' label='Bookmark' accent />
+    <Button icon='bookmark' label='Bookmark' accent onRippleEnded={rippleEnded} />
     <Button icon='bookmark' label='Bookmark' raised primary />
     <Button icon='inbox' label='Inbox' flat />
     <Button icon='add' floating />
@@ -26,5 +26,9 @@ const ButtonTest = () => (
     <Button icon='add' label='Add this' flat disabled />
   </section>
 );
+
+function rippleEnded () {
+  console.log('Ripple animation ended!');
+}
 
 export default ButtonTest;
