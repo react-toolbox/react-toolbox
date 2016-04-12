@@ -32,6 +32,7 @@ class TableTest extends React.Component {
         onChange={this.handleChange}
         onSelect={this.handleSelect}
         selectable
+        multiSelectable
         selected={this.state.selected}
         source={this.state.source}
       />

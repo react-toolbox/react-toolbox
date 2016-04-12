@@ -2,24 +2,27 @@ import React from 'react';
 import Checkbox from '../checkbox';
 import style from './style';
 
-const TableHead = ({model, onSelect, selectable, selected}) => {
+const TableHead = ({model, onSelect, selectable, multiSelectable, selected}) => {
   let selectCell;
   const contentCells = Object.keys(model).map((key) => {
     const name = model[key].title || key;
     return <th key={key}>{name}</th>;
   });
 
-  if (selectable) {
+  if (selectable && multiSelectable) {
     selectCell = (
       <th key='select' className={style.selectable}>
-        <Checkbox onChange={onSelect} checked={selected} />
+        <Checkbox onChange={onSelect} checked={selected}/>
       </th>
     );
+  } else if (selectable) {
+    selectCell = (
+      <th key='select' className={style.selectable}></th>
+    );
   }
-
   return (
     <thead>
-      <tr>{[selectCell, ...contentCells]}</tr>
+    <tr>{[selectCell, ...contentCells]}</tr>
     </thead>
   );
 };
@@ -29,6 +32,7 @@ TableHead.propTypes = {
   model: React.PropTypes.object,
   onSelect: React.PropTypes.func,
   selectable: React.PropTypes.bool,
+  multiSelectable: React.PropTypes.bool,
   selected: React.PropTypes.bool
 };
 
