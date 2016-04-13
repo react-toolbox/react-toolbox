@@ -23,7 +23,7 @@ class DatePickerTest extends React.Component {
       <section>
         <DatePicker label='Birthdate' onChange={this.handleChange.bind(this, 'date1')} value={this.state.date1} />
         <DatePicker label='Expiration date' minDate={min_datetime} onChange={this.handleChange.bind(this, 'date2')} value={this.state.date2} />
-        <DatePicker label='Formatted date' inputFormat={(value) => `${value.getDate()}/${value.getMonth()}/${value.getFullYear()}`} onChange={this.handleChange.bind(this, 'date3')} value={this.state.date3} />
+        <DatePicker label='Formatted date' inputFormat={(value) => `${value.getDate()}/${value.getMonth() + 1}/${value.getFullYear()}`} onChange={this.handleChange.bind(this, 'date3')} value={this.state.date3} />
       </section>
     );
   }
