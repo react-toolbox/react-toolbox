@@ -37,6 +37,7 @@ class Autocomplete extends React.Component {
  state = {
    direction: this.props.direction,
    focus: false,
+   changed: false,
    query: this.query(this.props.value)
  };
 
@@ -61,20 +62,26 @@ class Autocomplete extends React.Component {
    const key = this.props.multiple ? keys : keys[0];
    const query = this.query(key);
    if (this.props.onChange) this.props.onChange(key, event);
-   this.setState({ focus: false, query }, () => { this.refs.input.blur(); });
+   this.setState({ focus: false, changed: false, query }, () => { this.refs.input.blur(); });
  };
 
  handleQueryBlur = () => {
-   if (this.state.focus) this.setState({focus: false});
+   if (this.state.focus) this.setState({ focus: false, changed: false });
  };
 
  handleQueryChange = (value) => {
-   this.setState({query: value});
+   this.setState({ query: value, changed: true });
  };
 
  handleQueryFocus = () => {
    this.refs.suggestions.scrollTop = 0;
    this.setState({active: '', focus: true});
+ };
+
+ handleQueryKeyDown = (event) => {
+   if (event.which === 8 && !this.state.changed) {
+     this.setState({ query: '' });
+   }
  };
 
  handleQueryKeyUp = (event) => {
@@ -112,12 +119,31 @@ class Autocomplete extends React.Component {
    const suggest = new Map();
    const query = this.state.query.toLowerCase().trim() || '';
    const values = this.values();
-   for (const [key, value] of this.source()) {
-     if (value.toLowerCase().trim().startsWith(query)
-          && (!values.has(key) || !this.props.multiple)) {
-       suggest.set(key, value);
+   const source = this.source();
+
+   if (this.props.multiple) {
+     for (const [key, value] of source) {
+       if (value.toLowerCase().trim().startsWith(query) && !values.has(key)) {
+         suggest.set(key, value);
+       }
+     }
+   } else {
+     if (!query) {
+       return this.source();
+     }
+
+     for (const [key, value] of source) {
+       const match = value.toLowerCase().trim().startsWith(query);
+
+       if (
+         this.state.changed && match
+         || !this.state.changed && !match
+       ) {
+         suggest.set(key, value);
+       }
      }
    }
+
    return suggest;
  }
 
@@ -209,6 +235,7 @@ class Autocomplete extends React.Component {
          onBlur={this.handleQueryBlur}
          onChange={this.handleQueryChange}
          onFocus={this.handleQueryFocus}
+         onKeyDown={this.handleQueryKeyDown}
          onKeyUp={this.handleQueryKeyUp}
          value={this.state.query}
        />
