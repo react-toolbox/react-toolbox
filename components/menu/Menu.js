@@ -89,8 +89,8 @@ class Menu extends React.Component {
     if (this.state.active) {
       events.removeEventsFromDocument({click: this.handleDocumentClick});
     }
-    clearTimeout(this.positionTimeoutHandle)
-    clearTimeout(this.activateTimeoutHandle)
+    clearTimeout(this.positionTimeoutHandle);
+    clearTimeout(this.activateTimeoutHandle);
   }
 
   handleDocumentClick = (event) => {
