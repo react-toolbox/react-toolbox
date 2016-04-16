@@ -43,7 +43,7 @@ class Menu extends React.Component {
   };
 
   componentDidMount () {
-    setTimeout(() => {
+    this.positionTimeoutHandle = setTimeout(() => {
       const { width, height } = this.refs.menu.getBoundingClientRect();
       const position = this.props.position === POSITION.AUTO ? this.calculatePosition() : this.props.position;
       this.setState({ position, width, height });
@@ -62,7 +62,7 @@ class Menu extends React.Component {
       const position = this.calculatePosition();
       if (this.state.position !== position) {
         this.setState({ position, active: false }, () => {
-          setTimeout(() => {this.setState({active: true}); }, 20);
+          this.activateTimeoutHandle = setTimeout(() => {this.setState({active: true}); }, 20);
         });
         return false;
       }
@@ -89,6 +89,8 @@ class Menu extends React.Component {
     if (this.state.active) {
       events.removeEventsFromDocument({click: this.handleDocumentClick});
     }
+    clearTimeout(this.positionTimeoutHandle);
+    clearTimeout(this.activateTimeoutHandle);
   }
 
   handleDocumentClick = (event) => {
