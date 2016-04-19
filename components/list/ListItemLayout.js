@@ -22,7 +22,7 @@ const ListItemLayout = (props) => {
     ...props.rightActions
   ];
   const content = props.itemContent || <ListItemContent caption={props.caption} legend={props.legend} />;
-  const emptyActions = (item) => !item[0] && !item[1];
+  const emptyActions = (item) => !item[0] && !item[1] && !item[2];
 
   return (
     <span className={className}>
