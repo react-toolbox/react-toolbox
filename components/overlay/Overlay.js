@@ -20,7 +20,13 @@ class Overlay extends React.Component {
   componentDidMount () {
     if (this.props.active) {
       this.escKeyListener = document.body.addEventListener('keydown', this.handleEscKey.bind(this));
+      document.body.style.overflow = 'hidden';
     }
+  }
+
+  componentWillUpdate (nextProps) {
+    if (nextProps.active && !this.props.active) document.body.style.overflow = 'hidden';
+    if (!nextProps.active && this.props.active) document.body.style.overflow = null;
   }
 
   componentDidUpdate () {

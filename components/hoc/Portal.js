@@ -55,7 +55,6 @@ class Portal extends Component {
       : React.Children.only(this.props.children);
 
     if (overlay !== null) {
-      if (this.props.lockBody) document.body.style.overflow = 'hidden';
       this._mountOverlayTarget();
       this._overlayInstance = ReactDOM.unstable_renderSubtreeIntoContainer(
         this, overlay, this._overlayTarget
@@ -68,7 +67,6 @@ class Portal extends Component {
 
   _unrenderOverlay () {
     if (this._overlayTarget) {
-      if (this.props.lockBody) document.body.style.overflow = 'scroll';
       ReactDOM.unmountComponentAtNode(this._overlayTarget);
       this._overlayInstance = null;
     }
