@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import style from './style';
 
 class Portal extends Component {
   static propTypes = {
@@ -55,7 +56,7 @@ class Portal extends Component {
       : React.Children.only(this.props.children);
 
     if (overlay !== null) {
-      if (this.props.lockBody) document.body.style.overflow = 'hidden';
+      if (this.props.lockBody) document.body.classList.add(style.noScroll);
       this._mountOverlayTarget();
       this._overlayInstance = ReactDOM.unstable_renderSubtreeIntoContainer(
         this, overlay, this._overlayTarget
@@ -68,7 +69,7 @@ class Portal extends Component {
 
   _unrenderOverlay () {
     if (this._overlayTarget) {
-      if (this.props.lockBody) document.body.style.overflow = 'scroll';
+      if (this.props.lockBody) document.body.classList.remove(style.noScroll);
       ReactDOM.unmountComponentAtNode(this._overlayTarget);
       this._overlayInstance = null;
     }
