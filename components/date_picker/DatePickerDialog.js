@@ -24,9 +24,18 @@ class CalendarDialog extends React.Component {
   };
 
   state = {
-    date: this.props.value,
-    display: 'months'
+    display: 'months',
+    date: this.props.value
   };
+
+  componentWillMount () {
+    this.updateStateDate(this.props.value);
+
+  }
+
+  componentWillReceiveProps (nextProps) {
+    this.updateStateDate(nextProps.value);
+  }
 
   handleCalendarChange = (value, dayClick) => {
     const state = {display: 'months', date: value};
@@ -46,6 +55,14 @@ class CalendarDialog extends React.Component {
   handleSwitchDisplay = (display) => {
     this.setState({ display });
   };
+
+  updateStateDate = (date) => {
+    if (Object.prototype.toString.call(date) === '[object Date]') {
+      this.setState({
+        date
+      });
+    }
+  }
 
   actions = [
     { label: 'Cancel', className: style.button, onClick: this.props.onDismiss },
