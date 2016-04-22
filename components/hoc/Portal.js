@@ -12,6 +12,21 @@ class Portal extends Component {
     lockBody: true
   }
 
+  constructor () {
+    super();
+    this.state = {
+      originalOverflowValue: false
+    };
+  }
+
+  componentWillMount () {
+    if (document.body.style.overflow !== '' && document.body.style.overflow !== undefined) {
+      this.setState({
+        originalOverflowValue: document.body.style.overflow
+      });
+    }
+  }
+
   componentDidMount () {
     this._renderOverlay();
   }
@@ -68,7 +83,13 @@ class Portal extends Component {
 
   _unrenderOverlay () {
     if (this._overlayTarget) {
-      if (this.props.lockBody) document.body.style.overflow = 'scroll';
+      if (this.props.lockBody) {
+        if (this.state.originalOverflowValue !== false) {
+          document.body.style.overflow = this.state.originalOverflowValue;
+        } else {
+          document.body.style.removeProperty('overflow');
+        }
+      }
       ReactDOM.unmountComponentAtNode(this._overlayTarget);
       this._overlayInstance = null;
     }
