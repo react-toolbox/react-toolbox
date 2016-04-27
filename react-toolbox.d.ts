@@ -1162,6 +1162,10 @@ declare var Checkbox: typeof __RT.Checkbox;
 declare module 'react-toolbox/lib/checkbox' {
     export default Checkbox;
 }
+declare var Chip: typeof __RT.Chip;
+declare module 'react-toolbox/lib/chip' {
+    export default Chip;
+}
 declare var DatePicker: typeof __RT.DatePicker;
 declare module 'react-toolbox/lib/date_picker' {
     export default DatePicker;
