@@ -75,11 +75,11 @@ declare namespace __RT {
     }
 
     // Interface for components with icons
-    export interface Iconic {
+    export interface Iconic<T extends HTMLElement> {
         /**
          * Value of the icon (See icon component).
          */
-        icon?: string | __React.ReactElement<any> | __React.ReactHTMLElement,
+        icon?: string | __React.ReactElement<any> | __React.ReactHTMLElement<T>,
     }
 
     export interface Conditional {
@@ -136,12 +136,12 @@ declare namespace __RT {
      * Usually it contains controls on the right and left side and a title with the current section or app name. 
      * You should give the content with children elements.
      */
-    class AppBar extends React.Component<AppBarProps, {}> {
-        render(): React.DOMElement<any>;
+    class AppBar<P extends __React.DOMAttributes, T extends Element> extends React.Component<AppBarProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
-    export interface AvatarProps extends Props, Iconic {
+    export interface AvatarProps<T extends HTMLElement> extends Props, Iconic<T> {
         children?: any,
-        image?: string | __React.ReactElement<any> | __React.ReactHTMLElement | __React.ClassicComponent<any, any>,
+        image?: string | __React.ReactElement<any> | __React.ReactHTMLElement<T> | __React.ClassicComponent<any, any>,
         title?: string | boolean,
     }
     /**
@@ -150,8 +150,8 @@ declare namespace __RT {
      * As users may choose not to personalize an avatar, provide delightful defaults. 
      * When used with a specific logo, avatars can also be used to represent brand.
      */
-    class Avatar extends React.Component<AvatarProps, {}> {
-        render(): React.DOMElement<any>;
+    class Avatar<P extends __React.DOMAttributes, T extends HTMLElement> extends React.Component<AvatarProps<T>, {}> {
+        render(): React.DOMElement<P, T>;
     }
     interface AutocompleteProps extends Props, Conditional, Changeable<string | Array<any>> {
         /**
@@ -186,10 +186,10 @@ declare namespace __RT {
      * They can be simple or multiple depending on the amount of values that can be selected. 
      * The opening direction is determined at opening time depending on the current position.
      */
-    class Autocomplete extends React.Component<AutocompleteProps, {}> {
-        render(): React.DOMElement<any>;
+    class Autocomplete<P extends __React.DOMAttributes, T extends Element> extends React.Component<AutocompleteProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
-    interface ButtonProps extends Props, Clickable, Conditional, Iconic {
+    interface ButtonProps<T extends HTMLElement> extends Props, Clickable, Conditional, Iconic<T> {
         /**
          * Indicates if the button should have accent color.
          * @default false
@@ -243,13 +243,13 @@ declare namespace __RT {
      * A button clearly communicates what action will occur when the user touches it. 
      * It consists of text, an image, or both, designed in accordance with your app’s color theme.
      */
-    class Button extends React.Component<ButtonProps, {}> {
-        render(): React.DOMElement<any>;
+    class Button<P extends __React.DOMAttributes, T extends HTMLElement> extends React.Component<ButtonProps<T>, {}> {
+        render(): React.DOMElement<P, T>;
     }
-    class IconButton extends React.Component<ButtonProps, {}> {
-        render(): React.DOMElement<any>;
+    class IconButton<P extends __React.DOMAttributes, T extends HTMLElement> extends React.Component<ButtonProps<T>, {}> {
+        render(): React.DOMElement<P, T>;
     }
-    interface CardProps extends Props, Clickable {
+    interface CardProps<T extends HTMLElement> extends Props, Clickable {
         /**
          * Child components, usually Card subcomponents.
          */
@@ -262,7 +262,7 @@ declare namespace __RT {
          * Array of objects describing actions. These actions will be rendered as buttons and the object fields will be transferred to those.
          * @default []
          */
-        actions?: Array<ButtonProps>,
+        actions?: Array<ButtonProps<T>>,
         /**
          * Sets HEX or RGBA color to add a colored layer to the heading.
          */
@@ -283,11 +283,11 @@ declare namespace __RT {
      * Cards are composed of multiple subcomponents in React Toolbox. 
      * You can combine each of the subcomponents to create all different Material Design Cards given in the spec.
      */
-    export class Card extends React.Component<CardProps, {}> {
-        render(): React.DOMElement<any>;
+    export class Card<P extends __React.DOMAttributes, T extends HTMLElement> extends React.Component<CardProps<T>, {}> {
+        render(): React.DOMElement<P, T>;
     }
-    export interface CardTitleProps extends Props {
-        avatar?: string | __React.ReactElement<any> | __React.ReactHTMLElement | __React.ClassicComponent<any, any>,
+    export interface CardTitleProps<T extends HTMLElement> extends Props {
+        avatar?: string | __React.ReactElement<any> | __React.ReactHTMLElement<T> | __React.ClassicComponent<any, any>,
         /**
          * Children to pass through the component.
          */
@@ -305,10 +305,10 @@ declare namespace __RT {
      * A versatile title block that can be used in various places on the card, including the media area. 
      * This component can also display an avatar next to the title content.
      */
-    export class CardTitle extends React.Component<CardTitleProps, {}> {
-        render(): React.DOMElement<any>;
+    export class CardTitle<P extends __React.DOMAttributes, T extends HTMLElement> extends React.Component<CardTitleProps<T>, {}> {
+        render(): React.DOMElement<P, T>;
     }
-    export interface CardMediaProps extends Props {
+    export interface CardMediaProps<T extends HTMLElement> extends Props {
         /**
          * Forces a ('wide' 16:9) or ('square' 1:1) aspect ratio respectively. 
          * Unset, the media area will have a flexible height.
@@ -330,14 +330,14 @@ declare namespace __RT {
         /**
          * Can be used instead of children. Accepts an element or a URL string.
          */
-        image?: string | __React.ReactElement<any> | __React.ReactHTMLElement | __React.ClassicComponent<any, any>,
+        image?: string | __React.ReactElement<any> | __React.ReactHTMLElement<T> | __React.ClassicComponent<any, any>,
     }
     /**
      * Used for displaying media such as images or videos on a card. 
      * Can also be used with a solid background color instead of an image.
      */
-    export class CardMedia extends React.Component<CardMediaProps, {}> {
-        render(): React.DOMElement<any>;
+    export class CardMedia<P extends __React.DOMAttributes, T extends HTMLElement> extends React.Component<CardMediaProps<T>, {}> {
+        render(): React.DOMElement<P, T>;
     }
     export interface CardTextProps extends Props {
         /**
@@ -349,8 +349,8 @@ declare namespace __RT {
      * Basic card content container. 
      * Good for small descriptions or other supplementary text.
      */
-    export class CardText extends React.Component<CardTextProps, {}> {
-        render(): React.DOMElement<any>;
+    export class CardText<P extends __React.DOMAttributes, T extends Element> extends React.Component<CardTextProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
     export interface CardActionsProps extends Props {
         /**
@@ -362,8 +362,8 @@ declare namespace __RT {
      * This component is used as a container for supplemental card actions. 
      * Supplemental actions within the card are explicitly called out using icons, text, and UI controls, typically placed at the bottom of the card.
      */
-    export class CardActions extends React.Component<CardActionsProps, {}> {
-        render(): React.DOMElement<any>;
+    export class CardActions<P extends __React.DOMAttributes, T extends Element> extends React.Component<CardActionsProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
     export interface CheckboxProps extends Props, Changeable<boolean>, Conditional {
         /**
@@ -388,8 +388,8 @@ declare namespace __RT {
          */
         onFocus?: Function,
     }
-    export class Checkbox extends React.Component<CheckboxProps, {}> {
-        render(): React.DOMElement<any>;
+    export class Checkbox<P extends __React.DOMAttributes, T extends Element> extends React.Component<CheckboxProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
     export interface DatePickerProps extends Props, Changeable<Date> {
         /**
@@ -409,15 +409,15 @@ declare namespace __RT {
          */
         value?: Date,
     }
-    export class DatePicker extends React.Component<DatePickerProps, {}> {
-        render(): React.DOMElement<any>;
+    export class DatePicker<P extends __React.DOMAttributes, T extends Element> extends React.Component<DatePickerProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
-    export interface DialogProps extends Props, Modal {
+    export interface DialogProps<T extends HTMLElement> extends Props, Modal {
         /**
          * An array of objects representing the buttons for the dialog navigation area. The properties will be transferred to the buttons.
          * @default []
          */
-        actions?: Array<ButtonProps>,
+        actions?: Array<ButtonProps<T>>,
         /**
          * The text string to use as standar title of the dialog.
          */
@@ -428,8 +428,8 @@ declare namespace __RT {
          */
         type?: string,
     }
-    export class Dialog extends React.Component<DialogProps, {}> {
-        render(): React.DOMElement<any>;
+    export class Dialog<P extends __React.DOMAttributes, T extends HTMLElement> extends React.Component<DialogProps<T>, {}> {
+        render(): React.DOMElement<P, T>;
     }
     export interface DrawerProps extends Props, Modal {
         /**
@@ -438,8 +438,8 @@ declare namespace __RT {
          */
         type?: string
     }
-    export class Drawer extends React.Component<DrawerProps, {}> {
-        render(): React.DOMElement<any>;
+    export class Drawer<P extends __React.DOMAttributes, T extends Element> extends React.Component<DrawerProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
 
     export interface DropdownProps extends Props, Changeable<any>, Conditional {
@@ -464,18 +464,18 @@ declare namespace __RT {
          */
         value: string,
     }
-    class Dropdown extends React.Component<DropdownProps, {}> {
-        render(): React.DOMElement<any>;
+    class Dropdown<P extends __React.DOMAttributes, T extends Element> extends React.Component<DropdownProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
 
     interface FontIconProps extends Props {
         value: string
     }
-    class FontIcon extends React.Component<FontIconProps, {}> {
-        render(): React.DOMElement<any>;
+    class FontIcon<P extends __React.DOMAttributes, T extends Element> extends React.Component<FontIconProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
 
-    interface InputProps extends Props, Conditional, Changeable<string>, Iconic {
+    interface InputProps<T extends HTMLElement> extends Props, Conditional, Changeable<string>, Iconic<T> {
         /**
          * Give an error string to display under the field.
          */
@@ -533,11 +533,11 @@ declare namespace __RT {
          */
         value?: string,
     }
-    class Input extends React.Component<InputProps, {}> {
-        render(): React.DOMElement<any>;
+    class Input<P extends __React.DOMAttributes, T extends HTMLElement> extends React.Component<InputProps<T>, {}> {
+        render(): React.DOMElement<P, T>;
     }
 
-    interface LinkProps extends React.Props<Link>, Iconic {
+    interface LinkProps<P extends __React.DOMAttributes, T extends HTMLElement> extends React.Props<Link<P, T>>, Iconic<T> {
         href: string,
         /**
          * The text string used for the text content of the link.
@@ -548,8 +548,8 @@ declare namespace __RT {
          */
         count?: number,
     }
-    class Link extends React.Component<LinkProps, {}> {
-        render(): React.DOMElement<any>;
+    class Link<P extends __React.DOMAttributes, T extends HTMLElement> extends React.Component<LinkProps<P, T>, {}> {
+        render(): React.DOMElement<P, T>;
     }
 
     interface ListProps extends Props {
@@ -564,8 +564,8 @@ declare namespace __RT {
          */
         selectable?: boolean,
     }
-    class List extends React.Component<ListProps, {}> {
-        render(): React.DOMElement<any>;
+    class List<P extends __React.DOMAttributes, T extends Element> extends React.Component<ListProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
     interface ListItemProps extends Props, Conditional, Clickable {
         /**
@@ -599,8 +599,8 @@ declare namespace __RT {
          */
         selectable?: boolean,
     }
-    class ListItem extends React.Component<ListItemProps, {}> {
-        render(): React.DOMElement<any>;
+    class ListItem<P extends __React.DOMAttributes, T extends Element> extends React.Component<ListItemProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
     interface ListCheckboxProps extends Props, Conditional, Changeable<boolean> {
         /**
@@ -629,8 +629,8 @@ declare namespace __RT {
          */
         onFocus?: Function,
     }
-    class ListCheckbox extends React.Component<ListCheckboxProps, {}> {
-        render(): React.DOMElement<any>;
+    class ListCheckbox<P extends __React.DOMAttributes, T extends Element> extends React.Component<ListCheckboxProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
     export interface ListSubHeaderProps extends Props {
         /**
@@ -638,8 +638,8 @@ declare namespace __RT {
          */
         caption: string;
     }
-    class ListSubHeader extends React.Component<ListSubHeaderProps, {}> {
-        render(): React.DOMElement<any>;
+    class ListSubHeader<P extends __React.DOMAttributes, T extends Element> extends React.Component<ListSubHeaderProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
     interface ListDividerProps extends Props {
         /**
@@ -647,8 +647,8 @@ declare namespace __RT {
          */
         inset: boolean;
     }
-    class ListDivider extends React.Component<ListDividerProps, {}> {
-        render(): React.DOMElement<any>;
+    class ListDivider<P extends __React.DOMAttributes, T extends Element> extends React.Component<ListDividerProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
     interface MenuProps extends Props {
         /**
@@ -689,10 +689,10 @@ declare namespace __RT {
          */
         value?: boolean,
     }
-    class Menu extends React.Component<MenuProps, {}> {
-        render(): React.DOMElement<any>;
+    class Menu<P extends __React.DOMAttributes, T extends Element> extends React.Component<MenuProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
-    interface IconMenuProps extends Props, Iconic {
+    interface IconMenuProps<T extends HTMLElement> extends Props, Iconic<T> {
         /**
          * If true, the icon will show a ripple when is clicked.
          */
@@ -728,10 +728,10 @@ declare namespace __RT {
          */
         selectable?: boolean,
     }
-    class IconMenu extends React.Component<IconMenuProps, {}> {
-        render(): React.DOMElement<any>;
+    class IconMenu<P extends __React.DOMAttributes, T extends HTMLElement> extends React.Component<IconMenuProps<T>, {}> {
+        render(): React.DOMElement<P, T>;
     }
-    interface MenuItemProps extends Props, Conditional, Iconic {
+    interface MenuItemProps<T extends HTMLElement> extends Props, Conditional, Iconic<T> {
         /**
          * The text to include in the menu item.
          */
@@ -745,28 +745,28 @@ declare namespace __RT {
          */
         selected?: boolean,
     }
-    class MenuItem extends React.Component<MenuItemProps, {}> {
-        render(): React.DOMElement<any>;
+    class MenuItem<P extends __React.DOMAttributes, T extends HTMLElement> extends React.Component<MenuItemProps<T>, {}> {
+        render(): React.DOMElement<P, T>;
     }
-    class MenuDivider extends React.Component<any, {}> {
-        render(): React.DOMElement<any>;
+    class MenuDivider<P extends __React.DOMAttributes, T extends Element> extends React.Component<any, {}> {
+        render(): React.DOMElement<P, T>;
     }
-    interface NavigationProps extends Props {
+    interface NavigationProps<P extends __React.DOMAttributes, T extends HTMLElement> extends Props {
         /**
          * Array of objects that represent buttons so the keys will be transferred as properties to those.
          */
-        actions?: Array<ButtonProps>,
+        actions?: Array<ButtonProps<T>>,
         /**
          * Array of objects similar to actions but that will be rendered as <Link/> component definition.
          */
-        routes?: Array<LinkProps>,
+        routes?: Array<LinkProps<P, T>>,
         /**
          * Type of the navigation, it can be 'vertical' or 'horizontal'.
          */
         type?: string,
     }
-    class Navigation extends React.Component<NavigationProps, {}> {
-        render(): React.DOMElement<any>;
+    class Navigation<P extends __React.DOMAttributes, T extends HTMLElement> extends React.Component<NavigationProps<P, T>, {}> {
+        render(): React.DOMElement<P, T>;
     }
     interface ProgressBarProps extends Props {
         /**
@@ -799,8 +799,8 @@ declare namespace __RT {
          */
         value?: number,
     }
-    class ProgressBar extends React.Component<ProgressBarProps, {}> {
-        render(): React.DOMElement<any>;
+    class ProgressBar<P extends __React.DOMAttributes, T extends Element> extends React.Component<ProgressBarProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
     interface RadioGroupProps extends Props, Conditional, Changeable<any> {
         /**
@@ -812,8 +812,8 @@ declare namespace __RT {
          */
         value?: any,
     }
-    class RadioGroup extends React.Component<RadioGroupProps, {}> {
-        render(): React.DOMElement<any>;
+    class RadioGroup<P extends __React.DOMAttributes, T extends Element> extends React.Component<RadioGroupProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
     interface RadioButtonProps extends Props, Conditional {
         /**
@@ -841,8 +841,8 @@ declare namespace __RT {
          */
         value: any,
     }
-    class RadioButton extends React.Component<RadioButtonProps, {}> {
-        render(): React.DOMElement<any>;
+    class RadioButton<P extends __React.DOMAttributes, T extends Element> extends React.Component<RadioButtonProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
     interface SliderProps extends Props {
         /**
@@ -878,10 +878,10 @@ declare namespace __RT {
          */
         value: number,
     }
-    class Slider extends React.Component<SliderProps, {}> {
-        render(): React.DOMElement<any>;
+    class Slider<P extends __React.DOMAttributes, T extends Element> extends React.Component<SliderProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
-    interface SnackbarProps extends Props, Modal, Iconic {
+    interface SnackbarProps<T extends HTMLElement> extends Props, Modal, Iconic<T> {
         /**
          * For the action component inside the Snackbar.
          */
@@ -907,8 +907,8 @@ declare namespace __RT {
          */
         type?: string,
     }
-    class Snackbar extends React.Component<SnackbarProps, {}> {
-        render(): React.DOMElement<any>;
+    class Snackbar<P extends __React.DOMAttributes, T extends HTMLElement> extends React.Component<SnackbarProps<T>, {}> {
+        render(): React.DOMElement<P, T>;
     }
     interface SwitchProps extends Props, Conditional {
         /**
@@ -940,8 +940,8 @@ declare namespace __RT {
          */
         onFocus?: Function,
     }
-    class Switch extends React.Component<SwitchProps, {}> {
-        render(): React.DOMElement<any>;
+    class Switch<P extends __React.DOMAttributes, T extends Element> extends React.Component<SwitchProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
     interface TableProps extends Props {
         /**
@@ -969,8 +969,8 @@ declare namespace __RT {
          */
         source?: Array<{ [key: string]: any }>,
     }
-    class Table extends React.Component<TableProps, {}> {
-        render(): React.DOMElement<any>;
+    class Table<P extends __React.DOMAttributes, T extends Element> extends React.Component<TableProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
     interface TabsProps extends Props, Changeable<number> {
         /**
@@ -978,8 +978,8 @@ declare namespace __RT {
          */
         index: number,
     }
-    class Tabs extends React.Component<TabsProps, {}> {
-        render(): React.DOMElement<any>;
+    class Tabs<P extends __React.DOMAttributes, T extends Element> extends React.Component<TabsProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
     interface TabProps extends Props, Conditional {
         /**
@@ -1001,8 +1001,8 @@ declare namespace __RT {
          */
         onActive?: Function,
     }
-    class Tab extends React.Component<TabProps, {}> {
-        render(): React.DOMElement<any>;
+    class Tab<P extends __React.DOMAttributes, T extends Element> extends React.Component<TabProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
     interface TimePickerProps extends Props, Changeable<Date> {
         /**
@@ -1015,8 +1015,8 @@ declare namespace __RT {
          */
         value?: Date,
     }
-    class TimePicker extends React.Component<TimePickerProps, {}> {
-        render(): React.DOMElement<any>;
+    class TimePicker<P extends __React.DOMAttributes, T extends Element> extends React.Component<TimePickerProps, {}> {
+        render(): React.DOMElement<P, T>;
     }
     /*interface TooltipProps extends Props {
         /**
