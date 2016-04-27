@@ -28,7 +28,7 @@ const ListItemLayout = (props) => {
     <span className={className}>
       {!emptyActions(leftActions) > 0 && <ListItemActions type='left'>{leftActions}</ListItemActions>}
       {content}
-      {!emptyActions(leftActions) > 0 && <ListItemActions type='right'>{rightActions}</ListItemActions>}
+      {!emptyActions(rightActions) > 0 && <ListItemActions type='right'>{rightActions}</ListItemActions>}
     </span>
   );
 };

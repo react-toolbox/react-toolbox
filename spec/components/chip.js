@@ -1,6 +1,7 @@
 import React from 'react';
 import Avatar from '../../components/avatar';
 import Chip from '../../components/chip';
+import style from '../style';
 
 class ChipTest extends React.Component {
   state = {
@@ -49,6 +50,13 @@ class ChipTest extends React.Component {
           <Avatar><img src="https://placeimg.com/80/80/animals"/></Avatar>
           <span>Image contact chip</span>
         </Chip>
+
+        <div className={style.chipTruncateWrapper}>
+          <Chip deletable>
+            Truncated chip with long label. Lorem ipsum Amet quis mollit Excepteur id dolore.
+          </Chip>
+        </div>
+
       </section>
     );
   }

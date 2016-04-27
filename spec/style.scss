@@ -112,6 +112,13 @@ $offset: 1.8 * $unit;
   width: 345px;
 }
 
+.chipTruncateWrapper {
+  width: 20rem;
+  padding: $offset / 2;
+  margin-top: $offset;
+  border: 1px solid #f4f4f4;
+}
+
 .dropdownTemplate {
   display: flex;
   flex-direction: row;
