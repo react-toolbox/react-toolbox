@@ -17,7 +17,10 @@ class DatePicker extends React.Component {
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
     onChange: React.PropTypes.func,
-    value: React.PropTypes.object
+    value: React.PropTypes.oneOfType([
+      React.PropTypes.instanceOf(Date),
+      React.PropTypes.string
+    ])
   };
 
   state = {
@@ -41,7 +44,8 @@ class DatePicker extends React.Component {
   render () {
     const { inputClassName, value } = this.props;
     const inputFormat = this.props.inputFormat || time.formatDate;
-    const date = value ? inputFormat(value) : null;
+    const date = Object.prototype.toString.call(value) === '[object Date]' ? value : undefined;
+    const formattedDate = date === undefined ? inputFormat(value) : '';
 
     return (
       <div data-react-toolbox='date-picker'>
@@ -52,7 +56,7 @@ class DatePicker extends React.Component {
           label={this.props.label}
           readOnly
           type='text'
-          value={date}
+          value={formattedDate}
         />
         <DatePickerDialog
           autoOk={this.props.autoOk}
@@ -62,7 +66,7 @@ class DatePicker extends React.Component {
           minDate={this.props.minDate}
           onDismiss={this.handleDismiss}
           onSelect={this.handleSelect}
-          value={this.props.value}
+          value={date}
         />
       </div>
     );
