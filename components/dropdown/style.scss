@@ -32,6 +32,23 @@
     pointer-events: none;
     cursor: normal;
   }
+  &.withIcon {
+    margin-left: $input-icon-size;
+  }
+}
+
+.icon {
+  position: absolute;
+  top: $input-icon-offset;
+  left: -$input-icon-size;
+  display: block;
+  width: $input-icon-size;
+  height: $input-icon-size;
+  font-size: $input-icon-font-size !important;
+  line-height: $input-icon-size !important;
+  color: $input-text-label-color;
+  text-align: center;
+  transition: color $animation-duration $animation-curve-default;
 }
 
 .value {

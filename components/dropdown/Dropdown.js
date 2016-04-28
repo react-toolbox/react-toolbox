@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import ClassNames from 'classnames';
 import Input from '../input';
 import events from '../utils/events';
+import FontIcon from '../font_icon';
 import style from './style';
 
 class Dropdown extends React.Component {
@@ -13,6 +14,10 @@ class Dropdown extends React.Component {
     disabled: React.PropTypes.bool,
     error: React.PropTypes.string,
     label: React.PropTypes.string,
+    icon: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.element
+    ]),
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func,
     onFocus: React.PropTypes.func,
@@ -119,16 +124,18 @@ class Dropdown extends React.Component {
   }
 
   render () {
-    const {template, source, ...others} = this.props;
+    const {template, source, icon, ...others} = this.props;
     const selected = this.getSelectedItem();
     const className = ClassNames(style.root, {
       [style.up]: this.state.up,
       [style.active]: this.state.active,
-      [style.disabled]: this.props.disabled
+      [style.disabled]: this.props.disabled,
+      [style.withIcon]: icon
     }, this.props.className);
 
     return (
       <div data-react-toolbox='dropdown' className={className}>
+        {icon ? <FontIcon className={style.icon} value={icon} /> : null}
         <Input
           {...others}
           className={style.value}
