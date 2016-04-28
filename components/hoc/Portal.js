@@ -68,7 +68,7 @@ class Portal extends Component {
 
   _unrenderOverlay () {
     if (this._overlayTarget) {
-      if (this.props.lockBody) document.body.style.overflow = 'scroll';
+      if (this.props.lockBody) document.body.style.overflow = null;
       ReactDOM.unmountComponentAtNode(this._overlayTarget);
       this._overlayInstance = null;
     }
