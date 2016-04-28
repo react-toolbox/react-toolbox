@@ -20,6 +20,10 @@ class DatePicker extends React.Component {
     value: React.PropTypes.oneOfType([
       React.PropTypes.instanceOf(Date),
       React.PropTypes.string
+    ]),
+    icon: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.element
     ])
   };
 
@@ -56,6 +60,7 @@ class DatePicker extends React.Component {
           label={this.props.label}
           readOnly
           type='text'
+          icon={this.props.icon}
           value={formattedDate}
         />
         <DatePickerDialog
