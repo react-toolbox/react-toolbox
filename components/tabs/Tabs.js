@@ -8,6 +8,7 @@ class Tabs extends React.Component {
     children: React.PropTypes.node,
     className: React.PropTypes.string,
     disableAnimatedBottomBorder: React.PropTypes.bool,
+    tabsOnBottom: React.PropTypes.bool,
     index: React.PropTypes.number,
     onChange: React.PropTypes.func
   };
@@ -61,7 +62,6 @@ class Tabs extends React.Component {
       const label = this.refs.navigation.children[idx].getBoundingClientRect();
       this.setState({
         pointer: {
-          top: `${this.refs.navigation.getBoundingClientRect().height}px`,
           left: `${label.left - startPoint}px`,
           width: `${label.width}px`
         }
@@ -93,6 +93,48 @@ class Tabs extends React.Component {
     }
   }
 
+  renderNavHeaders (headers) {
+    return (
+      <nav className={this.props.tabsOnBottom ? style.topNavigation : style.bottomNavigation} ref='navigation'>
+        {this.renderHeaders(headers)}
+      </nav>
+    );
+  }
+
+  renderNavPointer () {
+    return (
+      <span className={style.pointer} style={this.state.pointer} />
+    );
+  }
+
+  renderNav (headers) {
+    let nav = this.renderNavHeaders(headers);
+    let pointer = this.renderNavPointer();
+
+    return (
+      <div>
+        {this.props.tabsOnBottom ? pointer : nav}
+        {this.props.tabsOnBottom ? nav : pointer}
+      </div>
+    )
+  }
+
+  renderSection (headers, contents, renderTopContents) {
+    if (renderTopContents) {
+      return this.renderContents(contents);
+    } else {
+      return this.renderNav(headers);
+    }
+  }
+
+  renderTopContent (headers, contents) {
+    return this.renderSection(headers, contents, this.props.tabsOnBottom)
+  }
+
+  renderBottomContent (headers, contents) {
+    return this.renderSection(headers, contents, !this.props.tabsOnBottom)
+  }
+
   render () {
     let className = style.root;
     const { headers, contents } = this.parseChildren();
@@ -100,11 +142,8 @@ class Tabs extends React.Component {
 
     return (
       <div ref='tabs' data-react-toolbox='tabs' className={className}>
-        <nav className={style.navigation} ref='navigation'>
-          {this.renderHeaders(headers)}
-        </nav>
-        <span className={style.pointer} style={this.state.pointer} />
-        {this.renderContents(contents)}
+        {this.renderTopContent(headers, contents)}
+        {this.renderBottomContent(headers, contents)}
       </div>
     );
   }
