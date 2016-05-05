@@ -116,7 +116,7 @@ class Tabs extends React.Component {
         {this.props.tabsOnBottom ? pointer : nav}
         {this.props.tabsOnBottom ? nav : pointer}
       </div>
-    )
+    );
   }
 
   renderSection (headers, contents, renderTopContents) {
@@ -128,11 +128,11 @@ class Tabs extends React.Component {
   }
 
   renderTopContent (headers, contents) {
-    return this.renderSection(headers, contents, this.props.tabsOnBottom)
+    return this.renderSection(headers, contents, this.props.tabsOnBottom);
   }
 
   renderBottomContent (headers, contents) {
-    return this.renderSection(headers, contents, !this.props.tabsOnBottom)
+    return this.renderSection(headers, contents, !this.props.tabsOnBottom);
   }
 
   render () {
