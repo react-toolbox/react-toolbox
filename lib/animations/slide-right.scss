@@ -1,0 +1,29 @@
+.enter, .leave {
+  position: absolute;
+}
+
+.enterActive, .leaveActive {
+  transition-timing-function: ease-in-out;
+  transition-duration: 350ms;
+  transition-property: transform, opacity;
+}
+
+.enter {
+  opacity: 0;
+  transform: translateX(100%);
+
+  &.enterActive {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.leave {
+  opacity: 1;
+  transform: translateX(0);
+
+  &.leaveActive {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}

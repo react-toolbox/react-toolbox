@@ -92,9 +92,9 @@
     "webpack-hot-middleware": "^2.10.0"
   },
   "scripts": {
-    "babel": "babel ./components --out-dir ./lib",
-    "build": "cross-env NODE_ENV=production npm run babel && npm run sass",
-    "clean": "rimraf ./lib",
+    "babel": "node_modules/.bin/babel ./components --out-dir ./lib",
+    "build": "node_modules/.bin/cross-env NODE_ENV=production npm run babel && npm run sass",
+    "clean": "node_modules/.bin/rimraf ./lib",
     "lint": "npm run lint:js && npm run lint:scss",
     "lint:js": "eslint ./ --ext .js",
     "lint:scss": "sass-lint ./components/**/*.scss -v -i ./components/slider/style.scss",

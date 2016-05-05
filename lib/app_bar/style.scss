@@ -1,0 +1,28 @@
+@import "../base";
+@import "./config";
+
+.root {
+  display: flex;
+  height: $appbar-height;
+  align-items: center;
+  padding: 0 $appbar-h-padding;
+  color: $appbar-contrast;
+  background: $appbar-color;
+
+  &:not(.flat) {
+    z-index: $z-index-high;
+    box-shadow: 0 2px 5px rgba(0,0,0,.26);
+  }
+
+  &.fixed {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: $z-index-highest;
+  }
+
+  a {
+    color: $appbar-contrast;
+  }
+}

@@ -1,0 +1,27 @@
+$timepicker-header-font-size: 5.2 * $unit !default;
+$timepicker-header-padding: $unit !default;
+$timepicker-ampm-font-size: 1.6 * $unit !default;
+$timepicker-primary: $color-primary !default;
+$timepicker-primary-contrast: $color-primary-contrast !default;
+$timepicker-primary-dark: $color-primary-dark !default;
+$timepicker-primary-color: $timepicker-primary !default;
+$timepicker-primary-hover-color: rgba($timepicker-primary, .2) !default;
+$timepicker-primary-contrast-color: $timepicker-primary-contrast !default;
+$timepicker-primary-dark-color: $timepicker-primary-dark !default;
+$timepicker-ampm-height: 2.2 * $unit !default;
+$timepicker-ampm-width: 4 * $unit !default;
+$timepicker-dialog-width: 30 * $unit !default;
+
+$clock-padding: 1.5 * $unit 2 * $unit !default;
+$clock-primary: $color-primary !default;
+$clock-primary-contrast: $color-primary-contrast !default;
+$clock-primary-dark: $color-primary-dark !default;
+$clock-primary-color: $clock-primary !default;
+$clock-primary-hover-color: rgba($clock-primary, .2) !default;
+$clock-primary-contrast-color: $clock-primary-contrast !default;
+$clock-primary-dark-color: $clock-primary-dark !default;
+$clock-number-size: 2 * $unit !default;
+$clock-hand-width: .4 * $unit !default;
+$clock-hand-dot-size: 1 * $unit !default;
+$clock-knob-size: 3.4 * $unit !default;
+$clock-knob-small-size: 1.2 * $unit !default;
