@@ -8,9 +8,9 @@ class Tabs extends React.Component {
     children: React.PropTypes.node,
     className: React.PropTypes.string,
     disableAnimatedBottomBorder: React.PropTypes.bool,
-    tabsOnBottom: React.PropTypes.bool,
     index: React.PropTypes.number,
-    onChange: React.PropTypes.func
+    onChange: React.PropTypes.func,
+    tabsOnBottom: React.PropTypes.bool
   };
 
   static defaultProps = {
@@ -108,8 +108,8 @@ class Tabs extends React.Component {
   }
 
   renderNav (headers) {
-    let nav = this.renderNavHeaders(headers);
-    let pointer = this.renderNavPointer();
+    const nav = this.renderNavHeaders(headers);
+    const pointer = this.renderNavPointer();
 
     return (
       <div>
