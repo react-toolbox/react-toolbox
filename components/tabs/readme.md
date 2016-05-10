@@ -41,6 +41,7 @@ This component acts as the wrapper and the main controller of the content that i
 |:-----|:-----|:-----|:-----|
 | `className`                   | `String`        | `''`            | Additional class name to provide custom styling.|
 | `disableAnimatedBottomBorder` | `Boolean`       | `false`         | Disable the animation below the active tab.|
+| `tabsOnBottom`                | `Boolean`       | `false`         | Position the tabs under the tab content.|
 | `index`                       | `Number`        | `0`             | Current <Tab> |
 | `onChange`                    | `Function`      |                 | Callback function that is fired when the tab changes.|
 

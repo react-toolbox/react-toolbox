@@ -7,7 +7,13 @@
   flex-direction: column;
 }
 
-.navigation {
+.topNavigation {
+  display: flex;
+  flex-direction: row;
+  box-shadow: inset 0 1px $tab-navigation-border-color;
+}
+
+.bottomNavigation {
   display: flex;
   flex-direction: row;
   box-shadow: inset 0 -1px $tab-navigation-border-color;
