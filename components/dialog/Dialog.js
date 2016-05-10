@@ -29,7 +29,7 @@ const Dialog = (props) => {
           {props.title ? <h6 className={style.title}>{props.title}</h6> : null}
           {props.children}
         </section>
-        {actions
+        {actions.length
           ? <nav role='navigation' className={style.navigation}>
               {actions}
             </nav>
