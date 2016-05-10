@@ -23,10 +23,22 @@
 
 .small {
   width: 30vw;
+  
+  @media screen and (max-width: $layout-breakpoint-sm-tablet) {
+	width: 50vw;
+  }
+  
+  @media screen and (max-width: $layout-breakpoint-xs) {
+	width: 75vw;
+  }
 }
 
 .normal {
   width: 50vw;
+  
+  @media screen and (max-width: $layout-breakpoint-xs) {
+	width: 96vw;
+  }
 }
 
 .large {
