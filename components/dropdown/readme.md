@@ -44,6 +44,7 @@ class DropdownTest extends React.Component {
 | `className`     | `String`        | `''`            | Set the class to give custom styles to the dropdown.|
 | `disabled`      | `Boolean`       | `false`         | Set the component as disabled.|
 | `error`         | `String`        |                 | Give an error string to display under the field.|
+| `icon`          | `String` or `Element`   |                 | Name of an icon to use as a label for the input.|
 | `label`         | `String`        |                 | The text string to use for the floating label element.|
 | `onBlur`        | `Function`      |                 | Callback function that is fired when the component is blurred.|
 | `onChange`      | `Function`      |                 | Callback function that is fired when the component's value changes.|
