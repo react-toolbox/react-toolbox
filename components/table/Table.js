@@ -8,10 +8,10 @@ class Table extends React.Component {
     className: React.PropTypes.string,
     heading: React.PropTypes.bool,
     model: React.PropTypes.object,
+    multiSelectable: React.PropTypes.bool,
     onChange: React.PropTypes.func,
     onSelect: React.PropTypes.func,
     selectable: React.PropTypes.bool,
-    multiSelectable: React.PropTypes.bool,
     selected: React.PropTypes.array,
     source: React.PropTypes.array
   };
@@ -37,11 +37,8 @@ class Table extends React.Component {
     if (this.props.onSelect) {
       const position = this.props.selected.indexOf(index);
       let newSelected = [...this.props.selected];
-
-      if (position !== -1) {
-        newSelected.splice(position, 1);
-      }
-      else if (this.props.multiSelectable) {
+      if (position !== -1) { newSelected.splice(position, 1); }
+      if (position !== -1 && this.props.multiSelectable) {
         newSelected.push(index);
       } else {
         newSelected = [index];
@@ -56,7 +53,7 @@ class Table extends React.Component {
     }
   };
 
-  renderHead() {
+  renderHead () {
     if (this.props.heading) {
       const {model, selected, source, selectable, multiSelectable} = this.props;
       const isSelected = selected.length === source.length;
@@ -72,7 +69,7 @@ class Table extends React.Component {
     }
   }
 
-  renderBody() {
+  renderBody () {
     const rows = this.props.source.map((data, index) => {
       return (
         <TableRow
@@ -91,7 +88,7 @@ class Table extends React.Component {
     return <tbody>{rows}</tbody>;
   }
 
-  render() {
+  render () {
     let className = style.root;
     if (this.props.className) className += ` ${this.props.className}`;
     return (

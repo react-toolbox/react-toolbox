@@ -11,6 +11,10 @@ class DatePicker extends React.Component {
     autoOk: React.PropTypes.bool,
     className: React.PropTypes.string,
     error: React.PropTypes.string,
+    icon: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.element
+    ]),
     inputClassName: React.PropTypes.string,
     inputFormat: React.PropTypes.func,
     label: React.PropTypes.string,
@@ -20,10 +24,6 @@ class DatePicker extends React.Component {
     value: React.PropTypes.oneOfType([
       React.PropTypes.instanceOf(Date),
       React.PropTypes.string
-    ]),
-    icon: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.element
     ])
   };
 
