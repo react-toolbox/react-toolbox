@@ -23,7 +23,9 @@ const AppBarTest = () => (
 | `flat`      | `Bool`    | `false`  | If true, the AppBar shows a shadow.|
 | `theme`     | `Object`  | `null`   | Classnames object defining the component style.|
 
-## Theme interface
+## Theming
+
+You can take a look to the `_config.scss` variables. The theme should implement the following interface:
 
 | Name     | Description|
 |:---------|:-----------|

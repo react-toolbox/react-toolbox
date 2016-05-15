@@ -1,6 +1,6 @@
 import React from 'react';
-import { themr } from 'react-css-themr';
 import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 
 const AppBar = ({ theme, ...props }) => {
   const className = classnames(theme.appBar, {
