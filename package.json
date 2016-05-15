@@ -36,7 +36,8 @@
     "toolkit"
   ],
   "dependencies": {
-    "classnames": "^2.2.5"
+    "classnames": "^2.2.5",
+    "react-css-themr": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",

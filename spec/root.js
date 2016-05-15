@@ -1,5 +1,8 @@
 /* global VERSION */
 import React from 'react';
+import { ThemeProvider } from 'react-css-themr';
+import theme from './theme';
+
 import AppBarToolbox from '../components/app_bar';
 import Avatar from './components/avatar';
 import ButtonToolbox from '../components/button';
@@ -27,47 +30,45 @@ import Tabs from './components/tabs';
 import Tooltip from './components/tooltip';
 import style from './style';
 
-const _hrefProject = () => {
-  window.href = 'http://react-toolbox';
-};
-
 const Root = () => (
-  <div className={style.app}>
-    <AppBarToolbox fixed flat className={style.appbar}>
-      <h1>React Toolbox <small>Spec {VERSION}</small></h1>
-      <ButtonToolbox
-        accent
-        className={style.github}
-        icon='web'
-        floating
-        onClick={_hrefProject}
-      />
-    </AppBarToolbox>
+  <ThemeProvider theme={theme}>
+    <div className={style.app}>
+      <AppBarToolbox className={style.appbar} fixed flat>
+        <h1>React Toolbox <small>Spec {VERSION}</small></h1>
+        <ButtonToolbox
+          accent
+          className={style.github}
+          icon='web'
+          floating
+          onClick={() => {window.href = 'http://react-toolbox';}}
+        />
+      </AppBarToolbox>
 
-    <Autocomplete />
-    <Avatar />
-    <Button />
-    <Card />
-    <Checkbox />
-    <Chip />
-    <Dialog />
-    <Drawer />
-    <Dropdown />
-    <IconMenu />
-    <Input />
-    <Layout />
-    <List />
-    <Menu />
-    <Pickers />
-    <Progress />
-    <Radio />
-    <Slider />
-    <Snackbar />
-    <Switch />
-    <Table />
-    <Tabs />
-    <Tooltip />
-  </div>
+      <Autocomplete />
+      <Avatar />
+      <Button />
+      <Card />
+      <Checkbox />
+      <Chip />
+      <Dialog />
+      <Drawer />
+      <Dropdown />
+      <IconMenu />
+      <Input />
+      <Layout />
+      <List />
+      <Menu />
+      <Pickers />
+      <Progress />
+      <Radio />
+      <Slider />
+      <Snackbar />
+      <Switch />
+      <Table />
+      <Tabs />
+      <Tooltip />
+    </div>
+  </ThemeProvider>
 );
 
 export default Root;
