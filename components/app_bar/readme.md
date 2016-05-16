@@ -4,7 +4,7 @@ The app bar is a special kind of toolbar that’s used for branding, navigation,
 
 ```jsx
 import AppBar from 'react-toolbox/lib/app_bar';
-import theme from 'react-toolbox/lib/app_bar/style';
+import theme from 'react-toolbox/lib/app_bar/theme';
 
 const AppBarTest = () => (
   <AppBar theme={theme} fixed flat>
