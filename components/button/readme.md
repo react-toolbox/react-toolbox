@@ -5,6 +5,7 @@ A [button](https://www.google.com/design/spec/components/buttons.html) clearly c
 <!-- example -->
 ```jsx
 import {Button, IconButton} from 'react-toolbox/lib/button';
+import theme from 'react-toolbox/lib/button/theme';
 
 const GithubIcon = () => (
   <svg viewBox="0 0 284 277">
@@ -14,18 +15,18 @@ const GithubIcon = () => (
 
 const TestButtons = () => (
   <div>
-    <Button href='http://github.com/javivelasco' target='_blank' raised>
+    <Button href='http://github.com/javivelasco' target='_blank' raised theme={theme}>
       <GithubIcon /> Github
     </Button>
-    <Button icon='bookmark' label='Bookmark' accent />
-    <Button icon='bookmark' label='Bookmark' raised primary />
-    <Button icon='inbox' label='Inbox' flat />
-    <Button icon='add' floating />
-    <Button icon='add' floating accent mini />
-    <IconButton icon='favorite' accent />
-    <IconButton primary><GithubIcon /></IconButton>
-    <Button icon='add' label='Add this' flat primary />
-    <Button icon='add' label='Add this' flat disabled />
+    <Button icon='bookmark' label='Bookmark' accent theme={theme} />
+    <Button icon='bookmark' label='Bookmark' raised primary theme={theme} />
+    <Button icon='inbox' label='Inbox' flat theme={theme} />
+    <Button icon='add' floating theme={theme} />
+    <Button icon='add' floating accent mini theme={theme} />
+    <IconButton icon='favorite' accent theme={theme} />
+    <IconButton primary theme={theme}><GithubIcon /></IconButton>
+    <Button icon='add' label='Add this' flat primary theme={theme} />
+    <Button icon='add' label='Add this' flat disabled theme={theme} />
   </div>
 );
 ```
@@ -50,10 +51,30 @@ const TestButtons = () => (
 | `primary`         | `Boolean`             | `false`     | Indicates if the button should have primary color.|
 | `raised`          | `Boolean`             | `false`     | If true, the button will have a raised look. |
 | `ripple`          | `Boolean`             | `true`      | If true, component will have a ripple effect on click.|
+| `theme`           | `Object`              |             | Theme object will classnames that will be used to style the component.|
 
 By default it will have neutral colors and a flat aspect even though the `flat` property is `false` by default. Also, some properties exclude others, for example a button cannot be `flat` and `raised` at the same time.
 
 The `Button` component also accept children so if you want to provide a custom component and text instead of a `label` and `icon` you can do it too. Just check the examples.
+
+## Theming
+
+You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxButton`, theme should implement the following interface:
+
+| Name       | Description|
+|:-----------|:-----------|
+| `accent`   | Used for accent button.|
+| `flat`     | Used when the button is flat.|
+| `floating` | Used when the button is floating.|
+| `icon`     | For the icon inside a button.|
+| `inverse`  | Used when colors are inverted.|
+| `mini`     | Used for mini floating buttons.|
+| `neutral`  | For neutral colored buttons.|
+| `primary`  | For primary buttons.|
+| `raised`   | Used when the button is raised.|
+| `toggle`   | Used for toggle buttons.|
+
+Since the `Button` implements a ripple, it accepts theme properties for the ripple as well. If you want to compose the default style for the ripple, you just have to provide Ripple keys with custom styles in the theme object.
 
 ## Icon Button
 

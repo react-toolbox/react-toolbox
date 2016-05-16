@@ -1,8 +1,8 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
-import style from './style';
 
 class Button extends React.Component {
   static propTypes = {
@@ -25,6 +25,7 @@ class Button extends React.Component {
     onMouseUp: React.PropTypes.func,
     primary: React.PropTypes.bool,
     raised: React.PropTypes.bool,
+    theme: React.PropTypes.object,
     type: React.PropTypes.string
   };
 
@@ -51,15 +52,15 @@ class Button extends React.Component {
 
   render () {
     const { accent, children, className, flat, floating, href, icon,
-            inverse, label, mini, neutral, primary, raised, ...others} = this.props;
+      inverse, label, mini, neutral, primary, theme, raised, ...others} = this.props;
     const element = href ? 'a' : 'button';
     const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
     const shape = flat ? 'flat' : raised ? 'raised' : floating ? 'floating' : 'flat';
 
-    const classes = ClassNames([style[shape]], {
-      [style[level]]: neutral,
-      [style.mini]: mini,
-      [style.inverse]: inverse
+    const classes = classnames([theme[shape]], {
+      [theme[level]]: neutral,
+      [theme.mini]: mini,
+      [theme.inverse]: inverse
     }, className);
 
     const props = {
@@ -74,12 +75,13 @@ class Button extends React.Component {
     };
 
     return React.createElement(element, props,
-      icon ? <FontIcon className={style.icon} value={icon}/> : null,
+      icon ? <FontIcon className={theme.icon} value={icon}/> : null,
       label,
       children
     );
   }
 }
 
-export default Ripple({centered: false})(Button);
-export { Button as RawButton };
+const RawButton = themr('ToolboxButton')(Button);
+export default themr('ToolboxButton')(Ripple({centered: false})(Button));
+export { RawButton as RawButton };

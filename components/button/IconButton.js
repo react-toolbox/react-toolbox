@@ -1,8 +1,8 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import FontIcon from '../font_icon';
 import Ripple from '../ripple';
-import style from './style';
 
 class IconButton extends React.Component {
   static propTypes = {
@@ -20,6 +20,7 @@ class IconButton extends React.Component {
     onMouseLeave: React.PropTypes.func,
     onMouseUp: React.PropTypes.func,
     primary: React.PropTypes.bool,
+    theme: React.PropTypes.object,
     type: React.PropTypes.string
   };
 
@@ -41,12 +42,13 @@ class IconButton extends React.Component {
   };
 
   render () {
-    const {accent, children, className, href, icon, inverse, neutral, primary, ...others} = this.props;
+    const {accent, children, className, href, icon, inverse, neutral,
+      primary, theme, ...others} = this.props;
     const element = href ? 'a' : 'button';
     const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
-    const classes = ClassNames([style.toggle], {
-      [style[level]]: neutral,
-      [style.inverse]: inverse
+    const classes = classnames([theme.toggle], {
+      [theme[level]]: neutral,
+      [theme.inverse]: inverse
     }, className);
 
     const props = {
@@ -61,11 +63,12 @@ class IconButton extends React.Component {
     };
 
     return React.createElement(element, props,
-      icon ? <FontIcon className={style.icon} value={icon}/> : null,
+      icon ? <FontIcon className={theme.icon} value={icon}/> : null,
       children
     );
   }
 }
 
-export default Ripple({centered: true})(IconButton);
-export { IconButton as RawIconButton };
+const RawIconButton = themr('ToolboxButton')(IconButton);
+export default themr('ToolboxButton')(Ripple({centered: true})(IconButton));
+export { RawIconButton as RawIconButton };
