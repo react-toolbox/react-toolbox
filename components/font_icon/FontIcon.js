@@ -1,18 +1,16 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
 
-const FontIcon = ({ children, className, value, ...other}) => {
-  const classes = ClassNames(
-    {'material-icons': typeof value === 'string'},
-    className
-  );
-  return (
-    <span className={classes} {...other} data-react-toolbox='font-icon'>
-      {value}
-      {children}
-    </span>
-  );
-};
+const FontIcon = ({ children, className, value, ...other}) => (
+  <span
+    data-react-toolbox='font-icon'
+    className={classnames({'material-icons': typeof value === 'string'}, className)}
+    {...other}
+  >
+    {value}
+    {children}
+  </span>
+);
 
 FontIcon.propTypes = {
   children: React.PropTypes.any,
