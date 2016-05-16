@@ -33,9 +33,9 @@ In any component you decorate with the Ripple you'd get some additional props:
 
 You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxRipple`, it should implement the following interface:
 
-| Name         | Description|
-|:-------------|:-----------|
-| `active`     | Applied when the ripple is active.|
-| `ripple`     | Root classname for the ripple.|
-| `restarting` | Applied when the ripple is restarting.|
-| `wrapper`    | Wrapper class to fit to the parent element.|
+| Name               | Description|
+|:-------------------|:-----------|
+| `ripple`           | Root classname for the ripple.|
+| `rippleActive`     | Applied when the ripple is active.|
+| `rippleRestarting` | Applied when the ripple is restarting.|
+| `rippleWrapper`    | Wrapper class to fit to the parent element.|

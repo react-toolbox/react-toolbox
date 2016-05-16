@@ -30,10 +30,10 @@ const Ripple = (options = {}) => {
         rippleClassName: React.PropTypes.string,
         rippleSpread: React.PropTypes.number,
         theme: React.PropTypes.shape({
-          active: React.PropTypes.string.isRequired,
           ripple: React.PropTypes.string.isRequired,
-          restarting: React.PropTypes.string.isRequired,
-          wrapper: React.PropTypes.string.isRequired
+          rippleActive: React.PropTypes.string.isRequired,
+          rippleRestarting: React.PropTypes.string.isRequired,
+          rippleWrapper: React.PropTypes.string.isRequired
         })
       };
 
@@ -117,8 +117,8 @@ const Ripple = (options = {}) => {
           } = this.props;
 
           const rippleClassName = classnames(this.props.theme.ripple, {
-            [this.props.theme.active]: this.state.active,
-            [this.props.theme.restarting]: this.state.restarting
+            [this.props.theme.rippleActive]: this.state.active,
+            [this.props.theme.rippleRestarting]: this.state.restarting
           }, className);
 
           const { left, top, width } = this.state;
@@ -130,7 +130,7 @@ const Ripple = (options = {}) => {
           return (
             <ComposedComponent {...other} onMouseDown={this.handleMouseDown}>
               {children ? children : null}
-              <span data-react-toolbox='ripple' className={this.props.theme.wrapper} {...props}>
+              <span data-react-toolbox='ripple' className={this.props.theme.rippleWrapper} {...props}>
                 <span ref='ripple' role='ripple' className={rippleClassName} style={rippleStyle} />
               </span>
             </ComposedComponent>

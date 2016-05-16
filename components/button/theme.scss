@@ -36,7 +36,7 @@
   > * {
     pointer-events: none;
   }
-  [data-react-toolbox="ripple"] {
+  > .rippleWrapper {
     overflow: hidden;
   }
   &[disabled] {
@@ -97,7 +97,7 @@
   .icon {
     line-height: $button-floating-height;
   }
-  [data-react-toolbox="ripple"] {
+  > .rippleWrapper {
     border-radius: 50%;
   }
   &.mini {
@@ -120,7 +120,7 @@
     line-height: $button-height;
     vertical-align: middle;
   }
-  [data-react-toolbox="ripple"] {
+  > .rippleWrapper {
     border-radius: 50%;
   }
 }

@@ -12,7 +12,7 @@
   transform-origin: 50% 50%;
 }
 
-.wrapper {
+.rippleWrapper {
   position: absolute;
   top: 0;
   right: 0;
@@ -25,15 +25,15 @@
 .ripple {
   @extend %ripple;
   transition-duration: $ripple-duration;
-  &.restarting {
+  &.rippleRestarting {
     opacity: $ripple-final-opacity;
     transition-property: none;
   }
-  &.active {
+  &.rippleActive {
     opacity: $ripple-final-opacity;
     transition-property: transform;
   }
-  &:not(.active):not(.restarting) {
+  &:not(.rippleActive):not(.rippleRestarting) {
     opacity: 0;
     transition-property: opacity, transform;
   }
