@@ -37,7 +37,7 @@ const AvatarTest = () => (
 
 ## Theming
 
-You can take a look to the `_config.scss` variables. The theme should implement the following interface:
+You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxAvatar`, it should implement the following interface:
 
 | Name     | Description|
 |:---------|:-----------|
