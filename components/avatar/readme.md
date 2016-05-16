@@ -5,6 +5,7 @@ Avatars can be used to represent people. This offer users the ability to persona
 <!-- example -->
 ```jsx
 import Avatar from 'react-toolbox/lib/avatar';
+import theme from 'react-toolbox/lib/avatar/theme';
 
 const GithubIcon = () => (
   <svg viewBox="0 0 284 277">
@@ -14,11 +15,11 @@ const GithubIcon = () => (
 
 const AvatarTest = () => (
   <div>
-    <Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" />
-    <Avatar icon={<GithubIcon />}/>
-    <Avatar><img src="https://placeimg.com/80/80/animals"/></Avatar>
-    <Avatar title="Javier" image="https://placeimg.com/80/80/animals"/>
-    <Avatar style={{backgroundColor: 'yellowgreen'}}><GithubIcon /></Avatar>
+    <Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" theme={theme} />
+    <Avatar icon={<GithubIcon />} theme={theme} />
+    <Avatar theme={theme}><img src="https://placeimg.com/80/80/animals"/></Avatar>
+    <Avatar title="Javier" image="https://placeimg.com/80/80/animals" theme={theme} />
+    <Avatar style={{backgroundColor: 'yellowgreen'}} theme={theme}><GithubIcon /></Avatar>
   </div>
 );
 ```
@@ -32,3 +33,14 @@ const AvatarTest = () => (
 | `icon`        | `String` or `Element`   |             | A key to identify an Icon from Material Design Icons or a custom Icon Element.|
 | `image`       | `String` or `Element`   |             | An image source or an image element. |
 | `title`       | `String`                | `''`        | A title for the image. If no image is provided, the first letter will be displayed as the avatar. |
+| `theme`       | `Object`  | `null`   | Classnames object defining the component style.|
+
+## Theming
+
+You can take a look to the `_config.scss` variables. The theme should implement the following interface:
+
+| Name     | Description|
+|:---------|:-----------|
+| `avatar` | Root class.|
+| `image`  | Used for the image if the avatar has image.|
+| `letter` | Used for the letter in case the avatar has no image.|
