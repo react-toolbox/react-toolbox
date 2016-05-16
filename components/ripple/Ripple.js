@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ClassNames from 'classnames';
-import style from './style';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import events from '../utils/events';
 import prefixer from '../utils/prefixer';
 
@@ -20,7 +20,7 @@ const Ripple = (options = {}) => {
   } = {...defaults, ...options};
 
   return ComposedComponent => {
-    return class RippledComponent extends React.Component {
+    class RippledComponent extends React.Component {
       static propTypes = {
         children: React.PropTypes.any,
         disabled: React.PropTypes.bool,
@@ -28,7 +28,13 @@ const Ripple = (options = {}) => {
         ripple: React.PropTypes.bool,
         rippleCentered: React.PropTypes.bool,
         rippleClassName: React.PropTypes.string,
-        rippleSpread: React.PropTypes.number
+        rippleSpread: React.PropTypes.number,
+        theme: React.PropTypes.shape({
+          active: React.PropTypes.string.isRequired,
+          ripple: React.PropTypes.string.isRequired,
+          restarting: React.PropTypes.string.isRequired,
+          wrapper: React.PropTypes.string.isRequired
+        })
       };
 
       static defaultProps = {
@@ -110,9 +116,9 @@ const Ripple = (options = {}) => {
             ...other
           } = this.props;
 
-          const rippleClassName = ClassNames(style.normal, {
-            [style.active]: this.state.active,
-            [style.restarting]: this.state.restarting
+          const rippleClassName = classnames(this.props.theme.ripple, {
+            [this.props.theme.active]: this.state.active,
+            [this.props.theme.restarting]: this.state.restarting
           }, className);
 
           const { left, top, width } = this.state;
@@ -124,14 +130,16 @@ const Ripple = (options = {}) => {
           return (
             <ComposedComponent {...other} onMouseDown={this.handleMouseDown}>
               {children ? children : null}
-              <span data-react-toolbox='ripple' className={style.wrapper} {...props}>
+              <span data-react-toolbox='ripple' className={this.props.theme.wrapper} {...props}>
                 <span ref='ripple' role='ripple' className={rippleClassName} style={rippleStyle} />
               </span>
             </ComposedComponent>
           );
         }
       }
-    };
+    }
+
+    return themr('ToolboxRipple')(RippledComponent);
   };
 };
 

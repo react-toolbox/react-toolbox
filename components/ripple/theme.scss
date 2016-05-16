@@ -22,7 +22,7 @@
   pointer-events: none;
 }
 
-.normal {
+.ripple {
   @extend %ripple;
   transition-duration: $ripple-duration;
   &.restarting {
