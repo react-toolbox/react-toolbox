@@ -127,18 +127,32 @@ class Autocomplete extends React.Component {
  }
 
  suggestions () {
-   const suggest = new Map();
+   let suggest = new Map();
    const query = this.state.query.toLowerCase().trim() || '';
    const values = this.values();
-   for (const [key, value] of this.source()) {
-     const valueMatchesQuery = value.toLowerCase().trim().startsWith(query);
-     if (
-       (valueMatchesQuery && !values.has(key))
-       || (!this.props.multiple && (this.state.showAllSuggestions || valueMatchesQuery))
-     ) {
-       suggest.set(key, value);
+   const source = this.source();
+
+   // Suggest any non-set value which matches the query
+   if (this.props.multiple) {
+     for (const [key, value] of source) {
+       if (!values.has(key) && value.toLowerCase().trim().startsWith(query)) {
+         suggest.set(key, value);
+       }
      }
+
+   // When multiple is false, suggest any value which matches the query if showAllSuggestions is false
+   } else if (query && !this.state.showAllSuggestions) {
+     for (const [key, value] of source) {
+       if (value.toLowerCase().trim().startsWith(query)) {
+         suggest.set(key, value);
+       }
+     }
+
+   // When multiple is false, suggest all values when showAllSuggestions is true
+   } else {
+     suggest = source;
    }
+
    return suggest;
  }
 
