@@ -7,26 +7,30 @@ Cards are composed of multiple subcomponents in React Toolbox. You can combine e
 <!-- example -->
 ```jsx
 import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
+import theme from 'react-toolbox/lib/card/theme';
 
 const dummyText = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.';
 
 const TestCards = () => (
-  <Card style={{width: '350px'}}>
+  <Card theme={theme} style={{width: '350px'}}>
     <CardTitle
       avatar="https://placeimg.com/80/80/animals"
       title="Avatar style title"
       subtitle="Subtitle here"
+      theme={theme}
     />
     <CardMedia
       aspectRatio="wide"
       image="https://placeimg.com/800/450/nature"
+      theme={theme}
     />
     <CardTitle
       title="Title goes here"
       subtitle="Subtitle here"
+      theme={theme}
     />
-    <CardText>{dummyText}</CardText>
-    <CardActions>
+    <CardText theme={theme}>{dummyText}</CardText>
+    <CardActions theme={theme}>
       <Button label="Action 1" />
       <Button label="Action 2" />
     </CardActions>
@@ -49,6 +53,10 @@ that all subcomponents are placed within.
 | `children` | `Any` |  | Child components, usually Card subcomponents. |
 | `className` | `String` |  | Additional class(es) for custom styling. |
 | `raised` | `Boolean` |  | Increases the shadow depth to appear elevated. |
+
+
+Since the `Button` implements a ripple, it accepts theme properties for the ripple as well. If you want to compose the default style for the ripple, you just have to provide Ripple keys with custom styles in the theme object.
+
 
 ## CardTitle
 A versatile title block that can be used in
@@ -103,3 +111,25 @@ typically placed at the bottom of the card.
 |:-----|:-----|:-----|:-----|
 | `children` | `Any` |  | Children to pass through the component. |
 | `className` | `String` |  | Additional class(es) for custom styling. |
+
+## Theming
+
+Each subcomponent takes it's own classes but since usually you'd want to include every card subcomponent, we use the same themed key `ToolboxCard` for your context styles. The interface is as follows:
+
+| Name       | Description|
+|:-----------|:-----------|
+| `card`     | Used in `Card` as root class.|
+| `cardActions` | Used in `CardActions` for the wrapper.|
+| `cardMedia` | Used in `CardMedia` for the wrapper.|
+| `cardText` | Used in `CardText` for text wrapper.|
+| `content` | Used in `CardMedia` for inner content.|
+| `contentOverlay` | Used in `CardMedia` for inner content if its overlayed.|
+| `large` | Used in `CardTitle` when the card has avatar.|
+| `raised`   | Used in `Card` for raised cards.|
+| `small` | Used in `CardTitle` when the card has no avatar.|
+| `square` | Used in `CardMedia` for square content.|
+| `subtitle` | Used in `CardTitle` for subtitle.|
+| `title` | Used in `CardTitle` for title main wrapper.|
+| `wide` | Used in `CardMedia` for wide content.|
+
+This component theme also includes modifiers for buttons used in `CardActions` and for `Avatar` component.

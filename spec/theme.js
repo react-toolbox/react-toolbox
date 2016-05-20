@@ -1,11 +1,14 @@
+import defineTheme from '../components/define-theme';
 import ToolboxAppBar from '../components/app_bar/theme.scss';
 import ToolboxAvatar from '../components/avatar/theme.scss';
+import ToolboxButton from '../components/button/theme.scss';
+import ToolboxCard from '../components/card/theme.scss';
 import ToolboxRipple from '../components/ripple/theme.scss';
-import ToolboxButton from '../components/button/theme.scss'; // Should import ToolboxRipple too
 
-export default {
+export default defineTheme({
   ToolboxAppBar,
   ToolboxAvatar,
-  ToolboxRipple,
-  ToolboxButton
-};
+  ToolboxButton,
+  ToolboxCard,
+  ToolboxRipple
+});

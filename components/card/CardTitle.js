@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import { Avatar } from '../avatar';
-import style from './style';
 
-const CardTitle = ({avatar, children, className, subtitle, title, ...other}) => {
-  const classes = ClassNames(style.cardTitle, {
-    [style.small]: avatar,
-    [style.large]: !avatar
+const CardTitle = ({avatar, children, className, subtitle, theme, title, ...other}) => {
+  const classes = classnames(theme.cardTitle, {
+    [theme.small]: avatar,
+    [theme.large]: !avatar
   }, className);
 
   let avatarComponent;
@@ -19,17 +19,13 @@ const CardTitle = ({avatar, children, className, subtitle, title, ...other}) => 
 
   return (
     <div className={classes} {...other}>
-      {avatarComponent && (
-        <div className={style.avatar}>
-          {avatarComponent}
-        </div>
-      )}
+      {avatarComponent}
       <div>
-        {title && <h5 className={style.title}>{title}</h5>}
+        {title && <h5 className={theme.title}>{title}</h5>}
         {children && typeof children === 'string' && (
-          <h5 className={style.title}>{children}</h5>
+          <h5 className={theme.title}>{children}</h5>
         )}
-        {subtitle && <p className={style.subtitle}>{subtitle}</p>}
+        {subtitle && <p className={theme.subtitle}>{subtitle}</p>}
         {children && typeof children !== 'string' && children}
       </div>
     </div>
@@ -51,10 +47,16 @@ CardTitle.propTypes = {
     PropTypes.string,
     PropTypes.element
   ]),
+  theme: React.PropTypes.shape({
+    large: React.PropTypes.string.isRequired,
+    title: React.PropTypes.string.isRequired,
+    small: React.PropTypes.string.isRequired,
+    subtitle: React.PropTypes.string.isRequired
+  }),
   title: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element
   ])
 };
 
-export default CardTitle;
+export default themr('ToolboxCard')(CardTitle);
