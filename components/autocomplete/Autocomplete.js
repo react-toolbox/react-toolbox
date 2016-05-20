@@ -83,6 +83,18 @@ class Autocomplete extends React.Component {
    this.setState({active: '', focus: true});
  };
 
+ handleQueryKeyDown = (event) => {
+   // Clear query when pressing backspace and showing all suggestions.
+   const shouldClearQuery = (
+     event.which === 8
+     && this.props.showSuggestionsWhenValueIsSet
+     && this.state.showAllSuggestions
+   );
+   if (shouldClearQuery) {
+     this.setState({query: ''});
+   }
+ };
+
  handleQueryKeyUp = (event) => {
    if (event.which === 13 && this.state.active) this.select(this.state.active, event);
    if (event.which === 27) this.refs.input.blur();
@@ -218,6 +230,7 @@ class Autocomplete extends React.Component {
          onBlur={this.handleQueryBlur}
          onChange={this.handleQueryChange}
          onFocus={this.handleQueryFocus}
+         onKeyDown={this.handleQueryKeyDown}
          onKeyUp={this.handleQueryKeyUp}
          value={this.state.query}
        />
