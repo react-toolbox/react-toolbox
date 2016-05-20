@@ -38,6 +38,7 @@ class AutocompleteTest extends React.Component {
           onChange={this.handleSimpleChange}
           source={countriesArray}
           value={this.state.simple}
+          showSuggestionsWhenValueIsSet
         />
       </section>
     );

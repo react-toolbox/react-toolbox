@@ -22,6 +22,7 @@ class Autocomplete extends React.Component {
    multiple: React.PropTypes.bool,
    onChange: React.PropTypes.func,
    selectedPosition: React.PropTypes.oneOf(['above', 'below']),
+   showSuggestionsWhenValueIsSet: React.PropTypes.bool,
    source: React.PropTypes.any,
    value: React.PropTypes.any
  };
@@ -31,13 +32,14 @@ class Autocomplete extends React.Component {
    direction: 'auto',
    selectedPosition: 'above',
    multiple: true,
+   showSuggestionsWhenValueIsSet: false,
    source: {}
  };
 
  state = {
    direction: this.props.direction,
    focus: false,
-   showAllSuggestions: true,
+   showAllSuggestions: this.props.showSuggestionsWhenValueIsSet,
    query: this.query(this.props.value)
  };
 
@@ -63,7 +65,7 @@ class Autocomplete extends React.Component {
    const query = this.query(key);
    if (this.props.onChange) this.props.onChange(key, event);
    this.setState(
-     {focus: false, query, showAllSuggestions: true},
+     {focus: false, query, showAllSuggestions: this.props.showSuggestionsWhenValueIsSet},
      () => { this.refs.input.blur(); }
    );
  };

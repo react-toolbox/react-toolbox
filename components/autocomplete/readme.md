@@ -50,6 +50,7 @@ class AutocompleteTest extends React.Component {
 | `onChange`          | `Function`             |                 | Callback function that is fired when the components's value changes.|
 | `source`            | `Object` or `Array`    |                 | Object of key/values or array representing all items suggested. |
 | `selectedPosition`  | `String`               |  `above`        | Determines if the selected list is shown above or below input. It can be `above` or `below`. |
+| `showSuggestionsWhenValueIsSet` | `Bool`     | `false`         | If true, the list of suggestions will not be filtered when a value is selected, until the query is modified. |
 | `value`             | `String` or `Array`    |                 | Value or array of values currently selected component.|
 
 Additional properties will be passed to the Input Component so you can use `hint`, `name` ... etc.
