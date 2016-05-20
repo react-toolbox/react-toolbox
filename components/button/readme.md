@@ -64,6 +64,7 @@ You can take a look to the `_config.scss` variables. The themed key for this com
 | Name       | Description|
 |:-----------|:-----------|
 | `accent`   | Used for accent button.|
+| `button`   | Used for the root element.|
 | `flat`     | Used when the button is flat.|
 | `floating` | Used when the button is floating.|
 | `icon`     | For the icon inside a button.|

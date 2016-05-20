@@ -1,6 +1,10 @@
 @import "../base";
 @import "./config";
 
+.button {
+  position: relative;
+}
+
 %button {
   @include typo-button();
   position: relative;
