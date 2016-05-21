@@ -7,6 +7,7 @@ const countriesObject = {'ES-es': 'Spain', 'TH-th': 'Thailand', 'EN-gb': 'Englan
 class AutocompleteTest extends React.Component {
   state = {
     simple: 'Spain',
+    simpleShowAll: 'England',
     multiple: ['ES-es', 'TH-th']
   };
 
@@ -16,6 +17,10 @@ class AutocompleteTest extends React.Component {
 
   handleSimpleChange = (value) => {
     this.setState({simple: value});
+  };
+
+  handleSimpleShowAllChange = (value) => {
+    this.setState({simpleShowAll: value});
   };
 
   render () {
@@ -38,6 +43,16 @@ class AutocompleteTest extends React.Component {
           onChange={this.handleSimpleChange}
           source={countriesArray}
           value={this.state.simple}
+        />
+
+        <Autocomplete
+          label="Choose a country (showing all suggestions)"
+          hint="Elements up to you..."
+          multiple={false}
+          onChange={this.handleSimpleShowAllChange}
+          source={countriesArray}
+          value={this.state.simpleShowAll}
+          showSuggestionsWhenValueIsSet
         />
       </section>
     );
