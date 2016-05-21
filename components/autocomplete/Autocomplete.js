@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import Input from '../input';
 import events from '../utils/events';
 import Chip from '../chip';
-import style from './style';
 
 const POSITION = {
  AUTO: 'auto',
@@ -24,6 +24,18 @@ class Autocomplete extends React.Component {
    selectedPosition: React.PropTypes.oneOf(['above', 'below']),
    showSuggestionsWhenValueIsSet: React.PropTypes.bool,
    source: React.PropTypes.any,
+   theme: React.PropTypes.shape({
+     active: React.PropTypes.string.isRequired,
+     autocomplete: React.PropTypes.string.isRequired,
+     focus: React.PropTypes.string.isRequired,
+     input: React.PropTypes.string.isRequired,
+     label: React.PropTypes.string.isRequired,
+     suggestion: React.PropTypes.string.isRequired,
+     suggestions: React.PropTypes.string.isRequired,
+     up: React.PropTypes.string.isRequired,
+     value: React.PropTypes.string.isRequired,
+     values: React.PropTypes.string.isRequired
+   }),
    value: React.PropTypes.any
  };
 
@@ -66,7 +78,7 @@ class Autocomplete extends React.Component {
    if (this.props.onChange) this.props.onChange(key, event);
    this.setState(
      {focus: false, query, showAllSuggestions: this.props.showSuggestionsWhenValueIsSet},
-     () => { this.refs.input.blur(); }
+     () => { ReactDOM.findDOMNode(this).querySelector('input').blur(); }
    );
  };
 
@@ -97,7 +109,7 @@ class Autocomplete extends React.Component {
 
  handleQueryKeyUp = (event) => {
    if (event.which === 13 && this.state.active) this.select(this.state.active, event);
-   if (event.which === 27) this.refs.input.blur();
+   if (event.which === 27) ReactDOM.findDOMNode(this).querySelector('input').blur();
    if ([40, 38].indexOf(event.which) !== -1) {
      const suggestionsKeys = [...this.suggestions().keys()];
      let index = suggestionsKeys.indexOf(this.state.active) + (event.which === 40 ? +1 : -1);
@@ -194,7 +206,7 @@ class Autocomplete extends React.Component {
        return (
          <Chip
            key={key}
-           className={style.value}
+           className={this.props.theme.value}
            deletable
            onDeleteClick={this.unselect.bind(this, key)}
          >
@@ -203,13 +215,14 @@ class Autocomplete extends React.Component {
        );
      });
 
-     return <ul className={style.values}>{selectedItems}</ul>;
+     return <ul className={this.props.theme.values}>{selectedItems}</ul>;
    }
  }
 
  renderSuggestions () {
+   const { theme } = this.props;
    const suggestions = [...this.suggestions()].map(([key, value]) => {
-     const className = ClassNames(style.suggestion, {[style.active]: this.state.active === key});
+     const className = classnames(theme.suggestion, {[theme.active]: this.state.active === key});
      return (
        <li
          key={key}
@@ -222,14 +235,14 @@ class Autocomplete extends React.Component {
      );
    });
 
-   const className = ClassNames(style.suggestions, {[style.up]: this.state.direction === 'up'});
+   const className = classnames(theme.suggestions, {[theme.up]: this.state.direction === 'up'});
    return <ul ref='suggestions' className={className}>{suggestions}</ul>;
  }
 
  render () {
-   const {error, label, ...other} = this.props;
-   const className = ClassNames(style.root, {
-     [style.focus]: this.state.focus
+   const {error, label, theme, ...other} = this.props;
+   const className = classnames(theme.autocomplete, {
+     [theme.focus]: this.state.focus
    }, this.props.className);
 
    return (
@@ -238,7 +251,7 @@ class Autocomplete extends React.Component {
        <Input
          {...other}
          ref='input'
-         className={style.input}
+         className={theme.input}
          error={error}
          label={label}
          onBlur={this.handleQueryBlur}
@@ -255,4 +268,4 @@ class Autocomplete extends React.Component {
  }
 }
 
-export default Autocomplete;
+export default themr('ToolboxAutocomplete')(Autocomplete);

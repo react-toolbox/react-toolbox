@@ -2,7 +2,7 @@
 @import "./config";
 @import "../input/config";
 
-.root {
+.autocomplete {
   position: relative;
   padding: $unit 0;
   &.focus {

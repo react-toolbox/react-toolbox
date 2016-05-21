@@ -5,6 +5,7 @@ An input field with a set of predeterminated labeled values. When it's focused i
 <!-- example -->
 ```jsx
 import Autocomplete from 'react-toolbox/lib/autocomplete';
+import theme from 'react-toolbox/lib/autocomplete/theme';
 
 const source = {
   'ES-es': 'Spain',
@@ -30,6 +31,7 @@ class AutocompleteTest extends React.Component {
         label="Choose countries"
         onChange={this.handleChange}
         source={source}
+        theme={theme}
         value={this.state.countries}
       />
     );
@@ -54,3 +56,20 @@ class AutocompleteTest extends React.Component {
 | `value`             | `String` or `Array`    |                 | Value or array of values currently selected component.|
 
 Additional properties will be passed to the Input Component so you can use `hint`, `name` ... etc.
+
+## Theming
+
+You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxAutocomplete`, it should implement the following interface:
+
+| Name     | Description|
+|:---------|:-----------|
+| `active` | Used for a suggestion when it's active.|
+| `autocomplete`  | Used for the root element.|
+| `focus`   | Used when the input is focused.|
+| `input`   | Used to style the `Input` component.|
+| `label`   | Used for the label.|
+| `suggestion`   | Used to style each suggestion.|
+| `suggestions`   | Used to style the suggestions container.|
+| `up`   | Used for the suggestions when it's opening to the top.|
+| `value`   | Classname used for a single value.|
+| `values`   | Classname used for the values container.|
