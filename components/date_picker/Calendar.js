@@ -1,11 +1,11 @@
 import React from 'react';
 import CssTransitionGroup from 'react-addons-css-transition-group';
+import { themr } from 'react-css-themr';
 import { SlideLeft, SlideRight } from '../animations';
 import { IconButton } from '../button';
 import CalendarMonth from './CalendarMonth';
 import time from '../utils/time';
 import utils from '../utils/utils';
-import style from './style.calendar';
 
 class Calendar extends React.Component {
   static propTypes = {
@@ -14,6 +14,13 @@ class Calendar extends React.Component {
     minDate: React.PropTypes.object,
     onChange: React.PropTypes.func,
     selectedDate: React.PropTypes.object,
+    theme: React.PropTypes.shape({
+      active: React.PropTypes.string.isRequired,
+      calendar: React.PropTypes.string.isRequired,
+      next: React.PropTypes.string.isRequired,
+      prev: React.PropTypes.string.isRequired,
+      years: React.PropTypes.string.isRequired
+    }),
     viewDate: React.PropTypes.object
   };
 
@@ -57,7 +64,7 @@ class Calendar extends React.Component {
 
   renderYear (year) {
     const props = {
-      className: year === this.state.viewDate.getFullYear() ? style.active : '',
+      className: year === this.state.viewDate.getFullYear() ? this.props.theme.active : '',
       key: year,
       onClick: this.handleYearClick.bind(this, year)
     };
@@ -71,18 +78,19 @@ class Calendar extends React.Component {
 
   renderYears () {
     return (
-      <ul data-react-toolbox='years' ref="years" className={style.years}>
+      <ul data-react-toolbox='years' ref="years" className={this.props.theme.years}>
         {utils.range(1900, 2100).map((i) => { return this.renderYear(i); })}
       </ul>
     );
   }
 
   renderMonths () {
+    const { theme } = this.props;
     const animation = this.state.direction === 'left' ? SlideLeft : SlideRight;
     return (
       <div data-react-toolbox='calendar'>
-        <IconButton className={style.prev} icon='chevron_left' onClick={this.changeViewMonth.bind(this, 'left', -1)} />
-        <IconButton className={style.next} icon='chevron_right' onClick={this.changeViewMonth.bind(this, 'right', 1)} />
+        <IconButton className={theme.prev} icon='chevron_left' onClick={this.changeViewMonth.bind(this, 'left', -1)} />
+        <IconButton className={theme.next} icon='chevron_right' onClick={this.changeViewMonth.bind(this, 'right', 1)} />
         <CssTransitionGroup transitionName={animation} transitionEnterTimeout={350} transitionLeaveTimeout={350}>
           <CalendarMonth
             key={this.state.viewDate.getMonth()}
@@ -99,11 +107,11 @@ class Calendar extends React.Component {
 
   render () {
     return (
-      <div className={style.root}>
+      <div className={this.props.theme.calendar}>
         {this.props.display === 'months' ? this.renderMonths() : this.renderYears()}
       </div>
     );
   }
 }
 
-export default Calendar;
+export default themr('ToolboxDatePicker')(Calendar);

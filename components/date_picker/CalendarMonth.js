@@ -1,8 +1,8 @@
 import React from 'react';
+import { themr } from 'react-css-themr';
 import CalendarDay from './CalendarDay';
 import time from '../utils/time';
 import utils from '../utils/utils';
-import style from './style.calendar';
 
 class Month extends React.Component {
   static propTypes = {
@@ -10,6 +10,12 @@ class Month extends React.Component {
     minDate: React.PropTypes.object,
     onDayClick: React.PropTypes.func,
     selectedDate: React.PropTypes.object,
+    theme: React.PropTypes.shape({
+      days: React.PropTypes.string.isRequired,
+      month: React.PropTypes.string.isRequired,
+      title: React.PropTypes.string.isRequired,
+      week: React.PropTypes.string.isRequired
+    }),
     viewDate: React.PropTypes.object
   };
 
@@ -43,15 +49,15 @@ class Month extends React.Component {
 
   render () {
     return (
-      <div data-react-toolbox='month' className={style.month}>
-        <span className={style.title}>
+      <div data-react-toolbox='month' className={this.props.theme.month}>
+        <span className={this.props.theme.title}>
           {time.getFullMonth(this.props.viewDate)} {this.props.viewDate.getFullYear()}
         </span>
-        <div className={style.week}>{this.renderWeeks()}</div>
-        <div className={style.days}>{this.renderDays()}</div>
+        <div className={this.props.theme.week}>{this.renderWeeks()}</div>
+        <div className={this.props.theme.days}>{this.renderDays()}</div>
       </div>
     );
   }
 }
 
-export default Month;
+export default themr('ToolboxDatePicker')(Month);

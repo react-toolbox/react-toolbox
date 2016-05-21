@@ -1,9 +1,9 @@
 import React from 'react';
 import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import DatePickerDialog from './DatePickerDialog';
 import events from '../utils/events';
 import Input from '../input';
-import style from './style';
 import time from '../utils/time';
 
 class DatePicker extends React.Component {
@@ -21,6 +21,9 @@ class DatePicker extends React.Component {
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
     onChange: React.PropTypes.func,
+    theme: React.PropTypes.shape({
+      input: React.PropTypes.string.isRequired
+    }),
     value: React.PropTypes.oneOfType([
       React.PropTypes.instanceOf(Date),
       React.PropTypes.string
@@ -54,7 +57,7 @@ class DatePicker extends React.Component {
     return (
       <div data-react-toolbox='date-picker'>
         <Input
-          className={classnames(style.input, {[inputClassName]: inputClassName })}
+          className={classnames(this.props.theme.input, {[inputClassName]: inputClassName })}
           error={this.props.error}
           onMouseDown={this.handleInputMouseDown}
           label={this.props.label}
@@ -78,4 +81,4 @@ class DatePicker extends React.Component {
   }
 }
 
-export default DatePicker;
+export default themr('ToolboxDatePicker')(DatePicker);

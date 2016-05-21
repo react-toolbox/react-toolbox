@@ -1,8 +1,8 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import Calendar from './Calendar';
 import Dialog from '../dialog';
-import style from './style';
 import time from '../utils/time';
 
 class CalendarDialog extends React.Component {
@@ -14,6 +14,16 @@ class CalendarDialog extends React.Component {
     minDate: React.PropTypes.object,
     onDismiss: React.PropTypes.func,
     onSelect: React.PropTypes.func,
+    theme: React.PropTypes.shape({
+      button: React.PropTypes.string.isRequired,
+      calendarWrapper: React.PropTypes.string.isRequired,
+      date: React.PropTypes.string.isRequired,
+      dialog: React.PropTypes.string.isRequired,
+      header: React.PropTypes.string.isRequired,
+      monthsDisplay: React.PropTypes.string.isRequired,
+      year: React.PropTypes.string.isRequired,
+      yearsDisplay: React.PropTypes.string.isRequired
+    }),
     value: React.PropTypes.object
   };
 
@@ -65,27 +75,28 @@ class CalendarDialog extends React.Component {
   }
 
   actions = [
-    { label: 'Cancel', className: style.button, onClick: this.props.onDismiss },
-    { label: 'Ok', className: style.button, onClick: this.handleSelect }
+    { label: 'Cancel', className: this.props.theme.button, onClick: this.props.onDismiss },
+    { label: 'Ok', className: this.props.theme.button, onClick: this.handleSelect }
   ];
 
   render () {
-    const display = `display-${this.state.display}`;
-    const className = ClassNames(style.dialog, this.props.className);
-    const headerClassName = ClassNames(style.header, style[display]);
+    const { theme } = this.props;
+    const display = `${this.state.display}Display`;
+    const className = classnames(theme.dialog, this.props.className);
+    const headerClassName = classnames(theme.header, theme[display]);
 
     return (
       <Dialog active={this.props.active} type="custom" className={className} actions={this.actions}>
           <header className={headerClassName}>
-            <span className={style.year} onClick={this.handleSwitchDisplay.bind(this, 'years')}>
+            <span className={theme.year} onClick={this.handleSwitchDisplay.bind(this, 'years')}>
               {this.state.date.getFullYear()}
             </span>
-            <h3 className={style.date} onClick={this.handleSwitchDisplay.bind(this, 'months')}>
+            <h3 className={theme.date} onClick={this.handleSwitchDisplay.bind(this, 'months')}>
               {time.getShortDayOfWeek(this.state.date.getDay())}, {time.getShortMonth(this.state.date)} {this.state.date.getDate()}
             </h3>
           </header>
 
-          <div className={style.wrapper}>
+          <div className={theme.calendarWrapper}>
             <Calendar
               display={this.state.display}
               maxDate={this.props.maxDate}
@@ -98,4 +109,4 @@ class CalendarDialog extends React.Component {
   }
 }
 
-export default CalendarDialog;
+export default themr('ToolboxDatePicker')(CalendarDialog);
