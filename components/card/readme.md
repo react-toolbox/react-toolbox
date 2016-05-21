@@ -114,7 +114,7 @@ typically placed at the bottom of the card.
 
 ## Theming
 
-Each subcomponent takes it's own classes but since usually you'd want to include every card subcomponent, we use the same themed key `ToolboxCard` for your context styles. The interface is as follows:
+Each subcomponent takes it's own classes but since usually you'd want to include every card subcomponent, and also those styles are related to each other, we use the same themed key `ToolboxCard` for context styles. The interface is as follows:
 
 | Name       | Description|
 |:-----------|:-----------|
@@ -132,4 +132,4 @@ Each subcomponent takes it's own classes but since usually you'd want to include
 | `title` | Used in `CardTitle` for title main wrapper.|
 | `wide` | Used in `CardMedia` for wide content.|
 
-This component theme also includes modifiers for buttons used in `CardActions` and for `Avatar` component.
+This component theme also includes modifiers for `Button` and for `Avatar` component.

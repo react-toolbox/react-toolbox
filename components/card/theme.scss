@@ -13,7 +13,7 @@
   &.raised {
     @include shadow-8dp();
   }
-  .avatar {
+  [data-react-toolbox="avatar"] {
     display: block;
   }
 }
@@ -60,7 +60,7 @@
 .cardTitle {
   display: flex;
   align-items: center;
-  .avatar {
+  [data-react-toolbox="avatar"] {
     margin-right: 1.3 * $unit;
   }
   .subtitle {
@@ -106,7 +106,7 @@
   align-items: center;
   justify-content: flex-start;
   padding: $card-padding-sm;
-  .button {
+  [data-react-toolbox="button"] {
     min-width: 0;
     padding: 0 $card-padding-sm;
     margin: 0 $card-padding-sm / 2;

@@ -1,7 +1,4 @@
-const DEPENDENCIES = {
-  ToolboxButton: [ 'ToolboxRipple' ],
-  ToolboxCard: [ 'ToolboxAvatar', 'ToolboxButton' ]
-};
+const DEPENDENCIES = {};
 
 export default function defineTheme (theme) {
   return generateModifiers(theme)(theme);
