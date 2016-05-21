@@ -5,6 +5,7 @@
 <!-- example -->
 ```jsx
 import Checkbox from 'react-toolbox/lib/checkbox';
+import theme from 'react-toolbox/lib/checkbox/theme';
 
 class TestCheckbox extends React.Component {
   state = { check1: true, check2: false };
@@ -20,16 +21,19 @@ class TestCheckbox extends React.Component {
           checked={this.state.check1}
           label="Checked option"
           onChange={this.handleChange.bind(this, 'check1')}
+          theme={theme}
         />
         <Checkbox
           checked={this.state.check2}
           label="Unchecked option"
           onChange={this.handleChange.bind(this, 'check2')}
+          theme={theme}
         />
         <Checkbox
           checked
           disabled
           label="Disabled checkbox"
+          theme={theme}
         />
       </div>
     );
@@ -50,9 +54,16 @@ class TestCheckbox extends React.Component {
 | `onChange`      | `Function`      |                 | Callback called when the checkbox value is changed.|
 | `onFocus`       | `Function`      |                 | Callback called when the checkbox is focused |
 
-## Methods
+## Theming
 
-This component exposes methods to communicate with the `input` DOM component:
+You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxCheckbox`, it should implement the following interface:
 
-- `blur` to blur the input.
-- `focus` to focus the input.
+| Name     | Description|
+|:---------|:-----------|
+| `check`  | Used as root in the check element.|
+| `checked`  | Used for the check element when it's checked.|
+| `disabled`   | Used when the component is disabled.|
+| `field`   | Used as the root class of the component.|
+| `input`   | Used for the input element.|
+| `ripple`   | Used for the ripple component.|
+| `text`   | Used for the text label.|

@@ -1,25 +1,32 @@
 import React, { PropTypes } from 'react';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import Ripple from '../ripple';
-import style from './style';
 
-const Check = ({checked, children, onMouseDown}) => {
-  const className = ClassNames(style.check, {
-    [style.checked]: checked
-  });
-
-  return <div data-react-toolbox='check' onMouseDown={onMouseDown} className={className}>{children}</div>;
-};
+const Check = ({checked, children, onMouseDown, theme}) => (
+  <div
+    data-react-toolbox='check'
+    className={classnames(theme.check, { [theme.checked]: checked })}
+    onMouseDown={onMouseDown}
+  >
+    {children}
+  </div>
+);
 
 Check.propTypes = {
   checked: PropTypes.bool,
   children: PropTypes.any,
-  onMouseDown: PropTypes.func
+  onMouseDown: PropTypes.func,
+  theme: React.PropTypes.shape({
+    check: React.PropTypes.string.isRequired,
+    checked: React.PropTypes.string.isRequired
+  })
 };
 
-export default Ripple({
-  className: style.ripple,
+const RawCheck = themr('ToolboxCheckbox')(Check);
+export default themr('ToolboxCheckbox')(Ripple({
   spread: 2.6,
   centered: true
-})(Check);
-export {Check as RawCheck};
+})(Check));
+
+export {RawCheck as RawCheck};

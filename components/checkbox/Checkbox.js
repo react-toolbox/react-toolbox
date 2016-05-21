@@ -1,7 +1,7 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import Check from './Check';
-import style from './style';
 
 class Checkbox extends React.Component {
   static propTypes = {
@@ -9,7 +9,13 @@ class Checkbox extends React.Component {
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     label: React.PropTypes.any,
-    onChange: React.PropTypes.func
+    onChange: React.PropTypes.func,
+    theme: React.PropTypes.shape({
+      disabled: React.PropTypes.string.isRequired,
+      field: React.PropTypes.string.isRequired,
+      input: React.PropTypes.string.isRequired,
+      ripple: React.PropTypes.string.isRequired
+    })
   };
 
   static defaultProps = {
@@ -34,26 +40,26 @@ class Checkbox extends React.Component {
   }
 
   render () {
-    const { onChange, ...others } = this.props; //eslint-disable-line no-unused-vars
-    const className = ClassNames(style.field, {
-      [style.disabled]: this.props.disabled
+    const { onChange, theme, ...others } = this.props; //eslint-disable-line no-unused-vars
+    const className = classnames(theme.field, {
+      [theme.disabled]: this.props.disabled
     }, this.props.className);
 
     return (
       <label data-react-toolbox='checkbox' className={className}>
         <input
           {...others}
-          className={style.input}
+          className={theme.input}
           onClick={this.handleToggle}
           readOnly
           ref='input'
           type='checkbox'
         />
-        <Check checked={this.props.checked} disabled={this.props.disabled}/>
-        {this.props.label ? <span data-react-toolbox='label' className={style.text}>{this.props.label}</span> : null}
+        <Check rippleClassName={theme.ripple} checked={this.props.checked} disabled={this.props.disabled}/>
+        {this.props.label ? <span data-react-toolbox='label' className={theme.text}>{this.props.label}</span> : null}
       </label>
     );
   }
 }
 
-export default Checkbox;
+export default themr('ToolboxCheckbox')(Checkbox);

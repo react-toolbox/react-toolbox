@@ -8,6 +8,11 @@
   margin-bottom: $checkbox-field-margin-bottom;
   white-space: nowrap;
   vertical-align: middle;
+  .ripple {
+    background-color: $checkbox-color;
+    opacity: .3;
+    transition-duration: $checkbox-ripple-duration;
+  }
 }
 
 .text {
@@ -79,12 +84,6 @@
       animation: checkmark-expand 140ms ease-out forwards;
     }
   }
-}
-
-.ripple {
-  background-color: $checkbox-color;
-  opacity: .3;
-  transition-duration: $checkbox-ripple-duration;
 }
 
 .disabled {
