@@ -4,11 +4,12 @@
 
 <!-- example -->
 ```jsx
+// Remember to provide default styles with ThemeProvider
 import Dialog from 'react-toolbox/lib/dialog';
 
 class DialogTest extends React.Component {
-  state = { 
-    active: false 
+  state = {
+    active: false
   };
 
   handleToggle = () => {
@@ -53,3 +54,16 @@ class DialogTest extends React.Component {
 | `onOverlayMouseUp`      | `Function`      |                 | Callback called when the mouse button is released over the overlay. |
 | `title`                 | `String`        |                 | The text string to use as standar title of the dialog.|
 | `type`                  | `String`        | `normal`        | Used to determine the size of the dialog. It can be `small`, `normal` or `large`. |
+
+## Theming
+
+You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxDialog`, it should implement the following interface:
+
+| Name     | Description|
+|:---------|:-----------|
+| `active` | Used for the root when the dialog is active.|
+| `body`  | Used to wrap the dialog body.|
+| `button` | Used in buttons when the dialog implements actions.|
+| `dialog` | Used for the root element.|
+| `navigation` | Used for the navigation element when it implements actions.|
+| `title`   | Used for the title element of the dialog.|

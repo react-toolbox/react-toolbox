@@ -1,18 +1,18 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import { themr } from 'react-css-themr';
+import classnames from 'classnames';
 import ActivableRenderer from '../hoc/ActivableRenderer';
 import Button from '../button';
 import Overlay from '../overlay';
-import style from './style';
 
 const Dialog = (props) => {
   const actions = props.actions.map((action, idx) => {
-    const className = ClassNames(style.button, {[action.className]: action.className});
+    const className = classnames(props.theme.button, {[action.className]: action.className});
     return <Button key={idx} {...action} className={className} />;
   });
 
-  const className = ClassNames([ style.root, style[props.type] ], {
-    [style.active]: props.active
+  const className = classnames([props.theme.dialog, props.theme[props.type]], {
+    [props.theme.active]: props.active
   }, props.className);
 
   return (
@@ -25,12 +25,12 @@ const Dialog = (props) => {
       onEscKeyDown={props.onEscKeyDown}
     >
       <div data-react-toolbox='dialog' className={className}>
-        <section role='body' className={style.body}>
-          {props.title ? <h6 className={style.title}>{props.title}</h6> : null}
+        <section role='body' className={props.theme.body}>
+          {props.title ? <h6 className={props.theme.title}>{props.title}</h6> : null}
           {props.children}
         </section>
         {actions.length
-          ? <nav role='navigation' className={style.navigation}>
+          ? <nav role='navigation' className={props.theme.navigation}>
               {actions}
             </nav>
           : null
@@ -50,6 +50,14 @@ Dialog.propTypes = {
   onOverlayMouseDown: React.PropTypes.func,
   onOverlayMouseMove: React.PropTypes.func,
   onOverlayMouseUp: React.PropTypes.func,
+  theme: React.PropTypes.shape({
+    active: React.PropTypes.string.isRequired,
+    body: React.PropTypes.string.isRequired,
+    button: React.PropTypes.string.isRequired,
+    dialog: React.PropTypes.string.isRequired,
+    navigation: React.PropTypes.string.isRequired,
+    title: React.PropTypes.string.isRequired
+  }),
   title: React.PropTypes.string,
   type: React.PropTypes.string
 };
@@ -60,4 +68,4 @@ Dialog.defaultProps = {
   type: 'normal'
 };
 
-export default ActivableRenderer()(Dialog);
+export default themr('ToolboxDialog')(ActivableRenderer()(Dialog));

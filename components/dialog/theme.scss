@@ -1,7 +1,7 @@
 @import "../base";
 @import "./config";
 
-.root {
+.dialog {
   display: flex;
   max-width: 96vw;
   max-height: 96vh;
@@ -23,21 +23,21 @@
 
 .small {
   width: 30vw;
-  
+
   @media screen and (max-width: $layout-breakpoint-sm-tablet) {
-	width: 50vw;
+    width: 50vw;
   }
-  
+
   @media screen and (max-width: $layout-breakpoint-xs) {
-	width: 75vw;
+    width: 75vw;
   }
 }
 
 .normal {
   width: 50vw;
-  
+
   @media screen and (max-width: $layout-breakpoint-xs) {
-	width: 96vw;
+    width: 96vw;
   }
 }
 
