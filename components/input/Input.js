@@ -10,6 +10,7 @@ class Input extends React.Component {
     disabled: React.PropTypes.bool,
     error: React.PropTypes.string,
     floating: React.PropTypes.bool,
+    forceFloatLabel: React.PropTypes.bool,
     hint: React.PropTypes.string,
     icon: React.PropTypes.oneOfType([
       React.PropTypes.string,
@@ -32,6 +33,7 @@ class Input extends React.Component {
     hint: '',
     disabled: false,
     floating: true,
+    forceFloatLabel: false,
     multiline: false,
     required: false,
     type: 'text'
@@ -50,7 +52,7 @@ class Input extends React.Component {
   }
 
   render () {
-    const { children, disabled, error, floating, hint, icon,
+    const { children, disabled, error, floating, forceFloatLabel, hint, icon,
             label: labelText, maxLength, multiline, required,
             type, value, ...others} = this.props;
     const length = maxLength && value ? value.length : 0;
@@ -67,7 +69,7 @@ class Input extends React.Component {
 
     const InputElement = React.createElement(multiline ? 'textarea' : 'input', {
       ...others,
-      className: ClassNames(style.input, {[style.filled]: valuePresent}),
+      className: ClassNames(style.input, {[style.filled]: valuePresent || forceFloatLabel}),
       onChange: this.handleChange,
       ref: 'input',
       role: 'input',
