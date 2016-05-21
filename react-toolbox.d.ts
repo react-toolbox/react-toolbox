@@ -190,6 +190,11 @@ declare namespace __RT {
          */
         source: Object | Array<any>,
         /**
+         * If true, the list of suggestions will not be filtered when a value is selected, until the query is modified.
+         * @default false
+         */
+        showSuggestionsWhenValueIsSet?: boolean,
+        /**
          * Type of the input element. It can be a valid HTML5 input type
          * @default text
          */

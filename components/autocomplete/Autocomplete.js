@@ -22,6 +22,7 @@ class Autocomplete extends React.Component {
    multiple: React.PropTypes.bool,
    onChange: React.PropTypes.func,
    selectedPosition: React.PropTypes.oneOf(['above', 'below']),
+   showSuggestionsWhenValueIsSet: React.PropTypes.bool,
    source: React.PropTypes.any,
    value: React.PropTypes.any
  };
@@ -31,12 +32,14 @@ class Autocomplete extends React.Component {
    direction: 'auto',
    selectedPosition: 'above',
    multiple: true,
+   showSuggestionsWhenValueIsSet: false,
    source: {}
  };
 
  state = {
    direction: this.props.direction,
    focus: false,
+   showAllSuggestions: this.props.showSuggestionsWhenValueIsSet,
    query: this.query(this.props.value)
  };
 
@@ -61,7 +64,10 @@ class Autocomplete extends React.Component {
    const key = this.props.multiple ? keys : keys[0];
    const query = this.query(key);
    if (this.props.onChange) this.props.onChange(key, event);
-   this.setState({ focus: false, query }, () => { this.refs.input.blur(); });
+   this.setState(
+     {focus: false, query, showAllSuggestions: this.props.showSuggestionsWhenValueIsSet},
+     () => { this.refs.input.blur(); }
+   );
  };
 
  handleQueryBlur = () => {
@@ -69,12 +75,24 @@ class Autocomplete extends React.Component {
  };
 
  handleQueryChange = (value) => {
-   this.setState({query: value});
+   this.setState({query: value, showAllSuggestions: false});
  };
 
  handleQueryFocus = () => {
    this.refs.suggestions.scrollTop = 0;
    this.setState({active: '', focus: true});
+ };
+
+ handleQueryKeyDown = (event) => {
+   // Clear query when pressing backspace and showing all suggestions.
+   const shouldClearQuery = (
+     event.which === 8
+     && this.props.showSuggestionsWhenValueIsSet
+     && this.state.showAllSuggestions
+   );
+   if (shouldClearQuery) {
+     this.setState({query: ''});
+   }
  };
 
  handleQueryKeyUp = (event) => {
@@ -109,15 +127,32 @@ class Autocomplete extends React.Component {
  }
 
  suggestions () {
-   const suggest = new Map();
+   let suggest = new Map();
    const query = this.state.query.toLowerCase().trim() || '';
    const values = this.values();
-   for (const [key, value] of this.source()) {
-     if (value.toLowerCase().trim().startsWith(query)
-          && (!values.has(key) || !this.props.multiple)) {
-       suggest.set(key, value);
+   const source = this.source();
+
+   // Suggest any non-set value which matches the query
+   if (this.props.multiple) {
+     for (const [key, value] of source) {
+       if (!values.has(key) && value.toLowerCase().trim().startsWith(query)) {
+         suggest.set(key, value);
+       }
      }
+
+   // When multiple is false, suggest any value which matches the query if showAllSuggestions is false
+   } else if (query && !this.state.showAllSuggestions) {
+     for (const [key, value] of source) {
+       if (value.toLowerCase().trim().startsWith(query)) {
+         suggest.set(key, value);
+       }
+     }
+
+   // When multiple is false, suggest all values when showAllSuggestions is true
+   } else {
+     suggest = source;
    }
+
    return suggest;
  }
 
@@ -209,6 +244,7 @@ class Autocomplete extends React.Component {
          onBlur={this.handleQueryBlur}
          onChange={this.handleQueryChange}
          onFocus={this.handleQueryFocus}
+         onKeyDown={this.handleQueryKeyDown}
          onKeyUp={this.handleQueryKeyUp}
          value={this.state.query}
        />
