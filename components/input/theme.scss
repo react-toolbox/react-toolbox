@@ -1,7 +1,7 @@
 @import "../base";
 @import "./config";
 
-.root {
+.input {
   position: relative;
   padding: $input-padding 0;
   &.withIcon {
@@ -23,7 +23,7 @@
   transition: color $animation-duration $animation-curve-default;
 }
 
-.input {
+.inputElement {
   display: block;
   width: 100%;
   padding: $input-field-padding 0;
@@ -126,14 +126,14 @@
   color: $input-text-label-color;
 }
 
-.disabled > .input {
+.disabled > .inputElement {
   color: $input-text-disabled-text-color;
   border-bottom-style: dotted;
 }
 
 .errored {
   padding-bottom: 0;
-  > .input {
+  > .inputElement {
     margin-top: 1px;
     border-bottom-color: $input-text-error-color;
   }

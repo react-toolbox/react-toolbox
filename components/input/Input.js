@@ -1,7 +1,7 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import FontIcon from '../font_icon';
-import style from './style';
 
 class Input extends React.Component {
   static propTypes = {
@@ -23,6 +23,20 @@ class Input extends React.Component {
     onFocus: React.PropTypes.func,
     onKeyPress: React.PropTypes.func,
     required: React.PropTypes.bool,
+    theme: React.PropTypes.shape({
+      bar: React.PropTypes.string.isRequired,
+      counter: React.PropTypes.string.isRequired,
+      disabled: React.PropTypes.string.isRequired,
+      error: React.PropTypes.string.isRequired,
+      errored: React.PropTypes.string.isRequired,
+      hidden: React.PropTypes.string.isRequired,
+      hint: React.PropTypes.string.isRequired,
+      icon: React.PropTypes.string.isRequired,
+      input: React.PropTypes.string.isRequired,
+      inputElement: React.PropTypes.string.isRequired,
+      required: React.PropTypes.string.isRequired,
+      withIcon: React.PropTypes.string.isRequired
+    }),
     type: React.PropTypes.string,
     value: React.PropTypes.any
   };
@@ -52,22 +66,22 @@ class Input extends React.Component {
   render () {
     const { children, disabled, error, floating, hint, icon,
             label: labelText, maxLength, multiline, required,
-            type, value, ...others} = this.props;
+            theme, type, value, ...others} = this.props;
     const length = maxLength && value ? value.length : 0;
-    const labelClassName = ClassNames(style.label, {[style.fixed]: !floating});
+    const labelClassName = classnames(theme.label, {[theme.fixed]: !floating});
 
-    const className = ClassNames(style.root, {
-      [style.disabled]: disabled,
-      [style.errored]: error,
-      [style.hidden]: type === 'hidden',
-      [style.withIcon]: icon
+    const className = classnames(theme.input, {
+      [theme.disabled]: disabled,
+      [theme.errored]: error,
+      [theme.hidden]: type === 'hidden',
+      [theme.withIcon]: icon
     }, this.props.className);
 
     const valuePresent = value !== null && value !== undefined && value !== '' && !Number.isNaN(value);
 
     const InputElement = React.createElement(multiline ? 'textarea' : 'input', {
       ...others,
-      className: ClassNames(style.input, {[style.filled]: valuePresent}),
+      className: classnames(theme.inputElement, {[theme.filled]: valuePresent}),
       onChange: this.handleChange,
       ref: 'input',
       role: 'input',
@@ -81,21 +95,21 @@ class Input extends React.Component {
     return (
       <div data-react-toolbox='input' className={className}>
         {InputElement}
-        {icon ? <FontIcon className={style.icon} value={icon} /> : null}
-        <span className={style.bar}></span>
+        {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
+        <span className={theme.bar}></span>
         {labelText
           ? <label className={labelClassName}>
               {labelText}
-              {required ? <span className={style.required}> * </span> : null}
+              {required ? <span className={theme.required}> * </span> : null}
             </label>
           : null}
-        {hint ? <span className={style.hint}>{hint}</span> : null}
-        {error ? <span className={style.error}>{error}</span> : null}
-        {maxLength ? <span className={style.counter}>{length}/{maxLength}</span> : null}
+        {hint ? <span className={theme.hint}>{hint}</span> : null}
+        {error ? <span className={theme.error}>{error}</span> : null}
+        {maxLength ? <span className={theme.counter}>{length}/{maxLength}</span> : null}
         {children}
       </div>
     );
   }
 }
 
-export default Input;
+export default themr('ToolboxInput')(Input);
