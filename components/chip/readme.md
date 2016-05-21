@@ -6,6 +6,7 @@ To add an icon or contact image to a chip, include an `Avatar` element as the fi
 
 <!-- example -->
 ```jsx
+// Import theme using `ThemeProvider`
 import Avatar from 'react-toolbox/lib/avatar';
 import Chip from 'react-toolbox/lib/chip';
 
