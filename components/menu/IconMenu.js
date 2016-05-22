@@ -1,7 +1,8 @@
 import React from 'react';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import { IconButton } from '../button';
 import Menu from './Menu';
-import style from './style.icon_menu';
 
 class IconMenu extends React.Component {
   static propTypes = {
@@ -19,7 +20,11 @@ class IconMenu extends React.Component {
     onShow: React.PropTypes.func,
     position: React.PropTypes.string,
     selectable: React.PropTypes.bool,
-    selected: React.PropTypes.any
+    selected: React.PropTypes.any,
+    theme: React.PropTypes.shape({
+      icon: React.PropTypes.string.isRequired,
+      iconMenu: React.PropTypes.string.isRequired
+    })
   };
 
   static defaultProps = {
@@ -31,26 +36,33 @@ class IconMenu extends React.Component {
     selectable: false
   };
 
+  state = {
+    active: false
+  }
+
   handleButtonClick = (event) => {
-    this.refs.menu.show();
+    this.setState({ active: !this.state.active });
     if (this.props.onClick) this.props.onClick(event);
   };
 
-  render () {
-    let className = style.root;
-    if (this.props.className) className += ` ${this.props.className}`;
+  handleMenuHide = () => {
+    this.setState({ active: false });
+    if (this.props.onHide) this.props.onHide();
+  }
 
+  render () {
     return (
-      <div className={className}>
+      <div className={classnames(this.props.theme.iconMenu, this.props.className)}>
         <IconButton
-          className={style.icon}
+          className={this.props.theme.icon}
           icon={this.props.icon}
           onClick={this.handleButtonClick}
           ripple={this.props.iconRipple}
         />
         <Menu
           ref='menu'
-          onHide={this.props.onHide}
+          active={this.state.active}
+          onHide={this.handleMenuHide}
           onSelect={this.props.onSelect}
           onShow={this.props.onShow}
           position={this.props.position}
@@ -65,4 +77,4 @@ class IconMenu extends React.Component {
   }
 }
 
-export default IconMenu;
+export default themr('ToolboxMenu')(IconMenu);

@@ -2,6 +2,8 @@
 
 A [Menu](https://www.google.com/design/spec/components/menus.html) is a temporary piece of material emitted from a button, an action, a pointer, or another control that contains at least two menu items. Each menu item is a discrete option or action that can affect the app, the view, or selected elements within a view. Menus should not be used as a primary method for navigation within an app. You can compose a menu based on a few subcomponents, same as for Lists.
 
+This set of components is themed to be provided width the key `ToolboxMenu`.
+
 <!-- example -->
 ```jsx
 import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
@@ -20,6 +22,8 @@ const MenuTest = () => (
 ## Menu
 
 This subcomponent is the default wrapper for a menu and is responsible for the opening behavior. Its properties can affect to the Item children.
+
+### Properties
 
 | Name          | Type          | Default     | Description|
 |:-----|:-----|:-----|:-----|
@@ -45,6 +49,8 @@ The menu has state to keep a value with the currently selected item. It also exp
 
 As the most usual scenario will be to open the menu from a click in an Icon, we provide this subcomponent implementing this behavior. The `IconMenu` shows an icon and implements a `Menu` under the covers that is shown when is clicked. Some of its properties are transferred to the menu, others to the children:
 
+### Properties
+
 | Name            | Type                  | Default         | Description|
 |:-----|:-----|:-----|:-----|
 | `className`     | `String`              |  `''`           | Set a class to give custom styles to the icon wrapper.|
@@ -58,6 +64,13 @@ As the most usual scenario will be to open the menu from a click in an Icon, we 
 | `position`      | `String`              | `auto`          | Determines the position of the menu. This property is transferred to the inner `Menu` component. |
 | `selectable`    | `Boolean`             | `false`         | If true, the menu will keep a value to highlight the active child item. |
 | `selected`      | `Any`                 |                 | Used for selectable menus. Indicates the current selected value so the child item with this value can be highlighted. |
+
+### Theming
+
+| Name     | Description|
+|:---------|:-----------|
+| `icon`   | Used for the icon element.|
+| `iconMenu`   | Used for the root element of the icon menu.|
 
 ## Menu Item
 

@@ -1,12 +1,11 @@
 @import "../base";
 @import "./config";
 
-.root {
+.iconMenu {
   position: relative;
   display: inline-block;
   text-align: center;
-}
-
-.icon {
-  cursor: pointer;
+  .icon {
+    cursor: pointer;
+  }
 }

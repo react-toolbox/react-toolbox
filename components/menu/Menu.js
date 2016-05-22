@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
 import MenuItem from './MenuItem';
 import { events, utils } from '../utils';
 import style from './style.menu';
@@ -54,6 +54,14 @@ class Menu extends React.Component {
     if (this.props.position !== nextProps.position) {
       const position = nextProps.position === POSITION.AUTO ? this.calculatePosition() : nextProps.position;
       this.setState({ position });
+    }
+
+    if (!this.props.active && nextProps.active && !this.state.active) {
+      this.show();
+    }
+
+    if (this.props.active && !nextProps.active && this.state.active) {
+      this.hide();
     }
   }
 
@@ -166,7 +174,7 @@ class Menu extends React.Component {
 
   render () {
     const outlineStyle = { width: this.state.width, height: this.state.height };
-    const className = ClassNames([style.root, style[this.state.position]], {
+    const className = classnames([style.root, style[this.state.position]], {
       [style.active]: this.state.active,
       [style.rippled]: this.state.rippled
     }, this.props.className);
