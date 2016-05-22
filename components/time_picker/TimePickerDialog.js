@@ -21,7 +21,7 @@ class TimePickerDialog extends React.Component {
       hours: React.PropTypes.string.isRequired,
       hoursDisplay: React.PropTypes.string.isRequired,
       minutes: React.PropTypes.string.isRequired,
-      minutessDisplay: React.PropTypes.string.isRequired,
+      minutesDisplay: React.PropTypes.string.isRequired,
       pm: React.PropTypes.string.isRequired,
       pmFormat: React.PropTypes.string.isRequired,
       separator: React.PropTypes.string.isRequired
