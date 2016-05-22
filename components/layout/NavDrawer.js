@@ -4,7 +4,7 @@ import { themr } from 'react-css-themr';
 
 const NavDrawer = ({ active, children, className, onOverlayClick, permanentAt, pinned, scrollY, theme, width }) => {
   const rootClasses = classnames([theme.navDrawer], {
-    [theme['permanent-' + permanentAt]]: permanentAt,
+    [theme[permanentAt + 'Permanent']]: permanentAt,
     [theme.wide]: (width === 'wide'),
     [theme.active]: active,
     [theme.pinned]: pinned

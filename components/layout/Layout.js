@@ -8,16 +8,16 @@ const Layout = ({ className, children, theme }) => (
   </div>
 );
 
-const ALLOWED = [
-  'Panel',
-  'NavDrawer|Panel',
-  'NavDrawer|Panel|Sidebar',
-  'Panel|Sidebar'
+const ALLOWED_THEMED = [
+  'Themed Panel',
+  'Themed NavDrawer|Themed Panel',
+  'Themed NavDrawer|Themed Panel|Themed Sidebar',
+  'Themed Panel|Themed Sidebar'
 ];
 
 function getChildName (child) {
   if (child.type) {
-    return child.type.name || child.type;
+    return child.type.displayName || child.type.name || child.type;
   }
   if (!child.constructor || !child.constructor.name) {
     return 'UNKNOWN';
@@ -37,7 +37,7 @@ Layout.propTypes = {
     }
 
     const names = React.Children.map(children, getChildName).join('|');
-    if (!(~ALLOWED.indexOf(names))) {
+    if (!(~ALLOWED_THEMED.indexOf(names))) {
       return new Error(
         '`' + componentName + '` '
         + 'should have a Panel for a child, optionally preceded by a NavDrawer and/or followed by a Sidebar.'

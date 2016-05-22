@@ -38,7 +38,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "core-js": "^2.4.0",
-    "react-css-themr": "^1.0.0"
+    "react-css-themr": "^1.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",

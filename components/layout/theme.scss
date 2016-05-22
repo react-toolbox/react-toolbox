@@ -137,11 +137,11 @@
     }
   }
 
-  & .root {
+  & .layout {
     .scrim {
       z-index: $z-index-highest - 1;
     }
-    & .root {
+    & .layout {
       .scrim {
         z-index: $z-index-highest - 2;
       }
