@@ -84,6 +84,8 @@ As the most usual scenario will be to open the menu from a click in an Icon, we 
 
 The inner component for menus and describes the content of each option. It behaves in a similar way to List Items but simpler.
 
+### Properties
+
 | Name              | Type              | Default     | Description|
 |:-----|:-----|:-----|:-----|
 | `caption`     | `String`              |             | The text to include in the menu item. Required.|
@@ -93,6 +95,17 @@ The inner component for menus and describes the content of each option. It behav
 | `onClick`     | `Function`            |             | Callback that will be called when Component is clicked. |
 | `selected`    | `Boolean`             | `false`     | Transferred from the `Menu` component for selectable menus. Indicates if it's the current active option. |
 | `shortcut`    | `String`              | `''`        | Displays shortcut text on the right side of the `caption` attribute. |
+
+### Theming
+
+| Name     | Description|
+|:---------|:-----------|
+| `caption`   | Used for the caption inside the item.|
+| `disabled`   | Added to the root element if it's disabled.|
+| `icon`   | Used for the icon element if exists.|
+| `menuItem`   | Used as the root class for the component.|
+| `selected`   | Added to the root element in case it's selected.|
+| `shortcut`   | Used for the shortcut element if exists.|
 
 ## Menu Divider
 
