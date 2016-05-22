@@ -1,8 +1,14 @@
 import React from 'react';
-import style from './style.menu_divider';
+import { themr } from 'react-css-themr';
 
-const MenuDivider = () => (
-  <hr data-react-toolbox='menu-divider' className={style.root}/>
+const MenuDivider = ({ theme }) => (
+  <hr data-react-toolbox='menu-divider' className={theme.menuDivider}/>
 );
 
-export default MenuDivider;
+MenuDivider.propTypes = {
+  theme: React.PropTypes.shape({
+    menuDivider: React.PropTypes.string.isRequired
+  })
+};
+
+export default themr('ToolboxMenu')(MenuDivider);

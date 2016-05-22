@@ -142,3 +142,11 @@
 .shortcut {
   margin-left: $menu-item-padding;
 }
+
+.menuDivider {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin: $menu-divider-height 0;
+  background-color: $color-divider;
+}

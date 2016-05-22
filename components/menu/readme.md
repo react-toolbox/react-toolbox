@@ -109,4 +109,4 @@ The inner component for menus and describes the content of each option. It behav
 
 ## Menu Divider
 
-A very simple component that just displays a separator between options. It has no props and no state or methods, just markup.
+A very simple component that just displays a separator between options. It has no props and no state or methods, just markup. Also it accepts a single class for the styling which is `menuDivider`.
