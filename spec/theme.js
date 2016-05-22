@@ -11,6 +11,7 @@ import ToolboxDialog from '../components/dialog/theme.scss';
 import ToolboxDrawer from '../components/drawer/theme.scss';
 import ToolboxInput from '../components/input/theme.scss';
 import ToolboxLayout from '../components/layout/theme.scss';
+import ToolboxLink from '../components/link/theme.scss';
 import ToolboxOverlay from '../components/overlay/theme.scss';
 import ToolboxRipple from '../components/ripple/theme.scss';
 import ToolboxTimePicker from '../components/time_picker/theme.scss';
@@ -28,6 +29,7 @@ export default defineTheme({
   ToolboxDrawer,
   ToolboxInput,
   ToolboxLayout,
+  ToolboxLink,
   ToolboxOverlay,
   ToolboxRipple,
   ToolboxTimePicker

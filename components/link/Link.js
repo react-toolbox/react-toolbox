@@ -1,19 +1,19 @@
 import React from 'react';
-import ClassNames from 'classnames';
-import style from './style';
+import classnames from 'classnames';
 import FontIcon from '../font_icon';
+import { themr } from 'react-css-themr';
 
-const Link = ({children, ...props}) => {
-  const className = ClassNames(style.root, {
-    [style.active]: props.active
-  }, props.className);
+const Link = ({active, children, className, count, icon, label, theme, ...others}) => {
+  const _className = classnames(theme.link, {
+    [theme.active]: active
+  }, className);
 
   return (
-    <a {...props} data-react-toolbox='link'className={className}>
-      {props.icon ? <FontIcon className={style.icon} value={props.icon} /> : null}
-      {props.label ? <abbr>{props.label}</abbr> : null}
-      {props.count && parseInt(props.count) !== 0 ? <small>{props.count}</small> : null}
-      {children ? children : null}
+    <a data-react-toolbox='link' className={_className} {...others}>
+      {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
+      {label ? <abbr>{label}</abbr> : null}
+      {count && parseInt(count) !== 0 ? <small>{count}</small> : null}
+      {children}
     </a>
   );
 };
@@ -27,7 +27,12 @@ Link.propTypes = {
     React.PropTypes.string,
     React.PropTypes.element
   ]),
-  label: React.PropTypes.string
+  label: React.PropTypes.string,
+  theme: React.PropTypes.shape({
+    active: React.PropTypes.string.isRequired,
+    icon: React.PropTypes.string.isRequired,
+    link: React.PropTypes.string.isRequired
+  })
 };
 
 Link.defaultProps = {
@@ -35,4 +40,4 @@ Link.defaultProps = {
   className: ''
 };
 
-export default Link;
+export default themr('ToolboxLink')(Link);
