@@ -111,6 +111,13 @@ with `flex` set to 1, and use whatever layout you like within it.
 | `children` | `Nodes` |  | A `Panel`, optionally preceded by a `NavDrawer` and/or followed by a `Sidebar` |
 | `className` | `string` |  | Additional class(es) for custom styling. |
 
+### Theme
+The themed key the `Layout` in general is `ToolboxLayout`. For the `Layout` wrapper it should only provide one class interface:
+
+| Name     | Description|
+|:---------|:-----------|
+| `layout` | Class used in the container to position and align inner items.|
+
 ## NavDrawer
 
 The [navigation drawer](https://www.google.com/design/spec/patterns/navigation-drawer.html) slides
@@ -138,6 +145,26 @@ and can also specify a breakpoint at which the drawer automatically becomes perm
 | `onOverlayClick` | `Function`     |            | Callback function to be invoked when the overlay is clicked.|
 | `className` | `string` |  | Additional class(es) for custom styling. |
 
+### Theme
+You can use `ToolboxLayout` as themed key for this component. The class interface is as follows:
+
+| Name     | Description|
+|:---------|:-----------|
+| `active` | Used when the drawer is active.|
+| `drawerContent` | Used for the content of the drawer.|
+| `lgPermanent` | Added to the root class for large drawer.|
+| `mdPermanent` | Added to the root class for medium drawer.|
+| `navDrawer` | Root class for the drawer.|
+| `normal` | Added to the root class if width is normal.|
+| `pinned` | Added to the root class if positioning is pinned.|
+| `scrim` | Used as a wrapper for the drawer content.|
+| `scrollY` | Added to the drawer content if its scrollable.|
+| `smPermanent` | Added to the root class for small drawer.|
+| `wide` | Added to the root class if width is wide.|
+| `xlPermanent` | Added to the root class for extra big drawer.|
+| `xxlPermanent` | Added to the root class for super big drawer.|
+| `xxxlPermanent` | Added to the root class for largest possible drawer.|
+
 ## Panel
 
 The `Panel` is the main content area within a `Layout`.  It is a full-height
@@ -149,6 +176,14 @@ and `Sidebar` are laid out.
 |:-----|:-----|:-----|:-----|
 | `scrollY` | `bool` | `false` | If true, the panel will vertically scroll all content. |
 | `className` | `string` |  | Additional class(es) for custom styling. |
+
+### Theme
+You can use `ToolboxLayout` as themed key for this component. The class interface is as follows:
+
+| Name     | Description|
+|:---------|:-----------|
+| `panel` | Used as the root class of the panel component.|
+| `scrollY` | Used in case the panel is scrollable.|
 
 ## Sidebar
 
@@ -165,6 +200,16 @@ covers the entire screen (see [examples](https://www.google.com/design/spec/layo
 | `pinned` | `bool` | `false` | If true, the sidebar will be pinned open. |
 | `scrollY` | `bool` | `false` | If true, the sidebar will vertically scroll all content. |
 | `className` | `string` |  | Additional class(es) for custom styling. |
+
+### Theme
+You can use `ToolboxLayout` as themed key for this component. The class interface is as follows:
+
+| Name     | Description|
+|:---------|:-----------|
+| `pinned` | Added to the root class if sidebar is pinned.|
+| `scrollY` | Add to the content of sidebar if its scrollable.|
+| `sidebar` | Root class of the sidebar.|
+| `sidebarContent` | Used in for the content element of the sidebar.|
 
 ## Nesting Layouts
 

@@ -1,9 +1,9 @@
 import React from 'react';
+import { themr } from 'react-css-themr';
 import classnames from 'classnames';
-import style from './style';
 
-const Layout = ({ className, children }) => (
-  <div data-react-toolbox='layout' className={classnames(style.root, className)}>
+const Layout = ({ className, children, theme }) => (
+  <div data-react-toolbox='layout' className={classnames(theme.layout, className)}>
     {children}
   </div>
 );
@@ -44,11 +44,14 @@ Layout.propTypes = {
       );
     }
   },
-  className: React.PropTypes.string
+  className: React.PropTypes.string,
+  theme: React.PropTypes.shape({
+    layout: React.PropTypes.string.isRequired
+  })
 };
 
 Layout.defaultProps = {
   className: ''
 };
 
-export default Layout;
+export default themr('ToolboxLayout')(Layout);
