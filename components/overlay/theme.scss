@@ -1,7 +1,7 @@
 @import "../base";
 @import "./config";
 
-.root {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -19,7 +19,7 @@
   }
 }
 
-.overlay {
+.backdrop {
   position: absolute;
   top: 0;
   left: 0;
@@ -34,7 +34,7 @@
 
 .active {
   pointer-events: all;
-  > .overlay {
+  > .backdrop {
     opacity: $overlay-opacity;
   }
 }

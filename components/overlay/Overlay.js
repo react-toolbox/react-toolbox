@@ -1,7 +1,7 @@
 import React from 'react';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import Portal from '../hoc/Portal';
-import ClassNames from 'classnames';
-import style from './style';
 
 class Overlay extends React.Component {
   static propTypes = {
@@ -10,7 +10,13 @@ class Overlay extends React.Component {
     className: React.PropTypes.string,
     invisible: React.PropTypes.bool,
     onClick: React.PropTypes.func,
-    onEscKeyDown: React.PropTypes.func
+    onEscKeyDown: React.PropTypes.func,
+    theme: React.PropTypes.shape({
+      active: React.PropTypes.string.isRequired,
+      backdrop: React.PropTypes.string.isRequired,
+      invisible: React.PropTypes.string.isRequired,
+      overlay: React.PropTypes.string.isRequired
+    })
   };
 
   static defaultProps = {
@@ -49,20 +55,21 @@ class Overlay extends React.Component {
   }
 
   render () {
-    const className = ClassNames(style.root, {
-      [style.active]: this.props.active,
-      [style.invisible]: this.props.invisible
-    }, this.props.className);
+    const { active, className, children, invisible, onClick, theme } = this.props;
+    const _className = classnames(theme.overlay, {
+      [theme.active]: active,
+      [theme.invisible]: invisible
+    }, className);
 
     return (
       <Portal>
-        <div className={className}>
-          <div className={style.overlay} onClick={this.props.onClick} />
-          {this.props.children}
+        <div className={_className}>
+          <div className={theme.backdrop} onClick={onClick} />
+          {children}
         </div>
       </Portal>
     );
   }
 }
 
-export default Overlay;
+export default themr('ToolboxOverlay')(Overlay);

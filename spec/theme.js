@@ -8,7 +8,9 @@ import ToolboxCheckbox from '../components/checkbox/theme.scss';
 import ToolboxChip from '../components/chip/theme.scss';
 import ToolboxDatePicker from '../components/date_picker/theme.scss';
 import ToolboxDialog from '../components/dialog/theme.scss';
+import ToolboxDrawer from '../components/drawer/theme.scss';
 import ToolboxInput from '../components/input/theme.scss';
+import ToolboxOverlay from '../components/overlay/theme.scss';
 import ToolboxRipple from '../components/ripple/theme.scss';
 import ToolboxTimePicker from '../components/time_picker/theme.scss';
 
@@ -22,7 +24,9 @@ export default defineTheme({
   ToolboxChip,
   ToolboxDatePicker,
   ToolboxDialog,
+  ToolboxDrawer,
   ToolboxInput,
+  ToolboxOverlay,
   ToolboxRipple,
   ToolboxTimePicker
 });

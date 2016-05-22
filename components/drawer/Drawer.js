@@ -1,19 +1,19 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import { themr } from 'react-css-themr';
+import classnames from 'classnames';
 import ActivableRenderer from '../hoc/ActivableRenderer';
 import Overlay from '../overlay';
-import style from './style';
 
-const Drawer = (props) => {
-  const className = ClassNames([style.root, style[props.type]], {
-    [style.active]: props.active
-  }, props.className);
+const Drawer = ({ active, children, className, onOverlayClick, theme, type }) => {
+  const _className = classnames([theme.drawer, theme[type]], {
+    [theme.active]: active
+  }, className);
 
   return (
-    <Overlay active={props.active} onClick={props.onOverlayClick}>
-      <div data-react-toolbox='drawer' className={className}>
-        <aside className={style.content}>
-          {props.children}
+    <Overlay active={active} onClick={onOverlayClick}>
+      <div data-react-toolbox='drawer' className={_className}>
+        <aside className={theme.content}>
+          {children}
         </aside>
       </div>
     </Overlay>
@@ -25,6 +25,13 @@ Drawer.propTypes = {
   children: React.PropTypes.node,
   className: React.PropTypes.string,
   onOverlayClick: React.PropTypes.func,
+  theme: React.PropTypes.shape({
+    active: React.PropTypes.string.isRequired,
+    content: React.PropTypes.string.isRequired,
+    drawer: React.PropTypes.string.isRequired,
+    left: React.PropTypes.string.isRequired,
+    right: React.PropTypes.string.isRequired
+  }),
   type: React.PropTypes.oneOf(['left', 'right'])
 };
 
@@ -34,4 +41,4 @@ Drawer.defaultProps = {
   type: 'left'
 };
 
-export default ActivableRenderer()(Drawer);
+export default themr('ToolboxDrawer')(ActivableRenderer()(Drawer));
