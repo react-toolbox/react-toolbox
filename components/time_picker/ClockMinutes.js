@@ -1,6 +1,5 @@
 import React from 'react';
 import utils from '../utils/utils';
-import style from './style.clock';
 import Face from './ClockFace';
 import Hand from './ClockHand';
 
@@ -13,7 +12,10 @@ class Minutes extends React.Component {
     onChange: React.PropTypes.func,
     radius: React.PropTypes.number,
     selected: React.PropTypes.number,
-    spacing: React.PropTypes.number
+    spacing: React.PropTypes.number,
+    theme: React.PropTypes.shape({
+      small: React.PropTypes.string.isRequired
+    })
   };
 
   static defaultProps = {
@@ -42,15 +44,17 @@ class Minutes extends React.Component {
           numbers={minutes}
           spacing={this.props.spacing}
           radius={this.props.radius}
-          twoDigits
           active={this.props.selected}
+          theme={this.props.theme}
+          twoDigits
         />
         <Hand ref='hand'
-          className={minutes.indexOf(this.props.selected) === -1 ? style.small : ''}
+          className={minutes.indexOf(this.props.selected) === -1 ? this.props.theme.small : ''}
           angle={this.props.selected * step}
           length={this.props.radius - this.props.spacing}
           onMove={this.handleHandMove}
           origin={this.props.center}
+          theme={this.props.theme}
           step={step}
         />
       </div>

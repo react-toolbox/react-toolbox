@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './style.clock';
+import classnames from 'classnames';
 
 class Face extends React.Component {
   static propTypes = {
@@ -7,6 +7,11 @@ class Face extends React.Component {
     numbers: React.PropTypes.array,
     radius: React.PropTypes.number,
     spacing: React.PropTypes.number,
+    theme: React.PropTypes.shape({
+      active: React.PropTypes.string.isRequired,
+      face: React.PropTypes.string.isRequired,
+      number: React.PropTypes.string.isRequired
+    }),
     twoDigits: React.PropTypes.bool
   };
 
@@ -33,29 +38,29 @@ class Face extends React.Component {
   }
 
   renderNumber (number, idx) {
-    let className = style.number;
-    if (number === this.props.active) className += ` ${style.active}`;
+    const { active, radius, spacing, theme, twoDigits } = this.props;
     return (
       <span
-        className={className}
-        style={this.numberStyle(this.props.radius - this.props.spacing, idx + 1)}
+        className={classnames(theme.number, {[theme.active]: number === active})}
+        style={this.numberStyle(radius - spacing, idx + 1)}
         key={number}
       >
-        {this.props.twoDigits ? ('0' + number).slice(-2) : number}
+        {twoDigits ? ('0' + number).slice(-2) : number}
       </span>
     );
   }
 
   render () {
+    const { numbers, onTouchStart, onMouseDown, theme } = this.props;
     return (
       <div
         ref='root'
-        className={style.face}
-        onTouchStart={this.props.onTouchStart}
-        onMouseDown={this.props.onMouseDown}
+        className={theme.face}
+        onTouchStart={onTouchStart}
+        onMouseDown={onMouseDown}
         style={this.faceStyle()}
       >
-        {this.props.numbers.map(this.renderNumber.bind(this))}
+        {numbers.map(this.renderNumber.bind(this))}
       </div>
     );
   }

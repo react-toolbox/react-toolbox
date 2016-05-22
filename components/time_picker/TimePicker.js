@@ -1,8 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import events from '../utils/events';
 import time from '../utils/time';
-import style from './style';
 import Input from '../input';
 import TimePickerDialog from './TimePickerDialog';
 
@@ -14,6 +14,9 @@ class TimePicker extends React.Component {
     inputClassName: React.PropTypes.string,
     label: React.PropTypes.string,
     onChange: React.PropTypes.func,
+    theme: React.PropTypes.shape({
+      input: React.PropTypes.string.isRequired
+    }),
     value: React.PropTypes.object
   };
 
@@ -41,12 +44,12 @@ class TimePicker extends React.Component {
   };
 
   render () {
-    const { value, format, inputClassName } = this.props;
+    const { value, format, inputClassName, theme } = this.props;
     const formattedTime = value ? time.formatTime(value, format) : null;
     return (
       <div data-react-toolbox='time-picker'>
         <Input
-          className={classnames(style.input, {[inputClassName]: inputClassName })}
+          className={classnames(theme.input, {[inputClassName]: inputClassName })}
           error={this.props.error}
           label={this.props.label}
           onMouseDown={this.handleInputMouseDown}
@@ -60,6 +63,7 @@ class TimePicker extends React.Component {
           format={format}
           onDismiss={this.handleDismiss}
           onSelect={this.handleSelect}
+          theme={this.props.theme}
           value={this.props.value}
         />
       </div>
@@ -67,4 +71,4 @@ class TimePicker extends React.Component {
   }
 }
 
-export default TimePicker;
+export default themr('ToolboxTimePicker')(TimePicker);

@@ -1,7 +1,71 @@
 @import "../base";
 @import "./config";
 
-.root {
+.input > [role="input"] {
+  cursor: pointer;
+}
+
+.header {
+  position: relative;
+  width: 100%;
+  padding: $timepicker-header-padding;
+  font-size: $timepicker-header-font-size;
+  color: $timepicker-primary-contrast-color;
+  text-align: center;
+  background: $timepicker-primary-color;
+}
+
+.hours, .minutes {
+  display: inline-block;
+  cursor: pointer;
+  opacity: .6;
+}
+
+.separator {
+  margin: 0 $timepicker-header-padding / 2;
+  opacity: .6;
+}
+
+.ampm {
+  position: absolute;
+  top: 50%;
+  right: 2 * $unit;
+  width: $timepicker-ampm-width;
+  height: $timepicker-ampm-height * 2;
+  margin-top: - $timepicker-ampm-height;
+  font-size: $timepicker-ampm-font-size;
+  line-height: $timepicker-ampm-height;
+  text-align: center;
+}
+
+.am, .pm {
+  display: block;
+  cursor: pointer;
+  opacity: .6;
+}
+
+.dialog {
+  width: $timepicker-dialog-width;
+  > [role="body"] {
+    padding: 0;
+    overflow-y: visible;
+  }
+  > [role="navigation"] > .button {
+    color: $timepicker-primary-color;
+    &:hover {
+      background: $timepicker-primary-hover-color;
+    }
+    &:focus:not(:active) {
+      background: $timepicker-primary-hover-color;
+    }
+  }
+  &.hoursDisplay .hours, &.minutesDisplay .minutes, &.amFormat .am,
+  &.pmFormat .pm {
+    opacity: 1;
+  }
+}
+
+.clock {
   padding: $clock-padding;
 }
 
@@ -10,7 +74,7 @@
   z-index: $z-index-high;
 }
 
-.wrapper {
+.clockWrapper {
   position: absolute;
   width: 100%;
   background-color: $color-divider;

@@ -1,5 +1,4 @@
 import React from 'react';
-import style from './style.clock';
 import events from '../utils/events';
 import prefixer from '../utils/prefixer';
 import utils from '../utils/utils';
@@ -12,7 +11,11 @@ class Hand extends React.Component {
     onMove: React.PropTypes.func,
     onMoved: React.PropTypes.func,
     origin: React.PropTypes.object,
-    step: React.PropTypes.number
+    step: React.PropTypes.number,
+    theme: React.PropTypes.shape({
+      hand: React.PropTypes.string.isRequired,
+      knob: React.PropTypes.string.isRequired
+    })
   };
 
   static defaultProps = {
@@ -104,7 +107,8 @@ class Hand extends React.Component {
   }
 
   render () {
-    const className = `${style.hand} ${this.props.className}`;
+    const { theme } = this.props;
+    const className = `${theme.hand} ${this.props.className}`;
     const handStyle = prefixer({
       height: this.props.length - this.state.knobWidth / 2,
       transform: `rotate(${this.props.angle}deg)`
@@ -112,7 +116,7 @@ class Hand extends React.Component {
 
     return (
       <div className={className} style={handStyle}>
-        <div ref='knob' className={style.knob}></div>
+        <div ref='knob' className={theme.knob}></div>
       </div>
     );
   }
