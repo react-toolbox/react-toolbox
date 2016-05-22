@@ -1,26 +1,25 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import Checkbox from '../checkbox';
 import ListItemContent from './ListItemContent';
-import style from './style';
 
-const ListCheckbox = (props) => {
-  const className = ClassNames([style.item, style.checkboxItem], {
-    [style.withLegend]: props.legend,
-    [style.disabled]: props.disabled
-  }, props.className);
+const ListCheckbox = ({ caption, checked, className, disabled, legend, name, onBlur, onChange, onFocus, theme }) => {
+  const _className = classnames(theme.item, theme.checkboxItem, {
+    [theme.disabled]: disabled
+  }, className);
 
   return (
-    <li className={className}>
+    <li className={_className}>
       <Checkbox
-        checked={props.checked}
-        className={style.checkbox}
-        disabled={props.disabled}
-        label={<ListItemContent caption={props.caption} legend={props.legend} />}
-        name={props.name}
-        onBlur={props.onBlur}
-        onChange={props.onChange}
-        onFocus={props.onFocus}
+        checked={checked}
+        className={theme.checkbox}
+        disabled={disabled}
+        label={<ListItemContent caption={caption} legend={legend} />}
+        name={name}
+        onBlur={onBlur}
+        onChange={onChange}
+        onFocus={onFocus}
       />
     </li>
   );
@@ -35,7 +34,13 @@ ListCheckbox.propTypes = {
   name: React.PropTypes.string,
   onBlur: React.PropTypes.func,
   onChange: React.PropTypes.func,
-  onFocus: React.PropTypes.func
+  onFocus: React.PropTypes.func,
+  theme: React.PropTypes.shape({
+    checkbox: React.PropTypes.string.isRequired,
+    checkboxItem: React.PropTypes.string.isRequired,
+    disabled: React.PropTypes.string.isRequired,
+    item: React.PropTypes.string.isRequired
+  })
 };
 
 ListCheckbox.defaultProps = {
@@ -43,4 +48,4 @@ ListCheckbox.defaultProps = {
   disabled: false
 };
 
-export default ListCheckbox;
+export default themr('ToolboxList')(ListCheckbox);

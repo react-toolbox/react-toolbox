@@ -1,14 +1,14 @@
 import React from 'react';
-import style from './style';
+import { themr } from 'react-css-themr';
 import ListItemAction from './ListItemAction';
 
-const ListItemActions = ({type, children}) => {
+const ListItemActions = ({type, children, theme}) => {
   const validChildren = React.Children.toArray(children).filter(c => (
     React.isValidElement(c)
   ));
 
   return (
-    <span className={style[type]}>
+    <span className={theme[type]}>
       {validChildren.map((action, i) => <ListItemAction key={i} action={action} />)}
     </span>
   );
@@ -16,7 +16,11 @@ const ListItemActions = ({type, children}) => {
 
 ListItemActions.propTypes = {
   children: React.PropTypes.any,
+  theme: React.PropTypes.shape({
+    left: React.PropTypes.string.isRequired,
+    right: React.PropTypes.string.isRequired
+  }),
   type: React.PropTypes.oneOf(['left', 'right'])
 };
 
-export default ListItemActions;
+export default themr('ToolboxList')(ListItemActions);

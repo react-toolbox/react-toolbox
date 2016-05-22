@@ -1,17 +1,20 @@
 import React from 'react';
-import style from './style';
+import { themr } from 'react-css-themr';
 
-const ListDivider = ({inset}) => {
-  const className = inset ? `${style.divider} ${style.inset}` : style.divider;
-  return <hr className={className} />;
-};
+const ListDivider = ({inset, theme}) => (
+  <hr className={inset ? `${theme.divider} ${theme.inset}` : theme.divider} />
+);
 
 ListDivider.propTypes = {
-  inset: React.PropTypes.bool
+  inset: React.PropTypes.bool,
+  theme: React.PropTypes.shape({
+    divider: React.PropTypes.string.isRequired,
+    inset: React.PropTypes.string.isRequired
+  })
 };
 
 ListDivider.defaultProps = {
   inset: false
 };
 
-export default ListDivider;
+export default themr('ToolboxList')(ListDivider);

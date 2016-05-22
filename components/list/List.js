@@ -1,13 +1,17 @@
 import React from 'react';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import ListItem from './ListItem';
-import style from './style';
 
 class List extends React.Component {
   static propTypes = {
     children: React.PropTypes.node,
     className: React.PropTypes.string,
     ripple: React.PropTypes.bool,
-    selectable: React.PropTypes.bool
+    selectable: React.PropTypes.bool,
+    theme: React.PropTypes.shape({
+      list: React.PropTypes.string.isRequired
+    })
   };
 
   static defaultProps = {
@@ -30,14 +34,12 @@ class List extends React.Component {
   }
 
   render () {
-    let className = style.list;
-    if (this.props.className) className += ` ${this.props.className}`;
     return (
-      <ul data-react-toolbox='list' className={className}>
+      <ul data-react-toolbox='list' className={classnames(this.props.theme.list, this.props.className)}>
         {this.renderItems()}
       </ul>
     );
   }
 }
 
-export default List;
+export default themr('ToolboxList')(List);

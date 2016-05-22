@@ -1,6 +1,6 @@
 import React from 'react';
-import style from './style';
 import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import ListItemText from './ListItemText';
 
 const types = ['auto', 'normal', 'large'];
@@ -10,6 +10,10 @@ class ListItemContent extends React.Component {
     caption: React.PropTypes.string,
     children: React.PropTypes.any,
     legend: React.PropTypes.string,
+    theme: React.PropTypes.shape({
+      itemContentRoot: React.PropTypes.string.isRequired,
+      large: React.PropTypes.string.isRequired
+    }),
     type: React.PropTypes.oneOf(types)
   };
 
@@ -24,9 +28,9 @@ class ListItemContent extends React.Component {
   }
 
   render () {
-    const {children, caption, legend} = this.props;
-    const className = classnames(style.itemContentRoot, {
-      [style[this.getType()]]: style[this.getType()]
+    const {children, caption, legend, theme} = this.props;
+    const className = classnames(theme.itemContentRoot, {
+      [theme[this.getType()]]: theme[this.getType()]
     });
 
     return (
@@ -38,4 +42,4 @@ class ListItemContent extends React.Component {
     );
   }
 }
-export default ListItemContent;
+export default themr('ToolboxList')(ListItemContent);

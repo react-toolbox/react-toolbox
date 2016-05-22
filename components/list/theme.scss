@@ -43,6 +43,10 @@
   > [data-react-toolbox="ripple"] {
     overflow: hidden;
   }
+
+  .ripple {
+    color: $color-text-secondary;
+  }
 }
 
 .item {
@@ -134,10 +138,6 @@
   > [data-react-toolbox="label"] {
     padding-left: 0;
   }
-}
-
-.ripple {
-  color: $color-text-secondary;
 }
 
 .itemText {

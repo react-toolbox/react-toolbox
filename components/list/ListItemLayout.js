@@ -1,15 +1,15 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import FontIcon from '../font_icon';
 import Avatar from '../avatar';
 import ListItemContent from './ListItemContent';
 import ListItemActions from './ListItemActions';
-import style from './style';
 
 const ListItemLayout = (props) => {
-  const className = ClassNames(style.item, {
-    [style.disabled]: props.disabled,
-    [style.selectable]: props.selectable
+  const className = classnames(props.theme.item, {
+    [props.theme.disabled]: props.disabled,
+    [props.theme.selectable]: props.selectable
   }, props.className);
 
   const leftActions = [
@@ -55,6 +55,11 @@ ListItemLayout.propTypes = {
     React.PropTypes.element
   ]),
   selectable: React.PropTypes.bool,
+  theme: React.PropTypes.shape({
+    disabled: React.PropTypes.string.isRequired,
+    item: React.PropTypes.string.isRequired,
+    selectable: React.PropTypes.string.isRequired
+  }),
   to: React.PropTypes.string
 };
 
@@ -63,4 +68,4 @@ ListItemLayout.defaultProps = {
   selectable: false
 };
 
-export default ListItemLayout;
+export default themr('ToolboxList')(ListItemLayout);

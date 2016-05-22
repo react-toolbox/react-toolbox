@@ -1,22 +1,25 @@
 import React, { PropTypes } from 'react';
-import style from './style';
+import { themr } from 'react-css-themr';
 
-const ListItemAction = ({action}) => {
+const ListItemAction = ({action, theme}) => {
   const {onClick, onMouseDown} = action.props;
   const stopRipple = onClick && !onMouseDown;
   const stop = e => e.stopPropagation();
   return (
-    <span className={style.itemAction} onMouseDown={stopRipple && stop} onClick={onClick && stop}>
+    <span className={theme.itemAction} onMouseDown={stopRipple && stop} onClick={onClick && stop}>
       {action}
     </span>
   );
 };
 
 ListItemAction.propTypes = {
-  action: PropTypes.object
+  action: PropTypes.object,
+  theme: PropTypes.shape({
+    itemAction: React.PropTypes.string.isRequired
+  })
 };
 
 ListItemAction.defaultProps = {
 };
 
-export default ListItemAction;
+export default themr('ToolboxList')(ListItemAction);

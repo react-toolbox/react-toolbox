@@ -1,8 +1,8 @@
 import React from 'react';
+import { themr } from 'react-css-themr';
 import ListItemContent from './ListItemContent';
 import ListItemLayout from './ListItemLayout';
 import Ripple from '../ripple';
-import style from './style';
 
 class ListItem extends React.Component {
   static propTypes = {
@@ -11,10 +11,14 @@ class ListItem extends React.Component {
     disabled: React.PropTypes.bool,
     onClick: React.PropTypes.func,
     ripple: React.PropTypes.bool,
+    theme: React.PropTypes.shape({
+      listItem: React.PropTypes.string.isRequired
+    }),
     to: React.PropTypes.string
   };
 
   static defaultProps = {
+    className: '',
     disabled: false,
     ripple: false
   };
@@ -52,14 +56,11 @@ class ListItem extends React.Component {
   }
 
   render () {
-    const {className, onMouseDown, to, onClick, ripple, ...other} = this.props; //eslint-disable-line no-unused-vars
+    const {className, onMouseDown, to, onClick, ripple, theme, ...other} = this.props; //eslint-disable-line no-unused-vars
     const children = this.groupChildren();
     const content = <ListItemLayout {...children} {...other}/>;
-    let finalClassName = style.listItem;
-    if (className) finalClassName += ` ${className}`;
-
     return (
-      <li className={finalClassName} onClick={this.handleClick} onMouseDown={onMouseDown}>
+      <li className={`${theme.listItem} ${className}`} onClick={this.handleClick} onMouseDown={onMouseDown}>
         {to ? <a href={this.props.to}>{content}</a> : content}
         {children.ignored}
       </li>
@@ -67,9 +68,10 @@ class ListItem extends React.Component {
   }
 }
 
-export default Ripple({
-  className: style.ripple,
+const RawListItem = themr('ToolboxList')(ListItem);
+export default themr('ToolboxList')(Ripple({
   centered: false,
   listItemIgnore: true
-})(ListItem);
-export {ListItem as RawListItem};
+})(ListItem));
+
+export {RawListItem as RawListItem};
