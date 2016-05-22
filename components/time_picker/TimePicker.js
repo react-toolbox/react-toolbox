@@ -45,7 +45,7 @@ class TimePicker extends React.Component {
 
   render () {
     const { value, format, inputClassName, theme } = this.props;
-    const formattedTime = value ? time.formatTime(value, format) : null;
+    const formattedTime = value ? time.formatTime(value, format) : '';
     return (
       <div data-react-toolbox='time-picker'>
         <Input
