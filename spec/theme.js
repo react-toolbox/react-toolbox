@@ -17,6 +17,7 @@ import ToolboxList from '../components/list/theme.scss';
 import ToolboxMenu from '../components/menu/theme.scss';
 import ToolboxNavigation from '../components/navigation/theme.scss';
 import ToolboxOverlay from '../components/overlay/theme.scss';
+import ToolboxProgress from '../components/progress_bar/theme.scss';
 import ToolboxRipple from '../components/ripple/theme.scss';
 import ToolboxTimePicker from '../components/time_picker/theme.scss';
 
@@ -39,6 +40,7 @@ export default defineTheme({
   ToolboxMenu,
   ToolboxNavigation,
   ToolboxOverlay,
+  ToolboxProgress,
   ToolboxRipple,
   ToolboxTimePicker
 });

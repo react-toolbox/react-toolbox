@@ -1,6 +1,6 @@
 import React from 'react';
-import ClassNames from 'classnames';
-import style from './style';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import prefixer from '../utils/prefixer';
 
 class ProgressBar extends React.Component {
@@ -9,8 +9,18 @@ class ProgressBar extends React.Component {
     className: React.PropTypes.string,
     max: React.PropTypes.number,
     min: React.PropTypes.number,
-    mode: React.PropTypes.string,
+    mode: React.PropTypes.oneOf(['determinate', 'indeterminate']),
     multicolor: React.PropTypes.bool,
+    theme: React.PropTypes.shape({
+      buffer: React.PropTypes.string.isRequired,
+      circle: React.PropTypes.string.isRequired,
+      circular: React.PropTypes.string.isRequired,
+      indeterminate: React.PropTypes.string.isRequired,
+      linear: React.PropTypes.string.isRequired,
+      multicolor: React.PropTypes.string.isRequired,
+      path: React.PropTypes.string.isRequired,
+      value: React.PropTypes.string.isRequired
+    }),
     type: React.PropTypes.oneOf(['linear', 'circular']),
     value: React.PropTypes.number
   };
@@ -51,8 +61,8 @@ class ProgressBar extends React.Component {
 
   renderCircular () {
     return (
-      <svg className={style.circle}>
-        <circle className={style.path} style={this.circularStyle()} cx='30' cy='30' r='25' />
+      <svg className={this.props.theme.circle}>
+        <circle className={this.props.theme.path} style={this.circularStyle()} cx='30' cy='30' r='25' />
       </svg>
     );
   }
@@ -61,30 +71,31 @@ class ProgressBar extends React.Component {
     const {buffer, value} = this.linearStyle();
     return (
       <div>
-        <span ref='buffer' data-ref='buffer' className={style.buffer} style={buffer}></span>
-        <span ref='value' data-ref='value' className={style.value} style={value}></span>
+        <span ref='buffer' data-ref='buffer' className={this.props.theme.buffer} style={buffer}></span>
+        <span ref='value' data-ref='value' className={this.props.theme.value} style={value}></span>
       </div>
     );
   }
 
   render () {
-    const className = ClassNames(style[this.props.type], {
-      [style[this.props.mode]]: this.props.mode,
-      [style.multicolor]: this.props.multicolor
-    }, this.props.className);
+    const { className, max, min, mode, multicolor, type, theme, value } = this.props;
+    const _className = classnames(theme[type], {
+      [theme[mode]]: mode,
+      [theme.multicolor]: multicolor
+    }, className);
 
     return (
       <div
         data-react-toolbox='progress-bar'
-        aria-valuenow={this.props.value}
-        aria-valuemin={this.props.min}
-        aria-valuemax={this.props.max}
-        className={className}
+        aria-valuenow={value}
+        aria-valuemin={min}
+        aria-valuemax={max}
+        className={_className}
       >
-        {this.props.type === 'circular' ? this.renderCircular() : this.renderLinear()}
+        {type === 'circular' ? this.renderCircular() : this.renderLinear()}
       </div>
     );
   }
 }
 
-export default ProgressBar;
+export default themr('ToolboxProgress')(ProgressBar);
