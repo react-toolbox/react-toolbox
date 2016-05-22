@@ -16,7 +16,8 @@ class Hours extends React.Component {
     onHandMoved: React.PropTypes.func,
     radius: React.PropTypes.number,
     selected: React.PropTypes.number,
-    spacing: React.PropTypes.number
+    spacing: React.PropTypes.number,
+    theme: React.PropTypes.object
   };
 
   state = {
@@ -59,6 +60,7 @@ class Hours extends React.Component {
           numbers={innerNumbers}
           spacing={this.props.spacing}
           radius={innerRadius}
+          theme={this.props.theme}
           active={this.props.selected}
         />
       );
@@ -79,12 +81,14 @@ class Hours extends React.Component {
             radius={radius}
             twoDigits={is24hr}
             active={is24hr ? selected : (selected % 12 || 12)}
+            theme={this.props.theme}
           />
           {this.renderInnerFace(radius - spacing * innerSpacing)}
           <Hand ref='hand'
             angle={selected * step}
             length={(this.state.inner ? radius - spacing * innerSpacing : radius) - spacing}
             onMove={this.handleHandMove}
+            theme={this.props.theme}
             onMoved={onHandMoved}
             origin={center}
             step={step}
