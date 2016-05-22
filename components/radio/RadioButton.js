@@ -1,7 +1,7 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import Radio from './Radio';
-import style from './style';
 
 class RadioButton extends React.Component {
   static propTypes = {
@@ -13,6 +13,12 @@ class RadioButton extends React.Component {
     onBlur: React.PropTypes.func,
     onChange: React.PropTypes.func,
     onFocus: React.PropTypes.func,
+    theme: React.PropTypes.shape({
+      disabled: React.PropTypes.string.isRequired,
+      field: React.PropTypes.string.isRequired,
+      input: React.PropTypes.string.isRequired,
+      text: React.PropTypes.string.isRequired
+    }),
     value: React.PropTypes.any
   };
 
@@ -37,24 +43,23 @@ class RadioButton extends React.Component {
   }
 
   render () {
-    const className = ClassNames(style[this.props.disabled ? 'disabled' : 'field'], this.props.className);
-    const { onChange, ...others } = this.props; //eslint-disable-line no-unused-vars
-
+    const { className, checked, disabled, label, theme, onChange, ...others } = this.props;  // eslint-disable-line
+    const _className = classnames(theme[this.props.disabled ? 'disabled' : 'field'], className);
     return (
-      <label data-react-toolbox='radio-button' className={className}>
+      <label data-react-toolbox='radio-button' className={_className}>
         <input
           {...others}
-          className={style.input}
+          className={theme.input}
           onClick={this.handleClick}
           readOnly
           ref='input'
           type='radio'
         />
-        <Radio checked={this.props.checked} disabled={this.props.disabled}/>
-        {this.props.label ? <span className={style.text}>{this.props.label}</span> : null}
+        <Radio checked={checked} disabled={disabled}/>
+        {label ? <span className={theme.text}>{label}</span> : null}
       </label>
     );
   }
 }
 
-export default RadioButton;
+export default themr('ToolboxRadio')(RadioButton);

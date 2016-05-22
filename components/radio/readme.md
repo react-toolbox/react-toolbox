@@ -2,6 +2,8 @@
 
 [Radio buttons](https://www.google.com/design/spec/components/selection-controls.html#selection-controls-radio-button) allow the user to select one option from a set. Use radio buttons for exclusive selection if you think that the user needs to see all available options side-by-side. Otherwise, consider a dropdown, which uses less space than displaying all options. They should always be used along with `RadioGroup`.
 
+You can provide the theme for this component using the key `ToolboxButton`
+
 <!-- example -->
 ```jsx
 import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
@@ -32,6 +34,8 @@ class RadioTest extends React.Component {
 
 A radio selector is mean to get a value from a set of choices, that's why a radio group is needed. It can take some properties and actions that will be transferred to the children, but they also can behave independently.
 
+### Properties
+
 | Name          | Type          | Default         | Description|
 |:-----|:-----|:-----|:-----|
 | `className`   | `String`      | `''`        | Set a class to give custom styles to the group.|
@@ -40,13 +44,12 @@ A radio selector is mean to get a value from a set of choices, that's why a radi
 | `onChange`    | `Function`    |             | Callback function that will be invoked when the value changes. |
 | `value`       | `Any`         |             | Default value selected in the radio group. |
 
-This component has state to keep the currently selected value and that's why it exposes to methods to work from the code with it:
-- `getValue` used to retrieve the currently selected value.
-- `setValue` used to set a new value.
 
 ## Radio Button
 
 The inner component to compose radio selectors. They will be rendered as radio input elements of HTML transferring the given properties that concerns to them.
+
+### Properties
 
 | Name          | Type          | Default         | Description|
 |:-----|:-----|:-----|:-----|
@@ -59,3 +62,15 @@ The inner component to compose radio selectors. They will be rendered as radio i
 | `onChange`    | `Function`    |             | Callback function that will be invoked when the value changes. |
 | `onFocus`     | `Function`    |             | Callback function that will be invoked when the input is focused. |
 | `value`       | `Any`         |             | Value for the radio button. |
+
+### Theming
+
+| Name     | Description|
+|:---------|:-----------|
+| `disabled` | Added to the root of the Radio in case it's disabled.|
+| `field` | Used as the root class of the component.|
+| `input` | Used for the input element.|
+| `radio` | Used to for the radio element.|
+| `radioChecked` | Used for the radio element when it's checked.|
+| `ripple` | To provide styles for the ripple.|
+| `text` | Used to style the text label element.|
