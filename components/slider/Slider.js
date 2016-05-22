@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ClassNames from 'classnames';
-import style from './style';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import events from '../utils/events';
 import prefixer from '../utils/prefixer';
 import utils from '../utils/utils';
@@ -18,6 +18,21 @@ class Slider extends React.Component {
     pinned: React.PropTypes.bool,
     snaps: React.PropTypes.bool,
     step: React.PropTypes.number,
+    theme: React.PropTypes.shape({
+      container: React.PropTypes.string.isRequired,
+      editable: React.PropTypes.string.isRequired,
+      innerknob: React.PropTypes.string.isRequired,
+      innerprogress: React.PropTypes.string.isRequired,
+      input: React.PropTypes.string.isRequired,
+      knob: React.PropTypes.string.isRequired,
+      pinned: React.PropTypes.string.isRequired,
+      pressed: React.PropTypes.string.isRequired,
+      progress: React.PropTypes.string.isRequired,
+      ring: React.PropTypes.string.isRequired,
+      slider: React.PropTypes.string.isRequired,
+      snap: React.PropTypes.string.isRequired,
+      snaps: React.PropTypes.string.isRequired
+    }),
     value: React.PropTypes.number
   };
 
@@ -204,9 +219,9 @@ class Slider extends React.Component {
   renderSnaps () {
     if (this.props.snaps) {
       return (
-        <div ref='snaps' className={style.snaps}>
+        <div ref='snaps' className={this.props.theme.snaps}>
           {utils.range(0, (this.props.max - this.props.min) / this.props.step).map(i => {
-              return <div key={`span-${i}`} className={style.snap}></div>;
+              return <div key={`span-${i}`} className={this.props.theme.snap} />;
             })}
         </div>
       );
@@ -219,7 +234,7 @@ class Slider extends React.Component {
       return (
         <Input
           ref='input'
-          className={style.input}
+          className={this.props.theme.input}
           onFocus={this.handleInputFocus}
           onChange={this.handleInputChange}
           onBlur={this.handleInputBlur}
@@ -230,12 +245,13 @@ class Slider extends React.Component {
   }
 
   render () {
+    const { theme } = this.props;
     const knobStyles = prefixer({transform: `translateX(${this.knobOffset()}px)`});
-    const className = ClassNames(style.root, {
-      [style.editable]: this.props.editable,
-      [style.pinned]: this.props.pinned,
-      [style.pressed]: this.state.pressed,
-      [style.ring]: this.props.value === this.props.min
+    const className = classnames(theme.slider, {
+      [theme.editable]: this.props.editable,
+      [theme.pinned]: this.props.pinned,
+      [theme.pressed]: this.state.pressed,
+      [theme.ring]: this.props.value === this.props.min
     }, this.props.className);
 
     return (
@@ -248,24 +264,24 @@ class Slider extends React.Component {
       >
         <div
           ref='slider'
-          className={style.container}
+          className={theme.container}
           onMouseDown={this.handleMouseDown}
           onTouchStart={this.handleTouchStart}
         >
           <div
             ref='knob'
-            className={style.knob}
+            className={theme.knob}
             onMouseDown={this.handleMouseDown}
             onTouchStart={this.handleTouchStart}
             style={knobStyles}
           >
-            <div className={style.innerknob} data-value={parseInt(this.props.value)}></div>
+            <div className={theme.innerknob} data-value={parseInt(this.props.value)}></div>
           </div>
 
-          <div className={style.progress}>
+          <div className={theme.progress}>
             <ProgressBar
               ref='progressbar'
-              className={style.innerprogress}
+              className={theme.innerprogress}
               max={this.props.max}
               min={this.props.min}
               mode='determinate'
@@ -281,4 +297,4 @@ class Slider extends React.Component {
   }
 }
 
-export default Slider;
+export default themr('ToolboxSlider')(Slider);
