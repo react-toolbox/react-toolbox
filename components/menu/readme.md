@@ -38,12 +38,20 @@ This subcomponent is the default wrapper for a menu and is responsible for the o
 | `selectable`  | `Boolean`     | `false`     | If true, the menu will keep a value to highlight the active child item. |
 | `selected`    | `Any`         |             | Used for selectable menus. Indicates the current selected value so the child item with this value can be highlighted. |
 
-The menu has state to keep a value with the currently selected item. It also exposes methods to show and hide the menu from the code:
+### Theming
 
-- `getValue` is used to get the current value.
-- `setValue` is used to set a new active value.
-- `show` is used to show the menu.
-- `hide` is used to hide the menu.
+| Name     | Description|
+|:---------|:-----------|
+| `active`   | Added to the root element when menu is active.|
+| `bottomLeft`   | Added to the root when position is bottom left.|
+| `bottomRight`   | Added to the root when position is bottom right.|
+| `menu`   | Used for the root element of the menu.|
+| `menuInner`   | Used for the inner wrapper.|
+| `outline`   | Used to draw the outline.|
+| `rippled`   | Added to the menu in case if should have ripple.|
+| `static`   | Added to the root in case its static.|
+| `topLeft`   | Added to the root when position is top left.|
+| `topRight`   | Added to the root when position is top right.|
 
 ## Icon Menu
 

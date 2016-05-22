@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { themr } from 'react-css-themr';
 import classnames from 'classnames';
 import MenuItem from './MenuItem';
 import { events, utils } from '../utils';
-import style from './style.menu';
 
 const POSITION = {
   AUTO: 'auto',
   STATIC: 'static',
-  TOP_LEFT: 'top-left',
-  TOP_RIGHT: 'top-right',
-  BOTTOM_LEFT: 'bottom-left',
-  BOTTOM_RIGHT: 'bottom-right'
+  TOP_LEFT: 'topLeft',
+  TOP_RIGHT: 'topRight',
+  BOTTOM_LEFT: 'bottomLeft',
+  BOTTOM_RIGHT: 'bottomRight'
 };
 
 class Menu extends React.Component {
@@ -26,7 +26,19 @@ class Menu extends React.Component {
     position: React.PropTypes.string,
     ripple: React.PropTypes.bool,
     selectable: React.PropTypes.bool,
-    selected: React.PropTypes.any
+    selected: React.PropTypes.any,
+    theme: React.PropTypes.shape({
+      active: React.PropTypes.string.isRequired,
+      bottomLeft: React.PropTypes.string.isRequired,
+      bottomRight: React.PropTypes.string.isRequired,
+      menu: React.PropTypes.string.isRequired,
+      menuInner: React.PropTypes.string.isRequired,
+      outline: React.PropTypes.string.isRequired,
+      rippled: React.PropTypes.string.isRequired,
+      static: React.PropTypes.string.isRequired,
+      topLeft: React.PropTypes.string.isRequired,
+      topRight: React.PropTypes.string.isRequired
+    })
   };
 
   static defaultProps = {
@@ -122,7 +134,7 @@ class Menu extends React.Component {
     const {height: wh, width: ww} = utils.getViewport();
     const toTop = top < ((wh / 2) - height / 2);
     const toLeft = left < ((ww / 2) - width / 2);
-    return `${toTop ? 'top' : 'bottom'}-${toLeft ? 'left' : 'right'}`;
+    return `${toTop ? 'top' : 'bottom'}${toLeft ? 'Left' : 'Right'}`;
   }
 
   getMenuStyle () {
@@ -173,16 +185,17 @@ class Menu extends React.Component {
   }
 
   render () {
+    const { theme } = this.props;
     const outlineStyle = { width: this.state.width, height: this.state.height };
-    const className = classnames([style.root, style[this.state.position]], {
-      [style.active]: this.state.active,
-      [style.rippled]: this.state.rippled
+    const className = classnames([theme.menu, theme[this.state.position]], {
+      [theme.active]: this.state.active,
+      [theme.rippled]: this.state.rippled
     }, this.props.className);
 
     return (
       <div data-react-toolbox='menu' className={className} style={this.getRootStyle()}>
-        {this.props.outline ? <div className={style.outline} style={outlineStyle}></div> : null}
-        <ul ref='menu' className={style.menu} style={this.getMenuStyle()}>
+        {this.props.outline ? <div className={theme.outline} style={outlineStyle}></div> : null}
+        <ul ref='menu' className={theme.menuInner} style={this.getMenuStyle()}>
           {this.renderItems()}
         </ul>
       </div>
@@ -190,4 +203,4 @@ class Menu extends React.Component {
   }
 }
 
-export default Menu;
+export default themr('ToolboxMenu')(Menu);
