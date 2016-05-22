@@ -1,25 +1,24 @@
 import React from 'react';
-import style from './style';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import Button from '../button';
 import Link from '../link';
 
-const Navigation = props => {
-  let className = `${style[props.type]}`;
-  if (props.className) className += ` ${props.className}`;
-
-  const buttons = props.actions.map((action, index) => {
-    return <Button className={style.button} key={index} {...action} />;
+const Navigation = ({ actions, children, className, routes, theme, type }) => {
+  const _className = classnames(theme[type], className);
+  const buttons = actions.map((action, index) => {
+    return <Button className={theme.button} key={index} {...action} />;
   });
 
-  const links = props.routes.map((route, index) => {
-    return <Link className={style.link} key={index} {...route} />;
+  const links = routes.map((route, index) => {
+    return <Link className={theme.link} key={index} {...route} />;
   });
 
   return (
-    <nav data-react-toolbox='navigation' className={className}>
+    <nav data-react-toolbox='navigation' className={_className}>
       {links}
       {buttons}
-      {props.children}
+      {children}
     </nav>
   );
 };
@@ -29,6 +28,12 @@ Navigation.propTypes = {
   children: React.PropTypes.node,
   className: React.PropTypes.string,
   routes: React.PropTypes.array,
+  theme: React.PropTypes.shape({
+    button: React.PropTypes.string.isRequired,
+    horizontal: React.PropTypes.string.isRequired,
+    link: React.PropTypes.string.isRequired,
+    vertical: React.PropTypes.string.isRequired
+  }),
   type: React.PropTypes.oneOf(['vertical', 'horizontal'])
 };
 
@@ -39,4 +44,4 @@ Navigation.defaultProps = {
   routes: []
 };
 
-export default Navigation;
+export default themr('ToolboxNavigation')(Navigation);

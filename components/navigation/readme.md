@@ -2,10 +2,13 @@
 
 This component is intended to be a common wrapper for a group of links or buttons. It sets a minimal layout, semantic markup and spacing for each of those elements.
 
+The theming for this component can be provided using the key `ToolboxNavigation`.
+
 <!-- example -->
 ```jsx
 import Navigation from 'react-toolbox/lib/navigation';
 import Link from 'react-toolbox/lib/link';
+// Remember to provide themes using ThemeProvider
 
 const actions = [
   { label: 'Alarm', raised: true, icon: 'access_alarm'},
@@ -31,3 +34,12 @@ const NavigationTest = () => (
 | `className`     | `String`      |                 | Set a custom class styles to style the navigation.|
 | `routes`        | `Array`       |                 | Array of objects similar to actions but that will be rendered as `<Link/>` component definition. |
 | `type`          | `String`      | `horizontal`    | Type of the navigation, it can be `vertical` or `horizontal`.|
+
+## Theming
+
+| Name     | Description|
+|:---------|:-----------|
+| `button` | Used for buttons provided in the component.|
+| `horizontal`  | Used for the root element if the layout is horizontal.|
+| `link`   | Used for links provided in the component.|
+| `vertical`   | Used for the root element if the layout is vertical.|
