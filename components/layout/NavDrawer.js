@@ -39,7 +39,6 @@ NavDrawer.propTypes = {
     lgPermanent: React.PropTypes.string.isRequired,
     mdPermanent: React.PropTypes.string.isRequired,
     navDrawer: React.PropTypes.string.isRequired,
-    normal: React.PropTypes.string.isRequired,
     pinned: React.PropTypes.string.isRequired,
     scrim: React.PropTypes.string.isRequired,
     scrollY: React.PropTypes.string.isRequired,

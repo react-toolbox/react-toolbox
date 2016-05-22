@@ -155,7 +155,6 @@ You can use `ToolboxLayout` as themed key for this component. The class interfac
 | `lgPermanent` | Added to the root class for large drawer.|
 | `mdPermanent` | Added to the root class for medium drawer.|
 | `navDrawer` | Root class for the drawer.|
-| `normal` | Added to the root class if width is normal.|
 | `pinned` | Added to the root class if positioning is pinned.|
 | `scrim` | Used as a wrapper for the drawer content.|
 | `scrollY` | Added to the drawer content if its scrollable.|

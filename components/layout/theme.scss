@@ -101,37 +101,37 @@
 
     // Permanent screen, ignore .active and make part of layout
     @media screen and (min-width: $layout-breakpoint-sm) {
-      &.permanent-sm {
+      &.smPermanent {
         @include permanent();
       }
     }
 
     @media screen and (min-width: $layout-breakpoint-md) {
-      &.permanent-md {
+      &.mdPermanent {
         @include permanent();
       }
     }
 
     @media screen and (min-width: $layout-breakpoint-lg) {
-      &.permanent-lg {
+      &.lgPermanent {
         @include permanent();
       }
     }
 
     @media screen and (min-width: $layout-breakpoint-xl) {
-      &.permanent-xl {
+      &.xlPermanent {
         @include permanent();
       }
     }
 
     @media screen and (min-width: $layout-breakpoint-xxl) {
-      &.permanent-xxl {
+      &.xxlPermanent {
         @include permanent();
       }
     }
 
     @media screen and (min-width: $layout-breakpoint-xxxl) {
-      &.permanent-xxxl {
+      &.xxxlPermanent {
         @include permanent();
       }
     }
