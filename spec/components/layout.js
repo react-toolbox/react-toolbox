@@ -96,7 +96,7 @@ class LayoutTest extends React.Component {
                                           <RadioButton label='Medium' value='md' />
                                           <RadioButton label='Large' value='lg' />
                                           <RadioButton label='Extra Large' value='xl' />
-                                          <RadioButton label='Never' value={null} />
+                                          <RadioButton label='Never' value={undefined} />
                                         </RadioGroup>
                                         <Checkbox label='Pin drawer' checked={this.state.drawerPinned} onChange={this.toggleDrawerPinned} />
                                     </section>
