@@ -9,7 +9,6 @@ import RadioGroup from '../radio/RadioGroup';
 import Slider from '../slider';
 import Switch from '../switch';
 import TimePicker from '../time_picker';
-import style from './style';
 
 const Component = {
   'autocomplete': Autocomplete,
