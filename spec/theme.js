@@ -9,6 +9,7 @@ import ToolboxChip from '../components/chip/theme.scss';
 import ToolboxDatePicker from '../components/date_picker/theme.scss';
 import ToolboxDialog from '../components/dialog/theme.scss';
 import ToolboxDrawer from '../components/drawer/theme.scss';
+import ToolboxDropdown from '../components/dropdown/theme.scss';
 import ToolboxInput from '../components/input/theme.scss';
 import ToolboxLayout from '../components/layout/theme.scss';
 import ToolboxLink from '../components/link/theme.scss';
@@ -29,6 +30,7 @@ export default defineTheme({
   ToolboxDatePicker,
   ToolboxDialog,
   ToolboxDrawer,
+  ToolboxDropdown,
   ToolboxInput,
   ToolboxLayout,
   ToolboxLink,

@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ClassNames from 'classnames';
-import Input from '../input';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import events from '../utils/events';
-import style from './style';
+import Input from '../input';
 
 class Dropdown extends React.Component {
   static propTypes = {
@@ -18,6 +18,20 @@ class Dropdown extends React.Component {
     onFocus: React.PropTypes.func,
     source: React.PropTypes.array.isRequired,
     template: React.PropTypes.func,
+    theme: React.PropTypes.shape({
+      active: React.PropTypes.string.isRequired,
+      disabled: React.PropTypes.string.isRequired,
+      dropdown: React.PropTypes.string.isRequired,
+      error: React.PropTypes.string.isRequired,
+      errored: React.PropTypes.string.isRequired,
+      field: React.PropTypes.string.isRequired,
+      label: React.PropTypes.string.isRequired,
+      selected: React.PropTypes.string.isRequired,
+      templateValue: React.PropTypes.string.isRequired,
+      up: React.PropTypes.string.isRequired,
+      value: React.PropTypes.string.isRequired,
+      values: React.PropTypes.string.isRequired
+    }),
     value: React.PropTypes.oneOfType([
       React.PropTypes.string,
       React.PropTypes.number
@@ -93,24 +107,26 @@ class Dropdown extends React.Component {
   };
 
   renderTemplateValue (selected) {
-    const className = ClassNames(style.field, {
-      [style.errored]: this.props.error,
-      [style.disabled]: this.props.disabled
+    const { theme } = this.props;
+    const className = classnames(theme.field, {
+      [theme.errored]: this.props.error,
+      [theme.disabled]: this.props.disabled
     });
 
     return (
       <div className={className} onMouseDown={this.handleMouseDown}>
-        <div className={`${style.templateValue} ${style.value}`}>
+        <div className={`${theme.templateValue} ${theme.value}`}>
           {this.props.template(selected)}
         </div>
-        {this.props.label ? <label className={style.label}>{this.props.label}</label> : null}
-        {this.props.error ? <span className={style.error}>{this.props.error}</span> : null}
+        {this.props.label ? <label className={theme.label}>{this.props.label}</label> : null}
+        {this.props.error ? <span className={theme.error}>{this.props.error}</span> : null}
       </div>
     );
   }
 
   renderValue (item, idx) {
-    const className = item.value === this.props.value ? style.selected : null;
+    const { theme } = this.props;
+    const className = item.value === this.props.value ? theme.selected : null;
     return (
       <li key={idx} className={className} onMouseDown={this.handleSelect.bind(this, item.value)}>
         {this.props.template ? this.props.template(item) : item.label}
@@ -119,26 +135,26 @@ class Dropdown extends React.Component {
   }
 
   render () {
-    const {template, source, ...others} = this.props;
+    const {template, theme, source, ...others} = this.props;
     const selected = this.getSelectedItem();
-    const className = ClassNames(style.root, {
-      [style.up]: this.state.up,
-      [style.active]: this.state.active,
-      [style.disabled]: this.props.disabled
+    const className = classnames(theme.dropdown, {
+      [theme.up]: this.state.up,
+      [theme.active]: this.state.active,
+      [theme.disabled]: this.props.disabled
     }, this.props.className);
 
     return (
       <div data-react-toolbox='dropdown' className={className}>
         <Input
           {...others}
-          className={style.value}
+          className={theme.value}
           onMouseDown={this.handleMouseDown}
           readOnly
           type={template && selected ? 'hidden' : null}
           value={selected && selected.label}
         />
       {template && selected ? this.renderTemplateValue(selected) : null}
-        <ul className={style.values} ref='values'>
+        <ul className={theme.values} ref='values'>
           {source.map(this.renderValue.bind(this))}
         </ul>
       </div>
@@ -146,4 +162,4 @@ class Dropdown extends React.Component {
   }
 }
 
-export default Dropdown;
+export default themr('ToolboxDropdown')(Dropdown);

@@ -2,9 +2,12 @@
 
 The Dropdown selects an option between multiple selections. The element displays the current state and a down arrow. When it is clicked, it displays the list of available options.
 
+The themr key you have to use to provide styles for this component is `ToolboxDropdown`.
+
 <!-- example -->
 ```jsx
 import Dropdown from 'react-toolbox/lib/dropdown';
+import theme from 'react-toolbox/lib/dropdown/theme';
 
 const countries = [
   { value: 'EN-gb', label: 'England' },
@@ -14,9 +17,7 @@ const countries = [
 ];
 
 class DropdownTest extends React.Component {
-  state = {
-    value: 'ES-es',
-  };
+  state = { value: 'ES-es' };
 
   handleChange = (value) => {
     this.setState({value: value});
@@ -28,6 +29,7 @@ class DropdownTest extends React.Component {
         auto
         onChange={this.handleChange}
         source={countries}
+        theme={theme}
         value={this.state.value}
       />
     );
@@ -51,3 +53,20 @@ class DropdownTest extends React.Component {
 | `source`        | `Array`         |                 | Array of data objects with the data to represent in the dropdown.|
 | `template`      | `Function`      |                 | Callback function that returns a JSX template to represent the element.|
 | `value`         | `String`        |                 | Default value using JSON data.|
+
+## Theming
+
+| Name     | Description|
+|:---------|:-----------|
+| `active`   | Added to the root element when the dropdown is active.|
+| `disabled`   | Added to the root element when it's disabled.|
+| `dropdown`   | Root element class.|
+| `error`   | Used for the error element.|
+| `errored`   | Added to the inner wrapper if it's errored.|
+| `field`   | Used for the inner wrapper of the component.|
+| `label`   | Used for the the label element.|
+| `selected`   | Used to highlight the selected value.|
+| `templateValue`   | Used as a wrapper for the given template value.|
+| `up`   | Added to the root element when it's opening up.|
+| `value`   | Used for each value in the dropdown component.|
+| `values`   | Used for the list of values.|

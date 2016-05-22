@@ -1,8 +1,8 @@
 @import "../base";
-@import "./config";
 @import "../input/config";
+@import "./config";
 
-.root {
+.dropdown {
   position: relative;
   &:not(.active) {
     > .values {
