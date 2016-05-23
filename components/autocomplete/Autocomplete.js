@@ -6,6 +6,8 @@ import events from '../utils/events';
 import Chip from '../chip';
 import style from './style';
 
+console.log(111);
+
 const POSITION = {
  AUTO: 'auto',
  DOWN: 'down',
