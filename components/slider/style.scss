@@ -89,6 +89,7 @@
   .innerprogress {
     position: absolute;
     top: $slider-knob-size / 2 - $slider-bar-height / 2;
+    left: 0;
     height: $slider-bar-height;
     [data-ref="value"] {
       transition-duration: 0s;
