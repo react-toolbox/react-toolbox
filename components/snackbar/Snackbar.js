@@ -1,10 +1,10 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import ActivableRenderer from '../hoc/ActivableRenderer';
 import Button from '../button';
 import FontIcon from '../font_icon';
 import Overlay from '../overlay';
-import style from './style';
 
 class Snackbar extends React.Component {
   static propTypes = {
@@ -18,8 +18,18 @@ class Snackbar extends React.Component {
     label: React.PropTypes.string.isRequired,
     onClick: React.PropTypes.func,
     onTimeout: React.PropTypes.func,
+    theme: React.PropTypes.shape({
+      accept: React.PropTypes.string,
+      active: React.PropTypes.string,
+      button: React.PropTypes.string,
+      cancel: React.PropTypes.string,
+      icon: React.PropTypes.string,
+      label: React.PropTypes.string,
+      snackbar: React.PropTypes.string,
+      warning: React.PropTypes.string
+    }),
     timeout: React.PropTypes.number,
-    type: React.PropTypes.string
+    type: React.PropTypes.oneOf([ 'accept', 'cancel', 'warning' ])
   };
 
   componentWillReceiveProps (nextProps) {
@@ -33,21 +43,21 @@ class Snackbar extends React.Component {
   }
 
   render () {
-    const {action, active, icon, label, onClick, type } = this.props;
-    const className = ClassNames([style.root, style[type]], {
-      [style.active]: active
+    const {action, active, icon, label, onClick, theme, type } = this.props;
+    const className = classnames([theme.snackbar, theme[type]], {
+      [theme.active]: active
     }, this.props.className);
 
     return (
       <Overlay invisible>
         <div data-react-toolbox='snackbar' className={className}>
-          {icon ? <FontIcon value={icon} className={style.icon} /> : null}
-          <span className={style.label}>{label}</span>
-          {action ? <Button className={style.button} label={action} onClick={onClick}/> : null}
+          {icon ? <FontIcon value={icon} className={theme.icon} /> : null}
+          <span className={theme.label}>{label}</span>
+          {action ? <Button className={theme.button} label={action} onClick={onClick}/> : null}
         </div>
       </Overlay>
     );
   }
 }
 
-export default ActivableRenderer()(Snackbar);
+export default themr('ToolboxSnackbar')(ActivableRenderer()(Snackbar));

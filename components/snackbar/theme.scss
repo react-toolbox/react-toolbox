@@ -1,8 +1,7 @@
 @import "../base";
 @import "./config";
 
-
-.root {
+.snackbar {
   position: fixed;
   right: $snackbar-horizontal-offset;
   bottom: 0;
