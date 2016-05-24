@@ -59,10 +59,8 @@ class Form extends React.Component {
   }
 
   render () {
-    const className = `${style.root} ${this.props.className}`;
-
     return (
-      <form data-react-toolbox='form' className={className} onSubmit={this.onSubmit}>
+      <form data-react-toolbox='form' className={this.props.className} onSubmit={this.onSubmit}>
         {this.renderFields()}
         {this.props.children}
       </form>
