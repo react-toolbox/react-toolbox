@@ -12,14 +12,14 @@ class ProgressBar extends React.Component {
     mode: React.PropTypes.oneOf(['determinate', 'indeterminate']),
     multicolor: React.PropTypes.bool,
     theme: React.PropTypes.shape({
-      buffer: React.PropTypes.string.isRequired,
-      circle: React.PropTypes.string.isRequired,
-      circular: React.PropTypes.string.isRequired,
-      indeterminate: React.PropTypes.string.isRequired,
-      linear: React.PropTypes.string.isRequired,
-      multicolor: React.PropTypes.string.isRequired,
-      path: React.PropTypes.string.isRequired,
-      value: React.PropTypes.string.isRequired
+      buffer: React.PropTypes.string,
+      circle: React.PropTypes.string,
+      circular: React.PropTypes.string,
+      indeterminate: React.PropTypes.string,
+      linear: React.PropTypes.string,
+      multicolor: React.PropTypes.string,
+      path: React.PropTypes.string,
+      value: React.PropTypes.string
     }),
     type: React.PropTypes.oneOf(['linear', 'circular']),
     value: React.PropTypes.number
@@ -99,3 +99,4 @@ class ProgressBar extends React.Component {
 }
 
 export default themr('ToolboxProgress')(ProgressBar);
+export { ProgressBar };

@@ -25,7 +25,20 @@ class Button extends React.Component {
     onMouseUp: React.PropTypes.func,
     primary: React.PropTypes.bool,
     raised: React.PropTypes.bool,
-    theme: React.PropTypes.object,
+    theme: React.PropTypes.shape({
+      accent: React.PropTypes.string.isRequired,
+      button: React.PropTypes.string.isRequired,
+      flat: React.PropTypes.string.isRequired,
+      floating: React.PropTypes.string.isRequired,
+      icon: React.PropTypes.string.isRequired,
+      inverse: React.PropTypes.string.isRequired,
+      mini: React.PropTypes.string.isRequired,
+      neutral: React.PropTypes.string.isRequired,
+      primary: React.PropTypes.string.isRequired,
+      raised: React.PropTypes.string.isRequired,
+      rippleWrapper: React.PropTypes.string.isRequired,
+      toggle: React.PropTypes.string.isRequired
+    }),
     type: React.PropTypes.string
   };
 
@@ -82,6 +95,9 @@ class Button extends React.Component {
   }
 }
 
+const RippledButton = themr('ToolboxButton')(Ripple({centered: false})(Button));
 const RawButton = themr('ToolboxButton')(Button);
-export default themr('ToolboxButton')(Ripple({centered: false})(Button));
+
+export default RippledButton;
 export { RawButton as RawButton };
+export { Button };

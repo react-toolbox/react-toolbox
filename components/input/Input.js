@@ -24,18 +24,18 @@ class Input extends React.Component {
     onKeyPress: React.PropTypes.func,
     required: React.PropTypes.bool,
     theme: React.PropTypes.shape({
-      bar: React.PropTypes.string.isRequired,
-      counter: React.PropTypes.string.isRequired,
-      disabled: React.PropTypes.string.isRequired,
-      error: React.PropTypes.string.isRequired,
-      errored: React.PropTypes.string.isRequired,
-      hidden: React.PropTypes.string.isRequired,
-      hint: React.PropTypes.string.isRequired,
-      icon: React.PropTypes.string.isRequired,
-      input: React.PropTypes.string.isRequired,
-      inputElement: React.PropTypes.string.isRequired,
-      required: React.PropTypes.string.isRequired,
-      withIcon: React.PropTypes.string.isRequired
+      bar: React.PropTypes.string,
+      counter: React.PropTypes.string,
+      disabled: React.PropTypes.string,
+      error: React.PropTypes.string,
+      errored: React.PropTypes.string,
+      hidden: React.PropTypes.string,
+      hint: React.PropTypes.string,
+      icon: React.PropTypes.string,
+      input: React.PropTypes.string,
+      inputElement: React.PropTypes.string,
+      required: React.PropTypes.string,
+      withIcon: React.PropTypes.string
     }),
     type: React.PropTypes.string,
     value: React.PropTypes.any
@@ -113,3 +113,4 @@ class Input extends React.Component {
 }
 
 export default themr('ToolboxInput')(Input);
+export { Input };

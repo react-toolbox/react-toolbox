@@ -30,10 +30,10 @@ const Ripple = (options = {}) => {
         rippleClassName: React.PropTypes.string,
         rippleSpread: React.PropTypes.number,
         theme: React.PropTypes.shape({
-          ripple: React.PropTypes.string.isRequired,
-          rippleActive: React.PropTypes.string.isRequired,
-          rippleRestarting: React.PropTypes.string.isRequired,
-          rippleWrapper: React.PropTypes.string.isRequired
+          ripple: React.PropTypes.string,
+          rippleActive: React.PropTypes.string,
+          rippleRestarting: React.PropTypes.string,
+          rippleWrapper: React.PropTypes.string
         })
       };
 

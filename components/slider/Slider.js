@@ -19,19 +19,19 @@ class Slider extends React.Component {
     snaps: React.PropTypes.bool,
     step: React.PropTypes.number,
     theme: React.PropTypes.shape({
-      container: React.PropTypes.string.isRequired,
-      editable: React.PropTypes.string.isRequired,
-      innerknob: React.PropTypes.string.isRequired,
-      innerprogress: React.PropTypes.string.isRequired,
-      input: React.PropTypes.string.isRequired,
-      knob: React.PropTypes.string.isRequired,
-      pinned: React.PropTypes.string.isRequired,
-      pressed: React.PropTypes.string.isRequired,
-      progress: React.PropTypes.string.isRequired,
-      ring: React.PropTypes.string.isRequired,
-      slider: React.PropTypes.string.isRequired,
-      snap: React.PropTypes.string.isRequired,
-      snaps: React.PropTypes.string.isRequired
+      container: React.PropTypes.string,
+      editable: React.PropTypes.string,
+      innerknob: React.PropTypes.string,
+      innerprogress: React.PropTypes.string,
+      input: React.PropTypes.string,
+      knob: React.PropTypes.string,
+      pinned: React.PropTypes.string,
+      pressed: React.PropTypes.string,
+      progress: React.PropTypes.string,
+      ring: React.PropTypes.string,
+      slider: React.PropTypes.string,
+      snap: React.PropTypes.string,
+      snaps: React.PropTypes.string
     }),
     value: React.PropTypes.number
   };
@@ -298,3 +298,4 @@ class Slider extends React.Component {
 }
 
 export default themr('ToolboxSlider')(Slider);
+export { Slider };
