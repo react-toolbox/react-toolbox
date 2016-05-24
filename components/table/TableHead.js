@@ -30,9 +30,9 @@ const TableHead = ({model, onSelect, selectable, multiSelectable, selected}) => 
 TableHead.propTypes = {
   className: React.PropTypes.string,
   model: React.PropTypes.object,
+  multiSelectable: React.PropTypes.bool,
   onSelect: React.PropTypes.func,
   selectable: React.PropTypes.bool,
-  multiSelectable: React.PropTypes.bool,
   selected: React.PropTypes.bool
 };
 
