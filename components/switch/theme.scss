@@ -40,12 +40,12 @@
   cursor: pointer;
   border-radius: 50%;
   transition-property: left;
-}
 
-.ripple {
-  background-color: $switch-color;
-  opacity: .3;
-  transition-duration: $switch-ripple-duration;
+  .ripple {
+    background-color: $switch-color;
+    opacity: .3;
+    transition-duration: $switch-ripple-duration;
+  }
 }
 
 .on {

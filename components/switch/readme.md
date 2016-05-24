@@ -2,9 +2,12 @@
 
 On/off switches toggle the state of a single settings option. The option that the switch controls, as well as the state it’s in, should be made clear from the corresponding inline label. Switches take on the same visual properties of the radio button.
 
+The theming key for this component is `ToolboxSwitch`.
+
 <!-- example -->
 ```jsx
 import Switch from 'react-toolbox/lib/switch';
+// Remember to provide a theme using ThemeProvider
 
 class SwitchTest extends React.Component {
   state = {
@@ -54,3 +57,16 @@ class SwitchTest extends React.Component {
 | `onBlur`       | `Function`       |               | Callback function that is fired when when the switch is blurred.|
 | `onChange`     | `Function`       |               | Callback function that is fired when the component's value changes.|
 | `onFocus`      | `Function`       |               | Callback function that is fired when the switch is focused.|
+
+## Theming
+
+| Name     | Description|
+|:---------|:-----------|
+| `disabled` | Used for the root element if the component is disabled.|
+| `field` | Used for the root element if the component is not disabled.|
+| `input` | Used for the input element.|
+| `off` | Used for a wrapper around the thumb if checked is `false`.|
+| `on` | Used for a wrapper around the thumb if checked is `true`.|
+| `ripple` | Used for the ripple inside the switch.|
+| `text` | Used for the text label element.|
+| `thumb` | Used for the thumb element.|
