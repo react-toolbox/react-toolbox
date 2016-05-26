@@ -9,6 +9,14 @@
   color: $appbar-contrast;
   background: $appbar-color;
 
+  @media screen and (max-width: $layout-breakpoint-xxs) and (orientation:portrait) {
+    height: $appbar-height-m-portrait;
+  }
+
+  @media screen and (max-width: $layout-breakpoint-xs) and (orientation:landscape) {
+    height: $appbar-height-m-landscape;
+  }
+
   &:not(.flat) {
     z-index: $z-index-high;
     box-shadow: 0 2px 5px rgba(0,0,0,.26);
