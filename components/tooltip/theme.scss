@@ -1,7 +1,7 @@
 @import "../base";
 @import "./config";
 
-.root {
+.tooltipWrapper {
   position: relative;
 }
 
@@ -26,7 +26,7 @@
   transition: $animation-curve-default $tooltip-animation-duration transform;
   transform: scale(0) translateX(-50%);
   transform-origin: top left;
-  &.active {
+  &.tooltipActive {
     transform: scale(1) translateX(-50%);
   }
 }

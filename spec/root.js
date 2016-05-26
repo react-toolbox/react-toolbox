@@ -3,11 +3,11 @@ import React from 'react';
 import { ThemeProvider } from 'react-css-themr';
 import theme from './theme';
 
-import AppBarToolbox from '../components/app_bar';
-import Avatar from './components/avatar';
-import ButtonToolbox from '../components/button';
+import AppBar from '../components/app_bar';
 import Autocomplete from './components/autocomplete';
+import Avatar from './components/avatar';
 import Button from './components/button';
+import ButtonToolbox from '../components/button';
 import Card from './components/card';
 import Checkbox from './components/checkbox';
 import Chip from './components/chip';
@@ -22,18 +22,19 @@ import Menu from './components/menu';
 import Pickers from './components/pickers';
 import Progress from './components/progress';
 import Radio from './components/radio';
-import Snackbar from './components/snackbar';
 import Slider from './components/slider';
+import Snackbar from './components/snackbar';
 import Switch from './components/switch';
 import Table from './components/table';
 import Tabs from './components/tabs';
 import Tooltip from './components/tooltip';
+
 import style from './style';
 
 const Root = () => (
   <ThemeProvider theme={theme}>
     <div className={style.app}>
-      <AppBarToolbox className={style.appbar} fixed flat>
+      <AppBar className={style.appbar} fixed flat>
         <h1>React Toolbox <small>Spec {VERSION}</small></h1>
         <ButtonToolbox
           accent
@@ -42,8 +43,7 @@ const Root = () => (
           floating
           onClick={() => {window.href = 'http://react-toolbox';}}
         />
-      </AppBarToolbox>
-
+      </AppBar>
       <Autocomplete />
       <Avatar />
       <Button />
