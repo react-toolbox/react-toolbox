@@ -1,7 +1,8 @@
 import React from 'react';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import TableHead from './TableHead';
 import TableRow from './TableRow';
-import style from './style';
 
 class Table extends React.Component {
   static propTypes = {
@@ -13,7 +14,10 @@ class Table extends React.Component {
     onSelect: React.PropTypes.func,
     selectable: React.PropTypes.bool,
     selected: React.PropTypes.array,
-    source: React.PropTypes.array
+    source: React.PropTypes.array,
+    theme: React.PropTypes.shape({
+      table: React.PropTypes.string
+    })
   };
 
   static defaultProps = {
@@ -64,35 +68,37 @@ class Table extends React.Component {
           selectable={selectable}
           multiSelectable={multiSelectable}
           selected={isSelected}
+          theme={this.props.theme}
         />
       );
     }
   }
 
   renderBody () {
-    const rows = this.props.source.map((data, index) => {
-      return (
-        <TableRow
-          data={data}
-          index={index}
-          key={index}
-          model={this.props.model}
-          onChange={this.props.onChange ? this.handleRowChange.bind(this) : undefined}
-          onSelect={this.handleRowSelect.bind(this, index)}
-          selectable={this.props.selectable}
-          selected={this.props.selected.indexOf(index) !== -1}
-        />
-      );
-    });
-
-    return <tbody>{rows}</tbody>;
+    const { source, model, onChange, selectable, selected, theme } = this.props;
+    return (
+      <tbody>
+        {source.map((data, index) => (
+          <TableRow
+            data={data}
+            index={index}
+            key={index}
+            model={model}
+            onChange={onChange ? this.handleRowChange.bind(this) : undefined}
+            onSelect={this.handleRowSelect.bind(this, index)}
+            selectable={selectable}
+            selected={selected.indexOf(index) !== -1}
+            theme={theme}
+          />
+        ))}
+      </tbody>
+    );
   }
 
   render () {
-    let className = style.root;
-    if (this.props.className) className += ` ${this.props.className}`;
+    const { className, theme } = this.props;
     return (
-      <table data-react-toolbox='table' className={className}>
+      <table data-react-toolbox='table' className={classnames(theme.table, className)}>
         {this.renderHead()}
         {this.renderBody()}
       </table>
@@ -100,4 +106,4 @@ class Table extends React.Component {
   }
 }
 
-export default Table;
+export default themr('ToolboxTable')(Table);

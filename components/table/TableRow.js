@@ -1,8 +1,7 @@
 import React from 'react';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
 import Checkbox from '../checkbox';
 import utils from '../utils/utils';
-import style from './style';
 
 class TableRow extends React.Component {
   static propTypes = {
@@ -12,7 +11,13 @@ class TableRow extends React.Component {
     onChange: React.PropTypes.func,
     onSelect: React.PropTypes.func,
     selectable: React.PropTypes.bool,
-    selected: React.PropTypes.bool
+    selected: React.PropTypes.bool,
+    theme: React.PropTypes.shape({
+      editable: React.PropTypes.string,
+      row: React.PropTypes.string,
+      selectable: React.PropTypes.string,
+      selected: React.PropTypes.string
+    })
   };
 
   handleInputChange = (index, key, type, event) => {
@@ -24,7 +29,7 @@ class TableRow extends React.Component {
   renderSelectCell () {
     if (this.props.selectable) {
       return (
-        <td className={style.selectable}>
+        <td className={this.props.theme.selectable}>
           <Checkbox checked={this.props.selected} onChange={this.props.onSelect} />
         </td>
       );
@@ -68,9 +73,9 @@ class TableRow extends React.Component {
   }
 
   render () {
-    const className = ClassNames(style.row, {
-      [style.editable]: this.props.onChange,
-      [style.selected]: this.props.selected
+    const className = classnames(this.props.theme.row, {
+      [this.props.theme.editable]: this.props.onChange,
+      [this.props.theme.selected]: this.props.selected
     });
 
     return (

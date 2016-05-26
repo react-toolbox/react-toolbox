@@ -23,6 +23,7 @@ import ToolboxRipple from '../components/ripple/theme.scss';
 import ToolboxSlider from '../components/slider/theme.scss';
 import ToolboxSnackbar from '../components/snackbar/theme.scss';
 import ToolboxSwitch from '../components/switch/theme.scss';
+import ToolboxTable from '../components/table/theme.scss';
 import ToolboxTimePicker from '../components/time_picker/theme.scss';
 
 export default defineTheme({
@@ -50,5 +51,6 @@ export default defineTheme({
   ToolboxSlider,
   ToolboxSnackbar,
   ToolboxSwitch,
+  ToolboxTable,
   ToolboxTimePicker
 });
