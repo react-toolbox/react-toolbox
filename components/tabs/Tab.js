@@ -1,6 +1,6 @@
 import React from 'react';
-import ClassNames from 'classnames';
-import style from './style';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 
 class TabHeader extends React.Component {
   static propTypes = {
@@ -11,7 +11,13 @@ class TabHeader extends React.Component {
     hidden: React.PropTypes.bool,
     label: React.PropTypes.any.isRequired,
     onActive: React.PropTypes.func,
-    onClick: React.PropTypes.func
+    onClick: React.PropTypes.func,
+    theme: React.PropTypes.shape({
+      active: React.PropTypes.string,
+      disabled: React.PropTypes.string,
+      hidden: React.PropTypes.string,
+      label: React.PropTypes.string
+    })
   };
 
   static defaultProps = {
@@ -34,19 +40,20 @@ class TabHeader extends React.Component {
   };
 
   render () {
-    const className = ClassNames(style.label, {
-      [style.active]: this.props.active,
-      [style.hidden]: this.props.hidden,
-      [style.disabled]: this.props.disabled,
-      [this.props.activeClassName]: this.props.active
-    }, this.props.className);
+    const { active, activeClassName, hidden, disabled, className, theme } = this.props;
+    const _className = classnames(theme.label, {
+      [theme.active]: active,
+      [theme.hidden]: hidden,
+      [theme.disabled]: disabled,
+      [activeClassName]: active
+    }, className);
 
     return (
-      <label data-react-toolbox='tab' className={className} onClick={this.handleClick}>
+      <label data-react-toolbox='tab' className={_className} onClick={this.handleClick}>
         {this.props.label}
       </label>
     );
   }
 }
 
-export default TabHeader;
+export default themr('ToolboxTabs')(TabHeader);

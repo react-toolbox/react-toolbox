@@ -2,6 +2,8 @@
 
 [Tabs](https://www.google.com/design/spec/components/tabs.html) make it easy to explore and switch between different views or functional aspects of an app or to browse categorized data sets.  Tabs are composed with their content, but only the active tab's content is rendered.  In the future, we may add the ability to render headers only, with event listeners.
 
+This component and subcomponents are themeable under the key `ToolboxTabs`. You can check the configuration variables for SASS at Github.
+
 <!-- example -->
 ```jsx
 import {Tab, Tabs} from 'react-toolbox';
@@ -37,6 +39,8 @@ class TabsTest extends React.Component {
 
 This component acts as the wrapper and the main controller of the content that is being displayed. It gets some properties that can be spread to the children.
 
+### Properties
+
 | Name                          | Type            | Default         | Description|
 |:-----|:-----|:-----|:-----|
 | `className`                   | `String`        | `''`            | Additional class name to provide custom styling.|
@@ -44,9 +48,21 @@ This component acts as the wrapper and the main controller of the content that i
 | `index`                       | `Number`        | `0`             | Current <Tab> |
 | `onChange`                    | `Function`      |                 | Callback function that is fired when the tab changes.|
 
+### Theming
+
+| Name     | Description|
+|:---------|:-----------|
+| `active` | Added to the active tab content and header.|
+| `navigation` | Used for the navigation element.|
+| `pointer` | Used for the moving underline element.|
+| `tabs` |Used as a root classname for the component.|
+| `tab` | Used for the tab content element.|
+
 ## Tab
 
 Represent a single tab element and it should include some properties to describe the tab itself and get children elements as content.
+
+### Properties
 
 | Name              | Type            | Default         | Description|
 |:-----|:-----|:-----|:-----|
@@ -58,3 +74,12 @@ Represent a single tab element and it should include some properties to describe
 | `label`           | `String`        |                 | Label text for navigation header. Required. |
 | `onActive`        | `Function`      |                 | Callback function that is fired when the tab is activated. |
 | `onClick`         | `Function`      |                 | Callback function that is fired when the tab is clicked. |
+
+### Theming
+
+| Name     | Description|
+|:---------|:-----------|
+| `active` | Added to the navigation tab element in case it's active.|
+| `disabled` | Added to the navigation tab element in case it's disabled.|
+| `hidden` | Added to the navigation tab element in case it's hidden.|
+| `label` | Added to the navigation tab element in case it's active.|

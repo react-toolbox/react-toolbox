@@ -1,7 +1,8 @@
 import React from 'react';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 import Tab from './Tab';
 import TabContent from './TabContent';
-import style from './style';
 
 class Tabs extends React.Component {
   static propTypes = {
@@ -9,7 +10,12 @@ class Tabs extends React.Component {
     className: React.PropTypes.string,
     disableAnimatedBottomBorder: React.PropTypes.bool,
     index: React.PropTypes.number,
-    onChange: React.PropTypes.func
+    onChange: React.PropTypes.func,
+    theme: React.PropTypes.shape({
+      navigation: React.PropTypes.string,
+      pointer: React.PropTypes.string,
+      tabs: React.PropTypes.string
+    })
   };
 
   static defaultProps = {
@@ -44,7 +50,7 @@ class Tabs extends React.Component {
       if (item.type === Tab) {
         headers.push(item);
         if (item.props.children) {
-          contents.push(<TabContent children={item.props.children}/>);
+          contents.push(<TabContent children={item.props.children} />);
         }
       } else if (item.type === TabContent) {
         contents.push(item);
@@ -94,20 +100,18 @@ class Tabs extends React.Component {
   }
 
   render () {
-    let className = style.root;
+    const { className, theme } = this.props;
     const { headers, contents } = this.parseChildren();
-    if (this.props.className) className += ` ${this.props.className}`;
-
     return (
-      <div ref='tabs' data-react-toolbox='tabs' className={className}>
-        <nav className={style.navigation} ref='navigation'>
+      <div ref='tabs' data-react-toolbox='tabs' className={classnames(theme.tabs, className)}>
+        <nav className={theme.navigation} ref='navigation'>
           {this.renderHeaders(headers)}
         </nav>
-        <span className={style.pointer} style={this.state.pointer} />
+        <span className={theme.pointer} style={this.state.pointer} />
         {this.renderContents(contents)}
       </div>
     );
   }
 }
 
-export default Tabs;
+export default themr('ToolboxTabs')(Tabs);

@@ -1,12 +1,17 @@
 import React from 'react';
-import style from './style';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
 
 class TabContent extends React.Component {
   static propTypes = {
     active: React.PropTypes.bool,
     children: React.PropTypes.node,
     className: React.PropTypes.string,
-    tabIndex: React.PropTypes.number
+    tabIndex: React.PropTypes.number,
+    theme: React.PropTypes.shape({
+      active: React.PropTypes.string,
+      tab: React.PropTypes.string
+    })
   };
 
   static defaultProps = {
@@ -15,9 +20,9 @@ class TabContent extends React.Component {
   };
 
   render () {
-    let className = style.tab;
-    if (this.props.active) className += ` ${style.active}`;
-    if (this.props.className) className += ` ${this.props.className}`;
+    const className = classnames(this.props.theme.tab, {
+      [this.props.theme.active]: this.props.active
+    }, this.props.className);
 
     return (
       <section className={className} tabIndex={this.props.tabIndex}>
@@ -27,4 +32,4 @@ class TabContent extends React.Component {
   }
 }
 
-export default TabContent;
+export default themr('ToolboxTabs')(TabContent);
