@@ -2,7 +2,6 @@
 import React from 'react';
 import { ThemeProvider } from 'react-css-themr';
 import theme from './theme';
-
 import AppBar from '../components/app_bar';
 import Autocomplete from './components/autocomplete';
 import Avatar from './components/avatar';
@@ -28,7 +27,6 @@ import Switch from './components/switch';
 import Table from './components/table';
 import Tabs from './components/tabs';
 import Tooltip from './components/tooltip';
-
 import style from './style';
 
 const Root = () => (

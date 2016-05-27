@@ -1,4 +1,5 @@
-import defineTheme from '../components/define-theme';
+import '../components/commons.scss';
+
 import ToolboxAppBar from '../components/app_bar/theme.scss';
 import ToolboxAutocomplete from '../components/autocomplete/theme.scss';
 import ToolboxAvatar from '../components/avatar/theme.scss';
@@ -28,7 +29,7 @@ import ToolboxTabs from '../components/tabs/theme.scss';
 import ToolboxTimePicker from '../components/time_picker/theme.scss';
 import ToolboxTooltip from '../components/tooltip/theme.scss';
 
-export default defineTheme({
+export default {
   ToolboxAppBar,
   ToolboxAutocomplete,
   ToolboxAvatar,
@@ -57,4 +58,4 @@ export default defineTheme({
   ToolboxTabs,
   ToolboxTimePicker,
   ToolboxTooltip
-});
+};
