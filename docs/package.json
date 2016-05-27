@@ -14,6 +14,7 @@
     "codemirror": "^5.14.2",
     "history": "^2.1.1",
     "react": "^15.0.2",
+    "react-css-themr": "^1.1.0",
     "react-dom": "^15.0.2",
     "react-router": "^2.4.0"
   },
@@ -45,7 +46,6 @@
     "redbox-react": "^1.2.4",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
-    "toolbox-loader": "0.0.3",
     "transfer-webpack-plugin": "^0.1.4",
     "webpack": "^1.13.0",
     "webpack-dev-middleware": "^1.6.1",
