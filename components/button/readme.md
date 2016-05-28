@@ -5,7 +5,6 @@ A [button](https://www.google.com/design/spec/components/buttons.html) clearly c
 <!-- example -->
 ```jsx
 import {Button, IconButton} from 'react-toolbox/lib/button';
-import theme from 'react-toolbox/lib/button/theme';
 
 const GithubIcon = () => (
   <svg viewBox="0 0 284 277">
@@ -15,18 +14,18 @@ const GithubIcon = () => (
 
 const TestButtons = () => (
   <div>
-    <Button href='http://github.com/javivelasco' target='_blank' raised theme={theme}>
+    <Button href='http://github.com/javivelasco' target='_blank' raised>
       <GithubIcon /> Github
     </Button>
-    <Button icon='bookmark' label='Bookmark' accent theme={theme} />
-    <Button icon='bookmark' label='Bookmark' raised primary theme={theme} />
-    <Button icon='inbox' label='Inbox' flat theme={theme} />
-    <Button icon='add' floating theme={theme} />
-    <Button icon='add' floating accent mini theme={theme} />
-    <IconButton icon='favorite' accent theme={theme} />
-    <IconButton primary theme={theme}><GithubIcon /></IconButton>
-    <Button icon='add' label='Add this' flat primary theme={theme} />
-    <Button icon='add' label='Add this' flat disabled theme={theme} />
+    <Button icon='bookmark' label='Bookmark' accent />
+    <Button icon='bookmark' label='Bookmark' raised primary />
+    <Button icon='inbox' label='Inbox' flat />
+    <Button icon='add' floating />
+    <Button icon='add' floating accent mini />
+    <IconButton icon='favorite' accent />
+    <IconButton primary><GithubIcon /></IconButton>
+    <Button icon='add' label='Add this' flat primary />
+    <Button icon='add' label='Add this' flat disabled />
   </div>
 );
 ```
@@ -57,28 +56,23 @@ By default it will have neutral colors and a flat aspect even though the `flat` 
 
 The `Button` component also accept children so if you want to provide a custom component and text instead of a `label` and `icon` you can do it too. Just check the examples.
 
-## Theming
-
-You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxButton`, theme should implement the following interface:
+## Theme
 
 | Name       | Description|
 |:-----------|:-----------|
-| `accent`   | Used for accent button.|
-| `button`   | Used for the root element.|
-| `flat`     | Used when the button is flat.|
-| `floating` | Used when the button is floating.|
+| `accent`   | Used for the root in case button is accent.|
+| `button`   | Used for the root element in any button.|
+| `flat`     | Used when the button is flat for the root element.|
+| `floating` | Used when the button is floating for the root element.|
 | `icon`     | For the icon inside a button.|
 | `inverse`  | Used when colors are inverted.|
 | `mini`     | Used for mini floating buttons.|
-| `neutral`  | For neutral colored buttons.|
-| `primary`  | For primary buttons.|
-| `raised`   | Used when the button is raised.|
-| `toggle`   | Used for toggle buttons.|
-
-Since the `Button` implements a ripple, it accepts theme properties for the ripple as well. If you want to compose the default style for the ripple, you just have to provide Ripple keys with custom styles in the theme object.
+| `neutral`  | Used for neutral colored buttons.|
+| `primary`  | Used for primary buttons when button is primary.|
+| `raised`   | Used when the button is raised for root element.|
+| `ripple`   | Used for the ripple element.|
+| `toggle`   | Used for toggle buttons in the root element.|
 
 ## Icon Button
 
-Icons are appropriate for toggle buttons that allow a single choice to be selected or deselected, such as adding or removing a star to an item. They are best located in app bars, toolbars, action buttons or toggles.
-
-We provide an `IconButton` component bundled with `Button` component. They share a similar API excluding onMouseLeave, onMouseUp and aspect properties.
+Icons are appropriate for toggle buttons that allow a single choice to be selected or deselected, such as adding or removing a star to an item. They are best located in app bars, toolbars, action buttons or toggles. We provide an `IconButton` component bundled with `Button` component. They share a similar API excluding onMouseLeave, onMouseUp and aspect properties.
