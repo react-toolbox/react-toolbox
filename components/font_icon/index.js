@@ -1,1 +1,1 @@
-export default from './FontIcon';
+export default from './FontIcon.js';

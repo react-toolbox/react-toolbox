@@ -3,7 +3,6 @@ import '../components/commons.scss';
 import ToolboxAppBar from '../components/app_bar/theme.scss';
 import ToolboxAutocomplete from '../components/autocomplete/theme.scss';
 import ToolboxAvatar from '../components/avatar/theme.scss';
-import ToolboxButton from '../components/button/theme.scss';
 import ToolboxCard from '../components/card/theme.scss';
 import ToolboxCheckbox from '../components/checkbox/theme.scss';
 import ToolboxChip from '../components/chip/theme.scss';
@@ -20,7 +19,6 @@ import ToolboxNavigation from '../components/navigation/theme.scss';
 import ToolboxOverlay from '../components/overlay/theme.scss';
 import ToolboxProgress from '../components/progress_bar/theme.scss';
 import ToolboxRadio from '../components/radio/theme.scss';
-import ToolboxRipple from '../components/ripple/theme.scss';
 import ToolboxSlider from '../components/slider/theme.scss';
 import ToolboxSnackbar from '../components/snackbar/theme.scss';
 import ToolboxSwitch from '../components/switch/theme.scss';
@@ -33,7 +31,6 @@ export default {
   ToolboxAppBar,
   ToolboxAutocomplete,
   ToolboxAvatar,
-  ToolboxButton,
   ToolboxCard,
   ToolboxCheckbox,
   ToolboxChip,
@@ -50,7 +47,6 @@ export default {
   ToolboxOverlay,
   ToolboxProgress,
   ToolboxRadio,
-  ToolboxRipple,
   ToolboxSlider,
   ToolboxSnackbar,
   ToolboxSwitch,

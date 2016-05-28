@@ -2,20 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import { RIPPLE } from '../identifiers.js';
 import events from '../utils/events';
 import prefixer from '../utils/prefixer';
 
 const defaults = {
   centered: false,
   className: '',
-  spread: 2
+  spread: 2,
+  theme: {}
 };
 
-const Ripple = (options = {}) => {
+const rippleFactory = (options = {}) => {
   const {
     centered: defaultCentered,
     className: defaultClassName,
     spread: defaultSpread,
+    theme: defaultTheme,
     ...props
   } = {...defaults, ...options};
 
@@ -139,8 +142,8 @@ const Ripple = (options = {}) => {
       }
     }
 
-    return themr('ToolboxRipple')(RippledComponent);
+    return themr(RIPPLE, defaultTheme)(RippledComponent);
   };
 };
 
-export default Ripple;
+export default rippleFactory;
