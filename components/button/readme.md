@@ -30,6 +30,8 @@ const TestButtons = () => (
 );
 ```
 
+If you want to provide a theme via context, the component key is `RTButton`.
+
 ## Properties
 
 | Name              | Type                  | Default     | Description|
