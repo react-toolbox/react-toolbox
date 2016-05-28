@@ -1,12 +1,9 @@
 # Chip
 
-Chips represent complex entities in small blocks, such as a contact. Chips can be used for various types of entities, including free form text, predefined text, rules, or contacts. Chips may also contain icons.
-
-To add an icon or contact image to a chip, include an `Avatar` element as the first child.
+Chips represent complex entities in small blocks, such as a contact. Chips can be used for various types of entities, including free form text, predefined text, rules, or contacts. Chips may also contain icons. To add an icon or contact image to a chip, include an `Avatar` element as the first child.
 
 <!-- example -->
 ```jsx
-// Import theme using `ThemeProvider`
 import Avatar from 'react-toolbox/lib/avatar';
 import Chip from 'react-toolbox/lib/chip';
 
@@ -37,6 +34,8 @@ const ChipTest = () => (
 );
 ```
 
+If you want to provide a theme via context, the component key is `RTChip`.
+
 ## Properties
 
 | Name            | Type        | Default         | Description|
@@ -46,15 +45,13 @@ const ChipTest = () => (
 | `deletable`     | `Boolean`   | `false`         | If true, the chip will be rendered with a delete icon.|
 | `onDeleteClick` | `Function`  |                 | Callback to be invoked when the delete icon is clicked. |
 
-## Theming
-
-You can take a look to the configuration variables at the `_config.scss` file. The component implements the following class interface:
+## Theme
 
 | Name       | Description|
 |:-----------|:-----------|
-| `avatar`     | Used in the root when the component includes an avatar.|
-| `chip` | Root class.|
-| `deletable` | Used in the root when the component is deletable.|
+| `avatar` | Added to the root element when the component includes an avatar.|
+| `chip` | Used for the root element.|
+| `deletable` | Added to the root element when the component is deletable.|
 | `delete` | Used for the delete element wrapper.|
-| `deleteIcon` | Used for the delete icon wrapper.|
+| `deleteIcon` | Used for the delete icon.|
 | `deleteX` | Used for the delete svg inner layer.|

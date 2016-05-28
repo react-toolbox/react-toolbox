@@ -5,7 +5,6 @@ Avatars can be used to represent people. This offer users the ability to persona
 <!-- example -->
 ```jsx
 import Avatar from 'react-toolbox/lib/avatar';
-import theme from 'react-toolbox/lib/avatar/theme';
 
 const GithubIcon = () => (
   <svg viewBox="0 0 284 277">
@@ -15,14 +14,16 @@ const GithubIcon = () => (
 
 const AvatarTest = () => (
   <div>
-    <Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" theme={theme} />
-    <Avatar icon={<GithubIcon />} theme={theme} />
-    <Avatar theme={theme}><img src="https://placeimg.com/80/80/animals"/></Avatar>
-    <Avatar title="Javier" image="https://placeimg.com/80/80/animals" theme={theme} />
-    <Avatar style={{backgroundColor: 'yellowgreen'}} theme={theme}><GithubIcon /></Avatar>
+    <Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" />
+    <Avatar icon={<GithubIcon />} />
+    <Avatar><img src="https://placeimg.com/80/80/animals"/></Avatar>
+    <Avatar title="Javier" image="https://placeimg.com/80/80/animals" />
+    <Avatar style={{backgroundColor: 'yellowgreen'}}><GithubIcon /></Avatar>
   </div>
 );
 ```
+
+If you want to provide a theme via context, the component key is `RTAvatar`.
 
 ## Properties
 
@@ -35,12 +36,10 @@ const AvatarTest = () => (
 | `title`       | `String`                | `''`        | A title for the image. If no image is provided, the first letter will be displayed as the avatar. |
 | `theme`       | `Object`  | `null`   | Classnames object defining the component style.|
 
-## Theming
-
-You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxAvatar`, it should implement the following interface:
+## Theme
 
 | Name     | Description|
 |:---------|:-----------|
-| `avatar` | Root class.|
-| `image`  | Used for the image if the avatar has image.|
-| `letter` | Used for the letter in case the avatar has no image.|
+| `avatar` | Used for the root class of the element.|
+| `image`  | Added to the root element when the component has image.|
+| `letter` | Used for the root element if the component shows the letter.|

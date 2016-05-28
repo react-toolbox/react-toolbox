@@ -27,6 +27,8 @@ class InputTest extends React.Component {
 }
 ```
 
+If you want to provide a theme via context, the component key is `RTInput`.
+
 ## Properties
 
 | Name            | Type                    | Default         | Description|
@@ -49,8 +51,6 @@ class InputTest extends React.Component {
 | `value`         | `Any`                   |                 | Current value of the input element.|
 
 ## Theming
-
-The input component uses `ToolboxInput` as theme context id and the configuration is available in the `_config.scss` as usual. Here is the class interface:
 
 | Name       | Description|
 |:-----------|:-----------|

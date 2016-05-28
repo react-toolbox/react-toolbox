@@ -5,7 +5,6 @@ An input field with a set of predeterminated labeled values. When it's focused i
 <!-- example -->
 ```jsx
 import Autocomplete from 'react-toolbox/lib/autocomplete';
-import theme from 'react-toolbox/lib/autocomplete/theme';
 
 const source = {
   'ES-es': 'Spain',
@@ -31,13 +30,14 @@ class AutocompleteTest extends React.Component {
         label="Choose countries"
         onChange={this.handleChange}
         source={source}
-        theme={theme}
         value={this.state.countries}
       />
     );
   }
 }
 ```
+
+If you want to provide a theme via context, the component key is `RTAutocomplete`.
 
 ## Properties
 
@@ -57,9 +57,7 @@ class AutocompleteTest extends React.Component {
 
 Additional properties will be passed to the Input Component so you can use `hint`, `name` ... etc.
 
-## Theming
-
-You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxAutocomplete`, it should implement the following interface:
+## Theme
 
 | Name     | Description|
 |:---------|:-----------|
