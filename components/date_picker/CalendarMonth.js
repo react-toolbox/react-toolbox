@@ -1,22 +1,21 @@
-import React from 'react';
-import { themr } from 'react-css-themr';
-import CalendarDay from './CalendarDay';
-import time from '../utils/time';
-import utils from '../utils/utils';
+import React, { Component, PropTypes } from 'react';
+import time from '../utils/time.js';
+import utils from '../utils/utils.js';
+import CalendarDay from './CalendarDay.js';
 
-class Month extends React.Component {
+class Month extends Component {
   static propTypes = {
-    maxDate: React.PropTypes.object,
-    minDate: React.PropTypes.object,
-    onDayClick: React.PropTypes.func,
-    selectedDate: React.PropTypes.object,
-    theme: React.PropTypes.shape({
-      days: React.PropTypes.string.isRequired,
-      month: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired,
-      week: React.PropTypes.string.isRequired
+    maxDate: PropTypes.object,
+    minDate: PropTypes.object,
+    onDayClick: PropTypes.func,
+    selectedDate: PropTypes.object,
+    theme: PropTypes.shape({
+      days: PropTypes.string.isRequired,
+      month: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      week: PropTypes.string.isRequired
     }),
-    viewDate: React.PropTypes.object
+    viewDate: PropTypes.object
   };
 
   handleDayClick = (day) => {
@@ -41,6 +40,7 @@ class Month extends React.Component {
           disabled={disabled}
           onClick={!disabled ? this.handleDayClick.bind(this, i) : null}
           selectedDate={this.props.selectedDate}
+          theme={this.props.theme}
           viewDate={this.props.viewDate}
         />
       );
@@ -60,4 +60,4 @@ class Month extends React.Component {
   }
 }
 
-export default themr('ToolboxDatePicker')(Month);
+export default Month;

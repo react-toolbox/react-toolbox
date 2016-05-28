@@ -30,6 +30,8 @@ class DatePickerTest extends React.Component {
 }
 ```
 
+If you want to provide a theme via context, the component key is `RTDatePicker`.
+
 ## Properties
 
 | Name            | Type            | Default       | Description|
@@ -44,9 +46,7 @@ class DatePickerTest extends React.Component {
 | `onChange`      | `Function`      |               | Callback called when the picker value is changed.|
 | `value`         | `Date`          |               | Date object with the currently selected date. |
 
-## Theming
-
-You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxDatePicker`, it should implement the following interface:
+## Theme
 
 | Name     | Description|
 |:---------|:-----------|

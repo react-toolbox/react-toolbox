@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
-import { themr } from 'react-css-themr';
-import time from '../utils/time';
+import time from '../utils/time.js';
 
 class Day extends React.Component {
   static propTypes = {
-    day: React.PropTypes.number,
-    disabled: React.PropTypes.bool,
-    onClick: React.PropTypes.func,
-    selectedDate: React.PropTypes.object,
-    theme: React.PropTypes.shape({
-      active: React.PropTypes.string.isRequired,
-      day: React.PropTypes.string.isRequired,
-      disabled: React.PropTypes.string.isRequired
+    day: PropTypes.number,
+    disabled: PropTypes.bool,
+    onClick: PropTypes.func,
+    selectedDate: PropTypes.object,
+    theme: PropTypes.shape({
+      active: PropTypes.string.isRequired,
+      day: PropTypes.string.isRequired,
+      disabled: PropTypes.string.isRequired
     }),
-    viewDate: React.PropTypes.object
+    viewDate: PropTypes.object
   };
 
   dayStyle () {
@@ -48,4 +47,4 @@ class Day extends React.Component {
   }
 }
 
-export default themr('ToolboxDatePicker')(Day);
+export default Day;

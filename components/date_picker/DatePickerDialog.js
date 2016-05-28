@@ -1,92 +1,90 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
-import { themr } from 'react-css-themr';
-import Calendar from './Calendar';
-import Dialog from '../dialog';
-import time from '../utils/time';
+import time from '../utils/time.js';
 
-class CalendarDialog extends React.Component {
-  static propTypes = {
-    active: React.PropTypes.bool,
-    autoOk: React.PropTypes.bool,
-    className: React.PropTypes.string,
-    maxDate: React.PropTypes.object,
-    minDate: React.PropTypes.object,
-    onDismiss: React.PropTypes.func,
-    onSelect: React.PropTypes.func,
-    theme: React.PropTypes.shape({
-      button: React.PropTypes.string.isRequired,
-      calendarWrapper: React.PropTypes.string.isRequired,
-      date: React.PropTypes.string.isRequired,
-      dialog: React.PropTypes.string.isRequired,
-      header: React.PropTypes.string.isRequired,
-      monthsDisplay: React.PropTypes.string.isRequired,
-      year: React.PropTypes.string.isRequired,
-      yearsDisplay: React.PropTypes.string.isRequired
-    }),
-    value: React.PropTypes.object
-  };
+const factory = (Dialog, Calendar) => {
+  class CalendarDialog extends Component {
+    static propTypes = {
+      active: PropTypes.bool,
+      autoOk: PropTypes.bool,
+      className: PropTypes.string,
+      maxDate: PropTypes.object,
+      minDate: PropTypes.object,
+      onDismiss: PropTypes.func,
+      onSelect: PropTypes.func,
+      theme: PropTypes.shape({
+        button: PropTypes.string.isRequired,
+        calendarWrapper: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired,
+        dialog: PropTypes.string.isRequired,
+        header: PropTypes.string.isRequired,
+        monthsDisplay: PropTypes.string.isRequired,
+        year: PropTypes.string.isRequired,
+        yearsDisplay: PropTypes.string.isRequired
+      }),
+      value: PropTypes.object
+    };
 
-  static defaultProps = {
-    active: false,
-    className: '',
-    value: new Date()
-  };
+    static defaultProps = {
+      active: false,
+      className: '',
+      value: new Date()
+    };
 
-  state = {
-    display: 'months',
-    date: this.props.value
-  };
+    state = {
+      display: 'months',
+      date: this.props.value
+    };
 
-  componentWillMount () {
-    this.updateStateDate(this.props.value);
+    componentWillMount () {
+      this.updateStateDate(this.props.value);
 
-  }
-
-  componentWillReceiveProps (nextProps) {
-    this.updateStateDate(nextProps.value);
-  }
-
-  handleCalendarChange = (value, dayClick) => {
-    const state = {display: 'months', date: value};
-    if (time.dateOutOfRange(value, this.props.minDate, this.props.maxDate)) {
-      state.date = this.props.maxDate || this.props.minDate;
     }
-    this.setState(state);
-    if (dayClick && this.props.autoOk && this.props.onSelect) {
-      this.props.onSelect(value);
+
+    componentWillReceiveProps (nextProps) {
+      this.updateStateDate(nextProps.value);
     }
-  };
 
-  handleSelect = (event) => {
-    if (this.props.onSelect) this.props.onSelect(this.state.date, event);
-  };
+    handleCalendarChange = (value, dayClick) => {
+      const state = {display: 'months', date: value};
+      if (time.dateOutOfRange(value, this.props.minDate, this.props.maxDate)) {
+        state.date = this.props.maxDate || this.props.minDate;
+      }
+      this.setState(state);
+      if (dayClick && this.props.autoOk && this.props.onSelect) {
+        this.props.onSelect(value);
+      }
+    };
 
-  handleSwitchDisplay = (display) => {
-    this.setState({ display });
-  };
+    handleSelect = (event) => {
+      if (this.props.onSelect) this.props.onSelect(this.state.date, event);
+    };
 
-  updateStateDate = (date) => {
-    if (Object.prototype.toString.call(date) === '[object Date]') {
-      this.setState({
-        date
-      });
+    handleSwitchDisplay = (display) => {
+      this.setState({ display });
+    };
+
+    updateStateDate = (date) => {
+      if (Object.prototype.toString.call(date) === '[object Date]') {
+        this.setState({
+          date
+        });
+      }
     }
-  }
 
-  actions = [
-    { label: 'Cancel', className: this.props.theme.button, onClick: this.props.onDismiss },
-    { label: 'Ok', className: this.props.theme.button, onClick: this.handleSelect }
-  ];
+    actions = [
+      { label: 'Cancel', className: this.props.theme.button, onClick: this.props.onDismiss },
+      { label: 'Ok', className: this.props.theme.button, onClick: this.handleSelect }
+    ];
 
-  render () {
-    const { theme } = this.props;
-    const display = `${this.state.display}Display`;
-    const className = classnames(theme.dialog, this.props.className);
-    const headerClassName = classnames(theme.header, theme[display]);
+    render () {
+      const { theme } = this.props;
+      const display = `${this.state.display}Display`;
+      const className = classnames(theme.dialog, this.props.className);
+      const headerClassName = classnames(theme.header, theme[display]);
 
-    return (
-      <Dialog active={this.props.active} type="custom" className={className} actions={this.actions}>
+      return (
+        <Dialog active={this.props.active} type="custom" className={className} actions={this.actions}>
           <header className={headerClassName}>
             <span className={theme.year} onClick={this.handleSwitchDisplay.bind(this, 'years')}>
               {this.state.date.getFullYear()}
@@ -102,11 +100,15 @@ class CalendarDialog extends React.Component {
               maxDate={this.props.maxDate}
               minDate={this.props.minDate}
               onChange={this.handleCalendarChange}
-              selectedDate={this.state.date} />
+              selectedDate={this.state.date}
+              theme={this.props.theme} />
           </div>
-      </Dialog>
-    );
+        </Dialog>
+      );
+    }
   }
-}
 
-export default themr('ToolboxDatePicker')(CalendarDialog);
+  return CalendarDialog;
+};
+
+export default factory;

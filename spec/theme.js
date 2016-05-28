@@ -1,8 +1,6 @@
 import '../components/commons.scss';
 
 import ToolboxCheckbox from '../components/checkbox/theme.scss';
-import ToolboxDatePicker from '../components/date_picker/theme.scss';
-import ToolboxDialog from '../components/dialog/theme.scss';
 import ToolboxDrawer from '../components/drawer/theme.scss';
 import ToolboxDropdown from '../components/dropdown/theme.scss';
 import ToolboxLayout from '../components/layout/theme.scss';
@@ -10,7 +8,6 @@ import ToolboxLink from '../components/link/theme.scss';
 import ToolboxList from '../components/list/theme.scss';
 import ToolboxMenu from '../components/menu/theme.scss';
 import ToolboxNavigation from '../components/navigation/theme.scss';
-import ToolboxOverlay from '../components/overlay/theme.scss';
 import ToolboxProgress from '../components/progress_bar/theme.scss';
 import ToolboxRadio from '../components/radio/theme.scss';
 import ToolboxSlider from '../components/slider/theme.scss';
@@ -23,8 +20,6 @@ import ToolboxTooltip from '../components/tooltip/theme.scss';
 
 export default {
   ToolboxCheckbox,
-  ToolboxDatePicker,
-  ToolboxDialog,
   ToolboxDrawer,
   ToolboxDropdown,
   ToolboxLayout,
@@ -32,7 +27,6 @@ export default {
   ToolboxList,
   ToolboxMenu,
   ToolboxNavigation,
-  ToolboxOverlay,
   ToolboxProgress,
   ToolboxRadio,
   ToolboxSlider,

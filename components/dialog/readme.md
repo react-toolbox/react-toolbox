@@ -4,7 +4,6 @@
 
 <!-- example -->
 ```jsx
-// Remember to provide default styles with ThemeProvider
 import Dialog from 'react-toolbox/lib/dialog';
 
 class DialogTest extends React.Component {
@@ -40,6 +39,8 @@ class DialogTest extends React.Component {
 }
 ```
 
+If you want to provide a theme via context, the component key is `RTDialog`.
+
 ## Properties
 
 | Name                    | Type            | Default         | Description|
@@ -55,9 +56,7 @@ class DialogTest extends React.Component {
 | `title`                 | `String`        |                 | The text string to use as standar title of the dialog.|
 | `type`                  | `String`        | `normal`        | Used to determine the size of the dialog. It can be `small`, `normal` or `large`. |
 
-## Theming
-
-You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxDialog`, it should implement the following interface:
+## Theme
 
 | Name     | Description|
 |:---------|:-----------|

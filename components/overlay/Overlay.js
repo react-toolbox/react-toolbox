@@ -1,7 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import Portal from '../hoc/Portal';
+import { OVERLAY } from '../identifiers.js';
+import Portal from '../hoc/Portal.js';
 
 class Overlay extends React.Component {
   static propTypes = {
@@ -72,4 +73,5 @@ class Overlay extends React.Component {
   }
 }
 
-export default themr('ToolboxOverlay')(Overlay);
+export default themr(OVERLAY)(Overlay);
+export { Overlay };
