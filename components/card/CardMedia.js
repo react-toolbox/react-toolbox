@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
+import { CARD } from '../identifiers.js';
 
 const CardMedia = ({ aspectRatio, children, className, color, contentOverlay, image, theme, ...other }) => {
   const classes = classnames(theme.cardMedia, {
@@ -44,4 +45,5 @@ CardMedia.propTypes = {
   })
 };
 
-export default themr('ToolboxCard')(CardMedia);
+export default themr(CARD)(CardMedia);
+export { CardMedia };

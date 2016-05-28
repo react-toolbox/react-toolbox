@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
+import { CARD } from '../identifiers.js';
 
 const CardActions = ({ children, className, theme, ...other }) => (
   <div className={classnames(theme.cardActions, className)} {...other}>
@@ -16,4 +17,5 @@ CardActions.propTypes = {
   })
 };
 
-export default themr('ToolboxCard')(CardActions);
+export default themr(CARD)(CardActions);
+export { CardActions };

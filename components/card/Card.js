@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
+import { CARD } from '../identifiers.js';
 
 const Card = ({children, className, raised, theme, ...other}) => {
   const classes = classnames(theme.card, {
@@ -19,9 +20,10 @@ Card.propTypes = {
   className: PropTypes.string,
   raised: PropTypes.bool,
   theme: React.PropTypes.shape({
-    card: React.PropTypes.string.isRequired,
-    raised: React.PropTypes.string.isRequired
+    card: React.PropTypes.string,
+    raised: React.PropTypes.string
   })
 };
 
-export default themr('ToolboxCard')(Card);
+export default themr(CARD)(Card);
+export { Card };
