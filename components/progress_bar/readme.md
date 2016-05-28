@@ -5,15 +5,16 @@ Minimize visual changes that occur while your app loads content by representing 
 <!-- example -->
 ```jsx
 import ProgressBar from 'react-toolbox/lib/progress_bar';
-import theme from 'react-toolbox/lib/progress_bar/theme';
 
 const ProgressTest = () => (
   <div>
-    <ProgressBar type="circular" mode="indeterminate" theme={theme} />
-    <ProgressBar type="linear" mode="determinate" value={83} buffer={90} theme={theme} />
+    <ProgressBar type="circular" mode="indeterminate" />
+    <ProgressBar type="linear" mode="determinate" value={83} buffer={90} />
   </div>
 );
 ```
+
+If you want to provide a theme via context, the component key is `RTProgressBar`.
 
 ## Properties
 
@@ -28,9 +29,7 @@ const ProgressTest = () => (
 | `type`        | `String`    | `linear`        | Type of the progress bar, it can be `circular` or `linear`.|
 | `value`       | `Number`    | `0`             | Value of the current progress.|
 
-## Theming
-
-You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxProgress`, it should implement the following interface:
+## Theme
 
 | Name     | Description|
 |:---------|:-----------|

@@ -5,4 +5,5 @@ export const BUTTON = 'RTButton';
 export const CARD = 'RTCard';
 export const CHIP = 'RTChip';
 export const INPUT = 'RTInput';
+export const PROGRESS_BAR = 'RTProgressBar';
 export const RIPPLE = 'RTRipple';

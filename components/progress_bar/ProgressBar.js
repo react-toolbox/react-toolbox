@@ -1,28 +1,29 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import prefixer from '../utils/prefixer';
+import { PROGRESS_BAR } from '../identifiers.js';
+import prefixer from '../utils/prefixer.js';
 
-class ProgressBar extends React.Component {
+class ProgressBar extends Component {
   static propTypes = {
-    buffer: React.PropTypes.number,
-    className: React.PropTypes.string,
-    max: React.PropTypes.number,
-    min: React.PropTypes.number,
-    mode: React.PropTypes.oneOf(['determinate', 'indeterminate']),
-    multicolor: React.PropTypes.bool,
-    theme: React.PropTypes.shape({
-      buffer: React.PropTypes.string,
-      circle: React.PropTypes.string,
-      circular: React.PropTypes.string,
-      indeterminate: React.PropTypes.string,
-      linear: React.PropTypes.string,
-      multicolor: React.PropTypes.string,
-      path: React.PropTypes.string,
-      value: React.PropTypes.string
+    buffer: PropTypes.number,
+    className: PropTypes.string,
+    max: PropTypes.number,
+    min: PropTypes.number,
+    mode: PropTypes.oneOf(['determinate', 'indeterminate']),
+    multicolor: PropTypes.bool,
+    theme: PropTypes.shape({
+      buffer: PropTypes.string,
+      circle: PropTypes.string,
+      circular: PropTypes.string,
+      indeterminate: PropTypes.string,
+      linear: PropTypes.string,
+      multicolor: PropTypes.string,
+      path: PropTypes.string,
+      value: PropTypes.string
     }),
-    type: React.PropTypes.oneOf(['linear', 'circular']),
-    value: React.PropTypes.number
+    type: PropTypes.oneOf(['linear', 'circular']),
+    value: PropTypes.number
   };
 
   static defaultProps = {
@@ -98,5 +99,5 @@ class ProgressBar extends React.Component {
   }
 }
 
-export default themr('ToolboxProgress')(ProgressBar);
+export default themr(PROGRESS_BAR)(ProgressBar);
 export { ProgressBar };
