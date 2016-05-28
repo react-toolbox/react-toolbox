@@ -4,15 +4,16 @@ The app bar is a special kind of toolbar that’s used for branding, navigation,
 
 ```jsx
 import AppBar from 'react-toolbox/lib/app_bar';
-import theme from 'react-toolbox/lib/app_bar/theme';
 
 const AppBarTest = () => (
-  <AppBar theme={theme} fixed flat>
+  <AppBar fixed flat>
     <a href="/home">React Toolbox Docs</a>
     <Navigation />
   </AppBar>
 );
 ```
+
+If you want to provide a theme via context, the component key is `RTAppBar`.
 
 ## Properties
 
@@ -23,12 +24,10 @@ const AppBarTest = () => (
 | `flat`      | `Bool`    | `false`  | If true, the AppBar shows a shadow.|
 | `theme`     | `Object`  | `null`   | Classnames object defining the component style.|
 
-## Theming
-
-You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxAppBar`, it should implement the following interface:
+## Theme
 
 | Name     | Description|
 |:---------|:-----------|
-| `appBar` | Root class.|
-| `fixed`  | Implemented when the app bar is fixed.|
-| `flat`   | Implemented when the app bar is flat.|
+| `appBar` | Used for the component root element.|
+| `fixed`  | Added to the root element when the app bar is fixed.|
+| `flat`   | Added to the root element when the app bar is flat.|

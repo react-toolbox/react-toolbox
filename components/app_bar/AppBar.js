@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import { APP_BAR } from '../identifiers.js';
 
 const AppBar = ({ theme, ...props }) => {
   const className = classnames(theme.appBar, {
@@ -16,14 +17,14 @@ const AppBar = ({ theme, ...props }) => {
 };
 
 AppBar.propTypes = {
-  children: React.PropTypes.node,
-  className: React.PropTypes.string,
-  fixed: React.PropTypes.bool,
-  flat: React.PropTypes.bool,
-  theme: React.PropTypes.shape({
-    appBar: React.PropTypes.string.isRequired,
-    fixed: React.PropTypes.string.isRequired,
-    flat: React.PropTypes.string.isRequired
+  children: PropTypes.node,
+  className: PropTypes.string,
+  fixed: PropTypes.bool,
+  flat: PropTypes.bool,
+  theme: PropTypes.shape({
+    appBar: PropTypes.string,
+    fixed: PropTypes.string,
+    flat: PropTypes.string
   })
 };
 
@@ -33,4 +34,5 @@ AppBar.defaultProps = {
   flat: false
 };
 
-export default themr('ToolboxAppBar')(AppBar);
+export default themr(APP_BAR)(AppBar);
+export { AppBar };

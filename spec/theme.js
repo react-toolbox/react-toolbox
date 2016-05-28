@@ -1,6 +1,5 @@
 import '../components/commons.scss';
 
-import ToolboxAppBar from '../components/app_bar/theme.scss';
 import ToolboxAutocomplete from '../components/autocomplete/theme.scss';
 import ToolboxAvatar from '../components/avatar/theme.scss';
 import ToolboxCard from '../components/card/theme.scss';
@@ -28,7 +27,6 @@ import ToolboxTimePicker from '../components/time_picker/theme.scss';
 import ToolboxTooltip from '../components/tooltip/theme.scss';
 
 export default {
-  ToolboxAppBar,
   ToolboxAutocomplete,
   ToolboxAvatar,
   ToolboxCard,
