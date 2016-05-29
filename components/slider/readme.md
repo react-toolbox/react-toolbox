@@ -2,12 +2,9 @@
 
 [Sliders](https://www.google.com/design/spec/components/sliders.html#) let users select a value from a continuous or discrete range of values by moving the slider thumb. The smallest value is to the left, the largest to the right. Sliders can have icons to the left and right of the bar that reflect the value intensity. The interactive nature of the slider makes it a great choice for settings that reflect intensity levels, such as volume, brightness, or color saturation.
 
-This component can be styled providing a theme with the key `ToolboxSlider` through the theme provider.
-
 <!-- example -->
 ```jsx
 import Slider from 'react-toolbox/lib/slider';
-// Remember to add styles using the key ToolboxSlider
 
 class SliderTest extends React.Component {
   state = {
@@ -36,6 +33,8 @@ class SliderTest extends React.Component {
 }
 ```
 
+This component can be styled by context providing a theme with the key `RTSlider` through the theme provider.
+
 ## Properties
 
 | Name          | Type          | Default   | Description|
@@ -50,7 +49,7 @@ class SliderTest extends React.Component {
 | `step`        | `Number`      | `0.01`    | Amount to vary the value when the knob is moved or increase/decrease is called.|
 | `value`       | `Number`      | `0`       | Current value of the slider.|
 
-## Theming
+## Theme
 
 | Name     | Description|
 |:---------|:-----------|

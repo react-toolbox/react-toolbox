@@ -1,40 +1,41 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import events from '../utils/events';
-import prefixer from '../utils/prefixer';
-import utils from '../utils/utils';
+import { SLIDER } from '../identifiers.js';
+import events from '../utils/events.js';
+import prefixer from '../utils/prefixer.js';
+import utils from '../utils/utils.js';
 import InjectProgressBar from '../progress_bar/ProgressBar.js';
 import InjectInput from '../input/Input.js';
 
 const factory = (ProgressBar, Input) => {
-  class Slider extends React.Component {
+  class Slider extends Component {
     static propTypes = {
-      className: React.PropTypes.string,
-      editable: React.PropTypes.bool,
-      max: React.PropTypes.number,
-      min: React.PropTypes.number,
-      onChange: React.PropTypes.func,
-      pinned: React.PropTypes.bool,
-      snaps: React.PropTypes.bool,
-      step: React.PropTypes.number,
-      theme: React.PropTypes.shape({
-        container: React.PropTypes.string,
-        editable: React.PropTypes.string,
-        innerknob: React.PropTypes.string,
-        innerprogress: React.PropTypes.string,
-        input: React.PropTypes.string,
-        knob: React.PropTypes.string,
-        pinned: React.PropTypes.string,
-        pressed: React.PropTypes.string,
-        progress: React.PropTypes.string,
-        ring: React.PropTypes.string,
-        slider: React.PropTypes.string,
-        snap: React.PropTypes.string,
-        snaps: React.PropTypes.string
+      className: PropTypes.string,
+      editable: PropTypes.bool,
+      max: PropTypes.number,
+      min: PropTypes.number,
+      onChange: PropTypes.func,
+      pinned: PropTypes.bool,
+      snaps: PropTypes.bool,
+      step: PropTypes.number,
+      theme: PropTypes.shape({
+        container: PropTypes.string,
+        editable: PropTypes.string,
+        innerknob: PropTypes.string,
+        innerprogress: PropTypes.string,
+        input: PropTypes.string,
+        knob: PropTypes.string,
+        pinned: PropTypes.string,
+        pressed: PropTypes.string,
+        progress: PropTypes.string,
+        ring: PropTypes.string,
+        slider: PropTypes.string,
+        snap: PropTypes.string,
+        snaps: PropTypes.string
       }),
-      value: React.PropTypes.number
+      value: PropTypes.number
     };
 
     static defaultProps = {
@@ -302,5 +303,6 @@ const factory = (ProgressBar, Input) => {
 };
 
 const Slider = factory(InjectProgressBar, InjectInput);
-export default themr('ToolboxSlider')(Slider);
+export default themr(SLIDER)(Slider);
+export { factory as sliderFactory };
 export { Slider };

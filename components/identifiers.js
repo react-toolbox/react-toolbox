@@ -16,3 +16,4 @@ export const OVERLAY = 'RTOverlay';
 export const PROGRESS_BAR = 'RTProgressBar';
 export const RADIO = 'RTRadio';
 export const RIPPLE = 'RTRipple';
+export const SLIDER = 'RTSlider';
