@@ -2,8 +2,6 @@
 
 A [Menu](https://www.google.com/design/spec/components/menus.html) is a temporary piece of material emitted from a button, an action, a pointer, or another control that contains at least two menu items. Each menu item is a discrete option or action that can affect the app, the view, or selected elements within a view. Menus should not be used as a primary method for navigation within an app. You can compose a menu based on a few subcomponents, same as for Lists.
 
-This set of components is themed to be provided width the key `ToolboxMenu`.
-
 <!-- example -->
 ```jsx
 import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
@@ -18,6 +16,8 @@ const MenuTest = () => (
   </IconMenu>
 );
 ```
+
+If you want to provide a theme for any of these subcomponents via context, the component key is `RTMenu`.
 
 ## Menu
 
