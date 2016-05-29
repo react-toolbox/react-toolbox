@@ -1,48 +1,57 @@
-import React from 'react';
-import RadioButton from './RadioButton';
+import React, { Component, PropTypes } from 'react';
+import { themr } from 'react-css-themr';
+import { RADIO } from '../identifiers.js';
+import InjectRadioButton from './RadioButton.js';
 
-class RadioGroup extends React.Component {
-  static propTypes = {
-    children: React.PropTypes.node,
-    className: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    name: React.PropTypes.string,
-    onChange: React.PropTypes.func,
-    value: React.PropTypes.any
-  };
+const factory = (RadioButton) => {
+  class RadioGroup extends Component {
+    static propTypes = {
+      children: PropTypes.node,
+      className: PropTypes.string,
+      disabled: PropTypes.bool,
+      name: PropTypes.string,
+      onChange: PropTypes.func,
+      value: PropTypes.any
+    };
 
-  static defaultProps = {
-    className: '',
-    disabled: false
-  };
+    static defaultProps = {
+      className: '',
+      disabled: false
+    };
 
-  handleChange = (value) => {
-    if (this.props.onChange) this.props.onChange(value);
-  };
+    handleChange = (value) => {
+      if (this.props.onChange) this.props.onChange(value);
+    };
 
-  renderRadioButtons () {
-    return React.Children.map(this.props.children, (radio, idx) => {
+    renderRadioButtons () {
+      return React.Children.map(this.props.children, (radio, idx) => {
+        return (
+          <RadioButton
+            {...radio.props}
+            checked={radio.props.value === this.props.value}
+            disabled={this.props.disabled || radio.props.disabled}
+            key={idx}
+            label={radio.props.label}
+            onChange={this.handleChange.bind(this, radio.props.value)}
+            value={radio.props.value}
+          />
+        );
+      });
+    }
+
+    render () {
       return (
-        <RadioButton
-          {...radio.props}
-          checked={radio.props.value === this.props.value}
-          disabled={this.props.disabled || radio.props.disabled}
-          key={idx}
-          label={radio.props.label}
-          onChange={this.handleChange.bind(this, radio.props.value)}
-          value={radio.props.value}
-        />
+        <div data-react-toolbox='radio-group' className={this.props.className}>
+          {this.renderRadioButtons()}
+        </div>
       );
-    });
+    }
   }
 
-  render () {
-    return (
-      <div data-react-toolbox='radio-group' className={this.props.className}>
-        {this.renderRadioButtons()}
-      </div>
-    );
-  }
-}
+  return RadioGroup;
+};
 
-export default RadioGroup;
+const RadioGroup = factory(InjectRadioButton);
+export default themr(RADIO)(RadioGroup);
+export { factory as radioGroupFactory };
+export { RadioGroup };
