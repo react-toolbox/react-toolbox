@@ -1,7 +1,7 @@
-import events from './events';
-import prefixer from './prefixer';
-import time from './time';
-import utils from './utils';
+import events from './events.js';
+import prefixer from './prefixer.js';
+import time from './time.js';
+import utils from './utils.js';
 
 export default {events, prefixer, time, utils};
 export {events};
