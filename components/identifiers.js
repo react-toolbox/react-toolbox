@@ -6,6 +6,7 @@ export const CARD = 'RTCard';
 export const CHIP = 'RTChip';
 export const DATE_PICKER = 'RTDatePicker';
 export const DIALOG = 'RTDialog';
+export const DROPDOWN = 'RTDropdown';
 export const INPUT = 'RTInput';
 export const OVERLAY = 'RTOverlay';
 export const PROGRESS_BAR = 'RTProgressBar';
