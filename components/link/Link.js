@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
-import FontIcon from '../font_icon';
 import { themr } from 'react-css-themr';
+import { LINK } from '../identifiers.js';
+import FontIcon from '../font_icon/FontIcon.js';
 
 const Link = ({active, children, className, count, icon, label, theme, ...others}) => {
   const _className = classnames(theme.link, {
@@ -19,19 +20,19 @@ const Link = ({active, children, className, count, icon, label, theme, ...others
 };
 
 Link.propTypes = {
-  active: React.PropTypes.bool,
-  children: React.PropTypes.node,
-  className: React.PropTypes.string,
-  count: React.PropTypes.number,
-  icon: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.element
+  active: PropTypes.bool,
+  children: PropTypes.node,
+  className: PropTypes.string,
+  count: PropTypes.number,
+  icon: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element
   ]),
-  label: React.PropTypes.string,
-  theme: React.PropTypes.shape({
-    active: React.PropTypes.string.isRequired,
-    icon: React.PropTypes.string.isRequired,
-    link: React.PropTypes.string.isRequired
+  label: PropTypes.string,
+  theme: PropTypes.shape({
+    active: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    link: PropTypes.string.isRequired
   })
 };
 
@@ -40,4 +41,5 @@ Link.defaultProps = {
   className: ''
 };
 
-export default themr('ToolboxLink')(Link);
+export default themr(LINK)(Link);
+export { Link };

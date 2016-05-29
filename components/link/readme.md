@@ -5,16 +5,17 @@ The link is a very simple component that acts mostly as a wrapper for the HTML a
 <!-- example -->
 ```jsx
 import Link from 'react-toolbox/lib/link';
-import theme from 'react-toolbox/lib/link/theme';
 
 const LinksTest = () => (
   <nav>
-    <Link active href="/#/components/link" label="Work" count={4} icon='business' theme={theme} />
-    <Link href="/#/components/link" label="Blog" icon='speaker_notes' theme={theme} />
-    <Link href="/#/components/link" label="Explore" icon='explore' theme={theme} />
+    <Link active href="/#/components/link" label="Work" count={4} icon='business' />
+    <Link href="/#/components/link" label="Blog" icon='speaker_notes' />
+    <Link href="/#/components/link" label="Explore" icon='explore' />
   </nav>
 );
 ```
+
+If you want to provide a theme via context, the component key is `RTLink`.
 
 ## Properties
 
@@ -22,15 +23,13 @@ You can add as many properties as you want to be directly transferred to the out
 
 | Name            | Type                  | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `active`        | `Boolean`             | `false`         | If true, adds active style to link.|
-| `className`     | `String`              | `''`            | Sets a custom class name to add styles to the link.|
-| `count`         | `Number`              |                 | Sets a count number.|
-| `icon`          | `String` or `Element` |                 | An icon key string to include a `FontIcon` component in front of the text.|
-| `label`         | `String`              |                 | The text string used for the text content of the link.|
+| `active`     | `Boolean`             | `false`         | If true, adds active style to link.|
+| `className`  | `String`              | `''`            | Sets a custom class name to add styles to the link.|
+| `count`      | `Number`              |                 | Sets a count number.|
+| `icon`       | `String` or `Element` |                 | An icon key string to include a `FontIcon` component in front of the text.|
+| `label`      | `String`              |                 | The text string used for the text content of the link.|
 
-## Theming
-
-You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxLink`, it should implement the following interface:
+## Theme
 
 | Name     | Description|
 |:---------|:-----------|
