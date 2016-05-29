@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { themr } from 'react-css-themr';
 import { LIST } from '../identifiers.js';
 
@@ -7,10 +7,10 @@ const ListDivider = ({inset, theme}) => (
 );
 
 ListDivider.propTypes = {
-  inset: React.PropTypes.bool,
-  theme: React.PropTypes.shape({
-    divider: React.PropTypes.string.isRequired,
-    inset: React.PropTypes.string.isRequired
+  inset: PropTypes.bool,
+  theme: PropTypes.shape({
+    divider: PropTypes.string.isRequired,
+    inset: PropTypes.string.isRequired
   })
 };
 

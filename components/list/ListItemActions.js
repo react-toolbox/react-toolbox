@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { themr } from 'react-css-themr';
 import { LIST } from '../identifiers.js';
 import InjectListItemAction from './ListItemAction.js';
@@ -17,12 +17,12 @@ const factory = (ListItemAction) => {
   };
 
   ListItemActions.propTypes = {
-    children: React.PropTypes.any,
-    theme: React.PropTypes.shape({
-      left: React.PropTypes.string.isRequired,
-      right: React.PropTypes.string.isRequired
+    children: PropTypes.any,
+    theme: PropTypes.shape({
+      left: PropTypes.string.isRequired,
+      right: PropTypes.string.isRequired
     }),
-    type: React.PropTypes.oneOf(['left', 'right'])
+    type: PropTypes.oneOf(['left', 'right'])
   };
 
   return ListItemActions;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { LIST } from '../identifiers.js';
@@ -13,12 +13,12 @@ const ListItemText = ({className, primary, children, theme, ...other}) => {
 };
 
 ListItemText.propTypes = {
-  children: React.PropTypes.any,
-  className: React.PropTypes.string,
-  primary: React.PropTypes.bool,
-  theme: React.PropTypes.shape({
-    itemText: React.PropTypes.string.isRequired,
-    primary: React.PropTypes.string.isRequired
+  children: PropTypes.any,
+  className: PropTypes.string,
+  primary: PropTypes.bool,
+  theme: PropTypes.shape({
+    itemText: PropTypes.string.isRequired,
+    primary: PropTypes.string.isRequired
   })
 };
 

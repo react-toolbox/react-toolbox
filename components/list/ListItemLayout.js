@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { LIST } from '../identifiers.js';
@@ -36,33 +36,33 @@ const factory = (Avatar, ListItemContent, ListItemActions) => {
   };
 
   ListItemLayout.propTypes = {
-    avatar: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.element
+    avatar: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element
     ]),
-    caption: React.PropTypes.string,
-    children: React.PropTypes.any,
-    className: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    itemContent: React.PropTypes.element,
-    leftActions: React.PropTypes.array,
-    leftIcon: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.element
+    caption: PropTypes.string,
+    children: PropTypes.any,
+    className: PropTypes.string,
+    disabled: PropTypes.bool,
+    itemContent: PropTypes.element,
+    leftActions: PropTypes.array,
+    leftIcon: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element
     ]),
-    legend: React.PropTypes.string,
-    rightActions: React.PropTypes.array,
-    rightIcon: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.element
+    legend: PropTypes.string,
+    rightActions: PropTypes.array,
+    rightIcon: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element
     ]),
-    selectable: React.PropTypes.bool,
-    theme: React.PropTypes.shape({
-      disabled: React.PropTypes.string.isRequired,
-      item: React.PropTypes.string.isRequired,
-      selectable: React.PropTypes.string.isRequired
+    selectable: PropTypes.bool,
+    theme: PropTypes.shape({
+      disabled: PropTypes.string.isRequired,
+      item: PropTypes.string.isRequired,
+      selectable: PropTypes.string.isRequired
     }),
-    to: React.PropTypes.string
+    to: PropTypes.string
   };
 
   ListItemLayout.defaultProps = {
