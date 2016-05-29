@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import CssTransitionGroup from 'react-addons-css-transition-group';
 import { SlideLeft, SlideRight } from '../animations';
 import time from '../utils/time.js';
@@ -6,21 +6,21 @@ import utils from '../utils/utils.js';
 import CalendarMonth from './CalendarMonth.js';
 
 const factory = (IconButton) => {
-  class Calendar extends React.Component {
+  class Calendar extends Component {
     static propTypes = {
-      display: React.PropTypes.oneOf(['months', 'years']),
-      maxDate: React.PropTypes.object,
-      minDate: React.PropTypes.object,
-      onChange: React.PropTypes.func,
-      selectedDate: React.PropTypes.object,
-      theme: React.PropTypes.shape({
-        active: React.PropTypes.string.isRequired,
-        calendar: React.PropTypes.string.isRequired,
-        next: React.PropTypes.string.isRequired,
-        prev: React.PropTypes.string.isRequired,
-        years: React.PropTypes.string.isRequired
+      display: PropTypes.oneOf(['months', 'years']),
+      maxDate: PropTypes.object,
+      minDate: PropTypes.object,
+      onChange: PropTypes.func,
+      selectedDate: PropTypes.object,
+      theme: PropTypes.shape({
+        active: PropTypes.string.isRequired,
+        calendar: PropTypes.string.isRequired,
+        next: PropTypes.string.isRequired,
+        prev: PropTypes.string.isRequired,
+        years: PropTypes.string.isRequired
       }),
-      viewDate: React.PropTypes.object
+      viewDate: PropTypes.object
     };
 
     static defaultProps = {

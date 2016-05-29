@@ -1,8 +1,8 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import time from '../utils/time.js';
 
-class Day extends React.Component {
+class Day extends Component {
   static propTypes = {
     day: PropTypes.number,
     disabled: PropTypes.bool,

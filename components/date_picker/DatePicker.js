@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { DATE_PICKER } from '../identifiers.js';
@@ -12,27 +12,27 @@ import calendarFactory from './Calendar.js';
 import datePickerDialogFactory from './DatePickerDialog.js';
 
 const factory = (Input, DatePickerDialog) => {
-  class DatePicker extends React.Component {
+  class DatePicker extends Component {
     static propTypes = {
-      autoOk: React.PropTypes.bool,
-      className: React.PropTypes.string,
-      error: React.PropTypes.string,
-      icon: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.element
+      autoOk: PropTypes.bool,
+      className: PropTypes.string,
+      error: PropTypes.string,
+      icon: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element
       ]),
-      inputClassName: React.PropTypes.string,
-      inputFormat: React.PropTypes.func,
-      label: React.PropTypes.string,
-      maxDate: React.PropTypes.object,
-      minDate: React.PropTypes.object,
-      onChange: React.PropTypes.func,
-      theme: React.PropTypes.shape({
-        input: React.PropTypes.string.isRequired
+      inputClassName: PropTypes.string,
+      inputFormat: PropTypes.func,
+      label: PropTypes.string,
+      maxDate: PropTypes.object,
+      minDate: PropTypes.object,
+      onChange: PropTypes.func,
+      theme: PropTypes.shape({
+        input: PropTypes.string.isRequired
       }),
-      value: React.PropTypes.oneOfType([
-        React.PropTypes.instanceOf(Date),
-        React.PropTypes.string
+      value: PropTypes.oneOfType([
+        PropTypes.instanceOf(Date),
+        PropTypes.string
       ])
     };
 

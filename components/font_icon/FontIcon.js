@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 
 const FontIcon = ({ children, className, value, ...other}) => (
@@ -13,11 +13,11 @@ const FontIcon = ({ children, className, value, ...other}) => (
 );
 
 FontIcon.propTypes = {
-  children: React.PropTypes.any,
-  className: React.PropTypes.string,
-  value: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.element
+  children: PropTypes.any,
+  className: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element
   ])
 };
 

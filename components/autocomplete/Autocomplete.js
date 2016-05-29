@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
@@ -14,31 +14,31 @@ const POSITION = {
 };
 
 const factory = (Chip, Input) => {
-  class Autocomplete extends React.Component {
+  class Autocomplete extends Component {
    static propTypes = {
-     className: React.PropTypes.string,
-     direction: React.PropTypes.oneOf(['auto', 'up', 'down']),
-     disabled: React.PropTypes.bool,
-     error: React.PropTypes.string,
-     label: React.PropTypes.string,
-     multiple: React.PropTypes.bool,
-     onChange: React.PropTypes.func,
-     selectedPosition: React.PropTypes.oneOf(['above', 'below']),
-     showSuggestionsWhenValueIsSet: React.PropTypes.bool,
-     source: React.PropTypes.any,
-     theme: React.PropTypes.shape({
-       active: React.PropTypes.string.isRequired,
-       autocomplete: React.PropTypes.string.isRequired,
-       focus: React.PropTypes.string.isRequired,
-       input: React.PropTypes.string.isRequired,
-       label: React.PropTypes.string.isRequired,
-       suggestion: React.PropTypes.string.isRequired,
-       suggestions: React.PropTypes.string.isRequired,
-       up: React.PropTypes.string.isRequired,
-       value: React.PropTypes.string.isRequired,
-       values: React.PropTypes.string.isRequired
+     className: PropTypes.string,
+     direction: PropTypes.oneOf(['auto', 'up', 'down']),
+     disabled: PropTypes.bool,
+     error: PropTypes.string,
+     label: PropTypes.string,
+     multiple: PropTypes.bool,
+     onChange: PropTypes.func,
+     selectedPosition: PropTypes.oneOf(['above', 'below']),
+     showSuggestionsWhenValueIsSet: PropTypes.bool,
+     source: PropTypes.any,
+     theme: PropTypes.shape({
+       active: PropTypes.string.isRequired,
+       autocomplete: PropTypes.string.isRequired,
+       focus: PropTypes.string.isRequired,
+       input: PropTypes.string.isRequired,
+       label: PropTypes.string.isRequired,
+       suggestion: PropTypes.string.isRequired,
+       suggestions: PropTypes.string.isRequired,
+       up: PropTypes.string.isRequired,
+       value: PropTypes.string.isRequired,
+       values: PropTypes.string.isRequired
      }),
-     value: React.PropTypes.any
+     value: PropTypes.any
    };
 
    static defaultProps = {

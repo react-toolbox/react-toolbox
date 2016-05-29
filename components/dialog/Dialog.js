@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
 import { DIALOG } from '../identifiers.js';
@@ -43,25 +43,25 @@ const factory = (Overlay, Button) => {
   };
 
   Dialog.propTypes = {
-    actions: React.PropTypes.array,
-    active: React.PropTypes.bool,
-    children: React.PropTypes.node,
-    className: React.PropTypes.string,
-    onEscKeyDown: React.PropTypes.func,
-    onOverlayClick: React.PropTypes.func,
-    onOverlayMouseDown: React.PropTypes.func,
-    onOverlayMouseMove: React.PropTypes.func,
-    onOverlayMouseUp: React.PropTypes.func,
-    theme: React.PropTypes.shape({
-      active: React.PropTypes.string.isRequired,
-      body: React.PropTypes.string.isRequired,
-      button: React.PropTypes.string.isRequired,
-      dialog: React.PropTypes.string.isRequired,
-      navigation: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired
+    actions: PropTypes.array,
+    active: PropTypes.bool,
+    children: PropTypes.node,
+    className: PropTypes.string,
+    onEscKeyDown: PropTypes.func,
+    onOverlayClick: PropTypes.func,
+    onOverlayMouseDown: PropTypes.func,
+    onOverlayMouseMove: PropTypes.func,
+    onOverlayMouseUp: PropTypes.func,
+    theme: PropTypes.shape({
+      active: PropTypes.string.isRequired,
+      body: PropTypes.string.isRequired,
+      button: PropTypes.string.isRequired,
+      dialog: PropTypes.string.isRequired,
+      navigation: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired
     }),
-    title: React.PropTypes.string,
-    type: React.PropTypes.string
+    title: PropTypes.string,
+    type: PropTypes.string
   };
 
   Dialog.defaultProps = {

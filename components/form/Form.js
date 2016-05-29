@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import Autocomplete from '../autocomplete';
 import Button from '../button';
 import Checkbox from '../checkbox';
@@ -10,7 +10,7 @@ import Slider from '../slider';
 import Switch from '../switch';
 import TimePicker from '../time_picker';
 
-const Component = {
+const COMPONENTS = {
   'autocomplete': Autocomplete,
   'button': Button,
   'checkbox': Checkbox,
@@ -23,17 +23,17 @@ const Component = {
   'timepicker': TimePicker
 };
 
-class Form extends React.Component {
+class Form extends Component {
   static propTypes = {
-    attributes: React.PropTypes.array,
-    children: React.PropTypes.node,
-    className: React.PropTypes.string,
-    model: React.PropTypes.object,
-    onChange: React.PropTypes.func,
-    onError: React.PropTypes.func,
-    onSubmit: React.PropTypes.func,
-    onValid: React.PropTypes.func,
-    storage: React.PropTypes.string
+    attributes: PropTypes.array,
+    children: PropTypes.node,
+    className: PropTypes.string,
+    model: PropTypes.object,
+    onChange: PropTypes.func,
+    onError: PropTypes.func,
+    onSubmit: PropTypes.func,
+    onValid: PropTypes.func,
+    storage: PropTypes.string
   };
 
   static defaultProps = {
@@ -53,7 +53,7 @@ class Form extends React.Component {
   renderFields () {
     return Object.keys(this.props.model).map((field, index) => {
       const properties = this.props.model[field];
-      const Field = Component[properties.kind.toLowerCase()];
+      const Field = COMPONENTS[properties.kind.toLowerCase()];
       return <Field key={index} {...properties} onChange={this.onChange.bind(this, field)} />;
     });
   }
