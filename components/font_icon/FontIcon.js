@@ -26,3 +26,4 @@ FontIcon.defaultProps = {
 };
 
 export default FontIcon;
+export { FontIcon };
