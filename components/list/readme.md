@@ -7,7 +7,6 @@ Lists are best suited to presenting a homogeneous data type or sets of data type
 <!-- example -->
 ```jsx
 import { List, ListItem, ListSubHeader, ListDivider, ListCheckbox } from 'react-toolbox/lib/list';
-// Remember to inject the style via provider
 
 const ListTest = () => (
   <List selectable ripple>
@@ -39,6 +38,8 @@ const ListTest = () => (
 );
 ```
 
+If you want to provide styles via context to this components, you should use the key `RTList`.
+
 ## List
 
 Is used as a wrapper for the list. It can hold properties that affect to the whole list and get styles for the wrapper.
@@ -50,9 +51,7 @@ Is used as a wrapper for the list. It can hold properties that affect to the who
 | `ripple`      | `Boolean`   | `false`    | If true, each element in the list will have a ripple effect on click |
 | `selectable`  | `Boolean`   | `false`    | If true, the elements in the list will display a hover effect and a pointer cursor. |
 
-### Theming
-The themed key for this component is `ToolboxList`, it should implement the following interface:
-
+### Theme
 | Name     | Description|
 |:---------|:-----------|
 | `list`   | Used for the root element of the list.|
@@ -79,9 +78,7 @@ Represents a list item that can have avatar, icons, title, subtitle, etc. Note: 
 | `selectable`      | `Boolean`             | `false`       | If true, the elements in the list will display a hover effect and a pointer cursor. Inherited from the parent.|
 | `to`              | `String`              |               | In case you want to provide the item as a link, you can pass this property to specify the href. |
 
-### Theming
-The themed key for this component is `ToolboxList`, it should implement the following interface:
-
+### Theme
 | Name     | Description|
 |:---------|:-----------|
 | `disabled` | Added to the inner content if its a disabled item.|
@@ -114,7 +111,7 @@ A special type of item that has a checkbox control on the left side. It implemen
 | `onChange`      | `Function`      |               | Callback called when the input element is changed.|
 | `onFocus`       | `Function`      |               | Callback called when the input element is focused.|
 
-### Theming
+### Theme
 | Name     | Description|
 |:---------|:-----------|
 | `checkbox` | Used as a wrapper class for the subheader element.|
@@ -137,7 +134,7 @@ Simple subcomponent used to give a title to a list area.
 | `caption`     | `String`    |               | Text that will be displayed.|
 | `className`   | `String`    | `''`          | Set a class to give custom styles to the list subheader.|
 
-### Theming
+### Theme
 | Name     | Description|
 |:---------|:-----------|
 | `subheader` | Used as a wrapper class for the subheader element.|

@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { themr } from 'react-css-themr';
+import { LIST } from '../identifiers.js';
 
 const ListItemAction = ({action, theme}) => {
   const {onClick, onMouseDown} = action.props;
@@ -19,7 +20,5 @@ ListItemAction.propTypes = {
   })
 };
 
-ListItemAction.defaultProps = {
-};
-
-export default themr('ToolboxList')(ListItemAction);
+export default themr(LIST)(ListItemAction);
+export { ListItemAction };

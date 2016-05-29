@@ -1,77 +1,81 @@
 import React from 'react';
 import { themr } from 'react-css-themr';
-import ListItemContent from './ListItemContent';
-import ListItemLayout from './ListItemLayout';
-import Ripple from '../ripple';
+import { LIST } from '../identifiers.js';
+import InjectListItemContent from './ListItemContent.js';
+import InjectListItemLayout from './ListItemLayout.js';
+import rippleFactory from '../ripple/Ripple.js';
 
-class ListItem extends React.Component {
-  static propTypes = {
-    children: React.PropTypes.any,
-    className: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    onClick: React.PropTypes.func,
-    ripple: React.PropTypes.bool,
-    theme: React.PropTypes.shape({
-      listItem: React.PropTypes.string.isRequired
-    }),
-    to: React.PropTypes.string
-  };
-
-  static defaultProps = {
-    className: '',
-    disabled: false,
-    ripple: false
-  };
-
-  handleClick = (event) => {
-    if (this.props.onClick && !this.props.disabled) {
-      this.props.onClick(event);
-    }
-  };
-
-  groupChildren () {
-    const children = {
-      leftActions: [],
-      rightActions: [],
-      ignored: []
+const factory = (ripple, ListItemLayout, ListItemContent) => {
+  class ListItem extends React.Component {
+    static propTypes = {
+      children: React.PropTypes.any,
+      className: React.PropTypes.string,
+      disabled: React.PropTypes.bool,
+      onClick: React.PropTypes.func,
+      ripple: React.PropTypes.bool,
+      theme: React.PropTypes.shape({
+        listItem: React.PropTypes.string.isRequired
+      }),
+      to: React.PropTypes.string
     };
 
-    React.Children.forEach(this.props.children, (child, i) => {
-      if (!React.isValidElement(child)) {
-        return;
-      }
-      if (child.props.listItemIgnore) {
-        children.ignored.push(child);
-        return;
-      }
-      if (child.type === ListItemContent) {
-        children.itemContent = child;
-        return;
-      }
-      const bucket = children.itemContent ? 'rightActions' : 'leftActions';
-      children[bucket].push({...child, key: i});
-    });
+    static defaultProps = {
+      className: '',
+      disabled: false,
+      ripple: false
+    };
 
-    return children;
+    handleClick = (event) => {
+      if (this.props.onClick && !this.props.disabled) {
+        this.props.onClick(event);
+      }
+    };
+
+    groupChildren () {
+      const children = {
+        leftActions: [],
+        rightActions: [],
+        ignored: []
+      };
+
+      React.Children.forEach(this.props.children, (child, i) => {
+        if (!React.isValidElement(child)) {
+          return;
+        }
+        if (child.props.listItemIgnore) {
+          children.ignored.push(child);
+          return;
+        }
+        if (child.type === ListItemContent) {
+          children.itemContent = child;
+          return;
+        }
+        const bucket = children.itemContent ? 'rightActions' : 'leftActions';
+        children[bucket].push({...child, key: i});
+      });
+
+      return children;
+    }
+
+    render () {
+      const {className, onMouseDown, to, onClick, ripple: hasRipple, theme, ...other} = this.props; //eslint-disable-line no-unused-vars
+      const children = this.groupChildren();
+      const content = <ListItemLayout {...children} {...other}/>;
+      return (
+        <li className={`${theme.listItem} ${className}`} onClick={this.handleClick} onMouseDown={onMouseDown}>
+          {to ? <a href={this.props.to}>{content}</a> : content}
+          {children.ignored}
+        </li>
+      );
+    }
   }
 
-  render () {
-    const {className, onMouseDown, to, onClick, ripple, theme, ...other} = this.props; //eslint-disable-line no-unused-vars
-    const children = this.groupChildren();
-    const content = <ListItemLayout {...children} {...other}/>;
-    return (
-      <li className={`${theme.listItem} ${className}`} onClick={this.handleClick} onMouseDown={onMouseDown}>
-        {to ? <a href={this.props.to}>{content}</a> : content}
-        {children.ignored}
-      </li>
-    );
-  }
-}
+  return ripple(ListItem);
+};
 
-const RawListItem = themr('ToolboxList')(ListItem);
-export default themr('ToolboxList')(Ripple({
-  centered: false,
-  listItemIgnore: true
-})(ListItem));
+const ripple = rippleFactory({ centered: false, listItemIgnore: true });
+const ListItem = factory(ripple, InjectListItemLayout, InjectListItemContent);
 
-export {RawListItem as RawListItem};
+export default themr(LIST)(ListItem);
+export { factory as listItemFactory };
+export { ListItem };

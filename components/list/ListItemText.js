@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import { LIST } from '../identifiers.js';
 
 const ListItemText = ({className, primary, children, theme, ...other}) => {
   const _className = classnames(theme.itemText, {[theme.primary]: primary}, className);
@@ -25,4 +26,5 @@ ListItemText.defaultProps = {
   primary: false
 };
 
-export default themr('ToolboxList')(ListItemText);
+export default themr(LIST)(ListItemText);
+export { ListItemText };

@@ -1,6 +1,5 @@
 import '../components/commons.scss';
 
-import ToolboxList from '../components/list/theme.scss';
 import ToolboxMenu from '../components/menu/theme.scss';
 import ToolboxNavigation from '../components/navigation/theme.scss';
 import ToolboxProgress from '../components/progress_bar/theme.scss';
@@ -14,7 +13,6 @@ import ToolboxTimePicker from '../components/time_picker/theme.scss';
 import ToolboxTooltip from '../components/tooltip/theme.scss';
 
 export default {
-  ToolboxList,
   ToolboxMenu,
   ToolboxNavigation,
   ToolboxProgress,
