@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import { LAYOUT } from '../identifiers.js';
 
 const NavDrawer = ({ active, children, className, onOverlayClick, permanentAt, pinned, scrollY, theme, width }) => {
   const rootClasses = classnames([theme.navDrawer], {
@@ -58,4 +59,5 @@ NavDrawer.defaultProps = {
   width: 'normal'
 };
 
-export default themr('ToolboxLayout')(NavDrawer);
+export default themr(LAYOUT)(NavDrawer);
+export { NavDrawer };

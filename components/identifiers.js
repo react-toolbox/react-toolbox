@@ -8,6 +8,7 @@ export const DATE_PICKER = 'RTDatePicker';
 export const DIALOG = 'RTDialog';
 export const DROPDOWN = 'RTDropdown';
 export const INPUT = 'RTInput';
+export const LAYOUT = 'RTLayout';
 export const OVERLAY = 'RTOverlay';
 export const PROGRESS_BAR = 'RTProgressBar';
 export const RIPPLE = 'RTRipple';

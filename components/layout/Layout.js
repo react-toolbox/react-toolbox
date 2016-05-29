@@ -1,6 +1,7 @@
 import React from 'react';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
+import { LAYOUT } from '../identifiers.js';
 
 const Layout = ({ className, children, theme }) => (
   <div data-react-toolbox='layout' className={classnames(theme.layout, className)}>
@@ -54,4 +55,5 @@ Layout.defaultProps = {
   className: ''
 };
 
-export default themr('ToolboxLayout')(Layout);
+export default themr(LAYOUT)(Layout);
+export { Layout };

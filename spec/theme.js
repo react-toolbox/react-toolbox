@@ -1,6 +1,5 @@
 import '../components/commons.scss';
 
-import ToolboxLayout from '../components/layout/theme.scss';
 import ToolboxLink from '../components/link/theme.scss';
 import ToolboxList from '../components/list/theme.scss';
 import ToolboxMenu from '../components/menu/theme.scss';
@@ -16,7 +15,6 @@ import ToolboxTimePicker from '../components/time_picker/theme.scss';
 import ToolboxTooltip from '../components/tooltip/theme.scss';
 
 export default {
-  ToolboxLayout,
   ToolboxLink,
   ToolboxList,
   ToolboxMenu,

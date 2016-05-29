@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import { LAYOUT } from '../identifiers.js';
 
 const Panel = ({ children, className, scrollY, theme }) => {
   const _className = classnames(theme.panel, {
@@ -29,4 +30,5 @@ Panel.defaultProps = {
   scrollY: false
 };
 
-export default themr('ToolboxLayout')(Panel);
+export default themr(LAYOUT)(Panel);
+export { Panel };

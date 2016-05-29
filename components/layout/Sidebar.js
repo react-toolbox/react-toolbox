@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import { LAYOUT } from '../identifiers.js';
 
 const Sidebar = ({ children, className, pinned, scrollY, theme, width }) => {
   const wrapperClasses = classnames(theme.sidebar, theme[`width-${width}`], {
@@ -41,4 +42,5 @@ Sidebar.defaultProps = {
   width: 5
 };
 
-export default themr('ToolboxLayout')(Sidebar);
+export default themr(LAYOUT)(Sidebar);
+export { Sidebar };
