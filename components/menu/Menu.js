@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { themr } from 'react-css-themr';
 import classnames from 'classnames';
-import MenuItem from './MenuItem';
+import { themr } from 'react-css-themr';
+import { MENU } from '../identifiers.js';
 import { events, utils } from '../utils';
+import InjectMenuItem from './MenuItem.js';
 
 const POSITION = {
   AUTO: 'auto',
@@ -14,193 +15,200 @@ const POSITION = {
   BOTTOM_RIGHT: 'bottomRight'
 };
 
-class Menu extends React.Component {
-  static propTypes = {
-    active: React.PropTypes.bool,
-    children: React.PropTypes.node,
-    className: React.PropTypes.string,
-    onHide: React.PropTypes.func,
-    onSelect: React.PropTypes.func,
-    onShow: React.PropTypes.func,
-    outline: React.PropTypes.bool,
-    position: React.PropTypes.string,
-    ripple: React.PropTypes.bool,
-    selectable: React.PropTypes.bool,
-    selected: React.PropTypes.any,
-    theme: React.PropTypes.shape({
-      active: React.PropTypes.string.isRequired,
-      bottomLeft: React.PropTypes.string.isRequired,
-      bottomRight: React.PropTypes.string.isRequired,
-      menu: React.PropTypes.string.isRequired,
-      menuInner: React.PropTypes.string.isRequired,
-      outline: React.PropTypes.string.isRequired,
-      rippled: React.PropTypes.string.isRequired,
-      static: React.PropTypes.string.isRequired,
-      topLeft: React.PropTypes.string.isRequired,
-      topRight: React.PropTypes.string.isRequired
-    })
-  };
+const factory = (MenuItem) => {
+  class Menu extends React.Component {
+    static propTypes = {
+      active: React.PropTypes.bool,
+      children: React.PropTypes.node,
+      className: React.PropTypes.string,
+      onHide: React.PropTypes.func,
+      onSelect: React.PropTypes.func,
+      onShow: React.PropTypes.func,
+      outline: React.PropTypes.bool,
+      position: React.PropTypes.string,
+      ripple: React.PropTypes.bool,
+      selectable: React.PropTypes.bool,
+      selected: React.PropTypes.any,
+      theme: React.PropTypes.shape({
+        active: React.PropTypes.string.isRequired,
+        bottomLeft: React.PropTypes.string.isRequired,
+        bottomRight: React.PropTypes.string.isRequired,
+        menu: React.PropTypes.string.isRequired,
+        menuInner: React.PropTypes.string.isRequired,
+        outline: React.PropTypes.string.isRequired,
+        rippled: React.PropTypes.string.isRequired,
+        static: React.PropTypes.string.isRequired,
+        topLeft: React.PropTypes.string.isRequired,
+        topRight: React.PropTypes.string.isRequired
+      })
+    };
 
-  static defaultProps = {
-    active: false,
-    outline: true,
-    position: POSITION.STATIC,
-    ripple: true,
-    selectable: true
-  };
+    static defaultProps = {
+      active: false,
+      outline: true,
+      position: POSITION.STATIC,
+      ripple: true,
+      selectable: true
+    };
 
-  state = {
-    active: this.props.active,
-    rippled: false
-  };
+    state = {
+      active: this.props.active,
+      rippled: false
+    };
 
-  componentDidMount () {
-    this.positionTimeoutHandle = setTimeout(() => {
-      const { width, height } = this.refs.menu.getBoundingClientRect();
-      const position = this.props.position === POSITION.AUTO ? this.calculatePosition() : this.props.position;
-      this.setState({ position, width, height });
-    });
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (this.props.position !== nextProps.position) {
-      const position = nextProps.position === POSITION.AUTO ? this.calculatePosition() : nextProps.position;
-      this.setState({ position });
+    componentDidMount () {
+      this.positionTimeoutHandle = setTimeout(() => {
+        const { width, height } = this.refs.menu.getBoundingClientRect();
+        const position = this.props.position === POSITION.AUTO ? this.calculatePosition() : this.props.position;
+        this.setState({ position, width, height });
+      });
     }
 
-    if (!this.props.active && nextProps.active && !this.state.active) {
-      this.show();
-    }
+    componentWillReceiveProps (nextProps) {
+      if (this.props.position !== nextProps.position) {
+        const position = nextProps.position === POSITION.AUTO ? this.calculatePosition() : nextProps.position;
+        this.setState({ position });
+      }
 
-    if (this.props.active && !nextProps.active && this.state.active) {
-      this.hide();
-    }
-  }
+      if (!this.props.active && nextProps.active && !this.state.active) {
+        this.show();
+      }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    if (!this.state.active && nextState.active && this.props.position === POSITION.AUTO) {
-      const position = this.calculatePosition();
-      if (this.state.position !== position) {
-        this.setState({ position, active: false }, () => {
-          this.activateTimeoutHandle = setTimeout(() => {this.setState({active: true}); }, 20);
-        });
-        return false;
+      if (this.props.active && !nextProps.active && this.state.active) {
+        this.hide();
       }
     }
-    return true;
-  }
 
-  componentWillUpdate (nextProps, nextState) {
-    if (!this.state.active && nextState.active) {
-      events.addEventsToDocument({click: this.handleDocumentClick});
+    shouldComponentUpdate (nextProps, nextState) {
+      if (!this.state.active && nextState.active && this.props.position === POSITION.AUTO) {
+        const position = this.calculatePosition();
+        if (this.state.position !== position) {
+          this.setState({ position, active: false }, () => {
+            this.activateTimeoutHandle = setTimeout(() => {this.setState({active: true}); }, 20);
+          });
+          return false;
+        }
+      }
+      return true;
     }
-  }
 
-  componentDidUpdate (prevProps, prevState) {
-    if (prevState.active && !this.state.active) {
-      if (this.props.onHide) this.props.onHide();
-      events.removeEventsFromDocument({click: this.handleDocumentClick});
-    } else if (!prevState.active && this.state.active && this.props.onShow) {
-      this.props.onShow();
+    componentWillUpdate (nextProps, nextState) {
+      if (!this.state.active && nextState.active) {
+        events.addEventsToDocument({click: this.handleDocumentClick});
+      }
     }
-  }
 
-  componentWillUnmount () {
-    if (this.state.active) {
-      events.removeEventsFromDocument({click: this.handleDocumentClick});
+    componentDidUpdate (prevProps, prevState) {
+      if (prevState.active && !this.state.active) {
+        if (this.props.onHide) this.props.onHide();
+        events.removeEventsFromDocument({click: this.handleDocumentClick});
+      } else if (!prevState.active && this.state.active && this.props.onShow) {
+        this.props.onShow();
+      }
     }
-    clearTimeout(this.positionTimeoutHandle);
-    clearTimeout(this.activateTimeoutHandle);
-  }
 
-  handleDocumentClick = (event) => {
-    if (this.state.active && !events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
-      this.setState({active: false, rippled: false});
-    }
-  };
-
-  handleSelect = (item) => {
-    const { value, onClick } = item.props;
-    this.setState({ active: false, rippled: this.props.ripple }, () => {
-      if (onClick) onClick();
-      if (this.props.onSelect) this.props.onSelect(value);
-    });
-  };
-
-  calculatePosition () {
-    const parentNode = ReactDOM.findDOMNode(this).parentNode;
-    if (!parentNode) return;
-    const {top, left, height, width} = parentNode.getBoundingClientRect();
-    const {height: wh, width: ww} = utils.getViewport();
-    const toTop = top < ((wh / 2) - height / 2);
-    const toLeft = left < ((ww / 2) - width / 2);
-    return `${toTop ? 'top' : 'bottom'}${toLeft ? 'Left' : 'Right'}`;
-  }
-
-  getMenuStyle () {
-    const { width, height, position } = this.state;
-    if (position !== POSITION.STATIC) {
+    componentWillUnmount () {
       if (this.state.active) {
-        return { clip: `rect(0 ${width}px ${height}px 0)` };
-      } else if (position === POSITION.TOP_RIGHT) {
-        return { clip: `rect(0 ${width}px 0 ${width}px)` };
-      } else if (position === POSITION.BOTTOM_RIGHT) {
-        return { clip: `rect(${height}px ${width}px ${height}px ${width}px)` };
-      } else if (position === POSITION.BOTTOM_LEFT) {
-        return { clip: `rect(${height}px 0 ${height}px 0)` };
-      } else if (position === POSITION.TOP_LEFT) {
-        return { clip: 'rect(0 0 0 0)' };
+        events.removeEventsFromDocument({click: this.handleDocumentClick});
       }
+      clearTimeout(this.positionTimeoutHandle);
+      clearTimeout(this.activateTimeoutHandle);
+    }
+
+    handleDocumentClick = (event) => {
+      if (this.state.active && !events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
+        this.setState({active: false, rippled: false});
+      }
+    };
+
+    handleSelect = (item) => {
+      const { value, onClick } = item.props;
+      this.setState({ active: false, rippled: this.props.ripple }, () => {
+        if (onClick) onClick();
+        if (this.props.onSelect) this.props.onSelect(value);
+      });
+    };
+
+    calculatePosition () {
+      const parentNode = ReactDOM.findDOMNode(this).parentNode;
+      if (!parentNode) return;
+      const {top, left, height, width} = parentNode.getBoundingClientRect();
+      const {height: wh, width: ww} = utils.getViewport();
+      const toTop = top < ((wh / 2) - height / 2);
+      const toLeft = left < ((ww / 2) - width / 2);
+      return `${toTop ? 'top' : 'bottom'}${toLeft ? 'Left' : 'Right'}`;
+    }
+
+    getMenuStyle () {
+      const { width, height, position } = this.state;
+      if (position !== POSITION.STATIC) {
+        if (this.state.active) {
+          return { clip: `rect(0 ${width}px ${height}px 0)` };
+        } else if (position === POSITION.TOP_RIGHT) {
+          return { clip: `rect(0 ${width}px 0 ${width}px)` };
+        } else if (position === POSITION.BOTTOM_RIGHT) {
+          return { clip: `rect(${height}px ${width}px ${height}px ${width}px)` };
+        } else if (position === POSITION.BOTTOM_LEFT) {
+          return { clip: `rect(${height}px 0 ${height}px 0)` };
+        } else if (position === POSITION.TOP_LEFT) {
+          return { clip: 'rect(0 0 0 0)' };
+        }
+      }
+    }
+
+    getRootStyle () {
+      if (this.state.position !== POSITION.STATIC) {
+        return { width: this.state.width, height: this.state.height };
+      }
+    }
+
+    renderItems () {
+      return React.Children.map(this.props.children, (item) => {
+        if (!item) return item;
+        if (item.type === MenuItem) {
+          return React.cloneElement(item, {
+            ripple: item.props.ripple || this.props.ripple,
+            selected: typeof item.props.value !== 'undefined' && this.props.selectable && item.props.value === this.props.selected,
+            onClick: this.handleSelect.bind(this, item)
+          });
+        } else {
+          return React.cloneElement(item);
+        }
+      });
+    }
+
+    show () {
+      const { width, height } = this.refs.menu.getBoundingClientRect();
+      this.setState({active: true, width, height});
+    }
+
+    hide () {
+      this.setState({active: false});
+    }
+
+    render () {
+      const { theme } = this.props;
+      const outlineStyle = { width: this.state.width, height: this.state.height };
+      const className = classnames([theme.menu, theme[this.state.position]], {
+        [theme.active]: this.state.active,
+        [theme.rippled]: this.state.rippled
+      }, this.props.className);
+
+      return (
+        <div data-react-toolbox='menu' className={className} style={this.getRootStyle()}>
+          {this.props.outline ? <div className={theme.outline} style={outlineStyle}></div> : null}
+          <ul ref='menu' className={theme.menuInner} style={this.getMenuStyle()}>
+            {this.renderItems()}
+          </ul>
+        </div>
+      );
     }
   }
 
-  getRootStyle () {
-    if (this.state.position !== POSITION.STATIC) {
-      return { width: this.state.width, height: this.state.height };
-    }
-  }
+  return Menu;
+};
 
-  renderItems () {
-    return React.Children.map(this.props.children, (item) => {
-      if (!item) return item;
-      if (item.type === MenuItem) {
-        return React.cloneElement(item, {
-          ripple: item.props.ripple || this.props.ripple,
-          selected: typeof item.props.value !== 'undefined' && this.props.selectable && item.props.value === this.props.selected,
-          onClick: this.handleSelect.bind(this, item)
-        });
-      } else {
-        return React.cloneElement(item);
-      }
-    });
-  }
-
-  show () {
-    const { width, height } = this.refs.menu.getBoundingClientRect();
-    this.setState({active: true, width, height});
-  }
-
-  hide () {
-    this.setState({active: false});
-  }
-
-  render () {
-    const { theme } = this.props;
-    const outlineStyle = { width: this.state.width, height: this.state.height };
-    const className = classnames([theme.menu, theme[this.state.position]], {
-      [theme.active]: this.state.active,
-      [theme.rippled]: this.state.rippled
-    }, this.props.className);
-
-    return (
-      <div data-react-toolbox='menu' className={className} style={this.getRootStyle()}>
-        {this.props.outline ? <div className={theme.outline} style={outlineStyle}></div> : null}
-        <ul ref='menu' className={theme.menuInner} style={this.getMenuStyle()}>
-          {this.renderItems()}
-        </ul>
-      </div>
-    );
-  }
-}
-
-export default themr('ToolboxMenu')(Menu);
+const Menu = factory(InjectMenuItem);
+export default themr(MENU)(Menu);
+export { factory as menuFactory };
+export { Menu };
