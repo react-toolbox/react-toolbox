@@ -5,7 +5,6 @@
 <!-- example -->
 ```jsx
 import Checkbox from 'react-toolbox/lib/checkbox';
-import theme from 'react-toolbox/lib/checkbox/theme';
 
 class TestCheckbox extends React.Component {
   state = { check1: true, check2: false };
@@ -21,25 +20,24 @@ class TestCheckbox extends React.Component {
           checked={this.state.check1}
           label="Checked option"
           onChange={this.handleChange.bind(this, 'check1')}
-          theme={theme}
         />
         <Checkbox
           checked={this.state.check2}
           label="Unchecked option"
           onChange={this.handleChange.bind(this, 'check2')}
-          theme={theme}
         />
         <Checkbox
           checked
           disabled
           label="Disabled checkbox"
-          theme={theme}
         />
       </div>
     );
   }
 }
 ```
+
+If you want to provide a theme via context, the component key is `RTCheckbox`.
 
 ## Properties
 
@@ -54,9 +52,7 @@ class TestCheckbox extends React.Component {
 | `onChange`      | `Function`      |                 | Callback called when the checkbox value is changed.|
 | `onFocus`       | `Function`      |                 | Callback called when the checkbox is focused |
 
-## Theming
-
-You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxCheckbox`, it should implement the following interface:
+## Theme
 
 | Name     | Description|
 |:---------|:-----------|
