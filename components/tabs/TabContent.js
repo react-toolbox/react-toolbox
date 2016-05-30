@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import { TABS } from '../identifiers.js';
 
-class TabContent extends React.Component {
+class TabContent extends Component {
   static propTypes = {
-    active: React.PropTypes.bool,
-    children: React.PropTypes.node,
-    className: React.PropTypes.string,
-    tabIndex: React.PropTypes.number,
-    theme: React.PropTypes.shape({
-      active: React.PropTypes.string,
-      tab: React.PropTypes.string
+    active: PropTypes.bool,
+    children: PropTypes.node,
+    className: PropTypes.string,
+    tabIndex: PropTypes.number,
+    theme: PropTypes.shape({
+      active: PropTypes.string,
+      tab: PropTypes.string
     })
   };
 
@@ -32,4 +33,5 @@ class TabContent extends React.Component {
   }
 }
 
-export default themr('ToolboxTabs')(TabContent);
+export default themr(TABS)(TabContent);
+export { TabContent };

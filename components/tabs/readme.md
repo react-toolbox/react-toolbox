@@ -2,8 +2,6 @@
 
 [Tabs](https://www.google.com/design/spec/components/tabs.html) make it easy to explore and switch between different views or functional aspects of an app or to browse categorized data sets.  Tabs are composed with their content, but only the active tab's content is rendered.  In the future, we may add the ability to render headers only, with event listeners.
 
-This component and subcomponents are themeable under the key `ToolboxTabs`. You can check the configuration variables for SASS at Github.
-
 <!-- example -->
 ```jsx
 import {Tab, Tabs} from 'react-toolbox';
@@ -34,6 +32,8 @@ class TabsTest extends React.Component {
   }
 }
 ```
+
+If you want to provide a theme via context, the component key is `RTTabs`.
 
 ## Tabs
 
@@ -75,7 +75,7 @@ Represent a single tab element and it should include some properties to describe
 | `onActive`        | `Function`      |                 | Callback function that is fired when the tab is activated. |
 | `onClick`         | `Function`      |                 | Callback function that is fired when the tab is clicked. |
 
-### Theming
+### Theme
 
 | Name     | Description|
 |:---------|:-----------|
