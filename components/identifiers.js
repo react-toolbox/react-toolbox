@@ -17,3 +17,6 @@ export const PROGRESS_BAR = 'RTProgressBar';
 export const RADIO = 'RTRadio';
 export const RIPPLE = 'RTRipple';
 export const SLIDER = 'RTSlider';
+export const SNACKBAR = 'RTSnackbar';
+export const SWITCH = 'RTSwitch';
+export const TABLE = 'RTTable';

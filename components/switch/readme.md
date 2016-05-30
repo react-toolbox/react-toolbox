@@ -2,12 +2,9 @@
 
 On/off switches toggle the state of a single settings option. The option that the switch controls, as well as the state it’s in, should be made clear from the corresponding inline label. Switches take on the same visual properties of the radio button.
 
-The theming key for this component is `ToolboxSwitch`.
-
 <!-- example -->
 ```jsx
 import Switch from 'react-toolbox/lib/switch';
-// Remember to provide a theme using ThemeProvider
 
 class SwitchTest extends React.Component {
   state = {
@@ -45,6 +42,8 @@ class SwitchTest extends React.Component {
 }
 ```
 
+This component can be styled by context providing a theme with the key `RTSwitch` through the theme provider.
+
 ## Properties
 
 | Name              | Type          | Default       | Description|
@@ -58,7 +57,7 @@ class SwitchTest extends React.Component {
 | `onChange`     | `Function`       |               | Callback function that is fired when the component's value changes.|
 | `onFocus`      | `Function`       |               | Callback function that is fired when the switch is focused.|
 
-## Theming
+## Theme
 
 | Name     | Description|
 |:---------|:-----------|

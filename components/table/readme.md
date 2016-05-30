@@ -2,8 +2,6 @@
 
 The Table component is an enhanced version of the standard HTML `<table>`. A data-table consists of rows and columns of well-formatted data, presented with appropriate user interaction capabilities. This component uses a solid typed model, helping you to create formatted formated cells. These cells can be editable if you subscribe to `onChange` method who dispatch then new source with each change.
 
-This component is themeable under the key `ToolboxTable`. You can check the configuration variables directly in Github.
-
 <!-- example -->
 ```jsx
 import Table from 'react-toolbox/lib/table';
@@ -51,6 +49,8 @@ class TableTest extends React.Component {
 }
 ```
 
+This component can be styled by context providing a theme with the key `RTTable` through the theme provider.
+
 ## Properties
 
 | Name              | Type            | Default         | Description|
@@ -65,7 +65,7 @@ class TableTest extends React.Component {
 | `selected`        | `Array`         |                 | Array of indexes of the items in the source that should appear as selected.|
 | `source`          | `Array`         |                 | Array of objects representing each item to show.|
 
-## Theming
+## Theme
 
 | Name     | Description|
 |:---------|:-----------|

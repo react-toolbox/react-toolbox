@@ -2,8 +2,6 @@
 
 Snackbars provide lightweight feedback about an operation by showing a brief message at the bottom of the screen. Snackbars can contain an action.
 
-This component is themeable under the key `ToolboxSnackbar`. You can check the configuration variables directly in Github.
-
 <!-- example -->
 ```jsx
 import { Button, Snackbar } from 'react-toolbox';
@@ -35,6 +33,8 @@ class SnackbarTest extends React.Component {
 }
 ```
 
+This component can be styled by context providing a theme with the key `RTSnackbar` through the theme provider.
+
 ## Properties
 
 | Name          | Type                    | Default       | Description|
@@ -49,7 +49,7 @@ class SnackbarTest extends React.Component {
 | `timeout`     | `Number`                |               | Amount of time in milliseconds after the Snackbar will be automatically hidden.|
 | `type`        | `String`                |               | Indicates the action type. Can be `accept`, `warning` or `cancel`|
 
-## Theming
+## Theme
 
 | Name     | Description|
 |:---------|:-----------|

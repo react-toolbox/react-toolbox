@@ -1,17 +1,19 @@
 import React, { PropTypes } from 'react';
-import Ripple from '../ripple';
 
-const Thumb = ({onMouseDown, theme, ...other}) => (
-  <span role='thumb' className={theme.thumb} onMouseDown={onMouseDown} {...other} />
-);
+const factory = (ripple) => {
+  const Thumb = ({onMouseDown, theme, ...other}) => (
+    <span role='thumb' className={theme.thumb} onMouseDown={onMouseDown} {...other} />
+  );
 
-Thumb.propTypes = {
-  children: PropTypes.any,
-  theme: PropTypes.shape({
-    ripple: PropTypes.string,
-    thumb: PropTypes.string
-  })
+  Thumb.propTypes = {
+    children: PropTypes.any,
+    theme: PropTypes.shape({
+      ripple: PropTypes.string,
+      thumb: PropTypes.string
+    })
+  };
+
+  return ripple(Thumb);
 };
 
-export default Ripple({spread: 2.6, centered: true})(Thumb);
-export {Thumb as RawThumb};
+export default factory;
