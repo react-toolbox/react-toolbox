@@ -2,14 +2,11 @@
 
 A Tooltip is useful to show information on hover in any kind of component. We have a component that can be used as a **decorator** for any kind of component. You just have to take into account that the overflow in the component should be visible.
 
-Tooltips are themeable under the key `ToolboxTooltip`. Check the configuration at github.
-
 <!-- example -->
 ```jsx
 import Button from 'react-toolbox/lib/button';
 import Tooltip from 'react-toolbox/lib/tooltip';
 import Link from 'react-toolbox/lib/link';
-// Remember to provide a default theme using the provider
 
 const TooltipButton = Tooltip(Button);
 const TooltipInput = Tooltip(Input);
@@ -24,6 +21,8 @@ const TooltipTest = () => (
   </div>
 );
 ```
+
+This component can be styled by context providing a theme with the key `RTTooltip` through the theme provider.
 
 ## Properties
 

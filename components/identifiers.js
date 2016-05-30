@@ -20,3 +20,4 @@ export const SLIDER = 'RTSlider';
 export const SNACKBAR = 'RTSnackbar';
 export const SWITCH = 'RTSwitch';
 export const TABLE = 'RTTable';
+export const TOOLTIP = 'RTTooltip';
