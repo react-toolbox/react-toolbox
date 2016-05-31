@@ -1,7 +1,6 @@
 /* global VERSION */
+import '../components/commons.scss';
 import React from 'react';
-import { ThemeProvider } from 'react-css-themr';
-import theme from './theme';
 import AppBar from '../components/app_bar';
 import Autocomplete from './components/autocomplete';
 import Avatar from './components/avatar';
@@ -30,43 +29,41 @@ import Tooltip from './components/tooltip';
 import style from './style';
 
 const Root = () => (
-  <ThemeProvider theme={theme}>
-    <div className={style.app}>
-      <AppBar className={style.appbar} fixed flat>
-        <h1>React Toolbox <small>Spec {VERSION}</small></h1>
-        <ButtonToolbox
-          accent
-          className={style.github}
-          icon='web'
-          floating
-          onClick={() => {window.href = 'http://react-toolbox';}}
-        />
-      </AppBar>
-      <Autocomplete />
-      <Avatar />
-      <Button />
-      <Card />
-      <Checkbox />
-      <Chip />
-      <Dialog />
-      <Drawer />
-      <Dropdown />
-      <IconMenu />
-      <Input />
-      <Layout />
-      <List />
-      <Menu />
-      <Pickers />
-      <Progress />
-      <Radio />
-      <Slider />
-      <Snackbar />
-      <Switch />
-      <Table />
-      <Tabs />
-      <Tooltip />
-    </div>
-  </ThemeProvider>
+  <div className={style.app}>
+    <AppBar className={style.appbar} fixed flat>
+      <h1>React Toolbox <small>Spec {VERSION}</small></h1>
+      <ButtonToolbox
+        accent
+        className={style.github}
+        icon='web'
+        floating
+        onClick={() => {window.href = 'http://react-toolbox';}}
+      />
+    </AppBar>
+    <Autocomplete />
+    <Avatar />
+    <Button />
+    <Card />
+    <Checkbox />
+    <Chip />
+    <Dialog />
+    <Drawer />
+    <Dropdown />
+    <IconMenu />
+    <Input />
+    <Layout />
+    <List />
+    <Menu />
+    <Pickers />
+    <Progress />
+    <Radio />
+    <Slider />
+    <Snackbar />
+    <Switch />
+    <Table />
+    <Tabs />
+    <Tooltip />
+  </div>
 );
 
 export default Root;

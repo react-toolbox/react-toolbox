@@ -1,20 +1,20 @@
-import React from 'react';
-import utils from '../utils/utils';
-import Face from './ClockFace';
-import Hand from './ClockHand';
+import React, { Component, PropTypes } from 'react';
+import utils from '../utils/utils.js';
+import Hand from './ClockHand.js';
+import Face from './ClockFace.js';
 
 const minutes = utils.range(0, 60, 5);
 const step = 360 / 60;
 
-class Minutes extends React.Component {
+class Minutes extends Component {
   static propTypes = {
-    center: React.PropTypes.object,
-    onChange: React.PropTypes.func,
-    radius: React.PropTypes.number,
-    selected: React.PropTypes.number,
-    spacing: React.PropTypes.number,
-    theme: React.PropTypes.shape({
-      small: React.PropTypes.string.isRequired
+    center: PropTypes.object,
+    onChange: PropTypes.func,
+    radius: PropTypes.number,
+    selected: PropTypes.number,
+    spacing: PropTypes.number,
+    theme: PropTypes.shape({
+      small: PropTypes.string.isRequired
     })
   };
 

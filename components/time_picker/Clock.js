@@ -1,23 +1,23 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import CssTransitionGroup from 'react-addons-css-transition-group';
 import { ZoomIn, ZoomOut } from '../animations';
-import time from '../utils/time';
-import Hours from './ClockHours';
-import Minutes from './ClockMinutes';
+import time from '../utils/time.js';
+import Hours from './ClockHours.js';
+import Minutes from './ClockMinutes.js';
 
-class Clock extends React.Component {
+class Clock extends Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    display: React.PropTypes.oneOf(['hours', 'minutes']),
-    format: React.PropTypes.oneOf(['24hr', 'ampm']),
-    onChange: React.PropTypes.func,
-    onHandMoved: React.PropTypes.func,
-    theme: React.PropTypes.shape({
-      clock: React.PropTypes.string.isRequired,
-      clockWrapper: React.PropTypes.string.isRequired,
-      placeholder: React.PropTypes.string.isRequired
+    className: PropTypes.string,
+    display: PropTypes.oneOf(['hours', 'minutes']),
+    format: PropTypes.oneOf(['24hr', 'ampm']),
+    onChange: PropTypes.func,
+    onHandMoved: PropTypes.func,
+    theme: PropTypes.shape({
+      clock: PropTypes.string.isRequired,
+      clockWrapper: PropTypes.string.isRequired,
+      placeholder: PropTypes.string.isRequired
     }),
-    time: React.PropTypes.object
+    time: PropTypes.object
   };
 
   static defaultProps = {

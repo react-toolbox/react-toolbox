@@ -1,20 +1,20 @@
-import React from 'react';
-import events from '../utils/events';
-import prefixer from '../utils/prefixer';
-import utils from '../utils/utils';
+import React, { Component, PropTypes } from 'react';
+import events from '../utils/events.js';
+import prefixer from '../utils/prefixer.js';
+import utils from '../utils/utils.js';
 
-class Hand extends React.Component {
+class Hand extends Component {
   static propTypes = {
-    angle: React.PropTypes.number,
-    className: React.PropTypes.string,
-    length: React.PropTypes.number,
-    onMove: React.PropTypes.func,
-    onMoved: React.PropTypes.func,
-    origin: React.PropTypes.object,
-    step: React.PropTypes.number,
-    theme: React.PropTypes.shape({
-      hand: React.PropTypes.string.isRequired,
-      knob: React.PropTypes.string.isRequired
+    angle: PropTypes.number,
+    className: PropTypes.string,
+    length: PropTypes.number,
+    onMove: PropTypes.func,
+    onMoved: PropTypes.func,
+    origin: PropTypes.object,
+    step: PropTypes.number,
+    theme: PropTypes.shape({
+      hand: PropTypes.string.isRequired,
+      knob: PropTypes.string.isRequired
     })
   };
 

@@ -5,7 +5,6 @@ A [dialog picker](https://www.google.com/design/spec/components/pickers.html#pic
 <!-- example -->
 ```jsx
 import TimePicker from 'react-toolbox/lib/time_picker';
-import theme from 'react-toolbox/lib/time_picker/theme'
 
 let time = new Date();
 time.setHours(17);
@@ -24,12 +23,13 @@ class TimePickerTest extends React.Component {
         label='Finishing time'
         onChange={this.handleChange}
         value={this.state.time}
-        theme={theme}
       />
     );
   }
 }
 ```
+
+If you want to provide a theme via context, the component key is `RTTimePicker`.
 
 ## Properties
 
@@ -43,9 +43,7 @@ class TimePickerTest extends React.Component {
 | `onChange`      | `Function`  |             | Callback called when the picker value is changed.|
 | `value`         | `Date`      |             | Datetime object with currrently selected time. |
 
-## Theming
-
-You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxTimePicker`, it should implement the following interface:
+## Theme
 
 | Name     | Description|
 |:---------|:-----------|

@@ -22,3 +22,4 @@ export const SWITCH = 'RTSwitch';
 export const TABLE = 'RTTable';
 export const TABS = 'RTTabs';
 export const TOOLTIP = 'RTTooltip';
+export const TIMEPICKER = 'RTTimePicker';

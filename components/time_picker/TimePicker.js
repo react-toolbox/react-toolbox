@@ -1,74 +1,84 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import events from '../utils/events';
-import time from '../utils/time';
-import Input from '../input';
-import TimePickerDialog from './TimePickerDialog';
+import { TIME_PICKER } from '../identifiers.js';
+import events from '../utils/events.js';
+import time from '../utils/time.js';
+import InjectDialog from '../dialog/Dialog.js';
+import InjectInput from '../input/Input.js';
+import timePickerDialogFactory from './TimePickerDialog.js';
 
-class TimePicker extends React.Component {
-  static propTypes = {
-    className: React.PropTypes.string,
-    error: React.PropTypes.string,
-    format: React.PropTypes.oneOf(['24hr', 'ampm']),
-    inputClassName: React.PropTypes.string,
-    label: React.PropTypes.string,
-    onChange: React.PropTypes.func,
-    theme: React.PropTypes.shape({
-      input: React.PropTypes.string.isRequired
-    }),
-    value: React.PropTypes.object
-  };
+const factory = (TimePickerDialog, Input) => {
+  class TimePicker extends Component {
+    static propTypes = {
+      className: PropTypes.string,
+      error: PropTypes.string,
+      format: PropTypes.oneOf(['24hr', 'ampm']),
+      inputClassName: PropTypes.string,
+      label: PropTypes.string,
+      onChange: PropTypes.func,
+      theme: PropTypes.shape({
+        input: PropTypes.string.isRequired
+      }),
+      value: PropTypes.object
+    };
 
-  static defaultProps = {
-    className: '',
-    format: '24hr'
-  };
+    static defaultProps = {
+      className: '',
+      format: '24hr'
+    };
 
-  state = {
-    active: false
-  };
+    state = {
+      active: false
+    };
 
-  handleDismiss = () => {
-    this.setState({active: false});
-  };
+    handleDismiss = () => {
+      this.setState({active: false});
+    };
 
-  handleInputMouseDown = (event) => {
-    events.pauseEvent(event);
-    this.setState({active: true});
-  };
+    handleInputMouseDown = (event) => {
+      events.pauseEvent(event);
+      this.setState({active: true});
+    };
 
-  handleSelect = (value, event) => {
-    if (this.props.onChange) this.props.onChange(value, event);
-    this.setState({active: false});
-  };
+    handleSelect = (value, event) => {
+      if (this.props.onChange) this.props.onChange(value, event);
+      this.setState({active: false});
+    };
 
-  render () {
-    const { value, format, inputClassName, theme } = this.props;
-    const formattedTime = value ? time.formatTime(value, format) : '';
-    return (
-      <div data-react-toolbox='time-picker'>
-        <Input
-          className={classnames(theme.input, {[inputClassName]: inputClassName })}
-          error={this.props.error}
-          label={this.props.label}
-          onMouseDown={this.handleInputMouseDown}
-          readOnly
-          type='text'
-          value={formattedTime}
-        />
-        <TimePickerDialog
-          active={this.state.active}
-          className={this.props.className}
-          format={format}
-          onDismiss={this.handleDismiss}
-          onSelect={this.handleSelect}
-          theme={this.props.theme}
-          value={this.props.value}
-        />
-      </div>
-    );
+    render () {
+      const { value, format, inputClassName, theme } = this.props;
+      const formattedTime = value ? time.formatTime(value, format) : '';
+      return (
+        <div data-react-toolbox='time-picker'>
+          <Input
+            className={classnames(theme.input, {[inputClassName]: inputClassName })}
+            error={this.props.error}
+            label={this.props.label}
+            onMouseDown={this.handleInputMouseDown}
+            readOnly
+            type='text'
+            value={formattedTime}
+          />
+          <TimePickerDialog
+            active={this.state.active}
+            className={this.props.className}
+            format={format}
+            onDismiss={this.handleDismiss}
+            onSelect={this.handleSelect}
+            theme={this.props.theme}
+            value={this.props.value}
+          />
+        </div>
+      );
+    }
   }
-}
 
-export default themr('ToolboxTimePicker')(TimePicker);
+  return TimePicker;
+};
+
+const TimePickerDialog = timePickerDialogFactory(InjectDialog);
+const TimePicker = factory(TimePickerDialog, InjectInput);
+export default themr(TIME_PICKER)(TimePicker);
+export { factory as timePickerFactory };
+export { TimePicker };

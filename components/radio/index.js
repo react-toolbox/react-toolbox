@@ -10,5 +10,6 @@ const ThemedRadio = radioFactory(themedRippleFactory({ centered: true, spread: 2
 const ThemedRadioButton = themr(RADIO, theme)(radioButtonFactory(ThemedRadio));
 const ThemedRadioGroup = themr(RADIO, theme)(radioGroupFactory(ThemedRadioButton));
 
+export default ThemedRadioButton;
 export { ThemedRadioButton as RadioButton };
 export { ThemedRadioGroup as RadioGroup };

@@ -1,18 +1,18 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 
-class Face extends React.Component {
+class Face extends Component {
   static propTypes = {
-    active: React.PropTypes.number,
-    numbers: React.PropTypes.array,
-    radius: React.PropTypes.number,
-    spacing: React.PropTypes.number,
-    theme: React.PropTypes.shape({
-      active: React.PropTypes.string.isRequired,
-      face: React.PropTypes.string.isRequired,
-      number: React.PropTypes.string.isRequired
+    active: PropTypes.number,
+    numbers: PropTypes.array,
+    radius: PropTypes.number,
+    spacing: PropTypes.number,
+    theme: PropTypes.shape({
+      active: PropTypes.string.isRequired,
+      face: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired
     }),
-    twoDigits: React.PropTypes.bool
+    twoDigits: PropTypes.bool
   };
 
   static defaultProps = {

@@ -1,23 +1,23 @@
-import React from 'react';
-import utils from '../utils/utils';
-import Face from './ClockFace';
-import Hand from './ClockHand';
+import React, { Component, PropTypes } from 'react';
+import utils from '../utils/utils.js';
+import Hand from './ClockHand.js';
+import Face from './ClockFace.js';
 
 const outerNumbers = [0, ...utils.range(13, 24)];
 const innerNumbers = [12, ...utils.range(1, 12)];
 const innerSpacing = 1.7;
 const step = 360 / 12;
 
-class Hours extends React.Component {
+class Hours extends Component {
   static propTypes = {
-    center: React.PropTypes.object,
-    format: React.PropTypes.oneOf(['24hr', 'ampm']),
-    onChange: React.PropTypes.func,
-    onHandMoved: React.PropTypes.func,
-    radius: React.PropTypes.number,
-    selected: React.PropTypes.number,
-    spacing: React.PropTypes.number,
-    theme: React.PropTypes.object
+    center: PropTypes.object,
+    format: PropTypes.oneOf(['24hr', 'ampm']),
+    onChange: PropTypes.func,
+    onHandMoved: PropTypes.func,
+    radius: PropTypes.number,
+    selected: PropTypes.number,
+    spacing: PropTypes.number,
+    theme: PropTypes.object
   };
 
   state = {
