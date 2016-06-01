@@ -191,8 +191,14 @@ class Slider extends React.Component {
   }
 
   trimValue (value) {
-    if (value < this.props.min) return this.props.min;
-    if (value > this.props.max) return this.props.max;
+    if (this.props.min < this.props.max) {
+      if (value < this.props.min) return this.props.min;
+      if (value > this.props.max) return this.props.max;
+    }
+    else if (this.props.min > this.props.max) {
+      if (value > this.props.min) return this.props.min;
+      if (value < this.props.max) return this.props.max;
+    }
     return utils.round(value, this.stepDecimals());
   }
 
