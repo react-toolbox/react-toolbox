@@ -4,7 +4,7 @@
 %button {
   @include typo-button();
   position: relative;
-  display: inline-block;
+  display: inline-flex;
   height: $button-height;
   flex-direction: row;
   align-content: center;
