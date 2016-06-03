@@ -1,0 +1,17 @@
+$chip-height: 3.2 * $unit !default;
+$chip-padding: 1.2 * $unit !default;
+$chip-margin-right: 0.25 * $unit !default;
+$chip-background: $palette-grey-200 !default;
+
+$chip-icon-font-size: 2 * $unit !default;
+$chip-icon-margin-right: 0.8 * $unit !default;
+
+$chip-color: $color-text-secondary !default;
+$chip-font-size: $font-size-small !default;
+
+$chip-remove-size: 2.4 * $unit !default;
+$chip-remove-margin: 0.4 * $unit !default;
+$chip-remove-stroke-width: 0.4 * $unit !default;
+$chip-remove-background: $palette-grey-400 !default;
+$chip-remove-background-hover: $palette-grey-500 !default;
+$chip-remove-color: $color-white !default;
