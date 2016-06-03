@@ -1,0 +1,29 @@
+@mixin open() {
+  transition-delay: $animation-delay;
+  & > .scrim {
+    & > .drawerContent {
+      pointer-events: all;
+      transition-delay: $animation-delay;
+      transform: translateX(0);
+    }
+  }
+}
+
+@mixin permanent() {
+  @include open();
+
+  width: $navigation-drawer-desktop-width;
+  max-width: $navigation-drawer-desktop-width;
+
+  &.wide {
+    width: $navigation-drawer-max-desktop-width;
+    max-width: $navigation-drawer-max-desktop-width;
+  }
+
+  &.active {
+    & > .scrim {
+      width: 0;
+      background-color: rgba($drawer-overlay-color, 0);
+    }
+  }
+}

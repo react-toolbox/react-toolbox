@@ -1,0 +1,18 @@
+$drawer-background-color: $palette-grey-50 !default;
+$drawer-border-color: $palette-grey-300 !default;
+$drawer-text-color: $palette-grey-800 !default;
+
+$drawer-overlay-color: $color-black !default;
+$drawer-overlay-opacity: .6 !default;
+
+// from: https://www.google.com/design/spec/layout/structure.html#structure-side-nav
+$navigation-drawer-desktop-width: 5 * $standard-increment-desktop !default;
+$navigation-drawer-max-desktop-width: 40 * $unit !default;
+
+// Mobile:
+// Width = Screen width − 56 dp
+// Maximum width: 320dp
+$navigation-drawer-mobile-width: 5 * $standard-increment-mobile !default;
+
+// sass doesn't like use of variable here: calc(100% - $standard-increment-mobile);
+$navigation-drawer-max-mobile-width: calc(100% - 5.6rem) !default;

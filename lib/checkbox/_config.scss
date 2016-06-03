@@ -1,0 +1,12 @@
+$checkbox-color: $color-primary !default;
+$checkbox-disabled-color: rgba($color-black, 0.26) !default;
+$checkbox-field-margin-bottom: 1.5 * $unit !default;
+$checkbox-focus-checked-color: rgba($color-primary, 0.26) !default;
+$checkbox-ripple-duration: 650ms !default;
+$checkbox-size: 1.8 * $unit !default;
+$checkbox-focus-color: rgba($color-black, 0.1) !default;
+$checkbox-focus-size: $checkbox-size * 2.3 !default;
+$checkbox-text-color: $color-black !default;
+$checkbox-text-font-size: $font-size-small !default;
+$checkbox-total-height: 1.8 * $unit !default;
+$checkbox-transition-duration: .2s !default;
