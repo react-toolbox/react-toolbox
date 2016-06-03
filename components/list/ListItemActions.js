@@ -19,8 +19,8 @@ const factory = (ListItemAction) => {
   ListItemActions.propTypes = {
     children: PropTypes.any,
     theme: PropTypes.shape({
-      left: PropTypes.string.isRequired,
-      right: PropTypes.string.isRequired
+      left: PropTypes.string,
+      right: PropTypes.string
     }),
     type: PropTypes.oneOf(['left', 'right'])
   };

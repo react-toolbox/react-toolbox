@@ -12,7 +12,7 @@ const factory = (ListItem) => {
       ripple: PropTypes.bool,
       selectable: PropTypes.bool,
       theme: PropTypes.shape({
-        list: PropTypes.string.isRequired
+        list: PropTypes.string
       })
     };
 

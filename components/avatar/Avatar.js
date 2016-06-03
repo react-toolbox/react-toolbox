@@ -18,10 +18,10 @@ const factory = (FontIcon) => {
     className: PropTypes.string,
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
     image: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-    theme: React.PropTypes.shape({
-      avatar: React.PropTypes.string.isRequired,
-      image: React.PropTypes.string.isRequired,
-      letter: React.PropTypes.string.isRequired
+    theme: PropTypes.shape({
+      avatar: PropTypes.string,
+      image: PropTypes.string,
+      letter: PropTypes.string
     }),
     title: PropTypes.string
   };

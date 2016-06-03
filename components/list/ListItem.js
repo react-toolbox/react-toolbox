@@ -14,7 +14,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       onClick: PropTypes.func,
       ripple: PropTypes.bool,
       theme: PropTypes.shape({
-        listItem: PropTypes.string.isRequired
+        listItem: PropTypes.string
       }),
       to: PropTypes.string
     };

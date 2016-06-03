@@ -58,9 +58,9 @@ const factory = (Avatar, ListItemContent, ListItemActions) => {
     ]),
     selectable: PropTypes.bool,
     theme: PropTypes.shape({
-      disabled: PropTypes.string.isRequired,
-      item: PropTypes.string.isRequired,
-      selectable: PropTypes.string.isRequired
+      disabled: PropTypes.string,
+      item: PropTypes.string,
+      selectable: PropTypes.string
     }),
     to: PropTypes.string
   };

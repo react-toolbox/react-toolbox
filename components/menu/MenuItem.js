@@ -8,7 +8,7 @@ import rippleFactory from '../ripple/Ripple.js';
 const factory = (ripple) => {
   class MenuItem extends Component {
     static propTypes = {
-      caption: PropTypes.string.isRequired,
+      caption: PropTypes.string,
       children: PropTypes.any,
       className: PropTypes.string,
       disabled: PropTypes.bool,
@@ -20,12 +20,12 @@ const factory = (ripple) => {
       selected: PropTypes.bool,
       shortcut: PropTypes.string,
       theme: PropTypes.shape({
-        caption: PropTypes.string.isRequired,
-        disabled: PropTypes.string.isRequired,
-        icon: PropTypes.string.isRequired,
-        menuItem: PropTypes.string.isRequired,
-        selected: PropTypes.string.isRequired,
-        shortcut: PropTypes.string.isRequired
+        caption: PropTypes.string,
+        disabled: PropTypes.string,
+        icon: PropTypes.string,
+        menuItem: PropTypes.string,
+        selected: PropTypes.string,
+        shortcut: PropTypes.string
       })
     };
 

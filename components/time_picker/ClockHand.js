@@ -13,8 +13,8 @@ class Hand extends Component {
     origin: PropTypes.object,
     step: PropTypes.number,
     theme: PropTypes.shape({
-      hand: PropTypes.string.isRequired,
-      knob: PropTypes.string.isRequired
+      hand: PropTypes.string,
+      knob: PropTypes.string
     })
   };
 

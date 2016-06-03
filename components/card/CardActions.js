@@ -12,8 +12,8 @@ const CardActions = ({ children, className, theme, ...other }) => (
 CardActions.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
-  theme: React.PropTypes.shape({
-    cardActions: React.PropTypes.string.isRequired
+  theme: PropTypes.shape({
+    cardActions: PropTypes.string
   })
 };
 

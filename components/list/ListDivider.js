@@ -9,8 +9,8 @@ const ListDivider = ({inset, theme}) => (
 ListDivider.propTypes = {
   inset: PropTypes.bool,
   theme: PropTypes.shape({
-    divider: PropTypes.string.isRequired,
-    inset: PropTypes.string.isRequired
+    divider: PropTypes.string,
+    inset: PropTypes.string
   })
 };
 

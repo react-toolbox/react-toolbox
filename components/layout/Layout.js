@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
 import { LAYOUT } from '../identifiers.js';
@@ -45,9 +45,9 @@ Layout.propTypes = {
       );
     }
   },
-  className: React.PropTypes.string,
-  theme: React.PropTypes.shape({
-    layout: React.PropTypes.string.isRequired
+  className: PropTypes.string,
+  theme: PropTypes.shape({
+    layout: PropTypes.string
   })
 };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { LAYOUT } from '../identifiers.js';
@@ -16,12 +16,12 @@ const Panel = ({ children, className, scrollY, theme }) => {
 };
 
 Panel.propTypes = {
-  children: React.PropTypes.any,
-  className: React.PropTypes.string,
-  scrollY: React.PropTypes.bool,
-  theme: React.PropTypes.shape({
-    panel: React.PropTypes.string.isRequired,
-    scrollY: React.PropTypes.string.isRequired
+  children: PropTypes.any,
+  className: PropTypes.string,
+  scrollY: PropTypes.bool,
+  theme: PropTypes.shape({
+    panel: PropTypes.string,
+    scrollY: PropTypes.string
   })
 };
 

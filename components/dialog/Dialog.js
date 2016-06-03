@@ -53,12 +53,12 @@ const factory = (Overlay, Button) => {
     onOverlayMouseMove: PropTypes.func,
     onOverlayMouseUp: PropTypes.func,
     theme: PropTypes.shape({
-      active: PropTypes.string.isRequired,
-      body: PropTypes.string.isRequired,
-      button: PropTypes.string.isRequired,
-      dialog: PropTypes.string.isRequired,
-      navigation: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired
+      active: PropTypes.string,
+      body: PropTypes.string,
+      button: PropTypes.string,
+      dialog: PropTypes.string,
+      navigation: PropTypes.string,
+      title: PropTypes.string
     }),
     title: PropTypes.string,
     type: PropTypes.string

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { LAYOUT } from '../identifiers.js';
@@ -22,17 +22,17 @@ const Sidebar = ({ children, className, pinned, scrollY, theme, width }) => {
 };
 
 Sidebar.propTypes = {
-  children: React.PropTypes.any,
-  className: React.PropTypes.string,
-  pinned: React.PropTypes.bool,
-  scrollY: React.PropTypes.bool,
-  theme: React.PropTypes.shape({
-    pinned: React.PropTypes.string.isRequired,
-    scrollY: React.PropTypes.string.isRequired,
-    sidebar: React.PropTypes.string.isRequired,
-    sidebarContent: React.PropTypes.string.isRequired
+  children: PropTypes.any,
+  className: PropTypes.string,
+  pinned: PropTypes.bool,
+  scrollY: PropTypes.bool,
+  theme: PropTypes.shape({
+    pinned: PropTypes.string,
+    scrollY: PropTypes.string,
+    sidebar: PropTypes.string,
+    sidebarContent: PropTypes.string
   }),
-  width: React.PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 25, 33, 50, 66, 75, 100])
+  width: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 25, 33, 50, 66, 75, 100])
 };
 
 Sidebar.defaultProps = {

@@ -31,10 +31,10 @@ const factory = (Button, Link) => {
     className: PropTypes.string,
     routes: PropTypes.array,
     theme: PropTypes.shape({
-      button: PropTypes.string.isRequired,
-      horizontal: PropTypes.string.isRequired,
-      link: PropTypes.string.isRequired,
-      vertical: PropTypes.string.isRequired
+      button: PropTypes.string,
+      horizontal: PropTypes.string,
+      link: PropTypes.string,
+      vertical: PropTypes.string
     }),
     type: PropTypes.oneOf(['vertical', 'horizontal'])
   };

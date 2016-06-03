@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
@@ -16,30 +16,30 @@ const POSITION = {
 };
 
 const factory = (MenuItem) => {
-  class Menu extends React.Component {
+  class Menu extends Component {
     static propTypes = {
-      active: React.PropTypes.bool,
-      children: React.PropTypes.node,
-      className: React.PropTypes.string,
-      onHide: React.PropTypes.func,
-      onSelect: React.PropTypes.func,
-      onShow: React.PropTypes.func,
-      outline: React.PropTypes.bool,
-      position: React.PropTypes.string,
-      ripple: React.PropTypes.bool,
-      selectable: React.PropTypes.bool,
-      selected: React.PropTypes.any,
-      theme: React.PropTypes.shape({
-        active: React.PropTypes.string.isRequired,
-        bottomLeft: React.PropTypes.string.isRequired,
-        bottomRight: React.PropTypes.string.isRequired,
-        menu: React.PropTypes.string.isRequired,
-        menuInner: React.PropTypes.string.isRequired,
-        outline: React.PropTypes.string.isRequired,
-        rippled: React.PropTypes.string.isRequired,
-        static: React.PropTypes.string.isRequired,
-        topLeft: React.PropTypes.string.isRequired,
-        topRight: React.PropTypes.string.isRequired
+      active: PropTypes.bool,
+      children: PropTypes.node,
+      className: PropTypes.string,
+      onHide: PropTypes.func,
+      onSelect: PropTypes.func,
+      onShow: PropTypes.func,
+      outline: PropTypes.bool,
+      position: PropTypes.string,
+      ripple: PropTypes.bool,
+      selectable: PropTypes.bool,
+      selected: PropTypes.any,
+      theme: PropTypes.shape({
+        active: PropTypes.string,
+        bottomLeft: PropTypes.string,
+        bottomRight: PropTypes.string,
+        menu: PropTypes.string,
+        menuInner: PropTypes.string,
+        outline: PropTypes.string,
+        rippled: PropTypes.string,
+        static: PropTypes.string,
+        topLeft: PropTypes.string,
+        topRight: PropTypes.string
       })
     };
 

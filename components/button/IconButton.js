@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { BUTTON } from '../identifiers.js';
@@ -8,22 +8,22 @@ import rippleFactory from '../ripple/Ripple.js';
 const factory = (ripple, FontIcon) => {
   class IconButton extends Component {
     static propTypes = {
-      accent: React.PropTypes.bool,
-      children: React.PropTypes.node,
-      className: React.PropTypes.string,
-      disabled: React.PropTypes.bool,
-      href: React.PropTypes.string,
-      icon: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.element
+      accent: PropTypes.bool,
+      children: PropTypes.node,
+      className: PropTypes.string,
+      disabled: PropTypes.bool,
+      href: PropTypes.string,
+      icon: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element
       ]),
-      inverse: React.PropTypes.bool,
-      neutral: React.PropTypes.bool,
-      onMouseLeave: React.PropTypes.func,
-      onMouseUp: React.PropTypes.func,
-      primary: React.PropTypes.bool,
-      theme: React.PropTypes.object,
-      type: React.PropTypes.string
+      inverse: PropTypes.bool,
+      neutral: PropTypes.bool,
+      onMouseLeave: PropTypes.func,
+      onMouseUp: PropTypes.func,
+      primary: PropTypes.bool,
+      theme: PropTypes.object,
+      type: PropTypes.string
     };
 
     static defaultProps = {

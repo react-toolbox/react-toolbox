@@ -13,8 +13,8 @@ const factory = (ListItemText) => {
       children: PropTypes.any,
       legend: PropTypes.string,
       theme: PropTypes.shape({
-        itemContentRoot: PropTypes.string.isRequired,
-        large: PropTypes.string.isRequired
+        itemContentRoot: PropTypes.string,
+        large: PropTypes.string
       }),
       type: PropTypes.oneOf(types)
     };

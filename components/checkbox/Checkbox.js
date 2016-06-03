@@ -14,10 +14,10 @@ const factory = (Check) => {
       label: PropTypes.any,
       onChange: PropTypes.func,
       theme: PropTypes.shape({
-        disabled: PropTypes.string.isRequired,
-        field: PropTypes.string.isRequired,
-        input: PropTypes.string.isRequired,
-        ripple: PropTypes.string.isRequired
+        disabled: PropTypes.string,
+        field: PropTypes.string,
+        input: PropTypes.string,
+        ripple: PropTypes.string
       })
     };
 

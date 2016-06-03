@@ -28,11 +28,11 @@ const factory = (Overlay) => {
     className: PropTypes.string,
     onOverlayClick: PropTypes.func,
     theme: PropTypes.shape({
-      active: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
-      drawer: PropTypes.string.isRequired,
-      left: PropTypes.string.isRequired,
-      right: PropTypes.string.isRequired
+      active: PropTypes.string,
+      content: PropTypes.string,
+      drawer: PropTypes.string,
+      left: PropTypes.string,
+      right: PropTypes.string
     }),
     type: PropTypes.oneOf(['left', 'right'])
   };

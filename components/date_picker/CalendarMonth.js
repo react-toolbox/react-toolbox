@@ -10,10 +10,10 @@ class Month extends Component {
     onDayClick: PropTypes.func,
     selectedDate: PropTypes.object,
     theme: PropTypes.shape({
-      days: PropTypes.string.isRequired,
-      month: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      week: PropTypes.string.isRequired
+      days: PropTypes.string,
+      month: PropTypes.string,
+      title: PropTypes.string,
+      week: PropTypes.string
     }),
     viewDate: PropTypes.object
   };

@@ -15,9 +15,9 @@ const factory = (ripple) => {
     children: PropTypes.any,
     onMouseDown: PropTypes.func,
     theme: PropTypes.shape({
-      radio: PropTypes.string.isRequired,
-      radioChecked: PropTypes.string.isRequired,
-      ripple: PropTypes.string.isRequired
+      radio: PropTypes.string,
+      radioChecked: PropTypes.string,
+      ripple: PropTypes.string
     })
   };
 

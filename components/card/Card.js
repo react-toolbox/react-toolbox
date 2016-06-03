@@ -19,9 +19,9 @@ Card.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
   raised: PropTypes.bool,
-  theme: React.PropTypes.shape({
-    card: React.PropTypes.string,
-    raised: React.PropTypes.string
+  theme: PropTypes.shape({
+    card: PropTypes.string,
+    raised: PropTypes.string
   })
 };
 

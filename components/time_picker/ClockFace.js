@@ -8,9 +8,9 @@ class Face extends Component {
     radius: PropTypes.number,
     spacing: PropTypes.number,
     theme: PropTypes.shape({
-      active: PropTypes.string.isRequired,
-      face: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired
+      active: PropTypes.string,
+      face: PropTypes.string,
+      number: PropTypes.string
     }),
     twoDigits: PropTypes.bool
   };

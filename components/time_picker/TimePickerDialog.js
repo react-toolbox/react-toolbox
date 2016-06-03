@@ -12,19 +12,19 @@ const factory = (Dialog) => {
       onDismiss: PropTypes.func,
       onSelect: PropTypes.func,
       theme: PropTypes.shape({
-        am: PropTypes.string.isRequired,
-        amFormat: PropTypes.string.isRequired,
-        ampm: PropTypes.string.isRequired,
-        button: PropTypes.string.isRequired,
-        dialog: PropTypes.string.isRequired,
-        header: PropTypes.string.isRequired,
-        hours: PropTypes.string.isRequired,
-        hoursDisplay: PropTypes.string.isRequired,
-        minutes: PropTypes.string.isRequired,
-        minutesDisplay: PropTypes.string.isRequired,
-        pm: PropTypes.string.isRequired,
-        pmFormat: PropTypes.string.isRequired,
-        separator: PropTypes.string.isRequired
+        am: PropTypes.string,
+        amFormat: PropTypes.string,
+        ampm: PropTypes.string,
+        button: PropTypes.string,
+        dialog: PropTypes.string,
+        header: PropTypes.string,
+        hours: PropTypes.string,
+        hoursDisplay: PropTypes.string,
+        minutes: PropTypes.string,
+        minutesDisplay: PropTypes.string,
+        pm: PropTypes.string,
+        pmFormat: PropTypes.string,
+        separator: PropTypes.string
       }),
       value: PropTypes.object
     };

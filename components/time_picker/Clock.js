@@ -13,9 +13,9 @@ class Clock extends Component {
     onChange: PropTypes.func,
     onHandMoved: PropTypes.func,
     theme: PropTypes.shape({
-      clock: PropTypes.string.isRequired,
-      clockWrapper: PropTypes.string.isRequired,
-      placeholder: PropTypes.string.isRequired
+      clock: PropTypes.string,
+      clockWrapper: PropTypes.string,
+      placeholder: PropTypes.string
     }),
     time: PropTypes.object
   };

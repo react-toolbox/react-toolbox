@@ -13,14 +13,14 @@ const factory = (Dialog, Calendar) => {
       onDismiss: PropTypes.func,
       onSelect: PropTypes.func,
       theme: PropTypes.shape({
-        button: PropTypes.string.isRequired,
-        calendarWrapper: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        dialog: PropTypes.string.isRequired,
-        header: PropTypes.string.isRequired,
-        monthsDisplay: PropTypes.string.isRequired,
-        year: PropTypes.string.isRequired,
-        yearsDisplay: PropTypes.string.isRequired
+        button: PropTypes.string,
+        calendarWrapper: PropTypes.string,
+        date: PropTypes.string,
+        dialog: PropTypes.string,
+        header: PropTypes.string,
+        monthsDisplay: PropTypes.string,
+        year: PropTypes.string,
+        yearsDisplay: PropTypes.string
       }),
       value: PropTypes.object
     };

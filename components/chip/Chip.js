@@ -38,13 +38,13 @@ const factory = (Avatar) => {
     className: PropTypes.string,
     deletable: PropTypes.bool,
     onDeleteClick: PropTypes.func,
-    theme: React.PropTypes.shape({
-      avatar: React.PropTypes.string.isRequired,
-      chip: React.PropTypes.string.isRequired,
-      deletable: React.PropTypes.string.isRequired,
-      delete: React.PropTypes.string.isRequired,
-      deleteIcon: React.PropTypes.string.isRequired,
-      deleteX: React.PropTypes.string.isRequired
+    theme: PropTypes.shape({
+      avatar: PropTypes.string,
+      chip: PropTypes.string,
+      deletable: PropTypes.string,
+      delete: PropTypes.string,
+      deleteIcon: PropTypes.string,
+      deleteX: PropTypes.string
     })
   };
 

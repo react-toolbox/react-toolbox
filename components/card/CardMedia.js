@@ -36,12 +36,12 @@ CardMedia.propTypes = {
     PropTypes.string,
     PropTypes.element
   ]),
-  theme: React.PropTypes.shape({
-    cardMedia: React.PropTypes.string.isRequired,
-    content: React.PropTypes.string.isRequired,
-    contentOverlay: React.PropTypes.string.isRequired,
-    square: React.PropTypes.string.isRequired,
-    wide: React.PropTypes.string.isRequired
+  theme: PropTypes.shape({
+    cardMedia: PropTypes.string,
+    content: PropTypes.string,
+    contentOverlay: PropTypes.string,
+    square: PropTypes.string,
+    wide: PropTypes.string
   })
 };
 

@@ -1,22 +1,22 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { OVERLAY } from '../identifiers.js';
 import Portal from '../hoc/Portal.js';
 
-class Overlay extends React.Component {
+class Overlay extends Component {
   static propTypes = {
-    active: React.PropTypes.bool,
-    children: React.PropTypes.node,
-    className: React.PropTypes.string,
-    invisible: React.PropTypes.bool,
-    onClick: React.PropTypes.func,
-    onEscKeyDown: React.PropTypes.func,
-    theme: React.PropTypes.shape({
-      active: React.PropTypes.string.isRequired,
-      backdrop: React.PropTypes.string.isRequired,
-      invisible: React.PropTypes.string.isRequired,
-      overlay: React.PropTypes.string.isRequired
+    active: PropTypes.bool,
+    children: PropTypes.node,
+    className: PropTypes.string,
+    invisible: PropTypes.bool,
+    onClick: PropTypes.func,
+    onEscKeyDown: PropTypes.func,
+    theme: PropTypes.shape({
+      active: PropTypes.string,
+      backdrop: PropTypes.string,
+      invisible: PropTypes.string,
+      overlay: PropTypes.string
     })
   };
 

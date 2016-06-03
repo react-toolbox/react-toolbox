@@ -28,7 +28,7 @@ const factory = (Input, DatePickerDialog) => {
       minDate: PropTypes.object,
       onChange: PropTypes.func,
       theme: PropTypes.shape({
-        input: PropTypes.string.isRequired
+        input: PropTypes.string
       }),
       value: PropTypes.oneOfType([
         PropTypes.instanceOf(Date),

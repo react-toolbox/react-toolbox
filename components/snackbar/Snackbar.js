@@ -17,7 +17,7 @@ const factory = (Overlay, Button) => {
         PropTypes.string,
         PropTypes.element
       ]),
-      label: PropTypes.string.isRequired,
+      label: PropTypes.string,
       onClick: PropTypes.func,
       onTimeout: PropTypes.func,
       theme: PropTypes.shape({

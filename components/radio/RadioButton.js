@@ -17,10 +17,10 @@ const factory = (Radio) => {
       onChange: PropTypes.func,
       onFocus: PropTypes.func,
       theme: PropTypes.shape({
-        disabled: PropTypes.string.isRequired,
-        field: PropTypes.string.isRequired,
-        input: PropTypes.string.isRequired,
-        text: PropTypes.string.isRequired
+        disabled: PropTypes.string,
+        field: PropTypes.string,
+        input: PropTypes.string,
+        text: PropTypes.string
       }),
       value: PropTypes.any
     };

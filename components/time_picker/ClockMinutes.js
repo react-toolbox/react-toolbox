@@ -14,7 +14,7 @@ class Minutes extends Component {
     selected: PropTypes.number,
     spacing: PropTypes.number,
     theme: PropTypes.shape({
-      small: PropTypes.string.isRequired
+      small: PropTypes.string
     })
   };
 

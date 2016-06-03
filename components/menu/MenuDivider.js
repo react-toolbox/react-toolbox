@@ -8,7 +8,7 @@ const MenuDivider = ({ theme }) => (
 
 MenuDivider.propTypes = {
   theme: PropTypes.shape({
-    menuDivider: PropTypes.string.isRequired
+    menuDivider: PropTypes.string
   })
 };
 

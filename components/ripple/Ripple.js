@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
@@ -23,20 +23,20 @@ const rippleFactory = (options = {}) => {
   } = {...defaults, ...options};
 
   return ComposedComponent => {
-    class RippledComponent extends React.Component {
+    class RippledComponent extends Component {
       static propTypes = {
-        children: React.PropTypes.any,
-        disabled: React.PropTypes.bool,
-        onRippleEnded: React.PropTypes.func,
-        ripple: React.PropTypes.bool,
-        rippleCentered: React.PropTypes.bool,
-        rippleClassName: React.PropTypes.string,
-        rippleSpread: React.PropTypes.number,
-        theme: React.PropTypes.shape({
-          ripple: React.PropTypes.string,
-          rippleActive: React.PropTypes.string,
-          rippleRestarting: React.PropTypes.string,
-          rippleWrapper: React.PropTypes.string
+        children: PropTypes.any,
+        disabled: PropTypes.bool,
+        onRippleEnded: PropTypes.func,
+        ripple: PropTypes.bool,
+        rippleCentered: PropTypes.bool,
+        rippleClassName: PropTypes.string,
+        rippleSpread: PropTypes.number,
+        theme: PropTypes.shape({
+          ripple: PropTypes.string,
+          rippleActive: PropTypes.string,
+          rippleRestarting: PropTypes.string,
+          rippleWrapper: PropTypes.string
         })
       };
 

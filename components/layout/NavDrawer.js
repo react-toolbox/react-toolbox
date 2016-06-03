@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { LAYOUT } from '../identifiers.js';
@@ -27,29 +27,29 @@ const NavDrawer = ({ active, children, className, onOverlayClick, permanentAt, p
 };
 
 NavDrawer.propTypes = {
-  active: React.PropTypes.bool,
-  children: React.PropTypes.any,
-  className: React.PropTypes.string,
-  onOverlayClick: React.PropTypes.func,
-  permanentAt: React.PropTypes.oneOf(['sm', 'md', 'lg', 'xl', 'xxl', 'xxxl']),
-  pinned: React.PropTypes.bool,
-  scrollY: React.PropTypes.bool,
-  theme: React.PropTypes.shape({
-    active: React.PropTypes.string.isRequired,
-    drawerContent: React.PropTypes.string.isRequired,
-    lgPermanent: React.PropTypes.string.isRequired,
-    mdPermanent: React.PropTypes.string.isRequired,
-    navDrawer: React.PropTypes.string.isRequired,
-    pinned: React.PropTypes.string.isRequired,
-    scrim: React.PropTypes.string.isRequired,
-    scrollY: React.PropTypes.string.isRequired,
-    smPermanent: React.PropTypes.string.isRequired,
-    wide: React.PropTypes.string.isRequired,
-    xlPermanent: React.PropTypes.string.isRequired,
-    xxlPermanent: React.PropTypes.string.isRequired,
-    xxxlPermanent: React.PropTypes.string.isRequired
+  active: PropTypes.bool,
+  children: PropTypes.any,
+  className: PropTypes.string,
+  onOverlayClick: PropTypes.func,
+  permanentAt: PropTypes.oneOf(['sm', 'md', 'lg', 'xl', 'xxl', 'xxxl']),
+  pinned: PropTypes.bool,
+  scrollY: PropTypes.bool,
+  theme: PropTypes.shape({
+    active: PropTypes.string,
+    drawerContent: PropTypes.string,
+    lgPermanent: PropTypes.string,
+    mdPermanent: PropTypes.string,
+    navDrawer: PropTypes.string,
+    pinned: PropTypes.string,
+    scrim: PropTypes.string,
+    scrollY: PropTypes.string,
+    smPermanent: PropTypes.string,
+    wide: PropTypes.string,
+    xlPermanent: PropTypes.string,
+    xxlPermanent: PropTypes.string,
+    xxxlPermanent: PropTypes.string
   }),
-  width: React.PropTypes.oneOf(['normal', 'wide'])
+  width: PropTypes.oneOf(['normal', 'wide'])
 };
 
 NavDrawer.defaultProps = {

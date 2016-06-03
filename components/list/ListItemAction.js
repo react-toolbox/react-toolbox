@@ -16,7 +16,7 @@ const ListItemAction = ({action, theme}) => {
 ListItemAction.propTypes = {
   action: PropTypes.object,
   theme: PropTypes.shape({
-    itemAction: React.PropTypes.string.isRequired
+    itemAction: PropTypes.string
   })
 };
 

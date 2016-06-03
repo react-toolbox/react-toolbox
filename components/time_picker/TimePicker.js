@@ -18,7 +18,7 @@ const factory = (TimePickerDialog, Input) => {
       label: PropTypes.string,
       onChange: PropTypes.func,
       theme: PropTypes.shape({
-        input: PropTypes.string.isRequired
+        input: PropTypes.string
       }),
       value: PropTypes.object
     };

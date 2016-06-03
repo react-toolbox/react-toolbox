@@ -28,7 +28,7 @@ const factory = (Checkbox, ListItemContent) => {
   };
 
   ListCheckbox.propTypes = {
-    caption: PropTypes.string.isRequired,
+    caption: PropTypes.string,
     checked: PropTypes.bool,
     className: PropTypes.string,
     disabled: PropTypes.bool,
@@ -38,10 +38,10 @@ const factory = (Checkbox, ListItemContent) => {
     onChange: PropTypes.func,
     onFocus: PropTypes.func,
     theme: PropTypes.shape({
-      checkbox: PropTypes.string.isRequired,
-      checkboxItem: PropTypes.string.isRequired,
-      disabled: PropTypes.string.isRequired,
-      item: PropTypes.string.isRequired
+      checkbox: PropTypes.string,
+      checkboxItem: PropTypes.string,
+      disabled: PropTypes.string,
+      item: PropTypes.string
     })
   };
 

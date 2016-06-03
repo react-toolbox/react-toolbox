@@ -17,8 +17,8 @@ ListItemText.propTypes = {
   className: PropTypes.string,
   primary: PropTypes.bool,
   theme: PropTypes.shape({
-    itemText: PropTypes.string.isRequired,
-    primary: PropTypes.string.isRequired
+    itemText: PropTypes.string,
+    primary: PropTypes.string
   })
 };
 

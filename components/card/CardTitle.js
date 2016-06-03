@@ -41,11 +41,11 @@ const factory = (Avatar) => {
       PropTypes.string,
       PropTypes.element
     ]),
-    theme: React.PropTypes.shape({
-      large: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired,
-      small: React.PropTypes.string.isRequired,
-      subtitle: React.PropTypes.string.isRequired
+    theme: PropTypes.shape({
+      large: PropTypes.string,
+      title: PropTypes.string,
+      small: PropTypes.string,
+      subtitle: PropTypes.string
     }),
     title: PropTypes.oneOfType([
       PropTypes.string,

@@ -16,9 +16,9 @@ const factory = (ripple) => {
     checked: PropTypes.bool,
     children: PropTypes.any,
     onMouseDown: PropTypes.func,
-    theme: React.PropTypes.shape({
-      check: React.PropTypes.string.isRequired,
-      checked: React.PropTypes.string.isRequired
+    theme: PropTypes.shape({
+      check: PropTypes.string,
+      checked: PropTypes.string
     })
   };
 

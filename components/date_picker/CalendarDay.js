@@ -9,9 +9,9 @@ class Day extends Component {
     onClick: PropTypes.func,
     selectedDate: PropTypes.object,
     theme: PropTypes.shape({
-      active: PropTypes.string.isRequired,
-      day: PropTypes.string.isRequired,
-      disabled: PropTypes.string.isRequired
+      active: PropTypes.string,
+      day: PropTypes.string,
+      disabled: PropTypes.string
     }),
     viewDate: PropTypes.object
   };

@@ -14,11 +14,11 @@ const factory = (IconButton) => {
       onChange: PropTypes.func,
       selectedDate: PropTypes.object,
       theme: PropTypes.shape({
-        active: PropTypes.string.isRequired,
-        calendar: PropTypes.string.isRequired,
-        next: PropTypes.string.isRequired,
-        prev: PropTypes.string.isRequired,
-        years: PropTypes.string.isRequired
+        active: PropTypes.string,
+        calendar: PropTypes.string,
+        next: PropTypes.string,
+        prev: PropTypes.string,
+        years: PropTypes.string
       }),
       viewDate: PropTypes.object
     };

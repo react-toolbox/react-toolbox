@@ -27,16 +27,16 @@ const factory = (Chip, Input) => {
      showSuggestionsWhenValueIsSet: PropTypes.bool,
      source: PropTypes.any,
      theme: PropTypes.shape({
-       active: PropTypes.string.isRequired,
-       autocomplete: PropTypes.string.isRequired,
-       focus: PropTypes.string.isRequired,
-       input: PropTypes.string.isRequired,
-       label: PropTypes.string.isRequired,
-       suggestion: PropTypes.string.isRequired,
-       suggestions: PropTypes.string.isRequired,
-       up: PropTypes.string.isRequired,
-       value: PropTypes.string.isRequired,
-       values: PropTypes.string.isRequired
+       active: PropTypes.string,
+       autocomplete: PropTypes.string,
+       focus: PropTypes.string,
+       input: PropTypes.string,
+       label: PropTypes.string,
+       suggestion: PropTypes.string,
+       suggestions: PropTypes.string,
+       up: PropTypes.string,
+       value: PropTypes.string,
+       values: PropTypes.string
      }),
      value: PropTypes.any
    };

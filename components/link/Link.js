@@ -30,9 +30,9 @@ Link.propTypes = {
   ]),
   label: PropTypes.string,
   theme: PropTypes.shape({
-    active: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired
+    active: PropTypes.string,
+    icon: PropTypes.string,
+    link: PropTypes.string
   })
 };
 
