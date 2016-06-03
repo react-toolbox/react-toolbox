@@ -45,7 +45,9 @@ class Autocomplete extends React.Component {
 
  componentWillReceiveProps (nextProps) {
    if (!this.props.multiple) {
-     this.setState({query: nextProps.value});
+     this.setState({
+       query: this.query(nextProps.value)
+     });
    }
  }
 
