@@ -1,15 +1,15 @@
 export default {
   getMousePosition (event) {
     return {
-      x: event.pageX - window.scrollX,
-      y: event.pageY - window.scrollY
+      x: event.pageX - (window.scrollX || window.pageXOffset),
+      y: event.pageY - (window.scrollY || window.pageYOffset)
     };
   },
 
   getTouchPosition (event) {
     return {
-      x: event.touches[0].pageX - window.scrollX,
-      y: event.touches[0].pageY - window.scrollY
+      x: event.touches[0].pageX - (window.scrollX || window.pageXOffset),
+      y: event.touches[0].pageY - (window.scrollY || window.pageYOffset)
     };
   },
 

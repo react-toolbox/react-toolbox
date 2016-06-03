@@ -8,9 +8,9 @@ import InjectInput from '../input/Input.js';
 import events from '../utils/events.js';
 
 const POSITION = {
- AUTO: 'auto',
- DOWN: 'down',
- UP: 'up'
+  AUTO: 'auto',
+  DOWN: 'down',
+  UP: 'up'
 };
 
 const factory = (Chip, Input) => {
@@ -59,7 +59,9 @@ const factory = (Chip, Input) => {
 
    componentWillReceiveProps (nextProps) {
      if (!this.props.multiple) {
-       this.setState({query: nextProps.value});
+       this.setState({
+         query: this.query(nextProps.value)
+       });
      }
    }
 
