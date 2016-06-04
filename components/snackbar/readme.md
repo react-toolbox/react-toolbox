@@ -33,6 +33,8 @@ class SnackbarTest extends React.Component {
 }
 ```
 
+This component can be styled by context providing a theme with the key `RTSnackbar` through the theme provider.
+
 ## Properties
 
 | Name          | Type                    | Default       | Description|
@@ -46,3 +48,16 @@ class SnackbarTest extends React.Component {
 | `onTimeout`   | `Function`              |               | Callback function when finish the set timeout.|
 | `timeout`     | `Number`                |               | Amount of time in milliseconds after the Snackbar will be automatically hidden.|
 | `type`        | `String`                |               | Indicates the action type. Can be `accept`, `warning` or `cancel`|
+
+## Theme
+
+| Name     | Description|
+|:---------|:-----------|
+| `accept` | Added to the root element in case it's accept type.|
+| `active` | Added to the root element when its active.|
+| `button` | Used for the button inside the component.|
+| `cancel` | Added to the root element in case it's cancel type.|
+| `icon` | Used for the icon element.|
+| `label` | Used for the label element.|
+| `snackbar` | Used as the className for the root element of the component.|
+| `warning` | Added to the root element in case it's warning type.|

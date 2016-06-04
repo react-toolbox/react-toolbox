@@ -1,10 +1,11 @@
 /* global VERSION */
+import '../components/commons.scss';
 import React from 'react';
-import AppBarToolbox from '../components/app_bar';
-import Avatar from './components/avatar';
-import ButtonToolbox from '../components/button';
+import AppBar from '../components/app_bar';
 import Autocomplete from './components/autocomplete';
+import Avatar from './components/avatar';
 import Button from './components/button';
+import ButtonToolbox from '../components/button';
 import Card from './components/card';
 import Checkbox from './components/checkbox';
 import Chip from './components/chip';
@@ -19,31 +20,26 @@ import Menu from './components/menu';
 import Pickers from './components/pickers';
 import Progress from './components/progress';
 import Radio from './components/radio';
-import Snackbar from './components/snackbar';
 import Slider from './components/slider';
+import Snackbar from './components/snackbar';
 import Switch from './components/switch';
 import Table from './components/table';
 import Tabs from './components/tabs';
 import Tooltip from './components/tooltip';
 import style from './style';
 
-const _hrefProject = () => {
-  window.href = 'http://react-toolbox';
-};
-
 const Root = () => (
   <div className={style.app}>
-    <AppBarToolbox fixed flat className={style.appbar}>
+    <AppBar className={style.appbar} fixed flat>
       <h1>React Toolbox <small>Spec {VERSION}</small></h1>
       <ButtonToolbox
         accent
         className={style.github}
         icon='web'
         floating
-        onClick={_hrefProject}
+        onClick={() => {window.href = 'http://react-toolbox';}}
       />
-    </AppBarToolbox>
-
+    </AppBar>
     <Autocomplete />
     <Avatar />
     <Button />

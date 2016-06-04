@@ -1,0 +1,120 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+
+.field {
+  position: relative;
+  display: block;
+  height: $checkbox-size;
+  margin-bottom: $checkbox-field-margin-bottom;
+  white-space: nowrap;
+  vertical-align: middle;
+  .ripple {
+    background-color: $checkbox-color;
+    opacity: .3;
+    transition-duration: $checkbox-ripple-duration;
+  }
+}
+
+.text {
+  display: inline-block;
+  padding-left: $unit;
+  font-size: $checkbox-text-font-size;
+  line-height: $checkbox-size;
+  color: $checkbox-text-color;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.input {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  &:focus ~ .check {
+    &:before {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: $checkbox-focus-size;
+      height: $checkbox-focus-size;
+      margin-top: - $checkbox-focus-size / 2;
+      margin-left: - $checkbox-focus-size / 2;
+      pointer-events: none;
+      content: "";
+      background-color: $checkbox-focus-color;
+      border-radius: 50%;
+    }
+    &.checked:before {
+      background-color: $checkbox-focus-checked-color;
+    }
+  }
+}
+
+.check {
+  position: relative;
+  display: inline-block;
+  width: $checkbox-size;
+  height: $checkbox-size;
+  vertical-align: top;
+  cursor: pointer;
+  border-color: $checkbox-text-color;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 2px;
+  transition-timing-function: $animation-curve-default;
+  transition-duration: $checkbox-transition-duration;
+  transition-property: background-color;
+  &.checked {
+    background-color: $checkbox-color;
+    border-color: $checkbox-color;
+    &:after {
+      position: absolute;
+      top: -.1 * $unit;
+      left: .4 * $unit;
+      width: .7 * $unit;
+      height: 1.2 * $unit;
+      content: "";
+      border-color: $color-background;
+      border-style: solid;
+      border-top: 0;
+      border-right-width: 2px;
+      border-bottom-width: 2px;
+      border-left: 0;
+      transform: rotate(45deg);
+      animation: checkmark-expand 140ms ease-out forwards;
+    }
+  }
+}
+
+.disabled {
+  > .text {
+    color: $checkbox-disabled-color;
+  }
+  > .check {
+    cursor: auto;
+    border-color: $checkbox-disabled-color;
+    &.checked {
+      cursor: auto;
+      background-color: $checkbox-disabled-color;
+      border-color: transparent;
+    }
+  }
+}
+
+@keyframes checkmark-expand {
+  0% {
+    top: .9 * $unit;
+    left: .6 * $unit;
+    width: 0;
+    height: 0;
+  }
+
+  100% {
+    top: -.1 * $unit;
+    left: .4 * $unit;
+    width: .7 * $unit;
+    height: 1.2 * $unit;
+  }
+}

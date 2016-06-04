@@ -1,22 +1,34 @@
-import React from 'react';
-import style from './style';
-import ListItemAction from './ListItemAction';
+import React, { PropTypes } from 'react';
+import { themr } from 'react-css-themr';
+import { LIST } from '../identifiers.js';
+import InjectListItemAction from './ListItemAction.js';
 
-const ListItemActions = ({type, children}) => {
-  const validChildren = React.Children.toArray(children).filter(c => (
-    React.isValidElement(c)
-  ));
+const factory = (ListItemAction) => {
+  const ListItemActions = ({type, children, theme}) => {
+    const validChildren = React.Children.toArray(children).filter(c => (
+      React.isValidElement(c)
+    ));
 
-  return (
-    <span className={style[type]}>
-      {validChildren.map((action, i) => <ListItemAction key={i} action={action} />)}
-    </span>
-  );
+    return (
+      <span className={theme[type]}>
+        {validChildren.map((action, i) => <ListItemAction key={i} action={action} />)}
+      </span>
+    );
+  };
+
+  ListItemActions.propTypes = {
+    children: PropTypes.any,
+    theme: PropTypes.shape({
+      left: PropTypes.string,
+      right: PropTypes.string
+    }),
+    type: PropTypes.oneOf(['left', 'right'])
+  };
+
+  return ListItemActions;
 };
 
-ListItemActions.propTypes = {
-  children: React.PropTypes.any,
-  type: React.PropTypes.oneOf(['left', 'right'])
-};
-
-export default ListItemActions;
+const ListItemActions = factory(InjectListItemAction);
+export default themr(LIST)(ListItemActions);
+export { factory as listItemActionsFactory };
+export { ListItemActions };

@@ -1,260 +1,281 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import ClassNames from 'classnames';
-import Input from '../input';
-import events from '../utils/events';
-import Chip from '../chip';
-import style from './style';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
+import { AUTOCOMPLETE } from '../identifiers.js';
+import InjectChip from '../chip/Chip.js';
+import InjectInput from '../input/Input.js';
+import events from '../utils/events.js';
 
 const POSITION = {
- AUTO: 'auto',
- DOWN: 'down',
- UP: 'up'
+  AUTO: 'auto',
+  DOWN: 'down',
+  UP: 'up'
 };
 
-class Autocomplete extends React.Component {
- static propTypes = {
-   className: React.PropTypes.string,
-   direction: React.PropTypes.oneOf(['auto', 'up', 'down']),
-   disabled: React.PropTypes.bool,
-   error: React.PropTypes.string,
-   label: React.PropTypes.string,
-   multiple: React.PropTypes.bool,
-   onChange: React.PropTypes.func,
-   selectedPosition: React.PropTypes.oneOf(['above', 'below']),
-   showSuggestionsWhenValueIsSet: React.PropTypes.bool,
-   source: React.PropTypes.any,
-   value: React.PropTypes.any
- };
+const factory = (Chip, Input) => {
+  class Autocomplete extends Component {
+   static propTypes = {
+     className: PropTypes.string,
+     direction: PropTypes.oneOf(['auto', 'up', 'down']),
+     disabled: PropTypes.bool,
+     error: PropTypes.string,
+     label: PropTypes.string,
+     multiple: PropTypes.bool,
+     onChange: PropTypes.func,
+     selectedPosition: PropTypes.oneOf(['above', 'below']),
+     showSuggestionsWhenValueIsSet: PropTypes.bool,
+     source: PropTypes.any,
+     theme: PropTypes.shape({
+       active: PropTypes.string,
+       autocomplete: PropTypes.string,
+       focus: PropTypes.string,
+       input: PropTypes.string,
+       label: PropTypes.string,
+       suggestion: PropTypes.string,
+       suggestions: PropTypes.string,
+       up: PropTypes.string,
+       value: PropTypes.string,
+       values: PropTypes.string
+     }),
+     value: PropTypes.any
+   };
 
- static defaultProps = {
-   className: '',
-   direction: 'auto',
-   selectedPosition: 'above',
-   multiple: true,
-   showSuggestionsWhenValueIsSet: false,
-   source: {}
- };
+   static defaultProps = {
+     className: '',
+     direction: 'auto',
+     selectedPosition: 'above',
+     multiple: true,
+     showSuggestionsWhenValueIsSet: false,
+     source: {}
+   };
 
- state = {
-   direction: this.props.direction,
-   focus: false,
-   showAllSuggestions: this.props.showSuggestionsWhenValueIsSet,
-   query: this.query(this.props.value)
- };
+   state = {
+     direction: this.props.direction,
+     focus: false,
+     showAllSuggestions: this.props.showSuggestionsWhenValueIsSet,
+     query: this.query(this.props.value)
+   };
 
- componentWillReceiveProps (nextProps) {
-   if (!this.props.multiple) {
-     this.setState({
-       query: this.query(nextProps.value)
-     });
-   }
- }
-
- shouldComponentUpdate (nextProps, nextState) {
-   if (!this.state.focus && nextState.focus && this.props.direction === POSITION.AUTO) {
-     const direction = this.calculateDirection();
-     if (this.state.direction !== direction) {
-       this.setState({ direction });
-       return false;
+   componentWillReceiveProps (nextProps) {
+     if (!this.props.multiple) {
+       this.setState({
+         query: this.query(nextProps.value)
+       });
      }
    }
-   return true;
- }
 
- handleChange = (keys, event) => {
-   const key = this.props.multiple ? keys : keys[0];
-   const query = this.query(key);
-   if (this.props.onChange) this.props.onChange(key, event);
-   this.setState(
-     {focus: false, query, showAllSuggestions: this.props.showSuggestionsWhenValueIsSet},
-     () => { this.refs.input.blur(); }
-   );
- };
-
- handleQueryBlur = () => {
-   if (this.state.focus) this.setState({focus: false});
- };
-
- handleQueryChange = (value) => {
-   this.setState({query: value, showAllSuggestions: false});
- };
-
- handleQueryFocus = () => {
-   this.refs.suggestions.scrollTop = 0;
-   this.setState({active: '', focus: true});
- };
-
- handleQueryKeyDown = (event) => {
-   // Clear query when pressing backspace and showing all suggestions.
-   const shouldClearQuery = (
-     event.which === 8
-     && this.props.showSuggestionsWhenValueIsSet
-     && this.state.showAllSuggestions
-   );
-   if (shouldClearQuery) {
-     this.setState({query: ''});
-   }
- };
-
- handleQueryKeyUp = (event) => {
-   if (event.which === 13 && this.state.active) this.select(this.state.active, event);
-   if (event.which === 27) this.refs.input.blur();
-   if ([40, 38].indexOf(event.which) !== -1) {
-     const suggestionsKeys = [...this.suggestions().keys()];
-     let index = suggestionsKeys.indexOf(this.state.active) + (event.which === 40 ? +1 : -1);
-     if (index < 0) index = suggestionsKeys.length - 1;
-     if (index >= suggestionsKeys.length) index = 0;
-     this.setState({active: suggestionsKeys[index]});
-   }
- };
-
- handleSuggestionHover = (key) => {
-   this.setState({active: key});
- };
-
- calculateDirection () {
-   if (this.props.direction === 'auto') {
-     const client = ReactDOM.findDOMNode(this.refs.input).getBoundingClientRect();
-     const screen_height = window.innerHeight || document.documentElement.offsetHeight;
-     const up = client.top > ((screen_height / 2) + client.height);
-     return up ? 'up' : 'down';
-   } else {
-     return this.props.direction;
-   }
- }
-
- query (key) {
-   return !this.props.multiple && key ? this.source().get(key) : '';
- }
-
- suggestions () {
-   let suggest = new Map();
-   const query = this.state.query.toLowerCase().trim() || '';
-   const values = this.values();
-   const source = this.source();
-
-   // Suggest any non-set value which matches the query
-   if (this.props.multiple) {
-     for (const [key, value] of source) {
-       if (!values.has(key) && value.toLowerCase().trim().startsWith(query)) {
-         suggest.set(key, value);
+   shouldComponentUpdate (nextProps, nextState) {
+     if (!this.state.focus && nextState.focus && this.props.direction === POSITION.AUTO) {
+       const direction = this.calculateDirection();
+       if (this.state.direction !== direction) {
+         this.setState({ direction });
+         return false;
        }
      }
+     return true;
+   }
 
-   // When multiple is false, suggest any value which matches the query if showAllSuggestions is false
-   } else if (query && !this.state.showAllSuggestions) {
-     for (const [key, value] of source) {
-       if (value.toLowerCase().trim().startsWith(query)) {
-         suggest.set(key, value);
+   handleChange = (keys, event) => {
+     const key = this.props.multiple ? keys : keys[0];
+     const query = this.query(key);
+     if (this.props.onChange) this.props.onChange(key, event);
+     this.setState(
+       {focus: false, query, showAllSuggestions: this.props.showSuggestionsWhenValueIsSet},
+       () => { ReactDOM.findDOMNode(this).querySelector('input').blur(); }
+     );
+   };
+
+   handleQueryBlur = () => {
+     if (this.state.focus) this.setState({focus: false});
+   };
+
+   handleQueryChange = (value) => {
+     this.setState({query: value, showAllSuggestions: false});
+   };
+
+   handleQueryFocus = () => {
+     this.refs.suggestions.scrollTop = 0;
+     this.setState({active: '', focus: true});
+   };
+
+   handleQueryKeyDown = (event) => {
+     // Clear query when pressing backspace and showing all suggestions.
+     const shouldClearQuery = (
+       event.which === 8
+       && this.props.showSuggestionsWhenValueIsSet
+       && this.state.showAllSuggestions
+     );
+     if (shouldClearQuery) {
+       this.setState({query: ''});
+     }
+   };
+
+   handleQueryKeyUp = (event) => {
+     if (event.which === 13 && this.state.active) this.select(this.state.active, event);
+     if (event.which === 27) ReactDOM.findDOMNode(this).querySelector('input').blur();
+     if ([40, 38].indexOf(event.which) !== -1) {
+       const suggestionsKeys = [...this.suggestions().keys()];
+       let index = suggestionsKeys.indexOf(this.state.active) + (event.which === 40 ? +1 : -1);
+       if (index < 0) index = suggestionsKeys.length - 1;
+       if (index >= suggestionsKeys.length) index = 0;
+       this.setState({active: suggestionsKeys[index]});
+     }
+   };
+
+   handleSuggestionHover = (key) => {
+     this.setState({active: key});
+   };
+
+   calculateDirection () {
+     if (this.props.direction === 'auto') {
+       const client = ReactDOM.findDOMNode(this.refs.input).getBoundingClientRect();
+       const screen_height = window.innerHeight || document.documentElement.offsetHeight;
+       const up = client.top > ((screen_height / 2) + client.height);
+       return up ? 'up' : 'down';
+     } else {
+       return this.props.direction;
+     }
+   }
+
+   query (key) {
+     return !this.props.multiple && key ? this.source().get(key) : '';
+   }
+
+   suggestions () {
+     let suggest = new Map();
+     const query = this.state.query.toLowerCase().trim() || '';
+     const values = this.values();
+     const source = this.source();
+
+     // Suggest any non-set value which matches the query
+     if (this.props.multiple) {
+       for (const [key, value] of source) {
+         if (!values.has(key) && value.toLowerCase().trim().startsWith(query)) {
+           suggest.set(key, value);
+         }
        }
+
+     // When multiple is false, suggest any value which matches the query if showAllSuggestions is false
+     } else if (query && !this.state.showAllSuggestions) {
+       for (const [key, value] of source) {
+         if (value.toLowerCase().trim().startsWith(query)) {
+           suggest.set(key, value);
+         }
+       }
+
+     // When multiple is false, suggest all values when showAllSuggestions is true
+     } else {
+       suggest = source;
      }
 
-   // When multiple is false, suggest all values when showAllSuggestions is true
-   } else {
-     suggest = source;
+     return suggest;
    }
 
-   return suggest;
- }
-
- source () {
-   const { source: src } = this.props;
-   if (src.hasOwnProperty('length')) {
-     return new Map(src.map((item) => Array.isArray(item) ? [...item] : [item, item]));
-   } else {
-     return new Map(Object.keys(src).map((key) => [key, src[key]]));
+   source () {
+     const { source: src } = this.props;
+     if (src.hasOwnProperty('length')) {
+       return new Map(src.map((item) => Array.isArray(item) ? [...item] : [item, item]));
+     } else {
+       return new Map(Object.keys(src).map((key) => [key, src[key]]));
+     }
    }
- }
 
- values () {
-   const valueMap = new Map();
-   const vals = this.props.multiple ? this.props.value : [this.props.value];
-   for (const [k, v] of this.source()) {
-     if (vals.indexOf(k) !== -1) valueMap.set(k, v);
+   values () {
+     const valueMap = new Map();
+     const vals = this.props.multiple ? this.props.value : [this.props.value];
+     for (const [k, v] of this.source()) {
+       if (vals.indexOf(k) !== -1) valueMap.set(k, v);
+     }
+     return valueMap;
    }
-   return valueMap;
- }
 
- select (key, event) {
-   events.pauseEvent(event);
-   const values = this.values(this.props.value);
-   this.handleChange([key, ...values.keys()], event);
- }
-
- unselect (key, event) {
-   if (!this.props.disabled) {
+   select (key, event) {
+     events.pauseEvent(event);
      const values = this.values(this.props.value);
-     values.delete(key);
-     this.handleChange([...values.keys()], event);
+     this.handleChange([key, ...values.keys()], event);
    }
- }
 
- renderSelected () {
-   if (this.props.multiple) {
-     const selectedItems = [...this.values()].map(([key, value]) => {
+   unselect (key, event) {
+     if (!this.props.disabled) {
+       const values = this.values(this.props.value);
+       values.delete(key);
+       this.handleChange([...values.keys()], event);
+     }
+   }
+
+   renderSelected () {
+     if (this.props.multiple) {
+       const selectedItems = [...this.values()].map(([key, value]) => {
+         return (
+           <Chip
+             key={key}
+             className={this.props.theme.value}
+             deletable
+             onDeleteClick={this.unselect.bind(this, key)}
+           >
+             {value}
+           </Chip>
+         );
+       });
+
+       return <ul className={this.props.theme.values}>{selectedItems}</ul>;
+     }
+   }
+
+   renderSuggestions () {
+     const { theme } = this.props;
+     const suggestions = [...this.suggestions()].map(([key, value]) => {
+       const className = classnames(theme.suggestion, {[theme.active]: this.state.active === key});
        return (
-         <Chip
+         <li
            key={key}
-           className={style.value}
-           deletable
-           onDeleteClick={this.unselect.bind(this, key)}
+           className={className}
+           onMouseDown={this.select.bind(this, key)}
+           onMouseOver={this.handleSuggestionHover.bind(this, key)}
          >
            {value}
-         </Chip>
+         </li>
        );
      });
 
-     return <ul className={style.values}>{selectedItems}</ul>;
+     const className = classnames(theme.suggestions, {[theme.up]: this.state.direction === 'up'});
+     return <ul ref='suggestions' className={className}>{suggestions}</ul>;
    }
- }
 
- renderSuggestions () {
-   const suggestions = [...this.suggestions()].map(([key, value]) => {
-     const className = ClassNames(style.suggestion, {[style.active]: this.state.active === key});
+   render () {
+     const {error, label, theme, ...other} = this.props;
+     const className = classnames(theme.autocomplete, {
+       [theme.focus]: this.state.focus
+     }, this.props.className);
+
      return (
-       <li
-         key={key}
-         className={className}
-         onMouseDown={this.select.bind(this, key)}
-         onMouseOver={this.handleSuggestionHover.bind(this, key)}
-       >
-         {value}
-       </li>
+       <div data-react-toolbox='autocomplete' className={className}>
+         {this.props.selectedPosition === 'above' ? this.renderSelected() : null}
+         <Input
+           {...other}
+           ref='input'
+           className={theme.input}
+           error={error}
+           label={label}
+           onBlur={this.handleQueryBlur}
+           onChange={this.handleQueryChange}
+           onFocus={this.handleQueryFocus}
+           onKeyDown={this.handleQueryKeyDown}
+           onKeyUp={this.handleQueryKeyUp}
+           value={this.state.query}
+         />
+         {this.renderSuggestions()}
+         {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
+       </div>
      );
-   });
+   }
+  }
 
-   const className = ClassNames(style.suggestions, {[style.up]: this.state.direction === 'up'});
-   return <ul ref='suggestions' className={className}>{suggestions}</ul>;
- }
+  return Autocomplete;
+};
 
- render () {
-   const {error, label, ...other} = this.props;
-   const className = ClassNames(style.root, {
-     [style.focus]: this.state.focus
-   }, this.props.className);
-
-   return (
-     <div data-react-toolbox='autocomplete' className={className}>
-       {this.props.selectedPosition === 'above' ? this.renderSelected() : null}
-       <Input
-         {...other}
-         ref='input'
-         className={style.input}
-         error={error}
-         label={label}
-         onBlur={this.handleQueryBlur}
-         onChange={this.handleQueryChange}
-         onFocus={this.handleQueryFocus}
-         onKeyDown={this.handleQueryKeyDown}
-         onKeyUp={this.handleQueryKeyUp}
-         value={this.state.query}
-       />
-       {this.renderSuggestions()}
-       {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
-     </div>
-   );
- }
-}
-
-export default Autocomplete;
+const Autocomplete = factory(InjectChip, InjectInput);
+export default themr(AUTOCOMPLETE)(Autocomplete);
+export { factory as autocompleteFactory };
+export { Autocomplete };

@@ -1,0 +1,53 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+
+.snackbar {
+  position: fixed;
+  right: $snackbar-horizontal-offset;
+  bottom: 0;
+  left: $snackbar-horizontal-offset;
+  z-index: $z-index-higher;
+  display: flex;
+  align-items: center;
+  padding: $snackbar-vertical-offset $snackbar-horizontal-offset;
+  margin: 0 auto;
+  margin-top: $snackbar-vertical-offset;
+  color: $snackbar-color;
+  background-color: $snackbar-background-color;
+  border-radius: $snackbar-border-radius;
+  transition: all $animation-duration $animation-curve-default $animation-duration;
+  &.accept .button {
+    color: $snackbar-color-accept;
+  }
+  &.warning .button {
+    color: $snackbar-color-warning;
+  }
+  &.cancel .button {
+    color: $snackbar-color-cancel;
+  }
+  &:not(.active) {
+    transform: translateY(100%);
+  }
+  &.active {
+    transform: translateY(0%);
+  }
+}
+
+.icon {
+  margin-right: $snackbar-vertical-offset;
+}
+
+.label {
+  flex-grow: 1;
+  font-size: $font-size-small;
+}
+
+.button {
+  min-width: inherit;
+  margin-top: - $snackbar-vertical-offset / 2;
+  margin-right: - $snackbar-horizontal-offset / 2;
+  margin-bottom: - $snackbar-vertical-offset / 2;
+  margin-left: $snackbar-button-offset;
+}

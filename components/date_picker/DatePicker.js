@@ -1,81 +1,100 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
-import DatePickerDialog from './DatePickerDialog';
-import events from '../utils/events';
-import Input from '../input';
-import style from './style';
-import time from '../utils/time';
+import { themr } from 'react-css-themr';
+import { DATE_PICKER } from '../identifiers.js';
+import events from '../utils/events.js';
+import time from '../utils/time.js';
 
-class DatePicker extends React.Component {
-  static propTypes = {
-    autoOk: React.PropTypes.bool,
-    className: React.PropTypes.string,
-    error: React.PropTypes.string,
-    icon: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.element
-    ]),
-    inputClassName: React.PropTypes.string,
-    inputFormat: React.PropTypes.func,
-    label: React.PropTypes.string,
-    maxDate: React.PropTypes.object,
-    minDate: React.PropTypes.object,
-    onChange: React.PropTypes.func,
-    value: React.PropTypes.oneOfType([
-      React.PropTypes.instanceOf(Date),
-      React.PropTypes.string
-    ])
-  };
+import InjectIconButton from '../button/IconButton.js';
+import InjectInput from '../input/Input.js';
+import InjectDialog from '../dialog/Dialog.js';
+import calendarFactory from './Calendar.js';
+import datePickerDialogFactory from './DatePickerDialog.js';
 
-  state = {
-    active: false
-  };
+const factory = (Input, DatePickerDialog) => {
+  class DatePicker extends Component {
+    static propTypes = {
+      autoOk: PropTypes.bool,
+      className: PropTypes.string,
+      error: PropTypes.string,
+      icon: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element
+      ]),
+      inputClassName: PropTypes.string,
+      inputFormat: PropTypes.func,
+      label: PropTypes.string,
+      maxDate: PropTypes.object,
+      minDate: PropTypes.object,
+      onChange: PropTypes.func,
+      theme: PropTypes.shape({
+        input: PropTypes.string
+      }),
+      value: PropTypes.oneOfType([
+        PropTypes.instanceOf(Date),
+        PropTypes.string
+      ])
+    };
 
-  handleDismiss = () => {
-    this.setState({active: false});
-  };
+    state = {
+      active: false
+    };
 
-  handleInputMouseDown = (event) => {
-    events.pauseEvent(event);
-    this.setState({active: true});
-  };
+    handleDismiss = () => {
+      this.setState({active: false});
+    };
 
-  handleSelect = (value, event) => {
-    if (this.props.onChange) this.props.onChange(value, event);
-    this.setState({active: false});
-  };
+    handleInputMouseDown = (event) => {
+      events.pauseEvent(event);
+      this.setState({active: true});
+    };
 
-  render () {
-    const { inputClassName, value } = this.props;
-    const inputFormat = this.props.inputFormat || time.formatDate;
-    const date = Object.prototype.toString.call(value) === '[object Date]' ? value : undefined;
-    const formattedDate = date === undefined ? '' : inputFormat(value);
+    handleSelect = (value, event) => {
+      if (this.props.onChange) this.props.onChange(value, event);
+      this.setState({active: false});
+    };
 
-    return (
-      <div data-react-toolbox='date-picker'>
-        <Input
-          className={classnames(style.input, {[inputClassName]: inputClassName })}
-          error={this.props.error}
-          onMouseDown={this.handleInputMouseDown}
-          label={this.props.label}
-          readOnly
-          type='text'
-          icon={this.props.icon}
-          value={formattedDate}
-        />
-        <DatePickerDialog
-          autoOk={this.props.autoOk}
-          active={this.state.active}
-          className={this.props.className}
-          maxDate={this.props.maxDate}
-          minDate={this.props.minDate}
-          onDismiss={this.handleDismiss}
-          onSelect={this.handleSelect}
-          value={date}
-        />
-      </div>
-    );
+    render () {
+      const { inputClassName, value } = this.props;
+      const inputFormat = this.props.inputFormat || time.formatDate;
+      const date = Object.prototype.toString.call(value) === '[object Date]' ? value : undefined;
+      const formattedDate = date === undefined ? '' : inputFormat(value);
+
+      return (
+        <div data-react-toolbox='date-picker'>
+          <Input
+            className={classnames(this.props.theme.input, {[inputClassName]: inputClassName })}
+            error={this.props.error}
+            onMouseDown={this.handleInputMouseDown}
+            label={this.props.label}
+            readOnly
+            type='text'
+            icon={this.props.icon}
+            value={formattedDate}
+          />
+          <DatePickerDialog
+            autoOk={this.props.autoOk}
+            active={this.state.active}
+            className={this.props.className}
+            maxDate={this.props.maxDate}
+            minDate={this.props.minDate}
+            onDismiss={this.handleDismiss}
+            onSelect={this.handleSelect}
+            theme={this.props.theme}
+            value={date}
+          />
+        </div>
+      );
+    }
   }
-}
 
-export default DatePicker;
+  return DatePicker;
+};
+
+const Calendar = calendarFactory(InjectIconButton);
+const DatePickerDialog = datePickerDialogFactory(InjectDialog, Calendar);
+const DatePicker = factory(InjectInput, DatePickerDialog);
+
+export default themr(DATE_PICKER)(DatePicker);
+export { factory as datePickerFactory };
+export { DatePicker };

@@ -1,23 +1,21 @@
-import React, { PropTypes, Component } from 'react';
-import ClassNames from 'classnames';
-import style from './style';
+import React, { PropTypes } from 'react';
+import { themr } from 'react-css-themr';
+import classnames from 'classnames';
+import { CARD } from '../identifiers.js';
 
-class CardText extends Component {
-  static propTypes = {
-    children: PropTypes.any,
-    className: PropTypes.string
-  };
+const CardText = ({ children, className, theme, ...other }) => (
+  <div className={classnames(theme.cardText, className)} {...other}>
+    {typeof children === 'string' ? <p>{children}</p> : children}
+  </div>
+);
 
-  render () {
-    const { children, className, ...other } = this.props;
-    const classes = ClassNames(style.cardText, className);
+CardText.propTypes = {
+  children: PropTypes.any,
+  className: PropTypes.string,
+  theme: PropTypes.shape({
+    cardText: PropTypes.string
+  })
+};
 
-    return (
-      <div className={classes} {...other}>
-        {typeof children === 'string' ? <p>{children}</p> : children}
-      </div>
-    );
-  }
-}
-
-export default CardText;
+export default themr(CARD)(CardText);
+export { CardText };

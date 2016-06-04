@@ -13,7 +13,7 @@ const AppBarTest = () => (
 );
 ```
 
-Coming soon, the `AppBar` component will support arbitrary content attributes for left and right content and a title, for now it's just a wrapper.
+If you want to provide a theme via context, the component key is `RTAppBar`.
 
 ## Properties
 
@@ -22,3 +22,12 @@ Coming soon, the `AppBar` component will support arbitrary content attributes fo
 | `className` | `String`  | `''`     | Set a class for the root component.|
 | `fixed`     | `Bool`    | `false`  | Determine if the bar should have position `fixed` or `relative`.|
 | `flat`      | `Bool`    | `false`  | If true, the AppBar shows a shadow.|
+| `theme`     | `Object`  | `null`   | Classnames object defining the component style.|
+
+## Theme
+
+| Name     | Description|
+|:---------|:-----------|
+| `appBar` | Used for the component root element.|
+| `fixed`  | Added to the root element when the app bar is fixed.|
+| `flat`   | Added to the root element when the app bar is flat.|

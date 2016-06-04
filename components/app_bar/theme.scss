@@ -1,0 +1,38 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+
+.appBar {
+  display: flex;
+  height: $appbar-height;
+  align-items: center;
+  padding: 0 $appbar-h-padding;
+  color: $appbar-contrast;
+  background: $appbar-color;
+
+  @media screen and (max-width: $layout-breakpoint-xxs) and (orientation: portrait) {
+    height: $appbar-height-m-portrait;
+  }
+
+  @media screen and (max-width: $layout-breakpoint-xs) and (orientation: landscape) {
+    height: $appbar-height-m-landscape;
+  }
+
+  &:not(.flat) {
+    z-index: $z-index-high;
+    box-shadow: 0 2px 5px rgba(0,0,0,.26);
+  }
+
+  &.fixed {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: $z-index-highest;
+  }
+
+  a {
+    color: $appbar-contrast;
+  }
+}

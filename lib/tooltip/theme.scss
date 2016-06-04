@@ -1,0 +1,34 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+
+.tooltipWrapper {
+  position: relative;
+}
+
+.tooltip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  z-index: $z-index-higher;
+  display: block;
+  max-width: $tooltip-max-width;
+  padding: $tooltip-padding;
+  margin: $tooltip-margin 0;
+  font-family: Roboto, sans-serif;
+  font-size: $tooltip-font-size;
+  font-weight: $font-weight-bold;
+  line-height: $font-size-small;
+  color: $tooltip-color;
+  text-align: center;
+  text-transform: none;
+  background: $tooltip-background;
+  border-radius: $tooltip-border-radius;
+  transition: $animation-curve-default $tooltip-animation-duration transform;
+  transform: scale(0) translateX(-50%);
+  transform-origin: top left;
+  &.tooltipActive {
+    transform: scale(1) translateX(-50%);
+  }
+}

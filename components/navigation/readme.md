@@ -23,6 +23,8 @@ const NavigationTest = () => (
 );
 ```
 
+The theming for this component can be provided using the key `RTNavigation`.
+
 ## Properties
 
 | Name            | Type          | Default         | Description|
@@ -31,3 +33,12 @@ const NavigationTest = () => (
 | `className`     | `String`      |                 | Set a custom class styles to style the navigation.|
 | `routes`        | `Array`       |                 | Array of objects similar to actions but that will be rendered as `<Link/>` component definition. |
 | `type`          | `String`      | `horizontal`    | Type of the navigation, it can be `vertical` or `horizontal`.|
+
+## Theming
+
+| Name     | Description|
+|:---------|:-----------|
+| `button` | Used for buttons provided in the component.|
+| `horizontal`  | Used for the root element if the layout is horizontal.|
+| `link`   | Used for links provided in the component.|
+| `vertical`   | Used for the root element if the layout is vertical.|

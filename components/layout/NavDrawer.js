@@ -1,24 +1,25 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
-import style from './style';
+import { themr } from 'react-css-themr';
+import { LAYOUT } from '../identifiers.js';
 
-const NavDrawer = (props) => {
-  const rootClasses = classnames([style.navDrawer], {
-    [style['permanent-' + props.permanentAt]]: props.permanentAt,
-    [style.wide]: (props.width === 'wide'),
-    [style.active]: props.active,
-    [style.pinned]: props.pinned
-  }, props.className);
+const NavDrawer = ({ active, children, className, onOverlayClick, permanentAt, pinned, scrollY, theme, width }) => {
+  const rootClasses = classnames([theme.navDrawer], {
+    [theme[permanentAt + 'Permanent']]: permanentAt,
+    [theme.wide]: (width === 'wide'),
+    [theme.active]: active,
+    [theme.pinned]: pinned
+  }, className);
 
-  const drawerClasses = classnames(style.drawerContent, {
-      [style.scrollY]: props.scrollY
+  const drawerClasses = classnames(theme.drawerContent, {
+      [theme.scrollY]: scrollY
   });
 
   return (
-    <div data-react-toolbox='nav-drawer' className={rootClasses} onClick={props.onOverlayClick}>
-      <div data-react-toolbox='nav-drawer-scrim' className={style.scrim}>
+    <div data-react-toolbox='nav-drawer' className={rootClasses} onClick={onOverlayClick}>
+      <div data-react-toolbox='nav-drawer-scrim' className={theme.scrim}>
         <aside data-react-toolbox='nav-drawer-content' className={drawerClasses}>
-          {props.children}
+          {children}
         </aside>
       </div>
     </div>
@@ -26,14 +27,29 @@ const NavDrawer = (props) => {
 };
 
 NavDrawer.propTypes = {
-  active: React.PropTypes.bool,
-  children: React.PropTypes.any,
-  className: React.PropTypes.string,
-  onOverlayClick: React.PropTypes.func,
-  permanentAt: React.PropTypes.oneOf(['sm', 'md', 'lg', 'xl', 'xxl', 'xxxl']),
-  pinned: React.PropTypes.bool,
-  scrollY: React.PropTypes.bool,
-  width: React.PropTypes.oneOf(['normal', 'wide'])
+  active: PropTypes.bool,
+  children: PropTypes.any,
+  className: PropTypes.string,
+  onOverlayClick: PropTypes.func,
+  permanentAt: PropTypes.oneOf(['sm', 'md', 'lg', 'xl', 'xxl', 'xxxl']),
+  pinned: PropTypes.bool,
+  scrollY: PropTypes.bool,
+  theme: PropTypes.shape({
+    active: PropTypes.string,
+    drawerContent: PropTypes.string,
+    lgPermanent: PropTypes.string,
+    mdPermanent: PropTypes.string,
+    navDrawer: PropTypes.string,
+    pinned: PropTypes.string,
+    scrim: PropTypes.string,
+    scrollY: PropTypes.string,
+    smPermanent: PropTypes.string,
+    wide: PropTypes.string,
+    xlPermanent: PropTypes.string,
+    xxlPermanent: PropTypes.string,
+    xxxlPermanent: PropTypes.string
+  }),
+  width: PropTypes.oneOf(['normal', 'wide'])
 };
 
 NavDrawer.defaultProps = {
@@ -43,4 +59,5 @@ NavDrawer.defaultProps = {
   width: 'normal'
 };
 
-export default NavDrawer;
+export default themr(LAYOUT)(NavDrawer);
+export { NavDrawer };

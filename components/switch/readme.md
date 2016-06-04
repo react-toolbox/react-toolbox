@@ -42,6 +42,8 @@ class SwitchTest extends React.Component {
 }
 ```
 
+This component can be styled by context providing a theme with the key `RTSwitch` through the theme provider.
+
 ## Properties
 
 | Name              | Type          | Default       | Description|
@@ -54,3 +56,16 @@ class SwitchTest extends React.Component {
 | `onBlur`       | `Function`       |               | Callback function that is fired when when the switch is blurred.|
 | `onChange`     | `Function`       |               | Callback function that is fired when the component's value changes.|
 | `onFocus`      | `Function`       |               | Callback function that is fired when the switch is focused.|
+
+## Theme
+
+| Name     | Description|
+|:---------|:-----------|
+| `disabled` | Used for the root element if the component is disabled.|
+| `field` | Used for the root element if the component is not disabled.|
+| `input` | Used for the input element.|
+| `off` | Used for a wrapper around the thumb if checked is `false`.|
+| `on` | Used for a wrapper around the thumb if checked is `true`.|
+| `ripple` | Used for the ripple inside the switch.|
+| `text` | Used for the text label element.|
+| `thumb` | Used for the thumb element.|

@@ -1,33 +1,39 @@
-import React from 'react';
-import ClassNames from 'classnames';
-import style from './style';
-import FontIcon from '../font_icon';
+import React, { PropTypes } from 'react';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
+import { LINK } from '../identifiers.js';
+import FontIcon from '../font_icon/FontIcon.js';
 
-const Link = ({children, ...props}) => {
-  const className = ClassNames(style.root, {
-    [style.active]: props.active
-  }, props.className);
+const Link = ({active, children, className, count, icon, label, theme, ...others}) => {
+  const _className = classnames(theme.link, {
+    [theme.active]: active
+  }, className);
 
   return (
-    <a {...props} data-react-toolbox='link'className={className}>
-      {props.icon ? <FontIcon className={style.icon} value={props.icon} /> : null}
-      {props.label ? <abbr>{props.label}</abbr> : null}
-      {props.count && parseInt(props.count) !== 0 ? <small>{props.count}</small> : null}
-      {children ? children : null}
+    <a data-react-toolbox='link' className={_className} {...others}>
+      {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
+      {label ? <abbr>{label}</abbr> : null}
+      {count && parseInt(count) !== 0 ? <small>{count}</small> : null}
+      {children}
     </a>
   );
 };
 
 Link.propTypes = {
-  active: React.PropTypes.bool,
-  children: React.PropTypes.node,
-  className: React.PropTypes.string,
-  count: React.PropTypes.number,
-  icon: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.element
+  active: PropTypes.bool,
+  children: PropTypes.node,
+  className: PropTypes.string,
+  count: PropTypes.number,
+  icon: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element
   ]),
-  label: React.PropTypes.string
+  label: PropTypes.string,
+  theme: PropTypes.shape({
+    active: PropTypes.string,
+    icon: PropTypes.string,
+    link: PropTypes.string
+  })
 };
 
 Link.defaultProps = {
@@ -35,4 +41,5 @@ Link.defaultProps = {
   className: ''
 };
 
-export default Link;
+export default themr(LINK)(Link);
+export { Link };

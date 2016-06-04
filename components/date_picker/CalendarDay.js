@@ -1,15 +1,19 @@
-import React from 'react';
-import ClassNames from 'classnames';
-import time from '../utils/time';
-import style from './style.calendar';
+import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
+import time from '../utils/time.js';
 
-class Day extends React.Component {
+class Day extends Component {
   static propTypes = {
-    day: React.PropTypes.number,
-    disabled: React.PropTypes.bool,
-    onClick: React.PropTypes.func,
-    selectedDate: React.PropTypes.object,
-    viewDate: React.PropTypes.object
+    day: PropTypes.number,
+    disabled: PropTypes.bool,
+    onClick: PropTypes.func,
+    selectedDate: PropTypes.object,
+    theme: PropTypes.shape({
+      active: PropTypes.string,
+      day: PropTypes.string,
+      disabled: PropTypes.string
+    }),
+    viewDate: PropTypes.object
   };
 
   dayStyle () {
@@ -28,9 +32,9 @@ class Day extends React.Component {
   }
 
   render () {
-    const className = ClassNames(style.day, {
-      [style.active]: this.isSelected(),
-      [style.disabled]: this.props.disabled
+    const className = classnames(this.props.theme.day, {
+      [this.props.theme.active]: this.isSelected(),
+      [this.props.theme.disabled]: this.props.disabled
     });
 
     return (

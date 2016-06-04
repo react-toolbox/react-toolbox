@@ -1,34 +1,43 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import ClassNames from 'classnames';
-import style from './style';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
+import { RIPPLE } from '../identifiers.js';
 import events from '../utils/events';
 import prefixer from '../utils/prefixer';
 
 const defaults = {
   centered: false,
   className: '',
-  spread: 2
+  spread: 2,
+  theme: {}
 };
 
-const Ripple = (options = {}) => {
+const rippleFactory = (options = {}) => {
   const {
     centered: defaultCentered,
     className: defaultClassName,
     spread: defaultSpread,
+    theme: defaultTheme,
     ...props
   } = {...defaults, ...options};
 
   return ComposedComponent => {
-    return class RippledComponent extends React.Component {
+    class RippledComponent extends Component {
       static propTypes = {
-        children: React.PropTypes.any,
-        disabled: React.PropTypes.bool,
-        onRippleEnded: React.PropTypes.func,
-        ripple: React.PropTypes.bool,
-        rippleCentered: React.PropTypes.bool,
-        rippleClassName: React.PropTypes.string,
-        rippleSpread: React.PropTypes.number
+        children: PropTypes.any,
+        disabled: PropTypes.bool,
+        onRippleEnded: PropTypes.func,
+        ripple: PropTypes.bool,
+        rippleCentered: PropTypes.bool,
+        rippleClassName: PropTypes.string,
+        rippleSpread: PropTypes.number,
+        theme: PropTypes.shape({
+          ripple: PropTypes.string,
+          rippleActive: PropTypes.string,
+          rippleRestarting: PropTypes.string,
+          rippleWrapper: PropTypes.string
+        })
       };
 
       static defaultProps = {
@@ -110,9 +119,9 @@ const Ripple = (options = {}) => {
             ...other
           } = this.props;
 
-          const rippleClassName = ClassNames(style.normal, {
-            [style.active]: this.state.active,
-            [style.restarting]: this.state.restarting
+          const rippleClassName = classnames(this.props.theme.ripple, {
+            [this.props.theme.rippleActive]: this.state.active,
+            [this.props.theme.rippleRestarting]: this.state.restarting
           }, className);
 
           const { left, top, width } = this.state;
@@ -124,15 +133,17 @@ const Ripple = (options = {}) => {
           return (
             <ComposedComponent {...other} onMouseDown={this.handleMouseDown}>
               {children ? children : null}
-              <span data-react-toolbox='ripple' className={style.wrapper} {...props}>
+              <span data-react-toolbox='ripple' className={this.props.theme.rippleWrapper} {...props}>
                 <span ref='ripple' role='ripple' className={rippleClassName} style={rippleStyle} />
               </span>
             </ComposedComponent>
           );
         }
       }
-    };
+    }
+
+    return themr(RIPPLE, defaultTheme)(RippledComponent);
   };
 };
 
-export default Ripple;
+export default rippleFactory;

@@ -22,19 +22,3 @@ var fields : [
 | **onSubmit**      | Function      |                 | Dispatch callback when user clicks on submit <Button/> |
 | **onValid**       | Function      |                 | Dispatch callback when all required fields are full-filled.|
 | **Storage**       | String        |                 | Sets a localStorage key for save all current field values.|
-
-## Methods
-
-#### getValue
-Returns the value of the form.
-
-```
-form_instance.getValue();
-```
-
-#### setValue
-Sets the value of the form component.
-
-```
-form_instance.setValue(newValue);
-```

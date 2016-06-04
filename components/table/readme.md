@@ -49,6 +49,8 @@ class TableTest extends React.Component {
 }
 ```
 
+This component can be styled by context providing a theme with the key `RTTable` through the theme provider.
+
 ## Properties
 
 | Name              | Type            | Default         | Description|
@@ -62,3 +64,13 @@ class TableTest extends React.Component {
 | `multiSelectable` | `Boolean`       | `true`          | If true, the header and each row will display a checkbox to allow the user to select multiple rows.|
 | `selected`        | `Array`         |                 | Array of indexes of the items in the source that should appear as selected.|
 | `source`          | `Array`         |                 | Array of objects representing each item to show.|
+
+## Theme
+
+| Name     | Description|
+|:---------|:-----------|
+| `editable` | It will be added to a row in case it is editable.|
+| `row` | Used for the row element.|
+| `selectable` | It will be added to a row in case it is selectable.|
+| `selected` | Added to a row in case it is selected.|
+| `table` | Classname used for the root element.|

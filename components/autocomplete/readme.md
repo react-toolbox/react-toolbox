@@ -37,6 +37,8 @@ class AutocompleteTest extends React.Component {
 }
 ```
 
+If you want to provide a theme via context, the component key is `RTAutocomplete`.
+
 ## Properties
 
 | Name                | Type                   | Default         | Description|
@@ -54,3 +56,18 @@ class AutocompleteTest extends React.Component {
 | `value`             | `String` or `Array`    |                 | Value or array of values currently selected component.|
 
 Additional properties will be passed to the Input Component so you can use `hint`, `name` ... etc.
+
+## Theme
+
+| Name     | Description|
+|:---------|:-----------|
+| `active` | Used for a suggestion when it's active.|
+| `autocomplete`  | Used for the root element.|
+| `focus`   | Used when the input is focused.|
+| `input`   | Used to style the `Input` component.|
+| `label`   | Used for the label.|
+| `suggestion`   | Used to style each suggestion.|
+| `suggestions`   | Used to style the suggestions container.|
+| `up`   | Used for the suggestions when it's opening to the top.|
+| `value`   | Classname used for a single value.|
+| `values`   | Classname used for the values container.|

@@ -17,9 +17,13 @@ const MenuTest = () => (
 );
 ```
 
+If you want to provide a theme for any of these subcomponents via context, the component key is `RTMenu`.
+
 ## Menu
 
 This subcomponent is the default wrapper for a menu and is responsible for the opening behavior. Its properties can affect to the Item children.
+
+### Properties
 
 | Name          | Type          | Default     | Description|
 |:-----|:-----|:-----|:-----|
@@ -34,16 +38,26 @@ This subcomponent is the default wrapper for a menu and is responsible for the o
 | `selectable`  | `Boolean`     | `false`     | If true, the menu will keep a value to highlight the active child item. |
 | `selected`    | `Any`         |             | Used for selectable menus. Indicates the current selected value so the child item with this value can be highlighted. |
 
-The menu has state to keep a value with the currently selected item. It also exposes methods to show and hide the menu from the code:
+### Theming
 
-- `getValue` is used to get the current value.
-- `setValue` is used to set a new active value.
-- `show` is used to show the menu.
-- `hide` is used to hide the menu.
+| Name     | Description|
+|:---------|:-----------|
+| `active`   | Added to the root element when menu is active.|
+| `bottomLeft`   | Added to the root when position is bottom left.|
+| `bottomRight`   | Added to the root when position is bottom right.|
+| `menu`   | Used for the root element of the menu.|
+| `menuInner`   | Used for the inner wrapper.|
+| `outline`   | Used to draw the outline.|
+| `rippled`   | Added to the menu in case if should have ripple.|
+| `static`   | Added to the root in case its static.|
+| `topLeft`   | Added to the root when position is top left.|
+| `topRight`   | Added to the root when position is top right.|
 
 ## Icon Menu
 
 As the most usual scenario will be to open the menu from a click in an Icon, we provide this subcomponent implementing this behavior. The `IconMenu` shows an icon and implements a `Menu` under the covers that is shown when is clicked. Some of its properties are transferred to the menu, others to the children:
+
+### Properties
 
 | Name            | Type                  | Default         | Description|
 |:-----|:-----|:-----|:-----|
@@ -59,9 +73,18 @@ As the most usual scenario will be to open the menu from a click in an Icon, we 
 | `selectable`    | `Boolean`             | `false`         | If true, the menu will keep a value to highlight the active child item. |
 | `selected`      | `Any`                 |                 | Used for selectable menus. Indicates the current selected value so the child item with this value can be highlighted. |
 
+### Theming
+
+| Name     | Description|
+|:---------|:-----------|
+| `icon`   | Used for the icon element.|
+| `iconMenu`   | Used for the root element of the icon menu.|
+
 ## Menu Item
 
 The inner component for menus and describes the content of each option. It behaves in a similar way to List Items but simpler.
+
+### Properties
 
 | Name              | Type              | Default     | Description|
 |:-----|:-----|:-----|:-----|
@@ -73,6 +96,17 @@ The inner component for menus and describes the content of each option. It behav
 | `selected`    | `Boolean`             | `false`     | Transferred from the `Menu` component for selectable menus. Indicates if it's the current active option. |
 | `shortcut`    | `String`              | `''`        | Displays shortcut text on the right side of the `caption` attribute. |
 
+### Theming
+
+| Name     | Description|
+|:---------|:-----------|
+| `caption`   | Used for the caption inside the item.|
+| `disabled`   | Added to the root element if it's disabled.|
+| `icon`   | Used for the icon element if exists.|
+| `menuItem`   | Used as the root class for the component.|
+| `selected`   | Added to the root element in case it's selected.|
+| `shortcut`   | Used for the shortcut element if exists.|
+
 ## Menu Divider
 
-A very simple component that just displays a separator between options. It has no props and no state or methods, just markup.
+A very simple component that just displays a separator between options. It has no props and no state or methods, just markup. Also it accepts a single class for the styling which is `menuDivider`.

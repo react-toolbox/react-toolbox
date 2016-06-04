@@ -1,0 +1,75 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+
+.dialog {
+  display: flex;
+  max-width: 96vw;
+  max-height: 96vh;
+  flex-direction: column;
+  background-color: $dialog-color-white;
+  border-radius: $dialog-border-radius;
+  box-shadow: $zdepth-shadow-5;
+  opacity: 0;
+  transition-delay: $animation-delay;
+  transition-timing-function: $animation-curve-default;
+  transition-duration: $animation-duration;
+  transition-property: opacity, transform;
+  transform: translateY(-$dialog-translate-y);
+  &.active {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+.small {
+  width: 30vw;
+
+  @media screen and (max-width: $layout-breakpoint-sm-tablet) {
+    width: 50vw;
+  }
+
+  @media screen and (max-width: $layout-breakpoint-xs) {
+    width: 75vw;
+  }
+}
+
+.normal {
+  width: 50vw;
+
+  @media screen and (max-width: $layout-breakpoint-xs) {
+    width: 96vw;
+  }
+}
+
+.large {
+  width: 96vw;
+}
+
+.title {
+  @include typo-title();
+  flex-grow: 0;
+  margin-bottom: 1.6 * $unit;
+  color: $dialog-color-title;
+}
+
+.body {
+  flex-grow: 2;
+  padding: $dialog-content-padding;
+  overflow-y: auto;
+  color: $color-text-secondary;
+}
+
+.navigation {
+  flex-grow: 0;
+  padding: $dialog-navigation-padding;
+  text-align: right;
+}
+
+.button {
+  min-width: 0;
+  padding-right: $dialog-navigation-padding;
+  padding-left: $dialog-navigation-padding;
+  margin-left: $dialog-navigation-padding;
+}

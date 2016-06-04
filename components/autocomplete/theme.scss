@@ -1,0 +1,85 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+@import "../input/config";
+
+.autocomplete {
+  position: relative;
+  padding: $unit 0;
+  &.focus {
+    .label {
+      color: $autocomplete-color-primary;
+    }
+    .suggestions {
+      max-height: $autocomplete-overflow-max-height;
+      visibility: visible;
+      box-shadow: $zdepth-shadow-1;
+    }
+  }
+}
+
+.label {
+  font-size: $font-size-tiny;
+  color: $color-text-secondary;
+  transition: color $animation-duration $animation-curve-default;
+}
+
+.values {
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-bottom: $unit / 2;
+}
+
+.value {
+  margin: $autocomplete-value-margin;
+}
+
+.suggestions {
+  @include no-webkit-scrollbar;
+  position: absolute;
+  z-index: $z-index-high;
+  width: 100%;
+  max-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  visibility: hidden;
+  background-color: $autocomplete-suggestions-background;
+  transition-timing-function: $animation-curve-default;
+  transition-duration: $animation-duration;
+  transition-property: max-height, box-shadow;
+  &:not(.up) {
+    margin-top: - $input-padding;
+  }
+  &.up {
+    bottom: 0;
+  }
+}
+
+.suggestion {
+  padding: $autocomplete-suggestion-padding;
+  font-size: $input-field-font-size;
+  cursor: pointer;
+  &.active {
+    background-color: $autocomplete-suggestion-active-background;
+  }
+}
+
+.input {
+  position: relative;
+  &:after {
+    $size: ($input-field-height / 7);
+    $border: $size solid transparent;
+    position: absolute;
+    top: 50%;
+    right: $input-chevron-offset;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    content: "";
+    border-top: $size solid $input-text-bottom-border-color;
+    border-right: $border;
+    border-left: $border;
+    transition: transform $animation-duration $animation-curve-default;
+  }
+}

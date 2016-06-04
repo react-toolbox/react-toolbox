@@ -1,0 +1,8 @@
+$appbar-color: $color-primary-dark !default;
+$appbar-contrast: $color-primary-contrast !default;
+$appbar-title-total-distance: 8 * $unit !default;
+$appbar-height: 6.4 * $unit !default;
+$appbar-height-m-portrait: 5.6 * $unit !default;
+$appbar-height-m-landscape: 4.8 * $unit !default;
+$appbar-h-padding: 2.4 * $unit !default;
+$appbar-title-distance: $appbar-title-total-distance - $appbar-h-padding !default;

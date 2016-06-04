@@ -1,0 +1,131 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "../input/config";
+@import "./config";
+
+.dropdown {
+  position: relative;
+  &:not(.active) {
+    > .values {
+      max-height: 0;
+      visibility: hidden;
+    }
+  }
+  &.active {
+    > .label, > .value {
+      opacity: .5;
+    }
+    > .values {
+      max-height: $dropdown-overflow-max-height;
+      visibility: visible;
+      box-shadow: $zdepth-shadow-1;
+    }
+  }
+  &:not(.up) > .values {
+    top: 0;
+    bottom: auto;
+  }
+  &.up > .values {
+    top: auto;
+    bottom: 0;
+  }
+  &.disabled {
+    pointer-events: none;
+    cursor: normal;
+  }
+}
+
+.value {
+  > input {
+    cursor: pointer;
+  }
+  &:after {
+    $size: ($input-field-height / 7);
+    $border: $size solid transparent;
+    position: absolute;
+    top: 50%;
+    right: $input-chevron-offset;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    content: "";
+    border-top: $size solid $input-text-bottom-border-color;
+    border-right: $border;
+    border-left: $border;
+    transition: transform $animation-duration $animation-curve-default;
+  }
+}
+.field {
+  position: relative;
+  padding: $input-padding 0;
+  cursor: pointer;
+  &.errored {
+    padding-bottom: 0;
+    > .label {
+      color: $input-text-error-color;
+    }
+    > .templateValue {
+      border-bottom: 1px solid $input-text-error-color;
+    }
+  }
+  &.disabled {
+    pointer-events: none;
+    cursor: normal;
+    > .templateValue {
+      border-bottom-style: dotted;
+      opacity: .7;
+    }
+  }
+}
+
+.templateValue {
+  position: relative;
+  min-height: $input-field-height;
+  padding: $input-field-padding 0;
+  color: $color-text;
+  background-color: $input-text-background-color;
+  border-bottom: 1px solid $input-text-bottom-border-color;
+}
+
+.label {
+  position: absolute;
+  top: $input-focus-label-top;
+  left: 0;
+  font-size: $input-label-font-size;
+  line-height: $input-field-font-size;
+  color: $input-text-label-color;
+}
+
+.error {
+  margin-bottom: - $input-underline-height;
+  font-size: $input-label-font-size;
+  line-height: $input-underline-height;
+  color: $input-text-error-color;
+}
+
+.values {
+  @include no-webkit-scrollbar;
+  position: absolute;
+  z-index: $z-index-high;
+  width: 100%;
+  overflow-y: auto;
+  list-style: none;
+  background-color: $dropdown-color-white;
+  border-radius: $dropdown-value-border-radius;
+  transition-timing-function: $animation-curve-default;
+  transition-duration: $animation-duration;
+  transition-property: max-height, box-shadow;
+  > * {
+    position: relative;
+    padding: $unit;
+    overflow: hidden;
+    cursor: pointer;
+    &:hover {
+      background-color: $dropdown-value-hover-background;
+    }
+    &.selected {
+      color: $dropdown-color-primary;
+    }
+  }
+}

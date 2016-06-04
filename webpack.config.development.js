@@ -6,7 +6,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   context: __dirname,
-	devtool: 'inline-source-map',
+  devtool: 'inline-source-map',
   entry: [
     'webpack-hot-middleware/client',
     './spec/index.js'
@@ -25,7 +25,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel',
-        exclude: /(node_modules)/
+        exclude: [/(node_modules)/, /react-css-themr/]
       }, {
         test: /\.(scss|css)$/,
         loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass?sourceMap')

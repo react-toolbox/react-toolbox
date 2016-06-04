@@ -1,0 +1,311 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+@import "./mixins";
+
+.layout {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  overflow-y: hidden;
+
+  .navDrawer {
+    width: 0;
+    min-width: 0;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    transition-timing-function: $animation-curve-default;
+    transition-duration: $animation-duration;
+    transition-property: width, min-width;
+
+    .scrim {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: $z-index-highest;
+      width: 0;
+      height: 100%;
+      background-color: rgba($drawer-overlay-color, 0);
+      transition: background-color $animation-duration $animation-curve-default, width 10ms linear $animation-duration;
+    }
+
+    .drawerContent {
+      @include shadow-2dp();
+      display: flex;
+      width: $navigation-drawer-mobile-width;
+      max-width: $navigation-drawer-max-mobile-width;
+      height: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: space-between;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      color: $drawer-text-color;
+      pointer-events: none;
+      background-color: $drawer-background-color;
+      border-right: 1px solid $drawer-border-color;
+      transition: transform $animation-duration $animation-curve-default;
+      transform: translateX(-100%);
+
+      &.scrollY {
+        overflow-y: auto;
+      }
+    }
+
+    &.pinned {
+      @include open();
+      width: $navigation-drawer-mobile-width;
+      max-width: $navigation-drawer-max-mobile-width;
+    }
+
+    &.active {
+      &:not(.pinned) {
+        @include open();
+        .scrim {
+          width: 100%;
+          background-color: rgba($drawer-overlay-color, $drawer-overlay-opacity);
+          transition: background-color $animation-duration $animation-curve-default;
+        }
+      }
+    }
+
+    // Larger than mobile width drawer
+    @media screen and (min-width: $layout-breakpoint-xs) {
+      &.pinned {
+        width: $navigation-drawer-desktop-width;
+        max-width: $navigation-drawer-desktop-width;
+      }
+
+      .drawerContent {
+        width: $navigation-drawer-desktop-width;
+        max-width: $navigation-drawer-desktop-width;
+      }
+
+      &.wide {
+        &.pinned {
+          width: $navigation-drawer-max-desktop-width;
+          max-width: $navigation-drawer-max-desktop-width;
+        }
+
+        .drawerContent {
+          width: $navigation-drawer-max-desktop-width;
+          max-width: $navigation-drawer-max-desktop-width;
+        }
+      }
+    }
+
+    // Permanent screen, ignore .active and make part of layout
+    @media screen and (min-width: $layout-breakpoint-sm) {
+      &.smPermanent {
+        @include permanent();
+      }
+    }
+
+    @media screen and (min-width: $layout-breakpoint-md) {
+      &.mdPermanent {
+        @include permanent();
+      }
+    }
+
+    @media screen and (min-width: $layout-breakpoint-lg) {
+      &.lgPermanent {
+        @include permanent();
+      }
+    }
+
+    @media screen and (min-width: $layout-breakpoint-xl) {
+      &.xlPermanent {
+        @include permanent();
+      }
+    }
+
+    @media screen and (min-width: $layout-breakpoint-xxl) {
+      &.xxlPermanent {
+        @include permanent();
+      }
+    }
+
+    @media screen and (min-width: $layout-breakpoint-xxxl) {
+      &.xxxlPermanent {
+        @include permanent();
+      }
+    }
+  }
+
+  & .layout {
+    .scrim {
+      z-index: $z-index-highest - 1;
+    }
+    & .layout {
+      .scrim {
+        z-index: $z-index-highest - 2;
+      }
+    }
+  }
+
+  .panel {
+    position: relative;
+    display: flex;
+    height: 100%;
+    flex: 1;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    overflow-y: hidden;
+
+    &.scrollY {
+      overflow-y: auto;
+    }
+  }
+
+  .sidebar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: $z-index-highest - 1;
+    width: 0;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    color: $drawer-text-color;
+    background-color: $drawer-background-color;
+    transition-timing-function: $animation-curve-default;
+    transition-duration: $animation-duration;
+    transition-property: width;
+
+    .sidebarContent {
+      display: flex;
+      height: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: space-between;
+      overflow-y: hidden;
+
+      &.scrollY {
+        overflow-y: auto;
+      }
+    }
+
+    $increments: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+
+    @each $increment in $increments {
+      &.width-#{$increment} {
+        $mobile: $standard-increment-mobile * $increment;
+        $desktop: $standard-increment-desktop * $increment;
+
+        .sidebarContent {
+          min-width: 100%;
+        }
+
+        &.pinned {
+          width: 100%;
+        }
+
+        @if $increment < 10 {
+          @media screen and (min-width: $layout-breakpoint-xs) and (orientation: landscape) {
+            position: relative;
+
+            .sidebarContent {
+              min-width: $mobile;
+            }
+
+            &.pinned {
+              width: $mobile;
+            }
+          }
+
+          @media screen and (min-width: $layout-breakpoint-xs) and (orientation: portrait) {
+            position: relative;
+
+            .sidebarContent {
+              min-width: $desktop;
+            }
+
+            &.pinned {
+              width: $desktop;
+            }
+          }
+        }
+
+        @if $increment < 11 {
+          @media screen and (min-width: $layout-breakpoint-sm-tablet) {
+            position: relative;
+
+            .sidebarContent {
+              min-width: $desktop;
+            }
+
+            &.pinned {
+              width: $desktop;
+            }
+          }
+        }
+
+        @media screen and (min-width: $layout-breakpoint-sm) {
+          position: relative;
+
+          .sidebarContent {
+            min-width: $desktop;
+          }
+
+          &.pinned {
+            width: $desktop;
+          }
+        }
+      }
+    }
+
+
+    $percentages: (25, 33, 50, 66, 75);
+
+    &.width-100 {
+      position: absolute;
+
+      .sidebarContent {
+        min-width: 100%;
+      }
+
+      &.pinned {
+        width: 100%;
+      }
+    }
+
+    @each $pct in $percentages {
+      &.width-#{$pct} {
+        position: absolute;
+
+        .sidebarContent {
+          min-width: 100%;
+        }
+
+        &.pinned {
+          width: 100%;
+        }
+      }
+    }
+
+    @media screen and (min-width: $layout-breakpoint-sm-tablet) {
+      @each $pct in $percentages {
+        &.width-#{$pct} {
+          position: relative;
+
+          .sidebarContent {
+            min-width: $pct * 1%;
+          }
+
+          &.pinned {
+            width: $pct * 1%;
+          }
+        }
+      }
+    }
+  }
+}

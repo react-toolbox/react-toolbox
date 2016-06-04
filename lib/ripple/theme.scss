@@ -1,0 +1,42 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+
+%ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: $z-index-high;
+  pointer-events: none;
+  background-color: currentColor;
+  border-radius: 50%;
+  transform-origin: 50% 50%;
+}
+
+.rippleWrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-normal;
+  pointer-events: none;
+}
+
+.ripple {
+  @extend %ripple;
+  transition-duration: $ripple-duration;
+  &.rippleRestarting {
+    opacity: $ripple-final-opacity;
+    transition-property: none;
+  }
+  &.rippleActive {
+    opacity: $ripple-final-opacity;
+    transition-property: transform;
+  }
+  &:not(.rippleActive):not(.rippleRestarting) {
+    opacity: 0;
+    transition-property: opacity, transform;
+  }
+}

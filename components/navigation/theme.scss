@@ -1,0 +1,26 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+
+.horizontal {
+  > [data-react-toolbox="button"], > [data-react-toolbox="link"] {
+    display: inline-block;
+    margin: 0 $navigation-space / 2;
+  }
+}
+
+.vertical {
+  > [data-react-toolbox="button"], > [data-react-toolbox="link"] {
+    display: block;
+    margin: $navigation-space / 2;
+  }
+}
+
+.vertical, .horizontal {
+  padding: $navigation-space / 2;
+
+  > [data-react-toolbox="link"] {
+    color: $navigation-color;
+  }
+}

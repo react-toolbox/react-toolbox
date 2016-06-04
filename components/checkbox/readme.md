@@ -37,6 +37,8 @@ class TestCheckbox extends React.Component {
 }
 ```
 
+If you want to provide a theme via context, the component key is `RTCheckbox`.
+
 ## Properties
 
 | Name              | Type          | Default         | Description|
@@ -50,9 +52,14 @@ class TestCheckbox extends React.Component {
 | `onChange`      | `Function`      |                 | Callback called when the checkbox value is changed.|
 | `onFocus`       | `Function`      |                 | Callback called when the checkbox is focused |
 
-## Methods
+## Theme
 
-This component exposes methods to communicate with the `input` DOM component:
-
-- `blur` to blur the input.
-- `focus` to focus the input.
+| Name     | Description|
+|:---------|:-----------|
+| `check`  | Used as root in the check element.|
+| `checked`  | Used for the check element when it's checked.|
+| `disabled`   | Used when the component is disabled.|
+| `field`   | Used as the root class of the component.|
+| `input`   | Used for the input element.|
+| `ripple`   | Used for the ripple component.|
+| `text`   | Used for the text label.|

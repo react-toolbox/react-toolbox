@@ -1,20 +1,21 @@
-import expect from 'expect';
-import sinon from 'sinon';
-import utils from '../../utils/testing';
-import style from '../../slider/style';
-import ProgressBar from '../../progress_bar';
-import Input from '../../input';
-import Slider from '../index';
+import React from 'react';
 import TestUtils from 'react-addons-test-utils';
+import sinon from 'sinon';
+import expect from 'expect';
+import { ProgressBar } from '../../progress_bar/ProgressBar.js';
+import Input, { Input as RawInput } from '../../input/Input.js';
+import Slider, { Slider as RawSlider } from '../Slider.js';
+import utils from '../../utils/testing';
+import theme from '../theme.scss';
 
 describe('Slider', function () {
-  let props, state, slider, progress, input, onChange;
+  let slider, progress, input, onChange;
 
   describe('#positionToValue', function () {
     before(function () {
-      props = { min: -500, max: 500 };
-      state = { sliderStart: 500, sliderLength: 100 };
-      slider = utils.renderComponent(Slider, props, state);
+      const tree = TestUtils.renderIntoDocument(<Slider min={-500} max={500} />);
+      slider = TestUtils.findRenderedComponentWithType(tree, RawSlider);
+      slider.setState({ sliderStart: 500, sliderLength: 100 });
     });
 
     it('returns min when position is less than origin', function () {
@@ -32,8 +33,8 @@ describe('Slider', function () {
 
   describe('#trimValue', function () {
     before(function () {
-      props = { min: 0, max: 100, step: 0.1 };
-      slider = utils.renderComponent(Slider, props);
+      const tree = TestUtils.renderIntoDocument(<Slider min={0} max={100} step={0.1} />);
+      slider = TestUtils.findRenderedComponentWithType(tree, RawSlider);
     });
 
     it('rounds to the proper number', function () {
@@ -52,8 +53,8 @@ describe('Slider', function () {
 
   describe('#valueForInput', function () {
     before(function () {
-      props = { min: 0, max: 100, step: 0.01 };
-      slider = utils.renderComponent(Slider, props);
+      const tree = TestUtils.renderIntoDocument(<Slider min={0} max={100} step={0.01} />);
+      slider = TestUtils.findRenderedComponentWithType(tree, RawSlider);
     });
 
     it('returns a fixed number when an integer is given', function () {
@@ -67,16 +68,17 @@ describe('Slider', function () {
 
   describe('#knobOffset', function () {
     it('returns the corresponding offset for a given value and slider length/start', function () {
-      props = { min: -500, max: 500, value: -250 };
-      state = { sliderStart: 500, sliderLength: 100 };
-      slider = utils.renderComponent(Slider, props, state);
+      const tree = TestUtils.renderIntoDocument(<Slider min={-500} max={500} value={-250} />);
+      slider = TestUtils.findRenderedComponentWithType(tree, RawSlider);
+      slider.setState({ sliderStart: 500, sliderLength: 100 });
       expect(slider.knobOffset()).toEqual(25);
     });
   });
 
   describe('#render', function () {
     it('contains a linear progress bar with proper properties', function () {
-      slider = utils.renderComponent(Slider, {min: 100, max: 1000, value: 140});
+      const tree = TestUtils.renderIntoDocument(<Slider min={100} max={1000} value={140} />);
+      slider = TestUtils.findRenderedComponentWithType(tree, RawSlider);
       progress = TestUtils.findRenderedComponentWithType(slider, ProgressBar);
       expect(progress.props.mode).toEqual('determinate');
       expect(progress.props.type).toEqual('linear');
@@ -86,26 +88,27 @@ describe('Slider', function () {
     });
 
     it('contains an input component if its editable', function () {
-      slider = utils.renderComponent(Slider, {editable: true, value: 130});
+      const tree = TestUtils.renderIntoDocument(<Slider editable value={130} />);
+      slider = TestUtils.findRenderedComponentWithType(tree, RawSlider);
       input = TestUtils.findRenderedComponentWithType(slider, Input);
       expect(parseInt(input.props.value)).toEqual(slider.props.value);
     });
 
     it('contains the proper number of snaps when snapped', function () {
-      slider = utils.shallowRenderComponent(Slider, {editable: true, pinned: true});
-      expect(slider.props.className).toContain(style.ring);
-      expect(slider.props.className).toContain(style.pinned);
-      slider = utils.shallowRenderComponent(Slider, {editable: true, value: 50});
-      expect(slider.props.className).toNotContain(style.ring);
+      slider = utils.shallowRenderComponent(RawSlider, {editable: true, pinned: true, theme});
+      expect(slider.props.className).toContain(theme.ring);
+      expect(slider.props.className).toContain(theme.pinned);
+      slider = utils.shallowRenderComponent(RawSlider, {editable: true, value: 50, theme});
+      expect(slider.props.className).toNotContain(theme.ring);
     });
   });
 
   describe('#events', function () {
     beforeEach(function () {
       onChange = sinon.spy();
-      props = { min: -500, max: 500, onChange };
-      state = { sliderStart: 0, sliderLength: 1000 };
-      slider = utils.renderComponent(Slider, props, state);
+      const tree = TestUtils.renderIntoDocument(<Slider min={-500} max={500} onChange={onChange} />);
+      slider = TestUtils.findRenderedComponentWithType(tree, RawSlider);
+      slider.setState({ sliderStart: 0, sliderLength: 1000 });
       slider.handleResize = (event, callback) => { callback(); };
     });
 
@@ -132,7 +135,9 @@ describe('Slider', function () {
     });
 
     it('changes input value when slider changes', function () {
-      slider = utils.renderComponent(Slider, {editable: true, onChange}, {sliderStart: 0, sliderLength: 1000});
+      const tree = TestUtils.renderIntoDocument(<Slider editable onChange={onChange} />);
+      slider = TestUtils.findRenderedComponentWithType(tree, RawSlider);
+      slider.setState({sliderStart: 0, sliderLength: 1000});
       slider.handleResize = (event, callback) => { callback(); };
       input = TestUtils.findRenderedComponentWithType(slider, Input);
       TestUtils.Simulate.mouseDown(slider.refs.slider, { pageX: 900 });
@@ -141,8 +146,9 @@ describe('Slider', function () {
     });
 
     it('changes its value when input is blurred', function () {
-      slider = utils.renderComponent(Slider, {editable: true, value: 50, onChange});
-      input = TestUtils.findRenderedComponentWithType(slider, Input);
+      const tree = TestUtils.renderIntoDocument(<Slider editable value={50} onChange={onChange} />);
+      slider = TestUtils.findRenderedComponentWithType(tree, RawSlider);
+      input = TestUtils.findRenderedComponentWithType(slider, RawInput);
       TestUtils.Simulate.change(input.refs.input, {target: {value: '80'}});
       TestUtils.Simulate.blur(input.refs.input);
       expect(onChange.called).toEqual(true);
@@ -151,7 +157,9 @@ describe('Slider', function () {
 
     it('calls onChange callback when the value is changed', function () {
       const onChangeSpy = sinon.spy();
-      slider = utils.renderComponent(Slider, {onChange: onChangeSpy}, {sliderStart: 0, sliderLength: 1000});
+      const tree = TestUtils.renderIntoDocument(<Slider onChange={onChangeSpy} />);
+      slider = TestUtils.findRenderedComponentWithType(tree, RawSlider);
+      slider.setState({sliderStart: 0, sliderLength: 1000});
       TestUtils.Simulate.mouseDown(slider.refs.slider, { pageX: 900 });
       expect(onChangeSpy.called).toEqual(true);
     });

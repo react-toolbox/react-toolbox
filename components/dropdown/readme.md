@@ -14,9 +14,7 @@ const countries = [
 ];
 
 class DropdownTest extends React.Component {
-  state = {
-    value: 'ES-es',
-  };
+  state = { value: 'ES-es' };
 
   handleChange = (value) => {
     this.setState({value: value});
@@ -35,19 +33,38 @@ class DropdownTest extends React.Component {
 }
 ```
 
+If you want to provide a theme via context, the component key is `RTDropdown`.
+
 ## Properties
 
-| Name            | Type            | Default         | Description |
-|:-----|:-----|:-----|:-----|
-| `allowBlank`    | `Boolean`       | `true`          | If true the dropdown will preselect the first item if the supplied value matches none of the options' values.|
-| `auto`          | `Boolean`       | `true`          | If true, the dropdown will open up or down depending on the position in the screen.|
-| `className`     | `String`        | `''`            | Set the class to give custom styles to the dropdown.|
-| `disabled`      | `Boolean`       | `false`         | Set the component as disabled.|
-| `error`         | `String`        |                 | Give an error string to display under the field.|
-| `label`         | `String`        |                 | The text string to use for the floating label element.|
-| `onBlur`        | `Function`      |                 | Callback function that is fired when the component is blurred.|
-| `onChange`      | `Function`      |                 | Callback function that is fired when the component's value changes.|
-| `onFocus`       | `Function`      |                 | Callback function that is fired when the component is focused.|
-| `source`        | `Array`         |                 | Array of data objects with the data to represent in the dropdown.|
-| `template`      | `Function`      |                 | Callback function that returns a JSX template to represent the element.|
-| `value`         | `String`        |                 | Default value using JSON data.|
+| Name         | Type       | Default | Description |
+|:-------------|:-----------|:--------|:------------|
+| `allowBlank` | `Boolean`  | `true`  | If true the dropdown will preselect the first item if the supplied value matches none of the options' values.|
+| `auto`       | `Boolean`  | `true`  | If true, the dropdown will open up or down depending on the position in the screen.|
+| `className`  | `String`   | `''`    | Set the class to give custom styles to the dropdown.|
+| `disabled`   | `Boolean`  | `false` | Set the component as disabled.|
+| `error`      | `String`   |         | Give an error string to display under the field.|
+| `label`      | `String`   |         | The text string to use for the floating label element.|
+| `onBlur`     | `Function` |         | Callback function that is fired when the component is blurred.|
+| `onChange`   | `Function` |         | Callback function that is fired when the component's value changes.|
+| `onFocus`    | `Function` |         | Callback function that is fired when the component is focused.|
+| `source`     | `Array`    |         | Array of data objects with the data to represent in the dropdown.|
+| `template`   | `Function` |         | Callback function that returns a JSX template to represent the element.|
+| `value`      | `String`   |         | Default value using JSON data.|
+
+## Theming
+
+| Name            | Description|
+|:----------------|:-----------|
+| `active`        | Added to the root element when the dropdown is active.|
+| `disabled`      | Added to the root element when it's disabled.|
+| `dropdown`      | Root element class.|
+| `error`         | Used for the error element.|
+| `errored`       | Added to the inner wrapper if it's errored.|
+| `field`         | Used for the inner wrapper of the component.|
+| `label`         | Used for the the label element.|
+| `selected`      | Used to highlight the selected value.|
+| `templateValue` | Used as a wrapper for the given template value.|
+| `up`            | Added to the root element when it's opening up.|
+| `value`         | Used for each value in the dropdown component.|
+| `values`        | Used for the list of values.|

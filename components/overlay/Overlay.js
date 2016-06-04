@@ -1,16 +1,23 @@
-import React from 'react';
-import Portal from '../hoc/Portal';
-import ClassNames from 'classnames';
-import style from './style';
+import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
+import { OVERLAY } from '../identifiers.js';
+import Portal from '../hoc/Portal.js';
 
-class Overlay extends React.Component {
+class Overlay extends Component {
   static propTypes = {
-    active: React.PropTypes.bool,
-    children: React.PropTypes.node,
-    className: React.PropTypes.string,
-    invisible: React.PropTypes.bool,
-    onClick: React.PropTypes.func,
-    onEscKeyDown: React.PropTypes.func
+    active: PropTypes.bool,
+    children: PropTypes.node,
+    className: PropTypes.string,
+    invisible: PropTypes.bool,
+    onClick: PropTypes.func,
+    onEscKeyDown: PropTypes.func,
+    theme: PropTypes.shape({
+      active: PropTypes.string,
+      backdrop: PropTypes.string,
+      invisible: PropTypes.string,
+      overlay: PropTypes.string
+    })
   };
 
   static defaultProps = {
@@ -49,20 +56,22 @@ class Overlay extends React.Component {
   }
 
   render () {
-    const className = ClassNames(style.root, {
-      [style.active]: this.props.active,
-      [style.invisible]: this.props.invisible
-    }, this.props.className);
+    const { active, className, children, invisible, onClick, theme } = this.props;
+    const _className = classnames(theme.overlay, {
+      [theme.active]: active,
+      [theme.invisible]: invisible
+    }, className);
 
     return (
       <Portal>
-        <div className={className}>
-          <div className={style.overlay} onClick={this.props.onClick} />
-          {this.props.children}
+        <div className={_className}>
+          <div className={theme.backdrop} onClick={onClick} />
+          {children}
         </div>
       </Portal>
     );
   }
 }
 
-export default Overlay;
+export default themr(OVERLAY)(Overlay);
+export { Overlay };

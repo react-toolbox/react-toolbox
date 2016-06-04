@@ -31,8 +31,8 @@ class InputTest extends React.Component {
         <Input type='email' value={this.state.multilineHint} label='Description' hint='Enter Description' multiline onChange={this.handleChange.bind(this, 'multilineHint')} />
         <Input type='text' label='Disabled field' disabled />
         <Input type='tel' value={this.state.withIcon} required label='With icon' onChange={this.handleChange.bind(this, 'withIcon')} icon='phone' />
-        <Input type='tel' value={this.state.withCustomIcon} label='With custom icon' onChange={this.handleChange.bind(this, 'withCustomIcon')} icon={<span>P</span>} />
-        <Input type='text' value={this.state.withHintCustomIcon} label='With Hint Text Icon' hint='Hint Text' onChange={this.handleChange.bind(this, 'withHintCustomIcon')} icon={<span>J</span>} />
+        <Input type='tel' value={this.state.withCustomIcon} label='With custom icon' onChange={this.handleChange.bind(this, 'withCustomIcon')} icon='favorite' />
+        <Input type='text' value={this.state.withHintCustomIcon} label='With Hint Text Icon' hint='Hint Text' onChange={this.handleChange.bind(this, 'withHintCustomIcon')} icon='share' />
       </section>
     );
   }

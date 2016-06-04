@@ -1,11 +1,12 @@
-import React from 'react';
-import ClassNames from 'classnames';
-import style from './style';
+import React, { PropTypes } from 'react';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
+import { APP_BAR } from '../identifiers.js';
 
-const AppBar = (props) => {
-  const className = ClassNames(style.root, {
-    [style.fixed]: props.fixed,
-    [style.flat]: props.flat
+const AppBar = ({ theme, ...props }) => {
+  const className = classnames(theme.appBar, {
+    [theme.fixed]: props.fixed,
+    [theme.flat]: props.flat
   }, props.className);
 
   return (
@@ -16,10 +17,15 @@ const AppBar = (props) => {
 };
 
 AppBar.propTypes = {
-  children: React.PropTypes.node,
-  className: React.PropTypes.string,
-  fixed: React.PropTypes.bool,
-  flat: React.PropTypes.bool
+  children: PropTypes.node,
+  className: PropTypes.string,
+  fixed: PropTypes.bool,
+  flat: PropTypes.bool,
+  theme: PropTypes.shape({
+    appBar: PropTypes.string,
+    fixed: PropTypes.string,
+    flat: PropTypes.string
+  })
 };
 
 AppBar.defaultProps = {
@@ -28,4 +34,5 @@ AppBar.defaultProps = {
   flat: false
 };
 
-export default AppBar;
+export default themr(APP_BAR)(AppBar);
+export { AppBar };

@@ -1,0 +1,37 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+
+.icon {
+  margin-right: $unit;
+  font-size: 1.8 * $unit;
+}
+
+.link {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: opacity $animation-duration $animation-curve-default;
+  &:not(.active) {
+    opacity: .5;
+  }
+  &:hover, &:active {
+    opacity: 1;
+  }
+  > * {
+    vertical-align: middle;
+  }
+  > abbr {
+    text-transform: capitalize;
+  }
+  > small {
+    margin-left: .8 * $unit;
+    font-size: $font-size-tiny;
+    text-align: center;
+  }
+}

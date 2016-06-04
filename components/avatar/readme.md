@@ -15,13 +15,15 @@ const GithubIcon = () => (
 const AvatarTest = () => (
   <div>
     <Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" />
-    <Avatar icon={<GithubIcon />}/>
+    <Avatar icon={<GithubIcon />} />
     <Avatar><img src="https://placeimg.com/80/80/animals"/></Avatar>
-    <Avatar title="Javier" image="https://placeimg.com/80/80/animals"/>
+    <Avatar title="Javier" image="https://placeimg.com/80/80/animals" />
     <Avatar style={{backgroundColor: 'yellowgreen'}}><GithubIcon /></Avatar>
   </div>
 );
 ```
+
+If you want to provide a theme via context, the component key is `RTAvatar`.
 
 ## Properties
 
@@ -32,3 +34,12 @@ const AvatarTest = () => (
 | `icon`        | `String` or `Element`   |             | A key to identify an Icon from Material Design Icons or a custom Icon Element.|
 | `image`       | `String` or `Element`   |             | An image source or an image element. |
 | `title`       | `String`                | `''`        | A title for the image. If no image is provided, the first letter will be displayed as the avatar. |
+| `theme`       | `Object`  | `null`   | Classnames object defining the component style.|
+
+## Theme
+
+| Name     | Description|
+|:---------|:-----------|
+| `avatar` | Used for the root class of the element.|
+| `image`  | Added to the root element when the component has image.|
+| `letter` | Used for the root element if the component shows the letter.|

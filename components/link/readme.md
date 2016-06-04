@@ -15,14 +15,24 @@ const LinksTest = () => (
 );
 ```
 
+If you want to provide a theme via context, the component key is `RTLink`.
+
 ## Properties
 
 You can add as many properties as you want to be directly transferred to the output anchor element. Apart from them you have the following properties:
 
 | Name            | Type                  | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `active`        | `Boolean`             | `false`         | If true, adds active style to link.|
-| `className`     | `String`              | `''`            | Sets a custom class name to add styles to the link.|
-| `count`         | `Number`              |                 | Sets a count number.|
-| `icon`          | `String` or `Element` |                 | An icon key string to include a `FontIcon` component in front of the text.|
-| `label`         | `String`              |                 | The text string used for the text content of the link.|
+| `active`     | `Boolean`             | `false`         | If true, adds active style to link.|
+| `className`  | `String`              | `''`            | Sets a custom class name to add styles to the link.|
+| `count`      | `Number`              |                 | Sets a count number.|
+| `icon`       | `String` or `Element` |                 | An icon key string to include a `FontIcon` component in front of the text.|
+| `label`      | `String`              |                 | The text string used for the text content of the link.|
+
+## Theme
+
+| Name     | Description|
+|:---------|:-----------|
+| `active` | Added to the root element if the Link is active.|
+| `icon`  | Used for the icon element if it's present.|
+| `link`   | Used for the root element.|

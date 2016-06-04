@@ -1,59 +1,80 @@
-import React from 'react';
-import ClassNames from 'classnames';
-import Check from './Check';
-import style from './style';
+import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
+import { CHECKBOX } from '../identifiers.js';
+import rippleFactory from '../ripple/Ripple.js';
+import checkFactory from './Check.js';
 
-class Checkbox extends React.Component {
-  static propTypes = {
-    checked: React.PropTypes.bool,
-    className: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    label: React.PropTypes.any,
-    onChange: React.PropTypes.func
-  };
+const factory = (Check) => {
+  class Checkbox extends Component {
+    static propTypes = {
+      checked: PropTypes.bool,
+      className: PropTypes.string,
+      disabled: PropTypes.bool,
+      label: PropTypes.any,
+      onChange: PropTypes.func,
+      theme: PropTypes.shape({
+        disabled: PropTypes.string,
+        field: PropTypes.string,
+        input: PropTypes.string,
+        ripple: PropTypes.string
+      })
+    };
 
-  static defaultProps = {
-    checked: false,
-    className: '',
-    disabled: false
-  };
+    static defaultProps = {
+      checked: false,
+      className: '',
+      disabled: false
+    };
 
-  handleToggle = (event) => {
-    if (event.pageX !== 0 && event.pageY !== 0) this.blur();
-    if (!this.props.disabled && this.props.onChange) {
-      this.props.onChange(!this.props.checked, event);
+    handleToggle = (event) => {
+      if (event.pageX !== 0 && event.pageY !== 0) this.blur();
+      if (!this.props.disabled && this.props.onChange) {
+        this.props.onChange(!this.props.checked, event);
+      }
+    };
+
+    blur () {
+      this.refs.input.blur();
     }
-  };
 
-  blur () {
-    this.refs.input.blur();
+    focus () {
+      this.refs.input.focus();
+    }
+
+    render () {
+      const { onChange, theme, ...others } = this.props; //eslint-disable-line no-unused-vars
+      const className = classnames(theme.field, {
+        [theme.disabled]: this.props.disabled
+      }, this.props.className);
+
+      return (
+        <label data-react-toolbox='checkbox' className={className}>
+          <input
+            {...others}
+            className={theme.input}
+            onClick={this.handleToggle}
+            readOnly
+            ref='input'
+            type='checkbox'
+          />
+          <Check
+            checked={this.props.checked}
+            disabled={this.props.disabled}
+            rippleClassName={theme.ripple}
+            theme={this.props.theme}
+          />
+          {this.props.label ? <span data-react-toolbox='label' className={theme.text}>{this.props.label}</span> : null}
+        </label>
+      );
+    }
   }
 
-  focus () {
-    this.refs.input.focus();
-  }
+  return Checkbox;
+};
 
-  render () {
-    const { onChange, ...others } = this.props; //eslint-disable-line no-unused-vars
-    const className = ClassNames(style.field, {
-      [style.disabled]: this.props.disabled
-    }, this.props.className);
-
-    return (
-      <label data-react-toolbox='checkbox' className={className}>
-        <input
-          {...others}
-          className={style.input}
-          onClick={this.handleToggle}
-          readOnly
-          ref='input'
-          type='checkbox'
-        />
-        <Check checked={this.props.checked} disabled={this.props.disabled}/>
-        {this.props.label ? <span data-react-toolbox='label' className={style.text}>{this.props.label}</span> : null}
-      </label>
-    );
-  }
-}
-
-export default Checkbox;
+const Check = checkFactory(rippleFactory({ centered: true, spread: 2.6}));
+const Checkbox = factory(Check);
+export default themr(CHECKBOX)(Checkbox);
+export { factory as checkboxFactory };
+export { Checkbox };

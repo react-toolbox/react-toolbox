@@ -1,8 +1,6 @@
 # Chip
 
-Chips represent complex entities in small blocks, such as a contact. Chips can be used for various types of entities, including free form text, predefined text, rules, or contacts. Chips may also contain icons.
-
-To add an icon or contact image to a chip, include an `Avatar` element as the first child.
+Chips represent complex entities in small blocks, such as a contact. Chips can be used for various types of entities, including free form text, predefined text, rules, or contacts. Chips may also contain icons. To add an icon or contact image to a chip, include an `Avatar` element as the first child.
 
 <!-- example -->
 ```jsx
@@ -36,6 +34,8 @@ const ChipTest = () => (
 );
 ```
 
+If you want to provide a theme via context, the component key is `RTChip`.
+
 ## Properties
 
 | Name            | Type        | Default         | Description|
@@ -44,3 +44,14 @@ const ChipTest = () => (
 | `className`     | `String`    | `''`            | Additional class name to provide custom styling.|
 | `deletable`     | `Boolean`   | `false`         | If true, the chip will be rendered with a delete icon.|
 | `onDeleteClick` | `Function`  |                 | Callback to be invoked when the delete icon is clicked. |
+
+## Theme
+
+| Name       | Description|
+|:-----------|:-----------|
+| `avatar` | Added to the root element when the component includes an avatar.|
+| `chip` | Used for the root element.|
+| `deletable` | Added to the root element when the component is deletable.|
+| `delete` | Used for the delete element wrapper.|
+| `deleteIcon` | Used for the delete icon.|
+| `deleteX` | Used for the delete svg inner layer.|

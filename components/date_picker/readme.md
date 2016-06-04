@@ -30,6 +30,8 @@ class DatePickerTest extends React.Component {
 }
 ```
 
+If you want to provide a theme via context, the component key is `RTDatePicker`.
+
 ## Properties
 
 | Name            | Type            | Default       | Description|
@@ -43,3 +45,28 @@ class DatePickerTest extends React.Component {
 | `minDate`       | `Date`          |               | Date object with the minimum selectable date. |
 | `onChange`      | `Function`      |               | Callback called when the picker value is changed.|
 | `value`         | `Date`          |               | Date object with the currently selected date. |
+
+## Theme
+
+| Name     | Description|
+|:---------|:-----------|
+| `active` | Used for the active day and year.|
+| `button` | Used for the buttons in the dialog.|
+| `calendar` | Used for the calendar root element.|
+| `calendarWrapper` | Used as wrapper for the calendar component inside dialog.|
+| `date` | Used for the date element inside header.|
+| `day` | Used for the day element inside the calendar.|
+| `days` | Used for the list of days inside a month.|
+| `dialog` | Used for the dialog component.|
+| `disabled` | Added to day element when day is disabled.|
+| `header` | Used for the dialog header,.|
+| `input` | Used for Input element that opens the picker.|
+| `month` | Used for the month root element.|
+| `monthsDisplay` | Added to the root dialog when months are displayed.|
+| `next` | Used for the next month icon.|
+| `prev` | Used for the prev month icon.|
+| `title` | Used for the month title element.|
+| `week` | Used for the weekdays wrapper.|
+| `year` | Used for the year element inside header.|
+| `years` | Used for the years list in years view.|
+| `yearsDisplay` | Added to the root dialog when years are displayed.|

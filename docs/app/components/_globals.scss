@@ -1,6 +1,5 @@
-$import-flex-attributes: true;
-
 @import "~react-toolbox/base";
+@import "../theme/theme";
 
 $unit: 1rem;
 $color-primary-dark: $color-primary-dark;

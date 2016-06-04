@@ -1,18 +1,21 @@
-import React from 'react';
-import style from './style.clock';
-import events from '../utils/events';
-import prefixer from '../utils/prefixer';
-import utils from '../utils/utils';
+import React, { Component, PropTypes } from 'react';
+import events from '../utils/events.js';
+import prefixer from '../utils/prefixer.js';
+import utils from '../utils/utils.js';
 
-class Hand extends React.Component {
+class Hand extends Component {
   static propTypes = {
-    angle: React.PropTypes.number,
-    className: React.PropTypes.string,
-    length: React.PropTypes.number,
-    onMove: React.PropTypes.func,
-    onMoved: React.PropTypes.func,
-    origin: React.PropTypes.object,
-    step: React.PropTypes.number
+    angle: PropTypes.number,
+    className: PropTypes.string,
+    length: PropTypes.number,
+    onMove: PropTypes.func,
+    onMoved: PropTypes.func,
+    origin: PropTypes.object,
+    step: PropTypes.number,
+    theme: PropTypes.shape({
+      hand: PropTypes.string,
+      knob: PropTypes.string
+    })
   };
 
   static defaultProps = {
@@ -104,7 +107,8 @@ class Hand extends React.Component {
   }
 
   render () {
-    const className = `${style.hand} ${this.props.className}`;
+    const { theme } = this.props;
+    const className = `${theme.hand} ${this.props.className}`;
     const handStyle = prefixer({
       height: this.props.length - this.state.knobWidth / 2,
       transform: `rotate(${this.props.angle}deg)`
@@ -112,7 +116,7 @@ class Hand extends React.Component {
 
     return (
       <div className={className} style={handStyle}>
-        <div ref='knob' className={style.knob}></div>
+        <div ref='knob' className={theme.knob}></div>
       </div>
     );
   }

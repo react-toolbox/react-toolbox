@@ -9,10 +9,12 @@ import ProgressBar from 'react-toolbox/lib/progress_bar';
 const ProgressTest = () => (
   <div>
     <ProgressBar type="circular" mode="indeterminate" />
-    <ProgressBar type="linear" mode="determinate" value={83} buffer={90}/>
+    <ProgressBar type="linear" mode="determinate" value={83} buffer={90} />
   </div>
 );
 ```
+
+If you want to provide a theme via context, the component key is `RTProgressBar`.
 
 ## Properties
 
@@ -27,3 +29,15 @@ const ProgressTest = () => (
 | `type`        | `String`    | `linear`        | Type of the progress bar, it can be `circular` or `linear`.|
 | `value`       | `Number`    | `0`             | Value of the current progress.|
 
+## Theme
+
+| Name     | Description|
+|:---------|:-----------|
+| `buffer` | Used to style the buffer element in the linear progress.|
+| `circle` | Used for the circle element in the circular progress.|
+| `circular` | Used for the root element when the type is circular.|
+| `indeterminate` | Added to the root element if mode is indeterminate.|
+| `linear` | Used for the root element when the type is linear.|
+| `multicolor` | Added to the root if the component is multicolor (circular).|
+| `path` | Used for the inner path in the circular progress.|
+| `value` | Used to style the value element in the linear progress.|

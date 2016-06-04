@@ -1,0 +1,56 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+
+.table {
+  width: 100%;
+  font-size: $font-size-tiny;
+  color: $table-text-color;
+  text-align: left;
+  tr {
+    height: $table-row-height;
+    line-height: $table-row-height;
+    border-bottom: $table-row-divider;
+  }
+  th {
+    font-weight: $font-weight-bold;
+    &:first-letter {
+      text-transform: capitalize;
+    }
+  }
+  th, td {
+    position: relative;
+    padding: 0 $table-row-offset;
+    &.selectable {
+      width: 1.8 * $unit;
+      padding-right: 0;
+      > * {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.row {
+  transition: background-color $animation-duration $animation-curve-default;
+  &:last-child {
+    border-color: transparent;
+  }
+  > td {
+    > input {
+      display: block;
+      width: 100%;
+      background-color: transparent;
+      border: 0;
+    }
+  }
+}
+
+.selected, .row:hover {
+  background-color: $table-row-highlight;
+}
+
+.editable > * {
+  cursor: pointer;
+}

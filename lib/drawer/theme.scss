@@ -1,0 +1,43 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+
+.drawer {
+  @include shadow-2dp();
+  position: absolute;
+  top: 0;
+  display: block;
+  width: $drawer-width;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: $drawer-text-color;
+  pointer-events: none;
+  background-color: $drawer-background-color;
+  transition-delay: 0s;
+  transition-timing-function: $animation-curve-default;
+  transition-duration: $animation-duration;
+  transition-property: transform;
+  transform-style: preserve-3d;
+  will-change: transform;
+  &.active {
+    pointer-events: all;
+    transition-delay: $animation-delay;
+    transform: translateX(0);
+  }
+  &.right {
+    right: 0;
+    border-left: 1px solid $drawer-border-color;
+    &:not(.active) {
+      transform: translateX(100%);
+    }
+  }
+  &.left {
+    left: 0;
+    border-right: 1px solid $drawer-border-color;
+    &:not(.active) {
+      transform: translateX(- 100%);
+    }
+  }
+}

@@ -1,0 +1,81 @@
+//-- Color configuration
+$color-divider: $palette-grey-200 !default;
+$color-background: $color-white !default;
+$color-text: $palette-grey-900 !default;
+$color-text-secondary: $palette-grey-600 !default;
+
+$color-primary: $palette-indigo-500 !default;
+$color-primary-dark: $palette-indigo-700 !default;
+$color-accent: $palette-pink-a200 !default;
+$color-accent-dark: $palette-pink-700 !default;
+$color-primary-contrast: $color-dark-contrast !default;
+$color-accent-contrast: $color-dark-contrast !default;
+
+//-- Sizing
+$unit: 1rem !default;
+
+// -- Fonts
+$preferred-font: "Roboto", "Helvetica", "Arial", sans-serif !default;
+$font-size: 1.6 * $unit !default;
+$font-size-tiny: 1.2 * $unit !default;
+$font-size-small: 1.4 * $unit !default;
+$font-size-normal: $font-size !default;
+$font-size-big: 1.8 * $unit !default;
+$font-weight-thin: 300 !default;
+$font-weight-normal: 400 !default;
+$font-weight-semi-bold: 500 !default;
+$font-weight-bold: 700 !default;
+
+//-- Shadows
+$shadow-key-umbra-opacity: 0.2 !default;
+$shadow-key-penumbra-opacity: 0.14 !default;
+$shadow-ambient-shadow-opacity: 0.12 !default;
+
+//-- Depth Shadows
+$zdepth-shadow-1: 0 1px 6px rgba(0,0,0,.12), 0 1px 4px rgba(0,0,0,.24);
+$zdepth-shadow-2: 0 3px 10px rgba(0,0,0,.16), 0 3px 10px rgba(0,0,0,.23);
+$zdepth-shadow-3: 0 10px 30px rgba(0,0,0,.19), 0 6px 10px rgba(0,0,0,.23);
+$zdepth-shadow-4: 0 14px 45px rgba(0,0,0,.25), 0 10px 18px rgba(0,0,0,.22);
+$zdepth-shadow-5: 0 19px 60px rgba(0,0,0,.3), 0 15px 20px rgba(0,0,0,.22);
+
+//-- Animation
+$animation-duration: .35s;
+$animation-delay: $animation-duration / 5;
+$animation-curve-fast-out-slow-in: cubic-bezier(0.4, 0, 0.2, 1) !default;
+$animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1) !default;
+$animation-curve-fast-out-linear-in: cubic-bezier(0.4, 0, 1, 1) !default;
+$animation-curve-default: $animation-curve-fast-out-slow-in !default;
+
+//-- Indexes
+$z-index-highest: 300 !default;
+$z-index-higher: 200 !default;
+$z-index-high: 100 !default;
+$z-index-normal: 1 !default;
+$z-index-low: -100 !default;
+$z-index-lower: -200 !default;
+
+//-- Breakpoints
+// height of app bar
+// https://www.google.com/design/spec/layout/metrics-keylines.html#metrics-keylines-keylines-spacing
+$standard-increment-mobile: (5.6 * $unit) !default;
+$standard-increment-desktop: (6.4 * $unit) !default;
+
+// https://www.google.com/design/spec/layout/metrics-keylines.html#metrics-keylines-baseline-grids
+$baseline-grid: (0.8 * $unit) !default;
+$layout-gutter-width-sm: ($baseline-grid * 2) !default;
+$layout-gutter-width: ($baseline-grid * 3) !default;
+
+// https://www.google.com/design/spec/layout/responsive-ui.html#responsive-ui-breakpoints
+// 4 columns
+$layout-breakpoint-xxs: 480px !default;
+// 8 columns
+$layout-breakpoint-xs: 600px !default;
+// 12 columns
+$layout-breakpoint-sm-tablet: 720px !default;
+$layout-breakpoint-sm: 840px !default;
+$layout-breakpoint-md: 960px !default;
+$layout-breakpoint-lg-tablet: 1024px !default;
+$layout-breakpoint-lg: 1280px !default;
+$layout-breakpoint-xl: 1440px !default;
+$layout-breakpoint-xxl: 1600px !default;
+$layout-breakpoint-xxxl: 1920px !default;

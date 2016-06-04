@@ -1,103 +1,121 @@
-import React from 'react';
-import TableHead from './TableHead';
-import TableRow from './TableRow';
-import style from './style';
+import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
+import { TABLE } from '../identifiers.js';
+import InjectCheckbox from '../checkbox/Checkbox.js';
+import tableHeadFactory from './TableHead.js';
+import tableRowFactory from './TableRow.js';
 
-class Table extends React.Component {
-  static propTypes = {
-    className: React.PropTypes.string,
-    heading: React.PropTypes.bool,
-    model: React.PropTypes.object,
-    multiSelectable: React.PropTypes.bool,
-    onChange: React.PropTypes.func,
-    onSelect: React.PropTypes.func,
-    selectable: React.PropTypes.bool,
-    selected: React.PropTypes.array,
-    source: React.PropTypes.array
-  };
+const factory = (TableHead, TableRow) => {
+  class Table extends Component {
+    static propTypes = {
+      className: PropTypes.string,
+      heading: PropTypes.bool,
+      model: PropTypes.object,
+      multiSelectable: PropTypes.bool,
+      onChange: PropTypes.func,
+      onSelect: PropTypes.func,
+      selectable: PropTypes.bool,
+      selected: PropTypes.array,
+      source: PropTypes.array,
+      theme: PropTypes.shape({
+        table: PropTypes.string
+      })
+    };
 
-  static defaultProps = {
-    className: '',
-    heading: true,
-    selectable: true,
-    multiSelectable: true,
-    selected: [],
-    source: []
-  };
+    static defaultProps = {
+      className: '',
+      heading: true,
+      selectable: true,
+      multiSelectable: true,
+      selected: [],
+      source: []
+    };
 
-  handleFullSelect = () => {
-    if (this.props.onSelect) {
-      const {source, selected} = this.props;
-      const newSelected = source.length === selected.length ? [] : source.map((i, idx) => idx);
-      this.props.onSelect(newSelected);
-    }
-  };
-
-  handleRowSelect = (index) => {
-    if (this.props.onSelect) {
-      const position = this.props.selected.indexOf(index);
-      let newSelected = [...this.props.selected];
-      if (position !== -1) { newSelected.splice(position, 1); }
-      if (position !== -1 && this.props.multiSelectable) {
-        newSelected.push(index);
-      } else {
-        newSelected = [index];
+    handleFullSelect = () => {
+      if (this.props.onSelect) {
+        const {source, selected} = this.props;
+        const newSelected = source.length === selected.length ? [] : source.map((i, idx) => idx);
+        this.props.onSelect(newSelected);
       }
-      this.props.onSelect(newSelected);
-    }
-  };
+    };
 
-  handleRowChange = (index, key, value) => {
-    if (this.props.onChange) {
-      this.props.onChange(index, key, value);
-    }
-  };
+    handleRowSelect = (index) => {
+      if (this.props.onSelect) {
+        const position = this.props.selected.indexOf(index);
+        let newSelected = [...this.props.selected];
+        if (position !== -1) { newSelected.splice(position, 1); }
+        if (position !== -1 && this.props.multiSelectable) {
+          newSelected.push(index);
+        } else {
+          newSelected = [index];
+        }
+        this.props.onSelect(newSelected);
+      }
+    };
 
-  renderHead () {
-    if (this.props.heading) {
-      const {model, selected, source, selectable, multiSelectable} = this.props;
-      const isSelected = selected.length === source.length;
+    handleRowChange = (index, key, value) => {
+      if (this.props.onChange) {
+        this.props.onChange(index, key, value);
+      }
+    };
+
+    renderHead () {
+      if (this.props.heading) {
+        const {model, selected, source, selectable, multiSelectable} = this.props;
+        const isSelected = selected.length === source.length;
+        return (
+          <TableHead
+            model={model}
+            onSelect={this.handleFullSelect}
+            selectable={selectable}
+            multiSelectable={multiSelectable}
+            selected={isSelected}
+            theme={this.props.theme}
+          />
+        );
+      }
+    }
+
+    renderBody () {
+      const { source, model, onChange, selectable, selected, theme } = this.props;
       return (
-        <TableHead
-          model={model}
-          onSelect={this.handleFullSelect}
-          selectable={selectable}
-          multiSelectable={multiSelectable}
-          selected={isSelected}
-        />
+        <tbody>
+          {source.map((data, index) => (
+            <TableRow
+              data={data}
+              index={index}
+              key={index}
+              model={model}
+              onChange={onChange ? this.handleRowChange.bind(this) : undefined}
+              onSelect={this.handleRowSelect.bind(this, index)}
+              selectable={selectable}
+              selected={selected.indexOf(index) !== -1}
+              theme={theme}
+            />
+          ))}
+        </tbody>
+      );
+    }
+
+    render () {
+      const { className, theme } = this.props;
+      return (
+        <table data-react-toolbox='table' className={classnames(theme.table, className)}>
+          {this.renderHead()}
+          {this.renderBody()}
+        </table>
       );
     }
   }
 
-  renderBody () {
-    const rows = this.props.source.map((data, index) => {
-      return (
-        <TableRow
-          data={data}
-          index={index}
-          key={index}
-          model={this.props.model}
-          onChange={this.props.onChange ? this.handleRowChange.bind(this) : undefined}
-          onSelect={this.handleRowSelect.bind(this, index)}
-          selectable={this.props.selectable}
-          selected={this.props.selected.indexOf(index) !== -1}
-        />
-      );
-    });
+  return Table;
+};
 
-    return <tbody>{rows}</tbody>;
-  }
+const TableHead = tableHeadFactory(InjectCheckbox);
+const TableRow = tableRowFactory(InjectCheckbox);
+const Table = factory(TableHead, TableRow);
 
-  render () {
-    let className = style.root;
-    if (this.props.className) className += ` ${this.props.className}`;
-    return (
-      <table data-react-toolbox='table' className={className}>
-        {this.renderHead()}
-        {this.renderBody()}
-      </table>
-    );
-  }
-}
-
-export default Table;
+export default themr(TABLE)(Table);
+export { factory as tableFactory };
+export { Table };

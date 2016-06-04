@@ -1,0 +1,16 @@
+$menu-expand-duration: .3s !default;
+$menu-fade-duration: .2s !default;
+$menu-ripple-delay: .3s !default;
+$menu-background-color: $color-white !default;
+$menu-padding: .8 * $unit 0 !default;
+$menu-outline-border-radius: .2 * $unit !default;
+$menu-item-hover-background: $palette-grey-200 !default;
+$menu-item-selected-background: transparent !default;
+$menu-item-icon-font-size: 2.4 * $unit !default;
+$menu-item-icon-size: 1.6 * $menu-item-icon-font-size !default;
+$menu-item-height: 4.8 * $unit !default;
+$menu-item-padding: 1.6 * $unit !default;
+$menu-item-font-size: 1.6 * $unit !default;
+$menu-divider-height: (4.8 * $unit) / 4 !default;
+$menu-icon-size: 2.3 * $unit !default;
+$menu-icon-ripple-duration: 650ms !default;

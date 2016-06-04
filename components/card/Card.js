@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
-import ClassNames from 'classnames';
-import style from './style';
+import { themr } from 'react-css-themr';
+import classnames from 'classnames';
+import { CARD } from '../identifiers.js';
 
-const Card = ({children, className, raised, ...other}) => {
-  const classes = ClassNames(style.card, {
-    [style.raised]: raised
+const Card = ({children, className, raised, theme, ...other}) => {
+  const classes = classnames(theme.card, {
+    [theme.raised]: raised
   }, className);
 
   return (
@@ -17,7 +18,12 @@ const Card = ({children, className, raised, ...other}) => {
 Card.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
-  raised: PropTypes.bool
+  raised: PropTypes.bool,
+  theme: PropTypes.shape({
+    card: PropTypes.string,
+    raised: PropTypes.string
+  })
 };
 
-export default Card;
+export default themr(CARD)(Card);
+export { Card };

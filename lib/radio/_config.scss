@@ -1,0 +1,9 @@
+$radio-field-margin-bottom: 1.5 * $unit !default;
+$radio-button-size: 1.6 * $unit !default;
+$radio-inner-margin: $radio-button-size / 4 !default;
+$radio-inner-color: $color-primary !default;
+$radio-focus-color: rgba($color-black, 0.1) !default;
+$radio-checked-focus-color: rgba($color-primary, 0.26) !default;
+$radio-text-color: $color-black !default;
+$radio-disabled-color: rgba($color-black, 0.26) !default;
+$radio-text-font-size: 1.4 * $unit !default;

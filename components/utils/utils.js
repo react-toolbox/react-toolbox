@@ -53,7 +53,7 @@ export default {
   prepareValueForInput (value, type) {
     if (type === 'date') return new Date(value).toISOString().slice(0, 10);
     if (type === 'checkbox') {
-      return value ? 'on' : null;
+      return value ? 'on' : '';
     }
     return value;
   }

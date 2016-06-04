@@ -1,0 +1,152 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+
+.input {
+  position: relative;
+  padding: $input-padding 0;
+  &.withIcon {
+    margin-left: $input-icon-size;
+  }
+}
+
+.icon {
+  position: absolute;
+  top: $input-icon-offset;
+  left: -$input-icon-size;
+  display: block;
+  width: $input-icon-size;
+  height: $input-icon-size;
+  font-size: $input-icon-font-size !important;
+  line-height: $input-icon-size !important;
+  color: $input-text-label-color;
+  text-align: center;
+  transition: color $animation-duration $animation-curve-default;
+}
+
+.inputElement {
+  display: block;
+  width: 100%;
+  padding: $input-field-padding 0;
+  font-size: $input-field-font-size;
+  color: $color-text;
+  background-color: $input-text-background-color;
+  border: 0;
+  border-bottom: 1px solid $input-text-bottom-border-color;
+  outline: none;
+  &:focus {
+    ~ .bar:before, ~ .bar:after {
+      width: 50%;
+    }
+    ~ .label:not(.fixed) {
+      color: $input-text-highlight-color;
+    }
+    ~ .label > .required {
+      color: $input-text-required-color;
+    }
+    ~ .hint {
+      opacity: $input-hint-opacity;
+    }
+    ~ .icon {
+      color: $input-text-highlight-color;
+    }
+  }
+  &:focus, &.filled, &[type="date"], &[type="time"] {
+    ~ .label:not(.fixed) {
+      top: $input-focus-label-top;
+      font-size: $input-label-font-size;
+    }
+  }
+  &.filled ~ .label.fixed, &.filled ~ .hint {
+    display: none;
+  }
+}
+
+.label {
+  position: absolute;
+  top: $input-padding + (1.5 * $input-field-padding);
+  left: 0;
+  font-size: $input-field-font-size;
+  line-height: $input-field-font-size;
+  color: $input-text-label-color;
+  pointer-events: none;
+  transition-timing-function: $animation-curve-default;
+  transition-duration: $animation-duration;
+  transition-property: top, font-size, color;
+  &.fixed ~ .hint {
+    display: none;
+  }
+}
+
+.hint {
+  position: absolute;
+  top: $input-padding + (1.5 * $input-field-padding);
+  left: 0;
+  font-size: $input-field-font-size;
+  line-height: $input-field-font-size;
+  color: $input-text-label-color;
+  pointer-events: none;
+  opacity: 0;
+  transition-timing-function: $animation-curve-default;
+  transition-duration: $animation-duration;
+  transition-property: opacity;
+}
+
+.bar {
+  position: relative;
+  display: block;
+  width: 100%;
+  &:before, &:after {
+    @include material-animation-default();
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    content: "";
+    background-color: $input-text-highlight-color;
+    transition-property: width, background-color;
+  }
+  &:before {
+    left: 50%;
+  }
+  &:after {
+    right: 50%;
+  }
+}
+
+.error, .counter {
+  margin-bottom: - $input-underline-height;
+  font-size: $input-label-font-size;
+  line-height: $input-underline-height;
+  color: $input-text-error-color;
+}
+
+.counter {
+  position: absolute;
+  right: 0;
+  color: $input-text-label-color;
+}
+
+.disabled > .inputElement {
+  color: $input-text-disabled-text-color;
+  border-bottom-style: dotted;
+}
+
+.errored {
+  padding-bottom: 0;
+  > .inputElement {
+    margin-top: 1px;
+    border-bottom-color: $input-text-error-color;
+  }
+  > .counter, > .label {
+    color: $input-text-error-color;
+  }
+  > .label > .required {
+    color: $input-text-required-color;
+  }
+}
+
+.hidden {
+  display: none;
+}

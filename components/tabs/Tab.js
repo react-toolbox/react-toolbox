@@ -1,17 +1,24 @@
-import React from 'react';
-import ClassNames from 'classnames';
-import style from './style';
+import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
+import { TABS } from '../identifiers.js';
 
-class TabHeader extends React.Component {
+class Tab extends Component {
   static propTypes = {
-    active: React.PropTypes.bool,
-    activeClassName: React.PropTypes.string,
-    className: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    hidden: React.PropTypes.bool,
-    label: React.PropTypes.any.isRequired,
-    onActive: React.PropTypes.func,
-    onClick: React.PropTypes.func
+    active: PropTypes.bool,
+    activeClassName: PropTypes.string,
+    className: PropTypes.string,
+    disabled: PropTypes.bool,
+    hidden: PropTypes.bool,
+    label: PropTypes.any.isRequired,
+    onActive: PropTypes.func,
+    onClick: PropTypes.func,
+    theme: PropTypes.shape({
+      active: PropTypes.string,
+      disabled: PropTypes.string,
+      hidden: PropTypes.string,
+      label: PropTypes.string
+    })
   };
 
   static defaultProps = {
@@ -34,19 +41,21 @@ class TabHeader extends React.Component {
   };
 
   render () {
-    const className = ClassNames(style.label, {
-      [style.active]: this.props.active,
-      [style.hidden]: this.props.hidden,
-      [style.disabled]: this.props.disabled,
-      [this.props.activeClassName]: this.props.active
-    }, this.props.className);
+    const { active, activeClassName, hidden, disabled, className, theme } = this.props;
+    const _className = classnames(theme.label, {
+      [theme.active]: active,
+      [theme.hidden]: hidden,
+      [theme.disabled]: disabled,
+      [activeClassName]: active
+    }, className);
 
     return (
-      <label data-react-toolbox='tab' className={className} onClick={this.handleClick}>
+      <label data-react-toolbox='tab' className={_className} onClick={this.handleClick}>
         {this.props.label}
       </label>
     );
   }
 }
 
-export default TabHeader;
+export default themr(TABS)(Tab);
+export { Tab };

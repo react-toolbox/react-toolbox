@@ -33,12 +33,6 @@ class DropdownTest extends React.Component {
     );
   }
 
-  handleFocus = (dropdowns) => {
-    dropdowns.forEach((dropdown) => {
-      this.refs[dropdown].close();
-    });
-  }
-
   render () {
     return (
       <section>
@@ -48,7 +42,6 @@ class DropdownTest extends React.Component {
         <Dropdown
           label="Country"
           ref="dropdown1"
-          onFocus={this.handleFocus.bind(this, ['dropdown3', 'dropdown4'])}
           onChange={this.handleChange.bind(this, 'dropdown1')}
           source={countries}
           template={this.customDropdownItem}
@@ -58,7 +51,6 @@ class DropdownTest extends React.Component {
         <Dropdown
           label="Country"
           ref="dropdown4"
-          onFocus={this.handleFocus.bind(this, ['dropdown1', 'dropdown4'])}
           onChange={this.handleChange.bind(this, 'dropdown4')}
           source={countries}
           value={this.state.dropdown4}
@@ -68,7 +60,6 @@ class DropdownTest extends React.Component {
           disabled
           ref="dropdown3"
           label="Country"
-          onFocus={this.handleFocus.bind(this, ['dropdown1', 'dropdown4'])}
           onChange={this.handleChange.bind(this, 'dropdown3')}
           source={countries}
         />

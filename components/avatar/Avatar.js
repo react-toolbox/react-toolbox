@@ -1,24 +1,35 @@
-import React, {PropTypes} from 'react';
-import FontIcon from '../font_icon';
-import style from './style';
+import React, { PropTypes } from 'react';
+import { themr } from 'react-css-themr';
+import { AVATAR } from '../identifiers.js';
+import InjectFontIcon from '../font_icon/FontIcon.js';
 
-const Avatar = ({children, className, icon, image, title, ...other}) => {
-  return (
-    <div data-react-toolbox='avatar' className={`${style.avatar} ${className}`} {...other}>
+const factory = (FontIcon) => {
+  const Avatar = ({children, className, icon, image, theme, title, ...other}) => (
+    <div data-react-toolbox='avatar' className={`${theme.avatar} ${className}`} {...other}>
       {children}
-      {typeof image === 'string' ? <img className={style.image} src={image} title={title} /> : image}
-      {typeof icon === 'string' ? <FontIcon className={style.letter} value={icon} /> : icon}
-      {title ? <span className={style.letter}>{title[0]}</span> : null}
+      {typeof image === 'string' ? <img className={theme.image} src={image} title={title} /> : image}
+      {typeof icon === 'string' ? <FontIcon className={theme.letter} value={icon} /> : icon}
+      {title ? <span className={theme.letter}>{title[0]}</span> : null}
     </div>
   );
+
+  Avatar.propTypes = {
+    children: PropTypes.node,
+    className: PropTypes.string,
+    icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    image: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    theme: PropTypes.shape({
+      avatar: PropTypes.string,
+      image: PropTypes.string,
+      letter: PropTypes.string
+    }),
+    title: PropTypes.string
+  };
+
+  return Avatar;
 };
 
-Avatar.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  image: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  title: PropTypes.string
-};
-
-export default Avatar;
+const Avatar = factory(InjectFontIcon);
+export default themr(AVATAR)(Avatar);
+export { factory as avatarFactory };
+export { Avatar };

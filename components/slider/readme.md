@@ -33,6 +33,8 @@ class SliderTest extends React.Component {
 }
 ```
 
+This component can be styled by context providing a theme with the key `RTSlider` through the theme provider.
+
 ## Properties
 
 | Name          | Type          | Default   | Description|
@@ -46,3 +48,21 @@ class SliderTest extends React.Component {
 | `snaps`       | `Boolean`     | `false`   | If true, the slider thumb snaps to tick marks evenly spaced based on the step property value.|
 | `step`        | `Number`      | `0.01`    | Amount to vary the value when the knob is moved or increase/decrease is called.|
 | `value`       | `Number`      | `0`       | Current value of the slider.|
+
+## Theme
+
+| Name     | Description|
+|:---------|:-----------|
+| `container` | Used as an inner container of the root component.|
+| `editable` | Added to the root of in case the Slider is editable.|
+| `innerknob` | Used to style the inner element of the knob.|
+| `innerprogress` | Provided to the ProgressBar component.|
+| `input` | Provided to the Input element in case it's editable.|
+| `knob` | Used to style the outer layer of the knob.|
+| `pinned` | Added to the root in case the Slider is pinned.|
+| `pressed` | Added to the root in case the state is pressed.|
+| `progress` | Used as an outer wrapper for the ProgressBar.|
+| `ring` | Used in the root when the knob should be a ring.|
+| `slider` | Class used for the root element.|
+| `snap` | Used for every individual snap element.|
+| `snaps` | Used as a wrapper for the group of snaps when it's snapped.|

@@ -29,6 +29,8 @@ class DrawerTest extends React.Component {
 }
 ```
 
+If you want to provide a theme via context, the component key is `RTDrawer`.
+
 ## Properties
 
 | Name              | Type          | Default         | Description|
@@ -37,3 +39,13 @@ class DrawerTest extends React.Component {
 | `className`       | `String`        | `''`          | Sets a class to give customized styles to the drawer.|
 | `onOverlayClick`  | `Function`      |               | Callback function to be invoked when the overlay is clicked.|
 | `type`            | `String`        | `left`        | Type of drawer. It can be `left` or `right` to display the drawer on the left or right side of the screen.|
+
+## Theme
+
+| Name     | Description|
+|:---------|:-----------|
+| `active` | Used for the root class when the drawer is active.|
+| `content`  | Used for the drawer content.|
+| `drawer`   | Root class.|
+| `left`   | Added to the root class when drawer is to the left.|
+| `right`   | Added to the root class when drawer is to the right.|

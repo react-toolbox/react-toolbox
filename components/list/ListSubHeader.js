@@ -1,15 +1,21 @@
-import React from 'react';
-import style from './style';
+import React, { PropTypes } from 'react';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
+import { LIST } from '../identifiers.js';
 
-const ListSubHeader = (props) => {
-  let className = style.subheader;
-  if (props.className) className += ` ${props.className}`;
-  return <h5 className={className}>{props.caption}</h5>;
-};
+const ListSubHeader = ({ caption, className, theme }) => (
+  <h5 className={classnames(theme.subheader, className)}>{caption}</h5>
+);
 
 ListSubHeader.propTypes = {
-  caption: React.PropTypes.string,
-  className: React.PropTypes.string
+  caption: PropTypes.string,
+  className: PropTypes.string,
+  theme: PropTypes.object
 };
 
-export default ListSubHeader;
+ListSubHeader.defaultProps = {
+  className: ''
+};
+
+export default themr(LIST)(ListSubHeader);
+export { ListSubHeader };

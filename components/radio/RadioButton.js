@@ -1,60 +1,75 @@
-import React from 'react';
-import ClassNames from 'classnames';
-import Radio from './Radio';
-import style from './style';
+import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
+import { RADIO } from '../identifiers.js';
+import rippleFactory from '../ripple/Ripple.js';
+import radioFactory from './Radio.js';
 
-class RadioButton extends React.Component {
-  static propTypes = {
-    checked: React.PropTypes.bool,
-    className: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    label: React.PropTypes.string,
-    name: React.PropTypes.string,
-    onBlur: React.PropTypes.func,
-    onChange: React.PropTypes.func,
-    onFocus: React.PropTypes.func,
-    value: React.PropTypes.any
-  };
+const factory = (Radio) => {
+  class RadioButton extends Component {
+    static propTypes = {
+      checked: PropTypes.bool,
+      className: PropTypes.string,
+      disabled: PropTypes.bool,
+      label: PropTypes.string,
+      name: PropTypes.string,
+      onBlur: PropTypes.func,
+      onChange: PropTypes.func,
+      onFocus: PropTypes.func,
+      theme: PropTypes.shape({
+        disabled: PropTypes.string,
+        field: PropTypes.string,
+        input: PropTypes.string,
+        text: PropTypes.string
+      }),
+      value: PropTypes.any
+    };
 
-  static defaultProps = {
-    checked: false,
-    className: '',
-    disabled: false
-  };
+    static defaultProps = {
+      checked: false,
+      className: '',
+      disabled: false
+    };
 
-  handleClick = (event) => {
-    const {checked, disabled, onChange} = this.props;
-    if (event.pageX !== 0 && event.pageY !== 0) this.blur();
-    if (!disabled && !checked && onChange) onChange(event, this);
-  };
+    handleClick = (event) => {
+      const {checked, disabled, onChange} = this.props;
+      if (event.pageX !== 0 && event.pageY !== 0) this.blur();
+      if (!disabled && !checked && onChange) onChange(event, this);
+    };
 
-  blur () {
-    this.refs.input.blur();
+    blur () {
+      this.refs.input.blur();
+    }
+
+    focus () {
+      this.refs.input.focus();
+    }
+
+    render () {
+      const { className, checked, disabled, label, theme, onChange, ...others } = this.props;  // eslint-disable-line
+      const _className = classnames(theme[this.props.disabled ? 'disabled' : 'field'], className);
+      return (
+        <label data-react-toolbox='radio-button' className={_className}>
+          <input
+            {...others}
+            className={theme.input}
+            onClick={this.handleClick}
+            readOnly
+            ref='input'
+            type='radio'
+          />
+        <Radio checked={checked} disabled={disabled} theme={theme} />
+          {label ? <span className={theme.text}>{label}</span> : null}
+        </label>
+      );
+    }
   }
 
-  focus () {
-    this.refs.input.focus();
-  }
+  return RadioButton;
+};
 
-  render () {
-    const className = ClassNames(style[this.props.disabled ? 'disabled' : 'field'], this.props.className);
-    const { onChange, ...others } = this.props; //eslint-disable-line no-unused-vars
-
-    return (
-      <label data-react-toolbox='radio-button' className={className}>
-        <input
-          {...others}
-          className={style.input}
-          onClick={this.handleClick}
-          readOnly
-          ref='input'
-          type='radio'
-        />
-        <Radio checked={this.props.checked} disabled={this.props.disabled}/>
-        {this.props.label ? <span className={style.text}>{this.props.label}</span> : null}
-      </label>
-    );
-  }
-}
-
-export default RadioButton;
+const Radio = radioFactory(rippleFactory({ centered: true, spread: 2.6 }));
+const RadioButton = factory(Radio);
+export default themr(RADIO)(RadioButton);
+export { factory as radioButtonFactory };
+export { RadioButton };
