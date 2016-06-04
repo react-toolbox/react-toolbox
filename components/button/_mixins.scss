@@ -1,0 +1,17 @@
+@mixin btn-colors($name, $color, $background, $hover) {
+  .#{$name}:not([disabled]) {
+    &.raised, &.floating {
+      color: $color;
+      background: $background;
+    }
+    &.flat, &.toggle {
+      color: $background;
+      &:focus:not(:active) {
+        background: $hover;
+      }
+    }
+    &.flat:hover {
+      background: $hover;
+    }
+  }
+}
