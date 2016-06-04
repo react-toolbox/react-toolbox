@@ -9,7 +9,7 @@ React Toolbox is a set of [React](http://facebook.github.io/react/) components t
 React Toolbox can be installed as an [npm package](https://www.npmjs.org/package/react-toolbox):
 
 ```bash
-npm install --save react-toolbox
+$ npm install --save react-toolbox
 ```
 
 ## Prerequisites
@@ -206,11 +206,11 @@ To work in the project you'd need a `node` version supporting ES6 syntax. Althou
 To start the documentation site locally, you'll need to install the dependencies from both the main package and the docs subproject:
 
 ```
-git clone https://github.com/react-toolbox/react-toolbox.git
-npm install
-cd docs/
-npm install
-npm start
+$ git clone https://github.com/react-toolbox/react-toolbox.git
+$ npm install
+$ cd docs/
+$ npm install
+$ npm start
 ```
 
 Local documentation will then be available at `http://localhost:8081/`.
