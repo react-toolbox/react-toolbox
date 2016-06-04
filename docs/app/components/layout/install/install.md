@@ -55,7 +55,7 @@ As you can see in the previous block, each folder includes: a Javascript file fo
 You import from the index file so the imported component comes with all dependencies and themes already required and injected for you. This means that the CSS for each dependency will be bundled in your final CSS automatically and the component markup includes the classnames to be styled. For example:
 
 ```js
-import { AppBar } from 'react-toolbox/lib/app_bar;
+import { AppBar } from 'react-toolbox/lib/app_bar';
 ```
 
 ### Raw component
@@ -63,7 +63,7 @@ import { AppBar } from 'react-toolbox/lib/app_bar;
 You import from the component definition so the imported component is bundled with its dependencies but it does not require any style for you. This means that no CSS will be bundled and the component markup will **not** include any classname. It's your responsibility to provide a theme to the component to be properly style and you can do it via properties or context. For example:
 
 ```js
-import { AppBar } from 'react-toolbox/lib/app_bar/AppBar.js;
+import { AppBar } from 'react-toolbox/lib/app_bar/AppBar.js';
 ```
 
 ## Customizing components
