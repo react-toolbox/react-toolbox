@@ -15,6 +15,7 @@ const factory = (TimePickerDialog, Input) => {
       error: PropTypes.string,
       format: PropTypes.oneOf(['24hr', 'ampm']),
       inputClassName: PropTypes.string,
+      name: PropTypes.string,
       label: PropTypes.string,
       onChange: PropTypes.func,
       theme: PropTypes.shape({
@@ -54,6 +55,7 @@ const factory = (TimePickerDialog, Input) => {
           <Input
             className={classnames(theme.input, {[inputClassName]: inputClassName })}
             error={this.props.error}
+            name={this.props.name}
             label={this.props.label}
             onMouseDown={this.handleInputMouseDown}
             readOnly
@@ -63,6 +65,7 @@ const factory = (TimePickerDialog, Input) => {
           <TimePickerDialog
             active={this.state.active}
             className={this.props.className}
+            name={this.props.name}
             format={format}
             onDismiss={this.handleDismiss}
             onSelect={this.handleSelect}
