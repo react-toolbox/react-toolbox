@@ -10,6 +10,7 @@ const factory = (Dialog, Calendar) => {
       className: PropTypes.string,
       maxDate: PropTypes.object,
       minDate: PropTypes.object,
+      name: PropTypes.string,
       onDismiss: PropTypes.func,
       onSelect: PropTypes.func,
       theme: PropTypes.shape({
@@ -74,7 +75,7 @@ const factory = (Dialog, Calendar) => {
 
     actions = [
       { label: 'Cancel', className: this.props.theme.button, onClick: this.props.onDismiss },
-      { label: 'Ok', className: this.props.theme.button, onClick: this.handleSelect }
+      { label: 'Ok', className: this.props.theme.button, name: this.props.name, onClick: this.handleSelect }
     ];
 
     render () {

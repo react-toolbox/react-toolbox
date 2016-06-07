@@ -9,6 +9,7 @@ const factory = (Dialog) => {
       active: PropTypes.bool,
       className: PropTypes.string,
       format: PropTypes.oneOf(['24hr', 'ampm']),
+      name: PropTypes.string,
       onDismiss: PropTypes.func,
       onSelect: PropTypes.func,
       theme: PropTypes.shape({
@@ -68,7 +69,7 @@ const factory = (Dialog) => {
 
     actions = [
       { label: 'Cancel', className: this.props.theme.button, onClick: this.props.onDismiss },
-      { label: 'Ok', className: this.props.theme.button, onClick: this.handleSelect }
+      { label: 'Ok', className: this.props.theme.button, name: this.props.name, onClick: this.handleSelect }
     ];
 
     formatHours () {

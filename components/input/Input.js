@@ -17,6 +17,7 @@ const factory = (FontIcon) => {
         React.PropTypes.string,
         React.PropTypes.element
       ]),
+      name: React.PropTypes.string,
       label: React.PropTypes.string,
       maxLength: React.PropTypes.number,
       multiline: React.PropTypes.bool,
@@ -67,7 +68,7 @@ const factory = (FontIcon) => {
 
     render () {
       const { children, disabled, error, floating, hint, icon,
-              label: labelText, maxLength, multiline, required,
+              name, label: labelText, maxLength, multiline, required,
               theme, type, value, ...others} = this.props;
       const length = maxLength && value ? value.length : 0;
       const labelClassName = classnames(theme.label, {[theme.fixed]: !floating});
@@ -87,6 +88,7 @@ const factory = (FontIcon) => {
         onChange: this.handleChange,
         ref: 'input',
         role: 'input',
+        name,
         disabled,
         required,
         type,

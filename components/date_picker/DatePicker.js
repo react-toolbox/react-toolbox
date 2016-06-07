@@ -23,6 +23,7 @@ const factory = (Input, DatePickerDialog) => {
       ]),
       inputClassName: PropTypes.string,
       inputFormat: PropTypes.func,
+      name: PropTypes.string,
       label: PropTypes.string,
       maxDate: PropTypes.object,
       minDate: PropTypes.object,
@@ -66,6 +67,7 @@ const factory = (Input, DatePickerDialog) => {
             className={classnames(this.props.theme.input, {[inputClassName]: inputClassName })}
             error={this.props.error}
             onMouseDown={this.handleInputMouseDown}
+            name={this.props.name}
             label={this.props.label}
             readOnly
             type='text'
@@ -76,6 +78,7 @@ const factory = (Input, DatePickerDialog) => {
             autoOk={this.props.autoOk}
             active={this.state.active}
             className={this.props.className}
+            name={this.props.name}
             maxDate={this.props.maxDate}
             minDate={this.props.minDate}
             onDismiss={this.handleDismiss}
