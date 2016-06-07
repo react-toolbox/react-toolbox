@@ -95,7 +95,7 @@
   },
   "scripts": {
     "babel": "babel ./components --out-dir ./lib",
-    "build": "cross-env NODE_ENV=production npm run babel && npm run sass",
+    "build": "cross-env NODE_ENV=production npm run babel && npm run sass && npm run tsd",
     "clean": "rimraf ./lib",
     "lint": "npm run lint:js && npm run lint:scss",
     "lint:js": "eslint ./ --ext .js",
@@ -104,7 +104,8 @@
     "prebuild": "npm run clean",
     "prepublish": "npm run build",
     "release": "bumped release",
-    "sass": "cpx './components/**/*.scss' ./lib",
+    "sass": "cpx ./components/**/*.scss ./lib",
+    "tsd": "cpx ./components/**/*.d.ts ./lib",
     "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
     "test": "cross-env NODE_ENV=test karma start",
     "test:watch": "cross-env NODE_ENV=test karma start --no-single-run"
@@ -116,6 +117,5 @@
     "react": "^0.14 || ^15.0.1",
     "react-addons-css-transition-group": "^0.14.0 || ^15.0.1",
     "react-dom": "^0.14.0 || ^15.0.1"
-  },
-  "typings": "./react-toolbox.d.ts"
+  }
 }
