@@ -40,7 +40,10 @@ export interface Conditional {
 	 */
 	disabled?: boolean
 }
-
+export interface Option<T> {
+	label: string,
+	value: T,
+}
 /**
  * Properties of components that have values that can be changed (T is the type of the value)
  */

@@ -160,7 +160,7 @@ export interface ListCheckboxProps extends Props, Conditional, Changeable<boolea
 export class ListCheckbox extends React.Component<ListCheckboxProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
-export export interface ListSubHeaderProps extends Props {
+export interface ListSubHeaderProps extends Props {
 	/**
 	 * List header caption.
 	 */

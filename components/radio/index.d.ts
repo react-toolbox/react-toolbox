@@ -68,7 +68,11 @@ export interface RadioButtonProps extends Props, Conditional {
 	/**
 	 * If true, the input element will be selected by default. Transferred from the parent.
 	 */
-	checked: boolean,
+	checked?: boolean,
+	/**
+	 * 	Label for the radio button.
+	 */
+	label?: string;
 	/**
 	 * Name for the input element.
 	 */

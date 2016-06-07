@@ -33,6 +33,21 @@ export interface Props {
 	 */
 	tooltipHideOnClick?: boolean,
 }
+export interface Iconic {
+	/**
+	 * Value of the icon (See icon component).
+	 */
+	icon?: string | __React.ReactElement<any> | __React.ReactHTMLElement<any>,
+}
+
+export interface Conditional {
+	/**
+	 * If true, component will be disabled
+	 * @default false
+	 */
+	disabled?: boolean
+}
+
 /**
  * Properties of components that can be clicked
  */
@@ -41,6 +56,56 @@ export interface Clickable {
 	 *  Callback called when the button is clicked.
 	 */
 	onClick?: Function
+}
+export interface ButtonProps extends Props, Clickable, Conditional, Iconic {
+	/**
+	 * Indicates if the button should have accent color.
+	 * @default false
+	 */
+	accent?: boolean,
+	/**
+	 * If true, the button will have a flat look.
+	 * @default false
+	 */
+	flat?: boolean,
+	/**
+	 * If true, the button will have a floating look.
+	 * @default false
+	 */
+	floating?: boolean,
+	/**
+	 * If specified, the button will be rendered as an <a>
+	 */
+	href?: string,
+	/**
+	 * The text string to use for the name of the button.
+	 */
+	label?: string,
+	/**
+	 * If true, component will be disabled and show a loading animation.
+	 * @default false
+	 */
+	loading?: boolean,
+	/**
+	 * To be used with floating button. If true the button will be smaller. 
+	 * @default false
+	 */
+	mini?: boolean,
+	/**
+	 * Indicates if the button should have primary color.
+	 * @default false
+	 */
+	primary?: boolean,
+	/**
+	 * If true, the button will have a raised look.
+	 * @default false
+	 */
+	raised?: boolean,
+	/**
+	 * If true, component will have a ripple effect on click.
+	 * @default true
+	 */
+	ripple?: boolean,
 }
 export interface CardProps extends Props, Clickable {
 	/**
