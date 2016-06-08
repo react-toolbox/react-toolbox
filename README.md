@@ -193,9 +193,9 @@ For now we have a [repository example](https://github.com/react-toolbox/react-to
 
 ## TypeScript
 
-A TypeScript definition file `react-toolbox.d.ts` is available. It is referenced in `package.json` and should be picked up by the TypeScript compiler when importing from the npm package.
+TypeScript external module definition files are included, and should not require any manual steps to utilize. They will be picked up by the TypeScript compiler when importing from the npm package.
 
-Note that to comply with the typings requirement, a triple-slash reference to `react.d.ts` is *NOT included*. You will need to reference [react.d.ts](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/react/react.d.ts) somewhere in your project.
+Note that to comply with the official recommendation for npm typings, a triple-slash reference to `react.d.ts` is *NOT included*. You will need to reference [react.d.ts](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/react/react.d.ts) somewhere in your project.
 
 ## Authors and Contributors
 
