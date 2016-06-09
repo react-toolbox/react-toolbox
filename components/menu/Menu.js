@@ -25,7 +25,7 @@ const factory = (MenuItem) => {
       onSelect: PropTypes.func,
       onShow: PropTypes.func,
       outline: PropTypes.bool,
-      position: PropTypes.string,
+      position: PropTypes.oneOf(Object.keys(POSITION).map(key => POSITION[key])),
       ripple: PropTypes.bool,
       selectable: PropTypes.bool,
       selected: PropTypes.any,

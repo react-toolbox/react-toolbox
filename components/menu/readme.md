@@ -7,7 +7,7 @@ A [Menu](https://www.google.com/design/spec/components/menus.html) is a temporar
 import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 
 const MenuTest = () => (
-  <IconMenu icon='more_vert' position='top-left' menuRipple>
+  <IconMenu icon='more_vert' position='topLeft' menuRipple>
     <MenuItem value='download' icon='get_app' caption='Download' />
     <MenuItem value='help' icon='favorite' caption='Favorite' />
     <MenuItem value='settings' icon='open_in_browser' caption='Open in app' />
@@ -33,7 +33,7 @@ This subcomponent is the default wrapper for a menu and is responsible for the o
 | `onSelect`    | `Function`    |             | Callback that will be invoked when a menu item is selected. |
 | `onShow`      | `Function`    |             | Callback that will be invoked when the menu is being shown. |
 | `outline`     | `Boolean`     | `true`      | If true the menu wrapper will show an outline with a soft shadow. |
-| `position`    | `String`      | `static`    | Determine the position of the menu. With `static` value the menu will be always shown, `auto` means that the it will decide the opening direction based on the current position. To force a position use `top-left`, `top-right`, `bottom-left`, `bottom-right`. |
+| `position`    | `String`      | `static`    | Determine the position of the menu. With `static` value the menu will be always shown, `auto` means that the it will decide the opening direction based on the current position. To force a position use `topLeft`, `topRight`, `bottomLeft`, `bottomRight`. |
 | `ripple`      | `Boolean`     | `true`      | If true, the menu items will show a ripple effect on click. |
 | `selectable`  | `Boolean`     | `false`     | If true, the menu will keep a value to highlight the active child item. |
 | `selected`    | `Any`         |             | Used for selectable menus. Indicates the current selected value so the child item with this value can be highlighted. |
