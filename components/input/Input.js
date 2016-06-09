@@ -17,10 +17,10 @@ const factory = (FontIcon) => {
         React.PropTypes.string,
         React.PropTypes.element
       ]),
-      name: React.PropTypes.string,
       label: React.PropTypes.string,
       maxLength: React.PropTypes.number,
       multiline: React.PropTypes.bool,
+      name: React.PropTypes.string,
       onBlur: React.PropTypes.func,
       onChange: React.PropTypes.func,
       onFocus: React.PropTypes.func,
