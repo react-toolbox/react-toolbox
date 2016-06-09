@@ -15,6 +15,7 @@ const factory = (Input) => {
       disabled: PropTypes.bool,
       error: PropTypes.string,
       label: PropTypes.string,
+      name: PropTypes.string,
       onBlur: PropTypes.func,
       onChange: PropTypes.func,
       onFocus: PropTypes.func,
@@ -94,6 +95,9 @@ const factory = (Input) => {
     handleSelect = (item, event) => {
       if (this.props.onBlur) this.props.onBlur(event);
       if (!this.props.disabled && this.props.onChange) {
+        if (this.props.name) {
+          event.target.name = this.props.name;
+        }
         this.props.onChange(item, event);
         this.setState({active: false});
       }
