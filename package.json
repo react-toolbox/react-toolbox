@@ -104,8 +104,8 @@
     "prebuild": "npm run clean",
     "prepublish": "npm run build",
     "release": "bumped release",
-    "sass": "cpx ./components/**/*.scss ./lib",
-    "tsd": "cpx ./components/**/*.d.ts ./lib",
+    "sass": "cpx './components/**/*.scss' ./lib",
+    "tsd": "cpx './components/**/*.d.ts' ./lib",
     "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
     "test": "cross-env NODE_ENV=test karma start",
     "test:watch": "cross-env NODE_ENV=test karma start --no-single-run"
