@@ -126,7 +126,7 @@
 
 .day {
   flex: 0 0 (100% / 7);
-  padding: $calendar-day-padding;
+  padding: $calendar-day-padding-topbottom $calendar-day-padding-leftright;
   > span {
     display: inline-block;
     width: $calendar-row-height;
