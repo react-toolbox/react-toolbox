@@ -53,6 +53,7 @@ If you want to provide a theme via context, the component key is `RTAutocomplete
 | `source`            | `Object` or `Array`    |                 | Object of key/values or array representing all items suggested. |
 | `selectedPosition`  | `String`               |  `above`        | Determines if the selected list is shown above or below input. It can be `above` or `below`. |
 | `showSuggestionsWhenValueIsSet` | `Bool`     | `false`         | If true, the list of suggestions will not be filtered when a value is selected, until the query is modified. |
+| `suggestionMatch`   | `String`               | `start`         | Determines how suggestions are supplied. It can be `start` (query matches the start of a suggestion), `anywhere` (query matches anywhere inside the suggestion), or `word` (query matches the start of a word in the suggestion). |
 | `value`             | `String` or `Array`    |                 | Value or array of values currently selected component.|
 
 Additional properties will be passed to the Input Component so you can use `hint`, `name` ... etc.

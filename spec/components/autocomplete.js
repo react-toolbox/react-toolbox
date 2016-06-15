@@ -2,7 +2,8 @@ import React from 'react';
 import Autocomplete from '../../components/autocomplete';
 
 const countriesArray = ['Spain', 'England', 'USA', 'Thailand', 'Tongo', 'Slovenia'];
-const countriesObject = {'ES-es': 'Spain', 'TH-th': 'Thailand', 'EN-gb': 'England', 'EN-en': 'USA'};
+const countriesObject = {'ES-es': 'Spain', 'TH-th': 'Thailand', 'EN-gb': 'England',
+  'EN-en': 'United States of America', 'EN-nz': 'New Zealand'};
 
 class AutocompleteTest extends React.Component {
   state = {
@@ -34,6 +35,7 @@ class AutocompleteTest extends React.Component {
           label="Pick multiple elements..."
           source={countriesObject}
           value={this.state.multiple}
+          suggestionMatch="anywhere"
         />
 
         <Autocomplete

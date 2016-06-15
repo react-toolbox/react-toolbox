@@ -26,6 +26,7 @@ const factory = (Chip, Input) => {
      selectedPosition: PropTypes.oneOf(['above', 'below']),
      showSuggestionsWhenValueIsSet: PropTypes.bool,
      source: PropTypes.any,
+     suggestionMatch: PropTypes.oneOf(['start', 'anywhere', 'word']),
      theme: PropTypes.shape({
        active: PropTypes.string,
        autocomplete: PropTypes.string,
@@ -47,7 +48,8 @@ const factory = (Chip, Input) => {
      selectedPosition: 'above',
      multiple: true,
      showSuggestionsWhenValueIsSet: false,
-     source: {}
+     source: {},
+     suggestionMatch: 'start'
    };
 
    state = {
@@ -151,7 +153,7 @@ const factory = (Chip, Input) => {
      // Suggest any non-set value which matches the query
      if (this.props.multiple) {
        for (const [key, value] of source) {
-         if (!values.has(key) && value.toLowerCase().trim().startsWith(query)) {
+         if (!values.has(key) && this.matches(value.toLowerCase().trim(), query)) {
            suggest.set(key, value);
          }
        }
@@ -159,7 +161,7 @@ const factory = (Chip, Input) => {
      // When multiple is false, suggest any value which matches the query if showAllSuggestions is false
      } else if (query && !this.state.showAllSuggestions) {
        for (const [key, value] of source) {
-         if (value.toLowerCase().trim().startsWith(query)) {
+         if (this.matches(value.toLowerCase().trim(), query)) {
            suggest.set(key, value);
          }
        }
@@ -170,6 +172,21 @@ const factory = (Chip, Input) => {
      }
 
      return suggest;
+   }
+
+   matches (value, query) {
+     const { suggestionMatch } = this.props;
+
+     if (suggestionMatch === 'start') {
+       return value.startsWith(query);
+     } else if (suggestionMatch === 'anywhere') {
+       return value.includes(query);
+     } else if (suggestionMatch === 'word') {
+       const re = new RegExp(`\\b${query}`, 'g');
+       return re.test(value);
+     }
+
+     return false;
    }
 
    source () {
