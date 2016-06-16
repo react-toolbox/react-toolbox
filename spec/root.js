@@ -4,6 +4,7 @@ import React from 'react';
 import AppBar from '../components/app_bar';
 import Autocomplete from './components/autocomplete';
 import Avatar from './components/avatar';
+import FontIcon from './components/font_icon';
 import Button from './components/button';
 import ButtonToolbox from '../components/button';
 import Card from './components/card';
@@ -42,6 +43,7 @@ const Root = () => (
     </AppBar>
     <Autocomplete />
     <Avatar />
+    <FontIcon />
     <Button />
     <Card />
     <Checkbox />
