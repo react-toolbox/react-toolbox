@@ -44,6 +44,10 @@ const factory = (Overlay, Button) => {
       }
     }
 
+    componentWillUnmount () {
+      clearTimeout(this.curTimeout);
+    }
+
     render () {
       const {action, active, icon, label, onClick, theme, type } = this.props;
       const className = classnames([theme.snackbar, theme[type]], {
