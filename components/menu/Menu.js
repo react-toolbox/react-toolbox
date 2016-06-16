@@ -121,10 +121,11 @@ const factory = (MenuItem) => {
       }
     };
 
-    handleSelect = (item) => {
+    handleSelect = (item, event) => {
       const { value, onClick } = item.props;
+      if (onClick) event.persist();
       this.setState({ active: false, rippled: this.props.ripple }, () => {
-        if (onClick) onClick();
+        if (onClick) onClick(event);
         if (this.props.onSelect) this.props.onSelect(value);
       });
     };
