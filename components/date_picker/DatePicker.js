@@ -23,10 +23,10 @@ const factory = (Input, DatePickerDialog) => {
       ]),
       inputClassName: PropTypes.string,
       inputFormat: PropTypes.func,
-      name: PropTypes.string,
       label: PropTypes.string,
       maxDate: PropTypes.object,
       minDate: PropTypes.object,
+      name: PropTypes.string,
       onChange: PropTypes.func,
       theme: PropTypes.shape({
         input: PropTypes.string

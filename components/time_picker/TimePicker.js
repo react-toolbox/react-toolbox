@@ -15,8 +15,8 @@ const factory = (TimePickerDialog, Input) => {
       error: PropTypes.string,
       format: PropTypes.oneOf(['24hr', 'ampm']),
       inputClassName: PropTypes.string,
-      name: PropTypes.string,
       label: PropTypes.string,
+      name: PropTypes.string,
       onChange: PropTypes.func,
       theme: PropTypes.shape({
         input: PropTypes.string
