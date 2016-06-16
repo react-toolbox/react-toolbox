@@ -1,7 +1,7 @@
 export default from './DatePicker';
 
 import { themr } from 'react-css-themr';
-import { DATE_PICKER } from '../identifiers.js';
+import { DATE_PICKER, DIALOG } from '../identifiers.js';
 import { datePickerFactory } from './DatePicker.js';
 import datePickerDialogFactory from './DatePickerDialog.js';
 import calendarFactory from './Calendar.js';
@@ -18,3 +18,6 @@ const DatePicker = datePickerFactory(Input, DatePickerDialog);
 const ThemedDatePicker = themr(DATE_PICKER, theme)(DatePicker);
 export default ThemedDatePicker;
 export { ThemedDatePicker as DatePicker };
+
+const ThemedDatePickerDialog = themr(DIALOG, theme)(DatePickerDialog);
+export { ThemedDatePickerDialog as DatePickerDialog };
