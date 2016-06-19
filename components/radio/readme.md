@@ -56,7 +56,7 @@ The inner component to compose radio selectors. They will be rendered as radio i
 | `checked`     | `Boolean`     | `false`     | If true, the input element will be selected by default. Transferred from the parent. |
 | `className`   | `String`      | `''`        | Set a class to give custom styles to the radio button.|
 | `disabled`    | `Boolean`     | `false`     | If true, the item will be displayed as disabled.|
-| `label`       | `String`      | `''`        | Label for the radio button.|
+| `label`       | `String` of `node`  | `''`        | Label for the radio button.|
 | `name`        | `String`      |             | Name for the input element. |
 | `onBlur`      | `Function`    |             | Callback function that will be invoked when the input is blurred. |
 | `onChange`    | `Function`    |             | Callback function that will be invoked when the value changes. |

@@ -11,7 +11,10 @@ const factory = (Check) => {
       checked: PropTypes.bool,
       className: PropTypes.string,
       disabled: PropTypes.bool,
-      label: PropTypes.any,
+      label: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node
+      ]),
       name: PropTypes.string,
       onChange: PropTypes.func,
       theme: PropTypes.shape({
