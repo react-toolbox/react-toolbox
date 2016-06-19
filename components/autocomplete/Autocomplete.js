@@ -114,8 +114,17 @@ const factory = (Chip, Input) => {
    };
 
    handleQueryKeyUp = (event) => {
-     if (event.which === 13 && this.state.active) this.select(this.state.active, event);
+     if (event.which === 13) {
+       let target = this.state.active;
+       if (!target) {
+         target = [...this.suggestions().keys()][0];
+         this.setState({active: target});
+       }
+       this.select(target, event);
+     }
+
      if (event.which === 27) ReactDOM.findDOMNode(this).querySelector('input').blur();
+
      if ([40, 38].indexOf(event.which) !== -1) {
        const suggestionsKeys = [...this.suggestions().keys()];
        let index = suggestionsKeys.indexOf(this.state.active) + (event.which === 40 ? +1 : -1);
