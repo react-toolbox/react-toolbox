@@ -11,7 +11,7 @@
 %button {
   @include typo-button();
   position: relative;
-  display: inline-flex;
+  display: inline-block;
   height: $button-height;
   flex-direction: row;
   align-content: center;
