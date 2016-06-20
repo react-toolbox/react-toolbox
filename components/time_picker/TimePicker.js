@@ -18,6 +18,7 @@ const factory = (TimePickerDialog, Input) => {
       label: PropTypes.string,
       name: PropTypes.string,
       onChange: PropTypes.func,
+      onKeyPress: PropTypes.func,
       theme: PropTypes.shape({
         input: PropTypes.string
       }),
@@ -42,22 +43,32 @@ const factory = (TimePickerDialog, Input) => {
       this.setState({active: true});
     };
 
+    handleInputKeyPress = (event) => {
+      if (event.charCode === 13) {
+        events.pauseEvent(event);
+        this.setState({active: true});
+      }
+      if (this.props.onKeyPress) this.props.onKeyPress(event);
+    };
+
     handleSelect = (value, event) => {
       if (this.props.onChange) this.props.onChange(value, event);
       this.setState({active: false});
     };
 
     render () {
-      const { value, format, inputClassName, theme } = this.props;
+      const { value, format, inputClassName, theme, ...others } = this.props;
       const formattedTime = value ? time.formatTime(value, format) : '';
       return (
         <div data-react-toolbox='time-picker'>
           <Input
+            {...others}
             className={classnames(theme.input, {[inputClassName]: inputClassName })}
             error={this.props.error}
             name={this.props.name}
             label={this.props.label}
             onMouseDown={this.handleInputMouseDown}
+            onKeyPress={this.handleInputKeyPress}
             readOnly
             type='text'
             value={formattedTime}

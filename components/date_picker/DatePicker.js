@@ -28,6 +28,7 @@ const factory = (Input, DatePickerDialog) => {
       minDate: PropTypes.object,
       name: PropTypes.string,
       onChange: PropTypes.func,
+      onKeyPress: PropTypes.func,
       theme: PropTypes.shape({
         input: PropTypes.string
       }),
@@ -50,13 +51,21 @@ const factory = (Input, DatePickerDialog) => {
       this.setState({active: true});
     };
 
+    handleInputKeyPress = (event) => {
+      if (event.charCode === 13) {
+        events.pauseEvent(event);
+        this.setState({active: true});
+      }
+      if (this.props.onKeyPress) this.props.onKeyPress(event);
+    };
+
     handleSelect = (value, event) => {
       if (this.props.onChange) this.props.onChange(value, event);
       this.setState({active: false});
     };
 
     render () {
-      const { inputClassName, value } = this.props;
+      const { inputClassName, value, ...others } = this.props;
       const inputFormat = this.props.inputFormat || time.formatDate;
       const date = Object.prototype.toString.call(value) === '[object Date]' ? value : undefined;
       const formattedDate = date === undefined ? '' : inputFormat(value);
@@ -64,9 +73,11 @@ const factory = (Input, DatePickerDialog) => {
       return (
         <div data-react-toolbox='date-picker'>
           <Input
+            {...others}
             className={classnames(this.props.theme.input, {[inputClassName]: inputClassName })}
             error={this.props.error}
             onMouseDown={this.handleInputMouseDown}
+            onKeyPress={this.handleInputKeyPress}
             name={this.props.name}
             label={this.props.label}
             readOnly
