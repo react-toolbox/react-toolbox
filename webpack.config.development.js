@@ -1,7 +1,6 @@
 const pkg = require('./package');
 const path = require('path');
 const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
@@ -27,12 +26,18 @@ module.exports = {
         loader: 'babel',
         exclude: [/(node_modules)/, /react-css-themr/]
       }, {
-        test: /\.(scss|css)$/,
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss')
+      }, {
+        test: /\.scss$/,
         loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass?sourceMap')
       }
     ]
   },
-  postcss: [autoprefixer],
+  postcss: (webpackInstance) => [
+    require('postcss-import')({ addDependencyTo: webpackInstance }),
+    require('postcss-cssnext')()
+  ],
   plugins: [
     new ExtractTextPlugin('spec.css', { allChunks: true }),
     new webpack.HotModuleReplacementPlugin(),
