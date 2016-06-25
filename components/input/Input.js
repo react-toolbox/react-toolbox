@@ -54,9 +54,43 @@ const factory = (FontIcon) => {
       type: 'text'
     };
 
+    componentDidMount () {
+      window.addEventListener('resize', this.handleAutoresize);
+    }
+
+    componentWillReceiveProps (nextProps) {
+      if (!this.props.multiline && nextProps.multiline) {
+        window.addEventListener('resize', this.handleAutoresize);
+      } else if (this.props.multiline && !nextProps.multiline) {
+        window.removeEventListener('resize', this.handleAutoresize);
+      }
+    }
+
+    componentWillUnmount () {
+      window.removeEventListener('resize', this.handleAutoresize);
+    }
+
     handleChange = (event) => {
+      if (this.props.multiline) {
+        this.handleAutoresize();
+      }
       if (this.props.onChange) this.props.onChange(event.target.value, event);
     };
+
+    handleAutoresize = () => {
+      const element = this.refs.input;
+      // compute the height difference between inner height and outer height
+      const style = getComputedStyle(element, null);
+      let heightOffset = 0;
+      if (style.boxSizing === 'content-box') {
+        heightOffset = -(parseFloat(style.paddingTop) + parseFloat(style.paddingBottom));
+      } else {
+        heightOffset = parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+      }
+      // resize the input to its content size
+      element.style.height = 'auto';
+      element.style.height = `${element.scrollHeight + heightOffset}px`;
+    }
 
     blur () {
       this.refs.input.blur();
