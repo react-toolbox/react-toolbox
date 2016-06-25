@@ -157,7 +157,7 @@ const factory = (Input) => {
             onMouseDown={this.handleMouseDown}
             readOnly
             type={template && selected ? 'hidden' : null}
-            value={selected && selected.label}
+            value={selected && selected.label ? selected.label : ''}
           />
         {template && selected ? this.renderTemplateValue(selected) : null}
           <ul className={theme.values} ref='values'>
