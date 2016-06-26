@@ -77,6 +77,8 @@ export interface DropdownProps extends Props, Changeable<any>, Conditional {
 	value: string,
 }
 
-export default class Dropdown extends React.Component<DropdownProps, {}> {
+export class Dropdown extends React.Component<DropdownProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default Dropdown;

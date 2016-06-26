@@ -51,6 +51,8 @@ export interface LinkProps extends Props, Iconic {
 	 */
 	count?: number,
 }
-export default class Link extends React.Component<LinkProps, {}> {
+export class Link extends React.Component<LinkProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default Link;

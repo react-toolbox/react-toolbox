@@ -62,6 +62,8 @@ export interface DatePickerProps extends Props, Changeable<Date> {
 	 */
 	value?: Date,
 }
-export default class DatePicker extends React.Component<DatePickerProps, {}> {
+export class DatePicker extends React.Component<DatePickerProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default DatePicker;

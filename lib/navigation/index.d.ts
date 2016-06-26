@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { ButtonProps } from '../button'
+import { LinkProps } from '../link'
+
 export interface Props {
 	/**
 	 * Sets a CSS class on the component.
@@ -48,6 +51,8 @@ export interface NavigationProps extends Props {
 	 */
 	type?: string,
 }
-export default class Navigation extends React.Component<NavigationProps, {}> {
+export class Navigation extends React.Component<NavigationProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default Navigation;

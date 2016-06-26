@@ -44,6 +44,8 @@ export interface OverlayProps extends Props {
 	onClick?: Function;
 	onEscKeyDown?: Function
 }
-export default class Overlay extends React.Component<OverlayProps, {}> {
+export class Overlay extends React.Component<OverlayProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default Overlay;

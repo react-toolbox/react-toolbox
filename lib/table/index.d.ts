@@ -59,6 +59,8 @@ export interface TableProps extends Props {
 	 */
 	source?: Array<{ [key: string]: any }>,
 }
-export default class Table extends React.Component<TableProps, {}> {
+export class Table extends React.Component<TableProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default Table;

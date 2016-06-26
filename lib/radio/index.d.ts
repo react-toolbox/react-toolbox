@@ -97,3 +97,5 @@ export interface RadioButtonProps extends Props, Conditional {
 export class RadioButton extends React.Component<RadioButtonProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default RadioButton;

@@ -61,6 +61,8 @@ export interface ChipProps extends Props {
  * As users may choose not to personalize an avatar, provide delightful defaults. 
  * When used with a specific logo, avatars can also be used to represent brand.
  */
-export default class Chip extends React.Component<ChipProps, {}> {
+export class Chip extends React.Component<ChipProps, {}> {
 	render(): React.ReactElement<any>;
 }
+
+export default Chip;

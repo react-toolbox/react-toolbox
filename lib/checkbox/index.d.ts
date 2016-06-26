@@ -75,6 +75,8 @@ export interface CheckboxProps extends Props, Changeable<boolean>, Conditional {
 	 */
 	onFocus?: Function,
 }
-export default class Checkbox extends React.Component<CheckboxProps, {}> {
+export class Checkbox extends React.Component<CheckboxProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default Checkbox;

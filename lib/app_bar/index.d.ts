@@ -47,10 +47,12 @@ export interface AppBarProps extends Props {
 	fixed?: boolean,
 }
 /**
- * The app bar is a special kind of toolbar that’s used for branding, navigation, search, and actions. 
+ * The app bar is a special kind of toolbar thatï¿½s used for branding, navigation, search, and actions. 
  * Usually it contains controls on the right and left side and a title with the current section or app name. 
  * You should give the content with children elements.
  */
-export default class AppBar extends React.Component<AppBarProps, {}> {
+export class AppBar extends React.Component<AppBarProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default AppBar;

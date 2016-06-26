@@ -69,6 +69,8 @@ export interface DrawerProps extends Props, Modal {
 	 */
 	type?: string
 }
-export default class Drawer extends React.Component<DrawerProps, {}> {
+export class Drawer extends React.Component<DrawerProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default Drawer;

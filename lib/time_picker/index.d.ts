@@ -54,6 +54,8 @@ export interface TimePickerProps extends Props, Changeable<Date> {
 	 */
 	value?: Date,
 }
-export default class TimePicker extends React.Component<TimePickerProps, {}> {
+export class TimePicker extends React.Component<TimePickerProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default TimePicker;
