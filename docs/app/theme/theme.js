@@ -5,7 +5,7 @@ import ToolboxAutocomplete from 'react-toolbox/autocomplete/theme.css';
 import ToolboxAvatar from 'react-toolbox/avatar/theme.css';
 import ToolboxButton from 'react-toolbox/button/theme.scss';
 import ToolboxCard from 'react-toolbox/card/theme.scss';
-import ToolboxCheckbox from 'react-toolbox/checkbox/theme.scss';
+import ToolboxCheckbox from 'react-toolbox/checkbox/theme.css';
 import ToolboxChip from 'react-toolbox/chip/theme.scss';
 import ToolboxDatePicker from 'react-toolbox/date_picker/theme.scss';
 import ToolboxDialog from 'react-toolbox/dialog/theme.scss';
