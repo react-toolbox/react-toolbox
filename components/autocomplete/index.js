@@ -3,7 +3,7 @@ import { themr } from 'react-css-themr';
 import { autocompleteFactory } from './Autocomplete.js';
 import Chip from '../chip';
 import Input from '../input';
-import theme from './theme.scss';
+import theme from './theme.css';
 
 const Autocomplete = autocompleteFactory(Chip, Input);
 const ThemedAutocomplete = themr(AUTOCOMPLETE, theme)(Autocomplete);

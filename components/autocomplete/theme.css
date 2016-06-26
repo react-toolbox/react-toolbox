@@ -1,0 +1,86 @@
+@import "../colors.css";
+@import "../globals.css";
+@import "./config.css";
+@import "../input/config.css";
+
+.autocomplete {
+  position: relative;
+  padding: var(--unit) 0;
+  &.focus {
+    & .label {
+      color: var(--autocomplete-color-primary);
+    }
+    & .suggestions {
+      max-height: var(--autocomplete-overflow-max-height);
+      visibility: visible;
+      box-shadow: var(--zdepth-shadow-1);
+    }
+  }
+}
+
+.label {
+  font-size: var(--font-size-tiny);
+  color: var(--color-text-secondary);
+  transition: color var(--animation-duration) var(--animation-curve-default);
+}
+
+.values {
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-bottom: calc(var(--unit) / 2);
+}
+
+.value {
+  margin: var(--autocomplete-value-margin);
+}
+
+.suggestions {
+  position: absolute;
+  z-index: var(--z-index-high);
+  width: 100%;
+  max-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  visibility: hidden;
+  background-color: var(--autocomplete-suggestions-background);
+  transition-timing-function: var(--animation-curve-default);
+  transition-duration: var(--animation-duration);
+  transition-property: max-height, box-shadow;
+  &:not(.up) {
+    margin-top: calc(-1 * var(--input-padding));
+  }
+  &.up {
+    bottom: 0;
+  }
+  /* no-webkit-scrollbar */
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}
+
+.suggestion {
+  padding: var(--autocomplete-suggestion-padding);
+  font-size: var(--input-field-font-size);
+  cursor: pointer;
+  &.active {
+    background-color: var(--autocomplete-suggestion-active-background);
+  }
+}
+
+.input {
+  position: relative;
+  &:after {
+    position: absolute;
+    top: 50%;
+    right: var(--input-chevron-offset);
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    content: "";
+    border-top: calc(var(--input-field-height) / 7) solid var(--input-text-bottom-border-color);
+    border-right: calc(var(--input-field-height) / 7) solid transparent;
+    border-left: calc(var(--input-field-height) / 7) solid transparent;
+    transition: transform var(--animation-duration) var(--animation-curve-default);
+  }
+}
