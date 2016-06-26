@@ -2,7 +2,7 @@ import 'react-toolbox/commons';
 
 import ToolboxAppBar from 'react-toolbox/app_bar/theme.css';
 import ToolboxAutocomplete from 'react-toolbox/autocomplete/theme.css';
-import ToolboxAvatar from 'react-toolbox/avatar/theme.scss';
+import ToolboxAvatar from 'react-toolbox/avatar/theme.css';
 import ToolboxButton from 'react-toolbox/button/theme.scss';
 import ToolboxCard from 'react-toolbox/card/theme.scss';
 import ToolboxCheckbox from 'react-toolbox/checkbox/theme.scss';

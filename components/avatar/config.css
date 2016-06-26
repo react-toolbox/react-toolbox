@@ -1,0 +1,6 @@
+:root {
+  --avatar-color: var(--color-white);
+  --avatar-background: var(--palette-grey-500);
+  --avatar-size: calc(4 * var(--unit));
+  --avatar-font-size: calc(2.4 * var(--unit));
+}

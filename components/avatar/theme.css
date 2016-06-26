@@ -1,26 +1,25 @@
-@import "../colors";
-@import "../globals";
-@import "../mixins";
-@import "./config";
+@import "../colors.css";
+@import "../globals.css";
+@import "./config.css";
 
 .avatar {
   position: relative;
   display: inline-block;
-  width: $avatar-size;
-  height: $avatar-size;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
   overflow: hidden;
-  font-size: $avatar-font-size;
-  color: $avatar-color;
+  font-size: var(--avatar-font-size);
+  color: var(--avatar-color);
   text-align: center;
   vertical-align: middle;
-  background-color: $avatar-background;
+  background-color: var(--avatar-background);
   border-radius: 50%;
-  > svg {
+  & > svg {
     width: 1em;
-    height: $avatar-size;
+    height: var(--avatar-size);
     fill: currentColor;
   }
-  > img {
+  & > img {
     max-width: 100%;
     height: auto;
   }
@@ -40,5 +39,5 @@
 .letter {
   display: block;
   width: 100%;
-  line-height: $avatar-size;
+  line-height: var(--avatar-size);
 }
