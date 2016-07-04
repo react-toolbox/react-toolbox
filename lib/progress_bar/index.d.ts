@@ -41,19 +41,19 @@ export interface ProgressBarProps extends Props {
 	/**
 	 * Maximum value permitted.
 	 */
-	max?: number, // 
+	max?: number, //
 	/**
 	 * minimum value permitted.
 	 */
-	min?: number, // 
+	min?: number, //
 	/**
 	 * Mode of the progress bar, it can be determinate or indeterminate.
 	 */
-	mode?: string, // 
+	mode?: string, //
 	/**
 	 * If true, the circular progress bar will be changing its color.
 	 */
-	multicolor?: boolean, // 
+	multicolor?: boolean, //
 	/**
 	 * Type of the progress bar, it can be circular or linear.
 	 * @default linear
@@ -64,6 +64,8 @@ export interface ProgressBarProps extends Props {
 	 */
 	value?: number,
 }
-export default class ProgressBar extends React.Component<ProgressBarProps, {}> {
+export class ProgressBar extends React.Component<ProgressBarProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default ProgressBar;

@@ -90,6 +90,8 @@ export interface AutocompleteProps extends Props, Conditional, Changeable<string
  * They can be simple or multiple depending on the amount of values that can be selected. 
  * The opening direction is determined at opening time depending on the current position.
  */
-export default class Autocomplete extends React.Component<AutocompleteProps, {}> {
+export class Autocomplete extends React.Component<AutocompleteProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default Autocomplete;

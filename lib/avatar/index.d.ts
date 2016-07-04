@@ -50,6 +50,8 @@ export interface AvatarProps extends Props, Iconic {
  * As users may choose not to personalize an avatar, provide delightful defaults. 
  * When used with a specific logo, avatars can also be used to represent brand.
  */
-export default class Avatar extends React.Component<AvatarProps, {}> {
+export class Avatar extends React.Component<AvatarProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default Avatar;

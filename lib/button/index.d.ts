@@ -120,3 +120,5 @@ export class Button extends React.Component<ButtonProps, {}> {
 export class IconButton extends React.Component<ButtonProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default Button;

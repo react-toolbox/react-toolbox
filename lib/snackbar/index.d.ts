@@ -92,6 +92,9 @@ export interface SnackbarProps extends Props, Modal, Iconic {
 	 */
 	type?: string,
 }
-export default class Snackbar extends React.Component<SnackbarProps, {}> {
+
+export class Snackbar extends React.Component<SnackbarProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default Snackbar;

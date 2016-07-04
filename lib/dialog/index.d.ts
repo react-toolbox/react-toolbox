@@ -152,6 +152,8 @@ export interface DialogProps extends Props, Modal {
 	 */
 	type?: string,
 }
-export default class Dialog extends React.Component<DialogProps, {}> {
+export class Dialog extends React.Component<DialogProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default Dialog;

@@ -37,6 +37,8 @@ export interface Props {
 export interface FontIconProps extends Props {
 	value: string
 }
-export default class FontIcon extends React.Component<FontIconProps, {}> {
+export class FontIcon extends React.Component<FontIconProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default FontIcon;

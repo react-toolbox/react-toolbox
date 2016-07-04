@@ -70,6 +70,8 @@ export interface SwitchProps extends Props, Conditional {
 	 */
 	onFocus?: Function,
 }
-export default class Switch extends React.Component<SwitchProps, {}> {
+export class Switch extends React.Component<SwitchProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default Switch;

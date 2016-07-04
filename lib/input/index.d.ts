@@ -117,6 +117,8 @@ export interface InputProps extends Props, Conditional, Changeable<string>, Icon
 	 */
 	value?: string,
 }
-export default class Input extends React.Component<InputProps, {}> {
+export class Input extends React.Component<InputProps, {}> {
 	render(): React.DOMElement<any, any>;
 }
+
+export default Input;
