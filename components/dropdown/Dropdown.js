@@ -141,7 +141,7 @@ const factory = (Input) => {
     }
 
     render () {
-      const {template, theme, source, ...others} = this.props;
+      const {template, theme, source, allowBlank, auto, ...others} = this.props; //eslint-disable-line no-unused-vars
       const selected = this.getSelectedItem();
       const className = classnames(theme.dropdown, {
         [theme.up]: this.state.up,

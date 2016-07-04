@@ -113,6 +113,7 @@ const rippleFactory = (options = {}) => {
           const {
             children,
             ripple, //eslint-disable-line no-unused-vars
+            onRippleEnded, //eslint-disable-line no-unused-vars
             rippleClassName: className,
             rippleCentered: centered, //eslint-disable-line no-unused-vars
             rippleSpread: spread, //eslint-disable-line no-unused-vars

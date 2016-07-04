@@ -270,7 +270,11 @@ const factory = (Chip, Input) => {
    }
 
    render () {
-     const {error, label, theme, ...other} = this.props;
+     const {
+      error, label, source, suggestionMatch,           //eslint-disable-line no-unused-vars
+      selectedPosition, showSuggestionsWhenValueIsSet, //eslint-disable-line no-unused-vars
+      theme, ...other
+    } = this.props;
      const className = classnames(theme.autocomplete, {
        [theme.focus]: this.state.focus
      }, this.props.className);
