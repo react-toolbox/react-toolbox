@@ -42,16 +42,20 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
         if (!React.isValidElement(child)) {
           return;
         }
-        if (child.props.listItemIgnore) {
-          children.ignored.push(child);
+
+        const { listItemIgnore, ...rest } = child.props;
+        const strippedChild = { ...child, ...{ props: rest } };
+
+        if (listItemIgnore) {
+          children.ignored.push(strippedChild);
           return;
         }
         if (child.type === ListItemContent) {
-          children.itemContent = child;
+          children.itemContent = strippedChild;
           return;
         }
         const bucket = children.itemContent ? 'rightActions' : 'leftActions';
-        children[bucket].push({...child, key: i});
+        children[bucket].push({...strippedChild, key: i});
       });
 
       return children;

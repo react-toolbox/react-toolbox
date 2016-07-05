@@ -38,7 +38,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "core-js": "^2.4.0",
-    "react-css-themr": "^1.1.0"
+    "react-css-themr": "^1.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",
@@ -75,11 +75,11 @@
     "phantomjs-polyfill": "0.0.2",
     "phantomjs-prebuilt": "^2.1.7",
     "postcss-loader": "^0.9.1",
-    "react": "^15.0.2",
-    "react-addons-css-transition-group": "^15.0.2",
+    "react": "^15.2.0",
+    "react-addons-css-transition-group": "^15.2.0",
     "react-addons-test-utils": "^15.0.2",
     "react-docgen": "^2.8.2",
-    "react-dom": "^15.0.2",
+    "react-dom": "^15.2.0",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
     "redbox-react": "^1.2.4",
@@ -114,8 +114,8 @@
   "peerDependencies": {
     "classnames": "^2.2.0",
     "normalize.css": "^4.0.0",
-    "react": "^0.14 || ^15.0.1",
-    "react-addons-css-transition-group": "^0.14.0 || ^15.0.1",
-    "react-dom": "^0.14.0 || ^15.0.1"
+    "react": "^0.14 || ^15.2.0",
+    "react-addons-css-transition-group": "^0.14.0 || ^15.2.0",
+    "react-dom": "^0.14.0 || ^15.2.0"
   }
 }
