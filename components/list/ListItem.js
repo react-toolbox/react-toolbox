@@ -64,7 +64,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
     render () {
       const {className, onMouseDown, to, onClick, ripple: hasRipple, theme, ...other} = this.props; //eslint-disable-line no-unused-vars
       const children = this.groupChildren();
-      const content = <ListItemLayout {...children} {...other}/>;
+      const content = <ListItemLayout theme={theme} {...children} {...other}/>;
       return (
         <li className={`${theme.listItem} ${className}`} onClick={this.handleClick} onMouseDown={onMouseDown}>
           {to ? <a href={this.props.to}>{content}</a> : content}
