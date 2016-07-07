@@ -43,7 +43,7 @@ class PickersTest extends React.Component {
 
         <DatePicker
           label='Formatted Date'
-          inputFormat={(value) => `${value.getDate()}/${value.getMonth()}/${value.getFullYear()}`}
+          inputFormat={(value) => `${value.getDate()}/${value.getMonth() + 1}/${value.getFullYear()}`}
           onChange={this.handleChange.bind(this, 'date3')}
           value={this.state.date3}
         />
