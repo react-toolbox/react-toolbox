@@ -52,7 +52,7 @@ const factory = (Tab, TabContent) => {
         if (item.type === Tab) {
           headers.push(item);
           if (item.props.children) {
-            contents.push(<TabContent children={item.props.children} />);
+            contents.push(<TabContent children={item.props.children} theme={this.props.theme} />);
           }
         } else if (item.type === TabContent) {
           contents.push(item);
