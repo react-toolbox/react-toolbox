@@ -12,6 +12,8 @@ const factory = (Dialog, Calendar) => {
       minDate: PropTypes.object,
       name: PropTypes.string,
       onDismiss: PropTypes.func,
+      onEscKeyDown: PropTypes.func,
+      onOverlayClick: PropTypes.func,
       onSelect: PropTypes.func,
       theme: PropTypes.shape({
         button: PropTypes.string,
@@ -85,7 +87,14 @@ const factory = (Dialog, Calendar) => {
       const headerClassName = classnames(theme.header, theme[display]);
 
       return (
-        <Dialog active={this.props.active} type="custom" className={className} actions={this.actions}>
+        <Dialog
+          actions={this.actions}
+          active={this.props.active}
+          className={className}
+          onEscKeyDown={this.props.onEscKeyDown}
+          onOverlayClick={this.props.onOverlayClick}
+          type="custom"
+        >
           <header className={headerClassName}>
             <span className={theme.year} onClick={this.handleSwitchDisplay.bind(this, 'years')}>
               {this.state.date.getFullYear()}

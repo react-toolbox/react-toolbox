@@ -44,6 +44,8 @@ If you want to provide a theme via context, the component key is `RTDatePicker`.
 | `maxDate`       | `Date`          |               | Date object with the maximum selectable date. |
 | `minDate`       | `Date`          |               | Date object with the minimum selectable date. |
 | `onChange`      | `Function`      |               | Callback called when the picker value is changed.|
+| `onEscKeyDown`   | `Function`     |               | Callback called when the ESC key is pressed with the overlay active. |
+| `onOverlayClick` | `Function`     |               | Callback to be invoked when the dialog overlay is clicked.|
 | `value`         | `Date`          |               | Date object with the currently selected date. |
 
 ## Theme

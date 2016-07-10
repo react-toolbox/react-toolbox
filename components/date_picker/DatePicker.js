@@ -28,7 +28,9 @@ const factory = (Input, DatePickerDialog) => {
       minDate: PropTypes.object,
       name: PropTypes.string,
       onChange: PropTypes.func,
+      onEscKeyDown: PropTypes.func,
       onKeyPress: PropTypes.func,
+      onOverlayClick: PropTypes.func,
       theme: PropTypes.shape({
         input: PropTypes.string
       }),
@@ -65,10 +67,11 @@ const factory = (Input, DatePickerDialog) => {
     };
 
     render () {
-      const { inputClassName, value, ...others } = this.props;
-      const inputFormat = this.props.inputFormat || time.formatDate;
+      const { autoOk, inputClassName, inputFormat, maxDate, minDate,
+        onEscKeyDown, onOverlayClick, value, ...others } = this.props;
+      const finalInputFormat = inputFormat || time.formatDate;
       const date = Object.prototype.toString.call(value) === '[object Date]' ? value : undefined;
-      const formattedDate = date === undefined ? '' : inputFormat(value);
+      const formattedDate = date === undefined ? '' : finalInputFormat(value);
 
       return (
         <div data-react-toolbox='date-picker'>
@@ -86,13 +89,15 @@ const factory = (Input, DatePickerDialog) => {
             value={formattedDate}
           />
           <DatePickerDialog
-            autoOk={this.props.autoOk}
             active={this.state.active}
+            autoOk={autoOk}
             className={this.props.className}
+            maxDate={maxDate}
+            minDate={minDate}
             name={this.props.name}
-            maxDate={this.props.maxDate}
-            minDate={this.props.minDate}
             onDismiss={this.handleDismiss}
+            onEscKeyDown={onEscKeyDown}
+            onOverlayClick={onOverlayClick}
             onSelect={this.handleSelect}
             theme={this.props.theme}
             value={date}

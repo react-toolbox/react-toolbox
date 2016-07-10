@@ -18,7 +18,9 @@ const factory = (TimePickerDialog, Input) => {
       label: PropTypes.string,
       name: PropTypes.string,
       onChange: PropTypes.func,
+      onEscKeyDown: PropTypes.func,
       onKeyPress: PropTypes.func,
+      onOverlayClick: PropTypes.func,
       theme: PropTypes.shape({
         input: PropTypes.string
       }),
@@ -57,7 +59,7 @@ const factory = (TimePickerDialog, Input) => {
     };
 
     render () {
-      const { value, format, inputClassName, theme, ...others } = this.props;
+      const { value, format, inputClassName, onEscKeyDown, onOverlayClick, theme, ...others } = this.props;
       const formattedTime = value ? time.formatTime(value, format) : '';
       return (
         <div data-react-toolbox='time-picker'>
@@ -76,9 +78,11 @@ const factory = (TimePickerDialog, Input) => {
           <TimePickerDialog
             active={this.state.active}
             className={this.props.className}
-            name={this.props.name}
             format={format}
+            name={this.props.name}
             onDismiss={this.handleDismiss}
+            onEscKeyDown={onEscKeyDown}
+            onOverlayClick={onOverlayClick}
             onSelect={this.handleSelect}
             theme={this.props.theme}
             value={this.props.value}

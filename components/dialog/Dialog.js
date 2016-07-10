@@ -21,10 +21,10 @@ const factory = (Overlay, Button) => {
       <Overlay
         active={props.active}
         onClick={props.onOverlayClick}
-        onMouseDown={props.onOverlayMouseDown}
-        onMouseUp={props.onOverlayMouseUp}
-        onMouseMove={props.onOverlayMouseMove}
         onEscKeyDown={props.onEscKeyDown}
+        onMouseDown={props.onOverlayMouseDown}
+        onMouseMove={props.onOverlayMouseMove}
+        onMouseUp={props.onOverlayMouseUp}
       >
         <div data-react-toolbox='dialog' className={className}>
           <section role='body' className={props.theme.body}>

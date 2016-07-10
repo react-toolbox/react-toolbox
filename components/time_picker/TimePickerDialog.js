@@ -11,6 +11,8 @@ const factory = (Dialog) => {
       format: PropTypes.oneOf(['24hr', 'ampm']),
       name: PropTypes.string,
       onDismiss: PropTypes.func,
+      onEscKeyDown: PropTypes.func,
+      onOverlayClick: PropTypes.func,
       onSelect: PropTypes.func,
       theme: PropTypes.shape({
         am: PropTypes.string,
@@ -98,7 +100,13 @@ const factory = (Dialog) => {
       const format = `${time.getTimeMode(this.state.displayTime)}Format`;
       const className = classnames([theme.dialog, theme[display], theme[format]], this.props.className);
       return (
-        <Dialog active={this.props.active} className={className} actions={this.actions}>
+        <Dialog
+          actions={this.actions}
+          active={this.props.active}
+          className={className}
+          onEscKeyDown={this.props.onEscKeyDown}
+          onOverlayClick={this.props.onOverlayClick}
+        >
           <header className={theme.header}>
             <span className={theme.hours} onClick={this.switchDisplay.bind(this, 'hours')}>
               {('0' + this.formatHours()).slice(-2)}

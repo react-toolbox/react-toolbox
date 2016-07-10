@@ -30,6 +30,8 @@ class PickersTest extends React.Component {
         <DatePicker
           label='Birthdate'
           onChange={this.handleChange.bind(this, 'date1')}
+          onEscKeyDown={() => console.log('esc key down')}
+          onOverlayClick={() => console.log('overlay click')}
           value={this.state.date1}
         />
 
@@ -58,6 +60,8 @@ class PickersTest extends React.Component {
         <TimePicker
           label='Start time'
           onChange={this.handleChange.bind(this, 'time1')}
+          onEscKeyDown={() => console.log('esc key down')}
+          onOverlayClick={() => console.log('overlay click')}
           value={this.state.time1}
         />
 
