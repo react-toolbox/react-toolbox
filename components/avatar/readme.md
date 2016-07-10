@@ -18,6 +18,7 @@ const AvatarTest = () => (
     <Avatar icon={<GithubIcon />} />
     <Avatar><img src="https://placeimg.com/80/80/animals"/></Avatar>
     <Avatar title="Javier" image="https://placeimg.com/80/80/animals" />
+    <Avatar image="http://www.thewrap.com/wp-content/uploads/2015/08/margot-robbie-harley-quinn_main.jpg" cover />
     <Avatar style={{backgroundColor: 'yellowgreen'}}><GithubIcon /></Avatar>
   </div>
 );
@@ -31,6 +32,7 @@ If you want to provide a theme via context, the component key is `RTAvatar`.
 |:-----|:-----|:-----|:-----|
 | `children`    | `Node`                  |             | Children for the avatar. You can pass an SVG for a custom icon or, for example, an image.|
 | `className`   | `String`                | `''`        | Set a class to style the Component.|
+| `cover`       | `Boolean`               | `''`        | Set to true if your image is not squared so it will be used as a cover for the element.|
 | `icon`        | `String` or `Element`   |             | A key to identify an Icon from Material Design Icons or a custom Icon Element.|
 | `image`       | `String` or `Element`   |             | An image source or an image element. |
 | `title`       | `String`                | `''`        | A title for the image. If no image is provided, the first letter will be displayed as the avatar. |
