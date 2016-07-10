@@ -2,7 +2,7 @@
   "name": "react-toolbox",
   "description": "A set of React components implementing Google's Material Design specification with the power of CSS Modules.",
   "homepage": "http://www.react-toolbox.com",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "./lib",
   "author": {
     "name": "React Toolbox Team",
@@ -105,10 +105,10 @@
     "prepublish": "npm run build",
     "release": "bumped release",
     "sass": "cpx './components/**/*.scss' ./lib",
-    "tsd": "cpx './components/**/*.d.ts' ./lib",
     "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
     "test": "cross-env NODE_ENV=test karma start",
-    "test:watch": "cross-env NODE_ENV=test karma start --no-single-run"
+    "test:watch": "cross-env NODE_ENV=test karma start --no-single-run",
+    "tsd": "cpx './components/**/*.d.ts' ./lib"
   },
   "license": "MIT",
   "peerDependencies": {
