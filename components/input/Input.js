@@ -112,7 +112,7 @@ const factory = (FontIcon) => {
         [theme.withIcon]: icon
       }, this.props.className);
 
-      const valuePresent = value !== null && value !== undefined && value !== '' && !Number.isNaN(value);
+      const valuePresent = value !== null && value !== undefined && value !== '' && !isNaN(value);
 
       const InputElement = React.createElement(multiline ? 'textarea' : 'input', {
         ...others,
