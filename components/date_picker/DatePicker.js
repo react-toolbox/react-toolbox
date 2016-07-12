@@ -68,7 +68,7 @@ const factory = (Input, DatePickerDialog) => {
 
     render () {
       const { autoOk, inputClassName, inputFormat, maxDate, minDate,
-        onEscKeyDown, onOverlayClick, value, ...others } = this.props;
+        onEscKeyDown = this.handleDismiss, onOverlayClick = this.handleDismiss, value, ...others } = this.props;
       const finalInputFormat = inputFormat || time.formatDate;
       const date = Object.prototype.toString.call(value) === '[object Date]' ? value : undefined;
       const formattedDate = date === undefined ? '' : finalInputFormat(value);
