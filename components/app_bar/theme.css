@@ -1,0 +1,38 @@
+@import '../colors.css';
+@import '../media.css';
+@import '../variables.css';
+@import './config.css';
+
+.appBar {
+  align-items: center;
+  background: var(--appbar-color);
+  color: var(--appbar-contrast);
+  display: flex;
+  height: var(--appbar-height);
+  padding: 0 var(--appbar-h-padding);
+
+  &:not(.flat) {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+    z-index: var(--z-index-high);
+  }
+
+  &.fixed {
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: var(--z-index-highest);
+  }
+
+  a {
+    color: var(--appbar-contrast);
+  }
+
+  @media screen and (--xxs-viewport) and (--portrait) {
+    height: var(--appbar-height-m-portrait);
+  }
+
+  @media screen and (--xs-viewport) and (--landscape) {
+    height: var(--appbar-height-m-landscape);
+  }
+}
