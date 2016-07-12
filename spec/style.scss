@@ -1,10 +1,10 @@
 @import "../components/colors";
 @import "../components/globals";
 @import "../components/mixins";
-@import "../components/app_bar/config";
 @import "../components/button/config";
 
 $offset: 1.8 * $unit;
+$appbar-height: 6.4 * $unit;
 
 .app {
   @include no-webkit-scrollbar;
