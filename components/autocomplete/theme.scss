@@ -2,7 +2,20 @@
 @import "../globals";
 @import "../mixins";
 @import "./config";
-@import "../input/config";
+
+$input-padding: 2 * $unit;
+$input-field-font-size: 1.6 * $unit;
+$input-field-padding: .8 * $unit;
+$input-field-height: $input-field-padding * 2 + $input-field-font-size * 1.4;
+$input-chevron-offset: 0.8 * $unit;
+$input-text-bottom-border-color: rgba($color-black, 0.12);
+$input-text-error-color: rgb(222, 50, 38);
+$input-text-background-color: transparent;
+$input-focus-label-top: 0.6 * $unit;
+$input-label-font-size: 1.2 * $unit;
+$input-focus-label-top: 0.6 * $unit;
+$input-text-label-color: rgba($color-black, 0.26);
+$input-underline-height: 2 * $unit;
 
 .autocomplete {
   position: relative;
