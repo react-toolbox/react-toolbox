@@ -1,0 +1,16 @@
+:root {
+  --chip-height: calc(3.2 * var(--unit));
+  --chip-padding: calc(1.2 * var(--unit));
+  --chip-margin-right: calc(0.25 * var(--unit));
+  --chip-background: var(--palette-grey-200);
+  --chip-icon-font-size: calc(2 * var(--unit));
+  --chip-icon-margin-right: calc(0.8 * var(--unit));
+  --chip-color: var(--color-text-secondary);
+  --chip-font-size: var(--font-size-small);
+  --chip-remove-size: calc(2.4 * var(--unit));
+  --chip-remove-margin: calc(0.4 * var(--unit));
+  --chip-remove-stroke-width: calc(0.4 * var(--unit));
+  --chip-remove-background: var(--palette-grey-400);
+  --chip-remove-background-hover: var(--palette-grey-500);
+  --chip-remove-color: var(--color-white);
+}
