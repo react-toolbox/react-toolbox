@@ -3,7 +3,9 @@
 @import "../components/mixins";
 @import "../components/button/config";
 
+
 $offset: 1.8 * $unit;
+$button-floating-height: $unit * 5.6;
 $appbar-height: 6.4 * $unit;
 
 .app {
