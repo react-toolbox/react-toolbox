@@ -72,7 +72,6 @@ const factory = (Chip, Input) => {
        const direction = this.calculateDirection();
        if (this.state.direction !== direction) {
          this.setState({ direction });
-         return false;
        }
      }
      return true;
