@@ -64,5 +64,6 @@ If you want to provide a theme via context, the component key is `RTInput`.
 | `icon`   | Used for the icon in case the input has icon.|
 | `input` | Used as root class for the component.|
 | `inputElement` | Used for the HTML input element.|
+| `label` | Used for the label when the input has a label.|
 | `required` | Used in case the input is required.|
 | `withIcon` | Added to the root class if the input has icon.|
