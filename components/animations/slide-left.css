@@ -1,8 +1,9 @@
-.enter, .leave {
+.enter,
+.leave {
   position: absolute;
-  transition-timing-function: ease-in-out;
-  transition-duration: .35s;
+  transition-duration: 0.35s;
   transition-property: transform, opacity;
+  transition-timing-function: ease-in-out;
 }
 
 .enter {

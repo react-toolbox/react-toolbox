@@ -1,11 +1,13 @@
-.enter, .leave {
+.enter,
+.leave {
   position: absolute;
 }
 
-.enterActive, .leaveActive {
-  transition-timing-function: ease-in-out;
+.enterActive,
+.leaveActive {
   transition-duration: 350ms;
   transition-property: transform, opacity;
+  transition-timing-function: ease-in-out;
 }
 
 .enter {
