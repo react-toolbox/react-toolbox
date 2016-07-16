@@ -52,7 +52,7 @@ const factory = (defaultTheme = {}) => {
 
       render () {
         const {children, className, tooltip,
-          tooltipDelay, tooltipHideOnClick, theme, ...other} = this.props; //eslint-disable-line no-unused-vars
+          tooltipDelay, tooltipHideOnClick, ...other} = this.props; //eslint-disable-line no-unused-vars
         const composedClassName = classnames(this.props.theme.tooltipWrapper, className);
         const tooltipClassName = classnames(this.props.theme.tooltip, {
           [this.props.theme.tooltipActive]: this.state.active
