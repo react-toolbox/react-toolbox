@@ -15,13 +15,13 @@
   vertical-align: middle;
   width: var(--avatar-size);
 
-  > svg {
+  & > svg {
     fill: currentColor;
     height: var(--avatar-size);
     width: 1em;
   }
 
-  > img {
+  & > img {
     height: auto;
     max-width: 100%;
   }
