@@ -1,6 +1,9 @@
 {
   "extends": "stylelint-config-standard",
   "rules": {
+    "at-rule-no-unknown": [true, {
+      ignoreAtRules: ["define-mixin", "mixin", "each"]
+    }],
     "color-hex-case": "lower",
     "declaration-block-properties-order": "alphabetical",
     "font-family-name-quotes": "always-where-recommended",
@@ -12,8 +15,7 @@
           "global"
         ]
       }
-    ],
-    "indentation": 2
+    ]
   }
 }
 
