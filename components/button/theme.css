@@ -14,7 +14,7 @@
   height: var(--button-height);
   justify-content: center;
   letter-spacing: 0;
-  line-height: 1;
+  line-height: var(--button-height);
   outline: none;
   position: relative;
   text-align: center;
