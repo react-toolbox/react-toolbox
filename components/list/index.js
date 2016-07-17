@@ -13,7 +13,7 @@ import { listItemActionsFactory } from './ListItemActions.js';
 import { listItemContentFactory } from './ListItemContent.js';
 import { listItemLayoutFactory } from './ListItemLayout.js';
 import themedRippleFactory from '../ripple';
-import theme from './theme.scss';
+import theme from './theme.css';
 
 const applyTheme = (Component) => themr(LIST, theme)(Component);
 const ripple = themedRippleFactory({ centered: false, listItemIgnore: true });
