@@ -4,7 +4,7 @@ import { Layout } from './Layout.js';
 import { Panel } from './Panel.js';
 import { NavDrawer } from './NavDrawer.js';
 import { Sidebar } from './Sidebar.js';
-import theme from './theme.scss';
+import theme from './theme.css';
 
 const ThemedLayout = themr(LAYOUT, theme)(Layout);
 const ThemedPanel = themr(LAYOUT, theme)(Panel);

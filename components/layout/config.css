@@ -1,0 +1,21 @@
+:root {
+  --standard-increment-mobile: calc(5.6 * var(--unit));
+  --standard-increment-desktop: calc(6.4 * var(--unit));
+  --drawer-background-color: var(--palette-grey-50);
+  --drawer-border-color: var(--palette-grey-300);
+  --drawer-text-color: var(--palette-grey-800);
+  --drawer-overlay-color: var(--color-black);
+  --drawer-overlay-opacity: 60%;
+
+  /* from: https://www.google.com/design/spec/layout/structure.html#structure-side-nav */
+  --navigation-drawer-desktop-width: calc(5 * var(--standard-increment-desktop));
+  --navigation-drawer-max-desktop-width: calc(40 * var(--unit));
+
+  /**
+   * Mobile:
+   * Width = Screen width − 56 dp
+   * Maximum width: 320dp
+   */
+  --navigation-drawer-mobile-width: calc(5 * var(--standard-increment-mobile));
+  --navigation-drawer-max-mobile-width: calc(100% - 5.6rem);
+}
