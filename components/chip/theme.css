@@ -58,7 +58,7 @@
   border-radius: var(--chip-remove-size);
   vertical-align: top;
 
-  .deleteX {
+  & .deleteX {
     fill: transparent;
     stroke: var(--chip-remove-color);
     stroke-width: var(--chip-remove-stroke-width);

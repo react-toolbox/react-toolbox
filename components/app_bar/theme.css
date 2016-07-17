@@ -24,7 +24,7 @@
     z-index: var(--z-index-highest);
   }
 
-  a {
+  & a {
     color: var(--appbar-contrast);
   }
 

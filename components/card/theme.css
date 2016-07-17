@@ -32,14 +32,14 @@
     height: 0;
     width: 100%;
 
-    .content {
+    & .content {
       height: 100%;
       position: absolute;
     }
 
-    .content > iframe,
-    .content > video,
-    .content > img {
+    & .content > iframe,
+    & .content > video,
+    & .content > img {
       max-width: 100%;
     }
   }
@@ -52,7 +52,7 @@
     padding-top: 100%;
   }
 
-  .content {
+  & .content {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -63,11 +63,18 @@
     width: 100%;
   }
 
-  .contentOverlay {
-    .cardTitle,
-    .cardActions,
-    .cardText {
+  & .contentOverlay {
+    & .cardTitle,
+    & .cardActions,
+    & .cardText {
       background-color: var(--card-text-overlay);
+    }
+  }
+
+  & .cardTitle {
+    & .title,
+    & .subtitle {
+      color: var(--card-color-white);
     }
   }
 }
@@ -107,13 +114,6 @@
     & .subtitle {
       font-weight: 500;
       line-height: 1.4;
-    }
-  }
-
-  .cardMedia & {
-    .title,
-    .subtitle {
-      color: var(--card-color-white);
     }
   }
 }
