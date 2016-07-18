@@ -1,0 +1,43 @@
+@import '../colors.css';
+@import '../variables.css';
+@import './config.css';
+
+.overlay {
+  align-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  left: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: var(--z-index-highest);
+
+  &.invisible > *:not(.backdrop) {
+    pointer-events: all;
+  }
+}
+
+.backdrop {
+  background-color: var(--overlay-color);
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transition-duration: var(--animation-duration);
+  transition-property: opacity;
+  transition-timing-function: var(--animation-curve-default);
+  width: 100%;
+}
+
+.active {
+  pointer-events: all;
+
+  & > .backdrop {
+    opacity: var(--overlay-opacity);
+  }
+}
