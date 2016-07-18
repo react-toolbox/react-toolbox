@@ -1,0 +1,196 @@
+@import 'normalize.css';
+@import './colors.css';
+@import './variables.css';
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: Roboto, sans-serif;
+  font-size: 1.6rem;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  -webkit-touch-callout: none;
+  width: 100%;
+
+  & * {
+    -webkit-tap-highlight-color: color(var(--color-white) a(0));
+  }
+}
+
+a,
+abbr,
+address,
+article,
+aside,
+audio,
+b,
+blockquote,
+body,
+caption,
+cite,
+code,
+dd,
+del,
+dfn,
+dialog,
+div,
+dl,
+dt,
+em,
+fieldset,
+figure,
+footer,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+hgroup,
+hr,
+html,
+i,
+iframe,
+img,
+ins,
+kbd,
+label,
+legend,
+li,
+mark,
+menu,
+nav,
+object,
+ol,
+p,
+pre,
+q,
+samp,
+section,
+small,
+span,
+strong,
+sub,
+sup,
+table,
+tbody,
+td,
+tfoot,
+th,
+thead,
+time,
+tr,
+ul,
+var,
+video {
+  border: 0;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+p,
+button,
+abbr,
+a,
+span,
+small {
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  text-size-adjust: 100%;
+}
+
+a {
+  -webkit-tap-highlight-color: color(var(--color-black) a(0%));
+  text-decoration: none;
+}
+
+input:not([type='checkbox']):not([type='radio']),
+button {
+  appearance: none;
+  outline: none;
+  -webkit-tap-highlight-color: color(var(--color-white) a(0%));
+  -webkit-touch-callout: none;
+}
+
+/* Material design font sizes */
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small {
+  font-size: 5.6rem;
+  font-weight: 400;
+  letter-spacing: calc(-1 * 0.02em);
+  line-height: 1.35;
+  opacity: 0.54;
+}
+
+h1 {
+  font-size: 5.6rem;
+  font-weight: 400;
+  letter-spacing: calc(-1 * 0.02em);
+  line-height: 1.35;
+}
+
+h2 {
+  font-size: 4.5rem;
+  font-weight: 400;
+  line-height: 4.8rem;
+}
+
+h3 {
+  font-size: 3.4rem;
+  font-weight: 400;
+  line-height: 4rem;
+}
+
+h4 {
+  font-size: 2.4rem;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  line-height: 3.2rem;
+}
+
+h5 {
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+h6 {
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 2.4rem;
+}
+
+p {
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 2.4rem;
+}

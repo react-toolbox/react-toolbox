@@ -1,5 +1,5 @@
 /* global VERSION */
-import '../components/commons.scss';
+import '../components/commons.css';
 import React from 'react';
 import AppBar from '../components/app_bar';
 import Autocomplete from './components/autocomplete';
@@ -27,7 +27,7 @@ import Switch from './components/switch';
 import Table from './components/table';
 import Tabs from './components/tabs';
 import Tooltip from './components/tooltip';
-import style from './style';
+import style from './style.css';
 
 const Root = () => (
   <div className={style.app}>
