@@ -4,7 +4,7 @@ import { timePickerFactory } from './TimePicker.js';
 import timePickerDialogFactory from './TimePickerDialog.js';
 import Dialog from '../dialog';
 import Input from '../input';
-import theme from './theme.scss';
+import theme from './theme.css';
 
 const TimePickerDialog = timePickerDialogFactory(Dialog);
 const ThemedTimePicker = themr(TIME_PICKER, theme)(timePickerFactory(TimePickerDialog, Input));
