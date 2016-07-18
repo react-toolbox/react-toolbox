@@ -59,37 +59,48 @@ const factory = (MenuItem) => {
     componentDidMount () {
       this.positionTimeoutHandle = setTimeout(() => {
         const { width, height } = this.refs.menu.getBoundingClientRect();
-        const position = this.props.position === POSITION.AUTO ? this.calculatePosition() : this.props.position;
+        const position = this.props.position === POSITION.AUTO
+          ? this.calculatePosition()
+          : this.props.position;
         this.setState({ position, width, height });
       });
     }
 
     componentWillReceiveProps (nextProps) {
       if (this.props.position !== nextProps.position) {
-        const position = nextProps.position === POSITION.AUTO ? this.calculatePosition() : nextProps.position;
+        const position = nextProps.position === POSITION.AUTO
+          ? this.calculatePosition()
+          : nextProps.position;
         this.setState({ position });
       }
 
+      /**
+       * If the menu is going to be activated via props and its not active, verify
+       * the position is appropriated and then show it recalculating position if its
+       * wrong. It should be shown in two consecutive setState.
+       */
       if (!this.props.active && nextProps.active && !this.state.active) {
-        this.show();
+        if (nextProps.position === POSITION.AUTO) {
+          const position = this.calculatePosition();
+          if (this.state.position !== position) {
+            this.setState({ position, active: false }, () => {
+              this.activateTimeoutHandle = setTimeout(() => { this.show(); }, 20);
+            });
+          } else {
+            this.show();
+          }
+        } else {
+          this.show();
+        }
       }
 
+      /**
+       * If the menu is being deactivated via props and the current state is
+       * active, it should be hid.
+       */
       if (this.props.active && !nextProps.active && this.state.active) {
         this.hide();
       }
-    }
-
-    shouldComponentUpdate (nextProps, nextState) {
-      if (!this.state.active && nextState.active && this.props.position === POSITION.AUTO) {
-        const position = this.calculatePosition();
-        if (this.state.position !== position) {
-          this.setState({ position, active: false }, () => {
-            this.activateTimeoutHandle = setTimeout(() => {this.setState({active: true}); }, 20);
-          });
-          return false;
-        }
-      }
-      return true;
     }
 
     componentWillUpdate (nextProps, nextState) {
@@ -108,9 +119,7 @@ const factory = (MenuItem) => {
     }
 
     componentWillUnmount () {
-      if (this.state.active) {
-        events.removeEventsFromDocument({click: this.handleDocumentClick});
-      }
+      if (this.state.active) events.removeEventsFromDocument({click: this.handleDocumentClick});
       clearTimeout(this.positionTimeoutHandle);
       clearTimeout(this.activateTimeoutHandle);
     }
