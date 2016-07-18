@@ -6,7 +6,7 @@ import { ProgressBar } from '../../progress_bar/ProgressBar.js';
 import Input, { Input as RawInput } from '../../input/Input.js';
 import Slider, { Slider as RawSlider } from '../Slider.js';
 import utils from '../../utils/testing';
-import theme from '../theme.scss';
+import theme from '../theme.css';
 
 describe('Slider', function () {
   let slider, progress, input, onChange;
