@@ -4,7 +4,7 @@ import { Checkbox } from '../checkbox';
 import { tableFactory } from './Table.js';
 import tableHeadFactory from './TableHead.js';
 import tableRowFactory from './TableRow.js';
-import theme from './theme.scss';
+import theme from './theme.css';
 
 const applyTheme = (Component) => themr(TABLE, theme)(Component);
 const ThemedTableHead = applyTheme(tableHeadFactory(Checkbox));
