@@ -46,7 +46,7 @@ class ProgressBarTest extends React.Component {
         <p style={{margin: '10px auto'}}>Indeterminate...</p>
         <ProgressBar mode='indeterminate'/>
         <p style={{margin: '10px auto'}}>Circular</p>
-        <ProgressBar type='circular' mode='indeterminate'/>
+        <ProgressBar type='circular' mode='indeterminate' multicolor />
       </section>
     );
   }
