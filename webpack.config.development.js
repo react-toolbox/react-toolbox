@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   context: __dirname,
-  devtool: 'inline-source-map',
+  devtool: 'cheap-module-eval-source-map',
   entry: [
     'webpack-hot-middleware/client',
     './spec/index.js'
@@ -16,7 +16,7 @@ module.exports = {
     publicPath: '/build/'
   },
   resolve: {
-    extensions: ['', '.css', '.scss', '.js', '.json'],
+    extensions: ['', '.css', '.js', '.json'],
     packageMains: ['browser', 'web', 'browserify', 'main', 'style']
   },
   module: {
@@ -28,10 +28,6 @@ module.exports = {
       test: /\.css$/,
       include: /node_modules/,
       loaders: ['style-loader', 'css-loader']
-    }, {
-      test: /\.scss$/,
-      include: [path.join(__dirname, './components'), path.join(__dirname, './spec')],
-      loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass?sourceMap')
     }, {
       test: /\.css$/,
       include: [path.join(__dirname, './components'), path.join(__dirname, './spec')],
