@@ -1,0 +1,56 @@
+@import '../colors.css';
+@import '../variables.css';
+@import './config.css';
+
+.snackbar {
+  align-items: center;
+  background-color: var(--snackbar-background-color);
+  border-radius: var(--snackbar-border-radius);
+  bottom: 0;
+  color: var(--snackbar-color);
+  display: flex;
+  left: var(--snackbar-horizontal-offset);
+  margin: var(--snackbar-vertical-offset) auto 0;
+  padding: var(--snackbar-vertical-offset) var(--snackbar-horizontal-offset);
+  position: fixed;
+  right: var(--snackbar-horizontal-offset);
+  transition: all var(--animation-duration) var(--animation-curve-default) var(--animation-duration);
+  z-index: var(--z-index-higher);
+
+  &.accept .button {
+    color: var(--snackbar-color-accept);
+  }
+
+  &.warning .button {
+    color: var(--snackbar-color-warning);
+  }
+
+  &.cancel .button {
+    color: var(--snackbar-color-cancel);
+  }
+
+  &:not(.active) {
+    transform: translateY(100%);
+  }
+
+  &.active {
+    transform: translateY(0%);
+  }
+}
+
+.icon {
+  margin-right: var(--snackbar-vertical-offset);
+}
+
+.label {
+  flex-grow: 1;
+  font-size: var(--font-size-small);
+}
+
+.button {
+  margin-bottom: calc(-1 * var(--snackbar-vertical-offset) / 2);
+  margin-left: var(--snackbar-button-offset);
+  margin-right: calc(-1 * var(--snackbar-horizontal-offset) / 2);
+  margin-top: calc(-1 * var(--snackbar-vertical-offset) / 2);
+  min-width: inherit;
+}
