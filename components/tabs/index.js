@@ -3,7 +3,7 @@ import { TABS } from '../identifiers.js';
 import { tabsFactory } from './Tabs.js';
 import { TabContent } from './TabContent.js';
 import { Tab } from './Tab.js';
-import theme from './theme.scss';
+import theme from './theme.css';
 
 const applyTheme = (Component) => themr(TABS, theme)(Component);
 const ThemedTabContent = applyTheme(TabContent);

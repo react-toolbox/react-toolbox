@@ -1,0 +1,68 @@
+@import '../colors.css';
+@import '../variables.css';
+@import './config.css';
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.navigation {
+  box-shadow: inset 0 -1px var(--tab-navigation-border-color);
+  display: flex;
+  flex-direction: row;
+}
+
+.label {
+  color: var(--tab-text-inactive-color);
+  font-size: var(--tab-text-height);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1;
+  padding: var(--tab-label-v-padding) var(--tab-label-h-padding);
+  text-transform: uppercase;
+  transition-duration: var(--animation-duration);
+  transition-property: box-shadow, color;
+  transition-timing-function: var(--animation-curve-default);
+
+  &.active {
+    color: var(--tab-text-color);
+  }
+
+  &.disabled {
+    opacity: var(--tab-label-disabled-opacity);
+  }
+
+  &:not(.disabled) {
+    cursor: pointer;
+  }
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.pointer {
+  background-color: var(--tab-pointer-color);
+  height: var(--tab-pointer-height);
+  margin-top: calc(-1 * var(--tab-pointer-height));
+  position: absolute;
+  transition-duration: var(--animation-duration);
+  transition-property: left, width;
+  transition-timing-function: var(--animation-curve-default);
+  width: 0;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  padding: var(--tab-label-v-padding) var(--tab-label-h-padding);
+
+  &:not(.active) {
+    display: none;
+  }
+
+  &.active {
+    display: block;
+  }
+}
