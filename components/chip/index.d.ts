@@ -36,7 +36,7 @@ interface ChipProps extends __ReactToolbox.Props {
    * If true, the chip will be rendered with a delete icon.
    * @default false
    */
-  deleteable?: boolean;
+  deletable?: boolean;
   /**
    * Callback to be invoked when the delete icon is clicked.
    */

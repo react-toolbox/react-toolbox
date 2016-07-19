@@ -1,5 +1,3 @@
-import { Props } from "../index.d.ts";
-
 export interface TooltipTheme {
   /**
    * Added to the tooltip element.
