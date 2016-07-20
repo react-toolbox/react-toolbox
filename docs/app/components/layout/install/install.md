@@ -134,7 +134,7 @@ Remember that you can import components without styles and provide those styles 
 Then, when you use a button you can inject the appropriated theme:
 
 ```js
-import { Button } from 'react-toolbox/lib/button/Button';
+import Button from 'react-toolbox/lib/button/Button';
 import buttonTheme from './theme/button.scss';
 
 const ThemedButton = (props) => (
