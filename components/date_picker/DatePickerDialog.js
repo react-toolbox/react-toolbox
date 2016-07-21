@@ -47,10 +47,14 @@ const factory = (Dialog, Calendar) => {
       this.updateStateDate(nextProps.value);
     }
 
-    handleCalendarChange = (value, dayClick) => {
+    handleNewDate = (value, dayClick) => {
       const state = {display: 'months', date: value};
       if (time.dateOutOfRange(value, this.props.minDate, this.props.maxDate)) {
-        state.date = this.props.maxDate || this.props.minDate;
+        if (this.props.maxDate && this.props.minDate) {
+          state.date = time.closestDate(value, this.props.maxDate, this.props.minDate);
+        } else {
+          state.date = this.props.maxDate || this.props.minDate;
+        }
       }
       this.setState(state);
       if (dayClick && this.props.autoOk && this.props.onSelect) {
@@ -68,7 +72,7 @@ const factory = (Dialog, Calendar) => {
 
     updateStateDate = (date) => {
       if (Object.prototype.toString.call(date) === '[object Date]') {
-        this.handleCalendarChange(date, false);
+        this.handleNewDate(date, false);
       }
     };
 
@@ -106,7 +110,7 @@ const factory = (Dialog, Calendar) => {
               display={this.state.display}
               maxDate={this.props.maxDate}
               minDate={this.props.minDate}
-              onChange={this.handleCalendarChange}
+              onChange={this.handleNewDate}
               selectedDate={this.state.date}
               theme={this.props.theme} />
           </div>
