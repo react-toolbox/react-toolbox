@@ -41,7 +41,6 @@ const factory = (Dialog, Calendar) => {
 
     componentWillMount () {
       this.updateStateDate(this.props.value);
-
     }
 
     componentWillReceiveProps (nextProps) {
@@ -69,11 +68,9 @@ const factory = (Dialog, Calendar) => {
 
     updateStateDate = (date) => {
       if (Object.prototype.toString.call(date) === '[object Date]') {
-        this.setState({
-          date
-        });
+        this.handleCalendarChange(date, false);
       }
-    }
+    };
 
     actions = [
       { label: 'Cancel', className: this.props.theme.button, onClick: this.props.onDismiss },
