@@ -55,7 +55,9 @@ const factory = (FontIcon) => {
     };
 
     componentDidMount () {
-      window.addEventListener('resize', this.handleAutoresize);
+      if (this.props.multiline) {
+        window.addEventListener('resize', this.handleAutoresize);
+      }
     }
 
     componentWillReceiveProps (nextProps) {
