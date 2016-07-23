@@ -1,0 +1,92 @@
+@import '../colors.css';
+@import '../variables.css';
+@import '../input/config.css';
+@import './config.css';
+
+.autocomplete {
+  padding: var(--unit) 0;
+  position: relative;
+
+  &.focus {
+    & .label {
+      color: var(--autocomplete-color-primary);
+    }
+
+    & .suggestions {
+      box-shadow: var(--zdepth-shadow-1);
+      max-height: var(--autocomplete-overflow-max-height);
+      visibility: visible;
+    }
+  }
+}
+
+.label {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-tiny);
+  transition: color var(--animation-duration) var(--animation-curve-default);
+}
+
+.values {
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-bottom: calc(var(--unit) / 2);
+}
+
+.value {
+  margin: var(--autocomplete-value-margin);
+}
+
+.suggestions {
+  background-color: var(--autocomplete-suggestions-background);
+  max-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: absolute;
+  transition-duration: var(--animation-duration);
+  transition-property: max-height, box-shadow;
+  transition-timing-function: var(--animation-curve-default);
+  visibility: hidden;
+  width: 100%;
+  z-index: var(--z-index-high);
+
+  &:not(.up) {
+    margin-top: calc(-1 * var(--input-padding));
+  }
+
+  &.up {
+    bottom: 0;
+  }
+
+  &::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+  }
+}
+
+.suggestion {
+  cursor: pointer;
+  font-size: var(--input-field-font-size);
+  padding: var(--autocomplete-suggestion-padding);
+
+  &.active {
+    background-color: var(--autocomplete-suggestion-active-background);
+  }
+}
+
+.input {
+  position: relative;
+
+  &::after {
+    border-left: var(--autocomplete-border-size) solid transparent;
+    border-right: var(--autocomplete-border-size) solid transparent;
+    border-top: var(--autocomplete-border-size) solid var(--input-text-bottom-border-color);
+    content: '';
+    height: 0;
+    pointer-events: none;
+    position: absolute;
+    right: var(--input-chevron-offset);
+    top: 50%;
+    transition: transform var(--animation-duration) var(--animation-curve-default);
+    width: 0;
+  }
+}

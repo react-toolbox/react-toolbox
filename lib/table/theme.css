@@ -1,0 +1,64 @@
+@import '../colors.css';
+@import '../variables.css';
+@import './config.css';
+
+.table {
+  color: var(--table-text-color);
+  font-size: var(--font-size-tiny);
+  text-align: left;
+  width: 100%;
+
+  & tr {
+    border-bottom: var(--table-row-divider);
+    height: var(--table-row-height);
+    line-height: var(--table-row-height);
+  }
+
+  & th {
+    font-weight: var(--font-weight-bold);
+    &::first-letter {
+      text-transform: capitalize;
+    }
+  }
+
+  & th,
+  & td {
+    padding: 0 var(--table-row-offset);
+    position: relative;
+
+    &.selectable {
+      padding-right: 0;
+      width: 1.8 * $unit;
+
+      & > * {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.row {
+  transition: background-color var(--animation-duration) var(--animation-curve-default);
+
+  &:last-child {
+    border-color: transparent;
+  }
+
+  & > td {
+    & > input {
+      background-color: transparent;
+      border: 0;
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+.selected,
+.row:hover {
+  background-color: var(--table-row-highlight);
+}
+
+.editable > * {
+  cursor: pointer;
+}

@@ -1,0 +1,34 @@
+@import '../colors.css';
+@import '../variables.css';
+@import './config.css';
+
+.tooltipWrapper {
+  position: relative;
+}
+
+.tooltip {
+  background: var(--tooltip-background);
+  border-radius: var(--tooltip-border-radius);
+  color: var(--tooltip-color);
+  display: block;
+  font-family: Roboto, sans-serif;
+  font-size: var(--tooltip-font-size);
+  font-weight: var(--font-weight-bold);
+  left: 50%;
+  line-height: var(--font-size-small);
+  margin: var(--tooltip-margin 0);
+  max-width: var(--tooltip-max-width);
+  padding: var(--tooltip-padding);
+  position: absolute;
+  text-align: center;
+  text-transform: none;
+  top: 100%;
+  transform: scale(0) translateX(-50%);
+  transform-origin: top left;
+  transition: var(--animation-curve-default) var(--tooltip-animation-duration) transform;
+  z-index: var(--z-index-higher);
+
+  &.tooltipActive {
+    transform: scale(1) translateX(-50%);
+  }
+}

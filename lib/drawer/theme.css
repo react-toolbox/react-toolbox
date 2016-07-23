@@ -1,0 +1,47 @@
+@import '../colors.css';
+@import '../variables.css';
+@import './config.css';
+
+.drawer {
+  background-color: var(--drawer-background-color);
+  box-shadow: var(--shadow-2p);
+  color: var(--drawer-text-color);
+  display: block;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform-style: preserve-3d;
+  transition-delay: 0s;
+  transition-duration: var(--animation-duration);
+  transition-property: transform;
+  transition-timing-function: var(--animation-curve-default);
+  width: var(--drawer-width);
+  will-change: transform;
+
+  &.active {
+    pointer-events: all;
+    transform: translateX(0);
+    transition-delay: var(--animation-delay);
+  }
+
+  &.right {
+    border-left: 1px solid var(--drawer-border-color);
+    right: 0;
+
+    &:not(.active) {
+      transform: translateX(100%);
+    }
+  }
+
+  &.left {
+    border-right: 1px solid var(--drawer-border-color);
+    left: 0;
+
+    &:not(.active) {
+      transform: translateX(calc(-1 * 100%));
+    }
+  }
+}

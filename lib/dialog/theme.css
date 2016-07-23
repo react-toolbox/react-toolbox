@@ -1,0 +1,79 @@
+@import '../colors.css';
+@import '../variables.css';
+@import '../media.css';
+@import './config.css';
+
+.dialog {
+  background-color: var(--dialog-color-white);
+  border-radius: var(--dialog-border-radius);
+  box-shadow: var(--zdepth-shadow-5);
+  display: flex;
+  flex-direction: column;
+  max-height: 96vh;
+  max-width: 96vw;
+  opacity: 0;
+  transform: translateY(calc(-1 * var(--dialog-translate-y)));
+  transition-delay: var(--animation-delay);
+  transition-duration: var(--animation-duration);
+  transition-property: opacity, transform;
+  transition-timing-function: var(--animation-curve-default);
+
+  &.active {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+.small {
+  width: 30vw;
+
+  @media screen and (--sm-tablet-viewport) {
+    width: 50vw;
+  }
+
+  @media screen and (--xs-viewport) {
+    width: 75vw;
+  }
+}
+
+.normal {
+  width: 50vw;
+
+  @media screen and (--xs-viewport) {
+    width: 96vw;
+  }
+}
+
+.large {
+  width: 96vw;
+}
+
+.title {
+  color: var(--dialog-color-title);
+  flex-grow: 0;
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin-bottom: calc(1.6 * var(--unit));
+}
+
+.body {
+  color: var(--color-text-secondary);
+  flex-grow: 2;
+  overflow-y: auto;
+  padding: var(--dialog-content-padding);
+}
+
+.navigation {
+  flex-grow: 0;
+  padding: var(--dialog-navigation-padding);
+  text-align: right;
+}
+
+.button {
+  margin-left: var(--dialog-navigation-padding);
+  min-width: 0;
+  padding-left: var(--dialog-navigation-padding);
+  padding-right: var(--dialog-navigation-padding);
+}
