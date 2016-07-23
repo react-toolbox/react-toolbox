@@ -1,3 +1,4 @@
+import 'react-toolbox/commons.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, useRouterHistory } from 'react-router';

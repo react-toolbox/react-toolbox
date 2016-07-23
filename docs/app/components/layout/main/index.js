@@ -7,15 +7,14 @@ import Playground from './components/playground.js';
 import MainNavigation from './components/navigation.js';
 import BaseDocs from './modules/components.md';
 import components from './modules/components.js';
-import buttonTheme from './button-theme.scss';
-import style from './style';
+import style from './style.css';
 
 const LoadExampleButton = (props) => (
   <Button
     accent
     icon='code'
     label="Load in playground"
-    theme={buttonTheme}
+    theme={style}
     onClick={props.onClick}
     raised
   />
