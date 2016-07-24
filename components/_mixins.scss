@@ -7,7 +7,7 @@
 
 @mixin typo-display-4($color-contrast: false, $use-preferred: true) {
   @include typo-preferred-font($use-preferred);
-  font-size: $unit * 11.2rem;
+  font-size: $unit * 11.2;
   font-weight: 300;
   line-height: 1;
   letter-spacing: -.04em;
@@ -19,7 +19,7 @@
 
 @mixin typo-display-3($color-contrast: false, $use-preferred: true) {
   @include typo-preferred-font($use-preferred);
-  font-size: $unit * 5.6rem;
+  font-size: $unit * 5.6;
   font-weight: 400;
   line-height: 1.35;
   letter-spacing: -.02em;
