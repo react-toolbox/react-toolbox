@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
 
@@ -36,7 +35,10 @@ module.exports = {
         exclude: /(node_modules)/,
         loader: 'babel'
       }, {
-        test: /\.(scss|css)$/,
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss')
+      }, {
+        test: /\.scss$/,
         loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass?sourceMap')
       }, {
         test: /\.(txt)$/,
@@ -48,7 +50,10 @@ module.exports = {
       }
     ]
   },
-  postcss: [autoprefixer],
+  postcss: (webpackInstance) => [
+    require('postcss-import')({ addDependencyTo: webpackInstance }),
+    require('postcss-cssnext')()
+  ],
   sassLoader: {
     data: '@import "' + path.resolve(__dirname, 'app/theme/_theme.scss') + '";'
   },

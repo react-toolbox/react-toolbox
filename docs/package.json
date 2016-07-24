@@ -39,6 +39,8 @@
     "html-webpack-plugin": "^2.16.1",
     "markdown-loader": "^0.1.7",
     "node-sass": "^3.7.0",
+    "postcss-cssnext": "^2.6.0",
+    "postcss-import": "^8.1.2",
     "postcss-loader": "^0.9.1",
     "raw-loader": "^0.5.1",
     "react-transform-catch-errors": "^1.0.2",
