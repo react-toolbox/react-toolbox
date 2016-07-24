@@ -63,7 +63,7 @@ import { AppBar } from 'react-toolbox/lib/app_bar';
 You import from the component definition so the imported component is bundled with its dependencies but it does not require any style for you. This means that no CSS will be bundled and the component markup will **not** include any classname. It's your responsibility to provide a theme to the component to be properly style and you can do it via properties or context. For example:
 
 ```js
-import { AppBar } from 'react-toolbox/lib/app_bar/AppBar.js';
+import AppBar from 'react-toolbox/lib/app_bar/AppBar.js';
 ```
 
 ## Customizing components
@@ -134,7 +134,7 @@ Remember that you can import components without styles and provide those styles 
 Then, when you use a button you can inject the appropriated theme:
 
 ```js
-import { Button } from 'react-toolbox/lib/button/Button';
+import Button from 'react-toolbox/lib/button/Button';
 import buttonTheme from './theme/button.scss';
 
 const ThemedButton = (props) => (
