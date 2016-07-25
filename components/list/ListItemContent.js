@@ -37,8 +37,8 @@ const factory = (ListItemText) => {
 
       return (
         <span className={className}>
-          {caption && <ListItemText primary>{caption}</ListItemText>}
-          {legend && <ListItemText>{legend}</ListItemText>}
+          {caption && <ListItemText theme={theme} primary>{caption}</ListItemText>}
+          {legend && <ListItemText theme={theme}>{legend}</ListItemText>}
           {children}
         </span>
       );
