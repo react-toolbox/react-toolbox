@@ -22,6 +22,10 @@
   left: 0;
   z-index: $z-index-normal;
   pointer-events: none;
+
+  &:not(.visible) {
+    display: none !important;
+  }
 }
 
 .ripple {

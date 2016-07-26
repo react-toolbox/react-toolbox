@@ -73,6 +73,9 @@ const rippleFactory = (options = {}) => {
       handleEnd = () => {
         document.removeEventListener(this.touch ? 'touchend' : 'mouseup', this.handleEnd);
         this.setState({active: false});
+        setTimeout(nil => {
+            this.setState({ visible: false });
+        }, 1000);
       };
 
       start = ({pageX, pageY}, touch = false) => {
@@ -80,7 +83,7 @@ const rippleFactory = (options = {}) => {
           this.touch = touch;
           document.addEventListener(this.touch ? 'touchend' : 'mouseup', this.handleEnd);
           const {top, left, width} = this._getDescriptor(pageX, pageY);
-          this.setState({active: false, restarting: true, top, left, width}, () => {
+          this.setState({active: false, restarting: true, visible: true, top, left, width}, () => {
             this.refs.ripple.offsetWidth;  //eslint-disable-line no-unused-expressions
             this.setState({active: true, restarting: false});
           });
@@ -125,6 +128,10 @@ const rippleFactory = (options = {}) => {
             [this.props.theme.rippleRestarting]: this.state.restarting
           }, className);
 
+          const rippleWrapperClassName = classnames({
+              [this.props.theme.visible]: this.state.visible,
+          }, this.props.theme.rippleWrapper);
+
           const { left, top, width } = this.state;
           const scale = this.state.restarting ? 0 : 1;
           const rippleStyle = prefixer({
@@ -134,7 +141,7 @@ const rippleFactory = (options = {}) => {
           return (
             <ComposedComponent {...other} onMouseDown={this.handleMouseDown}>
               {children ? children : null}
-              <span data-react-toolbox='ripple' className={this.props.theme.rippleWrapper} {...props}>
+              <span data-react-toolbox='ripple' className={rippleWrapperClassName} {...props}>
                 <span ref='ripple' role='ripple' className={rippleClassName} style={rippleStyle} />
               </span>
             </ComposedComponent>
