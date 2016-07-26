@@ -11,7 +11,7 @@ const factory = (ListItemAction) => {
 
     return (
       <span className={theme[type]}>
-        {validChildren.map((action, i) => <ListItemAction key={i} action={action} />)}
+        {validChildren.map((action, i) => <ListItemAction key={i} theme={theme} action={action} />)}
       </span>
     );
   };
