@@ -1,19 +1,24 @@
 import React from 'react';
 import Autocomplete from '../../components/autocomplete';
 
-const countriesArray = ['Spain', 'England', 'USA', 'Thailand', 'Tongo', 'Slovenia'];
-const countriesObject = {'ES-es': 'Spain', 'TH-th': 'Thailand', 'EN-gb': 'England',
-  'EN-en': 'United States of America', 'EN-nz': 'New Zealand'};
-
 class AutocompleteTest extends React.Component {
   state = {
     simple: 'Spain',
     simpleShowAll: 'England',
-    multiple: ['ES-es', 'TH-th']
+    multiple: ['ES-es', 'TH-th'],
+    countriesArray: ['Spain', 'England', 'USA', 'Thailand', 'Tongo', 'Slovenia'],
+    countriesObject: {'ES-es': 'Spain', 'TH-th': 'Thailand', 'EN-gb': 'England',
+      'EN-en': 'United States of America', 'EN-nz': 'New Zealand'}
   };
 
   handleMultipleChange = (value) => {
-    this.setState({multiple: value});
+    this.setState({
+      multiple: value,
+      countriesObject: {
+        ...this.state.countriesObject,
+        ...!this.state.countriesObject[value[0]] ? {[value[0]]: value[0]} : {}
+      }
+    });
   };
 
   handleSimpleChange = (value) => {
@@ -33,9 +38,10 @@ class AutocompleteTest extends React.Component {
         <Autocomplete
           onChange={this.handleMultipleChange}
           label="Pick multiple elements..."
-          source={countriesObject}
+          source={this.state.countriesObject}
           value={this.state.multiple}
           suggestionMatch="anywhere"
+          create={true}
         />
 
         <Autocomplete
@@ -43,7 +49,7 @@ class AutocompleteTest extends React.Component {
           hint="Elements up to you..."
           multiple={false}
           onChange={this.handleSimpleChange}
-          source={countriesArray}
+          source={this.state.countriesArray}
           value={this.state.simple}
         />
 
@@ -52,7 +58,7 @@ class AutocompleteTest extends React.Component {
           hint="Elements up to you..."
           multiple={false}
           onChange={this.handleSimpleShowAllChange}
-          source={countriesArray}
+          source={this.state.countriesArray}
           value={this.state.simpleShowAll}
           showSuggestionsWhenValueIsSet
         />
