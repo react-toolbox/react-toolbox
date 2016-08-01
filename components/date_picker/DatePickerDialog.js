@@ -8,6 +8,10 @@ const factory = (Dialog, Calendar) => {
       active: PropTypes.bool,
       autoOk: PropTypes.bool,
       className: PropTypes.string,
+      locale: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.object
+      ]),
       maxDate: PropTypes.object,
       minDate: PropTypes.object,
       name: PropTypes.string,
@@ -15,6 +19,7 @@ const factory = (Dialog, Calendar) => {
       onEscKeyDown: PropTypes.func,
       onOverlayClick: PropTypes.func,
       onSelect: PropTypes.func,
+      sundayFirstDayOfWeek: React.PropTypes.bool,
       theme: PropTypes.shape({
         button: PropTypes.string,
         calendarWrapper: PropTypes.string,
@@ -25,12 +30,7 @@ const factory = (Dialog, Calendar) => {
         year: PropTypes.string,
         yearsDisplay: PropTypes.string
       }),
-      value: PropTypes.object,
-      locale: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.object
-      ]),
-      sundayFirstDayOfWeek: React.PropTypes.bool
+      value: PropTypes.object
     };
 
     static defaultProps = {

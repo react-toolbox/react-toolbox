@@ -24,6 +24,10 @@ const factory = (Input, DatePickerDialog) => {
       inputClassName: PropTypes.string,
       inputFormat: PropTypes.func,
       label: PropTypes.string,
+      locale: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.object
+      ]),
       maxDate: PropTypes.object,
       minDate: PropTypes.object,
       name: PropTypes.string,
@@ -31,18 +35,14 @@ const factory = (Input, DatePickerDialog) => {
       onEscKeyDown: PropTypes.func,
       onKeyPress: PropTypes.func,
       onOverlayClick: PropTypes.func,
+      sundayFirstDayOfWeek: React.PropTypes.bool,
       theme: PropTypes.shape({
         input: PropTypes.string
       }),
       value: PropTypes.oneOfType([
         PropTypes.instanceOf(Date),
         PropTypes.string
-      ]),
-      locale: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.object
-      ]),
-      sundayFirstDayOfWeek: React.PropTypes.bool
+      ])
     };
 
     static defaultProps = {

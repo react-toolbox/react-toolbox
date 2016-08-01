@@ -9,10 +9,15 @@ const factory = (IconButton) => {
   class Calendar extends Component {
     static propTypes = {
       display: PropTypes.oneOf(['months', 'years']),
+      locale: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.object
+      ]),
       maxDate: PropTypes.object,
       minDate: PropTypes.object,
       onChange: PropTypes.func,
       selectedDate: PropTypes.object,
+      sundayFirstDayOfWeek: React.PropTypes.bool,
       theme: PropTypes.shape({
         active: PropTypes.string,
         calendar: PropTypes.string,
@@ -20,12 +25,7 @@ const factory = (IconButton) => {
         prev: PropTypes.string,
         years: PropTypes.string
       }),
-      viewDate: PropTypes.object,
-      locale: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.object
-      ]),
-      sundayFirstDayOfWeek: React.PropTypes.bool
+      viewDate: PropTypes.object
     };
 
     static defaultProps = {

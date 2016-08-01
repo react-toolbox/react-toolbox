@@ -5,22 +5,22 @@ import CalendarDay from './CalendarDay.js';
 
 class Month extends Component {
   static propTypes = {
+    locale: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.object
+    ]),
     maxDate: PropTypes.object,
     minDate: PropTypes.object,
     onDayClick: PropTypes.func,
     selectedDate: PropTypes.object,
+    sundayFirstDayOfWeek: React.PropTypes.bool,
     theme: PropTypes.shape({
       days: PropTypes.string,
       month: PropTypes.string,
       title: PropTypes.string,
       week: PropTypes.string
     }),
-    viewDate: PropTypes.object,
-    locale: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.object
-    ]),
-    sundayFirstDayOfWeek: React.PropTypes.bool
+    viewDate: PropTypes.object
   };
 
   handleDayClick = (day) => {
@@ -30,7 +30,7 @@ class Month extends Component {
   renderWeeks () {
     const days = utils.range(0, 7).map(d => time.getDayOfWeekLetter(d, this.props.locale));
     const source = (this.props.sundayFirstDayOfWeek) ? days : [...days.slice(1), days[0]];
-    return source.map((d, i) => (<span key={i}>{d}</span>))
+    return source.map((d, i) => (<span key={i}>{d}</span>));
   }
 
   renderDays () {

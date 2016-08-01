@@ -8,13 +8,13 @@ class Day extends Component {
     disabled: PropTypes.bool,
     onClick: PropTypes.func,
     selectedDate: PropTypes.object,
+    sundayFirstDayOfWeek: PropTypes.bool,
     theme: PropTypes.shape({
       active: PropTypes.string,
       day: PropTypes.string,
       disabled: PropTypes.string
     }),
-    viewDate: PropTypes.object,
-    sundayFirstDayOfWeek: PropTypes.bool
+    viewDate: PropTypes.object
   };
 
   dayStyle () {
