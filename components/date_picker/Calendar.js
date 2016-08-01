@@ -20,7 +20,12 @@ const factory = (IconButton) => {
         prev: PropTypes.string,
         years: PropTypes.string
       }),
-      viewDate: PropTypes.object
+      viewDate: PropTypes.object,
+      locale: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.object
+      ]),
+      sundayFirstDayOfWeek: React.PropTypes.bool
     };
 
     static defaultProps = {
@@ -99,6 +104,8 @@ const factory = (IconButton) => {
               selectedDate={this.props.selectedDate}
               theme={this.props.theme}
               viewDate={this.state.viewDate}
+              locale={this.props.locale}
+              sundayFirstDayOfWeek={this.props.sundayFirstDayOfWeek}
               />
           </CssTransitionGroup>
         </div>

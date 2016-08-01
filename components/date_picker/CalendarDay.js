@@ -13,13 +13,15 @@ class Day extends Component {
       day: PropTypes.string,
       disabled: PropTypes.string
     }),
-    viewDate: PropTypes.object
+    viewDate: PropTypes.object,
+    sundayFirstDayOfWeek: PropTypes.bool
   };
 
   dayStyle () {
     if (this.props.day === 1) {
+      const e = (this.props.sundayFirstDayOfWeek) ? 0 : 1;
       return {
-        marginLeft: `${time.getFirstWeekDay(this.props.viewDate) * 100 / 7}%`
+        marginLeft: `${(time.getFirstWeekDay(this.props.viewDate) - e) * 100 / 7}%`
       };
     }
   }

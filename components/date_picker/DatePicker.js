@@ -37,7 +37,17 @@ const factory = (Input, DatePickerDialog) => {
       value: PropTypes.oneOfType([
         PropTypes.instanceOf(Date),
         PropTypes.string
-      ])
+      ]),
+      locale: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.object
+      ]),
+      sundayFirstDayOfWeek: React.PropTypes.bool
+    };
+
+    static defaultProps = {
+      locale: 'en',
+      sundayFirstDayOfWeek: false
     };
 
     state = {
@@ -67,11 +77,11 @@ const factory = (Input, DatePickerDialog) => {
     };
 
     render () {
-      const { autoOk, inputClassName, inputFormat, maxDate, minDate,
-        onEscKeyDown, onOverlayClick, value, ...others } = this.props;
+      const { autoOk, inputClassName, inputFormat, maxDate, minDate, sundayFirstDayOfWeek,
+        onEscKeyDown, onOverlayClick, value, locale, ...others } = this.props;
       const finalInputFormat = inputFormat || time.formatDate;
       const date = Object.prototype.toString.call(value) === '[object Date]' ? value : undefined;
-      const formattedDate = date === undefined ? '' : finalInputFormat(value);
+      const formattedDate = date === undefined ? '' : finalInputFormat(value, locale);
 
       return (
         <div data-react-toolbox='date-picker'>
@@ -101,6 +111,8 @@ const factory = (Input, DatePickerDialog) => {
             onSelect={this.handleSelect}
             theme={this.props.theme}
             value={date}
+            locale={locale}
+            sundayFirstDayOfWeek={sundayFirstDayOfWeek}
           />
         </div>
       );
