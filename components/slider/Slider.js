@@ -61,13 +61,14 @@ const factory = (ProgressBar, Input) => {
       this.handleResize();
     }
 
-    shouldComponentUpdate (nextProps, nextState) {
-      if (!this.state.inputFocused && nextState.inputFocused) return false;
+    componentWillReceiveProps (nextProps) {
       if (this.state.inputFocused && this.props.value !== nextProps.value) {
         this.setState({inputValue: this.valueForInput(nextProps.value)});
-        return false;
       }
-      return true;
+    }
+
+    shouldComponentUpdate (nextProps, nextState) {
+      return this.state.inputFocused || !nextState.inputFocused;
     }
 
     componentWillUnmount () {
@@ -96,16 +97,13 @@ const factory = (ProgressBar, Input) => {
     };
 
     handleKeyDown = (event) => {
-      if ([13, 27].indexOf(event.keyCode) !== -1) {
-        this.refs.input.blur();
-        ReactDOM.findDOMNode(this).blur();
-      }
+      if ([13, 27].indexOf(event.keyCode) !== -1) this.getInput().blur();
       if (event.keyCode === 38) this.addToValue(this.props.step);
       if (event.keyCode === 40) this.addToValue(-this.props.step);
     };
 
     handleMouseDown = (event) => {
-      if (this.state.inputFocused) this.refs.input.blur();
+      if (this.state.inputFocused) this.getInput().blur();
       events.addEventsToDocument(this.getMouseEventMap());
       this.start(events.getMousePosition(event));
       events.pauseEvent(event);
@@ -143,7 +141,7 @@ const factory = (ProgressBar, Input) => {
     };
 
     handleTouchStart = (event) => {
-      if (this.state.inputFocused) this.refs.input.blur();
+      if (this.state.inputFocused) this.getInput().blur();
       this.start(events.getTouchPosition(event));
       events.addEventsToDocument(this.getTouchEventMap());
       events.pauseEvent(event);
@@ -153,6 +151,12 @@ const factory = (ProgressBar, Input) => {
       let value = this.state.inputFocused ? parseFloat(this.state.inputValue) : this.props.value;
       value = this.trimValue(value + increment);
       if (value !== this.props.value) this.props.onChange(value);
+    }
+
+    getInput () {
+      return this.refs.input && this.refs.input.getWrappedInstance
+        ? this.refs.input.getWrappedInstance()
+        : this.refs.input;
     }
 
     getKeyboardEvents () {
