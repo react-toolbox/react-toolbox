@@ -95,8 +95,8 @@ const rippleFactory = (options = {}) => {
         const {left, top, height, width} = ReactDOM.findDOMNode(this).getBoundingClientRect();
         const {rippleCentered: centered, rippleSpread: spread} = this.props;
         return {
-          left: centered ? 0 : pageX - left - width / 2 - window.scrollX,
-          top: centered ? 0 : pageY - top - height / 2 - window.scrollY,
+          left: centered ? 0 : pageX - left - width / 2 - window.pageXOffset,
+          top: centered ? 0 : pageY - top - height / 2 - window.pageYOffset,
           width: width * spread
         };
       }
