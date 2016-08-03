@@ -59,7 +59,7 @@ const factory = (TimePickerDialog, Input) => {
     };
 
     render () {
-      const { value, format, inputClassName, onEscKeyDown, onOverlayClick, theme, ...others } = this.props;
+      const { value, format, inputClassName, onEscKeyDown = this.handleDismiss, onOverlayClick = this.handleDismiss, theme, ...others } = this.props;
       const formattedTime = value ? time.formatTime(value, format) : '';
       return (
         <div data-react-toolbox='time-picker'>
