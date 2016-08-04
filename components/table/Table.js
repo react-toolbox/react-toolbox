@@ -44,10 +44,14 @@ const factory = (TableHead, TableRow) => {
       if (this.props.onSelect) {
         const position = this.props.selected.indexOf(index);
         let newSelected = [...this.props.selected];
-        if (position !== -1) { newSelected.splice(position, 1); }
-        if (position !== -1 && this.props.multiSelectable) {
+        
+        if (position !== -1) { 
+          newSelected = newSelected.filter((el,idx)=>{ return (idx != position); }); 
+        }
+        else if (this.props.multiSelectable) {
           newSelected.push(index);
-        } else {
+        } 
+        else {
           newSelected = [index];
         }
         this.props.onSelect(newSelected);
