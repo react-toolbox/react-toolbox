@@ -164,6 +164,7 @@ const factory = (FontIcon) => {
         value
       };
       if (!multiline) {
+        inputElementProps.maxLength = maxLength;
         inputElementProps.onKeyPress = onKeyPress;
       } else {
         inputElementProps.rows = 1;
