@@ -46,6 +46,7 @@ If you want to provide a theme via context, the component key is `RTDatePicker`.
 | `onChange`      | `Function`      |               | Callback called when the picker value is changed.|
 | `onEscKeyDown`   | `Function`     |               | Callback called when the ESC key is pressed with the overlay active. |
 | `onOverlayClick` | `Function`     |               | Callback to be invoked when the dialog overlay is clicked.|
+| `readonly`      | `Boolean`       |               | The input element will be readonly and look like disabled.|
 | `value`         | `Date`          |               | Date object with the currently selected date. |
 
 ## Theme

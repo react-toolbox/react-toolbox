@@ -31,6 +31,7 @@ const factory = (Input, DatePickerDialog) => {
       onEscKeyDown: PropTypes.func,
       onKeyPress: PropTypes.func,
       onOverlayClick: PropTypes.func,
+      readonly: PropTypes.bool,
       theme: PropTypes.shape({
         input: PropTypes.string
       }),
@@ -45,6 +46,16 @@ const factory = (Input, DatePickerDialog) => {
     };
 
     handleDismiss = () => {
+      this.setState({active: false});
+    };
+
+    handleInputFocus = (event) => {
+      events.pauseEvent(event);
+      this.setState({active: true});
+    };
+
+    handleInputBlur = (event) => {
+      events.pauseEvent(event);
       this.setState({active: false});
     };
 
@@ -68,7 +79,7 @@ const factory = (Input, DatePickerDialog) => {
 
     render () {
       const { autoOk, inputClassName, inputFormat, maxDate, minDate,
-        onEscKeyDown, onOverlayClick, value, ...others } = this.props;
+        onEscKeyDown, onOverlayClick, readonly, value, ...others } = this.props;
       const finalInputFormat = inputFormat || time.formatDate;
       const date = Object.prototype.toString.call(value) === '[object Date]' ? value : undefined;
       const formattedDate = date === undefined ? '' : finalInputFormat(value);
@@ -78,14 +89,16 @@ const factory = (Input, DatePickerDialog) => {
           <Input
             {...others}
             className={classnames(this.props.theme.input, {[inputClassName]: inputClassName })}
+            disabled={readonly}
             error={this.props.error}
-            onMouseDown={this.handleInputMouseDown}
-            onKeyPress={this.handleInputKeyPress}
-            name={this.props.name}
+            icon={this.props.icon}
             label={this.props.label}
+            name={this.props.name}
+            onFocus={this.handleInputFocus}
+            onKeyPress={this.handleInputKeyPress}
+            onMouseDown={this.handleInputMouseDown}
             readOnly
             type='text'
-            icon={this.props.icon}
             value={formattedDate}
           />
           <DatePickerDialog
