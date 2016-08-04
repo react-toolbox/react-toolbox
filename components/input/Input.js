@@ -69,14 +69,20 @@ const factory = (FontIcon) => {
       }
     }
 
+    componentDidUpdate (prevProps) {
+      const { multiline, value } = this.props;
+
+      // resize the textarea, if nessesary
+      if (multiline && (prevProps.value && prevProps.value.length) !== (value && value.length)) {
+        this.handleAutoresize();
+      }
+    }
+
     componentWillUnmount () {
       if (this.props.multiline) window.removeEventListener('resize', this.handleAutoresize);
     }
 
     handleChange = (event) => {
-      if (this.props.multiline) {
-        this.handleAutoresize();
-      }
       if (this.props.onChange) this.props.onChange(event.target.value, event);
     };
 
