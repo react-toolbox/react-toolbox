@@ -83,7 +83,15 @@ const factory = (FontIcon) => {
     }
 
     handleChange = (event) => {
-      if (this.props.onChange) this.props.onChange(event.target.value, event);
+      const { onChange, multiline, maxLength } = this.props;
+      const valueFromEvent = event.target.value;
+
+      // trim value to maxLength if that exists (only on multiline inputs)
+      const haveToTrim = (multiline && maxLength && event.target.value.length > maxLength);
+      const value = haveToTrim ? valueFromEvent.substr(0, maxLength) : valueFromEvent;
+
+      // propagate to to store and therefore to the input
+      if (onChange) onChange(value, event);
     };
 
     handleAutoresize = () => {
@@ -136,8 +144,7 @@ const factory = (FontIcon) => {
         disabled,
         required,
         type,
-        value,
-        maxLength
+        value
       });
 
       return (
