@@ -53,21 +53,22 @@ const rippleFactory = (options = {}) => {
         left: null,
         restarting: false,
         top: null,
+        visible: false,
         width: null
       };
 
-      componentDidMount () {
-        if (this.props.onRippleEnded) {
+      componentDidUpdate (prevProps, prevState) {
+        if (!prevState.visible && this.state.visible) {
           events.addEventListenerOnTransitionEnded(this.refs.ripple, (evt) => {
-            if (evt.propertyName === 'transform') this.props.onRippleEnded(evt);
+            if (evt.propertyName === 'opacity') this.handleOpacityEnded(evt);
           });
         }
       }
 
-      componentWillUnmount () {
-        if (this.props.onRippleEnded) {
-          events.removeEventListenerOnTransitionEnded(this.refs.ripple);
-        }
+      handleOpacityEnded = (evt) => {
+        events.removeEventListenerOnTransitionEnded(this.refs.ripple);
+        this.setState({visible: false});
+        if (this.props.onRippleEnded) this.props.onRippleEnded(evt);
       }
 
       handleEnd = () => {
@@ -80,9 +81,9 @@ const rippleFactory = (options = {}) => {
           this.touch = touch;
           document.addEventListener(this.touch ? 'touchend' : 'mouseup', this.handleEnd);
           const {top, left, width} = this._getDescriptor(pageX, pageY);
-          this.setState({active: false, restarting: true, top, left, width}, () => {
+          this.setState({active: false, restarting: true, visible: true, top, left, width}, () => {
             this.refs.ripple.offsetWidth;  //eslint-disable-line no-unused-expressions
-            this.setState({active: true, restarting: false});
+            this.setState({active: true, restarting: false, visible: true});
           });
         }
       };
@@ -131,12 +132,16 @@ const rippleFactory = (options = {}) => {
               transform: `translate3d(${-width / 2 + left}px, ${-width / 2 + top}px, 0) scale(${scale})`
             }, {width, height: width});
 
+          const rippleElement = (
+            <span data-react-toolbox='ripple' className={this.props.theme.rippleWrapper} {...props}>
+              <span ref='ripple' role='ripple' className={rippleClassName} style={rippleStyle} />
+            </span>
+          );
+
           return (
             <ComposedComponent {...other} onMouseDown={this.handleMouseDown}>
               {children ? children : null}
-              <span data-react-toolbox='ripple' className={this.props.theme.rippleWrapper} {...props}>
-                <span ref='ripple' role='ripple' className={rippleClassName} style={rippleStyle} />
-              </span>
+              {this.state.visible || this.state.active ? rippleElement : null}
             </ComposedComponent>
           );
         }
