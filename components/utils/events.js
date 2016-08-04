@@ -49,7 +49,7 @@ export default {
   removeEventListenerOnTransitionEnded (element) {
     const eventName = transitionEventNamesFor(element);
     if (!eventName) return false;
-    element.removeEventListener(eventName);
+    element.removeEventListener(eventName, () => {});
     return true;
   }
 };
