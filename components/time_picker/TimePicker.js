@@ -59,13 +59,13 @@ const factory = (TimePickerDialog, Input) => {
     };
 
     render () {
-      const { value, format, inputClassName, onEscKeyDown, onOverlayClick, theme, ...others } = this.props;
+      const { value, format, inputClassName, onEscKeyDown, onOverlayClick, ...others } = this.props;
       const formattedTime = value ? time.formatTime(value, format) : '';
       return (
         <div data-react-toolbox='time-picker'>
           <Input
             {...others}
-            className={classnames(theme.input, {[inputClassName]: inputClassName })}
+            className={classnames(this.props.theme.input, {[inputClassName]: inputClassName })}
             error={this.props.error}
             name={this.props.name}
             label={this.props.label}
