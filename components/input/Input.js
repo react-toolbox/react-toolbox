@@ -134,7 +134,7 @@ const factory = (FontIcon) => {
         && value !== ''
         && !(typeof value === Number && isNaN(value));
 
-      const InputElement = React.createElement(multiline ? 'textarea' : 'input', {
+      const inputElementProps = {
         ...others,
         className: classnames(theme.inputElement, {[theme.filled]: valuePresent}),
         onChange: this.handleChange,
@@ -145,7 +145,9 @@ const factory = (FontIcon) => {
         required,
         type,
         value
-      });
+      };
+      if (multiline) inputElementProps.rows = 1; // set initial height to 1
+      const InputElement = React.createElement(multiline ? 'textarea' : 'input', inputElementProps);
 
       return (
         <div data-react-toolbox='input' className={className}>
