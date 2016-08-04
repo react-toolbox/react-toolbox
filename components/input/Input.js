@@ -70,7 +70,7 @@ const factory = (FontIcon) => {
     }
 
     componentWillUnmount () {
-      window.removeEventListener('resize', this.handleAutoresize);
+      if (this.props.multiline) window.removeEventListener('resize', this.handleAutoresize);
     }
 
     handleChange = (event) => {
