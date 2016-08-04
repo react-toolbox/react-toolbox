@@ -36,10 +36,11 @@ class PickersTest extends React.Component {
         />
 
         <DatePicker
-          label='Expiration date'
+          label='Expiration date (Read Only)'
           maxDate={max_datetime}
           minDate={min_datetime}
           onChange={this.handleChange.bind(this, 'date2')}
+          readonly
           value={this.state.date2}
         />
 
@@ -67,7 +68,8 @@ class PickersTest extends React.Component {
 
         <TimePicker
           format='ampm'
-          label='Finishing time'
+          label='Finishing time (Read Only)'
+          readonly
           onChange={this.handleChange.bind(this, 'time2')}
           value={this.state.time2}
         />

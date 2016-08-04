@@ -28,7 +28,7 @@
 
     &.selectable {
       padding-right: 0;
-      width: 1.8 * $unit;
+      width: calc(1.8 * var(--unit));
 
       & > * {
         margin: 0;

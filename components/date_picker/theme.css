@@ -2,7 +2,7 @@
 @import '../variables.css';
 @import './config.css';
 
-.input > [role='input'] {
+.input:not(.disabled) > .inputElement {
   cursor: pointer;
 }
 

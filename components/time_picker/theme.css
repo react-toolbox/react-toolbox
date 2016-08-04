@@ -2,7 +2,7 @@
 @import '../variables.css';
 @import './config.css';
 
-.input > [role='input'] {
+.input:not(.disabled) > .inputElement {
   cursor: pointer;
 }
 
@@ -156,12 +156,12 @@
     }
 
     &::before {
-      background: $clock-primary-color;
+      background: var(--clock-primary-color);
       bottom: 0;
       content: '';
       height: calc(var(--clock-knob-size) - var(--clock-knob-small-size));
       left: 50%;
-      margin-left: calc(-1 * $clock-hand-width / 2);
+      margin-left: calc(-1 * var(--clock-hand-width) / 2);
       position: absolute;
       width: var(--clock-hand-width);
     }

@@ -38,7 +38,7 @@
   padding: var(--input-field-padding) 0;
   width: 100%;
 
-  &:focus {
+  &:focus:not([disabled]):not([readonly]) {
     & ~ .bar::before,
     & ~ .bar::after {
       width: 50%;
@@ -61,7 +61,7 @@
     }
   }
 
-  &:focus,
+  &:focus:not([disabled]):not([readonly]),
   &.filled,
   &[type='date'],
   &[type='time'] {

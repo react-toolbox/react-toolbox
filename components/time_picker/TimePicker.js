@@ -21,6 +21,7 @@ const factory = (TimePickerDialog, Input) => {
       onEscKeyDown: PropTypes.func,
       onKeyPress: PropTypes.func,
       onOverlayClick: PropTypes.func,
+      readonly: PropTypes.bool,
       theme: PropTypes.shape({
         input: PropTypes.string
       }),
@@ -37,6 +38,16 @@ const factory = (TimePickerDialog, Input) => {
     };
 
     handleDismiss = () => {
+      this.setState({active: false});
+    };
+
+    handleInputFocus = (event) => {
+      events.pauseEvent(event);
+      this.setState({active: true});
+    };
+
+    handleInputBlur = (event) => {
+      events.pauseEvent(event);
       this.setState({active: false});
     };
 
@@ -59,18 +70,20 @@ const factory = (TimePickerDialog, Input) => {
     };
 
     render () {
-      const { value, format, inputClassName, onEscKeyDown, onOverlayClick, ...others } = this.props;
+      const { value, format, inputClassName, onEscKeyDown, onOverlayClick,
+        readonly, ...others } = this.props;
       const formattedTime = value ? time.formatTime(value, format) : '';
       return (
         <div data-react-toolbox='time-picker'>
           <Input
             {...others}
             className={classnames(this.props.theme.input, {[inputClassName]: inputClassName })}
+            disabled={readonly}
             error={this.props.error}
-            name={this.props.name}
             label={this.props.label}
-            onMouseDown={this.handleInputMouseDown}
+            name={this.props.name}
             onKeyPress={this.handleInputKeyPress}
+            onMouseDown={this.handleInputMouseDown}
             readOnly
             type='text'
             value={formattedTime}
