@@ -111,10 +111,31 @@ const factory = (FontIcon) => {
       this.refs.input.focus();
     }
 
+    onKeyPress = (event) => {
+      // prevent insertion of more characters if we're a multiline input
+      // and maxLength exists
+      const { multiline, maxLength, onKeyPress } = this.props;
+      if (multiline && maxLength) {
+        // check if smt is selected, in which case the newly added charcter would
+        // replace the selected characters, so the length of value doesn't actually
+        // increase.
+        const isReplacing = event.target.selectionEnd - event.target.selectionStart;
+        const value = event.target.value;
+
+        if (!isReplacing && value.length === maxLength) {
+          event.preventDefault();
+          event.stopPropagation();
+          return;
+        }
+      }
+
+      if (onKeyPress) onKeyPress(event);
+    }
+
     render () {
       const { children, disabled, error, floating, hint, icon,
               name, label: labelText, maxLength, multiline, required,
-              theme, type, value, ...others} = this.props;
+              theme, type, value, onKeyPress, ...others} = this.props;
       const length = maxLength && value ? value.length : 0;
       const labelClassName = classnames(theme.label, {[theme.fixed]: !floating});
 
@@ -142,7 +163,13 @@ const factory = (FontIcon) => {
         type,
         value
       };
-      if (multiline) inputElementProps.rows = 1; // set initial height to 1
+      if (!multiline) {
+        inputElementProps.onKeyPress = onKeyPress;
+      } else {
+        inputElementProps.rows = 1;
+        inputElementProps.onKeyPress = this.onKeyPress;
+      }
+
       const InputElement = React.createElement(multiline ? 'textarea' : 'input', inputElementProps);
 
       return (
