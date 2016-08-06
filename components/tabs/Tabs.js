@@ -40,7 +40,8 @@ const factory = (Tab, TabContent) => {
       clearTimeout(this.pointerTimeout);
     }
 
-    handleHeaderClick = (idx) => {
+    handleHeaderClick = (event) => {
+      const idx = parseInt(event.target.id);
       if (this.props.onChange) this.props.onChange(idx);
     };
 
@@ -80,9 +81,10 @@ const factory = (Tab, TabContent) => {
     renderHeaders (headers) {
       return headers.map((item, idx) => {
         return React.cloneElement(item, {
+          id: idx,
           key: idx,
           active: this.props.index === idx,
-          onClick: this.handleHeaderClick.bind(this, idx, item)
+          onClick: this.handleHeaderClick
         });
       });
     }

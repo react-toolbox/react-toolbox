@@ -38,7 +38,7 @@ class Month extends Component {
           key={i}
           day={i}
           disabled={disabled}
-          onClick={!disabled ? this.handleDayClick.bind(this, i) : null}
+          onClick={this.handleDayClick}
           selectedDate={this.props.selectedDate}
           theme={this.props.theme}
           viewDate={this.props.viewDate}

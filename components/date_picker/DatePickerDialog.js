@@ -63,8 +63,8 @@ const factory = (Dialog, Calendar) => {
       if (this.props.onSelect) this.props.onSelect(this.state.date, event);
     };
 
-    handleSwitchDisplay = (display) => {
-      this.setState({ display });
+    handleSwitchDisplay = (event) => {
+      this.setState({ display: event.target.id });
     };
 
     updateStateDate = (date) => {
@@ -96,10 +96,10 @@ const factory = (Dialog, Calendar) => {
           type="custom"
         >
           <header className={headerClassName}>
-            <span className={theme.year} onClick={this.handleSwitchDisplay.bind(this, 'years')}>
+            <span id='years' className={theme.year} onClick={this.handleSwitchDisplay}>
               {this.state.date.getFullYear()}
             </span>
-            <h3 className={theme.date} onClick={this.handleSwitchDisplay.bind(this, 'months')}>
+            <h3 id='months' className={theme.date} onClick={this.handleSwitchDisplay}>
               {time.getShortDayOfWeek(this.state.date.getDay())}, {time.getShortMonth(this.state.date)} {this.state.date.getDate()}
             </h3>
           </header>

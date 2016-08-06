@@ -138,8 +138,8 @@ const factory = (Chip, Input) => {
      }
    };
 
-   handleSuggestionHover = (key) => {
-     this.setState({active: key});
+   handleSuggestionHover = (event) => {
+     this.setState({active: event.target.id});
    };
 
    calculateDirection () {
@@ -220,11 +220,11 @@ const factory = (Chip, Input) => {
      return valueMap;
    }
 
-   select (key, event) {
+   select = (event) => {
      events.pauseEvent(event);
      const values = this.values(this.props.value);
-     this.handleChange([key, ...values.keys()], event);
-   }
+     this.handleChange([event.target.id, ...values.keys()], event);
+   };
 
    unselect (key, event) {
      if (!this.props.disabled) {
@@ -259,10 +259,11 @@ const factory = (Chip, Input) => {
        const className = classnames(theme.suggestion, {[theme.active]: this.state.active === key});
        return (
          <li
+           id={key}
            key={key}
            className={className}
-           onMouseDown={this.select.bind(this, key)}
-           onMouseOver={this.handleSuggestionHover.bind(this, key)}
+           onMouseDown={this.select}
+           onMouseOver={this.handleSuggestionHover}
          >
            {value}
          </li>

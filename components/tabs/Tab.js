@@ -41,7 +41,10 @@ class Tab extends Component {
   };
 
   render () {
-    const { active, activeClassName, hidden, disabled, className, theme } = this.props;
+    const {
+      onActive, // eslint-disable-line
+      active, activeClassName, className, disabled, hidden, theme, ...other
+    } = this.props;
     const _className = classnames(theme.label, {
       [theme.active]: active,
       [theme.hidden]: hidden,
@@ -50,7 +53,7 @@ class Tab extends Component {
     }, className);
 
     return (
-      <label data-react-toolbox='tab' className={_className} onClick={this.handleClick}>
+      <label {...other} data-react-toolbox='tab' className={_className} onClick={this.handleClick}>
         {this.props.label}
       </label>
     );

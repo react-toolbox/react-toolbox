@@ -31,6 +31,12 @@ class Day extends Component {
     return sameYear && sameMonth && sameDay;
   }
 
+  handleClick = () => {
+    if (!this.props.disabled && this.props.onClick) {
+      this.props.onClick(this.props.day);
+    }
+  };
+
   render () {
     const className = classnames(this.props.theme.day, {
       [this.props.theme.active]: this.isSelected(),
@@ -39,7 +45,7 @@ class Day extends Component {
 
     return (
       <div data-react-toolbox='day' className={className} style={this.dayStyle()}>
-        <span onClick={this.props.onClick}>
+        <span onClick={this.handleClick}>
           {this.props.day}
         </span>
       </div>

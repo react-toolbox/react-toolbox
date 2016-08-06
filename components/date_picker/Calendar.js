@@ -5,6 +5,8 @@ import time from '../utils/time.js';
 import utils from '../utils/utils.js';
 import CalendarMonth from './CalendarMonth.js';
 
+const DIRECTION_STEPS = { left: -1, right: 1 };
+
 const factory = (IconButton) => {
   class Calendar extends Component {
     static propTypes = {
@@ -48,37 +50,34 @@ const factory = (IconButton) => {
       this.props.onChange(time.setDay(this.state.viewDate, day), true);
     };
 
-    handleYearClick = (year) => {
+    handleYearClick = (event) => {
+      const year = parseInt(event.target.id);
       const viewDate = time.setYear(this.props.selectedDate, year);
       this.setState({viewDate});
       this.props.onChange(viewDate, false);
     };
 
-    changeViewMonth = (direction, step) => {
+    changeViewMonth = (event) => {
+      const direction = event.target.id;
       this.setState({
         direction,
-        viewDate: time.addMonths(this.state.viewDate, step)
+        viewDate: time.addMonths(this.state.viewDate, DIRECTION_STEPS[direction])
       });
     };
-
-    renderYear (year) {
-      const props = {
-        className: year === this.state.viewDate.getFullYear() ? this.props.theme.active : '',
-        key: year,
-        onClick: this.handleYearClick.bind(this, year)
-      };
-
-      if (year === this.state.viewDate.getFullYear()) {
-        props.ref = 'activeYear';
-      }
-
-      return <li {...props}>{year}</li>;
-    }
 
     renderYears () {
       return (
         <ul data-react-toolbox='years' ref="years" className={this.props.theme.years}>
-          {utils.range(1900, 2100).map((i) => { return this.renderYear(i); })}
+          {utils.range(1900, 2100).map(year => (
+            <li
+              children={year}
+              className={year === this.state.viewDate.getFullYear() ? this.props.theme.active : ''}
+              id={year}
+              key={year}
+              onClick={this.handleYearClick}
+              ref={year === this.state.viewDate.getFullYear() ? 'activeYear' : undefined}
+            />
+          ))}
         </ul>
       );
     }
@@ -88,8 +87,8 @@ const factory = (IconButton) => {
       const animation = this.state.direction === 'left' ? SlideLeft : SlideRight;
       return (
         <div data-react-toolbox='calendar'>
-          <IconButton className={theme.prev} icon='chevron_left' onClick={this.changeViewMonth.bind(this, 'left', -1)} />
-          <IconButton className={theme.next} icon='chevron_right' onClick={this.changeViewMonth.bind(this, 'right', 1)} />
+          <IconButton id='left' className={theme.prev} icon='chevron_left' onClick={this.changeViewMonth} />
+          <IconButton id='right' className={theme.next} icon='chevron_right' onClick={this.changeViewMonth} />
           <CssTransitionGroup transitionName={animation} transitionEnterTimeout={350} transitionLeaveTimeout={350}>
             <CalendarMonth
               key={this.state.viewDate.getMonth()}
@@ -99,7 +98,7 @@ const factory = (IconButton) => {
               selectedDate={this.props.selectedDate}
               theme={this.props.theme}
               viewDate={this.state.viewDate}
-              />
+            />
           </CssTransitionGroup>
         </div>
       );
