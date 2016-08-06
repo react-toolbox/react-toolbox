@@ -156,6 +156,7 @@ const factory = (Input) => {
             className={theme.value}
             onMouseDown={this.handleMouseDown}
             readOnly
+            theme={theme}
             type={template && selected ? 'hidden' : null}
             value={selected && selected.label ? selected.label : ''}
           />
