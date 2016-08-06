@@ -36,17 +36,17 @@ class AutocompleteTest extends React.Component {
         <p>You can have a multiple or simple autocomplete.</p>
 
         <Autocomplete
-          onChange={this.handleMultipleChange}
+          allowCreate
           label="Pick multiple elements..."
+          onChange={this.handleMultipleChange}
           source={this.state.countriesObject}
-          value={this.state.multiple}
           suggestionMatch="anywhere"
-          create={true}
+          value={this.state.multiple}
         />
 
         <Autocomplete
-          label="Choose a country"
           hint="Elements up to you..."
+          label="Choose a country"
           multiple={false}
           onChange={this.handleSimpleChange}
           source={this.state.countriesArray}
@@ -54,13 +54,13 @@ class AutocompleteTest extends React.Component {
         />
 
         <Autocomplete
-          label="Choose a country (showing all suggestions)"
           hint="Elements up to you..."
+          label="Choose a country (showing all suggestions)"
           multiple={false}
           onChange={this.handleSimpleShowAllChange}
+          showSuggestionsWhenValueIsSet
           source={this.state.countriesArray}
           value={this.state.simpleShowAll}
-          showSuggestionsWhenValueIsSet
         />
       </section>
     );

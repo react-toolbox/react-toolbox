@@ -43,6 +43,7 @@ If you want to provide a theme via context, the component key is `RTAutocomplete
 
 | Name                | Type                   | Default         | Description|
 |:-----|:-----|:-----|:-----|
+| `allowCreate`       | `Bool`                 | `false`         | Determines if user can create a new option with the current typed value |
 | `className`         | `String`               | `''`            | Sets a class to style of the Component.|
 | `direction`         | `String`               |  `auto`         | Determines the opening direction. It can be `auto`, `top` or `bottom`.|
 | `disabled`          | `Bool`                 |  `false`        | If true, component will be disabled.|
@@ -55,7 +56,6 @@ If you want to provide a theme via context, the component key is `RTAutocomplete
 | `showSuggestionsWhenValueIsSet` | `Bool`     | `false`         | If true, the list of suggestions will not be filtered when a value is selected, until the query is modified. |
 | `suggestionMatch`   | `String`               | `start`         | Determines how suggestions are supplied. It can be `start` (query matches the start of a suggestion), `anywhere` (query matches anywhere inside the suggestion), or `word` (query matches the start of a word in the suggestion). |
 | `value`             | `String` or `Array`    |                 | Value or array of values currently selected component.|
-| `create`            | `Bool`  | `false` | Determines if user can create a new option by typing in the field
 
 Additional properties will be passed to the Input Component so you can use `hint`, `name` ... etc.
 

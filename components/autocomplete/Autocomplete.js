@@ -16,6 +16,7 @@ const POSITION = {
 const factory = (Chip, Input) => {
   class Autocomplete extends Component {
    static propTypes = {
+     allowCreate: PropTypes.bool,
      className: PropTypes.string,
      direction: PropTypes.oneOf(['auto', 'up', 'down']),
      disabled: PropTypes.bool,
@@ -27,7 +28,6 @@ const factory = (Chip, Input) => {
      showSuggestionsWhenValueIsSet: PropTypes.bool,
      source: PropTypes.any,
      suggestionMatch: PropTypes.oneOf(['start', 'anywhere', 'word']),
-     create: PropTypes.bool,
      theme: PropTypes.shape({
        active: PropTypes.string,
        autocomplete: PropTypes.string,
@@ -44,6 +44,7 @@ const factory = (Chip, Input) => {
    };
 
    static defaultProps = {
+     allowCreate: false,
      className: '',
      direction: 'auto',
      selectedPosition: 'above',
@@ -118,7 +119,7 @@ const factory = (Chip, Input) => {
        let target = this.state.active;
        if (!target) {
          target = [...this.suggestions().keys()][0];
-         if (this.props.create && !target){
+         if (!target && this.props.allowCreate) {
            target = this.state.query;
          }
          this.setState({active: target});
@@ -274,9 +275,9 @@ const factory = (Chip, Input) => {
 
    render () {
      const {
-      error, label, source, suggestionMatch,           //eslint-disable-line no-unused-vars
-      selectedPosition, showSuggestionsWhenValueIsSet, //eslint-disable-line no-unused-vars
-      theme, create, ...other
+      allowCreate, error, label, source, suggestionMatch, //eslint-disable-line no-unused-vars
+      selectedPosition, showSuggestionsWhenValueIsSet,    //eslint-disable-line no-unused-vars
+      theme, ...other
     } = this.props;
      const className = classnames(theme.autocomplete, {
        [theme.focus]: this.state.focus
