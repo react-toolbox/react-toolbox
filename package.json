@@ -78,6 +78,7 @@
     "react": "^15.2.0",
     "react-addons-css-transition-group": "^15.2.0",
     "react-addons-test-utils": "^15.0.2",
+    "react-addons-update": "^15.3.0",
     "react-docgen": "^2.8.2",
     "react-dom": "^15.2.0",
     "react-transform-catch-errors": "^1.0.2",

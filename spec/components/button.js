@@ -11,7 +11,7 @@ const ButtonTest = () => (
       <GithubIcon /> Github
     </Button>
     <Button icon='bookmark' label='Bookmark' accent onRippleEnded={rippleEnded} />
-    <Button icon='bookmark' label='Bookmark' raised primary />
+    <Button icon='bookmark' label='Bookmark' raised primary rippleMultiple={false} onRippleEnded={rippleEnded} />
     <Button icon='inbox' label='Inbox' flat />
     <Button icon='add' floating />
     <Button icon='add' floating primary />
