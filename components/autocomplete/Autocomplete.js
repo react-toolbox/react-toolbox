@@ -159,7 +159,7 @@ const factory = (Chip, Input) => {
 
    suggestions () {
      let suggest = new Map();
-     const query = this.state.query.toLowerCase().trim() || '';
+     const query = (this.state.query || (!this.props.multiple ? this.props.value : '')).toLowerCase().trim() || '';
      const values = this.values();
      const source = this.source();
 
