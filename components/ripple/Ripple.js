@@ -64,6 +64,13 @@ const rippleFactory = (options = {}) => {
         }
       }
 
+      componentWillUnmount () {
+        // Remove document event listeners for ripple if they still exists
+        Object.keys(this.state.ripples).forEach(key => {
+          this.state.ripples[key].endRipple();
+        });
+      }
+
       /**
        * Add an event listener to the reference with given key so when the animation transition
        * ends we can be sure that it finished and it can be safely removed from the state.
@@ -103,9 +110,9 @@ const rippleFactory = (options = {}) => {
           const { top, left, width } = this.getDescriptor(x, y);
           const noRipplesActive = Object.keys(this.state.ripples).length === 0;
           const key = this.props.rippleMultiple || noRipplesActive ? this.getNextKey() : this.getLastKey();
-          const initialState = { active: false, restarting: true, top, left, width };
+          const endRipple = this.addRippleDeactivateEventListener(isTouch, key);
+          const initialState = { active: false, restarting: true, top, left, width, endRipple };
           const runningState = { active: true, restarting: false };
-          this.addRippleDeactivateEventListener(isTouch, key);
           this.setState(update(this.state, { ripples: { [key]: { $set: initialState } } }), () => {
             this.refs[key].offsetWidth; //eslint-disable-line no-unused-expressions
             this.setState(update(this.state, { ripples: { [key]: { $merge: runningState } } }));
@@ -167,21 +174,38 @@ const rippleFactory = (options = {}) => {
       }
 
       /**
-       * Add an event listener to the document needed deactivate a ripple and make it dissappear.
-       * Deactivation can happen with a touchend or mouseup depending on the trigger type.
+       * Add an event listener to the document needed to deactivate a ripple and make it dissappear.
+       * Deactivation can happen with a touchend or mouseup depending on the trigger type. The
+       * ending function is created from a factory function and returned.
        *
        * @param {Boolean} isTouch True in case the trigger was a touch event false otherwise.
        * @param {String} rippleKey It's a key to identify the ripple that should be deactivated.
+       * @return {Function} Callback function that deactivates the ripple and removes the event listener
        */
       addRippleDeactivateEventListener (isTouch, rippleKey) {
-        const self = this;
         const eventType = isTouch ? 'touchend' : 'mouseup';
-        document.addEventListener(eventType, function endRipple () {
+        const endRipple = this.createRippleDeactivateCallback(eventType, rippleKey);
+        document.addEventListener(eventType, endRipple);
+        return endRipple;
+      }
+
+      /**
+       * Generates a function that can be called to deactivate a given ripple and remove its finishing
+       * event listener. If is generated because we need to store it to be called on unmount in case
+       * the ripple is still running.
+       *
+       * @param {String} eventType Is the event type that can be touchend or mouseup
+       * @param {String} rippleKey Is the key representing the ripple
+       * @return {Function} Callback function that deactivates the ripple and removes the listener
+       */
+      createRippleDeactivateCallback (eventType, rippleKey) {
+        const self = this;
+        return function endRipple () {
           document.removeEventListener(eventType, endRipple);
           self.setState({ ripples: update(self.state.ripples, {
             [rippleKey]: { $merge: { active: false } }
           }) });
-        });
+        };
       }
 
       handleMouseDown = (event) => {
