@@ -105,15 +105,7 @@ const factory = (FontIcon) => {
       element.style.height = `${element.scrollHeight + heightOffset}px`;
     }
 
-    blur () {
-      this.refs.input.blur();
-    }
-
-    focus () {
-      this.refs.input.focus();
-    }
-
-    onKeyPress = (event) => {
+    handleKeyPress = (event) => {
       // prevent insertion of more characters if we're a multiline input
       // and maxLength exists
       const { multiline, maxLength, onKeyPress } = this.props;
@@ -132,6 +124,14 @@ const factory = (FontIcon) => {
       }
 
       if (onKeyPress) onKeyPress(event);
+    };
+
+    blur () {
+      this.refs.input.blur();
+    }
+
+    focus () {
+      this.refs.input.focus();
     }
 
     render () {
@@ -170,14 +170,12 @@ const factory = (FontIcon) => {
         inputElementProps.onKeyPress = onKeyPress;
       } else {
         inputElementProps.rows = 1;
-        inputElementProps.onKeyPress = this.onKeyPress;
+        inputElementProps.onKeyPress = this.handleKeyPress;
       }
-
-      const InputElement = React.createElement(multiline ? 'textarea' : 'input', inputElementProps);
 
       return (
         <div data-react-toolbox='input' className={className}>
-          {InputElement}
+          {React.createElement(multiline ? 'textarea' : 'input', inputElementProps)}
           {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
           <span className={theme.bar}></span>
           {labelText
