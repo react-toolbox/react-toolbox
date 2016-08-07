@@ -139,3 +139,8 @@ $offset: 1.8 * $unit;
   flex-direction: column;
   flex-grow: 2;
 }
+
+.customSizedProgress {
+  width: 40px !important;
+  height: 40px !important;
+}
