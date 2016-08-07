@@ -2,27 +2,18 @@
 @import '../variables.css';
 @import './config.css';
 
-.tooltipWrapper {
-  position: relative;
-}
-
 .tooltip {
-  background: var(--tooltip-background);
-  border-radius: var(--tooltip-border-radius);
-  color: var(--tooltip-color);
   display: block;
   font-family: Roboto, sans-serif;
   font-size: var(--tooltip-font-size);
   font-weight: var(--font-weight-bold);
-  left: 50%;
   line-height: var(--font-size-small);
-  margin: var(--tooltip-margin 0);
   max-width: var(--tooltip-max-width);
-  padding: var(--tooltip-padding);
+  padding: var(--tooltip-margin);
+  pointer-events: none;
   position: absolute;
   text-align: center;
   text-transform: none;
-  top: 100%;
   transform: scale(0) translateX(-50%);
   transform-origin: top left;
   transition: var(--animation-curve-default) var(--tooltip-animation-duration) transform;
@@ -31,4 +22,36 @@
   &.tooltipActive {
     transform: scale(1) translateX(-50%);
   }
+
+  &.tooltipTop {
+    transform: scale(0) translateX(-50%) translateY(-100%);
+
+    &.tooltipActive {
+      transform: scale(1) translateX(-50%) translateY(-100%);
+    }
+  }
+
+  &.tooltipLeft {
+    transform: scale(0) translateX(-100%) translateY(-50%);
+
+    &.tooltipActive {
+      transform: scale(1) translateX(-100%) translateY(-50%);
+    }
+  }
+
+  &.tooltipRight {
+    transform: scale(0) translateX(0) translateY(-50%);
+
+    &.tooltipActive {
+      transform: scale(1) translateX(0) translateY(-50%);
+    }
+  }
+}
+
+.tooltipInner {
+  background: var(--tooltip-background);
+  border-radius: var(--tooltip-border-radius);
+  color: var(--tooltip-color);
+  display: block;
+  padding: var(--tooltip-padding);
 }

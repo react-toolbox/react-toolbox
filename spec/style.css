@@ -155,3 +155,10 @@
   flex-direction: column;
   flex-grow: 2;
 }
+
+.customSizedProgress {
+  &.circular {
+    width: 40px;
+    height: 40px;
+  }
+}

@@ -206,7 +206,7 @@ const factory = (MenuItem) => {
 
       return (
         <div data-react-toolbox='menu' className={className} style={this.getRootStyle()}>
-          {this.props.outline ? <div className={theme.outline} style={outlineStyle}></div> : null}
+          {this.props.outline ? <div className={theme.outline} style={outlineStyle} /> : null}
           <ul ref='menu' className={theme.menuInner} style={this.getMenuStyle()}>
             {this.renderItems()}
           </ul>

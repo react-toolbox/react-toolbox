@@ -35,6 +35,7 @@ If you want to provide a theme via context, the component key is `RTTimePicker`.
 
 | Name            | Type        | Default     | Description|
 |:-----|:-----|:-----|:-----|
+| `active`        | `Boolean`       | `false`       | Allows to control if the picker should be shown from outside. Beware you should update the prop when the Dialog is closed. |
 | `className`     | `String`    |             | This class will be placed at the top of the `TimePickerDialog` component so you can provide custom styles.|
 | `error`         | `String`    |             | Provide error text which will be displayed under the field.|
 | `inputClassName`| `String`        |         | This class will be applied to `Input` component of `TimePicker`. |

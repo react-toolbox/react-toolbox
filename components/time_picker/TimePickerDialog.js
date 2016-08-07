@@ -65,8 +65,8 @@ const factory = (Dialog) => {
       if (this.state.display === 'hours') this.setState({display: 'minutes'});
     };
 
-    switchDisplay = (display) => {
-      this.setState({display});
+    switchDisplay = (event) => {
+      this.setState({display: event.target.id});
     };
 
     actions = [
@@ -108,11 +108,11 @@ const factory = (Dialog) => {
           onOverlayClick={this.props.onOverlayClick}
         >
           <header className={theme.header}>
-            <span className={theme.hours} onClick={this.switchDisplay.bind(this, 'hours')}>
+            <span id='hours' className={theme.hours} onClick={this.switchDisplay}>
               {('0' + this.formatHours()).slice(-2)}
             </span>
             <span className={theme.separator}>:</span>
-            <span className={theme.minutes} onClick={this.switchDisplay.bind(this, 'minutes')}>
+            <span id='minutes' className={theme.minutes} onClick={this.switchDisplay}>
               {('0' + this.state.displayTime.getMinutes()).slice(-2)}
             </span>
             {this.renderAMPMLabels()}

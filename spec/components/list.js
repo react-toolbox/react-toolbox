@@ -62,7 +62,7 @@ class ListTest extends React.Component {
               rightIcon='star'
             />
             <ListItem
-              avatar='https://pbs.twimg.com/profile_images/477103691506282499/bsIaPEiM_400x400.jpeg'
+              avatar='https://pbs.twimg.com/profile_images/755797598565531649/Whsf9259.jpg'
               caption='Tobias Van Schneider'
               legend='Designer at Spotify'
               rightIcon='star'
@@ -122,7 +122,7 @@ class ListTest extends React.Component {
               rightIcon='mail'
             />
             <ListItem
-              avatar='https://pbs.twimg.com/profile_images/477103691506282499/bsIaPEiM_400x400.jpeg'
+              avatar='https://pbs.twimg.com/profile_images/755797598565531649/Whsf9259.jpg'
               caption='Tobias Van Schneider'
               rightIcon='mail'
             />
