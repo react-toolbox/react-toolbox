@@ -1,5 +1,4 @@
 import expect from 'expect';
-import React from 'react';
 import theme from '../theme.scss';
 import { DatePickerDialog } from '../DatePicker';
 import utils from '../../utils/testing';
@@ -8,9 +7,7 @@ describe('DatePickerDialog', function () {
   describe('#on mount', function () {
     it('passes value through to calendar if no maxDate/minDate specified', function () {
       const value = new Date(2016, 1, 1);
-
       const wrapper = utils.shallowRenderComponent(DatePickerDialog, {theme, value});
-
       expect(getDatePassedToCalendar(wrapper)).toBe(value);
     });
 
@@ -19,9 +16,7 @@ describe('DatePickerDialog', function () {
 
       it('passes through a value after minDate', function () {
         const value = new Date(2016, 1, 3);
-
         const wrapper = utils.shallowRenderComponent(DatePickerDialog, {theme, value, minDate});
-
         expect(getDatePassedToCalendar(wrapper)).toBe(value);
       });
 
@@ -29,7 +24,6 @@ describe('DatePickerDialog', function () {
         const wrapper = utils.shallowRenderComponent(DatePickerDialog, {
           theme, value: new Date(2016, 1, 1), minDate
         });
-
         expect(getDatePassedToCalendar(wrapper)).toBe(minDate);
       });
     });
@@ -39,9 +33,7 @@ describe('DatePickerDialog', function () {
 
       it('passes through a value before maxDate', function () {
         const value = new Date(2016, 1, 1);
-
         const wrapper = utils.shallowRenderComponent(DatePickerDialog, {theme, value, maxDate});
-
         expect(getDatePassedToCalendar(wrapper)).toBe(value);
       });
 
@@ -49,7 +41,6 @@ describe('DatePickerDialog', function () {
         const wrapper = utils.shallowRenderComponent(DatePickerDialog, {
           theme, value: new Date(2016, 1, 3), maxDate
         });
-
         expect(getDatePassedToCalendar(wrapper)).toBe(maxDate);
       });
     });
@@ -65,7 +56,6 @@ describe('DatePickerDialog', function () {
           minDate,
           maxDate
         });
-
         expect(getDatePassedToCalendar(wrapper)).toBe(minDate);
       });
 
@@ -76,7 +66,6 @@ describe('DatePickerDialog', function () {
           minDate,
           maxDate
         });
-
         expect(getDatePassedToCalendar(wrapper)).toBe(maxDate);
       });
 
@@ -87,7 +76,7 @@ describe('DatePickerDialog', function () {
       });
     });
 
-    function getDatePassedToCalendar(wrapper) {
+    function getDatePassedToCalendar (wrapper) {
       return wrapper.props.children[1].props.children.props.selectedDate;
     }
   });
