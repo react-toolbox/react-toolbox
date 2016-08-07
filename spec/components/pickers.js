@@ -12,13 +12,19 @@ datetime.setMinutes(28);
 class PickersTest extends React.Component {
   state = {
     date2: datetime,
+    firstActive: false,
     time2: datetime
   };
 
   handleChange = (item, value) => {
     const newState = {};
+    newState.firstActive = false;
     newState[item] = value;
     this.setState(newState);
+  };
+
+  makeFirstUnactive = () => {
+    this.setState({ firstActive: false });
   };
 
   localeExample = {
@@ -36,10 +42,11 @@ class PickersTest extends React.Component {
         <p>Date pickers and time pickers with Material flavour.</p>
 
         <DatePicker
+          active={this.state.firstActive}
           label='Birthdate'
           onChange={this.handleChange.bind(this, 'date1')}
-          onEscKeyDown={() => console.log('esc key down')}
-          onOverlayClick={() => console.log('overlay click')}
+          onEscKeyDown={this.makeFirstUnactive}
+          onOverlayClick={this.makeFirstUnactive}
           value={this.state.date1}
           sundayFirstDayOfWeek
         />
