@@ -8,6 +8,7 @@ class Day extends Component {
     disabled: PropTypes.bool,
     onClick: PropTypes.func,
     selectedDate: PropTypes.object,
+    sundayFirstDayOfWeek: PropTypes.bool,
     theme: PropTypes.shape({
       active: PropTypes.string,
       day: PropTypes.string,
@@ -18,8 +19,9 @@ class Day extends Component {
 
   dayStyle () {
     if (this.props.day === 1) {
+      const e = (this.props.sundayFirstDayOfWeek) ? 0 : 1;
       return {
-        marginLeft: `${time.getFirstWeekDay(this.props.viewDate) * 100 / 7}%`
+        marginLeft: `${(time.getFirstWeekDay(this.props.viewDate) - e) * 100 / 7}%`
       };
     }
   }

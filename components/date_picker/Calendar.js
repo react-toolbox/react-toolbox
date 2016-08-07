@@ -11,10 +11,15 @@ const factory = (IconButton) => {
   class Calendar extends Component {
     static propTypes = {
       display: PropTypes.oneOf(['months', 'years']),
+      locale: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.object
+      ]),
       maxDate: PropTypes.object,
       minDate: PropTypes.object,
       onChange: PropTypes.func,
       selectedDate: PropTypes.object,
+      sundayFirstDayOfWeek: React.PropTypes.bool,
       theme: PropTypes.shape({
         active: PropTypes.string,
         calendar: PropTypes.string,
@@ -92,10 +97,12 @@ const factory = (IconButton) => {
           <CssTransitionGroup transitionName={animation} transitionEnterTimeout={350} transitionLeaveTimeout={350}>
             <CalendarMonth
               key={this.state.viewDate.getMonth()}
+              locale={this.props.locale}
               maxDate={this.props.maxDate}
               minDate={this.props.minDate}
               onDayClick={this.handleDayClick}
               selectedDate={this.props.selectedDate}
+              sundayFirstDayOfWeek={this.props.sundayFirstDayOfWeek}
               theme={this.props.theme}
               viewDate={this.state.viewDate}
             />

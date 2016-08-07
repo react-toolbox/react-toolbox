@@ -4,6 +4,14 @@ const max_datetime = new Date(new Date(datetime).setDate(24));
 datetime.setHours(17);
 datetime.setMinutes(28);
 
+const localeExample = {
+  months: 'urtarrila_otsaila_martxoa_apirila_maiatza_ekaina_uztaila_abuztua_iraila_urria_azaroa_abendua'.split('_'),
+  monthsShort: 'urt._ots._mar._api._mai._eka._uzt._abu._ira._urr._aza._abe.'.split('_'),
+  weekdays: 'igandea_astelehena_asteartea_asteazkena_osteguna_ostirala_larunbata'.split('_'),
+  weekdaysShort: 'ig._al._ar._az._og._ol._lr.'.split('_'),
+  weekdaysLetter: 'ig_al_ar_az_og_ol_lr'.split('_')
+}
+
 class DatePickerTest extends React.Component {
   state = {date2: datetime};
 
@@ -18,6 +26,21 @@ class DatePickerTest extends React.Component {
           label='Birthdate'
           onChange={this.handleChange.bind(this, 'date1')}
           value={this.state.date1}
+          sundayFirstDayOfWeek
+        />
+
+        <DatePicker
+          label='Locale (String) - Spanish'
+          locale='es'
+          onChange={this.handleChange.bind(this, 'date1')}
+          value={this.state.date1}
+        />
+
+        <DatePicker
+          label='Locale (Object) - Basque'
+          locale={localeExample}
+          onChange={this.handleChange.bind(this, 'date1')}
+          value={this.state.date1}
         />
 
         <DatePicker
@@ -25,6 +48,7 @@ class DatePickerTest extends React.Component {
           minDate={min_datetime}
           onChange={this.handleChange.bind(this, 'date2')}
           value={this.state.date2}
+          sundayFirstDayOfWeek
         />
 
         <DatePicker
@@ -33,6 +57,7 @@ class DatePickerTest extends React.Component {
           inputFormat={(value) => `${value.getDate()}/${value.getMonth() + 1}/${value.getFullYear()}`}
           onChange={this.handleChange.bind(this, 'date3')}
           value={this.state.date3}
+          sundayFirstDayOfWeek
         />
       </section>
     );

@@ -21,6 +21,14 @@ class PickersTest extends React.Component {
     this.setState(newState);
   };
 
+  localeExample = {
+    months: 'urtarrila_otsaila_martxoa_apirila_maiatza_ekaina_uztaila_abuztua_iraila_urria_azaroa_abendua'.split('_'),
+    monthsShort: 'urt._ots._mar._api._mai._eka._uzt._abu._ira._urr._aza._abe.'.split('_'),
+    weekdays: 'igandea_astelehena_asteartea_asteazkena_osteguna_ostirala_larunbata'.split('_'),
+    weekdaysShort: 'ig._al._ar._az._og._ol._lr.'.split('_'),
+    weekdaysLetter: 'ig_al_ar_az_og_ol_lr'.split('_')
+  }
+
   render () {
     return (
       <section>
@@ -33,6 +41,21 @@ class PickersTest extends React.Component {
           onEscKeyDown={() => console.log('esc key down')}
           onOverlayClick={() => console.log('overlay click')}
           value={this.state.date1}
+          sundayFirstDayOfWeek
+        />
+
+        <DatePicker
+          label='With locale (string) - Spanish (string: en|es|af|ar|be|bg|bn|bo|br|bs|ca|gl|eu|pt|it|fr)'
+          locale='es'
+          onChange={this.handleChange.bind(this, 'date2')}
+          value={this.state.date2}
+        />
+
+        <DatePicker
+          label='With locale (object) - Basque'
+          locale={this.localeExample}
+          onChange={this.handleChange.bind(this, 'date2')}
+          value={this.state.date2}
         />
 
         <DatePicker
@@ -42,6 +65,7 @@ class PickersTest extends React.Component {
           onChange={this.handleChange.bind(this, 'date2')}
           readonly
           value={this.state.date2}
+          sundayFirstDayOfWeek
         />
 
         <DatePicker
@@ -49,11 +73,13 @@ class PickersTest extends React.Component {
           inputFormat={(value) => `${value.getDate()}/${value.getMonth() + 1}/${value.getFullYear()}`}
           onChange={this.handleChange.bind(this, 'date3')}
           value={this.state.date3}
+          sundayFirstDayOfWeek
         />
 
         <DatePicker
           label='Auto Picker'
           autoOk
+          sundayFirstDayOfWeek
           onChange={this.handleChange.bind(this, 'date4')}
           value={this.state.date4}
         />
