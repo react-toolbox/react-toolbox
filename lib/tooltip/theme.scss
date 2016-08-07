@@ -3,14 +3,8 @@
 @import "../mixins";
 @import "./config";
 
-.tooltipWrapper {
-  position: relative;
-}
-
 .tooltip {
   position: absolute;
-  top: 100%;
-  left: 50%;
   z-index: $z-index-higher;
   display: block;
   max-width: $tooltip-max-width;
@@ -22,6 +16,7 @@
   line-height: $font-size-small;
   color: $tooltip-color;
   text-align: center;
+  pointer-events: none;
   text-transform: none;
   background: $tooltip-background;
   border-radius: $tooltip-border-radius;
