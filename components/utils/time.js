@@ -177,6 +177,15 @@ const time = {
     return ((minDate && !(date >= minDate)) || (maxDate && !(date <= maxDate)));
   },
 
+  closestDate (to, date1, date2) {
+    const toTime = to.getTime();
+
+    const diff1 = Math.abs(toTime - date1.getTime());
+    const diff2 = Math.abs(toTime - date2.getTime());
+
+    return diff1 < diff2 ? date1 : date2;
+  },
+
   formatDate (date) {
     return `${date.getDate()} ${time.getFullMonth(date)} ${date.getFullYear()}`;
   }

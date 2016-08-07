@@ -128,5 +128,8 @@ const DatePickerDialog = datePickerDialogFactory(InjectDialog, Calendar);
 const DatePicker = factory(InjectInput, DatePickerDialog);
 
 export default themr(DATE_PICKER)(DatePicker);
-export { factory as datePickerFactory };
+export {
+  DatePickerDialog as DatePickerDialog,
+  factory as datePickerFactory
+};
 export { DatePicker };
