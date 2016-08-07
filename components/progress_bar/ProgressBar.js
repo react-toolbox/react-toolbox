@@ -62,7 +62,7 @@ class ProgressBar extends Component {
 
   renderCircular () {
     return (
-      <svg className={this.props.theme.circle}>
+      <svg className={this.props.theme.circle} viewBox="0 0 60 60">
         <circle className={this.props.theme.path} style={this.circularStyle()} cx='30' cy='30' r='25' />
       </svg>
     );

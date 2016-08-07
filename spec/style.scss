@@ -139,3 +139,10 @@ $offset: 1.8 * $unit;
   flex-direction: column;
   flex-grow: 2;
 }
+
+.customSizedProgress {
+  &.circular {
+    width: 40px;
+    height: 40px;
+  }
+}
