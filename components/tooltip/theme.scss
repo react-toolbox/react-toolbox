@@ -7,15 +7,15 @@
   position: absolute;
   z-index: $z-index-higher;
   display: block;
-  padding: $tooltip-margin;
   max-width: $tooltip-max-width;
+  padding: $tooltip-margin;
   font-family: Roboto, sans-serif;
   font-size: $tooltip-font-size;
   font-weight: $font-weight-bold;
   line-height: $font-size-small;
   text-align: center;
-  pointer-events: none;
   text-transform: none;
+  pointer-events: none;
   transition: $animation-curve-default $tooltip-animation-duration transform;
   transform: scale(0) translateX(-50%);
   transform-origin: top left;
@@ -47,9 +47,9 @@
 }
 
 .tooltipInner {
-  background: $tooltip-background;
-  border-radius: $tooltip-border-radius;
-  color: $tooltip-color;
   display: block;
   padding: $tooltip-padding;
+  color: $tooltip-color;
+  background: $tooltip-background;
+  border-radius: $tooltip-border-radius;
 }

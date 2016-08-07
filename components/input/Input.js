@@ -177,7 +177,7 @@ const factory = (FontIcon) => {
         <div data-react-toolbox='input' className={className}>
           {React.createElement(multiline ? 'textarea' : 'input', inputElementProps)}
           {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
-          <span className={theme.bar}></span>
+          <span className={theme.bar} />
           {labelText
             ? <label className={labelClassName}>
                 {labelText}

@@ -281,7 +281,7 @@ const factory = (ProgressBar, Input) => {
               onTouchStart={this.handleTouchStart}
               style={knobStyles}
               >
-              <div className={theme.innerknob} data-value={parseInt(this.props.value)}></div>
+              <div className={theme.innerknob} data-value={parseInt(this.props.value)}/>
             </div>
 
             <div className={theme.progress}>

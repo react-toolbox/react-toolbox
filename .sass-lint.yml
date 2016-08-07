@@ -49,7 +49,6 @@ rules:
       convention: hyphenatedlowercase
   mixins-before-declarations: 0
   nesting-depth: 0
-  no-color-keyword: 1
   no-color-literals: 0
   no-css-comments: 1
   no-debug: 1
@@ -73,9 +72,6 @@ rules:
   no-trailing-zero: 1
   no-url-protocols: 1
   placeholder-in-extend: 0
-  placeholder-name-format:
-    - 0
-    - convention: hyphenatedlowercase
   property-sort-order:
     - 1
     - ignore-custom-properties: false
