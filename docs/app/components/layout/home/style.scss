@@ -94,7 +94,7 @@ $content-width: 740px;
       margin: 0 $unit;
     }
     .twitter {
-      color: $twitter-color;
+      color: $twitter-color !important;
     }
   }
   > p {
