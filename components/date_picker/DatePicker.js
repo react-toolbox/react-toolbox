@@ -24,6 +24,10 @@ const factory = (Input, DatePickerDialog) => {
       inputClassName: PropTypes.string,
       inputFormat: PropTypes.func,
       label: PropTypes.string,
+      locale: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.object
+      ]),
       maxDate: PropTypes.object,
       minDate: PropTypes.object,
       name: PropTypes.string,
@@ -32,6 +36,7 @@ const factory = (Input, DatePickerDialog) => {
       onKeyPress: PropTypes.func,
       onOverlayClick: PropTypes.func,
       readonly: PropTypes.bool,
+      sundayFirstDayOfWeek: React.PropTypes.bool,
       theme: PropTypes.shape({
         input: PropTypes.string
       }),
@@ -39,6 +44,11 @@ const factory = (Input, DatePickerDialog) => {
         PropTypes.instanceOf(Date),
         PropTypes.string
       ])
+    };
+
+    static defaultProps = {
+      locale: 'en',
+      sundayFirstDayOfWeek: false
     };
 
     state = {
@@ -78,11 +88,12 @@ const factory = (Input, DatePickerDialog) => {
     };
 
     render () {
-      const { autoOk, inputClassName, inputFormat, maxDate, minDate,
-        onEscKeyDown, onOverlayClick, readonly, value, ...others } = this.props;
+      const { autoOk, inputClassName, inputFormat, locale, maxDate, minDate,
+        onEscKeyDown, onOverlayClick, readonly, sundayFirstDayOfWeek, value,
+        ...others } = this.props;
       const finalInputFormat = inputFormat || time.formatDate;
       const date = Object.prototype.toString.call(value) === '[object Date]' ? value : undefined;
-      const formattedDate = date === undefined ? '' : finalInputFormat(value);
+      const formattedDate = date === undefined ? '' : finalInputFormat(value, locale);
 
       return (
         <div data-react-toolbox='date-picker'>
@@ -105,6 +116,7 @@ const factory = (Input, DatePickerDialog) => {
             active={this.state.active}
             autoOk={autoOk}
             className={this.props.className}
+            locale={locale}
             maxDate={maxDate}
             minDate={minDate}
             name={this.props.name}
@@ -112,6 +124,7 @@ const factory = (Input, DatePickerDialog) => {
             onEscKeyDown={onEscKeyDown}
             onOverlayClick={onOverlayClick}
             onSelect={this.handleSelect}
+            sundayFirstDayOfWeek={sundayFirstDayOfWeek}
             theme={this.props.theme}
             value={date}
           />
