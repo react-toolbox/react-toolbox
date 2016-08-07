@@ -4,11 +4,22 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { TOOLTIP } from '../identifiers.js';
 import events from '../utils/events';
+import utils from '../utils/utils';
+
+const POSITION = {
+  BOTTOM: 'bottom',
+  HORIZONTAL: 'horizontal',
+  LEFT: 'left',
+  RIGHT: 'right',
+  TOP: 'top',
+  VERTICAL: 'vertical'
+};
 
 const defaults = {
   className: '',
   delay: 0,
   hideOnClick: true,
+  position: POSITION.VERTICAL,
   theme: {}
 };
 
@@ -17,6 +28,7 @@ const tooltipFactory = (options = {}) => {
     className: defaultClassName,
     delay: defaultDelay,
     hideOnClick: defaultHideOnClick,
+    position: defaultPosition,
     theme: defaultTheme
   } = {...defaults, ...options};
 
@@ -35,17 +47,20 @@ const tooltipFactory = (options = {}) => {
         }),
         tooltip: PropTypes.string,
         tooltipDelay: PropTypes.number,
-        tooltipHideOnClick: PropTypes.bool
+        tooltipHideOnClick: PropTypes.bool,
+        tooltipPosition: PropTypes.oneOf(Object.keys(POSITION).map(key => POSITION[key]))
       };
 
       static defaultProps = {
         className: defaultClassName,
         tooltipDelay: defaultDelay,
-        tooltipHideOnClick: defaultHideOnClick
+        tooltipHideOnClick: defaultHideOnClick,
+        tooltipPosition: defaultPosition
       };
 
       state = {
         active: false,
+        position: this.props.tooltipPosition,
         visible: false
       };
 
@@ -55,9 +70,9 @@ const tooltipFactory = (options = {}) => {
         }
       }
 
-      activate (top, left) {
+      activate ({ top, left, position }) {
         if (this.timeout) clearTimeout(this.timeout);
-        this.setState({ visible: true });
+        this.setState({ visible: true, position });
         this.timeout = setTimeout(() => {
           this.setState({ active: true, top, left });
         }, this.props.tooltipDelay);
@@ -73,6 +88,55 @@ const tooltipFactory = (options = {}) => {
         }
       }
 
+      getPosition (element) {
+        const { tooltipPosition } = this.props;
+        if (tooltipPosition === POSITION.HORIZONTAL) {
+          const origin = element.getBoundingClientRect();
+          const { width: ww } = utils.getViewport();
+          const toRight = origin.left < ((ww / 2) - origin.width / 2);
+          return toRight ? POSITION.RIGHT : POSITION.LEFT;
+        } else if (tooltipPosition === POSITION.VERTICAL) {
+          const origin = element.getBoundingClientRect();
+          const { height: wh } = utils.getViewport();
+          const toBottom = origin.top < ((wh / 2) - origin.height / 2);
+          return toBottom ? POSITION.BOTTOM : POSITION.TOP;
+        } else {
+          return tooltipPosition;
+        }
+      }
+
+      calculatePosition (element) {
+        const position = this.getPosition(element);
+        const { top, left, height, width } = element.getBoundingClientRect();
+        const xOffset = window.scrollX || window.pageXOffset;
+        const yOffset = window.scrollY || window.pageYOffset;
+        if (position === POSITION.BOTTOM) {
+          return {
+            top: top + height + yOffset,
+            left: left + (width / 2) + xOffset,
+            position
+          };
+        } else if (position === POSITION.TOP) {
+          return {
+            top: top + yOffset,
+            left: left + (width / 2) + xOffset,
+            position
+          };
+        } else if (position === POSITION.LEFT) {
+          return {
+            top: top + (height / 2) + yOffset,
+            left: left + xOffset,
+            position
+          };
+        } else if (position === POSITION.RIGHT) {
+          return {
+            top: top + (height / 2) + yOffset,
+            left: left + width + xOffset,
+            position
+          };
+        }
+      }
+
       onTransformEnd = (e) => {
         if (e.propertyName === 'transform') {
           events.removeEventListenerOnTransitionEnded(this.refs.tooltip, this.onTransformEnd);
@@ -81,10 +145,7 @@ const tooltipFactory = (options = {}) => {
       };
 
       handleMouseEnter = (event) => {
-        const yOffset = window.scrollY || window.pageYOffset;
-        const xOffset = window.scrollX || window.pageXOffset;
-        const { top, left, height, width } = event.target.getBoundingClientRect();
-        this.activate(top + height + yOffset, left + (width / 2) + xOffset);
+        this.activate(this.calculatePosition(event.target));
         if (this.props.onMouseEnter) this.props.onMouseEnter(event);
       };
 
@@ -99,7 +160,8 @@ const tooltipFactory = (options = {}) => {
       };
 
       render () {
-        const { active, left, top, visible } = this.state;
+        const { active, left, top, position, visible } = this.state;
+        const positionClass = `tooltip${position.charAt(0).toUpperCase() + position.slice(1)}`;
         const {
           children,
           className,
@@ -107,8 +169,14 @@ const tooltipFactory = (options = {}) => {
           tooltip,
           tooltipDelay,       //eslint-disable-line no-unused-vars
           tooltipHideOnClick, //eslint-disable-line no-unused-vars
+          tooltipPosition,    //eslint-disable-line no-unused-vars
           ...other
         } = this.props;
+
+        const _className = classnames(theme.tooltip, {
+          [theme.tooltipActive]: active,
+          [theme[positionClass]]: theme[positionClass]
+        });
 
         return (
           <ComposedComponent
@@ -122,13 +190,9 @@ const tooltipFactory = (options = {}) => {
             {children ? children : null}
             {visible && (
               <Portal>
-                <span
-                  ref="tooltip"
-                  children={tooltip}
-                  className={classnames(theme.tooltip, {[theme.tooltipActive]: active})}
-                  data-react-toolbox="tooltip"
-                  style={{ top, left }}
-                />
+                <span ref="tooltip" className={_className} data-react-toolbox="tooltip" style={{top, left}}>
+                  <span className={theme.tooltipInner}>{tooltip}</span>
+                </span>
               </Portal>
             )}
           </ComposedComponent>
