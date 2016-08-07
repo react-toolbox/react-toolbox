@@ -14,6 +14,7 @@ import datePickerDialogFactory from './DatePickerDialog.js';
 const factory = (Input, DatePickerDialog) => {
   class DatePicker extends Component {
     static propTypes = {
+      active: PropTypes.bool,
       autoOk: PropTypes.bool,
       className: PropTypes.string,
       error: PropTypes.string,
@@ -47,13 +48,20 @@ const factory = (Input, DatePickerDialog) => {
     };
 
     static defaultProps = {
+      active: false,
       locale: 'en',
       sundayFirstDayOfWeek: false
     };
 
     state = {
-      active: false
+      active: this.props.active
     };
+
+    componentWillReceiveProps (nextProps) {
+      if (this.state.active !== nextProps.active) {
+        this.setState({ active: nextProps.active });
+      }
+    }
 
     handleDismiss = () => {
       this.setState({active: false});
@@ -88,7 +96,8 @@ const factory = (Input, DatePickerDialog) => {
     };
 
     render () {
-      const { autoOk, inputClassName, inputFormat, locale, maxDate, minDate,
+      const { active, // eslint-disable-line
+        autoOk, inputClassName, inputFormat, locale, maxDate, minDate,
         onEscKeyDown, onOverlayClick, readonly, sundayFirstDayOfWeek, value,
         ...others } = this.props;
       const finalInputFormat = inputFormat || time.formatDate;
