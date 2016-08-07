@@ -154,9 +154,9 @@ const factory = (Chip, Input) => {
    }
 
    query (key) {
-      var query_value = '';
-      if(!this.props.multiple && key) {
-        var source_value = this.source().get(key)
+      let query_value = '';
+      if (!this.props.multiple && key) {
+        const source_value = this.source().get(key);
         query_value = source_value ? source_value : key;
       }
       return query_value;
