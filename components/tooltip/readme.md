@@ -1,6 +1,6 @@
 # Tooltip
 
-A Tooltip is useful to show information on hover in any kind of component. We have a component that can be used as a **decorator** for any kind of component. You just have to take into account that the overflow in the component should be visible.
+A Tooltip is useful to show information on hover in any kind of component. We have a component that can be used as a **decorator** for any kind of component. Also, it's factory function is exposed so you can create your own decorator with specific properties.
 
 <!-- example -->
 ```jsx
