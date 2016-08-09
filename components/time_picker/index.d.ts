@@ -1,59 +1,132 @@
-import * as React from 'react';
-export interface Props {
-	/**
-	 * Sets a CSS class on the component.
-	 */
-	className?: string,
-	id?: string;
-	/**
-	 * A key used to uniquely identify the element within an Array
-	 */
-	key?: string,
-	/**
-	 * Inline style
-	 */
-	style?: any,
-	/**
-	 * Tooltip text
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltip?: string,
-	/**
-	 * Amount of time in miliseconds spent before the tooltip is visible.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipDelay?: number,
-	/**
-	 * If true, the Tooltip hides after a click in the host component.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @default true
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipHideOnClick?: boolean,
+import __ReactToolbox from "../index.d.ts";
+
+export interface TimePickerTheme {
+  /**
+   * Added to the number which is active in clock face.
+   */
+  active?: string;
+  /**
+   * AM label in dialog header when mode is AM/PM.
+   */
+  am?: string;
+  /**
+   * Added to the dialog when the selected format is AM.
+   */
+  amFormat?: string;
+  /**
+   * Wrapper for AM and PM labels in header when mode is AM/PM.
+   */
+  ampm?: string;
+  /**
+   * Used for buttons inside the dialog of the picker.
+   */
+  button?: string;
+  /**
+   * Clock root class element.
+   */
+  clock?: string;
+  /**
+   * Wrapper for the proper positioning of the clock.
+   */
+  clockWrapper?: string;
+  /**
+   * Used for the dialog component.
+   */
+  dialog?: string;
+  /**
+   * Used to style the clock face.
+   */
+  face?: string;
+  /**
+   * Used for the clock's hand.
+   */
+  hand?: string;
+  /**
+   * Dialog header wrapper class.
+   */
+  header?: string;
+  /**
+   * Used for hours in dialog header.
+   */
+  hours?: string;
+  /**
+   * Added to the dialog hours are displayed.
+   */
+  hoursDisplay?: string;
+  /**
+   * Used for Input element that opens the picker.
+   */
+  input?: string;
+  /**
+   * Used for the knob of the hand.
+   */
+  knob?: string;
+  /**
+   * Used for minutes in dialog header.
+   */
+  minutes?: string;
+  /**
+   * Added to the dialog minutes are displayed.
+   */
+  minutesDisplay?: string;
+  /**
+   * Each of the numbers in the clock's face.
+   */
+  number?: string;
+  /**
+   * Placeholder for the clock inside the dialog (inner wrapper).
+   */
+  placeholder?: string;
+  /**
+   * PM label in dialog header when mode is AM/PM.
+   */
+  pm?: string;
+  /**
+   * Added to the dialog when the selected format is PM.
+   */
+  pmFormat?: string;
+  /**
+   * Is the : separator between hours and minutes in dialog header.
+   */
+  separator?: string;
+  /**
+   * Added to the knob when no round number is selected.
+   */
+  small?: string;
 }
-/**
- * Properties of components that have values that can be changed (T is the type of the value)
- */
-export interface Changeable<T> {
-	/**
-	 * Callback called when the picker value is changed.
-	 * @param v Type of the value
-	 */
-	onChange?: (v: T) => void
+
+interface TimePickerProps {
+  /**
+   * Provide error text which will be displayed under the field.
+   */
+  error?: string;
+  /**
+   * This class will be applied to Input component of TimePicker.
+   */
+  inputClassName?: string;
+  /**
+   * Format to display the clock. It can be 24hr or ampm.
+   * @default false
+   */
+  format?: "24hr" | "ampm";
+  /**
+   * The text string to use for the floating label element in the input component.
+   */
+  label?: string;
+  /**
+   * Callback called when the picker value is changed.
+   */
+  onChange?: Function;
+  /**
+   * Classnames object defining the component style.
+   */
+  theme?: TimePickerTheme;
+  /**
+   * Datetime object with currrently selected time.
+   */
+  value?: Date;
 }
-export interface TimePickerProps extends Props, Changeable<Date> {
-	/**
-	 * Format to display the clock. It can be 24hr or ampm.
-	 * @default 24hr
-	 */
-	format?: string,
-	/**
-	 * Datetime object with currrently selected time
-	 */
-	value?: Date,
-}
-export default class TimePicker extends React.Component<TimePickerProps, {}> {
-	render(): React.DOMElement<any, any>;
-}
+
+export class TimePicker extends __React.Component<TimePickerProps, {}> { }
+
+export default TimePicker;

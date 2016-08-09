@@ -130,7 +130,7 @@ const factory = (Input) => {
       );
     }
 
-    renderValue (item, idx) {
+    renderValue = (item, idx) => {
       const { theme } = this.props;
       const className = item.value === this.props.value ? theme.selected : null;
       return (
@@ -138,10 +138,10 @@ const factory = (Input) => {
           {this.props.template ? this.props.template(item) : item.label}
         </li>
       );
-    }
+    };
 
     render () {
-      const {template, theme, source, ...others} = this.props;
+      const {template, theme, source, allowBlank, auto, ...others} = this.props; //eslint-disable-line no-unused-vars
       const selected = this.getSelectedItem();
       const className = classnames(theme.dropdown, {
         [theme.up]: this.state.up,
@@ -157,11 +157,11 @@ const factory = (Input) => {
             onMouseDown={this.handleMouseDown}
             readOnly
             type={template && selected ? 'hidden' : null}
-            value={selected && selected.label}
+            value={selected && selected.label ? selected.label : ''}
           />
         {template && selected ? this.renderTemplateValue(selected) : null}
           <ul className={theme.values} ref='values'>
-            {source.map(this.renderValue.bind(this))}
+            {source.map(this.renderValue)}
           </ul>
         </div>
       );

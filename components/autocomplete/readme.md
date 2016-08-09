@@ -43,6 +43,7 @@ If you want to provide a theme via context, the component key is `RTAutocomplete
 
 | Name                | Type                   | Default         | Description|
 |:-----|:-----|:-----|:-----|
+| `allowCreate`       | `Bool`                 | `false`         | Determines if user can create a new option with the current typed value |
 | `className`         | `String`               | `''`            | Sets a class to style of the Component.|
 | `direction`         | `String`               |  `auto`         | Determines the opening direction. It can be `auto`, `top` or `bottom`.|
 | `disabled`          | `Bool`                 |  `false`        | If true, component will be disabled.|

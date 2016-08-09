@@ -5,10 +5,15 @@ import CalendarDay from './CalendarDay.js';
 
 class Month extends Component {
   static propTypes = {
+    locale: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.object
+    ]),
     maxDate: PropTypes.object,
     minDate: PropTypes.object,
     onDayClick: PropTypes.func,
     selectedDate: PropTypes.object,
+    sundayFirstDayOfWeek: React.PropTypes.bool,
     theme: PropTypes.shape({
       days: PropTypes.string,
       month: PropTypes.string,
@@ -23,9 +28,9 @@ class Month extends Component {
   };
 
   renderWeeks () {
-    return utils.range(0, 7).map(i => {
-      return <span key={i}>{time.getFullDayOfWeek(i).charAt(0)}</span>;
-    });
+    const days = utils.range(0, 7).map(d => time.getDayOfWeekLetter(d, this.props.locale));
+    const source = (this.props.sundayFirstDayOfWeek) ? days : [...days.slice(1), days[0]];
+    return source.map((d, i) => (<span key={i}>{d}</span>));
   }
 
   renderDays () {
@@ -38,10 +43,11 @@ class Month extends Component {
           key={i}
           day={i}
           disabled={disabled}
-          onClick={!disabled ? this.handleDayClick.bind(this, i) : null}
+          onClick={this.handleDayClick}
           selectedDate={this.props.selectedDate}
           theme={this.props.theme}
           viewDate={this.props.viewDate}
+          sundayFirstDayOfWeek={this.props.sundayFirstDayOfWeek}
         />
       );
     });
@@ -51,7 +57,7 @@ class Month extends Component {
     return (
       <div data-react-toolbox='month' className={this.props.theme.month}>
         <span className={this.props.theme.title}>
-          {time.getFullMonth(this.props.viewDate)} {this.props.viewDate.getFullYear()}
+          {time.getFullMonth(this.props.viewDate, this.props.locale)} {this.props.viewDate.getFullYear()}
         </span>
         <div className={this.props.theme.week}>{this.renderWeeks()}</div>
         <div className={this.props.theme.days}>{this.renderDays()}</div>

@@ -1,80 +1,69 @@
-import * as React from 'react';
-export interface Props {
-	/**
-	 * Sets a CSS class on the component.
-	 */
-	className?: string,
-	id?: string;
-	/**
-	 * A key used to uniquely identify the element within an Array
-	 */
-	key?: string,
-	/**
-	 * Inline style
-	 */
-	style?: any,
-	/**
-	 * Tooltip text
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltip?: string,
-	/**
-	 * Amount of time in miliseconds spent before the tooltip is visible.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipDelay?: number,
-	/**
-	 * If true, the Tooltip hides after a click in the host component.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @default true
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipHideOnClick?: boolean,
-}
-export interface Conditional {
-	/**
-	 * If true, component will be disabled
-	 * @default false
-	 */
-	disabled?: boolean
+import __ReactToolbox from "../index.d.ts";
+
+export interface CheckboxTheme {
+  /**
+   * Used as root in the check element.
+   */
+  check?: string;
+  /**
+   * Used for the check element when it's checked.
+   */
+  checked?: string;
+  /**
+   * Used when the component is disabled.
+   */
+  disabled?: string;
+  /**
+   * Used as the root class of the component.
+   */
+  field?: string;
+  /**
+   * Used for the input element.
+   */
+  input?: string;
+  /**
+   * Used for the ripple component.
+   */
+  ripple?: string;
+  /**
+   * Used for the text label.
+   */
+  text?: string;
 }
 
-/**
- * Properties of components that have values that can be changed (T is the type of the value)
- */
-export interface Changeable<T> {
-	/**
-	 * Callback called when the picker value is changed.
-	 * @param v Type of the value
-	 */
-	onChange?: (v: T) => void
+interface CheckboxProps extends __ReactToolbox.Props {
+  /**
+   * Value for the checkbox, can be true or false.
+   * @default false
+   */
+  checked?: boolean;
+  /**
+   * If true, the checkbox shown as disabled and cannot be modified.
+   * @default false
+   */
+  disabled?: boolean;
+  /**
+   * Text label to attach next to the checkbox element.
+   */
+  label?: __React.ReactNode | string;
+  /**
+   * The name of the field to set in the input checkbox.
+   */
+  name?: string;
+  /**
+   * Callback called when the checkbox is blurred.
+   */
+  onBlur?: __React.FocusEventHandler;
+  /**
+   * Callback called when the checkbox value is changed.
+   */
+  onChange?: __React.MouseEventHandler;
+  /**
+   * Classnames object defining the component style.
+   */
+  theme?: CheckboxTheme;
 }
 
-export interface CheckboxProps extends Props, Changeable<boolean>, Conditional {
-	/**
-	 * Value for the checkbox, can be true or false.
-	 * @default false
-	 */
-	checked?: boolean,
-	/**
-	 * Text label to attach next to the checkbox element.
-	 */
-	label?: string,
-	/**
-	 * The name of the field to set in the input checkbox.
-	 */
-	name?: string,
-	/**
-	 * Callback called when the checkbox is blurred.
-	 */
-	onBlur?: Function,
-	/**
-	 * Callback called when the checkbox is focused
-	 */
-	onFocus?: Function,
-}
-export default class Checkbox extends React.Component<CheckboxProps, {}> {
-	render(): React.DOMElement<any, any>;
-}
+export class Checkbox extends __React.Component<CheckboxProps, {}> { }
+
+export default Checkbox;

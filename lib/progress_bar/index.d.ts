@@ -1,69 +1,82 @@
-import * as React from 'react';
-export interface Props {
-	/**
-	 * Sets a CSS class on the component.
-	 */
-	className?: string,
-	id?: string;
-	/**
-	 * A key used to uniquely identify the element within an Array
-	 */
-	key?: string,
-	/**
-	 * Inline style
-	 */
-	style?: any,
-	/**
-	 * Tooltip text
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltip?: string,
-	/**
-	 * Amount of time in miliseconds spent before the tooltip is visible.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipDelay?: number,
-	/**
-	 * If true, the Tooltip hides after a click in the host component.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @default true
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipHideOnClick?: boolean,
+import __ReactToolbox from "../index.d.ts";
+
+export interface ProgressBarTheme {
+  /**
+   * Used to style the buffer element in the linear progress.
+   */
+  buffer?: string;
+  /**
+   * Used for the circle element in the circular progress.
+   */
+  circle?: string;
+  /**
+   * Used for the root element when the type is circular.
+   */
+  circular?: string;
+  /**
+   * Added to the root element if mode is indeterminate.
+   */
+  indeterminate?: string;
+  /**
+   * Used for the root element when the type is linear.
+   */
+  linear?: string;
+  /**
+   * Added to the root if the component is multicolor (circular).
+   */
+  multicolor?: string;
+  /**
+   * Used for the inner path in the circular progress.
+   */
+  path?: string;
+  /**
+   * Used to style the value element in the linear progress.
+   */
+  value?: string;
 }
-export interface ProgressBarProps extends Props {
-	/**
-	 * Value of a secondary progress bar useful for buffering.
-	 */
-	buffer?: number,
-	/**
-	 * Maximum value permitted.
-	 */
-	max?: number, // 
-	/**
-	 * minimum value permitted.
-	 */
-	min?: number, // 
-	/**
-	 * Mode of the progress bar, it can be determinate or indeterminate.
-	 */
-	mode?: string, // 
-	/**
-	 * If true, the circular progress bar will be changing its color.
-	 */
-	multicolor?: boolean, // 
-	/**
-	 * Type of the progress bar, it can be circular or linear.
-	 * @default linear
-	 */
-	type?: string,
-	/**
-	 * Value of the current progress.
-	 */
-	value?: number,
+
+interface ProgressBarProps extends __ReactToolbox.Props {
+  /**
+   * Value of a secondary progress bar useful for buffering.
+   * @default 0
+   */
+  buffer?: number;
+  /**
+   * Maximum value permitted.
+   * @default 100
+   */
+  max?: number;
+  /**
+   * Minimum value permitted.
+   * @default 0
+   */
+  min?: number;
+  /**
+   * Mode of the progress bar, it can be determinate or indeterminate.
+   * @default indeterminate
+   */
+  mode?: "determinate" | "indeterminate";
+  /**
+   * If true, the circular progress bar will be changing its color.
+   * @default false
+   */
+  multicolor?: boolean;
+  /**
+   * Classnames object defining the component style.
+   */
+  theme?: ProgressBarTheme;
+  /**
+   * Type of the progress bar, it can be circular or linear.
+   * @default linear
+   */
+  type?: "linear" | "circular";
+  /**
+   * Value of the current progress.
+   * @default 0
+   */
+  value?: number;
 }
-export default class ProgressBar extends React.Component<ProgressBarProps, {}> {
-	render(): React.DOMElement<any, any>;
-}
+
+export class ProgressBar extends __React.Component<ProgressBarProps, {}> { }
+
+export default ProgressBar;

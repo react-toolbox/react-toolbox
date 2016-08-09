@@ -1,66 +1,52 @@
-import * as React from 'react';
-export interface Props {
-	/**
-	 * Sets a CSS class on the component.
-	 */
-	className?: string,
-	id?: string;
-	/**
-	 * A key used to uniquely identify the element within an Array
-	 */
-	key?: string,
-	/**
-	 * Inline style
-	 */
-	style?: any,
-	/**
-	 * Tooltip text
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltip?: string,
-	/**
-	 * Amount of time in miliseconds spent before the tooltip is visible.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipDelay?: number,
-	/**
-	 * If true, the Tooltip hides after a click in the host component.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @default true
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipHideOnClick?: boolean,
-}
-export interface Conditional {
-	/**
-	 * If true, component will be disabled
-	 * @default false
-	 */
-	disabled?: boolean
+import __ReactToolbox from "../index.d.ts";
+
+export interface ChipTheme {
+  /**
+   * Added to the root element when the component includes an avatar.
+   */
+  avatar?: string;
+  /**
+   * Used for the root element.
+   */
+  chip?: string;
+  /**
+   * Added to the root element when the component is deletable.
+   */
+  deletable?: string;
+  /**
+   * Used for the delete element wrapper.
+   */
+  delete?: string;
+  /**
+   * Used for the delete icon.
+   */
+  deleteIcon?: string;
+  /**
+   * Used for the delete svg inner layer.
+   */
+  deleteX?: string;
 }
 
-export interface ChipProps extends Props {
-	/**
-	 * 	Child components, usually Avatar and inline elements
-	 */
-	children?: React.ReactNode;
-	/**
-	 * If true, the chip will be rendered with a delete icon.
-	 */
-	deletable?: boolean;
-	/**
-	 * Callback to be invoked when the delete icon is clicked.
-	 */
-	onDeleteClick?: React.MouseEventHandler
+interface ChipProps extends __ReactToolbox.Props {
+  /**
+   * Children to pass through the component.
+   */
+  children?: __React.ReactNode;
+  /**
+   * If true, the chip will be rendered with a delete icon.
+   * @default false
+   */
+  deletable?: boolean;
+  /**
+   * Callback to be invoked when the delete icon is clicked.
+   */
+  onDeleteClick?: __React.MouseEventHandler;
+  /**
+   * Classnames object defining the component style.
+   */
+  theme?: ChipTheme;
 }
-/**
- * Avatars can be used to represent people. 
- * For personal avatars, offer personalization options. 
- * As users may choose not to personalize an avatar, provide delightful defaults. 
- * When used with a specific logo, avatars can also be used to represent brand.
- */
-export default class Chip extends React.Component<ChipProps, {}> {
-	render(): React.ReactElement<any>;
-}
+
+export class Chip extends __React.Component<ChipProps, {}> { }
+
+export default Chip;

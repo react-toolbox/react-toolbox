@@ -143,7 +143,7 @@ const cards = {
         <CardMedia
           aspectRatio="wide"
         >
-          <iframe width="1280" height="720" src="https://www.youtube.com/embed/sGbxmsDFVnE?rel=0&amp;showinfo=0" frameBorder="0" allowFullScreen></iframe>
+          <iframe width="1280" height="720" src="https://www.youtube.com/embed/sGbxmsDFVnE?rel=0&amp;showinfo=0" frameBorder="0" allowFullScreen />
         </CardMedia>
         <CardActions style={{ justifyContent: 'flex-end' }}>
           <IconButton icon="report_problem" />

@@ -5,7 +5,10 @@ import Tooltip from '../../components/tooltip';
 
 const TooltipButton = Tooltip(Button);
 const TooltipInput = Tooltip(Input);
-const TooltipStrong = Tooltip(({children, ...other}) => <strong {...other}>{children}</strong>);
+const TooltipStrong = Tooltip(({children, ...other}) => {
+  delete other.theme;
+  return <strong {...other}>{children}</strong>;
+});
 
 const TooltipTest = () => (
   <section>

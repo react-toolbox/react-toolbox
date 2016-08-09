@@ -1,56 +1,41 @@
-import * as React from 'react';
-export interface Props {
-	/**
-	 * Sets a CSS class on the component.
-	 */
-	className?: string,
-	id?: string;
-	/**
-	 * A key used to uniquely identify the element within an Array
-	 */
-	key?: string,
-	/**
-	 * Inline style
-	 */
-	style?: any,
-	/**
-	 * Tooltip text
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltip?: string,
-	/**
-	 * Amount of time in miliseconds spent before the tooltip is visible.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipDelay?: number,
-	/**
-	 * If true, the Tooltip hides after a click in the host component.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @default true
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipHideOnClick?: boolean,
+import __ReactToolbox from "../index.d.ts";
+
+export interface AppBarTheme {
+  /**
+   * Used for the component root element.
+   */
+  appBar?: string;
+  /**
+   * Added to the root element when the app bar is fixed.
+   */
+  fixed?: string;
+  /**
+   * Added to the root element when the app bar is flat.
+   */
+  flat?: string;
 }
 
-export interface AppBarProps extends Props {
-	/**
-	 * If true, the AppBar shows a shadow.
-	 * @default false
-	 */
-	flat?: boolean,
-	/**
-	 * Determine if the bar should have position fixed (true) or relative (false)
-	 * @default false
-	 */
-	fixed?: boolean,
+interface AppBarProps extends __ReactToolbox.Props {
+  /**
+   * Children to pass through the component.
+   */
+  children?: __React.ReactNode;
+  /**
+   * Determine if the bar should have position fixed or relative.
+   * @default false
+   */
+  fixed?: boolean;
+  /**
+   * If true, the AppBar shows a shadow.
+   * @default false
+   */
+  flat?: boolean;
+  /**
+   * Classnames object defining the component style.
+   */
+  theme?: AppBarTheme;
 }
-/**
- * The app bar is a special kind of toolbar that’s used for branding, navigation, search, and actions. 
- * Usually it contains controls on the right and left side and a title with the current section or app name. 
- * You should give the content with children elements.
- */
-export default class AppBar extends React.Component<AppBarProps, {}> {
-	render(): React.DOMElement<any, any>;
-}
+
+export class AppBar extends __React.Component<AppBarProps, {}> { }
+
+export default AppBar;

@@ -1,64 +1,70 @@
-import * as React from 'react';
-export interface Props {
-	/**
-	 * Sets a CSS class on the component.
-	 */
-	className?: string,
-	id?: string;
-	/**
-	 * A key used to uniquely identify the element within an Array
-	 */
-	key?: string,
-	/**
-	 * Inline style
-	 */
-	style?: any,
-	/**
-	 * Tooltip text
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltip?: string,
-	/**
-	 * Amount of time in miliseconds spent before the tooltip is visible.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipDelay?: number,
-	/**
-	 * If true, the Tooltip hides after a click in the host component.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @default true
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipHideOnClick?: boolean,
+import __ReactToolbox from "../index.d.ts";
+
+export interface TableTheme {
+  /**
+   * It will be added to a row in case it is editable.
+   */
+  editable?: string;
+  /**
+   * Used for the row element.
+   */
+  row?: string;
+  /**
+   * It will be added to a row in case it is selectable.
+   */
+  selectable?: string;
+  /**
+   * Added to a row in case it is selected.
+   */
+  selected?: string;
+  /**
+   * Classname used for the root element.
+   */
+  table?: string;
 }
-export interface TableProps extends Props {
-	/**
-	 * If true, component will show a heading using model field names.
-	 */
-	heading?: boolean,
-	/**
-	 * Object describing the data model that represents each object in the source.
-	 */
-	model?: { [key: string]: string },
-	/**
-	 * Callback function that is fired when an item in a row changes. If set, rows are editable.
-	 */
-	onChange?: Function,
-	/**
-	 * Callback function invoked when the row selection changes.
-	 */
-	onSelect?: Function,
-	/**
-	 * Array of indexes of the items in the source that should appear as selected.
-	 */
-	selected?: Array<number>,
-	/**
-	 * Array of objects representing each item to show.
-	 */
-	source?: Array<{ [key: string]: any }>,
+
+interface TableProps extends __ReactToolbox.Props {
+  /**
+   * If true, component will show a heading using model field names.
+   * @default true
+   */
+  heading?: boolean;
+  /**
+   * Object describing the data model that represents each object in the source.
+   */
+  model?: any;
+  /**
+   * Callback function that is fired when an item in a row changes. If set, rows are editable.
+   */
+  onChange?: Function;
+  /**
+   * Callback function invoked when the row selection changes.
+   */
+  onSelect?: __React.FormEventHandler;
+  /**
+   * If true, each row will display a checkbox to allow the user to select that one row.
+   * @default true
+   */
+  selectable?: boolean;
+  /**
+   * If true, the header and each row will display a checkbox to allow the user to select multiple rows.
+   * @default true
+   */
+  multiSelectable?: boolean;
+  /**
+   * Array of indexes of the items in the source that should appear as selected.
+   */
+  selected?: any[];
+  /**
+   * Array of objects representing each item to show.
+   */
+  source?: any[];
+  /**
+   * Classnames object defining the component style.
+   */
+  theme?: TableTheme;
 }
-export default class Table extends React.Component<TableProps, {}> {
-	render(): React.DOMElement<any, any>;
-}
+
+export class Table extends __React.Component<TableProps, {}> { }
+
+export default Table;

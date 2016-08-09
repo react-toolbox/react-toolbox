@@ -1,53 +1,46 @@
-import * as React from 'react';
-export interface Props {
-	/**
-	 * Sets a CSS class on the component.
-	 */
-	className?: string,
-	id?: string;
-	/**
-	 * A key used to uniquely identify the element within an Array
-	 */
-	key?: string,
-	/**
-	 * Inline style
-	 */
-	style?: any,
-	/**
-	 * Tooltip text
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltip?: string,
-	/**
-	 * Amount of time in miliseconds spent before the tooltip is visible.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipDelay?: number,
-	/**
-	 * If true, the Tooltip hides after a click in the host component.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @default true
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipHideOnClick?: boolean,
+import __ReactToolbox from "../index.d.ts";
+
+export interface NavigationTheme {
+  /**
+   * Used for buttons provided in the component.
+   */
+  button?: string;
+  /**
+   * Used for the root element if the layout is horizontal.
+   */
+  horizontal?: string;
+  /**
+   * Used for links provided in the component.
+   */
+  link?: string;
+  /**
+   * Used for the root element if the layout is vertical.
+   */
+  vertical?: string;
 }
 
-export interface NavigationProps extends Props {
-	/**
-	 * Array of objects that represent buttons so the keys will be transferred as properties to those.
-	 */
-	actions?: Array<ButtonProps>,
-	/**
-	 * Array of objects similar to actions but that will be rendered as <Link/> component definition.
-	 */
-	routes?: Array<LinkProps>,
-	/**
-	 * Type of the navigation, it can be 'vertical' or 'horizontal'.
-	 */
-	type?: string,
+interface NavigationProps extends __ReactToolbox.Props {
+  /**
+   * Array of objects that will be represented as <Button/> so the keys will be transferred as properties the Button Component.
+   */
+  actions?: any[];
+  /**
+   * Children to pass through the component.
+   */
+  children?: __React.ReactNode;
+  /**
+   * Array of objects similar to actions but that will be rendered as <Link/> component definition.
+   */
+  routes?: any[];
+  /**
+   * Classnames object defining the component style.
+   */
+  theme?: NavigationTheme;
+  /**
+   * Type of the navigation, it can be vertical or horizontal.
+   * @default horizontal
+   */
+  type?: "vertical" | "horizontal";
 }
-export default class Navigation extends React.Component<NavigationProps, {}> {
-	render(): React.DOMElement<any, any>;
-}
+
+export class Navigation extends __React.Component<NavigationProps, {}> { }

@@ -9,7 +9,9 @@ const AvatarTest = () => (
     <Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" />
     <Avatar icon={<GithubIcon />}/>
     <Avatar><img src="https://placeimg.com/80/80/animals"/></Avatar>
-    <Avatar title="Javier" img="https://placeimg.com/80/80/animals"/>
+    <Avatar image="https://placeimg.com/80/80/animals" />
+    <Avatar image="http://www.thewrap.com/wp-content/uploads/2015/08/margot-robbie-harley-quinn_main.jpg" cover />
+    <Avatar title="Javier"/>
     <Avatar style={{backgroundColor: 'yellowgreen'}}><GithubIcon /></Avatar>
   </section>
 );

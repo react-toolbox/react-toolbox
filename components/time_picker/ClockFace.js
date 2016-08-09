@@ -37,7 +37,7 @@ class Face extends Component {
     };
   }
 
-  renderNumber (number, idx) {
+  renderNumber = (number, idx) => {
     const { active, radius, spacing, theme, twoDigits } = this.props;
     return (
       <span
@@ -60,7 +60,7 @@ class Face extends Component {
         onMouseDown={onMouseDown}
         style={this.faceStyle()}
       >
-        {numbers.map(this.renderNumber.bind(this))}
+        {numbers.map(this.renderNumber)}
       </div>
     );
   }

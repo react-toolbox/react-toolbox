@@ -43,6 +43,7 @@ class Overlay extends Component {
   }
 
   componentWillUnmount () {
+    document.body.style.overflow = null;
     if (this.escKeyListener) {
       document.body.removeEventListener('keydown', this.handleEscKey);
       this.escKeyListener = null;

@@ -1,84 +1,105 @@
-import * as React from 'react';
-export interface Props {
-	/**
-	 * Sets a CSS class on the component.
-	 */
-	className?: string,
-	id?: string;
-	/**
-	 * A key used to uniquely identify the element within an Array
-	 */
-	key?: string,
-	/**
-	 * Inline style
-	 */
-	style?: any,
-	/**
-	 * Tooltip text
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltip?: string,
-	/**
-	 * Amount of time in miliseconds spent before the tooltip is visible.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipDelay?: number,
-	/**
-	 * If true, the Tooltip hides after a click in the host component.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @default true
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipHideOnClick?: boolean,
+import __ReactToolbox from "../index.d.ts";
+
+export interface TabsTheme {
+  /**
+   * Added to the active tab content and header.
+   */
+  active?: string;
+  /**
+   * Used for the navigation element.
+   */
+  navigation?: string;
+  /**
+   * Used for the moving underline element.
+   */
+  pointer?: string;
+  /**
+   * Used as a root classname for the component.
+   */
+  tabs?: string;
+  /**
+   * Used for the tab content element.
+   */
+  tab?: string;
 }
-export interface Conditional {
-	/**
-	 * If true, component will be disabled
-	 * @default false
-	 */
-	disabled?: boolean
+
+interface TabsProps extends __ReactToolbox.Props {
+  /**
+   * Children to pass through the component.
+   */
+  children?: __React.ReactNode;
+  /**
+   * Disable the animation below the active tab.
+   * @default false
+   */
+  disableAnimatedBottomBorder?: boolean;
+  /**
+   * Current
+   * @default 0
+   */
+  index?: number;
+  /**
+   * Callback function that is fired when the tab changes.
+   */
+  onChange?: Function;
+  /**
+   * Classnames object defining the component style.
+   */
+  theme?: TabsTheme;
 }
-/**
- * Properties of components that have values that can be changed (T is the type of the value)
- */
-export interface Changeable<T> {
-	/**
-	 * Callback called when the picker value is changed.
-	 * @param v Type of the value
-	 */
-	onChange?: (v: T) => void
+
+export class Tabs extends __React.Component<TabsProps, {}> { }
+
+export interface TabTheme {
+  /**
+   * Added to the navigation tab element in case it's active.
+   */
+  active?: string;
+  /**
+   * Added to the navigation tab element in case it's disabled.
+   */
+  disabled?: string;
+  /**
+   * Added to the navigation tab element in case it's hidden.
+   */
+  hidden?: string;
+  /**
+   * Added to the navigation tab element in case it's active.
+   */
+  label?: string;
 }
-export interface TabsProps extends Props, Changeable<number> {
-	/**
-	 * Current
-	 */
-	index: number,
+
+interface TabProps extends __ReactToolbox.Props {
+  /**
+   * If true, the current component is visible.
+   */
+  active?: boolean;
+  /**
+   * Additional class name to provide custom styling for the active tab.
+   */
+  activeClassName?: string;
+  /**
+   * If true, the current component is not clickable.
+   * @default false
+   */
+  disabled?: boolean;
+  /**
+   * If true, the current component is not visible.
+   * @default false
+   */
+  hidden?: boolean;
+  /**
+   * Label text for navigation header. Required.
+   */
+  label: string;
+  /**
+   * Callback function that is fired when the tab is activated.
+   */
+  onActive?: Function;
+  /**
+   * Classnames object defining the component style.
+   */
+  theme?: TabTheme;
 }
-export class Tabs extends React.Component<TabsProps, {}> {
-	render(): React.DOMElement<any, any>;
-}
-export interface TabProps extends Props, Conditional {
-	/**
-	 * If true, the current component is visible.
-	 * @default false
-	 */
-	active?: boolean,
-	/**
-	 * If true, the current component is not visible.
-	 * @default false
-	 */
-	hidden?: boolean,
-	/**
-	 * Label text for navigation header
-	 */
-	label?: string,
-	/**
-	 * Callback function that is fired when the tab is activated.
-	 */
-	onActive?: Function,
-}
-export class Tab extends React.Component<TabProps, {}> {
-	render(): React.DOMElement<any, any>;
-}
+
+export class Tab extends __React.Component<TabProps, {}> { }

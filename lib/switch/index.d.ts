@@ -1,75 +1,77 @@
-import * as React from 'react';
-export interface Props {
-	/**
-	 * Sets a CSS class on the component.
-	 */
-	className?: string,
-	id?: string;
-	/**
-	 * A key used to uniquely identify the element within an Array
-	 */
-	key?: string,
-	/**
-	 * Inline style
-	 */
-	style?: any,
-	/**
-	 * Tooltip text
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltip?: string,
-	/**
-	 * Amount of time in miliseconds spent before the tooltip is visible.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipDelay?: number,
-	/**
-	 * If true, the Tooltip hides after a click in the host component.
-	 * APPLIES ONLY IF THE COMPONENT IS WRAPPED WITH Tooltip.
-	 * @default true
-	 * @see http://react-toolbox.com/#/components/tooltip
-	 */
-	tooltipHideOnClick?: boolean,
+import __ReactToolbox from "../index.d.ts";
+
+export interface SwitchTheme {
+  /**
+   * Used for the root element if the component is disabled.
+   */
+  disabled?: string;
+  /**
+   * Used for the root element if the component is not disabled.
+   */
+  field?: string;
+  /**
+   * Used for the input element.
+   */
+  input?: string;
+  /**
+   * Used for a wrapper around the thumb if checked is false.
+   */
+  off?: string;
+  /**
+   * Used for a wrapper around the thumb if checked is true.
+   */
+  on?: string;
+  /**
+   * Used for the ripple inside the switch.
+   */
+  ripple?: string;
+  /**
+   * Used for the text label element.
+   */
+  text?: string;
+  /**
+   * Used for the thumb element.
+   */
+  thumb?: string;
 }
-export interface Conditional {
-	/**
-	 * If true, component will be disabled
-	 * @default false
-	 */
-	disabled?: boolean
+
+interface SwitchProps extends __ReactToolbox.Props {
+  /**
+   * If true, the switch will be enabled.
+   * @default false
+   */
+  checked?: boolean;
+  /**
+   * If true, component will be disabled.
+   * @default false
+   */
+  disabled?: boolean;
+  /**
+   * The text string to use for the floating label element.
+   */
+  label?: string;
+  /**
+   * The text string used as name of the input.
+   */
+  name?: string;
+  /**
+   * Callback function that is fired when when the switch is blurred.
+   */
+  onBlur?: __React.FocusEventHandler;
+  /**
+   * Callback function that is fired when the component's value changes.
+   */
+  onChange?: __React.FormEventHandler;
+  /**
+   * Callback function that is fired when the switch is focused.
+   */
+  onFocus?: __React.FocusEventHandler;
+  /**
+   * Classnames object defining the component style.
+   */
+  theme?: SwitchTheme;
 }
-export interface SwitchProps extends Props, Conditional {
-	/**
-	 * If true, the switch will be enabled.
-	 */
-	checked: boolean,
-	/**
-	 * If true, component will be disabled.
-	 */
-	disabled?: boolean,
-	/**
-	 * The text string to use for the floating label element.
-	 */
-	label?: string,
-	/**
-	 * The text string used as name of the input.
-	 */
-	name?: string,
-	/**
-	 * Callback function that is fired when when the switch is blurred.
-	 */
-	onBlur?: Function,
-	/**
-	 * Callback function that is fired when the components's value changes.
-	 */
-	onChange?: Function,
-	/**
-	 * Callback function fire when the switch is focused.
-	 */
-	onFocus?: Function,
-}
-export default class Switch extends React.Component<SwitchProps, {}> {
-	render(): React.DOMElement<any, any>;
-}
+
+export class Switch extends __React.Component<SwitchProps, {}> { }
+
+export default Switch;
