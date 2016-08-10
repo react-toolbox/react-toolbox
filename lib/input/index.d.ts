@@ -112,10 +112,6 @@ interface InputProps extends __ReactToolbox.Props {
    */
   onKeyPress?: Function;
   /**
-   * Callback function that is fired when mouse down.
-   */
-  onMouseDown?: Function;
-  /**
    * If true, the html input has a required attribute.
    * @default false
    */

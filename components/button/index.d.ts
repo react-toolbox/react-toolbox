@@ -193,9 +193,9 @@ interface IconButtonProps extends __ReactToolbox.Props {
    */
   neutral?: boolean;
   /**
-    * Indicates if the button should have primary color.
-    * @default false
-    */
+   * Indicates if the button should have primary color.
+   * @default false
+   */
   primary?: boolean;
   /**
    * If true, component will have a ripple effect on click.
