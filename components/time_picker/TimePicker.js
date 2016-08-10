@@ -104,8 +104,8 @@ const factory = (TimePickerDialog, Input) => {
             format={format}
             name={this.props.name}
             onDismiss={this.handleDismiss}
-            onEscKeyDown={onEscKeyDown}
-            onOverlayClick={onOverlayClick}
+            onEscKeyDown={onEscKeyDown || this.handleDismiss}
+            onOverlayClick={onOverlayClick || this.handleDismiss}
             onSelect={this.handleSelect}
             theme={this.props.theme}
             value={this.props.value}

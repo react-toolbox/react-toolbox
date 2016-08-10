@@ -26,28 +26,27 @@ class DatePickerTest extends React.Component {
           label='Birthdate'
           onChange={this.handleChange.bind(this, 'date1')}
           value={this.state.date1}
-          sundayFirstDayOfWeek
         />
 
         <DatePicker
           label='Locale (String) - Spanish'
           locale='es'
-          onChange={this.handleChange.bind(this, 'date1')}
-          value={this.state.date1}
+          onChange={this.handleChange.bind(this, 'date2')}
+          value={this.state.date2}
         />
 
         <DatePicker
           label='Locale (Object) - Basque'
           locale={localeExample}
-          onChange={this.handleChange.bind(this, 'date1')}
-          value={this.state.date1}
+          onChange={this.handleChange.bind(this, 'date3')}
+          value={this.state.date3}
         />
 
         <DatePicker
           label='Expiration date'
           minDate={min_datetime}
-          onChange={this.handleChange.bind(this, 'date2')}
-          value={this.state.date2}
+          onChange={this.handleChange.bind(this, 'date4')}
+          value={this.state.date4}
           sundayFirstDayOfWeek
         />
 
@@ -55,9 +54,16 @@ class DatePickerTest extends React.Component {
           label='Formatted Date'
           autoOk
           inputFormat={(value) => `${value.getDate()}/${value.getMonth() + 1}/${value.getFullYear()}`}
-          onChange={this.handleChange.bind(this, 'date3')}
-          value={this.state.date3}
+          onChange={this.handleChange.bind(this, 'date5')}
+          value={this.state.date5}
           sundayFirstDayOfWeek
+        />
+
+        <DatePicker
+          label='MM/DD/YYYY Input format'
+          onChange={this.handleChange.bind(this, 'date6')}
+          value={this.state.date6}
+          monthFirst
         />
       </section>
     );

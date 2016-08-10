@@ -1,6 +1,6 @@
 # Date Picker
 
-A [dialog](https://www.google.com/design/spec/components/pickers.html#pickers-date-pickers) date  picker is used to select a single date. The selected day is indicated by a filled circle. The current day is indicated by a different color and type weight.
+A [dialog](https://www.google.com/design/spec/components/pickers.html#pickers-date-pickers) date  picker is used to select a single date. The selected day is indicated by a filled circle. The current day is indicated by a different color and type weight. If the input is tabbed into a date can be entered mannual in the format MM/DD/YYYY.
 
 <!-- example -->
 ```jsx
@@ -20,7 +20,7 @@ const localeExample = {
 }
 
 class DatePickerTest extends React.Component {
-  state = {date2: datetime};
+  state = {date1: datetime};
 
   handleChange = (item, value) => {
     this.setState({...this.state, [item]: value});
@@ -29,11 +29,12 @@ class DatePickerTest extends React.Component {
   render () {
     return (
       <section>
-        <DatePicker label='Birthdate' sundayFirstDayOfWeek onChange={this.handleChange.bind(this, 'date1')} value={this.state.date1} />
-        <DatePicker label='Locale (String) - Spanish' locale='es' onChange={this.handleChange.bind(this, 'date1')} value={this.state.date1} />
-        <DatePicker label='Locale (Object) - Basque' locale={localeExample} onChange={this.handleChange.bind(this, 'date1')} value={this.state.date1} />
-        <DatePicker label='Expiration date' sundayFirstDayOfWeek minDate={min_datetime} onChange={this.handleChange.bind(this, 'date2')} value={this.state.date2} />
-        <DatePicker label='Formatted date' sundayFirstDayOfWeek inputFormat={(value) => `${value.getDate()}/${value.getMonth() + 1}/${value.getFullYear()}`} onChange={this.handleChange.bind(this, 'date3')} value={this.state.date3} />
+        <DatePicker label='Birthdate' onChange={this.handleChange.bind(this, 'date1')} value={this.state.date1} />
+        <DatePicker label='Locale (String) - Spanish' locale='es' onChange={this.handleChange.bind(this, 'date2')} value={this.state.date2} />
+        <DatePicker label='Locale (Object) - Basque' locale={localeExample} onChange={this.handleChange.bind(this, 'date3')} value={this.state.date3} />
+        <DatePicker label='Expiration date' sundayFirstDayOfWeek minDate={min_datetime} onChange={this.handleChange.bind(this, 'date4')} value={this.state.date4} />
+        <DatePicker label='Formatted date' sundayFirstDayOfWeek inputFormat={(value) => `${value.getDate()}/${value.getMonth() + 1}/${value.getFullYear()}`} onChange={this.handleChange.bind(this, 'date5')} value={this.state.date5} />
+        <DatePicker label='MM/DD/YYYY Input format' monthFirst onChange={this.handleChange.bind(this, 'date6')} value={this.state.date6} />
       </section>
     );
   }
@@ -55,10 +56,11 @@ If you want to provide a theme via context, the component key is `RTDatePicker`.
 | `locale`        | `String` or `Object` | `'en'`     | Set the locale for the date picker dialog ('en','es','af','ar','be','bg','bn','bo','br','bs','ca','gl','eu','pt','it',fr'). Object is supported too (see example above). |
 | `maxDate`       | `Date`          |               | Date object with the maximum selectable date. |
 | `minDate`       | `Date`          |               | Date object with the minimum selectable date. |
+| `monthFirst`    | `bool`          |               | Changes input to accept MM/DD/YYYY instead of DD/MM/YYYY |
 | `onChange`      | `Function`      |               | Callback called when the picker value is changed.|
 | `onEscKeyDown`  | `Function`      |               | Callback called when the ESC key is pressed with the overlay active. |
 | `onOverlayClick`| `Function`      |               | Callback to be invoked when the dialog overlay is clicked.|
-| `readonly`      | `Boolean`       |               | The input element will be readonly and look like disabled.|
+| `readonly`      | `Boolean`       | `false`       | The input element will be readonly and look like disabled.|
 | `sundayFirstDayOfWeek` | `Boolean`| `false`       | Set week's first day to Sunday. Default week's first day is Monday ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Week_dates)). |
 | `value`         | `Date`          |               | Date object with the currently selected date. |
 
