@@ -36,7 +36,7 @@ interface DrawerProps extends __ReactToolbox.Props {
   /**
    * Callback function to be invoked when the overlay is clicked.
    */
-  onOverlayClick?: __React.MouseEventHandler;
+  onOverlayClick?: Function;
   /**
    * Classnames object defining the component style.
    */

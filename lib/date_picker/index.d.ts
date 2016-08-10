@@ -124,15 +124,15 @@ interface DatePickerProps extends __ReactToolbox.Props {
   /**
    * Callback called when the picker value is changed.
    */
-  onChange?: __React.MouseEventHandler;
+  onChange?: Function;
   /**
    * Callback called when the ESC key is pressed with the overlay active.
    */
-  onEscKeyDown?: __React.KeyboardEventHandler;
+  onEscKeyDown?: Function;
   /**
    * Callback to be invoked when the dialog overlay is clicked.
    */
-  onOverlayClick?: __React.MouseEventHandler;
+  onOverlayClick?: Function;
   /**
    * Classnames object defining the component style.
    */

@@ -21,7 +21,7 @@ interface RadioGroupProps extends __ReactToolbox.Props {
   /**
    * Default value selected in the radio group.
    */
-  value?: number;
+  value?: any;
 }
 
 export class RadioGroup extends __React.Component<RadioGroupProps, {}> { }
@@ -79,15 +79,15 @@ interface RadioButtonProps extends __ReactToolbox.Props {
   /**
    * Callback function that will be invoked when the input is blurred.
    */
-  onBlur?: __React.FocusEventHandler;
+  onBlur?: Function;
   /**
    * Callback function that will be invoked when the value changes.
    */
-  onChange?: __React.FormEventHandler;
+  onChange?: Function;
   /**
    * Callback function that will be invoked when the input is focused.
    */
-  onFocus?: __React.FocusEventHandler;
+  onFocus?: Function;
   /**
    * Classnames object defining the component style.
    */

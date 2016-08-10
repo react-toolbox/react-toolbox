@@ -40,7 +40,7 @@ interface ChipProps extends __ReactToolbox.Props {
   /**
    * Callback to be invoked when the delete icon is clicked.
    */
-  onDeleteClick?: __React.MouseEventHandler;
+  onDeleteClick?: Function;
   /**
    * Classnames object defining the component style.
    */

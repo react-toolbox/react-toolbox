@@ -103,14 +103,6 @@ interface ButtonProps extends __ReactToolbox.Props {
    */
   neutral?: boolean;
   /**
-   * Fires after the mouse leaves the Component.
-   */
-  onMouseLeave?: __React.MouseEventHandler;
-  /**
-   * Fires after the mouse is released from the Component.
-   */
-  OnMouseUp?: __React.MouseEventHandler;
-  /**
    * Indicates if the button should have primary color.
    * @default false
    */
@@ -200,14 +192,6 @@ interface IconButtonProps extends __ReactToolbox.Props {
    * @default true
    */
   neutral?: boolean;
-  /**
-   * Fires after the mouse leaves the Component.
-   */
-  onMouseLeave?: __React.MouseEventHandler;
-  /**
-   * Fires after the mouse is released from the Component.
-   */
-  OnMouseUp?: __React.MouseEventHandler;
   /**
    * Indicates if the button should have primary color.
    * @default false
