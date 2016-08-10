@@ -17,11 +17,11 @@ interface TooltipProps {
   /**
    * Callback called when the mouse enters the Component.
    */
-  onMouseEnter?: __React.MouseEventHandler;
+  onMouseEnter?: Function;
   /**
    * Callback called when the mouse leaves the Component.
    */
-  onMouseLeave?: __React.MouseEventHandler;
+  onMouseLeave?: Function;
   /**
    * Classnames object defining the component style.
    */

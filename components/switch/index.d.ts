@@ -57,15 +57,15 @@ interface SwitchProps extends __ReactToolbox.Props {
   /**
    * Callback function that is fired when when the switch is blurred.
    */
-  onBlur?: __React.FocusEventHandler;
+  onBlur?: Function;
   /**
    * Callback function that is fired when the component's value changes.
    */
-  onChange?: __React.FormEventHandler;
+  onChange?: Function;
   /**
    * Callback function that is fired when the switch is focused.
    */
-  onFocus?: __React.FocusEventHandler;
+  onFocus?: Function;
   /**
    * Classnames object defining the component style.
    */

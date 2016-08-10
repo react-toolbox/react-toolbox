@@ -35,7 +35,7 @@ interface DialogActionProps {
   /**
    * Callback called when the component is clicked.
    */
-  onClick?: __React.MouseEventHandler;
+  onClick?: Function;
 }
 
 interface DialogProps extends __ReactToolbox.Props {
@@ -55,23 +55,23 @@ interface DialogProps extends __ReactToolbox.Props {
   /**
    * Callback called when the ESC key is pressed with the overlay active.
    */
-  onEscKeyDown?: __React.KeyboardEventHandler;
+  onEscKeyDown?: Function;
   /**
    * Callback to be invoked when the dialog overlay is clicked.
    */
-  onOverlayClick?: __React.MouseEventHandler;
+  onOverlayClick?: Function;
   /**
    * Callback called when the mouse button is pressed on the overlay.
    */
-  onOverlayMouseDown?: __React.MouseEventHandler;
+  onOverlayMouseDown?: Function;
   /**
    * Callback called when the mouse is moving over the overlay.
    */
-  onOverlayMouseMove?: __React.MouseEventHandler;
+  onOverlayMouseMove?: Function;
   /**
    * Callback called when the mouse button is released over the overlay.
    */
-  onOverlayMouseUp?: __React.MouseEventHandler;
+  onOverlayMouseUp?: Function;
   /**
    * Classnames object defining the component style.
    */
