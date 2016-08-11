@@ -90,7 +90,7 @@ interface InputProps extends __ReactToolbox.Props {
    * If true, a textarea element will be rendered. The textarea also grows and shrinks according to the number of lines.
    * @default false
    */
-  multiLine?: boolean;
+  multiline?: boolean;
   /**
    * Name for the input field.
    */
@@ -98,19 +98,19 @@ interface InputProps extends __ReactToolbox.Props {
   /**
    * Callback function that is fired when component is blurred.
    */
-  onBlur?: __React.FocusEventHandler;
+  onBlur?: Function;
   /**
    * Callback function that is fired when the component's value changes
    */
-  onChange?: __React.FormEventHandler;
+  onChange?: Function;
   /**
    * Callback function that is fired when component is focused.
    */
-  onFocus?: __React.FocusEventHandler;
+  onFocus?: Function;
   /**
    * Callback function that is fired when a key is pressed.
    */
-  onKeyPress?: __React.MouseEventHandler;
+  onKeyPress?: Function;
   /**
    * If true, the html input has a required attribute.
    * @default false

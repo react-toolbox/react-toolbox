@@ -41,7 +41,7 @@ const factory = (Tab, TabContent) => {
     }
 
     handleHeaderClick = (event) => {
-      const idx = parseInt(event.target.id);
+      const idx = parseInt(event.currentTarget.id);
       if (this.props.onChange) this.props.onChange(idx);
     };
 

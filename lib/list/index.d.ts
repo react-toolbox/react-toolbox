@@ -91,15 +91,15 @@ interface ListCheckboxProps extends __ReactToolbox.Props {
   /**
    * Callback called when the input element is blurred.
    */
-  onBlur?: __React.FocusEventHandler;
+  onBlur?: Function;
   /**
    * Callback called when the input element is changed.
    */
-  onChange?: __React.FormEventHandler;
+  onChange?: Function;
   /**
    * Callback called when the input element is focused.
    */
-  onFocus?: __React.FocusEventHandler;
+  onFocus?: Function;
   /**
    * Classnames object defining the component style.
    */
