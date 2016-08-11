@@ -130,8 +130,8 @@ const factory = (Input, DatePickerDialog) => {
             minDate={minDate}
             name={this.props.name}
             onDismiss={this.handleDismiss}
-            onEscKeyDown={onEscKeyDown}
-            onOverlayClick={onOverlayClick}
+            onEscKeyDown={onEscKeyDown || this.handleDismiss}
+            onOverlayClick={onOverlayClick || this.handleDismiss}
             onSelect={this.handleSelect}
             sundayFirstDayOfWeek={sundayFirstDayOfWeek}
             theme={this.props.theme}
