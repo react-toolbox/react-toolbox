@@ -11,23 +11,23 @@ const factory = (Tab, TabContent) => {
       children: PropTypes.node,
       className: PropTypes.string,
       disableAnimatedBottomBorder: PropTypes.bool,
-      index: PropTypes.number,
-      onChange: PropTypes.func,
       fixed: PropTypes.bool,
+      index: PropTypes.number,
       inverse: PropTypes.bool,
+      onChange: PropTypes.func,
       theme: PropTypes.shape({
+        fixed: PropTypes.string,
+        inverse: PropTypes.string,
         navigation: PropTypes.string,
         pointer: PropTypes.string,
-        tabs: PropTypes.string,
-        fixed: PropTypes.string,
-        inverse: PropTypes.string
+        tabs: PropTypes.string
       })
     };
 
     static defaultProps = {
       index: 0,
       fixed: false,
-      inverse: false      
+      inverse: false
     };
 
     state = {
@@ -55,7 +55,7 @@ const factory = (Tab, TabContent) => {
       if (this.props.onChange) this.props.onChange(idx);
     };
 
-    handleResize = (event) => {
+    handleResize = () => {
       if (!this.props.fixed) {
         return;
       }
