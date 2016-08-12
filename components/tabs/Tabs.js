@@ -13,15 +13,21 @@ const factory = (Tab, TabContent) => {
       disableAnimatedBottomBorder: PropTypes.bool,
       index: PropTypes.number,
       onChange: PropTypes.func,
+      fixed: PropTypes.bool,
+      inverse: PropTypes.bool,
       theme: PropTypes.shape({
         navigation: PropTypes.string,
         pointer: PropTypes.string,
-        tabs: PropTypes.string
+        tabs: PropTypes.string,
+        fixed: PropTypes.string,
+        inverse: PropTypes.string
       })
     };
 
     static defaultProps = {
-      index: 0
+      index: 0,
+      fixed: false,
+      inverse: false      
     };
 
     state = {
@@ -30,6 +36,8 @@ const factory = (Tab, TabContent) => {
 
     componentDidMount () {
       !this.props.disableAnimatedBottomBorder && this.updatePointer(this.props.index);
+      window.addEventListener('resize', this.handleResize);
+      this.handleResize();
     }
 
     componentWillReceiveProps (nextProps) {
@@ -37,12 +45,29 @@ const factory = (Tab, TabContent) => {
     }
 
     componentWillUnmount () {
+      window.removeEventListener('resize', this.handleResize);
+      clearTimeout(this.resizeTimeout);
       clearTimeout(this.pointerTimeout);
     }
 
     handleHeaderClick = (event) => {
       const idx = parseInt(event.currentTarget.id);
       if (this.props.onChange) this.props.onChange(idx);
+    };
+
+    handleResize = (event) => {
+      if (!this.props.fixed) {
+        return;
+      }
+
+      if (this.resizeTimeout) {
+        clearTimeout(this.resizeTimeout);
+      }
+      this.resizeTimeout = setTimeout(this.handleResizeEnd, 50);
+    };
+
+    handleResizeEnd = () => {
+      this.updatePointer(this.props.index);
     };
 
     parseChildren () {
@@ -104,10 +129,18 @@ const factory = (Tab, TabContent) => {
     }
 
     render () {
-      const { className, theme } = this.props;
+      const { className, theme, fixed, inverse } = this.props;
       const { headers, contents } = this.parseChildren();
+      const classes = classnames(
+        theme.tabs,
+        className,
+        {
+          [theme.fixed]: fixed,
+          [theme.inverse]: inverse
+        }
+      );
       return (
-        <div ref='tabs' data-react-toolbox='tabs' className={classnames(theme.tabs, className)}>
+        <div ref='tabs' data-react-toolbox='tabs' className={classes}>
           <nav className={theme.navigation} ref='navigation'>
             {this.renderHeaders(headers)}
           </nav>
