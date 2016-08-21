@@ -56,5 +56,13 @@ export default {
       return value ? 'on' : '';
     }
     return value;
+  },
+
+  removeObjectKey (key, object) {
+    const newObject = {};
+    Object.keys(object)
+      .filter(k => k !== key)
+      .forEach(k => { newObject[k] = object[k]; });
+    return newObject;
   }
 };
