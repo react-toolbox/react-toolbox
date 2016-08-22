@@ -109,7 +109,10 @@ const factory = (Tab, TabContent) => {
           id: idx,
           key: idx,
           active: this.props.index === idx,
-          onClick: this.handleHeaderClick
+          onClick: event => {
+            this.handleHeaderClick(event);
+            item.props.onClick && item.props.onClick(event);
+          }
         });
       });
     }
