@@ -124,7 +124,7 @@ const factory = (Chip, Input) => {
          }
          this.setState({active: target});
        }
-       this.select(target, event);
+       this.select(event, target);
      }
 
      if (event.which === 27) ReactDOM.findDOMNode(this).querySelector('input').blur();
@@ -225,10 +225,11 @@ const factory = (Chip, Input) => {
      return valueMap;
    }
 
-   select = (event) => {
+   select = (event, target) => {
      events.pauseEvent(event);
      const values = this.values(this.props.value);
-     this.handleChange([event.target.id, ...values.keys()], event);
+     const newValue = target === void 0 ? event.target.id : target;
+     this.handleChange([newValue, ...values.keys()], event);
    };
 
    unselect (key, event) {
