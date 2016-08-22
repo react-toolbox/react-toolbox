@@ -3,11 +3,21 @@ import { Tabs, Tab } from '../../components/tabs';
 
 class TabsTest extends React.Component {
   state = {
-    index: 1
+    index: 1,
+    fixedIndex: 1,
+    inverseIndex: 1
   };
 
   handleTabChange = (index) => {
     this.setState({index});
+  };
+
+  handleFixedTabChange = (index) => {
+    this.setState({fixedIndex: index});
+  };
+
+  handleInverseTabChange = (index) => {
+    this.setState({inverseIndex: index});
   };
 
   handleActive = () => {
@@ -25,6 +35,21 @@ class TabsTest extends React.Component {
           <Tab label='Third' disabled><small>Disabled content</small></Tab>
           <Tab label='Fourth' hidden><small>Fourth content hidden</small></Tab>
           <Tab label='Fifth'><small>Fifth content</small></Tab>
+        </Tabs>
+        <h5>Fixed Tabs</h5>
+        <p>These tabs fill the given space.</p>
+        <Tabs index={this.state.fixedIndex} onChange={this.handleFixedTabChange} fixed>
+          <Tab label='First'><small>First Content</small></Tab>
+          <Tab label='Second'><small>Second Content</small></Tab>
+          <Tab label='Third'><small>Third Content</small></Tab>
+        </Tabs>
+        <h5>Inverse Tabs</h5>
+        <p>These tabs have an inverted theme.</p>
+        <Tabs index={this.state.inverseIndex} onChange={this.handleInverseTabChange} inverse>
+          <Tab label='First'><small>First Content</small></Tab>
+          <Tab label='Second'><small>Second Content</small></Tab>
+          <Tab label='Third'><small>Third Content</small></Tab>
+          <Tab label='Disabled' disabled><small>Disabled Content</small></Tab>
         </Tabs>
       </section>
     );
