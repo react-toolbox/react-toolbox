@@ -110,7 +110,7 @@ $color-primary: $palette-blue-500;
 $color-primary-dark: $palette-blue-700;
 ```
 
-This file should be prepended to each stylesheet compilation which be achieved in multiple ways.
+This file should be prepended to each stylesheet compilation which can be achieved in multiple ways.
 
 ### Using SASS Loader
 
@@ -122,7 +122,7 @@ sassLoader: {
 }
 ```
 
-In this case we have are prepending the theme import to each SASS compilation so the primary color will be changed in every single stylesheet. If you are not using webpack maybe your loader still has a similar option, otherwise don't worry, there are solutions.
+In this case we are prepending the theme import to each SASS compilation so the primary color will be changed in every single stylesheet. If you are not using webpack maybe your loader still has a similar option, otherwise don't worry, there are solutions.
 
 ### Using SASS imports and props
 
