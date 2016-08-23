@@ -16,7 +16,7 @@ const factory = (Checkbox) => {
       );
     } else if (selectable) {
       selectCell = (
-        <th key='select' className={theme.selectable}></th>
+        <th key='select' className={theme.selectable}/>
       );
     }
     return (

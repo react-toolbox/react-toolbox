@@ -1,5 +1,6 @@
 import React from 'react';
 import ProgressBar from '../../components/progress_bar';
+import style from '../style';
 
 const initialState = {
   progress: 0,
@@ -47,6 +48,8 @@ class ProgressBarTest extends React.Component {
         <ProgressBar mode='indeterminate'/>
         <p style={{margin: '10px auto'}}>Circular</p>
         <ProgressBar type='circular' mode='indeterminate'/>
+        <p style={{margin: '10px auto'}}>Circular with custom size</p>
+        <ProgressBar className={style.customSizedProgress} type='circular' mode='indeterminate' theme={style} />
       </section>
     );
   }

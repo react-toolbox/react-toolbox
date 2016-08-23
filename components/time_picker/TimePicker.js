@@ -11,6 +11,7 @@ import timePickerDialogFactory from './TimePickerDialog.js';
 const factory = (TimePickerDialog, Input) => {
   class TimePicker extends Component {
     static propTypes = {
+      active: PropTypes.bool,
       className: PropTypes.string,
       error: PropTypes.string,
       format: PropTypes.oneOf(['24hr', 'ampm']),
@@ -21,6 +22,7 @@ const factory = (TimePickerDialog, Input) => {
       onEscKeyDown: PropTypes.func,
       onKeyPress: PropTypes.func,
       onOverlayClick: PropTypes.func,
+      readonly: PropTypes.bool,
       theme: PropTypes.shape({
         input: PropTypes.string
       }),
@@ -28,15 +30,32 @@ const factory = (TimePickerDialog, Input) => {
     };
 
     static defaultProps = {
+      active: false,
       className: '',
       format: '24hr'
     };
 
     state = {
-      active: false
+      active: this.props.active
     };
 
+    componentWillReceiveProps (nextProps) {
+      if (this.state.active !== nextProps.active) {
+        this.setState({ active: nextProps.active });
+      }
+    }
+
     handleDismiss = () => {
+      this.setState({active: false});
+    };
+
+    handleInputFocus = (event) => {
+      events.pauseEvent(event);
+      this.setState({active: true});
+    };
+
+    handleInputBlur = (event) => {
+      events.pauseEvent(event);
       this.setState({active: false});
     };
 
@@ -59,18 +78,22 @@ const factory = (TimePickerDialog, Input) => {
     };
 
     render () {
-      const { value, format, inputClassName, onEscKeyDown, onOverlayClick, theme, ...others } = this.props;
+      const {
+        active, // eslint-disable-line
+        format, inputClassName, onEscKeyDown, onOverlayClick, readonly, value, ...others
+      } = this.props;
       const formattedTime = value ? time.formatTime(value, format) : '';
       return (
         <div data-react-toolbox='time-picker'>
           <Input
             {...others}
-            className={classnames(theme.input, {[inputClassName]: inputClassName })}
+            className={classnames(this.props.theme.input, {[inputClassName]: inputClassName })}
+            disabled={readonly}
             error={this.props.error}
-            name={this.props.name}
             label={this.props.label}
-            onMouseDown={this.handleInputMouseDown}
+            name={this.props.name}
             onKeyPress={this.handleInputKeyPress}
+            onMouseDown={this.handleInputMouseDown}
             readOnly
             type='text'
             value={formattedTime}

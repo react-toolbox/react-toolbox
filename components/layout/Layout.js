@@ -5,7 +5,7 @@ import { LAYOUT } from '../identifiers.js';
 
 const Layout = ({ className, children, theme }) => (
   <div data-react-toolbox='layout' className={classnames(theme.layout, className)}>
-    {children}
+    {React.Children.map(children, (child) => React.cloneElement(child, { theme }))}
   </div>
 );
 

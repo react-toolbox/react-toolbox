@@ -64,5 +64,13 @@ If you want to provide a theme via context, the component key is `RTInput`.
 | `icon`   | Used for the icon in case the input has icon.|
 | `input` | Used as root class for the component.|
 | `inputElement` | Used for the HTML input element.|
+| `label` | Used for the label when the input has a label.|
 | `required` | Used in case the input is required.|
 | `withIcon` | Added to the root class if the input has icon.|
+
+## Methods
+
+The `Input` component has some imperative methods that are used as a bypass to the native rendered DOM element. To call this methods you will need to retrieve the instance of the component. Check the [Install](http://react-toolbox.com/#/install) section for details on how to do this. The methods included for the `Input` are:
+
+- `blur` used to blur the `input` element.
+- `focus` used to focus the `input` element.

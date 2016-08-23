@@ -63,7 +63,7 @@ import { AppBar } from 'react-toolbox/lib/app_bar';
 You import from the component definition so the imported component is bundled with its dependencies but it does not require any style for you. This means that no CSS will be bundled and the component markup will **not** include any classname. It's your responsibility to provide a theme to the component to be properly style and you can do it via properties or context. For example:
 
 ```js
-import { AppBar } from 'react-toolbox/lib/app_bar/AppBar.js';
+import AppBar from 'react-toolbox/lib/app_bar/AppBar.js';
 ```
 
 ## Customizing components
@@ -134,7 +134,7 @@ Remember that you can import components without styles and provide those styles 
 Then, when you use a button you can inject the appropriated theme:
 
 ```js
-import { Button } from 'react-toolbox/lib/button/Button';
+import Button from 'react-toolbox/lib/button/Button';
 import buttonTheme from './theme/button.scss';
 
 const ThemedButton = (props) => (
@@ -180,6 +180,12 @@ A couple of things here. First you need to use raw components to get this styles
 React Toolbox assumes that you are importing [Roboto Font](https://www.google.com/fonts/specimen/Roboto) and [Material Design Icons](https://www.google.com/design/icons/).
 
 In order to import the fonts for you, we'd need to include them in the CSS which is considered a bad practice. If you are not including them in your app, go to the linked sites and follow the instructions.
+
+## References to Components
+
+As mentioned in the theming section, you'd usually import a component with a theme already injected. To do this we use a [Higher Order Component](http://github.com/javivelasco/react-css-themr). If you add a `ref` property to a React Toolbox component, what you will get is the **HOC** instead of the **Wrapped** component.
+
+For components with imperative methods such as the `Input`, you can also get its real instance instead of the HOC. To do this, the HOC includes a `getWrappedInstance` method that returns the wrapped component instance. This way you can call methods directly on the component's instance.
 
 ## Server Side Rendering
 

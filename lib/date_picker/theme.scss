@@ -3,7 +3,7 @@
 @import "../mixins";
 @import "./config";
 
-.input > [role="input"] {
+.input:not(.disabled) > .inputElement {
   cursor: pointer;
 }
 
