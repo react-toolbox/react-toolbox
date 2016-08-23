@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
-import update from 'react-addons-update';
+import update from 'immutability-helper';
 import { themr } from 'react-css-themr';
 import { RIPPLE } from '../identifiers.js';
 import events from '../utils/events';
