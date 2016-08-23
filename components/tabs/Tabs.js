@@ -81,6 +81,7 @@ const factory = (Tab, TabContent) => {
       return headers.map((item, idx) => {
         return React.cloneElement(item, {
           key: idx,
+          theme: this.props.theme,
           active: this.props.index === idx,
           onClick: this.handleHeaderClick.bind(this, idx, item)
         });
@@ -95,6 +96,7 @@ const factory = (Tab, TabContent) => {
       if (contents && contents[activeIdx]) {
         return React.cloneElement(contents[activeIdx], {
           key: activeIdx,
+          theme: this.props.theme,
           active: true,
           tabIndex: activeIdx
         });
