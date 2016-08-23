@@ -116,7 +116,7 @@ class Hand extends Component {
 
     return (
       <div className={className} style={handStyle}>
-        <div ref='knob' className={theme.knob}></div>
+        <div ref='knob' className={theme.knob}/>
       </div>
     );
   }

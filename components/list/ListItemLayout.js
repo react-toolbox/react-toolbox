@@ -23,14 +23,14 @@ const factory = (Avatar, ListItemContent, ListItemActions) => {
       props.rightIcon && <FontIcon value={props.rightIcon} key='rightIcon'/>,
       ...props.rightActions
     ];
-    const content = props.itemContent || <ListItemContent caption={props.caption} legend={props.legend} />;
+    const content = props.itemContent || <ListItemContent theme={props.theme} caption={props.caption} legend={props.legend} />;
     const emptyActions = (item) => !item[0] && !item[1] && !item[2];
 
     return (
       <span className={className}>
-        {!emptyActions(leftActions) > 0 && <ListItemActions type='left'>{leftActions}</ListItemActions>}
+        {!emptyActions(leftActions) > 0 && <ListItemActions type='left' theme={props.theme}>{leftActions}</ListItemActions>}
         {content}
-        {!emptyActions(rightActions) > 0 && <ListItemActions type='right'>{rightActions}</ListItemActions>}
+        {!emptyActions(rightActions) > 0 && <ListItemActions type='right' theme={props.theme}>{rightActions}</ListItemActions>}
       </span>
     );
   };

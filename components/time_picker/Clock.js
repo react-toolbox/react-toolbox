@@ -58,7 +58,7 @@ class Clock extends Component {
   handleCalculateShape = () => {
     const { top, left, width } = this.refs.placeholder.getBoundingClientRect();
     this.setState({
-      center: { x: left + width / 2 - window.scrollX, y: top + width / 2 - window.scrollX },
+      center: { x: left + width / 2 - window.pageXOffset, y: top + width / 2 - window.pageXOffset },
       radius: width / 2
     });
   };

@@ -46,10 +46,10 @@ export default {
     return true;
   },
 
-  removeEventListenerOnTransitionEnded (element) {
+  removeEventListenerOnTransitionEnded (element, fn) {
     const eventName = transitionEventNamesFor(element);
     if (!eventName) return false;
-    element.removeEventListener(eventName);
+    element.removeEventListener(eventName, fn);
     return true;
   }
 };

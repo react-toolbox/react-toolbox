@@ -16,6 +16,7 @@ const POSITION = {
 const factory = (Chip, Input) => {
   class Autocomplete extends Component {
    static propTypes = {
+     allowCreate: PropTypes.bool,
      className: PropTypes.string,
      direction: PropTypes.oneOf(['auto', 'up', 'down']),
      disabled: PropTypes.bool,
@@ -43,6 +44,7 @@ const factory = (Chip, Input) => {
    };
 
    static defaultProps = {
+     allowCreate: false,
      className: '',
      direction: 'auto',
      selectedPosition: 'above',
@@ -72,7 +74,6 @@ const factory = (Chip, Input) => {
        const direction = this.calculateDirection();
        if (this.state.direction !== direction) {
          this.setState({ direction });
-         return false;
        }
      }
      return true;
@@ -118,9 +119,12 @@ const factory = (Chip, Input) => {
        let target = this.state.active;
        if (!target) {
          target = [...this.suggestions().keys()][0];
+         if (!target && this.props.allowCreate) {
+           target = this.state.query;
+         }
          this.setState({active: target});
        }
-       this.select(target, event);
+       this.select(event, target);
      }
 
      if (event.which === 27) ReactDOM.findDOMNode(this).querySelector('input').blur();
@@ -134,8 +138,8 @@ const factory = (Chip, Input) => {
      }
    };
 
-   handleSuggestionHover = (key) => {
-     this.setState({active: key});
+   handleSuggestionHover = (event) => {
+     this.setState({active: event.target.id});
    };
 
    calculateDirection () {
@@ -150,12 +154,18 @@ const factory = (Chip, Input) => {
    }
 
    query (key) {
-     return !this.props.multiple && key ? this.source().get(key) : '';
-   }
+      let query_value = '';
+      if (!this.props.multiple && key) {
+        const source_value = this.source().get(key);
+        query_value = source_value ? source_value : key;
+      }
+      return query_value;
+    }
 
    suggestions () {
      let suggest = new Map();
-     const query = this.state.query.toLowerCase().trim() || '';
+     const rawQuery = this.state.query || this.props.multiple ? '' : this.props.value;
+     const query = (rawQuery || '').toLowerCase().trim();
      const values = this.values();
      const source = this.source();
 
@@ -216,11 +226,12 @@ const factory = (Chip, Input) => {
      return valueMap;
    }
 
-   select (key, event) {
+   select = (event, target) => {
      events.pauseEvent(event);
      const values = this.values(this.props.value);
-     this.handleChange([key, ...values.keys()], event);
-   }
+     const newValue = target === void 0 ? event.target.id : target;
+     this.handleChange([newValue, ...values.keys()], event);
+   };
 
    unselect (key, event) {
      if (!this.props.disabled) {
@@ -255,10 +266,11 @@ const factory = (Chip, Input) => {
        const className = classnames(theme.suggestion, {[theme.active]: this.state.active === key});
        return (
          <li
+           id={key}
            key={key}
            className={className}
-           onMouseDown={this.select.bind(this, key)}
-           onMouseOver={this.handleSuggestionHover.bind(this, key)}
+           onMouseDown={this.select}
+           onMouseOver={this.handleSuggestionHover}
          >
            {value}
          </li>
@@ -271,8 +283,8 @@ const factory = (Chip, Input) => {
 
    render () {
      const {
-      error, label, source, suggestionMatch,           //eslint-disable-line no-unused-vars
-      selectedPosition, showSuggestionsWhenValueIsSet, //eslint-disable-line no-unused-vars
+      allowCreate, error, label, source, suggestionMatch, //eslint-disable-line no-unused-vars
+      selectedPosition, showSuggestionsWhenValueIsSet,    //eslint-disable-line no-unused-vars
       theme, ...other
     } = this.props;
      const className = classnames(theme.autocomplete, {

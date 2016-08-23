@@ -1,3 +1,117 @@
+const dateLocales = {
+  en: {
+    months: 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
+    monthsShort: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_'),
+    weekdays: 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_'),
+    weekdaysShort: 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
+    weekdaysLetter: []
+  },
+  es: {
+    months: 'enero_febrero_marzo_abril_mayo_junio_julio_agosto_septiembre_octubre_noviembre_diciembre'.split('_'),
+    monthsShort: 'ene_feb_mar_abr_may_jun_jul_ago_sep_oct_nov_dic'.split('_'),
+    weekdays: 'domingo_lunes_martes_miércoles_jueves_viernes_sábado'.split('_'),
+    weekdaysShort: 'dom._lun._mar._mié._jue._vie._sáb.'.split('_'),
+    weekdaysLetter: 'D_L_M_X_J_V_S'.split('_')
+  },
+  af: {
+    months: 'Januarie_Februarie_Maart_April_Mei_Junie_Julie_Augustus_September_Oktober_November_Desember'.split('_'),
+    monthsShort: 'Jan_Feb_Mrt_Apr_Mei_Jun_Jul_Aug_Sep_Okt_Nov_Des'.split('_'),
+    weekdays: 'Sondag_Maandag_Dinsdag_Woensdag_Donderdag_Vrydag_Saterdag'.split('_'),
+    weekdaysShort: 'Son_Maa_Din_Woe_Don_Vry_Sat'.split('_'),
+    weekdaysLetter: []
+  },
+  ar: {
+    months: ['كانون الثاني يناير', 'شباط فبراير', 'آذار مارس', 'نيسان أبريل', 'أيار مايو', 'حزيران يونيو', 'تموز يوليو', 'آب أغسطس', 'أيلول سبتمبر', 'تشرين الأول أكتوبر', 'تشرين الثاني نوفمبر', 'كانون الأول ديسمبر'],
+    monthsShort: ['كانون الثاني يناير', 'شباط فبراير', 'آذار مارس', 'نيسان أبريل', 'أيار مايو', 'حزيران يونيو', 'تموز يوليو', 'آب أغسطس', 'أيلول سبتمبر', 'تشرين الأول أكتوبر', 'تشرين الثاني نوفمبر', 'كانون الأول ديسمبر'],
+    weekdays: 'الأحد_الإثنين_الثلاثاء_الأربعاء_الخميس_الجمعة_السبت'.split('_'),
+    weekdaysShort: 'أحد_إثنين_ثلاثاء_أربعاء_خميس_جمعة_سبت'.split('_'),
+    weekdaysLetter: []
+  },
+  be: {
+    months: 'студзень_люты_сакавік_красавік_травень_чэрвень_ліпень_жнівень_верасень_кастрычнік_лістапад_снежань'.split('_'),
+    monthsShort: 'студ_лют_сак_крас_трав_чэрв_ліп_жнів_вер_каст_ліст_снеж'.split('_'),
+    weekdays: 'нядзеля_панядзелак_аўторак_серада_чацвер_пятніца_субота'.split('_'),
+    weekdaysShort: 'нд_пн_ат_ср_чц_пт_сб'.split('_'),
+    weekdaysLetter: []
+  },
+  bg: {
+    months: 'януари_февруари_март_април_май_юни_юли_август_септември_октомври_ноември_декември'.split('_'),
+    monthsShort: 'янр_фев_мар_апр_май_юни_юли_авг_сеп_окт_ное_дек'.split('_'),
+    weekdays: 'неделя_понеделник_вторник_сряда_четвъртък_петък_събота'.split('_'),
+    weekdaysShort: 'нед_пон_вто_сря_чет_пет_съб'.split('_'),
+    weekdaysLetter: []
+  },
+  bn: {
+    months: 'জানুয়ারী_ফেবুয়ারী_মার্চ_এপ্রিল_মে_জুন_জুলাই_অগাস্ট_সেপ্টেম্বর_অক্টোবর_নভেম্বর_ডিসেম্বর'.split('_'),
+    monthsShort: 'জানু_ফেব_মার্চ_এপর_মে_জুন_জুল_অগ_সেপ্ট_অক্টো_নভ_ডিসেম্'.split('_'),
+    weekdays: 'রবিবার_সোমবার_মঙ্গলবার_বুধবার_বৃহস্পত্তিবার_শুক্রবার_শনিবার'.split('_'),
+    weekdaysShort: 'রবি_সোম_মঙ্গল_বুধ_বৃহস্পত্তি_শুক্র_শনি'.split('_'),
+    weekdaysLetter: []
+  },
+  bo: {
+    months: 'ཟླ་བ་དང་པོ_ཟླ་བ་གཉིས་པ_ཟླ་བ་གསུམ་པ_ཟླ་བ་བཞི་པ_ཟླ་བ་ལྔ་པ_ཟླ་བ་དྲུག་པ_ཟླ་བ་བདུན་པ_ཟླ་བ་བརྒྱད་པ_ཟླ་བ་དགུ་པ_ཟླ་བ་བཅུ་པ_ཟླ་བ་བཅུ་གཅིག་པ_ཟླ་བ་བཅུ་གཉིས་པ'.split('_'),
+    monthsShort: 'ཟླ་བ་དང་པོ_ཟླ་བ་གཉིས་པ_ཟླ་བ་གསུམ་པ_ཟླ་བ་བཞི་པ_ཟླ་བ་ལྔ་པ_ཟླ་བ་དྲུག་པ_ཟླ་བ་བདུན་པ_ཟླ་བ་བརྒྱད་པ_ཟླ་བ་དགུ་པ_ཟླ་བ་བཅུ་པ_ཟླ་བ་བཅུ་གཅིག་པ_ཟླ་བ་བཅུ་གཉིས་པ'.split('_'),
+    weekdays: 'གཟའ་ཉི་མ་_གཟའ་ཟླ་བ་_གཟའ་མིག་དམར་_གཟའ་ལྷག་པ་_གཟའ་ཕུར་བུ_གཟའ་པ་སངས་_གཟའ་སྤེན་པ་'.split('_'),
+    weekdaysShort: 'ཉི་མ་_ཟླ་བ་_མིག་དམར་_ལྷག་པ་_ཕུར་བུ_པ་སངས་_སྤེན་པ་'.split('_'),
+    weekdaysLetter: []
+  },
+  br: {
+    months: 'Genver_C\'hwevrer_Meurzh_Ebrel_Mae_Mezheven_Gouere_Eost_Gwengolo_Here_Du_Kerzu'.split('_'),
+    monthsShort: 'Gen_C\'hwe_Meu_Ebr_Mae_Eve_Gou_Eos_Gwe_Her_Du_Ker'.split('_'),
+    weekdays: 'Sul_Lun_Meurzh_Merc\'her_Yaou_Gwener_Sadorn'.split('_'),
+    weekdaysShort: 'Sul_Lun_Meu_Mer_Yao_Gwe_Sad'.split('_'),
+    weekdaysLetter: []
+  },
+  bs: {
+    months: 'januar_februar_mart_april_maj_juni_juli_august_septembar_oktobar_novembar_decembar'.split('_'),
+    monthsShort: 'jan._feb._mar._apr._maj._jun._jul._aug._sep._okt._nov._dec.'.split('_'),
+    weekdays: 'nedjelja_ponedjeljak_utorak_srijeda_četvrtak_petak_subota'.split('_'),
+    weekdaysShort: 'ned._pon._uto._sri._čet._pet._sub.'.split('_'),
+    weekdaysLetter: []
+  },
+  ca: {
+    months: 'gener_febrer_març_abril_maig_juny_juliol_agost_setembre_octubre_novembre_desembre'.split('_'),
+    monthsShort: 'gen._febr._mar._abr._mai._jun._jul._ag._set._oct._nov._des.'.split('_'),
+    weekdays: 'diumenge_dilluns_dimarts_dimecres_dijous_divendres_dissabte'.split('_'),
+    weekdaysShort: 'dg._dl._dt._dc._dj._dv._ds.'.split('_'),
+    weekdaysLetter: 'Dg_Dl_Dt_Dc_Dj_Dv_Ds'.split('_')
+  },
+  gl: {
+    months: 'Xaneiro_Febreiro_Marzo_Abril_Maio_Xuño_Xullo_Agosto_Setembro_Outubro_Novembro_Decembro'.split('_'),
+    monthsShort: 'Xan._Feb._Mar._Abr._Mai._Xuñ._Xul._Ago._Set._Out._Nov._Dec.'.split('_'),
+    weekdays: 'Domingo_Luns_Martes_Mércores_Xoves_Venres_Sábado'.split('_'),
+    weekdaysShort: 'Dom._Lun._Mar._Mér._Xov._Ven._Sáb.'.split('_'),
+    weekdaysLetter: 'Do_Lu_Ma_Mé_Xo_Ve_Sá'.split('_')
+  },
+  eu: {
+    months: 'urtarrila_otsaila_martxoa_apirila_maiatza_ekaina_uztaila_abuztua_iraila_urria_azaroa_abendua'.split('_'),
+    monthsShort: 'urt._ots._mar._api._mai._eka._uzt._abu._ira._urr._aza._abe.'.split('_'),
+    weekdays: 'igandea_astelehena_asteartea_asteazkena_osteguna_ostirala_larunbata'.split('_'),
+    weekdaysShort: 'ig._al._ar._az._og._ol._lr.'.split('_'),
+    weekdaysLetter: 'ig_al_ar_az_og_ol_lr'.split('_')
+  },
+  pt: {
+    months: 'Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro'.split('_'),
+    monthsShort: 'Jan_Fev_Mar_Abr_Mai_Jun_Jul_Ago_Set_Out_Nov_Dez'.split('_'),
+    weekdays: 'Domingo_Segunda-Feira_Terça-Feira_Quarta-Feira_Quinta-Feira_Sexta-Feira_Sábado'.split('_'),
+    weekdaysShort: 'Dom_Seg_Ter_Qua_Qui_Sex_Sáb'.split('_'),
+    weekdaysLetter: []
+  },
+  it: {
+    months: 'gennaio_febbraio_marzo_aprile_maggio_giugno_luglio_agosto_settembre_ottobre_novembre_dicembre'.split('_'),
+    monthsShort: 'gen_feb_mar_apr_mag_giu_lug_ago_set_ott_nov_dic'.split('_'),
+    weekdays: 'Domenica_Lunedì_Martedì_Mercoledì_Giovedì_Venerdì_Sabato'.split('_'),
+    weekdaysShort: 'Dom_Lun_Mar_Mer_Gio_Ven_Sab'.split('_'),
+    weekdaysLetter: []
+  },
+  fr: {
+    months: 'janvier_février_mars_avril_mai_juin_juillet_août_septembre_octobre_novembre_décembre'.split('_'),
+    monthsShort: 'janv._févr._mars_avr._mai_juin_juil._août_sept._oct._nov._déc.'.split('_'),
+    weekdays: 'dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi'.split('_'),
+    weekdaysShort: 'dim._lun._mar._mer._jeu._ven._sam.'.split('_'),
+    weekdaysLetter: []
+  }
+};
 const time = {
   getDaysInMonth (d) {
     const resultDate = this.getFirstDayOfMonth(d);
@@ -18,68 +132,31 @@ const time = {
     return d.getHours() >= 12 ? 'pm' : 'am';
   },
 
-  getFullMonth (d) {
+  getFullMonth (d, locale = 'en') {
     const month = d.getMonth();
-    switch (month) {
-      default: return 'Unknown';
-      case 0: return 'January';
-      case 1: return 'February';
-      case 2: return 'March';
-      case 3: return 'April';
-      case 4: return 'May';
-      case 5: return 'June';
-      case 6: return 'July';
-      case 7: return 'August';
-      case 8: return 'September';
-      case 9: return 'October';
-      case 10: return 'November';
-      case 11: return 'December';
-    }
+    const l = ((typeof locale === 'string') ? dateLocales[locale] : locale) || dateLocales.en;
+    return (l.hasOwnProperty('months')) ? l.months[month] || 'Unknown' : 'Unknown';
   },
 
-  getShortMonth (d) {
+  getShortMonth (d, locale = 'en') {
     const month = d.getMonth();
-    switch (month) {
-      default: return 'Unknown';
-      case 0: return 'Jan';
-      case 1: return 'Feb';
-      case 2: return 'Mar';
-      case 3: return 'Apr';
-      case 4: return 'May';
-      case 5: return 'Jun';
-      case 6: return 'Jul';
-      case 7: return 'Aug';
-      case 8: return 'Sep';
-      case 9: return 'Oct';
-      case 10: return 'Nov';
-      case 11: return 'Dec';
-    }
+    const l = ((typeof locale === 'string') ? dateLocales[locale] : locale) || dateLocales.en;
+    return (l.hasOwnProperty('monthsShort')) ? l.monthsShort[month] || 'Unknown' : 'Unknown';
   },
 
-  getFullDayOfWeek (day) {
-    switch (day) {
-      default: return 'Unknown';
-      case 0: return 'Sunday';
-      case 1: return 'Monday';
-      case 2: return 'Tuesday';
-      case 3: return 'Wednesday';
-      case 4: return 'Thursday';
-      case 5: return 'Friday';
-      case 6: return 'Saturday';
-    }
+  getFullDayOfWeek (day, locale = 'en') {
+    const l = ((typeof locale === 'string') ? dateLocales[locale] : locale) || dateLocales.en;
+    return (l.hasOwnProperty('weekdays')) ? l.weekdays[day] || 'Unknown' : 'Unknown';
   },
 
-  getShortDayOfWeek (day) {
-    switch (day) {
-      default: return 'Unknown';
-      case 0: return 'Sun';
-      case 1: return 'Mon';
-      case 2: return 'Tue';
-      case 3: return 'Wed';
-      case 4: return 'Thu';
-      case 5: return 'Fri';
-      case 6: return 'Sat';
-    }
+  getShortDayOfWeek (day, locale = 'en') {
+    const l = ((typeof locale === 'string') ? dateLocales[locale] : locale) || dateLocales.en;
+    return (l.hasOwnProperty('weekdaysShort')) ? l.weekdaysShort[day] || 'Unknown' : 'Unknown';
+  },
+
+  getDayOfWeekLetter (day, locale = 'en') {
+    const l = ((typeof locale === 'string') ? dateLocales[locale] : locale) || dateLocales.en;
+    return (l.hasOwnProperty('weekdaysLetter')) ? l.weekdaysLetter[day] || this.getFullDayOfWeek(day, locale).charAt(0) : 'Unknown';
   },
 
   clone (d) {
@@ -177,8 +254,21 @@ const time = {
     return ((minDate && !(date >= minDate)) || (maxDate && !(date <= maxDate)));
   },
 
-  formatDate (date) {
-    return `${date.getDate()} ${time.getFullMonth(date)} ${date.getFullYear()}`;
+  closestDate (to, date1, date2) {
+    const toTime = to.getTime();
+
+    const diff1 = Math.abs(toTime - date1.getTime());
+    const diff2 = Math.abs(toTime - date2.getTime());
+
+    return diff1 < diff2 ? date1 : date2;
+  },
+
+  formatDate (date, locale = 'en') {
+    if (locale === 'en') {
+      return `${date.getDate()} ${time.getFullMonth(date, locale)} ${date.getFullYear()}`;
+    } else {
+      return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    }
   }
 };
 

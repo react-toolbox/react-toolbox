@@ -110,7 +110,7 @@ $color-primary: $palette-blue-500;
 $color-primary-dark: $palette-blue-700;
 ```
 
-This file should be prepended to each stylesheet compilation which be achieved in multiple ways.
+This file should be prepended to each stylesheet compilation which can be achieved in multiple ways.
 
 ### Using SASS Loader
 
@@ -122,7 +122,7 @@ sassLoader: {
 }
 ```
 
-In this case we have are prepending the theme import to each SASS compilation so the primary color will be changed in every single stylesheet. If you are not using webpack maybe your loader still has a similar option, otherwise don't worry, there are solutions.
+In this case we are prepending the theme import to each SASS compilation so the primary color will be changed in every single stylesheet. If you are not using webpack maybe your loader still has a similar option, otherwise don't worry, there are solutions.
 
 ### Using SASS imports and props
 
@@ -179,7 +179,7 @@ A couple of things here. First you need to use raw components to get this styles
 
 ## Roboto Font and Material Design Icons
 
-React Toolbox assumes that you are importing [Roboto Font](https://www.google.com/fonts/specimen/Roboto) and [Material Design Icons](https://www.google.com/design/icons/).
+React Toolbox assumes that you are importing [Roboto Font](https://fonts.google.com/specimen/Roboto) and [Material Design Icons](https://www.google.com/design/icons/).
 
 In order to import the fonts for you, we'd need to include them in the CSS which is considered a bad practice. If you are not including them in your app, go to the linked sites and follow the instructions.
 
