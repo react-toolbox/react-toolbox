@@ -53,11 +53,11 @@ interface CheckboxProps extends __ReactToolbox.Props {
   /**
    * Callback called when the checkbox is blurred.
    */
-  onBlur?: __React.FocusEventHandler;
+  onBlur?: Function;
   /**
    * Callback called when the checkbox value is changed.
    */
-  onChange?: __React.MouseEventHandler;
+  onChange?: Function;
   /**
    * Classnames object defining the component style.
    */

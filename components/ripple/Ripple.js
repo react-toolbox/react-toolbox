@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
-import update from 'react-addons-update';
+import update from 'immutability-helper';
 import { themr } from 'react-css-themr';
 import { RIPPLE } from '../identifiers.js';
 import events from '../utils/events';
 import prefixer from '../utils/prefixer';
+import utils from '../utils/utils';
 
 const defaults = {
   centered: false,
@@ -84,12 +85,7 @@ const rippleFactory = (options = {}) => {
           if (e.propertyName === 'opacity') {
             if (self.props.onRippleEnded) self.props.onRippleEnded(e);
             events.removeEventListenerOnTransitionEnded(self.refs[rippleKey], onOpacityEnd);
-            self.setState({ ripples: update(self.state.ripples, {
-              [rippleKey]: { $apply: ripplesState => {
-                delete ripplesState[rippleKey];
-                return ripplesState;
-              } }
-            }) });
+            self.setState({ ripples: utils.removeObjectKey(rippleKey, self.state.ripples) });
           }
         });
       }
@@ -160,7 +156,7 @@ const rippleFactory = (options = {}) => {
        */
       getNextKey () {
         this.currentCount = this.currentCount ? this.currentCount + 1 : 1;
-        return this.currentCount.toString();
+        return `ripple${this.currentCount}`;
       }
 
       /**
@@ -170,7 +166,7 @@ const rippleFactory = (options = {}) => {
        * @return {String} The last generated ripple key.
        */
       getLastKey () {
-        return this.currentCount.toString();
+        return `ripple${this.currentCount}`;
       }
 
       /**

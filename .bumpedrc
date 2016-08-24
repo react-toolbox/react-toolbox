@@ -4,6 +4,7 @@ files: [
 
 plugins:
   prerelease:
+
     'Linting config files':
       plugin: 'bumped-finepack'
 
@@ -15,14 +16,22 @@ plugins:
       plugin: 'bumped-terminal'
       command: 'npm run prepublish'
 
+    'Generating CHANGELOG file':
+      plugin: 'bumped-changelog'
+
   postrelease:
+
     'Commiting new version':
       plugin: 'bumped-terminal'
-      command: 'git add package.json && git commit package.json -m "$newVersion release" && git push origin master'
+      command: 'git add CHANGELOG.md package.json && git commit package.json -m "Release $newVersion"'
+
+    'Detecting problem before publish':
+      plugin: 'bumped-terminal'
+      command: 'git-dirty'
 
     'Publishing tag at Github':
       plugin: 'bumped-terminal'
-      command: 'git tag $newVersion && git push origin $newVersion'
+      command: 'git tag $newVersion && git push && git push --tags'
 
     'Publishing at NPM':
       plugin: 'bumped-terminal'

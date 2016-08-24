@@ -40,7 +40,7 @@ interface TableProps extends __ReactToolbox.Props {
   /**
    * Callback function invoked when the row selection changes.
    */
-  onSelect?: __React.FormEventHandler;
+  onSelect?: Function;
   /**
    * If true, each row will display a checkbox to allow the user to select that one row.
    * @default true

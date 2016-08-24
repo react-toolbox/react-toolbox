@@ -15,14 +15,6 @@ export interface TooltipTheme {
 
 interface TooltipProps {
   /**
-   * Callback called when the mouse enters the Component.
-   */
-  onMouseEnter?: __React.MouseEventHandler;
-  /**
-   * Callback called when the mouse leaves the Component.
-   */
-  onMouseLeave?: __React.MouseEventHandler;
-  /**
    * Classnames object defining the component style.
    */
   theme?: TooltipTheme;

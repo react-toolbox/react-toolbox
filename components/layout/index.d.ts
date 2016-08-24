@@ -88,7 +88,7 @@ interface NavDrawerProps extends __ReactToolbox.Props {
   /**
    * Callback function to be invoked when the overlay is clicked.
    */
-  onOverlayClick?: __React.MouseEventHandler;
+  onOverlayClick?: Function;
   /**
    * The breakpoint at which the drawer is automatically pinned.
    */
