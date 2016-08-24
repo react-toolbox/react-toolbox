@@ -61,6 +61,7 @@
     "expect": "~1.20.1",
     "express": "~4.13.4",
     "extract-text-webpack-plugin": "~1.0.1",
+    "git-dirty": "~1.0.2",
     "glob": "~7.0.3",
     "immutability-helper": "~2.0.0",
     "karma": "~1.1.2",
