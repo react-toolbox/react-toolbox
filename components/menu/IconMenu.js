@@ -71,6 +71,7 @@ const factory = (IconButton, Menu) => {
             ripple={this.props.menuRipple}
             selectable={this.props.selectable}
             selected={this.props.selected}
+            theme={this.props.theme}
           >
             {this.props.children}
           </Menu>
