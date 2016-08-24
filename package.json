@@ -63,6 +63,7 @@
     "extract-text-webpack-plugin": "~1.0.1",
     "git-dirty": "~1.0.2",
     "glob": "~7.0.3",
+    "immutability-helper": "~2.0.0",
     "karma": "~1.1.2",
     "karma-chrome-launcher": "~1.0.1",
     "karma-cli": "~1.0.0",
@@ -79,7 +80,6 @@
     "react": "~15.3.0",
     "react-addons-css-transition-group": "~15.3.0",
     "react-addons-test-utils": "~15.3.0",
-    "react-addons-update": "~15.3.0",
     "react-docgen": "~2.8.2",
     "react-dom": "~15.3.0",
     "react-transform-catch-errors": "~1.0.2",
@@ -115,10 +115,10 @@
   "license": "MIT",
   "peerDependencies": {
     "classnames": "~2.2.0",
+    "immutability-helper": "~2.0.0",
     "normalize.css": "~4.2.0",
     "react": "~0.14 || ~15.3.0",
     "react-addons-css-transition-group": "~0.14.0 || ~15.3.0",
-    "react-addons-update": "~0.14 || ~15.3.0",
     "react-dom": "~0.14.0 || ~15.3.0"
   }
 }
