@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
+import { FontIcon } from '../font_icon';
 import { themr } from 'react-css-themr';
 import { TABS } from '../identifiers.js';
 
@@ -10,7 +11,8 @@ class Tab extends Component {
     className: PropTypes.string,
     disabled: PropTypes.bool,
     hidden: PropTypes.bool,
-    label: PropTypes.any.isRequired,
+    icon: PropTypes.node,
+    label: PropTypes.node,
     onActive: PropTypes.func,
     onClick: PropTypes.func,
     theme: PropTypes.shape({
@@ -40,6 +42,18 @@ class Tab extends Component {
     }
   };
 
+  renderIcon = () => {
+    if (!this.props.icon) {
+      return null;
+    } else {
+      return (
+        <div>
+          <FontIcon value={this.props.icon}/>
+        </div>
+      );
+    }
+  };
+
   render () {
     const {
       onActive, // eslint-disable-line
@@ -54,6 +68,7 @@ class Tab extends Component {
 
     return (
       <label {...other} data-react-toolbox='tab' className={_className} onClick={this.handleClick}>
+        {this.renderIcon()}
         {this.props.label}
       </label>
     );
