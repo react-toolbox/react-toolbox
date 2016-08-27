@@ -18,6 +18,7 @@ const factory = (Input) => {
       name: PropTypes.string,
       onBlur: PropTypes.func,
       onChange: PropTypes.func,
+      onClick: PropTypes.func,
       onFocus: PropTypes.func,
       source: PropTypes.array.isRequired,
       template: PropTypes.func,
@@ -88,8 +89,8 @@ const factory = (Input) => {
       const client = event.target.getBoundingClientRect();
       const screen_height = window.innerHeight || document.documentElement.offsetHeight;
       const up = this.props.auto ? client.top > ((screen_height / 2) + client.height) : false;
-      if (this.props.onFocus) this.props.onFocus(event);
       if (this.props.onClick) this.props.onClick(event);
+      if (this.props.onFocus) this.props.onFocus(event);
       this.setState({active: true, up});
     };
 
