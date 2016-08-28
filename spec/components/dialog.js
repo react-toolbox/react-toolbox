@@ -1,16 +1,29 @@
 import React, { PropTypes } from 'react';
 import Button from '../../components/button';
 import Dialog from '../../components/dialog';
+import Dropdown from '../../components/dropdown';
+
+const dialogTypes = [
+  {value: 'small', label: 'small'},
+  {value: 'normal', label: 'normal'},
+  {value: 'large', label: 'large'},
+  {value: 'fullscreen', label: 'fullscreen'}
+];
 
 class DialogTest extends React.Component {
   state = {
-    active: false
+    active: false,
+    type: 'normal'
   };
 
   handleToggle = () => {
     this.setState({
       active: !this.state.active
     });
+  };
+
+  changeDialogType = (value) => {
+    this.setState({type: value});
   };
 
   actions = [
@@ -23,11 +36,19 @@ class DialogTest extends React.Component {
       <section>
         <h5>Dialog</h5>
         <p>lorem ipsum...</p>
+        <Dropdown
+          label='Dialog Type'
+          auto
+          onChange={this.changeDialogType}
+          source={dialogTypes}
+          value={this.state.type}
+        />
         <Button label='Show Dialog' raised primary onClick={this.handleToggle} />
         <ContextComponent>
           <Dialog
             actions={this.actions}
             active={this.state.active}
+            type={this.state.type}
             title="Use Google's location service?"
             onOverlayClick={this.handleToggle}
             onEscKeyDown={this.handleToggle}
