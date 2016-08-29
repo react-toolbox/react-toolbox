@@ -13,6 +13,18 @@ export interface AppBarTheme {
    * Added to the root element when the app bar is flat.
    */
   flat?: string;
+  /**
+   * Used as the app bar title.
+   */
+  title ?: string;
+  /**
+   * Added to the left icon app bar element.
+   */
+  leftIcon?: string;
+  /**
+   * Added to the right icon app bar element.
+   */
+  rightIcon?: string;
 }
 
 interface AppBarProps extends __ReactToolbox.Props {
@@ -30,6 +42,26 @@ interface AppBarProps extends __ReactToolbox.Props {
    * @default false
    */
   flat?: boolean;
+  /**
+   * If it exists it is used as the AppBar title
+   */
+  title?: string;
+  /**
+   * If it exists it is used as the AppBar left icon
+   */
+  leftIcon?: string;
+  /**
+   * Called when the left icon is clicked
+   */
+  onLeftIconClick?: Function;
+  /**
+   * If it exists it is used as the AppBar right icon
+   */
+  rightIcon?: string;
+  /**
+   * Called when the righticon is clicked
+   */
+  onRightIconClick?: Function;
   /**
    * Classnames object defining the component style.
    */

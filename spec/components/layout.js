@@ -75,17 +75,13 @@ class LayoutTest extends React.Component {
                 <div style={{ width: '100%', height: '60rem', margin: '1.8rem 0' }}>
                     <Layout>
                         <NavDrawer active={this.state.drawerOpen} pinned={this.state.drawerPinned} permanentAt={this.state.permanentAt} onOverlayClick={this.toggleDrawer}>
-                            <AppBar>
-                                <h5>Drawer</h5>
-                            </AppBar>
+                          <AppBar title='Drawer'/>
                             <ul style={{ listStyle: 'none', overflowY: 'auto', flex: 1, padding: '1.6rem' }}>
                                 {drawerItems}
                             </ul>
                         </NavDrawer>
                         <Panel>
-                            <AppBar>
-                                <IconButton icon='menu' inverse onClick={this.toggleDrawer}/>
-                            </AppBar>
+                            <AppBar leftIcon='menu' onLeftIconClick={this.toggleDrawer}/>
                             <div style={{ flex: 1, overflowY: 'auto' }}>
                                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                                     <section style={{ margin: '1.8rem'}}>
