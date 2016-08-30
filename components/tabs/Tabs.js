@@ -12,6 +12,7 @@ const factory = (Tab, TabContent) => {
       className: PropTypes.string,
       disableAnimatedBottomBorder: PropTypes.bool,
       fixed: PropTypes.bool,
+      hideMode: PropTypes.oneOf(['display', 'unmounted']),
       index: PropTypes.number,
       inverse: PropTypes.bool,
       onChange: PropTypes.func,
@@ -27,7 +28,8 @@ const factory = (Tab, TabContent) => {
     static defaultProps = {
       index: 0,
       fixed: false,
-      inverse: false
+      inverse: false,
+      hideMode: 'unmounted'
     };
 
     state = {
@@ -119,18 +121,21 @@ const factory = (Tab, TabContent) => {
     }
 
     renderContents (contents) {
-      const activeIdx = contents.findIndex((item, idx) => {
-        return this.props.index === idx;
+      const contentElements = contents.map((item, idx) => {
+        return React.cloneElement(item, {
+          key: idx,
+          theme: this.props.theme,
+          active: this.props.index === idx,
+          hidden: this.props.index !== idx && this.props.hideMode === 'display',
+          tabIndex: idx
+        });
       });
 
-      if (contents && contents[activeIdx]) {
-        return React.cloneElement(contents[activeIdx], {
-          key: activeIdx,
-          theme: this.props.theme,
-          active: true,
-          tabIndex: activeIdx
-        });
+      if (this.props.hideMode === 'display') {
+        return contentElements;
       }
+
+      return contentElements.filter((item, idx) => (idx === this.props.index));
     }
 
     render () {

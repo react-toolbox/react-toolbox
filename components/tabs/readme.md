@@ -71,6 +71,7 @@ This component acts as the wrapper and the main controller of the content that i
 | `className`                   | `String`        | `''`            | Additional class name to provide custom styling.|
 | `disableAnimatedBottomBorder` | `Boolean`       | `false`         | Disable the animation below the active tab.|
 | `fixed`                       | `Boolean`       | `false`         | If True, the tabs will be 'fixed tabs'.|
+| `hideMode`                    | `enum`(`'display'`,`'unmounted'`) | `unmounted`         | `unmounted` mode will not mount the tab content of inactive tabs. `display` mode will mount but hide inactive tabs. Consider holding state outside of the Tabs component before using `display` mode |
 | `index`                       | `Number`        | `0`             | Current <Tab> |
 | `inverse`                     | `Boolean`       | `false`         | If True, the tabs will have an inverse style.|
 | `onChange`                    | `Function`      |                 | Callback function that is fired when the tab changes.|
