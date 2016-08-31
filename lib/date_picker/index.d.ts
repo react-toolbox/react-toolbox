@@ -1,4 +1,4 @@
-import __ReactToolbox from "../index.d.ts";
+import __ReactToolbox from "../index";
 
 export interface DatePickerTheme {
   /**
