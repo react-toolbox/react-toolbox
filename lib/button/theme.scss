@@ -31,14 +31,14 @@
   > span:not([data-react-toolbox="tooltip"]) {
     display: inline-block;
     line-height: $button-height;
-    vertical-align: middle;
+    vertical-align: top;
   }
   > svg {
     display: inline-block;
     width: 1em;
     height: $button-height;
     font-size: 120%;
-    vertical-align: middle;
+    vertical-align: top;
     fill: currentColor;
   }
   > * {
@@ -126,7 +126,7 @@
   > .icon, svg {
     font-size: $button-toggle-font-size;
     line-height: $button-height;
-    vertical-align: middle;
+    vertical-align: top;
   }
   > .rippleWrapper {
     border-radius: 50%;
