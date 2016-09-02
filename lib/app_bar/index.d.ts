@@ -1,4 +1,5 @@
-import __ReactToolbox from "../index";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface AppBarTheme {
   /**
@@ -15,11 +16,11 @@ export interface AppBarTheme {
   flat?: string;
 }
 
-interface AppBarProps extends __ReactToolbox.Props {
+interface AppBarProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Determine if the bar should have position fixed or relative.
    * @default false
@@ -36,6 +37,6 @@ interface AppBarProps extends __ReactToolbox.Props {
   theme?: AppBarTheme;
 }
 
-export class AppBar extends __React.Component<AppBarProps, {}> { }
+export class AppBar extends React.Component<AppBarProps, {}> { }
 
 export default AppBar;
