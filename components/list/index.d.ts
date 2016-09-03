@@ -254,7 +254,7 @@ interface ListSubHeaderProps extends __ReactToolbox.Props {
   /**
    * Text that will be displayed.
    */
-  caption?: boolean;
+  caption?: string;
   /**
    * Classnames object defining the component style.
    */
