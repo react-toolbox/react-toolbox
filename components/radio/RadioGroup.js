@@ -24,19 +24,13 @@ const factory = (RadioButton) => {
     };
 
     renderRadioButtons () {
-      return React.Children.map(this.props.children, (radio, idx) => {
-        return (
-          <RadioButton
-            {...radio.props}
-            checked={radio.props.value === this.props.value}
-            disabled={this.props.disabled || radio.props.disabled}
-            key={idx}
-            label={radio.props.label}
-            onChange={this.handleChange.bind(this, radio.props.value)}
-            value={radio.props.value}
-          />
-        );
-      });
+      return React.Children.map(this.props.children, radio => (
+        React.cloneElement(radio, {
+          checked: radio.props.value === this.props.value,
+          disabled: this.props.disabled || radio.props.disabled,
+          onChange: this.handleChange.bind(this, radio.props.value)
+        })
+      ));
     }
 
     render () {
