@@ -1,4 +1,5 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface DropdownTheme {
   /**
@@ -51,7 +52,7 @@ export interface DropdownTheme {
   values?: string;
 }
 
-interface DropdownProps extends __ReactToolbox.Props {
+interface DropdownProps extends ReactToolbox.Props {
   /**
    * If true the dropdown will preselect the first item if the supplied value matches none of the options' values.
    * @default true
@@ -109,6 +110,6 @@ interface DropdownProps extends __ReactToolbox.Props {
   value?: string | number;
 }
 
-export class Dropdown extends __React.Component<DropdownProps, {}> { }
+export class Dropdown extends React.Component<DropdownProps, {}> { }
 
 export default Dropdown;

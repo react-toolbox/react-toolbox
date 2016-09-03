@@ -1,4 +1,5 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface NavigationTheme {
   /**
@@ -19,7 +20,7 @@ export interface NavigationTheme {
   vertical?: string;
 }
 
-interface NavigationProps extends __ReactToolbox.Props {
+interface NavigationProps extends ReactToolbox.Props {
   /**
    * Array of objects that will be represented as <Button/> so the keys will be transferred as properties the Button Component.
    */
@@ -27,7 +28,7 @@ interface NavigationProps extends __ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Array of objects similar to actions but that will be rendered as <Link/> component definition.
    */
@@ -43,4 +44,4 @@ interface NavigationProps extends __ReactToolbox.Props {
   type?: "vertical" | "horizontal";
 }
 
-export class Navigation extends __React.Component<NavigationProps, {}> { }
+export class Navigation extends React.Component<NavigationProps, {}> { }

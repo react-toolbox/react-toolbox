@@ -1,4 +1,5 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface ButtonTheme {
   /**
@@ -51,7 +52,7 @@ export interface ButtonTheme {
   toggle?: string;
 }
 
-interface ButtonProps extends __ReactToolbox.Props {
+interface ButtonProps extends ReactToolbox.Props {
   /**
    * Indicates if the button should have accent color.
    * @default false
@@ -60,7 +61,7 @@ interface ButtonProps extends __ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * If true, component will be disabled.
    * @default false
@@ -83,7 +84,7 @@ interface ButtonProps extends __ReactToolbox.Props {
   /**
    * Value of the icon (See Font Icon Component).
    */
-  icon?: __React.ReactNode | string;
+  icon?: React.ReactNode | string;
   /**
    * If true, the neutral colors are inverted. Useful to put a button over a dark background.
    */
@@ -123,7 +124,7 @@ interface ButtonProps extends __ReactToolbox.Props {
   theme?: ButtonTheme;
 }
 
-export class Button extends __React.Component<ButtonProps, {}> { }
+export class Button extends React.Component<ButtonProps, {}> { }
 
 export interface IconButtonTheme {
   /**
@@ -160,7 +161,7 @@ export interface IconButtonTheme {
   toggle?: string;
 }
 
-interface IconButtonProps extends __ReactToolbox.Props {
+interface IconButtonProps extends ReactToolbox.Props {
   /**
    * Indicates if the button should have accent color.
    * @default false
@@ -169,7 +170,7 @@ interface IconButtonProps extends __ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * If true, component will be disabled.
    * @default false
@@ -182,7 +183,7 @@ interface IconButtonProps extends __ReactToolbox.Props {
   /**
    * Value of the icon (See Font Icon Component).
    */
-  icon?: __React.ReactNode | string;
+  icon?: React.ReactNode | string;
   /**
    * If true, the neutral colors are inverted. Useful to put a button over a dark background.
    */
@@ -208,4 +209,4 @@ interface IconButtonProps extends __ReactToolbox.Props {
   theme?: IconButtonTheme;
 }
 
-export class IconButton extends __React.Component<IconButtonProps, {}> { }
+export class IconButton extends React.Component<IconButtonProps, {}> { }

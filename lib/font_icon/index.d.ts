@@ -1,16 +1,17 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
-interface FontIconProps extends __ReactToolbox.Props {
+interface FontIconProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * The key string for the icon you want be displayed.
    */
-  value?: __React.ReactNode | string;
+  value?: React.ReactNode | string;
 }
 
-export class FontIcon extends __React.Component<FontIconProps, {}> { }
+export class FontIcon extends React.Component<FontIconProps, {}> { }
 
 export default FontIcon;

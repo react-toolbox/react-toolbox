@@ -1,4 +1,5 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface CheckboxTheme {
   /**
@@ -31,7 +32,7 @@ export interface CheckboxTheme {
   text?: string;
 }
 
-interface CheckboxProps extends __ReactToolbox.Props {
+interface CheckboxProps extends ReactToolbox.Props {
   /**
    * Value for the checkbox, can be true or false.
    * @default false
@@ -45,7 +46,7 @@ interface CheckboxProps extends __ReactToolbox.Props {
   /**
    * Text label to attach next to the checkbox element.
    */
-  label?: __React.ReactNode | string;
+  label?: React.ReactNode | string;
   /**
    * The name of the field to set in the input checkbox.
    */
@@ -64,6 +65,6 @@ interface CheckboxProps extends __ReactToolbox.Props {
   theme?: CheckboxTheme;
 }
 
-export class Checkbox extends __React.Component<CheckboxProps, {}> { }
+export class Checkbox extends React.Component<CheckboxProps, {}> { }
 
 export default Checkbox;
