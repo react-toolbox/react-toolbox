@@ -20,9 +20,9 @@
     }
   }
   th, td {
-    border-bottom: $table-row-divider;
     position: relative;
     padding: 0 $table-row-offset;
+    border-bottom: $table-row-divider;
     &.selectable {
       width: 1.8 * $unit;
       padding-right: 0;

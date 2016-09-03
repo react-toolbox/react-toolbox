@@ -51,10 +51,10 @@
   width: 96vw;
 
   @media screen and (max-width: $layout-breakpoint-xs) {
-    max-width: 100vw;
-    max-height: 100vh;
-    min-height: 100vh;
     width: 100vw;
+    max-width: 100vw;
+    min-height: 100vh;
+    max-height: 100vh;
     border-radius: 0;
   }
 }
