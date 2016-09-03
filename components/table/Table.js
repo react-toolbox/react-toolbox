@@ -42,11 +42,11 @@ const factory = (TableHead, TableRow) => {
 
     handleRowSelect = (index) => {
       if (this.props.onSelect) {
-        let newSelection = [];
+        let newSelection = [...this.props.selected];
         if (this.props.multiSelectable) {
           const position = this.props.selected.indexOf(index);
-          newSelection = this.props.selected.indexOf(index) !== -1
-            ? this.props.selected.filter((el, idx) => idx !== position)
+          newSelection = position !== -1
+            ? newSelection.filter((el, idx) => idx !== position)
             : newSelection.concat([index]);
         } else {
           newSelection = [index];
