@@ -56,14 +56,14 @@ const factory = (IconButton) => {
     };
 
     handleYearClick = (event) => {
-      const year = parseInt(event.target.id);
+      const year = parseInt(event.currentTarget.id);
       const viewDate = time.setYear(this.props.selectedDate, year);
       this.setState({viewDate});
       this.props.onChange(viewDate, false);
     };
 
     changeViewMonth = (event) => {
-      const direction = event.target.id;
+      const direction = event.currentTarget.id;
       this.setState({
         direction,
         viewDate: time.addMonths(this.state.viewDate, DIRECTION_STEPS[direction])
