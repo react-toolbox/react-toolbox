@@ -1,4 +1,5 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface MenuTheme {
   /**
@@ -43,7 +44,7 @@ export interface MenuTheme {
   topRight?: string;
 }
 
-interface MenuProps extends __ReactToolbox.Props {
+interface MenuProps extends ReactToolbox.Props {
   /**
    * If true, the menu will be displayed as opened by default.
    * @default false
@@ -52,7 +53,7 @@ interface MenuProps extends __ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Callback that will be called when the menu is being hidden.
    */
@@ -95,7 +96,7 @@ interface MenuProps extends __ReactToolbox.Props {
   theme?: MenuTheme;
 }
 
-export class Menu extends __React.Component<MenuProps, {}> { }
+export class Menu extends React.Component<MenuProps, {}> { }
 
 export interface IconMenuTheme {
   /**
@@ -108,16 +109,16 @@ export interface IconMenuTheme {
   iconMenu?: string;
 }
 
-interface IconMenuProps extends __ReactToolbox.Props {
+interface IconMenuProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Icon font key string or Element to display the opener icon.
    * @default more_vert
    */
-  icon?: __React.ReactNode | string;
+  icon?: React.ReactNode | string;
   /**
    * If true, the icon will show a ripple when is clicked.
    * @default true
@@ -160,7 +161,7 @@ interface IconMenuProps extends __ReactToolbox.Props {
   theme?: IconMenuTheme;
 }
 
-export class IconMenu extends __React.Component<IconMenuProps, {}> { }
+export class IconMenu extends React.Component<IconMenuProps, {}> { }
 
 export interface MenuDividerTheme {
   /**
@@ -169,14 +170,14 @@ export interface MenuDividerTheme {
   menuDivider?: string;
 }
 
-interface MenuDividerProps extends __ReactToolbox.Props {
+interface MenuDividerProps extends ReactToolbox.Props {
   /**
    * Classnames object defining the component style.
    */
   theme?: MenuDividerTheme;
 }
 
-export class MenuDivider extends __React.Component<MenuDividerProps, {}> { }
+export class MenuDivider extends React.Component<MenuDividerProps, {}> { }
 
 export interface MenuItemTheme {
   /**
@@ -205,7 +206,7 @@ export interface MenuItemTheme {
   shortcut?: string;
 }
 
-interface MenuItemProps extends __ReactToolbox.Props {
+interface MenuItemProps extends ReactToolbox.Props {
   /**
    * The text to include in the menu item. Required.
    */
@@ -213,7 +214,7 @@ interface MenuItemProps extends __ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * If true, the item will be displayed as disabled and is not selectable.
    * @default false
@@ -222,7 +223,7 @@ interface MenuItemProps extends __ReactToolbox.Props {
   /**
    * Icon font key string or Element to display in the right side of the option.
    */
-  icon?: __React.ReactNode | string;
+  icon?: React.ReactNode | string;
   /**
    * Transferred from the Menu component for selectable menus. Indicates if it's the current active option.
    * @default false
@@ -238,4 +239,4 @@ interface MenuItemProps extends __ReactToolbox.Props {
   theme?: MenuItemTheme;
 }
 
-export class MenuItem extends __React.Component<MenuItemProps, {}> { }
+export class MenuItem extends React.Component<MenuItemProps, {}> { }

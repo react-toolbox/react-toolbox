@@ -1,4 +1,5 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface DialogTheme {
   /**
@@ -38,7 +39,7 @@ interface DialogActionProps {
   onClick?: Function;
 }
 
-interface DialogProps extends __ReactToolbox.Props {
+interface DialogProps extends ReactToolbox.Props {
   /**
    * A array of objects representing the buttons for the dialog navigation area. The properties will be transferred to the buttons.
    */
@@ -51,7 +52,7 @@ interface DialogProps extends __ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Callback called when the ESC key is pressed with the overlay active.
    */
@@ -87,6 +88,6 @@ interface DialogProps extends __ReactToolbox.Props {
   type?: string;
 }
 
-export class Dialog extends __React.Component<DialogProps, {}> { }
+export class Dialog extends React.Component<DialogProps, {}> { }
 
 export default Dialog;

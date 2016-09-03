@@ -1,10 +1,11 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
-interface RadioGroupProps extends __ReactToolbox.Props {
+interface RadioGroupProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * If true, the group will be displayed as disabled.
    * @default false
@@ -24,7 +25,7 @@ interface RadioGroupProps extends __ReactToolbox.Props {
   value?: any;
 }
 
-export class RadioGroup extends __React.Component<RadioGroupProps, {}> { }
+export class RadioGroup extends React.Component<RadioGroupProps, {}> { }
 
 export interface RadioButtonTheme {
   /**
@@ -57,7 +58,7 @@ export interface RadioButtonTheme {
   text?: string;
 }
 
-interface RadioButtonProps extends __ReactToolbox.Props {
+interface RadioButtonProps extends ReactToolbox.Props {
   /**
    * If true, the input element will be selected by default. Transferred from the parent.
    * @default false
@@ -71,7 +72,7 @@ interface RadioButtonProps extends __ReactToolbox.Props {
   /**
    * Label for the radio button.
    */
-  label?: __React.ReactNode | string;
+  label?: React.ReactNode | string;
   /**
    * Name for the input element.
    */
@@ -98,4 +99,4 @@ interface RadioButtonProps extends __ReactToolbox.Props {
   value?: any;
 }
 
-export class RadioButton extends __React.Component<RadioButtonProps, {}> { }
+export class RadioButton extends React.Component<RadioButtonProps, {}> { }

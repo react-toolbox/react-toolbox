@@ -1,4 +1,5 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface AutocompleteTheme {
   /**
@@ -43,7 +44,7 @@ export interface AutocompleteTheme {
   values?: string;
 }
 
-interface AutocompleteProps extends __ReactToolbox.Props {
+interface AutocompleteProps extends ReactToolbox.Props {
   /**
    * Determines the opening direction. It can be auto, up or down.
    * @default auto
@@ -100,6 +101,6 @@ interface AutocompleteProps extends __ReactToolbox.Props {
   value?: any;
 }
 
-export class Autocomplete extends __React.Component<AutocompleteProps, {}> { }
+export class Autocomplete extends React.Component<AutocompleteProps, {}> { }
 
 export default Autocomplete;

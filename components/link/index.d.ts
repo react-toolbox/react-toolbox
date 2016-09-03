@@ -1,4 +1,5 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface LinkTheme {
   /**
@@ -15,7 +16,7 @@ export interface LinkTheme {
   link?: string;
 }
 
-interface LinkProps extends __ReactToolbox.Props {
+interface LinkProps extends ReactToolbox.Props {
   /**
    * If true, adds active style to link.
    * @default false
@@ -24,7 +25,7 @@ interface LinkProps extends __ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Sets a count number.
    */
@@ -36,7 +37,7 @@ interface LinkProps extends __ReactToolbox.Props {
   /**
    * An icon key string to include a FontIcon component in front of the text.
    */
-  icon?: __React.ReactNode | string;
+  icon?: React.ReactNode | string;
   /**
    * The text string used for the text content of the link.
    */
@@ -47,4 +48,4 @@ interface LinkProps extends __ReactToolbox.Props {
   theme?: LinkTheme;
 }
 
-export class Link extends __React.Component<LinkProps, {}> { }
+export class Link extends React.Component<LinkProps, {}> { }
