@@ -3,13 +3,13 @@
 @import './config.css';
 
 .table {
+  border-spacing: 0;
   color: var(--table-text-color);
   font-size: var(--font-size-tiny);
   text-align: left;
   width: 100%;
 
   & tr {
-    border-bottom: var(--table-row-divider);
     height: var(--table-row-height);
     line-height: var(--table-row-height);
   }
@@ -23,6 +23,7 @@
 
   & th,
   & td {
+    border-bottom: var(--table-row-divider);
     padding: 0 var(--table-row-offset);
     position: relative;
 

@@ -36,3 +36,25 @@
     height: var(--appbar-height-m-landscape);
   }
 }
+
+.title {
+  flex-grow: 1;
+  font-size: calc(1.8 * var(--unit));
+  font-weight: bold;
+
+  & > small {
+    font-size: calc(1.8 * var(--unit));
+    font-weight: normal;
+  }
+}
+
+.leftIcon {
+  padding: calc(1.2 * var(--unit)) calc(1.2 * var(--unit)) calc(1.2 * var(--unit)) 0;
+  text-align: left;
+}
+
+.rightIcon {
+  margin-left: auto;
+  padding: calc(1.2 * var(--unit)) 0 calc(1.2 * var(--unit)) calc(1.2 * var(--unit));
+  text-align: right;
+}

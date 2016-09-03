@@ -33,7 +33,7 @@
   & > span:not([data-react-toolbox='tooltip']) {
     display: inline-block;
     line-height: var(--button-height);
-    vertical-align: middle;
+    vertical-align: top;
   }
 
   & > svg {
@@ -41,7 +41,7 @@
     fill: currentColor;
     font-size: 120%;
     height: var(--button-height);
-    vertical-align: middle;
+    vertical-align: top;
     width: 1em;
   }
 
@@ -146,7 +146,7 @@
   & svg {
     font-size: var(--button-toggle-font-size);
     line-height: var(--button-height);
-    vertical-align: middle;
+    vertical-align: top;
   }
 
   & > .rippleWrapper {

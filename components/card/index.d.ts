@@ -1,15 +1,16 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface CardTheme {
   card?: string;
   raised?: string;
 }
 
-interface CardProps extends __ReactToolbox.Props {
+interface CardProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   raised?: boolean;
   /**
    * Classnames object defining the component style.
@@ -17,24 +18,24 @@ interface CardProps extends __ReactToolbox.Props {
   theme?: CardTheme;
 }
 
-export class Card extends __React.Component<CardProps, {}> { }
+export class Card extends React.Component<CardProps, {}> { }
 
 export interface CardActionsTheme {
   cardActions?: string;
 }
 
-interface CardActionsProps extends __ReactToolbox.Props {
+interface CardActionsProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Classnames object defining the component style.
    */
   theme?: CardActionsTheme;
 }
 
-export class CardActions extends __React.Component<CardActionsProps, {}> { }
+export class CardActions extends React.Component<CardActionsProps, {}> { }
 
 export interface CardMediaTheme {
   cardMedia?: string;
@@ -44,39 +45,39 @@ export interface CardMediaTheme {
   wide?: string;
 }
 
-interface CardMediaProps extends __ReactToolbox.Props {
+interface CardMediaProps extends ReactToolbox.Props {
   aspectRatio?: "wide" | "square";
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   color?: string;
   contentOverlay?: boolean;
-  image?: __React.ReactNode | string;
+  image?: React.ReactNode | string;
   /**
    * Classnames object defining the component style.
    */
   theme?: CardMediaTheme;
 }
 
-export class CardMedia extends __React.Component<CardMediaProps, {}> { }
+export class CardMedia extends React.Component<CardMediaProps, {}> { }
 
 export interface CardTextTheme {
   cardText?: string;
 }
 
-interface CardTextProps extends __ReactToolbox.Props {
+interface CardTextProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Classnames object defining the component style.
    */
   theme?: CardTextTheme;
 }
 
-export class CardText extends __React.Component<CardTextProps, {}> { }
+export class CardText extends React.Component<CardTextProps, {}> { }
 
 export interface CardTitleTheme {
   large?: string;
@@ -85,18 +86,18 @@ export interface CardTitleTheme {
   subtitle?: string;
 }
 
-interface CardTitleProps extends __ReactToolbox.Props {
-  avatar?: __React.ReactNode | string;
+interface CardTitleProps extends ReactToolbox.Props {
+  avatar?: React.ReactNode | string;
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
-  subtitle?: __React.ReactNode | string;
+  children?: React.ReactNode;
+  subtitle?: React.ReactNode | string;
   /**
    * Classnames object defining the component style.
    */
   theme?: CardTitleTheme;
-  title?: __React.ReactNode | string;
+  title?: React.ReactNode | string;
 }
 
-export class CardTitle extends __React.Component<CardTitleProps, {}> { }
+export class CardTitle extends React.Component<CardTitleProps, {}> { }

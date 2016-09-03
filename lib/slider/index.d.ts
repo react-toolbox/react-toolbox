@@ -1,4 +1,5 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface SliderTheme {
   /**
@@ -55,7 +56,7 @@ export interface SliderTheme {
   snaps?: string;
 }
 
-interface SliderProps extends __ReactToolbox.Props {
+interface SliderProps extends ReactToolbox.Props {
   /**
    * If true, an input is shown and the user can set the slider from keyboard value.
    * @default false
@@ -101,6 +102,6 @@ interface SliderProps extends __ReactToolbox.Props {
   value?: number;
 }
 
-export class Slider extends __React.Component<SliderProps, {}> { }
+export class Slider extends React.Component<SliderProps, {}> { }
 
 export default Slider;

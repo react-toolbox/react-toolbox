@@ -1,4 +1,5 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface SwitchTheme {
   /**
@@ -35,7 +36,7 @@ export interface SwitchTheme {
   thumb?: string;
 }
 
-interface SwitchProps extends __ReactToolbox.Props {
+interface SwitchProps extends ReactToolbox.Props {
   /**
    * If true, the switch will be enabled.
    * @default false
@@ -72,6 +73,6 @@ interface SwitchProps extends __ReactToolbox.Props {
   theme?: SwitchTheme;
 }
 
-export class Switch extends __React.Component<SwitchProps, {}> { }
+export class Switch extends React.Component<SwitchProps, {}> { }
 
 export default Switch;

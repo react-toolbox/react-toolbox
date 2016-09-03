@@ -15,19 +15,28 @@ const AppBarTest = () => (
 
 If you want to provide a theme via context, the component key is `RTAppBar`.
 
+The `AppBar` component provides properties for the common use cases of `title`, `leftIcon` and `rightIcon`. However, you can also override these with your own content by not specifying these and instead provide children elements, as shown in the example.
+
 ## Properties
 
 | Name          | Type    | Default  | Description|
 |:-----|:-----|:-----|:-----|
-| `className` | `String`  | `''`     | Set a class for the root component.|
-| `fixed`     | `Bool`    | `false`  | Determine if the bar should have position `fixed` or `relative`.|
-| `flat`      | `Bool`    | `false`  | If true, the AppBar shows a shadow.|
-| `theme`     | `Object`  | `null`   | Classnames object defining the component style.|
+| `className`        | `String`   | `''`    | Set a class for the root component.|
+| `fixed`            | `Bool`     | `false` | Determine if the bar should have position `fixed` or `relative`.|
+| `flat`             | `Bool`     | `false` | If true, the AppBar shows a shadow.|
+| `theme`            | `Object`   | `null`  | Classnames object defining the component style.|
+| `title`            | `String`   | `null`  | Title used for the appbar.|
+| `leftIcon`         | `String`   | `null`  | Left icon.|
+| `onLeftIconClick`  | `Function` | `null`  | Called on left icon click event.|
+| `rightIcon`        | `String`   | `null`  | Right icon.|
+| `onRightIconClick` | `Function` | `null`  | Called on right icon click event.|
 
 ## Theme
 
-| Name     | Description|
-|:---------|:-----------|
-| `appBar` | Used for the component root element.|
-| `fixed`  | Added to the root element when the app bar is fixed.|
-| `flat`   | Added to the root element when the app bar is flat.|
+| Name        | Description|
+|:------------|:-----------|
+| `appBar`    | Used for the component root element.|
+| `fixed`     | Added to the root element when the app bar is fixed.|
+| `title`     | Added to the title element of the app bar.|
+| `leftIcon`  | Added to the left icon element when the app bar.|
+| `rightIcon` | Added to the right icon element when the app bar.|

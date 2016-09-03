@@ -40,6 +40,25 @@
   &.hidden {
     display: none;
   }
+
+  &.withIcon {
+    padding-bottom: calc(var(--tab-label-v-padding) - var(--tab-icon-margin-bottom) / 2);
+    padding-top: calc(var(--tab-label-v-padding) - var(--tab-icon-margin-bottom) / 2);
+    text-align: center;
+  }
+
+  &.withText {
+    & .icon {
+      margin-bottom: var(--tab-icon-margin-bottom);
+    }
+  }
+}
+
+.icon {
+  display: block;
+  height: var(--tab-icon-height);
+  line-height: var(--tab-icon-height);
+  margin: 0 auto;
 }
 
 .pointer {

@@ -1,4 +1,5 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface DatePickerTheme {
   /**
@@ -83,7 +84,7 @@ export interface DatePickerTheme {
   yearsDisplay?: string;
 }
 
-interface DatePickerProps extends __ReactToolbox.Props {
+interface DatePickerProps extends ReactToolbox.Props {
   /**
    * Automatically selects a date upon clicking on a day
    * @default false
@@ -96,7 +97,7 @@ interface DatePickerProps extends __ReactToolbox.Props {
   /**
    * A key to identify an Icon from Material Design Icons or a custom Icon Element.
    */
-  icon?: __React.ReactNode | string;
+  icon?: React.ReactNode | string;
   /**
    * This class will be applied to Input component of DatePicker.
    */
@@ -143,6 +144,6 @@ interface DatePickerProps extends __ReactToolbox.Props {
   value?: Date | string;
 }
 
-export class DatePicker extends __React.Component<DatePickerProps, {}> { }
+export class DatePicker extends React.Component<DatePickerProps, {}> { }
 
 export default DatePicker;

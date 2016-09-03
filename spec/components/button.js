@@ -29,12 +29,12 @@ const ButtonTest = () => (
       Icon Buttons should align in the vertical center, to see this we need to
       put them next to text or highlight thier background color.
     </p>
-    <IconButton icon='menu' style={{'background-color': 'red'}} inverse />
-    <span style={{'vertical-align': 'middle'}}>Menu</span>
+    <IconButton icon='menu' style={{backgroundColor: 'red'}} inverse />
+    <span style={{verticalAlign: 'middle'}}>Menu</span>
     <IconButton icon='menu' />
-    <span style={{'vertical-align': 'middle'}}>Menu</span>
+    <span style={{verticalAlign: 'middle'}}>Menu</span>
     <IconButton><GithubIcon /></IconButton>
-    <span style={{'vertical-align': 'middle'}}>Github</span>
+    <span style={{verticalAlign: 'middle'}}>Github</span>
   </section>
 );
 

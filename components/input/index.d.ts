@@ -1,4 +1,5 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface InputTheme {
   /**
@@ -51,11 +52,11 @@ export interface InputTheme {
   withIcon?: string;
 }
 
-interface InputProps extends __ReactToolbox.Props {
+interface InputProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * If true, component will be disabled.
    * @default false
@@ -77,7 +78,7 @@ interface InputProps extends __ReactToolbox.Props {
   /**
    * Name of an icon to use as a label for the input.
    */
-  icon?: __React.ReactNode | string;
+  icon?: React.ReactNode | string;
   /**
    * The text string to use for the floating label element.
    */
@@ -130,6 +131,6 @@ interface InputProps extends __ReactToolbox.Props {
   value?: any;
 }
 
-export class Input extends __React.Component<InputProps, {}> { }
+export class Input extends React.Component<InputProps, {}> { }
 
 export default Input;
