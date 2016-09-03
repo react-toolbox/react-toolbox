@@ -100,9 +100,12 @@ Represent a single tab element and it should include some properties to describe
 | `className`       | `String`        | `''`            | Additional class name to provide custom styling for each tab.|
 | `disabled`        | `Boolean`       | `false`         | If true, the current component is not clickable.|
 | `hidden`          | `Boolean`       | `false`         | If true, the current component is not visible.|
-| `label`           | `String`        |                 | Label text for navigation header. Required. |
+| `icon`            | `String`        |                 | Icon for navigation header. |
+| `label`           | `String`        |                 | Label text for navigation header. |
 | `onActive`        | `Function`      |                 | Callback function that is fired when the tab is activated. |
 | `onClick`         | `Function`      |                 | Callback function that is fired when the tab is clicked. |
+
+It is required to provide either a label or an icon (or both).
 
 ### Theme
 
