@@ -38,6 +38,24 @@
   &.hidden {
     display: none;
   }
+
+  &.withIcon {
+    padding-top: ($tab-label-v-padding - $tab-icon-margin-bottom / 2);
+    padding-bottom: ($tab-label-v-padding - $tab-icon-margin-bottom / 2);
+  }
+
+  &.withText {
+    .icon {
+      margin-bottom: $tab-icon-margin-bottom;
+    }
+  }
+}
+
+.icon {
+  display: block;
+  height: $tab-icon-height;
+  margin: 0 auto;
+  line-height: $tab-icon-height;
 }
 
 .pointer {

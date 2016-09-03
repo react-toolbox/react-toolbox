@@ -42,34 +42,24 @@ class Tab extends Component {
     }
   };
 
-  renderIcon = () => {
-    if (!this.props.icon) {
-      return null;
-    } else {
-      return (
-        <div>
-          <FontIcon value={this.props.icon}/>
-        </div>
-      );
-    }
-  };
-
   render () {
     const {
       onActive, // eslint-disable-line
-      active, activeClassName, className, disabled, hidden, theme, ...other
+      active, activeClassName, className, disabled, hidden, label, icon, theme, ...other
     } = this.props;
     const _className = classnames(theme.label, {
       [theme.active]: active,
       [theme.hidden]: hidden,
+      [theme.withText]: label,
+      [theme.withIcon]: icon,
       [theme.disabled]: disabled,
       [activeClassName]: active
     }, className);
 
     return (
       <label {...other} data-react-toolbox='tab' className={_className} onClick={this.handleClick}>
-        {this.renderIcon()}
-        {this.props.label}
+        {icon && <FontIcon className={theme.icon} value={icon}/>}
+        {label}
       </label>
     );
   }
