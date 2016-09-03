@@ -1,5 +1,4 @@
-import * as React from "react";
-export declare namespace ReactToolbox {
+export declare namespace __ReactToolbox {
   interface Props {
     /**
      * Set a class for the root component.
@@ -49,8 +48,8 @@ export declare namespace ReactToolbox {
     /**
      * Set inline style for the root component.
      */
-    style?: React.CSSProperties;
+    style?: __React.CSSProperties;
   }
 }
 
-export default ReactToolbox;
+export default __ReactToolbox;

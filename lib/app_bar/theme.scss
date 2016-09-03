@@ -35,4 +35,25 @@
   a {
     color: $appbar-contrast;
   }
+
+  .title {
+    flex-grow: 1;
+    font-size: 1.8 * $unit;
+    font-weight: bold;
+    > small {
+      font-size: 1.8 * $unit;
+      font-weight: normal;
+    }
+  }
+
+  .leftIcon {
+    padding: 1.2 * $unit 1.2 * $unit 1.2 * $unit 0;
+    text-align: left;
+  }
+
+  .rightIcon {
+    padding: 1.2 * $unit 0 1.2 * $unit 1.2 * $unit;
+    margin-left: auto;
+    text-align: right;
+  }
 }
