@@ -240,21 +240,17 @@ const rippleFactory = (options = {}) => {
       }
 
       render () {
-        if (!this.props.ripple) {
-          return <ComposedComponent {...this.props} />;
-        } else {
-          const { ripples } = this.state;
-          const {
-            ripple, onRippleEnded, rippleCentered, rippleMultiple, rippleSpread, //eslint-disable-line no-unused-vars
-            children, rippleClassName: className, ...other
-          } = this.props;
-          return (
-            <ComposedComponent {...other} onMouseDown={this.handleMouseDown} onTouchStart={this.handleTouchStart}>
-              {children ? children : null}
-              {Object.keys(ripples).map(key => this.renderRipple(key, className, ripples[key]))}
-            </ComposedComponent>
-          );
-        }
+        const { ripples } = this.state;
+        const { onRippleEnded, rippleCentered, rippleMultiple, rippleSpread, // eslint-disable-line
+          children, ripple, rippleClassName, ...other } = this.props;
+
+        if (!ripple) return <ComposedComponent children={children} {...other} />;
+        return (
+          <ComposedComponent {...other} onMouseDown={this.handleMouseDown} onTouchStart={this.handleTouchStart}>
+            {children}
+            {Object.keys(ripples).map(key => this.renderRipple(key, rippleClassName, ripples[key]))}
+          </ComposedComponent>
+        );
       }
     }
 
