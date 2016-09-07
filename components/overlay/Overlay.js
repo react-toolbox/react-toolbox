@@ -33,7 +33,7 @@ class Overlay extends Component {
 
   componentWillUpdate (nextProps) {
     if (nextProps.active && !this.props.active) document.body.style.overflow = 'hidden';
-    if (!nextProps.active && this.props.active) document.body.style.overflow = '';
+    if (!nextProps.active && this.props.active && !document.querySelectorAll('[data-react-toolbox="overlay"]')[1]) document.body.style.overflow = '';
   }
 
   componentDidUpdate () {
@@ -43,7 +43,7 @@ class Overlay extends Component {
   }
 
   componentWillUnmount () {
-    document.body.style.overflow = '';
+    if (!document.querySelectorAll('[data-react-toolbox="overlay"]')[1]) document.body.style.overflow = '';
     if (this.escKeyListener) {
       document.body.removeEventListener('keydown', this.handleEscKey);
       this.escKeyListener = null;
@@ -65,7 +65,7 @@ class Overlay extends Component {
 
     return (
       <Portal>
-        <div className={_className}>
+        <div className={_className} data-react-toolbox="overlay">
           <div className={theme.backdrop} onClick={onClick} />
           {children}
         </div>
