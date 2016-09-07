@@ -21,6 +21,7 @@
   font-weight: $font-weight-semi-bold;
   line-height: 1;
   color: $tab-text-inactive-color;
+  text-align: center;
   text-transform: uppercase;
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
@@ -37,6 +38,24 @@
   &.hidden {
     display: none;
   }
+
+  &.withIcon {
+    padding-top: ($tab-label-v-padding - $tab-icon-margin-bottom / 2);
+    padding-bottom: ($tab-label-v-padding - $tab-icon-margin-bottom / 2);
+  }
+
+  &.withText {
+    .icon {
+      margin-bottom: $tab-icon-margin-bottom;
+    }
+  }
+}
+
+.icon {
+  display: block;
+  height: $tab-icon-height;
+  margin: 0 auto;
+  line-height: $tab-icon-height;
 }
 
 .pointer {
@@ -58,6 +77,30 @@
     display: none;
   }
   &.active {
-    display: block;
+    display: flex;
+  }
+}
+
+.fixed {
+  .label {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+.inverse {
+  .navigation {
+    background-color: $tab-inverse-bar-color;
+  }
+
+  .label {
+    color: $tab-inverse-text-inactive-color;
+    &.active {
+      color: $tab-inverse-text-color;
+    }
+  }
+
+  .pointer {
+    background-color: $tab-inverse-pointer-color;
   }
 }

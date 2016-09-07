@@ -1,4 +1,5 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface ListTheme {
   /**
@@ -7,11 +8,11 @@ export interface ListTheme {
   list?: string;
 }
 
-interface ListProps extends __ReactToolbox.Props {
+interface ListProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * If true, each element in the list will have a ripple effect on click
    * @default false
@@ -28,7 +29,7 @@ interface ListProps extends __ReactToolbox.Props {
   theme?: ListTheme;
 }
 
-export class List extends __React.Component<ListProps, {}> { }
+export class List extends React.Component<ListProps, {}> { }
 
 export interface ListCheckboxTheme {
   /**
@@ -65,7 +66,7 @@ export interface ListCheckboxTheme {
   primary?: string;
 }
 
-interface ListCheckboxProps extends __ReactToolbox.Props {
+interface ListCheckboxProps extends ReactToolbox.Props {
   /**
    * Main text of the item. Required.
    */
@@ -106,7 +107,7 @@ interface ListCheckboxProps extends __ReactToolbox.Props {
   theme?: ListCheckboxTheme;
 }
 
-export class ListCheckbox extends __React.Component<ListCheckboxProps, {}> { }
+export class ListCheckbox extends React.Component<ListCheckboxProps, {}> { }
 
 export interface ListDividerTheme {
   /**
@@ -119,7 +120,7 @@ export interface ListDividerTheme {
   inset?: string;
 }
 
-interface ListDividerProps extends __ReactToolbox.Props {
+interface ListDividerProps extends ReactToolbox.Props {
   /**
    * If true, will leave a space at the left side.
    */
@@ -130,7 +131,7 @@ interface ListDividerProps extends __ReactToolbox.Props {
   theme?: ListDividerTheme;
 }
 
-export class ListDivider extends __React.Component<ListDivider, {}> { }
+export class ListDivider extends React.Component<ListDivider, {}> { }
 
 export interface ListItemTheme {
   /**
@@ -179,11 +180,11 @@ export interface ListItemTheme {
   selectable?: string;
 }
 
-interface ListItemProps extends __ReactToolbox.Props {
+interface ListItemProps extends ReactToolbox.Props {
   /**
    * A string URL to specify an avatar in the left side of the item.
    */
-  avatar?: __React.ReactNode | string;
+  avatar?: React.ReactNode | string;
   /**
    * Main text of the item.
    */
@@ -191,7 +192,7 @@ interface ListItemProps extends __ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * If true, the item is displayed as disabled and is not clickable.
    * @default false
@@ -200,15 +201,15 @@ interface ListItemProps extends __ReactToolbox.Props {
   /**
    * An element that will be displayed as the item. If set, this will override caption and legend.
    */
-  itemContent?: __React.ReactNode;
+  itemContent?: React.ReactNode;
   /**
    * A list of elements that are placed on the left side of the item and after the avatar attribute.
    */
-  leftActions?: __React.ReactNode;
+  leftActions?: React.ReactNode;
   /**
    * A string key of a font icon or element to display an icon in the left side of the item.
    */
-  leftIcon?: __React.ReactNode | string;
+  leftIcon?: React.ReactNode | string;
   /**
    * Secondary text to display under the caption.
    */
@@ -216,11 +217,11 @@ interface ListItemProps extends __ReactToolbox.Props {
   /**
    * A list of elements that are placed on the right side of the item and after the rightIcon attribute.
    */
-  rightActions?: __React.ReactNode;
+  rightActions?: React.ReactNode;
   /**
    * The same as the leftIcon but in this case the icon is displayed in the right side.
    */
-  rightIcon?: __React.ReactNode | string;
+  rightIcon?: React.ReactNode | string;
   /**
    * If true, the item displays a ripple effect on click. By default it's inherited from the parent element.
    */
@@ -241,7 +242,7 @@ interface ListItemProps extends __ReactToolbox.Props {
   to?: string;
 }
 
-export class ListItem extends __React.Component<ListItemProps, {}> { }
+export class ListItem extends React.Component<ListItemProps, {}> { }
 
 export interface ListSubHeaderTheme {
   /**
@@ -250,15 +251,15 @@ export interface ListSubHeaderTheme {
   subheader?: string;
 }
 
-interface ListSubHeaderProps extends __ReactToolbox.Props {
+interface ListSubHeaderProps extends ReactToolbox.Props {
   /**
    * Text that will be displayed.
    */
-  caption?: boolean;
+  caption?: string;
   /**
    * Classnames object defining the component style.
    */
   theme?: ListSubHeaderTheme;
 }
 
-export class ListSubHeader extends __React.Component<ListSubHeaderProps, {}> { }
+export class ListSubHeader extends React.Component<ListSubHeaderProps, {}> { }

@@ -3,6 +3,7 @@ import '../components/commons.scss';
 import React from 'react';
 import AppBar from '../components/app_bar';
 import Autocomplete from './components/autocomplete';
+import AppBarTest from './components/app_bar';
 import Avatar from './components/avatar';
 import FontIcon from './components/font_icon';
 import Button from './components/button';
@@ -29,19 +30,24 @@ import Tabs from './components/tabs';
 import Tooltip from './components/tooltip';
 import style from './style';
 
+const RootAppBar = () => (
+  <AppBar className={style.appbar} fixed flat>
+    <h1>React Toolbox <small>Spec {VERSION}</small></h1>
+    <ButtonToolbox
+      accent
+      className={style.github}
+      icon='web'
+      floating
+      onClick={() => {window.href = 'http://react-toolbox';}}
+    />
+  </AppBar>
+);
+
 const Root = () => (
   <div className={style.app}>
-    <AppBar className={style.appbar} fixed flat>
-      <h1>React Toolbox <small>Spec {VERSION}</small></h1>
-      <ButtonToolbox
-        accent
-        className={style.github}
-        icon='web'
-        floating
-        onClick={() => {window.href = 'http://react-toolbox';}}
-      />
-    </AppBar>
+    <RootAppBar />
     <Autocomplete />
+    <AppBarTest />
     <Avatar />
     <FontIcon />
     <Button />

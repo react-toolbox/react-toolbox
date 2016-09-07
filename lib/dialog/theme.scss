@@ -47,6 +47,18 @@
   width: 96vw;
 }
 
+.fullscreen {
+  width: 96vw;
+
+  @media screen and (max-width: $layout-breakpoint-xs) {
+    width: 100vw;
+    max-width: 100vw;
+    min-height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+}
+
 .title {
   @include typo-title();
   flex-grow: 0;

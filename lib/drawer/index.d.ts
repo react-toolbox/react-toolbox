@@ -1,4 +1,5 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface DrawerTheme {
   /**
@@ -23,7 +24,7 @@ export interface DrawerTheme {
   right?: string;
 }
 
-interface DrawerProps extends __ReactToolbox.Props {
+interface DrawerProps extends ReactToolbox.Props {
   /**
    * If true, the drawer will be visible.
    * @default false
@@ -32,7 +33,7 @@ interface DrawerProps extends __ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Callback function to be invoked when the overlay is clicked.
    */
@@ -48,6 +49,6 @@ interface DrawerProps extends __ReactToolbox.Props {
   type?: "left" | "right";
 }
 
-export class Drawer extends __React.Component<DrawerProps, {}> { }
+export class Drawer extends React.Component<DrawerProps, {}> { }
 
 export default Drawer;

@@ -146,3 +146,7 @@ $offset: 1.8 * $unit;
     height: 40px;
   }
 }
+
+section {
+    overflow-x: scroll;
+}

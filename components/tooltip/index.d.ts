@@ -1,3 +1,4 @@
+import * as React from "react";
 export interface TooltipTheme {
   /**
    * Added to the tooltip element.
@@ -33,7 +34,7 @@ interface TooltipProps {
   tooltipHideOnClick?: boolean;
 }
 
-declare class TooltipComponent<P, S> extends __React.Component<P, S> {
+declare class TooltipComponent<P, S> extends React.Component<P, S> {
   props: P & TooltipProps;
 }
 
@@ -41,6 +42,6 @@ interface TooltippedComponentClass<P> extends TooltipProps {
   new (props?: P, context?: any): TooltipComponent<P, any>;
 }
 
-export function Tooltip<P>(componentClass: __React.ComponentClass<P>): TooltippedComponentClass<P>;
+export function Tooltip<P>(componentClass: React.ComponentClass<P>): TooltippedComponentClass<P>;
 
 export default Tooltip;

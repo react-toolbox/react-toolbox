@@ -1,4 +1,5 @@
-import __ReactToolbox from "../index.d.ts";
+import * as React from "react";
+import ReactToolbox from "../index";
 
 export interface RippleTheme {
   /**
@@ -23,7 +24,7 @@ interface RippleProps {
   /**
    * Children to pass through the component.
    */
-  children?: __React.ReactNode;
+  children?: React.ReactNode;
   /**
    * True in case you want a centered ripple.
    * @default false
@@ -44,6 +45,6 @@ interface RippleProps {
   theme?: RippleTheme;
 }
 
-export class Ripple extends __React.Component<RippleProps, {}> { }
+export class Ripple extends React.Component<RippleProps, {}> { }
 
 export default Ripple;

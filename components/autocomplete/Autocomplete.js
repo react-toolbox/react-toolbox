@@ -118,10 +118,9 @@ const factory = (Chip, Input) => {
      if (event.which === 13) {
        let target = this.state.active;
        if (!target) {
-         target = [...this.suggestions().keys()][0];
-         if (!target && this.props.allowCreate) {
-           target = this.state.query;
-         }
+         target = this.props.allowCreate
+           ? this.state.query
+           : [...this.suggestions().keys()][0];
          this.setState({active: target});
        }
        this.select(event, target);
@@ -164,7 +163,7 @@ const factory = (Chip, Input) => {
 
    suggestions () {
      let suggest = new Map();
-     const rawQuery = this.state.query || this.props.multiple ? '' : this.props.value;
+     const rawQuery = this.state.query || (this.props.multiple ? '' : this.props.value);
      const query = (rawQuery || '').toLowerCase().trim();
      const values = this.values();
      const source = this.source();

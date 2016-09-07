@@ -116,6 +116,7 @@ const factory = (Dialog, Calendar) => {
           <div className={theme.calendarWrapper}>
             <Calendar
               display={this.state.display}
+              handleSelect={this.handleSelect}
               maxDate={this.props.maxDate}
               minDate={this.props.minDate}
               onChange={this.handleNewDate}
