@@ -23,7 +23,9 @@ const factory = (Chip, Input) => {
      error: PropTypes.string,
      label: PropTypes.string,
      multiple: PropTypes.bool,
+     onBlur: PropTypes.func,
      onChange: PropTypes.func,
+     onFocus: PropTypes.func,
      selectedPosition: PropTypes.oneOf(['above', 'below']),
      showSuggestionsWhenValueIsSet: PropTypes.bool,
      source: PropTypes.any,
@@ -91,6 +93,7 @@ const factory = (Chip, Input) => {
 
    handleQueryBlur = () => {
      if (this.state.focus) this.setState({focus: false});
+     if (this.props.onBlur) this.props.onBlur();
    };
 
    handleQueryChange = (value) => {
@@ -100,6 +103,7 @@ const factory = (Chip, Input) => {
    handleQueryFocus = () => {
      this.refs.suggestions.scrollTop = 0;
      this.setState({active: '', focus: true});
+     if (this.props.onFocus) this.props.onFocus();
    };
 
    handleQueryKeyDown = (event) => {
