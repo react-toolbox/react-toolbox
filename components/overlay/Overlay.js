@@ -33,7 +33,7 @@ class Overlay extends Component {
 
   componentWillUpdate (nextProps) {
     if (nextProps.active && !this.props.active) document.body.style.overflow = 'hidden';
-    if (!nextProps.active && this.props.active) document.body.style.overflow = null;
+    if (!nextProps.active && this.props.active) document.body.style.overflow = "";
   }
 
   componentDidUpdate () {
@@ -43,7 +43,7 @@ class Overlay extends Component {
   }
 
   componentWillUnmount () {
-    document.body.style.overflow = null;
+    document.body.style.overflow = "";
     if (this.escKeyListener) {
       document.body.removeEventListener('keydown', this.handleEscKey);
       this.escKeyListener = null;

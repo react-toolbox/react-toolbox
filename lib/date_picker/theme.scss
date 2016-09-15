@@ -101,6 +101,7 @@
     cursor: pointer;
     &.active {
       font-size: $calendar-year-font-size;
+      font-weight: $font-weight-semi-bold;
       color: $calendar-primary-color;
     }
   }
