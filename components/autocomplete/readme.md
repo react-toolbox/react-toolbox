@@ -50,7 +50,9 @@ If you want to provide a theme via context, the component key is `RTAutocomplete
 | `error`             | `String`               |                 | Sets the error string for the internal input element.|
 | `label`             | `String`               |                 | The text string to use for the floating label element.|
 | `multiple`          | `Bool`                 | `true`          | If true, component can hold multiple values.|
+| `onBlur`            | `Function`             |                 | Callback function that is fired when component is blurred.|
 | `onChange`          | `Function`             |                 | Callback function that is fired when the components's value changes.|
+| `onFocus`           | `Function`             |                 | Callback function that is fired when component is focused.|
 | `source`            | `Object` or `Array`    |                 | Object of key/values or array representing all items suggested. |
 | `selectedPosition`  | `String`               |  `above`        | Determines if the selected list is shown above or below input. It can be `above` or `below`. |
 | `showSuggestionsWhenValueIsSet` | `Bool`     | `false`         | If true, the list of suggestions will not be filtered when a value is selected, until the query is modified. |

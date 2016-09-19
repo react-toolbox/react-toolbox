@@ -13,7 +13,7 @@ const factory = (Avatar) => {
 
     return (
       <div className={classes} {...other}>
-        {typeof avatar === 'string' ? <Avatar image={avatar} /> : avatar}
+        {typeof avatar === 'string' ? <Avatar image={avatar} theme={theme} /> : avatar}
         <div>
           {title && <h5 className={theme.title}>{title}</h5>}
           {children && typeof children === 'string' && (

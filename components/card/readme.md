@@ -74,8 +74,8 @@ A versatile title block that can be used in various places on the card, includin
 | Name     | Description|
 |:---------|:-----------|
 | `cardTitle` | Class used for the root element.|
-| `large` | Added to the root element when the card has avatar.|
-| `small` | Added to the root element when the card has no avatar.|
+| `large` | Added to the root element when the card has no avatar.|
+| `small` | Added to the root element when the card has avatar.|
 | `subtitle` | Added to the subtitle element.|
 | `title` | Added to the title element.|
 

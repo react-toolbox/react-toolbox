@@ -110,6 +110,7 @@
     &.active {
       color: var(--calendar-primary-color);
       font-size: var(--calendar-year-font-size);
+      font-weight: var(--font-weight-semi-bold);
     }
   }
 }
