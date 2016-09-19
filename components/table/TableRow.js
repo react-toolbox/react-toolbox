@@ -75,26 +75,14 @@ const factory = (Checkbox) => {
       const inputType = utils.inputTypeForPrototype(this.props.model[key].type);
       const inputValue = utils.prepareValueForInput(value, inputType);
       const checked = inputType === 'checkbox' && value ? true : null;
-
-      if (inputType === 'text') {
-        return (
-          <div
-            contentEditable
-            suppressContentEditableWarning
-            onInput={this.handleInputChange.bind(null, index, key, inputType)}>
-            {inputValue}
-          </div>
-        );
-      } else {
-        return (
-          <input
-            checked={checked}
-            onChange={this.handleInputChange.bind(null, index, key, inputType)}
-            type={inputType}
-            value={inputValue}
-          />
-        );
-      }
+      return (
+        <input
+          checked={checked}
+          onChange={this.handleInputChange.bind(null, index, key, inputType)}
+          type={inputType}
+          value={inputValue}
+        />
+      );
     }
 
     render () {
