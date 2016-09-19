@@ -21,7 +21,20 @@ const factory = (Checkbox) => {
     };
 
     handleInputChange = (index, key, type, event) => {
-      const value = type === 'checkbox' ? event.target.checked : event.target.value;
+      let value;
+      switch (type) {
+        case 'checkbox':
+          value = event.target.checked;
+          break;
+        // Handle contentEditable
+        case 'text':
+          value = event.target.textContent;
+          break;
+        default:
+          value = event.target.value;
+          break;
+      }
+
       const onChange = this.props.model[key].onChange || this.props.onChange;
       onChange(index, key, value);
     };
@@ -62,14 +75,26 @@ const factory = (Checkbox) => {
       const inputType = utils.inputTypeForPrototype(this.props.model[key].type);
       const inputValue = utils.prepareValueForInput(value, inputType);
       const checked = inputType === 'checkbox' && value ? true : null;
-      return (
-        <input
-          checked={checked}
-          onChange={this.handleInputChange.bind(null, index, key, inputType)}
-          type={inputType}
-          value={inputValue}
-        />
-      );
+
+      if (inputType === 'text') {
+        return (
+          <div
+            contentEditable
+            suppressContentEditableWarning
+            onInput={this.handleInputChange.bind(null, index, key, inputType)}>
+            {inputValue}
+          </div>
+        );
+      } else {
+        return (
+          <input
+            checked={checked}
+            onChange={this.handleInputChange.bind(null, index, key, inputType)}
+            type={inputType}
+            value={inputValue}
+          />
+        );
+      }
     }
 
     render () {
