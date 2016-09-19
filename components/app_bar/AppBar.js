@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { APP_BAR } from '../identifiers.js';
-import InjectedFontIcon from '../font_icon/FontIcon.js';
+import InjectIconButton from '../button/IconButton.js';
 
-const factory = (FontIcon) => {
+const factory = (IconButton) => {
   const AppBar = ({ children, leftIcon, onLeftIconClick, onRightIconClick, rightIcon, theme, title, ...props }) => {
     const className = classnames(theme.appBar, {
       [theme.fixed]: props.fixed,
@@ -13,17 +13,19 @@ const factory = (FontIcon) => {
 
     return (
       <header className={className} data-react-toolbox='app-bar'>
-        {leftIcon && <FontIcon
+        {leftIcon && <IconButton
+          inverse
           className={classnames(theme.leftIcon)}
           onClick={onLeftIconClick}
-          value={leftIcon} />
+          icon={leftIcon} />
         }
         {title && <h1 className={classnames(theme.title)}>{title}</h1>}
         {children}
-        {rightIcon && <FontIcon
+        {rightIcon && <IconButton
+          inverse
           className={classnames(theme.rightIcon)}
           onClick={onRightIconClick}
-          value={rightIcon} />
+          icon={rightIcon} />
         }
       </header>
     );
@@ -64,7 +66,7 @@ const factory = (FontIcon) => {
   return AppBar;
 };
 
-const AppBar = factory(InjectedFontIcon);
-export default themr(APP_BAR, null)(AppBar);
+const AppBar = factory(InjectIconButton);
+export default themr(APP_BAR)(AppBar);
 export { factory as appBarFactory };
 export { AppBar };
