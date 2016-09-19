@@ -31,6 +31,7 @@ const factory = (Input, DatePickerDialog) => {
       ]),
       maxDate: PropTypes.object,
       minDate: PropTypes.object,
+      monthFirst: PropTypes.bool,
       name: PropTypes.string,
       onChange: PropTypes.func,
       onEscKeyDown: PropTypes.func,
@@ -50,30 +51,28 @@ const factory = (Input, DatePickerDialog) => {
     static defaultProps = {
       active: false,
       locale: 'en',
-      sundayFirstDayOfWeek: false
+      sundayFirstDayOfWeek: false,
+      readonly: false
     };
 
     state = {
-      active: this.props.active
+      active: this.props.active,
+      value: Object.prototype.toString.call(this.props.value) === '[object Date]' ? this.props.value : ''
     };
 
     componentWillReceiveProps (nextProps) {
       if (this.state.active !== nextProps.active) {
         this.setState({ active: nextProps.active });
       }
+
+      if (this.props.value !== nextProps.value) {
+        this.setState({
+          value: Object.prototype.toString.call(nextProps.value) === '[object Date]' ? nextProps.value : ''
+        });
+      }
     }
 
     handleDismiss = () => {
-      this.setState({active: false});
-    };
-
-    handleInputFocus = (event) => {
-      events.pauseEvent(event);
-      this.setState({active: true});
-    };
-
-    handleInputBlur = (event) => {
-      events.pauseEvent(event);
       this.setState({active: false});
     };
 
@@ -95,14 +94,65 @@ const factory = (Input, DatePickerDialog) => {
       this.setState({active: false});
     };
 
+    handleInputChange = (value) => {
+      this.setState({
+        value
+      });
+    }
+
+    formatInputText = (value, monthFirst) => {
+      const _value = monthFirst ? this.formatMonthFirstDate(value) : value;
+
+      if (this.isValidDate(_value)) {
+        const seperator = this.getSeparator(_value);
+        const dateSplit = _value.split(seperator);
+
+        return new Date(dateSplit[2], parseInt(dateSplit[1], 10) - 1, dateSplit[0]);
+      }
+
+      return value;
+    }
+
+    isValidDate = (dateString) => {
+      // checks for format DD/MM/YY or DD-MM-YYYY or DD.MM.YYYY
+      const regexDate = /(^(((0[1-9]|1[0-9]|2[0-8])(\/|-|\.)(0[1-9]|1[012]))|((29|30|31)(\/|-|\.)(0[13578]|1[02]))|((29|30)(\/|-|\.)(0[4,6,9]|11)))(\/|-|\.)(19|[2-9][0-9])\d\d$)|(^29(\/|-|\.)02(\/|-|\.)(19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)/;
+      return regexDate.test(dateString);
+    }
+
+    formatMonthFirstDate = (dateString) => {
+      // Changes MM/DD/YYYY to DD/MM/YYYY
+      const seperator = this.getSeparator(dateString);
+      const dateSplit = dateString.split(seperator);
+      return dateSplit[1] + seperator + dateSplit[0] + seperator + dateSplit[2];
+    }
+
+    getSeparator = (string) => {
+      if (string.indexOf('/') !== -1) return '/';
+      if (string.indexOf('-') !== -1) return '-';
+      if (string.indexOf('.') !== -1) return '.';
+      return '';
+    }
+
+    getErrorMessage = (date, monthFirst) => {
+      if (!date || Object.prototype.toString.call(date) === '[object Date]') return '';
+      const s = this.getSeparator(date) || '/';
+      if (monthFirst) {
+        return `Please enter date in MM${s}DD${s}YYYY format`;
+      }
+      return `Please enter date in DD${s}MM${s}YYYY format`;
+    }
+
     render () {
       const { active, // eslint-disable-line
-        autoOk, inputClassName, inputFormat, locale, maxDate, minDate,
+        autoOk, inputClassName, inputFormat, locale, maxDate, minDate, monthFirst,
         onEscKeyDown, onOverlayClick, readonly, sundayFirstDayOfWeek, value,
         ...others } = this.props;
+
       const finalInputFormat = inputFormat || time.formatDate;
       const date = Object.prototype.toString.call(value) === '[object Date]' ? value : undefined;
-      const formattedDate = date === undefined ? '' : finalInputFormat(value, locale);
+      const inputDate = Object.prototype.toString.call(this.state.value) === '[object Date]' ? this.state.value : this.formatInputText(this.state.value, monthFirst);
+      const formattedDate = Object.prototype.toString.call(inputDate) === '[object Date]' ? finalInputFormat(inputDate, locale) : this.state.value;
+      const errorMessage = this.getErrorMessage(inputDate, monthFirst);
 
       return (
         <div data-react-toolbox='date-picker'>
@@ -110,14 +160,13 @@ const factory = (Input, DatePickerDialog) => {
             {...others}
             className={classnames(this.props.theme.input, {[inputClassName]: inputClassName })}
             disabled={readonly}
-            error={this.props.error}
+            error={this.props.error || errorMessage}
             icon={this.props.icon}
             label={this.props.label}
             name={this.props.name}
-            onFocus={this.handleInputFocus}
             onKeyPress={this.handleInputKeyPress}
             onMouseDown={this.handleInputMouseDown}
-            readOnly
+            onChange={this.handleInputChange}
             type='text'
             value={formattedDate}
           />
