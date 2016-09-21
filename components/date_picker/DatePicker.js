@@ -35,6 +35,7 @@ const factory = (Input, DatePickerDialog) => {
       onChange: PropTypes.func,
       onEscKeyDown: PropTypes.func,
       onKeyPress: PropTypes.func,
+      onClick: PropTypes.func,
       onOverlayClick: PropTypes.func,
       readonly: PropTypes.bool,
       sundayFirstDayOfWeek: React.PropTypes.bool,
@@ -77,9 +78,10 @@ const factory = (Input, DatePickerDialog) => {
       this.setState({active: false});
     };
 
-    handleInputMouseDown = (event) => {
+    handleInputClick = (event) => {
       events.pauseEvent(event);
       this.setState({active: true});
+      if (this.props.onClick) this.props.onClick(event);
     };
 
     handleInputKeyPress = (event) => {
@@ -116,7 +118,7 @@ const factory = (Input, DatePickerDialog) => {
             name={this.props.name}
             onFocus={this.handleInputFocus}
             onKeyPress={this.handleInputKeyPress}
-            onMouseDown={this.handleInputMouseDown}
+            onClick={this.handleInputClick}
             readOnly
             type='text'
             value={formattedDate}
