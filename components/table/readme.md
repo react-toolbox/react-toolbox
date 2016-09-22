@@ -8,7 +8,7 @@ A note about models and table headers: By default, the table header text uses na
 .table {
   th {
     &:first-letter {
-      text-transform: lowercase !important;
+      text-transform: lowercase;
     }
   }
 }
