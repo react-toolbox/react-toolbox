@@ -85,16 +85,16 @@ const factory = (Checkbox) => {
             {inputValue}
           </div>
         );
-      } else {
-        return (
-          <input
-            checked={checked}
-            onChange={this.handleInputChange.bind(null, index, key, inputType)}
-            type={inputType}
-            value={inputValue}
-          />
-        );
       }
+
+      return (
+        <input
+          checked={checked}
+          onChange={this.handleInputChange.bind(null, index, key, inputType)}
+          type={inputType}
+          value={inputValue}
+        />
+      );
     }
 
     render () {
