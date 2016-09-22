@@ -2,7 +2,7 @@
 
 The Table component is an enhanced version of the standard HTML `<table>`. A data-table consists of rows and columns of well-formatted data, presented with appropriate user interaction capabilities. This component uses a solid typed model, helping you to create formatted cells. These cells can be editable if you subscribe to `onChange` method who dispatch then new source with each change.
 
-A note about models and table headers: By default, the table header text uses name of the property in the model. Additionally, the table header text is automatically set in title case (first letter of each word capitalized). Thus, if you use the property name `twitter` in your model, the displayed table header will be `Twitter`. You can override the default text by including a `title` attribute, as demonstrated in the example below for the `birthdate` property. You may also override the title case in your own theme's css. In the following example, we force the first letter of the table header text to lowercase, using SCSS syntax:
+*A note about models and table headers*: By default, the table header text uses name of the property in the model. Additionally, the table header text is automatically set in title case (first letter of each word capitalized). Thus, if you use the property name `twitter` in your model, the displayed table header will be `Twitter`. You can override the default text by including a `title` attribute, as demonstrated in the example below for the `birthdate` property. You may also override the title case in your own theme's css. In the following example, we force the first letter of the table header text to lowercase, using SCSS syntax:
 
 ```
 .table {
