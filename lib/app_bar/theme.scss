@@ -47,13 +47,11 @@
   }
 
   .leftIcon {
-    padding: 1.2 * $unit 1.2 * $unit 1.2 * $unit 0;
-    text-align: left;
+    margin-left: -1.2 * $unit;
   }
 
   .rightIcon {
-    padding: 1.2 * $unit 0 1.2 * $unit 1.2 * $unit;
     margin-left: auto;
-    text-align: right;
+    margin-right: -1.2 * $unit;
   }
 }
