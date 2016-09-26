@@ -10,20 +10,12 @@
   height: $radio-button-size;
   vertical-align: top;
   cursor: pointer;
-  border: .2 * $unit solid $radio-text-color;
-  border-radius: 50%;
+  transform: color .2s cubic-bezier(0.4, 0, 0.2, 1);
   &:before {
     @include material-animation-default();
-    position: absolute;
-    top: $radio-inner-margin - .2 * $unit;
-    left: $radio-inner-margin - .2 * $unit;
-    width: $radio-button-size - $radio-inner-margin * 2;
-    height: $radio-button-size - $radio-inner-margin * 2;
-    content: "";
-    background-color: $radio-inner-color;
-    border-radius: 50%;
-    transition: transform;
-    transform: scale(0);
+    content: "\E836";
+    font-family: "Material Icons";
+    font-size: $radio-button-size;
   }
 
   .ripple {
@@ -35,9 +27,9 @@
 
 .radioChecked {
   @extend .radio;
-  border: .2 * $unit solid $radio-inner-color;
+  color: $radio-inner-color;
   &:before {
-    transform: scale(1);
+    animation: radio-show .2s linear forwards;
   }
 }
 
@@ -84,13 +76,24 @@
   }
   .radio {
     cursor: auto;
-    border-color: $radio-disabled-color;
+    color: $radio-disabled-color;
   }
   .radioChecked {
     cursor: auto;
-    border-color: $radio-disabled-color;
+    color: $radio-disabled-color;
     &:before {
       background-color: $radio-disabled-color;
     }
   }
 }
+
+@keyframes radio-show {
+  0% {
+    content: '\E836';
+  }
+
+  100% {
+    content: '\E837'
+  }
+}
+
