@@ -12,7 +12,7 @@
   padding: 0 var(--appbar-h-padding);
 
   &:not(.flat) {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+    box-shadow: var(--shadow-4p);
     z-index: var(--z-index-high);
   }
 
