@@ -31,7 +31,7 @@ NavDrawer.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
   onOverlayClick: PropTypes.func,
-  permanentAt: PropTypes.oneOf(['sm', 'md', 'lg', 'xl', 'xxl', 'xxxl']),
+  permanentAt: PropTypes.oneOf(['sm', 'smTablet', 'md', 'lg', 'lgTablet', 'xl', 'xxl', 'xxxl']),
   pinned: PropTypes.bool,
   scrollY: PropTypes.bool,
   theme: PropTypes.shape({
