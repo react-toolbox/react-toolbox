@@ -16,6 +16,7 @@ const factory = (Input, DatePickerDialog) => {
     static propTypes = {
       active: PropTypes.bool,
       autoOk: PropTypes.bool,
+      cancelLabel: PropTypes.string,
       className: PropTypes.string,
       error: PropTypes.string,
       icon: PropTypes.oneOfType([
@@ -32,6 +33,7 @@ const factory = (Input, DatePickerDialog) => {
       maxDate: PropTypes.object,
       minDate: PropTypes.object,
       name: PropTypes.string,
+      okLabel: PropTypes.string,
       onChange: PropTypes.func,
       onEscKeyDown: PropTypes.func,
       onKeyPress: PropTypes.func,
@@ -99,8 +101,8 @@ const factory = (Input, DatePickerDialog) => {
 
     render () {
       const { active, // eslint-disable-line
-        autoOk, inputClassName, inputFormat, locale, maxDate, minDate,
-        onEscKeyDown, onOverlayClick, readonly, sundayFirstDayOfWeek, value,
+        autoOk, cancelLabel, inputClassName, inputFormat, locale, maxDate, minDate,
+        okLabel, onEscKeyDown, onOverlayClick, readonly, sundayFirstDayOfWeek, value,
         ...others } = this.props;
       const finalInputFormat = inputFormat || time.formatDate;
       const date = Object.prototype.toString.call(value) === '[object Date]' ? value : undefined;
@@ -126,11 +128,13 @@ const factory = (Input, DatePickerDialog) => {
           <DatePickerDialog
             active={this.state.active}
             autoOk={autoOk}
+            cancelLabel={cancelLabel}
             className={this.props.className}
             locale={locale}
             maxDate={maxDate}
             minDate={minDate}
             name={this.props.name}
+            okLabel={okLabel}
             onDismiss={this.handleDismiss}
             onEscKeyDown={onEscKeyDown || this.handleDismiss}
             onOverlayClick={onOverlayClick || this.handleDismiss}
