@@ -1,5 +1,3 @@
-export default from './DatePicker';
-
 import { themr } from 'react-css-themr';
 import { DATE_PICKER, DIALOG } from '../identifiers.js';
 import { datePickerFactory } from './DatePicker.js';
