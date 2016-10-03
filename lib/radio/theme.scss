@@ -13,16 +13,15 @@
   border: .2 * $unit solid $radio-text-color;
   border-radius: 50%;
   &:before {
-    @include material-animation-default();
     position: absolute;
-    top: $radio-inner-margin - .2 * $unit;
-    left: $radio-inner-margin - .2 * $unit;
-    width: $radio-button-size - $radio-inner-margin * 2;
-    height: $radio-button-size - $radio-inner-margin * 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     content: "";
     background-color: $radio-inner-color;
     border-radius: 50%;
-    transition: transform;
+    transition: transform $animation-duration $animation-curve-default;
     transform: scale(0);
   }
 
@@ -37,7 +36,7 @@
   @extend .radio;
   border: .2 * $unit solid $radio-inner-color;
   &:before {
-    transform: scale(1);
+    transform: scale(0.65);
   }
 }
 
