@@ -150,3 +150,10 @@ $offset: 1.8 * $unit;
 section {
     overflow-x: scroll;
 }
+
+.pager
+{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}

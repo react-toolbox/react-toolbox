@@ -25,3 +25,4 @@ export const TABLE = 'RTTable';
 export const TABS = 'RTTabs';
 export const TOOLTIP = 'RTTooltip';
 export const TIME_PICKER = 'RTTimePicker';
+export const PAGER = 'RTPager';
