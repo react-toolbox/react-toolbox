@@ -17,6 +17,7 @@ const factory = (Check) => {
       ]),
       name: PropTypes.string,
       onChange: PropTypes.func,
+      style: PropTypes.object,
       theme: PropTypes.shape({
         disabled: PropTypes.string,
         field: PropTypes.string,
