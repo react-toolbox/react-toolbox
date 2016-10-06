@@ -62,6 +62,6 @@ class PagerTest extends React.Component {
       </section>
     );
   }
-};
+}
 
 export default PagerTest;
