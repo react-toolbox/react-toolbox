@@ -48,7 +48,7 @@ const factory = (ListItemText) => {
   return ListItemContent;
 };
 
-const ListItemContent = themr(LIST)(InjectListItemText);
-export default ListItemContent;
+const ListItemContent = factory(InjectListItemText);
+export default themr(LIST)(ListItemContent);
 export { factory as listItemContentFactory };
 export { ListItemContent };
