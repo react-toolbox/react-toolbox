@@ -52,11 +52,11 @@
   width: 96vw;
 
   @media screen and (--xs-viewport) {
-    width: 100vw;
+    border-radius: 0;
+    max-height: 100vh;
     max-width: 100vw;
     min-height: 100vh;
-    max-height: 100vh;
-    border-radius: 0;
+    width: 100vw;
   }
 }
 
