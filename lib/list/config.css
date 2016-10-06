@@ -8,7 +8,7 @@
   --list-divider-height: calc(0.1 * var(--unit));
   --list-item-min-height: calc(4.8 * var(--unit));
   --list-item-min-height-legend: calc(7.2 * var(--unit));
-  --list-item-hover-color: palette-grey-200;
+  --list-item-hover-color: $palette-grey-200;
   --list-item-legend-margin-top: calc(0.3 * var(--unit));
   --list-item-icon-font-size: calc(2.4 * var(--unit));
   --list-item-icon-size: calc(1.8 * var(--unit));

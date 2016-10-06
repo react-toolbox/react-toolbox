@@ -12,7 +12,7 @@
   padding: 0 var(--appbar-h-padding);
 
   &:not(.flat) {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+    box-shadow: var(--shadow-4p);
     z-index: var(--z-index-high);
   }
 
@@ -49,12 +49,10 @@
 }
 
 .leftIcon {
-  padding: calc(1.2 * var(--unit)) calc(1.2 * var(--unit)) calc(1.2 * var(--unit)) 0;
-  text-align: left;
+  margin-left: calc(-1.2 * var(--unit));
 }
 
 .rightIcon {
   margin-left: auto;
-  padding: calc(1.2 * var(--unit)) 0 calc(1.2 * var(--unit)) calc(1.2 * var(--unit));
-  text-align: right;
+  margin-right: calc(-1.2 * var(--unit));
 }
