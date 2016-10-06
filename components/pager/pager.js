@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 
-import Button from '../button';
+import InjectButton from '../button';
 import { PAGER } from '../identifiers.js';
 
 const isOnePage = (first, last) => {
@@ -21,26 +21,29 @@ const factory = (Button) => {
   class Pager extends Component {
 
     static propTypes = {
-        pagerClassName:  PropTypes.string,
-        prevButtonContent: React.PropTypes.oneOfType([
-                                    React.PropTypes.string,
-                                    React.PropTypes.element
-                                ]),
-        rangeLeftButtonContent: React.PropTypes.oneOfType([
-                                    React.PropTypes.string,
-                                    React.PropTypes.element
-                                ]),
-        rangeRightButtonContent: React.PropTypes.oneOfType([
-                                    React.PropTypes.string,
-                                    React.PropTypes.element
-                                ]),
+        currentPage: React.PropTypes.number.isRequired,
+        lastPage: React.PropTypes.number.isRequired,
+        leftRightArrowButtonTypes: React.PropTypes.object,
+        leftRightRangeButtonTypes: React.PropTypes.object,
         nextButtonContent: React.PropTypes.oneOfType([
-                                    React.PropTypes.string,
-                                    React.PropTypes.element
-                                ]),
-        leftRightArrowButtonTypes :React.PropTypes.object,
-        leftRightRangeButtonTypes :React.PropTypes.object,
-        pagesButtonTypes :React.PropTypes.object,
+            React.PropTypes.string,
+            React.PropTypes.element
+        ]),
+        onPageChange: React.PropTypes.func,
+        pagerClassName: PropTypes.string,
+        pagesButtonTypes: React.PropTypes.object,
+        prevButtonContent: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.element
+        ]),
+        rangeLeftButtonContent: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.element
+        ]),
+        rangeRightButtonContent: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            React.PropTypes.element
+        ]),
         theme: PropTypes.shape({
             pager: PropTypes.string,
             active: PropTypes.string,
@@ -48,49 +51,45 @@ const factory = (Button) => {
             leftRightRangeButton: PropTypes.string,
             pagesButton: PropTypes.string
         }),
-        currentPage: React.PropTypes.number.isRequired,
-        lastPage: React.PropTypes.number.isRequired,
-        visiblePagesBlockSize: React.PropTypes.number.isRequired,
-        onPageChange: React.PropTypes.func
-    };
+        visiblePagesBlockSize: React.PropTypes.number.isRequired
+    }
 
     static defaultProps = {
-            prevButtonContent: '\u003C',
-            rangeLeftButtonContent: '...',
-            rangeRightButtonContent: '...',
-            nextButtonContent: '\u003E',
-            leftRightArrowButtonTypes:  {raised: true},
-            leftRightRangeButtonTypes:  {flat: true},
-            pagesButtonTypes: {flat: true},
-            visiblePagesBlockSize: initialVisiblePagesBlockSize,
-            currentPage: initialCurrentPage,
-            lastPage: initialCurrentPage
-    };
+        currentPage: initialCurrentPage,
+        lastPage: initialCurrentPage,
+        leftRightArrowButtonTypes: {raised: true},
+        leftRightRangeButtonTypes: {flat: true},
+        nextButtonContent: '\u003E',
+        pagesButtonTypes: {flat: true},
+        prevButtonContent: '\u003C',
+        rangeLeftButtonContent: '...',
+        rangeRightButtonContent: '...',
+        visiblePagesBlockSize: initialVisiblePagesBlockSize
+    }
 
     state = {
         currentPage: this.props.currentPage,
         lastPage: this.props.lastPage
-    };
+    }
 
     componentWillReceiveProps (nextProps) {
-      if (nextProps.currentPage && !isNaN(Number(nextProps.currentPage)) &&
-        this.state.currentPage !== nextProps.currentPage) {
-        this.setState({ 
+      if (nextProps.currentPage && !isNaN(Number(nextProps.currentPage))
+        && this.state.currentPage !== nextProps.currentPage) {
+        this.setState({
             currentPage: Number(nextProps.currentPage < first ? first : nextProps.currentPage)
         });
       }
-      if (nextProps.lastPage && !isNaN(Number(nextProps.lastPage)) &&
-        this.state.lastPage !== nextProps.lastPage) {
-        this.setState({ 
+      if (nextProps.lastPage && !isNaN(Number(nextProps.lastPage))
+        && this.state.lastPage !== nextProps.lastPage) {
+        this.setState({
             lastPage: Number(nextProps.lastPage < first ? first : nextProps.lastPage)
         });
       }
-    };
+    }
 
-    handlerPageClick(page)
-    {
-        var oldValue = this.state.currentPage;
-        var newValue = page;
+    handlerPageClick (page) {
+        const oldValue = this.state.currentPage;
+        const newValue = page;
 
         if (this.props.onPageChange) {
             this.props.onPageChange(oldValue, newValue);
@@ -99,23 +98,21 @@ const factory = (Button) => {
         this.setState({
             currentPage: newValue
         });
-    };
+    }
 
-    handlerRangeClick(key)
-    {
-        var curr = this.state.currentPage;
-        var last = this.state.lastPage;
+    handlerRangeClick (key) {
+        const curr = this.state.currentPage;
+        const last = this.state.lastPage;
 
-        var right = !this._ranges.rightStart ? last : this._ranges.rightStart;
-        var left = !this._ranges.leftEnd ? first : this._ranges.leftEnd;
-        
-        var newValue = curr;
+        const right = !this._ranges.rightStart ? last : this._ranges.rightStart;
+        const left = !this._ranges.leftEnd ? first : this._ranges.leftEnd;
+
+        let newValue = curr;
+        let sum = first + left;
         if (key === 'prev') {
-            var sum = first + left;
             newValue = (sum >> 1); //rounding to left
-        }
-        else {
-            var sum = last + right;
+        } else {
+            sum = last + right;
             newValue = (sum >> 1) + (sum % 2); //rounding to right
         }
 
@@ -126,13 +123,12 @@ const factory = (Button) => {
         this.setState({
             currentPage: newValue
         });
-    };
+    }
 
-    handlerPrevNextClick(key)
-    {
-        var oldValue = this.state.currentPage;
-        var newValue = key === 'prev' ? oldValue - 1 : oldValue + 1;
-        
+    handlerPrevNextClick (key) {
+        const oldValue = this.state.currentPage;
+        const newValue = key === 'prev' ? oldValue - 1 : oldValue + 1;
+
         if (this.props.onPageChange) {
             this.props.onPageChange(oldValue, newValue);
         }
@@ -140,21 +136,20 @@ const factory = (Button) => {
         this.setState({
             currentPage: newValue
         });
-    };
+    }
 
     //fields
     _ranges = {
-        leftEnd: null, 
+        leftEnd: null,
         rightStart: null
-    };
+    }
 
     //rendering
     //private methods
-    renderPages(curr, last)
-    {
-        last = last < first ? first : last;
-        if (curr < first || curr > last)
-        {
+    renderPages (currPage, lastPage) {
+        let curr = currPage;
+        let last = lastPage < first ? first : lastPage;
+        if (curr < first || curr > last) {
             curr = curr < first ? first : curr > last ? last : curr;
             this.setState({
                 currentPage: curr
@@ -165,22 +160,22 @@ const factory = (Button) => {
         * adjustment of start and end elements at range to have equal elements during navigation
         * 2 - because we already have the rendered first and last button
         */
-        var adjustment = 2;
-        var content = [];
+        const adjustment = 2;
+        const content = [];
 
-        var blockSize = this.props.visiblePagesBlockSize === 1 ? adjustment : this.props.visiblePagesBlockSize;
+        const blockSize = this.props.visiblePagesBlockSize === 1 ? adjustment : this.props.visiblePagesBlockSize;
 
-        var padding = blockSize >> 1;
-        var left = curr - padding * (blockSize % 2); //in case of even visiblePagesBlockSize
-        var right = curr + padding;
+        const padding = blockSize >> 1;
+        const left = curr - padding * (blockSize % 2); //in case of even visiblePagesBlockSize
+        const right = curr + padding;
 
-        var blocksNumber = Math.ceil(last / blockSize);
-        var currentBlock = Math.ceil(curr / blockSize);
+        const blocksNumber = Math.ceil(last / blockSize);
+        let currentBlock = Math.ceil(curr / blockSize);
 
-        var start = ((currentBlock - 1) * blockSize) + first;        
-        var end = start + blockSize - first;        
+        let start = ((currentBlock - 1) * blockSize) + first;
+        let end = start + blockSize - first;
 
-        if (currentBlock === 1) { //adjust set of buttons if current is on the left boundary  
+        if (currentBlock === 1) { //adjust set of buttons if current is on the left boundary
             end += adjustment;
             end = (last - first) === end ? last : end;
         } else if (currentBlock < blocksNumber) { //adjustment set of buttons if current is between boundaries
@@ -189,7 +184,7 @@ const factory = (Button) => {
 
             currentBlock = Math.ceil(end / blockSize);
         }
-        
+
         if (currentBlock === blocksNumber) { //adjustment set of buttons if current is on the right boundary
             start = last - (blockSize + adjustment - first);
             start = start - 1 <= first ? first : start;
@@ -198,10 +193,10 @@ const factory = (Button) => {
 
         if (currentBlock > 1 && (start - 1) > first) {
             content.push(
-                <Button 
+                <Button
                     key={first}
                     {...this.props.pagesButtonTypes}
-                    className={classnames(this.props.theme.pagesButton, (curr === first ? this.props.theme.active : null))} 
+                    className={classnames(this.props.theme.pagesButton, (curr === first ? this.props.theme.active : null))}
                     onClick={this.handlerPageClick.bind(this, first)}>
                     { String(first) }
                 </Button>
@@ -218,12 +213,12 @@ const factory = (Button) => {
             );
         }
 
-        for(var i = start; i <= last && i <= end; ++i) {
+        for (let i = start; i <= last && i <= end; ++i) {
             content.push(
-                    <Button 
+                    <Button
                         key={i}
                         {...this.props.pagesButtonTypes}
-                        className={classnames(this.props.theme.pagesButton, (curr === i ? this.props.theme.active : null))} 
+                        className={classnames(this.props.theme.pagesButton, (curr === i ? this.props.theme.active : null))}
                         onClick={this.handlerPageClick.bind(this, i)}>
                         { String(i) }
                     </Button>
@@ -242,61 +237,60 @@ const factory = (Button) => {
             );
 
             content.push(
-                <Button 
+                <Button
                     key={last}
                     {...this.props.pagesButtonTypes}
-                    className={classnames(this.props.theme.pagesButton, (curr === last ? this.props.theme.active : null))} 
+                    className={classnames(this.props.theme.pagesButton, (curr === last ? this.props.theme.active : null))}
                     onClick={this.handlerPageClick.bind(this, last)}>
                     { String(last) }
                 </Button>
             );
         }
 
-        // keep range boundaries to calculate correct navigation through the range 
+        // keep range boundaries to calculate correct navigation through the range
         this._ranges.leftEnd = start;
         this._ranges.rightStart = end - 1;
 
         return content;
-    };
+    }
 
-    render() {
-        const {leftRightArrowButtonTypes, prevButtonContent, nextButtonContent, 
-                pagerClassName, currentPage, lastPage, theme, ...other} = this.props;
+    render () {
+        const {leftRightArrowButtonTypes, prevButtonContent, nextButtonContent,
+                pagerClassName, lastPage, theme} = this.props;
 
-        if (lastPage < first)
-        {
-            console.error("ArgumentOutOfRangeException: last Page must be bigger or equal first = 1.");
+        if (lastPage < first) {
+            console.error('ArgumentOutOfRangeException: last Page must be bigger or equal first = 1.');
         }
 
         return (
             <div data-react-toolbox='pager' className={classnames(theme.pager, pagerClassName)} >
 
-                <Button 
+                <Button
                     {...leftRightArrowButtonTypes}
                     disabled={isOnePage(first, this.state.lastPage) || isBorderPage(this.state.currentPage, first)}
-                    className={theme.leftRightArrowButton} 
+                    className={theme.leftRightArrowButton}
                     onClick={this.handlerPrevNextClick.bind(this, 'prev')}>
                     { prevButtonContent }
                 </Button>
                 {
                     this.renderPages(this.state.currentPage, this.state.lastPage)
                 }
-                <Button 
+                <Button
                     {...leftRightArrowButtonTypes}
                     disabled={isOnePage(first, this.state.lastPage) || isBorderPage(this.state.currentPage, this.state.lastPage)}
-                    className={theme.leftRightArrowButton}                         
+                    className={theme.leftRightArrowButton}
                     onClick={this.handlerPrevNextClick.bind(this, 'next')}>
                     { nextButtonContent }
                 </Button>
 
             </div>);
-        };
+        }
     }
 
     return Pager;
 };
 
-const Pager = factory(Button);
+const Pager = factory(InjectButton);
 
 export default themr(PAGER)(Pager);
 export {
