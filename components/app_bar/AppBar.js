@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { APP_BAR } from '../identifiers.js';
@@ -44,18 +43,39 @@ const factory = (IconButton) => {
     state = {hidden: false, height: 0};
 
     componentDidMount () {
-      window.addEventListener('scroll', this.handleScroll);
-      const height = ReactDOM.findDOMNode(this).clientHeight;
-      this.setState({height});
-      this.curScroll = window.scrollY;
+      if (this.props.scrollHide) {
+        this.initializeScroll();
+      }
+    }
+
+    componentWillReceiveProps (nextProps) {
+      if (!this.props.scrollHide && nextProps.scrollHide) {
+        this.initializeScroll();
+      }
+
+      if (this.props.scrollHide && !nextProps.scrollHide) {
+        this.endScroll();
+      }
     }
 
     componentWillUnmount () {
-      window.removeEventListener('scroll', this.handleScroll);
+      if (this.props.scrollHide) {
+        this.endScroll();
+      }
     }
 
+    initializeScroll = () => {
+      window.addEventListener('scroll', this.handleScroll);
+      const { height } = this.rootNode.getBoundingClientRect();
+      this.curScroll = window.scrollY;
+      this.setState({height});
+    };
+
+    endScroll = () => {
+      window.removeEventListener('scroll', this.handleScroll);
+    };
+
     handleScroll = () => {
-      if (!this.props.scrollHide) return;
       const scrollDiff = this.curScroll - window.scrollY;
       const hidden = scrollDiff < 0 && window.scrollY !== undefined && window.scrollY > this.state.height;
       this.setState({hidden});
@@ -71,7 +91,11 @@ const factory = (IconButton) => {
       }, this.props.className);
 
       return (
-        <header className={className} data-react-toolbox='app-bar'>
+        <header
+          className={className}
+          data-react-toolbox='app-bar'
+          ref={node => {this.rootNode = node;}}
+        >
           {leftIcon && <IconButton
             inverse
             className={classnames(theme.leftIcon)}
