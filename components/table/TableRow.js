@@ -79,11 +79,11 @@ const factory = (Checkbox) => {
       if (inputType === 'text') {
         return (
           <div
+            children={inputValue}
             contentEditable
             suppressContentEditableWarning
-            onInput={this.handleInputChange.bind(null, index, key, inputType)}>
-            {inputValue}
-          </div>
+            onInput={this.handleInputChange.bind(null, index, key, inputType)}
+          />
         );
       }
 
