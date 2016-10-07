@@ -33,10 +33,12 @@ The `AppBar` component provides properties for the common use cases of `title`, 
 
 ## Theme
 
-| Name        | Description|
-|:------------|:-----------|
-| `appBar`    | Used for the component root element.|
-| `fixed`     | Added to the root element when the app bar is fixed.|
-| `title`     | Added to the title element of the app bar.|
-| `leftIcon`  | Added to the left icon element when the app bar.|
-| `rightIcon` | Added to the right icon element when the app bar.|
+| Name         | Description|
+|:-------------|:-----------|
+| `appBar`     | Used for the component root element.|
+| `fixed`      | Added to the root element when the app bar is fixed.|
+| `flat`       | Added to the root element when the app bar is flat.|
+| `title`      | Added to the title element of the app bar.|
+| `leftIcon`   | Added to the left icon element when the app bar.|
+| `rightIcon`  | Added to the right icon element when the app bar.|
+| `scrollHide` | Added to the root element when the app bar is hidden during scroll.|

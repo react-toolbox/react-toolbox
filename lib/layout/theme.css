@@ -149,6 +149,12 @@
     }
   }
 
+  @media screen and (--larger-than-sm-tablet-viewport) {
+    &.smTabletPermanent {
+      @mixin permanent;
+    }
+  }
+
   @media screen and (--larger-than-md-viewport) {
     &.mdPermanent {
       @mixin permanent;
@@ -157,6 +163,12 @@
 
   @media screen and (--larger-than-lg-viewport) {
     &.lgPermanent {
+      @mixin permanent;
+    }
+  }
+
+  @media screen and (--larger-than-lg-tablet-viewport) {
+    &.lgTabletPermanent {
       @mixin permanent;
     }
   }

@@ -10,6 +10,13 @@
   display: flex;
   height: var(--appbar-height);
   padding: 0 var(--appbar-h-padding);
+  transition-duration: .5s;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+  &.scrollHide {
+    transform: translateY(-100%);
+  }
 
   &:not(.flat) {
     box-shadow: var(--shadow-4p);
