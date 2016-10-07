@@ -17,11 +17,11 @@ const factory = (ripple) => {
     checked: PropTypes.bool,
     children: PropTypes.any,
     onMouseDown: PropTypes.func,
+    style: PropTypes.object,
     theme: PropTypes.shape({
       check: PropTypes.string,
       checked: PropTypes.string
-    }),
-    style: PropTypes.object
+    })
   };
 
   return ripple(Check);

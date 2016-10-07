@@ -9,6 +9,7 @@ const factory = (Checkbox) => {
       index: PropTypes.number,
       model: PropTypes.object,
       onChange: PropTypes.func,
+      onRowClick: PropTypes.func,
       onSelect: PropTypes.func,
       selectable: PropTypes.bool,
       selected: PropTypes.bool,
@@ -21,7 +22,20 @@ const factory = (Checkbox) => {
     };
 
     handleInputChange = (index, key, type, event) => {
-      const value = type === 'checkbox' ? event.target.checked : event.target.value;
+      let value;
+      switch (type) {
+        case 'checkbox':
+          value = event.target.checked;
+          break;
+        // Handle contentEditable
+        case 'text':
+          value = event.target.textContent;
+          break;
+        default:
+          value = event.target.value;
+          break;
+      }
+
       const onChange = this.props.model[key].onChange || this.props.onChange;
       onChange(index, key, value);
     };
@@ -38,7 +52,7 @@ const factory = (Checkbox) => {
 
     renderCells () {
       return Object.keys(this.props.model).map((key) => {
-        return <td key={key}>{this.renderCell(key)}</td>;
+        return <td key={key} onClick={this.props.onRowClick}>{this.renderCell(key)}</td>;
       });
     }
 
@@ -62,6 +76,18 @@ const factory = (Checkbox) => {
       const inputType = utils.inputTypeForPrototype(this.props.model[key].type);
       const inputValue = utils.prepareValueForInput(value, inputType);
       const checked = inputType === 'checkbox' && value ? true : null;
+
+      if (inputType === 'text') {
+        return (
+          <div
+            children={inputValue}
+            contentEditable
+            suppressContentEditableWarning
+            onInput={this.handleInputChange.bind(null, index, key, inputType)}
+          />
+        );
+      }
+
       return (
         <input
           checked={checked}

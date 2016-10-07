@@ -19,9 +19,9 @@ const factory = (TimePickerDialog, Input) => {
       label: PropTypes.string,
       name: PropTypes.string,
       onChange: PropTypes.func,
+      onClick: PropTypes.func,
       onEscKeyDown: PropTypes.func,
       onKeyPress: PropTypes.func,
-      onClick: PropTypes.func,
       onOverlayClick: PropTypes.func,
       readonly: PropTypes.bool,
       theme: PropTypes.shape({
