@@ -8,7 +8,6 @@ const factory = (Checkbox) => {
       data: PropTypes.object,
       index: PropTypes.number,
       model: PropTypes.object,
-      onChange: PropTypes.func,
       onSelect: PropTypes.func,
       selectable: PropTypes.bool,
       selected: PropTypes.bool,
@@ -51,7 +50,7 @@ const factory = (Checkbox) => {
 
     renderCells () {
       return Object.keys(this.props.model).map((key) => {
-        return <td key={key}>{this.renderCell(key)}</td>;
+        return <td key={key} onClick={this.props.onRowClick}>{this.renderCell(key)}</td>
       });
     }
 
