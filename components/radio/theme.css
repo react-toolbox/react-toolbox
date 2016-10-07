@@ -16,15 +16,13 @@
     background-color: var(--radio-inner-color);
     border-radius: 50%;
     content: '';
-    height: calc(var(--radio-button-size) - var(--radio-inner-margin) * 2);
-    left: calc(var(--radio-inner-margin) - 0.2 * var(--unit));
+    height: 100%;
+    left: 0;
     position: absolute;
-    top: calc(var(--radio-inner-margin) - 0.2 * var(--unit));
+    top: 0;
     transform: scale(0);
-    transition: transform;
-    transition-duration: 0.2s;
-    transition-timing-function: var(--animation-curve-default);
-    width: calc(var(--radio-button-size) - var(--radio-inner-margin) * 2);
+    transition: transform 0.2s var(--animation-curve-default);
+    width: 100%;
   }
 
   & .ripple {
@@ -39,7 +37,7 @@
   composes: radio;
 
   &::before {
-    transform: scale(1);
+    transform: scale(0.65);
   }
 }
 

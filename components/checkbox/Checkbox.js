@@ -17,6 +17,7 @@ const factory = (Check) => {
       ]),
       name: PropTypes.string,
       onChange: PropTypes.func,
+      style: PropTypes.object,
       theme: PropTypes.shape({
         disabled: PropTypes.string,
         field: PropTypes.string,
@@ -47,7 +48,7 @@ const factory = (Check) => {
     }
 
     render () {
-      const { onChange, theme, ...others } = this.props; //eslint-disable-line no-unused-vars
+      const { onChange, theme, style, ...others } = this.props; //eslint-disable-line no-unused-vars
       const className = classnames(theme.field, {
         [theme.disabled]: this.props.disabled
       }, this.props.className);
@@ -66,6 +67,7 @@ const factory = (Check) => {
             checked={this.props.checked}
             disabled={this.props.disabled}
             rippleClassName={theme.ripple}
+            style={style}
             theme={this.props.theme}
           />
           {this.props.label ? <span data-react-toolbox='label' className={theme.text}>{this.props.label}</span> : null}

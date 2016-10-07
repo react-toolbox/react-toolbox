@@ -4,7 +4,6 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { SLIDER } from '../identifiers.js';
 import events from '../utils/events.js';
-import prefixer from '../utils/prefixer.js';
 import utils from '../utils/utils.js';
 import InjectProgressBar from '../progress_bar/ProgressBar.js';
 import InjectInput from '../input/Input.js';
@@ -186,7 +185,8 @@ const factory = (ProgressBar, Input) => {
 
     knobOffset () {
       const { max, min } = this.props;
-      return this.state.sliderLength * (this.props.value - min) / (max - min);
+      const translated = this.state.sliderLength * (this.props.value - min) / (max - min);
+      return translated * 100 / this.state.sliderLength;
     }
 
     move (position) {
@@ -252,7 +252,7 @@ const factory = (ProgressBar, Input) => {
 
     render () {
       const { theme } = this.props;
-      const knobStyles = prefixer({transform: `translateX(${this.knobOffset()}px)`});
+      const knobStyles = {left: `${this.knobOffset()}%`};
       const className = classnames(theme.slider, {
         [theme.editable]: this.props.editable,
         [theme.pinned]: this.props.pinned,

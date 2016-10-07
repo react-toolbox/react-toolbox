@@ -45,7 +45,10 @@ const tooltipFactory = (options = {}) => {
           tooltipActive: PropTypes.string,
           tooltipWrapper: PropTypes.string
         }),
-        tooltip: PropTypes.string,
+        tooltip: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.node
+        ]),
         tooltipDelay: PropTypes.number,
         tooltipHideOnClick: PropTypes.bool,
         tooltipPosition: PropTypes.oneOf(Object.keys(POSITION).map(key => POSITION[key]))

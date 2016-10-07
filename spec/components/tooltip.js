@@ -17,6 +17,11 @@ const TooltipTest = () => (
     <TooltipButton label='Bookmark' icon='bookmark' raised primary tooltip='Bookmark Tooltip' tooltipDelay={1000} />
     <TooltipButton icon='add' floating accent tooltip='Floating Tooltip' />
     <TooltipButton icon='add' floating disabled tooltip='Floating can not be shown' />
+    <TooltipButton
+      icon='add'
+      floating
+      tooltip={<div><p>An example with</p><p>Multiline!</p></div>}
+    />
     <TooltipInput tooltip='lorem ipsum...' />
     <p>Lorem ipsum dolor sit amet, <TooltipStrong tooltip='This is a auto show tooltip'>consectetur</TooltipStrong> adipiscing elit.</p>
   </section>
