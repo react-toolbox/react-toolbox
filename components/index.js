@@ -28,4 +28,3 @@ export Table from './table';
 export * from './tabs';
 export Tooltip from './tooltip';
 export TimePicker from './time_picker';
-export Pager from './pager';

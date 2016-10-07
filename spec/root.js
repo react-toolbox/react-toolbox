@@ -19,7 +19,6 @@ import Input from './components/input';
 import Layout from './components/layout';
 import List from './components/list';
 import Menu from './components/menu';
-import Pager from './components/pager';
 import Pickers from './components/pickers';
 import Progress from './components/progress';
 import Radio from './components/radio';
@@ -64,7 +63,6 @@ const Root = () => (
     <List />
     <Menu />
     <Pickers />
-    <Pager />
     <Progress />
     <Radio />
     <Slider />
