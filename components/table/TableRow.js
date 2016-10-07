@@ -9,7 +9,7 @@ const factory = (Checkbox) => {
       index: PropTypes.number,
       model: PropTypes.object,
       onChange: PropTypes.func,
-      onRowClick: PropTypes.onRowChange,
+      onRowClick: PropTypes.func,
       onSelect: PropTypes.func,
       selectable: PropTypes.bool,
       selected: PropTypes.bool,
