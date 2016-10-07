@@ -54,4 +54,12 @@
     margin-right: -1.2 * $unit;
     margin-left: auto;
   }
+
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition-duration: .5s;
+  transition-property: transform;
+
+  &.scrollHide {
+    transform: translateY(-100%);
+  }
 }
