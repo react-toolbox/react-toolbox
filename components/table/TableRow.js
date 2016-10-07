@@ -38,7 +38,8 @@ const factory = (Checkbox) => {
 
     renderCells () {
       return Object.keys(this.props.model).map((key) => {
-        return <td key={key}>{this.renderCell(key)}</td>;
+        const style = this.props.model[key].style;
+        return <td key={key} style={{style}}>{this.renderCell(key)}</td>;
       });
     }
 

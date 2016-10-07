@@ -5,8 +5,8 @@ const factory = (Checkbox) => {
     let selectCell;
     const contentCells = Object.keys(model).map((key) => {
       const name = model[key].title || key;
-      const width = model[key].width;
-      return <th key={key} style={{width}}>{name}</th>;
+      const headStyle = model[key].headStyle;
+      return <th key={key} style={headStyle}>{name}</th>;
     });
 
     if (selectable && multiSelectable) {
