@@ -55,8 +55,13 @@ const factory = (Checkbox) => {
         return this.renderInput(key, value);
       } else if (value) {
         if (this.props.model[key].render) {
-          const disabled = true;
-          return this.props.model[key].render(this.props.index, key, value, disabled);
+          return this.props.model[key].render(
+            {
+              index: this.props.index, 
+              key: key, 
+              value: value, 
+              disabled: true,
+            });
         }
         return value.toString();
       }
@@ -66,8 +71,13 @@ const factory = (Checkbox) => {
       const index = this.props.index;
       const inputType = utils.inputTypeForPrototype(this.props.model[key].type);
       if (this.props.model[key].render) {
-          const disabled = false;
-          return this.props.model[key].render(index, key, value, disabled);
+          return this.props.model[key].render(
+            {
+              index: index, 
+              key: key, 
+              value: value, 
+              disabled: false,
+            });
       }
       const inputValue = utils.prepareValueForInput(value, inputType);
       const checked = inputType === 'checkbox' && value ? true : null;
