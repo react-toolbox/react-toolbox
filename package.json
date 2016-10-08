@@ -38,7 +38,8 @@
   "dependencies": {
     "classnames": "~2.2.5",
     "core-js": "~2.4.0",
-    "react-css-themr": "~1.2.0"
+    "normalize.css": "~5.0.0",
+    "react-css-themr": "~1.4.1"
   },
   "devDependencies": {
     "autoprefixer": "~6.4.0",
@@ -71,7 +72,6 @@
     "karma-phantomjs-launcher": "~1.0.0",
     "karma-webpack": "~1.7.0",
     "mocha": "~3.0.1",
-    "normalize.css": "~4.2.0",
     "phantomjs": "~2.1.7",
     "phantomjs-polyfill": "0.0.2",
     "phantomjs-prebuilt": "~2.1.7",
@@ -121,7 +121,6 @@
   "peerDependencies": {
     "classnames": "~2.2.0",
     "immutability-helper": "~2.0.0",
-    "normalize.css": "~4.2.0",
     "react": "~0.14 || ~15.3.0",
     "react-addons-css-transition-group": "~0.14.0 || ~15.3.0",
     "react-dom": "~0.14.0 || ~15.3.0"

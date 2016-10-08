@@ -63,7 +63,7 @@ const TRANSITIONS = {
 
 function transitionEventNamesFor (element) {
   for (const transition in TRANSITIONS) {
-    if (element.style[transition] !== undefined) {
+    if (element && element.style[transition] !== undefined) {
       return TRANSITIONS[transition];
     }
   }

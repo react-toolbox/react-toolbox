@@ -10,7 +10,7 @@
   display: flex;
   height: var(--appbar-height);
   padding: 0 var(--appbar-h-padding);
-  transition-duration: .5s;
+  transition-duration: 0.5s;
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
 
