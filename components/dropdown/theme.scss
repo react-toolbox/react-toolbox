@@ -69,6 +69,9 @@
     > .templateValue {
       border-bottom: 1px solid $input-text-error-color;
     }
+    > .label > .required {
+      color: $input-text-required-color;
+    }
   }
   &.disabled {
     pointer-events: none;
@@ -96,6 +99,9 @@
   font-size: $input-label-font-size;
   line-height: $input-field-font-size;
   color: $input-text-label-color;
+  .required {
+    color: $input-text-required-color;
+  }
 }
 
 .error {
