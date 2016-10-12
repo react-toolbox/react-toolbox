@@ -1,6 +1,6 @@
 import React from 'react';
 import GithubIcon from './github_icon';
-import { Button, IconButton } from '../../components/button';
+import { Button, IconButton, BrowseButton } from '../../components/button';
 
 const ButtonTest = () => (
   <section>
@@ -35,7 +35,12 @@ const ButtonTest = () => (
     <span style={{verticalAlign: 'middle'}}>Menu</span>
     <IconButton><GithubIcon /></IconButton>
     <span style={{verticalAlign: 'middle'}}>Github</span>
-  </section>
+    <h5>Browse Button</h5>
+    <br/>
+    <BrowseButton icon='folder_open' label='BROWSE' raised primary />
+    &nbsp;
+    <BrowseButton label='BROWSE' raised />
+</section>
 );
 
 function rippleEnded () {

@@ -6,6 +6,17 @@
 
 .button {
   position: relative;
+
+  > input {
+    width: 0.1px !important;
+    height: 0.1px !important;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
 }
 
 %button {
