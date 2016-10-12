@@ -1,20 +1,35 @@
-//-- Color configuration
-$color-divider: $palette-grey-200 !default;
-$color-background: $color-white !default;
-$color-text: $palette-grey-900 !default;
-$color-text-secondary: $palette-grey-600 !default;
+// Colors
+$primary-color: #F7921E;
+$darkprimary-color: darken($primary-color, 10%);
+$lightprimary-color: lighten($primary-color, 35%);
+$lighterprimary-color: lighten($primary-color, 40%);
 
-$color-primary: $palette-indigo-500 !default;
-$color-primary-dark: $palette-indigo-700 !default;
-$color-accent: $palette-pink-a200 !default;
-$color-accent-dark: $palette-pink-700 !default;
+$accent-color: #72CDDD;
+$darkaccent-color: darken($accent-color, 10%);
+$lightaccent-color: lighten($accent-color, 32.5%);
+
+$gray: #2C3E50;
+$black: #161F29;
+$white: lighten(#FFF9E1, 5%);
+
+
+// Color configuration
+$color-divider: $gray !default;
+$color-background: $white !default;
+$color-text: $black !default;
+$color-text-secondary: $darkprimary-color !default;
+
+$color-primary: $primary-color !default;
+$color-primary-dark: $darkprimary-color !default;
+$color-accent: $accent-color !default;
+$color-accent-dark: $darkaccent-color !default;
 $color-primary-contrast: $color-dark-contrast !default;
 $color-accent-contrast: $color-dark-contrast !default;
 
-//-- Sizing
+// Sizing
 $unit: 1rem !default;
 
-// -- Fonts
+// Fonts
 $preferred-font: "Roboto", "Helvetica", "Arial", sans-serif !default;
 $font-size: 1.6 * $unit !default;
 $font-size-tiny: 1.2 * $unit !default;
@@ -26,7 +41,7 @@ $font-weight-normal: 400 !default;
 $font-weight-semi-bold: 500 !default;
 $font-weight-bold: 700 !default;
 
-//-- Shadows
+// Shadows
 $shadow-key-umbra-opacity: 0.2 !default;
 $shadow-key-penumbra-opacity: 0.14 !default;
 $shadow-ambient-shadow-opacity: 0.12 !default;
@@ -38,7 +53,7 @@ $zdepth-shadow-3: 0 10px 30px rgba(0,0,0,.19), 0 6px 10px rgba(0,0,0,.23);
 $zdepth-shadow-4: 0 14px 45px rgba(0,0,0,.25), 0 10px 18px rgba(0,0,0,.22);
 $zdepth-shadow-5: 0 19px 60px rgba(0,0,0,.3), 0 15px 20px rgba(0,0,0,.22);
 
-//-- Animation
+// Animation
 $animation-duration: .35s;
 $animation-delay: $animation-duration / 5;
 $animation-curve-fast-out-slow-in: cubic-bezier(0.4, 0, 0.2, 1) !default;
@@ -46,7 +61,7 @@ $animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1) !default;
 $animation-curve-fast-out-linear-in: cubic-bezier(0.4, 0, 1, 1) !default;
 $animation-curve-default: $animation-curve-fast-out-slow-in !default;
 
-//-- Indexes
+// Indexes
 $z-index-highest: 300 !default;
 $z-index-higher: 200 !default;
 $z-index-high: 100 !default;
@@ -54,7 +69,7 @@ $z-index-normal: 1 !default;
 $z-index-low: -100 !default;
 $z-index-lower: -200 !default;
 
-//-- Breakpoints
+// Breakpoints
 // height of app bar
 // https://www.google.com/design/spec/layout/metrics-keylines.html#metrics-keylines-keylines-spacing
 $standard-increment-mobile: (5.6 * $unit) !default;
@@ -79,3 +94,98 @@ $layout-breakpoint-lg: 1280px !default;
 $layout-breakpoint-xl: 1440px !default;
 $layout-breakpoint-xxl: 1600px !default;
 $layout-breakpoint-xxxl: 1920px !default;
+
+// Tabel
+$table-row-height: 52px !default;
+$table-row-divider: solid 1px rgba($gray,.12) !default;
+$table-row-offset: 1.8 * $unit !default;
+$table-row-highlight: rgba($primary-color, 0.1) !default;
+$table-text-color: $black !default;
+
+
+// Buttons
+$button-neutral-color: lighten($gray, 20%) !default;
+$button-neutral-color-contrast: $white !default;
+$button-neutral-color-hover: rgba($gray, .2) !default;
+$button-primary-color-contrast: $color-primary-contrast !default;
+$button-primary-color-hover: rgba($color-primary, .2) !default;
+$button-primary-color: $color-primary !default;
+$button-accent-color-contrast: $color-primary-contrast !default;
+$button-accent-color-hover: rgba($color-accent, .2) !default;
+$button-accent-color: $color-accent !default;
+$button-disabled-text-color: rgba($color-black, 0.26) !default;
+$button-disabled-background-color: rgba($color-black, 0.12) !default;
+$button-border-radius: 0.2 * $unit !default;
+$button-floating-font-size: $unit * 2.4 !default;
+$button-floating-height: $unit * 5.6 !default;
+$button-floating-mini-height: $unit * 4 !default;
+$button-floating-mini-font-size: $button-floating-mini-height / 2.25 !default;
+$button-height: $unit * 3.6 !default;
+$button-squared-icon-margin: $unit * .6 !default;
+$button-squared-min-width: 9 * $unit !default;
+$button-squared-padding: 0 $unit * 1.2 !default;
+$button-toggle-font-size: $unit * 2 !default;
+
+//  autocomplete
+$autocomplete-color-primary-contrast: $accent-color !default;
+$autocomplete-color-primary: $color-primary !default;
+$autocomplete-overflow-max-height: 45vh !default;
+$autocomplete-suggestion-active-background: rgba($accent-color, 0.2) !default;
+$autocomplete-suggestion-padding: $unit !default;
+$autocomplete-suggestions-background: $white !default;
+$autocomplete-value-margin: $unit * .25 $unit * .5 $unit * .25 0 !default;
+
+// input
+$input-padding: 2 * $unit !default;
+$input-field-padding: .8 * $unit !default;
+$input-field-font-size: 1.6 * $unit !default;
+$input-field-height: $input-field-padding * 2 + $input-field-font-size * 1.4 !default;
+$input-label-font-size: 1.2 * $unit !default;
+$input-focus-label-top: .6 * $unit !default;
+$input-text-background-color: transparent !default;
+$input-text-label-color: rgba($darkprimary-color, 0.26) !default;
+$input-text-bottom-border-color: rgba($darkprimary-color, 0.12) !default;
+$input-text-highlight-color: $primary-color !default;
+$input-text-disabled-color: $input-text-bottom-border-color !default;
+$input-text-disabled-text-color: $input-text-label-color !default;
+$input-text-error-color: rgb(222, 50, 38) !default;
+$input-text-required-color: rgb(222, 50, 38) !default;
+$input-underline-height:  2 * $unit !default;
+$input-icon-font-size: 2.4 * $unit !default;
+$input-icon-size: 2 * $input-icon-font-size !default;
+$input-icon-offset: 1.6 * $unit !default;
+$input-chevron-offset: .8 * $unit !default;
+$input-hint-opacity: 1 !default;
+
+// Checkbox
+$checkbox-color: $primary-color !default;
+$checkbox-disabled-color: rgba($gray, 0.26) !default;
+$checkbox-field-margin-bottom: 1.5 * $unit !default;
+$checkbox-focus-checked-color: rgba($primary-color, 0.26) !default;
+$checkbox-ripple-duration: 650ms !default;
+$checkbox-size: 1.8 * $unit !default;
+$checkbox-focus-color: rgba($accent-color, 0.4) !default;
+$checkbox-focus-size: $checkbox-size * 2.3 !default;
+$checkbox-text-color: $black !default;
+$checkbox-text-font-size: $font-size-small !default;
+$checkbox-total-height: 1.8 * $unit !default;
+$checkbox-transition-duration: .2s !default;
+
+// Chip
+$chip-height: 3.2 * $unit !default;
+$chip-padding: 1.2 * $unit !default;
+$chip-margin-right: 0.25 * $unit !default;
+$chip-background: rgba($accent-color, 0.25) !default;
+
+$chip-icon-font-size: 2 * $unit !default;
+$chip-icon-margin-right: 0.8 * $unit !default;
+
+$chip-color: $color-text-secondary !default;
+$chip-font-size: $font-size-small !default;
+
+$chip-remove-size: 2.4 * $unit !default;
+$chip-remove-margin: 0.4 * $unit !default;
+$chip-remove-stroke-width: 0.4 * $unit !default;
+$chip-remove-background: rgba($accent-color, 0.25) !default;
+$chip-remove-background-hover: rgba($accent-color, 0.25) !default;
+$chip-remove-color: $color-white !default;

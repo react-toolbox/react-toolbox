@@ -22,11 +22,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/react-toolbox/react-toolbox.git"
+    "url": "git+https://github.com/PurpleBracket/RTreact-toolbox.git"
   },
   "bugs": {
     "email": "issues@react-toolbox.com",
-    "url": "https://github.com/react-toolbox/react-toolbox/issues"
+    "url": "https://github.com/PurpleBracket/RTreact-toolbox/issues"
   },
   "keywords": [
     "components",
