@@ -11,6 +11,17 @@ const FontIconTest = () => (
     <FontIcon value="explore"/>
     <FontIcon value="zoom_in"/>
     <FontIcon>input</FontIcon>
+
+    <h5>Using FontAwesome</h5>
+    Basic: <FontIcon value="fa:leaf"/>
+    <br />
+    With modifiers: <FontIcon value="fa:cog:spin"/> <FontIcon value="fa:cog:border"/>
+
+    <h5>font awesome inline with text</h5>
+    <div>
+      <FontIcon value="fa:search-plus:fw"/>
+      Some text
+    </div>
   </section>
 );
 
