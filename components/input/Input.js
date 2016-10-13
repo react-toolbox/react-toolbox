@@ -26,6 +26,7 @@ const factory = (FontIcon) => {
       onFocus: React.PropTypes.func,
       onKeyPress: React.PropTypes.func,
       required: React.PropTypes.bool,
+      rows: React.PropTypes.number,
       theme: React.PropTypes.shape({
         bar: React.PropTypes.string,
         counter: React.PropTypes.string,
@@ -41,8 +42,7 @@ const factory = (FontIcon) => {
         withIcon: React.PropTypes.string
       }),
       type: React.PropTypes.string,
-      value: React.PropTypes.any,
-      rows: React.PropTypes.number,
+      value: React.PropTypes.any
     };
 
     static defaultProps = {
