@@ -71,10 +71,10 @@ The Layout's subcomponents can alter their appearance and behavior based on the 
 |:-----|:-----|:-----|
 | 480px | `xxs` | Phone (portrait) |
 | 600px | `xs` | Small tablet, phone (landscape) |
-| 720px | `sm-tablet` | Small tablet (portrait) |
+| 720px | `smTablet` | Small tablet (portrait) |
 | 840px | `sm` | Large tablet (portrait) |
 | 960px | `md` | Small tablet (landscape) |
-| 1024px | `lg-tablet` | Large tablet (landscape) |
+| 1024px | `lgTablet` | Large tablet (landscape) |
 | 1280px | `lg` | Large tablet (landscape), desktop |
 | 1440px | `xl` | desktop |
 | 1600px | `xxl` | desktop |
@@ -148,6 +148,7 @@ The `Panel` is the main content area within a `Layout`.  It is a full-height fle
 ### Properties
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
+| `onScroll` | `Function` | | Callback function to be invoked when the component scrolls. |
 | `scrollY` | `bool` | `false` | If true, the panel will vertically scroll all content. |
 | `className` | `string` |  | Additional class(es) for custom styling. |
 

@@ -1,6 +1,11 @@
+sudo: false
+
 language: node_js
+
 node_js:
-  - "4.3.2"
+  - 6
+  - 4
+  
 script:
   - npm run lint
   - npm test

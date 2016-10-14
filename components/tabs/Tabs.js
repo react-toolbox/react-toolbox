@@ -58,10 +58,6 @@ const factory = (Tab, TabContent) => {
     };
 
     handleResize = () => {
-      if (!this.props.fixed) {
-        return;
-      }
-
       if (this.resizeTimeout) {
         clearTimeout(this.resizeTimeout);
       }

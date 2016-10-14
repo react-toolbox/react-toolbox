@@ -20,6 +20,7 @@ const factory = (Input) => {
       onChange: PropTypes.func,
       onClick: PropTypes.func,
       onFocus: PropTypes.func,
+      required: PropTypes.bool,
       source: PropTypes.array.isRequired,
       template: PropTypes.func,
       theme: PropTypes.shape({
@@ -30,6 +31,7 @@ const factory = (Input) => {
         errored: PropTypes.string,
         field: PropTypes.string,
         label: PropTypes.string,
+        required: PropTypes.bool,
         selected: PropTypes.string,
         templateValue: PropTypes.string,
         up: PropTypes.string,
@@ -46,7 +48,8 @@ const factory = (Input) => {
       auto: true,
       className: '',
       allowBlank: true,
-      disabled: false
+      disabled: false,
+      required: false
     };
 
     state = {
@@ -118,7 +121,8 @@ const factory = (Input) => {
       const { theme } = this.props;
       const className = classnames(theme.field, {
         [theme.errored]: this.props.error,
-        [theme.disabled]: this.props.disabled
+        [theme.disabled]: this.props.disabled,
+        [theme.required]: this.props.required
       });
 
       return (
@@ -126,7 +130,12 @@ const factory = (Input) => {
           <div className={`${theme.templateValue} ${theme.value}`}>
             {this.props.template(selected)}
           </div>
-          {this.props.label ? <label className={theme.label}>{this.props.label}</label> : null}
+          {this.props.label
+            ? <label className={theme.label}>
+                {this.props.label}
+                {this.props.required ? <span className={theme.required}> * </span> : null}
+              </label>
+            : null}
           {this.props.error ? <span className={theme.error}>{this.props.error}</span> : null}
         </div>
       );
@@ -143,12 +152,13 @@ const factory = (Input) => {
     };
 
     render () {
-      const {template, theme, source, allowBlank, auto, ...others} = this.props; //eslint-disable-line no-unused-vars
+      const {template, theme, source, allowBlank, auto, required, ...others} = this.props; //eslint-disable-line no-unused-vars
       const selected = this.getSelectedItem();
       const className = classnames(theme.dropdown, {
         [theme.up]: this.state.up,
         [theme.active]: this.state.active,
-        [theme.disabled]: this.props.disabled
+        [theme.disabled]: this.props.disabled,
+        [theme.required]: this.props.required
       }, this.props.className);
 
       return (
@@ -157,6 +167,7 @@ const factory = (Input) => {
             {...others}
             className={theme.value}
             onClick={this.handleClick}
+            required={this.props.required}
             readOnly
             type={template && selected ? 'hidden' : null}
             value={selected && selected.label ? selected.label : ''}

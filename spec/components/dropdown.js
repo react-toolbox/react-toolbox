@@ -63,6 +63,14 @@ class DropdownTest extends React.Component {
           onChange={this.handleChange.bind(this, 'dropdown3')}
           source={countries}
         />
+
+        <Dropdown
+          label="Country"
+          ref="dropdown5"
+          onChange={this.handleChange.bind(this, 'dropdown5')}
+          source={countries}
+          required
+        />
       </section>
     );
   }

@@ -27,7 +27,6 @@
   background-size: cover;
   &.wide, &.square {
     width: 100%;
-    height: 0;
     .content {
       position: absolute;
       height: 100%;
@@ -36,10 +35,15 @@
       max-width: 100%;
     }
   }
-  &.wide {
+  &::after {
+    display: block;
+    height: 0;
+    content: "";
+  }
+  &.wide::after {
     padding-top: 56.25%;
   }
-  &.square {
+  &.square::after {
     padding-top: 100%;
   }
   .content {

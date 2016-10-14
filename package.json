@@ -2,7 +2,7 @@
   "name": "react-toolbox",
   "description": "A set of React components implementing Google's Material Design specification with the power of CSS Modules.",
   "homepage": "http://www.react-toolbox.com",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "main": "./lib",
   "author": {
     "name": "React Toolbox Team",
@@ -38,7 +38,8 @@
   "dependencies": {
     "classnames": "~2.2.5",
     "core-js": "~2.4.0",
-    "react-css-themr": "~1.2.0"
+    "normalize.css": "~5.0.0",
+    "react-css-themr": "~1.4.1"
   },
   "devDependencies": {
     "autoprefixer": "~6.4.0",
@@ -72,7 +73,6 @@
     "karma-webpack": "~1.7.0",
     "mocha": "~3.0.1",
     "node-sass": "~3.7.0",
-    "normalize.css": "~4.2.0",
     "phantomjs": "~2.1.7",
     "phantomjs-polyfill": "0.0.2",
     "phantomjs-prebuilt": "~2.1.7",
@@ -105,17 +105,16 @@
     "prebuild": "npm run clean",
     "prepublish": "npm run build",
     "release": "bumped release",
-    "sass": "cpx './components/**/*.scss' ./lib",
+    "sass": "cpx \"./components/**/*.scss\" ./lib",
     "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
     "test": "cross-env NODE_ENV=test karma start",
     "test:watch": "cross-env NODE_ENV=test karma start --no-single-run",
-    "tsd": "cpx './components/**/*.d.ts' ./lib"
+    "tsd": "cpx \"./components/**/*.d.ts\" ./lib"
   },
   "license": "MIT",
   "peerDependencies": {
     "classnames": "~2.2.0",
     "immutability-helper": "~2.0.0",
-    "normalize.css": "~4.2.0",
     "react": "~0.14 || ~15.3.0",
     "react-addons-css-transition-group": "~0.14.0 || ~15.3.0",
     "react-dom": "~0.14.0 || ~15.3.0"

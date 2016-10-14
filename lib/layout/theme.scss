@@ -108,6 +108,12 @@
       }
     }
 
+    @media screen and (min-width: $layout-breakpoint-sm-tablet) {
+      &.smTabletPermanent {
+        @include permanent();
+      }
+    }
+
     @media screen and (min-width: $layout-breakpoint-md) {
       &.mdPermanent {
         @include permanent();
@@ -116,6 +122,12 @@
 
     @media screen and (min-width: $layout-breakpoint-lg) {
       &.lgPermanent {
+        @include permanent();
+      }
+    }
+
+    @media screen and (min-width: $layout-breakpoint-lg-tablet) {
+      &.lgTabletPermanent {
         @include permanent();
       }
     }
