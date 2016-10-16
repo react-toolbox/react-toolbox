@@ -51,6 +51,7 @@ If you want to provide a theme via context, the component key is `RTDropdown`.
 | `source`     | `Array`    |         | Array of data objects with the data to represent in the dropdown.|
 | `template`   | `Function` |         | Callback function that returns a JSX template to represent the element.|
 | `value`      | `String`   |         | Default value using JSON data.|
+| `required`   | `Boolean`  | `false` | If true, the dropdown has a required attribute.|
 
 ## Theming
 

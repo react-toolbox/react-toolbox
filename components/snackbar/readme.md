@@ -41,9 +41,10 @@ This component can be styled by context providing a theme with the key `RTSnackb
 |:-----|:-----|:-----|:-----|
 | `action`      | `String`                |               | Label for the action component inside the Snackbar.|
 | `active`      | `Boolean`               |  `false`      | If true, the snackbar will be active.|
+| `children`    | `String or Element`     |  `false`      | Text or node to be displayed in the content as alternative to `label`.|
 | `className`   | `String`                | `''`          | Additional class name to provide custom styling.|
 | `icon`        | `String` or `Element`   |               | String key for an icon or Element which will be displayed in left side of the snackbar.|
-| `label`       | `String`                |               | Text to display in the content. Required.|
+| `label`       | `String or Element`     |               | Text to display in the content.|
 | `onClick`     | `Function`              |               | Callback function that will be called when the button action is clicked.|
 | `onTimeout`   | `Function`              |               | Callback function when finish the set timeout.|
 | `timeout`     | `Number`                |               | Amount of time in milliseconds after the Snackbar will be automatically hidden.|

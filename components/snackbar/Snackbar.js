@@ -12,12 +12,16 @@ const factory = (Overlay, Button) => {
     static propTypes = {
       action: PropTypes.string,
       active: PropTypes.bool,
+      children: PropTypes.node,
       className: PropTypes.string,
       icon: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.element
       ]),
-      label: PropTypes.string,
+      label: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element
+      ]),
       onClick: PropTypes.func,
       onTimeout: PropTypes.func,
       theme: PropTypes.shape({
@@ -49,7 +53,7 @@ const factory = (Overlay, Button) => {
     }
 
     render () {
-      const {action, active, icon, label, onClick, theme, type } = this.props;
+      const {action, active, children, icon, label, onClick, theme, type } = this.props;
       const className = classnames([theme.snackbar, theme[type]], {
         [theme.active]: active
       }, this.props.className);
@@ -58,7 +62,10 @@ const factory = (Overlay, Button) => {
         <Overlay invisible>
           <div data-react-toolbox='snackbar' className={className}>
             {icon ? <FontIcon value={icon} className={theme.icon} /> : null}
-            <span className={theme.label}>{label}</span>
+            <span className={theme.label}>
+              {label}
+              {children}
+            </span>
             {action ? <Button className={theme.button} label={action} onClick={onClick}/> : null}
           </div>
         </Overlay>
