@@ -135,6 +135,10 @@ interface DatePickerProps extends ReactToolbox.Props {
    */
   onOverlayClick?: Function;
   /**
+   * The input element will be readonly and look like disabled.
+   */
+  readonly?: boolean;
+  /**
    * Classnames object defining the component style.
    */
   theme?: DatePickerTheme;
