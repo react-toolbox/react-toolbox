@@ -8,14 +8,14 @@
   position: relative;
 
   > input {
-    position: absolute;
-    z-index: 0;
-    width: 0.1px;
-    height: 0.1px;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
+    width: 0.1px !important;
+    height: 0.1px !important;
     opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 }
 
