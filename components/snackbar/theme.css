@@ -48,9 +48,10 @@
 }
 
 .button {
-  margin-bottom: calc(-1 * var(--snackbar-vertical-offset) / 2);
-  margin-left: var(--snackbar-button-offset);
-  margin-right: calc(-1 * var(--snackbar-horizontal-offset) / 2);
-  margin-top: calc(-1 * var(--snackbar-vertical-offset) / 2);
+  margin:
+    calc(-1 * var(--snackbar-vertical-offset) / 2)
+    calc(-1 * var(--snackbar-horizontal-offset) / 2)
+    calc(-1 * var(--snackbar-vertical-offset) / 2)
+    var(--snackbar-button-offset);
   min-width: inherit;
 }

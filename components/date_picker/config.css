@@ -14,7 +14,6 @@
   --datepicker-day-font-size: calc(5 * var(--unit));
   --datepicker-day-line-height: calc(4 * var(--unit));
   --datepicker-year-font-size: var(--font-size-small);
-
   --calendar-primary: var(--color-primary);
   --calendar-primary-contrast: var(--color-primary-contrast);
   --calendar-primary-color: var(--calendar-primary);

@@ -13,10 +13,10 @@
   max-width: 96vw;
   opacity: 0;
   transform: translateY(calc(-1 * var(--dialog-translate-y)));
+  transition:
+    opacity var(--animation-duration) var(--animation-curve-default),
+    transform var(--animation-duration) var(--animation-curve-default);
   transition-delay: var(--animation-delay);
-  transition-duration: var(--animation-duration);
-  transition-property: opacity, transform;
-  transition-timing-function: var(--animation-curve-default);
 
   &.active {
     opacity: 1;

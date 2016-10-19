@@ -27,6 +27,7 @@
  */
 @define-mixin permanent {
   @mixin open;
+
   max-width: var(--navigation-drawer-desktop-width);
   width: var(--navigation-drawer-desktop-width);
 
@@ -102,6 +103,7 @@
 
   &.pinned {
     @mixin open;
+
     max-width: var(--navigation-drawer-max-mobile-width);
     width: var(--navigation-drawer-mobile-width);
   }
@@ -109,6 +111,7 @@
   &.active {
     &:not(.pinned) {
       @mixin open;
+
       & .scrim {
         background-color: color(var(--drawer-overlay-color) a(var(--drawer-overlay-opacity)));
         transition: background-color var(--animation-duration) var(--animation-curve-default);

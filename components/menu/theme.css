@@ -80,6 +80,7 @@
       & > .outline {
         transition-delay: var(--menu-ripple-delay);
       }
+
       & > .menuInner {
         transition-delay: var(--menu-ripple-delay);
       }

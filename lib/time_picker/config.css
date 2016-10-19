@@ -13,7 +13,6 @@
   --timepicker-ampm-width: calc(4 * var(--unit));
   --timepicker-dialog-width: calc(30 * var(--unit));
   --clock-padding: calc(1.5 * var(--unit)) calc(2 * var(--unit));
-
   --clock-primary: var(--color-primary);
   --clock-primary-contrast: var(--color-primary-contrast);
   --clock-primary-dark: var(--color-primary-dark);

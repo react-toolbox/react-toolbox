@@ -16,6 +16,7 @@
 
   & th {
     font-weight: var(--font-weight-bold);
+
     &::first-letter {
       text-transform: capitalize;
     }

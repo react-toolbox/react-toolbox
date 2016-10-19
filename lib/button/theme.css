@@ -206,6 +206,7 @@
   &.flat,
   &.toggle {
     color: var(--button-neutral-color-contrast);
+
     &:focus:not(:active) {
       background: var(--button-neutral-color-hover);
     }

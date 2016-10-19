@@ -55,9 +55,11 @@
 
   & > [role='navigation'] > .button {
     color: var(--datepicker-primary-color);
+
     &:hover {
       background: var(--datepicker-primary-hover-color);
     }
+
     &:focus:not(:active) {
       background: var(--datepicker-primary-hover-color);
     }

@@ -12,7 +12,6 @@
   --tab-text: var(--color-black);
   --tab-text-color: var(--tab-text);
   --tab-text-inactive-color: color(var(--tab-text), a(70%));
-
   --tab-inverse-bar-color: var(--color-primary);
   --tab-inverse-pointer-color: var(--color-accent);
   --tab-inverse-text: var(--color-primary-contrast);

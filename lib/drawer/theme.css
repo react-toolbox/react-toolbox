@@ -14,10 +14,8 @@
   position: absolute;
   top: 0;
   transform-style: preserve-3d;
+  transition: transform var(--animation-duration) var(--animation-curve-default);
   transition-delay: 0s;
-  transition-duration: var(--animation-duration);
-  transition-property: transform;
-  transition-timing-function: var(--animation-curve-default);
   width: var(--drawer-width);
   will-change: transform;
 
