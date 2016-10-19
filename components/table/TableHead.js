@@ -1,50 +1,65 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes, cloneElement } from 'react';
+import { themr } from 'react-css-themr';
+import { TABLE } from '../identifiers.js';
+import InjectCheckbox from '../checkbox/Checkbox.js';
+import InjectTableCell from './TableCell.js';
 
-const factory = (Checkbox) => {
-  const TableHead = ({model, onSelect, selectable, multiSelectable, selected, theme}) => {
-    let selectCell;
-    const contentCells = Object.keys(model).map((key) => {
-      const name = model[key].title || key;
-      return <th key={key}>{name}</th>;
-    });
+const factory = (Checkbox, TableCell) => {
+  class TableHead extends Component {
+    static propTypes = {
+      children: PropTypes.node,
+      className: PropTypes.string,
+      displaySelect: PropTypes.bool,
+      multiSelectable: PropTypes.bool,
+      onSelect: PropTypes.func,
+      selectable: PropTypes.bool,
+      selected: PropTypes.bool,
+      theme: PropTypes.shape({
+        checkboxCell: PropTypes.string
+      })
+    }
 
-    if (selectable && multiSelectable) {
-      selectCell = (
-        <th key='select' className={theme.selectable}>
-          <Checkbox onChange={onSelect} checked={selected}/>
-        </th>
-      );
-    } else if (selectable) {
-      selectCell = (
-        <th key='select' className={theme.selectable}/>
+    static defaultProps = {
+      displaySelect: true
+    }
+
+    handleSelect = (value, event) => {
+      this.props.onSelect(value, event);
+    };
+
+    render () {
+      const {
+        children,
+        displaySelect,
+        multiSelectable,
+        onSelect,        // eslint-disable-line
+        selectable,
+        selected,
+        theme,
+        ...other
+      } = this.props;
+      return (
+        <tr {...other}>
+          {selectable && <TableCell className={theme.checkboxCell} tagName="th">
+            {displaySelect && <Checkbox
+              checked={selected}
+              disabled={!multiSelectable}
+              onChange={this.handleSelect}
+            />}
+          </TableCell>}
+          {React.Children.map(children, (child, index) => cloneElement(child, {
+            column: index,
+            tagName: 'th'
+          }))}
+        </tr>
       );
     }
-    return (
-      <thead>
-        <tr>{[selectCell, ...contentCells]}</tr>
-      </thead>
-    );
-  };
-
-  TableHead.propTypes = {
-    className: PropTypes.string,
-    model: PropTypes.object,
-    multiSelectable: PropTypes.bool,
-    onSelect: PropTypes.func,
-    selectable: PropTypes.bool,
-    selected: PropTypes.bool,
-    theme: PropTypes.shape({
-      selectable: PropTypes.string
-    })
-  };
-
-  TableHead.defaultProps = {
-    className: '',
-    model: {},
-    selected: false
-  };
+  }
 
   return TableHead;
 };
 
-export default factory;
+const TableHead = factory(InjectCheckbox, InjectTableCell);
+export default themr(TABLE)(TableHead);
+export { factory as tableHeadFactory };
+export { TableHead };
