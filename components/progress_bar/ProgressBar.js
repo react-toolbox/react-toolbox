@@ -8,6 +8,7 @@ class ProgressBar extends Component {
   static propTypes = {
     buffer: PropTypes.number,
     className: PropTypes.string,
+    disabled: PropTypes.bool,
     max: PropTypes.number,
     min: PropTypes.number,
     mode: PropTypes.oneOf(['determinate', 'indeterminate']),
@@ -79,7 +80,7 @@ class ProgressBar extends Component {
   }
 
   render () {
-    const { className, max, min, mode, multicolor, type, theme, value } = this.props;
+    const { className, disabled, max, min, mode, multicolor, type, theme, value } = this.props;
     const _className = classnames(theme[type], {
       [theme[mode]]: mode,
       [theme.multicolor]: multicolor
@@ -87,6 +88,7 @@ class ProgressBar extends Component {
 
     return (
       <div
+        disabled={disabled}
         data-react-toolbox='progress-bar'
         aria-valuenow={value}
         aria-valuemin={min}

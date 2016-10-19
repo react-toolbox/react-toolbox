@@ -9,7 +9,8 @@ import Slider from 'react-toolbox/lib/slider';
 class SliderTest extends React.Component {
   state = {
     slider2: 5,
-    slider3: 1
+    slider3: 1,
+    slider4: 3
   };
 
   handleChange = (slider, value) => {
@@ -27,6 +28,8 @@ class SliderTest extends React.Component {
         <Slider min={0} max={10} editable value={this.state.slider2} onChange={this.handleChange.bind(this, 'slider2')} />
         <p>Pinned and with snaps</p>
         <Slider pinned snaps min={0} max={10} step={1} editable value={this.state.slider3} onChange={this.handleChange.bind(this, 'slider3')} />
+        <p>Disabled</p>
+        <Slider disabled min={0} max={10} value={this.state.slider4} onChange={this.handleChange.bind(this, 'slider4')} />
       </section>
     );
   }
@@ -40,6 +43,7 @@ This component can be styled by context providing a theme with the key `RTSlider
 | Name          | Type          | Default   | Description|
 |:-----|:-----|:-----|:-----|
 | `className`   | `String`      | `''`      | Additional class name to provide custom styling.|
+| `disabled`    | `Boolean`     | `false`   | If true, component will be disabled.|
 | `editable`    | `Boolean`     | `false`   | If true, an input is shown and the user can set the slider from keyboard value.|
 | `max`         | `Number`      | `100`     | Maximum value permitted.|
 | `min`         | `Number`      | `0`       | Minimum value permitted.|

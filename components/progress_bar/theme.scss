@@ -32,9 +32,18 @@
   background-color: $progress-main-color;
 }
 
+[disabled] .value {
+  background-color: $progress-disabled-color;
+}
+
 .buffer {
   background-image: linear-gradient(to right, $progress-secondary-color, $progress-secondary-color),
   linear-gradient(to right, $progress-main-color, $progress-main-color);
+}
+
+[disabled] .buffer {
+  background-image: linear-gradient(to right, $progress-secondary-color, $progress-secondary-color),
+  linear-gradient(to right, $progress-disabled-color, $progress-disabled-color);
 }
 
 .circular {
