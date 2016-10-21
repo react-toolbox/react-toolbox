@@ -31,7 +31,7 @@ const factory = (Input) => {
         errored: PropTypes.string,
         field: PropTypes.string,
         label: PropTypes.string,
-        required: PropTypes.bool,
+        required: PropTypes.string,
         selected: PropTypes.string,
         templateValue: PropTypes.string,
         up: PropTypes.string,
