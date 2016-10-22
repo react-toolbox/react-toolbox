@@ -43,6 +43,11 @@ interface ProgressBarProps extends ReactToolbox.Props {
    */
   buffer?: number;
   /**
+   * If true, component will be disabled.
+   * @default false
+   */
+  disabled?: boolean;
+  /**
    * Maximum value permitted.
    * @default 100
    */
