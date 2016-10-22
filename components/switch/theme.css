@@ -4,10 +4,9 @@
 
 .field {
   display: block;
-  height: var(--switch-total-height);
   margin-bottom: var(--switch-field-margin-bottom);
   position: relative;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .text {
