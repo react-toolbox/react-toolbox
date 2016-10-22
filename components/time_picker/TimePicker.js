@@ -22,6 +22,7 @@ const factory = (TimePickerDialog, Input) => {
       okLabel: PropTypes.string,
       onChange: PropTypes.func,
       onClick: PropTypes.func,
+      onDismiss: PropTypes.func,
       onEscKeyDown: PropTypes.func,
       onKeyPress: PropTypes.func,
       onOverlayClick: PropTypes.func,
@@ -50,6 +51,9 @@ const factory = (TimePickerDialog, Input) => {
 
     handleDismiss = () => {
       this.setState({active: false});
+      if (this.props.onDismiss) {
+        this.props.onDismiss();
+      }
     };
 
     handleInputFocus = (event) => {
@@ -83,7 +87,7 @@ const factory = (TimePickerDialog, Input) => {
 
     render () {
       const {
-        active, // eslint-disable-line
+        active, onDismiss, // eslint-disable-line
         cancelLabel, format, inputClassName, okLabel, onEscKeyDown, onOverlayClick,
         readonly, value, ...others
       } = this.props;
