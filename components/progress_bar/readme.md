@@ -22,6 +22,7 @@ If you want to provide a theme via context, the component key is `RTProgressBar`
 |:-----|:-----|:-----|:-----|
 | `buffer`      | `Number`    | `0`             | Value of a secondary progress bar useful for buffering.|
 | `className`   | `String`    | `''`            | Additional class name to provide custom styling.|
+| `disabled`    | `Boolean`   | `false`         | If true, component will be disabled.|
 | `max`         | `Number`    | `100`           | Maximum value permitted.|
 | `min`         | `Number`    | `0`             | Minimum value permitted.|
 | `mode`        | `String`    | `indeterminate` | Mode of the progress bar, it can be `determinate` or `indeterminate`.|

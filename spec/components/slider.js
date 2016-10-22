@@ -21,6 +21,8 @@ class SliderTest extends React.Component {
         <Slider min={0} max={10} editable value={this.state.slider2} onChange={this.handleChange.bind(this, 'slider2')} />
         <p>Pinned and with snaps</p>
         <Slider pinned snaps min={0} max={10} step={1} editable value={this.state.slider3} onChange={this.handleChange.bind(this, 'slider3')} />
+        <p>Disabled status</p>
+        <Slider disabled pinned snaps min={0} max={10} step={1} editable value={this.state.slider3} onChange={this.handleChange.bind(this, 'slider3')} />
       </section>
     );
   }

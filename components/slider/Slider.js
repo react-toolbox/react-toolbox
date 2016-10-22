@@ -12,6 +12,7 @@ const factory = (ProgressBar, Input) => {
   class Slider extends Component {
     static propTypes = {
       className: PropTypes.string,
+      disabled: PropTypes.bool,
       editable: PropTypes.bool,
       max: PropTypes.number,
       min: PropTypes.number,
@@ -241,6 +242,7 @@ const factory = (ProgressBar, Input) => {
           <Input
             ref='input'
             className={this.props.theme.input}
+            disabled={this.props.disabled}
             onFocus={this.handleInputFocus}
             onChange={this.handleInputChange}
             onBlur={this.handleInputBlur}
@@ -255,6 +257,7 @@ const factory = (ProgressBar, Input) => {
       const knobStyles = {left: `${this.knobOffset()}%`};
       const className = classnames(theme.slider, {
         [theme.editable]: this.props.editable,
+        [theme.disabled]: this.props.disabled,
         [theme.pinned]: this.props.pinned,
         [theme.pressed]: this.state.pressed,
         [theme.ring]: this.props.value === this.props.min
@@ -263,6 +266,7 @@ const factory = (ProgressBar, Input) => {
       return (
         <div
           className={className}
+          disabled={this.props.disabled}
           data-react-toolbox='slider'
           onBlur={this.handleSliderBlur}
           onFocus={this.handleSliderFocus}
@@ -286,6 +290,7 @@ const factory = (ProgressBar, Input) => {
 
             <div className={theme.progress}>
               <ProgressBar
+                disabled={this.props.disabled}
                 ref='progressbar'
                 className={theme.innerprogress}
                 max={this.props.max}
