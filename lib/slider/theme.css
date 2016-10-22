@@ -118,6 +118,15 @@
     z-index: var(--z-index-normal);
   }
 
+  &[disabled] {
+    pointer-events: none;
+    cursor: auto;
+
+    & .innerknob {
+      background-color: var(--slider-disabled-color);
+    }
+  }
+
   &.editable {
     align-items: center;
     display: flex;

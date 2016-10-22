@@ -65,6 +65,19 @@
   }
 }
 
+.circular[disabled],
+.linear[disabled] {
+  & .value {
+    background-color: var(--progress-disabled-color);
+  }
+
+  & .buffer {
+    background-image:
+      linear-gradient(to right, var(--progress-secondary-color), var(--progress-secondary-color)),
+      linear-gradient(to right, var(--progress-disabled-color), var(--progress-disabled-color));
+  }
+}
+
 .circle {
   height: 100%;
   width: 100%;
