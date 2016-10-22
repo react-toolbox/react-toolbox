@@ -69,6 +69,9 @@ const factory = (Input, DatePickerDialog) => {
 
     handleDismiss = () => {
       this.setState({active: false});
+      if (this.props.onDismiss) {
+        this.props.onDismiss();
+      }
     };
 
     handleInputFocus = (event) => {
@@ -101,10 +104,10 @@ const factory = (Input, DatePickerDialog) => {
     };
 
     render () {
-      const { active, // eslint-disable-line
+      const { active, onDismiss,// eslint-disable-line
         autoOk, cancelLabel, inputClassName, inputFormat, locale, maxDate, minDate,
         okLabel, onEscKeyDown, onOverlayClick, readonly, sundayFirstDayOfWeek, value,
-        onDismiss, ...others } = this.props;
+        ...others } = this.props;
       const finalInputFormat = inputFormat || time.formatDate;
       const date = Object.prototype.toString.call(value) === '[object Date]' ? value : undefined;
       const formattedDate = date === undefined ? '' : finalInputFormat(value, locale);
@@ -135,7 +138,7 @@ const factory = (Input, DatePickerDialog) => {
             maxDate={maxDate}
             minDate={minDate}
             name={this.props.name}
-            onDismiss={onDismiss || this.handleDismiss}
+            onDismiss={this.handleDismiss}
             okLabel={okLabel}
             onEscKeyDown={onEscKeyDown || this.handleDismiss}
             onOverlayClick={onOverlayClick || this.handleDismiss}
