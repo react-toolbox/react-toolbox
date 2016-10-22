@@ -54,6 +54,11 @@ export interface InputTheme {
 
 interface InputProps extends ReactToolbox.Props {
   /**
+   * Gives auto focus to input element on mount
+   * @default false
+   */
+  autoFocus?: boolean;
+  /**
    * Children to pass through the component.
    */
   children?: React.ReactNode;

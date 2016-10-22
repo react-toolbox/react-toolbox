@@ -131,7 +131,7 @@ interface ListDividerProps extends ReactToolbox.Props {
   theme?: ListDividerTheme;
 }
 
-export class ListDivider extends React.Component<ListDivider, {}> { }
+export class ListDivider extends React.Component<ListDividerProps, {}> { }
 
 export interface ListItemTheme {
   /**

@@ -80,6 +80,7 @@ interface CardTextProps extends ReactToolbox.Props {
 export class CardText extends React.Component<CardTextProps, {}> { }
 
 export interface CardTitleTheme {
+  cardTitle?: string;
   large?: string;
   title?: string;
   small?: string;

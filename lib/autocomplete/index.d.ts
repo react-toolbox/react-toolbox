@@ -15,6 +15,10 @@ export interface AutocompleteTheme {
    */
   focus?: string;
   /**
+   * Used for the hint text.
+   */
+  hint?: string;
+  /**
    * Used to style the Input component.
    */
   input?: string;
@@ -46,6 +50,11 @@ export interface AutocompleteTheme {
 
 interface AutocompleteProps extends ReactToolbox.Props {
   /**
+   * Determines if user can create a new option with the current typed value
+   * @default false
+   */
+  allowCreate?: boolean;
+  /**
    * Determines the opening direction. It can be auto, up or down.
    * @default auto
    */
@@ -59,6 +68,10 @@ interface AutocompleteProps extends ReactToolbox.Props {
    * @default false
    */
   error?: string;
+  /**
+   * The text string to use for hint text element.
+   */
+  hint?: string;
   /**
    * The text string to use for the floating label element.
    */
@@ -81,7 +94,7 @@ interface AutocompleteProps extends ReactToolbox.Props {
    * If true, the list of suggestions will not be filtered when a value is selected.
    * @default false
    */
-  showSuggestionsWHenValueIsSet?: boolean;
+  showSuggestionsWhenValueIsSet?: boolean;
   /**
    * Object of key/values or array representing all items suggested.
    */
