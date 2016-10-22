@@ -242,6 +242,7 @@ const factory = (ProgressBar, Input) => {
           <Input
             ref='input'
             className={this.props.theme.input}
+            disabled={this.props.disabled}
             onFocus={this.handleInputFocus}
             onChange={this.handleInputChange}
             onBlur={this.handleInputBlur}
