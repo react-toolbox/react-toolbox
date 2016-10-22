@@ -81,7 +81,7 @@ interface AutocompleteProps extends ReactToolbox.Props {
    * If true, the list of suggestions will not be filtered when a value is selected.
    * @default false
    */
-  showSuggestionsWHenValueIsSet?: boolean;
+  showSuggestionsWhenValueIsSet?: boolean;
   /**
    * Object of key/values or array representing all items suggested.
    */
