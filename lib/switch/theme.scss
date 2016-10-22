@@ -6,7 +6,7 @@
 .field {
   position: relative;
   display: block;
-  height: $switch-total-height;
+  height: auto;
   margin-bottom: $switch-field-margin-bottom;
   white-space: nowrap;
   vertical-align: middle;
@@ -18,7 +18,7 @@
   font-size: $switch-font-size;
   line-height: $switch-total-height;
   color: $switch-text-color;
-  white-space: nowrap;
+  white-space: normal;
   vertical-align: top;
 }
 
