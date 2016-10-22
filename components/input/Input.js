@@ -26,6 +26,7 @@ const factory = (FontIcon) => {
       onFocus: React.PropTypes.func,
       onKeyPress: React.PropTypes.func,
       required: React.PropTypes.bool,
+      rows: React.PropTypes.number,
       theme: React.PropTypes.shape({
         bar: React.PropTypes.string,
         counter: React.PropTypes.string,
@@ -94,15 +95,21 @@ const factory = (FontIcon) => {
 
     handleAutoresize = () => {
       const element = this.refs.input;
-      // compute the height difference between inner height and outer height
-      const style = getComputedStyle(element, null);
-      const heightOffset = style.boxSizing === 'content-box'
-        ? -(parseFloat(style.paddingTop) + parseFloat(style.paddingBottom))
-        : parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+      const rows = this.props.rows;
 
-      // resize the input to its content size
-      element.style.height = 'auto';
-      element.style.height = `${element.scrollHeight + heightOffset}px`;
+      if (typeof rows === 'number' && !isNaN(rows)) {
+        element.style.height = null;
+      } else {
+        // compute the height difference between inner height and outer height
+        const style = getComputedStyle(element, null);
+        const heightOffset = style.boxSizing === 'content-box'
+          ? -(parseFloat(style.paddingTop) + parseFloat(style.paddingBottom))
+          : parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+
+        // resize the input to its content size
+        element.style.height = 'auto';
+        element.style.height = `${element.scrollHeight + heightOffset}px`;
+      }
     }
 
     handleKeyPress = (event) => {
@@ -137,7 +144,7 @@ const factory = (FontIcon) => {
     render () {
       const { children, disabled, error, floating, hint, icon,
               name, label: labelText, maxLength, multiline, required,
-              theme, type, value, onKeyPress, ...others} = this.props;
+              theme, type, value, onKeyPress, rows = 1, ...others} = this.props;
       const length = maxLength && value ? value.length : 0;
       const labelClassName = classnames(theme.label, {[theme.fixed]: !floating});
 
@@ -169,7 +176,7 @@ const factory = (FontIcon) => {
         inputElementProps.maxLength = maxLength;
         inputElementProps.onKeyPress = onKeyPress;
       } else {
-        inputElementProps.rows = 1;
+        inputElementProps.rows = rows;
         inputElementProps.onKeyPress = this.handleKeyPress;
       }
 
