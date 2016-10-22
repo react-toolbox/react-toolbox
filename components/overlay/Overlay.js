@@ -26,7 +26,7 @@ class Overlay extends Component {
 
   componentDidMount () {
     if (this.props.active) {
-      this.escKeyListener = document.body.addEventListener('keydown', this.handleEscKey.bind(this));
+      document.body.addEventListener('keydown', this.handleEscKey);
       document.body.style.overflow = 'hidden';
     }
   }
@@ -37,20 +37,17 @@ class Overlay extends Component {
   }
 
   componentDidUpdate () {
-    if (this.props.active && !this.escKeyListener) {
-      this.escKeyListener = document.body.addEventListener('keydown', this.handleEscKey.bind(this));
+    if (this.props.active) {
+      document.body.addEventListener('keydown', this.handleEscKey);
     }
   }
 
   componentWillUnmount () {
     if (!document.querySelectorAll('[data-react-toolbox="overlay"]')[1]) document.body.style.overflow = '';
-    if (this.escKeyListener) {
-      document.body.removeEventListener('keydown', this.handleEscKey);
-      this.escKeyListener = null;
-    }
+    document.body.removeEventListener('keydown', this.handleEscKey);
   }
 
-  handleEscKey (e) {
+  handleEscKey = (e) => {
     if (this.props.active && this.props.onEscKeyDown && e.which === 27) {
       this.props.onEscKeyDown(e);
     }

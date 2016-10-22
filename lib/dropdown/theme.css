@@ -77,6 +77,10 @@
     & > .templateValue {
       border-bottom: 1px solid var(--input-text-error-color);
     }
+
+    & > .label > .required {
+      color: var(--input-text-error-color);
+    }
   }
 
   &.disabled {
@@ -106,6 +110,10 @@
   line-height: var(--input-field-font-size);
   position: absolute;
   top: var(--input-focus-label-top);
+
+  & .required {
+    color: var(--input-text-error-color);
+  }
 }
 
 .error {

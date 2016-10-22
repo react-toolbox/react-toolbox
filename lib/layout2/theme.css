@@ -1,0 +1,18 @@
+.layout {
+  background-color: #607d8b;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.drawerDrawer.drawerLeft {
+  border-right: 0;
+}
+
+.pinned {
+  pointer-events: none;
+
+  & .drawerOverlayBackdrop {
+    background: transparent;
+    opacity: 0;
+  }
+}

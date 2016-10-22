@@ -7,9 +7,11 @@ const factory = (Dialog) => {
   class TimePickerDialog extends Component {
     static propTypes = {
       active: PropTypes.bool,
+      cancelLabel: PropTypes.string,
       className: PropTypes.string,
       format: PropTypes.oneOf(['24hr', 'ampm']),
       name: PropTypes.string,
+      okLabel: PropTypes.string,
       onDismiss: PropTypes.func,
       onEscKeyDown: PropTypes.func,
       onOverlayClick: PropTypes.func,
@@ -34,7 +36,9 @@ const factory = (Dialog) => {
 
     static defaultProps = {
       active: false,
+      cancelLabel: 'Cancel',
       format: '24hr',
+      okLabel: 'Ok',
       value: new Date()
     };
 
@@ -70,8 +74,8 @@ const factory = (Dialog) => {
     };
 
     actions = [
-      { label: 'Cancel', className: this.props.theme.button, onClick: this.props.onDismiss },
-      { label: 'Ok', className: this.props.theme.button, name: this.props.name, onClick: this.handleSelect }
+      { label: this.props.cancelLabel, className: this.props.theme.button, onClick: this.props.onDismiss },
+      { label: this.props.okLabel, className: this.props.theme.button, name: this.props.name, onClick: this.handleSelect }
     ];
 
     formatHours () {

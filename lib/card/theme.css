@@ -29,7 +29,6 @@
 
   &.wide,
   &.square {
-    height: 0;
     width: 100%;
 
     & .content {
@@ -44,11 +43,17 @@
     }
   }
 
-  &.wide {
+  &::after {
+    content: "";
+    display: block;
+    height: 0;
+  }
+
+  &.wide::after {
     padding-top: 56.25%;
   }
 
-  &.square {
+  &.square::after {
     padding-top: 100%;
   }
 

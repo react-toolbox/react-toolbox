@@ -1,7 +1,0 @@
-:root {
-  --table-row-height: calc(4.8 * var(--unit));
-  --table-row-divider: solid 1px color(var(--color-black) a(12%));
-  --table-row-offset: calc(1.8 * var(--unit));
-  --table-row-highlight: #eee;
-  --table-text-color: #757575;
-}

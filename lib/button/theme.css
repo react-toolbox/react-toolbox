@@ -26,6 +26,17 @@
     color 0.2s var(--animation-curve-default);
   white-space: nowrap;
 
+  & > input {
+    height: 0.1px;
+    margin: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 0.1px;
+    z-index: 0;
+  }
+
   &::-moz-focus-inner {
     border: 0;
   }

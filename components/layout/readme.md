@@ -148,6 +148,7 @@ The `Panel` is the main content area within a `Layout`.  It is a full-height fle
 ### Properties
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
+| `onScroll` | `Function` | | Callback function to be invoked when the component scrolls. |
 | `scrollY` | `bool` | `false` | If true, the panel will vertically scroll all content. |
 | `className` | `string` |  | Additional class(es) for custom styling. |
 

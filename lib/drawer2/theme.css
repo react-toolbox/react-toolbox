@@ -1,0 +1,51 @@
+@import '../colors.css';
+@import '../variables.css';
+
+:root {
+  --drawer-background-color: var(--palette-grey-50);
+  --drawer-border-color: var(--palette-grey-300);
+  --drawer-text-color: var(--palette-grey-800);
+  --drawer-width: calc(24 * var(--unit));
+}
+
+.drawer {
+  background-color: var(--drawer-background-color);
+  box-shadow: var(--shadow-2p);
+  color: var(--drawer-text-color);
+  display: block;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  /*transform-style: preserve-3d;*/
+  /*transition: transform var(--animation-duration) var(--animation-curve-default);*/
+  /*transition-delay: 0s;*/
+  width: var(--drawer-width);
+  /*will-change: transform;*/
+
+  &.active {
+    pointer-events: all;
+    transform: translateX(0);
+    /*transition-delay: var(--animation-delay);*/
+  }
+
+  &.right {
+    border-left: 1px solid var(--drawer-border-color);
+    right: 0;
+
+    /*&:not(.active) {
+      transform: translateX(100%);
+    }*/
+  }
+
+  &.left {
+    border-right: 1px solid var(--drawer-border-color);
+    left: 0;
+
+    /*&:not(.active) {
+      transform: translateX(calc(-1 * 100%));
+    }*/
+  }
+}

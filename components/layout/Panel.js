@@ -3,13 +3,13 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { LAYOUT } from '../identifiers.js';
 
-const Panel = ({ children, className, scrollY, theme }) => {
+const Panel = ({ children, className, onScroll, scrollY, theme }) => {
   const _className = classnames(theme.panel, {
     [theme.scrollY]: scrollY
   }, className);
 
   return (
-    <div data-react-toolbox='panel' className={_className}>
+    <div data-react-toolbox='panel' onScroll={onScroll} className={_className}>
       {children}
     </div>
   );
@@ -18,6 +18,7 @@ const Panel = ({ children, className, scrollY, theme }) => {
 Panel.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
+  onScroll: PropTypes.func,
   scrollY: PropTypes.bool,
   theme: PropTypes.shape({
     panel: PropTypes.string,
