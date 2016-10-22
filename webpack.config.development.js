@@ -27,7 +27,7 @@ module.exports = {
     }, {
       test: /\.css$/,
       include: /node_modules/,
-      loaders: ['style-loader', 'css-loader']
+      loader: ExtractTextPlugin.extract('style', 'css')
     }, {
       test: /\.css$/,
       include: [path.join(__dirname, './components'), path.join(__dirname, './spec')],
