@@ -46,6 +46,7 @@
       color: $input-text-required-color;
     }
     ~ .hint {
+      display: block;
       opacity: $input-hint-opacity;
     }
     ~ .icon {
@@ -56,6 +57,9 @@
     ~ .label:not(.fixed) {
       top: $input-focus-label-top;
       font-size: $input-label-font-size;
+    }
+    &.filled ~ .hint {
+      opacity: 0;
     }
   }
   &.filled ~ .label.fixed, &.filled ~ .hint {
@@ -87,7 +91,7 @@
   line-height: $input-field-font-size;
   color: $input-text-label-color;
   pointer-events: none;
-  opacity: 0;
+  opacity: $input-hint-opacity;
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
   transition-property: opacity;

@@ -1,5 +1,5 @@
 class InputTest extends React.Component {
-  state = { name: '', phone: '', multiline: '', email: '', hint: '' };
+  state = { name: '', phone: '', multiline: '', email: '', hint: '', label: '' };
 
   handleChange = (name, value) => {
     this.setState({...this.state, [name]: value});
@@ -9,6 +9,7 @@ class InputTest extends React.Component {
     return (
       <section>
         <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange.bind(this, 'name')} maxLength={16} />
+        <Input type='text' hint='With Hint, no label' name='name' value={this.state.label} onChange={this.handleChange.bind(this, 'label')} maxLength={16} />
         <Input type='text' label='Disabled field' disabled />
         <Input type='text' multiline label='Multiline' maxLength={20} value={this.state.multiline} onChange={this.handleChange.bind(this, 'multiline')} />
         <Input type='email' label='Email address' icon='email' value={this.state.email} onChange={this.handleChange.bind(this, 'email')} />
