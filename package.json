@@ -38,7 +38,6 @@
   "dependencies": {
     "classnames": "~2.2.5",
     "core-js": "~2.4.0",
-    "normalize.css": "~4.2.0",
     "react-css-themr": "~1.4.1"
   },
   "devDependencies": {
@@ -68,6 +67,7 @@
     "karma-phantomjs-launcher": "~1.0.0",
     "karma-webpack": "~1.8.0",
     "mocha": "~3.1.2",
+    "normalize.css": "~4.2.0",
     "phantomjs": "~2.1.7",
     "phantomjs-polyfill": "0.0.2",
     "phantomjs-prebuilt": "~2.1.7",
