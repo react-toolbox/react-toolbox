@@ -53,11 +53,16 @@
     }
 
     & ~ .hint {
+      display: block;
       opacity: var(--input-hint-opacity);
     }
 
     & ~ .icon {
       color: var(--input-text-highlight-color);
+    }
+
+    &.filled ~ .hint {
+      opacity: 0;
     }
   }
 
@@ -99,7 +104,7 @@
   font-size: var(--input-field-font-size);
   left: 0;
   line-height: var(--input-field-font-size);
-  opacity: 0;
+  opacity: var(--input-hint-opacity);
   pointer-events: none;
   position: absolute;
   top: calc(var(--input-padding) + 1.5 * var(--input-field-padding));
