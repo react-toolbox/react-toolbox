@@ -4,11 +4,13 @@ import ReactDOM from 'react-dom';
 class Portal extends Component {
   static propTypes = {
     children: PropTypes.any,
+    className: PropTypes.string,
     container: PropTypes.any,
     lockBody: PropTypes.bool
   }
 
   static defaultProps = {
+    className: '',
     lockBody: true
   }
 
@@ -49,11 +51,13 @@ class Portal extends Component {
     this._portalContainerNode = null;
   }
 
-  _renderOverlay () {
-    const overlay = !this.props.children
-      ? null
-      : React.Children.only(this.props.children);
+  _getOverlay () {
+    if (!this.props.children) return null;
+    return <div className={this.props.className}>{this.props.children}</div>;
+  }
 
+  _renderOverlay () {
+    const overlay = this._getOverlay();
     if (overlay !== null) {
       this._mountOverlayTarget();
       this._overlayInstance = ReactDOM.unstable_renderSubtreeIntoContainer(

@@ -1,46 +1,74 @@
 import React, { PropTypes } from 'react';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
+import Portal from '../hoc/Portal.js';
 import { DRAWER } from '../identifiers.js';
 import ActivableRenderer from '../hoc/ActivableRenderer.js';
 import InjectOverlay from '../overlay/Overlay.js';
 
 const factory = (Overlay) => {
-  const Drawer = ({ active, children, className, onOverlayClick, theme, type }) => {
+  const Drawer = ({
+    active,
+    children,
+    className,
+    insideTree,
+    onOverlayClick,
+    theme,
+    type,
+    withOverlay
+  }) => {
     const _className = classnames([theme.drawer, theme[type]], {
       [theme.active]: active
     }, className);
 
-    return (
-      <Overlay active={active} onClick={onOverlayClick}>
-        <div data-react-toolbox='drawer' className={_className}>
-          <aside className={theme.content}>
-            {children}
-          </aside>
-        </div>
-      </Overlay>
+    const content = (
+      <aside
+        data-react-toolbox='drawer'
+        className={_className}
+        children={children}
+      />
     );
+
+    return React.createElement(insideTree ? 'div' : Portal, {
+      className: theme.wrapper,
+      children: [
+        withOverlay && (
+          <Overlay
+            active={active}
+            onClick={onOverlayClick}
+            theme={theme}
+            themeNamespace="overlay"
+          />
+        ),
+        content
+      ]
+    });
   };
 
   Drawer.propTypes = {
     active: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
+    insideTree: PropTypes.bool,
     onOverlayClick: PropTypes.func,
     theme: PropTypes.shape({
       active: PropTypes.string,
-      content: PropTypes.string,
       drawer: PropTypes.string,
       left: PropTypes.string,
       right: PropTypes.string
     }),
-    type: PropTypes.oneOf(['left', 'right'])
+    type: PropTypes.oneOf([
+      'left', 'right'
+    ]),
+    withOverlay: PropTypes.bool
   };
 
   Drawer.defaultProps = {
     active: false,
     className: '',
-    type: 'left'
+    insideTree: false,
+    type: 'left',
+    withOverlay: true
   };
 
   return ActivableRenderer()(Drawer);
