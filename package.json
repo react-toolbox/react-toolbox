@@ -72,10 +72,12 @@
     "karma-mocha": "~1.2.0",
     "karma-phantomjs-launcher": "~1.0.0",
     "karma-webpack": "~1.8.0",
+    "lint-staged": "^3.2.0",
     "mocha": "~3.1.2",
     "node-sass": "~3.10.1",
     "phantomjs-prebuilt": "~2.1.7",
     "postcss-loader": "~1.0.0",
+    "pre-commit": "^1.1.3",
     "react": "~15.3.0",
     "react-addons-css-transition-group": "~15.3.0",
     "react-addons-test-utils": "~15.3.0",
@@ -99,6 +101,7 @@
     "lint": "npm run lint:js && npm run lint:scss",
     "lint:js": "eslint ./ --ext .js",
     "lint:scss": "sass-lint ./components/**/*.scss -v -i ./components/slider/style.scss",
+    "lint:staged": "lint-staged",
     "patch": "bumped release patch",
     "prebuild": "npm run clean",
     "prepublish": "npm run build",
@@ -109,6 +112,7 @@
     "test:watch": "cross-env NODE_ENV=test karma start --no-single-run",
     "tsd": "cpx \"./components/**/*.d.ts\" ./lib"
   },
+  "pre-commit": "lint:staged",
   "license": "MIT",
   "peerDependencies": {
     "classnames": "~2.2.0",
