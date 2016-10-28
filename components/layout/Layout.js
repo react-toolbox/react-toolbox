@@ -23,6 +23,10 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
       theme: PropTypes.object
     };
 
+    static defaultProps = {
+      className: ''
+    };
+
     state = {
       width: utils.getViewport().width
     };
