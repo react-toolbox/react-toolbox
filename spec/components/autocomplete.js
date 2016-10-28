@@ -16,7 +16,7 @@ class AutocompleteTest extends React.Component {
       multiple: value,
       countriesObject: {
         ...this.state.countriesObject,
-        ...!this.state.countriesObject[value[0]] ? {[value[0]]: value[0]} : {}
+        ...(value[0] && !this.state.countriesObject[value[0]]) ? {[value[0]]: value[0]} : {}
       }
     });
   };
