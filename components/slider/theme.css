@@ -119,8 +119,8 @@
   }
 
   &[disabled] {
-    pointer-events: none;
     cursor: auto;
+    pointer-events: none;
 
     & .innerknob {
       background-color: var(--slider-disabled-color);

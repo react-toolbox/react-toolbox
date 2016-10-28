@@ -45,6 +45,7 @@ const factory = Drawer => {
   };
 
   Sidebar.defaultProps = {
+    className: '',
     pinned: false,
     right: false
   };

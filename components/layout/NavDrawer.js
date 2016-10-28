@@ -44,6 +44,7 @@ const factory = Drawer => {
   };
 
   NavDrawer.defaultProps = {
+    className: '',
     pinned: false
   };
 

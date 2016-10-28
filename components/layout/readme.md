@@ -173,7 +173,7 @@ The drawer can be docked to the left side of the screen or can float temporarily
 | `active` | `bool` | `false` | If true, the drawer will be shown as an overlay. |
 | `className` | `string` |  | Additional class(es) for custom styling. |
 | `clipped` | `bool` | `false` | If true, when the `AppBar` gets pinned, it will stand over the `Drawer`. |
-| `permanentAt` | `enum`(`'sm'`,`'md'`,`'lg'`,`'xl'`,`'xxl'`,`'xxxl'`) |  | The breakpoint at which the drawer is automatically pinned. |
+| `permanentAt` | `enum`(`'sm'`,`'smTablet'`,`'md'`,`'lg'`,`'lgTablet'`,`'xl'`,`'xxl'`,`'xxxl'`) |  | The breakpoint at which the drawer is automatically pinned. |
 | `pinned` | `bool` | `false` | If true, the drawer will be pinned open. `pinned` takes precedence over `active`. |
 | `onOverlayClick` | `Function`     |            | Callback function to be invoked when the overlay is clicked. It only works if the `Drawer` is actually displaying and Overlay|
 
