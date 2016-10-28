@@ -3,6 +3,17 @@
 @import '../media.css';
 @import './config.css';
 
+.wrapper {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: var(--z-index-higher);
+}
+
 .dialog {
   background-color: var(--dialog-color-white);
   border-radius: var(--dialog-border-radius);

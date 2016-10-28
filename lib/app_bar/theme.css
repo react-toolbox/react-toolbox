@@ -4,10 +4,8 @@
 @import './config.css';
 
 .appBar {
-  align-items: center;
   background: var(--appbar-color);
   color: var(--appbar-contrast);
-  display: flex;
   height: var(--appbar-height);
   padding: 0 var(--appbar-h-padding);
   transition-duration: 0.5s;
@@ -31,6 +29,12 @@
     z-index: var(--z-index-highest);
   }
 
+  & .inner {
+    align-items: center;
+    display: flex;
+    height: 100%;
+  }
+
   & a {
     color: var(--appbar-contrast);
   }
@@ -48,6 +52,9 @@
   flex-grow: 1;
   font-size: calc(1.8 * var(--unit));
   font-weight: bold;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   & > small {
     font-size: calc(1.8 * var(--unit));
