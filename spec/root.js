@@ -17,7 +17,7 @@ import Drawer from './components/drawer';
 import Dropdown from './components/dropdown';
 import IconMenu from './components/icon_menu';
 import Input from './components/input';
-import Layout from './components/layout';
+import { Layout, Panel } from '../components/layout';
 import List from './components/list';
 import Menu from './components/menu';
 import Pickers from './components/pickers';
@@ -31,48 +31,45 @@ import Tabs from './components/tabs';
 import Tooltip from './components/tooltip';
 import style from './style.css';
 
-const RootAppBar = () => (
-  <AppBar className={style.appbar} fixed flat>
-    <h1>React Toolbox <small>Spec {VERSION}</small></h1>
-    <ButtonToolbox
-      accent
-      className={style.github}
-      icon='web'
-      floating
-      onClick={() => {window.href = 'http://react-toolbox';}}
-    />
-  </AppBar>
-);
-
 const Root = () => (
-  <div className={style.app}>
-    <RootAppBar />
-    <Autocomplete />
-    <AppBarTest />
-    <Avatar />
-    <FontIcon />
-    <Button />
-    <Card />
-    <Checkbox />
-    <Chip />
-    <Dialog />
-    <Drawer />
-    <Dropdown />
-    <IconMenu />
-    <Input />
-    <Layout />
-    <List />
-    <Menu />
-    <Pickers />
-    <Progress />
-    <Radio />
-    <Slider />
-    <Snackbar />
-    <Switch />
-    <Table />
-    <Tabs />
-    <Tooltip />
-  </div>
+  <Layout>
+    <AppBar className={style.appbar} title={`React Toolbox Spec ${VERSION}`} fixed flat>
+      <ButtonToolbox
+        accent
+        className={style.github}
+        icon='web'
+        floating
+        onClick={() => {window.href = 'http://react-toolbox';}}
+      />
+    </AppBar>
+
+    <Panel className={style.app}>
+      <Autocomplete />
+      <AppBarTest />
+      <Avatar />
+      <FontIcon />
+      <Button />
+      <Card />
+      <Checkbox />
+      <Chip />
+      <Dialog />
+      <Drawer />
+      <Dropdown />
+      <IconMenu />
+      <Input />
+      <List />
+      <Menu />
+      <Pickers />
+      <Progress />
+      <Radio />
+      <Slider />
+      <Snackbar />
+      <Switch />
+      <Table />
+      <Tabs />
+      <Tooltip />
+    </Panel>
+  </Layout>
 );
 
 export default Root;
