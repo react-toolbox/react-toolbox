@@ -25,3 +25,8 @@
 @custom-media --larger-than-xl-viewport (min-width: 1440px);
 @custom-media --larger-than-xxl-viewport (min-width: 1600px);
 @custom-media --larger-than-xxxl-viewport (min-width: 1920px);
+
+:root {
+  --standard-increment-mobile: calc(5.6 * var(--unit));
+  --standard-increment-desktop: calc(6.4 * var(--unit));
+}

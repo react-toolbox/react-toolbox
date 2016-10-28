@@ -1,46 +1,58 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { LAYOUT } from '../identifiers.js';
+import InjectDrawer from '../drawer/Drawer';
+import { LAYOUT } from '../identifiers';
 
-const Sidebar = ({ children, className, pinned, scrollY, theme, width }) => {
-  const wrapperClasses = classnames(theme.sidebar, theme[`width-${width}`], {
-    [theme.pinned]: pinned
-  }, className);
+const factory = Drawer => {
+  const Sidebar = ({
+    active,
+    className,
+    clipped,
+    permanentAt, // eslint-disable-line
+    pinned,
+    theme,
+    ...rest
+  }) => {
+    const _className = classnames({
+      [theme.pinned]: pinned,
+      [theme.clipped]: clipped
+    }, className);
 
-  const innerClasses = classnames(theme.sidebarContent, {
-    [theme.scrollY]: scrollY
-  });
+    return (
+      <Drawer
+        {...rest}
+        active={active || pinned}
+        className={_className}
+        insideTree
+        theme={theme}
+        themeNamespace="sidebar"
+        type="right"
+        withOverlay={!pinned}
+      />
+    );
+  };
 
-  return (
-    <div data-react-toolbox='sidebar' className={wrapperClasses}>
-      <aside data-react-toolbox='sidebar-content' className={innerClasses}>
-        {children}
-      </aside>
-    </div>
-  );
+  Sidebar.propTypes = {
+    active: PropTypes.bool,
+    children: PropTypes.node,
+    className: PropTypes.string,
+    clipped: PropTypes.bool,
+    permanentAt: PropTypes.oneOf(['sm', 'smTablet', 'md', 'lg', 'lgTablet', 'xl', 'xxl', 'xxxl']),
+    pinned: PropTypes.bool,
+    theme: PropTypes.object,
+    width: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 25, 33, 50, 66, 75, 100])
+  };
+
+  Sidebar.defaultProps = {
+    pinned: false,
+    right: false
+  };
+
+  return Sidebar;
 };
 
-Sidebar.propTypes = {
-  children: PropTypes.any,
-  className: PropTypes.string,
-  pinned: PropTypes.bool,
-  scrollY: PropTypes.bool,
-  theme: PropTypes.shape({
-    pinned: PropTypes.string,
-    scrollY: PropTypes.string,
-    sidebar: PropTypes.string,
-    sidebarContent: PropTypes.string
-  }),
-  width: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 25, 33, 50, 66, 75, 100])
-};
-
-Sidebar.defaultProps = {
-  className: '',
-  pinned: false,
-  scrollY: false,
-  width: 5
-};
-
+const Sidebar = factory(InjectDrawer);
 export default themr(LAYOUT)(Sidebar);
+export { factory as sidebarFactory };
 export { Sidebar };

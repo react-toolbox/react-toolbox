@@ -1,28 +1,107 @@
-import React, { PropTypes } from 'react';
-import { themr } from 'react-css-themr';
+import React, { cloneElement, Component, PropTypes } from 'react';
 import classnames from 'classnames';
-import { LAYOUT } from '../identifiers.js';
+import { themr } from 'react-css-themr';
+import filterReactChildren from '../utils/filter-react-children.js';
+import isComponentOfType from '../utils/is-component-of-type.js';
+import InjectAppBar from '../app_bar/AppBar';
+import InjectNavDrawer from './NavDrawer';
+import InjectSidebar from './Sidebar';
+import breakpoints from '../utils/breakpoints';
+import utils from '../utils/utils';
+import { LAYOUT } from '../identifiers';
 
-const Layout = ({ className, children, theme }) => (
-  <div data-react-toolbox='layout' className={classnames(theme.layout, className)}>
-    {React.Children.map(children, (child) => React.cloneElement(child, { theme }))}
-  </div>
-);
+const factory = (AppBar, NavDrawer, Sidebar) => {
+  const isNavDrawer = child => isComponentOfType(NavDrawer, child);
+  const isSidebar = child => isComponentOfType(Sidebar, child);
+  const isAppBar = child => isComponentOfType(AppBar, child);
+  const isUnknown = child => !isNavDrawer(child) && !isSidebar(child) && !isAppBar(child);
 
-Layout.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element
-  ]),
-  className: PropTypes.string,
-  theme: PropTypes.shape({
-    layout: PropTypes.string
-  })
+  class Layout extends Component {
+    static propTypes = {
+      children: PropTypes.node,
+      className: PropTypes.string,
+      theme: PropTypes.object
+    };
+
+    state = {
+      width: utils.getViewport().width
+    };
+
+    componentDidMount () {
+      window.addEventListener('resize', this.handleResize);
+    }
+
+    componentWillUnmount () {
+      window.removeEventListener('resize', this.handleResize);
+    }
+
+    handleResize = () => {
+      this.setState({ width: utils.getViewport().width });
+    }
+
+    isPinned = sideNav => {
+      if (sideNav) {
+        const { permanentAt, pinned } = sideNav.props;
+        const { width } = this.state;
+        return width > breakpoints[permanentAt] || pinned;
+      }
+      return undefined;
+    }
+
+    render () {
+      const { children, className, theme, ...rest } = this.props;
+      const appBar = filterReactChildren(children, isAppBar)[0];
+      const navDrawer = filterReactChildren(children, isNavDrawer)[0];
+      const sidebar = filterReactChildren(children, isSidebar)[0];
+      const unknown = filterReactChildren(children, isUnknown);
+      const appBarFixed = appBar && appBar.props.fixed;
+      const navDrawerPinned = this.isPinned(navDrawer);
+      const navDrawerClipped = navDrawer && navDrawer.props.clipped;
+      const sidebarWidth = sidebar && sidebar.props.width;
+      const sidebarPinned = this.isPinned(sidebar);
+      const sidebarClipped = sidebar && sidebar.props.clipped;
+
+      const clonedAppBar = appBar && cloneElement(appBar, {
+        theme,
+        themeNamespace: 'appbar'
+      });
+
+      const clonedLeftSideNav = navDrawer && cloneElement(navDrawer, {
+        clipped: navDrawerClipped,
+        pinned: navDrawerPinned
+      });
+
+      const clonedRightSideNav = sidebar && cloneElement(sidebar, {
+        clipped: sidebarClipped,
+        pinned: sidebarPinned
+      });
+
+      const _className = classnames(theme.layout,
+        theme[`sidebarWidth${sidebarWidth}`], {
+          [theme.navDrawerPinned]: navDrawerPinned,
+          [theme.navDrawerClipped]: navDrawerClipped,
+          [theme.sidebarPinned]: sidebarPinned,
+          [theme.sidebarClipped]: sidebarClipped,
+          [theme.appbarFixed]: appBarFixed
+      }, className);
+
+      return (
+        <div {...rest} className={_className}>
+          {clonedLeftSideNav}
+          {clonedAppBar}
+          <div className={theme.layoutInner}>
+            {unknown}
+          </div>
+          {clonedRightSideNav}
+        </div>
+      );
+    }
+  }
+
+  return Layout;
 };
 
-Layout.defaultProps = {
-  className: ''
-};
-
+const Layout = factory(InjectAppBar, InjectNavDrawer, InjectSidebar);
 export default themr(LAYOUT)(Layout);
+export { factory as layoutFactory };
 export { Layout };
