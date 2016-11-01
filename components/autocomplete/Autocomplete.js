@@ -116,9 +116,7 @@ const factory = (Chip, Input) => {
      if (shouldClearQuery) {
        this.setState({query: ''});
      }
-   };
-
-   handleQueryKeyUp = (event) => {
+     
      if (event.which === 13) {
        let target = this.state.active;
        if (!target) {
@@ -129,7 +127,9 @@ const factory = (Chip, Input) => {
        }
        this.select(event, target);
      }
+   };
 
+   handleQueryKeyUp = (event) => {
      if (event.which === 27) ReactDOM.findDOMNode(this).querySelector('input').blur();
 
      if ([40, 38].indexOf(event.which) !== -1) {
