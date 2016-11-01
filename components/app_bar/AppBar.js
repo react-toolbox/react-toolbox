@@ -24,6 +24,7 @@ const factory = (IconButton) => {
       scrollHide: PropTypes.bool,
       theme: PropTypes.shape({
         appBar: PropTypes.string,
+        inner: PropTypes.string,
         fixed: PropTypes.string,
         flat: PropTypes.string,
         leftIcon: PropTypes.string,
@@ -96,20 +97,22 @@ const factory = (IconButton) => {
           data-react-toolbox='app-bar'
           ref={node => {this.rootNode = node;}}
         >
-          {leftIcon && <IconButton
-            inverse
-            className={classnames(theme.leftIcon)}
-            onClick={onLeftIconClick}
-            icon={leftIcon} />
-          }
-          {title && <h1 className={classnames(theme.title)}>{title}</h1>}
-          {children}
-          {rightIcon && <IconButton
-            inverse
-            className={classnames(theme.rightIcon)}
-            onClick={onRightIconClick}
-            icon={rightIcon} />
-          }
+          <div className={theme.inner}>
+            {leftIcon && <IconButton
+              inverse
+              className={classnames(theme.leftIcon)}
+              onClick={onLeftIconClick}
+              icon={leftIcon} />
+            }
+            {title && <h1 className={classnames(theme.title)}>{title}</h1>}
+            {children}
+            {rightIcon && <IconButton
+              inverse
+              className={classnames(theme.rightIcon)}
+              onClick={onRightIconClick}
+              icon={rightIcon} />
+            }
+          </div>
         </header>
       );
     }

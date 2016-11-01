@@ -2,49 +2,63 @@ import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { OVERLAY } from '../identifiers.js';
-import Portal from '../hoc/Portal.js';
 
 class Overlay extends Component {
   static propTypes = {
     active: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
-    invisible: PropTypes.bool,
+    lockScroll: PropTypes.bool,
     onClick: PropTypes.func,
     onEscKeyDown: PropTypes.func,
     theme: PropTypes.shape({
       active: PropTypes.string,
       backdrop: PropTypes.string,
-      invisible: PropTypes.string,
       overlay: PropTypes.string
     })
   };
 
   static defaultProps = {
-    invisible: false
+    lockScroll: true
   };
 
   componentDidMount () {
-    if (this.props.active) {
-      document.body.addEventListener('keydown', this.handleEscKey);
-      document.body.style.overflow = 'hidden';
-    }
+    const { active, lockScroll, onEscKeyDown } = this.props;
+    if (onEscKeyDown) document.body.addEventListener('keydown', this.handleEscKey.bind(this));
+    if (active && lockScroll) document.body.style.overflow = 'hidden';
   }
 
   componentWillUpdate (nextProps) {
-    if (nextProps.active && !this.props.active) document.body.style.overflow = 'hidden';
-    if (!nextProps.active && this.props.active && !document.querySelectorAll('[data-react-toolbox="overlay"]')[1]) document.body.style.overflow = '';
+    if (this.props.lockScroll) {
+      const becomingActive = nextProps.active && !this.props.active;
+      const becomingUnactive = !nextProps.active && this.props.active;
+
+      if (becomingActive) {
+        document.body.style.overflow = 'hidden';
+      }
+
+      if (becomingUnactive && !document.querySelectorAll('[data-react-toolbox="overlay"]')[1]) {
+        document.body.style.overflow = '';
+      }
+    }
   }
 
-  componentDidUpdate () {
-    if (this.props.active) {
-      document.body.addEventListener('keydown', this.handleEscKey);
+  componentDidUpdate (prevProps) {
+    if (this.props.active && !prevProps.active && this.props.onEscKeyDown) {
+      document.body.addEventListener('keydown', this.handleEscKey.bind(this));
     }
   }
 
   componentWillUnmount () {
-    if (!document.querySelectorAll('[data-react-toolbox="overlay"]')[1]) document.body.style.overflow = '';
-    document.body.removeEventListener('keydown', this.handleEscKey);
+    if (this.props.active && this.props.lockScroll) {
+      if (!document.querySelectorAll('[data-react-toolbox="overlay"]')[1]) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    if (this.props.onEscKeyDown) {
+      document.body.removeEventListener('keydown', this.handleEscKey);
+    }
   }
 
   handleEscKey = (e) => {
@@ -53,20 +67,24 @@ class Overlay extends Component {
     }
   }
 
-  render () {
-    const { active, className, children, invisible, onClick, theme } = this.props;
-    const _className = classnames(theme.overlay, {
-      [theme.active]: active,
-      [theme.invisible]: invisible
-    }, className);
+  handleClick = event => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.props.onClick) {
+      this.props.onClick(event);
+    }
+  }
 
+  render () {
+    const { active, className, lockScroll, theme, ...other } = this.props; // eslint-disable-line
     return (
-      <Portal>
-        <div className={_className} data-react-toolbox="overlay">
-          <div className={theme.backdrop} onClick={onClick} />
-          {children}
-        </div>
-      </Portal>
+      <div
+        {...other}
+        onClick={this.handleClick}
+        className={classnames(theme.overlay, {
+          [theme.active]: active
+        }, className)}
+      />
     );
   }
 }

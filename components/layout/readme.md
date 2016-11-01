@@ -4,56 +4,102 @@ A Layout is a container that can hold a main content area with an optional navig
 
 <!-- example -->
 ```jsx
-import { AppBar, Checkbox, IconButton } from 'react-toolbox';
-import { Layout, NavDrawer, Panel, Sidebar } from 'react-toolbox';
+import React, { Component } from 'react';
+import { Layout, NavDrawer, Sidebar, Panel } from '../../components/layout';
+import { AppBar } from '../../components/app_bar';
+import Checkbox from '../../components/checkbox';
 
-class LayoutTest extends React.Component {
-    state = {
-        drawerActive: false,
-        drawerPinned: false,
-        sidebarPinned: false
-    };
+class LayoutExample extends Component {
+  state = {
+    bodyScrolled: true,
+    sideNavActive: false,
+    sideNavPinned: false,
+    sideNavClipped: false,
+    rightSideNavActive: false,
+    rightSideNavPinned: false,
+    rightSideNavClipped: false
+  };
 
-    toggleDrawerActive = () => {
-        this.setState({ drawerActive: !this.state.drawerActive });
-    };
+  handleToggle = param => {
+    this.setState({ [param]: !this.state[param] });
+  }
 
-    toggleDrawerPinned = () => {
-        this.setState({ drawerPinned: !this.state.drawerPinned });
-    }
+  render () {
+    const { sideNavActive, rightSideNavActive } = this.state;
+    return (
+      <Layout>
+        <NavDrawer
+          active={sideNavActive}
+          clipped={this.state.sideNavClipped}
+          onOverlayClick={this.handleToggle.bind(this, 'sideNavActive')}
+          permanentAt="md"
+          pinned={this.state.sideNavPinned}
+        >
+          <p>I'm a NavDrawer content.</p>
+        </NavDrawer>
 
-    toggleSidebar = () => {
-        this.setState({ sidebarPinned: !this.state.sidebarPinned });
-    };
+        <AppBar
+          fixed
+          rightIcon='more'
+          leftIcon='menu'
+          onLeftIconClick={this.handleToggle.bind(this, 'sideNavActive')}
+          title="Super Layout with a large text to be covered!"
+        />
 
-    render() {
-        return (
-            <Layout>
-                <NavDrawer active={this.state.drawerActive}
-                    pinned={this.state.drawerPinned} permanentAt='xxxl'
-                    onOverlayClick={ this.toggleDrawerActive }>
-                    <p>
-                        Navigation, account switcher, etc. go here.
-                    </p>
-                </NavDrawer>
-                <Panel>
-                    <AppBar><IconButton icon='menu' inverse={ true } onClick={ this.toggleDrawerActive }/></AppBar>
-                    <div style={{ flex: 1, overflowY: 'auto', padding: '1.8rem' }}>
-                        <h1>Main Content</h1>
-                        <p>Main content goes here.</p>
-                        <Checkbox label='Pin drawer' checked={this.state.drawerPinned} onChange={this.toggleDrawerPinned} />
-                        <Checkbox label='Show sidebar' checked={this.state.sidebarPinned} onChange={this.toggleSidebar} />
-                    </div>
-                </Panel>
-                <Sidebar pinned={ this.state.sidebarPinned } width={ 5 }>
-                    <div><IconButton icon='close' onClick={ this.toggleSidebar }/></div>
-                    <div style={{ flex: 1 }}>
-                        <p>Supplemental content goes here.</p>
-                    </div>
-                </Sidebar>
-            </Layout>
-        );
-    }
+        <Panel bodyScroll={this.state.bodyScrolled}>
+          <section style={{ margin: '1.8rem'}}>
+            <h5 style={{ marginBottom: 20 }}>SideNav State</h5>
+            <Checkbox
+              label='Pinned'
+              checked={this.state.sideNavPinned}
+              onChange={this.handleToggle.bind(this, 'sideNavPinned')}
+            />
+
+            <Checkbox
+              label='Clipped'
+              checked={this.state.sideNavClipped}
+              onChange={this.handleToggle.bind(this, 'sideNavClipped')}
+            />
+
+            <Checkbox
+              label="Right SideNav Active"
+              checked={this.state.rightSideNavActive}
+              onChange={this.handleToggle.bind(this, 'rightSideNavActive')}
+            />
+
+            <Checkbox
+              label="Right SideNav Pinned"
+              checked={this.state.rightSideNavPinned}
+              onChange={this.handleToggle.bind(this, 'rightSideNavPinned')}
+            />
+
+            <Checkbox
+              label="Right SideNav Clipped"
+              checked={this.state.rightSideNavClipped}
+              onChange={this.handleToggle.bind(this, 'rightSideNavClipped')}
+            />
+
+            <Checkbox
+              label="Body scrolled"
+              checked={this.state.bodyScrolled}
+              onChange={this.handleToggle.bind(this, 'bodyScrolled')}
+            />
+          </section>
+        </Panel>
+
+        <Sidebar
+          active={rightSideNavActive}
+          onOverlayClick={this.handleToggle.bind(this, 'rightSideNavActive')}
+          clipped={this.state.rightSideNavClipped}
+          pinned={this.state.rightSideNavPinned}
+          width={11}
+          right
+        >
+          <p>I'm a Sidebar content.</p>
+        </Sidebar>
+      </Layout>
+    );
+  }
 }
 ```
 
@@ -91,15 +137,23 @@ If the column layout does not suit your needs, simply fill the content area with
 ### Properties
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
-| `children` | `Nodes` |  | A `Panel`, optionally preceded by a `NavDrawer` and/or followed by a `Sidebar` |
+| `children` | `Nodes` |  | Can hold a `Panel`, along with a `NavDrawer`, a `Sidebar` and an `AppBar` |
 | `className` | `string` |  | Additional class(es) for custom styling. |
 
 ### Theme
-The themed key the `Layout` in general is `ToolboxLayout`. For the `Layout` wrapper it should only provide one class interface:
+The themed key the `Layout` in general is `ToolboxLayout`. We add classes to the root element depending on the parsed children:
 
 | Name     | Description|
 |:---------|:-----------|
-| `layout` | Class used in the container to position and align inner items.|
+| `appbarFixed` | Added to the root class if there is a fixed `AppBar` present.|
+| `layout` | The root class that wraps the whole layout.|
+| `navDrawerPinned` | Added to the root if there is a pinned `NavDrawer`.|
+| `navDrawerClipped` | Added to the root if there is a clipped NavDrawer.|
+| `sidebarPinned` | Added to the root if there is a pinned sidebar.|
+| `sidebarClipped` | Added to the root if there is a clipped sidebar.|
+| `sidebarWidth${width}` | Added to the root element in case there is a sidebar present. width correspond to the value passed to the `Sidebar`.|
+
+Note that you can also pass namespaced properties under `appbar` to override styles of a nested `AppBar` inside the layout.
 
 ## NavDrawer
 
@@ -111,52 +165,42 @@ The [navigation drawer](https://www.google.com/design/spec/patterns/navigation-d
 | > `xs` | 320px | |
 | > `xs` | 400px | If property `width` is set to `wide` |
 
-The drawer can be docked to the left side of the screen or can float temporarily as an overlay. You can control the drawer's display manually `active` and `pinned` properties, and can also specify a breakpoint at which the drawer automatically becomes permanently docked.
+The drawer can be docked to the left side of the screen or can float temporarily as an overlay. You can control the drawer's display manually `active` and `pinned` properties, and can also specify a breakpoint at which the drawer automatically becomes permanently docked. You can also use a `clipped` property when it's pinned so the `AppBar` would stick over the Drawer.
 
 ### Properties
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
-| `width` | `enum`(`'normal'`,`'wide'`) | `normal` | 320px or 400px. Only applicable above the `sm` breakpoint. |
 | `active` | `bool` | `false` | If true, the drawer will be shown as an overlay. |
-| `pinned` | `bool` | `false` | If true, the drawer will be pinned open. `pinned` takes precedence over `active`. |
-| `permanentAt` | `enum`(`'sm'`,`'md'`,`'lg'`,`'xl'`,`'xxl'`,`'xxxl'`) |  | The breakpoint at which the drawer is automatically pinned. |
-| `scrollY` | `bool` | `false` | If true, the drawer will vertically scroll all content. |
-| `onOverlayClick` | `Function`     |            | Callback function to be invoked when the overlay is clicked.|
 | `className` | `string` |  | Additional class(es) for custom styling. |
+| `clipped` | `bool` | `false` | If true, when the `AppBar` gets pinned, it will stand over the `Drawer`. |
+| `permanentAt` | `enum`(`'sm'`,`'smTablet'`,`'md'`,`'lg'`,`'lgTablet'`,`'xl'`,`'xxl'`,`'xxxl'`) |  | The breakpoint at which the drawer is automatically pinned. |
+| `pinned` | `bool` | `false` | If true, the drawer will be pinned open. `pinned` takes precedence over `active`. |
+| `onOverlayClick` | `Function`     |            | Callback function to be invoked when the overlay is clicked. It only works if the `Drawer` is actually displaying and Overlay|
 
 ### Theme
+
+The `navDrawer` uses a `Drawer` component under the covers the theme is the same as for it but namespaced under `navDrawer`. It takes the following extra properties:
+
 | Name     | Description|
 |:---------|:-----------|
-| `active` | Used when the drawer is active.|
-| `drawerContent` | Used for the content of the drawer.|
-| `lgPermanent` | Added to the root class for large drawer.|
-| `mdPermanent` | Added to the root class for medium drawer.|
-| `navDrawer` | Root class for the drawer.|
-| `pinned` | Added to the root class if positioning is pinned.|
-| `scrim` | Used as a wrapper for the drawer content.|
-| `scrollY` | Added to the drawer content if its scrollable.|
-| `smPermanent` | Added to the root class for small drawer.|
-| `wide` | Added to the root class if width is wide.|
-| `xlPermanent` | Added to the root class for extra big drawer.|
-| `xxlPermanent` | Added to the root class for super big drawer.|
-| `xxxlPermanent` | Added to the root class for largest possible drawer.|
+| `pinned` | Added to the root class when it is pinned.|
+| `clipped` | Added to the root class when it is clipped.|
 
 ## Panel
 
-The `Panel` is the main content area within a `Layout`.  It is a full-height flexbox column that takes up all remaining horizontal space after the `NavDrawer` and `Sidebar` are laid out.
+The `Panel` is the main content area within a `Layout`.  By default we assume it is rendered in the body using the `document` scroll but you can use a `bodyScroll` to `false` property to make it look like a scrolled `div`.
 
 ### Properties
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
-| `onScroll` | `Function` | | Callback function to be invoked when the component scrolls. |
-| `scrollY` | `bool` | `false` | If true, the panel will vertically scroll all content. |
+| `bodyScroll` | `Boolean` | | You can set it to true in case you are using a pinned Sidebar so it takes an scrolled `div` instead of using the document scroll. |
 | `className` | `string` |  | Additional class(es) for custom styling. |
 
 ### Theme
 | Name     | Description|
 |:---------|:-----------|
+| `bodyScroll` | Used in the root class in case the panel has bodyScroll.|
 | `panel` | Used as the root class of the panel component.|
-| `scrollY` | Used in case the panel is scrollable.|
 
 ## Sidebar
 
@@ -171,31 +215,10 @@ The `Sidebar` is an extra drawer that docks to the right side of the `Layout`. T
 | `className` | `string` |  | Additional class(es) for custom styling. |
 
 ### Theme
+
+The `Sidebar` uses a `Drawer` component under the covers the theme is the same as for it but namespaced under `sidebar`. It takes the following extra properties:
+
 | Name     | Description|
 |:---------|:-----------|
-| `pinned` | Added to the root class if sidebar is pinned.|
-| `scrollY` | Add to the content of sidebar if its scrollable.|
-| `sidebar` | Root class of the sidebar.|
-| `sidebarContent` | Used in for the content element of the sidebar.|
-
-## Nesting Layouts
-
-The `Layout` is meant to be used near the top level of your application, so that it occupies the entire screen. However, it is possible to nest one layout inside another:
-
-```jsx
-<Layout>
-    <NavDrawer>[navigation here]<NavDrawer>
-    <Panel>
-        <Layout>
-            <Panel>
-                [main content here]
-            </Panel>
-            <Sidebar>
-                [supplemental info here]
-            </Sidebar>
-        </Layout>
-    </Panel>
-</Layout>
-```
-
-The main reason you would want to do something like this would be so that the navigation could be rendered at a high level, while the contents of the inner `Layout` would be controlled by react-router or something like that.
+| `clipped` | Added to the root class when it is clipped.|
+| `pinned` | Added to the root class when it is pinned.|

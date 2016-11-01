@@ -38,6 +38,7 @@ The `AppBar` component provides properties for the common use cases of `title`, 
 | `appBar`     | Used for the component root element.|
 | `fixed`      | Added to the root element when the app bar is fixed.|
 | `flat`       | Added to the root element when the app bar is flat.|
+| `inner`      | Added to a wrapper to the component main content.|
 | `title`      | Added to the title element of the app bar.|
 | `leftIcon`   | Added to the left icon element when the app bar.|
 | `rightIcon`  | Added to the right icon element when the app bar.|

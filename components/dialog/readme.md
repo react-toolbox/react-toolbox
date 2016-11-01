@@ -69,3 +69,4 @@ Notice that the `fullscreen` option only applies on mobile devices with small sc
 | `dialog` | Used for the root element.|
 | `navigation` | Used for the navigation element when it implements actions.|
 | `title`   | Used for the title element of the dialog.|
+| `wrapper`  | A wrapper class for the top of the root.|

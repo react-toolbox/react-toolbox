@@ -10,7 +10,7 @@
 
 .app {
   background-color: #f5f5f5;
-  padding: calc(var(--appbar-height) + 2) var(--offset) var(--offset);
+  padding: var(--offset);
 
   & > section,
   & > div > section {

@@ -1,350 +1,218 @@
 @import '../colors.css';
 @import '../media.css';
 @import '../variables.css';
-@import './config.css';
+@import '../app_bar/config.css';
+@import '../drawer/config.css';
 
-/**
- * Used to add to a class the open behavior for Drawer.
- * Needs to be extended for different breakpoints so for now we can't
- * avoid using the mixin plugin for now.
- */
-@define-mixin open {
-  transition-delay: var(--animation-delay);
-
-  & > .scrim {
-    & > .drawerContent {
-      pointer-events: all;
-      transform: translateX(0);
-      transition-delay: var(--animation-delay);
-    }
-  }
-}
-
-/**
- * Used to indicate an specific class needs to keep opened the side
- * element. This should be extended with different breakpoints so
- * the mixin plugin cannot be removed for now.
- */
-@define-mixin permanent {
-  @mixin open;
-
-  max-width: var(--navigation-drawer-desktop-width);
-  width: var(--navigation-drawer-desktop-width);
-
-  &.wide {
-    max-width: var(--navigation-drawer-max-desktop-width);
-    width: var(--navigation-drawer-max-desktop-width);
-  }
-
-  &.active {
-    & > .scrim {
-      background-color: color(var(--drawer-overlay-color) a(0%));
-      width: 0;
-    }
-  }
+:root {
+  --layout-side-transition: all var(--animation-duration) var(--animation-curve-default);
 }
 
 .layout {
   align-items: stretch;
   display: flex;
-  flex-direction: row;
-  height: 100%;
+  flex: 1;
+  flex-direction: column;
   justify-content: space-between;
-  overflow-y: hidden;
+  min-height: 100vh;
+  min-width: 100vw;
   position: relative;
-  width: 100%;
-}
-
-.navDrawer {
-  height: 100%;
-  min-width: 0;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  transition-duration: var(--animation-duration);
-  transition-property: width, min-width;
-  transition-timing-function: var(--animation-curve-default);
-  width: 0;
-
-  & .scrim {
-    background-color: color(var(--drawer-overlay-color) a(0%));
-    bottom: 0;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    transition:
-      background-color var(--animation-duration) var(--animation-curve-default),
-      width 10ms linear var(--animation-duration);
-    width: 0;
-    z-index: var(--z-index-highest);
-  }
-
-  & .drawerContent {
-    align-items: stretch;
-    background-color: var(--drawer-background-color);
-    border-right: 1px solid var(--drawer-border-color);
-    box-shadow: var(--shadow-2p);
-    color: var(--drawer-text-color);
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: space-between;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    pointer-events: none;
-    transform: translateX(-100%);
-    transition: transform var(--animation-duration) var(--animation-curve-default);
-    width: var(--navigation-drawer-mobile-width);
-
-    &.scrollY {
-      overflow-y: auto;
-    }
-  }
-
-  &.pinned {
-    @mixin open;
-
-    max-width: var(--navigation-drawer-max-mobile-width);
-    width: var(--navigation-drawer-mobile-width);
-  }
-
-  &.active {
-    &:not(.pinned) {
-      @mixin open;
-
-      & .scrim {
-        background-color: color(var(--drawer-overlay-color) a(var(--drawer-overlay-opacity)));
-        transition: background-color var(--animation-duration) var(--animation-curve-default);
-        width: 100%;
-      }
-    }
-  }
-
-  /* Larger than mobile width drawer */
-  @media screen and (--larger-than-xs-viewport) {
-    &.pinned {
-      max-width: var(--navigation-drawer-desktop-width);
-      width: var(--navigation-drawer-desktop-width);
-    }
-
-    & .drawerContent {
-      max-width: var(--navigation-drawer-desktop-width);
-      width: var(--navigation-drawer-desktop-width);
-    }
-
-    &.wide {
-      &.pinned {
-        max-width: var(--navigation-drawer-max-desktop-width);
-        width: var(--navigation-drawer-max-desktop-width);
-      }
-
-      & .drawerContent {
-        max-width: var(--navigation-drawer-max-desktop-width);
-        width: var(--navigation-drawer-max-desktop-width);
-      }
-    }
-  }
-
-  /* Permanent screen, ignore .active and make part of layout */
-  @media screen and (--larger-than-sm-viewport) {
-    &.smPermanent {
-      @mixin permanent;
-    }
-  }
-
-  @media screen and (--larger-than-sm-tablet-viewport) {
-    &.smTabletPermanent {
-      @mixin permanent;
-    }
-  }
-
-  @media screen and (--larger-than-md-viewport) {
-    &.mdPermanent {
-      @mixin permanent;
-    }
-  }
-
-  @media screen and (--larger-than-lg-viewport) {
-    &.lgPermanent {
-      @mixin permanent;
-    }
-  }
-
-  @media screen and (--larger-than-lg-tablet-viewport) {
-    &.lgTabletPermanent {
-      @mixin permanent;
-    }
-  }
-
-  @media screen and (--larger-than-xl-viewport) {
-    &.xlPermanent {
-      @mixin permanent;
-    }
-  }
-
-  @media screen and (--larger-than-xxl-viewport) {
-    &.xxlPermanent {
-      @mixin permanent;
-    }
-  }
-
-  @media screen and (--larger-than-xxxl-viewport) {
-    &.xxxlPermanent {
-      @mixin permanent;
-    }
-  }
 }
 
 .panel {
-  align-items: stretch;
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  height: 100%;
-  justify-content: space-between;
-  overflow-y: hidden;
-  position: relative;
-
-  &.scrollY {
-    overflow-y: auto;
-  }
-}
-
-.sidebarContent {
-  align-items: stretch;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: space-between;
-  overflow-y: hidden;
-
-  &.scrollY {
-    overflow-y: auto;
-  }
-}
-
-.sidebar {
-  background-color: var(--drawer-background-color);
-  bottom: 0;
-  color: var(--drawer-text-color);
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  left: 0;
   position: absolute;
   right: 0;
   top: 0;
-  transition-duration: var(--animation-duration);
-  transition-property: width;
-  transition-timing-function: var(--animation-curve-default);
-  width: 0;
-  z-index: calc(var(--z-index-highest - 1));
 
-  @each $increment in 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 {
-    &.width-$(increment) {
-      & .sidebarContent {
-        min-width: 100%;
-      }
+  &:not(.bodyScroll) {
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: scroll;
+  }
+}
 
-      &.pinned {
-        width: 100%;
-      }
+.sidebarDrawer,
+.navDrawerDrawer {
+  z-index: var(--z-index-high);
 
-      @media screen and (--larger-than-sm-viewport) {
-        position: relative;
+  &.pinned {
+    box-shadow: none;
+  }
 
-        & .sidebarContent {
-          min-width: calc(var(--standard-increment-desktop) * $(increment));
-        }
+  &.clipped {
+    height: calc(100vh - var(--appbar-height));
+    padding-top: calc(0.5 * var(--unit));
+    top: var(--appbar-height);
 
-        &.pinned {
-          width: calc(var(--standard-increment-desktop) * $(increment));
-        }
-      }
+    @media screen and (--xxs-viewport) and (--portrait) {
+      height: calc(100vh - var(--appbar-height-m-portrait));
+      top: var(--appbar-height-m-portrait);
+    }
+
+    @media screen and (--xs-viewport) and (--landscape) {
+      height: calc(100vh - var(--appbar-height-m-landscape));
+      top: var(--appbar-height-m-landscape);
+    }
+  }
+}
+
+.appbarInner,
+.panel {
+  transition: var(--layout-side-transition);
+}
+
+.appbarFixed {
+  &.appbarAppBar {
+    z-index: var(--z-index-high);
+  }
+
+  & .panel {
+    top: var(--appbar-height);
+
+    @media screen and (--xxs-viewport) and (--portrait) {
+      padding-top: var(--appbar-height-m-portrait);
+    }
+
+    @media screen and (--xs-viewport) and (--landscape) {
+      padding-top: var(--appbar-height-m-landscape);
+    }
+  }
+}
+
+.navDrawerPinned {
+  & .appbarLeftIcon {
+    display: none;
+  }
+
+  & .panel {
+    left: var(--drawer-mobile-width);
+  }
+
+  &:not(.navDrawerClipped) {
+    & .appbarInner {
+      padding-left: var(--drawer-mobile-width);
     }
   }
 
-  @each $increment in 1, 2, 3, 4, 5, 6, 7, 8, 9 {
-    &.width-$(increment) {
-      @media screen and (--larger-than-xs-viewport) and (--landscape) {
-        position: relative;
+  @media screen and (--larger-than-xs-viewport) {
+    & .panel {
+      left: var(--drawer-desktop-width);
+    }
 
-        & .sidebarContent {
-          min-width: calc(var(--standard-increment-mobile) * $(increment));
-        }
-
-        &.pinned {
-          width: calc(var(--standard-increment-mobile) * $(increment));
-        }
-      }
-
-      @media screen and (--larger-than-xs-viewport) and (orientation: portrait) {
-        position: relative;
-
-        & .sidebarContent {
-          min-width: calc(var(--standard-increment-desktop) * $(increment));
-        }
-
-        &.pinned {
-          width: calc(var(--standard-increment-desktop) * $(increment));
-        }
+    &:not(.navDrawerClipped) {
+      & .appbarInner {
+        padding-left: var(--drawer-desktop-width);
       }
     }
   }
+}
 
-  @each $increment in 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 {
-    &.width-$(increment) {
-      @media screen and (--larger-than-sm-tablet-viewport) {
-        position: relative;
+.navDrawerClipped {
+  & .navDrawerWrapper {
+    position: relative;
+    z-index: var(--z-index-normal);
+  }
+}
 
-        & .sidebarContent {
-          min-width: calc(var(--standard-increment-desktop) * $(increment));
-        }
+.sidebarPinned {
+  & .appbarLeftIcon {
+    display: none;
+  }
 
-        &.pinned {
-          width: calc(var(--standard-increment-desktop) * $(increment));
-        }
-      }
+  & .panel {
+    right: var(--drawer-mobile-width);
+  }
+
+  &:not(.sidebarClipped) {
+    & .appbarInner {
+      padding-right: var(--drawer-mobile-width);
     }
   }
 
-  &.width-100 {
-    position: absolute;
-
-    & .sidebarContent {
-      min-width: 100%;
+  @media screen and (--larger-than-xs-viewport) {
+    & .panel {
+      right: var(--drawer-desktop-width);
     }
 
-    &.pinned {
+    &:not(.sidebarClipped) {
+      & .appbarInner {
+        padding-right: var(--drawer-desktop-width);
+      }
+    }
+  }
+}
+
+.sidebarClipped {
+  & .sidebarWrapper {
+    position: relative;
+    z-index: var(--z-index-normal);
+  }
+}
+
+@define-mixin sidebarIncrements $platform {
+  & .sidebarDrawer {
+    width: calc(var(--standard-increment-$(platform)) * $(increment));
+  }
+
+  &.sidebarPinned {
+    & .panel {
+      right: calc(var(--standard-increment-$(platform)) * $(increment));
+    }
+
+    &:not(.sidebarClipped) {
+      & .appbarInner {
+        padding-right: calc(var(--standard-increment-$(platform)) * $(increment));
+      }
+    }
+  }
+}
+
+@each $increment in 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 {
+  .sidebarWidth$(increment) {
+    & .sidebarDrawer {
+      width: 100%;
+    }
+
+    @media screen and (--larger-than-sm-viewport) {
+      @mixin sidebarIncrements desktop;
+    }
+  }
+}
+
+@each $increment in 1, 2, 3, 4, 5, 6, 7, 8, 9 {
+  .sidebarWidth$(increment) {
+    @media screen and (--larger-than-xs-viewport) and (--landscape) {
+      @mixin sidebarIncrements mobile;
+    }
+
+    @media screen and (--larger-than-xs-viewport) and (orientation: portrait) {
+      @mixin sidebarIncrements desktop;
+    }
+  }
+}
+
+@each $increment in 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 {
+  .sidebarWidth$(increment) {
+    @media screen and (--larger-than-sm-tablet-viewport) {
+      @mixin sidebarIncrements desktop;
+    }
+  }
+}
+
+@each $pct in 25, 33, 50, 66, 75, 100 {
+  .sidebarWidth$(pct) {
+    & .sidebarDrawer {
       width: 100%;
     }
   }
+}
 
-  @each $pct in 25, 33, 50, 66, 75 {
-    &.width-$(pct) {
-      position: absolute;
-
-      & .sidebarContent {
-        min-width: 100%;
-      }
-
-      &.pinned {
-        width: 100%;
-      }
-    }
-  }
-
-  @media screen and (--larger-than-sm-tablet-viewport) {
-    @each $pct in 25, 33, 50, 66, 75 {
-      &.width-$(pct) {
-        position: absolute;
-
-        & .sidebarContent {
-          min-width: calc($(pct) * 1%);
-        }
-
-        &.pinned {
-          width: calc($(pct) * 1%);
-        }
+@media screen and (--larger-than-sm-tablet-viewport) {
+  @each $pct in 25, 33, 50, 66, 75, 100 {
+    .sidebarWidth$(pct) {
+      & .sidebarDrawer {
+        width: calc($(pct) * 1%);
       }
     }
   }
