@@ -93,7 +93,7 @@ const factory = (Chip, Input) => {
 
    handleQueryBlur = (event) => {
      if (this.state.focus) this.setState({focus: false});
-     if (this.props.onBlur) this.props.onBlur(event);
+     if (this.props.onBlur) this.props.onBlur(event, this.state.active);
    };
 
    handleQueryChange = (value) => {
