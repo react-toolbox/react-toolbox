@@ -116,7 +116,7 @@ const factory = (Chip, Input) => {
      if (shouldClearQuery) {
        this.setState({query: ''});
      }
-     
+
      if (event.which === 13) {
        let target = this.state.active;
        if (!target) {
