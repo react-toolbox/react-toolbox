@@ -56,6 +56,11 @@ input:not([type="checkbox"]):not([type="radio"]), button {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
+// -- Remove firefox default style for required inputs
+input[required]:-moz-ui-invalid {
+  box-shadow: none;
+}
+
 // -- Material design font sizes
 h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
   @include typo-display-3($color-contrast: true);

@@ -44,7 +44,7 @@ export declare namespace ReactToolbox {
     onMouseOver?: Function;
     onTouchCancel?: Function;
     onTouchEnd?: Function;
-    uchMove?: Function;
+    onTouchMove?: Function;
     onTouchStart?: Function;
     /**
      * Set inline style for the root component.
