@@ -59,7 +59,7 @@ const Home = () => (
       <h3>About the authors</h3>
       <ul className={style.authors}>
         <Card className={style.author}>
-          <CardMedia aspectRatio='wide' image='/images/javivelasco.jpg' />
+          <CardMedia aspectRatio='wide' image='images/javivelasco.jpg' />
           <CardTitle title="Javi Velasco" subtitle="@javivelasco" />
           <CardText>Software gardener • Film, music & comic lover • Frontend Engineer at Audiense  • Any biographer in the room?</CardText>
           <CardActions>
@@ -69,7 +69,7 @@ const Home = () => (
         </Card>
 
         <Card className={style.author}>
-          <CardMedia aspectRatio='wide' image='/images/soyjavi.jpg' />
+          <CardMedia aspectRatio='wide' image='images/soyjavi.jpg' />
           <CardTitle title="Javi Jiménez" subtitle="@soyjavi" />
           <CardText>Creative Doer · A complicated #human who builds stuff · #author · #opensource lover · #traveller · with a dark past being CEO & CTO</CardText>
           <CardActions>
