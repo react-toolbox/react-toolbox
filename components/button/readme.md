@@ -23,6 +23,7 @@ const TestButtons = () => (
     <Button icon='add' floating />
     <Button icon='add' floating accent mini />
     <IconButton icon='favorite' accent />
+    <IconButton icon={<GithubIcon />} accent />
     <IconButton primary><GithubIcon /></IconButton>
     <Button icon='add' label='Add this' flat primary />
     <Button icon='add' label='Add this' flat disabled />
