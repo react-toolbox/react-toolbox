@@ -29,6 +29,7 @@ import Tooltip from 'react-toolbox/tooltip/readme';
 import TimePicker from 'react-toolbox/time_picker/readme';
 
 // Examples for the Playground
+import AppBarExample1 from './examples/app_bar_example_1.txt';
 import AutocompleteExample1 from './examples/autocomplete_example_1.txt';
 import AvatarExample1 from './examples/avatar_example_1.txt';
 import ButtonExample1 from './examples/button_example_1.txt';
@@ -61,7 +62,8 @@ export default {
   app_bar: {
     name: 'App Bar',
     docs: AppBar,
-    path: '/components/app_bar'
+    path: '/components/app_bar',
+    examples: [AppBarExample1]
   },
   autocomplete: {
     name: 'Autocomplete',
