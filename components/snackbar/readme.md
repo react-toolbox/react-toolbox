@@ -21,7 +21,6 @@ class SnackbarTest extends React.Component {
         <Button label='Show Snackbar' raised onClick={this.handleClick} />
         <Snackbar
           action='Nice'
-          icon='question_answer'
           label='A new developer started using React Toolbox'
           onClick={this.handleSnackbarClick}
           ref='snackbar'
@@ -43,7 +42,6 @@ This component can be styled by context providing a theme with the key `RTSnackb
 | `active`      | `Boolean`               |  `false`      | If true, the snackbar will be active.|
 | `children`    | `String or Element`     |  `false`      | Text or node to be displayed in the content as alternative to `label`.|
 | `className`   | `String`                | `''`          | Additional class name to provide custom styling.|
-| `icon`        | `String` or `Element`   |               | String key for an icon or Element which will be displayed in left side of the snackbar.|
 | `label`       | `String or Element`     |               | Text to display in the content.|
 | `onClick`     | `Function`              |               | Callback function that will be called when the button action is clicked.|
 | `onTimeout`   | `Function`              |               | Callback function when finish the set timeout.|
@@ -58,7 +56,6 @@ This component can be styled by context providing a theme with the key `RTSnackb
 | `active` | Added to the root element when its active.|
 | `button` | Used for the button inside the component.|
 | `cancel` | Added to the root element in case it's cancel type.|
-| `icon` | Used for the icon element.|
 | `label` | Used for the label element.|
 | `snackbar` | Used as the className for the root element of the component.|
 | `warning` | Added to the root element in case it's warning type.|

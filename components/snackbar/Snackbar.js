@@ -3,7 +3,6 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { SNACKBAR } from '../identifiers.js';
 import ActivableRenderer from '../hoc/ActivableRenderer.js';
-import FontIcon from '../font_icon/FontIcon.js';
 import InjectOverlay from '../overlay/Overlay.js';
 import InjectButton from '../button/Button.js';
 
@@ -14,10 +13,6 @@ const factory = (Overlay, Button) => {
       active: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
-      icon: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.element
-      ]),
       label: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.element
@@ -53,7 +48,7 @@ const factory = (Overlay, Button) => {
     }
 
     render () {
-      const {action, active, children, icon, label, onClick, theme, type } = this.props;
+      const {action, active, children, label, onClick, theme, type } = this.props;
       const className = classnames([theme.snackbar, theme[type]], {
         [theme.active]: active
       }, this.props.className);
@@ -61,7 +56,6 @@ const factory = (Overlay, Button) => {
       return (
         <Overlay invisible>
           <div data-react-toolbox='snackbar' className={className}>
-            {icon ? <FontIcon value={icon} className={theme.icon} /> : null}
             <span className={theme.label}>
               {label}
               {children}
