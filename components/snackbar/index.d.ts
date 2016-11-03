@@ -19,10 +19,6 @@ export interface SnackbarTheme {
    */
   cancel?: string;
   /**
-   * Used for the icon element.
-   */
-  icon?: string;
-  /**
    * Used for the label element.
    */
   label?: string;
@@ -46,10 +42,6 @@ interface SnackbarProps extends ReactToolbox.Props {
    * @default true
    */
   active?: boolean;
-  /**
-   * String key for an icon or Element which will be displayed in left side of the snackbar.
-   */
-  icon?: React.ReactNode | string;
   /**
    * Text to display in the content. Required.
    */
