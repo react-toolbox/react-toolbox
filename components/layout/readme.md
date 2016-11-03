@@ -37,7 +37,7 @@ class LayoutTest extends React.Component {
                     </p>
                 </NavDrawer>
                 <Panel>
-                    <AppBar><IconButton icon='menu' inverse={ true } onClick={ this.toggleDrawerActive }/></AppBar>
+                    <AppBar leftIcon='menu' onLeftIconClick={ this.toggleDrawerActive } />
                     <div style={{ flex: 1, overflowY: 'auto', padding: '1.8rem' }}>
                         <h1>Main Content</h1>
                         <p>Main content goes here.</p>
