@@ -10,6 +10,7 @@ const FontIcons = () => (
   <span>
     <FontIcon value='add' />
     <FontIcon value='favorite' />
+    <FontIcon value='account_circle' />
     <FontIcon>star</FontIcon>
   </span>
 );
