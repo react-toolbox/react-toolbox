@@ -44,7 +44,7 @@ const factory = (TimePickerDialog, Input) => {
     };
 
     componentWillReceiveProps (nextProps) {
-      if (this.state.active !== nextProps.active) {
+      if (nextProps.active !== this.props.active && this.state.active !== nextProps.active) {
         this.setState({ active: nextProps.active });
       }
     }
