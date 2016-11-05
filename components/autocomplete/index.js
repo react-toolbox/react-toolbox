@@ -1,8 +1,8 @@
-import { AUTOCOMPLETE } from '../identifiers.js';
 import { themr } from 'react-css-themr';
-import { autocompleteFactory } from './Autocomplete.js';
-import Chip from '../chip';
-import Input from '../input';
+import { AUTOCOMPLETE } from '../identifiers';
+import { autocompleteFactory } from './Autocomplete';
+import { Chip } from '../chip';
+import { Input } from '../input';
 import theme from './theme.scss';
 
 const Autocomplete = autocompleteFactory(Chip, Input);

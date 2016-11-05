@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { MENU } from '../identifiers.js';
+import { MENU } from '../identifiers';
 import { events, utils } from '../utils';
-import InjectMenuItem from './MenuItem.js';
+import InjectMenuItem from './MenuItem';
 
 const POSITION = {
   AUTO: 'auto',
@@ -12,7 +12,7 @@ const POSITION = {
   TOP_LEFT: 'topLeft',
   TOP_RIGHT: 'topRight',
   BOTTOM_LEFT: 'bottomLeft',
-  BOTTOM_RIGHT: 'bottomRight'
+  BOTTOM_RIGHT: 'bottomRight',
 };
 
 const factory = (MenuItem) => {
@@ -31,16 +31,16 @@ const factory = (MenuItem) => {
       selected: PropTypes.any,
       theme: PropTypes.shape({
         active: PropTypes.string,
-        bottomLeft: PropTypes.string,
-        bottomRight: PropTypes.string,
-        menu: PropTypes.string,
-        menuInner: PropTypes.string,
+        bottomLeft: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        bottomRight: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        menu: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        menuInner: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
         outline: PropTypes.string,
-        rippled: PropTypes.string,
-        static: PropTypes.string,
-        topLeft: PropTypes.string,
-        topRight: PropTypes.string
-      })
+        rippled: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        static: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        topLeft: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        topRight: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+      }),
     };
 
     static defaultProps = {
@@ -48,15 +48,15 @@ const factory = (MenuItem) => {
       outline: true,
       position: POSITION.STATIC,
       ripple: true,
-      selectable: true
+      selectable: true,
     };
 
     state = {
       active: this.props.active,
-      rippled: false
+      rippled: false,
     };
 
-    componentDidMount () {
+    componentDidMount() {
       this.positionTimeoutHandle = setTimeout(() => {
         const { width, height } = this.refs.menu.getBoundingClientRect();
         const position = this.props.position === POSITION.AUTO
@@ -66,7 +66,7 @@ const factory = (MenuItem) => {
       });
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
       if (this.props.position !== nextProps.position) {
         const position = nextProps.position === POSITION.AUTO
           ? this.calculatePosition()
@@ -103,64 +103,39 @@ const factory = (MenuItem) => {
       }
     }
 
-    componentWillUpdate (nextProps, nextState) {
+    componentWillUpdate(nextProps, nextState) {
       if (!this.state.active && nextState.active) {
         events.addEventsToDocument({
           click: this.handleDocumentClick,
-          touchstart: this.handleDocumentClick
+          touchstart: this.handleDocumentClick,
         });
       }
     }
 
-    componentDidUpdate (prevProps, prevState) {
+    componentDidUpdate(prevProps, prevState) {
       if (prevState.active && !this.state.active) {
         if (this.props.onHide) this.props.onHide();
         events.removeEventsFromDocument({
           click: this.handleDocumentClick,
-          touchstart: this.handleDocumentClick
+          touchstart: this.handleDocumentClick,
         });
       } else if (!prevState.active && this.state.active && this.props.onShow) {
         this.props.onShow();
       }
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
       if (this.state.active) {
         events.removeEventsFromDocument({
           click: this.handleDocumentClick,
-          touchstart: this.handleDocumentClick
+          touchstart: this.handleDocumentClick,
         });
       }
       clearTimeout(this.positionTimeoutHandle);
       clearTimeout(this.activateTimeoutHandle);
     }
 
-    handleDocumentClick = (event) => {
-      if (this.state.active && !events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
-        this.setState({active: false, rippled: false});
-      }
-    };
-
-    handleSelect = (item, event) => {
-      const { value, onClick } = item.props;
-      if (onClick) event.persist();
-      this.setState({ active: false, rippled: this.props.ripple }, () => {
-        if (onClick) onClick(event);
-        if (this.props.onSelect) this.props.onSelect(value);
-      });
-    };
-
-    calculatePosition () {
-      const parentNode = ReactDOM.findDOMNode(this).parentNode;
-      if (!parentNode) return;
-      const {top, left, height, width} = parentNode.getBoundingClientRect();
-      const {height: wh, width: ww} = utils.getViewport();
-      const toTop = top < ((wh / 2) - height / 2);
-      const toLeft = left < ((ww / 2) - width / 2);
-      return `${toTop ? 'top' : 'bottom'}${toLeft ? 'Left' : 'Right'}`;
-    }
-
-    getMenuStyle () {
+    getMenuStyle() {
       const { width, height, position } = this.state;
       if (position !== POSITION.STATIC) {
         if (this.state.active) {
@@ -177,48 +152,72 @@ const factory = (MenuItem) => {
       }
     }
 
-    getRootStyle () {
+    getRootStyle() {
       if (this.state.position !== POSITION.STATIC) {
         return { width: this.state.width, height: this.state.height };
       }
     }
 
-    renderItems () {
+    handleDocumentClick = (event) => {
+      if (this.state.active && !events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
+        this.setState({ active: false, rippled: false });
+      }
+    };
+
+    handleSelect = (item, event) => {
+      const { value, onClick } = item.props;
+      if (onClick) event.persist();
+      this.setState({ active: false, rippled: this.props.ripple }, () => {
+        if (onClick) onClick(event);
+        if (this.props.onSelect) this.props.onSelect(value);
+      });
+    };
+
+    calculatePosition() {
+      const parentNode = ReactDOM.findDOMNode(this).parentNode;
+      if (!parentNode) return;
+      const { top, left, height, width } = parentNode.getBoundingClientRect();
+      const { height: wh, width: ww } = utils.getViewport();
+      const toTop = top < (((wh / 2) - height) / 2);
+      const toLeft = left < (((ww / 2) - width) / 2);
+      return `${toTop ? 'top' : 'bottom'}${toLeft ? 'Left' : 'Right'}`;
+    }
+
+    show() {
+      const { width, height } = this.refs.menu.getBoundingClientRect();
+      this.setState({ active: true, width, height });
+    }
+
+    hide() {
+      this.setState({ active: false });
+    }
+
+    renderItems() {
       return React.Children.map(this.props.children, (item) => {
         if (!item) return item;
         if (item.type === MenuItem) {
           return React.cloneElement(item, {
             ripple: item.props.ripple || this.props.ripple,
             selected: typeof item.props.value !== 'undefined' && this.props.selectable && item.props.value === this.props.selected,
-            onClick: this.handleSelect.bind(this, item)
+            onClick: this.handleSelect.bind(this, item),
           });
-        } else {
-          return React.cloneElement(item);
         }
+        return React.cloneElement(item);
       });
     }
 
-    show () {
-      const { width, height } = this.refs.menu.getBoundingClientRect();
-      this.setState({active: true, width, height});
-    }
-
-    hide () {
-      this.setState({active: false});
-    }
-
-    render () {
+    render() {
       const { theme } = this.props;
       const outlineStyle = { width: this.state.width, height: this.state.height };
       const className = classnames([theme.menu, theme[this.state.position]], {
         [theme.active]: this.state.active,
-        [theme.rippled]: this.state.rippled
+        [theme.rippled]: this.state.rippled,
       }, this.props.className);
 
       return (
-        <div data-react-toolbox='menu' className={className} style={this.getRootStyle()}>
+        <div data-react-toolbox="menu" className={className} style={this.getRootStyle()}>
           {this.props.outline ? <div className={theme.outline} style={outlineStyle} /> : null}
-          <ul ref='menu' className={theme.menuInner} style={this.getMenuStyle()}>
+          <ul ref="menu" className={theme.menuInner} style={this.getMenuStyle()}>
             {this.renderItems()}
           </ul>
         </div>

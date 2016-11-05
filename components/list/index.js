@@ -1,21 +1,21 @@
 import { themr } from 'react-css-themr';
-import { LIST } from '../identifiers.js';
+import { LIST } from '../identifiers';
 import { Avatar } from '../avatar';
 import { Checkbox } from '../checkbox';
-import { ListItemText } from './ListItemText.js';
-import { ListItemAction } from './ListItemAction.js';
-import { ListSubHeader } from './ListSubHeader.js';
-import { ListDivider } from './ListDivider.js';
-import { listFactory } from './List.js';
-import { listItemFactory } from './ListItem.js';
-import { listCheckboxFactory } from './ListCheckbox.js';
-import { listItemActionsFactory } from './ListItemActions.js';
-import { listItemContentFactory } from './ListItemContent.js';
-import { listItemLayoutFactory } from './ListItemLayout.js';
+import { ListItemText } from './ListItemText';
+import { ListItemAction } from './ListItemAction';
+import { ListSubHeader } from './ListSubHeader';
+import { ListDivider } from './ListDivider';
+import { listFactory } from './List';
+import { listItemFactory } from './ListItem';
+import { listCheckboxFactory } from './ListCheckbox';
+import { listItemActionsFactory } from './ListItemActions';
+import { listItemContentFactory } from './ListItemContent';
+import { listItemLayoutFactory } from './ListItemLayout';
 import themedRippleFactory from '../ripple';
 import theme from './theme.scss';
 
-const applyTheme = (Component) => themr(LIST, theme)(Component);
+const applyTheme = Component => themr(LIST, theme)(Component);
 const ripple = themedRippleFactory({ centered: false, listItemIgnore: true });
 const ThemedListItemAction = applyTheme(ListItemAction);
 const ThemedListSubHeader = applyTheme(ListSubHeader);
@@ -23,9 +23,9 @@ const ThemedListItemText = applyTheme(ListItemText);
 const ThemedListDivider = applyTheme(ListDivider);
 const ThemedListItemContent = applyTheme(listItemContentFactory(ThemedListItemText));
 const ThemedListItemActions = applyTheme(listItemActionsFactory(ThemedListItemAction));
-const ThemedListItemLayout = applyTheme(listItemLayoutFactory(Avatar, ThemedListItemContent, ThemedListItemActions));
+const ThemedListItemLayout = applyTheme(listItemLayoutFactory(Avatar, ThemedListItemContent, ThemedListItemActions)); // eslint-disable-line max-len
 const ThemedListCheckbox = applyTheme(listCheckboxFactory(Checkbox, ThemedListItemContent));
-const ThemedListItem = applyTheme(listItemFactory(ripple, ThemedListItemLayout, ThemedListItemContent));
+const ThemedListItem = applyTheme(listItemFactory(ripple, ThemedListItemLayout, ThemedListItemContent)); // eslint-disable-line max-len
 const ThemedList = applyTheme(listFactory(ThemedListItem));
 
 export { ThemedListItemActions as ListItemActions };

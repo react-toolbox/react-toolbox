@@ -1,19 +1,19 @@
 import React, { PropTypes } from 'react';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
-import { DRAWER } from '../identifiers.js';
-import ActivableRenderer from '../hoc/ActivableRenderer.js';
-import InjectOverlay from '../overlay/Overlay.js';
+import { DRAWER } from '../identifiers';
+import ActivableRenderer from '../hoc/ActivableRenderer';
+import InjectOverlay from '../overlay/Overlay';
 
 const factory = (Overlay) => {
   const Drawer = ({ active, children, className, onOverlayClick, theme, type }) => {
     const _className = classnames([theme.drawer, theme[type]], {
-      [theme.active]: active
+      [theme.active]: active,
     }, className);
 
     return (
       <Overlay active={active} onClick={onOverlayClick}>
-        <div data-react-toolbox='drawer' className={_className}>
+        <div data-react-toolbox="drawer" className={_className}>
           <aside className={theme.content}>
             {children}
           </aside>
@@ -29,18 +29,18 @@ const factory = (Overlay) => {
     onOverlayClick: PropTypes.func,
     theme: PropTypes.shape({
       active: PropTypes.string,
-      content: PropTypes.string,
-      drawer: PropTypes.string,
-      left: PropTypes.string,
-      right: PropTypes.string
+      content: PropTypes.string,  // eslint-disable-line react/no-unused-prop-types
+      drawer: PropTypes.string,  // eslint-disable-line react/no-unused-prop-types
+      left: PropTypes.string,  // eslint-disable-line react/no-unused-prop-types
+      right: PropTypes.string,  // eslint-disable-line react/no-unused-prop-types
     }),
-    type: PropTypes.oneOf(['left', 'right'])
+    type: PropTypes.oneOf(['left', 'right']),
   };
 
   Drawer.defaultProps = {
     active: false,
     className: '',
-    type: 'left'
+    type: 'left',
   };
 
   return ActivableRenderer()(Drawer);

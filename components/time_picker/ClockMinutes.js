@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import utils from '../utils/utils.js';
-import Hand from './ClockHand.js';
-import Face from './ClockFace.js';
+import utils from '../utils/utils';
+import Hand from './ClockHand';
+import Face from './ClockFace';
 
 const minutes = utils.range(0, 60, 5);
 const step = 360 / 60;
@@ -14,13 +14,13 @@ class Minutes extends Component {
     selected: PropTypes.number,
     spacing: PropTypes.number,
     theme: PropTypes.shape({
-      small: PropTypes.string
-    })
+      small: PropTypes.string,
+    }),
   };
 
   static defaultProps = {
     selected: 0,
-    onChange: null
+    onChange: null,
   };
 
   handleHandMove = (degrees) => {
@@ -35,7 +35,7 @@ class Minutes extends Component {
     this.refs.hand.touchStart(event);
   };
 
-  render () {
+  render() {
     return (
       <div>
         <Face
@@ -48,7 +48,8 @@ class Minutes extends Component {
           theme={this.props.theme}
           twoDigits
         />
-        <Hand ref='hand'
+        <Hand
+          ref="hand"
           className={minutes.indexOf(this.props.selected) === -1 ? this.props.theme.small : ''}
           angle={this.props.selected * step}
           length={this.props.radius - this.props.spacing}

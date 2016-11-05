@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import utils from '../utils/utils.js';
-import Hand from './ClockHand.js';
-import Face from './ClockFace.js';
+import utils from '../utils/utils';
+import Hand from './ClockHand';
+import Face from './ClockFace';
 
 const outerNumbers = [0, ...utils.range(13, 24)];
 const innerNumbers = [12, ...utils.range(1, 12)];
@@ -17,17 +17,17 @@ class Hours extends Component {
     radius: PropTypes.number,
     selected: PropTypes.number,
     spacing: PropTypes.number,
-    theme: PropTypes.object
+    theme: PropTypes.object,
   };
 
   state = {
-    inner: this.props.format === '24hr' && this.props.selected > 0 && this.props.selected <= 12
+    inner: this.props.format === '24hr' && this.props.selected > 0 && this.props.selected <= 12,
   };
 
   handleHandMove = (degrees, radius) => {
-    const currentInner = radius < this.props.radius - this.props.spacing * innerSpacing;
+    const currentInner = radius < (this.props.radius - this.props.spacing) * innerSpacing;
     if (this.props.format === '24hr' && this.state.inner !== currentInner) {
-      this.setState({inner: currentInner}, () => {
+      this.setState({ inner: currentInner }, () => {
         this.props.onChange(this.valueFromDegrees(degrees));
       });
     } else {
@@ -43,7 +43,7 @@ class Hours extends Component {
     this.refs.hand.touchStart(event);
   };
 
-  valueFromDegrees (degrees) {
+  valueFromDegrees(degrees) {
     if (this.props.format === 'ampm' || this.props.format === '24hr' && this.state.inner) {
       return innerNumbers[degrees / step];
     } else {
@@ -51,7 +51,7 @@ class Hours extends Component {
     }
   }
 
-  renderInnerFace (innerRadius) {
+  renderInnerFace(innerRadius) {
     if (this.props.format === '24hr') {
       return (
         <Face
@@ -67,32 +67,33 @@ class Hours extends Component {
     }
   }
 
-  render () {
+  render() {
     const { format, selected, radius, spacing, center, onHandMoved } = this.props;
     const is24hr = format === '24hr';
 
     return (
       <div>
-          <Face
-            onTouchStart={this.handleTouchStart}
-            onMouseDown={this.handleMouseDown}
-            numbers={is24hr ? outerNumbers : innerNumbers}
-            spacing={spacing}
-            radius={radius}
-            twoDigits={is24hr}
-            active={is24hr ? selected : (selected % 12 || 12)}
-            theme={this.props.theme}
-          />
-          {this.renderInnerFace(radius - spacing * innerSpacing)}
-          <Hand ref='hand'
-            angle={selected * step}
-            length={(this.state.inner ? radius - spacing * innerSpacing : radius) - spacing}
-            onMove={this.handleHandMove}
-            theme={this.props.theme}
-            onMoved={onHandMoved}
-            origin={center}
-            step={step}
-          />
+        <Face
+          onTouchStart={this.handleTouchStart}
+          onMouseDown={this.handleMouseDown}
+          numbers={is24hr ? outerNumbers : innerNumbers}
+          spacing={spacing}
+          radius={radius}
+          twoDigits={is24hr}
+          active={is24hr ? selected : (selected % 12 || 12)}
+          theme={this.props.theme}
+        />
+        {this.renderInnerFace((radius - spacing) * innerSpacing)}
+        <Hand
+          ref="hand"
+          angle={selected * step}
+          length={(this.state.inner ? (radius - spacing) * innerSpacing : radius) - spacing}
+          onMove={this.handleHandMove}
+          theme={this.props.theme}
+          onMoved={onHandMoved}
+          origin={center}
+          step={step}
+        />
       </div>
     );
   }

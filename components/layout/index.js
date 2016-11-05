@@ -1,9 +1,9 @@
 import { themr } from 'react-css-themr';
-import { LAYOUT } from '../identifiers.js';
-import { Layout } from './Layout.js';
-import { Panel } from './Panel.js';
-import { NavDrawer } from './NavDrawer.js';
-import { Sidebar } from './Sidebar.js';
+import { LAYOUT } from '../identifiers';
+import { Layout } from './Layout';
+import { Panel } from './Panel';
+import { NavDrawer } from './NavDrawer';
+import { Sidebar } from './Sidebar';
 import theme from './theme.scss';
 
 const ThemedLayout = themr(LAYOUT, theme)(Layout);

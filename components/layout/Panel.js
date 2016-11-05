@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { LAYOUT } from '../identifiers.js';
+import { LAYOUT } from '../identifiers';
 
 const Panel = ({ children, className, onScroll, scrollY, theme }) => {
   const _className = classnames(theme.panel, {
-    [theme.scrollY]: scrollY
+    [theme.scrollY]: scrollY,
   }, className);
 
   return (
-    <div data-react-toolbox='panel' onScroll={onScroll} className={_className}>
+    <div data-react-toolbox="panel" onScroll={onScroll} className={_className}>
       {children}
     </div>
   );
@@ -21,14 +21,14 @@ Panel.propTypes = {
   onScroll: PropTypes.func,
   scrollY: PropTypes.bool,
   theme: PropTypes.shape({
-    panel: PropTypes.string,
-    scrollY: PropTypes.string
-  })
+    panel: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+    scrollY: PropTypes.string,
+  }),
 };
 
 Panel.defaultProps = {
   className: '',
-  scrollY: false
+  scrollY: false,
 };
 
 export default themr(LAYOUT)(Panel);

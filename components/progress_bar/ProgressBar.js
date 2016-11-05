@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { PROGRESS_BAR } from '../identifiers.js';
-import prefixer from '../utils/prefixer.js';
+import { PROGRESS_BAR } from '../identifiers';
+import prefixer from '../utils/prefixer';
 
 class ProgressBar extends Component {
   static propTypes = {
@@ -16,15 +16,15 @@ class ProgressBar extends Component {
     theme: PropTypes.shape({
       buffer: PropTypes.string,
       circle: PropTypes.string,
-      circular: PropTypes.string,
-      indeterminate: PropTypes.string,
-      linear: PropTypes.string,
+      circular: PropTypes.string,  // eslint-disable-line react/no-unused-prop-types
+      indeterminate: PropTypes.string,  // eslint-disable-line react/no-unused-prop-types
+      linear: PropTypes.string,  // eslint-disable-line react/no-unused-prop-types
       multicolor: PropTypes.string,
       path: PropTypes.string,
-      value: PropTypes.string
+      value: PropTypes.string,
     }),
     type: PropTypes.oneOf(['linear', 'circular']),
-    value: PropTypes.number
+    value: PropTypes.number,
   };
 
   static defaultProps = {
@@ -35,61 +35,60 @@ class ProgressBar extends Component {
     mode: 'indeterminate',
     multicolor: false,
     type: 'linear',
-    value: 0
+    value: 0,
   };
 
-  calculateRatio (value) {
+  calculateRatio(value) {
     if (value < this.props.min) return 0;
     if (value > this.props.max) return 1;
     return (value - this.props.min) / (this.props.max - this.props.min);
   }
 
-  circularStyle () {
+  circularStyle() {
     if (this.props.mode !== 'indeterminate') {
-      return {strokeDasharray: `${2 * Math.PI * 25 * this.calculateRatio(this.props.value)}, 400`};
+      return { strokeDasharray: `${2 * Math.PI * 25 * this.calculateRatio(this.props.value)}, 400` };
     }
   }
 
-  linearStyle () {
+  linearStyle() {
     if (this.props.mode !== 'indeterminate') {
       return {
-        buffer: prefixer({transform: `scaleX(${this.calculateRatio(this.props.buffer)})`}),
-        value: prefixer({transform: `scaleX(${this.calculateRatio(this.props.value)})`})
+        buffer: prefixer({ transform: `scaleX(${this.calculateRatio(this.props.buffer)})` }),
+        value: prefixer({ transform: `scaleX(${this.calculateRatio(this.props.value)})` }),
       };
-    } else {
-      return {};
     }
+    return {};
   }
 
-  renderCircular () {
+  renderCircular() {
     return (
       <svg className={this.props.theme.circle} viewBox="0 0 60 60">
-        <circle className={this.props.theme.path} style={this.circularStyle()} cx='30' cy='30' r='25' />
+        <circle className={this.props.theme.path} style={this.circularStyle()} cx="30" cy="30" r="25" />
       </svg>
     );
   }
 
-  renderLinear () {
-    const {buffer, value} = this.linearStyle();
+  renderLinear() {
+    const { buffer, value } = this.linearStyle();
     return (
       <div>
-        <span ref='buffer' data-ref='buffer' className={this.props.theme.buffer} style={buffer}/>
-        <span ref='value' data-ref='value' className={this.props.theme.value} style={value}/>
+        <span ref="buffer" data-ref="buffer" className={this.props.theme.buffer} style={buffer} />
+        <span ref="value" data-ref="value" className={this.props.theme.value} style={value} />
       </div>
     );
   }
 
-  render () {
+  render() {
     const { className, disabled, max, min, mode, multicolor, type, theme, value } = this.props;
     const _className = classnames(theme[type], {
       [theme[mode]]: mode,
-      [theme.multicolor]: multicolor
+      [theme.multicolor]: multicolor,
     }, className);
 
     return (
       <div
         disabled={disabled}
-        data-react-toolbox='progress-bar'
+        data-react-toolbox="progress-bar"
         aria-valuenow={value}
         aria-valuemin={min}
         aria-valuemax={max}

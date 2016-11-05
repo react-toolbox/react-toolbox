@@ -5,18 +5,18 @@ class Portal extends Component {
   static propTypes = {
     children: PropTypes.any,
     container: PropTypes.any,
-    lockBody: PropTypes.bool
+    lockBody: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   }
 
   static defaultProps = {
-    lockBody: true
+    lockBody: true,
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this._renderOverlay();
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (this._overlayTarget && nextProps.container !== this.props.container) {
       this._portalContainerNode.removeChild(this._overlayTarget);
       this._portalContainerNode = getContainer(nextProps.container);
@@ -24,16 +24,16 @@ class Portal extends Component {
     }
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     this._renderOverlay();
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this._unrenderOverlay();
     this._unmountOverlayTarget();
   }
 
-  _mountOverlayTarget () {
+  _mountOverlayTarget() {
     if (!this._overlayTarget) {
       this._overlayTarget = document.createElement('div');
       this._portalContainerNode = getContainer(this.props.container);
@@ -41,7 +41,7 @@ class Portal extends Component {
     }
   }
 
-  _unmountOverlayTarget () {
+  _unmountOverlayTarget() {
     if (this._overlayTarget) {
       this._portalContainerNode.removeChild(this._overlayTarget);
       this._overlayTarget = null;
@@ -49,7 +49,7 @@ class Portal extends Component {
     this._portalContainerNode = null;
   }
 
-  _renderOverlay () {
+  _renderOverlay() {
     const overlay = !this.props.children
       ? null
       : React.Children.only(this.props.children);
@@ -65,18 +65,18 @@ class Portal extends Component {
     }
   }
 
-  _unrenderOverlay () {
+  _unrenderOverlay() {
     if (this._overlayTarget) {
       ReactDOM.unmountComponentAtNode(this._overlayTarget);
       this._overlayInstance = null;
     }
   }
 
-  getMountNode () {
+  getMountNode() {
     return this._overlayTarget;
   }
 
-  getOverlayDOMNode () {
+  getOverlayDOMNode() {
     if (!this.isMounted()) {
       throw new Error('getOverlayDOMNode(): A component must be mounted to have a DOM node.');
     }
@@ -92,13 +92,13 @@ class Portal extends Component {
     return null;
   }
 
-  render () {
+  render() {
     return null;
   }
 
 }
 
-function getContainer (container) {
+function getContainer(container) {
   const _container = typeof container === 'function' ? container() : container;
   return ReactDOM.findDOMNode(_container) || document.body;
 }

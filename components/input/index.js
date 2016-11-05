@@ -1,7 +1,7 @@
-import { INPUT } from '../identifiers.js';
 import { themr } from 'react-css-themr';
-import { inputFactory } from './Input.js';
-import FontIcon from '../font_icon/FontIcon.js';
+import { INPUT } from '../identifiers';
+import { inputFactory } from './Input';
+import { FontIcon } from '../font_icon/FontIcon';
 import theme from './theme.scss';
 
 const Input = inputFactory(FontIcon);

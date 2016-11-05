@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 const factory = (Checkbox) => {
-  const TableHead = ({model, onSelect, selectable, multiSelectable, selected, theme}) => {
+  const TableHead = ({ model, onSelect, selectable, multiSelectable, selected, theme }) => {
     let selectCell;
     const contentCells = Object.keys(model).map((key) => {
       const name = model[key].title || key;
@@ -10,13 +10,13 @@ const factory = (Checkbox) => {
 
     if (selectable && multiSelectable) {
       selectCell = (
-        <th key='select' className={theme.selectable}>
-          <Checkbox onChange={onSelect} checked={selected}/>
+        <th key="select" className={theme.selectable}>
+          <Checkbox onChange={onSelect} checked={selected} />
         </th>
       );
     } else if (selectable) {
       selectCell = (
-        <th key='select' className={theme.selectable}/>
+        <th key="select" className={theme.selectable} />
       );
     }
     return (
@@ -34,14 +34,14 @@ const factory = (Checkbox) => {
     selectable: PropTypes.bool,
     selected: PropTypes.bool,
     theme: PropTypes.shape({
-      selectable: PropTypes.string
-    })
+      selectable: PropTypes.string,
+    }),
   };
 
   TableHead.defaultProps = {
     className: '',
     model: {},
-    selected: false
+    selected: false,
   };
 
   return TableHead;

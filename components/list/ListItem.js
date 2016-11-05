@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { themr } from 'react-css-themr';
-import { LIST } from '../identifiers.js';
-import InjectListItemContent from './ListItemContent.js';
-import InjectListItemLayout from './ListItemLayout.js';
-import rippleFactory from '../ripple/Ripple.js';
+import { LIST } from '../identifiers';
+import InjectListItemContent from './ListItemContent';
+import InjectListItemLayout from './ListItemLayout';
+import rippleFactory from '../ripple/Ripple';
 
 const factory = (ripple, ListItemLayout, ListItemContent) => {
   class ListItem extends Component {
@@ -12,17 +12,19 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       className: PropTypes.string,
       disabled: PropTypes.bool,
       onClick: PropTypes.func,
+      onMouseDown: PropTypes.func,
+      onTouchStart: PropTypes.func,
       ripple: PropTypes.bool,
       theme: PropTypes.shape({
-        listItem: PropTypes.string
+        listItem: PropTypes.string,
       }),
-      to: PropTypes.string
+      to: PropTypes.string,
     };
 
     static defaultProps = {
       className: '',
       disabled: false,
-      ripple: false
+      ripple: false,
     };
 
     handleClick = (event) => {
@@ -31,11 +33,11 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       }
     };
 
-    groupChildren () {
+    groupChildren() {
       const children = {
         leftActions: [],
         rightActions: [],
-        ignored: []
+        ignored: [],
       };
 
       React.Children.forEach(this.props.children, (child, i) => {
@@ -55,16 +57,18 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
           return;
         }
         const bucket = children.itemContent ? 'rightActions' : 'leftActions';
-        children[bucket].push({...strippedChild, key: i});
+        children[bucket].push({ ...strippedChild, key: i });
       });
 
       return children;
     }
 
-    render () {
-      const {className, onMouseDown, onTouchStart, to, onClick, ripple: hasRipple, theme, ...other} = this.props; //eslint-disable-line no-unused-vars
+    render() {
+      // eslint-disable-next-line no-unused-vars
+      const { className, onMouseDown, onTouchStart, to, onClick, ripple: hasRipple,
+        theme, ...other } = this.props;
       const children = this.groupChildren();
-      const content = <ListItemLayout theme={theme} {...children} {...other}/>;
+      const content = <ListItemLayout theme={theme} {...children} {...other} />;
       return (
         <li className={`${theme.listItem} ${className}`} onClick={this.handleClick} onMouseDown={onMouseDown} onTouchStart={onTouchStart}>
           {to ? <a href={this.props.to}>{content}</a> : content}

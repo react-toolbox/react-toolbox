@@ -1,4 +1,4 @@
-import rippleFactory from './Ripple.js';
+import rippleFactory from './Ripple';
 import theme from './theme.scss';
 
-export default (options) => rippleFactory({ ...options, theme });
+export default options => rippleFactory({ ...options, theme });

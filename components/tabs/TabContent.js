@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { TABS } from '../identifiers.js';
+import { TABS } from '../identifiers';
 
 class TabContent extends Component {
   static propTypes = {
@@ -11,18 +11,18 @@ class TabContent extends Component {
     tabIndex: PropTypes.number,
     theme: PropTypes.shape({
       active: PropTypes.string,
-      tab: PropTypes.string
-    })
+      tab: PropTypes.string,
+    }),
   };
 
   static defaultProps = {
     active: false,
-    className: ''
+    className: '',
   };
 
-  render () {
+  render() {
     const className = classnames(this.props.theme.tab, {
-      [this.props.theme.active]: this.props.active
+      [this.props.theme.active]: this.props.active,
     }, this.props.className);
 
     return (

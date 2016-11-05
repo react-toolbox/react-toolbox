@@ -17,8 +17,8 @@ const factory = (Checkbox) => {
         editable: PropTypes.string,
         row: PropTypes.string,
         selectable: PropTypes.string,
-        selected: PropTypes.string
-      })
+        selected: PropTypes.string,
+      }),
     };
 
     handleInputChange = (index, key, type, event) => {
@@ -40,7 +40,7 @@ const factory = (Checkbox) => {
       onChange(index, key, value);
     };
 
-    renderSelectCell () {
+    renderSelectCell() {
       if (this.props.selectable) {
         return (
           <td className={this.props.theme.selectable}>
@@ -50,13 +50,13 @@ const factory = (Checkbox) => {
       }
     }
 
-    renderCells () {
-      return Object.keys(this.props.model).map((key) => {
-        return <td key={key} onClick={this.props.onRowClick}>{this.renderCell(key)}</td>;
-      });
+    renderCells() {
+      return Object.keys(this.props.model).map(key => (
+        <td key={key} onClick={this.props.onRowClick}>{this.renderCell(key)}</td>
+      ));
     }
 
-    renderCell (key) {
+    renderCell(key) {
       const value = this.props.data[key];
 
       // if the value is a valid React element return it directly, since it
@@ -71,7 +71,7 @@ const factory = (Checkbox) => {
       }
     }
 
-    renderInput (key, value) {
+    renderInput(key, value) {
       const index = this.props.index;
       const inputType = utils.inputTypeForPrototype(this.props.model[key].type);
       const inputValue = utils.prepareValueForInput(value, inputType);
@@ -98,14 +98,14 @@ const factory = (Checkbox) => {
       );
     }
 
-    render () {
+    render() {
       const className = classnames(this.props.theme.row, {
         [this.props.theme.editable]: this.props.onChange,
-        [this.props.theme.selected]: this.props.selected
+        [this.props.theme.selected]: this.props.selected,
       });
 
       return (
-        <tr data-react-toolbox-table='row' className={className}>
+        <tr data-react-toolbox-table="row" className={className}>
           {this.renderSelectCell()}
           {this.renderCells()}
         </tr>

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
-import time from '../utils/time.js';
-import Clock from './Clock.js';
+import time from '../utils/time';
+import Clock from './Clock';
 
 const factory = (Dialog) => {
   class TimePickerDialog extends Component {
@@ -29,9 +29,9 @@ const factory = (Dialog) => {
         minutesDisplay: PropTypes.string,
         pm: PropTypes.string,
         pmFormat: PropTypes.string,
-        separator: PropTypes.string
+        separator: PropTypes.string,
       }),
-      value: PropTypes.object
+      value: PropTypes.object,
     };
 
     static defaultProps = {
@@ -39,22 +39,22 @@ const factory = (Dialog) => {
       cancelLabel: 'Cancel',
       format: '24hr',
       okLabel: 'Ok',
-      value: new Date()
+      value: new Date(),
     };
 
     state = {
       display: 'hours',
-      displayTime: this.props.value
+      displayTime: this.props.value,
     };
 
-    componentDidUpdate (prevProps) {
+    componentDidUpdate(prevProps) {
       if (!prevProps.active && this.props.active) {
         setTimeout(this.refs.clock.handleCalculateShape, 1000);
       }
     }
 
     handleClockChange = (value) => {
-      this.setState({displayTime: value});
+      this.setState({ displayTime: value });
     };
 
     handleSelect = (event) => {
@@ -62,23 +62,32 @@ const factory = (Dialog) => {
     };
 
     toggleTimeMode = () => {
-      this.setState({displayTime: time.toggleTimeMode(this.state.displayTime)});
+      this.setState({ displayTime: time.toggleTimeMode(this.state.displayTime) });
     };
 
     handleHandMoved = () => {
-      if (this.state.display === 'hours') this.setState({display: 'minutes'});
+      if (this.state.display === 'hours') this.setState({ display: 'minutes' });
     };
 
     switchDisplay = (event) => {
-      this.setState({display: event.target.id});
+      this.setState({ display: event.target.id });
     };
 
     actions = [
-      { label: this.props.cancelLabel, className: this.props.theme.button, onClick: this.props.onDismiss },
-      { label: this.props.okLabel, className: this.props.theme.button, name: this.props.name, onClick: this.handleSelect }
+      {
+        label: this.props.cancelLabel,
+        className: this.props.theme.button,
+        onClick: this.props.onDismiss,
+      },
+      {
+        label: this.props.okLabel,
+        className: this.props.theme.button,
+        name: this.props.name,
+        onClick: this.handleSelect,
+      },
     ];
 
-    formatHours () {
+    formatHours() {
       if (this.props.format === 'ampm') {
         return this.state.displayTime.getHours() % 12 || 12;
       } else {
@@ -86,7 +95,7 @@ const factory = (Dialog) => {
       }
     }
 
-    renderAMPMLabels () {
+    renderAMPMLabels() {
       const { theme } = this.props;
       if (this.props.format === 'ampm') {
         return (
@@ -98,7 +107,7 @@ const factory = (Dialog) => {
       }
     }
 
-    render () {
+    render() {
       const { theme } = this.props;
       const display = `${this.state.display}Display`;
       const format = `${time.getTimeMode(this.state.displayTime)}Format`;
@@ -112,17 +121,17 @@ const factory = (Dialog) => {
           onOverlayClick={this.props.onOverlayClick}
         >
           <header className={theme.header}>
-            <span id='hours' className={theme.hours} onClick={this.switchDisplay}>
-              {('0' + this.formatHours()).slice(-2)}
+            <span id="hours" className={theme.hours} onClick={this.switchDisplay}>
+              {(`0${this.formatHours()}`).slice(-2)}
             </span>
             <span className={theme.separator}>:</span>
-            <span id='minutes' className={theme.minutes} onClick={this.switchDisplay}>
-              {('0' + this.state.displayTime.getMinutes()).slice(-2)}
+            <span id="minutes" className={theme.minutes} onClick={this.switchDisplay}>
+              {(`0${this.state.displayTime.getMinutes()}`).slice(-2)}
             </span>
             {this.renderAMPMLabels()}
           </header>
           <Clock
-            ref='clock'
+            ref="clock"
             display={this.state.display}
             format={this.props.format}
             onChange={this.handleClockChange}

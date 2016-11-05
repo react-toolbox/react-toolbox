@@ -1,14 +1,14 @@
-import { BUTTON } from '../identifiers.js';
 import { themr } from 'react-css-themr';
-import { buttonFactory } from './Button.js';
-import { browseButtonFactory } from './BrowseButton.js';
-import { iconButtonFactory } from './IconButton.js';
-import FontIcon from '../font_icon/FontIcon.js';
+import { BUTTON } from '../identifiers';
+import { buttonFactory } from './Button';
+import { browseButtonFactory } from './BrowseButton';
+import { iconButtonFactory } from './IconButton';
+import { FontIcon } from '../font_icon/FontIcon';
 import themedRippleFactory from '../ripple';
 import theme from './theme.scss';
 
 const Button = buttonFactory(themedRippleFactory({ centered: false }), FontIcon);
-const IconButton = iconButtonFactory(themedRippleFactory({centered: true}), FontIcon);
+const IconButton = iconButtonFactory(themedRippleFactory({ centered: true }), FontIcon);
 const BrowseButton = browseButtonFactory(themedRippleFactory({ centered: false }), FontIcon);
 const ThemedButton = themr(BUTTON, theme)(Button);
 const ThemedIconButton = themr(BUTTON, theme)(IconButton);
