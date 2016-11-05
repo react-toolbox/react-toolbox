@@ -59,21 +59,26 @@ const factory = (Input) => {
 
     componentWillUpdate (nextProps, nextState) {
       if (!this.state.active && nextState.active) {
-        events.addEventsToDocument({click: this.handleDocumentClick});
+        events.addEventsToDocument(this.getDocumentEvents());
       }
     }
 
     componentDidUpdate (prevProps, prevState) {
       if (prevState.active && !this.state.active) {
-        events.removeEventsFromDocument({click: this.handleDocumentClick});
+        events.removeEventsFromDocument(this.getDocumentEvents());
       }
     }
 
     componentWillUnmount () {
       if (this.state.active) {
-        events.removeEventsFromDocument({click: this.handleDocumentClick});
+        events.removeEventsFromDocument(this.getDocumentEvents());
       }
     }
+
+    getDocumentEvents = () => ({
+      click: this.handleDocumentClick,
+      touchend: this.handleDocumentClick
+    });
 
     close = () => {
       if (this.state.active) {
@@ -94,6 +99,7 @@ const factory = (Input) => {
       const up = this.props.auto ? client.top > ((screen_height / 2) + client.height) : false;
       if (this.props.onClick) this.props.onClick(event);
       if (this.props.onFocus) this.props.onFocus(event);
+      if (this.inputNode) this.inputNode.blur();
       this.setState({active: true, up});
     };
 
@@ -169,6 +175,7 @@ const factory = (Input) => {
             onClick={this.handleClick}
             required={this.props.required}
             readOnly
+            ref={node => { this.inputNode = node && node.getWrappedInstance(); }}
             type={template && selected ? 'hidden' : null}
             value={selected && selected.label ? selected.label : ''}
           />
