@@ -21,7 +21,7 @@ const factory = (Input) => {
       onClick: PropTypes.func,
       onFocus: PropTypes.func,
       required: PropTypes.bool,
-      source: PropTypes.array.isRequired,
+      source: PropTypes.arrayOf(PropTypes.object).isRequired,
       template: PropTypes.func,
       theme: PropTypes.shape({
         active: PropTypes.string,
@@ -181,7 +181,7 @@ const factory = (Input) => {
             value={selected && selected.label ? selected.label : ''}
           />
           { template && selected ? this.renderTemplateValue(selected) : null}
-          <ul className={theme.values} ref="values">
+          <ul className={theme.values} ref={(node) => { this.valuesNode = node; }}>
             {source.map(this.renderValue)}
           </ul>
         </div>

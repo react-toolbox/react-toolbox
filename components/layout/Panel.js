@@ -16,7 +16,7 @@ const Panel = ({ children, className, onScroll, scrollY, theme }) => {
 };
 
 Panel.propTypes = {
-  children: PropTypes.any,
+  children: PropTypes.node,
   className: PropTypes.string,
   onScroll: PropTypes.func,
   scrollY: PropTypes.bool,

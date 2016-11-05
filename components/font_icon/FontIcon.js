@@ -13,7 +13,7 @@ const FontIcon = ({ children, className, value, ...other }) => (
 );
 
 FontIcon.propTypes = {
-  children: PropTypes.any,
+  children: PropTypes.node,
   className: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.string,

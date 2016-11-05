@@ -62,7 +62,7 @@ const factory = (IconButton, Menu) => {
             ripple={this.props.iconRipple}
           />
           <Menu
-            ref="menu"
+            ref={(node) => { this.menuNode = node; }}
             active={this.state.active}
             onHide={this.handleMenuHide}
             onSelect={this.props.onSelect}

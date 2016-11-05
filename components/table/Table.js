@@ -20,7 +20,7 @@ const factory = (TableHead, TableRow) => {
       selected: PropTypes.array,
       source: PropTypes.array,
       theme: PropTypes.shape({
-        table: PropTypes.string,
+        table: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
       }),
     };
 

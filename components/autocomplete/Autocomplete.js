@@ -28,7 +28,10 @@ const factory = (Chip, Input) => {
       onFocus: PropTypes.func,
       selectedPosition: PropTypes.oneOf(['above', 'below']),
       showSuggestionsWhenValueIsSet: PropTypes.bool,
-      source: PropTypes.any,
+      source: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array,
+      ]),
       suggestionMatch: PropTypes.oneOf(['start', 'anywhere', 'word']),
       theme: PropTypes.shape({
         active: PropTypes.string,
@@ -42,7 +45,10 @@ const factory = (Chip, Input) => {
         value: PropTypes.string,
         values: PropTypes.string,
       }),
-      value: PropTypes.any,
+      value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array,
+      ]),
     };
 
     static defaultProps = {
@@ -101,7 +107,7 @@ const factory = (Chip, Input) => {
     };
 
     handleQueryFocus = () => {
-      this.refs.suggestions.scrollTop = 0;
+      this.suggestionsNode.scrollTop = 0;
       this.setState({ active: '', focus: true });
       if (this.props.onFocus) this.props.onFocus();
     };
@@ -147,7 +153,7 @@ const factory = (Chip, Input) => {
 
     calculateDirection() {
       if (this.props.direction === 'auto') {
-        const client = ReactDOM.findDOMNode(this.refs.input).getBoundingClientRect();
+        const client = ReactDOM.findDOMNode(this.inputNode).getBoundingClientRect();
         const screenHeight = window.innerHeight || document.documentElement.offsetHeight;
         const up = client.top > ((screenHeight / 2) + client.height);
         return up ? 'up' : 'down';
@@ -214,7 +220,10 @@ const factory = (Chip, Input) => {
     source() {
       const { source: src } = this.props;
       if (src.hasOwnProperty('length')) {
-        return new Map(src.map(item => Array.isArray(item) ? [...item] : [item, item]));
+        return new Map(src.map((item) => {
+          if (Array.isArray(item)) return [...item];
+          return [item, item];
+        }));
       }
       return new Map(Object.keys(src).map(key => [key, src[key]]));
     }
@@ -231,7 +240,7 @@ const factory = (Chip, Input) => {
     select = (event, target) => {
       events.pauseEvent(event);
       const values = this.values(this.props.value);
-      const newValue = target === void 0 ? event.target.id : target;
+      const newValue = target === void 0 ? event.target.id : target; // eslint-disable-line no-void
       this.handleChange([newValue, ...values.keys()], event);
     };
 
@@ -257,7 +266,6 @@ const factory = (Chip, Input) => {
              </Chip>
           )
         );
-
         return <ul className={this.props.theme.values}>{selectedItems}</ul>;
       }
     }
@@ -282,7 +290,11 @@ const factory = (Chip, Input) => {
       });
 
       const className = classnames(theme.suggestions, { [theme.up]: this.state.direction === 'up' });
-      return <ul ref="suggestions" className={className}>{suggestions}</ul>;
+      return (
+        <ul ref={(node) => { this.suggestionsNode = node; }} className={className}>
+          {suggestions}
+        </ul>
+      );
     }
 
     render() {
@@ -300,7 +312,7 @@ const factory = (Chip, Input) => {
           {this.props.selectedPosition === 'above' ? this.renderSelected() : null}
           <Input
             {...other}
-            ref="input"
+            ref={(node) => { this.inputNode = node; }}
             className={theme.input}
             error={error}
             label={label}

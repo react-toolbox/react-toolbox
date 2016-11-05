@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 
 class Portal extends Component {
   static propTypes = {
-    children: PropTypes.any,
-    container: PropTypes.any,
+    children: PropTypes.node,
+    container: PropTypes.node,
     lockBody: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   }
 

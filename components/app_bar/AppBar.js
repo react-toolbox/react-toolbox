@@ -76,10 +76,11 @@ const factory = (IconButton) => {
     };
 
     handleScroll = () => {
-      const scrollDiff = this.curScroll - window.scrollY;
-      const hidden = scrollDiff < 0 && window.scrollY !== undefined && window.scrollY > this.state.height;
+      const scrollY = window.scrollY;
+      const scrollDiff = this.curScroll - scrollY;
+      const hidden = scrollDiff < 0 && scrollY !== undefined && scrollY > this.state.height;
       this.setState({ hidden });
-      this.curScroll = window.scrollY;
+      this.curScroll = scrollY;
     };
 
     render() {

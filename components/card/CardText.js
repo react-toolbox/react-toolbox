@@ -10,7 +10,7 @@ const CardText = ({ children, className, theme, ...other }) => (
 );
 
 CardText.propTypes = {
-  children: PropTypes.any,
+  children: PropTypes.node,
   className: PropTypes.string,
   theme: PropTypes.shape({
     cardText: PropTypes.string,

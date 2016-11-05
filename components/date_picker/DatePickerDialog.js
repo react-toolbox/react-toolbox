@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
-import time from '../utils/time.js';
+import time from '../utils/time';
 
 const factory = (Dialog, Calendar) => {
   class CalendarDialog extends Component {
@@ -13,8 +13,8 @@ const factory = (Dialog, Calendar) => {
         React.PropTypes.string,
         React.PropTypes.object,
       ]),
-      maxDate: PropTypes.object,
-      minDate: PropTypes.object,
+      maxDate: PropTypes.instanceOf(Date),
+      minDate: PropTypes.instanceOf(Date),
       name: PropTypes.string,
       okLabel: PropTypes.string,
       onDismiss: PropTypes.func,
@@ -24,15 +24,18 @@ const factory = (Dialog, Calendar) => {
       sundayFirstDayOfWeek: React.PropTypes.bool,
       theme: PropTypes.shape({
         button: PropTypes.string,
-        calendarWrapper: PropTypes.string,
-        date: PropTypes.string,
-        dialog: PropTypes.string,
-        header: PropTypes.string,
-        monthsDisplay: PropTypes.string,
-        year: PropTypes.string,
-        yearsDisplay: PropTypes.string,
+        calendarWrapper: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        date: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        dialog: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        header: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        monthsDisplay: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        year: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        yearsDisplay: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
       }),
-      value: PropTypes.object,
+      value: PropTypes.oneOfType([
+        PropTypes.instanceOf(Date),
+        PropTypes.string,
+      ]),
     };
 
     static defaultProps = {

@@ -3,7 +3,8 @@ import { themr } from 'react-css-themr';
 import classnames from 'classnames';
 import { CARD } from '../identifiers';
 
-const CardMedia = ({ aspectRatio, children, className, color, contentOverlay, image, theme, ...other }) => {
+const CardMedia = ({ aspectRatio, children, className, color, contentOverlay, image,
+  theme, ...other }) => {
   const classes = classnames(theme.cardMedia, {
     [theme[aspectRatio]]: aspectRatio,
   }, className);
@@ -28,7 +29,7 @@ const CardMedia = ({ aspectRatio, children, className, color, contentOverlay, im
 
 CardMedia.propTypes = {
   aspectRatio: PropTypes.oneOf(['wide', 'square']),
-  children: PropTypes.any,
+  children: PropTypes.node,
   className: PropTypes.string,
   color: PropTypes.string,
   contentOverlay: PropTypes.bool,

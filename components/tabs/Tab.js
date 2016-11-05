@@ -11,6 +11,7 @@ class Tab extends Component {
     className: PropTypes.string,
     disabled: PropTypes.bool,
     hidden: PropTypes.bool,
+    htmlFor: PropTypes.string,
     icon: PropTypes.node,
     label: PropTypes.node,
     onActive: PropTypes.func,
@@ -45,7 +46,7 @@ class Tab extends Component {
   render() {
     const {
       onActive, // eslint-disable-line
-      active, activeClassName, className, disabled, hidden, label, icon, theme, ...other
+      active, activeClassName, className, disabled, hidden, htmlFor, label, icon, theme, ...other
     } = this.props;
     const _className = classnames(theme.label, {
       [theme.active]: active,
@@ -57,7 +58,7 @@ class Tab extends Component {
     }, className);
 
     return (
-      <label {...other} data-react-toolbox="tab" className={_className} onClick={this.handleClick}>
+      <label {...other} data-react-toolbox="tab" className={_className} htmlFor={htmlFor} onClick={this.handleClick}>
         {icon && <FontIcon className={theme.icon} value={icon} />}
         {label}
       </label>

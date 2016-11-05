@@ -8,11 +8,11 @@ import { Button, Snackbar } from 'react-toolbox';
 
 class SnackbarTest extends React.Component {
   handleClick = () => {
-    this.refs.snackbar.show();
+    this.snackbarNode.show();
   };
 
   handleSnackbarClick = () => {
-    this.refs.snackbar.hide();
+    this.snackbarNode.hide();
   };
 
   render () {
@@ -23,7 +23,7 @@ class SnackbarTest extends React.Component {
           action='Nice'
           label='A new developer started using React Toolbox'
           onClick={this.handleSnackbarClick}
-          ref='snackbar'
+          ref={(node) => { this.snackbarNode = node; }}
           type='accept'
       />
       </section>

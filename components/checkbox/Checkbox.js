@@ -11,6 +11,7 @@ const factory = (Check) => {
       checked: PropTypes.bool,
       className: PropTypes.string,
       disabled: PropTypes.bool,
+      htmlFor: PropTypes.string,
       label: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.node,
@@ -40,28 +41,28 @@ const factory = (Check) => {
     };
 
     blur() {
-      this.refs.input.blur();
+      this.inputRoot.blur();
     }
 
     focus() {
-      this.refs.input.focus();
+      this.inputRoot.focus();
     }
 
     render() {
       // eslint-disable-next-line no-unused-vars
-      const { onChange, theme, style, ...others } = this.props;
+      const { onChange, theme, style, htmlFor, ...others } = this.props;
       const className = classnames(theme.field, {
         [theme.disabled]: this.props.disabled,
       }, this.props.className);
 
       return (
-        <label data-react-toolbox="checkbox" className={className}>
+        <label data-react-toolbox="checkbox" className={className} htmlFor={htmlFor}>
           <input
             {...others}
             className={theme.input}
             onClick={this.handleToggle}
             readOnly
-            ref="input"
+            ref={(node) => { this.inputRoot = node; }}
             type="checkbox"
           />
           <Check

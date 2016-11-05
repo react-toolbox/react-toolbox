@@ -11,6 +11,7 @@ const factory = (Thumb) => {
       checked: PropTypes.bool,
       className: PropTypes.string,
       disabled: PropTypes.bool,
+      htmlFor: PropTypes.string,
       label: PropTypes.string,
       name: PropTypes.string,
       onBlur: PropTypes.func,
@@ -42,26 +43,26 @@ const factory = (Thumb) => {
     };
 
     blur() {
-      this.refs.input.blur();
+      this.inputNode.blur();
     }
 
     focus() {
-      this.refs.input.focus();
+      this.inputNode.focus();
     }
 
     render() {
       // eslint-disable-next-line no-unused-vars
-      const { className, checked, disabled, onChange, theme, ...others } = this.props;
+      const { className, checked, disabled, htmlFor, onChange, theme, ...others } = this.props;
       const _className = classnames(theme[disabled ? 'disabled' : 'field'], className);
       return (
-        <label data-react-toolbox="switch" className={_className}>
+        <label data-react-toolbox="switch" className={_className} htmlFor={htmlFor}>
           <input
             {...others}
             checked={this.props.checked}
             className={theme.input}
             onClick={this.handleToggle}
             readOnly
-            ref="input"
+            ref={(node) => { this.inputNode = node; }}
             type="checkbox"
           />
           <span className={theme[checked ? 'on' : 'off']}>

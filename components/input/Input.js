@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { INPUT } from '../identifiers';
@@ -7,42 +7,42 @@ import InjectedFontIcon from '../font_icon/FontIcon';
 const factory = (FontIcon) => {
   class Input extends React.Component {
     static propTypes = {
-      children: React.PropTypes.any,
-      className: React.PropTypes.string,
-      disabled: React.PropTypes.bool,
-      error: React.PropTypes.string,
-      floating: React.PropTypes.bool,
-      hint: React.PropTypes.string,
-      icon: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.element,
+      children: PropTypes.node,
+      className: PropTypes.string,
+      disabled: PropTypes.bool,
+      error: PropTypes.string,
+      floating: PropTypes.bool,
+      hint: PropTypes.string,
+      icon: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
       ]),
-      label: React.PropTypes.string,
-      maxLength: React.PropTypes.number,
-      multiline: React.PropTypes.bool,
-      name: React.PropTypes.string,
-      onBlur: React.PropTypes.func,
-      onChange: React.PropTypes.func,
-      onFocus: React.PropTypes.func,
-      onKeyPress: React.PropTypes.func,
-      required: React.PropTypes.bool,
-      rows: React.PropTypes.number,
-      theme: React.PropTypes.shape({
-        bar: React.PropTypes.string,
-        counter: React.PropTypes.string,
-        disabled: React.PropTypes.string,
-        error: React.PropTypes.string,
-        errored: React.PropTypes.string,
-        hidden: React.PropTypes.string,
-        hint: React.PropTypes.string,
-        icon: React.PropTypes.string,
-        input: React.PropTypes.string,
-        inputElement: React.PropTypes.string,
-        required: React.PropTypes.string,
-        withIcon: React.PropTypes.string,
+      label: PropTypes.string,
+      maxLength: PropTypes.number,
+      multiline: PropTypes.bool,
+      name: PropTypes.string,
+      onBlur: PropTypes.func,
+      onChange: PropTypes.func,
+      onFocus: PropTypes.func,
+      onKeyPress: PropTypes.func,
+      required: PropTypes.bool,
+      rows: PropTypes.number,
+      theme: PropTypes.shape({
+        bar: PropTypes.string,
+        counter: PropTypes.string,
+        disabled: PropTypes.string,
+        error: PropTypes.string,
+        errored: PropTypes.string,
+        hidden: PropTypes.string,
+        hint: PropTypes.string,
+        icon: PropTypes.string,
+        input: PropTypes.string,
+        inputElement: PropTypes.string,
+        required: PropTypes.string,
+        withIcon: PropTypes.string,
       }),
-      type: React.PropTypes.string,
-      value: React.PropTypes.any,
+      type: PropTypes.string,
+      value: PropTypes.any,
     };
 
     static defaultProps = {
@@ -94,7 +94,7 @@ const factory = (FontIcon) => {
     };
 
     handleAutoresize = () => {
-      const element = this.refs.input;
+      const element = this.inputNode;
       const rows = this.props.rows;
 
       if (typeof rows === 'number' && !isNaN(rows)) {
@@ -134,11 +134,11 @@ const factory = (FontIcon) => {
     };
 
     blur() {
-      this.refs.input.blur();
+      this.inputNode.blur();
     }
 
     focus() {
-      this.refs.input.focus();
+      this.inputNode.focus();
     }
 
     render() {
@@ -158,13 +158,13 @@ const factory = (FontIcon) => {
       const valuePresent = value !== null
         && value !== undefined
         && value !== ''
-        && !(typeof value === Number && isNaN(value));
+        && !(typeof value === 'number' && isNaN(value));
 
       const inputElementProps = {
         ...others,
         className: classnames(theme.inputElement, { [theme.filled]: valuePresent }),
         onChange: this.handleChange,
-        ref: 'input',
+        ref: (node) => { this.inputNode = node; },
         role: 'input',
         name,
         disabled,

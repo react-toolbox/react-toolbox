@@ -12,23 +12,23 @@ const factory = (IconButton) => {
     static propTypes = {
       display: PropTypes.oneOf(['months', 'years']),
       handleSelect: PropTypes.func,
-      locale: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.object,
+      locale: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.object,
       ]),
-      maxDate: PropTypes.object,
-      minDate: PropTypes.object,
+      maxDate: PropTypes.instanceOf(Date),
+      minDate: PropTypes.instanceOf(Date),
       onChange: PropTypes.func,
-      selectedDate: PropTypes.object,
-      sundayFirstDayOfWeek: React.PropTypes.bool,
+      selectedDate: PropTypes.instanceOf(Date),
+      sundayFirstDayOfWeek: PropTypes.bool,
       theme: PropTypes.shape({
         active: PropTypes.string,
         calendar: PropTypes.string,
-        next: PropTypes.string,
-        prev: PropTypes.string,
+        next: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        prev: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
         years: PropTypes.string,
       }),
-      viewDate: PropTypes.object,
+      viewDate: PropTypes.instanceOf(Date), // eslint-disable-line react/no-unused-prop-types
     };
 
     static defaultProps = {
@@ -45,7 +45,7 @@ const factory = (IconButton) => {
     }
 
     componentDidUpdate() {
-      if (this.refs.activeYear) {
+      if (this.activeYearNode) {
         this.scrollToActive();
       }
     }
@@ -55,9 +55,9 @@ const factory = (IconButton) => {
     }
 
     scrollToActive() {
-      this.refs.years.scrollTop = this.refs.activeYear.offsetTop
-      - this.refs.years.offsetHeight / 2
-      + this.refs.activeYear.offsetHeight / 2;
+      this.yearsNode.scrollTop = (((this.activeYearNode.offsetTop
+      - this.yearsNode.offsetHeight) / 2)
+      + this.activeYearNode.offsetHeight) / 2;
     }
 
     handleDayClick = (day) => {
@@ -73,8 +73,8 @@ const factory = (IconButton) => {
 
     handleKeys = (e) => {
       const { selectedDate } = this.props;
-
-      if (e.which === 37 || e.which === 38 || e.which === 39 || e.which === 40 || e.which === 13) e.preventDefault();
+      const keys = [37, 38, 39, 40, 13];
+      if (keys.includes(e.which)) e.preventDefault();
 
       switch (e.which) {
         case 13: this.props.handleSelect(); break; // enter
@@ -101,18 +101,21 @@ const factory = (IconButton) => {
 
     renderYears() {
       return (
-        <ul data-react-toolbox="years" ref="years" className={this.props.theme.years}>
-          {utils.range(1900, 2100).map(year => (
-            <li
-              className={year === this.state.viewDate.getFullYear() ? this.props.theme.active : ''}
-              id={year}
-              key={year}
-              onClick={this.handleYearClick}
-              ref={year === this.state.viewDate.getFullYear() ? 'activeYear' : undefined}
-            >
-              {year}
-            </li>
-          ))}
+        <ul data-react-toolbox="years" ref={(node) => { this.yearsNode = node; }} className={this.props.theme.years}>
+          {utils.range(1900, 2100).map((year) => {
+            const fullYear = year === this.state.viewDate.getFullYear();
+            return (
+              <li
+                className={fullYear ? this.props.theme.active : ''}
+                id={year}
+                key={year}
+                onClick={this.handleYearClick}
+                ref={fullYear ? (node) => { this.activeYearNode = node; } : undefined}
+              >
+                {year}
+              </li>
+            );
+          })}
         </ul>
       );
     }

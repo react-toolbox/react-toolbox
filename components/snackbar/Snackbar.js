@@ -18,18 +18,18 @@ const factory = (Overlay, Button) => {
         PropTypes.element,
       ]),
       onClick: PropTypes.func,
-      onTimeout: PropTypes.func,
+      onTimeout: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
       theme: PropTypes.shape({
-        accept: PropTypes.string,
+        accept: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
         active: PropTypes.string,
-        button: PropTypes.string,
-        cancel: PropTypes.string,
-        icon: PropTypes.string,
+        button: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        cancel: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        icon: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
         label: PropTypes.string,
-        snackbar: PropTypes.string,
-        warning: PropTypes.string,
+        snackbar: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        warning: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
       }),
-      timeout: PropTypes.number,
+      timeout: PropTypes.number, // eslint-disable-line react/no-unused-prop-types
       type: PropTypes.oneOf(['accept', 'cancel', 'warning']),
     };
 

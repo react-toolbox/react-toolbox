@@ -10,7 +10,7 @@ const CardActions = ({ children, className, theme, ...other }) => (
 );
 
 CardActions.propTypes = {
-  children: PropTypes.any,
+  children: PropTypes.node,
   className: PropTypes.string,
   theme: PropTypes.shape({
     cardActions: PropTypes.string,

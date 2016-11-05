@@ -26,15 +26,15 @@ const factory = (Button, Link) => {
   };
 
   Navigation.propTypes = {
-    actions: PropTypes.array,
+    actions: PropTypes.arrayOf(PropTypes.object),
     children: PropTypes.node,
     className: PropTypes.string,
-    routes: PropTypes.array,
+    routes: PropTypes.arrayOf(PropTypes.object),
     theme: PropTypes.shape({
-      button: PropTypes.string,
-      horizontal: PropTypes.string,
-      link: PropTypes.string,
-      vertical: PropTypes.string,
+      button: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+      horizontal: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+      link: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+      vertical: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
     }),
     type: PropTypes.oneOf(['vertical', 'horizontal']),
   };

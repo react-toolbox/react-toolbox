@@ -27,7 +27,7 @@ const factory = (Checkbox) => {
   };
 
   TableHead.propTypes = {
-    className: PropTypes.string,
+    className: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
     model: PropTypes.object,
     multiSelectable: PropTypes.bool,
     onSelect: PropTypes.func,

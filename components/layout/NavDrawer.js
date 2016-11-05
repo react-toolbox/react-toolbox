@@ -3,7 +3,8 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { LAYOUT } from '../identifiers';
 
-const NavDrawer = ({ active, children, className, onOverlayClick, permanentAt, pinned, scrollY, theme, width }) => {
+const NavDrawer = ({ active, children, className, onOverlayClick, permanentAt, pinned, scrollY,
+  theme, width }) => {
   const rootClasses = classnames([theme.navDrawer], {
     [theme[`${permanentAt}Permanent`]]: permanentAt,
     [theme.wide]: (width === 'wide'),
@@ -28,7 +29,7 @@ const NavDrawer = ({ active, children, className, onOverlayClick, permanentAt, p
 
 NavDrawer.propTypes = {
   active: PropTypes.bool,
-  children: PropTypes.any,
+  children: PropTypes.node,
   className: PropTypes.string,
   onOverlayClick: PropTypes.func,
   permanentAt: PropTypes.oneOf(['sm', 'smTablet', 'md', 'lg', 'lgTablet', 'xl', 'xxl', 'xxxl']),
@@ -36,18 +37,18 @@ NavDrawer.propTypes = {
   scrollY: PropTypes.bool,
   theme: PropTypes.shape({
     active: PropTypes.string,
-    drawerContent: PropTypes.string,
-    lgPermanent: PropTypes.string,
-    mdPermanent: PropTypes.string,
-    navDrawer: PropTypes.string,
+    drawerContent: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+    lgPermanent: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+    mdPermanent: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+    navDrawer: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
     pinned: PropTypes.string,
-    scrim: PropTypes.string,
+    scrim: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
     scrollY: PropTypes.string,
-    smPermanent: PropTypes.string,
-    wide: PropTypes.string,
-    xlPermanent: PropTypes.string,
-    xxlPermanent: PropTypes.string,
-    xxxlPermanent: PropTypes.string,
+    smPermanent: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+    wide: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+    xlPermanent: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+    xxlPermanent: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+    xxxlPermanent: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
   }),
   width: PropTypes.oneOf(['normal', 'wide']),
 };

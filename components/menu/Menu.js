@@ -58,7 +58,7 @@ const factory = (MenuItem) => {
 
     componentDidMount() {
       this.positionTimeoutHandle = setTimeout(() => {
-        const { width, height } = this.refs.menu.getBoundingClientRect();
+        const { width, height } = this.menuNode.getBoundingClientRect();
         const position = this.props.position === POSITION.AUTO
           ? this.calculatePosition()
           : this.props.position;
@@ -184,7 +184,7 @@ const factory = (MenuItem) => {
     }
 
     show() {
-      const { width, height } = this.refs.menu.getBoundingClientRect();
+      const { width, height } = this.menuNode.getBoundingClientRect();
       this.setState({ active: true, width, height });
     }
 
@@ -217,7 +217,11 @@ const factory = (MenuItem) => {
       return (
         <div data-react-toolbox="menu" className={className} style={this.getRootStyle()}>
           {this.props.outline ? <div className={theme.outline} style={outlineStyle} /> : null}
-          <ul ref="menu" className={theme.menuInner} style={this.getMenuStyle()}>
+          <ul
+            ref={(node) => { this.menuNode = node; }}
+            className={theme.menuInner}
+            style={this.getMenuStyle()}
+          >
             {this.renderItems()}
           </ul>
         </div>

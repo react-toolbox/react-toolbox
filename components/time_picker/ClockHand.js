@@ -13,8 +13,8 @@ class Hand extends Component {
     origin: PropTypes.object,
     step: PropTypes.number,
     theme: PropTypes.shape({
-      hand: PropTypes.string,
-      knob: PropTypes.string,
+      hand: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+      knob: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
     }),
   };
 
@@ -31,7 +31,7 @@ class Hand extends Component {
 
   componentDidMount() {
     setTimeout(() => {
-      this.setState({ knobWidth: this.refs.knob.offsetWidth });
+      this.setState({ knobWidth: this.knobNode.offsetWidth });
     });
   }
 
@@ -117,7 +117,7 @@ class Hand extends Component {
 
     return (
       <div className={className} style={handStyle}>
-        <div ref="knob" className={theme.knob} />
+        <div ref={(node) => { this.knobNode = node; }} className={theme.knob} />
       </div>
     );
   }

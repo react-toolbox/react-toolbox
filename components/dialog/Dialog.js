@@ -38,7 +38,7 @@ const factory = (Overlay, Button) => {
   };
 
   Dialog.propTypes = {
-    actions: PropTypes.array,
+    actions: PropTypes.arrayOf(PropTypes.object),
     active: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,

@@ -4,15 +4,15 @@ import classnames from 'classnames';
 class Face extends Component {
   static propTypes = {
     active: PropTypes.number,
-    numbers: PropTypes.array,
+    numbers: PropTypes.arrayOf(PropTypes.number),
     onMouseDown: PropTypes.func,
     onTouchStart: PropTypes.func,
     radius: PropTypes.number,
     spacing: PropTypes.number,
     theme: PropTypes.shape({
       active: PropTypes.string,
-      face: PropTypes.string,
-      number: PropTypes.string,
+      face: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+      number: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
     }),
     twoDigits: PropTypes.bool,
   };
@@ -56,7 +56,7 @@ class Face extends Component {
     const { numbers, onTouchStart, onMouseDown, theme } = this.props;
     return (
       <div
-        ref="root"
+        ref={(node) => { this.rootNode = node; }}
         className={theme.face}
         onTouchStart={onTouchStart}
         onMouseDown={onMouseDown}

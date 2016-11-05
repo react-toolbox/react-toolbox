@@ -21,13 +21,13 @@ module.exports = {
     packageMains: ['browser', 'web', 'browserify', 'main', 'style'],
   },
   module: {
-    preLoaders: [
-      {
-        test: /\.js$/,
-        loader: 'eslint-loader',
-        exclude: [/(node_modules)/, /react-css-themr/, /lib/, /build/],
-      },
-    ],
+    // preLoaders: [
+    //   {
+    //     test: /\.js$/,
+    //     loader: 'eslint-loader',
+    //     exclude: [/(node_modules)/, /react-css-themr/, /lib/, /build/],
+    //   },
+    // ],
     loaders: [
       {
         test: /\.js$/,

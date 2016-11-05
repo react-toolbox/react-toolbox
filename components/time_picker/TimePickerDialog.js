@@ -17,19 +17,19 @@ const factory = (Dialog) => {
       onOverlayClick: PropTypes.func,
       onSelect: PropTypes.func,
       theme: PropTypes.shape({
-        am: PropTypes.string,
-        amFormat: PropTypes.string,
-        ampm: PropTypes.string,
-        button: PropTypes.string,
-        dialog: PropTypes.string,
-        header: PropTypes.string,
-        hours: PropTypes.string,
-        hoursDisplay: PropTypes.string,
-        minutes: PropTypes.string,
-        minutesDisplay: PropTypes.string,
-        pm: PropTypes.string,
-        pmFormat: PropTypes.string,
-        separator: PropTypes.string,
+        am: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        amFormat: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        ampm: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        button: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        dialog: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        header: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        hours: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        hoursDisplay: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        minutes: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        minutesDisplay: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        pm: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        pmFormat: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        separator: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
       }),
       value: PropTypes.object,
     };
@@ -49,7 +49,7 @@ const factory = (Dialog) => {
 
     componentDidUpdate(prevProps) {
       if (!prevProps.active && this.props.active) {
-        setTimeout(this.refs.clock.handleCalculateShape, 1000);
+        setTimeout(this.clockNode.handleCalculateShape, 1000);
       }
     }
 
@@ -90,9 +90,8 @@ const factory = (Dialog) => {
     formatHours() {
       if (this.props.format === 'ampm') {
         return this.state.displayTime.getHours() % 12 || 12;
-      } else {
-        return this.state.displayTime.getHours();
       }
+      return this.state.displayTime.getHours();
     }
 
     renderAMPMLabels() {
@@ -111,7 +110,10 @@ const factory = (Dialog) => {
       const { theme } = this.props;
       const display = `${this.state.display}Display`;
       const format = `${time.getTimeMode(this.state.displayTime)}Format`;
-      const className = classnames([theme.dialog, theme[display], theme[format]], this.props.className);
+      const className = classnames(
+        [theme.dialog, theme[display], theme[format]],
+        this.props.className
+      );
       return (
         <Dialog
           actions={this.actions}
@@ -131,7 +133,7 @@ const factory = (Dialog) => {
             {this.renderAMPMLabels()}
           </header>
           <Clock
-            ref="clock"
+            ref={(node) => { this.clockNode = node; }}
             display={this.state.display}
             format={this.props.format}
             onChange={this.handleClockChange}

@@ -19,9 +19,9 @@ const factory = (Tab, TabContent) => {
       theme: PropTypes.shape({
         fixed: PropTypes.string,
         inverse: PropTypes.string,
-        navigation: PropTypes.string,
-        pointer: PropTypes.string,
-        tabs: PropTypes.string,
+        navigation: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        pointer: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        tabs: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
       }),
     };
 
@@ -76,7 +76,7 @@ const factory = (Tab, TabContent) => {
         if (item.type === Tab) {
           headers.push(item);
           if (item.props.children) {
-            contents.push(<TabContent children={item.props.children} theme={this.props.theme} />);
+            contents.push(<TabContent theme={this.props.theme}>{item.props.children}</TabContent>);
           }
         } else if (item.type === TabContent) {
           contents.push(item);
@@ -89,11 +89,11 @@ const factory = (Tab, TabContent) => {
     updatePointer(idx) {
       clearTimeout(this.pointerTimeout);
       this.pointerTimeout = setTimeout(() => {
-        const startPoint = this.refs.tabs.getBoundingClientRect().left;
-        const label = this.refs.navigation.children[idx].getBoundingClientRect();
+        const startPoint = this.tabsNode.getBoundingClientRect().left;
+        const label = this.navigationNode.children[idx].getBoundingClientRect();
         this.setState({
           pointer: {
-            top: `${this.refs.navigation.getBoundingClientRect().height}px`,
+            top: `${this.navigationNode.getBoundingClientRect().height}px`,
             left: `${label.left - startPoint}px`,
             width: `${label.width}px`,
           },
@@ -146,8 +146,8 @@ const factory = (Tab, TabContent) => {
         }
       );
       return (
-        <div ref="tabs" data-react-toolbox="tabs" className={classes}>
-          <nav className={theme.navigation} ref="navigation">
+        <div ref={(node) => { this.tabsNode = node; }} data-react-toolbox="tabs" className={classes}>
+          <nav className={theme.navigation} ref={(node) => { this.navigationNode = node; }}>
             {this.renderHeaders(headers)}
           </nav>
           <span className={theme.pointer} style={this.state.pointer} />

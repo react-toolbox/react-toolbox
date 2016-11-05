@@ -72,8 +72,8 @@ class ProgressBar extends Component {
     const { buffer, value } = this.linearStyle();
     return (
       <div>
-        <span ref="buffer" data-ref="buffer" className={this.props.theme.buffer} style={buffer} />
-        <span ref="value" data-ref="value" className={this.props.theme.value} style={value} />
+        <span ref={(node) => { this.bufferNode = node; }} data-ref="buffer" className={this.props.theme.buffer} style={buffer} />
+        <span ref={(node) => { this.valueNode = node; }} data-ref="value" className={this.props.theme.value} style={value} />
       </div>
     );
   }

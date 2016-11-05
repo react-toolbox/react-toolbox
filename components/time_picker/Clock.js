@@ -7,15 +7,15 @@ import Minutes from './ClockMinutes';
 
 class Clock extends Component {
   static propTypes = {
-    className: PropTypes.string,
+    className: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
     display: PropTypes.oneOf(['hours', 'minutes']),
     format: PropTypes.oneOf(['24hr', 'ampm']),
     onChange: PropTypes.func,
     onHandMoved: PropTypes.func,
     theme: PropTypes.shape({
-      clock: PropTypes.string,
-      clockWrapper: PropTypes.string,
-      placeholder: PropTypes.string,
+      clock: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+      clockWrapper: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+      placeholder: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
     }),
     time: PropTypes.object,
   };
@@ -56,7 +56,7 @@ class Clock extends Component {
   };
 
   handleCalculateShape = () => {
-    const { top, left, width } = this.refs.placeholder.getBoundingClientRect();
+    const { top, left, width } = this.placeholderNode.getBoundingClientRect();
     this.setState({
       center: { x: left + width / 2 - window.pageXOffset, y: top + width / 2 - window.pageXOffset },
       radius: width / 2,
@@ -109,7 +109,11 @@ class Clock extends Component {
     const animation = this.props.display === 'hours' ? ZoomOut : ZoomIn;
     return (
       <div data-react-toolbox="clock" className={theme.clock}>
-        <div ref="placeholder" className={theme.placeholder} style={{ height: this.state.radius * 2 }}>
+        <div
+          ref={(node) => { this.placeholderNode = node; }}
+          className={theme.placeholder}
+          style={{ height: this.state.radius * 2 }}
+        >
           <CssTransitionGroup
             transitionName={animation}
             transitionEnterTimeout={500}

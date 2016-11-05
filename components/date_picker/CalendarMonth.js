@@ -9,10 +9,10 @@ class Month extends Component {
       React.PropTypes.string,
       React.PropTypes.object,
     ]),
-    maxDate: PropTypes.object,
-    minDate: PropTypes.object,
+    maxDate: PropTypes.instanceOf(Date),
+    minDate: PropTypes.instanceOf(Date),
     onDayClick: PropTypes.func,
-    selectedDate: PropTypes.object,
+    selectedDate: PropTypes.instanceOf(Date),
     sundayFirstDayOfWeek: React.PropTypes.bool,
     theme: PropTypes.shape({
       days: PropTypes.string,
@@ -20,7 +20,7 @@ class Month extends Component {
       title: PropTypes.string,
       week: PropTypes.string,
     }),
-    viewDate: PropTypes.object,
+    viewDate: PropTypes.instanceOf(Date),
   };
 
   handleDayClick = (day) => {

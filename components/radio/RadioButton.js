@@ -11,6 +11,7 @@ const factory = (Radio) => {
       checked: PropTypes.bool,
       className: PropTypes.string,
       disabled: PropTypes.bool,
+      htmlFor: PropTypes.string,
       label: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.node,
@@ -41,24 +42,24 @@ const factory = (Radio) => {
     };
 
     blur() {
-      this.refs.input.blur();
+      this.inputNode.blur();
     }
 
     focus() {
-      this.refs.input.focus();
+      this.inputNode.focus();
     }
 
     render() {
-      const { className, checked, disabled, label, theme, onChange, ...others } = this.props;  // eslint-disable-line
+      const { className, checked, disabled, htmlFor, label, theme, onChange, ...others } = this.props;  // eslint-disable-line
       const _className = classnames(theme[this.props.disabled ? 'disabled' : 'field'], className);
       return (
-        <label data-react-toolbox="radio-button" className={_className}>
+        <label data-react-toolbox="radio-button" className={_className} htmlFor={htmlFor}>
           <input
             {...others}
             className={theme.input}
             onClick={this.handleClick}
             readOnly
-            ref="input"
+            ref={(node) => { this.inputNode = node; }}
             type="radio"
           />
           <Radio checked={checked} disabled={disabled} theme={theme} />

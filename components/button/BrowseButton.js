@@ -56,12 +56,12 @@ const factory = (ripple, FontIcon) => {
     };
 
     handleMouseUp = (event) => {
-      this.refs.label.blur();
+      this.labelNode.blur();
       if (this.props.onMouseUp) this.props.onMouseUp(event);
     };
 
     handleMouseLeave = (event) => {
-      this.refs.label.blur();
+      this.labelNode.blur();
       if (this.props.onMouseLeave) this.props.onMouseLeave(event);
     };
 
@@ -84,7 +84,7 @@ const factory = (ripple, FontIcon) => {
 
       const props = {
         ...others,
-        ref: 'label',
+        ref: (node) => { this.labelNode = node; },
         className: classes,
         disabled: this.props.disabled,
         onMouseUp: this.handleMouseUp,

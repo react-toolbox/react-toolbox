@@ -6,7 +6,7 @@ const factory = (ripple) => {
   );
 
   Thumb.propTypes = {
-    children: PropTypes.any,
+    children: PropTypes.node,
     onMouseDown: PropTypes.func,
     theme: PropTypes.shape({
       ripple: PropTypes.string,

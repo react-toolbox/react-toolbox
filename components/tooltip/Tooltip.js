@@ -35,7 +35,7 @@ const tooltipFactory = (options = {}) => {
   return (ComposedComponent) => {
     class TooltippedComponent extends Component {
       static propTypes = {
-        children: PropTypes.any,
+        children: PropTypes.node,
         className: PropTypes.string,
         onClick: PropTypes.func,
         onMouseEnter: PropTypes.func,
@@ -68,14 +68,14 @@ const tooltipFactory = (options = {}) => {
       };
 
       componentWillUnmount() {
-        if (this.refs.tooltip) {
-          events.removeEventListenerOnTransitionEnded(this.refs.tooltip, this.onTransformEnd);
+        if (this.tooltipNode) {
+          events.removeEventListenerOnTransitionEnded(this.tooltipNode, this.onTransformEnd);
         }
       }
 
       onTransformEnd = (e) => {
         if (e.propertyName === 'transform') {
-          events.removeEventListenerOnTransitionEnded(this.refs.tooltip, this.onTransformEnd);
+          events.removeEventListenerOnTransitionEnded(this.tooltipNode, this.onTransformEnd);
           this.setState({ visible: false });
         }
       };
@@ -92,9 +92,8 @@ const tooltipFactory = (options = {}) => {
           const { height: wh } = utils.getViewport();
           const toBottom = origin.top < (((wh / 2) - origin.height) / 2);
           return toBottom ? POSITION.BOTTOM : POSITION.TOP;
-        } else {
-          return tooltipPosition;
         }
+        return tooltipPosition;
       }
 
       activate({ top, left, position }) {
@@ -108,7 +107,7 @@ const tooltipFactory = (options = {}) => {
       deactivate() {
         if (this.timeout) clearTimeout(this.timeout);
         if (this.state.active) {
-          events.addEventListenerOnTransitionEnded(this.refs.tooltip, this.onTransformEnd);
+          events.addEventListenerOnTransitionEnded(this.tooltipNode, this.onTransformEnd);
           this.setState({ active: false });
         } else if (this.state.visible) {
           this.setState({ visible: false });
@@ -193,7 +192,7 @@ const tooltipFactory = (options = {}) => {
             {children || null}
             {visible && (
               <Portal>
-                <span ref="tooltip" className={_className} data-react-toolbox="tooltip" style={{ top, left }}>
+                <span ref={(node) => { this.tooltipNode = node; }} className={_className} data-react-toolbox="tooltip" style={{ top, left }}>
                   <span className={theme.tooltipInner}>{tooltip}</span>
                 </span>
               </Portal>

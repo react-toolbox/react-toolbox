@@ -79,9 +79,9 @@ const factory = (ProgressBar, Input) => {
     }
 
     getInput() {
-      return this.refs.input && this.refs.input.getWrappedInstance
-        ? this.refs.input.getWrappedInstance()
-        : this.refs.input;
+      return this.inputNode && this.inputNode.getWrappedInstance
+        ? this.inputNode.getWrappedInstance()
+        : this.inputNode;
     }
 
     getKeyboardEvents() {
@@ -140,7 +140,7 @@ const factory = (ProgressBar, Input) => {
     };
 
     handleResize = (event, callback) => {
-      const { left, right } = ReactDOM.findDOMNode(this.refs.progressbar).getBoundingClientRect();
+      const { left, right } = ReactDOM.findDOMNode(this.progressbarNode).getBoundingClientRect();
       const cb = (callback) || (() => {});
       this.setState({ sliderStart: left, sliderLength: right - left }, cb);
     };
@@ -226,7 +226,7 @@ const factory = (ProgressBar, Input) => {
     renderSnaps() {
       if (this.props.snaps) {
         return (
-          <div ref="snaps" className={this.props.theme.snaps}>
+          <div ref={(node) => { this.snapsNode = node; }} className={this.props.theme.snaps}>
             {utils.range(0, (this.props.max - this.props.min) / this.props.step).map(i => (
               <div key={`span-${i}`} className={this.props.theme.snap} />
             ))}
@@ -237,10 +237,11 @@ const factory = (ProgressBar, Input) => {
 
     renderInput() {
       if (this.props.editable) {
-        const value = this.state.inputFocused ? this.state.inputValue : this.valueForInput(this.props.value);
+        const inputFocused = this.state.inputFocused;
+        const value = inputFocused ? this.state.inputValue : this.valueForInput(this.props.value);
         return (
           <Input
-            ref="input"
+            ref={(node) => { this.inputNode = node; }}
             className={this.props.theme.input}
             disabled={this.props.disabled}
             onFocus={this.handleInputFocus}
@@ -273,13 +274,13 @@ const factory = (ProgressBar, Input) => {
           tabIndex="0"
         >
           <div
-            ref="slider"
+            ref={(node) => { this.sliderNode = node; }}
             className={theme.container}
             onMouseDown={this.handleMouseDown}
             onTouchStart={this.handleTouchStart}
           >
             <div
-              ref="knob"
+              ref={(node) => { this.knobNode = node; }}
               className={theme.knob}
               onMouseDown={this.handleMouseDown}
               onTouchStart={this.handleTouchStart}
@@ -291,7 +292,7 @@ const factory = (ProgressBar, Input) => {
             <div className={theme.progress}>
               <ProgressBar
                 disabled={this.props.disabled}
-                ref="progressbar"
+                ref={(node) => { this.progressbarNode = node; }}
                 className={theme.innerprogress}
                 max={this.props.max}
                 min={this.props.min}
