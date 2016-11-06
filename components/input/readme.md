@@ -1,6 +1,6 @@
 # Input
 
-Although we are calling them Inputs they actually correspond to Material Design [Text fields](https://www.google.com/design/spec/components/text-fields.html). It allows a user to input text and it's the base for other components like the autocomplete.
+Although we are calling them Inputs they actually correspond to Material Design [Text fields](https://material.google.com/components/text-fields.html). It allows a user to input text and it's the base for other components like the autocomplete.
 
 <!-- example -->
 ```jsx
