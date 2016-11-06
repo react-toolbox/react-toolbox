@@ -96,7 +96,7 @@ const factory = (Chip, Input) => {
    };
 
    handleQueryChange = (value) => {
-     this.setState({query: value, showAllSuggestions: false});
+     this.setState({query: value, showAllSuggestions: false, active: null});
    };
 
    handleQueryFocus = () => {
