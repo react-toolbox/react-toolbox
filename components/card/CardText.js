@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
-import { CARD } from '../identifiers.js';
+import { CARD } from '../identifiers';
 
 const CardText = ({ children, className, theme, ...other }) => (
   <div className={classnames(theme.cardText, className)} {...other}>
@@ -10,11 +10,11 @@ const CardText = ({ children, className, theme, ...other }) => (
 );
 
 CardText.propTypes = {
-  children: PropTypes.any,
+  children: PropTypes.node,
   className: PropTypes.string,
   theme: PropTypes.shape({
-    cardText: PropTypes.string
-  })
+    cardText: PropTypes.string,
+  }),
 };
 
 export default themr(CARD)(CardText);

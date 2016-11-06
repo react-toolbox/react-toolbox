@@ -1,20 +1,20 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { LAYOUT } from '../identifiers.js';
+import { LAYOUT } from '../identifiers';
 
 const Sidebar = ({ children, className, pinned, scrollY, theme, width }) => {
   const wrapperClasses = classnames(theme.sidebar, theme[`width-${width}`], {
-    [theme.pinned]: pinned
+    [theme.pinned]: pinned,
   }, className);
 
   const innerClasses = classnames(theme.sidebarContent, {
-    [theme.scrollY]: scrollY
+    [theme.scrollY]: scrollY,
   });
 
   return (
-    <div data-react-toolbox='sidebar' className={wrapperClasses}>
-      <aside data-react-toolbox='sidebar-content' className={innerClasses}>
+    <div data-react-toolbox="sidebar" className={wrapperClasses}>
+      <aside data-react-toolbox="sidebar-content" className={innerClasses}>
         {children}
       </aside>
     </div>
@@ -29,17 +29,17 @@ Sidebar.propTypes = {
   theme: PropTypes.shape({
     pinned: PropTypes.string,
     scrollY: PropTypes.string,
-    sidebar: PropTypes.string,
-    sidebarContent: PropTypes.string
+    sidebar: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+    sidebarContent: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
   }),
-  width: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 25, 33, 50, 66, 75, 100])
+  width: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 25, 33, 50, 66, 75, 100]),
 };
 
 Sidebar.defaultProps = {
   className: '',
   pinned: false,
   scrollY: false,
-  width: 5
+  width: 5,
 };
 
 export default themr(LAYOUT)(Sidebar);

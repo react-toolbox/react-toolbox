@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { TABLE } from '../identifiers.js';
-import InjectCheckbox from '../checkbox/Checkbox.js';
-import tableHeadFactory from './TableHead.js';
-import tableRowFactory from './TableRow.js';
+import { TABLE } from '../identifiers';
+import InjectCheckbox from '../checkbox/Checkbox';
+import tableHeadFactory from './TableHead';
+import tableRowFactory from './TableRow';
 
 const factory = (TableHead, TableRow) => {
   class Table extends Component {
@@ -20,8 +20,8 @@ const factory = (TableHead, TableRow) => {
       selected: PropTypes.array,
       source: PropTypes.array,
       theme: PropTypes.shape({
-        table: PropTypes.string
-      })
+        table: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+      }),
     };
 
     static defaultProps = {
@@ -30,12 +30,12 @@ const factory = (TableHead, TableRow) => {
       selectable: true,
       multiSelectable: true,
       selected: [],
-      source: []
+      source: [],
     };
 
     handleFullSelect = () => {
       if (this.props.onSelect) {
-        const {source, selected} = this.props;
+        const { source, selected } = this.props;
         const newSelected = source.length === selected.length ? [] : source.map((i, idx) => idx);
         this.props.onSelect(newSelected);
       }
@@ -68,9 +68,9 @@ const factory = (TableHead, TableRow) => {
       }
     }
 
-    renderHead () {
+    renderHead() {
       if (this.props.heading) {
-        const {model, selected, source, selectable, multiSelectable} = this.props;
+        const { model, selected, source, selectable, multiSelectable } = this.props;
         const isSelected = selected.length === source.length;
         return (
           <TableHead
@@ -85,7 +85,7 @@ const factory = (TableHead, TableRow) => {
       }
     }
 
-    renderBody () {
+    renderBody() {
       const { source, model, onChange, selectable, selected, theme } = this.props;
       return (
         <tbody>
@@ -107,10 +107,10 @@ const factory = (TableHead, TableRow) => {
       );
     }
 
-    render () {
+    render() {
       const { className, theme } = this.props;
       return (
-        <table data-react-toolbox='table' className={classnames(theme.table, className)}>
+        <table data-react-toolbox="table" className={classnames(theme.table, className)}>
           {this.renderHead()}
           {this.renderBody()}
         </table>

@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { TABS } from '../identifiers.js';
-import InjectTab from './Tab.js';
-import InjectTabContent from './TabContent.js';
+import { TABS } from '../identifiers';
+import InjectTab from './Tab';
+import InjectTabContent from './TabContent';
 
 const factory = (Tab, TabContent) => {
   class Tabs extends Component {
@@ -19,34 +19,34 @@ const factory = (Tab, TabContent) => {
       theme: PropTypes.shape({
         fixed: PropTypes.string,
         inverse: PropTypes.string,
-        navigation: PropTypes.string,
-        pointer: PropTypes.string,
-        tabs: PropTypes.string
-      })
+        navigation: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        pointer: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        tabs: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+      }),
     };
 
     static defaultProps = {
       index: 0,
       fixed: false,
       inverse: false,
-      hideMode: 'unmounted'
+      hideMode: 'unmounted',
     };
 
     state = {
-      pointer: {}
+      pointer: {},
     };
 
-    componentDidMount () {
+    componentDidMount() {
       !this.props.disableAnimatedBottomBorder && this.updatePointer(this.props.index);
       window.addEventListener('resize', this.handleResize);
       this.handleResize();
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
       !this.props.disableAnimatedBottomBorder && this.updatePointer(nextProps.index);
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
       window.removeEventListener('resize', this.handleResize);
       clearTimeout(this.resizeTimeout);
       clearTimeout(this.pointerTimeout);
@@ -68,7 +68,7 @@ const factory = (Tab, TabContent) => {
       this.updatePointer(this.props.index);
     };
 
-    parseChildren () {
+    parseChildren() {
       const headers = [];
       const contents = [];
 
@@ -76,56 +76,56 @@ const factory = (Tab, TabContent) => {
         if (item.type === Tab) {
           headers.push(item);
           if (item.props.children) {
-            contents.push(<TabContent children={item.props.children} theme={this.props.theme} />);
+            contents.push(<TabContent theme={this.props.theme}>{item.props.children}</TabContent>);
           }
         } else if (item.type === TabContent) {
           contents.push(item);
         }
       });
 
-      return {headers, contents};
+      return { headers, contents };
     }
 
-    updatePointer (idx) {
+    updatePointer(idx) {
       clearTimeout(this.pointerTimeout);
       this.pointerTimeout = setTimeout(() => {
-        const startPoint = this.refs.tabs.getBoundingClientRect().left;
-        const label = this.refs.navigation.children[idx].getBoundingClientRect();
+        const startPoint = this.tabsNode.getBoundingClientRect().left;
+        const label = this.navigationNode.children[idx].getBoundingClientRect();
         this.setState({
           pointer: {
-            top: `${this.refs.navigation.getBoundingClientRect().height}px`,
+            top: `${this.navigationNode.getBoundingClientRect().height}px`,
             left: `${label.left - startPoint}px`,
-            width: `${label.width}px`
-          }
+            width: `${label.width}px`,
+          },
         });
       }, 20);
     }
 
-    renderHeaders (headers) {
-      return headers.map((item, idx) => {
-        return React.cloneElement(item, {
+    renderHeaders(headers) {
+      return headers.map((item, idx) => (
+        React.cloneElement(item, {
           id: idx,
           key: idx,
           theme: this.props.theme,
           active: this.props.index === idx,
-          onClick: event => {
+          onClick: (event) => {
             this.handleHeaderClick(event);
             item.props.onClick && item.props.onClick(event);
-          }
-        });
-      });
+          },
+        })
+      ));
     }
 
-    renderContents (contents) {
-      const contentElements = contents.map((item, idx) => {
-        return React.cloneElement(item, {
+    renderContents(contents) {
+      const contentElements = contents.map((item, idx) => (
+        React.cloneElement(item, {
           key: idx,
           theme: this.props.theme,
           active: this.props.index === idx,
           hidden: this.props.index !== idx && this.props.hideMode === 'display',
-          tabIndex: idx
-        });
-      });
+          tabIndex: idx,
+        })
+      ));
 
       if (this.props.hideMode === 'display') {
         return contentElements;
@@ -134,7 +134,7 @@ const factory = (Tab, TabContent) => {
       return contentElements.filter((item, idx) => (idx === this.props.index));
     }
 
-    render () {
+    render() {
       const { className, theme, fixed, inverse } = this.props;
       const { headers, contents } = this.parseChildren();
       const classes = classnames(
@@ -142,12 +142,12 @@ const factory = (Tab, TabContent) => {
         className,
         {
           [theme.fixed]: fixed,
-          [theme.inverse]: inverse
+          [theme.inverse]: inverse,
         }
       );
       return (
-        <div ref='tabs' data-react-toolbox='tabs' className={classes}>
-          <nav className={theme.navigation} ref='navigation'>
+        <div ref={(node) => { this.tabsNode = node; }} data-react-toolbox="tabs" className={classes}>
+          <nav className={theme.navigation} ref={(node) => { this.navigationNode = node; }}>
             {this.renderHeaders(headers)}
           </nav>
           <span className={theme.pointer} style={this.state.pointer} />

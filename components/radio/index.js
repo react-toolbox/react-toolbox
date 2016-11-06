@@ -1,12 +1,12 @@
 import { themr } from 'react-css-themr';
-import { RADIO } from '../identifiers.js';
+import { RADIO } from '../identifiers';
 import themedRippleFactory from '../ripple';
-import radioFactory from './Radio.js';
-import { radioButtonFactory } from './RadioButton.js';
-import { radioGroupFactory } from './RadioGroup.js';
+import radioFactory from './Radio';
+import { radioButtonFactory } from './RadioButton';
+import { radioGroupFactory } from './RadioGroup';
 import theme from './theme.scss';
 
-const ThemedRadio = radioFactory(themedRippleFactory({ centered: true, spread: 2.6}));
+const ThemedRadio = radioFactory(themedRippleFactory({ centered: true, spread: 2.6 }));
 const ThemedRadioButton = themr(RADIO, theme)(radioButtonFactory(ThemedRadio));
 const ThemedRadioGroup = themr(RADIO, theme)(radioGroupFactory(ThemedRadioButton));
 

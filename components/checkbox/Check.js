@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 
 const factory = (ripple) => {
-  const Check = ({checked, children, onMouseDown, theme, style}) => (
+  const Check = ({ checked, children, onMouseDown, theme, style }) => (
     <div
-      data-react-toolbox='check'
+      data-react-toolbox="check"
       className={classnames(theme.check, { [theme.checked]: checked })}
       onMouseDown={onMouseDown}
       style={style}
@@ -19,9 +19,9 @@ const factory = (ripple) => {
     onMouseDown: PropTypes.func,
     style: PropTypes.object,
     theme: PropTypes.shape({
-      check: PropTypes.string,
-      checked: PropTypes.string
-    })
+      check: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+      checked: PropTypes.string,
+    }),
   };
 
   return ripple(Check);

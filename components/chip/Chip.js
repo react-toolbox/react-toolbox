@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { CHIP } from '../identifiers.js';
-import InjectAvatar from '../avatar/Avatar.js';
+import { CHIP } from '../identifiers';
+import InjectAvatar from '../avatar/Avatar';
 
 const factory = (Avatar) => {
-  const Chip = ({children, className, deletable, onDeleteClick, theme, ...other}) => {
+  const Chip = ({ children, className, deletable, onDeleteClick, theme, ...other }) => {
     let hasAvatar = false;
     if (React.Children.count(children)) {
       const firstChild = children[0];
@@ -13,12 +13,12 @@ const factory = (Avatar) => {
     }
 
     const classes = classnames(theme.chip, {
-        [theme.deletable]: !!deletable,
-        [theme.avatar]: !!hasAvatar
+      [theme.deletable]: !!deletable,
+      [theme.avatar]: !!hasAvatar,
     }, className);
 
     return (
-      <div data-react-toolbox='chip' className={classes} {...other}>
+      <div data-react-toolbox="chip" className={classes} {...other}>
         {typeof children === 'string' ? <span>{children}</span> : children}
         {
           deletable ? (
@@ -44,13 +44,13 @@ const factory = (Avatar) => {
       deletable: PropTypes.string,
       delete: PropTypes.string,
       deleteIcon: PropTypes.string,
-      deleteX: PropTypes.string
-    })
+      deleteX: PropTypes.string,
+    }),
   };
 
   Chip.defaultProps = {
     className: '',
-    deletable: false
+    deletable: false,
   };
 
   return Chip;

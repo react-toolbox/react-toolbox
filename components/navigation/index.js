@@ -1,6 +1,6 @@
 import { themr } from 'react-css-themr';
-import { NAVIGATION } from '../identifiers.js';
-import { navigationFactory } from './Navigation.js';
+import { NAVIGATION } from '../identifiers';
+import { navigationFactory } from './Navigation';
 import { Button } from '../button';
 import { Link } from '../link';
 import theme from './theme.scss';

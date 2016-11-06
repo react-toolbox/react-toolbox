@@ -1,11 +1,11 @@
 import { themr } from 'react-css-themr';
-import { CHECKBOX } from '../identifiers.js';
+import { CHECKBOX } from '../identifiers';
 import themedRippleFactory from '../ripple';
-import { checkboxFactory } from './Checkbox.js';
-import checkFactory from './Check.js';
+import { checkboxFactory } from './Checkbox';
+import checkFactory from './Check';
 import theme from './theme.scss';
 
-const ThemedCheck = checkFactory(themedRippleFactory({ centered: true, spread: 2.6}));
+const ThemedCheck = checkFactory(themedRippleFactory({ centered: true, spread: 2.6 }));
 const ThemedCheckbox = themr(CHECKBOX, theme)(checkboxFactory(ThemedCheck));
 
 export default ThemedCheckbox;

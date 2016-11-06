@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
-import { FontIcon } from '../font_icon';
 import { themr } from 'react-css-themr';
-import { TABS } from '../identifiers.js';
+import { FontIcon } from '../font_icon';
+import { TABS } from '../identifiers';
 
 class Tab extends Component {
   static propTypes = {
@@ -11,6 +11,7 @@ class Tab extends Component {
     className: PropTypes.string,
     disabled: PropTypes.bool,
     hidden: PropTypes.bool,
+    htmlFor: PropTypes.string,
     icon: PropTypes.node,
     label: PropTypes.node,
     onActive: PropTypes.func,
@@ -19,18 +20,18 @@ class Tab extends Component {
       active: PropTypes.string,
       disabled: PropTypes.string,
       hidden: PropTypes.string,
-      label: PropTypes.string
-    })
+      label: PropTypes.string,
+    }),
   };
 
   static defaultProps = {
     active: false,
     className: '',
     disabled: false,
-    hidden: false
+    hidden: false,
   };
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     if (!prevProps.active && this.props.active && this.props.onActive) {
       this.props.onActive();
     }
@@ -42,10 +43,10 @@ class Tab extends Component {
     }
   };
 
-  render () {
+  render() {
     const {
       onActive, // eslint-disable-line
-      active, activeClassName, className, disabled, hidden, label, icon, theme, ...other
+      active, activeClassName, className, disabled, hidden, htmlFor, label, icon, theme, ...other
     } = this.props;
     const _className = classnames(theme.label, {
       [theme.active]: active,
@@ -53,12 +54,12 @@ class Tab extends Component {
       [theme.withText]: label,
       [theme.withIcon]: icon,
       [theme.disabled]: disabled,
-      [activeClassName]: active
+      [activeClassName]: active,
     }, className);
 
     return (
-      <label {...other} data-react-toolbox='tab' className={_className} onClick={this.handleClick}>
-        {icon && <FontIcon className={theme.icon} value={icon}/>}
+      <label {...other} data-react-toolbox="tab" className={_className} htmlFor={htmlFor} onClick={this.handleClick}>
+        {icon && <FontIcon className={theme.icon} value={icon} />}
         {label}
       </label>
     );

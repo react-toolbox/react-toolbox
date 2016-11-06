@@ -1,49 +1,48 @@
 import React, { Component, PropTypes } from 'react';
-import InjectAutocomplete from '../autocomplete/Autocomplete.js';
-import InjectButton from '../button/Button.js';
-import InjectCheckbox from '../checkbox/Checkbox.js';
-import InjectDatePicker from '../date_picker/DatePicker.js';
-import InjectDropdown from '../dropdown/Dropdown.js';
-import InjectInput from '../input/Input.js';
-import InjectRadioGroup from '../radio/RadioGroup.js';
-import InjectSlider from '../slider/Slider.js';
-import InjectSwitch from '../switch/Switch.js';
-import InjectTimePicker from '../time_picker/TimePicker.js';
+import InjectAutocomplete from '../autocomplete/Autocomplete';
+import InjectButton from '../button/Button';
+import InjectCheckbox from '../checkbox/Checkbox';
+import InjectDatePicker from '../date_picker/DatePicker';
+import InjectDropdown from '../dropdown/Dropdown';
+import InjectInput from '../input/Input';
+import InjectRadioGroup from '../radio/RadioGroup';
+import InjectSlider from '../slider/Slider';
+import InjectSwitch from '../switch/Switch';
+import InjectTimePicker from '../time_picker/TimePicker';
 
 const factory = (
     Autocomplete, Button, Checkbox, DatePicker, Dropdown,
     Input, RadioGroup, Slider, Switch, TimePicker
   ) => {
-
   const COMPONENTS = {
-    'autocomplete': Autocomplete,
-    'button': Button,
-    'checkbox': Checkbox,
-    'datepicker': DatePicker,
-    'dropdown': Dropdown,
-    'input': Input,
-    'radioGroup': RadioGroup,
-    'slider': Slider,
-    'switch': Switch,
-    'timepicker': TimePicker
+    autocomplete: Autocomplete,
+    button: Button,
+    checkbox: Checkbox,
+    datepicker: DatePicker,
+    dropdown: Dropdown,
+    input: Input,
+    radioGroup: RadioGroup,
+    slider: Slider,
+    switch: Switch,
+    timepicker: TimePicker,
   };
 
   class Form extends Component {
     static propTypes = {
-      attributes: PropTypes.array,
+      attributes: PropTypes.array, // eslint-disable-line react/no-unused-prop-types
       children: PropTypes.node,
       className: PropTypes.string,
       model: PropTypes.object,
       onChange: PropTypes.func,
-      onError: PropTypes.func,
+      onError: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
       onSubmit: PropTypes.func,
-      onValid: PropTypes.func,
-      storage: PropTypes.string
+      onValid: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
+      storage: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
     };
 
     static defaultProps = {
       attributes: [],
-      className: ''
+      className: '',
     };
 
     onSubmit = (event) => {
@@ -55,7 +54,7 @@ const factory = (
       if (this.props.onChange) this.props.onChange(field, value, event);
     };
 
-    renderFields () {
+    renderFields() {
       return Object.keys(this.props.model).map((field, index) => {
         const properties = this.props.model[field];
         const Field = COMPONENTS[properties.kind.toLowerCase()];
@@ -63,9 +62,9 @@ const factory = (
       });
     }
 
-    render () {
+    render() {
       return (
-        <form data-react-toolbox='form' className={this.props.className} onSubmit={this.onSubmit}>
+        <form data-react-toolbox="form" className={this.props.className} onSubmit={this.onSubmit}>
           {this.renderFields()}
           {this.props.children}
         </form>

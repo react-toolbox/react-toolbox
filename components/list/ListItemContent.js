@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { LIST } from '../identifiers.js';
-import InjectListItemText from './ListItemText.js';
+import { LIST } from '../identifiers';
+import InjectListItemText from './ListItemText';
 
 const types = ['auto', 'normal', 'large'];
 
@@ -13,26 +13,26 @@ const factory = (ListItemText) => {
       children: PropTypes.any,
       legend: PropTypes.string,
       theme: PropTypes.shape({
-        itemContentRoot: PropTypes.string,
-        large: PropTypes.string
+        itemContentRoot: PropTypes.string,  // eslint-disable-line react/no-unused-prop-types
+        large: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
       }),
-      type: PropTypes.oneOf(types)
+      type: PropTypes.oneOf(types),
     };
 
-    getType () {
-      const {type, children, caption, legend} = this.props;
+    getType() {
+      const { type, children, caption, legend } = this.props;
 
       let count = React.Children.count(children);
-      [caption, legend].forEach(s => { count += s ? 1 : 0; });
+      [caption, legend].forEach((s) => { count += s ? 1 : 0; });
       const typeIndex = Math.min(count, types.length);
 
       return type || types[typeIndex];
     }
 
-    render () {
-      const {children, caption, legend, theme} = this.props;
+    render() {
+      const { children, caption, legend, theme } = this.props;
       const className = classnames(theme.itemContentRoot, {
-        [theme[this.getType()]]: theme[this.getType()]
+        [theme[this.getType()]]: theme[this.getType()],
       });
 
       return (

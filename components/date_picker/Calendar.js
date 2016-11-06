@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import CssTransitionGroup from 'react-addons-css-transition-group';
 import { SlideLeft, SlideRight } from '../animations';
-import time from '../utils/time.js';
-import utils from '../utils/utils.js';
-import CalendarMonth from './CalendarMonth.js';
+import time from '../utils/time';
+import utils from '../utils/utils';
+import CalendarMonth from './CalendarMonth';
 
 const DIRECTION_STEPS = { left: -1, right: 1 };
 
@@ -12,52 +12,52 @@ const factory = (IconButton) => {
     static propTypes = {
       display: PropTypes.oneOf(['months', 'years']),
       handleSelect: PropTypes.func,
-      locale: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.object
+      locale: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.object,
       ]),
-      maxDate: PropTypes.object,
-      minDate: PropTypes.object,
+      maxDate: PropTypes.instanceOf(Date),
+      minDate: PropTypes.instanceOf(Date),
       onChange: PropTypes.func,
-      selectedDate: PropTypes.object,
-      sundayFirstDayOfWeek: React.PropTypes.bool,
+      selectedDate: PropTypes.instanceOf(Date),
+      sundayFirstDayOfWeek: PropTypes.bool,
       theme: PropTypes.shape({
         active: PropTypes.string,
         calendar: PropTypes.string,
-        next: PropTypes.string,
-        prev: PropTypes.string,
-        years: PropTypes.string
+        next: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        prev: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+        years: PropTypes.string,
       }),
-      viewDate: PropTypes.object
+      viewDate: PropTypes.instanceOf(Date), // eslint-disable-line react/no-unused-prop-types
     };
 
     static defaultProps = {
       display: 'months',
-      selectedDate: new Date()
+      selectedDate: new Date(),
     };
 
     state = {
-      viewDate: this.props.selectedDate
+      viewDate: this.props.selectedDate,
     };
 
-    componentWillMount () {
+    componentWillMount() {
       document.body.addEventListener('keydown', this.handleKeys);
     }
 
-    componentDidUpdate () {
-      if (this.refs.activeYear) {
+    componentDidUpdate() {
+      if (this.activeYearNode) {
         this.scrollToActive();
       }
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
       document.body.removeEventListener('keydown', this.handleKeys);
     }
 
-    scrollToActive () {
-      this.refs.years.scrollTop = this.refs.activeYear.offsetTop
-      - this.refs.years.offsetHeight / 2
-      + this.refs.activeYear.offsetHeight / 2;
+    scrollToActive() {
+      this.yearsNode.scrollTop = (((this.activeYearNode.offsetTop
+      - this.yearsNode.offsetHeight) / 2)
+      + this.activeYearNode.offsetHeight) / 2;
     }
 
     handleDayClick = (day) => {
@@ -67,14 +67,14 @@ const factory = (IconButton) => {
     handleYearClick = (event) => {
       const year = parseInt(event.currentTarget.id);
       const viewDate = time.setYear(this.props.selectedDate, year);
-      this.setState({viewDate});
+      this.setState({ viewDate });
       this.props.onChange(viewDate, false);
     };
 
     handleKeys = (e) => {
       const { selectedDate } = this.props;
-
-      if (e.which === 37 || e.which === 38 || e.which === 39 || e.which === 40 || e.which === 13) e.preventDefault();
+      const keys = [37, 38, 39, 40, 13];
+      if (keys.includes(e.which)) e.preventDefault();
 
       switch (e.which) {
         case 13: this.props.handleSelect(); break; // enter
@@ -95,35 +95,53 @@ const factory = (IconButton) => {
       const direction = event.currentTarget.id;
       this.setState({
         direction,
-        viewDate: time.addMonths(this.state.viewDate, DIRECTION_STEPS[direction])
+        viewDate: time.addMonths(this.state.viewDate, DIRECTION_STEPS[direction]),
       });
     };
 
-    renderYears () {
+    renderYears() {
       return (
-        <ul data-react-toolbox='years' ref="years" className={this.props.theme.years}>
-          {utils.range(1900, 2100).map(year => (
-            <li
-              children={year}
-              className={year === this.state.viewDate.getFullYear() ? this.props.theme.active : ''}
-              id={year}
-              key={year}
-              onClick={this.handleYearClick}
-              ref={year === this.state.viewDate.getFullYear() ? 'activeYear' : undefined}
-            />
-          ))}
+        <ul data-react-toolbox="years" ref={(node) => { this.yearsNode = node; }} className={this.props.theme.years}>
+          {utils.range(1900, 2100).map((year) => {
+            const fullYear = year === this.state.viewDate.getFullYear();
+            return (
+              <li
+                className={fullYear ? this.props.theme.active : ''}
+                id={year}
+                key={year}
+                onClick={this.handleYearClick}
+                ref={fullYear ? (node) => { this.activeYearNode = node; } : undefined}
+              >
+                {year}
+              </li>
+            );
+          })}
         </ul>
       );
     }
 
-    renderMonths () {
+    renderMonths() {
       const { theme } = this.props;
       const animation = this.state.direction === 'left' ? SlideLeft : SlideRight;
       return (
-        <div data-react-toolbox='calendar'>
-          <IconButton id='left' className={theme.prev} icon='chevron_left' onClick={this.changeViewMonth} />
-          <IconButton id='right' className={theme.next} icon='chevron_right' onClick={this.changeViewMonth} />
-          <CssTransitionGroup transitionName={animation} transitionEnterTimeout={350} transitionLeaveTimeout={350}>
+        <div data-react-toolbox="calendar">
+          <IconButton
+            id="left"
+            className={theme.prev}
+            icon="chevron_left"
+            onClick={this.changeViewMonth}
+          />
+          <IconButton
+            id="right"
+            className={theme.next}
+            icon="chevron_right"
+            onClick={this.changeViewMonth}
+          />
+          <CssTransitionGroup
+            transitionName={animation}
+            transitionEnterTimeout={350}
+            transitionLeaveTimeout={350}
+          >
             <CalendarMonth
               key={this.state.viewDate.getMonth()}
               locale={this.props.locale}
@@ -140,7 +158,7 @@ const factory = (IconButton) => {
       );
     }
 
-    render () {
+    render() {
       return (
         <div className={this.props.theme.calendar}>
           {this.props.display === 'months' ? this.renderMonths() : this.renderYears()}

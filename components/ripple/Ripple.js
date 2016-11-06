@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import update from 'immutability-helper';
 import { themr } from 'react-css-themr';
-import { RIPPLE } from '../identifiers.js';
+import { RIPPLE } from '../identifiers';
 import events from '../utils/events';
 import prefixer from '../utils/prefixer';
 import utils from '../utils/utils';
@@ -13,7 +13,7 @@ const defaults = {
   className: '',
   multiple: true,
   spread: 2,
-  theme: {}
+  theme: {},
 };
 
 const rippleFactory = (options = {}) => {
@@ -24,14 +24,16 @@ const rippleFactory = (options = {}) => {
     spread: defaultSpread,
     theme: defaultTheme,
     ...props
-  } = {...defaults, ...options};
+  } = { ...defaults, ...options };
 
-  return ComposedComponent => {
+  return (ComposedComponent) => {
     class RippledComponent extends Component {
       static propTypes = {
         children: PropTypes.any,
         disabled: PropTypes.bool,
+        onMouseDown: PropTypes.func,
         onRippleEnded: PropTypes.func,
+        onTouchStart: PropTypes.func,
         ripple: PropTypes.bool,
         rippleCentered: PropTypes.bool,
         rippleClassName: PropTypes.string,
@@ -41,8 +43,8 @@ const rippleFactory = (options = {}) => {
           ripple: PropTypes.string,
           rippleActive: PropTypes.string,
           rippleRestarting: PropTypes.string,
-          rippleWrapper: PropTypes.string
-        })
+          rippleWrapper: PropTypes.string,
+        }),
       };
 
       static defaultProps = {
@@ -51,25 +53,78 @@ const rippleFactory = (options = {}) => {
         rippleCentered: defaultCentered,
         rippleClassName: defaultClassName,
         rippleMultiple: defaultMultiple,
-        rippleSpread: defaultSpread
+        rippleSpread: defaultSpread,
       };
 
       state = {
-        ripples: {}
+        ripples: {},
       };
 
-      componentDidUpdate (prevProps, prevState) {
+      componentDidUpdate(prevProps, prevState) {
         // If a new ripple was just added, add a remove event listener to its animation
         if (Object.keys(prevState.ripples).length < Object.keys(this.state.ripples).length) {
           this.addRippleRemoveEventListener(this.getLastKey());
         }
       }
 
-      componentWillUnmount () {
+      componentWillUnmount() {
         // Remove document event listeners for ripple if they still exists
-        Object.keys(this.state.ripples).forEach(key => {
+        Object.keys(this.state.ripples).forEach((key) => {
           this.state.ripples[key].endRipple();
         });
+      }
+
+      /**
+       * Find out a descriptor object for the ripple element being created depending on
+       * the position where the it was triggered and the component's dimensions.
+       *
+       * @param {Number} x Coordinate x in the viewport where ripple was triggered
+       * @param {Number} y Coordinate y in the viewport where ripple was triggered
+       * @return {Object} Descriptor element including position and size of the element
+       */
+      getDescriptor(x, y) {
+        const { left, top, height, width } = ReactDOM.findDOMNode(this).getBoundingClientRect();
+        const { rippleCentered: centered, rippleSpread: spread } = this.props;
+        return {
+          left: centered ? 0 : (x - left - width) / 2,
+          top: centered ? 0 : (y - top - height) / 2,
+          width: width * spread,
+        };
+      }
+
+      /**
+       * Increments and internal counter and returns the next value as a string. It
+       * is used to assign key references to new ripple elements.
+       *
+       * @return {String} Key to be assigned to a ripple.
+       */
+      getNextKey() {
+        this.currentCount = this.currentCount ? this.currentCount + 1 : 1;
+        return `ripple${this.currentCount}`;
+      }
+
+      /**
+       * Return the last generated key for a ripple element. When there is only one ripple
+       * and to get the reference when a ripple was just created.
+       *
+       * @return {String} The last generated ripple key.
+       */
+      getLastKey() {
+        return `ripple${this.currentCount}`;
+      }
+
+      /**
+       * Determine if a ripple should start depending if its a touch event. For mobile both
+       * touchStart and mouseDown are launched so in case is touch we should always trigger
+       * but if its not we should check if a touch was already triggered to decide.
+       *
+       * @param {Boolean} isTouch True in case a touch event triggered the ripple false otherwise.
+       * @return {Boolean} True in case the ripple should trigger or false if it shouldn't.
+       */
+      rippleShouldTrigger(isTouch) {
+        const shouldStart = isTouch ? true : !this.touchCache;
+        this.touchCache = isTouch;
+        return shouldStart;
       }
 
       /**
@@ -79,9 +134,9 @@ const rippleFactory = (options = {}) => {
        *
        * @param {String} rippleKey Is the key of the ripple to add the event.
        */
-      addRippleRemoveEventListener (rippleKey) {
+      addRippleRemoveEventListener(rippleKey) {
         const self = this;
-        events.addEventListenerOnTransitionEnded(this.refs[rippleKey], function onOpacityEnd (e) {
+        events.addEventListenerOnTransitionEnded(this.refs[rippleKey], function onOpacityEnd(e) {
           if (e.propertyName === 'opacity') {
             if (self.props.onRippleEnded) self.props.onRippleEnded(e);
             events.removeEventListenerOnTransitionEnded(self.refs[rippleKey], onOpacityEnd);
@@ -101,7 +156,7 @@ const rippleFactory = (options = {}) => {
        * @param {Number} y Coordinate Y on the screen where animation should start
        * @param {Boolean} isTouch Use events from touch or mouse.
        */
-      animateRipple (x, y, isTouch) {
+      animateRipple(x, y, isTouch) {
         if (this.rippleShouldTrigger(isTouch)) {
           const { top, left, width } = this.getDescriptor(x, y);
           const noRipplesActive = Object.keys(this.state.ripples).length === 0;
@@ -110,63 +165,10 @@ const rippleFactory = (options = {}) => {
           const initialState = { active: false, restarting: true, top, left, width, endRipple };
           const runningState = { active: true, restarting: false };
           this.setState(update(this.state, { ripples: { [key]: { $set: initialState } } }), () => {
-            this.refs[key].offsetWidth; //eslint-disable-line no-unused-expressions
+            this.refs[key].offsetWidth; // eslint-disable-line no-unused-expressions
             this.setState(update(this.state, { ripples: { [key]: { $merge: runningState } } }));
           });
         }
-      }
-
-      /**
-       * Determine if a ripple should start depending if its a touch event. For mobile both
-       * touchStart and mouseDown are launched so in case is touch we should always trigger
-       * but if its not we should check if a touch was already triggered to decide.
-       *
-       * @param {Boolean} isTouch True in case a touch event triggered the ripple false otherwise.
-       * @return {Boolean} True in case the ripple should trigger or false if it shouldn't.
-       */
-      rippleShouldTrigger (isTouch) {
-        const shouldStart = isTouch ? true : !this.touchCache;
-        this.touchCache = isTouch;
-        return shouldStart;
-      }
-
-      /**
-       * Find out a descriptor object for the ripple element being created depending on
-       * the position where the it was triggered and the component's dimensions.
-       *
-       * @param {Number} x Coordinate x in the viewport where ripple was triggered
-       * @param {Number} y Coordinate y in the viewport where ripple was triggered
-       * @return {Object} Descriptor element including position and size of the element
-       */
-      getDescriptor (x, y) {
-        const { left, top, height, width } = ReactDOM.findDOMNode(this).getBoundingClientRect();
-        const { rippleCentered: centered, rippleSpread: spread } = this.props;
-        return {
-          left: centered ? 0 : x - left - width / 2,
-          top: centered ? 0 : y - top - height / 2,
-          width: width * spread
-        };
-      }
-
-      /**
-       * Increments and internal counter and returns the next value as a string. It
-       * is used to assign key references to new ripple elements.
-       *
-       * @return {String} Key to be assigned to a ripple.
-       */
-      getNextKey () {
-        this.currentCount = this.currentCount ? this.currentCount + 1 : 1;
-        return `ripple${this.currentCount}`;
-      }
-
-      /**
-       * Return the last generated key for a ripple element. When there is only one ripple
-       * and to get the reference when a ripple was just created.
-       *
-       * @return {String} The last generated ripple key.
-       */
-      getLastKey () {
-        return `ripple${this.currentCount}`;
       }
 
       /**
@@ -176,9 +178,10 @@ const rippleFactory = (options = {}) => {
        *
        * @param {Boolean} isTouch True in case the trigger was a touch event false otherwise.
        * @param {String} rippleKey It's a key to identify the ripple that should be deactivated.
-       * @return {Function} Callback function that deactivates the ripple and removes the event listener
+       * @return {Function} Callback function that deactivates the ripple and removes the event
+       * listener
        */
-      addRippleDeactivateEventListener (isTouch, rippleKey) {
+      addRippleDeactivateEventListener(isTouch, rippleKey) {
         const eventType = isTouch ? 'touchend' : 'mouseup';
         const endRipple = this.createRippleDeactivateCallback(eventType, rippleKey);
         document.addEventListener(eventType, endRipple);
@@ -186,20 +189,20 @@ const rippleFactory = (options = {}) => {
       }
 
       /**
-       * Generates a function that can be called to deactivate a given ripple and remove its finishing
-       * event listener. If is generated because we need to store it to be called on unmount in case
-       * the ripple is still running.
+       * Generates a function that can be called to deactivate a given ripple and remove its
+       * finishing event listener. If is generated because we need to store it to be called on
+       * unmount in case the ripple is still running.
        *
        * @param {String} eventType Is the event type that can be touchend or mouseup
        * @param {String} rippleKey Is the key representing the ripple
        * @return {Function} Callback function that deactivates the ripple and removes the listener
        */
-      createRippleDeactivateCallback (eventType, rippleKey) {
+      createRippleDeactivateCallback(eventType, rippleKey) {
         const self = this;
-        return function endRipple () {
+        return function endRipple() {
           document.removeEventListener(eventType, endRipple);
           self.setState({ ripples: update(self.state.ripples, {
-            [rippleKey]: { $merge: { active: false } }
+            [rippleKey]: { $merge: { active: false } },
           }) });
         };
       }
@@ -220,33 +223,37 @@ const rippleFactory = (options = {}) => {
         }
       };
 
-      renderRipple (key, className, { active, left, restarting, top, width }) {
+      renderRipple(key, className, { active, left, restarting, top, width }) {
         const scale = restarting ? 0 : 1;
-        const transform = `translate3d(${-width / 2 + left}px, ${-width / 2 + top}px, 0) scale(${scale})`;
+        const transform = `translate3d(${(-width / 2) + left}px, ${(-width / 2) + top}px, 0) scale(${scale})`;
         const _className = classnames(this.props.theme.ripple, {
           [this.props.theme.rippleActive]: active,
-          [this.props.theme.rippleRestarting]: restarting
+          [this.props.theme.rippleRestarting]: restarting,
         }, className);
         return (
-          <span key={key} data-react-toolbox='ripple' className={this.props.theme.rippleWrapper} {...props}>
+          <span key={key} data-react-toolbox="ripple" className={this.props.theme.rippleWrapper} {...props}>
             <span
-              role='ripple'
+              role="ripple"
               ref={key}
               className={_className}
-              style={prefixer({ transform }, {width, height: width})}
+              style={prefixer({ transform }, { width, height: width })}
             />
           </span>
         );
       }
 
-      render () {
+      render() {
         const { ripples } = this.state;
         const { onRippleEnded, rippleCentered, rippleMultiple, rippleSpread, // eslint-disable-line
           children, ripple, rippleClassName, ...other } = this.props;
 
-        if (!ripple) return <ComposedComponent children={children} {...other} />;
+        if (!ripple) return <ComposedComponent {...other}>{children}</ComposedComponent>;
         return (
-          <ComposedComponent {...other} onMouseDown={this.handleMouseDown} onTouchStart={this.handleTouchStart}>
+          <ComposedComponent
+            {...other}
+            onMouseDown={this.handleMouseDown}
+            onTouchStart={this.handleTouchStart}
+          >
             {children}
             {Object.keys(ripples).map(key => this.renderRipple(key, rippleClassName, ripples[key]))}
           </ComposedComponent>
