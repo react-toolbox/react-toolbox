@@ -35,7 +35,6 @@ const factory = (Chip, Input) => {
        autocomplete: PropTypes.string,
        focus: PropTypes.string,
        input: PropTypes.string,
-       label: PropTypes.string,
        suggestion: PropTypes.string,
        suggestions: PropTypes.string,
        up: PropTypes.string,
@@ -308,6 +307,8 @@ const factory = (Chip, Input) => {
            onFocus={this.handleQueryFocus}
            onKeyDown={this.handleQueryKeyDown}
            onKeyUp={this.handleQueryKeyUp}
+           theme={theme}
+           themeNamespace="input"
            value={this.state.query}
          />
          {this.renderSuggestions()}
