@@ -7,6 +7,7 @@ export const CHIP = 'RTChip';
 export const CHECKBOX = 'RTCheckbox';
 export const DATE_PICKER = 'RTDatePicker';
 export const DIALOG = 'RTDialog';
+export const DRAWER = 'RTDrawer';
 export const DROPDOWN = 'RTDropdown';
 export const INPUT = 'RTInput';
 export const LAYOUT = 'RTLayout';
