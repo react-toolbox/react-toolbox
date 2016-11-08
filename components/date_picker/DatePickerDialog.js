@@ -9,6 +9,8 @@ const factory = (Dialog, Calendar) => {
       autoOk: PropTypes.bool,
       cancelLabel: PropTypes.string,
       className: PropTypes.string,
+      disabledDates: PropTypes.array,
+      enabledDates: PropTypes.array,
       locale: React.PropTypes.oneOfType([
         React.PropTypes.string,
         React.PropTypes.object
@@ -119,7 +121,9 @@ const factory = (Dialog, Calendar) => {
 
           <div className={theme.calendarWrapper}>
             <Calendar
+              disabledDates={this.props.disabledDates}
               display={this.state.display}
+              enabledDates={this.props.enabledDates}
               handleSelect={this.handleSelect}
               maxDate={this.props.maxDate}
               minDate={this.props.minDate}
@@ -127,7 +131,7 @@ const factory = (Dialog, Calendar) => {
               selectedDate={this.state.date}
               theme={this.props.theme}
               locale={this.props.locale}
-              sundayFirstDayOfWeek={this.props.sundayFirstDayOfWeek} />
+              sundayFirstDayOfWeek={this.props.sundayFirstDayOfWeek}/>
           </div>
         </Dialog>
       );

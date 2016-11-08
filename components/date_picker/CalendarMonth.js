@@ -5,6 +5,8 @@ import CalendarDay from './CalendarDay.js';
 
 class Month extends Component {
   static propTypes = {
+    disabledDates: React.PropTypes.array,
+    enabledDates: React.PropTypes.array,
     locale: React.PropTypes.oneOfType([
       React.PropTypes.string,
       React.PropTypes.object
@@ -27,6 +29,20 @@ class Month extends Component {
     if (this.props.onDayClick) this.props.onDayClick(day);
   };
 
+  isDayDisabled (date) {
+    const {minDate, maxDate, enabledDates, disabledDates} = this.props;
+    return time.dateOutOfRange(date, minDate, maxDate)
+        || (enabledDates && enabledDates.length > 0 && !this.findDate(date, enabledDates))
+        || (disabledDates && disabledDates.length > 0 && this.findDate(date, disabledDates));
+  }
+
+  findDate (comparisonDate, dates){
+    for (const date of dates){
+        if (comparisonDate.getTime() === date.getTime()) return true;
+    }
+    return false;
+  }
+
   renderWeeks () {
     const days = utils.range(0, 7).map(d => time.getDayOfWeekLetter(d, this.props.locale));
     const source = (this.props.sundayFirstDayOfWeek) ? days : [...days.slice(1), days[0]];
@@ -36,7 +52,7 @@ class Month extends Component {
   renderDays () {
     return utils.range(1, time.getDaysInMonth(this.props.viewDate) + 1).map(i => {
       const date = new Date(this.props.viewDate.getFullYear(), this.props.viewDate.getMonth(), i);
-      const disabled = time.dateOutOfRange(date, this.props.minDate, this.props.maxDate);
+      const disabled = this.isDayDisabled(date);
 
       return (
         <CalendarDay

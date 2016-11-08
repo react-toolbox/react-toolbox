@@ -49,6 +49,8 @@ If you want to provide a theme via context, the component key is `RTDatePicker`.
 | `active`        | `Boolean`       | `false`       | Allows to control if the picker should be shown from outside. Beware you should update the prop when the Dialog is closed. |
 | `autoOk`        | `Boolean`       | `false`       | Automatically selects a date upon clicking on a day. |
 | `className`     | `String`        |               | This class will be placed at the top of the `DatePickerDialog` component so you can provide custom styles.|
+| `disabledDates`     | `Array`        |               | An array of date objects which will be disabled in the calendar. All other dates will be enabled.|
+| `enabledDates`     | `Array`        |               | An array of date objects which will be enabled in the calendar. All other dates will be disabled.|
 | `inputClassName`| `String`        |               | This class will be applied to `Input` component of `DatePicker`. |
 | `inputFormat`   | `Function`      |               | Function to format the date displayed on the input. |
 | `label`         | `String`        |               | The text string to use for the floating label element in the input component.|

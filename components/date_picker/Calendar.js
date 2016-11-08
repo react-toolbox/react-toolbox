@@ -10,7 +10,9 @@ const DIRECTION_STEPS = { left: -1, right: 1 };
 const factory = (IconButton) => {
   class Calendar extends Component {
     static propTypes = {
+      disabledDates: React.PropTypes.array,
       display: PropTypes.oneOf(['months', 'years']),
+      enabledDates: React.PropTypes.array,
       handleSelect: PropTypes.func,
       locale: React.PropTypes.oneOfType([
         React.PropTypes.string,
@@ -125,6 +127,8 @@ const factory = (IconButton) => {
           <IconButton id='right' className={theme.next} icon='chevron_right' onClick={this.changeViewMonth} />
           <CssTransitionGroup transitionName={animation} transitionEnterTimeout={350} transitionLeaveTimeout={350}>
             <CalendarMonth
+              enabledDates={this.props.enabledDates}
+              disabledDates={this.props.disabledDates}
               key={this.state.viewDate.getMonth()}
               locale={this.props.locale}
               maxDate={this.props.maxDate}
