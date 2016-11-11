@@ -1,4 +1,11 @@
 const dateLocales = {
+   no: {
+    months: 'januar_februar_mars_april_mai_juni_juli_august_september_oktober_november_desember'.split('_'),
+    monthsShort: 'jan._feb._mars_april_mai_juni_juli_aug._sep._okt._nov._des.'.split('_'),
+    weekdays: 'søndag_mandag_tirsdag_onsdag_torsdag_fredag_lørdag'.split('_'),
+    weekdaysShort: 'sø._ma._ti._on._to._fr._lø'.split('_'),
+    weekdaysLetter: []
+  },
   en: {
     months: 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
     monthsShort: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_'),
