@@ -1,11 +1,9 @@
 @mixin open() {
   transition-delay: $animation-delay;
-  & > .scrim {
-    & > .drawerContent {
-      pointer-events: all;
-      transition-delay: $animation-delay;
-      transform: translateX(0);
-    }
+  .drawerContent {
+    pointer-events: all;
+    transition-delay: $animation-delay;
+    transform: translateX(0);
   }
 }
 

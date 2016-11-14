@@ -16,12 +16,11 @@ const NavDrawer = ({ active, children, className, onOverlayClick, permanentAt, p
   });
 
   return (
-    <div data-react-toolbox='nav-drawer' className={rootClasses} onClick={onOverlayClick}>
-      <div data-react-toolbox='nav-drawer-scrim' className={theme.scrim}>
-        <aside data-react-toolbox='nav-drawer-content' className={drawerClasses}>
-          {children}
-        </aside>
-      </div>
+    <div data-react-toolbox='nav-drawer' className={rootClasses}>
+      <div data-react-toolbox='nav-drawer-scrim' className={theme.scrim} onClick={onOverlayClick} />
+      <aside data-react-toolbox='nav-drawer-content' className={drawerClasses}>
+        {children}
+      </aside>
     </div>
   );
 };
