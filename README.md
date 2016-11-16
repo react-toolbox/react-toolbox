@@ -215,6 +215,11 @@ $ npm start
 
 Local documentation will then be available at `http://localhost:8081/`.
 
+## Extensions
+
+The additional components which are not covered by [Google Material Design](https://www.google.com/design/spec/material-design/introduction.html) but often used such as Pager, FilePicker,... are available in:
+    [on github: react-toolbox-additions](https://github.com/MaximKomlev/react-toolbox-additions), [on npm: react-toolbox-additions](https://www.npmjs.com/package/react-toolbox-additions)
+
 ## License
 
 This project is licensed under the terms of the [MIT license](https://github.com/react-toolbox/react-toolbox/blob/master/LICENSE).
