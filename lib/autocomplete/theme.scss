@@ -8,21 +8,12 @@
   position: relative;
   padding: $unit 0;
   &.focus {
-    .label {
-      color: $autocomplete-color-primary;
-    }
     .suggestions {
       max-height: $autocomplete-overflow-max-height;
       visibility: visible;
       box-shadow: $zdepth-shadow-1;
     }
   }
-}
-
-.label {
-  font-size: $font-size-tiny;
-  color: $color-text-secondary;
-  transition: color $animation-duration $animation-curve-default;
 }
 
 .values {
