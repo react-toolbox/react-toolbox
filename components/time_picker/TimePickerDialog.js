@@ -44,8 +44,14 @@ const factory = (Dialog) => {
 
     state = {
       display: 'hours',
-      displayTime: this.props.value
+      displayTime: new Date(this.props.value.getTime())
     };
+
+    componentWillUpdate (nextProps) {
+      if (nextProps.value.getTime() !== this.state.displayTime.getTime()) {
+        this.setState({ displayTime: new Date(nextProps.value.getTime()) });
+      }
+    }
 
     componentDidUpdate (prevProps) {
       if (!prevProps.active && this.props.active) {
