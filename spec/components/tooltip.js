@@ -24,6 +24,14 @@ const TooltipTest = () => (
     />
     <TooltipInput tooltip='lorem ipsum...' />
     <p>Lorem ipsum dolor sit amet, <TooltipStrong tooltip='This is a auto show tooltip'>consectetur</TooltipStrong> adipiscing elit.</p>
+    <p>
+      Click this next word to show and hide on click:
+      {' '}
+      <TooltipStrong tooltip='This is a auto show tooltip' tooltipShowOnClick>
+        oh hai
+      </TooltipStrong>
+      {' '}. This is useful for mobile!
+    </p>
   </section>
 );
 
