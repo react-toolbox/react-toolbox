@@ -21,6 +21,7 @@ const factory = (Chip, Input) => {
      direction: PropTypes.oneOf(['auto', 'up', 'down']),
      disabled: PropTypes.bool,
      error: PropTypes.string,
+     keepFocusOnChange: PropTypes.bool,
      label: PropTypes.string,
      multiple: PropTypes.bool,
      onBlur: PropTypes.func,
@@ -48,8 +49,9 @@ const factory = (Chip, Input) => {
      allowCreate: false,
      className: '',
      direction: 'auto',
-     selectedPosition: 'above',
+     keepFocusOnChange: false,
      multiple: true,
+     selectedPosition: 'above',
      showSuggestionsWhenValueIsSet: false,
      source: {},
      suggestionMatch: 'start'
@@ -82,12 +84,16 @@ const factory = (Chip, Input) => {
 
    handleChange = (keys, event) => {
      const key = this.props.multiple ? keys : keys[0];
+     const { showSuggestionsWhenValueIsSet: showAllSuggestions } = this.props;
      const query = this.query(key);
      if (this.props.onChange) this.props.onChange(key, event);
-     this.setState(
-       {focus: false, query, showAllSuggestions: this.props.showSuggestionsWhenValueIsSet},
-       () => { ReactDOM.findDOMNode(this).querySelector('input').blur(); }
-     );
+     if (this.props.keepFocusOnChange) {
+       this.setState({ query, showAllSuggestions });
+     } else {
+       this.setState({ focus: false, query, showAllSuggestions }, () => {
+         ReactDOM.findDOMNode(this).querySelector('input').blur();
+       });
+     }
    };
 
    handleQueryBlur = (event) => {
@@ -286,7 +292,7 @@ const factory = (Chip, Input) => {
    render () {
      const {
       allowCreate, error, label, source, suggestionMatch, //eslint-disable-line no-unused-vars
-      selectedPosition, showSuggestionsWhenValueIsSet,    //eslint-disable-line no-unused-vars
+      selectedPosition, keepFocusOnChange, showSuggestionsWhenValueIsSet,    //eslint-disable-line no-unused-vars
       theme, ...other
     } = this.props;
      const className = classnames(theme.autocomplete, {

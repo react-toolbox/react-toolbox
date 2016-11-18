@@ -37,6 +37,7 @@ class AutocompleteTest extends React.Component {
 
         <Autocomplete
           allowCreate
+          keepFocusOnChange
           label="Pick multiple elements..."
           onChange={this.handleMultipleChange}
           source={this.state.countriesObject}
