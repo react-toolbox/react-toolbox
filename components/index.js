@@ -1,3 +1,4 @@
+import 'fifteen-kilos';
 import './utils/polyfills'; // Import polyfills for IE11
 export AppBar from './app_bar';
 export Autocomplete from './autocomplete';

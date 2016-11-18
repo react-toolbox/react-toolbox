@@ -38,6 +38,7 @@
   "dependencies": {
     "classnames": "~2.2.5",
     "core-js": "~2.4.0",
+    "fifteen-kilos": "^2.0.0",
     "normalize.css": "~4.2.0",
     "react-css-themr": "~1.4.1"
   },
