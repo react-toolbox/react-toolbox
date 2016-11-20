@@ -106,7 +106,7 @@ const factory = (Chip, Input) => {
    };
 
    handleQueryFocus = () => {
-     this.refs.suggestions.scrollTop = 0;
+     this.suggestionsNode.scrollTop = 0;
      this.setState({active: '', focus: true});
      if (this.props.onFocus) this.props.onFocus();
    };
@@ -152,7 +152,7 @@ const factory = (Chip, Input) => {
 
    calculateDirection () {
      if (this.props.direction === 'auto') {
-       const client = ReactDOM.findDOMNode(this.refs.input).getBoundingClientRect();
+       const client = ReactDOM.findDOMNode(this.inputNode).getBoundingClientRect();
        const screen_height = window.innerHeight || document.documentElement.offsetHeight;
        const up = client.top > ((screen_height / 2) + client.height);
        return up ? 'up' : 'down';
@@ -285,8 +285,14 @@ const factory = (Chip, Input) => {
        );
      });
 
-     const className = classnames(theme.suggestions, {[theme.up]: this.state.direction === 'up'});
-     return <ul ref='suggestions' className={className}>{suggestions}</ul>;
+     return (
+       <ul
+         className={classnames(theme.suggestions, {[theme.up]: this.state.direction === 'up'})}
+         ref={node => { this.suggestionsNode = node; }}
+       >
+         {suggestions}
+       </ul>
+     );
    }
 
    render () {
@@ -304,7 +310,8 @@ const factory = (Chip, Input) => {
          {this.props.selectedPosition === 'above' ? this.renderSelected() : null}
          <Input
            {...other}
-           ref='input'
+           ref={node => { this.inputNode = node; }}
+           autoComplete="off"
            className={theme.input}
            error={error}
            label={label}
