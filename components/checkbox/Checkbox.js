@@ -40,15 +40,15 @@ const factory = (Check) => {
     };
 
     blur () {
-      this.refs.input.blur();
+      this.inputNode && this.inputNode.blur();
     }
 
     focus () {
-      this.refs.input.focus();
+      this.inputNode && this.inputNode.focus();
     }
 
     render () {
-      const { onChange, theme, style, ...others } = this.props; //eslint-disable-line no-unused-vars
+      const { checked, disabled, label, style, theme, ...others } = this.props;
       const className = classnames(theme.field, {
         [theme.disabled]: this.props.disabled
       }, this.props.className);
@@ -57,20 +57,22 @@ const factory = (Check) => {
         <label data-react-toolbox='checkbox' className={className}>
           <input
             {...others}
+            checked={checked}
             className={theme.input}
+            disabled={disabled}
+            onChange={() => {}}
             onClick={this.handleToggle}
-            readOnly
-            ref='input'
+            ref={node => { this.inputNode = node; }}
             type='checkbox'
           />
           <Check
-            checked={this.props.checked}
-            disabled={this.props.disabled}
+            checked={checked}
+            disabled={disabled}
             rippleClassName={theme.ripple}
             style={style}
-            theme={this.props.theme}
+            theme={theme}
           />
-          {this.props.label ? <span data-react-toolbox='label' className={theme.text}>{this.props.label}</span> : null}
+          {label ? <span data-react-toolbox='label' className={theme.text}>{label}</span> : null}
         </label>
       );
     }

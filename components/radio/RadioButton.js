@@ -41,11 +41,11 @@ const factory = (Radio) => {
     };
 
     blur () {
-      this.refs.input.blur();
+      this.inputNode && this.inputNode.blur();
     }
 
     focus () {
-      this.refs.input.focus();
+      this.inputNode && this.inputNode.focus();
     }
 
     render () {
@@ -55,10 +55,12 @@ const factory = (Radio) => {
         <label data-react-toolbox='radio-button' className={_className}>
           <input
             {...others}
+            checked={checked}
             className={theme.input}
+            disabled={disabled}
             onClick={this.handleClick}
-            readOnly
-            ref='input'
+            onChange={() => {}}
+            ref={node => { this.inputNode = node; }}
             type='radio'
           />
         <Radio checked={checked} disabled={disabled} theme={theme} />
