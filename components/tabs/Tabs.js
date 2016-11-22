@@ -33,7 +33,8 @@ const factory = (Tab, TabContent) => {
     };
 
     state = {
-      pointer: {}
+      pointer: {},
+      arrows: {}
     };
 
     componentDidMount () {
@@ -50,6 +51,7 @@ const factory = (Tab, TabContent) => {
       window.removeEventListener('resize', this.handleResize);
       clearTimeout(this.resizeTimeout);
       clearTimeout(this.pointerTimeout);
+      clearTimeout(this.arrowsTimeout);
     }
 
     handleHeaderClick = (event) => {
@@ -66,6 +68,7 @@ const factory = (Tab, TabContent) => {
 
     handleResizeEnd = () => {
       this.updatePointer(this.props.index);
+      this.updateArrows();
     };
 
     parseChildren () {
@@ -89,16 +92,46 @@ const factory = (Tab, TabContent) => {
     updatePointer (idx) {
       clearTimeout(this.pointerTimeout);
       this.pointerTimeout = setTimeout(() => {
-        const startPoint = this.refs.tabs.getBoundingClientRect().left;
+        const nav = this.refs.navigation.getBoundingClientRect();
         const label = this.refs.navigation.children[idx].getBoundingClientRect();
+        const scrollLeft = this.refs.navigation.scrollLeft;
         this.setState({
           pointer: {
-            top: `${this.refs.navigation.getBoundingClientRect().height}px`,
-            left: `${label.left - startPoint}px`,
+            top: `${nav.height}px`,
+            left: `${label.left - nav.left + scrollLeft}px`,
             width: `${label.width}px`
           }
         });
       }, 20);
+    }
+
+    updateArrows () {
+      clearTimeout(this.arrowsTimeout);
+      this.arrowsTimeout = setTimeout(() => {
+        const nav = this.refs.navigation;
+        this.setState({
+          arrows: {
+            left: nav.scrollLeft > 0,
+            right: nav.scrollWidth > nav.clientWidth && (nav.scrollLeft + nav.clientWidth) < nav.scrollWidth
+          }
+        });
+      }, 20);
+    }
+
+    scrollNavigationLeft = () => {
+      const oldScrollLeft = this.refs.navigation.scrollLeft;
+      this.refs.navigation.scrollLeft -= this.refs.navigation.clientWidth;
+      if (this.refs.navigation.scrollLeft !== oldScrollLeft) {
+        this.updateArrows();
+      }
+    }
+
+    scrollNavigationRight = () => {
+      const oldScrollLeft = this.refs.navigation.scrollLeft;
+      this.refs.navigation.scrollLeft += this.refs.navigation.clientWidth;
+      if (this.refs.navigation.scrollLeft !== oldScrollLeft) {
+        this.updateArrows();
+      }
     }
 
     renderHeaders (headers) {
@@ -108,7 +141,7 @@ const factory = (Tab, TabContent) => {
           key: idx,
           theme: this.props.theme,
           active: this.props.index === idx,
-          onClick: event => {
+          onClick: (event) => {
             this.handleHeaderClick(event);
             item.props.onClick && item.props.onClick(event);
           }
@@ -147,10 +180,18 @@ const factory = (Tab, TabContent) => {
       );
       return (
         <div ref='tabs' data-react-toolbox='tabs' className={classes}>
-          <nav className={theme.navigation} ref='navigation'>
-            {this.renderHeaders(headers)}
-          </nav>
-          <span className={theme.pointer} style={this.state.pointer} />
+          <div className={theme.navigationContainer}>
+            <div className={classnames(theme.arrowContainer, { [theme.invisible]: !(this.state.arrows.left || this.state.arrows.right) })} onClick={this.scrollNavigationLeft}>
+              <span className={classnames('material-icons', theme.arrow, { [theme.invisible]: !this.state.arrows.left })}>keyboard_arrow_left</span>
+            </div>
+            <nav className={theme.navigation} ref='navigation'>
+              {this.renderHeaders(headers)}
+              <span className={theme.pointer} style={this.state.pointer} />
+            </nav>
+            <div className={classnames(theme.arrowContainer, { [theme.invisible]: !(this.state.arrows.left || this.state.arrows.right) })} onClick={this.scrollNavigationRight}>
+              <span className={classnames('material-icons', theme.arrow, { [theme.invisible]: !this.state.arrows.right })}>keyboard_arrow_right</span>
+            </div>
+          </div>
           {this.renderContents(contents)}
         </div>
       );
