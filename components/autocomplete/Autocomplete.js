@@ -97,14 +97,7 @@ const factory = (Chip, Input) => {
    };
 
    handleMouseDown = event => {
-     let target = this.state.active;
-     if (!target) {
-       target = this.props.allowCreate
-         ? this.state.query
-         : [...this.suggestions().keys()][0];
-       this.setState({active: target});
-     }
-     this.select(event, target);
+     this.selectOrCreateActiveItem();
    }
 
    handleQueryBlur = (event) => {
@@ -134,14 +127,7 @@ const factory = (Chip, Input) => {
      }
 
      if (event.which === 13) {
-       let target = this.state.active;
-       if (!target) {
-         target = this.props.allowCreate
-           ? this.state.query
-           : [...this.suggestions().keys()][0];
-         this.setState({active: target});
-       }
-       this.select(event, target);
+       this.selectOrCreateActiveItem();
      }
    };
 
@@ -179,7 +165,18 @@ const factory = (Chip, Input) => {
         query_value = source_value ? source_value : key;
       }
       return query_value;
-    }
+   }
+
+   selectOrCreateActiveItem() {
+     let target = this.state.active;
+     if (!target) {
+       target = this.props.allowCreate
+         ? this.state.query
+         : [...this.suggestions().keys()][0];
+       this.setState({active: target});
+     }
+     this.select(event, target);
+   }
 
    suggestions () {
      let suggest = new Map();
