@@ -96,6 +96,17 @@ const factory = (Chip, Input) => {
      }
    };
 
+   handleMouseDown = event => {
+     let target = this.state.active;
+     if (!target) {
+       target = this.props.allowCreate
+         ? this.state.query
+         : [...this.suggestions().keys()][0];
+       this.setState({active: target});
+     }
+     this.select(event, target);
+   }
+
    handleQueryBlur = (event) => {
      if (this.state.focus) this.setState({focus: false});
      if (this.props.onBlur) this.props.onBlur(event, this.state.active);
@@ -277,7 +288,7 @@ const factory = (Chip, Input) => {
            id={key}
            key={key}
            className={className}
-           onMouseDown={this.select}
+           onMouseDown={this.handleMouseDown}
            onMouseOver={this.handleSuggestionHover}
          >
            {value}
