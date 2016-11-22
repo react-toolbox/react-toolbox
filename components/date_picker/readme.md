@@ -52,7 +52,7 @@ If you want to provide a theme via context, the component key is `RTDatePicker`.
 | `inputClassName`| `String`        |               | This class will be applied to `Input` component of `DatePicker`. |
 | `inputFormat`   | `Function`      |               | Function to format the date displayed on the input. |
 | `label`         | `String`        |               | The text string to use for the floating label element in the input component.|
-| `locale`        | `String` or `Object` | `'en'`     | Set the locale for the date picker dialog ('en','es','af','ar','be','bg','bn','bo','br','bs','ca','gl','eu','pt','it',fr'). Object is supported too (see example above). |
+| `locale`        | `String` or `Object` | `'en'`     | Set the locale for the date picker dialog ('de','en','es','af','ar','be','bg','bn','bo','br','bs','ca','gl','eu','pt','it',fr'). Object is supported too (see example above). |
 | `maxDate`       | `Date`          |               | Date object with the maximum selectable date. |
 | `minDate`       | `Date`          |               | Date object with the minimum selectable date. |
 | `onChange`      | `Function`      |               | Callback called when the picker value is changed.|
