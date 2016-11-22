@@ -131,7 +131,8 @@ const factory = (Dialog, Calendar) => {
               selectedDate={this.state.date}
               theme={this.props.theme}
               locale={this.props.locale}
-              sundayFirstDayOfWeek={this.props.sundayFirstDayOfWeek}/>
+              sundayFirstDayOfWeek={this.props.sundayFirstDayOfWeek}
+            />
           </div>
         </Dialog>
       );

@@ -25,22 +25,23 @@ class Month extends Component {
     viewDate: PropTypes.object
   };
 
+  static defaultProps = {
+    disabledDates: [],
+    enabledDates: []
+  };
+
   handleDayClick = (day) => {
     if (this.props.onDayClick) this.props.onDayClick(day);
   };
 
   isDayDisabled (date) {
     const {minDate, maxDate, enabledDates, disabledDates} = this.props;
+    const compareDate = compDate => date.getTime() === compDate.getTime();
+    const dateInDisabled = disabledDates.filter(compareDate).length > 0;
+    const dateInEnabled = enabledDates.filter(compareDate).length > 0;
     return time.dateOutOfRange(date, minDate, maxDate)
-        || (enabledDates && enabledDates.length > 0 && !this.findDate(date, enabledDates))
-        || (disabledDates && disabledDates.length > 0 && this.findDate(date, disabledDates));
-  }
-
-  findDate (comparisonDate, dates){
-    for (const date of dates){
-        if (comparisonDate.getTime() === date.getTime()) return true;
-    }
-    return false;
+      || (enabledDates.length > 0 && !dateInEnabled)
+      || dateInDisabled;
   }
 
   renderWeeks () {
@@ -52,13 +53,11 @@ class Month extends Component {
   renderDays () {
     return utils.range(1, time.getDaysInMonth(this.props.viewDate) + 1).map(i => {
       const date = new Date(this.props.viewDate.getFullYear(), this.props.viewDate.getMonth(), i);
-      const disabled = this.isDayDisabled(date);
-
       return (
         <CalendarDay
           key={i}
           day={i}
-          disabled={disabled}
+          disabled={this.isDayDisabled(date)}
           onClick={this.handleDayClick}
           selectedDate={this.props.selectedDate}
           theme={this.props.theme}
