@@ -50,8 +50,6 @@ const factory = (Tab, TabContent, FontIcon) => {
     componentWillUnmount () {
       window.removeEventListener('resize', this.handleResize);
       clearTimeout(this.resizeTimeout);
-      clearTimeout(this.pointerTimeout);
-      clearTimeout(this.arrowsTimeout);
     }
 
     handleHeaderClick = (event) => {
