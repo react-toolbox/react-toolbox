@@ -27,10 +27,6 @@
 .arrow {
   padding: 0 $tab-label-h-padding;
   color: $tab-text-color;
-
-  &.invisible {
-    visibility: hidden;
-  }
 }
 
 .arrowContainer {
@@ -38,10 +34,6 @@
   align-items: center;
   cursor: pointer;
   box-shadow: inset 0 -1px $tab-navigation-border-color;
-
-  &.invisible {
-    display: none;
-  }
 }
 
 .label {
@@ -55,15 +47,19 @@
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
   transition-property: box-shadow, color;
+
   &.active {
     color: $tab-text-color;
   }
+
   &.disabled {
     opacity: $tab-label-disabled-opacity;
   }
+
   &:not(.disabled) {
     cursor: pointer;
   }
+
   &.hidden {
     display: none;
   }
@@ -96,15 +92,21 @@
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
   transition-property: left, width;
+
+  &.disableAnimation {
+    transition: none;
+  }
 }
 
 .tab {
   display: flex;
   flex-direction: column;
   padding: $tab-label-v-padding $tab-label-h-padding;
+
   &:not(.active) {
     display: none;
   }
+
   &.active {
     display: flex;
   }
@@ -124,6 +126,7 @@
 
   .label {
     color: $tab-inverse-text-inactive-color;
+
     &.active {
       color: $tab-inverse-text-color;
     }

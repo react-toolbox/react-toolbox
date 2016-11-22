@@ -2,10 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { TABS } from '../identifiers.js';
+import InjectFontIcon from '../font_icon/FontIcon.js';
 import InjectTab from './Tab.js';
 import InjectTabContent from './TabContent.js';
 
-const factory = (Tab, TabContent) => {
+const factory = (Tab, TabContent, FontIcon) => {
   class Tabs extends Component {
     static propTypes = {
       children: PropTypes.node,
@@ -38,13 +39,12 @@ const factory = (Tab, TabContent) => {
     };
 
     componentDidMount () {
-      !this.props.disableAnimatedBottomBorder && this.updatePointer(this.props.index);
       window.addEventListener('resize', this.handleResize);
       this.handleResize();
     }
 
     componentWillReceiveProps (nextProps) {
-      !this.props.disableAnimatedBottomBorder && this.updatePointer(nextProps.index);
+      this.updatePointer(nextProps.index);
     }
 
     componentWillUnmount () {
@@ -60,16 +60,52 @@ const factory = (Tab, TabContent) => {
     };
 
     handleResize = () => {
-      if (this.resizeTimeout) {
-        clearTimeout(this.resizeTimeout);
-      }
-      this.resizeTimeout = setTimeout(this.handleResizeEnd, 50);
+      if (this.resizeTimeout) clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = setTimeout(() => {
+        this.updatePointer(this.props.index);
+        this.updateArrows();
+      }, 100);
     };
 
-    handleResizeEnd = () => {
-      this.updatePointer(this.props.index);
-      this.updateArrows();
-    };
+    updatePointer = idx => {
+      if (this.navigationNode && this.navigationNode.children[idx]) {
+        const nav = this.navigationNode.getBoundingClientRect();
+        const label = this.navigationNode.children[idx].getBoundingClientRect();
+        const scrollLeft = this.navigationNode.scrollLeft;
+        this.setState({
+          pointer: {
+            top: `${nav.height}px`,
+            left: `${label.left - nav.left + scrollLeft}px`,
+            width: `${label.width}px`
+          }
+        });
+      }
+    }
+
+    updateArrows = () => {
+      const nav = this.navigationNode;
+      this.setState({
+        arrows: {
+          left: nav.scrollLeft > 0,
+          right: nav.scrollWidth > nav.clientWidth
+            && (nav.scrollLeft + nav.clientWidth) < nav.scrollWidth
+        }
+      });
+    }
+
+    scrollNavigation = (factor) => {
+      const oldScrollLeft = this.navigationNode.scrollLeft;
+      this.navigationNode.scrollLeft += factor * this.navigationNode.clientWidth;
+      if (this.navigationNode.scrollLeft !== oldScrollLeft) {
+        this.updateArrows();
+      }
+    }
+
+    scrollRight = () =>
+      this.scrollNavigation(-1);
+
+    scrollLeft = () =>
+      this.scrollNavigation(+1);
 
     parseChildren () {
       const headers = [];
@@ -87,51 +123,6 @@ const factory = (Tab, TabContent) => {
       });
 
       return {headers, contents};
-    }
-
-    updatePointer (idx) {
-      clearTimeout(this.pointerTimeout);
-      this.pointerTimeout = setTimeout(() => {
-        const nav = this.refs.navigation.getBoundingClientRect();
-        const label = this.refs.navigation.children[idx].getBoundingClientRect();
-        const scrollLeft = this.refs.navigation.scrollLeft;
-        this.setState({
-          pointer: {
-            top: `${nav.height}px`,
-            left: `${label.left - nav.left + scrollLeft}px`,
-            width: `${label.width}px`
-          }
-        });
-      }, 20);
-    }
-
-    updateArrows () {
-      clearTimeout(this.arrowsTimeout);
-      this.arrowsTimeout = setTimeout(() => {
-        const nav = this.refs.navigation;
-        this.setState({
-          arrows: {
-            left: nav.scrollLeft > 0,
-            right: nav.scrollWidth > nav.clientWidth && (nav.scrollLeft + nav.clientWidth) < nav.scrollWidth
-          }
-        });
-      }, 20);
-    }
-
-    scrollNavigationLeft = () => {
-      const oldScrollLeft = this.refs.navigation.scrollLeft;
-      this.refs.navigation.scrollLeft -= this.refs.navigation.clientWidth;
-      if (this.refs.navigation.scrollLeft !== oldScrollLeft) {
-        this.updateArrows();
-      }
-    }
-
-    scrollNavigationRight = () => {
-      const oldScrollLeft = this.refs.navigation.scrollLeft;
-      this.refs.navigation.scrollLeft += this.refs.navigation.clientWidth;
-      if (this.refs.navigation.scrollLeft !== oldScrollLeft) {
-        this.updateArrows();
-      }
     }
 
     renderHeaders (headers) {
@@ -160,37 +151,37 @@ const factory = (Tab, TabContent) => {
         });
       });
 
-      if (this.props.hideMode === 'display') {
-        return contentElements;
-      }
-
-      return contentElements.filter((item, idx) => (idx === this.props.index));
+      return this.props.hideMode === 'display'
+        ? contentElements
+        : contentElements.filter((item, idx) => (idx === this.props.index));
     }
 
     render () {
-      const { className, theme, fixed, inverse } = this.props;
+      const { className, disableAnimatedBottomBorder, theme, fixed, inverse } = this.props;
+      const { left: hasLeftArrow, right: hasRightArrow } = this.state.arrows;
       const { headers, contents } = this.parseChildren();
-      const classes = classnames(
-        theme.tabs,
-        className,
-        {
-          [theme.fixed]: fixed,
-          [theme.inverse]: inverse
-        }
-      );
+      const classNamePointer = classnames(theme.pointer, {
+        [theme.disableAnimation]: disableAnimatedBottomBorder
+      });
+
+      const classNames = classnames(theme.tabs, {
+        [theme.fixed]: fixed,
+        [theme.inverse]: inverse
+      }, className);
+
       return (
-        <div ref='tabs' data-react-toolbox='tabs' className={classes}>
+        <div data-react-toolbox='tabs' className={classNames}>
           <div className={theme.navigationContainer}>
-            <div className={classnames(theme.arrowContainer, { [theme.invisible]: !(this.state.arrows.left || this.state.arrows.right) })} onClick={this.scrollNavigationLeft}>
-              <span className={classnames('material-icons', theme.arrow, { [theme.invisible]: !this.state.arrows.left })}>keyboard_arrow_left</span>
-            </div>
-            <nav className={theme.navigation} ref='navigation'>
+            {hasLeftArrow && <div className={theme.arrowContainer} onClick={this.scrollRight}>
+              <FontIcon className={theme.arrow} value="keyboard_arrow_left" />
+            </div>}
+            <nav className={theme.navigation} ref={node => {this.navigationNode = node; }}>
               {this.renderHeaders(headers)}
-              <span className={theme.pointer} style={this.state.pointer} />
+              <span className={classNamePointer} style={this.state.pointer} />
             </nav>
-            <div className={classnames(theme.arrowContainer, { [theme.invisible]: !(this.state.arrows.left || this.state.arrows.right) })} onClick={this.scrollNavigationRight}>
-              <span className={classnames('material-icons', theme.arrow, { [theme.invisible]: !this.state.arrows.right })}>keyboard_arrow_right</span>
-            </div>
+            {hasRightArrow && <div className={theme.arrowContainer} onClick={this.scrollLeft}>
+              <FontIcon className={theme.arrow} value="keyboard_arrow_right" />
+            </div>}
           </div>
           {this.renderContents(contents)}
         </div>
@@ -201,7 +192,7 @@ const factory = (Tab, TabContent) => {
   return Tabs;
 };
 
-const Tabs = factory(InjectTab, InjectTabContent);
+const Tabs = factory(InjectTab, InjectTabContent, InjectFontIcon);
 export default themr(TABS)(Tabs);
 export { factory as tabsFactory };
 export { Tabs };
