@@ -18,6 +18,8 @@ const factory = (Input, DatePickerDialog) => {
       autoOk: PropTypes.bool,
       cancelLabel: PropTypes.string,
       className: PropTypes.string,
+      disabledDates: React.PropTypes.array,
+      enabledDates: React.PropTypes.array,
       error: PropTypes.string,
       icon: PropTypes.oneOfType([
         PropTypes.string,
@@ -105,7 +107,7 @@ const factory = (Input, DatePickerDialog) => {
 
     render () {
       const { active, onDismiss,// eslint-disable-line
-        autoOk, cancelLabel, inputClassName, inputFormat, locale, maxDate, minDate,
+        autoOk, cancelLabel, enabledDates, disabledDates, inputClassName, inputFormat, locale, maxDate, minDate,
         okLabel, onEscKeyDown, onOverlayClick, readonly, sundayFirstDayOfWeek, value,
         ...others } = this.props;
       const finalInputFormat = inputFormat || time.formatDate;
@@ -134,6 +136,8 @@ const factory = (Input, DatePickerDialog) => {
             autoOk={autoOk}
             cancelLabel={cancelLabel}
             className={this.props.className}
+            disabledDates={disabledDates}
+            enabledDates={enabledDates}
             locale={locale}
             maxDate={maxDate}
             minDate={minDate}
