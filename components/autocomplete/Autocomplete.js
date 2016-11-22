@@ -167,7 +167,7 @@ const factory = (Chip, Input) => {
       return query_value;
    }
 
-   selectOrCreateActiveItem() {
+   selectOrCreateActiveItem () {
      let target = this.state.active;
      if (!target) {
        target = this.props.allowCreate
