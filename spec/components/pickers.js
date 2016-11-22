@@ -8,6 +8,9 @@ const min_datetime = new Date(new Date(datetime).setDate(8));
 const max_datetime = new Date(new Date(datetime).setDate(24));
 datetime.setHours(17);
 datetime.setMinutes(28);
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+const enabledDisabledDates = [new Date(today.getTime()), new Date(today.setDate(today.getDate() - 1))];
 
 class PickersTest extends React.Component {
   state = {
@@ -89,6 +92,20 @@ class PickersTest extends React.Component {
           sundayFirstDayOfWeek
           onChange={this.handleChange.bind(this, 'date4')}
           value={this.state.date4}
+        />
+
+        <DatePicker
+          label='Date picker with enabled dates'
+          onChange={this.handleChange.bind(this, 'date5')}
+          enabledDates={enabledDisabledDates}
+          value={this.state.date5}
+        />
+
+        <DatePicker
+          label='Date picker with disabled dates'
+          onChange={this.handleChange.bind(this, 'date6')}
+          disabledDates={enabledDisabledDates}
+          value={this.state.date6}
         />
 
         <TimePicker
