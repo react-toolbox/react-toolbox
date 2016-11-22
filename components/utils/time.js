@@ -6,6 +6,13 @@ const dateLocales = {
     weekdaysShort: 'So_Mo_Di_Mi_Do_Fr_Sa'.split('_'),
     weekdaysLetter: 'S_M_D_M_D_F_S'.split('_')
   },
+  no: {
+    months: 'januar_februar_mars_april_mai_juni_juli_august_september_oktober_november_desember'.split('_'),
+    monthsShort: 'jan._feb._mars_april_mai_juni_juli_aug._sep._okt._nov._des.'.split('_'),
+    weekdays: 'søndag_mandag_tirsdag_onsdag_torsdag_fredag_lørdag'.split('_'),
+    weekdaysShort: 'søn_man_tir_ons_tor_fre_lør'.split('_'),
+    weekdaysLetter: []
+  },
   en: {
     months: 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
     monthsShort: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_'),
@@ -133,6 +140,7 @@ const dateLocales = {
     weekdaysLetter: []
   }
 };
+
 const time = {
   getDaysInMonth (d) {
     const resultDate = this.getFirstDayOfMonth(d);
