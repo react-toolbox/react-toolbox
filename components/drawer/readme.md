@@ -1,6 +1,6 @@
 # Drawer
 
-The [navigation drawer](https://www.google.com/design/spec/patterns/navigation-drawer.html) slides in from the left. It is a common pattern found in Google apps and follows the keylines and metrics for lists.
+The [navigation drawer](https://material.google.com/patterns/navigation-drawer.html) slides in from the left. It is a common pattern found in Google apps and follows the keylines and metrics for lists.
 
 <!-- example -->
 ```jsx

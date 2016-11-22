@@ -1,6 +1,6 @@
 # Progress Bar
 
-Minimize visual changes that occur while your app loads content by representing each operation with a single [activity indicator](https://www.google.com/design/spec/components/progress-activity.html). For example, a refresh operation should display either a refresh bar or an activity circle, but not both.
+Minimize visual changes that occur while your app loads content by representing each operation with a single [activity indicator](https://material.google.com/components/progress-activity.html). For example, a refresh operation should display either a refresh bar or an activity circle, but not both.
 
 <!-- example -->
 ```jsx

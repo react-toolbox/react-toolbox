@@ -1,6 +1,6 @@
 # Date Picker
 
-A [dialog](https://www.google.com/design/spec/components/pickers.html#pickers-date-pickers) date  picker is used to select a single date. The selected day is indicated by a filled circle. The current day is indicated by a different color and type weight.
+A [dialog](https://material.google.com/components/pickers.html#pickers-date-pickers) date  picker is used to select a single date. The selected day is indicated by a filled circle. The current day is indicated by a different color and type weight.
 
 <!-- example -->
 ```jsx
