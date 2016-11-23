@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "autoprefixer": "^6.5.1",
+    "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-class-properties": "^6.19.0",
