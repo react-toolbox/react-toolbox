@@ -9,6 +9,7 @@ const factory = (Check) => {
   class Checkbox extends Component {
     static propTypes = {
       checked: PropTypes.bool,
+      children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
       label: PropTypes.oneOfType([
@@ -48,15 +49,14 @@ const factory = (Check) => {
     }
 
     render () {
-      const { checked, disabled, label, style, theme, ...others } = this.props;
+      const { checked, children, disabled, label, style, theme, ...others } = this.props;
       const className = classnames(theme.field, {
         [theme.disabled]: this.props.disabled
       }, this.props.className);
 
       return (
-        <label data-react-toolbox='checkbox' className={className}>
+        <label {...others} data-react-toolbox='checkbox' className={className}>
           <input
-            {...others}
             checked={checked}
             className={theme.input}
             disabled={disabled}
@@ -73,6 +73,7 @@ const factory = (Check) => {
             theme={theme}
           />
           {label ? <span data-react-toolbox='label' className={theme.text}>{label}</span> : null}
+          {children}
         </label>
       );
     }

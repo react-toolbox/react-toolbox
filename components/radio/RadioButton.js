@@ -9,6 +9,7 @@ const factory = (Radio) => {
   class RadioButton extends Component {
     static propTypes = {
       checked: PropTypes.bool,
+      children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
       label: PropTypes.oneOfType([
@@ -49,12 +50,15 @@ const factory = (Radio) => {
     }
 
     render () {
-      const { className, checked, disabled, label, theme, onChange, ...others } = this.props;  // eslint-disable-line
+      const { checked, children, className, disabled, label, onChange, theme, ...others } = this.props; // eslint-disable-line
       const _className = classnames(theme[this.props.disabled ? 'disabled' : 'field'], className);
       return (
-        <label data-react-toolbox='radio-button' className={_className}>
+        <label
+          {...others}
+          data-react-toolbox='radio-button'
+          className={_className}
+        >
           <input
-            {...others}
             checked={checked}
             className={theme.input}
             disabled={disabled}
@@ -63,8 +67,9 @@ const factory = (Radio) => {
             ref={node => { this.inputNode = node; }}
             type='radio'
           />
-        <Radio checked={checked} disabled={disabled} theme={theme} />
+          <Radio checked={checked} disabled={disabled} theme={theme} />
           {label ? <span className={theme.text}>{label}</span> : null}
+          {children}
         </label>
       );
     }
