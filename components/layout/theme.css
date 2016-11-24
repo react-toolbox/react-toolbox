@@ -70,6 +70,12 @@
   & .panel {
     top: var(--appbar-height);
 
+    &:not(.bodyScroll) {
+      height: calc(100vh - var(--appbar-height));
+      max-height: calc(100vh - var(--appbar-height));
+      overflow-y: scroll;
+    }
+
     @media screen and (--xxs-viewport) and (--portrait) {
       padding-top: var(--appbar-height-m-portrait);
     }
@@ -90,8 +96,8 @@
   }
 
   &:not(.navDrawerClipped) {
-    & .appbarInner {
-      padding-left: var(--drawer-mobile-width);
+    & .appbarAppBar {
+      padding-left: calc(var(--drawer-mobile-width) + var(--appbar-h-padding));
     }
   }
 
@@ -101,8 +107,8 @@
     }
 
     &:not(.navDrawerClipped) {
-      & .appbarInner {
-        padding-left: var(--drawer-desktop-width);
+      & .appbarAppBar {
+        padding-left: calc(var(--drawer-desktop-width) + var(--appbar-h-padding));
       }
     }
   }
@@ -125,8 +131,8 @@
   }
 
   &:not(.sidebarClipped) {
-    & .appbarInner {
-      padding-right: var(--drawer-mobile-width);
+    & .appbarAppBar {
+      padding-right: calc(var(--drawer-mobile-width) + var(--appbar-h-padding));
     }
   }
 
@@ -136,8 +142,8 @@
     }
 
     &:not(.sidebarClipped) {
-      & .appbarInner {
-        padding-right: var(--drawer-desktop-width);
+      & .appbarAppBar {
+        padding-right: calc(var(--drawer-desktop-width) + var(--appbar-h-padding));
       }
     }
   }
@@ -161,8 +167,8 @@
     }
 
     &:not(.sidebarClipped) {
-      & .appbarInner {
-        padding-right: calc(var(--standard-increment-$(platform)) * $(increment));
+      & .appbarAppBar {
+        padding-right: calc(var(--standard-increment-$(platform)) * $(increment) + var(--appbar-h-padding));
       }
     }
   }
@@ -211,8 +217,18 @@
 @media screen and (--larger-than-sm-tablet-viewport) {
   @each $pct in 25, 33, 50, 66, 75, 100 {
     .sidebarWidth$(pct) {
+      & .panel {
+        right: calc($(pct) * 1%);
+      }
+
       & .sidebarDrawer {
         width: calc($(pct) * 1%);
+      }
+
+      &:not(.sidebarClipped) {
+        & .appbarAppBar {
+          padding-right: calc(calc($(pct) * 1%) + var(--appbar-h-padding));
+        }
       }
     }
   }
