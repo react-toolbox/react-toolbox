@@ -215,6 +215,10 @@ $ npm start
 
 Local documentation will then be available at `http://localhost:8081/`.
 
+## Extensions
+
+We don't officially support components that are not covered by [Google Material Design](https://www.google.com/design/spec/material-design/introduction.html). If you want to implement some complementary component feel free to open a PR adding your a link in this section. For now you can check [on github: react-toolbox-additions](https://github.com/MaximKomlev/react-toolbox-additions) and [on npm: react-toolbox-additions](https://www.npmjs.com/package/react-toolbox-additions).
+
 ## License
 
 This project is licensed under the terms of the [MIT license](https://github.com/react-toolbox/react-toolbox/blob/master/LICENSE).
