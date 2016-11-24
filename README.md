@@ -217,8 +217,7 @@ Local documentation will then be available at `http://localhost:8081/`.
 
 ## Extensions
 
-The additional components which are not covered by [Google Material Design](https://www.google.com/design/spec/material-design/introduction.html) but often used such as Pager, FilePicker,... are available in:
-    [on github: react-toolbox-additions](https://github.com/MaximKomlev/react-toolbox-additions), [on npm: react-toolbox-additions](https://www.npmjs.com/package/react-toolbox-additions)
+We don't officially support components that are not covered by [Google Material Design](https://www.google.com/design/spec/material-design/introduction.html). If you want to implement some complementary component feel free to open a PR adding your a link in this section. For now you can check [on github: react-toolbox-additions](https://github.com/MaximKomlev/react-toolbox-additions) and [on npm: react-toolbox-additions](https://www.npmjs.com/package/react-toolbox-additions).
 
 ## License
 
