@@ -27,7 +27,7 @@ const factory = (Chip, Input) => {
      onChange: PropTypes.func,
      onQueryChange: PropTypes.func,
      onFocus: PropTypes.func,
-     selectedPosition: PropTypes.oneOf(['above', 'below']),
+     selectedPosition: PropTypes.oneOf(['above', 'below', 'none']),
      showSuggestionsWhenValueIsSet: PropTypes.bool,
      source: PropTypes.any,
      suggestionMatch: PropTypes.oneOf(['start', 'anywhere', 'word']),
