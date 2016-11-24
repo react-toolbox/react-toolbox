@@ -15,7 +15,7 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
-  min-width: 100vw;
+  min-width: 100%;
   position: relative;
 }
 
@@ -77,11 +77,11 @@
     }
 
     @media screen and (--xxs-viewport) and (--portrait) {
-      padding-top: var(--appbar-height-m-portrait);
+      top: var(--appbar-height-m-portrait);
     }
 
     @media screen and (--xs-viewport) and (--landscape) {
-      padding-top: var(--appbar-height-m-landscape);
+      top: var(--appbar-height-m-landscape);
     }
   }
 }
