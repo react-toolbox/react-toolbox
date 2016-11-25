@@ -207,6 +207,7 @@ To start the documentation site locally, you'll need to install the dependencies
 
 ```
 $ git clone https://github.com/react-toolbox/react-toolbox.git
+$ cd react-toolbox/
 $ npm install
 $ cd docs/
 $ npm install
