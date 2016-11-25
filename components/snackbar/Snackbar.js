@@ -59,7 +59,7 @@ const factory = (Button) => {
       }, this.props.className);
 
       return (
-        <Portal>
+        <Portal className={theme.portal}>
           <div data-react-toolbox='snackbar' className={className}>
             {icon ? <FontIcon value={icon} className={theme.icon} /> : null}
             <span className={theme.label}>
