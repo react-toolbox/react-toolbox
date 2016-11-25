@@ -53,6 +53,7 @@ If you want to provide a theme via context, the component key is `RTAutocomplete
 | `onBlur`            | `Function`             |                 | Callback function that is fired when component is blurred.|
 | `onChange`          | `Function`             |                 | Callback function that is fired when the components's value changes.|
 | `onFocus`           | `Function`             |                 | Callback function that is fired when component is focused.|
+| `onQueryChange`     | `Function`             |                 | Callback function that is fired when component's query changes, called with the new query value. |
 | `source`            | `Object` or `Array`    |                 | Object of key/values or array representing all items suggested. |
 | `selectedPosition`  | `String`               |  `above`        | Determines if the selected list is shown above or below input. It can be `above` or `below`. |
 | `showSuggestionsWhenValueIsSet` | `Bool`     | `false`         | If true, the list of suggestions will not be filtered when a value is selected, until the query is modified. |
