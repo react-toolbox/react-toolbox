@@ -96,8 +96,8 @@ const factory = (Chip, Input) => {
      }
    };
 
-   handleMouseDown = event => {
-     this.selectOrCreateActiveItem();
+   handleMouseDown = (event) => {
+     this.selectOrCreateActiveItem(event);
    }
 
    handleQueryBlur = (event) => {
@@ -127,7 +127,7 @@ const factory = (Chip, Input) => {
      }
 
      if (event.which === 13) {
-       this.selectOrCreateActiveItem();
+       this.selectOrCreateActiveItem(event);
      }
    };
 
@@ -167,7 +167,7 @@ const factory = (Chip, Input) => {
       return query_value;
    }
 
-   selectOrCreateActiveItem () {
+   selectOrCreateActiveItem (event) {
      let target = this.state.active;
      if (!target) {
        target = this.props.allowCreate
