@@ -289,7 +289,7 @@ const factory = (Chip, Input) => {
    render () {
      const {
       allowCreate, error, label, source, suggestionMatch, //eslint-disable-line no-unused-vars
-      selectedPosition, showSuggestionsWhenValueIsSet,    //eslint-disable-line no-unused-vars
+      selectedPosition, showSuggestionsWhenValueIsSet, onQueryChange,    //eslint-disable-line no-unused-vars
       theme, ...other
     } = this.props;
      const className = classnames(theme.autocomplete, {
