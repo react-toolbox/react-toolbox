@@ -79,6 +79,7 @@ If you want to provide a theme via context, the component key is `RTDatePicker`.
 | `disabled` | Added to day element when day is disabled.|
 | `header` | Used for the dialog header,.|
 | `input` | Used for Input element that opens the picker.|
+| `label` | Used for the label element.|
 | `month` | Used for the month root element.|
 | `monthsDisplay` | Added to the root dialog when months are displayed.|
 | `next` | Used for the next month icon.|
