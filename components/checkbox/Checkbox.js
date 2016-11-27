@@ -49,7 +49,7 @@ const factory = (Check) => {
     }
 
     render () {
-      const { checked, children, disabled, label, style, theme, ...others } = this.props;
+      const { checked, children, disabled, label, style, onChange, theme, ...others } = this.props; // eslint-disable-line
       const className = classnames(theme.field, {
         [theme.disabled]: this.props.disabled
       }, this.props.className);
