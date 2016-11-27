@@ -177,6 +177,8 @@ render(
 
 A couple of things here. First you need to use raw components to get this styles properly applied. Second, you have to add dependency themes by yourself. For example, the `Button` requires `Ripple` so you have to provide styles for both of them.
 
+Also, recall that all components accepts a theme verifying required classNames but there may be some missing. If any property is missing you can check the selectors you want to override straight in the DevTools.
+
 ## Roboto Font and Material Design Icons
 
 React Toolbox assumes that you are importing [Roboto Font](https://fonts.google.com/specimen/Roboto) and [Material Design Icons](https://material.io/icons/).
