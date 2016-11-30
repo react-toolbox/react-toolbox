@@ -8,22 +8,12 @@
   position: relative;
 
   &.focus {
-    & .label {
-      color: var(--autocomplete-color-primary);
-    }
-
     & .suggestions {
       box-shadow: var(--zdepth-shadow-1);
       max-height: var(--autocomplete-overflow-max-height);
       visibility: visible;
     }
   }
-}
-
-.label {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-tiny);
-  transition: color var(--animation-duration) var(--animation-curve-default);
 }
 
 .values {

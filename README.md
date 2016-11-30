@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/react-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/react-toolbox) [![Build Status](http://img.shields.io/travis/react-toolbox/react-toolbox/master.svg?style=flat-square)](https://travis-ci.org/react-toolbox/react-toolbox) [![NPM Status](http://img.shields.io/npm/dm/react-toolbox.svg?style=flat-square)](https://www.npmjs.org/package/react-toolbox) [![react-toolbox channel on discord](https://img.shields.io/badge/discord-%23react--toolbox%20%40%20reactiflux-61dafb.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bW9FLzM) [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://paypal.me/javivelasco)
 
-React Toolbox is a set of [React](http://facebook.github.io/react/) components that implement [Google's Material Design specification](https://www.google.com/design/spec/material-design/introduction.html). It's powered by [CSS Modules](https://github.com/css-modules/css-modules) and harmoniously integrates with your [webpack](http://webpack.github.io/) workflow, although you can use any other module bundler. You can take a tour through our documentation website and try the components live!
+React Toolbox is a set of [React](http://facebook.github.io/react/) components that implement [Google's Material Design specification](https://material.google.com/). It's powered by [CSS Modules](https://github.com/css-modules/css-modules) and harmoniously integrates with your [webpack](http://webpack.github.io/) workflow, although you can use any other module bundler. You can take a tour through our documentation website and try the components live!
 
 ## Installation
 
@@ -177,9 +177,11 @@ render(
 
 A couple of things here. First you need to use raw components to get this styles properly applied. Second, you have to add dependency themes by yourself. For example, the `Button` requires `Ripple` so you have to provide styles for both of them.
 
+Also, recall that all components accepts a theme verifying required classNames but there may be some missing. If any property is missing you can check the selectors you want to override straight in the DevTools.
+
 ## Roboto Font and Material Design Icons
 
-React Toolbox assumes that you are importing [Roboto Font](https://fonts.google.com/specimen/Roboto) and [Material Design Icons](https://www.google.com/design/icons/).
+React Toolbox assumes that you are importing [Roboto Font](https://fonts.google.com/specimen/Roboto) and [Material Design Icons](https://material.io/icons/).
 
 In order to import the fonts for you, we'd need to include them in the CSS which is considered a bad practice. If you are not including them in your app, go to the linked sites and follow the instructions.
 
@@ -207,6 +209,7 @@ To start the documentation site locally, you'll need to install the dependencies
 
 ```
 $ git clone https://github.com/react-toolbox/react-toolbox.git
+$ cd react-toolbox/
 $ npm install
 $ cd docs/
 $ npm install
@@ -214,6 +217,10 @@ $ npm start
 ```
 
 Local documentation will then be available at `http://localhost:8081/`.
+
+## Extensions
+
+We don't officially support components that are not covered by [Google Material Design](https://www.google.com/design/spec/material-design/introduction.html). If you want to implement some complementary component feel free to open a PR adding your a link in this section. For now you can check [on github: react-toolbox-additions](https://github.com/MaximKomlev/react-toolbox-additions) and [on npm: react-toolbox-additions](https://www.npmjs.com/package/react-toolbox-additions).
 
 ## License
 

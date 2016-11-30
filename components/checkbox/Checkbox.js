@@ -9,6 +9,7 @@ const factory = (Check) => {
   class Checkbox extends Component {
     static propTypes = {
       checked: PropTypes.bool,
+      children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
       label: PropTypes.oneOfType([
@@ -17,6 +18,8 @@ const factory = (Check) => {
       ]),
       name: PropTypes.string,
       onChange: PropTypes.func,
+      onMouseEnter: PropTypes.func,
+      onMouseLeave: PropTypes.func,
       style: PropTypes.object,
       theme: PropTypes.shape({
         disabled: PropTypes.string,
@@ -40,37 +43,47 @@ const factory = (Check) => {
     };
 
     blur () {
-      this.refs.input.blur();
+      this.inputNode && this.inputNode.blur();
     }
 
     focus () {
-      this.refs.input.focus();
+      this.inputNode && this.inputNode.focus();
     }
 
     render () {
-      const { onChange, theme, style, ...others } = this.props; //eslint-disable-line no-unused-vars
+      const { checked, children, disabled, label, name, style, onChange, // eslint-disable-line
+        onMouseEnter, onMouseLeave, theme, ...others } = this.props;
       const className = classnames(theme.field, {
         [theme.disabled]: this.props.disabled
       }, this.props.className);
 
       return (
-        <label data-react-toolbox='checkbox' className={className}>
+        <label
+          data-react-toolbox='checkbox'
+          className={className}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+        >
           <input
             {...others}
+            checked={checked}
             className={theme.input}
+            disabled={disabled}
+            name={name}
+            onChange={() => {}}
             onClick={this.handleToggle}
-            readOnly
-            ref='input'
+            ref={node => { this.inputNode = node; }}
             type='checkbox'
           />
           <Check
-            checked={this.props.checked}
-            disabled={this.props.disabled}
+            checked={checked}
+            disabled={disabled}
             rippleClassName={theme.ripple}
             style={style}
-            theme={this.props.theme}
+            theme={theme}
           />
-          {this.props.label ? <span data-react-toolbox='label' className={theme.text}>{this.props.label}</span> : null}
+          {label ? <span data-react-toolbox='label' className={theme.text}>{label}</span> : null}
+          {children}
         </label>
       );
     }

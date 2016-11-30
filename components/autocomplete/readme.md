@@ -63,13 +63,14 @@ Additional properties will be passed to the Input Component so you can use `hint
 
 ## Theme
 
+This component uses an `Input` under the covers. The theme object is passed down namespaced under `input` keyword. This means you can use the same theme classNames from `Input` component but namespaced with `input`. For example, to style the label you have to use `inputLabel` className.
+
 | Name     | Description|
 |:---------|:-----------|
 | `active` | Used for a suggestion when it's active.|
 | `autocomplete`  | Used for the root element.|
 | `focus`   | Used when the input is focused.|
 | `input`   | Used to style the `Input` component.|
-| `label`   | Used for the label.|
 | `suggestion`   | Used to style each suggestion.|
 | `suggestions`   | Used to style the suggestions container.|
 | `up`   | Used for the suggestions when it's opening to the top.|

@@ -17,6 +17,8 @@
   --button-floating-mini-font-size: calc(var(--button-floating-mini-height) / 2.25);
   --button-disabled-text-color: color(var(--color-black) a(26%));
   --button-disabled-background-color: color(var(--color-black) a(12%));
+  --button-disabled-text-color-inverse: color(var(--color-black) a(54%));
+  --button-disabled-background-inverse: color(var(--color-black) a(8%));
   --button-squared-icon-margin: calc(0.6 * var(--unit));
   --button-squared-min-width: calc(9 * var(--unit));
   --button-squared-padding: 0 calc(1.2 * var(--unit));

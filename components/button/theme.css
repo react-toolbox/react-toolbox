@@ -248,3 +248,8 @@
     }
   }
 }
+
+.neutral.inverse[disabled] {
+  background-color: var(--button-disabled-background-inverse);
+  color: var(--button-disabled-text-color-inverse);
+}

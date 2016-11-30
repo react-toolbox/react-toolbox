@@ -4,22 +4,13 @@ const GithubIcon = () => (
   </svg>
 );
 
-const ButtonsTest = () => (
-  <div>
-    <Button href='http://github.com/javivelasco' target='_blank' raised>
-      <GithubIcon /> Github
-    </Button>
-    <Button icon='bookmark' label='Bookmark' accent />
-    <Button icon='bookmark' label='Bookmark' raised primary />
-    <Button icon='inbox' label='Inbox' flat />
-    <Button icon='add' floating />
-    <Button icon='add' floating accent mini />
-    <IconButton icon='favorite' accent />
-    <IconButton icon={<GithubIcon />} accent />
-    <IconButton primary><GithubIcon /></IconButton>
-    <Button icon='add' label='Add this' flat primary />
-    <Button icon='add' label='Add this' flat disabled />
-  </div>
+const AppBarTest = () => (
+  <AppBar title="React Toolbox" leftIcon="menu" rightIcon={<GithubIcon />}>
+    <Navigation type="horizontal">
+      <Link href="http://" label="Inbox" icon="inbox" />
+      <Link href="http://" active label="Profile" icon="person" />
+    </Navigation>
+  </AppBar>
 );
 
-return <ButtonsTest />
+return <AppBarTest />

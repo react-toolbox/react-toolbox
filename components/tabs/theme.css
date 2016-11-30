@@ -5,13 +5,34 @@
 .tabs {
   display: flex;
   flex-direction: column;
-  position: relative;
 }
 
 .navigation {
   box-shadow: inset 0 -1px var(--tab-navigation-border-color);
   display: flex;
   flex-direction: row;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.navigationContainer {
+  display: flex;
+
+  & .navigation {
+    flex: 1;
+  }
+}
+
+.arrow {
+  color: var(--tab-text-color);
+  padding: 0 var(--tab-label-h-padding);
+}
+
+.arrowContainer {
+  align-items: center;
+  box-shadow: inset 0 -1px var(--tab-navigation-border-color);
+  cursor: pointer;
+  display: flex;
 }
 
 .label {
@@ -94,7 +115,8 @@
 }
 
 .inverse {
-  & .navigation {
+  & .navigation,
+  & .arrowContainer {
     background-color: var(--tab-inverse-bar-color);
   }
 
@@ -104,6 +126,10 @@
     &.active {
       color: var(--tab-inverse-text-color);
     }
+  }
+
+  & .arrow {
+    color: var(--tab-inverse-text-color);
   }
 
   & .pointer {

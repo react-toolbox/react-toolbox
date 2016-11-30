@@ -197,8 +197,9 @@ const factory = (ProgressBar, Input) => {
 
     positionToValue (position) {
       const { sliderStart: start, sliderLength: length } = this.state;
-      const { max, min } = this.props;
-      return this.trimValue((position.x - start) / length * (max - min) + min);
+      const { max, min, step } = this.props;
+      const pos = (position.x - start) / length * (max - min);
+      return this.trimValue(Math.round(pos / step) * step + min);
     }
 
     start (position) {

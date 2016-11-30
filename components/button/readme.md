@@ -1,6 +1,6 @@
 # Button
 
-A [button](https://www.google.com/design/spec/components/buttons.html) clearly communicates what action will occur when the user touches it. It consists of text, an image, or both, designed in accordance with your app’s color theme.
+A [button](https://material.google.com/components/buttons.html) clearly communicates what action will occur when the user touches it. It consists of text, an image, or both, designed in accordance with your app’s color theme.
 
 <!-- example -->
 ```jsx
@@ -23,6 +23,7 @@ const TestButtons = () => (
     <Button icon='add' floating />
     <Button icon='add' floating accent mini />
     <IconButton icon='favorite' accent />
+    <IconButton icon={<GithubIcon />} accent />
     <IconButton primary><GithubIcon /></IconButton>
     <Button icon='add' label='Add this' flat primary />
     <Button icon='add' label='Add this' flat disabled />

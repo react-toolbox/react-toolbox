@@ -40,6 +40,21 @@ interface TabsProps extends ReactToolbox.Props {
    */
   index?: number;
   /**
+   * `unmounted` mode will not mount the tab content of inactive tabs.
+   * `display` mode will mount but hide inactive tabs.
+   * Consider holding state outside of the Tabs component before using `display` mode
+   * @default unmounted
+   */
+  hideMode?: 'display' | 'unmounted';
+  /**
+   * If True, the tabs will have an inverse style.
+   */
+  inverse?: boolean;
+  /**
+   * If True, the tabs will be fixed, covering the whole width.
+   */
+  fixed?: boolean;
+  /**
    * Callback function that is fired when the tab changes.
    */
   onChange?: Function;

@@ -30,7 +30,8 @@ const factory = (ripple, FontIcon) => {
       accent: false,
       className: '',
       neutral: true,
-      primary: false
+      primary: false,
+      type: 'button'
     };
 
     handleMouseUp = (event) => {
@@ -45,7 +46,7 @@ const factory = (ripple, FontIcon) => {
 
     render () {
       const {accent, children, className, href, icon, inverse, neutral,
-        primary, theme, ...others} = this.props;
+        primary, theme, type, ...others} = this.props;
       const element = href ? 'a' : 'button';
       const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
       const classes = classnames([theme.toggle], {
@@ -61,11 +62,12 @@ const factory = (ripple, FontIcon) => {
         disabled: this.props.disabled,
         onMouseUp: this.handleMouseUp,
         onMouseLeave: this.handleMouseLeave,
+        type: !href ? type : null,
         'data-react-toolbox': 'button'
       };
 
       return React.createElement(element, props,
-        icon ? <FontIcon className={theme.icon} value={icon}/> : null,
+        icon ? typeof icon === 'string' ? <FontIcon className={theme.icon} value={icon} /> : icon : null,
         children
       );
     }

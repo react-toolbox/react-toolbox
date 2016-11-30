@@ -21,6 +21,7 @@ const factory = (Chip, Input) => {
      direction: PropTypes.oneOf(['auto', 'up', 'down']),
      disabled: PropTypes.bool,
      error: PropTypes.string,
+     keepFocusOnChange: PropTypes.bool,
      label: PropTypes.string,
      multiple: PropTypes.bool,
      onBlur: PropTypes.func,
@@ -35,7 +36,6 @@ const factory = (Chip, Input) => {
        autocomplete: PropTypes.string,
        focus: PropTypes.string,
        input: PropTypes.string,
-       label: PropTypes.string,
        suggestion: PropTypes.string,
        suggestions: PropTypes.string,
        up: PropTypes.string,
@@ -49,8 +49,9 @@ const factory = (Chip, Input) => {
      allowCreate: false,
      className: '',
      direction: 'auto',
-     selectedPosition: 'above',
+     keepFocusOnChange: false,
      multiple: true,
+     selectedPosition: 'above',
      showSuggestionsWhenValueIsSet: false,
      source: {},
      suggestionMatch: 'start'
@@ -83,25 +84,33 @@ const factory = (Chip, Input) => {
 
    handleChange = (keys, event) => {
      const key = this.props.multiple ? keys : keys[0];
+     const { showSuggestionsWhenValueIsSet: showAllSuggestions } = this.props;
      const query = this.query(key);
      if (this.props.onChange) this.props.onChange(key, event);
-     this.setState(
-       {focus: false, query, showAllSuggestions: this.props.showSuggestionsWhenValueIsSet},
-       () => { ReactDOM.findDOMNode(this).querySelector('input').blur(); }
-     );
+     if (this.props.keepFocusOnChange) {
+       this.setState({ query, showAllSuggestions });
+     } else {
+       this.setState({ focus: false, query, showAllSuggestions }, () => {
+         ReactDOM.findDOMNode(this).querySelector('input').blur();
+       });
+     }
    };
+
+   handleMouseDown = (event) => {
+     this.selectOrCreateActiveItem(event);
+   }
 
    handleQueryBlur = (event) => {
      if (this.state.focus) this.setState({focus: false});
-     if (this.props.onBlur) this.props.onBlur(event);
+     if (this.props.onBlur) this.props.onBlur(event, this.state.active);
    };
 
    handleQueryChange = (value) => {
-     this.setState({query: value, showAllSuggestions: false});
+     this.setState({query: value, showAllSuggestions: false, active: null});
    };
 
    handleQueryFocus = () => {
-     this.refs.suggestions.scrollTop = 0;
+     this.suggestionsNode.scrollTop = 0;
      this.setState({active: '', focus: true});
      if (this.props.onFocus) this.props.onFocus();
    };
@@ -116,20 +125,13 @@ const factory = (Chip, Input) => {
      if (shouldClearQuery) {
        this.setState({query: ''});
      }
+
+     if (event.which === 13) {
+       this.selectOrCreateActiveItem(event);
+     }
    };
 
    handleQueryKeyUp = (event) => {
-     if (event.which === 13) {
-       let target = this.state.active;
-       if (!target) {
-         target = this.props.allowCreate
-           ? this.state.query
-           : [...this.suggestions().keys()][0];
-         this.setState({active: target});
-       }
-       this.select(event, target);
-     }
-
      if (event.which === 27) ReactDOM.findDOMNode(this).querySelector('input').blur();
 
      if ([40, 38].indexOf(event.which) !== -1) {
@@ -147,7 +149,7 @@ const factory = (Chip, Input) => {
 
    calculateDirection () {
      if (this.props.direction === 'auto') {
-       const client = ReactDOM.findDOMNode(this.refs.input).getBoundingClientRect();
+       const client = ReactDOM.findDOMNode(this.inputNode).getBoundingClientRect();
        const screen_height = window.innerHeight || document.documentElement.offsetHeight;
        const up = client.top > ((screen_height / 2) + client.height);
        return up ? 'up' : 'down';
@@ -163,7 +165,18 @@ const factory = (Chip, Input) => {
         query_value = source_value ? source_value : key;
       }
       return query_value;
-    }
+   }
+
+   selectOrCreateActiveItem (event) {
+     let target = this.state.active;
+     if (!target) {
+       target = this.props.allowCreate
+         ? this.state.query
+         : [...this.suggestions().keys()][0];
+       this.setState({active: target});
+     }
+     this.select(event, target);
+   }
 
    suggestions () {
      let suggest = new Map();
@@ -272,7 +285,7 @@ const factory = (Chip, Input) => {
            id={key}
            key={key}
            className={className}
-           onMouseDown={this.select}
+           onMouseDown={this.handleMouseDown}
            onMouseOver={this.handleSuggestionHover}
          >
            {value}
@@ -280,14 +293,20 @@ const factory = (Chip, Input) => {
        );
      });
 
-     const className = classnames(theme.suggestions, {[theme.up]: this.state.direction === 'up'});
-     return <ul ref='suggestions' className={className}>{suggestions}</ul>;
+     return (
+       <ul
+         className={classnames(theme.suggestions, {[theme.up]: this.state.direction === 'up'})}
+         ref={node => { this.suggestionsNode = node; }}
+       >
+         {suggestions}
+       </ul>
+     );
    }
 
    render () {
      const {
       allowCreate, error, label, source, suggestionMatch, //eslint-disable-line no-unused-vars
-      selectedPosition, showSuggestionsWhenValueIsSet,    //eslint-disable-line no-unused-vars
+      selectedPosition, keepFocusOnChange, showSuggestionsWhenValueIsSet,    //eslint-disable-line no-unused-vars
       theme, ...other
     } = this.props;
      const className = classnames(theme.autocomplete, {
@@ -299,7 +318,8 @@ const factory = (Chip, Input) => {
          {this.props.selectedPosition === 'above' ? this.renderSelected() : null}
          <Input
            {...other}
-           ref='input'
+           ref={node => { this.inputNode = node; }}
+           autoComplete="off"
            className={theme.input}
            error={error}
            label={label}
@@ -308,6 +328,8 @@ const factory = (Chip, Input) => {
            onFocus={this.handleQueryFocus}
            onKeyDown={this.handleQueryKeyDown}
            onKeyUp={this.handleQueryKeyUp}
+           theme={theme}
+           themeNamespace="input"
            value={this.state.query}
          />
          {this.renderSuggestions()}

@@ -1,6 +1,6 @@
 # Radio buttons
 
-[Radio buttons](https://www.google.com/design/spec/components/selection-controls.html#selection-controls-radio-button) allow the user to select one option from a set. Use radio buttons for exclusive selection if you think that the user needs to see all available options side-by-side. Otherwise, consider a dropdown, which uses less space than displaying all options. They should always be used along with `RadioGroup`.
+[Radio buttons](https://material.google.com/components/selection-controls.html#selection-controls-radio-button) allow the user to select one option from a set. Use radio buttons for exclusive selection if you think that the user needs to see all available options side-by-side. Otherwise, consider a dropdown, which uses less space than displaying all options. They should always be used along with `RadioGroup`.
 
 You can provide the theme for this component using the key `ToolboxButton`
 

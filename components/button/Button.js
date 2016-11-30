@@ -52,7 +52,8 @@ const factory = (ripple, FontIcon) => {
       mini: false,
       neutral: true,
       primary: false,
-      raised: false
+      raised: false,
+      type: 'button'
     };
 
     handleMouseUp = (event) => {
@@ -67,7 +68,7 @@ const factory = (ripple, FontIcon) => {
 
     render () {
       const { accent, children, className, flat, floating, href, icon,
-        inverse, label, mini, neutral, primary, theme, raised, ...others} = this.props;
+        inverse, label, mini, neutral, primary, theme, type, raised, ...others} = this.props;
       const element = href ? 'a' : 'button';
       const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
       const shape = flat ? 'flat' : raised ? 'raised' : floating ? 'floating' : 'flat';
@@ -86,6 +87,7 @@ const factory = (ripple, FontIcon) => {
         disabled: this.props.disabled,
         onMouseUp: this.handleMouseUp,
         onMouseLeave: this.handleMouseLeave,
+        type: !href ? type : null,
         'data-react-toolbox': 'button'
       };
 

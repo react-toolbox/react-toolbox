@@ -30,6 +30,7 @@
   height: 0;
   opacity: 0;
   overflow: hidden;
+  position: absolute;
   width: 0;
 
   &:focus ~ .check {
