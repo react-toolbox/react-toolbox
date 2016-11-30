@@ -11,7 +11,7 @@
   --color-primary-contrast: var(--color-dark-contrast);
   --color-accent-contrast: var(--color-dark-contrast);
 
-  --unit: 1rem;
+  --unit: 10px;
 
   --preferred-font: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   --font-size: calc(1.6 * var(--unit));
