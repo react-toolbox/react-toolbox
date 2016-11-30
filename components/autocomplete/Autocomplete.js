@@ -27,7 +27,9 @@ const factory = (Chip, Input) => {
      onBlur: PropTypes.func,
      onChange: PropTypes.func,
      onFocus: PropTypes.func,
-     selectedPosition: PropTypes.oneOf(['above', 'below']),
+     onQueryChange: PropTypes.func,
+     selectedPosition: PropTypes.oneOf(['above', 'below', 'none']),
+     showSelectedWhenNotInSource: PropTypes.bool,
      showSuggestionsWhenValueIsSet: PropTypes.bool,
      source: PropTypes.any,
      suggestionMatch: PropTypes.oneOf(['start', 'anywhere', 'word']),
@@ -53,6 +55,7 @@ const factory = (Chip, Input) => {
      multiple: true,
      selectedPosition: 'above',
      showSuggestionsWhenValueIsSet: false,
+     showSelectedWhenNotInSource: false,
      source: {},
      suggestionMatch: 'start'
    };
@@ -61,14 +64,23 @@ const factory = (Chip, Input) => {
      direction: this.props.direction,
      focus: false,
      showAllSuggestions: this.props.showSuggestionsWhenValueIsSet,
-     query: this.query(this.props.value)
+     query: this.query(this.props.value),
+     isValueAnObject: false
    };
+
+   componentDidMount () {
+     this.setIsValueAnObject();
+   }
 
    componentWillReceiveProps (nextProps) {
      if (!this.props.multiple) {
        this.setState({
          query: this.query(nextProps.value)
        });
+     }
+
+     if (nextProps.multiple && this.props.value !== nextProps.value) {
+        this.setIsValueAnObject();
      }
    }
 
@@ -82,11 +94,11 @@ const factory = (Chip, Input) => {
      return true;
    }
 
-   handleChange = (keys, event) => {
-     const key = this.props.multiple ? keys : keys[0];
+   handleChange = (values, event) => {
+     const value = this.props.multiple ? values : values[0];
      const { showSuggestionsWhenValueIsSet: showAllSuggestions } = this.props;
-     const query = this.query(key);
-     if (this.props.onChange) this.props.onChange(key, event);
+     const query = this.query(value);
+     if (this.props.onChange) this.props.onChange(value, event);
      if (this.props.keepFocusOnChange) {
        this.setState({ query, showAllSuggestions });
      } else {
@@ -96,9 +108,9 @@ const factory = (Chip, Input) => {
      }
    };
 
-   handleMouseDown = event => {
+   handleMouseDown = () => {
      this.selectOrCreateActiveItem();
-   }
+   };
 
    handleQueryBlur = (event) => {
      if (this.state.focus) this.setState({focus: false});
@@ -106,6 +118,7 @@ const factory = (Chip, Input) => {
    };
 
    handleQueryChange = (value) => {
+     if (this.props.onQueryChange) this.props.onQueryChange(value);
      this.setState({query: value, showAllSuggestions: false, active: null});
    };
 
@@ -234,10 +247,17 @@ const factory = (Chip, Input) => {
    }
 
    values () {
-     const valueMap = new Map();
      const vals = this.props.multiple ? this.props.value : [this.props.value];
+
+     if (this.props.showSelectedWhenNotInSource && this.state.isValueAnObject) {
+       return new Map(Object.entries(vals));
+     }
+
+     const valueMap = new Map();
      for (const [k, v] of this.source()) {
-       if (vals.indexOf(k) !== -1) valueMap.set(k, v);
+       if ((Array.isArray(vals) && vals.indexOf(k) !== -1) || (k in vals)) {
+         valueMap.set(k, v);
+       }
      }
      return valueMap;
    }
@@ -245,17 +265,49 @@ const factory = (Chip, Input) => {
    select = (event, target) => {
      events.pauseEvent(event);
      const values = this.values(this.props.value);
+     const source = this.source();
      const newValue = target === void 0 ? event.target.id : target;
+
+     if (this.state.isValueAnObject) {
+       const newItem = Array.from(source).reduce((obj, [k, value]) => {
+         if (k === newValue) {
+           obj[k] = value;
+         }
+         return obj;
+       }, {});
+
+       return this.handleChange(Object.assign(this.mapToObject(values), newItem), event);
+     }
+
      this.handleChange([newValue, ...values.keys()], event);
    };
 
    unselect (key, event) {
      if (!this.props.disabled) {
        const values = this.values(this.props.value);
+
        values.delete(key);
+
+       if (this.state.isValueAnObject) {
+         return this.handleChange(this.mapToObject(values), event);
+       }
+
        this.handleChange([...values.keys()], event);
      }
    }
+
+   setIsValueAnObject () {
+      this.setState({
+        isValueAnObject: !Array.isArray(this.props.value) && typeof this.props.value === 'object'
+      });
+    }
+
+    mapToObject (map) {
+      return Array.from(map).reduce((obj, [k, value]) => {
+        obj[k] = value;
+        return obj;
+      }, {});
+    }
 
    renderSelected () {
      if (this.props.multiple) {
@@ -306,7 +358,7 @@ const factory = (Chip, Input) => {
    render () {
      const {
       allowCreate, error, label, source, suggestionMatch, //eslint-disable-line no-unused-vars
-      selectedPosition, keepFocusOnChange, showSuggestionsWhenValueIsSet,    //eslint-disable-line no-unused-vars
+      selectedPosition, keepFocusOnChange, showSuggestionsWhenValueIsSet, showSelectedWhenNotInSource, onQueryChange,   //eslint-disable-line no-unused-vars
       theme, ...other
     } = this.props;
      const className = classnames(theme.autocomplete, {
