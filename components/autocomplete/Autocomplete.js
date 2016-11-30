@@ -65,14 +65,11 @@ const factory = (Chip, Input) => {
      focus: false,
      showAllSuggestions: this.props.showSuggestionsWhenValueIsSet,
      query: this.query(this.props.value),
-     valueIsObject: false
+     isValueAnObject: false
    };
 
    componentDidMount () {
-     this.setState({
-       // TODO: Move to method
-       valueIsObject: !Array.isArray(this.props.value) && typeof this.props.value === 'object'
-     });
+     this.setIsValueAnObject();
    }
 
    componentWillReceiveProps (nextProps) {
@@ -81,13 +78,9 @@ const factory = (Chip, Input) => {
          query: this.query(nextProps.value)
        });
      }
-     // TODO: Better comparison?
+
      if (nextProps.multiple && this.props.value !== nextProps.value) {
-       console.log('value has changed fo real', nextProps.value);
-       this.setState({
-         // TODO: Move to method
-         valueIsObject: !Array.isArray(nextProps.value) && typeof nextProps.value === 'object'
-       });
+        this.setIsValueAnObject();
      }
    }
 
@@ -102,12 +95,9 @@ const factory = (Chip, Input) => {
    }
 
    handleChange = (values, event) => {
-     console.log('handle change', values);
      const value = this.props.multiple ? values : values[0];
-     console.log('new keys here in handle change', value);
      const { showSuggestionsWhenValueIsSet: showAllSuggestions } = this.props;
      const query = this.query(value);
-     // TODO: Pass back key/value if object originally supplied for value
      if (this.props.onChange) this.props.onChange(value, event);
      if (this.props.keepFocusOnChange) {
        this.setState({ query, showAllSuggestions });
@@ -208,17 +198,15 @@ const factory = (Chip, Input) => {
      const values = this.values();
      const source = this.source();
 
-     console.log('in suggestions', values);
      // Suggest any non-set value which matches the query
      if (this.props.multiple) {
        for (const [key, value] of source) {
-         //if ((Array.isArray(values) && !values.has(key)) && this.matches(value.toLowerCase().trim(), query)) {
-         if ((!values.has(key)) && this.matches(value.toLowerCase().trim(), query)) {
+         if (!values.has(key) && this.matches(value.toLowerCase().trim(), query)) {
            suggest.set(key, value);
          }
        }
 
-     // When multipleArray is false, suggest any value which matches the query if showAllSuggestions is false
+     // When multiple is false, suggest any value which matches the query if showAllSuggestions is false
      } else if (query && !this.state.showAllSuggestions) {
        for (const [key, value] of source) {
          if (this.matches(value.toLowerCase().trim(), query)) {
@@ -226,7 +214,7 @@ const factory = (Chip, Input) => {
          }
        }
 
-     // When multipleArray is false, suggest all values when showAllSuggestions is true
+     // When multiple is false, suggest all values when showAllSuggestions is true
      } else {
        suggest = source;
      }
@@ -261,7 +249,7 @@ const factory = (Chip, Input) => {
    values () {
      const vals = this.props.multiple ? this.props.value : [this.props.value];
 
-     if (this.props.showSelectedWhenNotInSource && typeof vals === 'object') {
+     if (this.props.showSelectedWhenNotInSource && this.state.isValueAnObject) {
        return new Map(Object.entries(vals));
      }
 
@@ -276,31 +264,19 @@ const factory = (Chip, Input) => {
 
    select = (event, target) => {
      events.pauseEvent(event);
-     let values = this.values(this.props.value);
+     const values = this.values(this.props.value);
      const source = this.source();
      const newValue = target === void 0 ? event.target.id : target;
-     console.log('selected', target, event.target);
-     if (this.state.valueIsObject) {
-       console.log('current values', values);
-       console.log('new value', newValue);
 
-       const sourceObj = Array.from(source).reduce((obj, [k, value]) => {
-         console.log('reducer', 'key', k, 'value', value);
+     if (this.state.isValueAnObject) {
+       const newItem = Array.from(source).reduce((obj, [k, value]) => {
          if (k === newValue) {
-           obj[k] = value; // Be careful! ES6 Maps may have non-String keys.
+           obj[k] = value;
          }
          return obj;
        }, {});
 
-       values = Array.from(values).reduce((obj, [ke, value]) => {
-         console.log('reducer', 'key', ke, 'value', value);
-           obj[ke] = value; // Be careful! ES6 Maps may have non-String keys.
-          return obj;
-       }, {});
-
-       console.log('new obj', sourceObj);
-
-       return this.handleChange(Object.assign(values, sourceObj), event);
+       return this.handleChange(Object.assign(this.mapToObject(values), newItem), event);
      }
 
      this.handleChange([newValue, ...values.keys()], event);
@@ -310,66 +286,43 @@ const factory = (Chip, Input) => {
      if (!this.props.disabled) {
        const values = this.values(this.props.value);
 
-       console.log('unselected vals', values, 'key', key);
-       /*if (typeof values === 'object') {
-         delete values[key];
-
-         return this.handleChange(Object.keys(values), event);
-       }*/
-
        values.delete(key);
 
-       console.log('new keys', values.keys());
-
-       if (this.state.valueIsObject) {
-         const valuesObj = Array.from(values).reduce((obj, [k, value]) => {
-           obj[k] = value; // Be careful! ES6 Maps may have non-String keys.
-           return obj;
-         }, {});
-
-         return this.handleChange(valuesObj, event);
+       if (this.state.isValueAnObject) {
+         return this.handleChange(this.mapToObject(values), event);
        }
+
        this.handleChange([...values.keys()], event);
      }
    }
 
+   setIsValueAnObject () {
+      this.setState({
+        isValueAnObject: !Array.isArray(this.props.value) && typeof this.props.value === 'object'
+      });
+    }
+
+    mapToObject (map) {
+      return Array.from(map).reduce((obj, [k, value]) => {
+        obj[k] = value;
+        return obj;
+      }, {});
+    }
+
    renderSelected () {
      if (this.props.multiple) {
-       let selectedItems = [];
-
-       if (typeof this.values() === 'object') {
-         console.log('values here', this.values().keys());
-
-         // TODO: Extract to renderSelectedFromObject and renderSelectedFromArray methods
-         selectedItems = [...this.values()].map(([key, value]) => {
-           console.log('key', key, 'value', value, 'name', this.values()[key]);
-           return (
-             <Chip
-               key={key}
-               className={this.props.theme.value}
-               deletable
-               onDeleteClick={this.unselect.bind(this, key)}
-             >
-               {value}
-             </Chip>
-           );
-         });
-       } else {
-         selectedItems = [...this.values()].map(([key, value]) => {
-           return (
-             <Chip
-               key={key}
-               className={this.props.theme.value}
-               deletable
-               onDeleteClick={this.unselect.bind(this, key)}
-             >
-               {value}
-             </Chip>
-           );
-         });
-       }
-
-       console.log('items', selectedItems);
+       const selectedItems = [...this.values()].map(([key, value]) => {
+         return (
+           <Chip
+             key={key}
+             className={this.props.theme.value}
+             deletable
+             onDeleteClick={this.unselect.bind(this, key)}
+           >
+             {value}
+           </Chip>
+         );
+       });
 
        return <ul className={this.props.theme.values}>{selectedItems}</ul>;
      }
