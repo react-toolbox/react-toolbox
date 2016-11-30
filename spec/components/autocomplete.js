@@ -5,19 +5,28 @@ class AutocompleteTest extends React.Component {
   state = {
     simple: 'Spain',
     simpleShowAll: 'England',
-    multiple: ['ES-es', 'TH-th'],
+    multipleArray: ['ES-es', 'TH-th'],
+    multipleObject: {'ES-es': 'Spain', 'TH-th': 'Thailand'},
     countriesArray: ['Spain', 'England', 'USA', 'Thailand', 'Tongo', 'Slovenia'],
-    countriesObject: {'ES-es': 'Spain', 'TH-th': 'Thailand', 'EN-gb': 'England',
-      'EN-en': 'United States of America', 'EN-nz': 'New Zealand'}
+    countriesObject: {
+      'EN-gb': 'England',
+      'EN-en': 'United States of America', 'EN-nz': 'New Zealand'
+    }
   };
 
-  handleMultipleChange = (value) => {
+  handleMultipleArrayChange = (value) => {
     this.setState({
-      multiple: value,
+      multipleArray: value,
       countriesObject: {
         ...this.state.countriesObject,
         ...(value[0] && !this.state.countriesObject[value[0]]) ? {[value[0]]: value[0]} : {}
       }
+    });
+  };
+
+  handleMultipleObjectChange = (value) => {
+    this.setState({
+      multipleObject: value
     });
   };
 
@@ -29,6 +38,15 @@ class AutocompleteTest extends React.Component {
     this.setState({simpleShowAll: value});
   };
 
+  handleQueryChange = () => {
+    /*this.setState({
+      countriesObject: {
+        'EN-gb': 'England',
+        'EN-en': 'United States of America', 'EN-nz': 'New Zealand'
+      },
+    })*/
+  };
+
   render () {
     return (
       <section>
@@ -38,10 +56,22 @@ class AutocompleteTest extends React.Component {
         <Autocomplete
           allowCreate
           label="Pick multiple elements..."
-          onChange={this.handleMultipleChange}
+          onChange={this.handleMultipleArrayChange}
+          //onQueryChange={this.handleQueryChange}
           source={this.state.countriesObject}
           suggestionMatch="anywhere"
-          value={this.state.multiple}
+          value={this.state.multipleArray}
+        />
+
+        <Autocomplete
+          allowCreate
+          label="Pick multiple elements (showValuesWhenNotInSource example)..."
+          onChange={this.handleMultipleObjectChange}
+          //onQueryChange={this.handleQueryChange}
+          showSelectedWhenNotInSource
+          source={this.state.countriesObject}
+          suggestionMatch="anywhere"
+          value={this.state.multipleObject}
         />
 
         <Autocomplete

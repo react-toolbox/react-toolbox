@@ -162,6 +162,7 @@
       "location": "start"
     }],
     "no-with": [2],
+    "object-shorthand": [2],
     "one-var": [0],
     "operator-assignment": [0, "always"],
     "operator-linebreak": [2, "before"],
@@ -200,7 +201,6 @@
     "yoda": [2, "never", {
       "exceptRange": true
     }],
-    "babel/object-shorthand": [2],
     "react/display-name": 0,
     "react/jsx-boolean-value": 1,
     "react/jsx-closing-bracket-location": 0,
