@@ -1,0 +1,55 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+
+.tooltip {
+  position: absolute;
+  z-index: $z-index-higher;
+  display: block;
+  max-width: $tooltip-max-width;
+  padding: $tooltip-margin;
+  font-family: Roboto, sans-serif;
+  font-size: $tooltip-font-size;
+  font-weight: $font-weight-bold;
+  line-height: $font-size-small;
+  text-align: center;
+  text-transform: none;
+  pointer-events: none;
+  transition: $animation-curve-default $tooltip-animation-duration transform;
+  transform: scale(0) translateX(-50%);
+  transform-origin: top left;
+
+  &.tooltipActive {
+    transform: scale(1) translateX(-50%);
+  }
+
+  &.tooltipTop {
+    transform: scale(0) translateX(-50%) translateY(-100%);
+    &.tooltipActive {
+      transform: scale(1) translateX(-50%) translateY(-100%);
+    }
+  }
+
+  &.tooltipLeft {
+    transform: scale(0) translateX(-100%) translateY(-50%);
+    &.tooltipActive {
+      transform: scale(1) translateX(-100%) translateY(-50%);
+    }
+  }
+
+  &.tooltipRight {
+    transform: scale(0) translateX(0) translateY(-50%);
+    &.tooltipActive {
+      transform: scale(1) translateX(0) translateY(-50%);
+    }
+  }
+}
+
+.tooltipInner {
+  display: block;
+  padding: $tooltip-padding;
+  color: $tooltip-color;
+  background: $tooltip-background;
+  border-radius: $tooltip-border-radius;
+}

@@ -1,0 +1,146 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+
+.linear {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: $progress-height;
+  overflow: hidden;
+  background: $color-divider;
+  &.indeterminate .value {
+    transform-origin: center center;
+    animation: linear-indeterminate-bar 1s linear infinite;
+  }
+}
+
+.value, .buffer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transition-timing-function: $animation-curve-default;
+  transition-duration: $animation-duration;
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.value {
+  background-color: $progress-main-color;
+}
+
+[disabled] .value {
+  background-color: $progress-disabled-color;
+}
+
+.buffer {
+  background-image: linear-gradient(to right, $progress-secondary-color, $progress-secondary-color),
+  linear-gradient(to right, $progress-main-color, $progress-main-color);
+}
+
+[disabled] .buffer {
+  background-image: linear-gradient(to right, $progress-secondary-color, $progress-secondary-color),
+  linear-gradient(to right, $progress-disabled-color, $progress-disabled-color);
+}
+
+.circular {
+  position: relative;
+  display: inline-block;
+  width: $circle-wrapper-width * 1px;
+  height: $circle-wrapper-width * 1px;
+  transform: rotate(-90deg);
+  &.indeterminate {
+    .circle {
+      animation: circular-indeterminate-bar-rotate 2s linear infinite;
+    }
+    .path {
+      animation: circular-indeterminate-bar-dash 1.5s ease-in-out infinite;
+
+      stroke-dasharray: $scale-ratio * 1, $scale-ratio * 200;
+      stroke-dashoffset: 0;
+    }
+    &.multicolor .path {
+      animation: circular-indeterminate-bar-dash 1.5s ease-in-out infinite,
+      colors (1.5s * 4) ease-in-out infinite;
+    }
+  }
+}
+
+.circle {
+  width: 100%;
+  height: 100%;
+}
+
+.path {
+  transition: stroke-dasharray $animation-duration $animation-curve-default;
+  fill: none;
+
+  stroke-dasharray: 0, $scale-ratio * 200;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  stroke-miterlimit: 20;
+  stroke-width: 4;
+  stroke: $progress-main-color;
+}
+
+@keyframes linear-indeterminate-bar {
+  0% {
+    transform: translate(-50%) scaleX(0);
+  }
+
+  50% {
+    transform: translate(-0%) scaleX(.3);
+  }
+
+  100% {
+    transform: translate(50%) scaleX(0);
+  }
+}
+
+@keyframes circular-indeterminate-bar-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes circular-indeterminate-bar-dash {
+  0% {
+    stroke-dasharray: $scale-ratio * 1, $scale-ratio * 200;
+    stroke-dashoffset: $scale-ratio * 0;
+  }
+
+  50% {
+    stroke-dasharray: $scale-ratio * 89, $scale-ratio * 200;
+    stroke-dashoffset: $scale-ratio * -35;
+  }
+
+  100% {
+    stroke-dasharray: $scale-ratio * 89, $scale-ratio * 200;
+    stroke-dashoffset: $scale-ratio * -124;
+  }
+}
+
+@keyframes colors {
+  0% {
+    stroke: #4285f4;
+  }
+
+  25% {
+    stroke: #de3e35;
+  }
+
+  50% {
+    stroke: #f7c223;
+  }
+
+  75% {
+    stroke: #1b9a59;
+  }
+
+  100% {
+    stroke: #4285f4;
+  }
+}

@@ -1,0 +1,200 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+
+.container {
+  position: relative;
+  width: calc(100% - #{$slider-knob-size});
+  height: $slider-knob-size;
+  margin-right: $slider-knob-size;
+  user-select: none;
+  &:not(:last-child) {
+    margin-right: $slider-side-separation + $slider-knob-size;
+  }
+  &:not(:first-child) {
+    margin-left: $slider-side-separation;
+  }
+}
+
+.knob {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: $z-index-higher;
+  display: flex;
+  width: $slider-knob-size;
+  height: $slider-knob-size;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+
+.innerknob {
+  z-index: $z-index-high;
+  width: $slider-inner-knob-size;
+  height: $slider-inner-knob-size;
+  background-color: $slider-main-color;
+  border-radius: 50%;
+  transition-timing-function: $animation-curve-default;
+  transition-duration: .1s;
+  transition-property: height, width, background-color, border;
+}
+
+.snaps {
+  position: absolute;
+  top: $slider-knob-size / 2 - $slider-snap-size / 2;
+  left: 0;
+  display: flex;
+  width: calc(100% + #{$slider-snap-size});
+  height: $slider-snap-size;
+  flex-direction: row;
+  pointer-events: none;
+  &:after {
+    display: block;
+    width: $slider-snap-size;
+    height: $slider-snap-size;
+    content: "";
+    background-color: $slider-snap-color;
+    border-radius: 50%;
+  }
+}
+
+.snap {
+  flex: 1;
+  &:after {
+    display: block;
+    width: $slider-snap-size;
+    height: $slider-snap-size;
+    content: "";
+    background-color: $slider-snap-color;
+    border-radius: 50%;
+  }
+}
+
+.input {
+  width: $slider-input-width;
+  padding: 0;
+  margin-bottom: 0;
+  > input {
+    text-align: center;
+  }
+}
+
+.progress {
+  position: absolute;
+  top: 0;
+  left: $slider-knob-size / 2;
+  width: 100%;
+  height: 100%;
+  .innerprogress {
+    position: absolute;
+    top: $slider-knob-size / 2 - $slider-bar-height / 2;
+    height: $slider-bar-height;
+    [data-ref="value"] {
+      transition-duration: 0s;
+    }
+  }
+}
+
+.slider {
+  &:focus .knob:before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: $z-index-normal;
+    content: "";
+    background-color: $slider-main-color;
+    border-radius: 50%;
+    opacity: .26;
+  }
+  &[disabled] {
+    pointer-events: none;
+    cursor: auto;
+    .innerknob {
+      background-color: $slider-disabled-color;
+    }
+  }
+  &.editable {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  &.pinned .innerknob {
+    &:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: $slider-pin-size;
+      height: $slider-pin-size;
+      margin-left: ($slider-knob-size - $slider-pin-size) / 2;
+      content: "";
+      background-color: $slider-main-color;
+      border-radius: 50% 50% 50% 0;
+      transition: transform .2s ease, background-color .18s ease;
+      transform: rotate(-45deg) scale(0) translate(0);
+    }
+    &:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: $slider-knob-size;
+      height: $slider-pin-size;
+      font-size: 10px;
+      color: $color-background;
+      text-align: center;
+      content: attr(data-value);
+      transition: transform .2s ease, background-color .18s ease;
+      transform: scale(0) translate(0);
+    }
+  }
+  &.pressed {
+    &.pinned .innerknob {
+      &:before {
+        transition-delay: 100ms;
+        transform: rotate(-45deg) scale(1) translate($slider-pin-elevation, - $slider-pin-elevation);
+      }
+      &:after {
+        transition-delay: 100ms;
+        transform: scale(1) translate(0, - $slider-pin-elevation);
+      }
+    }
+    &:not(.pinned) {
+      &.ring .progress {
+        left: $slider-knob-size / 2 + ($slider-knob-size - $slider-empty-knob-border * 2) / 2;
+        width: calc(100% - #{($slider-knob-size - $slider-empty-knob-border * 2) / 2});
+      }
+      .innerknob {
+        width: 100%;
+        height: 100%;
+        transform: translateZ(0);
+      }
+    }
+  }
+  &.ring {
+    .innerknob {
+      background-color: transparent;
+      border: $slider-empty-knob-border solid $color-divider;
+      &:before {
+        background-color: $slider-main-color;
+      }
+    }
+    .progress {
+      left: $slider-knob-size / 2 + $slider-empty-knob-border * 2;
+      width: calc(100% - #{$slider-empty-knob-border * 2});
+      transition: left .18s ease, width .18s ease;
+    }
+    &.pinned {
+      .innerknob {
+        background-color: $color-background;
+      }
+      .progress {
+        left: $slider-knob-size / 2;
+        width: calc(100%);
+      }
+    }
+  }
+}

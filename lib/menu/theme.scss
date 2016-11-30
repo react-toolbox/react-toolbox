@@ -1,0 +1,154 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+
+.iconMenu {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  .icon {
+    cursor: pointer;
+  }
+}
+
+.menu {
+  position: relative;
+  display: inline-block;
+  &.topLeft {
+    position: absolute;
+    top: 0;
+    left: 0;
+    > .outline {
+      transform-origin: 0 0;
+    }
+  }
+  &.topRight {
+    position: absolute;
+    top: 0;
+    right: 0;
+    > .outline {
+      transform-origin: 100% 0;
+    }
+  }
+  &.bottomLeft {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    > .outline {
+      transform-origin: 0 100%;
+    }
+  }
+  &.bottomRight {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    > .outline {
+      transform-origin: 100% 100%;
+    }
+  }
+  &:not(.static) {
+    z-index: $z-index-higher;
+    pointer-events: none;
+    > .outline {
+      opacity: 0;
+      transition: transform $menu-expand-duration $animation-curve-default,
+      opacity $menu-fade-duration $animation-curve-default;
+      transform: scale(0);
+      will-change: transform;
+    }
+    > .menuInner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+    }
+    &.rippled:not(.active) {
+      > .outline {
+        transition-delay: $menu-ripple-delay;
+      }
+      > .menuInner {
+        transition-delay: $menu-ripple-delay;
+      }
+    }
+    &.active {
+      pointer-events: all;
+      > .outline {
+        opacity: 1;
+        transform: scale(1);
+      }
+      > .menuInner {
+        opacity: 1;
+        transition: opacity $menu-fade-duration $animation-curve-default,
+        clip $menu-expand-duration $animation-curve-default;
+      }
+    }
+  }
+}
+
+.outline {
+  @include shadow-2dp();
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  background-color: $menu-background-color;
+  border-radius: $menu-outline-border-radius;
+}
+
+.menuInner {
+  position: relative;
+  display: block;
+  padding: $menu-padding;
+  text-align: left;
+  white-space: nowrap;
+  list-style: none;
+}
+
+.menuItem {
+  position: relative;
+  display: flex;
+  height: $menu-item-height;
+  align-items: center;
+  padding: 0 $menu-item-padding;
+  overflow: hidden;
+  font-size: $menu-item-font-size;
+  color: $color-text;
+  &:not(.disabled):hover {
+    cursor: pointer;
+    background-color: $menu-item-hover-background;
+  }
+  &.disabled {
+    pointer-events: none;
+    opacity: .5;
+  }
+  &.selected {
+    font-weight: 500;
+    background-color: $menu-item-selected-background;
+  }
+  .ripple {
+    color: $color-text-secondary;
+  }
+
+  .icon {
+    width: $menu-item-icon-size;
+    font-size: $menu-item-icon-font-size !important;
+  }
+}
+
+.caption {
+  flex-grow: 1;
+  font-size: $font-size-normal;
+}
+
+.shortcut {
+  margin-left: $menu-item-padding;
+}
+
+.menuDivider {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin: $menu-divider-height 0;
+  background-color: $color-divider;
+}

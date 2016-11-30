@@ -1,0 +1,33 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+
+.enter, .leave {
+  position: absolute;
+}
+
+.enterActive, .leaveActive {
+  transition: transform, opacity;
+  transition-timing-function: $animation-curve-fast-out-slow-in;
+  transition-duration: 500ms;
+}
+
+.enter {
+  opacity: 0;
+  transform: scale(0.85);
+
+  &.enterActive {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.leave {
+  opacity: 1;
+  transform: scale(1);
+
+  &.leaveActive {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+}

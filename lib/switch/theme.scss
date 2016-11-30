@@ -1,0 +1,123 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+
+.field {
+  position: relative;
+  display: block;
+  height: auto;
+  margin-bottom: $switch-field-margin-bottom;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.text {
+  display: inline-block;
+  padding-left: $unit;
+  font-size: $switch-font-size;
+  line-height: $switch-total-height;
+  color: $switch-text-color;
+  white-space: normal;
+  vertical-align: top;
+}
+
+%switch {
+  position: relative;
+  display: inline-block;
+  width: $switch-track-length;
+  height: $switch-track-height;
+  margin-top: ($switch-total-height - $switch-track-height) / 2;
+  vertical-align: top;
+  cursor: pointer;
+  border-radius: $switch-track-height;
+}
+
+.thumb {
+  @include material-animation-default(.28s);
+  position: absolute;
+  top: ($switch-track-height - $switch-thumb-size) / 2;
+  width: $switch-thumb-size;
+  height: $switch-thumb-size;
+  cursor: pointer;
+  border-radius: 50%;
+  transition-property: left;
+
+  .ripple {
+    background-color: $switch-color;
+    opacity: .3;
+    transition-duration: $switch-ripple-duration;
+  }
+}
+
+.on {
+  @extend %switch;
+  background: $switch-track-on-color;
+  .thumb {
+    @include shadow-3dp();
+    left: $switch-track-length - $switch-thumb-size;
+    background: $switch-thumb-on-color;
+  }
+}
+
+.off {
+  @extend %switch;
+  background: $switch-track-off-color;
+  .thumb {
+    @include shadow-2dp();
+    left: 0;
+    background: $switch-thumb-off-color;
+  }
+  .ripple {
+    background: $switch-off-ripple-color;
+  }
+}
+
+%thumb-focus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  box-sizing: border-box;
+  display: inline-block;
+  width: $switch-focus-init-size;
+  height: $switch-focus-init-size;
+  content: "";
+  background-color: transparent;
+  border-radius: 50%;
+  transform: translate(- $switch-focus-init-size / 2, - $switch-focus-init-size / 2);
+}
+
+.input {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  &:focus:not(:active) {
+    + .switch-on > .thumb:before {
+      @extend %thumb-focus;
+      background-color: $switch-on-focus-color;
+      box-shadow: 0 0 0 $switch-focus-diff $switch-on-focus-color;
+    }
+    + .switch-off > .thumb:before {
+      @extend %thumb-focus;
+      background-color: $switch-off-focus-color;
+      box-shadow: 0 0 0 $switch-focus-diff $switch-off-focus-color;
+    }
+  }
+}
+
+.disabled {
+  @extend .field;
+  .text {
+    color: $switch-disabled-text-color;
+  }
+  .on, .off {
+    cursor: auto;
+    background: $switch-disabled-track-color;
+  }
+  .thumb {
+    cursor: auto;
+    background-color: $switch-disabled-thumb-color;
+    border-color: transparent;
+  }
+}

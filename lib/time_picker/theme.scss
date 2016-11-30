@@ -1,0 +1,168 @@
+@import "../colors";
+@import "../globals";
+@import "../mixins";
+@import "./config";
+
+.input:not(.disabled) > .inputElement {
+  cursor: pointer;
+}
+
+.header {
+  position: relative;
+  width: 100%;
+  padding: $timepicker-header-padding;
+  font-size: $timepicker-header-font-size;
+  color: $timepicker-primary-contrast-color;
+  text-align: center;
+  background: $timepicker-primary-color;
+}
+
+.hours, .minutes {
+  display: inline-block;
+  cursor: pointer;
+  opacity: .6;
+}
+
+.separator {
+  margin: 0 $timepicker-header-padding / 2;
+  opacity: .6;
+}
+
+.ampm {
+  position: absolute;
+  top: 50%;
+  right: 2 * $unit;
+  width: $timepicker-ampm-width;
+  height: $timepicker-ampm-height * 2;
+  margin-top: - $timepicker-ampm-height;
+  font-size: $timepicker-ampm-font-size;
+  line-height: $timepicker-ampm-height;
+  text-align: center;
+}
+
+.am, .pm {
+  display: block;
+  cursor: pointer;
+  opacity: .6;
+}
+
+.dialog {
+  width: $timepicker-dialog-width;
+  > [role="body"] {
+    padding: 0;
+    overflow-y: visible;
+  }
+  > [role="navigation"] > .button {
+    color: $timepicker-primary-color;
+    &:hover {
+      background: $timepicker-primary-hover-color;
+    }
+    &:focus:not(:active) {
+      background: $timepicker-primary-hover-color;
+    }
+  }
+  &.hoursDisplay .hours, &.minutesDisplay .minutes, &.amFormat .am,
+  &.pmFormat .pm {
+    opacity: 1;
+  }
+}
+
+.clock {
+  padding: $clock-padding;
+}
+
+.placeholder {
+  position: relative;
+  z-index: $z-index-high;
+}
+
+.clockWrapper {
+  position: absolute;
+  width: 100%;
+  background-color: $color-divider;
+  border-radius: 50%;
+}
+
+.face {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: $z-index-high;
+  cursor: pointer;
+  border-radius: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.number {
+  position: relative;
+  width: $clock-number-size;
+  height: $clock-number-size;
+  margin-top: - $clock-number-size / 2;
+  margin-left: - $clock-number-size / 2;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  &.active {
+    color: $clock-primary-contrast-color;
+  }
+}
+
+.hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  display: block;
+  width: $clock-hand-width;
+  margin-left: - $clock-hand-width / 2;
+  background-color: $clock-primary-color;
+  transform-origin: 50% 100%;
+  &:before {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: $clock-hand-dot-size;
+    height: $clock-hand-dot-size;
+    margin-bottom: - $clock-hand-dot-size / 2;
+    margin-left: - $clock-hand-dot-size / 2;
+    content: "";
+    background-color: $clock-primary-color;
+    border-radius: 50%;
+  }
+  &.small > .knob {
+    background-color: $clock-primary-hover-color;
+    &:after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: $clock-knob-small-size;
+      height: $clock-knob-small-size;
+      margin-top: - $clock-knob-small-size / 2;
+      margin-left: - $clock-knob-small-size / 2;
+      content: "";
+      background: $clock-primary-color;
+      border-radius: 50%;
+    }
+    &:before {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: $clock-hand-width;
+      height: $clock-knob-size - $clock-knob-small-size;
+      margin-left: - $clock-hand-width / 2;
+      content: "";
+      background: $clock-primary-color;
+    }
+  }
+}
+
+.knob {
+  position: absolute;
+  top: - $clock-knob-size;
+  left: 50%;
+  width: $clock-knob-size;
+  height: $clock-knob-size;
+  margin-left: - $clock-knob-size / 2;
+  cursor: pointer;
+  background-color: $clock-primary-color;
+  border-radius: 50%;
+}
