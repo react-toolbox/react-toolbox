@@ -20,6 +20,8 @@ const factory = (Radio) => {
       onBlur: PropTypes.func,
       onChange: PropTypes.func,
       onFocus: PropTypes.func,
+      onMouseEnter: PropTypes.func,
+      onMouseLeave: PropTypes.func,
       theme: PropTypes.shape({
         disabled: PropTypes.string,
         field: PropTypes.string,
@@ -50,20 +52,24 @@ const factory = (Radio) => {
     }
 
     render () {
-      const { checked, children, className, disabled, label, onChange, theme, ...others } = this.props; // eslint-disable-line
+      const { checked, children, className, disabled, label, name, onChange,  // eslint-disable-line
+        onMouseEnter, onMouseLeave, theme, ...others } = this.props;
       const _className = classnames(theme[this.props.disabled ? 'disabled' : 'field'], className);
       return (
         <label
-          {...others}
           data-react-toolbox='radio-button'
           className={_className}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
         >
           <input
+            {...others}
             checked={checked}
             className={theme.input}
             disabled={disabled}
-            onClick={this.handleClick}
+            name={name}
             onChange={() => {}}
+            onClick={this.handleClick}
             ref={node => { this.inputNode = node; }}
             type='radio'
           />
