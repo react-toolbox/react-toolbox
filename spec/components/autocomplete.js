@@ -38,15 +38,6 @@ class AutocompleteTest extends React.Component {
     this.setState({simpleShowAll: value});
   };
 
-  handleQueryChange = () => {
-    /*this.setState({
-      countriesObject: {
-        'EN-gb': 'England',
-        'EN-en': 'United States of America', 'EN-nz': 'New Zealand'
-      },
-    })*/
-  };
-
   render () {
     return (
       <section>
@@ -58,7 +49,6 @@ class AutocompleteTest extends React.Component {
           keepFocusOnChange
           label="Pick multiple elements..."
           onChange={this.handleMultipleArrayChange}
-          //onQueryChange={this.handleQueryChange}
           source={this.state.countriesObject}
           suggestionMatch="anywhere"
           value={this.state.multipleArray}
@@ -66,9 +56,8 @@ class AutocompleteTest extends React.Component {
 
         <Autocomplete
           allowCreate
-          label="Pick multiple elements (showValuesWhenNotInSource example)..."
+          label="Pick multiple elements with object value..."
           onChange={this.handleMultipleObjectChange}
-          //onQueryChange={this.handleQueryChange}
           showSelectedWhenNotInSource
           source={this.state.countriesObject}
           suggestionMatch="anywhere"
