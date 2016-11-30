@@ -34,10 +34,9 @@ module.exports = {
       loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss')
     }]
   },
-  postcss (webpackInstance) {
+  postcss () {
     return [
       require('postcss-import')({
-        addDependencyTo: webpackInstance,
         root: __dirname,
         path: [path.join(__dirname, './components')]
       }),
@@ -48,7 +47,7 @@ module.exports = {
     ];
   },
   plugins: [
-    new ExtractTextPlugin('spec.css', { allChunks: true }),
+    new ExtractTextPlugin('spec.css', { allChunks: true, disable: true }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({

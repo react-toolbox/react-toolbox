@@ -22,10 +22,9 @@ module.exports = {
     packageMains: ['browser', 'web', 'browserify', 'main', 'style']
   },
   watch: true,
-  postcss (webpackInstance) {
+  postcss () {
     return [
       require('postcss-import')({
-        addDependencyTo: webpackInstance,
         root: __dirname,
         path: [path.join(__dirname, './components')]
       }),
