@@ -9,6 +9,8 @@ $button-accent-color-hover: rgba($color-accent, .2) !default;
 $button-accent-color: $color-accent !default;
 $button-disabled-text-color: rgba($color-black, 0.26) !default;
 $button-disabled-background-color: rgba($color-black, 0.12) !default;
+$button-disabled-text-color-inverse: rgba($color-white, 0.54) !default;
+$button-disabled-background-inverse: rgba($color-white, 0.08) !default;
 $button-border-radius: 0.2 * $unit !default;
 $button-floating-font-size: $unit * 2.4 !default;
 $button-floating-height: $unit * 5.6 !default;
