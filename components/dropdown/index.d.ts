@@ -108,6 +108,10 @@ interface DropdownProps extends ReactToolbox.Props {
    * Default value using JSON data.
    */
   value?: string | number;
+  /**
+   * If true, the dropdown has a required attribute.
+   */
+  required?: boolean;
 }
 
 export class Dropdown extends React.Component<DropdownProps, {}> { }

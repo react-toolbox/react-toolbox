@@ -80,7 +80,7 @@ const factory = (Input) => {
       touchend: this.handleDocumentClick
     });
 
-    open = () => {
+    open = (event) => {
       const client = event.target.getBoundingClientRect();
       const screenHeight = window.innerHeight || document.documentElement.offsetHeight;
       const up = this.props.auto ? client.top > ((screenHeight / 2) + client.height) : false;
@@ -101,7 +101,7 @@ const factory = (Input) => {
     };
 
     handleClick = (event) => {
-      this.open();
+      this.open(event);
       events.pauseEvent(event);
       if (this.props.onClick) this.props.onClick(event);
     };
@@ -162,7 +162,7 @@ const factory = (Input) => {
 
     handleFocus = event => {
       event.stopPropagation();
-      if (!this.props.disabled) this.open();
+      if (!this.props.disabled) this.open(event);
       if (this.props.onFocus) this.props.onFocus(event);
     };
 

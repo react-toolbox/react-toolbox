@@ -54,8 +54,8 @@ const factory = (Chip, Input) => {
      keepFocusOnChange: false,
      multiple: true,
      selectedPosition: 'above',
-     showSuggestionsWhenValueIsSet: false,
      showSelectedWhenNotInSource: false,
+     showSuggestionsWhenValueIsSet: false,
      source: {},
      suggestionMatch: 'start'
    };
@@ -108,9 +108,9 @@ const factory = (Chip, Input) => {
      }
    };
 
-   handleMouseDown = () => {
-     this.selectOrCreateActiveItem();
-   };
+   handleMouseDown = (event) => {
+     this.selectOrCreateActiveItem(event);
+   }
 
    handleQueryBlur = (event) => {
      if (this.state.focus) this.setState({focus: false});
@@ -140,7 +140,7 @@ const factory = (Chip, Input) => {
      }
 
      if (event.which === 13) {
-       this.selectOrCreateActiveItem();
+       this.selectOrCreateActiveItem(event);
      }
    };
 
@@ -180,7 +180,7 @@ const factory = (Chip, Input) => {
       return query_value;
    }
 
-   selectOrCreateActiveItem () {
+   selectOrCreateActiveItem (event) {
      let target = this.state.active;
      if (!target) {
        target = this.props.allowCreate

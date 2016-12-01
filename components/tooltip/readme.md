@@ -38,6 +38,7 @@ In any component you decorate with the Tooltip you'd get some additional props:
 | `tooltipDelay`        | `Number`      |               | Amount of time in miliseconds spent before the tooltip is visible.|
 | `tooltipHideOnClick`  | `Boolean`     | `true`        | If true, the Tooltip hides after a click in the host component.|
 | `tooltipPosition`     | `String`      | `vertical`    | Determines the position of the tooltip. It can be automatic with `vertical` and `horizontal` values or forced with `bottom`, `top`, `left` or `right`.|
+| `tooltipShowOnClick`  | `Boolean`     | `false`       | Determines the tooltip should be toggled when clicked. This is useful for mobile where there is no mouse enter.|
 
 ## Theming
 

@@ -18,6 +18,8 @@ const factory = (Check) => {
       ]),
       name: PropTypes.string,
       onChange: PropTypes.func,
+      onMouseEnter: PropTypes.func,
+      onMouseLeave: PropTypes.func,
       style: PropTypes.object,
       theme: PropTypes.shape({
         disabled: PropTypes.string,
@@ -49,17 +51,25 @@ const factory = (Check) => {
     }
 
     render () {
-      const { checked, children, disabled, label, style, theme, ...others } = this.props;
+      const { checked, children, disabled, label, name, style, onChange, // eslint-disable-line
+        onMouseEnter, onMouseLeave, theme, ...others } = this.props;
       const className = classnames(theme.field, {
         [theme.disabled]: this.props.disabled
       }, this.props.className);
 
       return (
-        <label {...others} data-react-toolbox='checkbox' className={className}>
+        <label
+          data-react-toolbox='checkbox'
+          className={className}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+        >
           <input
+            {...others}
             checked={checked}
             className={theme.input}
             disabled={disabled}
+            name={name}
             onChange={() => {}}
             onClick={this.handleToggle}
             ref={node => { this.inputNode = node; }}
