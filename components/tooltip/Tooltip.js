@@ -152,7 +152,7 @@ const tooltipFactory = (options = {}) => {
       };
 
       handleMouseEnter = (event) => {
-        this.activate(this.calculatePosition(event.target));
+        this.activate(this.calculatePosition(event.currentTarget));
         if (this.props.onMouseEnter) this.props.onMouseEnter(event);
       };
 
@@ -167,7 +167,7 @@ const tooltipFactory = (options = {}) => {
         }
 
         if (this.props.tooltipShowOnClick && !this.state.active) {
-          this.activate(this.calculatePosition(event.target));
+          this.activate(this.calculatePosition(event.currentTarget));
         }
 
         if (this.props.onClick) this.props.onClick(event);
