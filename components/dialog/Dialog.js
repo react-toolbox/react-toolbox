@@ -21,47 +21,47 @@ const factory = (Overlay, Button) => {
 
     //events handler
     const onOverlayClick = (ev) => {
-      if (ev.target.getAttribute('data-react-toolbox') === 'dialog-holder'
+      if (ev.target.getAttribute('data-react-toolbox') === 'dialog-holder' 
           && ev.target.getAttribute('data-react-toolbox') !== 'dialog') {
         if (props.onOverlayClick) {
           props.onOverlayClick(ev);
         }
       }
-    };
+    }
 
     const onOverlayMouseDown = (ev) => {
-      if (ev.target.getAttribute('data-react-toolbox') === 'dialog-holder'
+      if (ev.target.getAttribute('data-react-toolbox') === 'dialog-holder' 
           && ev.target.getAttribute('data-react-toolbox') !== 'dialog') {
         if (props.onOverlayMouseDown) {
           props.onOverlayMouseDown(ev);
         }
       }
-    };
+    }
 
     const onOverlayMouseMove = (ev) => {
-      if (ev.target.getAttribute('data-react-toolbox') === 'dialog-holder'
+      if (ev.target.getAttribute('data-react-toolbox') === 'dialog-holder' 
           && ev.target.getAttribute('data-react-toolbox') !== 'dialog') {
         if (props.onOverlayMouseMove) {
           props.onOverlayMouseMove(ev);
         }
       }
-    };
+    }
 
     const onOverlayMouseUp = (ev) => {
-      if (ev.target.getAttribute('data-react-toolbox') === 'dialog-holder'
+      if (ev.target.getAttribute('data-react-toolbox') === 'dialog-holder' 
           && ev.target.getAttribute('data-react-toolbox') !== 'dialog') {
         if (props.onOverlayMouseUp) {
           props.onOverlayMouseUp(ev);
         }
       }
-    };
+    }
 
     return (
       <Overlay
         active={props.active}
         onEscKeyDown={props.onEscKeyDown}
       >
-      <div
+      <div 
           data-react-toolbox='dialog-holder'
           className={holderClassName}
           onClick={onOverlayClick}
@@ -103,7 +103,6 @@ const factory = (Overlay, Button) => {
       body: PropTypes.string,
       button: PropTypes.string,
       dialog: PropTypes.string,
-      holder: PropTypes.string,
       navigation: PropTypes.string,
       title: PropTypes.string
     }),
