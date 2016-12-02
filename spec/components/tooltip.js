@@ -9,6 +9,7 @@ const TooltipStrong = Tooltip(({children, ...other}) => {
   delete other.theme;
   return <strong {...other}>{children}</strong>;
 });
+const TooltipStrongDirect = Tooltip('strong');
 
 const TooltipTest = () => (
   <section>
@@ -27,9 +28,9 @@ const TooltipTest = () => (
     <p>
       Click this next word to show and hide on click:
       {' '}
-      <TooltipStrong tooltip='This is a auto show tooltip' tooltipShowOnClick>
+      <TooltipStrongDirect tooltip='This is a auto show tooltip' tooltipShowOnClick>
         oh hai
-      </TooltipStrong>
+      </TooltipStrongDirect>
       {' '}. This is useful for mobile!
     </p>
   </section>
