@@ -107,16 +107,12 @@ class DialogTest extends React.Component {
               * Fixes for typescript definitions, typos etc. ([213411b](https://github.com/react-toolbox/react-toolbox/commit/213411b))
               * Remove prop duplicates ([c016565](https://github.com/react-toolbox/react-toolbox/commit/c016565))
 
-
-
               <a name="1.1.1"></a>
               ## 1.1.1 (2016-08-08)
 
               * 1.1.1 release ([56426b9](https://github.com/react-toolbox/react-toolbox/commit/56426b9))
               * Fix linter for tooltip theme ([f09a9d7](https://github.com/react-toolbox/react-toolbox/commit/f09a9d7))
               * Move addon-update to peerDependencies ([fac66cb](https://github.com/react-toolbox/react-toolbox/commit/fac66cb))
-
-
 
               <a name="1.1.0"></a>
               # 1.1.0 (2016-08-07)
@@ -173,7 +169,7 @@ class DialogTest extends React.Component {
               * fix(multiline input): autoresize after initial render too ([1809d67](https://github.com/react-toolbox/react-toolbox/commit/1809d67))
               * refactor(input): move autoresize to didUpdate ([8559c18](https://github.com/react-toolbox/react-toolbox/commit/8559c18))
               * docs(input): fix multiline example and add maxLength to it ([9a4f553](https://github.com/react-toolbox/react-toolbox/commit/9a4f553))
-            
+
               <a name="1.0.3"></a>
               ## 1.0.3 (2016-07-25)
 
@@ -203,8 +199,6 @@ class DialogTest extends React.Component {
               * Update install.md ([42feb7f](https://github.com/react-toolbox/react-toolbox/commit/42feb7f))
               * Update README.md ([3a57270](https://github.com/react-toolbox/react-toolbox/commit/3a57270))
 
-
-
               <a name="1.0.2"></a>
               ## 1.0.2 (2016-07-10)
 
@@ -228,8 +222,6 @@ class DialogTest extends React.Component {
               * Update pickers.js ([49fa53a](https://github.com/react-toolbox/react-toolbox/commit/49fa53a))
               * Update to react 15.2.0 ([3e29844](https://github.com/react-toolbox/react-toolbox/commit/3e29844))
               * chore(dropdown): set value to empty string to prevent uncontrolled errors ([ad52adb](https://github.com/react-toolbox/react-toolbox/commit/ad52adb))
-
-
 
               <a name="1.0.1"></a>
               ## 1.0.1 (2016-06-19)
@@ -259,7 +251,7 @@ class DialogTest extends React.Component {
               * Update typings to external modules (no more 'declare module ...') to get the definitions working aut ([f8c1a3f](https://github.com/react-toolbox/react-toolbox/commit/f8c1a3f))
               * chore(eslint): fix propTypes order ([d06dd78](https://github.com/react-toolbox/react-toolbox/commit/d06dd78))
               * feat(dropdown): add support for name prop ([ec94e5a](https://github.com/react-toolbox/react-toolbox/commit/ec94e5a))
-            
+
               <a name="0.14.1"></a>
               ## 0.14.1 (2016-01-26)
 

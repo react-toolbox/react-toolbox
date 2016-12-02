@@ -4,17 +4,17 @@
 @import "./config";
 
 .holder {
-  display: block;
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  display: block;
 
   .dialog {
     position: relative;
-    margin: 0 auto;
     width: 96vw;
+    margin: 0 auto;
     background-color: $dialog-color-white;
     border-radius: $dialog-border-radius;
     box-shadow: $zdepth-shadow-5;
@@ -24,8 +24,8 @@
     transition-duration: $animation-duration;
     transition-property: opacity, margin;
     &.active {
-      opacity: 1;
       margin: $dialog-translate-y auto;
+      opacity: 1;
     }
   }
 

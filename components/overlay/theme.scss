@@ -4,22 +4,22 @@
 @import "./config";
 
 .overlay {
-  display: block;
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: $z-index-highest + 1;
+  display: block;
 }
 
 .backdrop {
-  display: block;
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  display: block;
   background-color: $overlay-color;
   opacity: 0;
   transition-timing-function: $animation-curve-default;
