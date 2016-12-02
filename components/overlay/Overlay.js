@@ -24,8 +24,8 @@ class Overlay extends Component {
     invisible: false
   };
 
-  componentWillMount () {
-      const orig = document.body.className;
+  componentWillMount() {
+      var orig = document.body.className;
       document.body.className = orig + (orig ? ' ' : '') + this.props.theme.active;
   }
 
@@ -37,7 +37,7 @@ class Overlay extends Component {
 
   componentWillUpdate (nextProps) {
     if (nextProps.active && !this.props.active) {
-      const orig = document.body.className;
+      var orig = document.body.className;
       document.body.className = document.body.className.replace(this.props.theme.active, '');
       document.body.className = orig + (orig ? ' ' : '') + this.props.theme.active;
     }
