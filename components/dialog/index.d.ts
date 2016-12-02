@@ -23,6 +23,10 @@ export interface DialogTheme {
    */
   dialog?: string;
   /**
+   * Used for the dialog holder eliment.
+   */
+  holder?: string;
+  /**
    * Used for the navigation element when it implements actions.
    */
   navigation?: string;
