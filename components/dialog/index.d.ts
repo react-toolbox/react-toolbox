@@ -7,6 +7,10 @@ export interface DialogTheme {
    */
   active?: string;
   /**
+   * Used for the body of dialog when the dialog is auto height enabled.
+   */
+  autoheight?: string;
+  /**
    * Used to wrap the dialog body.
    */
   body?: string;
@@ -49,6 +53,11 @@ interface DialogProps extends ReactToolbox.Props {
    * @default false
    */
   active?: boolean;
+  /**
+   * If true, the dialog body will be expanded on whole content.
+   * @default false
+   */
+  autoHeight?: boolean;
   /**
    * Children to pass through the component.
    */

@@ -24,16 +24,26 @@ class Overlay extends Component {
     invisible: false
   };
 
+  componentWillMount() {
+      var orig = document.body.className;
+      document.body.className = orig + (orig ? ' ' : '') + this.props.theme.active;
+  }
+
   componentDidMount () {
     if (this.props.active) {
       document.body.addEventListener('keydown', this.handleEscKey);
-      document.body.style.overflow = 'hidden';
     }
   }
 
   componentWillUpdate (nextProps) {
-    if (nextProps.active && !this.props.active) document.body.style.overflow = 'hidden';
-    if (!nextProps.active && this.props.active && !document.querySelectorAll('[data-react-toolbox="overlay"]')[1]) document.body.style.overflow = '';
+    if (nextProps.active && !this.props.active) {
+      var orig = document.body.className;
+      document.body.className = document.body.className.replace(this.props.theme.active, '');
+      document.body.className = orig + (orig ? ' ' : '') + this.props.theme.active;
+    }
+    if (!nextProps.active && this.props.active && !document.querySelectorAll('[data-react-toolbox="overlay"]')[1]) {
+      document.body.className = document.body.className.replace(this.props.theme.active, '');
+    }
   }
 
   componentDidUpdate () {
@@ -43,7 +53,9 @@ class Overlay extends Component {
   }
 
   componentWillUnmount () {
-    if (!document.querySelectorAll('[data-react-toolbox="overlay"]')[1]) document.body.style.overflow = '';
+    if (!document.querySelectorAll('[data-react-toolbox="overlay"]')[1]) {
+      document.body.className = document.body.className.replace(this.props.theme.active, '');
+    }
     document.body.removeEventListener('keydown', this.handleEscKey);
   }
 
@@ -54,16 +66,16 @@ class Overlay extends Component {
   }
 
   render () {
-    const { active, className, children, invisible, onClick, theme } = this.props;
-    const _className = classnames(theme.overlay, {
-      [theme.active]: active,
-      [theme.invisible]: invisible
+    const { active, className, children, invisible, onClick } = this.props;
+    const _className = classnames(this.props.theme.overlay, {
+      [this.props.theme.active]: active,
+      [this.props.theme.invisible]: invisible
     }, className);
 
     return (
       <Portal>
         <div className={_className} data-react-toolbox="overlay">
-          <div className={theme.backdrop} onClick={onClick} />
+          <div className={this.props.theme.backdrop} onClick={onClick} />
           {children}
         </div>
       </Portal>
