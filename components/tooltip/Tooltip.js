@@ -152,7 +152,7 @@ const tooltipFactory = (options = {}) => {
       };
 
       handleMouseEnter = (event) => {
-        this.activate(this.calculatePosition(event.target));
+        this.activate(this.calculatePosition(event.currentTarget));
         if (this.props.onMouseEnter) this.props.onMouseEnter(event);
       };
 
@@ -167,7 +167,7 @@ const tooltipFactory = (options = {}) => {
         }
 
         if (this.props.tooltipShowOnClick && !this.state.active) {
-          this.activate(this.calculatePosition(event.target));
+          this.activate(this.calculatePosition(event.currentTarget));
         }
 
         if (this.props.onClick) this.props.onClick(event);
@@ -193,6 +193,8 @@ const tooltipFactory = (options = {}) => {
           [theme[positionClass]]: theme[positionClass]
         });
 
+        const isNative = typeof ComposedComponent === 'string';
+
         return (
           <ComposedComponent
             {...other}
@@ -200,7 +202,7 @@ const tooltipFactory = (options = {}) => {
             onClick={this.handleClick}
             onMouseEnter={this.handleMouseEnter}
             onMouseLeave={this.handleMouseLeave}
-            theme={theme}
+            {...isNative ? {} : {theme}}
           >
             {children ? children : null}
             {visible && (
