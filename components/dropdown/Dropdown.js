@@ -202,6 +202,8 @@ const factory = (Input) => {
             readOnly
             ref={node => { this.inputNode = node && node.getWrappedInstance(); }}
             type={template && selected ? 'hidden' : null}
+            theme={theme}
+            themeNamespace="input"
             value={selected && selected.label ? selected.label : ''}
           />
         {template && selected ? this.renderTemplateValue(selected) : null}
