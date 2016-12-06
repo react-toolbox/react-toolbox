@@ -83,6 +83,11 @@ interface AutocompleteProps extends ReactToolbox.Props {
    */
   selectedPosition?: "above" | "below" | "none";
   /**
+   * Determines if the selected list is shown if the `value` keys don't exist in the source. Only works if passing the `value` prop as an Object.
+   * @default false
+   */
+  showSelectedWhenNotInSource?: boolean;
+  /**
    * If true, the list of suggestions will not be filtered when a value is selected.
    * @default false
    */
