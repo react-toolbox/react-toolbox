@@ -163,7 +163,7 @@ const factory = (Chip, Input) => {
    query (key) {
       let query_value = '';
       if (!this.props.multiple && key) {
-        const source_value = this.source().get(key);
+        const source_value = this.source().get(`${key}`);
         query_value = source_value ? source_value : key;
       }
       return query_value;
@@ -183,7 +183,7 @@ const factory = (Chip, Input) => {
    suggestions () {
      let suggest = new Map();
      const rawQuery = this.state.query || (this.props.multiple ? '' : this.props.value);
-     const query = (rawQuery || '').toLowerCase().trim();
+     const query = (`${rawQuery}`).toLowerCase().trim();
      const values = this.values();
      const source = this.source();
 
@@ -231,15 +231,16 @@ const factory = (Chip, Input) => {
      if (src.hasOwnProperty('length')) {
        return new Map(src.map((item) => Array.isArray(item) ? [...item] : [item, item]));
      } else {
-       return new Map(Object.keys(src).map((key) => [key, src[key]]));
+       return new Map(Object.keys(src).map((key) => [`${key}`, src[key]]));
      }
    }
 
    values () {
      const valueMap = new Map();
      const vals = this.props.multiple ? this.props.value : [this.props.value];
+     const stringVals = vals.map(v => `${v}`);
      for (const [k, v] of this.source()) {
-       if (vals.indexOf(k) !== -1) valueMap.set(k, v);
+       if (stringVals.indexOf(k) !== -1) valueMap.set(k, v);
      }
      return valueMap;
    }

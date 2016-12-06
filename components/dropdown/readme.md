@@ -55,6 +55,8 @@ If you want to provide a theme via context, the component key is `RTDropdown`.
 
 ## Theming
 
+This component uses an `Input` under the covers. The theme object is passed down namespaced under `input` keyword. This means you can use the same theme classNames from `Input` component but namespaced with `input`. For example, to style the label you have to use `inputLabel` className.
+
 | Name            | Description|
 |:----------------|:-----------|
 | `active`        | Added to the root element when the dropdown is active.|

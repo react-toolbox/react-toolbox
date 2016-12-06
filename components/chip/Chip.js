@@ -8,7 +8,8 @@ const factory = (Avatar) => {
   const Chip = ({children, className, deletable, onDeleteClick, theme, ...other}) => {
     let hasAvatar = false;
     if (React.Children.count(children)) {
-      const firstChild = children[0];
+      const flatChildren = React.Children.toArray(children);
+      const firstChild = flatChildren[0];
       hasAvatar = firstChild && firstChild.type && firstChild.type === Avatar;
     }
 
