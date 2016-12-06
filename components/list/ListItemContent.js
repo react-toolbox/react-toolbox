@@ -9,7 +9,10 @@ const types = ['auto', 'normal', 'large'];
 const factory = (ListItemText) => {
   class ListItemContent extends Component {
     static propTypes = {
-      caption: PropTypes.string,
+      caption: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node
+      ]),
       children: PropTypes.any,
       legend: PropTypes.string,
       theme: PropTypes.shape({
