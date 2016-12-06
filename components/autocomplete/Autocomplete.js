@@ -247,7 +247,9 @@ const factory = (Chip, Input) => {
    }
 
    values () {
-     const vals = this.props.multiple ? this.props.value : [this.props.value];
+     let vals = this.props.multiple ? this.props.value : [this.props.value];
+
+     if (!vals) vals = [];
 
      if (this.props.showSelectedWhenNotInSource && this.state.isValueAnObject) {
        return new Map(Object.entries(vals));
