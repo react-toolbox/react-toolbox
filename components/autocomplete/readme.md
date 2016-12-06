@@ -41,23 +41,25 @@ If you want to provide a theme via context, the component key is `RTAutocomplete
 
 ## Properties
 
-| Name                | Type                   | Default         | Description|
+| Name                | Type      | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `allowCreate`       | `Bool`                 | `false`         | Determines if user can create a new option with the current typed value |
-| `className`         | `String`               | `''`            | Sets a class to style of the Component.|
-| `direction`         | `String`               |  `auto`         | Determines the opening direction. It can be `auto`, `top` or `down`.|
-| `disabled`          | `Bool`                 |  `false`        | If true, component will be disabled.|
-| `error`             | `String`               |                 | Sets the error string for the internal input element.|
-| `label`             | `String`               |                 | The text string to use for the floating label element.|
-| `multiple`          | `Bool`                 | `true`          | If true, component can hold multiple values.|
-| `onBlur`            | `Function`             |                 | Callback function that is fired when component is blurred.|
-| `onChange`          | `Function`             |                 | Callback function that is fired when the components's value changes.|
-| `onFocus`           | `Function`             |                 | Callback function that is fired when component is focused.|
-| `source`            | `Object` or `Array`    |                 | Object of key/values or array representing all items suggested. |
-| `selectedPosition`  | `String`               |  `above`        | Determines if the selected list is shown above or below input. It can be `above` or `below`. |
-| `showSuggestionsWhenValueIsSet` | `Bool`     | `false`         | If true, the list of suggestions will not be filtered when a value is selected, until the query is modified. |
-| `suggestionMatch`   | `String`               | `start`         | Determines how suggestions are supplied. It can be `start` (query matches the start of a suggestion), `anywhere` (query matches anywhere inside the suggestion), or `word` (query matches the start of a word in the suggestion). |
-| `value`             | `String` or `Array`    |                 | Value or array of values currently selected component.|
+| `allowCreate`                   | `Bool`                        | `false` | Determines if user can create a new option with the current typed value |
+| `className`                     | `String`                      | `''`    | Sets a class to style of the Component.|
+| `direction`                     | `String`                      | `auto`  | Determines the opening direction. It can be `auto`, `top` or `down`. |
+| `disabled`                      | `Bool`                        | `false` | If true, component will be disabled. |
+| `error`                         | `String`                      |         | Sets the error string for the internal input element. |
+| `label`                         | `String`                      |         | The text string to use for the floating label element. |
+| `multiple`                      | `Bool`                        | `true`  | If true, component can hold multiple values. |
+| `onBlur`                        | `Function`                    |         | Callback function that is fired when component is blurred. |
+| `onChange`                      | `Function`                    |         | Callback function that is fired when the components's value changes. |
+| `onQueryChange`                 | `Function`                    |         | Callback function that is fired when the components's query input value changes. |
+| `onFocus`                       | `Function`                    |         | Callback function that is fired when component is focused. |
+| `source`                        | `Object` or `Array`           |         | Object of key/values or array representing all items suggested. |
+| `selectedPosition`              | `String`                      | `above` | Determines if the selected list is shown above or below input. It can be `above`, `below` or `none`. |
+| `showSelectedWhenNotInSource`   | `Bool`                        | `false` | Determines if the selected list is shown if the `value` keys don't exist in the source. Only works if passing the `value` prop as an Object. |
+| `showSuggestionsWhenValueIsSet` | `Bool`                        | `false` | If true, the list of suggestions will not be filtered when a value is selected, until the query is modified. |
+| `suggestionMatch`               | `String`                      | `start` | Determines how suggestions are supplied. It can be `start` (query matches the start of a suggestion), `anywhere` (query matches anywhere inside the suggestion), or `word` (query matches the start of a word in the suggestion). |
+| `value`                         | `String`, `Array` or `Object` |         | Value or array of values currently selected component. |
 
 Additional properties will be passed to the Input Component so you can use `hint`, `name` ... etc.
 

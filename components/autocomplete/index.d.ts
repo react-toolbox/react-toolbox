@@ -73,10 +73,20 @@ interface AutocompleteProps extends ReactToolbox.Props {
    */
   onChange?: Function;
   /**
+   * Callback function that is fired when the components's query value changes.
+   * @default auto
+   */
+  onQueryChange?: Function;
+  /**
    * Determines if the selected list is shown above or below input. It can be above or below.
    * @default above
    */
-  selectedPosition?: "above" | "below";
+  selectedPosition?: "above" | "below" | "none";
+  /**
+   * Determines if the selected list is shown if the `value` keys don't exist in the source. Only works if passing the `value` prop as an Object.
+   * @default false
+   */
+  showSelectedWhenNotInSource?: boolean;
   /**
    * If true, the list of suggestions will not be filtered when a value is selected.
    * @default false
