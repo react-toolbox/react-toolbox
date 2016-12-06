@@ -102,7 +102,7 @@
     "babel": "babel ./components --out-dir ./lib",
     "build": "cross-env NODE_ENV=production npm run babel && npm run css && npm run tsd",
     "clean": "rimraf ./lib",
-    "css": "cpx './components/**/*.css' ./lib",
+    "css": "cpx \"./components/**/*.css\" ./lib",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:css": "stylelint ./components/**/*.css",
     "lint:js": "eslint ./ --ext .js",
