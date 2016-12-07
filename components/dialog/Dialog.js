@@ -99,6 +99,7 @@ const factory = (Overlay, Button) => {
     actions: PropTypes.array,
     active: PropTypes.bool,
     autoHeight: PropTypes.bool,
+    centered: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
     onEscKeyDown: PropTypes.func,
@@ -111,10 +112,13 @@ const factory = (Overlay, Button) => {
       autoheight: PropTypes.string,
       body: PropTypes.string,
       button: PropTypes.string,
+      center: PropTypes.string,
       dialog: PropTypes.string,
       holder: PropTypes.string,
+      layout: PropTypes.string,
       navigation: PropTypes.string,
-      title: PropTypes.string
+      title: PropTypes.string,
+      top: PropTypes.string
     }),
     title: PropTypes.string,
     type: PropTypes.string
@@ -124,6 +128,7 @@ const factory = (Overlay, Button) => {
     actions: [],
     active: false,
     autoHeight: false,
+    centered: false,
     type: 'normal'
   };
 
