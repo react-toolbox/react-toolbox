@@ -236,7 +236,7 @@ const factory = (Chip, Input) => {
    values () {
      const valueMap = new Map();
      const vals = this.props.multiple ? this.props.value : [this.props.value];
-     const stringVals = vals.map(v => `${v}`);
+     const stringVals = vals.map ? vals.map(v => `${v}`) : Object.keys(vals).map(v => `${v}`);
      for (const [k, v] of this.source()) {
        if (stringVals.indexOf(k) !== -1) valueMap.set(k, v);
      }
