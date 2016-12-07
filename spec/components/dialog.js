@@ -14,8 +14,8 @@ class DialogTest extends React.Component {
   state = {
     active: false,
     active2: false,
-    type: 'normal',
-    type2: 'normal'
+    active3: false,
+    type: 'normal'
   };
 
   handleToggle = () => {
@@ -30,12 +30,14 @@ class DialogTest extends React.Component {
     });
   };
 
-  changeDialogType = (value) => {
-    this.setState({type: value});
+  handleToggle3 = () => {
+    this.setState({
+      active3: !this.state.active3
+    });
   };
 
-  changeDialogType2 = (value) => {
-    this.setState({type2: value});
+  changeDialogType = (value) => {
+    this.setState({type: value});
   };
 
   actions = [
@@ -44,15 +46,19 @@ class DialogTest extends React.Component {
   ];
 
   actions2 = [
-    { label: 'Disagree', primary: true, onClick: this.handleToggle2 },
-    { label: 'Agree', primary: true, onClick: this.handleToggle2 }
+    { label: 'Close', primary: true, onClick: this.handleToggle2 }
+  ];
+
+  actions3 = [
+    { label: 'Disagree', primary: true, onClick: this.handleToggle3 },
+    { label: 'Agree', primary: true, onClick: this.handleToggle3 }
   ];
 
   render () {
     return (
       <section>
         <h5>Dialog</h5>
-        <p>lorem ipsum...</p>
+
         <Dropdown
           label='Dialog Type'
           auto
@@ -60,6 +66,8 @@ class DialogTest extends React.Component {
           source={dialogTypes}
           value={this.state.type}
         />
+
+        <p>lorem ipsum...</p>
         <Button label='Show Dialog' raised primary onClick={this.handleToggle} />
         <ContextComponent>
           <Dialog
@@ -75,22 +83,31 @@ class DialogTest extends React.Component {
           </Dialog>
         </ContextComponent>
 
+        <p>Centered dialog</p>
+        <Button label='Show Dialog' raised primary onClick={this.handleToggle3} />
+        <ContextComponent>
+          <Dialog
+            centered={true}
+            actions={this.actions3}
+            active={this.state.active3}
+            type={this.state.type}
+            title="Use Google's location service?"
+            onOverlayClick={this.handleToggle3}
+            onEscKeyDown={this.handleToggle3}
+          >
+            <p>Let Google help apps <strong>determine location</strong>. This means sending anonymous location data to Google, even when no apps are running.</p>
+            <DialogChild />
+          </Dialog>
+        </ContextComponent>
 
-        <p>Huge content of dialog</p>
-        <Dropdown
-          label='Dialog Type'
-          auto
-          onChange={this.changeDialogType2}
-          source={dialogTypes}
-          value={this.state.type}
-        />
+        <p>Dialog with huge content</p>
         <Button label='Show Dialog' raised primary onClick={this.handleToggle2} />
         <ContextComponent>
           <Dialog
             actions={this.actions2}
             active={this.state.active2}
             autoHeight={true}
-            type={this.state.type2}
+            type={this.state.type}
             title="Use Google's location service?"
             onOverlayClick={this.handleToggle2}
             onEscKeyDown={this.handleToggle2}

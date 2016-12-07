@@ -10,6 +10,15 @@
   bottom: 0;
   left: 0;
   display: block;
+  overflow-y: auto;
+
+  &.autoheight {
+    overflow-y: auto;
+    .body {
+      height: auto;
+      max-height: none !important;
+    }
+  }
 
   .dialog {
     position: relative;
@@ -24,51 +33,65 @@
     transition-duration: $animation-duration;
     transition-property: opacity, margin;
     &.active {
-      margin: $dialog-translate-y auto;
       opacity: 1;
     }
   }
 
-  &.autoheight {
-    overflow-y: auto;
-    .body {
-      height: auto;
-      max-height: none !important;
+  .layout {
+    display: table;
+    width: 100%;
+    height: 100%;
+
+    .top {
+      display: table-cell;
+      vertical-align: top;
+
+      .dialog {
+        &.active {
+          margin: $dialog-translate-y auto;
+          opacity: 1;
+        }
+      }
     }
-  }
 
-  .small {
-    width: 30vw;
+    .center {
+      display: table-cell;
+      vertical-align: middle;
+    }
 
-    @media screen and (max-width: $layout-breakpoint-sm-tablet) {
+    .small {
+      width: 30vw;
+
+      @media screen and (max-width: $layout-breakpoint-sm-tablet) {
+        width: 50vw;
+      }
+
+      @media screen and (max-width: $layout-breakpoint-xs) {
+        width: 75vw;
+      }
+    }
+
+    .normal {
       width: 50vw;
+
+      @media screen and (max-width: $layout-breakpoint-xs) {
+        width: 96vw;
+      }
     }
 
-    @media screen and (max-width: $layout-breakpoint-xs) {
-      width: 75vw;
-    }
-  }
-
-  .normal {
-    width: 50vw;
-
-    @media screen and (max-width: $layout-breakpoint-xs) {
+    .large {
       width: 96vw;
     }
-  }
 
-  .large {
-    width: 96vw;
-  }
+    .fullscreen {
+      width: 96vw;
 
-  .fullscreen {
-    width: 96vw;
-
-    @media screen and (max-width: $layout-breakpoint-xs) {
-      width: 100vw;
-      max-width: 100vw;
-      min-height: 100vh;
-      border-radius: 0;
+      @media screen and (max-width: $layout-breakpoint-xs) {
+        width: 100vw;
+        max-width: 100vw;
+        min-height: 100vh;
+        border-radius: 0;
+      }
     }
   }
 }
