@@ -18,6 +18,7 @@ const factory = (Overlay, Button) => {
     }, props.className);
 
     const holderClassName = classnames({[props.theme.autoheight]: props.autoHeight}, props.theme.holder);
+    const layoutClassName = classnames(props.centered ? props.theme.center : props.theme.top);
 
     //events handler
     const onOverlayClick = (ev) => {
@@ -61,25 +62,33 @@ const factory = (Overlay, Button) => {
         active={props.active}
         onEscKeyDown={props.onEscKeyDown}
       >
-      <div
-          data-react-toolbox='dialog-holder'
+        <div
           className={holderClassName}
-          onClick={onOverlayClick}
-          onMouseDown={onOverlayMouseDown}
-          onMouseMove={onOverlayMouseMove}
-          onMouseUp={onOverlayMouseUp}
+        >
+          <div
+            className={props.theme.layout}
           >
-          <div data-react-toolbox='dialog' className={className}>
-            <section role='body' className={props.theme.body}>
-              {props.title ? <h6 className={props.theme.title}>{props.title}</h6> : null}
-              {props.children}
-            </section>
-            {actions.length
-              ? <nav role='navigation' className={props.theme.navigation}>
-                  {actions}
-                </nav>
-              : null
-            }
+            <div
+              data-react-toolbox='dialog-holder'
+              className={layoutClassName}
+              onClick={onOverlayClick}
+              onMouseDown={onOverlayMouseDown}
+              onMouseMove={onOverlayMouseMove}
+              onMouseUp={onOverlayMouseUp}
+              >
+              <div data-react-toolbox='dialog' className={className}>
+                <section role='body' className={props.theme.body}>
+                  {props.title ? <h6 className={props.theme.title}>{props.title}</h6> : null}
+                  {props.children}
+                </section>
+                {actions.length
+                  ? <nav role='navigation' className={props.theme.navigation}>
+                      {actions}
+                    </nav>
+                  : null
+                }
+              </div>
+            </div>
           </div>
         </div>
       </Overlay>
