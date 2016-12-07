@@ -54,6 +54,28 @@
   background-color: $table-row-highlight;
 }
 
+.clickable {
+  position: relative;
+
+  cursor: pointer;
+}
+
 .editable > * {
   cursor: pointer;
+}
+
+// NOTE Vertically centered in tall headings
+.ascIcon, .descIcon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -4px;
+
+  display: flex;
+  align-items: center;
+
+  font-size: $font-size-normal;
+  color: $color-text-secondary;
+
+  vertical-align: "middle";
 }

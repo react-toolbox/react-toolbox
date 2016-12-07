@@ -1,11 +1,25 @@
 import React, { PropTypes } from 'react';
 
-const factory = (Checkbox) => {
-  const TableHead = ({model, onSelect, selectable, multiSelectable, selected, theme}) => {
+const factory = (Checkbox, FontIcon) => {
+  const TableHead = ({model, onSelect, selectable, multiSelectable, selected, theme, sortColumn, sortDirection}) => {
     let selectCell;
     const contentCells = Object.keys(model).map((key) => {
       const name = model[key].title || key;
-      return <th key={key}>{name}</th>;
+      const onClick = model[key].onClick;
+      return (
+        <th
+          key={key}
+          className={onClick && theme.clickable}
+          onClick={onClick}>
+          {sortColumn === key && sortDirection === 'asc'
+            && <FontIcon value="arrow_upward" className={theme.ascIcon} />
+          }
+          {sortColumn === key && sortDirection === 'desc'
+            && <FontIcon value="arrow_downward" className={theme.descIcon} />
+          }
+          {name}
+        </th>
+      );
     });
 
     if (selectable && multiSelectable) {
@@ -33,6 +47,8 @@ const factory = (Checkbox) => {
     onSelect: PropTypes.func,
     selectable: PropTypes.bool,
     selected: PropTypes.bool,
+    sortColumn: PropTypes.string,
+    sortDirection: PropTypes.string,
     theme: PropTypes.shape({
       selectable: PropTypes.string
     })

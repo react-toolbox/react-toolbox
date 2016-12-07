@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { TABLE } from '../identifiers.js';
 import InjectCheckbox from '../checkbox/Checkbox.js';
+import InjectFontIcon from '../font_icon/FontIcon.js';
 import tableHeadFactory from './TableHead.js';
 import tableRowFactory from './TableRow.js';
 
@@ -18,6 +19,8 @@ const factory = (TableHead, TableRow) => {
       onSelect: PropTypes.func,
       selectable: PropTypes.bool,
       selected: PropTypes.array,
+      sortColumn: PropTypes.string,
+      sortDirection: PropTypes.string,
       source: PropTypes.array,
       theme: PropTypes.shape({
         table: PropTypes.string
@@ -70,7 +73,7 @@ const factory = (TableHead, TableRow) => {
 
     renderHead () {
       if (this.props.heading) {
-        const {model, selected, source, selectable, multiSelectable} = this.props;
+        const {model, selected, source, selectable, multiSelectable, sortColumn, sortDirection} = this.props;
         const isSelected = selected.length === source.length;
         return (
           <TableHead
@@ -79,6 +82,8 @@ const factory = (TableHead, TableRow) => {
             selectable={selectable}
             multiSelectable={multiSelectable}
             selected={isSelected}
+            sortColumn={sortColumn}
+            sortDirection={sortDirection}
             theme={this.props.theme}
           />
         );
@@ -121,7 +126,7 @@ const factory = (TableHead, TableRow) => {
   return Table;
 };
 
-const TableHead = tableHeadFactory(InjectCheckbox);
+const TableHead = tableHeadFactory(InjectCheckbox, InjectFontIcon);
 const TableRow = tableRowFactory(InjectCheckbox);
 const Table = factory(TableHead, TableRow);
 
