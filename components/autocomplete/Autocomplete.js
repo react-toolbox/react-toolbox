@@ -291,16 +291,16 @@ const factory = (Chip, Input) => {
      }
    }
 
-    isValueAnObject () {
+   isValueAnObject () {
       return !Array.isArray(this.props.value) && typeof this.props.value === 'object';
-    }
+   }
 
-    mapToObject (map) {
+   mapToObject (map) {
       return Array.from(map).reduce((obj, [k, value]) => {
         obj[k] = value;
         return obj;
       }, {});
-    }
+   }
 
    renderSelected () {
      if (this.props.multiple) {
