@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
-import update from 'immutability-helper';
 import { themr } from 'react-css-themr';
 import { RIPPLE } from '../identifiers.js';
 import events from '../utils/events';
@@ -109,9 +108,13 @@ const rippleFactory = (options = {}) => {
           const endRipple = this.addRippleDeactivateEventListener(isTouch, key);
           const initialState = { active: false, restarting: true, top, left, width, endRipple };
           const runningState = { active: true, restarting: false };
-          this.setState(update(this.state, { ripples: { [key]: { $set: initialState } } }), () => {
+          const ripples = {...this.state.ripples, [key]: initialState };
+          this.setState({ ripples }, () => {
             this.refs[key].offsetWidth; //eslint-disable-line no-unused-expressions
-            this.setState(update(this.state, { ripples: { [key]: { $merge: runningState } } }));
+            this.setState({ ripples: {
+              ...this.state.ripples,
+              [key]: Object.assign({}, this.state.ripples[key], runningState)
+            } });
           });
         }
       }
@@ -198,9 +201,10 @@ const rippleFactory = (options = {}) => {
         const self = this;
         return function endRipple () {
           document.removeEventListener(eventType, endRipple);
-          self.setState({ ripples: update(self.state.ripples, {
-            [rippleKey]: { $merge: { active: false } }
-          }) });
+          self.setState({ ripples: {
+            ...self.state.ripples,
+            [rippleKey]: Object.assign({}, self.state.ripples[rippleKey], { active: false })
+          } });
         };
       }
 
