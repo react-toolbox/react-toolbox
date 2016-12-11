@@ -121,8 +121,7 @@ const factory = (ProgressBar, Input) => {
         events.pauseEvent(event);
         this.move(events.getMousePosition(event));
       }, this.props.debouncedWait, {maxWait: this.props.debouncedMaxWait})
-      :
-      (event) => {
+      : (event) => {
         events.pauseEvent(event);
         this.move(events.getMousePosition(event));
     };
