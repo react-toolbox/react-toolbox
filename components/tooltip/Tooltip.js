@@ -75,6 +75,7 @@ const tooltipFactory = (options = {}) => {
         if (this.refs.tooltip) {
           events.removeEventListenerOnTransitionEnded(this.refs.tooltip, this.onTransformEnd);
         }
+        if (this.timeout) clearTimeout(this.timeout);
       }
 
       activate ({ top, left, position }) {
