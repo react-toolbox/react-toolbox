@@ -14,8 +14,8 @@ const factory = (ProgressBar, Input) => {
     static propTypes = {
       className: PropTypes.string,
       debounced: PropTypes.bool,
-      debouncedWait: PropTypes.number,
       debouncedMaxWait: PropTypes.number,
+      debouncedWait: PropTypes.number,
       disabled: PropTypes.bool,
       editable: PropTypes.bool,
       max: PropTypes.number,
@@ -116,15 +116,16 @@ const factory = (ProgressBar, Input) => {
       events.pauseEvent(event);
     };
 
-    handleMouseMove = this.props.debounced ?
-      debounce((event) => {
+    handleMouseMove = this.props.debounced
+      ? debounce((event) => {
         events.pauseEvent(event);
         this.move(events.getMousePosition(event));
-      }, this.props.debouncedWait, {maxWait: this.props.debouncedMaxWait}) :
+      }, this.props.debouncedWait, {maxWait: this.props.debouncedMaxWait})
+      :
       (event) => {
         events.pauseEvent(event);
         this.move(events.getMousePosition(event));
-      };
+    };
 
     handleMouseUp = () => {
       this.end(this.getMouseEventMap());
@@ -148,13 +149,13 @@ const factory = (ProgressBar, Input) => {
       this.end(this.getTouchEventMap());
     };
 
-    handleTouchMove = this.props.debounced ?
-      debounce((event) => {
+    handleTouchMove = this.props.debounced
+      ? debounce((event) => {
         this.move(events.getTouchPosition(event));
-      }, this.props.debouncedWait, {maxWait: this.props.debouncedMaxWait}) :
-      (event) => {
+      }, this.props.debouncedWait, {maxWait: this.props.debouncedMaxWait})
+      : (event) => {
         this.move(events.getTouchPosition(event));
-      };
+    };
 
     handleTouchStart = (event) => {
       if (this.state.inputFocused) this.getInput().blur();
