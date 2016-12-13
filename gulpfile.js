@@ -21,8 +21,8 @@ gulp.task('css', function () {
   ];
 
   return gulp.src([
-      './components/commons.css',
-      './components/**/theme.css'
+      './components/*.css',
+      './components/**/*.css'
     ])
     .pipe(postcss(plugins))
     .pipe(gulp.dest('./lib'));
