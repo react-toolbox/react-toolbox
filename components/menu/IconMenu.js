@@ -15,6 +15,7 @@ const factory = (IconButton, Menu) => {
         PropTypes.element
       ]),
       iconRipple: PropTypes.bool,
+      label: PropTypes.string,
       menuRipple: PropTypes.bool,
       onClick: PropTypes.func,
       onHide: PropTypes.func,
@@ -31,6 +32,7 @@ const factory = (IconButton, Menu) => {
 
     static defaultProps = {
       className: '',
+      label: '',
       icon: 'more_vert',
       iconRipple: true,
       menuRipple: true,
@@ -54,12 +56,13 @@ const factory = (IconButton, Menu) => {
 
     render () {
       const {
-        children, className, icon, iconRipple, menuRipple, onHide, // eslint-disable-line
+        children, className, icon, iconRipple, label, menuRipple, onHide, // eslint-disable-line
         onSelect, onShow, position, selectable, selected, theme, ...other
       } = this.props;
       return (
         <div {...other} className={classnames(theme.iconMenu, className)}>
           <IconButton
+            label={label}
             className={theme.icon}
             icon={icon}
             onClick={this.handleButtonClick}

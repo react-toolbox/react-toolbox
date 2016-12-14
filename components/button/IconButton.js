@@ -18,6 +18,7 @@ const factory = (ripple, FontIcon) => {
         PropTypes.element
       ]),
       inverse: PropTypes.bool,
+      label: PropTypes.string,
       neutral: PropTypes.bool,
       onMouseLeave: PropTypes.func,
       onMouseUp: PropTypes.func,
@@ -27,6 +28,7 @@ const factory = (ripple, FontIcon) => {
     };
 
     static defaultProps = {
+      label: '',
       accent: false,
       className: '',
       neutral: true,
@@ -45,7 +47,7 @@ const factory = (ripple, FontIcon) => {
     };
 
     render () {
-      const {accent, children, className, href, icon, inverse, neutral,
+      const {accent, children, className, href, icon, inverse, label, neutral,
         primary, theme, type, ...others} = this.props;
       const element = href ? 'a' : 'button';
       const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
@@ -58,6 +60,7 @@ const factory = (ripple, FontIcon) => {
         ...others,
         href,
         ref: 'button',
+        'aria-label': label,
         className: classes,
         disabled: this.props.disabled,
         onMouseUp: this.handleMouseUp,
