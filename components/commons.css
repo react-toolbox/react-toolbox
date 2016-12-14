@@ -5,21 +5,6 @@ html {
   font-size: 62.5%;
 }
 
-body {
-  font-family: Roboto, sans-serif;
-  font-size: 1.6rem;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  position: absolute;
-  -webkit-touch-callout: none;
-  width: 100%;
-
-  & * {
-    -webkit-tap-highlight-color: color(var(--color-white) a(0));
-  }
-}
-
 a,
 abbr,
 address,
@@ -92,32 +77,6 @@ video {
   margin: 0;
   outline: 0;
   padding: 0;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-label,
-p,
-button,
-abbr,
-a,
-span,
-small {
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
-  text-size-adjust: 100%;
 }
 
 a {

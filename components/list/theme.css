@@ -3,6 +3,7 @@
 @import './config.css';
 
 .list {
+  composes: reset from '../helpers.css';
   display: inline-block;
   list-style: none;
   padding: var(--list-vertical-padding) 0;

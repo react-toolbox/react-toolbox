@@ -3,6 +3,7 @@
 @import './config.css';
 
 .field {
+  composes: reset from '../helpers.css';
   display: block;
   height: var(--checkbox-size);
   margin-bottom: var(--checkbox-field-margin-bottom);
@@ -59,6 +60,7 @@
   border-radius: 2px;
   border-style: solid;
   border-width: 2px;
+  composes: reset from '../helpers.css';
   cursor: pointer;
   display: inline-block;
   height: var(--checkbox-size);

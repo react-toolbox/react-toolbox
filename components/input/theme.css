@@ -3,6 +3,7 @@
 @import './config.css';
 
 .input {
+  composes: reset from '../helpers.css';
   padding: var(--input-padding) 0;
   position: relative;
 

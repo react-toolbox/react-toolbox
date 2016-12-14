@@ -5,6 +5,7 @@
 .radio {
   border: calc(0.2 * var(--unit)) solid var(--radio-text-color);
   border-radius: 50%;
+  composes: reset from '../helpers.css';
   cursor: pointer;
   display: inline-block;
   height: var(--radio-button-size);

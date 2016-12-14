@@ -3,6 +3,7 @@
 @import './config.css';
 
 .container {
+  composes: reset from '../helpers.css';
   height: var(--slider-knob-size);
   margin-right: var(--slider-knob-size);
   position: relative;

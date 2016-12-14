@@ -19,6 +19,7 @@
   border-radius: var(--snackbar-border-radius);
   bottom: 0;
   color: var(--snackbar-color);
+  composes: reset from '../helpers.css';
   display: flex;
   left: var(--snackbar-horizontal-offset);
   margin: var(--snackbar-vertical-offset) auto 0;

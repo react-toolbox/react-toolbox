@@ -6,6 +6,7 @@
   background-color: var(--chip-background);
   border-radius: var(--chip-height);
   color: var(--chip-color);
+  composes: reset from '../helpers.css';
   display: inline-block;
   font-size: var(--chip-font-size);
   line-height: var(--chip-height);

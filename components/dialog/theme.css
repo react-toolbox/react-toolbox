@@ -5,6 +5,7 @@
 
 .wrapper {
   align-items: center;
+  composes: reset from '../helpers.css';
   display: flex;
   height: 100vh;
   justify-content: center;
