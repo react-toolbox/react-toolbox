@@ -170,3 +170,63 @@
 .month {
   background-color: var(--calendar-primary-contrast-color);
 }
+
+.slideRightEnter,
+.slideRightLeave {
+  position: absolute;
+}
+
+.slideRightEnterActive,
+.slideRightLeaveActive {
+  transition-duration: 350ms;
+  transition-property: transform, opacity;
+  transition-timing-function: ease-in-out;
+}
+
+.slideRightEnter {
+  opacity: 0;
+  transform: translateX(100%);
+
+  &.slideRightEnterActive {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slideRightLeave {
+  opacity: 1;
+  transform: translateX(0);
+
+  &.slideRightLeaveActive {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+.slideLeftEnter,
+.slideLeftLeave {
+  position: absolute;
+  transition-duration: 0.35s;
+  transition-property: transform, opacity;
+  transition-timing-function: ease-in-out;
+}
+
+.slideLeftEnter {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+
+  &.slideLeftEnterActive {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.slideLeftLeave {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+
+  &.slideLeftLeaveActive {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+}

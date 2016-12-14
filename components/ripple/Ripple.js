@@ -2,10 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import { dissoc } from 'ramda';
 import { RIPPLE } from '../identifiers.js';
 import events from '../utils/events';
 import prefixer from '../utils/prefixer';
-import utils from '../utils/utils';
 
 const defaults = {
   centered: false,
@@ -84,7 +84,7 @@ const rippleFactory = (options = {}) => {
           if (e.propertyName === 'opacity') {
             if (self.props.onRippleEnded) self.props.onRippleEnded(e);
             events.removeEventListenerOnTransitionEnded(self.refs[rippleKey], onOpacityEnd);
-            self.setState({ ripples: utils.removeObjectKey(rippleKey, self.state.ripples) });
+            self.setState({ ripples: dissoc(rippleKey, self.state.ripples) });
           }
         });
       }

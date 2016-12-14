@@ -1,13 +1,13 @@
 import React, { cloneElement, Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import { getViewport } from '../utils/utils';
 import filterReactChildren from '../utils/filter-react-children.js';
 import isComponentOfType from '../utils/is-component-of-type.js';
 import InjectAppBar from '../app_bar/AppBar';
 import InjectNavDrawer from './NavDrawer';
 import InjectSidebar from './Sidebar';
 import breakpoints from '../utils/breakpoints';
-import utils from '../utils/utils';
 import { LAYOUT } from '../identifiers';
 
 const factory = (AppBar, NavDrawer, Sidebar) => {
@@ -28,7 +28,7 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
     };
 
     state = {
-      width: utils.getViewport().width
+      width: getViewport().width
     };
 
     componentDidMount () {
@@ -40,7 +40,7 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
     }
 
     handleResize = () => {
-      this.setState({ width: utils.getViewport().width });
+      this.setState({ width: getViewport().width });
     }
 
     isPinned = sideNav => {
