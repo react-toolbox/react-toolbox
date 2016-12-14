@@ -20,9 +20,15 @@ const factory = (Chip, Input) => {
      className: PropTypes.string,
      direction: PropTypes.oneOf(['auto', 'up', 'down']),
      disabled: PropTypes.bool,
-     error: PropTypes.node,
+     error: React.PropTypes.oneOfType([
+       React.PropTypes.string,
+       React.PropTypes.node
+     ]),
      keepFocusOnChange: PropTypes.bool,
-     label: PropTypes.node,
+     label: React.PropTypes.oneOfType([
+       React.PropTypes.string,
+       React.PropTypes.node
+     ]),
      multiple: PropTypes.bool,
      onBlur: PropTypes.func,
      onChange: PropTypes.func,

@@ -10,14 +10,23 @@ const factory = (FontIcon) => {
       children: React.PropTypes.any,
       className: React.PropTypes.string,
       disabled: React.PropTypes.bool,
-      error: React.PropTypes.node,
+      error: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.node
+      ]),
       floating: React.PropTypes.bool,
-      hint: React.PropTypes.node,
+      hint: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.node
+      ]),
       icon: React.PropTypes.oneOfType([
         React.PropTypes.string,
         React.PropTypes.element
       ]),
-      label: React.PropTypes.node,
+      label: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.node
+      ]),
       maxLength: React.PropTypes.number,
       multiline: React.PropTypes.bool,
       name: React.PropTypes.string,

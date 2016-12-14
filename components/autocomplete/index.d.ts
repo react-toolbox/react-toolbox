@@ -58,11 +58,11 @@ interface AutocompleteProps extends ReactToolbox.Props {
    * Sets the error string for the internal input element.
    * @default false
    */
-  error?: React.ReactNode;
+  error?: string | React.ReactNode;
   /**
    * The text string to use for the floating label element.
    */
-  label?: React.ReactNode;
+  label?: string | React.ReactNode;
   /**
    * If true, component can hold multiple values.
    */
