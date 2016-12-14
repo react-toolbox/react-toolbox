@@ -179,3 +179,67 @@
   top: calc(-1 * var(--clock-knob-size));
   width: var(--clock-knob-size);
 }
+
+.zoomInEnter,
+.zoomInLeave {
+  position: absolute;
+}
+
+.zoomInEnterActive,
+.zoomInLeaveActive {
+  transition: transform, opacity;
+  transition-duration: 500ms;
+  transition-timing-function: var(--animation-curve-fast-out-slow-in);
+}
+
+.zoomInEnter {
+  opacity: 0;
+  transform: scale(0.85);
+
+  &.zoomInEnterActive {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.zoomInLeave {
+  opacity: 1;
+  transform: scale(1);
+
+  &.zoomInLeaveActive {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+}
+
+.zoomOutEnter,
+.zoomOutLeave {
+  position: absolute;
+}
+
+.zoomOutEnterActive,
+.zoomOutLeaveActive {
+  transition: transform, opacity;
+  transition-duration: 500ms;
+  transition-timing-function: var(--animation-curve-fast-out-slow-in);
+}
+
+.zoomOutEnter {
+  opacity: 0;
+  transform: scale(1.25);
+
+  &.zoomOutEnterActive {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.zoomOutLeave {
+  opacity: 1;
+  transform: scale(1);
+
+  &.zoomOutLeaveActive {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}

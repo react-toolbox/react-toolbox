@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { MENU } from '../identifiers.js';
-import { events, utils } from '../utils';
+import { events } from '../utils';
+import { getViewport } from '../utils/utils';
 import InjectMenuItem from './MenuItem.js';
 
 const POSITION = {
@@ -154,7 +155,7 @@ const factory = (MenuItem) => {
       const parentNode = ReactDOM.findDOMNode(this).parentNode;
       if (!parentNode) return;
       const {top, left, height, width} = parentNode.getBoundingClientRect();
-      const {height: wh, width: ww} = utils.getViewport();
+      const {height: wh, width: ww} = getViewport();
       const toTop = top < ((wh / 2) - height / 2);
       const toLeft = left < ((ww / 2) - width / 2);
       return `${toTop ? 'top' : 'bottom'}${toLeft ? 'Left' : 'Right'}`;

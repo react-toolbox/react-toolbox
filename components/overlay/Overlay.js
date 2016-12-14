@@ -76,7 +76,7 @@ class Overlay extends Component {
   }
 
   render () {
-    const { active, className, lockScroll, theme, ...other } = this.props; // eslint-disable-line
+    const { active, className, lockScroll, theme, onEscKeyDown, ...other } = this.props; // eslint-disable-line
     return (
       <div
         {...other}

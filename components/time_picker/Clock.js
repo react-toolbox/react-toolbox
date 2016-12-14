@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import CssTransitionGroup from 'react-addons-css-transition-group';
-import { ZoomIn, ZoomOut } from '../animations';
+import { getAnimationModule } from '../utils/utils';
 import time from '../utils/time.js';
 import Hours from './ClockHours.js';
 import Minutes from './ClockMinutes.js';
@@ -106,11 +106,16 @@ class Clock extends Component {
 
   render () {
     const { theme } = this.props;
-    const animation = this.props.display === 'hours' ? ZoomOut : ZoomIn;
+    const animation = this.state.display === 'hours' ? 'zoomOut' : 'zoomIn';
+    const animationModule = getAnimationModule(animation, theme);
     return (
       <div data-react-toolbox='clock' className={theme.clock}>
         <div ref='placeholder' className={theme.placeholder} style={{height: this.state.radius * 2}}>
-          <CssTransitionGroup transitionName={animation} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+          <CssTransitionGroup
+            transitionName={animationModule}
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={500}
+          >
             <div key={this.props.display} className={theme.clockWrapper} style={{height: this.state.radius * 2}}>
               {this.props.display === 'hours' ? this.renderHours() : null}
               {this.props.display === 'minutes' ? this.renderMinutes() : null}

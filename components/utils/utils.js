@@ -6,7 +6,7 @@ export const angleFromPositions = (cx, cy, ex, ey) => {
 };
 
 export const angle360FromPositions = (cx, cy, ex, ey) => {
-  const angle = this.angleFromPositions(cx, cy, ex, ey);
+  const angle = angleFromPositions(cx, cy, ex, ey);
   return angle < 0 ? 360 + angle : angle;
 };
 
