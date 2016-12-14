@@ -8,6 +8,7 @@ import InjectMenu from './Menu.js';
 const factory = (IconButton, Menu) => {
   class IconMenu extends Component {
     static propTypes = {
+      autofocus: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
       icon: PropTypes.oneOfType([
@@ -31,6 +32,7 @@ const factory = (IconButton, Menu) => {
     };
 
     static defaultProps = {
+      autofocus: true,
       className: '',
       label: '',
       icon: 'more_vert',
@@ -56,7 +58,7 @@ const factory = (IconButton, Menu) => {
 
     render () {
       const {
-        children, className, icon, iconRipple, label, menuRipple, onHide, // eslint-disable-line
+        autofocus, children, className, icon, iconRipple, label, menuRipple, onHide, // eslint-disable-line
         onSelect, onShow, position, selectable, selected, theme, ...other
       } = this.props;
       return (
@@ -69,6 +71,7 @@ const factory = (IconButton, Menu) => {
             ripple={iconRipple}
           />
           <Menu
+            autofocus={autofocus}
             active={this.state.active}
             onHide={this.handleMenuHide}
             onSelect={onSelect}

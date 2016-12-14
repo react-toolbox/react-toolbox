@@ -18,6 +18,7 @@ const POSITION = {
 const factory = (MenuItem) => {
   class Menu extends Component {
     static propTypes = {
+      autofocus: PropTypes.bool,
       active: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
@@ -44,6 +45,7 @@ const factory = (MenuItem) => {
     };
 
     static defaultProps = {
+      autofocus: false,
       active: false,
       outline: true,
       position: POSITION.STATIC,
@@ -198,9 +200,22 @@ const factory = (MenuItem) => {
       });
     }
 
+    setFocus () {
+      const menuContainer = this.refs.menu.parentNode;
+      menuContainer.setAttribute('tabindex', -1);
+      menuContainer.focus();
+    }
+
     show () {
       const { width, height } = this.refs.menu.getBoundingClientRect();
+      let listenerTransition = () => {
+        this.setFocus();
+        this.refs.menu.removeEventListener(listenerTransition);
+      };
       this.setState({active: true, width, height});
+      if(this.props.autofocus) {
+        this.refs.menu.addEventListener('transitionend', listenerTransition);
+      }
     }
 
     hide () {
