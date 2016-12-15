@@ -47,8 +47,8 @@ If you want to provide a theme via context, the component key is `RTAutocomplete
 | `className`                     | `String`                      | `''`    | Sets a class to style of the Component.|
 | `direction`                     | `String`                      | `auto`  | Determines the opening direction. It can be `auto`, `top` or `down`. |
 | `disabled`                      | `Bool`                        | `false` | If true, component will be disabled. |
-| `error`                         | `String`                      |         | Sets the error string for the internal input element. |
-| `label`                         | `String`                      |         | The text string to use for the floating label element. |
+| `error`                         | `String` or `Node`            |         | Sets the error string for the internal input element. |
+| `label`                         | `String` or `Node`            |         | The text string to use for the floating label element. |
 | `multiple`                      | `Bool`                        | `true`  | If true, component can hold multiple values. |
 | `onBlur`                        | `Function`                    |         | Callback function that is fired when component is blurred. |
 | `onChange`                      | `Function`                    |         | Callback function that is fired when the components's value changes. |
