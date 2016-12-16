@@ -11,8 +11,8 @@
 .drawer {
   background-color: var(--drawer-background-color);
   box-shadow: var(--shadow-2p);
-  composes: reset from '../helpers.css';
   color: var(--drawer-text-color);
+  composes: reset from '../helpers.css';
   display: block;
   height: 100vh;
   overflow-x: hidden;

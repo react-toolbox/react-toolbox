@@ -128,7 +128,9 @@
   background-color: var(--dropdown-color-white);
   border-radius: var(--dropdown-value-border-radius);
   list-style: none;
+  margin: 0;
   overflow-y: auto;
+  padding: 0;
   position: absolute;
   transition-duration: var(--animation-duration);
   transition-property: max-height, box-shadow;

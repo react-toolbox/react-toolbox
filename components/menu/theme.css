@@ -72,6 +72,7 @@
 
     & > .menuInner {
       left: 0;
+      margin: 0;
       opacity: 0;
       position: absolute;
       top: 0;
@@ -170,8 +171,11 @@
 
 .menuDivider {
   background-color: var(--color-divider);
+  border: 0;
   display: block;
   height: 1px;
   margin: var(--menu-divider-height) 0;
+  outline: 0;
+  padding: 0;
   width: 100%;
 }
