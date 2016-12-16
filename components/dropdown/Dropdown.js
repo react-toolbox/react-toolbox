@@ -13,14 +13,17 @@ const factory = (Input) => {
       auto: PropTypes.bool,
       className: PropTypes.string,
       disabled: PropTypes.bool,
+      editable: PropTypes.bool,
       error: PropTypes.string,
       label: PropTypes.string,
+      menu: PropTypes.bool,
       name: PropTypes.string,
       onBlur: PropTypes.func,
       onChange: PropTypes.func,
       onClick: PropTypes.func,
       onFocus: PropTypes.func,
       required: PropTypes.bool,
+      segmented: PropTypes.bool,
       source: PropTypes.array.isRequired,
       template: PropTypes.func,
       theme: PropTypes.shape({
@@ -36,7 +39,9 @@ const factory = (Input) => {
         templateValue: PropTypes.string,
         up: PropTypes.string,
         value: PropTypes.string,
-        values: PropTypes.string
+        values: PropTypes.string,
+        menuValue: PropTypes.string,
+        segmentedDivider: PropTypes.string
       }),
       value: PropTypes.oneOfType([
         PropTypes.string,
@@ -54,7 +59,8 @@ const factory = (Input) => {
 
     state = {
       active: false,
-      up: false
+      up: false,
+      editing: false
     };
 
     componentWillUpdate (nextProps, nextState) {
@@ -101,9 +107,22 @@ const factory = (Input) => {
     };
 
     handleClick = (event) => {
-      this.open(event);
+      const { segmented, editable, onClick } = this.props;
+      if (!segmented) {
+        this.open(event);
+      }
+      if (editable) {
+        this.setState({
+          editing: true
+        });
+      }
       events.pauseEvent(event);
-      if (this.props.onClick) this.props.onClick(event);
+      if (onClick) onClick(event);
+    };
+
+    handleClickSegmentedButton = (event) => {
+      event.stopPropagation();
+      this.open(event);
     };
 
     handleSelect = (item, event) => {
@@ -112,12 +131,25 @@ const factory = (Input) => {
         if (this.props.name) {
           event.target.name = this.props.name;
         }
+        this.setState({
+          editingValue: null
+        });
         this.props.onChange(item, event);
         this.close();
       }
     };
 
+    handleInputChange = (value) => {
+      this.setState({
+        editingValue: value
+      });
+      if (this.props.onChange) this.props.onChange(value);
+    }
+
     getSelectedItem = () => {
+      if (this.props.editable && this.state.editingValue) {
+        return {label: this.state.editingValue, value: this.state.editingValue};
+      }
       for (const item of this.props.source) {
         if (item.value === this.props.value) return item;
       }
@@ -150,6 +182,33 @@ const factory = (Input) => {
       );
     }
 
+    handleSegmentedMenuBlur = (event) => {
+      event.stopPropagation();
+    }
+
+    renderSegmentedButton = () => {
+      const { theme } = this.props;
+      return (
+        <button
+          type="button"
+          className={theme.segmentedButton}
+          onClick={this.handleClickSegmentedButton}
+          onBlur={this.handleSegmentedMenuBlur}
+        />
+      );
+    }
+
+    renderMenuValue = () => {
+      const { theme, label, menu, segmented } = this.props;
+      const selected = this.getSelectedItem();
+      return (
+        <li className={theme.menuValue} onClick={this.close}>
+          {selected ? selected.label : label}
+          {menu && segmented ? this.renderSegmentedButton() : null}
+        </li>
+      );
+    }
+
     renderValue = (item, idx) => {
       const { theme } = this.props;
       const className = item.value === this.props.value ? theme.selected : null;
@@ -161,9 +220,11 @@ const factory = (Input) => {
     };
 
     handleFocus = event => {
-      event.stopPropagation();
-      if (!this.props.disabled) this.open(event);
-      if (this.props.onFocus) this.props.onFocus(event);
+      const {disabled, segmented, onFocus} = this.props;
+      if (!segmented || (segmented && event.target.tagName === 'BUTTON')) {
+        if (!disabled) this.open(event);
+        if (onFocus) onFocus(event);
+      }
     };
 
     handleBlur = event => {
@@ -175,14 +236,17 @@ const factory = (Input) => {
     render () {
       const {
         allowBlank, auto, required, onChange, onFocus, onBlur, //eslint-disable-line no-unused-vars
-        source, template, theme, ...others
+        source, template, theme, menu, segmented, editable, ...others
       } = this.props;
       const selected = this.getSelectedItem();
       const className = classnames(theme.dropdown, {
         [theme.up]: this.state.up,
         [theme.active]: this.state.active,
         [theme.disabled]: this.props.disabled,
-        [theme.required]: this.props.required
+        [theme.required]: this.props.required,
+        [theme.menu]: menu,
+        [theme.segmented]: menu && segmented,
+        [theme.editable]: menu && segmented && editable
       }, this.props.className);
 
       return (
@@ -198,17 +262,23 @@ const factory = (Input) => {
             tabIndex="-1"
             className={theme.value}
             onClick={this.handleClick}
+            onChange={this.handleInputChange}
             required={this.props.required}
-            readOnly
+            readOnly={!this.state.editing}
             ref={node => { this.inputNode = node && node.getWrappedInstance(); }}
             type={template && selected ? 'hidden' : null}
             theme={theme}
             themeNamespace="input"
+            floating={!menu}
             value={selected && selected.label ? selected.label : ''}
-          />
+          >
+            {menu && segmented ? this.renderSegmentedButton() : null}
+          </Input>
         {template && selected ? this.renderTemplateValue(selected) : null}
           <ul className={theme.values} ref='values'>
+            {menu && !this.state.up ? this.renderMenuValue() : null}
             {source.map(this.renderValue)}
+            {menu && this.state.up ? this.renderMenuValue() : null}
           </ul>
         </div>
       );
