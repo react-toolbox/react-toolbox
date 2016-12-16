@@ -10,6 +10,14 @@ const countries = [
   { value: 'FR-fr', label: 'France', img: 'http://' }
 ];
 
+const fontSizes = [
+  { value: '12', label: '12'},
+  { value: '24', label: '24'},
+  { value: '36', label: '36'},
+  { value: '48', label: '48'},
+  { value: '74', label: '74'}
+];
+
 class DropdownTest extends React.Component {
   state = {
     dropdown4: 'TH-th'
@@ -39,6 +47,7 @@ class DropdownTest extends React.Component {
         <h5>Dropdown</h5>
         <p>lorem ipsum...</p>
 
+        <p>Custor template</p>
         <Dropdown
           label="Country"
           ref="dropdown1"
@@ -48,6 +57,8 @@ class DropdownTest extends React.Component {
           value={this.state.dropdown1}
         />
 
+        <p>Default</p>
+
         <Dropdown
           label="Country"
           ref="dropdown4"
@@ -55,6 +66,8 @@ class DropdownTest extends React.Component {
           source={countries}
           value={this.state.dropdown4}
         />
+
+        <p>Without value</p>
 
         <Dropdown
           disabled
@@ -64,12 +77,51 @@ class DropdownTest extends React.Component {
           source={countries}
         />
 
+        <p>Without value and required</p>
+
         <Dropdown
           label="Country"
           ref="dropdown5"
           onChange={this.handleChange.bind(this, 'dropdown5')}
           source={countries}
           required
+        />
+
+        <p>Generic overflow dropdown button</p>
+
+        <Dropdown
+          label="Country"
+          ref="dropdown6"
+          onChange={this.handleChange.bind(this, 'dropdown6')}
+          source={countries}
+          value={this.state.dropdown6}
+          menu
+        />
+
+        <p>Segmented dropdown button</p>
+
+        <Dropdown
+          label="Country"
+          ref="dropdown7"
+          onChange={this.handleChange.bind(this, 'dropdown7')}
+          source={countries}
+          value={this.state.dropdown7}
+          menu
+          segmented
+        />
+
+        <p>Editable segmented dropdown button</p>
+
+        <Dropdown
+          label="Font size"
+          ref="dropdown8"
+          onChange={this.handleChange.bind(this, 'dropdown8')}
+          // onInputChange={this.handleInputChange}
+          source={fontSizes}
+          value={this.state.dropdown8}
+          menu
+          segmented
+          editable
         />
       </section>
     );

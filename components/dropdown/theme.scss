@@ -34,6 +34,99 @@
     pointer-events: none;
     cursor: normal;
   }
+  &.menu {
+    &.segmented {
+      .value {
+        display: flex;
+
+        &:after {
+          display: none;
+        }
+
+        span {
+          display: none;
+        }
+        input, .segmentedButton {
+          &:hover {
+            background-color: $dropdown-input-hover-background;
+          }
+        }
+      }
+      .values {
+        .menuValue {
+          display: flex;
+          justify-content: space-between;
+
+          .segmentedButton {
+            flex: 0 0 4.45rem;
+            margin: -$dropdown-menu-input-padding;
+            border-top: 0;
+            border-bottom: 0;
+
+            &:after {
+              @include arrow-up;
+            }
+          }
+          &:after {
+            display: none;
+          }
+        }
+      }
+      .segmentedButton {
+        width: 4.5rem;
+        cursor: pointer;
+        background-color: transparent;
+        border: 0;
+        border-top: 1px solid $input-text-bottom-border-color;
+        border-bottom: 1px solid $input-text-bottom-border-color;
+        border-left: 1px solid $input-text-bottom-border-color;
+        appearance: none;
+
+      }
+      &:not(.active) .segmentedButton {
+        &:after {
+          @include arrow-down;
+        }
+      }
+    }
+    input {
+      padding: $dropdown-menu-input-padding 1.6rem;
+      border-top: 1px solid $input-text-bottom-border-color;
+
+      &:hover {
+        background-color: $dropdown-input-hover-background;
+      }
+    }
+    .value {
+      label {
+        top: 3.6rem;
+        padding-left: $dropdown-menu-input-padding;
+      }
+      &:after {
+        right: 1.6rem;
+      }
+    }
+    .values {
+      top: 2rem;
+    }
+    .menuValue {
+      padding: 1.5rem;
+      border-bottom: 1px solid $input-text-bottom-border-color;
+      &:after {
+        @include arrow-up;
+      }
+    }
+    &.up {
+      > .values {
+        top: auto;
+        bottom: 2rem;
+      }
+      .menuValue {
+        border-top: 1px solid $input-text-bottom-border-color;
+        border-bottom: 0;
+      }
+    }
+  }
 }
 
 .value {

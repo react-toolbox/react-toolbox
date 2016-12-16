@@ -2,5 +2,38 @@ $dropdown-color-white: $color-white !default;
 $dropdown-color-primary: $color-primary !default;
 $dropdown-color-primary-contrast: $color-primary-contrast !default;
 $dropdown-value-hover-background: $palette-grey-200 !default;
+$dropdown-input-hover-background: rgb(247, 247, 247) !default;
+$dropdown-menu-input-padding: 1.4rem !default;
 $dropdown-overflow-max-height: 45vh !default;
 $dropdown-value-border-radius: .2 * $unit !default;
+
+$size: ($input-field-height / 7);
+$border: $size solid transparent;
+
+@mixin arrow-down () {
+  position: absolute;
+  top: 50%;
+  right: 1.6rem;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  content: "";
+  border-top: $size solid $input-text-bottom-border-color;
+  border-right: $border;
+  border-left: $border;
+  transition: transform $animation-duration $animation-curve-default;
+}
+
+@mixin arrow-up () {
+  position: absolute;
+  top: 50%;
+  right: 1.6rem;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  content: "";
+  border-right: $border;
+  border-bottom: $size solid $input-text-bottom-border-color;
+  border-left: $border;
+  transition: transform $animation-duration $animation-curve-default;
+}
