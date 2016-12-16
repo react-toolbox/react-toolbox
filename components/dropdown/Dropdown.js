@@ -152,9 +152,12 @@ const factory = (Input) => {
 
     renderValue = (item, idx) => {
       const { theme } = this.props;
-      const className = item.value === this.props.value ? theme.selected : null;
+      const className = classnames({
+        [theme.selected]: item.value === this.props.value,
+        [theme.disabled]: item.disabled
+      });
       return (
-        <li key={idx} className={className} onClick={this.handleSelect.bind(this, item.value)}>
+        <li key={idx} className={className} onClick={!item.disabled ? this.handleSelect.bind(this, item.value) : null}>
           {this.props.template ? this.props.template(item) : item.label}
         </li>
       );
