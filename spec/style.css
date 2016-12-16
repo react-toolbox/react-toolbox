@@ -21,6 +21,9 @@
 
     & > h5 {
       color: rgb(48, 63, 159);
+      font-size: 20px;
+      line-height: 1;
+      margin: 0 0 10px;
 
       &:not(:first-child) {
         margin-top: calc(2 * var(--offset));
@@ -28,6 +31,8 @@
     }
 
     & > p {
+      font-size: 14px;
+      line-height: 24px;
       margin: calc(var(--offset) / 4) 0;
       opacity: 0.6;
     }
@@ -41,6 +46,26 @@
   &::-webkit-scrollbar {
     height: 0;
     width: 0;
+  }
+}
+
+.drawer {
+  padding: 15px;
+
+  & h5 {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    margin: 0 0 10px;
+  }
+
+  & p {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 24px;
+    margin: 0 0 10px;
   }
 }
 
@@ -158,7 +183,7 @@
 
 .customSizedProgress {
   &.circular {
-    width: 40px;
     height: 40px;
+    width: 40px;
   }
 }

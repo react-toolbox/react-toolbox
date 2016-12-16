@@ -16,6 +16,7 @@ class DropdownTest extends React.Component {
   };
 
   handleChange = (dropdown, value) => {
+    console.log('selected', value);
     const newState = {};
     newState[dropdown] = value;
     this.setState(newState);
@@ -69,6 +70,7 @@ class DropdownTest extends React.Component {
           ref="dropdown5"
           onChange={this.handleChange.bind(this, 'dropdown5')}
           source={countries}
+          value={this.state.dropdown5}
           required
         />
       </section>

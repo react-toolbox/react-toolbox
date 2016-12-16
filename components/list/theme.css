@@ -3,8 +3,10 @@
 @import './config.css';
 
 .list {
+  composes: reset from '../helpers.css';
   display: inline-block;
   list-style: none;
+  margin: 0;
   padding: var(--list-vertical-padding) 0;
   position: relative;
   text-align: left;

@@ -6,7 +6,8 @@
     }],
     "property-no-unknown": [ true, {
       "ignoreProperties": [
-        "composes"
+        "composes",
+        "font-smoothing"
       ]
     }],
     "color-hex-case": "lower",

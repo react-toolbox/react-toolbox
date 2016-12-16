@@ -10,6 +10,7 @@
 
 .layout {
   align-items: stretch;
+  composes: reset from '../helpers.css';
   display: flex;
   flex: 1;
   flex-direction: column;

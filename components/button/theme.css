@@ -6,6 +6,7 @@
   align-content: center;
   align-items: center;
   border: 0;
+  composes: reset from '../helpers.css';
   cursor: pointer;
   display: inline-block;
   flex-direction: row;
@@ -16,6 +17,7 @@
   letter-spacing: 0;
   line-height: var(--button-height);
   outline: none;
+  padding: 0;
   position: relative;
   text-align: center;
   text-decoration: none;
@@ -151,6 +153,7 @@
   background: transparent;
   border-radius: 50%;
   composes: button;
+  vertical-align: middle;
   width: var(--button-height);
 
   & > .icon,

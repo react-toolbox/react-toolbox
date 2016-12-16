@@ -20,6 +20,7 @@
 
 .vertical,
 .horizontal {
+  composes: reset from '../helpers.css';
   padding: calc(var(--navigation-space) / 2);
 
   & > [data-react-toolbox='link'] {

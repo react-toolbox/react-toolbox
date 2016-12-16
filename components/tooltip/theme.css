@@ -3,8 +3,9 @@
 @import './config.css';
 
 .tooltip {
+  composes: reset from '../helpers.css';
   display: block;
-  font-family: Roboto, sans-serif;
+  font-family: var(--preferred-font);
   font-size: var(--tooltip-font-size);
   font-weight: var(--font-weight-bold);
   line-height: var(--font-size-small);

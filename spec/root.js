@@ -1,6 +1,5 @@
 /* global VERSION */
 import 'normalize.css';
-import '../components/commons.css';
 import React from 'react';
 import AppBar from '../components/app_bar';
 import Autocomplete from './components/autocomplete';

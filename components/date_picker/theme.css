@@ -21,7 +21,11 @@
 
 .date {
   display: block;
+  font-size: calc(3.4 * var(--unit));
+  font-weight: 400;
   font-weight: var(--font-weight-semi-bold);
+  line-height: calc(4 * var(--unit));
+  margin: 0;
   text-transform: capitalize;
   transition: opacity var(--animation-duration) var(--animation-curve-default);
 }
@@ -103,7 +107,10 @@
 .years {
   font-size: var(--font-size-big);
   height: 100%;
+  list-style: none;
+  margin: 0;
   overflow-y: auto;
+  padding: 0;
 
   & > li {
     cursor: pointer;

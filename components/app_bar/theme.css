@@ -6,6 +6,8 @@
 .appBar {
   background: var(--appbar-color);
   color: var(--appbar-contrast);
+  composes: reset from '../helpers.css';
+  font-family: var(--preferred-font);
   height: var(--appbar-height);
   padding: 0 var(--appbar-h-padding);
   transition-duration: 0.5s;

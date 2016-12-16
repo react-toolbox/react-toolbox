@@ -5,6 +5,7 @@
 
 .wrapper {
   align-items: center;
+  composes: reset from '../helpers.css';
   display: flex;
   height: 100vh;
   justify-content: center;
@@ -74,17 +75,25 @@
 .title {
   color: var(--dialog-color-title);
   flex-grow: 0;
-  font-size: 2rem;
+  font-size: calc(2 * var(--unit));
   font-weight: 500;
   letter-spacing: 0.02em;
   line-height: 1;
-  margin-bottom: calc(1.6 * var(--unit));
+  margin: 0 0 calc(1.6 * var(--unit));
 }
 
 .body {
   color: var(--color-text-secondary);
   flex-grow: 2;
   padding: var(--dialog-content-padding);
+
+  & p {
+    font-size: calc(1.4 * var(--unit));
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: calc(2.4 * var(--unit));
+    margin: 0;
+  }
 }
 
 .navigation {

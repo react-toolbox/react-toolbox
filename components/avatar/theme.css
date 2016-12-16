@@ -6,6 +6,7 @@
   background-color: var(--avatar-background);
   border-radius: 50%;
   color: var(--avatar-color);
+  composes: reset from '../helpers.css';
   display: inline-block;
   font-size: var(--avatar-font-size);
   height: var(--avatar-size);

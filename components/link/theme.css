@@ -9,6 +9,7 @@
 .link {
   align-content: center;
   align-items: center;
+  composes: reset from '../helpers.css';
   cursor: pointer;
   display: flex;
   flex-direction: row;

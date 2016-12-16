@@ -6,6 +6,7 @@
   background: var(--card-background-color);
   border-radius: calc(0.2 * var(--unit));
   box-shadow: var(--shadow-2p);
+  composes: reset from '../helpers.css';
   display: flex;
   flex-direction: column;
   font-size: var(--card-font-size);
@@ -92,15 +93,30 @@
     margin-right: calc(1.3 * var(--unit));
   }
 
+  & .title {
+    font-size: calc(2 * var(--unit));
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+  }
+
   & .subtitle {
     color: var(--color-text-secondary);
+    font-size: calc(1.4 * var(--unit));
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: calc(2.4 * var(--unit));
+    margin: 0;
+    padding: 0;
   }
 
   &.large {
     padding: var(--card-padding-lg) var(--card-padding) calc(var(--card-padding) - 0.2 * var(--unit));
 
     & .title {
-      font-size: 2.4rem;
+      font-size: calc(2.4 * var(--unit));
       -moz-osx-font-smoothing: grayscale;
       font-weight: 400;
       line-height: 1.25;
@@ -126,6 +142,14 @@
 .cardTitle,
 .cardText {
   padding: calc(var(--card-padding) - 0.2 * var(--unit)) var(--card-padding);
+
+  & p {
+    font-size: calc(1.4 * var(--unit));
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: calc(2.4 * var(--unit));
+    margin: 0;
+  }
 
   &:last-child {
     padding-bottom: var(--card-padding-lg);

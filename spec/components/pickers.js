@@ -2,7 +2,6 @@ import React from 'react';
 import DatePicker from '../../components/date_picker';
 import TimePicker from '../../components/time_picker';
 
-
 const datetime = new Date(2015, 10, 16);
 const min_datetime = new Date(new Date(datetime).setDate(8));
 const max_datetime = new Date(new Date(datetime).setDate(24));
@@ -109,6 +108,7 @@ class PickersTest extends React.Component {
         />
 
         <TimePicker
+          format='ampm'
           label='Start time'
           onChange={this.handleChange.bind(this, 'time1')}
           onEscKeyDown={() => console.log('esc key down')}

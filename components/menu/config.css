@@ -12,7 +12,7 @@
   --menu-item-height: calc(4.8 * var(--unit));
   --menu-item-padding: calc(1.6 * var(--unit));
   --menu-item-font-size: calc(1.6 * var(--unit));
-  --menu-divider-height: calc((4.8 * var(--unit)) / 4);
+  --menu-divider-height: calc((4.8 / 4) * var(--unit)));
   --menu-icon-size: calc(2.3 * var(--unit));
   --menu-icon-ripple-duration: 650ms;
 }
