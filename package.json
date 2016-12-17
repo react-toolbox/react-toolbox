@@ -75,7 +75,7 @@
     "karma-webpack": "^1.8.0",
     "lint-staged": "^3.2.3",
     "mocha": "^3.2.0",
-    "node-sass": "^4.0.0",
+    "node-sass": "^3.13.0",
     "phantomjs-prebuilt": "^2.1.14",
     "postcss-loader": "^1.2.1",
     "pre-commit": "^1.2.2",
