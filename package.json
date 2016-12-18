@@ -38,6 +38,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "core-js": "^2.4.0",
+    "lodash.debounce": "^4.0.8",
     "normalize.css": "^4.2.0",
     "react-css-themr": "^1.7.0"
   },

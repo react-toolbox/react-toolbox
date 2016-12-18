@@ -7,11 +7,15 @@ import events from '../utils/events.js';
 import utils from '../utils/utils.js';
 import InjectProgressBar from '../progress_bar/ProgressBar.js';
 import InjectInput from '../input/Input.js';
+import debounce from 'lodash.debounce';
 
 const factory = (ProgressBar, Input) => {
   class Slider extends Component {
     static propTypes = {
       className: PropTypes.string,
+      debounced: PropTypes.bool,
+      debouncedMaxWait: PropTypes.number,
+      debouncedWait: PropTypes.number,
       disabled: PropTypes.bool,
       editable: PropTypes.bool,
       max: PropTypes.number,
@@ -40,6 +44,9 @@ const factory = (ProgressBar, Input) => {
 
     static defaultProps = {
       className: '',
+      debounced: false,
+      debouncedMaxWait: 200,
+      debouncedWait: 32,
       editable: false,
       max: 100,
       min: 0,
@@ -109,9 +116,14 @@ const factory = (ProgressBar, Input) => {
       events.pauseEvent(event);
     };
 
-    handleMouseMove = (event) => {
-      events.pauseEvent(event);
-      this.move(events.getMousePosition(event));
+    handleMouseMove = this.props.debounced
+      ? debounce((event) => {
+        events.pauseEvent(event);
+        this.move(events.getMousePosition(event));
+      }, this.props.debouncedWait, {maxWait: this.props.debouncedMaxWait})
+      : (event) => {
+        events.pauseEvent(event);
+        this.move(events.getMousePosition(event));
     };
 
     handleMouseUp = () => {
@@ -136,8 +148,12 @@ const factory = (ProgressBar, Input) => {
       this.end(this.getTouchEventMap());
     };
 
-    handleTouchMove = (event) => {
-      this.move(events.getTouchPosition(event));
+    handleTouchMove = this.props.debounced
+      ? debounce((event) => {
+        this.move(events.getTouchPosition(event));
+      }, this.props.debouncedWait, {maxWait: this.props.debouncedMaxWait})
+      : (event) => {
+        this.move(events.getTouchPosition(event));
     };
 
     handleTouchStart = (event) => {
