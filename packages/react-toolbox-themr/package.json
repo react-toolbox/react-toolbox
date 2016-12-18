@@ -4,29 +4,27 @@
   "homepage": "https://github.com/react-toolbox/react-toolbox-themr#readme",
   "version": "1.0.0",
   "main": "index.js",
+  "bin": {
+    "react-toolbox-themr": "./bin/builder.js"
+  },
   "author": {
     "email": "javier.velasco86@gmail.com",
     "name": "Javi Velasco",
     "url": "http://javivelasco.com/"
   },
-  "license": "MIT",
-  "keywords": [
-    "css-modules",
-    "react-toolbox",
-    "builder",
-    "postcss"
-  ],
-  "bin": {
-    "react-toolbox-themr": "./bin/builder.js"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/react-toolbox/react-toolbox-themr.git"
   },
   "bugs": {
     "url": "https://github.com/react-toolbox/react-toolbox-themr/issues"
   },
-  "scripts": {
-    "lint": "eslint src bin",
-    "test": "jest",
-    "test:watch": "node_modules/.bin/jest --watch --no-watchman"
-  },
+  "keywords": [
+    "builder",
+    "css-modules",
+    "postcss",
+    "react-toolbox"
+  ],
   "dependencies": {
     "babel-eslint": "^7.1.1",
     "clean-css": "^3.4.21",
@@ -42,6 +40,13 @@
     "ramda": "^0.22.1",
     "yargs": "^6.5.0"
   },
+  "scripts": {
+    "lint": "eslint src bin",
+    "prepublish": "npm run lint",
+    "test": "jest",
+    "test:watch": "node_modules/.bin/jest --watch --no-watchman"
+  },
+  "license": "MIT",
   "peerDependencies": {
     "react-toolbox": "^2.0.0"
   }
