@@ -1,0 +1,13 @@
+{
+  "extends": "eslint-config-rackt",
+  "env": {
+    "browser": true,
+    "jest": true,
+    "mocha": true,
+    "node": true
+  },
+  "rules": {
+    "no-var": 0,
+    "valid-jsdoc": 2
+  }
+}
