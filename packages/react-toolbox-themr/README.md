@@ -12,6 +12,8 @@ $ yarn add --dev react-toolbox-themr
 
 Note it only works with **React Toolbox 2.0 beta**.
 
+![react-toolbox-themr](https://cloud.githubusercontent.com/assets/1634922/21305836/285a092a-c5ce-11e6-8ad4-7b170dc97d1b.gif)
+
 ## Why?
 
 [React Toolbox 2.0](https://github.com/react-toolbox/react-toolbox/releases) styles have been rewritten using [postcss](https://github.com/postcss/postcss). This gives us more flexibility and makes the library more powerful allowing things like live transforming in the browser. We still use [CSS Modules](https://github.com/css-modules/css-modules) thought, and some people find difficult to integrate the library in their current stack, specially when [Webpack](https://webpack.github.io/) is not included or accessible.
