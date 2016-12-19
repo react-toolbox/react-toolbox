@@ -1,7 +1,7 @@
 import * as React from "react";
 import ReactToolbox from "../index";
 
-interface FontIconProps extends ReactToolbox.Props {
+export interface FontIconProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
@@ -10,6 +10,10 @@ interface FontIconProps extends ReactToolbox.Props {
    * The key string for the icon you want be displayed.
    */
   value?: React.ReactNode | string;
+  /**
+   * Additional properties passed to component root.
+   */
+  [key: string]: any
 }
 
 export class FontIcon extends React.Component<FontIconProps, {}> { }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import ReactToolbox from "../index";
 
-interface RadioGroupProps extends ReactToolbox.Props {
+export interface RadioGroupProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
@@ -29,18 +29,6 @@ export class RadioGroup extends React.Component<RadioGroupProps, {}> { }
 
 export interface RadioButtonTheme {
   /**
-   * Used to for the radio element.
-   */
-  radio?: string;
-  /**
-   * Used for the radio element when it's checked.
-   */
-  radioChecked?: string;
-  /**
-   * To provide styles for the ripple.
-   */
-  ripple?: string;
-  /**
    * Added to the root of the Radio in case it's disabled.
    */
   disabled?: string;
@@ -58,12 +46,16 @@ export interface RadioButtonTheme {
   text?: string;
 }
 
-interface RadioButtonProps extends ReactToolbox.Props {
+export interface RadioButtonProps extends ReactToolbox.Props {
   /**
    * If true, the input element will be selected by default. Transferred from the parent.
    * @default false
    */
   checked?: boolean;
+  /**
+   * Children to pass through the component.
+   */
+  children?: React.ReactNode;
   /**
    * If true, the item will be displayed as disabled.
    * @default false
@@ -92,7 +84,7 @@ interface RadioButtonProps extends ReactToolbox.Props {
   /**
    * Classnames object defining the component style.
    */
-  theme?: RadioButtonTheme;
+  theme?: RadioButtonTheme & RadioTheme;
   /**
    * Value for the radio button.
    */
@@ -100,3 +92,38 @@ interface RadioButtonProps extends ReactToolbox.Props {
 }
 
 export class RadioButton extends React.Component<RadioButtonProps, {}> { }
+
+export interface RadioTheme {
+  /**
+   * Used to for the radio element.
+   */
+  radio?: string;
+  /**
+   * Used for the radio element when it's checked.
+   */
+  radioChecked?: string;
+  /**
+   * To provide styles for the ripple.
+   */
+  ripple?: string;
+}
+
+export interface RadioProps {
+  /**
+   * If true, the input element will be selected by default. Transferred from the parent.
+   * @default false
+   */
+  checked?: boolean;
+  /**
+   * Children to pass through the component.
+   */
+  children?: React.ReactNode;
+  /**
+   * Callback invoked on mouse down.
+   */
+  onMouseDown?: Function;
+  /**
+   * Additional properties passed to Radio container.
+   */
+  [key: string]: any;
+}

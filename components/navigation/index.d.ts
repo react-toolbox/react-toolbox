@@ -20,7 +20,7 @@ export interface NavigationTheme {
   vertical?: string;
 }
 
-interface NavigationProps extends ReactToolbox.Props {
+export interface NavigationProps extends ReactToolbox.Props {
   /**
    * Array of objects that will be represented as <Button/> so the keys will be transferred as properties the Button Component.
    */

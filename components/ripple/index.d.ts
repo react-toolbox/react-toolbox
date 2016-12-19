@@ -20,7 +20,7 @@ export interface RippleTheme {
   rippleWrapper?: string;
 }
 
-interface RippleProps {
+export interface RippleProps {
   /**
    * Children to pass through the component.
    */
@@ -43,8 +43,19 @@ interface RippleProps {
    * Classnames object defining the component style.
    */
   theme?: RippleTheme;
+  /**
+   * Additional properties passed to rippled component.
+   */
+  [key: string]: any;
 }
 
-export class Ripple extends React.Component<RippleProps, {}> { }
+export interface RippledComponentFactory {
+  <P, RippledComponent extends (React.ComponentClass<P> | React.SFC<P>)>(component: RippledComponent): RippledComponent;
+}
 
-export default Ripple;
+export function rippleFactory(
+  options: RippleProps
+): RippledComponentFactory;
+
+
+export default rippleFactory;
