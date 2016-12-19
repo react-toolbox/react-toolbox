@@ -1,5 +1,5 @@
 [![npm version](https://img.shields.io/npm/v/react-toolbox-themr.svg?style=flat-square)](https://www.npmjs.com/package/react-toolbox-themr)
-[![Build Status](http://img.shields.io/travis/javivelasco/react-toolbox-themr/master.svg?style=flat-square)](https://travis-ci.org/react-toolbox/react-toolbox-themr)
+[![Build Status](http://img.shields.io/travis/react-toolbox/react-toolbox-themr/master.svg?style=flat-square)](https://travis-ci.org/react-toolbox/react-toolbox-themr)
 [![NPM Status](http://img.shields.io/npm/dm/react-toolbox-themr.svg?style=flat-square)](https://www.npmjs.com/package/react-toolbox-themr)
 
 # React Toolbox Themr
