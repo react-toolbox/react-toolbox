@@ -16,8 +16,10 @@ const factory = (ListItemText) => {
       children: PropTypes.any,
       legend: PropTypes.string,
       theme: PropTypes.shape({
+        auto: PropTypes.string,
         itemContentRoot: PropTypes.string,
-        large: PropTypes.string
+        large: PropTypes.string,
+        normal: PropTypes.string
       }),
       type: PropTypes.oneOf(types)
     };
@@ -34,8 +36,9 @@ const factory = (ListItemText) => {
 
     render () {
       const {children, caption, legend, theme} = this.props;
+      const contentType = this.getType();
       const className = classnames(theme.itemContentRoot, {
-        [theme[this.getType()]]: theme[this.getType()]
+        [theme[contentType]]: theme[contentType]
       });
 
       return (
