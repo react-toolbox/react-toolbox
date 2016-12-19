@@ -64,7 +64,7 @@ As a final step you have to include the generated CSS file in your document just
 
 ```jsx
 import theme from 'assets/react-toolbox/theme'
-import { ThemeProvider } from 'react-toolbox/lib/utils/ThemeProvider';
+import ThemeProvider from 'react-toolbox/lib/ThemeProvider';
 
 const App = ({ children }) => (  
   <ThemeProvider theme={theme}>
