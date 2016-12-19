@@ -4,16 +4,16 @@ const getBuildPaths = require('../configure').getBuildPaths
 describe('Path generation', () => {
   test('set defaults if no options given', () => {
     expect(getBuildPaths({})).toEqual({
-      css: path.resolve('public/react-toolbox/theme.css'),
-      js: path.resolve('public/react-toolbox/theme.js')
+      css: path.resolve('src/toolbox/theme.css'),
+      js: path.resolve('src/toolbox/theme.js')
     })
   })
 
   test('adds default dir if only a name is given', () => {
     const options = { styles: 'foo.css', javascript: 'bar' }
     expect(getBuildPaths(options)).toEqual({
-      css: path.resolve('public/react-toolbox/foo.css'),
-      js: path.resolve('public/react-toolbox/bar.js')
+      css: path.resolve('src/toolbox/foo.css'),
+      js: path.resolve('src/toolbox/bar.js')
     })
   })
 
