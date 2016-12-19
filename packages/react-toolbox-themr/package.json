@@ -2,7 +2,7 @@
   "name": "react-toolbox-themr",
   "description": "A themr builder for react-toolbox",
   "homepage": "https://github.com/react-toolbox/react-toolbox-themr#readme",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "bin": {
     "react-toolbox-themr": "./bin/builder.js"
