@@ -75,7 +75,7 @@ const App = ({ children }) => (
 export default App;
 ```
 
-Although `ThemeProvider` is exposed by react-toolbox, you can add your own importing directly from [react-css-themr](www.github.com/javivelasco/react-css-themr).
+Although `ThemeProvider` is exposed by react-toolbox, you can add your own importing directly from [react-css-themr](www.github.com/javivelasco/react-css-themr). Finally, *make sure* the components you use from react-toolbox are imported without bundled css. Check the documentation for more details.
 
 
 That's all!
