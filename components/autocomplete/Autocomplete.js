@@ -257,7 +257,7 @@ const factory = (Chip, Input) => {
 
      if (!vals) vals = [];
 
-     if (this.props.showSelectedWhenNotInSource && this.state.isValueAnObject) {
+     if (this.props.showSelectedWhenNotInSource || this.state.isValueAnObject) {
        return new Map(Object.entries(vals));
      }
 
