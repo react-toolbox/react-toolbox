@@ -7,6 +7,7 @@ import isComponentOfType from '../utils/is-component-of-type.js';
 import InjectAppBar from '../app_bar/AppBar';
 import InjectNavDrawer from './NavDrawer';
 import InjectSidebar from './Sidebar';
+import isBrowser from '../utils/is-browser';
 import breakpoints from '../utils/breakpoints';
 import { LAYOUT } from '../identifiers';
 
@@ -28,10 +29,11 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
     };
 
     state = {
-      width: getViewport().width
+      width: isBrowser() && getViewport().width
     };
 
     componentDidMount () {
+      if (!this.state.width) this.handleResize();
       window.addEventListener('resize', this.handleResize);
     }
 
