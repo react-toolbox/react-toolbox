@@ -1,5 +1,6 @@
 import * as React from "react";
 import ReactToolbox from "../index";
+import { InputTheme } from "../input"
 
 export interface AutocompleteTheme {
   /**
@@ -18,10 +19,6 @@ export interface AutocompleteTheme {
    * Used to style the Input component.
    */
   input?: string;
-  /**
-   * Used for the label.
-   */
-  label?: string;
   /**
    * Used to style each suggestion.
    */
@@ -44,7 +41,12 @@ export interface AutocompleteTheme {
   values?: string;
 }
 
-interface AutocompleteProps extends ReactToolbox.Props {
+export interface AutocompleteProps extends ReactToolbox.Props {
+  /**
+   * Determines if user can create a new option with the current typed value.
+   * @default false
+   */
+  allowCreate?: boolean;
   /**
    * Determines the opening direction. It can be auto, up or down.
    * @default auto
@@ -52,6 +54,7 @@ interface AutocompleteProps extends ReactToolbox.Props {
   direction?: "auto" | "up" | "down";
   /**
    * If true, component will be disabled.
+   * @default false
    */
   disabled?: boolean;
   /**
@@ -60,21 +63,33 @@ interface AutocompleteProps extends ReactToolbox.Props {
    */
   error?: string | React.ReactNode;
   /**
+   * Whether component should keep focus after value change.
+   * @default false
+   */
+  keepFocusOnChange?: boolean;
+  /**
    * The text string to use for the floating label element.
    */
   label?: string | React.ReactNode;
   /**
    * If true, component can hold multiple values.
+   * @default true
    */
   multiple?: boolean;
   /**
+   * Callback function that is fired when component is blurred.
+   */
+  onBlur?: Function;
+  /**
    * Callback function that is fired when the components's value changes.
-   * @default auto
    */
   onChange?: Function;
   /**
+   * Callback function that is fired when component is focused.
+   */
+  onFocus?: Function;
+  /**
    * Callback function that is fired when the components's query value changes.
-   * @default auto
    */
   onQueryChange?: Function;
   /**
@@ -104,11 +119,15 @@ interface AutocompleteProps extends ReactToolbox.Props {
   /**
    * Classnames object defining the component style.
    */
-  theme?: AutocompleteTheme;
+  theme?: AutocompleteTheme & InputTheme;
   /**
    * Value or array of values currently selected component.
    */
   value?: any;
+  /**
+   * Additional properties passed to inner Input component.
+   */
+  [key: string]: any;
 }
 
 export class Autocomplete extends React.Component<AutocompleteProps, {}> { }

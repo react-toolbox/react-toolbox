@@ -8,7 +8,7 @@ export interface LayoutTheme {
   layout?: string;
 }
 
-interface LayoutProps extends ReactToolbox.Props {
+export interface LayoutProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
@@ -33,11 +33,15 @@ export interface NavDrawerTheme {
   /**
    * Added to the root class for large drawer.
    */
-  lgPermangent?: string;
+  lgPermanent?: string;
+  /**
+   * Added to the root class for large drawer (tablet landscape).
+   */
+  lgTabletPermanent?: string;
   /**
    * Added to the root class for medium drawer.
    */
-  mdPermangent?: string;
+  mdPermanent?: string;
   /**
    * Root class for the drawer.
    */
@@ -59,6 +63,10 @@ export interface NavDrawerTheme {
    */
   smPermanent?: string;
   /**
+   * Added to the root class for small drawer (tablet portrait).
+   */
+  smTabletPermanent?: string;
+  /**
    * Added to the root class if width is wide.
    */
   wide?: string;
@@ -69,14 +77,14 @@ export interface NavDrawerTheme {
   /**
    * Added to the root class for super big drawer.
    */
-  xxlPermangent?: string;
+  xxlPermanent?: string;
   /**
    * Added to the root class for largest possible drawer.
    */
-  xxxlPermangent?: string;
+  xxxlPermanent?: string;
 }
 
-interface NavDrawerProps extends ReactToolbox.Props {
+export interface NavDrawerProps extends ReactToolbox.Props {
   /**
    * If true, the drawer will be shown as an overlay.
    * @default false
@@ -93,7 +101,7 @@ interface NavDrawerProps extends ReactToolbox.Props {
   /**
    * The breakpoint at which the drawer is automatically pinned.
    */
-  permanentAt?: "sm" | "md" | "lg" | "xl" | "xxl" | "xxxl";
+  permanentAt?: "sm" | "smTablet" | "md" | "lg" | "lgTablet" | "xl" | "xxl" | "xxxl";
   /**
    * If true, the drawer will be pinned open. pinned takes precedence over active.
    * @default false
@@ -128,11 +136,15 @@ export interface PanelTheme {
   scrollY?: string;
 }
 
-interface PanelProps extends ReactToolbox.Props {
+export interface PanelProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
   children?: React.ReactNode;
+  /**
+   * Callback function to be invoked when the component scrolls.
+   */
+  onScroll?: Function;
   /**
    * If true, the panel will vertically scroll all content.
    * @default false
@@ -165,7 +177,7 @@ export interface SidebarTheme {
   sidebarContent?: string;
 }
 
-interface SidebarProps extends ReactToolbox.Props {
+export interface SidebarProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */

@@ -28,7 +28,7 @@ export interface ChipTheme {
   deleteX?: string;
 }
 
-interface ChipProps extends ReactToolbox.Props {
+export interface ChipProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
