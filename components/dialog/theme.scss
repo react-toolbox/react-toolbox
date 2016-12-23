@@ -3,59 +3,96 @@
 @import "../mixins";
 @import "./config";
 
-.dialog {
-  display: flex;
-  max-width: 96vw;
-  max-height: 96vh;
-  flex-direction: column;
-  background-color: $dialog-color-white;
-  border-radius: $dialog-border-radius;
-  box-shadow: $zdepth-shadow-5;
-  opacity: 0;
-  transition-delay: $animation-delay;
-  transition-timing-function: $animation-curve-default;
-  transition-duration: $animation-duration;
-  transition-property: opacity, transform;
-  transform: translateY(-$dialog-translate-y);
-  &.active {
-    opacity: 1;
-    transform: translateY(0%);
-  }
-}
+.holder {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  overflow-y: auto;
 
-.small {
-  width: 30vw;
-
-  @media screen and (max-width: $layout-breakpoint-sm-tablet) {
-    width: 50vw;
+  &.autoheight {
+    overflow-y: auto;
+    .body {
+      height: auto;
+      max-height: none !important;
+    }
   }
 
-  @media screen and (max-width: $layout-breakpoint-xs) {
-    width: 75vw;
-  }
-}
-
-.normal {
-  width: 50vw;
-
-  @media screen and (max-width: $layout-breakpoint-xs) {
+  .dialog {
+    position: relative;
     width: 96vw;
+    margin: 0 auto;
+    background-color: $dialog-color-white;
+    border-radius: $dialog-border-radius;
+    box-shadow: $zdepth-shadow-5;
+    opacity: 0;
+    transition-delay: $animation-delay;
+    transition-timing-function: $animation-curve-default;
+    transition-duration: $animation-duration;
+    transition-property: opacity, margin;
+    &.active {
+      opacity: 1;
+    }
   }
-}
 
-.large {
-  width: 96vw;
-}
+  .layout {
+    display: table;
+    width: 100%;
+    height: 100%;
 
-.fullscreen {
-  width: 96vw;
+    .top {
+      display: table-cell;
+      vertical-align: top;
 
-  @media screen and (max-width: $layout-breakpoint-xs) {
-    width: 100vw;
-    max-width: 100vw;
-    min-height: 100vh;
-    max-height: 100vh;
-    border-radius: 0;
+      .dialog {
+        &.active {
+          margin: $dialog-translate-y auto;
+          opacity: 1;
+        }
+      }
+    }
+
+    .center {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .small {
+      width: 30vw;
+
+      @media screen and (max-width: $layout-breakpoint-sm-tablet) {
+        width: 50vw;
+      }
+
+      @media screen and (max-width: $layout-breakpoint-xs) {
+        width: 75vw;
+      }
+    }
+
+    .normal {
+      width: 50vw;
+
+      @media screen and (max-width: $layout-breakpoint-xs) {
+        width: 96vw;
+      }
+    }
+
+    .large {
+      width: 96vw;
+    }
+
+    .fullscreen {
+      width: 96vw;
+
+      @media screen and (max-width: $layout-breakpoint-xs) {
+        width: 100vw;
+        max-width: 100vw;
+        min-height: 100vh;
+        border-radius: 0;
+      }
+    }
   }
 }
 

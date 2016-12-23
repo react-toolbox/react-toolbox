@@ -47,6 +47,7 @@ If you want to provide a theme via context, the component key is `RTDialog`.
 |:-----|:-----|:-----|:-----|
 | `actions`               | `Array`         | `[]`            | A array of objects representing the buttons for the dialog navigation area. The properties will be transferred to the buttons.|
 | `active`                | `Boolean`       | `false`         | If true, the dialog will be active.|
+| `autoHeight`            | `Boolean`       | `false`         | If true, the dialog body will be expanded on whole content.|
 | `className`             | `String`        | `''`            | Sets a class to give customized styles to the dialog.|
 | `onEscKeyDown`          | `Function`      |                 | Callback called when the ESC key is pressed with the overlay active. |
 | `onOverlayClick`        | `Function`      |                 | Callback to be invoked when the dialog overlay is clicked.|
@@ -64,8 +65,10 @@ Notice that the `fullscreen` option only applies on mobile devices with small sc
 | Name     | Description|
 |:---------|:-----------|
 | `active` | Used for the root when the dialog is active.|
+| `autoheight` | Used for the body of dialog when the dialog is auto height enabled.|
 | `body`  | Used to wrap the dialog body.|
 | `button` | Used in buttons when the dialog implements actions.|
 | `dialog` | Used for the root element.|
+| `holder` | Used for the dialog holder element.|
 | `navigation` | Used for the navigation element when it implements actions.|
 | `title`   | Used for the title element of the dialog.|

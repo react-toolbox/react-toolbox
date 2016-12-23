@@ -17,26 +17,79 @@ const factory = (Overlay, Button) => {
       [props.theme.active]: props.active
     }, props.className);
 
+    const holderClassName = classnames({[props.theme.autoheight]: props.autoHeight}, props.theme.holder);
+    const layoutClassName = classnames(props.centered ? props.theme.center : props.theme.top);
+
+    //events handler
+    const onOverlayClick = (ev) => {
+      if (ev.target.getAttribute('data-react-toolbox') === 'dialog-holder'
+          && ev.target.getAttribute('data-react-toolbox') !== 'dialog') {
+        if (props.onOverlayClick) {
+          props.onOverlayClick(ev);
+        }
+      }
+    };
+
+    const onOverlayMouseDown = (ev) => {
+      if (ev.target.getAttribute('data-react-toolbox') === 'dialog-holder'
+          && ev.target.getAttribute('data-react-toolbox') !== 'dialog') {
+        if (props.onOverlayMouseDown) {
+          props.onOverlayMouseDown(ev);
+        }
+      }
+    };
+
+    const onOverlayMouseMove = (ev) => {
+      if (ev.target.getAttribute('data-react-toolbox') === 'dialog-holder'
+          && ev.target.getAttribute('data-react-toolbox') !== 'dialog') {
+        if (props.onOverlayMouseMove) {
+          props.onOverlayMouseMove(ev);
+        }
+      }
+    };
+
+    const onOverlayMouseUp = (ev) => {
+      if (ev.target.getAttribute('data-react-toolbox') === 'dialog-holder'
+          && ev.target.getAttribute('data-react-toolbox') !== 'dialog') {
+        if (props.onOverlayMouseUp) {
+          props.onOverlayMouseUp(ev);
+        }
+      }
+    };
+
     return (
       <Overlay
         active={props.active}
-        onClick={props.onOverlayClick}
         onEscKeyDown={props.onEscKeyDown}
-        onMouseDown={props.onOverlayMouseDown}
-        onMouseMove={props.onOverlayMouseMove}
-        onMouseUp={props.onOverlayMouseUp}
       >
-        <div data-react-toolbox='dialog' className={className}>
-          <section role='body' className={props.theme.body}>
-            {props.title ? <h6 className={props.theme.title}>{props.title}</h6> : null}
-            {props.children}
-          </section>
-          {actions.length
-            ? <nav role='navigation' className={props.theme.navigation}>
-                {actions}
-              </nav>
-            : null
-          }
+        <div
+          className={holderClassName}
+        >
+          <div
+            className={props.theme.layout}
+          >
+            <div
+              data-react-toolbox='dialog-holder'
+              className={layoutClassName}
+              onClick={onOverlayClick}
+              onMouseDown={onOverlayMouseDown}
+              onMouseMove={onOverlayMouseMove}
+              onMouseUp={onOverlayMouseUp}
+              >
+              <div data-react-toolbox='dialog' className={className}>
+                <section role='body' className={props.theme.body}>
+                  {props.title ? <h6 className={props.theme.title}>{props.title}</h6> : null}
+                  {props.children}
+                </section>
+                {actions.length
+                  ? <nav role='navigation' className={props.theme.navigation}>
+                      {actions}
+                    </nav>
+                  : null
+                }
+              </div>
+            </div>
+          </div>
         </div>
       </Overlay>
     );
@@ -45,6 +98,8 @@ const factory = (Overlay, Button) => {
   Dialog.propTypes = {
     actions: PropTypes.array,
     active: PropTypes.bool,
+    autoHeight: PropTypes.bool,
+    centered: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
     onEscKeyDown: PropTypes.func,
@@ -54,11 +109,16 @@ const factory = (Overlay, Button) => {
     onOverlayMouseUp: PropTypes.func,
     theme: PropTypes.shape({
       active: PropTypes.string,
+      autoheight: PropTypes.string,
       body: PropTypes.string,
       button: PropTypes.string,
+      center: PropTypes.string,
       dialog: PropTypes.string,
+      holder: PropTypes.string,
+      layout: PropTypes.string,
       navigation: PropTypes.string,
-      title: PropTypes.string
+      title: PropTypes.string,
+      top: PropTypes.string
     }),
     title: PropTypes.string,
     type: PropTypes.string
@@ -67,6 +127,8 @@ const factory = (Overlay, Button) => {
   Dialog.defaultProps = {
     actions: [],
     active: false,
+    autoHeight: false,
+    centered: false,
     type: 'normal'
   };
 
