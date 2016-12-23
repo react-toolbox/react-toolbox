@@ -18,9 +18,13 @@ const factory = (Tab, TabContent, FontIcon) => {
       inverse: PropTypes.bool,
       onChange: PropTypes.func,
       theme: PropTypes.shape({
+        arrow: PropTypes.string,
+        arrowContainer: PropTypes.string,
+        disableAnimation: PropTypes.string,
         fixed: PropTypes.string,
         inverse: PropTypes.string,
         navigation: PropTypes.string,
+        navigationContainer: PropTypes.string,
         pointer: PropTypes.string,
         tabs: PropTypes.string
       })

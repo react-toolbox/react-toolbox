@@ -19,7 +19,9 @@ class Tab extends Component {
       active: PropTypes.string,
       disabled: PropTypes.string,
       hidden: PropTypes.string,
-      label: PropTypes.string
+      label: PropTypes.string,
+      withIcon: PropTypes.string,
+      withText: PropTypes.string
     })
   };
 
