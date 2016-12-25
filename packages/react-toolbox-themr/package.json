@@ -26,11 +26,7 @@
     "react-toolbox"
   ],
   "dependencies": {
-    "babel-eslint": "^7.1.1",
     "clean-css": "^3.4.21",
-    "eslint": "^3.12.0",
-    "eslint-config-rackt": "^1.1.1",
-    "jest": "^17.0.3",
     "mkdirp": "^0.5.1",
     "postcss-cssnext": "^2.9.0",
     "postcss-import": "8.1.0",
@@ -39,6 +35,12 @@
     "postcss-reporter": "^2.0.0",
     "ramda": "^0.22.1",
     "yargs": "^6.5.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.12.0",
+    "eslint-config-rackt": "^1.1.1",
+    "jest": "^17.0.3"
   },
   "scripts": {
     "lint": "eslint src bin",
