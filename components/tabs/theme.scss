@@ -17,6 +17,7 @@
 }
 
 .navigationContainer {
+  position: relative;
   display: flex;
 
   .navigation {
@@ -83,11 +84,21 @@
   line-height: $tab-icon-height;
 }
 
+.pointerContainer {
+  position: absolute;
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: $tab-pointer-height;
+  overflow: hidden;
+}
+
 .pointer {
   position: absolute;
   width: 0;
   height: $tab-pointer-height;
-  margin-top: - $tab-pointer-height;
   background-color: $tab-pointer-color;
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
