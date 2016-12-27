@@ -85,14 +85,20 @@ const factory = (Tab, TabContent, FontIcon) => {
     }
 
     updateArrows = () => {
-      const nav = this.navigationNode;
-      this.setState({
-        arrows: {
-          left: nav.scrollLeft > 0,
-          right: nav.scrollWidth > nav.clientWidth
-            && (nav.scrollLeft + nav.clientWidth) < nav.scrollWidth
-        }
-      });
+      const idx = this.navigationNode.children.length - 2;
+
+      if (idx >= 0) {
+        const scrollLeft = this.navigationNode.scrollLeft;
+        const nav = this.navigationNode.getBoundingClientRect();
+        const lastLabel = this.navigationNode.children[idx].getBoundingClientRect();
+
+        this.setState({
+          arrows: {
+            left: scrollLeft > 0,
+            right: nav.right < (lastLabel.right - 5)
+          }
+        });
+      }
     }
 
     scrollNavigation = (factor) => {
