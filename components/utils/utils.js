@@ -1,4 +1,8 @@
-import { assoc, compose, keys, reduce, pickBy } from 'ramda';
+import assoc from 'ramda/src/assoc';
+import compose from 'ramda/src/compose';
+import keys from 'ramda/src/keys';
+import reduce from 'ramda/src/reduce';
+import pickBy from 'ramda/src/pickBy';
 
 export const angleFromPositions = (cx, cy, ex, ey) => {
   const theta = Math.atan2(ey - cy, ex - cx) + Math.PI / 2;
