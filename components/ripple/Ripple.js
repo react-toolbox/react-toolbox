@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { dissoc } from 'ramda';
+import dissoc from 'ramda/src/dissoc';
 import { RIPPLE } from '../identifiers.js';
 import events from '../utils/events';
 import prefixer from '../utils/prefixer';
