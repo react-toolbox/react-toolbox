@@ -58,7 +58,7 @@ const factory = (IconButton, Menu) => {
     handleMenuHide = () => {
       this.setState({ active: false });
       if (this.props.onHide) this.props.onHide();
-    }
+    };
 
     render () {
       const menuId = 'Menu' + this.generateID(7);
@@ -77,7 +77,6 @@ const factory = (IconButton, Menu) => {
             ripple={iconRipple}
           />
           <Menu
-            hidden={true}
             menuId={menuId}
             autofocus={autofocus}
             active={this.state.active}
