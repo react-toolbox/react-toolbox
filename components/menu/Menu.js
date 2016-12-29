@@ -211,7 +211,7 @@ const factory = (MenuItem) => {
       const { width, height } = this.refs.menu.getBoundingClientRect();
       let listenerTransition = () => {
         this.setFocus();
-        this.refs.menu.removeEventListener(listenerTransition);
+        this.refs.menu.removeEventListener('transitionend', listenerTransition);
       };
       this.setState({active: true, width, height});
       if(this.props.autofocus) {
