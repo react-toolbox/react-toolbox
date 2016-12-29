@@ -18,6 +18,7 @@ const POSITION = {
 const factory = (MenuItem) => {
   class Menu extends Component {
     static propTypes = {
+      menuId: PropTypes.string,
       autofocus: PropTypes.bool,
       active: PropTypes.bool,
       children: PropTypes.node,
@@ -231,7 +232,7 @@ const factory = (MenuItem) => {
       }, this.props.className);
 
       return (
-        <div data-react-toolbox='menu' className={className} style={this.getRootStyle()}>
+        <div id={this.props.menuId} data-react-toolbox='menu' className={className} style={this.getRootStyle()}>
           {this.props.outline ? <div className={theme.outline} style={outlineStyle} /> : null}
           <ul ref='menu' className={theme.menuInner} style={this.getMenuStyle()}>
             {this.renderItems()}

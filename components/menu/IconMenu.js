@@ -46,6 +46,10 @@ const factory = (IconButton, Menu) => {
       active: false
     }
 
+    generateID = (len) => {
+      return Math.random().toString(36).substr(2, len)
+    };
+
     handleButtonClick = (event) => {
       this.setState({ active: !this.state.active });
       if (this.props.onClick) this.props.onClick(event);
@@ -57,6 +61,7 @@ const factory = (IconButton, Menu) => {
     }
 
     render () {
+      const menuId = 'Menu' + this.generateID(7);
       const {
         autofocus, children, className, icon, iconRipple, label, menuRipple, onHide, // eslint-disable-line
         onSelect, onShow, position, selectable, selected, theme, ...other
@@ -64,6 +69,7 @@ const factory = (IconButton, Menu) => {
       return (
         <div {...other} className={classnames(theme.iconMenu, className)}>
           <IconButton
+            ariaControls={menuId}
             label={label}
             className={theme.icon}
             icon={icon}
@@ -71,6 +77,7 @@ const factory = (IconButton, Menu) => {
             ripple={iconRipple}
           />
           <Menu
+            menuId={menuId}
             autofocus={autofocus}
             active={this.state.active}
             onHide={this.handleMenuHide}

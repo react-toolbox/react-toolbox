@@ -9,6 +9,7 @@ const factory = (ripple, FontIcon) => {
   class IconButton extends Component {
     static propTypes = {
       accent: PropTypes.bool,
+      ariaControls: PropTypes.string,
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
@@ -28,7 +29,6 @@ const factory = (ripple, FontIcon) => {
     };
 
     static defaultProps = {
-      label: '',
       accent: false,
       className: '',
       neutral: true,
@@ -47,7 +47,7 @@ const factory = (ripple, FontIcon) => {
     };
 
     render () {
-      const {accent, children, className, href, icon, inverse, label, neutral,
+      const {accent, ariaControls, children, className, href, icon, inverse, label, neutral,
         primary, theme, type, ...others} = this.props;
       const element = href ? 'a' : 'button';
       const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
@@ -60,6 +60,7 @@ const factory = (ripple, FontIcon) => {
         ...others,
         href,
         ref: 'button',
+        'aria-controls': ariaControls,
         'aria-label': label,
         className: classes,
         disabled: this.props.disabled,
