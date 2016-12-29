@@ -29,6 +29,7 @@ class IconMenuTest extends React.Component {
         <h5>Icon Menus</h5>
         <p>Although a menu can be used indepently with any component, we are providing a common use case with the icon menu.</p>
         <IconMenu
+          label='show more options'
           icon='more_vert'
           position='auto'
           iconRipple
