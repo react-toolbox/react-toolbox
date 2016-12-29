@@ -70,6 +70,7 @@ const factory = (IconButton, Menu) => {
         <div {...other} className={classnames(theme.iconMenu, className)}>
           <IconButton
             ariaControls={menuId}
+            ariaExpanded={this.state.active}
             label={label}
             className={theme.icon}
             icon={icon}
