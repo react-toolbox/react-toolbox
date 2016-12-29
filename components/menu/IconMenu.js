@@ -77,6 +77,7 @@ const factory = (IconButton, Menu) => {
             ripple={iconRipple}
           />
           <Menu
+            hidden={true}
             menuId={menuId}
             autofocus={autofocus}
             active={this.state.active}

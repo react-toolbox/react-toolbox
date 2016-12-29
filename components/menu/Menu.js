@@ -23,6 +23,7 @@ const factory = (MenuItem) => {
       active: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
+      hidden: PropTypes.bool,
       onHide: PropTypes.func,
       onSelect: PropTypes.func,
       onShow: PropTypes.func,
@@ -232,7 +233,7 @@ const factory = (MenuItem) => {
       }, this.props.className);
 
       return (
-        <div id={this.props.menuId} data-react-toolbox='menu' className={className} style={this.getRootStyle()}>
+        <div id={this.props.menuId} aria-hidden={this.props.hidden} data-react-toolbox='menu' className={className} style={this.getRootStyle()}>
           {this.props.outline ? <div className={theme.outline} style={outlineStyle} /> : null}
           <ul ref='menu' className={theme.menuInner} style={this.getMenuStyle()}>
             {this.renderItems()}
