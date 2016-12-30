@@ -60,7 +60,7 @@ After this, you can run from the console the command `yarn run toolbox` and the 
 - `theme.css` includes all CSS from react-toolbox for the components you have specified in the configuration.
 - `theme.js` implements a javascript object (a css module) that tells react-toolbox components what are the `classNames` each included component needs to use.
 
-As a final step you have to include the generated CSS file in your document just like any other CSS asset. Also, you have to use [react-css-themr](www.github.com/javivelasco/react-css-themr) `ThemeProvider` at the top of your app passing the theme.
+As a final step you have to include the generated CSS file in your document just like any other CSS asset. Also, you have to use [react-css-themr](https://github.com/javivelasco/react-css-themr) `ThemeProvider` at the top of your app passing the theme.
 
 ```jsx
 import theme from 'assets/react-toolbox/theme'
@@ -75,7 +75,7 @@ const App = ({ children }) => (
 export default App;
 ```
 
-Although `ThemeProvider` is exposed by react-toolbox, you can add your own importing directly from [react-css-themr](www.github.com/javivelasco/react-css-themr). Finally, *make sure* the components you use from react-toolbox are imported without bundled css. Check the documentation for more details.
+Although `ThemeProvider` is exposed by react-toolbox, you can add your own importing directly from [react-css-themr](https://github.com/javivelasco/react-css-themr). Finally, *make sure* the components you use from react-toolbox are imported without bundled css. Check the documentation for more details.
 
 
 That's all!
