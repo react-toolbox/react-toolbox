@@ -34,6 +34,7 @@ class IconMenuTest extends React.Component {
           position='auto'
           iconRipple
           menuRipple
+          onEscKeyDown={this.handleHide}
           onShow={this.handleShow}
           onHide={this.handleHide}
           onSelect={this.handleSelect}

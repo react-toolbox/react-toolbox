@@ -19,6 +19,7 @@ const factory = (IconButton, Menu) => {
       label: PropTypes.string,
       menuRipple: PropTypes.bool,
       onClick: PropTypes.func,
+      onEscKeyDown: PropTypes.func,
       onHide: PropTypes.func,
       onSelect: PropTypes.func,
       onShow: PropTypes.func,
@@ -50,6 +51,13 @@ const factory = (IconButton, Menu) => {
       return Math.random().toString(36).substr(2, len)
     };
 
+    handleEscKey = (e) => {
+      if (this.state.active && this.props.onEscKeyDown && e.which === 27) {
+        this.setState({ active: !this.state.active });
+        this.props.onEscKeyDown(e);
+      }
+    };
+
     handleButtonClick = (event) => {
       this.setState({ active: !this.state.active });
       if (this.props.onClick) this.props.onClick(event);
@@ -58,16 +66,30 @@ const factory = (IconButton, Menu) => {
     handleMenuHide = () => {
       this.setState({ active: false });
       if (this.props.onHide) this.props.onHide();
+      document.body.removeEventListener('keydown', this.handleEscKey);
+      this.refs.iconmenu.firstChild.focus();
     };
 
-    render () {
+    componentWillUpdate () {
+      document.body.addEventListener('keydown', this.handleEscKey);
+    };
+
+    componentDidMount () {
+      document.body.addEventListener('keydown', this.handleEscKey);
+    };
+
+    componentWillUnmount () {
+      document.body.removeEventListener('keydown', this.handleEscKey);
+    };
+
+    render() {
       const menuId = 'Menu' + this.generateID(7);
       const {
-        autofocus, children, className, icon, iconRipple, label, menuRipple, onHide, // eslint-disable-line
+        autofocus, children, className, icon, iconRipple, label, menuRipple, onHide, onEscKeyDown, // eslint-disable-line
         onSelect, onShow, position, selectable, selected, theme, ...other
       } = this.props;
       return (
-        <div {...other} className={classnames(theme.iconMenu, className)}>
+        <div ref="iconmenu" {...other} className={classnames(theme.iconMenu, className)}>
           <IconButton
             ariaControls={menuId}
             ariaExpanded={this.state.active}
@@ -76,7 +98,7 @@ const factory = (IconButton, Menu) => {
             icon={icon}
             onClick={this.handleButtonClick}
             ripple={iconRipple}
-          />
+            />
           <Menu
             menuId={menuId}
             autofocus={autofocus}
@@ -89,7 +111,7 @@ const factory = (IconButton, Menu) => {
             selectable={selectable}
             selected={selected}
             theme={theme}
-          >
+            >
             {children}
           </Menu>
         </div>
