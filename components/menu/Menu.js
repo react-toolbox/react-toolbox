@@ -231,8 +231,18 @@ const factory = (MenuItem) => {
         [theme.rippled]: this.state.rippled
       }, this.props.className);
 
+      if(this.props.menuId) {
+        return (
+          <div id={this.props.menuId} aria-hidden={!this.props.active} data-react-toolbox='menu' className={className} style={this.getRootStyle()}>
+            {this.props.outline ? <div className={theme.outline} style={outlineStyle} /> : null}
+            <ul ref='menu' className={theme.menuInner} style={this.getMenuStyle()}>
+              {this.renderItems()}
+            </ul>
+          </div>
+        );
+      }
       return (
-        <div id={this.props.menuId} aria-hidden={!this.props.active} data-react-toolbox='menu' className={className} style={this.getRootStyle()}>
+        <div data-react-toolbox='menu' className={className} style={this.getRootStyle()}>
           {this.props.outline ? <div className={theme.outline} style={outlineStyle} /> : null}
           <ul ref='menu' className={theme.menuInner} style={this.getMenuStyle()}>
             {this.renderItems()}
