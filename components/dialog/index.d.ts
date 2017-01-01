@@ -1,5 +1,6 @@
 import * as React from "react";
 import ReactToolbox from "../index";
+import {ButtonProps} from "../button";
 
 export interface DialogTheme {
   /**
@@ -28,7 +29,7 @@ export interface DialogTheme {
   title?: string;
 }
 
-export interface DialogActionProps {
+export interface DialogActionProps extends ButtonProps {
   /**
    * The text string to use for the name of the button.
    */
