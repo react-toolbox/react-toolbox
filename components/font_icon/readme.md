@@ -20,5 +20,6 @@ const FontIcons = () => (
 
 | Name            | Type                    | Default         | Description|
 |:-----|:-----|:-----|:-----|
+| `alt`     | `String`                | `''`            | The text used to set the `aria-label` attribute. 
 | `className`     | `String`                | `''`            | The class name to give custom styles such as sizing.|
 | `value`         | `String` or `Element`   |                 | The key string for the icon you want be displayed.|
