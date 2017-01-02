@@ -1,5 +1,10 @@
-import * as React from "react";
+import * as React from 'react';
+import classnames from 'classnames';
+import { themr } from 'react-css-themr';
+
 import ReactToolbox from "../index";
+import { LINK } from '../identifiers.js';
+import FontIcon from '../font_icon/FontIcon.js';
 
 export interface LinkTheme {
   /**
@@ -16,7 +21,7 @@ export interface LinkTheme {
   link?: string;
 }
 
-export interface LinkProps extends ReactToolbox.Props {
+export interface LinkProps extends ReactToolbox.Props<Link> {
   /**
    * If true, adds active style to link.
    * @default false
@@ -52,4 +57,26 @@ export interface LinkProps extends ReactToolbox.Props {
   [key: string]: any;
 }
 
-export class Link extends React.Component<LinkProps, {}> { }
+
+const Link: React.SFC<LinkProps> = ({active, children, className, count, icon, label, theme, ...others}: LinkProps) => {
+  const _className = classnames(theme.link, {
+    [theme.active]: active
+  }, className);
+  return (
+    <a data-react-toolbox='link' className={_className} {...others}>
+      {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
+      {label ? <abbr>{label}</abbr> : null}
+      {count && count !== 0 ? <small>{count}</small> : null}
+      {children}
+    </a>
+  );
+};
+
+
+Link.defaultProps = {
+  active: false,
+  className: ''
+};
+
+export default themr(LINK)(Link);
+export { Link };

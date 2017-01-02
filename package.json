@@ -43,6 +43,8 @@
     "react-css-themr": "^1.7.0"
   },
   "devDependencies": {
+    "@types/react": "^0.14.55",
+    "@types/react-dom": "^0.14.20",
     "autoprefixer": "^6.5.4",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
@@ -92,6 +94,7 @@
     "sass-loader": "^4.1.0",
     "sinon": "^2.0.0-pre.2",
     "style-loader": "^0.13.1",
+    "typescript": "next",
     "webpack": "^1.14.0",
     "webpack-dev-middleware": "^1.9.0",
     "webpack-hot-middleware": "^2.13.0"
