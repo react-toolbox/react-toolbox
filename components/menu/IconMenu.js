@@ -47,8 +47,20 @@ const factory = (IconButton, Menu) => {
       active: false
     }
 
+    componentDidMount () {
+      document.body.addEventListener('keydown', this.handleEscKey);
+    }
+
+    componentWillUpdate () {
+      document.body.addEventListener('keydown', this.handleEscKey);
+    }
+
+    componentWillUnmount () {
+      document.body.removeEventListener('keydown', this.handleEscKey);
+    }
+
     generateID = (len) => {
-      return Math.random().toString(36).substr(2, len)
+      return Math.random().toString(36).substr(2, len);
     };
 
     handleEscKey = (e) => {
@@ -70,19 +82,7 @@ const factory = (IconButton, Menu) => {
       this.refs.iconmenu.firstChild.focus();
     };
 
-    componentWillUpdate () {
-      document.body.addEventListener('keydown', this.handleEscKey);
-    };
-
-    componentDidMount () {
-      document.body.addEventListener('keydown', this.handleEscKey);
-    };
-
-    componentWillUnmount () {
-      document.body.removeEventListener('keydown', this.handleEscKey);
-    };
-
-    render() {
+    render () {
       const menuId = 'Menu' + this.generateID(7);
       const {
         autofocus, children, className, icon, iconRipple, label, menuRipple, onHide, onEscKeyDown, // eslint-disable-line
