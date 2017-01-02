@@ -30,6 +30,7 @@ If you want to provide a theme via context, the component key is `RTAvatar`.
 
 | Name          | Type                    | Default     | Description|
 |:-----|:-----|:-----|:-----|
+| `alt`    | `String`                  |     `''`        | An alternative text for the image or icon.|
 | `children`    | `Node`                  |             | Children for the avatar. You can pass an SVG for a custom icon or, for example, an image.|
 | `className`   | `String`                | `''`        | Set a class to style the Component.|
 | `cover`       | `Boolean`               | `''`        | Set to true if your image is not squared so it will be used as a cover for the element.|
