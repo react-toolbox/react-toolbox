@@ -20,6 +20,5 @@ const FontIcons = () => (
 
 | Name            | Type                    | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `children`      | `String`                |                 | The key string for the icon you want to be displayed.|
 | `className`     | `String`                | `''`            | The class name to give custom styles such as sizing.|
 | `value`         | `String` or `Element`   |                 | The key string for the icon you want be displayed.|

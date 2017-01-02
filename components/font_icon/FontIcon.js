@@ -8,7 +8,6 @@ const FontIcon = ({ children, className, value, ...other}) => (
     {...other}
   >
     {value}
-    {children}
   </span>
 );
 
