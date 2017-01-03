@@ -4,8 +4,8 @@ import Snackbar from '../../components/snackbar';
 
 class SnackbarTest extends React.Component {
   state = {
-    target: null,
-    active: false
+    active: false,
+    opener: null
   };
 
   handleSnackbarClick = () => {
