@@ -45,6 +45,7 @@ This component can be styled by context providing a theme with the key `RTSnackb
 | `label`       | `String or Element`     |               | Text to display in the content.|
 | `onClick`     | `Function`              |               | Callback function that will be called when the button action is clicked.|
 | `onTimeout`   | `Function`              |               | Callback function when finish the set timeout.|
+| `opener`        | `Object`                |               | Indicates the node which opens the component.|
 | `timeout`     | `Number`                |               | Amount of time in milliseconds after the Snackbar will be automatically hidden.|
 | `type`        | `String`                |               | Indicates the action type. Can be `accept`, `warning` or `cancel`|
 

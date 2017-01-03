@@ -46,4 +46,7 @@
   margin-right: - $snackbar-horizontal-offset / 2;
   margin-bottom: - $snackbar-vertical-offset / 2;
   margin-left: $snackbar-button-offset;
+  &:focus {
+    outline: 1px solid $snackbar-color;
+  }
 }
