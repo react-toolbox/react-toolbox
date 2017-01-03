@@ -13,6 +13,7 @@ const argv = require('yargs')
   .alias('j', 'javascript')
   .alias('s', 'styles')
   .alias('o', 'output')
+  .alias('f', 'fixed')
   .alias('h', 'help')
   .array('include')
   .describe('c', 'Configuration file pathname')
@@ -21,6 +22,7 @@ const argv = require('yargs')
   .describe('j', 'Pathname to generate Javascript theme file')
   .describe('s', 'Pathname to generate CSS theme file')
   .describe('o', 'Output directory for both css and javascript')
+  .describe('f', 'Generate fixed, human-readable class names')
   .help('h')
   .epilog('Javi Velasco (@javivelasco)')
   .argv
@@ -42,7 +44,7 @@ const identifiers = require(path.join(rtPath, 'identifiers.js'))
 function processComponent(variables, component) {
   const identifier = identifiers[component]
   const componentPath = path.join(rtPath, getPath(component))
-  return postcssWithModules(identifier, componentPath, variables, rtPath)
+  return postcssWithModules(identifier, componentPath, variables, rtPath, config.fixed)
 }
 
 mkdirp(path.parse(cssDst).dir)

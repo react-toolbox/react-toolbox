@@ -4,6 +4,7 @@ const cssnext = require('postcss-cssnext')
 const modules = require('postcss-modules')
 const reporter = require('postcss-reporter')
 const resolver = require('postcss-modules-resolve-path')
+const fsPath = require('path')
 
 function getCssNextConfig(variables) {
   return cssnext({
@@ -21,22 +22,35 @@ function getResolver(rootPath) {
   })
 }
 
-function getModulesConfig(rootPath, path, fn) {
+function getModulesConfig(rootPath, path, fn, fixed) {
   return modules({
-    generateScopedName: '[hash:base64:5]',
+    generateScopedName: fixed ? getScopedName : '[hash:base64:5]',
     getJSON: function (cssFileName, json) {
       fn(json)
     }
   })
 }
 
-function postcssWithModules(id, path, variables, rootPath) {
+function getScopedName(className, filePath) {
+  let fileName = fsPath.basename(filePath, '.css')
+  // for anything except theme.css files we use file name
+  // for theme.css files we use folder name
+  let file = '', folder = ''
+  if(fileName === 'theme') {
+    folder = '-' + fsPath.basename(fsPath.dirname(filePath))
+  } else {
+    file = '-' + fileName
+  }
+  return 'rt' + folder + file + '-' + className
+}
+
+function postcssWithModules(id, path, variables, rootPath, fixed) {
   var json
   const cssContent = fs.readFileSync(path)
   return new Promise(function (resolve) {
     postcss([
       getResolver(rootPath),
-      getModulesConfig(rootPath, path, function (_json) { json = _json }),
+      getModulesConfig(rootPath, path, function (_json) { json = _json }, fixed),
       getCssNextConfig(variables),
       reporter()
     ]).process(cssContent, {
