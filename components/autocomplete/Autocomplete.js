@@ -120,10 +120,10 @@ const factory = (Chip, Input) => {
      this.setState({query: value, showAllSuggestions: false, active: null});
    };
 
-   handleQueryFocus = () => {
+   handleQueryFocus = (event) => {
      this.suggestionsNode.scrollTop = 0;
      this.setState({active: '', focus: true});
-     if (this.props.onFocus) this.props.onFocus();
+     if (this.props.onFocus) this.props.onFocus(event);
    };
 
    handleQueryKeyDown = (event) => {
