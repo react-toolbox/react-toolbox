@@ -24,7 +24,6 @@ const factory = (Button) => {
         active: PropTypes.string,
         button: PropTypes.string,
         cancel: PropTypes.string,
-        icon: PropTypes.string,
         label: PropTypes.string,
         snackbar: PropTypes.string,
         warning: PropTypes.string

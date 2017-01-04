@@ -144,12 +144,17 @@
     padding: var(--unit);
     position: relative;
 
-    &:hover {
+    &:hover:not(.disabled) {
       background-color: var(--dropdown-value-hover-background);
     }
 
     &.selected {
       color: var(--dropdown-color-primary);
+    }
+
+    .disabled {
+      color: var(--dropdown-color-disabled);
+      cursor: not-allowed;
     }
   }
 

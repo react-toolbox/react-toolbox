@@ -41,6 +41,7 @@ The `AppBar` component provides properties for the common use cases of `title`, 
 | `onLeftIconClick`  | `Function` | `null`  | Called on left icon click event.|
 | `rightIcon`        | `String|Element`   | `null`  | Right icon.|
 | `onRightIconClick` | `Function` | `null`  | Called on right icon click event.|
+| `scrollHide`       | `Bool`     | `false` | Whether AppBar should be hidden during scroll.|
 
 ## Theme
 

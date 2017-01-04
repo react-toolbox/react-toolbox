@@ -17,7 +17,7 @@ export interface AppBarTheme {
   /**
    * Used as the app bar title.
    */
-  title ?: string;
+  title?: string;
   /**
    * Added to the left icon app bar element.
    */
@@ -26,9 +26,13 @@ export interface AppBarTheme {
    * Added to the right icon app bar element.
    */
   rightIcon?: string;
+  /**
+   * Added to the root element when the app bar is hidden during scroll.
+   */
+  scrollHide?: string;
 }
 
-interface AppBarProps extends ReactToolbox.Props {
+export interface AppBarProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
@@ -50,7 +54,7 @@ interface AppBarProps extends ReactToolbox.Props {
   /**
    * If it exists it is used as the AppBar left icon
    */
-  leftIcon?: string;
+  leftIcon?: string | React.ReactNode;
   /**
    * Called when the left icon is clicked
    */
@@ -58,11 +62,16 @@ interface AppBarProps extends ReactToolbox.Props {
   /**
    * If it exists it is used as the AppBar right icon
    */
-  rightIcon?: string;
+  rightIcon?: string | React.ReactNode;
   /**
    * Called when the righticon is clicked
    */
   onRightIconClick?: Function;
+  /**
+   * Whether AppBar should be hidden during scroll.
+   * @default false
+   */
+  scrollHide?: boolean;
   /**
    * Classnames object defining the component style.
    */

@@ -48,6 +48,7 @@ If you want to provide a theme via context, the component key is `RTAutocomplete
 | `direction`                     | `String`                      | `auto`  | Determines the opening direction. It can be `auto`, `top` or `down`. |
 | `disabled`                      | `Bool`                        | `false` | If true, component will be disabled. |
 | `error`                         | `String` or `Node`            |         | Sets the error string for the internal input element. |
+| `keepFocusOnChange`             | `Bool`                        | `false` | Whether component should keep focus after value change. |
 | `label`                         | `String` or `Node`            |         | The text string to use for the floating label element. |
 | `multiple`                      | `Bool`                        | `true`  | If true, component can hold multiple values. |
 | `onBlur`                        | `Function`                    |         | Callback function that is fired when component is blurred. |

@@ -29,6 +29,7 @@ const factory = (IconButton) => {
         flat: PropTypes.string,
         leftIcon: PropTypes.string,
         rightIcon: PropTypes.string,
+        scrollHide: PropTypes.string,
         title: PropTypes.string
       }),
       title: PropTypes.string

@@ -16,13 +16,14 @@ export interface AvatarTheme {
   letter?: string;
 }
 
-interface AvatarProps extends ReactToolbox.Props {
+export interface AvatarProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
   children?: React.ReactNode;
   /**
    * Set to true if your image is not squared so it will be used as a cover for the element.
+   * @default false
    */
   cover?: boolean;
   /**
@@ -41,6 +42,10 @@ interface AvatarProps extends ReactToolbox.Props {
    * A title for the image. If no image is provided, the first letter will be displayed as the avatar.
    */
   title?: string;
+  /**
+   * Additional properties for component root element.
+   */
+  [key: string]: any;
 }
 
 export class Avatar extends React.Component<AvatarProps, {}> { }

@@ -1,15 +1,35 @@
 import * as React from "react";
 import ReactToolbox from "../index";
 
-export interface TabsTheme {
+export interface TabsTheme extends TabTheme, TabContentTheme {
   /**
-   * Added to the active tab content and header.
+   * Class used for arrows.
    */
-  active?: string;
+  arrow?: string;
+  /**
+   * Class used for arrow container.
+   */
+  arrowContainer?: string;
+  /**
+   * Class used when 'disableAnimatedBottomBorder' is true.
+   */
+  disableAnimation?: string;
+  /**
+   * Used to make the 'fixed tabs'.
+   */
+  fixed?: string;
+  /**
+   * Used to invert the colors.
+   */
+  inverse?: string;
   /**
    * Used for the navigation element.
    */
   navigation?: string;
+  /**
+   * Used for navigation container.
+   */
+  navigationContainer?: string;
   /**
    * Used for the moving underline element.
    */
@@ -18,13 +38,9 @@ export interface TabsTheme {
    * Used as a root classname for the component.
    */
   tabs?: string;
-  /**
-   * Used for the tab content element.
-   */
-  tab?: string;
 }
 
-interface TabsProps extends ReactToolbox.Props {
+export interface TabsProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
@@ -83,9 +99,17 @@ export interface TabTheme {
    * Added to the navigation tab element in case it's active.
    */
   label?: string;
+  /**
+   * Class added when icon is set.
+   */
+  withIcon?: string;
+  /**
+   * Class added when label is set.
+   */
+  withText?: string;
 }
 
-interface TabProps extends ReactToolbox.Props {
+export interface TabProps extends ReactToolbox.Props {
   /**
    * If true, the current component is visible.
    */
@@ -105,6 +129,10 @@ interface TabProps extends ReactToolbox.Props {
    */
   hidden?: boolean;
   /**
+   * Icon to be used in inner FontIcon.
+   */
+  icon?: React.ReactNode;
+  /**
    * Label text for navigation header. Required.
    */
   label: string;
@@ -116,6 +144,42 @@ interface TabProps extends ReactToolbox.Props {
    * Classnames object defining the component style.
    */
   theme?: TabTheme;
+  /**
+   * Additional properties passed to Tab root container.
+   */
+  [key: string]: any;
 }
 
 export class Tab extends React.Component<TabProps, {}> { }
+
+export interface TabContentTheme {
+  /**
+   * Added when tab is active.
+   */
+  active?: string;
+  /**
+   * Used for the tab content element.
+   */
+  tab?: string;
+}
+
+export interface TabContentProps extends ReactToolbox.Props {
+  /**
+   * Whether tab is active.
+   */
+  active?: boolean;
+  /**
+   * Tab content.
+   */
+  children?: React.ReactNode;
+  /**
+   * Current tab index.
+   */
+  tabIndex?: number;
+  /**
+   * Classnames object defining the component style.
+   */
+  theme?: TabContentTheme;
+}
+
+export class TabContent extends React.Component<TabContentProps, {}> { }

@@ -32,12 +32,16 @@ export interface CheckboxTheme {
   text?: string;
 }
 
-interface CheckboxProps extends ReactToolbox.Props {
+export interface CheckboxProps extends ReactToolbox.Props {
   /**
    * Value for the checkbox, can be true or false.
    * @default false
    */
   checked?: boolean;
+  /**
+   * Children to pass through the component.
+   */
+  children?: React.ReactNode;
   /**
    * If true, the checkbox shown as disabled and cannot be modified.
    * @default false
@@ -63,6 +67,10 @@ interface CheckboxProps extends ReactToolbox.Props {
    * Classnames object defining the component style.
    */
   theme?: CheckboxTheme;
+  /**
+   * Additional properties passed to inner input element.
+   */
+  [key: string]: any;
 }
 
 export class Checkbox extends React.Component<CheckboxProps, {}> { }

@@ -74,19 +74,11 @@ const factory = (Chip, Input) => {
      isValueAnObject: false
    };
 
-   componentDidMount () {
-     this.setIsValueAnObject();
-   }
-
    componentWillReceiveProps (nextProps) {
      if (!this.props.multiple) {
        this.setState({
          query: this.query(nextProps.value)
        });
-     }
-
-     if (nextProps.multiple && this.props.value !== nextProps.value) {
-        this.setIsValueAnObject();
      }
    }
 
@@ -257,7 +249,7 @@ const factory = (Chip, Input) => {
 
      if (!vals) vals = [];
 
-     if (this.props.showSelectedWhenNotInSource || this.state.isValueAnObject) {
+     if (this.props.showSelectedWhenNotInSource && this.isValueAnObject()) {
        return new Map(Object.entries(vals));
      }
 
@@ -277,7 +269,7 @@ const factory = (Chip, Input) => {
      const source = this.source();
      const newValue = target === void 0 ? event.target.id : target;
 
-     if (this.state.isValueAnObject) {
+     if (this.isValueAnObject()) {
        const newItem = Array.from(source).reduce((obj, [k, value]) => {
          if (k === newValue) {
            obj[k] = value;
@@ -297,7 +289,7 @@ const factory = (Chip, Input) => {
 
        values.delete(key);
 
-       if (this.state.isValueAnObject) {
+       if (this.isValueAnObject()) {
          return this.handleChange(this.mapToObject(values), event);
        }
 
@@ -305,18 +297,16 @@ const factory = (Chip, Input) => {
      }
    }
 
-   setIsValueAnObject () {
-      this.setState({
-        isValueAnObject: !Array.isArray(this.props.value) && typeof this.props.value === 'object'
-      });
-    }
+   isValueAnObject () {
+      return !Array.isArray(this.props.value) && typeof this.props.value === 'object';
+   }
 
-    mapToObject (map) {
+   mapToObject (map) {
       return Array.from(map).reduce((obj, [k, value]) => {
         obj[k] = value;
         return obj;
       }, {});
-    }
+   }
 
    renderSelected () {
      if (this.props.multiple) {
