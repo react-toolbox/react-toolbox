@@ -42,7 +42,7 @@
     "normalize.css": "^4.2.0",
     "ramda": "^0.22.1",
     "react-addons-css-transition-group": "^15.4.0",
-    "react-css-themr": "^1.7.0"
+    "react-css-themr": "^1.7.1"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
