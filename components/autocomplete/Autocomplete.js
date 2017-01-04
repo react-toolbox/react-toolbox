@@ -74,14 +74,6 @@ const factory = (Chip, Input) => {
      isValueAnObject: false
    };
 
-   componentWillReceiveProps (nextProps) {
-     if (!this.props.multiple) {
-       this.setState({
-         query: this.query(nextProps.value)
-       });
-     }
-   }
-
    shouldComponentUpdate (nextProps, nextState) {
      if (!this.state.focus && nextState.focus && this.props.direction === POSITION.AUTO) {
        const direction = this.calculateDirection();
