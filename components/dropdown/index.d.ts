@@ -31,6 +31,10 @@ export interface DropdownTheme {
    */
   label?: string;
   /**
+   * Used when dropdown has required attribute.
+   */
+  required?: string;
+  /**
    * Used to highlight the selected value.
    */
   selected?: string;
@@ -52,7 +56,7 @@ export interface DropdownTheme {
   values?: string;
 }
 
-interface DropdownProps extends ReactToolbox.Props {
+export interface DropdownProps extends ReactToolbox.Props {
   /**
    * If true the dropdown will preselect the first item if the supplied value matches none of the options' values.
    * @default true
@@ -110,6 +114,7 @@ interface DropdownProps extends ReactToolbox.Props {
   value?: string | number;
   /**
    * If true, the dropdown has a required attribute.
+   * @default false
    */
   required?: boolean;
 }

@@ -16,7 +16,7 @@ export interface LinkTheme {
   link?: string;
 }
 
-interface LinkProps extends ReactToolbox.Props {
+export interface LinkProps extends ReactToolbox.Props {
   /**
    * If true, adds active style to link.
    * @default false
@@ -46,6 +46,10 @@ interface LinkProps extends ReactToolbox.Props {
    * Classnames object defining the component style.
    */
   theme?: LinkTheme;
+  /**
+   * Additional parameters passed to anchor element.
+   */
+  [key: string]: any;
 }
 
 export class Link extends React.Component<LinkProps, {}> { }

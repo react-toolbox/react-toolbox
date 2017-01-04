@@ -52,7 +52,7 @@ export interface InputTheme {
   withIcon?: string;
 }
 
-interface InputProps extends ReactToolbox.Props {
+export interface InputProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
@@ -118,11 +118,16 @@ interface InputProps extends ReactToolbox.Props {
    */
   required?: boolean;
   /**
+   * The number of rows the multiline input field has.
+   */
+  rows?:number;
+  /**
    * Classnames object defining the component style.
    */
   theme?: InputTheme;
   /**
-   * Type of the input element. It can be a valid HTML5 input type
+   * Type of the input element. It can be a valid HTML5 input type.
+   * @default "text"
    */
   type?: string;
   /**

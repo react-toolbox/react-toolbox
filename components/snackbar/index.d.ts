@@ -32,7 +32,7 @@ export interface SnackbarTheme {
   warning?: string;
 }
 
-interface SnackbarProps extends ReactToolbox.Props {
+export interface SnackbarProps extends ReactToolbox.Props {
   /**
    * Label for the action component inside the Snackbar.
    */
@@ -43,9 +43,17 @@ interface SnackbarProps extends ReactToolbox.Props {
    */
   active?: boolean;
   /**
-   * Text to display in the content. Required.
+   * Children to pass through the component.
    */
-  label: string;
+  children?: React.ReactNode;
+  /**
+   * Text to display in the content.
+   */
+  label?: string;
+  /**
+   * Callback function that will be called when the button action is clicked.
+   */
+  onClick?: Function;
   /**
    * Callback function when finish the set timeout.
    */

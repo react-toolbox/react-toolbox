@@ -24,7 +24,7 @@ export interface DrawerTheme {
   right?: string;
 }
 
-interface DrawerProps extends ReactToolbox.Props {
+export interface DrawerProps extends ReactToolbox.Props {
   /**
    * If true, the drawer will be visible.
    * @default false
