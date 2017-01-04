@@ -1,14 +1,13 @@
 import expect from 'expect';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {
   renderIntoDocument,
   scryRenderedDOMComponentsWithClass,
   Simulate
 } from 'react-addons-test-utils';
 import sinon from 'sinon';
-import theme from '../theme.scss';
-import Dropdown, { Dropdown as RawDropdown } from '../Dropdown';
+import theme from '../theme.css';
+import Dropdown from '../Dropdown';
 
 
 describe('Dropdown', function () {
