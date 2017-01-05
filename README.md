@@ -4,6 +4,8 @@
 
 React Toolbox is a set of [React](http://facebook.github.io/react/) components that implement [Google's Material Design specification](https://material.google.com/). It's powered by [CSS Modules](https://github.com/css-modules/css-modules) and harmoniously integrates with your [webpack](http://webpack.github.io/) workflow, although you can use any other module bundler. You can take a tour through our documentation website and try the components live!
 
+**Note:** This source code refers to the future version. To check the source for `1.x` go to `master` branch. We are currently writing a migration guide so you can start working with 2.0-beta.x now!
+
 ## Installation
 
 React Toolbox can be installed as an [npm package](https://www.npmjs.org/package/react-toolbox):
