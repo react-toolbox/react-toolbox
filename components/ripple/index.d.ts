@@ -57,5 +57,5 @@ export function rippleFactory(
   options: RippleProps
 ): RippledComponentFactory;
 
-
+export { rippleFactory as Ripple };
 export default rippleFactory;
