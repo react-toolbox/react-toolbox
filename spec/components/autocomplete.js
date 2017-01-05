@@ -14,6 +14,11 @@ class AutocompleteTest extends React.Component {
     }
   };
 
+  handleFocus = (event) => {
+    console.log('This is focused');
+    console.log(event);
+  };
+
   handleMultipleArrayChange = (value) => {
     this.setState({
       multipleArray: value,
@@ -48,6 +53,7 @@ class AutocompleteTest extends React.Component {
           allowCreate
           keepFocusOnChange
           label="Pick multiple elements..."
+          onFocus={this.handleFocus}
           onChange={this.handleMultipleArrayChange}
           source={this.state.countriesObject}
           suggestionMatch="anywhere"
