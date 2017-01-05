@@ -1,6 +1,5 @@
 import expect from 'expect';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {
   renderIntoDocument,
   scryRenderedDOMComponentsWithClass,
@@ -8,7 +7,7 @@ import {
 } from 'react-addons-test-utils';
 import sinon from 'sinon';
 import theme from '../theme.scss';
-import Dropdown, { Dropdown as RawDropdown } from '../Dropdown';
+import Dropdown from '../Dropdown';
 
 
 describe('Dropdown', function () {
