@@ -22,11 +22,14 @@ const factory = (Overlay, Button) => {
       <Portal className={props.theme.wrapper}>
         <Overlay
           active={props.active}
+          className={props.theme.overlay}
           onClick={props.onOverlayClick}
           onEscKeyDown={props.onEscKeyDown}
           onMouseDown={props.onOverlayMouseDown}
           onMouseMove={props.onOverlayMouseMove}
           onMouseUp={props.onOverlayMouseUp}
+          theme={props.theme}
+          themeNamespace="overlay"
         />
         <div data-react-toolbox='dialog' className={className}>
           <section role='body' className={props.theme.body}>
@@ -60,6 +63,7 @@ const factory = (Overlay, Button) => {
       button: PropTypes.string,
       dialog: PropTypes.string,
       navigation: PropTypes.string,
+      overlay: PropTypes.string,
       title: PropTypes.string,
       wrapper: PropTypes.string
     }),
