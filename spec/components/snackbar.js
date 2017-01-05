@@ -4,7 +4,8 @@ import Snackbar from '../../components/snackbar';
 
 class SnackbarTest extends React.Component {
   state = {
-    active: false
+    active: false,
+    opener: null
   };
 
   handleSnackbarClick = () => {
@@ -15,8 +16,8 @@ class SnackbarTest extends React.Component {
     this.setState({active: false});
   };
 
-  handleClick = () => {
-    this.setState({active: true});
+  handleClick = (e) => {
+    this.setState({active: true, opener: e.target});
   };
 
   render () {
@@ -26,14 +27,15 @@ class SnackbarTest extends React.Component {
         <p>lorem ipsum...</p>
         <Button label='Show snackbar' primary raised onClick={this.handleClick} />
         <Snackbar
-          action='Hide'
+          action='Hide message'
           active={this.state.active}
-          timeout={2000}
           onClick={this.handleSnackbarClick}
           onTimeout={this.handleSnackbarTimeout}
+          opener={this.state.opener}
+          timeout={2000}
           type='warning'
         >
-          Snackbar action <strong>cancel</strong>
+          Snackbar message. <strong>This text will be bolded</strong>
         </Snackbar>
       </section>
     );

@@ -19,6 +19,7 @@ const factory = (Overlay, Button) => {
       ]),
       onClick: PropTypes.func,
       onTimeout: PropTypes.func,
+      opener: PropTypes.object,
       theme: PropTypes.shape({
         accept: PropTypes.string,
         active: PropTypes.string,
@@ -39,13 +40,29 @@ const factory = (Overlay, Button) => {
     }
 
     componentWillReceiveProps (nextProps) {
+      const listenerTransition = () => {
+        this.setFocus();
+        this.refs.snackbar.removeEventListener('transitionend', listenerTransition);
+      };
+      if (nextProps.active) {
+        this.refs.snackbar.addEventListener('transitionend', listenerTransition);
+      }
       if (nextProps.active && nextProps.timeout) {
         this.scheduleTimeout(nextProps);
       }
     }
 
     componentWillUnmount () {
+      if (this.props.opener) {
+        this.props.opener.focus();
+      }
       clearTimeout(this.curTimeout);
+    }
+
+    setFocus () {
+      const container = this.refs.snackbar;
+      container.setAttribute('tabindex', -1);
+      container.focus();
     }
 
     scheduleTimeout = props => {
@@ -65,7 +82,7 @@ const factory = (Overlay, Button) => {
 
       return (
         <Overlay invisible>
-          <div data-react-toolbox='snackbar' className={className}>
+          <div data-react-toolbox='snackbar' ref='snackbar' className={className}>
             <span className={theme.label}>
               {label}
               {children}
