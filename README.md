@@ -4,6 +4,8 @@
 
 React Toolbox is a set of [React](http://facebook.github.io/react/) components that implement [Google's Material Design specification](https://material.google.com/). It's powered by [CSS Modules](https://github.com/css-modules/css-modules) and harmoniously integrates with your [webpack](http://webpack.github.io/) workflow, although you can use any other module bundler. You can take a tour through our documentation website and try the components live!
 
+**Note:** This source code refers to the future version. To check the source for `1.x` go to `master` branch. We are currently writing a migration guide so you can start working with 2.0-beta.x now!
+
 ## Installation
 
 React Toolbox can be installed as an [npm package](https://www.npmjs.org/package/react-toolbox):
@@ -18,7 +20,7 @@ React Toolbox uses [CSS Modules](https://github.com/css-modules/css-modules) by 
 
 Although we recommend [webpack](https://webpack.github.io/), you are free to use whatever module bundler you want as long as it can compile and require SASS files located in your `node_modules`. If you are experiencing require errors, make sure your configuration satisfies this requirement.
 
-Of course this is a set of React components so you should be familiar with [React](https://facebook.github.io/react/). If want to customize your components via themes, you may want to take a look to [react-css-themr](https://github.com/javivelasco/react-css-themr) which is used by React Toolbox to make component easily themeable.
+Of course this is a set of React components so you should be familiar with [React](https://facebook.github.io/react/). If want to customize your components via themes, you may want to take a look to [react-css-themr](https://github.com/javivelasco/react-css-themr) which is used by React Toolbox to make components easily themeable.
 
 ## Basic usage
 
@@ -54,7 +56,7 @@ As you can see in the previous block, each folder includes: a Javascript file fo
 
 ### Bundled component
 
-You import from the index file so the imported component comes with all dependencies and themes already required and injected for you. This means that the CSS for each dependency will be bundled in your final CSS automatically and the component markup includes the classnames to be styled. For example:
+If you import from the index file, the imported component comes with all dependencies and themes already required and injected for you. This means that the CSS for each dependency will be bundled in your final CSS automatically and the component markup includes the classnames to be styled. For example:
 
 ```js
 import { AppBar } from 'react-toolbox/lib/app_bar';
@@ -62,7 +64,7 @@ import { AppBar } from 'react-toolbox/lib/app_bar';
 
 ### Raw component
 
-You import from the component definition so the imported component is bundled with its dependencies but it does not require any style for you. This means that no CSS will be bundled and the component markup will **not** include any classname. It's your responsibility to provide a theme to the component to be properly style and you can do it via properties or context. For example:
+If you import from the component definition, the imported component is bundled with its dependencies, but it does not include any styles. This means no CSS will be bundled, and the component markup will **not** include any classname. It's your responsibility to provide a theme to the component to be properly styled. You can do so via properties or context. For example:
 
 ```js
 import { AppBar } from 'react-toolbox/lib/app_bar/AppBar.js';
@@ -70,9 +72,9 @@ import { AppBar } from 'react-toolbox/lib/app_bar/AppBar.js';
 
 ## Customizing components
 
-Every component accepts a `theme` property intended to provide a [CSS Module import object](https://github.com/css-modules/css-modules) that will be used by the component to assign local classnames to its DOM nodes. Therefore, each one implements a documented **classname API** so if you want to customize a component, you just need to provide a theme object with the appropriated classname  mapping.  
+Every component accepts a `theme` property intended to provide a [CSS Module import object](https://github.com/css-modules/css-modules) that will be used by the component to assign local classnames to its DOM nodes. Therefore, each one implements a documented **classname API**. So if you want to customize a component, you just need to provide a theme object with the appropriated classname mapping.  
 
-If the component has already a theme injected, the properties you pass will be merged with the injected. In this way, you can **add** classnames to the nodes of a specific component and use them to add or to override styles. For example, if you want to customize the `AppBar` to be purple:
+If the component already has a theme injected, the properties you pass will be merged with the injected theme. In this way, you can **add** classnames to the nodes of a specific component and use them to add or to override styles. For example, if you want to customize the `AppBar` to be purple:
 
 ```js
 import React from 'react';
@@ -114,7 +116,7 @@ This file should be prepended to each stylesheet compilation which can be achiev
 
 ### Using SASS Loader
 
-If you are using  [Webpack](http://webpack.github.io/) as module bundler, you are probably using [sass-loader](https://github.com/jtangelder/sass-loader) as well. What we want to do is to prepend to each SASS file compilation a bunch of variables to override and this can be done with the `data` option. For example:
+If you are using  [Webpack](http://webpack.github.io/) as module bundler, you are probably using [sass-loader](https://github.com/jtangelder/sass-loader) as well. What we want to do is to prepend to each SASS file compilation a bunch of variables to override. This can be done with the `data` option. For example:
 
 ```js
 sassLoader: {
@@ -122,7 +124,7 @@ sassLoader: {
 }
 ```
 
-In this case we are prepending the theme import to each SASS compilation so the primary color will be changed in every single stylesheet. If you are not using webpack maybe your loader still has a similar option, otherwise don't worry, there are solutions.
+In this case we are prepending the theme import to each SASS compilation so the primary color will be changed in every single stylesheet. If you are not using webpack, maybe your loader still has a similar option. Otherwise, don't worry, there are solutions.
 
 ### Using SASS imports and props
 
@@ -133,7 +135,7 @@ Remember that you can import components without styles and provide those styles 
 @import "~react-toolbox/lib/button/theme";
 ```
 
-Then, when you use a button you can inject the appropriated theme:
+Then, when you use a button, you can inject the appropriate theme:
 
 ```js
 import { Button } from 'react-toolbox/lib/button/Button';
@@ -146,7 +148,7 @@ const ThemedButton = (props) => (
 export default ThemedButton;
 ```
 
-With this technique you have to create wrappers for every component and this is not cool at all... but don't worry, we can provide the theme via context to avoid this.
+With this technique you have to create wrappers for every component, and this is not cool at all... but don't worry, we can provide the theme via context to avoid this.
 
 ### Using SASS imports and context
 
@@ -177,7 +179,7 @@ render(
 
 A couple of things here. First you need to use raw components to get this styles properly applied. Second, you have to add dependency themes by yourself. For example, the `Button` requires `Ripple` so you have to provide styles for both of them.
 
-Also, recall that all components accepts a theme verifying required classNames but there may be some missing. If any property is missing you can check the selectors you want to override straight in the DevTools.
+Also, recall that all components accept a theme verifying required classNames but there may be some missing. If any property is missing you can check the selectors you want to override straight in the DevTools.
 
 ## Roboto Font and Material Design Icons
 
