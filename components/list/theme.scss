@@ -13,9 +13,9 @@
   list-style: none;
 
   & > a {
-    cursor: pointer;
     display: block;
     text-decoration: none;
+    cursor: pointer;
 
     &:hover {
       background-color: $list-item-hover-color;
