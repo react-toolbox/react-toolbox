@@ -54,6 +54,7 @@ const factory = (Tab, TabContent, FontIcon) => {
     componentWillUnmount () {
       window.removeEventListener('resize', this.handleResize);
       clearTimeout(this.resizeTimeout);
+      clearTimeout(this.updatePointerTimeout);
     }
 
     handleHeaderClick = (event) => {
@@ -73,11 +74,18 @@ const factory = (Tab, TabContent, FontIcon) => {
       if (this.navigationNode && this.navigationNode.children[idx]) {
         const nav = this.navigationNode.getBoundingClientRect();
         const label = this.navigationNode.children[idx].getBoundingClientRect();
+        const pointerContainer = this.pointerContainer.getBoundingClientRect();
         const scrollLeft = this.navigationNode.scrollLeft;
+
+        let diff = 0;
+
+        if (scrollLeft > 0 && nav.left > pointerContainer.left) {
+          diff += nav.left - pointerContainer.left;
+        }
+
         this.setState({
           pointer: {
-            top: `${nav.height}px`,
-            left: `${label.left - nav.left + scrollLeft}px`,
+            left: `${label.left - nav.left + diff}px`,
             width: `${label.width}px`
           }
         });
@@ -100,6 +108,9 @@ const factory = (Tab, TabContent, FontIcon) => {
       this.navigationNode.scrollLeft += factor * this.navigationNode.clientWidth;
       if (this.navigationNode.scrollLeft !== oldScrollLeft) {
         this.updateArrows();
+        this.updatePointerTimeout = setTimeout(() => {
+          this.updatePointer(this.props.index);
+        }, 100);
       }
     }
 
@@ -179,11 +190,13 @@ const factory = (Tab, TabContent, FontIcon) => {
             </div>}
             <nav className={theme.navigation} ref={node => {this.navigationNode = node; }}>
               {this.renderHeaders(headers)}
-              <span className={classNamePointer} style={this.state.pointer} />
             </nav>
             {hasRightArrow && <div className={theme.arrowContainer} onClick={this.scrollLeft}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_right" />
             </div>}
+            <div className={theme.pointerContainer} ref={node => {this.pointerContainer = node; }}>
+              <span className={classNamePointer} style={this.state.pointer} />
+            </div>
           </div>
           {this.renderContents(contents)}
         </div>
