@@ -2,6 +2,16 @@
 # yarn lockfile v1
 
 
+"@types/react-dom@^0.14.20":
+  version "0.14.20"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-0.14.20.tgz#6e30d66148e78b29ef593fa91ba30d0175190604"
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*", "@types/react@^0.14.55":
+  version "0.14.55"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-0.14.55.tgz#f7f7a6ad0c94780531e95632435b2798c5dad11b"
+
 Base64@~0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/Base64/-/Base64-0.2.1.tgz#ba3a4230708e186705065e66babdd4c35cf60028"
@@ -5574,6 +5584,10 @@ type-is@~1.6.13:
 typedarray@~0.0.5:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
+
+typescript@next:
+  version "2.2.0-dev.20170101"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.2.0-dev.20170101.tgz#28a941bfd5a114241d4c9025a8d1cde541efcd3b"
 
 ua-parser-js@^0.7.9:
   version "0.7.10"

@@ -12,40 +12,42 @@ export declare namespace ReactToolbox {
     /**
      * Callback called when the component is clicked.
      */
-    onClick?: Function;
+    // onClick?: Function;
+    onClick?: React.MouseEventHandler<React.ReactNode>;
+
     /**
      * Fires after the mouse is released from the Component.
      */
-    onMouseUp?: Function;
+    onMouseUp?: React.MouseEventHandler<React.ReactNode>;
     /**
      * Callback called when the mouse enters the Component.
      */
-    onMouseEnter?: Function;
+    onMouseEnter?: React.MouseEventHandler<React.ReactNode>;
     /**
      * Callback called when the mouse leaves the Component.
      */
-    onMouseLeave?: Function;
+    onMouseLeave?: React.MouseEventHandler<React.ReactNode>;
     /**
      * Callback called when the mouse press the Component.
      */
-    onMouseDown?: Function;
-    onContextMenu?: Function;
-    onDoubleClick?: Function;
-    onDrag?: Function;
-    onDragEnd?: Function;
-    onDragEnter?: Function;
-    onDragExit?: Function;
-    onDragLeave?: Function;
-    onDragOver?: Function;
-    onDragStart?: Function;
-    onDrop?: Function;
-    onMouseMove?: Function;
-    onMouseOut?: Function;
-    onMouseOver?: Function;
-    onTouchCancel?: Function;
-    onTouchEnd?: Function;
-    onTouchMove?: Function;
-    onTouchStart?: Function;
+    onMouseDown?: React.MouseEventHandler<React.ReactNode>;
+    onContextMenu?: React.MouseEventHandler<React.ReactNode>;
+    onDoubleClick?: React.MouseEventHandler<React.ReactNode>;
+    onDrag?: React.DragEventHandler<React.ReactNode>;
+    onDragEnd?: React.DragEventHandler<React.ReactNode>;
+    onDragEnter?: React.DragEventHandler<React.ReactNode>;
+    onDragExit?: React.DragEventHandler<React.ReactNode>;
+    onDragLeave?: React.DragEventHandler<React.ReactNode>;
+    onDragOver?: React.DragEventHandler<React.ReactNode>;
+    onDragStart?: React.DragEventHandler<React.ReactNode>;
+    onDrop?: React.DragEventHandler<React.ReactNode>;
+    onMouseMove?: React.MouseEventHandler<React.ReactNode>;
+    onMouseOut?: React.MouseEventHandler<React.ReactNode>;
+    onMouseOver?: React.MouseEventHandler<React.ReactNode>;
+    onTouchCancel?: React.TouchEventHandler<React.ReactNode>;
+    onTouchEnd?: React.TouchEventHandler<React.ReactNode>;
+    onTouchMove?: React.TouchEventHandler<React.ReactNode>;
+    onTouchStart?: React.TouchEventHandler<React.ReactNode>;
     /**
      * Set inline style for the root component.
      */
