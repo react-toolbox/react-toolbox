@@ -1,7 +1,9 @@
 import React from 'react';
-import style from './style';
 import CodeMirror from 'codemirror';
-import 'codemirror/mode/javascript/javascript';
+import style from './style.css';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/mode/javascript/javascript.js';
+import './one-dark.css';
 
 class Editor extends React.Component {
   static propTypes = {

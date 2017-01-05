@@ -4,7 +4,7 @@ import Button from 'react-toolbox/button';
 import {Card, CardTitle, CardMedia, CardText, CardActions} from 'react-toolbox/card';
 import Logo from '../../logo';
 import Navigation from '../../navigation';
-import style from './style';
+import style from './style.css';
 
 const GithubIcon = () => (
   <svg viewBox="0 0 284 277">
@@ -64,7 +64,7 @@ const Home = () => (
           <CardText>Software gardener • Film, music & comic lover • Frontend Engineer at Audiense  • Any biographer in the room?</CardText>
           <CardActions>
             <Button href='http://github.com/javivelasco' target='_blank'><GithubIcon /> Github</Button>
-            <Button href='http://twitter.com/javivelasco' target='_blank' className={style.twitter}><TwitterIcon /> Twitter</Button>
+            <Button href='http://twitter.com/javivelasco' theme={style} target='_blank' className={style.twitterButton}><TwitterIcon /> Twitter</Button>
           </CardActions>
         </Card>
 
@@ -74,7 +74,7 @@ const Home = () => (
           <CardText>Creative Doer · A complicated #human who builds stuff · #author · #opensource lover · #traveller · with a dark past being CEO & CTO</CardText>
           <CardActions>
             <Button href='http://github.com/soyjavi' target='_blank'><GithubIcon /> Github</Button>
-            <Button href='http://twitter.com/soyjavi' target='_blank' className={style.twitter}><TwitterIcon /> Twitter</Button>
+            <Button href='http://twitter.com/soyjavi' theme={style} target='_blank' className={style.twitterButton}><TwitterIcon /> Twitter</Button>
           </CardActions>
         </Card>
       </ul>

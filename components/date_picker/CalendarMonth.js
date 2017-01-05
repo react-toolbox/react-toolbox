@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import { range } from '../utils/utils';
 import time from '../utils/time.js';
-import utils from '../utils/utils.js';
 import CalendarDay from './CalendarDay.js';
 
 class Month extends Component {
@@ -45,13 +45,13 @@ class Month extends Component {
   }
 
   renderWeeks () {
-    const days = utils.range(0, 7).map(d => time.getDayOfWeekLetter(d, this.props.locale));
+    const days = range(0, 7).map(d => time.getDayOfWeekLetter(d, this.props.locale));
     const source = (this.props.sundayFirstDayOfWeek) ? days : [...days.slice(1), days[0]];
     return source.map((d, i) => (<span key={i}>{d}</span>));
   }
 
   renderDays () {
-    return utils.range(1, time.getDaysInMonth(this.props.viewDate) + 1).map(i => {
+    return range(1, time.getDaysInMonth(this.props.viewDate) + 1).map(i => {
       const date = new Date(this.props.viewDate.getFullYear(), this.props.viewDate.getMonth(), i);
       return (
         <CalendarDay

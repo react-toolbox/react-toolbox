@@ -1,0 +1,4 @@
+:root {
+  --navigation-space: var(--unit);
+  --navigation-color: var(--color-black);
+}

@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import Portal from '../hoc/Portal';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import { getViewport } from '../utils/utils';
 import { TOOLTIP } from '../identifiers.js';
 import events from '../utils/events';
-import utils from '../utils/utils';
 
 const POSITION = {
   BOTTOM: 'bottom',
@@ -75,6 +75,7 @@ const tooltipFactory = (options = {}) => {
         if (this.refs.tooltip) {
           events.removeEventListenerOnTransitionEnded(this.refs.tooltip, this.onTransformEnd);
         }
+        if (this.timeout) clearTimeout(this.timeout);
       }
 
       activate ({ top, left, position }) {
@@ -99,12 +100,12 @@ const tooltipFactory = (options = {}) => {
         const { tooltipPosition } = this.props;
         if (tooltipPosition === POSITION.HORIZONTAL) {
           const origin = element.getBoundingClientRect();
-          const { width: ww } = utils.getViewport();
+          const { width: ww } = getViewport();
           const toRight = origin.left < ((ww / 2) - origin.width / 2);
           return toRight ? POSITION.RIGHT : POSITION.LEFT;
         } else if (tooltipPosition === POSITION.VERTICAL) {
           const origin = element.getBoundingClientRect();
-          const { height: wh } = utils.getViewport();
+          const { height: wh } = getViewport();
           const toBottom = origin.top < ((wh / 2) - origin.height / 2);
           return toBottom ? POSITION.BOTTOM : POSITION.TOP;
         } else {

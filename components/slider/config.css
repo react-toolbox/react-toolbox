@@ -1,0 +1,15 @@
+:root {
+  --slider-main-color: var(--color-primary);
+  --slider-main-color-contrast: var(--color-primary-contrast);
+  --slider-snap-color: var(--color-black);
+  --slider-disabled-color: rgba(177, 177, 177, 1);
+  --slider-knob-size: calc(3.2 * var(--unit));
+  --slider-inner-knob-size: calc(1.2 * var(--unit));
+  --slider-snap-size: calc(0.2 * var(--unit));
+  --slider-input-width: calc(5 * var(--unit));
+  --slider-bar-height: calc(0.2 * var(--unit));
+  --slider-pin-size: calc(2.6 * var(--unit));
+  --slider-pin-elevation: calc(1.7 * var(--unit));
+  --slider-side-separation: calc(1 * var(--unit));
+  --slider-empty-knob-border: calc(0.2 * var(--unit));
+}

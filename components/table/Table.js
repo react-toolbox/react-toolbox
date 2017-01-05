@@ -1,118 +1,98 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes, Component, cloneElement } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import filterReactChildren from '../utils/filter-react-children.js';
+import isComponentOfType from '../utils/is-component-of-type.js';
 import { TABLE } from '../identifiers.js';
-import InjectCheckbox from '../checkbox/Checkbox.js';
-import tableHeadFactory from './TableHead.js';
-import tableRowFactory from './TableRow.js';
+import InjectTableHead from './TableHead.js';
+import InjectTableRow from './TableRow.js';
 
 const factory = (TableHead, TableRow) => {
+  const isTableHead = child => isComponentOfType(TableHead, child);
+  const isTableRow = child => isComponentOfType(TableRow, child);
+
   class Table extends Component {
     static propTypes = {
+      children: PropTypes.node,
       className: PropTypes.string,
-      heading: PropTypes.bool,
-      model: PropTypes.object,
       multiSelectable: PropTypes.bool,
-      onChange: PropTypes.func,
-      onRowClick: PropTypes.func,
-      onSelect: PropTypes.func,
+      onRowSelect: PropTypes.func,
       selectable: PropTypes.bool,
-      selected: PropTypes.array,
-      source: PropTypes.array,
       theme: PropTypes.shape({
+        head: PropTypes.string,
         table: PropTypes.string
       })
     };
 
     static defaultProps = {
       className: '',
-      heading: true,
-      selectable: true,
-      multiSelectable: true,
-      selected: [],
-      source: []
+      multiSelectable: false,
+      selectable: true
     };
 
-    handleFullSelect = () => {
-      if (this.props.onSelect) {
-        const {source, selected} = this.props;
-        const newSelected = source.length === selected.length ? [] : source.map((i, idx) => idx);
-        this.props.onSelect(newSelected);
+    getRowTuples = () => React.Children
+      .toArray(filterReactChildren(this.props.children, isTableRow))
+      .map((child, index) => [index, Boolean(child.props.selected)]);
+
+    handleHeadSelect = value => {
+      if (this.props.onRowSelect) {
+        this.props.onRowSelect(value
+          ? this.getRowTuples().map(item => item[0])
+          : []);
       }
     };
 
-    handleRowSelect = (index) => {
-      if (this.props.onSelect) {
-        let newSelection = [...this.props.selected];
+    handleRowSelect = idx => {
+      if (this.props.onRowSelect) {
         if (this.props.multiSelectable) {
-          const position = this.props.selected.indexOf(index);
-          newSelection = position !== -1
-            ? newSelection.filter((el, idx) => idx !== position)
-            : newSelection.concat([index]);
+          const current = this.getRowTuples().filter(item => item[1]).map(item => item[0]);
+          const rowIndex = current.indexOf(idx);
+          const indexes = rowIndex !== -1
+          ? [...current.slice(0, rowIndex), ...current.slice(rowIndex + 1)]
+          : [...current, idx];
+          this.props.onRowSelect(indexes);
         } else {
-          newSelection = [index];
+          this.props.onRowSelect([idx]);
         }
-        this.props.onSelect(newSelection);
       }
     };
 
-    handleRowChange = (index, key, value) => {
-      if (this.props.onChange) {
-        this.props.onChange(index, key, value);
-      }
-    };
-
-    handleRowClick = (index, event) => {
-      if (this.props.onRowClick) {
-        this.props.onRowClick(index, event);
-      }
-    }
-
-    renderHead () {
-      if (this.props.heading) {
-        const {model, selected, source, selectable, multiSelectable} = this.props;
-        const isSelected = selected.length === source.length;
-        return (
-          <TableHead
-            model={model}
-            onSelect={this.handleFullSelect}
-            selectable={selectable}
-            multiSelectable={multiSelectable}
-            selected={isSelected}
-            theme={this.props.theme}
-          />
-        );
-      }
-    }
-
-    renderBody () {
-      const { source, model, onChange, selectable, selected, theme } = this.props;
-      return (
-        <tbody>
-          {source.map((data, index) => (
-            <TableRow
-              data={data}
-              index={index}
-              key={index}
-              model={model}
-              onChange={onChange ? this.handleRowChange.bind(this) : undefined}
-              onSelect={this.handleRowSelect.bind(this, index)}
-              onRowClick={this.handleRowClick.bind(this, index)}
-              selectable={selectable}
-              selected={selected.indexOf(index) !== -1}
-              theme={theme}
-            />
-          ))}
-        </tbody>
+    renderHead = () => {
+      const tuples = this.getRowTuples();
+      const selected = tuples.filter(item => item[1]).length === tuples.length;
+      return React.Children.map(
+        filterReactChildren(this.props.children, isTableHead),
+        child => cloneElement(child, {
+          selected,
+          multiSelectable: this.props.multiSelectable,
+          onSelect: this.handleHeadSelect,
+          selectable: this.props.selectable
+        })
       );
-    }
+    };
+
+    renderRows = () => React.Children.map(
+      filterReactChildren(this.props.children, isTableRow),
+      (child, idx) => cloneElement(child, {
+        idx,
+        onSelect: this.handleRowSelect,
+        selectable: this.props.selectable
+      })
+    );
 
     render () {
-      const { className, theme } = this.props;
+      const {
+        className,
+        multiSelectable, // eslint-disable-line
+        onRowSelect,     // eslint-disable-line
+        selectable,      // eslint-disable-line
+        theme,
+        ...rest
+      } = this.props;
       return (
-        <table data-react-toolbox='table' className={classnames(theme.table, className)}>
-          {this.renderHead()}
-          {this.renderBody()}
+        <table {...rest} className={classnames(theme.table, className)}>
+          <thead className={theme.head}>{this.renderHead()}</thead>
+          <tbody>{this.renderRows()}</tbody>
         </table>
       );
     }
@@ -121,10 +101,7 @@ const factory = (TableHead, TableRow) => {
   return Table;
 };
 
-const TableHead = tableHeadFactory(InjectCheckbox);
-const TableRow = tableRowFactory(InjectCheckbox);
-const Table = factory(TableHead, TableRow);
-
+const Table = factory(InjectTableHead, InjectTableRow);
 export default themr(TABLE)(Table);
 export { factory as tableFactory };
 export { Table };

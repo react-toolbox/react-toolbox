@@ -42,6 +42,8 @@ class TabsTest extends React.Component {
           <Tab label='First'><small>First Content</small></Tab>
           <Tab label='Second'><small>Second Content</small></Tab>
           <Tab label='Third'><small>Third Content</small></Tab>
+          <Tab label='Fourth'><small>Fourth Content</small></Tab>
+          <Tab label='Fifth'><small>Fifth Content</small></Tab>
         </Tabs>
         <h5>Inverse Tabs</h5>
         <p>These tabs have an inverted theme.</p>

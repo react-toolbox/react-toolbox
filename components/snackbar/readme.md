@@ -57,5 +57,6 @@ This component can be styled by context providing a theme with the key `RTSnackb
 | `button` | Used for the button inside the component.|
 | `cancel` | Added to the root element in case it's cancel type.|
 | `label` | Used for the label element.|
+| `portal` | Used for the portal container element.|
 | `snackbar` | Used as the className for the root element of the component.|
 | `warning` | Added to the root element in case it's warning type.|

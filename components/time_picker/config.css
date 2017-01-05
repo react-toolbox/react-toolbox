@@ -1,0 +1,28 @@
+:root {
+  --timepicker-header-font-size: calc(5.2 * var(--unit));
+  --timepicker-header-padding: var(--unit);
+  --timepicker-ampm-font-size: calc(1.6 * var(--unit));
+  --timepicker-primary: var(--color-primary);
+  --timepicker-primary-contrast: var(--color-primary-contrast);
+  --timepicker-primary-dark: var(--color-primary-dark);
+  --timepicker-primary-color: var(--timepicker-primary);
+  --timepicker-primary-hover-color: color(var(--timepicker-primary) a(20%));
+  --timepicker-primary-contrast-color: var(--timepicker-primary-contrast);
+  --timepicker-primary-dark-color: var(--timepicker-primary-dark);
+  --timepicker-ampm-height: calc(2.2 * var(--unit));
+  --timepicker-ampm-width: calc(4 * var(--unit));
+  --timepicker-dialog-width: calc(30 * var(--unit));
+  --clock-padding: calc(1.5 * var(--unit)) calc(2 * var(--unit));
+  --clock-primary: var(--color-primary);
+  --clock-primary-contrast: var(--color-primary-contrast);
+  --clock-primary-dark: var(--color-primary-dark);
+  --clock-primary-color: var(--clock-primary);
+  --clock-primary-hover-color: color(var(--clock-primary) a(20%));
+  --clock-primary-contrast-color: var(--clock-primary-contrast);
+  --clock-primary-dark-color: var(--clock-primary-dark);
+  --clock-number-size: calc(2 * var(--unit));
+  --clock-hand-width: calc(0.4 * var(--unit));
+  --clock-hand-dot-size: calc(1 * var(--unit));
+  --clock-knob-size: calc(3.4 * var(--unit));
+  --clock-knob-small-size: calc(1.2 * var(--unit));
+}

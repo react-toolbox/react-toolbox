@@ -1,0 +1,10 @@
+:root {
+  --tooltip-background: color(rgb(97, 97, 97) a(90%));
+  --tooltip-margin: calc(0.5 * var(--unit));
+  --tooltip-border-radius: calc(0.2 * var(--unit));
+  --tooltip-color: var(--color-white);
+  --tooltip-font-size: var(--unit);
+  --tooltip-max-width: calc(17 * var(--unit));
+  --tooltip-padding: calc(0.8 * var(--unit));
+  --tooltip-animation-duration: 200ms;
+}

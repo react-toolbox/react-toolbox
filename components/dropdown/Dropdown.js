@@ -194,11 +194,10 @@ const factory = (Input) => {
           data-react-toolbox='dropdown'
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
-          tabIndex="0"
         >
           <Input
             {...others}
-            tabIndex="-1"
+            tabIndex="0"
             className={theme.value}
             onClick={this.handleClick}
             required={this.props.required}

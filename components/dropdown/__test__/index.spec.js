@@ -6,7 +6,7 @@ import {
   Simulate
 } from 'react-addons-test-utils';
 import sinon from 'sinon';
-import theme from '../theme.scss';
+import theme from '../theme.css';
 import Dropdown from '../Dropdown';
 
 

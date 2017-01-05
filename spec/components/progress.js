@@ -1,6 +1,6 @@
 import React from 'react';
 import ProgressBar from '../../components/progress_bar';
-import style from '../style';
+import style from '../style.css';
 
 const initialState = {
   progress: 0,

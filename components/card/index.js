@@ -6,7 +6,7 @@ import { CardMedia } from './CardMedia.js';
 import { CardText } from './CardText.js';
 import { cardTitleFactory } from './CardTitle.js';
 import Avatar from '../avatar';
-import theme from './theme.scss';
+import theme from './theme.css';
 
 const CardTitle = cardTitleFactory(Avatar);
 const ThemedCard = themr(CARD, theme)(Card);

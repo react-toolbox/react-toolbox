@@ -23,7 +23,7 @@ plugins:
 
     'Commiting new version':
       plugin: 'bumped-terminal'
-      command: 'git add CHANGELOG.md package.json && git commit package.json -m "Release $newVersion"'
+      command: 'git add CHANGELOG.md package.json && git commit CHANGELOG.md package.json -m "Release $newVersion"'
 
     'Detecting problem before publish':
       plugin: 'bumped-terminal'

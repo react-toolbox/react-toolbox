@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 import Tabs, { Tabs as RawTabs } from '../Tabs';
 import Tab from '../Tab';
 import TabContent from '../TabContent';
-import theme from '../theme.scss';
+import theme from '../theme.css';
 
 const getRenderedClassName = (tree, TargetComponent) => {
   const rendered = ReactTestUtils.findRenderedComponentWithType(tree, TargetComponent);

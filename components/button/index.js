@@ -5,7 +5,7 @@ import { browseButtonFactory } from './BrowseButton.js';
 import { iconButtonFactory } from './IconButton.js';
 import FontIcon from '../font_icon/FontIcon.js';
 import themedRippleFactory from '../ripple';
-import theme from './theme.scss';
+import theme from './theme.css';
 
 const Button = buttonFactory(themedRippleFactory({ centered: false }), FontIcon);
 const IconButton = iconButtonFactory(themedRippleFactory({centered: true}), FontIcon);

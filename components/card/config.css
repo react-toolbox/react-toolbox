@@ -1,0 +1,9 @@
+:root {
+  --card-color-white: var(--color-white);
+  --card-text-overlay: color(var(--color-black) a(35%));
+  --card-background-color: var(--card-color-white);
+  --card-padding-sm: calc(0.8 * var(--unit));
+  --card-padding: calc(1.6 * var(--unit));
+  --card-padding-lg: calc(2 * var(--unit));
+  --card-font-size: var(--font-size-small);
+}

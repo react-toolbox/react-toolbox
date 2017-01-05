@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './style';
+import style from './style.css';
 
 const Logo = (props) => {
   let className = style.logo;
