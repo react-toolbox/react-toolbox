@@ -38,7 +38,7 @@ const factory = (Chip, Input) => {
      showSelectedWhenNotInSource: PropTypes.bool,
      showSuggestionsWhenValueIsSet: PropTypes.bool,
      source: PropTypes.any,
-     suggestionMatch: PropTypes.oneOf(['start', 'anywhere', 'word']),
+     suggestionMatch: PropTypes.oneOf(['disabled', 'start', 'anywhere', 'word']),
      theme: PropTypes.shape({
        active: PropTypes.string,
        autocomplete: PropTypes.string,
@@ -223,7 +223,9 @@ const factory = (Chip, Input) => {
    matches (value, query) {
      const { suggestionMatch } = this.props;
 
-     if (suggestionMatch === 'start') {
+     if (suggestionMatch === 'disabled') {
+       return true;
+     } else if (suggestionMatch === 'start') {
        return value.startsWith(query);
      } else if (suggestionMatch === 'anywhere') {
        return value.includes(query);
