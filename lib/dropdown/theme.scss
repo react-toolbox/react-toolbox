@@ -128,11 +128,15 @@
     padding: $unit;
     overflow: hidden;
     cursor: pointer;
-    &:hover {
+    &:hover:not(.disabled) {
       background-color: $dropdown-value-hover-background;
     }
     &.selected {
       color: $dropdown-color-primary;
+    }
+    &.disabled {
+      color: $dropdown-color-disabled;
+      cursor: not-allowed;
     }
   }
 }

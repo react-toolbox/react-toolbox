@@ -10,7 +10,7 @@ const countries = [
   { value: 'EN-gb', label: 'England' },
   { value: 'ES-es', label: 'Spain'},
   { value: 'TH-th', label: 'Thailand' },
-  { value: 'EN-en', label: 'USA'}
+  { value: 'EN-en', label: 'USA', disabled: true}
 ];
 
 class DropdownTest extends React.Component {
@@ -48,7 +48,7 @@ If you want to provide a theme via context, the component key is `RTDropdown`.
 | `onBlur`     | `Function` |         | Callback function that is fired when the component is blurred.|
 | `onChange`   | `Function` |         | Callback function that is fired when the component's value changes.|
 | `onFocus`    | `Function` |         | Callback function that is fired when the component is focused.|
-| `source`     | `Array`    |         | Array of data objects with the data to represent in the dropdown.|
+| `source`     | `Array`    |         | Array of data objects with the data to represent in the dropdown. Takes value, label, and a disabled boolean.|
 | `template`   | `Function` |         | Callback function that returns a JSX template to represent the element.|
 | `value`      | `String`   |         | Default value using JSON data.|
 | `required`   | `Boolean`  | `false` | If true, the dropdown has a required attribute.|
