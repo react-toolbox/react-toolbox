@@ -56,9 +56,10 @@ const factory = (Tab, TabContent, FontIcon) => {
       clearTimeout(this.resizeTimeout);
     }
 
-    handleHeaderClick = (event) => {
-      const idx = parseInt(event.currentTarget.id);
-      if (this.props.onChange) this.props.onChange(idx);
+    handleHeaderClick = (idx) => {
+      if (this.props.onChange) {
+        this.props.onChange(idx);
+      }
     };
 
     handleResize = () => {
@@ -130,12 +131,12 @@ const factory = (Tab, TabContent, FontIcon) => {
     renderHeaders (headers) {
       return headers.map((item, idx) => {
         return React.cloneElement(item, {
-          id: idx,
           key: idx,
+          index: idx,
           theme: this.props.theme,
           active: this.props.index === idx,
-          onClick: (event) => {
-            this.handleHeaderClick(event);
+          onClick: (event, index) => {
+            this.handleHeaderClick(index);
             item.props.onClick && item.props.onClick(event);
           }
         });
