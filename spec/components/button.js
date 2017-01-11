@@ -40,6 +40,10 @@ const ButtonTest = () => (
     <BrowseButton icon='folder_open' label='BROWSE' raised primary />
     &nbsp;
     <BrowseButton label='BROWSE' raised />
+
+    <h5>With font awesome</h5>
+    <IconButton icon='fa:bars' />
+    <Button icon='fa:bars' label="Menu" />
 </section>
 );
 

@@ -13,6 +13,7 @@ const AvatarTest = () => (
     <Avatar image="http://www.thewrap.com/wp-content/uploads/2015/08/margot-robbie-harley-quinn_main.jpg" cover />
     <Avatar title="Javier"/>
     <Avatar style={{backgroundColor: 'yellowgreen'}}><GithubIcon /></Avatar>
+    <Avatar style={{backgroundColor: 'deepskyblue'}} icon="fa:user" />
   </section>
 );
 
