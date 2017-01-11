@@ -30,7 +30,9 @@ const factory = (ListItem) => {
 
     renderItems () {
       return React.Children.map(this.props.children, (item) => {
-        if (item.type === ListItem) {
+        if (item === null || item === undefined) {
+          return item;
+        } else if (item.type === ListItem) {
           const selectable = mergeProp('selectable', item.props, this.props);
           const ripple = mergeProp('ripple', item.props, this.props);
           return React.cloneElement(item, { selectable, ripple });
