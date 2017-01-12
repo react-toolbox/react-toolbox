@@ -136,6 +136,9 @@ export interface InputProps extends ReactToolbox.Props {
   value?: any;
 }
 
-export class Input extends React.Component<InputProps, {}> { }
+export class Input extends React.Component<InputProps, {}> {
+  public focus(): void
+  public blur(): void
+}
 
 export default Input;
