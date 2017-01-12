@@ -37,7 +37,7 @@ export interface LinkProps extends ReactToolbox.Props {
   /**
    * An icon key string to include a FontIcon component in front of the text.
    */
-  icon?: React.ReactNode | string;
+  icon?: React.ReactNode;
   /**
    * The text string used for the text content of the link.
    */

@@ -21,7 +21,7 @@ export interface IconMenuProps extends ReactToolbox.Props {
    * Icon font key string or Element to display the opener icon.
    * @default more_vert
    */
-  icon?: React.ReactNode | string;
+  icon?: React.ReactNode;
   /**
    * If true, the icon will show a ripple when is clicked.
    * @default true

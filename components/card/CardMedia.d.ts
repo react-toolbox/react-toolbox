@@ -44,7 +44,7 @@ export interface CardMediaProps extends ReactToolbox.Props {
   /**
    * Can be used instead of children. Accepts an element or a URL string.
    */
-  image?: React.ReactNode | string;
+  image?: React.ReactNode;
   /**
    * Classnames object defining the component style.
    */

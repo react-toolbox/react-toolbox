@@ -39,7 +39,7 @@ export interface RadioButtonProps extends ReactToolbox.Props {
   /**
    * Label for the radio button.
    */
-  label?: React.ReactNode | string;
+  label?: React.ReactNode;
   /**
    * Name for the input element.
    */

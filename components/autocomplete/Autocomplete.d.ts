@@ -1,6 +1,6 @@
 import * as React from "react";
 import ReactToolbox from "../index";
-import { InputTheme } from "../input/index";
+import { InputProps, InputTheme } from "../input/Input";
 
 export interface AutocompleteTheme {
   /**
@@ -41,7 +41,7 @@ export interface AutocompleteTheme {
   values?: string;
 }
 
-export interface AutocompleteProps extends ReactToolbox.Props {
+export interface AutocompleteProps extends InputProps {
   /**
    * Determines if user can create a new option with the current typed value.
    * @default false
@@ -61,7 +61,7 @@ export interface AutocompleteProps extends ReactToolbox.Props {
    * Sets the error string for the internal input element.
    * @default false
    */
-  error?: string | React.ReactNode;
+  error?: React.ReactNode;
   /**
    * Whether component should keep focus after value change.
    * @default false
@@ -70,7 +70,7 @@ export interface AutocompleteProps extends ReactToolbox.Props {
   /**
    * The text string to use for the floating label element.
    */
-  label?: string | React.ReactNode;
+  label?: React.ReactNode;
   /**
    * If true, component can hold multiple values.
    * @default true

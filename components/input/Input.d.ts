@@ -65,7 +65,7 @@ export interface InputProps extends ReactToolbox.Props {
   /**
    * Give an error node to display under the field.
    */
-  error?: string | React.ReactNode;
+  error?: React.ReactNode;
   /**
    * Indicates if the label is floating in the input field or not.
    * @default true
@@ -74,15 +74,15 @@ export interface InputProps extends ReactToolbox.Props {
   /**
    * The text string to use for hint text element.
    */
-  hint?: string | React.ReactNode;
+  hint?: React.ReactNode;
   /**
    * Name of an icon to use as a label for the input.
    */
-  icon?: React.ReactNode | string;
+  icon?: React.ReactNode;
   /**
    * The text string to use for the floating label element.
    */
-  label?: string | React.ReactNode;
+  label?: React.ReactNode;
   /**
    * Specifies the maximum number of characters allowed in the component
    */

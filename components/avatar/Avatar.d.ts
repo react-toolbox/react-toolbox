@@ -29,11 +29,11 @@ export interface AvatarProps extends ReactToolbox.Props {
   /**
    * A key to identify an Icon from Material Design Icons or a custom Icon Element.
    */
-  icon?: React.ReactNode | string;
+  icon?: React.ReactNode;
   /**
    * An image source or an image element.
    */
-  image?: React.ReactNode | string;
+  image?: React.ReactNode;
   /**
    * Classnames object defining the component style.
    */

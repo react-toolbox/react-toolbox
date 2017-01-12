@@ -28,7 +28,7 @@ export interface CardTitleProps extends ReactToolbox.Props {
   /**
    * A string URL or Element to specify an avatar in the left side of the title.
    */
-  avatar?: React.ReactNode | string;
+  avatar?: React.ReactNode;
   /**
    * Children to pass through the component.
    */
@@ -36,7 +36,7 @@ export interface CardTitleProps extends ReactToolbox.Props {
   /**
    * Text used for the sub header of the card.
    */
-  subtitle?: React.ReactNode | string;
+  subtitle?: React.ReactNode;
   /**
    * Classnames object defining the component style.
    */
@@ -44,7 +44,7 @@ export interface CardTitleProps extends ReactToolbox.Props {
   /**
    * Text used for the title of the card.
    */
-  title?: React.ReactNode | string;
+  title?: React.ReactNode;
 }
 
 export class CardTitle extends React.Component<CardTitleProps, {}> { }

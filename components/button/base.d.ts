@@ -70,7 +70,7 @@ export interface ButtonBaseProps extends ReactToolbox.Props {
   /**
    * Value of the icon (See Font Icon Component).
    */
-  icon?: React.ReactNode | string;
+  icon?: React.ReactNode;
   /**
    * If true, the neutral colors are inverted. Useful to put a button over a dark background.
    */

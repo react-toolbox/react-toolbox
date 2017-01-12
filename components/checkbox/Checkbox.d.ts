@@ -50,7 +50,7 @@ export interface CheckboxProps extends ReactToolbox.Props {
   /**
    * Text label to attach next to the checkbox element.
    */
-  label?: React.ReactNode | string;
+  label?: React.ReactNode;
   /**
    * The name of the field to set in the input checkbox.
    */

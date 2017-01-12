@@ -54,7 +54,7 @@ export interface AppBarProps extends ReactToolbox.Props {
   /**
    * If it exists it is used as the AppBar left icon
    */
-  leftIcon?: string | React.ReactNode;
+  leftIcon?: React.ReactNode;
   /**
    * Called when the left icon is clicked
    */
@@ -62,7 +62,7 @@ export interface AppBarProps extends ReactToolbox.Props {
   /**
    * If it exists it is used as the AppBar right icon
    */
-  rightIcon?: string | React.ReactNode;
+  rightIcon?: React.ReactNode;
   /**
    * Called when the righticon is clicked
    */

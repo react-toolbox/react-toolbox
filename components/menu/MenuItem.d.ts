@@ -45,7 +45,7 @@ export interface MenuItemProps extends ReactToolbox.Props {
   /**
    * Icon font key string or Element to display in the right side of the option.
    */
-  icon?: React.ReactNode | string;
+  icon?: React.ReactNode;
   /**
    * Transferred from the Menu component for selectable menus. Indicates if it's the current active option.
    * @default false

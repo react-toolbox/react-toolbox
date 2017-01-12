@@ -114,7 +114,7 @@ export interface TimePickerProps {
   /**
    * A key to identify an Icon from Material Design Icons or a custom Icon Element.
    */
-  icon?: React.ReactNode | string;
+  icon?: React.ReactNode;
   /**
    * This class will be applied to Input component of TimePicker.
    */

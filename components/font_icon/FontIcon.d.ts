@@ -9,7 +9,7 @@ export interface FontIconProps extends ReactToolbox.Props {
   /**
    * The key string for the icon you want be displayed.
    */
-  value?: React.ReactNode | string;
+  value?: React.ReactNode;
   /**
    * Additional properties passed to component root.
    */
