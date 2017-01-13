@@ -1,6 +1,7 @@
 # <a href='http://react-toolbox.com'><img src='https://dl.dropboxusercontent.com/u/2247264/banner.png' height='50'></a>
 
-[![npm version](https://img.shields.io/npm/v/react-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/react-toolbox) [![Build Status](http://img.shields.io/travis/react-toolbox/react-toolbox/master.svg?style=flat-square)](https://travis-ci.org/react-toolbox/react-toolbox) [![NPM Status](http://img.shields.io/npm/dm/react-toolbox.svg?style=flat-square)](https://www.npmjs.org/package/react-toolbox) [![react-toolbox channel on discord](https://img.shields.io/badge/discord-%23react--toolbox%20%40%20reactiflux-61dafb.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bW9FLzM) [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://paypal.me/javivelasco)
+[![npm version](https://img.shields.io/npm/v/react-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/react-toolbox) [![Build Status](http://img.shields.io/travis/react-toolbox/react-toolbox/master.svg?style=flat-square)](https://travis-ci.org/react-toolbox/react-toolbox) [![NPM Status](http://img.shields.io/npm/dm/react-toolbox.svg?style=flat-square)](https://www.npmjs.org/package/react-toolbox) [![react-toolbox channel on discord](https://img.shields.io/badge/discord-%23react--toolbox%20%40%20reactiflux-61dafb.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bW9FLzM) [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://paypal.me/javivelasco) [![OpenCollective](https://opencollective.com/react-toolbox/backers/badge.svg)](#backers) 
+[![OpenCollective](https://opencollective.com/react-toolbox/sponsors/badge.svg)](#sponsors)
 
 React Toolbox is a set of [React](http://facebook.github.io/react/) components that implement [Google's Material Design specification](https://material.google.com/). It's powered by [CSS Modules](https://github.com/css-modules/css-modules) and harmoniously integrates with your [webpack](http://webpack.github.io/) workflow, although you can use any other module bundler. You can take a tour through our documentation website and try the components live!
 
@@ -223,6 +224,77 @@ Local documentation will then be available at `http://localhost:8081/`.
 ## Extensions
 
 We don't officially support components that are not covered by [Google Material Design](https://www.google.com/design/spec/material-design/introduction.html). If you want to implement some complementary component feel free to open a PR adding your a link in this section. For now you can check [on github: react-toolbox-additions](https://github.com/MaximKomlev/react-toolbox-additions) and [on npm: react-toolbox-additions](https://www.npmjs.com/package/react-toolbox-additions).
+
+## Support
+
+### Backers
+Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/react-toolbox#backer)]
+
+<a href="https://opencollective.com/react-toolbox/backer/0/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/0/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/1/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/1/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/2/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/2/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/3/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/3/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/4/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/4/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/5/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/5/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/6/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/6/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/7/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/7/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/8/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/8/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/9/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/9/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/10/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/10/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/11/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/11/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/12/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/12/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/13/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/13/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/14/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/14/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/15/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/15/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/16/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/16/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/17/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/17/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/18/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/18/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/19/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/19/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/20/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/20/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/21/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/21/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/22/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/22/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/23/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/23/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/24/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/24/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/25/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/25/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/26/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/26/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/27/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/27/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/28/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/28/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/backer/29/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/29/avatar.svg"></a>
+
+
+### Sponsors
+Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/react-toolbox#sponsor)]
+
+<a href="https://opencollective.com/react-toolbox/sponsor/0/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/1/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/2/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/3/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/4/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/5/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/6/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/7/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/8/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/9/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/9/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/10/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/10/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/11/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/11/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/12/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/12/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/13/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/13/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/14/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/14/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/15/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/15/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/16/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/16/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/17/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/17/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/18/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/18/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/19/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/19/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/20/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/20/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/21/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/21/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/22/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/22/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/23/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/23/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/24/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/24/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/25/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/25/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/26/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/26/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/27/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/27/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/28/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/28/avatar.svg"></a>
+<a href="https://opencollective.com/react-toolbox/sponsor/29/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/29/avatar.svg"></a>
 
 ## License
 
