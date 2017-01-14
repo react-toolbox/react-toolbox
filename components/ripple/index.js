@@ -1,4 +1,5 @@
 import rippleFactory from './Ripple.js';
 import theme from './theme.scss';
 
-export default (options) => rippleFactory({ ...options, theme });
+export const Ripple = (options) => rippleFactory({ ...options, theme });
+export default Ripple;
