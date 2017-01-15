@@ -29,7 +29,7 @@ class TabsTest extends React.Component {
       <section>
         <h5>Tabs</h5>
         <p>This tabs can be disabled or hidden</p>
-        <Tabs index={this.state.index} onChange={this.handleTabChange}>
+        <Tabs disableAnimatedBottomBorder index={this.state.index} onChange={this.handleTabChange}>
           <Tab label='Primary'><small>Primary content</small></Tab>
           <Tab label='Secondary' onActive={this.handleActive}><small>Secondary content</small></Tab>
           <Tab label='Third' disabled><small>Disabled content</small></Tab>
@@ -42,6 +42,8 @@ class TabsTest extends React.Component {
           <Tab label='First'><small>First Content</small></Tab>
           <Tab label='Second'><small>Second Content</small></Tab>
           <Tab label='Third'><small>Third Content</small></Tab>
+          <Tab label='Fourth'><small>Fourth Content</small></Tab>
+          <Tab label='Fifth'><small>Fifth Content</small></Tab>
         </Tabs>
         <h5>Inverse Tabs</h5>
         <p>These tabs have an inverted theme.</p>

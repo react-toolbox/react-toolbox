@@ -3,7 +3,7 @@ import { AppBar } from 'react-toolbox';
 import { Link } from 'react-router';
 import Logo from '../logo';
 import Navigation from '../navigation';
-import style from './style';
+import style from './style.css';
 
 const MainAppBar = (props) => {
   let className = style.appbar;

@@ -36,7 +36,7 @@ export interface SwitchTheme {
   thumb?: string;
 }
 
-interface SwitchProps extends ReactToolbox.Props {
+export interface SwitchProps extends ReactToolbox.Props {
   /**
    * If true, the switch will be enabled.
    * @default false

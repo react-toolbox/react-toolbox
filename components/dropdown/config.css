@@ -1,0 +1,10 @@
+:root {
+  --dropdown-value-border-size: calc(var(--input-field-height) / 7);
+  --dropdown-color-white: var(--color-white);
+  --dropdown-color-primary: var(--color-primary);
+  --dropdown-color-primary-contrast: var(--color-primary-contrast);
+  --dropdown-color-disabled: color(var(--color-black) a(26%));
+  --dropdown-value-hover-background: var(--palette-grey-200);
+  --dropdown-overflow-max-height: 45vh;
+  --dropdown-value-border-radius: calc(0.2 * var(--unit));
+}

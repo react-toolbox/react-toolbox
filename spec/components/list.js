@@ -32,7 +32,7 @@ class ListTest extends React.Component {
           <List selectable ripple>
             <ListSubHeader caption='Contacts' />
             <ListItem caption='Inbox' leftIcon='inbox' />
-            <ListItem caption='Outbox' leftIcon='send' />
+            <ListItem caption='Outbox' selectable={false} ripple={false} leftIcon='send' />
             <ListItem caption='Trash' leftIcon='delete' />
             <ListItem caption='Spam' leftIcon='report' />
           </List>

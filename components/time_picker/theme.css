@@ -1,0 +1,245 @@
+@import '../colors.css';
+@import '../variables.css';
+@import './config.css';
+
+.input:not(.disabled) > .inputElement {
+  cursor: pointer;
+}
+
+.header {
+  background: var(--timepicker-primary-color);
+  color: var(--timepicker-primary-contrast-color);
+  font-size: var(--timepicker-header-font-size);
+  padding: var(--timepicker-header-padding);
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.hours,
+.minutes {
+  cursor: pointer;
+  display: inline-block;
+  opacity: 0.6;
+}
+
+.separator {
+  margin: 0 calc(var(--timepicker-header-padding) / 2);
+  opacity: 0.6;
+}
+
+.ampm {
+  font-size: var(--timepicker-ampm-font-size);
+  height: calc(var(--timepicker-ampm-height) * 2);
+  line-height: var(--timepicker-ampm-height);
+  margin-top: calc(-1 * var(--timepicker-ampm-height));
+  position: absolute;
+  right: calc(2 * var(--unit));
+  text-align: center;
+  top: 50%;
+  width: var(--timepicker-ampm-width);
+}
+
+.am,
+.pm {
+  cursor: pointer;
+  display: block;
+  opacity: 0.6;
+}
+
+.dialog {
+  width: var(--timepicker-dialog-width);
+
+  & > [role='body'] {
+    overflow-y: visible;
+    padding: 0;
+  }
+
+  & > [role='navigation'] > .button {
+    color: var(--timepicker-primary-color);
+
+    &:hover {
+      background: var(--timepicker-primary-hover-color);
+    }
+
+    &:focus:not(:active) {
+      background: var(--timepicker-primary-hover-color);
+    }
+  }
+
+  &.hoursDisplay .hours,
+  &.minutesDisplay .minutes,
+  &.amFormat .am,
+  &.pmFormat .pm {
+    opacity: 1;
+  }
+}
+
+.clock {
+  padding: var(--clock-padding);
+}
+
+.placeholder {
+  position: relative;
+  z-index: var(--z-index-high);
+}
+
+.clockWrapper {
+  background-color: var(--color-divider);
+  border-radius: 50%;
+  position: absolute;
+  width: 100%;
+}
+
+.face {
+  border-radius: 50%;
+  cursor: pointer;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: var(--z-index-high);
+}
+
+.number {
+  height: var(--clock-number-size);
+  margin-left: calc(-1 * var(--clock-number-size) / 2);
+  margin-top: calc(-1 * var(--clock-number-size) / 2);
+  pointer-events: none;
+  position: relative;
+  text-align: center;
+  user-select: none;
+  width: var(--clock-number-size);
+
+  &.active {
+    color: var(--clock-primary-contrast-color);
+  }
+}
+
+.hand {
+  background-color: var(--clock-primary-color);
+  bottom: 50%;
+  display: block;
+  left: 50%;
+  margin-left: calc(-1 * var(--clock-hand-width) / 2);
+  position: absolute;
+  transform-origin: 50% 100%;
+  width: var(--clock-hand-width);
+
+  &::before {
+    background-color: var(--clock-primary-color);
+    border-radius: 50%;
+    bottom: 0;
+    content: '';
+    height: var(--clock-hand-dot-size);
+    left: 50%;
+    margin-bottom: calc(-1 * var(--clock-hand-dot-size) / 2);
+    margin-left: calc(-1 * var(--clock-hand-dot-size) / 2);
+    position: absolute;
+    width: var(--clock-hand-dot-size);
+  }
+
+  &.small > .knob {
+    background-color: var(--clock-primary-hover-color);
+
+    &::after {
+      background: var(--clock-primary-color);
+      border-radius: 50%;
+      content: '';
+      height: var(--clock-knob-small-size);
+      left: 50%;
+      margin-left: calc(-1 * var(--clock-knob-small-size) / 2);
+      margin-top: calc(-1 * var(--clock-knob-small-size) / 2);
+      position: absolute;
+      top: 50%;
+      width: var(--clock-knob-small-size);
+    }
+
+    &::before {
+      background: var(--clock-primary-color);
+      bottom: 0;
+      content: '';
+      height: calc(var(--clock-knob-size) - var(--clock-knob-small-size));
+      left: 50%;
+      margin-left: calc(-1 * var(--clock-hand-width) / 2);
+      position: absolute;
+      width: var(--clock-hand-width);
+    }
+  }
+}
+
+.knob {
+  background-color: var(--clock-primary-color);
+  border-radius: 50%;
+  cursor: pointer;
+  height: var(--clock-knob-size);
+  left: 50%;
+  margin-left: calc(-1 * var(--clock-knob-size) / 2);
+  position: absolute;
+  top: calc(-1 * var(--clock-knob-size));
+  width: var(--clock-knob-size);
+}
+
+.zoomInEnter,
+.zoomInLeave {
+  position: absolute;
+}
+
+.zoomInEnterActive,
+.zoomInLeaveActive {
+  transition: transform, opacity;
+  transition-duration: 500ms;
+  transition-timing-function: var(--animation-curve-fast-out-slow-in);
+}
+
+.zoomInEnter {
+  opacity: 0;
+  transform: scale(0.85);
+
+  &.zoomInEnterActive {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.zoomInLeave {
+  opacity: 1;
+  transform: scale(1);
+
+  &.zoomInLeaveActive {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+}
+
+.zoomOutEnter,
+.zoomOutLeave {
+  position: absolute;
+}
+
+.zoomOutEnterActive,
+.zoomOutLeaveActive {
+  transition: transform, opacity;
+  transition-duration: 500ms;
+  transition-timing-function: var(--animation-curve-fast-out-slow-in);
+}
+
+.zoomOutEnter {
+  opacity: 0;
+  transform: scale(1.25);
+
+  &.zoomOutEnterActive {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.zoomOutLeave {
+  opacity: 1;
+  transform: scale(1);
+
+  &.zoomOutLeaveActive {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}

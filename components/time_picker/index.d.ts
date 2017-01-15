@@ -96,7 +96,17 @@ export interface TimePickerTheme {
   small?: string;
 }
 
-interface TimePickerProps {
+export interface TimePickerProps {
+  /**
+   * Whether time picker is active.
+   * @default false
+   */
+  active?: boolean;
+  /**
+   * Label used for cancel button.
+   * @default "Cancel"
+   */
+  cancelLabel?: string;
   /**
    * Provide error text which will be displayed under the field.
    */
@@ -111,7 +121,7 @@ interface TimePickerProps {
   inputClassName?: string;
   /**
    * Format to display the clock. It can be 24hr or ampm.
-   * @default false
+   * @default "24hr"
    */
   format?: "24hr" | "ampm";
   /**
@@ -119,9 +129,38 @@ interface TimePickerProps {
    */
   label?: string;
   /**
+   * Label used for 'OK' button on Dialog.
+   * @default "Ok"
+   */
+  okLabel?: string;
+  /**
    * Callback called when the picker value is changed.
    */
   onChange?: Function;
+  /**
+   * Callback fired on Input click.
+   */
+  onClick?: Function;
+  /**
+   * Callback fired after dismissing the Dialog.
+   */
+  onDismiss?: Function;
+  /**
+   * Callback called when the ESC key is pressed with the overlay active.
+   */
+  onEscKeyDown?: Function;
+  /**
+   * Callback invoked on Input key press.
+   */
+  onKeyPress?: Function;
+  /**
+   * Callback to be invoked when the dialog overlay is clicked.
+   */
+  onOverlayClick?: Function;
+  /**
+   * The input element will be readonly and look like disabled.
+   */
+  readonly?: boolean;
   /**
    * Classnames object defining the component style.
    */
@@ -130,6 +169,10 @@ interface TimePickerProps {
    * Datetime object with currrently selected time.
    */
   value?: Date;
+  /**
+   * Additional attributes passed to inner Input component.
+   */
+  [key: string]: any;
 }
 
 export class TimePicker extends React.Component<TimePickerProps, {}> { }

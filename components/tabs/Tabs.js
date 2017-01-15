@@ -2,10 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { TABS } from '../identifiers.js';
+import InjectFontIcon from '../font_icon/FontIcon.js';
 import InjectTab from './Tab.js';
 import InjectTabContent from './TabContent.js';
 
-const factory = (Tab, TabContent) => {
+const factory = (Tab, TabContent, FontIcon) => {
   class Tabs extends Component {
     static propTypes = {
       children: PropTypes.node,
@@ -17,9 +18,13 @@ const factory = (Tab, TabContent) => {
       inverse: PropTypes.bool,
       onChange: PropTypes.func,
       theme: PropTypes.shape({
+        arrow: PropTypes.string,
+        arrowContainer: PropTypes.string,
+        disableAnimation: PropTypes.string,
         fixed: PropTypes.string,
         inverse: PropTypes.string,
         navigation: PropTypes.string,
+        navigationContainer: PropTypes.string,
         pointer: PropTypes.string,
         tabs: PropTypes.string
       })
@@ -33,40 +38,83 @@ const factory = (Tab, TabContent) => {
     };
 
     state = {
-      pointer: {}
+      pointer: {},
+      arrows: {}
     };
 
     componentDidMount () {
-      !this.props.disableAnimatedBottomBorder && this.updatePointer(this.props.index);
       window.addEventListener('resize', this.handleResize);
       this.handleResize();
     }
 
     componentWillReceiveProps (nextProps) {
-      !this.props.disableAnimatedBottomBorder && this.updatePointer(nextProps.index);
+      this.updatePointer(nextProps.index);
     }
 
     componentWillUnmount () {
       window.removeEventListener('resize', this.handleResize);
       clearTimeout(this.resizeTimeout);
-      clearTimeout(this.pointerTimeout);
     }
 
-    handleHeaderClick = (event) => {
-      const idx = parseInt(event.currentTarget.id);
-      if (this.props.onChange) this.props.onChange(idx);
+    handleHeaderClick = (idx) => {
+      if (this.props.onChange) {
+        this.props.onChange(idx);
+      }
     };
 
     handleResize = () => {
-      if (this.resizeTimeout) {
-        clearTimeout(this.resizeTimeout);
-      }
-      this.resizeTimeout = setTimeout(this.handleResizeEnd, 50);
+      if (this.resizeTimeout) clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = setTimeout(() => {
+        this.updatePointer(this.props.index);
+        this.updateArrows();
+      }, 100);
     };
 
-    handleResizeEnd = () => {
-      this.updatePointer(this.props.index);
-    };
+    updatePointer = idx => {
+      if (this.navigationNode && this.navigationNode.children[idx]) {
+        const nav = this.navigationNode.getBoundingClientRect();
+        const label = this.navigationNode.children[idx].getBoundingClientRect();
+        const scrollLeft = this.navigationNode.scrollLeft;
+        this.setState({
+          pointer: {
+            top: `${nav.height}px`,
+            left: `${label.left - nav.left + scrollLeft}px`,
+            width: `${label.width}px`
+          }
+        });
+      }
+    }
+
+    updateArrows = () => {
+      const idx = this.navigationNode.children.length - 2;
+
+      if (idx >= 0) {
+        const scrollLeft = this.navigationNode.scrollLeft;
+        const nav = this.navigationNode.getBoundingClientRect();
+        const lastLabel = this.navigationNode.children[idx].getBoundingClientRect();
+
+        this.setState({
+          arrows: {
+            left: scrollLeft > 0,
+            right: nav.right < (lastLabel.right - 5)
+          }
+        });
+      }
+    }
+
+    scrollNavigation = (factor) => {
+      const oldScrollLeft = this.navigationNode.scrollLeft;
+      this.navigationNode.scrollLeft += factor * this.navigationNode.clientWidth;
+      if (this.navigationNode.scrollLeft !== oldScrollLeft) {
+        this.updateArrows();
+      }
+    }
+
+    scrollRight = () =>
+      this.scrollNavigation(-1);
+
+    scrollLeft = () =>
+      this.scrollNavigation(+1);
 
     parseChildren () {
       const headers = [];
@@ -86,30 +134,15 @@ const factory = (Tab, TabContent) => {
       return {headers, contents};
     }
 
-    updatePointer (idx) {
-      clearTimeout(this.pointerTimeout);
-      this.pointerTimeout = setTimeout(() => {
-        const startPoint = this.refs.tabs.getBoundingClientRect().left;
-        const label = this.refs.navigation.children[idx].getBoundingClientRect();
-        this.setState({
-          pointer: {
-            top: `${this.refs.navigation.getBoundingClientRect().height}px`,
-            left: `${label.left - startPoint}px`,
-            width: `${label.width}px`
-          }
-        });
-      }, 20);
-    }
-
     renderHeaders (headers) {
       return headers.map((item, idx) => {
         return React.cloneElement(item, {
-          id: idx,
           key: idx,
+          index: idx,
           theme: this.props.theme,
           active: this.props.index === idx,
-          onClick: event => {
-            this.handleHeaderClick(event);
+          onClick: (event, index) => {
+            this.handleHeaderClick(index);
             item.props.onClick && item.props.onClick(event);
           }
         });
@@ -127,30 +160,38 @@ const factory = (Tab, TabContent) => {
         });
       });
 
-      if (this.props.hideMode === 'display') {
-        return contentElements;
-      }
-
-      return contentElements.filter((item, idx) => (idx === this.props.index));
+      return this.props.hideMode === 'display'
+        ? contentElements
+        : contentElements.filter((item, idx) => (idx === this.props.index));
     }
 
     render () {
-      const { className, theme, fixed, inverse } = this.props;
+      const { className, disableAnimatedBottomBorder, theme, fixed, inverse } = this.props;
+      const { left: hasLeftArrow, right: hasRightArrow } = this.state.arrows;
       const { headers, contents } = this.parseChildren();
-      const classes = classnames(
-        theme.tabs,
-        className,
-        {
-          [theme.fixed]: fixed,
-          [theme.inverse]: inverse
-        }
-      );
+      const classNamePointer = classnames(theme.pointer, {
+        [theme.disableAnimation]: disableAnimatedBottomBorder
+      });
+
+      const classNames = classnames(theme.tabs, {
+        [theme.fixed]: fixed,
+        [theme.inverse]: inverse
+      }, className);
+
       return (
-        <div ref='tabs' data-react-toolbox='tabs' className={classes}>
-          <nav className={theme.navigation} ref='navigation'>
-            {this.renderHeaders(headers)}
-          </nav>
-          <span className={theme.pointer} style={this.state.pointer} />
+        <div data-react-toolbox='tabs' className={classNames}>
+          <div className={theme.navigationContainer}>
+            {hasLeftArrow && <div className={theme.arrowContainer} onClick={this.scrollRight}>
+              <FontIcon className={theme.arrow} value="keyboard_arrow_left" />
+            </div>}
+            <nav className={theme.navigation} ref={node => {this.navigationNode = node; }}>
+              {this.renderHeaders(headers)}
+              <span className={classNamePointer} style={this.state.pointer} />
+            </nav>
+            {hasRightArrow && <div className={theme.arrowContainer} onClick={this.scrollLeft}>
+              <FontIcon className={theme.arrow} value="keyboard_arrow_right" />
+            </div>}
+          </div>
           {this.renderContents(contents)}
         </div>
       );
@@ -160,7 +201,7 @@ const factory = (Tab, TabContent) => {
   return Tabs;
 };
 
-const Tabs = factory(InjectTab, InjectTabContent);
+const Tabs = factory(InjectTab, InjectTabContent, InjectFontIcon);
 export default themr(TABS)(Tabs);
 export { factory as tabsFactory };
 export { Tabs };

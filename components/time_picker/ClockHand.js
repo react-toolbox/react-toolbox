@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import { angle360FromPositions } from '../utils/utils.js';
 import events from '../utils/events.js';
 import prefixer from '../utils/prefixer.js';
-import utils from '../utils/utils.js';
 
 class Hand extends Component {
   static propTypes = {
@@ -92,7 +92,7 @@ class Hand extends Component {
   }
 
   positionToAngle (position) {
-    return utils.angle360FromPositions(this.props.origin.x, this.props.origin.y, position.x, position.y);
+    return angle360FromPositions(this.props.origin.x, this.props.origin.y, position.x, position.y);
   }
 
   end (evts) {

@@ -4,6 +4,12 @@ import { themr } from 'react-css-themr';
 import { LIST } from '../identifiers.js';
 import InjectListItem from './ListItem.js';
 
+const mergeProp = (propName, child, parent) => (
+  child[propName] !== undefined
+  ? child[propName]
+  : parent[propName]
+);
+
 const factory = (ListItem) => {
   class List extends Component {
     static propTypes = {
@@ -24,11 +30,12 @@ const factory = (ListItem) => {
 
     renderItems () {
       return React.Children.map(this.props.children, (item) => {
-        if (item.type === ListItem) {
-          return React.cloneElement(item, {
-            ripple: this.props.ripple,
-            selectable: this.props.selectable
-          });
+        if (item === null || item === undefined) {
+          return item;
+        } else if (item.type === ListItem) {
+          const selectable = mergeProp('selectable', item.props, this.props);
+          const ripple = mergeProp('ripple', item.props, this.props);
+          return React.cloneElement(item, { selectable, ripple });
         } else {
           return React.cloneElement(item);
         }

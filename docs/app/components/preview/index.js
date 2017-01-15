@@ -1,11 +1,9 @@
 /*eslint-disable no-eval*/
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ThemeProvider } from 'react-css-themr';
 import { transform } from 'babel-standalone';
 import * as ReactToolbox from 'react-toolbox';
-import theme from '../../theme/theme.js';
-import style from './style';
+import style from './style.css';
 
 const ERROR_TIMEOUT = 500;
 
@@ -73,11 +71,7 @@ const Preview = React.createClass({
     }
 
     try {
-      ReactDOM.render(
-        <ThemeProvider theme={theme}>
-          {eval(this.compileCode())(...scope)}
-        </ThemeProvider>
-      , mountNode);
+      ReactDOM.render(eval(this.compileCode())(...scope), mountNode);
       if (this.state.error) {
         this.setState({error: null});
       }

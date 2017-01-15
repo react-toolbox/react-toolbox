@@ -1,6 +1,6 @@
 # Checkbox
 
-[Checkboxes](https://www.google.com/design/spec/components/selection-controls.html#selection-controls-checkbox) allow the user to select multiple options from a set. If you have multiple options appearing in a list, you can preserve space by using checkboxes instead of on/off switches. If you have a single option, avoid using a checkbox and use an on/off switch instead.
+[Checkboxes](https://material.google.com/components/selection-controls.html#selection-controls-checkbox) allow the user to select multiple options from a set. If you have multiple options appearing in a list, you can preserve space by using checkboxes instead of on/off switches. If you have a single option, avoid using a checkbox and use an on/off switch instead.
 
 <!-- example -->
 ```jsx
@@ -44,6 +44,7 @@ If you want to provide a theme via context, the component key is `RTCheckbox`.
 | Name              | Type          | Default         | Description|
 |:-----|:-----|:-----|:-----|
 | `checked`       | `Boolean`       | `false`         | Value for the checkbox, can be `true` or `false`. |
+| `children`      | `String`, `Element` or `Array` |  | Children to pass through the component. |
 | `className`     | `String`        | `''`            | Sets a class to give customized styles to the checkbox field.|
 | `disabled`      | `Boolean`       | `false`         | If true, the checkbox shown as disabled and cannot be modified.|
 | `label`         | `String` of `node`        |                 | Text label to attach next to the checkbox element.|

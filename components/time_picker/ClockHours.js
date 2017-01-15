@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import utils from '../utils/utils.js';
+import { range } from '../utils/utils.js';
 import Hand from './ClockHand.js';
 import Face from './ClockFace.js';
 
-const outerNumbers = [0, ...utils.range(13, 24)];
-const innerNumbers = [12, ...utils.range(1, 12)];
+const outerNumbers = [0, ...range(13, 24)];
+const innerNumbers = [12, ...range(1, 12)];
 const innerSpacing = 1.7;
 const step = 360 / 12;
 

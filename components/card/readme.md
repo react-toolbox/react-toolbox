@@ -1,12 +1,13 @@
 # Card
 
-A [Card](https://www.google.com/design/spec/components/cards.html) is a piece of paper with unique related data that serves as an entry point to more detailed information. For example, a card could contain a photo, text, and a link about a single subject.
+A [Card](https://material.google.com/components/cards.html) is a piece of paper with unique related data that serves as an entry point to more detailed information. For example, a card could contain a photo, text, and a link about a single subject.
 
 Cards are composed of multiple subcomponents in React Toolbox. You can combine each of the subcomponents to create all different Material Design Cards given in the spec.
 
 <!-- example -->
 ```jsx
 import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
+import {Button} from 'react-toolbox/lib/button';
 
 const dummyText = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.';
 
@@ -89,7 +90,7 @@ Used for displaying media such as images or videos on a card. Can also be used w
 | `aspectRatio` | `enum`(`'wide'`,`'square'`) |  | Forces a 16:9 or 1:1 aspect ratio respectively. Unset, the media area will have a flexible height. |
 | `children` | `Any` |  | Usually an image/video element or a `<CardTitle>` component. |
 | `className` | `String` |  | Additional class(es) for custom styling. |
-| `color` | `String` |  | Sets the background color |
+| `color` | `String` |  | Sets the background color. |
 | `contentOverlay` | `Boolean` |  | Creates a dark overlay underneath the child components. |
 | `image` | `String`, `Element` |  | Can be used instead of children. Accepts an element or a URL string. |
 

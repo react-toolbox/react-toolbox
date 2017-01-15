@@ -1,6 +1,6 @@
 # Input
 
-Although we are calling them Inputs they actually correspond to Material Design [Text fields](https://www.google.com/design/spec/components/text-fields.html). It allows a user to input text and it's the base for other components like the autocomplete.
+Although we are calling them Inputs they actually correspond to Material Design [Text fields](https://material.google.com/components/text-fields.html). It allows a user to input text and it's the base for other components like the autocomplete.
 
 <!-- example -->
 ```jsx
@@ -35,11 +35,11 @@ If you want to provide a theme via context, the component key is `RTInput`.
 |:-----|:-----|:-----|:-----|
 | `className`     | `String`                | `''`            | Sets a class name to give custom styles.|
 | `disabled`      | `Boolean`               | `false`         | If true, component will be disabled.|
-| `error`         | `String`                |                 | Give an error node to display under the field.|
+| `error`         | `String` or `Node`      |                 | Give an error node to display under the field.|
 | `floating`      | `Boolean`               | `true`          | Indicates if the label is floating in the input field or not.|
-| `hint`          | `String`                | `''`            | The text string to use for hint text element.|
+| `hint`          | `String` or `Node`      | `''`            | The text string to use for hint text element.|
 | `icon`          | `String` or `Element`   |                 | Name of an icon to use as a label for the input.|
-| `label`         | `String`                |                 | The text string to use for the floating label element.|
+| `label`         | `String` or `Node`      |                 | The text string to use for the floating label element.|
 | `maxLength`     | `Number`                |                 | Specifies the maximum number of characters allowed in the component.|
 | `multiline`     | `Boolean`               | `false`         | If true, a textarea element will be rendered. The textarea also grows and shrinks according to the number of lines.|
 | `rows`          | `Number`                |                 | The number of rows the multiline input field has.|

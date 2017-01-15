@@ -1,6 +1,6 @@
 # Dialog
 
-[Dialogs](https://www.google.com/design/spec/components/dialogs.html) contain text and UI controls focused on a specific task. They inform users about critical information, require users to make decisions, or involve multiple tasks. You would need an additional component to take actions and display or hide the dialog.
+[Dialogs](https://material.google.com/components/dialogs.html) contain text and UI controls focused on a specific task. They inform users about critical information, require users to make decisions, or involve multiple tasks. You would need an additional component to take actions and display or hide the dialog.
 
 <!-- example -->
 ```jsx
@@ -61,6 +61,8 @@ Notice that the `fullscreen` option only applies on mobile devices with small sc
 
 ## Theme
 
+The `Dialog` uses an `Overlay` under the covers. You can pass the overlay theme under the namespace `overlay`. For example, if you want to style the root element which is called `.overlay` you must use the className `.overlayOverlay`.
+
 | Name     | Description|
 |:---------|:-----------|
 | `active` | Used for the root when the dialog is active.|
@@ -68,4 +70,6 @@ Notice that the `fullscreen` option only applies on mobile devices with small sc
 | `button` | Used in buttons when the dialog implements actions.|
 | `dialog` | Used for the root element.|
 | `navigation` | Used for the navigation element when it implements actions.|
+| `overlay` | Used for the root element of the Overlay component.|
 | `title`   | Used for the title element of the dialog.|
+| `wrapper`  | A wrapper class for the top of the root.|

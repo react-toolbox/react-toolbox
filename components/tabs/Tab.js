@@ -12,6 +12,7 @@ class Tab extends Component {
     disabled: PropTypes.bool,
     hidden: PropTypes.bool,
     icon: PropTypes.node,
+    index: PropTypes.number,
     label: PropTypes.node,
     onActive: PropTypes.func,
     onClick: PropTypes.func,
@@ -19,7 +20,9 @@ class Tab extends Component {
       active: PropTypes.string,
       disabled: PropTypes.string,
       hidden: PropTypes.string,
-      label: PropTypes.string
+      label: PropTypes.string,
+      withIcon: PropTypes.string,
+      withText: PropTypes.string
     })
   };
 
@@ -38,13 +41,13 @@ class Tab extends Component {
 
   handleClick = (event) => {
     if (!this.props.disabled && this.props.onClick) {
-      this.props.onClick(event);
+      this.props.onClick(event, this.props.index);
     }
   };
 
   render () {
     const {
-      onActive, // eslint-disable-line
+      index, onActive, // eslint-disable-line
       active, activeClassName, className, disabled, hidden, label, icon, theme, ...other
     } = this.props;
     const _className = classnames(theme.label, {

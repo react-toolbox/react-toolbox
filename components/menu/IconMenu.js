@@ -54,28 +54,31 @@ const factory = (IconButton, Menu) => {
     }
 
     render () {
+      const {
+        children, className, icon, iconRipple, menuRipple, onHide, // eslint-disable-line
+        onSelect, onShow, position, selectable, selected, theme, ...other
+      } = this.props;
       return (
-        <div className={classnames(this.props.theme.iconMenu, this.props.className)}>
+        <div {...other} className={classnames(theme.iconMenu, className)}>
           <IconButton
             className={this.props.theme.icon}
             icon={this.props.icon}
             inverse={this.props.inverse}
             onClick={this.handleButtonClick}
-            ripple={this.props.iconRipple}
+            ripple={iconRipple}
           />
           <Menu
-            ref='menu'
             active={this.state.active}
             onHide={this.handleMenuHide}
-            onSelect={this.props.onSelect}
-            onShow={this.props.onShow}
-            position={this.props.position}
-            ripple={this.props.menuRipple}
-            selectable={this.props.selectable}
-            selected={this.props.selected}
-            theme={this.props.theme}
+            onSelect={onSelect}
+            onShow={onShow}
+            position={position}
+            ripple={menuRipple}
+            selectable={selectable}
+            selected={selected}
+            theme={theme}
           >
-            {this.props.children}
+            {children}
           </Menu>
         </div>
       );

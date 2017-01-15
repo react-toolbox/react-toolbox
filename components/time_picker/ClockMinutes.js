@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import utils from '../utils/utils.js';
+import { range } from '../utils/utils.js';
 import Hand from './ClockHand.js';
 import Face from './ClockFace.js';
 
-const minutes = utils.range(0, 60, 5);
+const minutes = range(0, 60, 5);
 const step = 360 / 60;
 
 class Minutes extends Component {

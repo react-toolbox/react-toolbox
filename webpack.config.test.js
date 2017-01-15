@@ -1,25 +1,37 @@
+const path = require('path');
 const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
 
 module.exports = {
   module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /(node_modules)/,
-        loader: 'babel'
-      }, {
-        test: /\.(scss|css)$/,
-        loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass'
-      }
-    ]
+    loaders: [{
+      test: /\.js$/,
+      include: [path.join(__dirname, './components'), path.join(__dirname, './spec')],
+      loader: 'babel'
+    }, {
+      test: /\.css$/,
+      include: /node_modules/,
+      loaders: ['style-loader', 'css-loader']
+    }, {
+      test: /\.css$/,
+      include: [path.join(__dirname, './components'), path.join(__dirname, './spec')],
+      loader: 'style!css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss'
+    }]
   },
   resolve: {
-    extensions: ['', '.scss', '.js', '.json'],
+    extensions: ['', '.css', '.js', '.json'],
     packageMains: ['browser', 'web', 'browserify', 'main', 'style']
   },
   watch: true,
-  postcss: [autoprefixer],
+  postcss () {
+    return [
+      require('postcss-import')({
+        root: __dirname,
+        path: [path.join(__dirname, './components')]
+      }),
+      require('postcss-cssnext')(),
+      require('postcss-reporter')({ clearMessages: true })
+    ];
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('test')

@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import CssTransitionGroup from 'react-addons-css-transition-group';
-import { SlideLeft, SlideRight } from '../animations';
+import { range, getAnimationModule } from '../utils/utils';
 import time from '../utils/time.js';
-import utils from '../utils/utils.js';
 import CalendarMonth from './CalendarMonth.js';
 
 const DIRECTION_STEPS = { left: -1, right: 1 };
@@ -10,7 +9,9 @@ const DIRECTION_STEPS = { left: -1, right: 1 };
 const factory = (IconButton) => {
   class Calendar extends Component {
     static propTypes = {
+      disabledDates: React.PropTypes.array,
       display: PropTypes.oneOf(['months', 'years']),
+      enabledDates: React.PropTypes.array,
       handleSelect: PropTypes.func,
       locale: React.PropTypes.oneOfType([
         React.PropTypes.string,
@@ -102,7 +103,7 @@ const factory = (IconButton) => {
     renderYears () {
       return (
         <ul data-react-toolbox='years' ref="years" className={this.props.theme.years}>
-          {utils.range(1900, 2100).map(year => (
+          {range(1900, 2100).map(year => (
             <li
               children={year}
               className={year === this.state.viewDate.getFullYear() ? this.props.theme.active : ''}
@@ -118,13 +119,20 @@ const factory = (IconButton) => {
 
     renderMonths () {
       const { theme } = this.props;
-      const animation = this.state.direction === 'left' ? SlideLeft : SlideRight;
+      const animation = this.state.direction === 'left' ? 'slideLeft' : 'slideRight';
+      const animationModule = getAnimationModule(animation, theme);
       return (
         <div data-react-toolbox='calendar'>
           <IconButton id='left' className={theme.prev} icon='chevron_left' onClick={this.changeViewMonth} />
           <IconButton id='right' className={theme.next} icon='chevron_right' onClick={this.changeViewMonth} />
-          <CssTransitionGroup transitionName={animation} transitionEnterTimeout={350} transitionLeaveTimeout={350}>
+          <CssTransitionGroup
+            transitionName={animationModule}
+            transitionEnterTimeout={350}
+            transitionLeaveTimeout={350}
+          >
             <CalendarMonth
+              enabledDates={this.props.enabledDates}
+              disabledDates={this.props.disabledDates}
               key={this.state.viewDate.getMonth()}
               locale={this.props.locale}
               maxDate={this.props.maxDate}

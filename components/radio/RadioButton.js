@@ -9,6 +9,7 @@ const factory = (Radio) => {
   class RadioButton extends Component {
     static propTypes = {
       checked: PropTypes.bool,
+      children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
       label: PropTypes.oneOfType([
@@ -19,6 +20,8 @@ const factory = (Radio) => {
       onBlur: PropTypes.func,
       onChange: PropTypes.func,
       onFocus: PropTypes.func,
+      onMouseEnter: PropTypes.func,
+      onMouseLeave: PropTypes.func,
       theme: PropTypes.shape({
         disabled: PropTypes.string,
         field: PropTypes.string,
@@ -41,28 +44,38 @@ const factory = (Radio) => {
     };
 
     blur () {
-      this.refs.input.blur();
+      this.inputNode && this.inputNode.blur();
     }
 
     focus () {
-      this.refs.input.focus();
+      this.inputNode && this.inputNode.focus();
     }
 
     render () {
-      const { className, checked, disabled, label, theme, onChange, ...others } = this.props;  // eslint-disable-line
+      const { checked, children, className, disabled, label, name, onChange,  // eslint-disable-line
+        onMouseEnter, onMouseLeave, theme, ...others } = this.props;
       const _className = classnames(theme[this.props.disabled ? 'disabled' : 'field'], className);
       return (
-        <label data-react-toolbox='radio-button' className={_className}>
+        <label
+          data-react-toolbox='radio-button'
+          className={_className}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+        >
           <input
             {...others}
+            checked={checked}
             className={theme.input}
+            disabled={disabled}
+            name={name}
+            onChange={() => {}}
             onClick={this.handleClick}
-            readOnly
-            ref='input'
+            ref={node => { this.inputNode = node; }}
             type='radio'
           />
-        <Radio checked={checked} disabled={disabled} theme={theme} />
+          <Radio checked={checked} disabled={disabled} theme={theme} />
           {label ? <span className={theme.text}>{label}</span> : null}
+          {children}
         </label>
       );
     }

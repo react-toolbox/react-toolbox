@@ -28,7 +28,7 @@ export interface DialogTheme {
   title?: string;
 }
 
-interface DialogActionProps {
+export interface DialogActionProps {
   /**
    * The text string to use for the name of the button.
    */
@@ -39,7 +39,7 @@ interface DialogActionProps {
   onClick?: Function;
 }
 
-interface DialogProps extends ReactToolbox.Props {
+export interface DialogProps extends ReactToolbox.Props {
   /**
    * A array of objects representing the buttons for the dialog navigation area. The properties will be transferred to the buttons.
    */
@@ -83,9 +83,9 @@ interface DialogProps extends ReactToolbox.Props {
   title?: string;
   /**
    * Used to determine the size of the dialog. It can be small, normal or large.
-   * @default normal
+   * @default "normal"
    */
-  type?: string;
+  type?: "small" | "normal" | "large" | string;
 }
 
 export class Dialog extends React.Component<DialogProps, {}> { }

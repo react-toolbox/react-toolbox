@@ -1,0 +1,39 @@
+@import '../variables.css';
+@import './config.css';
+
+.rippleWrapper {
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: var(--z-index-normal);
+}
+
+.ripple {
+  background-color: currentColor;
+  border-radius: 50%;
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform-origin: 50% 50%;
+  transition-duration: var(--ripple-duration);
+  z-index: var(--z-index-high);
+
+  &.rippleRestarting {
+    opacity: var(--ripple-final-opacity);
+    transition-property: none;
+  }
+
+  &.rippleActive {
+    opacity: var(--ripple-final-opacity);
+    transition-property: transform;
+  }
+
+  &:not(.rippleActive):not(.rippleRestarting) {
+    opacity: 0;
+    transition-property: opacity, transform;
+  }
+}

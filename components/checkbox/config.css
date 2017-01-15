@@ -1,0 +1,14 @@
+:root {
+  --checkbox-color: var(--color-primary);
+  --checkbox-disabled-color: color(var(--color-black) a(26%));
+  --checkbox-field-margin-bottom: calc(1.5 * var(--unit));
+  --checkbox-focus-checked-color: color(var(--color-primary) a(26%));
+  --checkbox-ripple-duration: 650ms;
+  --checkbox-size: calc(1.8 * var(--unit));
+  --checkbox-focus-color: color(var(--color-black) a(1%));
+  --checkbox-focus-size: calc(var(--checkbox-size) * 2.3);
+  --checkbox-text-color: var(--color-black);
+  --checkbox-text-font-size: var(--font-size-small);
+  --checkbox-total-height: calc(1.8 * var(--unit));
+  --checkbox-transition-duration: 0.2s;
+}

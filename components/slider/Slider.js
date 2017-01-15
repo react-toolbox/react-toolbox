@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import { round, range } from '../utils/utils';
 import { SLIDER } from '../identifiers.js';
 import events from '../utils/events.js';
-import utils from '../utils/utils.js';
 import InjectProgressBar from '../progress_bar/ProgressBar.js';
 import InjectInput from '../input/Input.js';
 
@@ -197,8 +197,9 @@ const factory = (ProgressBar, Input) => {
 
     positionToValue (position) {
       const { sliderStart: start, sliderLength: length } = this.state;
-      const { max, min } = this.props;
-      return this.trimValue((position.x - start) / length * (max - min) + min);
+      const { max, min, step } = this.props;
+      const pos = (position.x - start) / length * (max - min);
+      return this.trimValue(Math.round(pos / step) * step + min);
     }
 
     start (position) {
@@ -215,7 +216,7 @@ const factory = (ProgressBar, Input) => {
     trimValue (value) {
       if (value < this.props.min) return this.props.min;
       if (value > this.props.max) return this.props.max;
-      return utils.round(value, this.stepDecimals());
+      return round(value, this.stepDecimals());
     }
 
     valueForInput (value) {
@@ -227,7 +228,7 @@ const factory = (ProgressBar, Input) => {
       if (this.props.snaps) {
         return (
           <div ref='snaps' className={this.props.theme.snaps}>
-            {utils.range(0, (this.props.max - this.props.min) / this.props.step).map(i => {
+            {range(0, (this.props.max - this.props.min) / this.props.step).map(i => {
               return <div key={`span-${i}`} className={this.props.theme.snap} />;
             })}
           </div>

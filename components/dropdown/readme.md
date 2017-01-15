@@ -39,7 +39,7 @@ If you want to provide a theme via context, the component key is `RTDropdown`.
 
 | Name         | Type       | Default | Description |
 |:-------------|:-----------|:--------|:------------|
-| `allowBlank` | `Boolean`  | `true`  | If true the dropdown will preselect the first item if the supplied value matches none of the options' values.|
+| `allowBlank` | `Boolean`  | `true`  | If false the dropdown will preselect the first item if the supplied value matches none of the options' values.|
 | `auto`       | `Boolean`  | `true`  | If true, the dropdown will open up or down depending on the position in the screen.|
 | `className`  | `String`   | `''`    | Set the class to give custom styles to the dropdown.|
 | `disabled`   | `Boolean`  | `false` | Set the component as disabled.|
@@ -54,6 +54,8 @@ If you want to provide a theme via context, the component key is `RTDropdown`.
 | `required`   | `Boolean`  | `false` | If true, the dropdown has a required attribute.|
 
 ## Theming
+
+This component uses an `Input` under the covers. The theme object is passed down namespaced under `input` keyword. This means you can use the same theme classNames from `Input` component but namespaced with `input`. For example, to style the label you have to use `inputLabel` className.
 
 | Name            | Description|
 |:----------------|:-----------|

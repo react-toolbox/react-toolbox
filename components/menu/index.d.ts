@@ -44,7 +44,7 @@ export interface MenuTheme {
   topRight?: string;
 }
 
-interface MenuProps extends ReactToolbox.Props {
+export interface MenuProps extends ReactToolbox.Props {
   /**
    * If true, the menu will be displayed as opened by default.
    * @default false
@@ -68,7 +68,7 @@ interface MenuProps extends ReactToolbox.Props {
   onShow?: Function;
   /**
    * If true the menu wrapper will show an outline with a soft shadow.
-   * @default false
+   * @default true
    */
   outline?: boolean;
   /**
@@ -83,7 +83,7 @@ interface MenuProps extends ReactToolbox.Props {
   ripple?: boolean;
   /**
    * If true, the menu will keep a value to highlight the active child item.
-   * @default false
+   * @default true
    */
   selectable?: boolean;
   /**
@@ -109,7 +109,7 @@ export interface IconMenuTheme {
   iconMenu?: string;
 }
 
-interface IconMenuProps extends ReactToolbox.Props {
+export interface IconMenuProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
@@ -170,7 +170,7 @@ export interface MenuDividerTheme {
   menuDivider?: string;
 }
 
-interface MenuDividerProps extends ReactToolbox.Props {
+export interface MenuDividerProps extends ReactToolbox.Props {
   /**
    * Classnames object defining the component style.
    */
@@ -206,7 +206,7 @@ export interface MenuItemTheme {
   shortcut?: string;
 }
 
-interface MenuItemProps extends ReactToolbox.Props {
+export interface MenuItemProps extends ReactToolbox.Props {
   /**
    * The text to include in the menu item. Required.
    */

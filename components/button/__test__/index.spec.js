@@ -2,7 +2,7 @@ import expect from 'expect';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
-import theme from '../theme.scss';
+import theme from '../theme.css';
 import Button, { Button as RawButton } from '../Button';
 
 const getRenderedClassName = (tree, Component) => {

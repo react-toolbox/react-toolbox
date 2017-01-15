@@ -1,6 +1,6 @@
 # Drawer
 
-The [navigation drawer](https://www.google.com/design/spec/patterns/navigation-drawer.html) slides in from the left. It is a common pattern found in Google apps and follows the keylines and metrics for lists.
+The [navigation drawer](https://material.google.com/patterns/navigation-drawer.html) slides in from the left. It is a common pattern found in Google apps and follows the keylines and metrics for lists.
 
 <!-- example -->
 ```jsx
@@ -37,8 +37,10 @@ If you want to provide a theme via context, the component key is `RTDrawer`.
 |:-----|:-----|:-----|:-----|
 | `active`          | `Boolean`       | `false`       | If true, the drawer will be visible.|
 | `className`       | `String`        | `''`          | Sets a class to give customized styles to the drawer.|
+| `insideTree`      | `Boolean`       | `false`       | If true the Drawer is rendered inside the normal tree.|
 | `onOverlayClick`  | `Function`      |               | Callback function to be invoked when the overlay is clicked.|
 | `type`            | `String`        | `left`        | Type of drawer. It can be `left` or `right` to display the drawer on the left or right side of the screen.|
+| `withOverlay`     | `String`        | `true`        | If true display an Overlay that locks the scroll when the Drawer is active.|
 
 ## Theme
 
@@ -49,3 +51,4 @@ If you want to provide a theme via context, the component key is `RTDrawer`.
 | `drawer`   | Root class.|
 | `left`   | Added to the root class when drawer is to the left.|
 | `right`   | Added to the root class when drawer is to the right.|
+| `wrapper`  | A wrapper class for the top of the root.|

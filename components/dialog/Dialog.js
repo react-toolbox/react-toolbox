@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
 import { DIALOG } from '../identifiers.js';
+import Portal from '../hoc/Portal.js';
 import ActivableRenderer from '../hoc/ActivableRenderer.js';
 import InjectButton from '../button/Button.js';
 import InjectOverlay from '../overlay/Overlay.js';
@@ -18,14 +19,18 @@ const factory = (Overlay, Button) => {
     }, props.className);
 
     return (
-      <Overlay
-        active={props.active}
-        onClick={props.onOverlayClick}
-        onEscKeyDown={props.onEscKeyDown}
-        onMouseDown={props.onOverlayMouseDown}
-        onMouseMove={props.onOverlayMouseMove}
-        onMouseUp={props.onOverlayMouseUp}
-      >
+      <Portal className={props.theme.wrapper}>
+        <Overlay
+          active={props.active}
+          className={props.theme.overlay}
+          onClick={props.onOverlayClick}
+          onEscKeyDown={props.onEscKeyDown}
+          onMouseDown={props.onOverlayMouseDown}
+          onMouseMove={props.onOverlayMouseMove}
+          onMouseUp={props.onOverlayMouseUp}
+          theme={props.theme}
+          themeNamespace="overlay"
+        />
         <div data-react-toolbox='dialog' className={className}>
           <section role='body' className={props.theme.body}>
             {props.title ? <h6 className={props.theme.title}>{props.title}</h6> : null}
@@ -38,7 +43,7 @@ const factory = (Overlay, Button) => {
             : null
           }
         </div>
-      </Overlay>
+      </Portal>
     );
   };
 
@@ -58,7 +63,9 @@ const factory = (Overlay, Button) => {
       button: PropTypes.string,
       dialog: PropTypes.string,
       navigation: PropTypes.string,
-      title: PropTypes.string
+      overlay: PropTypes.string,
+      title: PropTypes.string,
+      wrapper: PropTypes.string
     }),
     title: PropTypes.string,
     type: PropTypes.string

@@ -3,10 +3,10 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { SNACKBAR } from '../identifiers.js';
 import ActivableRenderer from '../hoc/ActivableRenderer.js';
-import InjectOverlay from '../overlay/Overlay.js';
 import InjectButton from '../button/Button.js';
+import Portal from '../hoc/Portal.js';
 
-const factory = (Overlay, Button) => {
+const factory = (Button) => {
   class Snackbar extends Component {
     static propTypes = {
       action: PropTypes.string,
@@ -24,7 +24,6 @@ const factory = (Overlay, Button) => {
         active: PropTypes.string,
         button: PropTypes.string,
         cancel: PropTypes.string,
-        icon: PropTypes.string,
         label: PropTypes.string,
         snackbar: PropTypes.string,
         warning: PropTypes.string
@@ -33,18 +32,29 @@ const factory = (Overlay, Button) => {
       type: PropTypes.oneOf([ 'accept', 'cancel', 'warning' ])
     };
 
+    componentDidMount () {
+      if (this.props.active && this.props.timeout) {
+        this.scheduleTimeout(this.props);
+      }
+    }
+
     componentWillReceiveProps (nextProps) {
       if (nextProps.active && nextProps.timeout) {
-        if (this.curTimeout) clearTimeout(this.curTimeout);
-        this.curTimeout = setTimeout(() => {
-          nextProps.onTimeout();
-          this.curTimeout = null;
-        }, nextProps.timeout);
+        this.scheduleTimeout(nextProps);
       }
     }
 
     componentWillUnmount () {
       clearTimeout(this.curTimeout);
+    }
+
+    scheduleTimeout = props => {
+      const { onTimeout, timeout } = props;
+      if (this.curTimeout) clearTimeout(this.curTimeout);
+      this.curTimeout = setTimeout(() => {
+        if (onTimeout) onTimeout();
+        this.curTimeout = null;
+      }, timeout);
     }
 
     render () {
@@ -54,7 +64,7 @@ const factory = (Overlay, Button) => {
       }, this.props.className);
 
       return (
-        <Overlay invisible>
+        <Portal className={theme.portal}>
           <div data-react-toolbox='snackbar' className={className}>
             <span className={theme.label}>
               {label}
@@ -62,7 +72,7 @@ const factory = (Overlay, Button) => {
             </span>
             {action ? <Button className={theme.button} label={action} onClick={onClick}/> : null}
           </div>
-        </Overlay>
+        </Portal>
       );
     }
   }
@@ -70,7 +80,7 @@ const factory = (Overlay, Button) => {
   return ActivableRenderer()(Snackbar);
 };
 
-const Snackbar = factory(InjectOverlay, InjectButton);
+const Snackbar = factory(InjectButton);
 export default themr(SNACKBAR)(Snackbar);
 export { factory as snackbarFactory };
 export { Snackbar };

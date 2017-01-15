@@ -1,17 +1,21 @@
 import { themr } from 'react-css-themr';
-import { LAYOUT } from '../identifiers.js';
-import { Layout } from './Layout.js';
-import { Panel } from './Panel.js';
-import { NavDrawer } from './NavDrawer.js';
-import { Sidebar } from './Sidebar.js';
-import theme from './theme.scss';
+import { LAYOUT } from '../identifiers';
+import { layoutFactory } from './Layout';
+import { sidebarFactory } from './Sidebar';
+import { navDrawerFactory } from './NavDrawer';
+import Panel from './Panel';
+import AppBar from '../app_bar';
+import Drawer from '../drawer';
+import theme from './theme.css';
 
-const ThemedLayout = themr(LAYOUT, theme)(Layout);
-const ThemedPanel = themr(LAYOUT, theme)(Panel);
-const ThemedNavDrawer = themr(LAYOUT, theme)(NavDrawer);
-const ThemedSidebar = themr(LAYOUT, theme)(Sidebar);
+const injectTheme = component => themr(LAYOUT, theme)(component);
+const ThemedNavDrawer = injectTheme(navDrawerFactory(Drawer));
+const ThemedSidebar = injectTheme(sidebarFactory(Drawer));
+const ThemedPanel = injectTheme(Panel);
+const ThemedLayout = injectTheme(layoutFactory(AppBar, ThemedNavDrawer, ThemedSidebar));
 
+export default ThemedLayout;
 export { ThemedLayout as Layout };
-export { ThemedPanel as Panel };
-export { ThemedNavDrawer as NavDrawer };
 export { ThemedSidebar as Sidebar };
+export { ThemedNavDrawer as NavDrawer };
+export { ThemedPanel as Panel };

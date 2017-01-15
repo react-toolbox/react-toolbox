@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import Portal from '../hoc/Portal';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import { getViewport } from '../utils/utils';
 import { TOOLTIP } from '../identifiers.js';
 import events from '../utils/events';
-import utils from '../utils/utils';
 
 const POSITION = {
   BOTTOM: 'bottom',
@@ -19,6 +19,7 @@ const defaults = {
   className: '',
   delay: 0,
   hideOnClick: true,
+  showOnClick: false,
   position: POSITION.VERTICAL,
   theme: {}
 };
@@ -28,6 +29,7 @@ const tooltipFactory = (options = {}) => {
     className: defaultClassName,
     delay: defaultDelay,
     hideOnClick: defaultHideOnClick,
+    showOnClick: defaultShowOnClick,
     position: defaultPosition,
     theme: defaultTheme
   } = {...defaults, ...options};
@@ -51,14 +53,16 @@ const tooltipFactory = (options = {}) => {
         ]),
         tooltipDelay: PropTypes.number,
         tooltipHideOnClick: PropTypes.bool,
-        tooltipPosition: PropTypes.oneOf(Object.keys(POSITION).map(key => POSITION[key]))
+        tooltipPosition: PropTypes.oneOf(Object.keys(POSITION).map(key => POSITION[key])),
+        tooltipShowOnClick: PropTypes.bool
       };
 
       static defaultProps = {
         className: defaultClassName,
         tooltipDelay: defaultDelay,
         tooltipHideOnClick: defaultHideOnClick,
-        tooltipPosition: defaultPosition
+        tooltipPosition: defaultPosition,
+        tooltipShowOnClick: defaultShowOnClick
       };
 
       state = {
@@ -71,6 +75,7 @@ const tooltipFactory = (options = {}) => {
         if (this.refs.tooltip) {
           events.removeEventListenerOnTransitionEnded(this.refs.tooltip, this.onTransformEnd);
         }
+        if (this.timeout) clearTimeout(this.timeout);
       }
 
       activate ({ top, left, position }) {
@@ -95,12 +100,12 @@ const tooltipFactory = (options = {}) => {
         const { tooltipPosition } = this.props;
         if (tooltipPosition === POSITION.HORIZONTAL) {
           const origin = element.getBoundingClientRect();
-          const { width: ww } = utils.getViewport();
+          const { width: ww } = getViewport();
           const toRight = origin.left < ((ww / 2) - origin.width / 2);
           return toRight ? POSITION.RIGHT : POSITION.LEFT;
         } else if (tooltipPosition === POSITION.VERTICAL) {
           const origin = element.getBoundingClientRect();
-          const { height: wh } = utils.getViewport();
+          const { height: wh } = getViewport();
           const toBottom = origin.top < ((wh / 2) - origin.height / 2);
           return toBottom ? POSITION.BOTTOM : POSITION.TOP;
         } else {
@@ -148,7 +153,7 @@ const tooltipFactory = (options = {}) => {
       };
 
       handleMouseEnter = (event) => {
-        this.activate(this.calculatePosition(event.target));
+        this.activate(this.calculatePosition(event.currentTarget));
         if (this.props.onMouseEnter) this.props.onMouseEnter(event);
       };
 
@@ -158,7 +163,14 @@ const tooltipFactory = (options = {}) => {
       };
 
       handleClick = (event) => {
-        if (this.props.tooltipHideOnClick) this.deactivate();
+        if (this.props.tooltipHideOnClick && this.state.active) {
+            this.deactivate();
+        }
+
+        if (this.props.tooltipShowOnClick && !this.state.active) {
+          this.activate(this.calculatePosition(event.currentTarget));
+        }
+
         if (this.props.onClick) this.props.onClick(event);
       };
 
@@ -173,6 +185,7 @@ const tooltipFactory = (options = {}) => {
           tooltipDelay,       //eslint-disable-line no-unused-vars
           tooltipHideOnClick, //eslint-disable-line no-unused-vars
           tooltipPosition,    //eslint-disable-line no-unused-vars
+          tooltipShowOnClick, //eslint-disable-line no-unused-vars
           ...other
         } = this.props;
 
@@ -181,6 +194,8 @@ const tooltipFactory = (options = {}) => {
           [theme[positionClass]]: theme[positionClass]
         });
 
+        const isNative = typeof ComposedComponent === 'string';
+
         return (
           <ComposedComponent
             {...other}
@@ -188,7 +203,7 @@ const tooltipFactory = (options = {}) => {
             onClick={this.handleClick}
             onMouseEnter={this.handleMouseEnter}
             onMouseLeave={this.handleMouseLeave}
-            theme={theme}
+            {...isNative ? {} : {theme}}
           >
             {children ? children : null}
             {visible && (

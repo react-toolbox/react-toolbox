@@ -1,6 +1,6 @@
 # List
 
-A [list component](https://www.google.com/design/spec/components/lists.html) consists of a single continuous column of tessellated sub-divisions of equal width called rows that function as containers for tiles. Tiles hold content, and can vary in height within a list.
+A [list component](https://material.google.com/components/lists.html) consists of a single continuous column of tessellated sub-divisions of equal width called rows that function as containers for tiles. Tiles hold content, and can vary in height within a list.
 
 Lists are best suited to presenting a homogeneous data type or sets of data types, such as images and text, optimized for reading comprehension with the goal of differentiating between like data types or qualities within a single data type. You can compose lists based on subcomponents.
 
