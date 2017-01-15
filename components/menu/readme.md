@@ -64,6 +64,7 @@ As the most usual scenario will be to open the menu from a click in an Icon, we 
 | `className`     | `String`              |  `''`           | Set a class to give custom styles to the icon wrapper.|
 | `icon`          | `String` or `Element` | `more_vert`     | Icon font key string or Element to display the opener icon. |
 | `iconRipple`    | `Boolean`             | `true`          | If true, the icon will show a ripple when is clicked. |
+| `inverse`       | `Boolean`             | `false`         | Used when colors are inverted.|
 | `menuRipple`    | `Boolean`             | `true`          | Transferred to the `Menu` component. |
 | `onClick`       | `Function`            |                 | Callback that will be called when the icon is clicked. |
 | `onHide`        | `Function`            |                 | Callback that will be called when the menu is being hidden. |
