@@ -54,7 +54,7 @@ const factory = (IconButton, Menu) => {
 
     render () {
       const {
-        children, className, icon, iconRipple, menuRipple, onHide, // eslint-disable-line
+        children, className, icon, iconRipple, inverse, menuRipple, onHide, // eslint-disable-line
         onSelect, onShow, position, selectable, selected, theme, ...other
       } = this.props;
       return (
@@ -62,6 +62,7 @@ const factory = (IconButton, Menu) => {
           <IconButton
             className={theme.icon}
             icon={icon}
+            inverse={inverse}
             onClick={this.handleButtonClick}
             ripple={iconRipple}
           />
