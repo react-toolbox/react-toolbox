@@ -189,17 +189,33 @@ const factory = (Chip, Input) => {
      this.select(event, target);
    }
 
+   normalise (value) {
+      const sdiak = 'áâäąáâäąččććççĉĉďđďđééěëēėęéěëēėęĝĝğğġġģģĥĥħħíîíîĩĩīīĭĭįįi̇ıĵĵķķĸĺĺļļŀŀłłĺľĺľňńņŋŋņňńŉóöôőøōōóöőôøřřŕŕŗŗššśśŝŝşşţţťťŧŧũũūūŭŭůůűűúüúüűųųŵŵýyŷŷýyžžźźżżß';
+      const bdiak = 'AAAAAAAACCCCCCCCDDDDEEEEEEEEEEEEEGGGGGGGGHHHHIIIIIIIIIIIIIIJJKKKLLLLLLLLLLLLNNNNNNNNNOOOOOOOOOOOORRRRRRSSSSSSSSTTTTTTUUUUUUUUUUUUUUUUUWWYYYYYYZZZZZZS';
+
+      let normalised = '';
+      for (let p = 0; p < value.length; p++) {
+        if (sdiak.indexOf(value.charAt(p)) !== -1) {
+          normalised += bdiak.charAt(sdiak.indexOf(value.charAt(p)));
+        } else {
+          normalised += value.charAt(p);
+        }
+      }
+
+      return normalised.toLowerCase().trim();
+   }
+
    suggestions () {
      let suggest = new Map();
      const rawQuery = this.state.query || (this.props.multiple ? '' : this.props.value);
-     const query = (`${rawQuery}`).toLowerCase().trim();
+     const query = this.normalise((`${rawQuery}`));
      const values = this.values();
      const source = this.source();
 
      // Suggest any non-set value which matches the query
      if (this.props.multiple) {
        for (const [key, value] of source) {
-         if (!values.has(key) && this.matches(value.toLowerCase().trim(), query)) {
+         if (!values.has(key) && this.matches(this.normalise(value), query)) {
            suggest.set(key, value);
          }
        }
@@ -207,7 +223,7 @@ const factory = (Chip, Input) => {
      // When multiple is false, suggest any value which matches the query if showAllSuggestions is false
      } else if (query && !this.state.showAllSuggestions) {
        for (const [key, value] of source) {
-         if (this.matches(value.toLowerCase().trim(), query)) {
+         if (this.matches(this.normalise(value), query)) {
            suggest.set(key, value);
          }
        }
