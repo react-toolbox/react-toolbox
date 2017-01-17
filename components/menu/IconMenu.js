@@ -15,6 +15,7 @@ const factory = (IconButton, Menu) => {
         PropTypes.element
       ]),
       iconRipple: PropTypes.bool,
+      inverse: PropTypes.bool,
       menuRipple: PropTypes.bool,
       onClick: PropTypes.func,
       onHide: PropTypes.func,
@@ -60,8 +61,9 @@ const factory = (IconButton, Menu) => {
       return (
         <div {...other} className={classnames(theme.iconMenu, className)}>
           <IconButton
-            className={theme.icon}
-            icon={icon}
+            className={this.props.theme.icon}
+            icon={this.props.icon}
+            inverse={this.props.inverse}
             onClick={this.handleButtonClick}
             ripple={iconRipple}
           />
