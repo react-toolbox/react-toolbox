@@ -28,7 +28,9 @@ This subcomponent is the default wrapper for a menu and is responsible for the o
 | Name          | Type          | Default     | Description|
 |:-----|:-----|:-----|:-----|
 | `active`      | `Boolean`     | `false`     | If true, the menu will be displayed as opened by default.|
+| `autofocus`      | `Boolean`     | `false`     | If true, the menu will be received the focus after is opened.|
 | `className`   | `String`      | `''`        | Set a class to give custom styles to the menu wrapper.|
+| `menuId`      | `String`     |      | Set an ID to establish the relation with a `IconButton` via `aria-controls` attribute.|
 | `onHide`      | `Function`    |             | Callback that will be called when the menu is being hidden. |
 | `onSelect`    | `Function`    |             | Callback that will be invoked when a menu item is selected. |
 | `onShow`      | `Function`    |             | Callback that will be invoked when the menu is being shown. |
@@ -64,8 +66,10 @@ As the most usual scenario will be to open the menu from a click in an Icon, we 
 | `className`     | `String`              |  `''`           | Set a class to give custom styles to the icon wrapper.|
 | `icon`          | `String` or `Element` | `more_vert`     | Icon font key string or Element to display the opener icon. |
 | `iconRipple`    | `Boolean`             | `true`          | If true, the icon will show a ripple when is clicked. |
+| `label`    | `String`             | `''`          | Set the `aria-label` attribute with the value of the property. |
 | `menuRipple`    | `Boolean`             | `true`          | Transferred to the `Menu` component. |
 | `onClick`       | `Function`            |                 | Callback that will be called when the icon is clicked. |
+| `onEscKeyDown`       | `Function`            |                 | Callback that will be called when the user press the Esc key. |
 | `onHide`        | `Function`            |                 | Callback that will be called when the menu is being hidden. |
 | `onSelect`      | `Function`            |                 | Callback that will be invoked when a menu item is selected. |
 | `onShow`        | `Function`            |                 | Callback that will be invoked when the menu is being shown. |

@@ -38,6 +38,8 @@ If you want to provide a theme via context, the component key is `RTButton`.
 | Name              | Type                  | Default     | Description|
 |:-----|:-----|:-----|:-----|
 | `accent`          | `Boolean`             | `false`     | Indicates if the button should have accent color.|
+| `ariaControls`          | `String`             |      | Indicates the ID of the element which controls.|
+| `ariaExpanded`          | `Boolean`             |     | Indicates if the button has an element opened or not.|
 | `className`       | `String`              | `''`        | Set a class to style the Component.|
 | `disabled`        | `Boolean`             | `false`     | If true, component will be disabled.|
 | `flat`            | `Boolean`             | `false`     | If true, the button will have a flat look. |

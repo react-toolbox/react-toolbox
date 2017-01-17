@@ -20,8 +20,10 @@ const factory = (MenuItem) => {
   class Menu extends Component {
     static propTypes = {
       active: PropTypes.bool,
+      autofocus: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
+      menuId: PropTypes.string,
       onHide: PropTypes.func,
       onSelect: PropTypes.func,
       onShow: PropTypes.func,
@@ -45,6 +47,7 @@ const factory = (MenuItem) => {
     };
 
     static defaultProps = {
+      autofocus: false,
       active: false,
       outline: true,
       position: POSITION.STATIC,
@@ -199,9 +202,22 @@ const factory = (MenuItem) => {
       });
     }
 
+    setFocus () {
+      const menuContainer = this.refs.menu.parentNode;
+      menuContainer.setAttribute('tabindex', -1);
+      menuContainer.focus();
+    }
+
     show () {
       const { width, height } = this.refs.menu.getBoundingClientRect();
+      const listenerTransition = () => {
+        this.setFocus();
+        this.refs.menu.removeEventListener('transitionend', listenerTransition);
+      };
       this.setState({active: true, width, height});
+      if (this.props.autofocus) {
+        this.refs.menu.addEventListener('transitionend', listenerTransition);
+      }
     }
 
     hide () {
@@ -216,6 +232,16 @@ const factory = (MenuItem) => {
         [theme.rippled]: this.state.rippled
       }, this.props.className);
 
+      if (this.props.menuId) {
+        return (
+          <div id={this.props.menuId} aria-hidden={!this.props.active} data-react-toolbox='menu' className={className} style={this.getRootStyle()}>
+            {this.props.outline ? <div className={theme.outline} style={outlineStyle} /> : null}
+            <ul ref='menu' className={theme.menuInner} style={this.getMenuStyle()}>
+              {this.renderItems()}
+            </ul>
+          </div>
+        );
+      }
       return (
         <div data-react-toolbox='menu' className={className} style={this.getRootStyle()}>
           {this.props.outline ? <div className={theme.outline} style={outlineStyle} /> : null}

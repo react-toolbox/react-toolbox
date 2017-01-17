@@ -9,6 +9,8 @@ const factory = (ripple, FontIcon) => {
   class IconButton extends Component {
     static propTypes = {
       accent: PropTypes.bool,
+      ariaControls: PropTypes.string,
+      ariaExpanded: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
@@ -18,6 +20,7 @@ const factory = (ripple, FontIcon) => {
         PropTypes.element
       ]),
       inverse: PropTypes.bool,
+      label: PropTypes.string,
       neutral: PropTypes.bool,
       onMouseLeave: PropTypes.func,
       onMouseUp: PropTypes.func,
@@ -45,7 +48,7 @@ const factory = (ripple, FontIcon) => {
     };
 
     render () {
-      const {accent, children, className, href, icon, inverse, neutral,
+      const {accent, ariaControls, ariaExpanded, children, className, href, icon, inverse, label, neutral,
         primary, theme, type, ...others} = this.props;
       const element = href ? 'a' : 'button';
       const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
@@ -58,6 +61,9 @@ const factory = (ripple, FontIcon) => {
         ...others,
         href,
         ref: 'button',
+        'aria-expanded': ariaExpanded,
+        'aria-controls': ariaControls,
+        'aria-label': label,
         className: classes,
         disabled: this.props.disabled,
         onMouseUp: this.handleMouseUp,
