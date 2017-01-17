@@ -13,6 +13,7 @@ const factory = (Overlay) => {
     className,
     insideTree,
     onOverlayClick,
+    onEscKeyDown,
     theme,
     type,
     withOverlay
@@ -36,6 +37,7 @@ const factory = (Overlay) => {
           <Overlay
             active={active}
             onClick={onOverlayClick}
+            onEscKeyDown={onEscKeyDown}
             theme={theme}
             themeNamespace="overlay"
           />
@@ -51,6 +53,7 @@ const factory = (Overlay) => {
     className: PropTypes.string,
     insideTree: PropTypes.bool,
     onOverlayClick: PropTypes.func,
+    onEscKeyDown: PropTypes.func,
     theme: PropTypes.shape({
       active: PropTypes.string,
       drawer: PropTypes.string,
