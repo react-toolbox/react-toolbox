@@ -34,6 +34,7 @@ const factory = (Chip, Input) => {
      onChange: PropTypes.func,
      onFocus: PropTypes.func,
      onQueryChange: PropTypes.func,
+     query: PropTypes.string,
      selectedPosition: PropTypes.oneOf(['above', 'below', 'none']),
      showSelectedWhenNotInSource: PropTypes.bool,
      showSuggestionsWhenValueIsSet: PropTypes.bool,
@@ -70,15 +71,14 @@ const factory = (Chip, Input) => {
      direction: this.props.direction,
      focus: false,
      showAllSuggestions: this.props.showSuggestionsWhenValueIsSet,
-     query: this.query(this.props.value),
+     query: this.props.query ? this.props.query : this.query(this.props.value),
      isValueAnObject: false
    };
 
    componentWillReceiveProps (nextProps) {
      if (!this.props.multiple) {
-       this.setState({
-         query: this.query(nextProps.value)
-       });
+       const query = nextProps.query ? nextProps.query : this.query(nextProps.value);
+       this.updateQuery(query, false);
      }
    }
 
@@ -104,6 +104,7 @@ const factory = (Chip, Input) => {
          ReactDOM.findDOMNode(this).querySelector('input').blur();
        });
      }
+     this.updateQuery(query, this.props.query);
    };
 
    handleMouseDown = (event) => {
@@ -115,9 +116,17 @@ const factory = (Chip, Input) => {
      if (this.props.onBlur) this.props.onBlur(event, this.state.active);
    };
 
+   updateQuery = (query, notify) => {
+     if (notify && this.props.onQueryChange) this.props.onQueryChange(query);
+     this.setState({ query });
+   }
+
    handleQueryChange = (value) => {
-     if (this.props.onQueryChange) this.props.onQueryChange(value);
-     this.setState({query: value, showAllSuggestions: false, active: null});
+     const query = this.clearQuery ? '' : value;
+     this.clearQuery = false;
+
+     this.updateQuery(query, true);
+     this.setState({showAllSuggestions: false, active: null});
    };
 
    handleQueryFocus = (event) => {
@@ -127,15 +136,12 @@ const factory = (Chip, Input) => {
    };
 
    handleQueryKeyDown = (event) => {
-     // Clear query when pressing backspace and showing all suggestions.
-     const shouldClearQuery = (
+     // Mark query for clearing in handleQueryChange when pressing backspace and showing all suggestions.
+     this.clearQuery = (
        event.which === 8
        && this.props.showSuggestionsWhenValueIsSet
        && this.state.showAllSuggestions
      );
-     if (shouldClearQuery) {
-       this.setState({query: ''});
-     }
 
      if (event.which === 13) {
        this.selectOrCreateActiveItem(event);
@@ -374,7 +380,7 @@ const factory = (Chip, Input) => {
 
    render () {
      const {
-      allowCreate, error, label, source, suggestionMatch, //eslint-disable-line no-unused-vars
+      allowCreate, error, label, source, suggestionMatch, query, //eslint-disable-line no-unused-vars
       selectedPosition, keepFocusOnChange, showSuggestionsWhenValueIsSet, showSelectedWhenNotInSource, onQueryChange,   //eslint-disable-line no-unused-vars
       theme, ...other
     } = this.props;

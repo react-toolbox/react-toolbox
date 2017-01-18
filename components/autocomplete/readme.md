@@ -55,6 +55,7 @@ If you want to provide a theme via context, the component key is `RTAutocomplete
 | `onChange`                      | `Function`                    |         | Callback function that is fired when the components's value changes. |
 | `onQueryChange`                 | `Function`                    |         | Callback function that is fired when the components's query input value changes. |
 | `onFocus`                       | `Function`                    |         | Callback function that is fired when component is focused. |
+| `query`                         | `String` |         | This property has to be used in case the `source` is not static and will be changing during search for `multiple={false}` autocomplete, content of the `query` has to be managed by the `onQueryChange` callback. |
 | `source`                        | `Object` or `Array`           |         | Object of key/values or array representing all items suggested. |
 | `selectedPosition`              | `String`                      | `above` | Determines if the selected list is shown above or below input. It can be `above`, `below` or `none`. |
 | `showSelectedWhenNotInSource`   | `Bool`                        | `false` | Determines if the selected list is shown if the `value` keys don't exist in the source. Only works if passing the `value` prop as an Object. |
