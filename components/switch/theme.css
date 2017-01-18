@@ -3,11 +3,12 @@
 @import './config.css';
 
 .field {
-  composes: reset from '../helpers.css';
   display: block;
   margin-bottom: var(--switch-field-margin-bottom);
   position: relative;
   white-space: normal;
+
+  @apply --reset;
 }
 
 .text {
@@ -22,7 +23,6 @@
 
 .thumb {
   border-radius: 50%;
-  composes: reset from '../helpers.css';
   cursor: pointer;
   height: var(--switch-thumb-size);
   position: absolute;
@@ -31,6 +31,8 @@
   transition-property: left;
   transition-timing-function: var(--animation-curve-default);
   width: var(--switch-thumb-size);
+
+  @apply --reset;
 
   & .ripple {
     background-color: var(--switch-color);

@@ -4,9 +4,10 @@
 @import './config.css';
 
 .autocomplete {
-  composes: reset from '../helpers.css';
   padding: var(--unit) 0;
   position: relative;
+
+  @apply --reset;
 
   &.focus {
     & .suggestions {

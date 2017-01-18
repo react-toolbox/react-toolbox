@@ -4,8 +4,9 @@
 @import './config.css';
 
 .dropdown {
-  composes: reset from '../helpers.css';
   position: relative;
+
+  @apply --reset;
 
   &:not(.active) {
     & > .values {

@@ -9,7 +9,6 @@
 .link {
   align-content: center;
   align-items: center;
-  composes: reset from '../helpers.css';
   cursor: pointer;
   display: flex;
   flex-direction: row;
@@ -17,6 +16,8 @@
   line-height: 1.5;
   position: relative;
   transition: opacity var(--animation-duration) var(--animation-curve-default);
+
+  @apply --reset;
 
   &:not(.active) {
     opacity: 0.5;

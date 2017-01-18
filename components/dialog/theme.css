@@ -5,7 +5,6 @@
 
 .wrapper {
   align-items: center;
-  composes: reset from '../helpers.css';
   display: flex;
   height: 100vh;
   justify-content: center;
@@ -13,6 +12,8 @@
   top: 0;
   width: 100vw;
   z-index: var(--z-index-higher);
+
+  @apply --reset;
 }
 
 .dialog {

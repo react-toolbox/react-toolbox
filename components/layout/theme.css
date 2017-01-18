@@ -10,7 +10,6 @@
 
 .layout {
   align-items: stretch;
-  composes: reset from '../helpers.css';
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -18,6 +17,8 @@
   min-height: 100vh;
   min-width: 100%;
   position: relative;
+
+  @apply --reset;
 }
 
 .panel {

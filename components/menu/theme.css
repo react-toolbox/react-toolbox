@@ -3,10 +3,11 @@
 @import './config.css';
 
 .iconMenu {
-  composes: reset from '../helpers.css';
   display: inline-block;
   position: relative;
   text-align: center;
+
+  @apply --reset;
 
   & .icon {
     cursor: pointer;

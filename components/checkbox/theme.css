@@ -3,12 +3,13 @@
 @import './config.css';
 
 .field {
-  composes: reset from '../helpers.css';
   display: block;
   height: var(--checkbox-size);
   margin-bottom: var(--checkbox-field-margin-bottom);
   position: relative;
   white-space: nowrap;
+
+  @apply --reset;
 
   & .ripple {
     background-color: var(--checkbox-color);
@@ -60,7 +61,6 @@
   border-radius: 2px;
   border-style: solid;
   border-width: 2px;
-  composes: reset from '../helpers.css';
   cursor: pointer;
   display: inline-block;
   height: var(--checkbox-size);
@@ -70,6 +70,8 @@
   transition-timing-function: var(--animation-curve-default);
   vertical-align: top;
   width: var(--checkbox-size);
+
+  @apply --reset;
 
   &.checked {
     background-color: var(--checkbox-color);

@@ -3,9 +3,10 @@
 @import './config.css';
 
 .tabs {
-  composes: reset from '../helpers.css';
   display: flex;
   flex-direction: column;
+
+  @apply --reset;
 }
 
 .navigation {

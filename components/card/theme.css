@@ -6,12 +6,13 @@
   background: var(--card-background-color);
   border-radius: calc(0.2 * var(--unit));
   box-shadow: var(--shadow-2p);
-  composes: reset from '../helpers.css';
   display: flex;
   flex-direction: column;
   font-size: var(--card-font-size);
   overflow: hidden;
   width: 100%;
+
+  @apply --reset;
 
   &.raised {
     box-shadow: var(--shadow-8p);

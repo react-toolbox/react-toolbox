@@ -3,7 +3,6 @@
 @import './config.css';
 
 .list {
-  composes: reset from '../helpers.css';
   display: inline-block;
   list-style: none;
   margin: 0;
@@ -12,6 +11,8 @@
   text-align: left;
   white-space: nowrap;
   width: 100%;
+
+  @apply --reset;
 
   & + .divider {
     margin-top: calc(-1 * var(--list-vertical-padding));

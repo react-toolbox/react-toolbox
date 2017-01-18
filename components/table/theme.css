@@ -22,9 +22,10 @@
 .table {
   background-color: var(--color-white);
   border-collapse: collapse;
-  composes: reset from '../helpers.css';
   font-size: var(--table-font-size);
   width: 100%;
+
+  @apply --reset;
 }
 
 .head {

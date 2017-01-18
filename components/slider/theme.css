@@ -3,12 +3,13 @@
 @import './config.css';
 
 .container {
-  composes: reset from '../helpers.css';
   height: var(--slider-knob-size);
   margin-right: var(--slider-knob-size);
   position: relative;
   user-select: none;
   width: calc(100% - var(--slider-knob-size));
+
+  @apply --reset;
 
   &:not(:last-child) {
     margin-right: calc(var(--slider-side-separation) + var(--slider-knob-size));

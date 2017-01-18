@@ -19,7 +19,6 @@
   border-radius: var(--snackbar-border-radius);
   bottom: 0;
   color: var(--snackbar-color);
-  composes: reset from '../helpers.css';
   display: flex;
   left: var(--snackbar-horizontal-offset);
   margin: var(--snackbar-vertical-offset) auto 0;
@@ -28,6 +27,8 @@
   right: var(--snackbar-horizontal-offset);
   transition: all var(--animation-duration) var(--animation-curve-default) var(--animation-duration);
   z-index: var(--z-index-higher);
+
+  @apply --reset;
 
   &.accept .button {
     color: var(--snackbar-color-accept);

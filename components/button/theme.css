@@ -6,7 +6,6 @@
   align-content: center;
   align-items: center;
   border: 0;
-  composes: reset from '../helpers.css';
   cursor: pointer;
   display: inline-block;
   flex-direction: row;
@@ -27,6 +26,8 @@
     background-color 0.2s var(--animation-curve-default),
     color 0.2s var(--animation-curve-default);
   white-space: nowrap;
+
+  @apply --reset;
 
   & > input {
     height: 0.1px;

@@ -12,7 +12,6 @@
   background-color: var(--drawer-background-color);
   box-shadow: var(--shadow-2p);
   color: var(--drawer-text-color);
-  composes: reset from '../helpers.css';
   display: block;
   height: 100vh;
   overflow-x: hidden;
@@ -25,6 +24,8 @@
   transition-delay: 0s;
   width: var(--drawer-mobile-width);
   will-change: transform;
+
+  @apply --reset;
 
   &.active {
     pointer-events: all;

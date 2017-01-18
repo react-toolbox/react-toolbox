@@ -20,8 +20,9 @@
 
 .vertical,
 .horizontal {
-  composes: reset from '../helpers.css';
   padding: calc(var(--navigation-space) / 2);
+
+  @apply --reset;
 
   & > [data-react-toolbox='link'] {
     color: var(--navigation-color);
