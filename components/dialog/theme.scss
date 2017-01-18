@@ -72,6 +72,10 @@
   color: $color-text-secondary;
 }
 
+.scroll {
+  overflow: hidden;
+}
+
 .navigation {
   flex-grow: 0;
   padding: $dialog-navigation-padding;
