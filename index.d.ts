@@ -2,60 +2,62 @@
 // Project: https://github.com/react-toolbox/react-toolbox
 // Definitions by: Per Bergqwist <https://github.com/normano64>
 
-import { AppBar } from "react-toolbox/lib/app_bar";
-import { Autocomplete } from "react-toolbox/lib/autocomplete";
-import { Avatar } from "react-toolbox/lib/avatar";
-import { Button, IconButton } from "react-toolbox/lib/button";
-import { Card, CardTitle, CardMedia, CardText, CardActions } from "react-toolbox/lib/card";
-import { Checkbox } from "react-toolbox/lib/checkbox";
-import { Chip } from "react-toolbox/lib/chip";
-import { DatePicker } from "react-toolbox/lib/date_picker";
-import { Dialog } from "react-toolbox/lib/dialog";
-import { Drawer } from "react-toolbox/lib/drawer";
-import { Dropdown } from "react-toolbox/lib/dropdown";
-import { FontIcon } from "react-toolbox/lib/font_icon";
-import { Input } from "react-toolbox/lib/input";
-import { Layout, Panel, NavDrawer, Sidebar } from "react-toolbox/lib/layout";
-import { Link } from "react-toolbox/lib/link";
-import { List, ListCheckbox, ListItem, ListDivider, ListSubHeader } from "react-toolbox/lib/list";
-import { Menu, MenuDivider, MenuItem, IconMenu } from "react-toolbox/lib/menu";
-import { Navigation } from "react-toolbox/lib/navigation";
-import { ProgressBar } from "react-toolbox/lib/progress_bar";
-import { RadioGroup, RadioButton } from "react-toolbox/lib/radio";
-import { Ripple } from "react-toolbox/lib/ripple";
-import { Slider } from "react-toolbox/lib/slider";
-import { Snackbar } from "react-toolbox/lib/snackbar";
-import { Switch } from "react-toolbox/lib/switch";
-import { Tabs, Tab } from "react-toolbox/lib/tabs";
-import { TimePicker } from "react-toolbox/lib/time_picker";
-import { Tooltip } from "react-toolbox/lib/tooltip";
+import { AppBar } from "./lib/app_bar";
+import { Autocomplete } from "./lib/autocomplete";
+import { Avatar } from "./lib/avatar";
+import { Button, IconButton } from "./lib/button";
+import { Card, CardTitle, CardMedia, CardText, CardActions } from "./lib/card";
+import { Checkbox } from "./lib/checkbox";
+import { Chip } from "./lib/chip";
+import { DatePicker } from "./lib/date_picker";
+import { Dialog } from "./lib/dialog";
+import { Drawer } from "./lib/drawer";
+import { Dropdown } from "./lib/dropdown";
+import { FontIcon } from "./lib/font_icon";
+import { Input } from "./lib/input";
+import { Layout, Panel, NavDrawer, Sidebar } from "./lib/layout";
+import { Link } from "./lib/link";
+import { List, ListCheckbox, ListItem, ListDivider, ListSubHeader } from "./lib/list";
+import { Menu, MenuDivider, MenuItem, IconMenu } from "./lib/menu";
+import { Navigation } from "./lib/navigation";
+import { ProgressBar } from "./lib/progress_bar";
+import { RadioGroup, RadioButton } from "./lib/radio";
+import { Ripple } from "./lib/ripple";
+import { Slider } from "./lib/slider";
+import { Snackbar } from "./lib/snackbar";
+import { Switch } from "./lib/switch";
+import { Table } from './lib/table';
+import { Tabs, Tab } from "./lib/tabs";
+import { TimePicker } from "./lib/time_picker";
+import { Tooltip } from "./lib/tooltip";
 
-import { AppBarTheme } from "react-toolbox/lib/app_bar";
-import { AutocompleteTheme } from "react-toolbox/lib/autocomplete";
-import { AvatarTheme } from "react-toolbox/lib/avatar";
-import { ButtonTheme, IconButtonTheme } from "react-toolbox/lib/button";
-import { CardTheme, CardTitleTheme, CardMediaTheme, CardTextTheme, CardActionsTheme } from "react-toolbox/lib/card";
-import { CheckboxTheme } from "react-toolbox/lib/checkbox";
-import { ChipTheme } from "react-toolbox/lib/chip";
-import { DatePickerTheme } from "react-toolbox/lib/date_picker";
-import { DialogTheme } from "react-toolbox/lib/dialog";
-import { DrawerTheme } from "react-toolbox/lib/drawer";
-import { DropdownTheme } from "react-toolbox/lib/dropdown";
-import { InputTheme } from "react-toolbox/lib/input";
-import { LayoutTheme, PanelTheme, NavDrawerTheme, SidebarTheme } from "react-toolbox/lib/layout";
-import { LinkTheme } from "react-toolbox/lib/link";
-import { ListTheme, ListCheckboxTheme, ListItemTheme, ListDividerTheme, ListSubHeaderTheme } from "react-toolbox/lib/list";
-import { MenuTheme, MenuDividerTheme, MenuItemTheme, IconMenuTheme } from "react-toolbox/lib/menu";
-import { NavigationTheme } from "react-toolbox/lib/navigation";
-import { ProgressBarTheme } from "react-toolbox/lib/progress_bar";
-import { RadioButtonTheme } from "react-toolbox/lib/radio";
-import { RippleTheme } from "react-toolbox/lib/ripple";
-import { SliderTheme } from "react-toolbox/lib/slider";
-import { SnackbarTheme } from "react-toolbox/lib/snackbar";
-import { SwitchTheme } from "react-toolbox/lib/switch";
-import { TabsTheme, TabTheme } from "react-toolbox/lib/tabs";
-import { TimePickerTheme } from "react-toolbox/lib/time_picker";
-import { TooltipTheme } from "react-toolbox/lib/tooltip";
+import { AppBarTheme } from "./lib/app_bar";
+import { AutocompleteTheme } from "./lib/autocomplete";
+import { AvatarTheme } from "./lib/avatar";
+import { ButtonTheme, IconButtonTheme } from "./lib/button";
+import { CardTheme, CardTitleTheme, CardMediaTheme, CardTextTheme, CardActionsTheme } from "./lib/card";
+import { CheckboxTheme } from "./lib/checkbox";
+import { ChipTheme } from "./lib/chip";
+import { DatePickerTheme } from "./lib/date_picker";
+import { DialogTheme } from "./lib/dialog";
+import { DrawerTheme } from "./lib/drawer";
+import { DropdownTheme } from "./lib/dropdown";
+import { InputTheme } from "./lib/input";
+import { LayoutTheme, PanelTheme, NavDrawerTheme, SidebarTheme } from "./lib/layout";
+import { LinkTheme } from "./lib/link";
+import { ListTheme, ListCheckboxTheme, ListItemTheme, ListDividerTheme, ListSubHeaderTheme } from "./lib/list";
+import { MenuTheme, MenuDividerTheme, MenuItemTheme, IconMenuTheme } from "./lib/menu";
+import { NavigationTheme } from "./lib/navigation";
+import { ProgressBarTheme } from "./lib/progress_bar";
+import { RadioButtonTheme } from "./lib/radio";
+import { RippleTheme } from "./lib/ripple";
+import { SliderTheme } from "./lib/slider";
+import { SnackbarTheme } from "./lib/snackbar";
+import { SwitchTheme } from "./lib/switch";
+import { TableTheme, TableCellTheme, TableRowTheme, TableHeadTheme } from './lib/table';
+import { TabsTheme, TabTheme } from "./lib/tabs";
+import { TimePickerTheme } from "./lib/time_picker";
+import { TooltipTheme } from "./lib/tooltip";
 
 export {
   AppBar,
@@ -82,6 +84,7 @@ export {
   Slider,
   Snackbar,
   Switch,
+  Table,
   Tabs, Tab,
   TimePicker,
   Tooltip,
@@ -109,6 +112,7 @@ export {
   SliderTheme,
   SnackbarTheme,
   SwitchTheme,
+  TableTheme, TableCellTheme, TableRowTheme, TableHeadTheme,
   TabsTheme, TabTheme,
   TimePickerTheme,
   TooltipTheme
