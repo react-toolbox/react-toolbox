@@ -48,6 +48,7 @@ If you want to provide a theme via context, the component key is `RTButton`.
 | `label`           | `String`              |             | The text string to use for the name of the button.|
 | `mini`            | `Boolean`             | `false`     | To be used with floating button. If true, the button will be smaller.|
 | `neutral`         | `Boolean`             | `true`      | Set it to `false` if you don't want the neutral styles to be included.|
+| `onMouseEnter`    | `Function`            |             | Fires after the mouse enters the Component.|
 | `onMouseLeave`    | `Function`            |             | Fires after the mouse leaves the Component.|
 | `onMouseUp`       | `Function`            |             | Fires after the mouse is released from the Component.|
 | `primary`         | `Boolean`             | `false`     | Indicates if the button should have primary color.|

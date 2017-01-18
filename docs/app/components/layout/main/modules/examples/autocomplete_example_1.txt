@@ -4,16 +4,36 @@ const countriesObject = {'ES-es': 'Spain', 'TH-th': 'Thailand', 'EN-gb': 'Englan
 class AutocompleteTest extends React.Component {
   state = {
     simple: 'Spain',
-    multiple: ['ES-es', 'TH-th']
+    multiple: ['ES-es', 'TH-th'],
+    dynamicSimple: '',
+    dynamicSource: {},
+    query: ''
   };
 
   handleSimpleChange = (value) => {
     this.setState({simple: value});
   };
 
+  handleDynamicSimpleChange = (value) => {
+    this.setState({dynamicSimple: value});
+  };
+
   handleMultipleChange = (value) => {
     this.setState({multiple: value});
   };
+
+  handleQueryChange = (value) => {
+    this.setState({query: value});
+  };
+
+  generateSource = (event) => {
+    const query = event.target.value;
+    const source = {
+      A: query + ' # A',
+      B: query + ' # B'
+    };
+    this.setState({dynamicSource: source});
+  }
 
   render () {
     return (
@@ -34,6 +54,19 @@ class AutocompleteTest extends React.Component {
           onChange={this.handleSimpleChange}
           source={countriesArray}
           value={this.state.simple}
+        />
+
+        <Autocomplete
+          direction="down"
+          label="Type to load new source"
+          hint="You can only choose one..."
+          multiple={false}
+          onChange={this.handleDynamicSimpleChange}
+          onInput={this.generateSource}
+          onQueryChange={this.handleQueryChange}
+          query={this.state.query}
+          source={this.state.dynamicSource}
+          value={this.state.dynamicSimple}
         />
       </div>
     );
