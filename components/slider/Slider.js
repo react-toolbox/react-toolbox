@@ -20,6 +20,7 @@ const factory = (ProgressBar, Input) => {
       pinned: PropTypes.bool,
       snaps: PropTypes.bool,
       step: PropTypes.number,
+      style: PropTypes.object,
       theme: PropTypes.shape({
         container: PropTypes.string,
         editable: PropTypes.string,
@@ -271,6 +272,7 @@ const factory = (ProgressBar, Input) => {
           data-react-toolbox='slider'
           onBlur={this.handleSliderBlur}
           onFocus={this.handleSliderFocus}
+          style={this.props.style}
           tabIndex='0'
           >
           <div
