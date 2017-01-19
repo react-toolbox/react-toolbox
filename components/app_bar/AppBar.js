@@ -32,7 +32,7 @@ const factory = (IconButton) => {
         scrollHide: PropTypes.string,
         title: PropTypes.string
       }),
-      title: PropTypes.string
+      title: PropTypes.node
     };
 
     static defaultProps = {

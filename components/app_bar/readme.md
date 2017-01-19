@@ -36,7 +36,7 @@ The `AppBar` component provides properties for the common use cases of `title`, 
 | `fixed`            | `Bool`     | `false` | Determine if the bar should have position `fixed` or `relative`.|
 | `flat`             | `Bool`     | `false` | If true, the AppBar shows a shadow.|
 | `theme`            | `Object`   | `null`  | Classnames object defining the component style.|
-| `title`            | `String`   | `null`  | Title used for the appbar.|
+| `title`            | `Element`  | `null`  | Title used for the appbar.|
 | `leftIcon`         | `String|Element`   | `null`  | Left icon.|
 | `onLeftIconClick`  | `Function` | `null`  | Called on left icon click event.|
 | `rightIcon`        | `String|Element`   | `null`  | Right icon.|
