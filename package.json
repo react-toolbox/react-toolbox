@@ -45,6 +45,7 @@
     "react-css-themr": "^1.7.1"
   },
   "devDependencies": {
+    "@types/react": "^15.0.0",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
     "babel-eslint": "^7.1.1",
@@ -98,6 +99,7 @@
     "style-loader": "^0.13.1",
     "stylelint": "^7.5.0",
     "stylelint-config-standard": "^15.0.0",
+    "typescript": "^2.1.5",
     "webpack": "^1.14.0",
     "webpack-dev-middleware": "^1.9.0",
     "webpack-hot-middleware": "^2.13.0"
@@ -118,6 +120,7 @@
     "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
     "test": "cross-env NODE_ENV=test karma start",
     "test:watch": "cross-env NODE_ENV=test karma start --no-single-run",
+    "ts": "tsc",
     "tsd": "cpx \"./components/**/*.d.ts\" ./lib"
   },
   "license": "MIT",

@@ -1,0 +1,26 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "css.validate": false,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": true,
+  "editor.renderWhitespace": "boundary",
+  "editor.rulers": [
+    120
+  ],
+  "editor.wrappingColumn": 120,
+  "editor.snippetSuggestions": "top",
+  "eslint.enable": false,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/.idea": true,
+    "**/.iml": true
+  },
+  "stylelint.enable": false,
+  "tslint.enable": false,
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "xo.enable": false
+}
