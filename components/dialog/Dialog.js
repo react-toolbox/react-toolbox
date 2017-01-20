@@ -17,6 +17,8 @@ const factory = (Overlay, Button) => {
       [props.theme.active]: props.active
     }, props.className);
 
+    const bodyClassName = props.disableScrolling ? props.theme.body : classnames(props.theme.body, props.theme.scroll);
+
     return (
       <Overlay
         active={props.active}
@@ -27,7 +29,7 @@ const factory = (Overlay, Button) => {
         onMouseUp={props.onOverlayMouseUp}
       >
         <div data-react-toolbox='dialog' className={className}>
-          <section role='body' className={props.theme.body}>
+          <section role='body' className={bodyClassName}>
             {props.title ? <h6 className={props.theme.title}>{props.title}</h6> : null}
             {props.children}
           </section>
@@ -47,6 +49,7 @@ const factory = (Overlay, Button) => {
     active: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
+    disableScrolling: PropTypes.bool,
     onEscKeyDown: PropTypes.func,
     onOverlayClick: PropTypes.func,
     onOverlayMouseDown: PropTypes.func,
@@ -58,6 +61,7 @@ const factory = (Overlay, Button) => {
       button: PropTypes.string,
       dialog: PropTypes.string,
       navigation: PropTypes.string,
+      scroll: PropTypes.string,
       title: PropTypes.string
     }),
     title: PropTypes.string,
@@ -67,6 +71,7 @@ const factory = (Overlay, Button) => {
   Dialog.defaultProps = {
     actions: [],
     active: false,
+    disableScrolling: false,
     type: 'normal'
   };
 
