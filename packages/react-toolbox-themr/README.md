@@ -97,7 +97,7 @@ All of these options have the same name if you use them in your `package.json`, 
 
 - `config`: Path to a custom configuration `json` file. Should be used only via command line.
 - `path`: Path to `react-toolbox`. Usually you don't need to change but you can set your own if your setup is more complex. Aliased as `-p`.
-- `include`: List of components to be included in the theme. Each component name must be capitalized. Aliased as `-i`.
+- `include`: Array of components that will be included in the theme. Aliased as `-i`. Accepted values are 'AUTOCOMPLETE', 'AVATAR', 'BUTTON', 'CARD', 'CHECKBOX', 'CHIP', 'DATE_PICKER', 'DIALOG', 'DRAWER', 'DROPDOWN', 'INPUT', 'LAYOUT', 'LINK', 'LIST', 'MENU', 'NAVIGATION', 'OVERLAY', 'PROGRESS_BAR', 'RADIO', 'RIPPLE', 'SLIDER', 'SNACKBAR', 'SWITCH', 'TABLE', 'TABS', 'TIME_PICKER' and 'TOOLTIP'.
 - `output`: Path where both Javascript and CSS files will be generated. Aliased as `-o`.
 - `javascript`: Path where the Javascript theme file will be generated. You can optionally include the name of the file. Takes precedence over `output`, aliased as `-j`.
 - `styles`: Path where the CSS theme file will be generated. You can optionally include the name of the file. Takes precedence over `output`, aliased as `-s`.
