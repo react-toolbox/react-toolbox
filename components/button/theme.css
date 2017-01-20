@@ -47,7 +47,7 @@
   & > span:not([data-react-toolbox='tooltip']) {
     display: inline-block;
     line-height: var(--button-height);
-    vertical-align: top;
+    vertical-align: middle;
   }
 
   & > svg {
@@ -131,7 +131,7 @@
   height: var(--button-floating-height);
   width: var(--button-floating-height);
 
-  & .icon {
+  & .icon:not([data-react-toolbox='tooltip']) {
     line-height: var(--button-floating-height);
   }
 

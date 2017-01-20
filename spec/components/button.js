@@ -15,6 +15,7 @@ const ButtonTest = () => (
     <Button icon='inbox' label='Inbox' flat />
     <Button icon='add' floating />
     <Button icon='add' floating primary />
+    <Button href='http://github.com/javivelasco' target='_blank' icon='link' floating accent />
     <Button icon='add' floating primary disabled />
     <Button icon='add' floating accent mini />
     <IconButton icon='favorite' accent />
