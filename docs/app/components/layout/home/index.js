@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Button from 'react-toolbox/button';
 import {Card, CardTitle, CardMedia, CardText, CardActions} from 'react-toolbox/card';
+import Carbon from '../../Carbon';
 import Logo from '../../logo';
 import Navigation from '../../navigation';
 import style from './style';
@@ -35,6 +36,7 @@ const Home = () => (
       <h2 className={style.title}>React Toolbox</h2>
       <h4 className={style.subtitle}>Bootstrap your application with beautiful Material Design Components</h4>
       <Navigation className={style.navigation} />
+      <Carbon className={style.ad} />
     </header>
 
     <section className={style.content}>
