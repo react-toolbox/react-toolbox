@@ -137,6 +137,7 @@ const factory = (Tab, TabContent, FontIcon) => {
     renderHeaders (headers) {
       return headers.map((item, idx) => {
         return React.cloneElement(item, {
+          children: null,
           key: idx,
           index: idx,
           theme: this.props.theme,
