@@ -16,6 +16,7 @@ const factory = (Thumb) => {
       onBlur: PropTypes.func,
       onChange: PropTypes.func,
       onFocus: PropTypes.func,
+      ripple: PropTypes.bool,
       theme: PropTypes.shape({
         disabled: PropTypes.string,
         field: PropTypes.string,
@@ -50,7 +51,7 @@ const factory = (Thumb) => {
     }
 
     render () {
-      const { className, checked, disabled, onChange, theme, ...others } = this.props; //eslint-disable-line no-unused-vars
+      const { className, checked, ripple, disabled, onChange, theme, ...others } = this.props; //eslint-disable-line no-unused-vars
       const _className = classnames(theme[disabled ? 'disabled' : 'field'], className);
       return (
         <label data-react-toolbox='switch' className={_className}>
@@ -64,7 +65,7 @@ const factory = (Thumb) => {
             type='checkbox'
           />
           <span className={theme[checked ? 'on' : 'off']}>
-            <Thumb disabled={this.props.disabled} theme={theme} />
+            <Thumb disabled={this.props.disabled} theme={theme} ripple={ripple} />
           </span>
           {this.props.label ? <span className={theme.text}>{this.props.label}</span> : null}
         </label>

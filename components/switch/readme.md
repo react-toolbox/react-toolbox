@@ -56,6 +56,7 @@ This component can be styled by context providing a theme with the key `RTSwitch
 | `onBlur`       | `Function`       |               | Callback function that is fired when when the switch is blurred.|
 | `onChange`     | `Function`       |               | Callback function that is fired when the component's value changes.|
 | `onFocus`      | `Function`       |               | Callback function that is fired when the switch is focused.|
+| `ripple`       | `Boolean`        |               | If true, the ripple effect will be disabled.|
 
 ## Theme
 
