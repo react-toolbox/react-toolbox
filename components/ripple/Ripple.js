@@ -11,6 +11,7 @@ const defaults = {
   centered: false,
   className: '',
   multiple: true,
+  passthrough: true,
   spread: 2,
   theme: {}
 };
@@ -20,6 +21,7 @@ const rippleFactory = (options = {}) => {
     centered: defaultCentered,
     className: defaultClassName,
     multiple: defaultMultiple,
+    passthrough: defaultPassthrough,
     spread: defaultSpread,
     theme: defaultTheme,
     ...props
@@ -244,17 +246,26 @@ const rippleFactory = (options = {}) => {
       }
 
       render () {
+        const {
+          children,
+          disabled,
+          ripple,
+          onRippleEnded,   // eslint-disable-line
+          rippleCentered,  // eslint-disable-line
+          rippleClassName, // eslint-disable-line
+          rippleMultiple,  // eslint-disable-line
+          rippleSpread,    // eslint-disable-line
+          theme,
+          ...other
+        } = this.props;
         const { ripples } = this.state;
-        const { onRippleEnded, rippleCentered, rippleMultiple, rippleSpread, // eslint-disable-line
-          children, ripple, rippleClassName, ...other } = this.props;
+        const childRipples = Object.keys(ripples).map(key => this.renderRipple(key, rippleClassName, ripples[key]));
+        const childProps = { onMouseDown: this.handleMouseDown, onTouchStart: this.handleTouchStart, ...other };
+        const finalProps = defaultPassthrough ? { ...childProps, theme, disabled } : childProps;
 
-        if (!ripple) return <ComposedComponent children={children} {...other} />;
-        return (
-          <ComposedComponent {...other} onMouseDown={this.handleMouseDown} onTouchStart={this.handleTouchStart}>
-            {children}
-            {Object.keys(ripples).map(key => this.renderRipple(key, rippleClassName, ripples[key]))}
-          </ComposedComponent>
-        );
+        return !ripple
+          ? React.createElement(ComposedComponent, finalProps, children)
+          : React.createElement(ComposedComponent, finalProps, [children, childRipples]);
       }
     }
 
