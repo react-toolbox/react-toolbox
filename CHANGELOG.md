@@ -1,5 +1,5 @@
-<a name="2.0.0-beta.4"></a>
-# 2.0.0-beta.4 (2017-01-24)
+<a name="2.0.0-beta.5"></a>
+# 2.0.0-beta.5 (2017-01-24)
 
 * Ability to override default isComponentOfType implementation (#1164) ([49d6605](https://github.com/react-toolbox/react-toolbox/commit/49d6605))
 * Add backers and Sponsors (#1137) ([46f5353](https://github.com/react-toolbox/react-toolbox/commit/46f5353))
