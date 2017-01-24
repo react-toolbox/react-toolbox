@@ -3,10 +3,14 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { TABS } from '../identifiers.js';
 import InjectFontIcon from '../font_icon/FontIcon.js';
+import isComponentOfType from '../utils/is-component-of-type.js';
 import InjectTab from './Tab.js';
 import InjectTabContent from './TabContent.js';
 
 const factory = (Tab, TabContent, FontIcon) => {
+  const isTab = child => isComponentOfType(Tab, child);
+  const isTabContent = child => isComponentOfType(TabContent, child);
+
   class Tabs extends Component {
     static propTypes = {
       children: PropTypes.node,
@@ -121,12 +125,12 @@ const factory = (Tab, TabContent, FontIcon) => {
       const contents = [];
 
       React.Children.forEach(this.props.children, (item) => {
-        if (item.type === Tab) {
+        if (isTab(item)) {
           headers.push(item);
           if (item.props.children) {
             contents.push(<TabContent children={item.props.children} theme={this.props.theme} />);
           }
-        } else if (item.type === TabContent) {
+        } else if (isTabContent(item)) {
           contents.push(item);
         }
       });
