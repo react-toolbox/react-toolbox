@@ -112,7 +112,7 @@ const rippleFactory = (options = {}) => {
           const runningState = { active: true, restarting: false };
           const ripples = {...this.state.ripples, [key]: initialState };
           this.setState({ ripples }, () => {
-            this.refs[key].offsetWidth; //eslint-disable-line no-unused-expressions
+            if (this.refs[key]) this.refs[key].offsetWidth; //eslint-disable-line no-unused-expressions
             this.setState({ ripples: {
               ...this.state.ripples,
               [key]: Object.assign({}, this.state.ripples[key], runningState)
