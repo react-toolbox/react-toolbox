@@ -21,7 +21,6 @@
 
   &:not(.flat) {
     box-shadow: var(--shadow-4p);
-    z-index: var(--z-index-high);
   }
 
   &.fixed {
