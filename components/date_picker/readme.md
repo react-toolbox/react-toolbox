@@ -77,6 +77,7 @@ If you want to provide a theme via context, the component key is `RTDatePicker`.
 | `button` | Used for the buttons in the dialog.|
 | `calendar` | Used for the calendar root element.|
 | `calendarWrapper` | Used as wrapper for the calendar component inside dialog.|
+| `container` | Wrapper element of the picker.|
 | `date` | Used for the date element inside header.|
 | `day` | Used for the day element inside the calendar.|
 | `days` | Used for the list of days inside a month.|

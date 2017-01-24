@@ -45,6 +45,7 @@ const factory = (Input, DatePickerDialog) => {
       readonly: PropTypes.bool,
       sundayFirstDayOfWeek: React.PropTypes.bool,
       theme: PropTypes.shape({
+        container: PropTypes.string,
         input: PropTypes.string
       }),
       value: PropTypes.oneOfType([
@@ -115,7 +116,7 @@ const factory = (Input, DatePickerDialog) => {
       const formattedDate = date === undefined ? '' : finalInputFormat(value, locale);
 
       return (
-        <div data-react-toolbox='date-picker'>
+        <div data-react-toolbox='date-picker' className={this.props.theme.container}>
           <Input
             {...others}
             className={classnames(this.props.theme.input, {[inputClassName]: inputClassName })}

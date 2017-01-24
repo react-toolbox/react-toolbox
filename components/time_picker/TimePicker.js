@@ -28,6 +28,7 @@ const factory = (TimePickerDialog, Input) => {
       onOverlayClick: PropTypes.func,
       readonly: PropTypes.bool,
       theme: PropTypes.shape({
+        container: PropTypes.string,
         input: PropTypes.string
       }),
       value: PropTypes.object
@@ -93,7 +94,7 @@ const factory = (TimePickerDialog, Input) => {
       } = this.props;
       const formattedTime = value ? time.formatTime(value, format) : '';
       return (
-        <div data-react-toolbox='time-picker'>
+        <div data-react-toolbox='time-picker' className={this.props.theme.container}>
           <Input
             {...others}
             className={classnames(this.props.theme.input, {[inputClassName]: inputClassName })}

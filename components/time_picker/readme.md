@@ -56,6 +56,7 @@ If you want to provide a theme via context, the component key is `RTTimePicker`.
 | `button` | Used for buttons inside the dialog of the picker.|
 | `clock` | Clock root class element.|
 | `clockWrapper` | Wrapper for the proper positioning of the clock.|
+| `container` | Wrapper element of the picker.|
 | `dialog` | Used for the dialog component.|
 | `face` | Used to style the clock face.|
 | `hand` | Used for the clock's hand.|
