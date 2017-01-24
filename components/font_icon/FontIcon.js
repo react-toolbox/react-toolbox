@@ -9,6 +9,7 @@ const FontIcon = ({ alt, children, className, value, ...other}) => (
     {...other}
   >
     <span aria-hidden="true">{value}</span>
+    {children}
   </span>
 );
 
