@@ -19,6 +19,7 @@ const defaults = {
   className: '',
   delay: 0,
   hideOnClick: true,
+  passthrough: true,
   showOnClick: false,
   position: POSITION.VERTICAL,
   theme: {}
@@ -30,6 +31,7 @@ const tooltipFactory = (options = {}) => {
     delay: defaultDelay,
     hideOnClick: defaultHideOnClick,
     showOnClick: defaultShowOnClick,
+    passthrough: defaultPassthrough,
     position: defaultPosition,
     theme: defaultTheme
   } = {...defaults, ...options};
@@ -181,11 +183,14 @@ const tooltipFactory = (options = {}) => {
           children,
           className,
           theme,
+          onClick,            // eslint-disable-line no-unused-vars
+          onMouseEnter,       // eslint-disable-line no-unused-vars
+          onMouseLeave,       // eslint-disable-line no-unused-vars
           tooltip,
-          tooltipDelay,       //eslint-disable-line no-unused-vars
-          tooltipHideOnClick, //eslint-disable-line no-unused-vars
-          tooltipPosition,    //eslint-disable-line no-unused-vars
-          tooltipShowOnClick, //eslint-disable-line no-unused-vars
+          tooltipDelay,       // eslint-disable-line no-unused-vars
+          tooltipHideOnClick, // eslint-disable-line no-unused-vars
+          tooltipPosition,    // eslint-disable-line no-unused-vars
+          tooltipShowOnClick, // eslint-disable-line no-unused-vars
           ...other
         } = this.props;
 
@@ -194,26 +199,25 @@ const tooltipFactory = (options = {}) => {
           [theme[positionClass]]: theme[positionClass]
         });
 
-        const isNative = typeof ComposedComponent === 'string';
+        const childProps = {
+          ...other,
+          className,
+          onClick: this.handleClick,
+          onMouseEnter: this.handleMouseEnter,
+          onMouseLeave: this.handleMouseLeave
+        };
 
-        return (
-          <ComposedComponent
-            {...other}
-            className={className}
-            onClick={this.handleClick}
-            onMouseEnter={this.handleMouseEnter}
-            onMouseLeave={this.handleMouseLeave}
-            {...isNative ? {} : {theme}}
-          >
-            {children ? children : null}
-            {visible && (
-              <Portal>
-                <span ref="tooltip" className={_className} data-react-toolbox="tooltip" style={{top, left}}>
-                  <span className={theme.tooltipInner}>{tooltip}</span>
-                </span>
-              </Portal>
-            )}
-          </ComposedComponent>
+        const shouldPass = typeof ComposedComponent !== 'string' && defaultPassthrough;
+        const finalProps = shouldPass ? { ...childProps, theme } : childProps;
+
+        return React.createElement(ComposedComponent, finalProps, children,
+          visible && (
+            <Portal>
+              <span ref="tooltip" className={_className} data-react-toolbox="tooltip" style={{top, left}}>
+                <span className={theme.tooltipInner}>{tooltip}</span>
+              </span>
+            </Portal>
+          )
         );
       }
     }

@@ -1,10 +1,12 @@
 import React from 'react';
 import Button from '../../components/button';
 import Input from '../../components/input';
-import Tooltip from '../../components/tooltip';
+import FontIcon from '../../components/font_icon';
+import Tooltip, { tooltipFactory } from '../../components/tooltip';
 import Chip from '../../components/chip';
 import Avatar from '../../components/avatar';
 
+const TooltipFontIcon = tooltipFactory({ passthrough: false })(FontIcon);
 const TooltipButton = Tooltip(Button);
 const TooltipInput = Tooltip(Input);
 const TooltipStrong = Tooltip(({children, ...other}) => {
@@ -40,6 +42,7 @@ const TooltipTest = () => (
       </TooltipStrongDirect>
       {' '}. This is useful for mobile!
     </p>
+    <TooltipFontIcon value="code" tooltip="This is a test with FontIcon" />
   </section>
 );
 
