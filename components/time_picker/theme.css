@@ -48,6 +48,7 @@
 }
 
 .dialog {
+  background-color: var(--timepicker-background);
   width: var(--timepicker-dialog-width);
 
   & > [role='body'] {

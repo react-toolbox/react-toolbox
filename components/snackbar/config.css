@@ -1,0 +1,12 @@
+:root {
+  --snackbar-color: var(--color-text-snackbar);
+  --snackbar-background: var(--color-background-snackbar);
+  --snackbar-color-cancel: var(--palette-red-500);
+  --snackbar-color-accept: var(--palette-green-500);
+  --snackbar-color-warning: var(--palette-lime-a200);
+  --snackbar-border-radius: calc(0.2 * var(--unit));
+  --snackbar-button-offset: calc(4.8 * var(--unit));
+  --snackbar-horizontal-offset: calc(2.4 * var(--unit));
+  --snackbar-vertical-offset: calc(1.4 * var(--unit));
+}
+

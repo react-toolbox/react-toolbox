@@ -1,12 +1,12 @@
 :root {
+  --menu-background-color: var(--color-background-raised);
+  --menu-item-hover-background: var(--color-background-hover);
+  --menu-item-selected-background: transparent;
   --menu-expand-duration: 0.3s;
   --menu-fade-duration: 0.2s;
   --menu-ripple-delay: 0.3s;
-  --menu-background-color: var(--color-white);
   --menu-padding: calc(0.8 * var(--unit)) 0;
   --menu-outline-border-radius: calc(0.2 * var(--unit));
-  --menu-item-hover-background: var(--palette-grey-200);
-  --menu-item-selected-background: transparent;
   --menu-item-icon-font-size: calc(2.4 * var(--unit));
   --menu-item-icon-size: calc(1.6 * var(--menu-item-icon-font-size));
   --menu-item-height: calc(4.8 * var(--unit));

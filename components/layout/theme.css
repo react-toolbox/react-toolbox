@@ -3,13 +3,12 @@
 @import '../variables.css';
 @import '../app_bar/config.css';
 @import '../drawer/config.css';
-
-:root {
-  --layout-side-transition: all var(--animation-duration) var(--animation-curve-default);
-}
+@import './config.css';
 
 .layout {
   align-items: stretch;
+  background-color: var(--color-background);
+  color: var(--color-text);
   display: flex;
   flex: 1;
   flex-direction: column;

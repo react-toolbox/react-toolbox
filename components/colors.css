@@ -274,6 +274,39 @@
 
   --color-black: rgb(0, 0, 0);
   --color-white: rgb(255, 255, 255);
-  --color-dark-contrast: var(--color-white);
-  --color-light-contrast: var(--color-black);
+
+  --theme-light-background: var(--palette-grey-50);
+  --theme-light-background-raised: var(--color-white);
+  --theme-light-background-secondary: var(--palette-grey-100);
+  --theme-light-background-hover: var(--palette-grey-200);
+  --theme-light-background-statusbar: var(--palette-grey-300);
+  --theme-light-background-snackbar: rgb(50, 50, 50);
+  --theme-light-text: color(var(--color-black) a(87%));
+  --theme-light-text-secondary: color(var(--color-black) a(54%));
+  --theme-light-text-disabled: color(var(--color-black) a(38%));
+  --theme-light-text-snackbar: var(--color-white);
+  --theme-light-divider: color(var(--color-black) a(12%));
+  --theme-light-faded: color(var(--color-black) a(26%));
+  --theme-light-switch-thumb-off: var(--palette-grey-50);
+  --theme-light-switch-track-off: color(var(--color-black) a(38%));
+  --theme-light-switch-disabled-thumb: var(--palette-grey-400);
+  --theme-light-switch-disabled-track: color(var(--color-black) a(12%));
+
+  --theme-dark-background: rgb(48, 48, 48);
+  --theme-dark-background-raised: var(--palette-grey-800);
+  --theme-dark-background-secondary: var(--palette-grey-900);
+  --theme-dark-background-hover: var(--palette-grey-700); /* just a guess */
+  --theme-dark-background-statusbar: var(--color-black);
+  --theme-dark-background-snackbar: rgb(50, 50, 50); /* just a guess */
+  --theme-dark-text: var(--color-white);
+  --theme-dark-text-secondary: color(var(--color-white) a(70%));
+  --theme-dark-text-disabled: color(var(--color-white) a(50%));
+  --theme-dark-text-snackbar: var(--color-white);
+  --theme-dark-divider: color(var(--color-white) a(12%));
+  --theme-dark-faded: color(var(--color-white) a(30%));
+  --theme-dark-switch-thumb-off: var(--palette-grey-400);
+  --theme-dark-switch-track-off: color(var(--color-white) a(30%));
+  --theme-dark-switch-disabled-thumb: var(--palette-grey-800);
+  --theme-dark-switch-disabled-track: color(var(--color-white) a(10%));
+
 }

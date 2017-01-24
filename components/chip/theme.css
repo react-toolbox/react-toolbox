@@ -52,17 +52,17 @@
 }
 
 .delete:hover .deleteIcon {
-  background: var(--chip-remove-background-hover);
+  background: var(--chip-remove-color-hover);
 }
 
 .deleteIcon {
-  background: var(--chip-remove-background);
+  background: var(--chip-remove-color);
   border-radius: var(--chip-remove-size);
   vertical-align: top;
 
   & .deleteX {
     fill: transparent;
-    stroke: var(--chip-remove-color);
+    stroke: var(--chip-background);
     stroke-width: var(--chip-remove-stroke-width);
   }
 }

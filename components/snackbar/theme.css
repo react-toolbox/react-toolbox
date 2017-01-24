@@ -1,21 +1,10 @@
 @import '../colors.css';
 @import '../variables.css';
-
-:root {
-  --snackbar-color-cancel: var(--palette-red-500);
-  --snackbar-color-accept: var(--palette-green-500);
-  --snackbar-color-warning: var(--palette-lime-a200);
-  --snackbar-background-color: var(--color-text);
-  --snackbar-border-radius: calc(0.2 * var(--unit));
-  --snackbar-button-offset: calc(4.8 * var(--unit));
-  --snackbar-color: var(--color-white);
-  --snackbar-horizontal-offset: calc(2.4 * var(--unit));
-  --snackbar-vertical-offset: calc(1.4 * var(--unit));
-}
+@import './config.css';
 
 .snackbar {
   align-items: center;
-  background-color: var(--snackbar-background-color);
+  background-color: var(--snackbar-background);
   border-radius: var(--snackbar-border-radius);
   bottom: 0;
   color: var(--snackbar-color);

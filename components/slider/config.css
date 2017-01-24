@@ -1,7 +1,7 @@
 :root {
   --slider-main-color: var(--color-primary);
   --slider-main-color-contrast: var(--color-primary-contrast);
-  --slider-snap-color: var(--color-black);
+  --slider-snap-color: var(--color-text);
   --slider-disabled-color: rgba(177, 177, 177, 1);
   --slider-knob-size: calc(3.2 * var(--unit));
   --slider-inner-knob-size: calc(1.2 * var(--unit));

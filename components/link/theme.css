@@ -1,8 +1,9 @@
 @import '../colors.css';
 @import '../variables.css';
+@import './config.css';
 
 .icon {
-  font-size: calc(1.8 * var(--unit));
+  font-size: var(--link-icon-size);
   margin-right: var(--unit);
 }
 

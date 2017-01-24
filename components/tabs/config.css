@@ -9,7 +9,7 @@
   --tab-navigation-border-color: var(--color-divider);
   --tab-pointer-color: var(--color-primary);
   --tab-pointer-height: calc(0.2 * var(--unit));
-  --tab-text: var(--color-black);
+  --tab-text: var(--color-text);
   --tab-text-color: var(--tab-text);
   --tab-text-inactive-color: color(var(--tab-text) a(70%));
   --tab-inverse-bar-color: var(--color-primary);

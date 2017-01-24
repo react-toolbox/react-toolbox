@@ -126,7 +126,7 @@
 }
 
 .values {
-  background-color: var(--dropdown-color-white);
+  background-color: var(--dropdown-color-background);
   border-radius: var(--dropdown-value-border-radius);
   list-style: none;
   margin: 0;

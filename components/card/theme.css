@@ -3,7 +3,7 @@
 @import './config.css';
 
 .card {
-  background: var(--card-background-color);
+  background: var(--card-background);
   border-radius: calc(0.2 * var(--unit));
   box-shadow: var(--shadow-2p);
   display: flex;
@@ -95,6 +95,7 @@
   }
 
   & .title {
+    color: var(--color-text);
     font-size: calc(2 * var(--unit));
     font-weight: 500;
     letter-spacing: 0.02em;

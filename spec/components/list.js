@@ -3,12 +3,7 @@ import { ListCheckbox, ListSubHeader, List, ListItem, ListDivider, ListItemText,
 import { Button } from '../../components/button';
 import Avatar from '../../components/avatar';
 import FontIcon from '../../components/font_icon';
-
-const listStyle = {
-  border: '1px solid #EEE',
-  display: 'inline-block',
-  minWidth: 340,
-};
+import style from '../style.css';
 
 class ListTest extends React.Component {
   state = {
@@ -28,7 +23,7 @@ class ListTest extends React.Component {
       <section>
         <h5>With simple text and icons</h5>
         <p>This list can be used inside a Drawer for a list of options or as navigation.</p>
-        <div style={listStyle}>
+        <div className={style.listWrapper}>
           <List selectable ripple>
             <ListSubHeader caption="Contacts" />
             <ListItem caption="Inbox" leftIcon="inbox" />
@@ -40,7 +35,7 @@ class ListTest extends React.Component {
 
         <h5>Two text lines, avatar and right icon</h5>
         <p>Useful for a list of contacts or similar.</p>
-        <div style={listStyle}>
+        <div className={style.listWrapper}>
           <List selectable ripple>
             <ListSubHeader caption="Contacts" />
             <ListItem
@@ -72,7 +67,7 @@ class ListTest extends React.Component {
 
         <h5>Two line options and checkbox items</h5>
         <p>It can be used to embed little checkboxes in the list. These behave as checkboxes.</p>
-        <div style={listStyle}>
+        <div className={style.listWrapper}>
           <List>
             <ListSubHeader caption="General" />
             <ListItem caption="Profile Photo" legend="Change your Google+ profile photo" />
@@ -104,7 +99,7 @@ class ListTest extends React.Component {
 
         <h5>Avatar, single text and icon</h5>
         <p>Similar to a previous one but only with one text line</p>
-        <div style={listStyle}>
+        <div className={style.listWrapper}>
           <List>
             <ListItem
               avatar="https://pbs.twimg.com/profile_images/614407428/s6pTalMzZs-nusCGWqoV.0_400x400.jpeg"
@@ -131,7 +126,7 @@ class ListTest extends React.Component {
 
         <h5>Simple with just one text line</h5>
         <p>The most simple list.</p>
-        <div style={listStyle}>
+        <div className={style.listWrapper}>
           <List>
             <ListItem caption="Alfonso Rocha" />
             <ListItem caption="Javi Velasco" />
@@ -144,7 +139,7 @@ class ListTest extends React.Component {
 
         <h5> List with custom components </h5>
         <p> Using custom components in list item </p>
-        <div style={listStyle}>
+        <div className={style.listWrapper}>
           <List ripple selectable>
             <ListItem leftIcon="send" rightIcon="done" caption="Reference item" />
             <ListItem rightIcon="done" caption="Item with custom left icons">

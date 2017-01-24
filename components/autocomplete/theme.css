@@ -32,6 +32,7 @@
 
 .suggestions {
   background-color: var(--autocomplete-suggestions-background);
+  color: var(--autocomplete-suggestions-color);
   list-style: none;
   max-height: 0;
   overflow-x: hidden;

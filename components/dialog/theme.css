@@ -17,7 +17,7 @@
 }
 
 .dialog {
-  background-color: var(--dialog-color-white);
+  background-color: var(--dialog-color-background);
   border-radius: var(--dialog-border-radius);
   box-shadow: var(--zdepth-shadow-5);
   display: flex;

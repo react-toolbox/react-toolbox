@@ -1,6 +1,6 @@
 import React from 'react';
 import Dropdown from '../../components/dropdown';
-import style from '../style';
+import style from '../style.css';
 
 const countries = [
   { value: 'EN-gb', label: 'England', img: 'http://' },

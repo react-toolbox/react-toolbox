@@ -1,7 +1,7 @@
 :root {
-  --drawer-background-color: var(--palette-grey-50);
-  --drawer-border-color: var(--palette-grey-300);
-  --drawer-text-color: var(--palette-grey-800);
+  --drawer-background-color: var(--color-background);
+  --drawer-border-color: var(--color-divider);
+  --drawer-text-color: var(--color-text-secondary);
   --drawer-width: calc(24 * var(--unit));
   --drawer-desktop-width: calc(4 * var(--standard-increment-desktop));
   --drawer-mobile-width: calc(5 * var(--standard-increment-mobile));

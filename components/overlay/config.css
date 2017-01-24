@@ -1,4 +1,4 @@
 :root {
-  --overlay-color: var(--color-black);
+  --overlay-color: var(--color-black); /* TODO */
   --overlay-opacity: 0.6;
 }

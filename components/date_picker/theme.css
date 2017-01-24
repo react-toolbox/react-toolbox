@@ -51,6 +51,7 @@
 }
 
 .dialog {
+  background-color: var(--datepicker-background);
   width: var(--datepicker-dialog-width);
 
   & > [role='body'] {
@@ -71,7 +72,6 @@
 }
 
 .calendar {
-  background: var(--calendar-primary-contrast-color);
   font-size: var(--font-size-small);
   height: var(--calendar-total-height);
   line-height: var(--calendar-row-height);
@@ -172,10 +172,6 @@
   &.disabled {
     opacity: var(--calendar-day-disable-opacity);
   }
-}
-
-.month {
-  background-color: var(--calendar-primary-contrast-color);
 }
 
 .slideRightEnter,

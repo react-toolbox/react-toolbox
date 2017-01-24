@@ -1,4 +1,4 @@
 :root {
   --navigation-space: var(--unit);
-  --navigation-color: var(--color-black);
+  --navigation-color: var(--color-text);
 }

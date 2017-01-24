@@ -76,7 +76,7 @@
   }
 
   &:focus ~ .radioChecked {
-    box-shadow: 0 0 0 var(--unit) var(--radio-checked-focus-color);
+    box-shadow: 0 0 0 var(--unit) var(--radio-focus-checked-color);
   }
 }
 

@@ -2,7 +2,7 @@
 import React from 'react';
 import Button, { IconButton } from '../../components/button';
 import Card, { CardActions, CardMedia, CardText, CardTitle } from '../../components/card';
-import style from '../style';
+import style from '../style.css';
 
 const dummyText = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.';
 
@@ -105,8 +105,8 @@ const cards = {
             subtitle="Subtitle here"
           />
           <CardActions>
-            <Button inverse label="Action 1" />
-            <Button inverse label="Action 2" />
+            <Button style={{ color: '#fff' }} label="Action 1" />
+            <Button style={{ color: '#fff' }} label="Action 2" />
           </CardActions>
         </CardMedia>
       </Card>
@@ -218,9 +218,9 @@ const cards = {
           image="https://placeimg.com/280/280/people"
         >
           <CardActions style={{ justifyContent: 'center' }}>
-            <IconButton inverse icon="fast_rewind" />
-            <IconButton inverse icon="play_arrow" />
-            <IconButton inverse icon="fast_forward" />
+            <IconButton style={{ color: '#fff' }} icon="fast_rewind" />
+            <IconButton style={{ color: '#fff' }} icon="play_arrow" />
+            <IconButton style={{ color: '#fff' }} icon="fast_forward" />
           </CardActions>
         </CardMedia>
       </Card>
