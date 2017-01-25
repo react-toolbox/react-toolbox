@@ -1,0 +1,9 @@
+engines:
+ eslint:
+   enabled: true
+   
+ratings:
+ paths:
+ - "**.js"
+
+exclude_paths:
