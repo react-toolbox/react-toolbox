@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { INPUT } from '../identifiers.js';
@@ -7,51 +7,52 @@ import InjectedFontIcon from '../font_icon/FontIcon.js';
 const factory = (FontIcon) => {
   class Input extends React.Component {
     static propTypes = {
-      children: React.PropTypes.any,
-      className: React.PropTypes.string,
-      disabled: React.PropTypes.bool,
-      error: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.node
+      children: PropTypes.any,
+      className: PropTypes.string,
+      defaultValue: PropTypes.string,
+      disabled: PropTypes.bool,
+      error: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node
       ]),
-      floating: React.PropTypes.bool,
-      hint: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.node
+      floating: PropTypes.bool,
+      hint: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node
       ]),
-      icon: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.element
+      icon: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element
       ]),
-      label: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.node
+      label: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node
       ]),
-      maxLength: React.PropTypes.number,
-      multiline: React.PropTypes.bool,
-      name: React.PropTypes.string,
-      onBlur: React.PropTypes.func,
-      onChange: React.PropTypes.func,
-      onFocus: React.PropTypes.func,
-      onKeyPress: React.PropTypes.func,
-      required: React.PropTypes.bool,
-      rows: React.PropTypes.number,
-      theme: React.PropTypes.shape({
-        bar: React.PropTypes.string,
-        counter: React.PropTypes.string,
-        disabled: React.PropTypes.string,
-        error: React.PropTypes.string,
-        errored: React.PropTypes.string,
-        hidden: React.PropTypes.string,
-        hint: React.PropTypes.string,
-        icon: React.PropTypes.string,
-        input: React.PropTypes.string,
-        inputElement: React.PropTypes.string,
-        required: React.PropTypes.string,
-        withIcon: React.PropTypes.string
+      maxLength: PropTypes.number,
+      multiline: PropTypes.bool,
+      name: PropTypes.string,
+      onBlur: PropTypes.func,
+      onChange: PropTypes.func,
+      onFocus: PropTypes.func,
+      onKeyPress: PropTypes.func,
+      required: PropTypes.bool,
+      rows: PropTypes.number,
+      theme: PropTypes.shape({
+        bar: PropTypes.string,
+        counter: PropTypes.string,
+        disabled: PropTypes.string,
+        error: PropTypes.string,
+        errored: PropTypes.string,
+        hidden: PropTypes.string,
+        hint: PropTypes.string,
+        icon: PropTypes.string,
+        input: PropTypes.string,
+        inputElement: PropTypes.string,
+        required: PropTypes.string,
+        withIcon: PropTypes.string
       }),
-      type: React.PropTypes.string,
-      value: React.PropTypes.any
+      type: PropTypes.string,
+      value: PropTypes.any
     };
 
     static defaultProps = {
@@ -150,8 +151,15 @@ const factory = (FontIcon) => {
       this.refs.input.focus();
     }
 
+    valuePresent (value) {
+      return value !== null
+        && value !== undefined
+        && value !== ''
+        && !(typeof value === Number && isNaN(value));
+    }
+
     render () {
-      const { children, disabled, error, floating, hint, icon,
+      const { children, defaultValue, disabled, error, floating, hint, icon,
               name, label: labelText, maxLength, multiline, required,
               theme, type, value, onKeyPress, rows = 1, ...others} = this.props;
       const length = maxLength && value ? value.length : 0;
@@ -164,10 +172,7 @@ const factory = (FontIcon) => {
         [theme.withIcon]: icon
       }, this.props.className);
 
-      const valuePresent = value !== null
-        && value !== undefined
-        && value !== ''
-        && !(typeof value === Number && isNaN(value));
+      const valuePresent = this.valuePresent(value) || this.valuePresent(defaultValue);
 
       const inputElementProps = {
         ...others,
@@ -176,6 +181,7 @@ const factory = (FontIcon) => {
         ref: 'input',
         role: 'input',
         name,
+        defaultValue,
         disabled,
         required,
         type,
