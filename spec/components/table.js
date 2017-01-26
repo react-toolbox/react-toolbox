@@ -10,7 +10,7 @@ const data = [
   { name: 'Gingerbread', calories: 356, fat: 16.0, carbs: 49, protein: 3.9, sodium: 327, calcium: '7%', iron: '16%' },
   { name: 'Ice cream sandwich', calories: 237, fat: 9.0, carbs: 37, protein: 4.3, sodium: 129, calcium: '8%', iron: '1%' },
   { name: 'Jelly bean', calories: 375, fat: 0.0, carbs: 94, protein: 0.0, sodium: 50, calcium: '0%', iron: '0%' },
-  { name: 'KitKat', calories: 518, fat: 26.0, carbs: 65, protein: 7, sodium: 54, calcium: '12%', iron: '6%' }
+  { name: 'KitKat', calories: 518, fat: 26.0, carbs: 65, protein: 7, sodium: 54, calcium: '12%', iron: '6%' },
 ];
 
 const TooltippedCell = Tooltip(TableCell);
@@ -30,7 +30,7 @@ const sortByCaloriesDesc = (a, b) => {
 class TableTest extends Component {
   state = {
     selected: ['Donut'],
-    sorted: 'asc'
+    sorted: 'asc',
   };
 
   getSortedData = () => {
@@ -38,7 +38,7 @@ class TableTest extends Component {
     return data.sort(compare);
   }
 
-  handleRowSelect = selected => {
+  handleRowSelect = (selected) => {
     const sortedData = this.getSortedData();
     this.setState({ selected: selected.map(item => sortedData[item].name) });
   };
@@ -49,7 +49,7 @@ class TableTest extends Component {
     this.setState({ sorted: nextSorting });
   };
 
-  render () {
+  render() {
     const { sorted } = this.state;
     const sortedData = this.getSortedData();
     return (

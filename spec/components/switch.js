@@ -5,18 +5,18 @@ class SwitchTest extends React.Component {
   state = {
     switch_1: true,
     switch_2: false,
-    switch_3: true
+    switch_3: true,
   };
 
   handleChange = (field, value) => {
-    this.setState({...this.state, [field]: value});
+    this.setState({ ...this.state, [field]: value });
   };
 
-  render () {
+  render() {
     return (
       <section>
         <h5>Switches</h5>
-        <p style={{marginBottom: '10px'}}>This is more beautiful than the old fashion checkboxes...</p>
+        <p style={{ marginBottom: '10px' }}>This is more beautiful than the old fashion checkboxes...</p>
         <Switch
           checked={this.state.switch_1}
           label="Push notifications"

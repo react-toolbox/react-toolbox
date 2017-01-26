@@ -5,11 +5,11 @@ class CheckboxTest extends React.Component {
   state = {
     checkbox_1: true,
     checkbox_2: false,
-    checkbox_3: true
+    checkbox_3: true,
   };
 
   handleChange = (field, value) => {
-    this.setState({...this.state, [field]: value});
+    this.setState({ ...this.state, [field]: value });
   };
 
   handleFocus = () => {
@@ -20,11 +20,11 @@ class CheckboxTest extends React.Component {
     console.log('Blur');
   };
 
-  render () {
+  render() {
     return (
       <section>
         <h5>Checkbox</h5>
-        <p style={{marginBottom: '10px'}}>Lorem ipsum...</p>
+        <p style={{ marginBottom: '10px' }}>Lorem ipsum...</p>
 
         <Checkbox
           checked={this.state.checkbox_1}

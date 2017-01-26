@@ -1,11 +1,11 @@
 import { themr } from 'react-css-themr';
-import { CARD } from '../identifiers.js';
-import { Card } from './Card.js';
-import { CardActions } from './CardActions.js';
-import { CardMedia } from './CardMedia.js';
-import { CardText } from './CardText.js';
-import { cardTitleFactory } from './CardTitle.js';
-import Avatar from '../avatar';
+import { CARD } from '../identifiers';
+import { Card } from './Card';
+import { CardActions } from './CardActions';
+import { CardMedia } from './CardMedia';
+import { CardText } from './CardText';
+import { cardTitleFactory } from './CardTitle';
+import { Avatar } from '../avatar';
 import theme from './theme.css';
 
 const CardTitle = cardTitleFactory(Avatar);

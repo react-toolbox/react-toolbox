@@ -4,7 +4,7 @@ import { themr } from 'react-css-themr';
 import InjectDrawer from '../drawer/Drawer';
 import { LAYOUT } from '../identifiers';
 
-const factory = Drawer => {
+const factory = (Drawer) => {
   const NavDrawer = ({
     active,
     className,
@@ -16,7 +16,7 @@ const factory = Drawer => {
   }) => {
     const _className = classnames({
       [theme.pinned]: pinned,
-      [theme.clipped]: clipped
+      [theme.clipped]: clipped,
     }, className);
 
     return (
@@ -40,12 +40,15 @@ const factory = Drawer => {
     permanentAt: PropTypes.oneOf(['sm', 'smTablet', 'md', 'lg', 'lgTablet', 'xl', 'xxl', 'xxxl']),
     pinned: PropTypes.bool,
     right: PropTypes.bool,
-    theme: PropTypes.object
+    theme: PropTypes.shape({
+      clipped: PropTypes.string,
+      pinned: PropTypes.string,
+    }),
   };
 
   NavDrawer.defaultProps = {
     className: '',
-    pinned: false
+    pinned: false,
   };
 
   return NavDrawer;

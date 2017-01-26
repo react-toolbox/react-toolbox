@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { TABLE } from '../identifiers.js';
-import InjectFontIcon from '../font_icon/FontIcon.js';
+import { TABLE } from '../identifiers';
+import InjectFontIcon from '../font_icon/FontIcon';
 
 const ASC = 'asc';
 const DESC = 'desc';
@@ -10,7 +10,7 @@ const DESC = 'desc';
 const factory = (FontIcon) => {
   class TableCell extends Component {
     static propTypes = {
-      children: PropTypes.any,
+      children: PropTypes.node,
       className: PropTypes.string,
       column: PropTypes.number,
       numeric: PropTypes.bool,
@@ -25,23 +25,23 @@ const factory = (FontIcon) => {
         rowCell: PropTypes.string,
         sorted: PropTypes.string,
         sortIcon: PropTypes.string,
-        tableCell: PropTypes.string
-      })
+        tableCell: PropTypes.string,
+      }),
     };
 
     static defaultProps = {
       children: PropTypes.node,
       className: '',
       numeric: false,
-      tagName: 'td'
+      tagName: 'td',
     };
 
-    handleClick = event => {
+    handleClick = (event) => {
       const { onClick, row, column } = this.props;
       if (onClick) onClick(event, column, row);
     }
 
-    render () {
+    render() {
       const {
         children,
         className,
@@ -58,23 +58,23 @@ const factory = (FontIcon) => {
         [theme.headCell]: tagName === 'th',
         [theme.rowCell]: tagName === 'td',
         [theme.sorted]: sorted,
-        [theme.numeric]: numeric
+        [theme.numeric]: numeric,
       }, className);
 
       const props = {
         ...other,
         className: _className,
-        onClick: this.handleClick
+        onClick: this.handleClick,
       };
 
       return (
         React.createElement(tagName, props, [
           sorted && <FontIcon
             className={classnames(theme.sortIcon, { [theme.asc]: sorted === ASC })}
-            key='icon'
+            key="icon"
             value="arrow_downward"
           />,
-          children
+          children,
         ])
       );
     }

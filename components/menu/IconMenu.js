@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { MENU } from '../identifiers.js';
-import InjectIconButton from '../button/IconButton.js';
-import InjectMenu from './Menu.js';
+import { MENU } from '../identifiers';
+import InjectIconButton from '../button/IconButton';
+import InjectMenu from './Menu';
 
 const factory = (IconButton, Menu) => {
   class IconMenu extends Component {
@@ -12,7 +12,7 @@ const factory = (IconButton, Menu) => {
       className: PropTypes.string,
       icon: PropTypes.oneOfType([
         PropTypes.string,
-        PropTypes.element
+        PropTypes.element,
       ]),
       iconRipple: PropTypes.bool,
       menuRipple: PropTypes.bool,
@@ -22,11 +22,11 @@ const factory = (IconButton, Menu) => {
       onShow: PropTypes.func,
       position: PropTypes.string,
       selectable: PropTypes.bool,
-      selected: PropTypes.any,
+      selected: PropTypes.node,
       theme: PropTypes.shape({
         icon: PropTypes.string,
-        iconMenu: PropTypes.string
-      })
+        iconMenu: PropTypes.string,
+      }),
     };
 
     static defaultProps = {
@@ -35,11 +35,11 @@ const factory = (IconButton, Menu) => {
       iconRipple: true,
       menuRipple: true,
       position: 'auto',
-      selectable: false
+      selectable: false,
     };
 
     state = {
-      active: false
+      active: false,
     }
 
     handleButtonClick = (event) => {
@@ -52,7 +52,7 @@ const factory = (IconButton, Menu) => {
       if (this.props.onHide) this.props.onHide();
     }
 
-    render () {
+    render() {
       const {
         children, className, icon, iconRipple, inverse, menuRipple, onHide, // eslint-disable-line
         onSelect, onShow, position, selectable, selected, theme, ...other

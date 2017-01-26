@@ -1,11 +1,11 @@
 import React, { PropTypes, Component, cloneElement } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import filterReactChildren from '../utils/filter-react-children.js';
-import isComponentOfType from '../utils/is-component-of-type.js';
-import { TABLE } from '../identifiers.js';
-import InjectTableHead from './TableHead.js';
-import InjectTableRow from './TableRow.js';
+import filterReactChildren from '../utils/filter-react-children';
+import isComponentOfType from '../utils/is-component-of-type';
+import { TABLE } from '../identifiers';
+import InjectTableHead from './TableHead';
+import InjectTableRow from './TableRow';
 
 const factory = (TableHead, TableRow) => {
   const isTableHead = child => isComponentOfType(TableHead, child);
@@ -20,21 +20,21 @@ const factory = (TableHead, TableRow) => {
       selectable: PropTypes.bool,
       theme: PropTypes.shape({
         head: PropTypes.string,
-        table: PropTypes.string
-      })
+        table: PropTypes.string,
+      }),
     };
 
     static defaultProps = {
       className: '',
       multiSelectable: false,
-      selectable: true
+      selectable: true,
     };
 
     getRowTuples = () => React.Children
       .toArray(filterReactChildren(this.props.children, isTableRow))
       .map((child, index) => [index, Boolean(child.props.selected)]);
 
-    handleHeadSelect = value => {
+    handleHeadSelect = (value) => {
       if (this.props.onRowSelect) {
         this.props.onRowSelect(value
           ? this.getRowTuples().map(item => item[0])
@@ -42,7 +42,7 @@ const factory = (TableHead, TableRow) => {
       }
     };
 
-    handleRowSelect = idx => {
+    handleRowSelect = (idx) => {
       if (this.props.onRowSelect) {
         if (this.props.multiSelectable) {
           const current = this.getRowTuples().filter(item => item[1]).map(item => item[0]);
@@ -66,8 +66,8 @@ const factory = (TableHead, TableRow) => {
           selected,
           multiSelectable: this.props.multiSelectable,
           onSelect: this.handleHeadSelect,
-          selectable: this.props.selectable
-        })
+          selectable: this.props.selectable,
+        }),
       );
     };
 
@@ -76,11 +76,11 @@ const factory = (TableHead, TableRow) => {
       (child, idx) => cloneElement(child, {
         idx,
         onSelect: this.handleRowSelect,
-        selectable: this.props.selectable
-      })
+        selectable: this.props.selectable,
+      }),
     );
 
-    render () {
+    render() {
       const {
         className,
         multiSelectable, // eslint-disable-line

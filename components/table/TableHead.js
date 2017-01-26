@@ -1,8 +1,8 @@
 import React, { Component, PropTypes, cloneElement } from 'react';
 import { themr } from 'react-css-themr';
-import { TABLE } from '../identifiers.js';
-import InjectCheckbox from '../checkbox/Checkbox.js';
-import InjectTableCell from './TableCell.js';
+import { TABLE } from '../identifiers';
+import InjectCheckbox from '../checkbox/Checkbox';
+import InjectTableCell from './TableCell';
 
 const factory = (Checkbox, TableCell) => {
   class TableHead extends Component {
@@ -15,19 +15,19 @@ const factory = (Checkbox, TableCell) => {
       selectable: PropTypes.bool,
       selected: PropTypes.bool,
       theme: PropTypes.shape({
-        checkboxCell: PropTypes.string
-      })
+        checkboxCell: PropTypes.string,
+      }),
     }
 
     static defaultProps = {
-      displaySelect: true
+      displaySelect: true,
     }
 
     handleSelect = (value, event) => {
       this.props.onSelect(value, event);
     };
 
-    render () {
+    render() {
       const {
         children,
         displaySelect,
@@ -49,7 +49,7 @@ const factory = (Checkbox, TableCell) => {
           </TableCell>}
           {React.Children.map(children, (child, index) => cloneElement(child, {
             column: index,
-            tagName: 'th'
+            tagName: 'th',
           }))}
         </tr>
       );

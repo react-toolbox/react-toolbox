@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import Button from 'react-toolbox/button';
-import {Card, CardTitle, CardMedia, CardText, CardActions} from 'react-toolbox/card';
+import { Card, CardTitle, CardMedia, CardText, CardActions } from 'react-toolbox/card';
 import Logo from '../../logo';
 import Navigation from '../../navigation';
 import style from './style.css';
@@ -23,9 +23,9 @@ const Home = () => (
   <article>
     <header className={style.header}>
       <div className={style.github}>
-        <iframe src='https://ghbtns.com/github-btn.html?user=react-toolbox&amp;repo=react-toolbox&amp;type=star&amp;count=true' frameBorder='0' scrolling='0' />
-        <iframe src='https://ghbtns.com/github-btn.html?user=react-toolbox&amp;repo=react-toolbox&amp;type=fork&amp;count=true' frameBorder='0' scrolling='0' />
-        <a className={style.donate} href='https://www.paypal.me/javivelasco' target='_blank'>
+        <iframe src="https://ghbtns.com/github-btn.html?user=react-toolbox&amp;repo=react-toolbox&amp;type=star&amp;count=true" frameBorder="0" scrolling="0" />
+        <iframe src="https://ghbtns.com/github-btn.html?user=react-toolbox&amp;repo=react-toolbox&amp;type=fork&amp;count=true" frameBorder="0" scrolling="0" />
+        <a className={style.donate} href="https://www.paypal.me/javivelasco" target="_blank">
           <span className={style.legend}>support</span>
           <span className={style.paypal}>paypal</span>
         </a>
@@ -50,8 +50,8 @@ const Home = () => (
         our components, so fun!
       </p>
 
-      <Link to='/components'>
-        <Button label='Try it now!' raised accent />
+      <Link to="/components">
+        <Button label="Try it now!" raised accent />
       </Link>
     </section>
 
@@ -59,22 +59,22 @@ const Home = () => (
       <h3>About the authors</h3>
       <ul className={style.authors}>
         <Card className={style.author}>
-          <CardMedia aspectRatio='wide' image='images/javivelasco.jpg' />
+          <CardMedia aspectRatio="wide" image="images/javivelasco.jpg" />
           <CardTitle title="Javi Velasco" subtitle="@javivelasco" />
           <CardText>Software gardener • Film, music & comic lover • Frontend Engineer at Audiense  • Any biographer in the room?</CardText>
           <CardActions>
-            <Button href='http://github.com/javivelasco' target='_blank'><GithubIcon /> Github</Button>
-            <Button href='http://twitter.com/javivelasco' theme={style} target='_blank' className={style.twitterButton}><TwitterIcon /> Twitter</Button>
+            <Button href="http://github.com/javivelasco" target="_blank"><GithubIcon /> Github</Button>
+            <Button href="http://twitter.com/javivelasco" theme={style} target="_blank" className={style.twitterButton}><TwitterIcon /> Twitter</Button>
           </CardActions>
         </Card>
 
         <Card className={style.author}>
-          <CardMedia aspectRatio='wide' image='images/soyjavi.jpg' />
+          <CardMedia aspectRatio="wide" image="images/soyjavi.jpg" />
           <CardTitle title="Javi Jiménez" subtitle="@soyjavi" />
           <CardText>Creative Doer · A complicated #human who builds stuff · #author · #opensource lover · #traveller · with a dark past being CEO & CTO</CardText>
           <CardActions>
-            <Button href='http://github.com/soyjavi' target='_blank'><GithubIcon /> Github</Button>
-            <Button href='http://twitter.com/soyjavi' theme={style} target='_blank' className={style.twitterButton}><TwitterIcon /> Twitter</Button>
+            <Button href="http://github.com/soyjavi" target="_blank"><GithubIcon /> Github</Button>
+            <Button href="http://twitter.com/soyjavi" theme={style} target="_blank" className={style.twitterButton}><TwitterIcon /> Twitter</Button>
           </CardActions>
         </Card>
       </ul>
