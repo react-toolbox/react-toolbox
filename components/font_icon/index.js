@@ -1,4 +1,4 @@
-import FontIcon from './FontIcon.js';
+import { FontIcon } from './FontIcon';
 
 export default FontIcon;
 export { FontIcon };

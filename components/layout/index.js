@@ -3,9 +3,9 @@ import { LAYOUT } from '../identifiers';
 import { layoutFactory } from './Layout';
 import { sidebarFactory } from './Sidebar';
 import { navDrawerFactory } from './NavDrawer';
-import Panel from './Panel';
-import AppBar from '../app_bar';
-import Drawer from '../drawer';
+import { Panel } from './Panel';
+import { AppBar } from '../app_bar';
+import { Drawer } from '../drawer';
 import theme from './theme.css';
 
 const injectTheme = component => themr(LAYOUT, theme)(component);

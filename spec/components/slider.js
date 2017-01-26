@@ -4,14 +4,14 @@ import Slider from '../../components/slider';
 class SliderTest extends React.Component {
   state = {
     slider2: 5,
-    slider3: 1
+    slider3: 1,
   };
 
   handleChange = (slider, value) => {
-    this.setState({...this.state, [slider]: value});
+    this.setState({ ...this.state, [slider]: value });
   };
 
-  render () {
+  render() {
     return (
       <section>
         <h5>Sliders</h5>

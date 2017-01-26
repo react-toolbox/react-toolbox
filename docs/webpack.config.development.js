@@ -6,7 +6,7 @@ const toolboxVariables = require('./toolbox-variables');
 
 module.exports = {
   context: __dirname,
-	devtool: 'inline-source-map',
+  devtool: 'inline-source-map',
   entry: [
     'webpack-hot-middleware/client',
     './app/index.js'
@@ -19,7 +19,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.scss', '.css', '.json', '.md'],
     packageMains: ['browser', 'web', 'browserify', 'main', 'style'],
-    alias: { 'react-toolbox': path.resolve(__dirname + './../components') },
+    alias: { 'react-toolbox': path.resolve(`${__dirname}./../components`) },
     modulesDirectories: [
       'node_modules',
       path.resolve(__dirname, './node_modules'),
@@ -38,7 +38,7 @@ module.exports = {
       loaders: ['style-loader', 'css-loader']
     }, {
       test: /\.css$/,
-      include: [path.resolve(__dirname, './app'), path.resolve(__dirname + './../components')],
+      include: [path.resolve(__dirname, './app'), path.resolve(`${__dirname}./../components`)],
       loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss')
     }, {
       test: /\.txt$/,

@@ -6,12 +6,13 @@ class AutocompleteTest extends React.Component {
     simple: 'Spain',
     simpleShowAll: 'England',
     multipleArray: ['ES-es', 'TH-th'],
-    multipleObject: {'ES-es': 'Spain', 'TH-th': 'Thailand'},
+    multipleObject: { 'ES-es': 'Spain', 'TH-th': 'Thailand' },
     countriesArray: ['Spain', 'England', 'USA', 'Thailand', 'Tongo', 'Slovenia'],
     countriesObject: {
       'EN-gb': 'England',
-      'EN-en': 'United States of America', 'EN-nz': 'New Zealand'
-    }
+      'EN-en': 'United States of America',
+      'EN-nz': 'New Zealand',
+    },
   };
 
   handleFocus = (event) => {
@@ -24,26 +25,26 @@ class AutocompleteTest extends React.Component {
       multipleArray: value,
       countriesObject: {
         ...this.state.countriesObject,
-        ...(value[0] && !this.state.countriesObject[value[0]]) ? {[value[0]]: value[0]} : {}
-      }
+        ...(value[0] && !this.state.countriesObject[value[0]]) ? { [value[0]]: value[0] } : {},
+      },
     });
   };
 
   handleMultipleObjectChange = (value) => {
     this.setState({
-      multipleObject: value
+      multipleObject: value,
     });
   };
 
   handleSimpleChange = (value) => {
-    this.setState({simple: value});
+    this.setState({ simple: value });
   };
 
   handleSimpleShowAllChange = (value) => {
-    this.setState({simpleShowAll: value});
+    this.setState({ simpleShowAll: value });
   };
 
-  render () {
+  render() {
     return (
       <section>
         <h5>Autocomplete</h5>

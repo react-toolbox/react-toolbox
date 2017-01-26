@@ -1,20 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { MENU } from '../identifiers.js';
-import FontIcon from '../font_icon/FontIcon.js';
-import rippleFactory from '../ripple/Ripple.js';
+import { MENU } from '../identifiers';
+import { FontIcon } from '../font_icon/FontIcon';
+import rippleFactory from '../ripple/Ripple';
 
 const factory = (ripple) => {
   class MenuItem extends Component {
     static propTypes = {
       caption: PropTypes.string,
-      children: PropTypes.any,
+      children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
       icon: PropTypes.oneOfType([
         PropTypes.string,
-        PropTypes.element
+        PropTypes.element,
       ]),
       onClick: PropTypes.func,
       selected: PropTypes.bool,
@@ -25,14 +25,14 @@ const factory = (ripple) => {
         icon: PropTypes.string,
         menuItem: PropTypes.string,
         selected: PropTypes.string,
-        shortcut: PropTypes.string
-      })
+        shortcut: PropTypes.string,
+      }),
     };
 
     static defaultProps = {
       className: '',
       disabled: false,
-      selected: false
+      selected: false,
     };
 
     handleClick = (event) => {
@@ -41,16 +41,25 @@ const factory = (ripple) => {
       }
     };
 
-    render () {
-      const {icon, caption, children, shortcut, selected, disabled, theme, ...others} = this.props;
+    render() {
+      const {
+        caption,
+        children,
+        disabled,
+        icon,
+        selected,
+        shortcut,
+        theme,
+        ...others
+      } = this.props;
       const className = classnames(theme.menuItem, {
         [theme.selected]: selected,
-        [theme.disabled]: disabled
+        [theme.disabled]: disabled,
       }, this.props.className);
 
       return (
-        <li {...others} data-react-toolbox='menu-item' className={className} onClick={this.handleClick}>
-          {icon ? <FontIcon value={icon} className={theme.icon}/> : null}
+        <li {...others} data-react-toolbox="menu-item" className={className} onClick={this.handleClick}>
+          {icon ? <FontIcon value={icon} className={theme.icon} /> : null}
           <span className={theme.caption}>{caption}</span>
           {shortcut ? <small className={theme.shortcut}>{shortcut}</small> : null}
           {children}

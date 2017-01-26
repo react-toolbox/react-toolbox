@@ -1,23 +1,23 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { NAVIGATION } from '../identifiers.js';
-import InjectButton from '../button/Button.js';
-import InjectLink from '../link/Link.js';
+import { NAVIGATION } from '../identifiers';
+import InjectButton from '../button/Button';
+import InjectLink from '../link/Link';
 
 const factory = (Button, Link) => {
   const Navigation = ({ actions, children, className, routes, theme, type }) => {
     const _className = classnames(theme[type], className);
-    const buttons = actions.map((action, index) => {
-      return <Button className={theme.button} key={index} {...action} />;
-    });
+    const buttons = actions.map((action, index) => (
+      <Button className={theme.button} key={index} {...action} /> // eslint-disable-line
+    ));
 
-    const links = routes.map((route, index) => {
-      return <Link className={theme.link} key={index} {...route} />;
-    });
+    const links = routes.map((route, index) => (
+      <Link className={theme.link} key={index} {...route} /> // eslint-disable-line
+    ));
 
     return (
-      <nav data-react-toolbox='navigation' className={_className}>
+      <nav data-react-toolbox="navigation" className={_className}>
         {links}
         {buttons}
         {children}
@@ -26,24 +26,24 @@ const factory = (Button, Link) => {
   };
 
   Navigation.propTypes = {
-    actions: PropTypes.array,
+    actions: PropTypes.array, // eslint-disable-line
     children: PropTypes.node,
     className: PropTypes.string,
-    routes: PropTypes.array,
+    routes: PropTypes.array, // eslint-disable-line
     theme: PropTypes.shape({
       button: PropTypes.string,
       horizontal: PropTypes.string,
       link: PropTypes.string,
-      vertical: PropTypes.string
+      vertical: PropTypes.string,
     }),
-    type: PropTypes.oneOf(['vertical', 'horizontal'])
+    type: PropTypes.oneOf(['vertical', 'horizontal']),
   };
 
   Navigation.defaultProps = {
     actions: [],
     className: '',
     type: 'horizontal',
-    routes: []
+    routes: [],
   };
 
   return Navigation;

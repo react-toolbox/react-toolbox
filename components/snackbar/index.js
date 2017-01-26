@@ -1,6 +1,6 @@
 import { themr } from 'react-css-themr';
-import { SNACKBAR } from '../identifiers.js';
-import { snackbarFactory } from './Snackbar.js';
+import { SNACKBAR } from '../identifiers';
+import { snackbarFactory } from './Snackbar';
 import { Button } from '../button';
 import theme from './theme.css';
 

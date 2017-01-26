@@ -1,7 +1,7 @@
-import { AVATAR } from '../identifiers.js';
 import { themr } from 'react-css-themr';
-import { avatarFactory } from './Avatar.js';
-import FontIcon from '../font_icon/FontIcon.js';
+import { AVATAR } from '../identifiers';
+import { avatarFactory } from './Avatar';
+import { FontIcon } from '../font_icon/FontIcon';
 import theme from './theme.css';
 
 const Avatar = avatarFactory(FontIcon);

@@ -5,16 +5,16 @@ import style from '../style';
 
 class ChipTest extends React.Component {
   state = {
-    deleted: false
+    deleted: false,
   };
 
   handleDeleteClick = () => {
     this.setState({
-      deleted: true
+      deleted: true,
     });
   };
 
-  render () {
+  render() {
     return (
       <section>
         <h5>Chips</h5>
@@ -22,7 +22,7 @@ class ChipTest extends React.Component {
 
         <Chip>Example chip</Chip>
         <Chip>
-          <span style={{textDecoration: 'line-through'}}>Standard</span>
+          <span style={{ textDecoration: 'line-through' }}>Standard</span>
           <strong>Custom</strong> chip <small>(custom markup)</small>
         </Chip>
 
@@ -38,7 +38,7 @@ class ChipTest extends React.Component {
         }
 
         <Chip>
-          <Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" />
+          <Avatar style={{ backgroundColor: 'deepskyblue' }} icon="folder" />
           <span>Avatar Chip</span>
         </Chip>
 
@@ -47,7 +47,7 @@ class ChipTest extends React.Component {
         </Chip>
 
         <Chip>
-          <Avatar><img src="https://placeimg.com/80/80/animals"/></Avatar>
+          <Avatar><img src="https://placeimg.com/80/80/animals" /></Avatar>
           <span>Image contact chip</span>
         </Chip>
 

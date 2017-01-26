@@ -39,7 +39,7 @@ class Root extends Component {
     this.setState({ pinned: !this.state.pinned });
   };
 
-  render () {
+  render() {
     return (
       <Layout>
         <AppBar
@@ -54,7 +54,7 @@ class Root extends Component {
             className={style.github}
             href="http://react-toolbox"
             target="_blank"
-            icon='web'
+            icon="web"
             floating
             accent
           />

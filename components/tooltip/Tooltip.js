@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import Portal from '../hoc/Portal';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import Portal from '../hoc/Portal';
 import { getViewport } from '../utils/utils';
-import { TOOLTIP } from '../identifiers.js';
+import { TOOLTIP } from '../identifiers';
 import events from '../utils/events';
 
 const POSITION = {
@@ -12,7 +12,7 @@ const POSITION = {
   LEFT: 'left',
   RIGHT: 'right',
   TOP: 'top',
-  VERTICAL: 'vertical'
+  VERTICAL: 'vertical',
 };
 
 const defaults = {
@@ -22,7 +22,7 @@ const defaults = {
   passthrough: true,
   showOnClick: false,
   position: POSITION.VERTICAL,
-  theme: {}
+  theme: {},
 };
 
 const tooltipFactory = (options = {}) => {
@@ -33,13 +33,13 @@ const tooltipFactory = (options = {}) => {
     showOnClick: defaultShowOnClick,
     passthrough: defaultPassthrough,
     position: defaultPosition,
-    theme: defaultTheme
-  } = {...defaults, ...options};
+    theme: defaultTheme,
+  } = { ...defaults, ...options };
 
-  return ComposedComponent => {
+  return (ComposedComponent) => {
     class TooltippedComponent extends Component {
       static propTypes = {
-        children: PropTypes.any,
+        children: PropTypes.node,
         className: PropTypes.string,
         onClick: PropTypes.func,
         onMouseEnter: PropTypes.func,
@@ -47,16 +47,16 @@ const tooltipFactory = (options = {}) => {
         theme: PropTypes.shape({
           tooltip: PropTypes.string,
           tooltipActive: PropTypes.string,
-          tooltipWrapper: PropTypes.string
+          tooltipWrapper: PropTypes.string,
         }),
         tooltip: PropTypes.oneOfType([
           PropTypes.string,
-          PropTypes.node
+          PropTypes.node,
         ]),
         tooltipDelay: PropTypes.number,
         tooltipHideOnClick: PropTypes.bool,
         tooltipPosition: PropTypes.oneOf(Object.keys(POSITION).map(key => POSITION[key])),
-        tooltipShowOnClick: PropTypes.bool
+        tooltipShowOnClick: PropTypes.bool,
       };
 
       static defaultProps = {
@@ -64,23 +64,46 @@ const tooltipFactory = (options = {}) => {
         tooltipDelay: defaultDelay,
         tooltipHideOnClick: defaultHideOnClick,
         tooltipPosition: defaultPosition,
-        tooltipShowOnClick: defaultShowOnClick
+        tooltipShowOnClick: defaultShowOnClick,
       };
 
       state = {
         active: false,
         position: this.props.tooltipPosition,
-        visible: false
+        visible: false,
       };
 
-      componentWillUnmount () {
-        if (this.refs.tooltip) {
-          events.removeEventListenerOnTransitionEnded(this.refs.tooltip, this.onTransformEnd);
+      componentWillUnmount() {
+        if (this.tooltipNode) {
+          events.removeEventListenerOnTransitionEnded(this.tooltipNode, this.onTransformEnd);
         }
         if (this.timeout) clearTimeout(this.timeout);
       }
 
-      activate ({ top, left, position }) {
+      onTransformEnd = (e) => {
+        if (e.propertyName === 'transform') {
+          events.removeEventListenerOnTransitionEnded(this.tooltipNode, this.onTransformEnd);
+          this.setState({ visible: false });
+        }
+      };
+
+      getPosition(element) {
+        const { tooltipPosition } = this.props;
+        if (tooltipPosition === POSITION.HORIZONTAL) {
+          const origin = element.getBoundingClientRect();
+          const { width: ww } = getViewport();
+          const toRight = origin.left < ((ww / 2) - (origin.width / 2));
+          return toRight ? POSITION.RIGHT : POSITION.LEFT;
+        } else if (tooltipPosition === POSITION.VERTICAL) {
+          const origin = element.getBoundingClientRect();
+          const { height: wh } = getViewport();
+          const toBottom = origin.top < ((wh / 2) - (origin.height / 2));
+          return toBottom ? POSITION.BOTTOM : POSITION.TOP;
+        }
+        return tooltipPosition;
+      }
+
+      activate({ top, left, position }) {
         if (this.timeout) clearTimeout(this.timeout);
         this.setState({ visible: true, position });
         this.timeout = setTimeout(() => {
@@ -88,34 +111,17 @@ const tooltipFactory = (options = {}) => {
         }, this.props.tooltipDelay);
       }
 
-      deactivate () {
+      deactivate() {
         if (this.timeout) clearTimeout(this.timeout);
         if (this.state.active) {
-          events.addEventListenerOnTransitionEnded(this.refs.tooltip, this.onTransformEnd);
+          events.addEventListenerOnTransitionEnded(this.tooltipNode, this.onTransformEnd);
           this.setState({ active: false });
         } else if (this.state.visible) {
           this.setState({ visible: false });
         }
       }
 
-      getPosition (element) {
-        const { tooltipPosition } = this.props;
-        if (tooltipPosition === POSITION.HORIZONTAL) {
-          const origin = element.getBoundingClientRect();
-          const { width: ww } = getViewport();
-          const toRight = origin.left < ((ww / 2) - origin.width / 2);
-          return toRight ? POSITION.RIGHT : POSITION.LEFT;
-        } else if (tooltipPosition === POSITION.VERTICAL) {
-          const origin = element.getBoundingClientRect();
-          const { height: wh } = getViewport();
-          const toBottom = origin.top < ((wh / 2) - origin.height / 2);
-          return toBottom ? POSITION.BOTTOM : POSITION.TOP;
-        } else {
-          return tooltipPosition;
-        }
-      }
-
-      calculatePosition (element) {
+      calculatePosition(element) {
         const position = this.getPosition(element);
         const { top, left, height, width } = element.getBoundingClientRect();
         const xOffset = window.scrollX || window.pageXOffset;
@@ -124,35 +130,29 @@ const tooltipFactory = (options = {}) => {
           return {
             top: top + height + yOffset,
             left: left + (width / 2) + xOffset,
-            position
+            position,
           };
         } else if (position === POSITION.TOP) {
           return {
             top: top + yOffset,
             left: left + (width / 2) + xOffset,
-            position
+            position,
           };
         } else if (position === POSITION.LEFT) {
           return {
             top: top + (height / 2) + yOffset,
             left: left + xOffset,
-            position
+            position,
           };
         } else if (position === POSITION.RIGHT) {
           return {
             top: top + (height / 2) + yOffset,
             left: left + width + xOffset,
-            position
+            position,
           };
         }
+        return undefined;
       }
-
-      onTransformEnd = (e) => {
-        if (e.propertyName === 'transform') {
-          events.removeEventListenerOnTransitionEnded(this.refs.tooltip, this.onTransformEnd);
-          this.setState({ visible: false });
-        }
-      };
 
       handleMouseEnter = (event) => {
         this.activate(this.calculatePosition(event.currentTarget));
@@ -166,7 +166,7 @@ const tooltipFactory = (options = {}) => {
 
       handleClick = (event) => {
         if (this.props.tooltipHideOnClick && this.state.active) {
-            this.deactivate();
+          this.deactivate();
         }
 
         if (this.props.tooltipShowOnClick && !this.state.active) {
@@ -176,7 +176,7 @@ const tooltipFactory = (options = {}) => {
         if (this.props.onClick) this.props.onClick(event);
       };
 
-      render () {
+      render() {
         const { active, left, top, position, visible } = this.state;
         const positionClass = `tooltip${position.charAt(0).toUpperCase() + position.slice(1)}`;
         const {
@@ -196,7 +196,7 @@ const tooltipFactory = (options = {}) => {
 
         const _className = classnames(theme.tooltip, {
           [theme.tooltipActive]: active,
-          [theme[positionClass]]: theme[positionClass]
+          [theme[positionClass]]: theme[positionClass],
         });
 
         const childProps = {
@@ -204,7 +204,7 @@ const tooltipFactory = (options = {}) => {
           className,
           onClick: this.handleClick,
           onMouseEnter: this.handleMouseEnter,
-          onMouseLeave: this.handleMouseLeave
+          onMouseLeave: this.handleMouseLeave,
         };
 
         const shouldPass = typeof ComposedComponent !== 'string' && defaultPassthrough;
@@ -213,11 +213,16 @@ const tooltipFactory = (options = {}) => {
         return React.createElement(ComposedComponent, finalProps, children,
           visible && (
             <Portal>
-              <span ref="tooltip" className={_className} data-react-toolbox="tooltip" style={{top, left}}>
+              <span
+                ref={(node) => { this.tooltipNode = node; }}
+                className={_className}
+                data-react-toolbox="tooltip"
+                style={{ top, left }}
+              >
                 <span className={theme.tooltipInner}>{tooltip}</span>
               </span>
             </Portal>
-          )
+          ),
         );
       }
     }

@@ -1,9 +1,9 @@
 import React, { cloneElement, Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { TABLE } from '../identifiers.js';
-import InjectCheckbox from '../checkbox/Checkbox.js';
-import InjectTableCell from './TableCell.js';
+import { TABLE } from '../identifiers';
+import InjectCheckbox from '../checkbox/Checkbox';
+import InjectTableCell from './TableCell';
 
 const factory = (Checkbox, TableCell) => {
   class TableRow extends Component {
@@ -17,19 +17,19 @@ const factory = (Checkbox, TableCell) => {
       theme: PropTypes.shape({
         checkboxCell: PropTypes.string,
         row: PropTypes.string,
-        selected: PropTypes.string
-      })
+        selected: PropTypes.string,
+      }),
     };
 
-    handleSelect = value => {
+    handleSelect = (value) => {
       const { idx, onSelect } = this.props;
       if (onSelect) onSelect(idx, value);
     };
 
-    render () {
+    render() {
       const { children, className, selectable, idx, selected, theme, ...other } = this.props; // eslint-disable-line
       const _className = classnames(theme.row, {
-        [theme.selected]: selectable && selected
+        [theme.selected]: selectable && selected,
       }, className);
       return (
         <tr {...other} className={_className}>
@@ -38,7 +38,7 @@ const factory = (Checkbox, TableCell) => {
           </TableCell>}
           {React.Children.map(children, (child, index) => cloneElement(child, {
             column: index,
-            tagName: 'td'
+            tagName: 'td',
           }))}
         </tr>
       );

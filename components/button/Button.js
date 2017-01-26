@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { BUTTON } from '../identifiers.js';
-import InjectFontIcon from '../font_icon/FontIcon.js';
-import rippleFactory from '../ripple/Ripple.js';
+import { BUTTON } from '../identifiers';
+import InjectFontIcon from '../font_icon/FontIcon';
+import rippleFactory from '../ripple/Ripple';
 
 const factory = (ripple, FontIcon) => {
   class Button extends Component {
@@ -17,7 +17,7 @@ const factory = (ripple, FontIcon) => {
       href: PropTypes.string,
       icon: PropTypes.oneOfType([
         PropTypes.string,
-        PropTypes.element
+        PropTypes.element,
       ]),
       inverse: PropTypes.bool,
       label: PropTypes.string,
@@ -39,9 +39,9 @@ const factory = (ripple, FontIcon) => {
         primary: PropTypes.string,
         raised: PropTypes.string,
         rippleWrapper: PropTypes.string,
-        toggle: PropTypes.string
+        toggle: PropTypes.string,
       }),
-      type: PropTypes.string
+      type: PropTypes.string,
     };
 
     static defaultProps = {
@@ -53,48 +53,76 @@ const factory = (ripple, FontIcon) => {
       neutral: true,
       primary: false,
       raised: false,
-      type: 'button'
+      type: 'button',
     };
 
+    getLevel = () => {
+      if (this.props.primary) return 'primary';
+      if (this.props.accent) return 'accent';
+      return 'neutral';
+    }
+
+    getShape = () => {
+      if (this.props.raised) return 'raised';
+      if (this.props.floating) return 'floating';
+      return 'flat';
+    }
+
     handleMouseUp = (event) => {
-      this.refs.button.blur();
+      this.buttonNode.blur();
       if (this.props.onMouseUp) this.props.onMouseUp(event);
     };
 
     handleMouseLeave = (event) => {
-      this.refs.button.blur();
+      this.buttonNode.blur();
       if (this.props.onMouseLeave) this.props.onMouseLeave(event);
     };
 
-    render () {
-      const { accent, children, className, flat, floating, href, icon,
-        inverse, label, mini, neutral, primary, theme, type, raised, ...others} = this.props;
+    render() {
+      const {
+        accent,    // eslint-disable-line
+        children,
+        className,
+        flat,      // eslint-disable-line
+        floating,  // eslint-disable-line
+        href,
+        icon,
+        inverse,
+        label,
+        mini,
+        neutral,
+        primary,   // eslint-disable-line
+        raised,    // eslint-disable-line
+        theme,
+        type,
+        ...others
+      } = this.props;
       const element = href ? 'a' : 'button';
-      const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
-      const shape = flat ? 'flat' : raised ? 'raised' : floating ? 'floating' : 'flat';
+      const level = this.getLevel();
+      const shape = this.getShape();
 
       const classes = classnames(theme.button, [theme[shape]], {
         [theme[level]]: neutral,
         [theme.mini]: mini,
-        [theme.inverse]: inverse
+        [theme.inverse]: inverse,
       }, className);
 
       const props = {
         ...others,
         href,
-        ref: 'button',
+        ref: (node) => { this.buttonNode = node; },
         className: classes,
         disabled: this.props.disabled,
         onMouseUp: this.handleMouseUp,
         onMouseLeave: this.handleMouseLeave,
         type: !href ? type : null,
-        'data-react-toolbox': 'button'
+        'data-react-toolbox': 'button',
       };
 
       return React.createElement(element, props,
-        icon ? <FontIcon className={theme.icon} value={icon}/> : null,
+        icon ? <FontIcon className={theme.icon} value={icon} /> : null,
         label,
-        children
+        children,
       );
     }
   }

@@ -1,21 +1,22 @@
+/* eslint-disable jsx-a11y/aria-role */
 import React, { PropTypes } from 'react';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
-import { DIALOG } from '../identifiers.js';
-import Portal from '../hoc/Portal.js';
-import ActivableRenderer from '../hoc/ActivableRenderer.js';
-import InjectButton from '../button/Button.js';
-import InjectOverlay from '../overlay/Overlay.js';
+import { DIALOG } from '../identifiers';
+import Portal from '../hoc/Portal';
+import ActivableRenderer from '../hoc/ActivableRenderer';
+import InjectButton from '../button/Button';
+import InjectOverlay from '../overlay/Overlay';
 
 const factory = (Overlay, Button) => {
   const Dialog = (props) => {
     const actions = props.actions.map((action, idx) => {
-      const className = classnames(props.theme.button, {[action.className]: action.className});
-      return <Button key={idx} {...action} className={className} />;
+      const className = classnames(props.theme.button, { [action.className]: action.className });
+      return <Button key={idx} {...action} className={className} />; // eslint-disable-line
     });
 
     const className = classnames([props.theme.dialog, props.theme[props.type]], {
-      [props.theme.active]: props.active
+      [props.theme.active]: props.active,
     }, props.className);
 
     return (
@@ -31,15 +32,15 @@ const factory = (Overlay, Button) => {
           theme={props.theme}
           themeNamespace="overlay"
         />
-        <div data-react-toolbox='dialog' className={className}>
-          <section role='body' className={props.theme.body}>
+        <div data-react-toolbox="dialog" className={className}>
+          <section role="body" className={props.theme.body}>
             {props.title ? <h6 className={props.theme.title}>{props.title}</h6> : null}
             {props.children}
           </section>
           {actions.length
-            ? <nav role='navigation' className={props.theme.navigation}>
-                {actions}
-              </nav>
+            ? <nav role="navigation" className={props.theme.navigation}>
+              {actions}
+            </nav>
             : null
           }
         </div>
@@ -48,7 +49,11 @@ const factory = (Overlay, Button) => {
   };
 
   Dialog.propTypes = {
-    actions: PropTypes.array,
+    actions: PropTypes.arrayOf(PropTypes.shape({
+      className: PropTypes.string,
+      label: PropTypes.string,
+      children: PropTypes.node,
+    })),
     active: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
@@ -65,16 +70,16 @@ const factory = (Overlay, Button) => {
       navigation: PropTypes.string,
       overlay: PropTypes.string,
       title: PropTypes.string,
-      wrapper: PropTypes.string
+      wrapper: PropTypes.string,
     }),
     title: PropTypes.string,
-    type: PropTypes.string
+    type: PropTypes.string,
   };
 
   Dialog.defaultProps = {
     actions: [],
     active: false,
-    type: 'normal'
+    type: 'normal',
   };
 
   return ActivableRenderer()(Dialog);

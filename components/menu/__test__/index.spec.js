@@ -1,13 +1,14 @@
+/* eslint-disable */
 import expect from 'expect';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-addons-test-utils';
 import Menu from '../Menu';
-import MenuItem, {MenuItem as RawMenuItem} from '../MenuItem';
+import MenuItem, { MenuItem as RawMenuItem } from '../MenuItem';
 
-describe('MenuItem', function () {
-  describe('#onClick', function () {
-    it('passes to listener the event', function () {
+describe('MenuItem', () => {
+  describe('#onClick', () => {
+    it('passes to listener the event', () => {
       let listenerCalled = false;
       const handleClick = function (event) {
         listenerCalled = true;
@@ -17,7 +18,7 @@ describe('MenuItem', function () {
 
       const tree = ReactTestUtils.renderIntoDocument(
         <Menu>
-          <MenuItem key="1" onClick={handleClick}/>
+          <MenuItem key="1" onClick={handleClick} />
         </Menu>);
 
       const menuItem = ReactTestUtils.findRenderedComponentWithType(tree, RawMenuItem);

@@ -1,14 +1,14 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { CARD } from '../identifiers.js';
-import InjectAvatar from '../avatar/Avatar.js';
+import { CARD } from '../identifiers';
+import InjectAvatar from '../avatar/Avatar';
 
 const factory = (Avatar) => {
-  const CardTitle = ({avatar, children, className, subtitle, theme, title, ...other}) => {
+  const CardTitle = ({ avatar, children, className, subtitle, theme, title, ...other }) => {
     const classes = classnames(theme.cardTitle, {
       [theme.small]: avatar,
-      [theme.large]: !avatar
+      [theme.large]: !avatar,
     }, className);
 
     return (
@@ -29,28 +29,28 @@ const factory = (Avatar) => {
   CardTitle.propTypes = {
     avatar: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.element
+      PropTypes.element,
     ]),
     children: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element,
-      PropTypes.array
+      PropTypes.array,
     ]),
     className: PropTypes.string,
     subtitle: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.element
+      PropTypes.element,
     ]),
     theme: PropTypes.shape({
       large: PropTypes.string,
       title: PropTypes.string,
       small: PropTypes.string,
-      subtitle: PropTypes.string
+      subtitle: PropTypes.string,
     }),
     title: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.element
-    ])
+      PropTypes.element,
+    ]),
   };
 
   return CardTitle;
