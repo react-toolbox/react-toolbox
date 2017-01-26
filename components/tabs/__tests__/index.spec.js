@@ -1,9 +1,9 @@
-import expect from 'expect';
-import utils from '../../utils/testing';
-import ReactTestUtils from 'react-addons-test-utils';
-
+/* eslint-disable import/no-named-as-default */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import expect from 'expect';
+import ReactTestUtils from 'react-addons-test-utils';
+import utils from '../../utils/testing';
 
 import Tabs, { Tabs as RawTabs } from '../Tabs';
 import Tab from '../Tab';
@@ -15,16 +15,17 @@ const getRenderedClassName = (tree, TargetComponent) => {
   return ReactDOM.findDOMNode(rendered).getAttribute('class');
 };
 
-describe('Tabs', function () {
-  let tabContents, composition;
+describe('Tabs', () => {
+  let tabContents;
+  let composition;
 
   class Composition extends Component {
-    constructor () {
+    constructor() {
       super();
       this.state = { index: 0 };
     }
 
-    render () {
+    render() {
       return (
         <Tabs index={this.state.index} {...this.props}>
           <Tab label="tab1">tab1</Tab>
@@ -34,7 +35,7 @@ describe('Tabs', function () {
     }
   }
 
-  it('defaults to only rendering the current tab', function () {
+  it('defaults to only rendering the current tab', () => {
     // initial render
     composition = utils.renderComponent(Composition);
 
@@ -55,7 +56,7 @@ describe('Tabs', function () {
     expect(tabContents[0].props.tabIndex).toEqual(1);
   });
 
-  it('renders inactive tabs when hideMode is set to display', function () {
+  it('renders inactive tabs when hideMode is set to display', () => {
     // initial render
     composition = utils.renderComponent(Composition, { hideMode: 'display' });
 
@@ -64,8 +65,8 @@ describe('Tabs', function () {
 
     expect(tabContents.length).toEqual(2);
 
-    let tabOne = tabContents.find((tab) => (tab.props.children === 'tab1'));
-    let tabTwo = tabContents.find((tab) => (tab.props.children === 'tab2'));
+    let tabOne = tabContents.find(tab => (tab.props.children === 'tab1'));
+    let tabTwo = tabContents.find(tab => (tab.props.children === 'tab2'));
 
     expect(tabOne.props.hidden).toEqual(false);
     expect(tabTwo.props.hidden).toEqual(true);
@@ -79,33 +80,33 @@ describe('Tabs', function () {
 
     expect(tabContents.length).toEqual(2);
 
-    tabOne = tabContents.find((tab) => (tab.props.children === 'tab1'));
-    tabTwo = tabContents.find((tab) => (tab.props.children === 'tab2'));
+    tabOne = tabContents.find(tab => (tab.props.children === 'tab1'));
+    tabTwo = tabContents.find(tab => (tab.props.children === 'tab2'));
 
     expect(tabOne.props.hidden).toEqual(true);
     expect(tabTwo.props.hidden).toEqual(false);
   });
 
-  describe('#render', function () {
-    it('does not use fixed by default', function () {
+  describe('#render', () => {
+    it('does not use fixed by default', () => {
       const tree = ReactTestUtils.renderIntoDocument(<Tabs theme={theme} />);
       const className = getRenderedClassName(tree, RawTabs);
       expect(className).toNotContain(theme.fixed);
     });
 
-    it('uses fixed when set', function () {
+    it('uses fixed when set', () => {
       const tree = ReactTestUtils.renderIntoDocument(<Tabs theme={theme} fixed />);
       const className = getRenderedClassName(tree, RawTabs);
       expect(className).toContain(theme.fixed);
     });
 
-    it('does not use inverse by default', function () {
+    it('does not use inverse by default', () => {
       const tree = ReactTestUtils.renderIntoDocument(<Tabs theme={theme} />);
       const className = getRenderedClassName(tree, RawTabs);
       expect(className).toNotContain(theme.inverse);
     });
 
-    it('uses inverse when set', function () {
+    it('uses inverse when set', () => {
       const tree = ReactTestUtils.renderIntoDocument(<Tabs theme={theme} inverse />);
       const className = getRenderedClassName(tree, RawTabs);
       expect(className).toContain(theme.inverse);

@@ -50,8 +50,9 @@ If you want to provide a theme via context, the component key is `RTDatePicker`.
 | `autoOk`        | `Boolean`       | `false`       | Automatically selects a date upon clicking on a day. |
 | `cancelLabel`   | `String`        | `'Cancel'`    | Label used for cancel button on date picker dialog. |
 | `className`     | `String`        |               | This class will be placed at the top of the `DatePickerDialog` component so you can provide custom styles.|
-| `disabledDates`     | `Array`        |               | An array of date objects which will be disabled in the calendar. All other dates will be enabled.|
-| `enabledDates`     | `Array`        |               | An array of date objects which will be enabled in the calendar. All other dates will be disabled.|
+| `disabledDates` | `Array`         |               | An array of date objects which will be disabled in the calendar. All other dates will be enabled.|
+| `enabledDates`  | `Array`         |               | An array of date objects which will be enabled in the calendar. All other dates will be disabled.|
+| `error`         | `String`        |               | Give an error message to display under the field.|
 | `inputClassName`| `String`        |               | This class will be applied to `Input` component of `DatePicker`. |
 | `inputFormat`   | `Function`      |               | Function to format the date displayed on the input. |
 | `label`         | `String`        |               | The text string to use for the floating label element in the input component.|
@@ -76,6 +77,7 @@ If you want to provide a theme via context, the component key is `RTDatePicker`.
 | `button` | Used for the buttons in the dialog.|
 | `calendar` | Used for the calendar root element.|
 | `calendarWrapper` | Used as wrapper for the calendar component inside dialog.|
+| `container` | Wrapper element of the picker.|
 | `date` | Used for the date element inside header.|
 | `day` | Used for the day element inside the calendar.|
 | `days` | Used for the list of days inside a month.|

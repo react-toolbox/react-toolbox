@@ -26,6 +26,7 @@ You can pass some options to configure the default props for the ripple when dec
 | `centered`      | `Boolean`   | `false`     | True in case you want a centered ripple.|
 | `className`     | `String`    | `''`        | String to customize appearance (color and opacity for example).|
 | `multiple`      | `Boolean`   | `true`      | If true each touch produces a different wave. If false the same wave is restarted. |
+| `passthrough`   | `Boolean`   | `true`      | If true it passes down `theme` and `disabled` properties when present.|
 | `spread`        | `Number`    | `2`         | Factor to indicate how much should the ripple spread under the component.|
 | `theme`         | `Object`    | `null`      | Classnames object defining the ripple style.|
 

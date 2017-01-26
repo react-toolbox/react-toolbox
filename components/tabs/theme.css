@@ -43,10 +43,15 @@
   font-weight: var(--font-weight-semi-bold);
   line-height: 1;
   padding: var(--tab-label-v-padding) var(--tab-label-h-padding);
+  position: relative;
   text-transform: uppercase;
   transition-duration: var(--animation-duration);
   transition-property: box-shadow, color;
   transition-timing-function: var(--animation-curve-default);
+
+  & > .rippleWrapper {
+    overflow: hidden;
+  }
 
   &.active {
     color: var(--tab-text-color);

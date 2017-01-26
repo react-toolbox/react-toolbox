@@ -4,7 +4,7 @@ import { themr } from 'react-css-themr';
 import InjectDrawer from '../drawer/Drawer';
 import { LAYOUT } from '../identifiers';
 
-const factory = Drawer => {
+const factory = (Drawer) => {
   const Sidebar = ({
     active,
     className,
@@ -16,7 +16,7 @@ const factory = Drawer => {
   }) => {
     const _className = classnames({
       [theme.pinned]: pinned,
-      [theme.clipped]: clipped
+      [theme.clipped]: clipped,
     }, className);
 
     return (
@@ -40,14 +40,17 @@ const factory = Drawer => {
     clipped: PropTypes.bool,
     permanentAt: PropTypes.oneOf(['sm', 'smTablet', 'md', 'lg', 'lgTablet', 'xl', 'xxl', 'xxxl']),
     pinned: PropTypes.bool,
-    theme: PropTypes.object,
-    width: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 25, 33, 50, 66, 75, 100])
+    theme: PropTypes.shape({
+      clipped: PropTypes.string,
+      pinned: PropTypes.string,
+    }),
+    width: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 25, 33, 50, 66, 75, 100]),
   };
 
   Sidebar.defaultProps = {
     className: '',
     pinned: false,
-    right: false
+    right: false,
   };
 
   return Sidebar;

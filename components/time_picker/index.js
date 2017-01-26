@@ -1,9 +1,9 @@
 import { themr } from 'react-css-themr';
-import { TIME_PICKER } from '../identifiers.js';
-import { timePickerFactory } from './TimePicker.js';
-import timePickerDialogFactory from './TimePickerDialog.js';
-import Dialog from '../dialog';
-import Input from '../input';
+import { TIME_PICKER } from '../identifiers';
+import { timePickerFactory } from './TimePicker';
+import timePickerDialogFactory from './TimePickerDialog';
+import { Dialog } from '../dialog';
+import { Input } from '../input';
 import theme from './theme.css';
 
 const TimePickerDialog = timePickerDialogFactory(Dialog);

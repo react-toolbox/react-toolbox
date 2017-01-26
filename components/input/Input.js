@@ -1,57 +1,60 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { INPUT } from '../identifiers.js';
-import InjectedFontIcon from '../font_icon/FontIcon.js';
+import { INPUT } from '../identifiers';
+import InjectedFontIcon from '../font_icon/FontIcon';
 
 const factory = (FontIcon) => {
   class Input extends React.Component {
     static propTypes = {
-      children: React.PropTypes.any,
-      className: React.PropTypes.string,
-      disabled: React.PropTypes.bool,
-      error: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.node
+      children: PropTypes.node,
+      className: PropTypes.string,
+      disabled: PropTypes.bool,
+      error: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node,
       ]),
-      floating: React.PropTypes.bool,
-      hint: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.node
+      floating: PropTypes.bool,
+      hint: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node,
       ]),
-      icon: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.element
+      icon: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
       ]),
-      label: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.node
+      label: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node,
       ]),
-      maxLength: React.PropTypes.number,
-      multiline: React.PropTypes.bool,
-      name: React.PropTypes.string,
-      onBlur: React.PropTypes.func,
-      onChange: React.PropTypes.func,
-      onFocus: React.PropTypes.func,
-      onKeyPress: React.PropTypes.func,
-      required: React.PropTypes.bool,
-      rows: React.PropTypes.number,
-      theme: React.PropTypes.shape({
-        bar: React.PropTypes.string,
-        counter: React.PropTypes.string,
-        disabled: React.PropTypes.string,
-        error: React.PropTypes.string,
-        errored: React.PropTypes.string,
-        hidden: React.PropTypes.string,
-        hint: React.PropTypes.string,
-        icon: React.PropTypes.string,
-        input: React.PropTypes.string,
-        inputElement: React.PropTypes.string,
-        required: React.PropTypes.string,
-        withIcon: React.PropTypes.string
+      maxLength: PropTypes.number,
+      multiline: PropTypes.bool,
+      name: PropTypes.string,
+      onBlur: PropTypes.func,
+      onChange: PropTypes.func,
+      onFocus: PropTypes.func,
+      onKeyPress: PropTypes.func,
+      required: PropTypes.bool,
+      rows: PropTypes.number,
+      theme: PropTypes.shape({
+        bar: PropTypes.string,
+        counter: PropTypes.string,
+        disabled: PropTypes.string,
+        error: PropTypes.string,
+        errored: PropTypes.string,
+        hidden: PropTypes.string,
+        hint: PropTypes.string,
+        icon: PropTypes.string,
+        input: PropTypes.string,
+        inputElement: PropTypes.string,
+        required: PropTypes.string,
+        withIcon: PropTypes.string,
       }),
-      type: React.PropTypes.string,
-      value: React.PropTypes.any
+      type: PropTypes.string,
+      value: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.string,
+      ]),
     };
 
     static defaultProps = {
@@ -61,17 +64,17 @@ const factory = (FontIcon) => {
       floating: true,
       multiline: false,
       required: false,
-      type: 'text'
+      type: 'text',
     };
 
-    componentDidMount () {
+    componentDidMount() {
       if (this.props.multiline) {
         window.addEventListener('resize', this.handleAutoresize);
         this.handleAutoresize();
       }
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
       if (!this.props.multiline && nextProps.multiline) {
         window.addEventListener('resize', this.handleAutoresize);
       } else if (this.props.multiline && !nextProps.multiline) {
@@ -79,12 +82,12 @@ const factory = (FontIcon) => {
       }
     }
 
-    componentDidUpdate () {
+    componentDidUpdate() {
       // resize the textarea, if nessesary
       if (this.props.multiline) this.handleAutoresize();
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
       if (this.props.multiline) window.removeEventListener('resize', this.handleAutoresize);
     }
 
@@ -103,7 +106,7 @@ const factory = (FontIcon) => {
     };
 
     handleAutoresize = () => {
-      const element = this.refs.input;
+      const element = this.inputNode;
       const rows = this.props.rows;
 
       if (typeof rows === 'number' && !isNaN(rows)) {
@@ -135,51 +138,52 @@ const factory = (FontIcon) => {
         if (!isReplacing && value.length === maxLength) {
           event.preventDefault();
           event.stopPropagation();
-          return;
+          return undefined;
         }
       }
 
       if (onKeyPress) onKeyPress(event);
+      return undefined;
     };
 
-    blur () {
-      this.refs.input.blur();
+    blur() {
+      this.inputNode.blur();
     }
 
-    focus () {
-      this.refs.input.focus();
+    focus() {
+      this.inputNode.focus();
     }
 
-    render () {
+    render() {
       const { children, disabled, error, floating, hint, icon,
               name, label: labelText, maxLength, multiline, required,
-              theme, type, value, onKeyPress, rows = 1, ...others} = this.props;
+              theme, type, value, onKeyPress, rows = 1, ...others } = this.props;
       const length = maxLength && value ? value.length : 0;
-      const labelClassName = classnames(theme.label, {[theme.fixed]: !floating});
+      const labelClassName = classnames(theme.label, { [theme.fixed]: !floating });
 
       const className = classnames(theme.input, {
         [theme.disabled]: disabled,
         [theme.errored]: error,
         [theme.hidden]: type === 'hidden',
-        [theme.withIcon]: icon
+        [theme.withIcon]: icon,
       }, this.props.className);
 
       const valuePresent = value !== null
         && value !== undefined
         && value !== ''
-        && !(typeof value === Number && isNaN(value));
+        && !(typeof value === Number && isNaN(value)); // eslint-disable-line
 
       const inputElementProps = {
         ...others,
-        className: classnames(theme.inputElement, {[theme.filled]: valuePresent}),
+        className: classnames(theme.inputElement, { [theme.filled]: valuePresent }),
         onChange: this.handleChange,
-        ref: 'input',
+        ref: (node) => { this.inputNode = node; },
         role: 'input',
         name,
         disabled,
         required,
         type,
-        value
+        value,
       };
       if (!multiline) {
         inputElementProps.maxLength = maxLength;
@@ -190,15 +194,15 @@ const factory = (FontIcon) => {
       }
 
       return (
-        <div data-react-toolbox='input' className={className}>
+        <div data-react-toolbox="input" className={className}>
           {React.createElement(multiline ? 'textarea' : 'input', inputElementProps)}
           {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
           <span className={theme.bar} />
           {labelText
-            ? <label className={labelClassName}>
-                {labelText}
-                {required ? <span className={theme.required}> * </span> : null}
-              </label>
+            ? <label className={labelClassName} htmlFor={name}>
+              {labelText}
+              {required ? <span className={theme.required}> * </span> : null}
+            </label>
             : null}
           {hint ? <span hidden={labelText} className={theme.hint}>{hint}</span> : null}
           {error ? <span className={theme.error}>{error}</span> : null}

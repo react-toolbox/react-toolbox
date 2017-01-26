@@ -9,10 +9,10 @@ import BaseDocs from './modules/components.md';
 import components from './modules/components.js';
 import style from './style.css';
 
-const LoadExampleButton = (props) => (
+const LoadExampleButton = props => (
   <Button
     accent
-    icon='code'
+    icon="code"
     label="Load in playground"
     theme={style}
     onClick={props.onClick}
@@ -45,12 +45,12 @@ class Main extends React.Component {
   LOAD_EXAMPLE_CLASS = 'js-load-in-playground playground-button';
 
   handlePlayGroundClick = () => {
-    this.setState({ playground: !this.state.playground});
+    this.setState({ playground: !this.state.playground });
   };
 
   handlePlaygroundLoad = (code) => {
     this.refs.playground.loadCode(code);
-    this.setState({playground: true});
+    this.setState({ playground: true });
   };
 
   renderExampleLoaders () {
@@ -81,7 +81,7 @@ class Main extends React.Component {
 
     return (
       <div className={className}>
-        <Appbar className={style.appbar}/>
+        <Appbar className={style.appbar} />
         <Button
           accent
           floating
@@ -90,8 +90,8 @@ class Main extends React.Component {
           onClick={this.handlePlayGroundClick}
         />
         <MainNavigation className={style.navigation} />
-        <Markdown className={style.documentation} markdown={docs}/>
-        <Playground ref='playground' className={style.playground} />
+        <Markdown className={style.documentation} markdown={docs} />
+        <Playground ref="playground" className={style.playground} />
       </div>
     );
   }

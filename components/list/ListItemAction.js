@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import { themr } from 'react-css-themr';
-import { LIST } from '../identifiers.js';
+import { LIST } from '../identifiers';
 
-const ListItemAction = ({action, theme}) => {
-  const {onClick, onMouseDown} = action.props;
+const ListItemAction = ({ action, theme }) => {
+  const { onClick, onMouseDown } = action.props;
   const stopRipple = onClick && !onMouseDown;
   const stop = e => e.stopPropagation();
   return (
@@ -14,10 +14,10 @@ const ListItemAction = ({action, theme}) => {
 };
 
 ListItemAction.propTypes = {
-  action: PropTypes.object,
+  action: PropTypes.node,
   theme: PropTypes.shape({
-    itemAction: PropTypes.string
-  })
+    itemAction: PropTypes.string,
+  }),
 };
 
 export default themr(LIST)(ListItemAction);

@@ -8,8 +8,11 @@
   --appbar-height: calc(6.4 * var(--unit));
 }
 
-.app {
+body {
   background-color: #f5f5f5;
+}
+
+.app {
   padding: var(--offset);
 
   & > section,

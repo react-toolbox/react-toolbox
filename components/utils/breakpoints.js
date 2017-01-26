@@ -8,5 +8,5 @@ export default {
   lg: 1280,
   xl: 1440,
   xxl: 1600,
-  xxxl: 1920
+  xxxl: 1920,
 };

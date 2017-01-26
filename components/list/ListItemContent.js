@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { LIST } from '../identifiers.js';
-import InjectListItemText from './ListItemText.js';
+import { LIST } from '../identifiers';
+import InjectListItemText from './ListItemText';
 
 const types = ['auto', 'normal', 'large'];
 
@@ -11,34 +11,34 @@ const factory = (ListItemText) => {
     static propTypes = {
       caption: PropTypes.oneOfType([
         PropTypes.string,
-        PropTypes.node
+        PropTypes.node,
       ]),
-      children: PropTypes.any,
+      children: PropTypes.node,
       legend: PropTypes.string,
       theme: PropTypes.shape({
         auto: PropTypes.string,
         itemContentRoot: PropTypes.string,
         large: PropTypes.string,
-        normal: PropTypes.string
+        normal: PropTypes.string,
       }),
-      type: PropTypes.oneOf(types)
+      type: PropTypes.oneOf(types),
     };
 
-    getType () {
-      const {type, children, caption, legend} = this.props;
+    getType() {
+      const { type, children, caption, legend } = this.props;
 
       let count = React.Children.count(children);
-      [caption, legend].forEach(s => { count += s ? 1 : 0; });
+      [caption, legend].forEach((s) => { count += s ? 1 : 0; });
       const typeIndex = Math.min(count, types.length);
 
       return type || types[typeIndex];
     }
 
-    render () {
-      const {children, caption, legend, theme} = this.props;
+    render() {
+      const { children, caption, legend, theme } = this.props;
       const contentType = this.getType();
       const className = classnames(theme.itemContentRoot, {
-        [theme[contentType]]: theme[contentType]
+        [theme[contentType]]: theme[contentType],
       });
 
       return (

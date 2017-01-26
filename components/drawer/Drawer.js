@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
-import Portal from '../hoc/Portal.js';
-import { DRAWER } from '../identifiers.js';
-import ActivableRenderer from '../hoc/ActivableRenderer.js';
-import InjectOverlay from '../overlay/Overlay.js';
+import Portal from '../hoc/Portal';
+import { DRAWER } from '../identifiers';
+import ActivableRenderer from '../hoc/ActivableRenderer';
+import InjectOverlay from '../overlay/Overlay';
 
 const factory = (Overlay) => {
   const Drawer = ({
@@ -16,35 +16,32 @@ const factory = (Overlay) => {
     onEscKeyDown,
     theme,
     type,
-    withOverlay
+    withOverlay,
   }) => {
     const _className = classnames([theme.drawer, theme[type]], {
-      [theme.active]: active
+      [theme.active]: active,
     }, className);
 
     const content = (
-      <aside
-        data-react-toolbox='drawer'
-        className={_className}
-        children={children}
-      />
+      <aside data-react-toolbox="drawer" className={_className}>
+        {children}
+      </aside>
     );
 
-    return React.createElement(insideTree ? 'div' : Portal, {
-      className: theme.wrapper,
-      children: [
-        withOverlay && (
-          <Overlay
-            active={active}
-            onClick={onOverlayClick}
-            onEscKeyDown={onEscKeyDown}
-            theme={theme}
-            themeNamespace="overlay"
-          />
-        ),
-        content
-      ]
-    });
+    return React.createElement(
+      insideTree ? 'div' : Portal,
+      { className: theme.wrapper },
+      withOverlay && (
+        <Overlay
+          active={active}
+          onClick={onOverlayClick}
+          onEscKeyDown={onEscKeyDown}
+          theme={theme}
+          themeNamespace="overlay"
+        />
+      ),
+      content,
+    );
   };
 
   Drawer.propTypes = {
@@ -52,18 +49,18 @@ const factory = (Overlay) => {
     children: PropTypes.node,
     className: PropTypes.string,
     insideTree: PropTypes.bool,
-    onOverlayClick: PropTypes.func,
     onEscKeyDown: PropTypes.func,
+    onOverlayClick: PropTypes.func,
     theme: PropTypes.shape({
       active: PropTypes.string,
       drawer: PropTypes.string,
       left: PropTypes.string,
-      right: PropTypes.string
+      right: PropTypes.string,
     }),
     type: PropTypes.oneOf([
-      'left', 'right'
+      'left', 'right',
     ]),
-    withOverlay: PropTypes.bool
+    withOverlay: PropTypes.bool,
   };
 
   Drawer.defaultProps = {
@@ -71,7 +68,7 @@ const factory = (Overlay) => {
     className: '',
     insideTree: false,
     type: 'left',
-    withOverlay: true
+    withOverlay: true,
   };
 
   return ActivableRenderer()(Drawer);

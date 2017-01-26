@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { OVERLAY } from '../identifiers.js';
+import { OVERLAY } from '../identifiers';
 
 class Overlay extends Component {
   static propTypes = {
@@ -14,21 +14,21 @@ class Overlay extends Component {
     theme: PropTypes.shape({
       active: PropTypes.string,
       backdrop: PropTypes.string,
-      overlay: PropTypes.string
-    })
+      overlay: PropTypes.string,
+    }),
   };
 
   static defaultProps = {
-    lockScroll: true
+    lockScroll: true,
   };
 
-  componentDidMount () {
+  componentDidMount() {
     const { active, lockScroll, onEscKeyDown } = this.props;
     if (onEscKeyDown) document.body.addEventListener('keydown', this.handleEscKey.bind(this));
     if (active && lockScroll) document.body.style.overflow = 'hidden';
   }
 
-  componentWillUpdate (nextProps) {
+  componentWillUpdate(nextProps) {
     if (this.props.lockScroll) {
       const becomingActive = nextProps.active && !this.props.active;
       const becomingUnactive = !nextProps.active && this.props.active;
@@ -43,13 +43,13 @@ class Overlay extends Component {
     }
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.active && !prevProps.active && this.props.onEscKeyDown) {
       document.body.addEventListener('keydown', this.handleEscKey.bind(this));
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     if (this.props.active && this.props.lockScroll) {
       if (!document.querySelectorAll('[data-react-toolbox="overlay"]')[1]) {
         document.body.style.overflow = '';
@@ -67,7 +67,7 @@ class Overlay extends Component {
     }
   }
 
-  handleClick = event => {
+  handleClick = (event) => {
     event.preventDefault();
     event.stopPropagation();
     if (this.props.onClick) {
@@ -75,14 +75,14 @@ class Overlay extends Component {
     }
   }
 
-  render () {
+  render() {
     const { active, className, lockScroll, theme, onEscKeyDown, ...other } = this.props; // eslint-disable-line
     return (
       <div
         {...other}
         onClick={this.handleClick}
         className={classnames(theme.overlay, {
-          [theme.active]: active
+          [theme.active]: active,
         }, className)}
       />
     );
