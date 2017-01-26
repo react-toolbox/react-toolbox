@@ -24,14 +24,22 @@ module.exports = {
     loaders: [{
       test: /\.js$/,
       loader: 'babel',
-      include: [path.join(__dirname, './components'), path.join(__dirname, './spec')]
+      include: [
+        path.join(__dirname, './components'),
+        path.join(__dirname, './spec'),
+        path.join(__dirname, './src')
+      ]
     }, {
       test: /\.css$/,
       include: /node_modules/,
       loader: ExtractTextPlugin.extract('style', 'css')
     }, {
       test: /\.css$/,
-      include: [path.join(__dirname, './components'), path.join(__dirname, './spec')],
+      include: [
+        path.join(__dirname, './components'),
+        path.join(__dirname, './spec'),
+        path.join(__dirname, './src')
+      ],
       loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss')
     }]
   },

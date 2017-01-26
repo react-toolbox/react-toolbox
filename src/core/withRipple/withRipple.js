@@ -1,29 +1,27 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import classnames from 'classnames';
-import { themr } from 'react-css-themr';
 import dissoc from 'ramda/src/dissoc';
-import { RIPPLE } from '../identifiers';
-import events from '../utils/events';
-import prefixer from '../utils/prefixer';
+import events from '../../../components/utils/events';
+import prefixer from '../../../components/utils/prefixer';
 
 const defaults = {
   centered: false,
   className: '',
   multiple: true,
-  passthrough: true,
   spread: 2,
   theme: {},
 };
 
-const rippleFactory = (options = {}) => {
+const withRippleFactory = ({
+  RippleNode,
+  RippleWrapper,
+}) => (options = {}) => {
   const {
     centered: defaultCentered,
     className: defaultClassName,
     multiple: defaultMultiple,
     passthrough: defaultPassthrough,
     spread: defaultSpread,
-    theme: defaultTheme,
     ...props
   } = { ...defaults, ...options };
 
@@ -93,6 +91,10 @@ const rippleFactory = (options = {}) => {
         };
       }
 
+      getRef(key) {
+        return this.ripples[key].refs.ripple;
+      }
+
       /**
        * Increments and internal counter and returns the next value as a string. It
        * is used to assign key references to new ripple elements.
@@ -113,11 +115,6 @@ const rippleFactory = (options = {}) => {
       getLastKey() {
         return `ripple${this.currentCount}`;
       }
-
-      /**
-       * Variable to store the ripple references
-       */
-      rippleNodes = {};
 
       /**
        * Determine if a ripple should start depending if its a touch event. For mobile both
@@ -156,7 +153,7 @@ const rippleFactory = (options = {}) => {
           const runningState = { active: true, restarting: false };
           const ripples = { ...this.state.ripples, [key]: initialState };
           this.setState({ ripples }, () => {
-            if (this.rippleNodes[key]) this.rippleNodes[key].offsetWidth; // eslint-disable-line
+            this.getRef(key).offsetWidth; // eslint-disable-line
             this.setState({ ripples: {
               ...this.state.ripples,
               [key]: Object.assign({}, this.state.ripples[key], runningState),
@@ -174,16 +171,18 @@ const rippleFactory = (options = {}) => {
        */
       addRippleRemoveEventListener(rippleKey) {
         const self = this;
-        const rippleNode = this.rippleNodes[rippleKey];
+        const rippleNode = this.getRef(rippleKey);
         events.addEventListenerOnTransitionEnded(rippleNode, function onOpacityEnd(e) {
           if (e.propertyName === 'opacity') {
             if (self.props.onRippleEnded) self.props.onRippleEnded(e);
-            events.removeEventListenerOnTransitionEnded(self.rippleNodes[rippleKey], onOpacityEnd);
-            delete self.rippleNodes[rippleKey];
+            events.removeEventListenerOnTransitionEnded(self.getRef(rippleKey), onOpacityEnd);
+            // delete self.rippleNodes[rippleKey];
             self.setState({ ripples: dissoc(rippleKey, self.state.ripples) });
           }
         });
       }
+
+      ripples = [];
 
       /**
        * Add an event listener to the document needed to deactivate a ripple and make it dissappear.
@@ -240,18 +239,18 @@ const rippleFactory = (options = {}) => {
       renderRipple(key, className, { active, left, restarting, top, width }) {
         const scale = restarting ? 0 : 1;
         const transform = `translate3d(${(-width / 2) + left}px, ${(-width / 2) + top}px, 0) scale(${scale})`;
-        const _className = classnames(this.props.theme.ripple, {
-          [this.props.theme.rippleActive]: active,
-          [this.props.theme.rippleRestarting]: restarting,
-        }, className);
+        const { className: decoratedClassName, theme, ...other } = this.props; // eslint-disable-line
         return (
-          <span key={key} data-react-toolbox="ripple" className={this.props.theme.rippleWrapper} {...props}>
-            <span
-              className={_className}
-              ref={(node) => { if (node) this.rippleNodes[key] = node; }}
+          <RippleWrapper key={key} {...props} {...other}>
+            <RippleNode
+              active={active}
+              innerRef="ripple"
+              ref={(node) => { this.ripples[key] = node; }}
+              restarting={restarting}
+              theme={theme}
               style={prefixer({ transform }, { width, height: width })}
             />
-          </span>
+          </RippleWrapper>
         );
       }
 
@@ -259,10 +258,10 @@ const rippleFactory = (options = {}) => {
         const {
           children,
           disabled,
-          ripple,
           onRippleEnded,   // eslint-disable-line
+          ripple,
           rippleCentered,  // eslint-disable-line
-          rippleClassName, // eslint-disable-line
+          rippleClassName,
           rippleMultiple,  // eslint-disable-line
           rippleSpread,    // eslint-disable-line
           theme,
@@ -287,8 +286,8 @@ const rippleFactory = (options = {}) => {
       }
     }
 
-    return themr(RIPPLE, defaultTheme)(RippledComponent);
+    return RippledComponent;
   };
 };
 
-export default rippleFactory;
+export default withRippleFactory;

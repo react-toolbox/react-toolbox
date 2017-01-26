@@ -70,30 +70,7 @@ class Root extends Component {
         </NavDrawer>
 
         <Panel className={style.app}>
-          <Autocomplete />
-          <AppBarTest />
-          <Avatar />
-          <FontIcon />
           <Button />
-          <Card />
-          <Checkbox />
-          <Chip />
-          <Dialog />
-          <Drawer />
-          <Dropdown />
-          <IconMenu />
-          <InputTest />
-          <List />
-          <Menu />
-          <Pickers />
-          <Progress />
-          <Radio />
-          <Slider />
-          <Snackbar />
-          <Switch />
-          <Table />
-          <Tabs />
-          <Tooltip />
         </Panel>
       </Layout>
     );
