@@ -117,23 +117,23 @@ describe('Slider', () => {
     });
 
     it('sets pressed state when knob is clicked', () => {
-      TestUtils.Simulate.mouseDown(slider.refs.knob);
+      TestUtils.Simulate.mouseDown(slider.knobNode);
       expect(slider.state.pressed).toEqual(true);
     });
 
     it('sets pressed state when knob is touched', () => {
-      TestUtils.Simulate.touchStart(slider.refs.knob, { touches: [{ pageX: 200 }] });
+      TestUtils.Simulate.touchStart(slider.knobNode, { touches: [{ pageX: 200 }] });
       expect(slider.state.pressed).toEqual(true);
     });
 
     it('sets a proper value when the slider is clicked', () => {
-      TestUtils.Simulate.mouseDown(slider.refs.slider, { pageX: 200 });
+      TestUtils.Simulate.mouseDown(slider.sliderNode, { pageX: 200 });
       expect(onChange.called).toEqual(true);
       expect(onChange.getCall(0).args[0]).toEqual(-300);
     });
 
     it('sets a proper value when the slider is touched', () => {
-      TestUtils.Simulate.touchStart(slider.refs.slider, { touches: [{ pageX: 200, pageY: 0 }] });
+      TestUtils.Simulate.touchStart(slider.sliderNode, { touches: [{ pageX: 200, pageY: 0 }] });
       expect(onChange.called).toEqual(true);
       expect(onChange.getCall(0).args[0]).toEqual(-300);
     });
@@ -144,7 +144,7 @@ describe('Slider', () => {
       slider.setState({ sliderStart: 0, sliderLength: 1000 });
       slider.handleResize = (event, callback) => { callback(); };
       input = TestUtils.findRenderedComponentWithType(slider, Input);
-      TestUtils.Simulate.mouseDown(slider.refs.slider, { pageX: 900 });
+      TestUtils.Simulate.mouseDown(slider.sliderNode, { pageX: 900 });
       expect(onChange.called).toEqual(true);
       expect(onChange.getCall(0).args[0]).toEqual(90);
     });
@@ -153,8 +153,8 @@ describe('Slider', () => {
       const tree = TestUtils.renderIntoDocument(<Slider editable value={50} onChange={onChange} />);
       slider = TestUtils.findRenderedComponentWithType(tree, RawSlider);
       input = TestUtils.findRenderedComponentWithType(slider, RawInput);
-      TestUtils.Simulate.change(input.refs.input, { target: { value: '80' } });
-      TestUtils.Simulate.blur(input.refs.input);
+      TestUtils.Simulate.change(input.inputNode, { target: { value: '80' } });
+      TestUtils.Simulate.blur(input.inputNode);
       expect(onChange.called).toEqual(true);
       expect(onChange.getCall(0).args[0]).toEqual(80);
     });
@@ -164,7 +164,7 @@ describe('Slider', () => {
       const tree = TestUtils.renderIntoDocument(<Slider onChange={onChangeSpy} />);
       slider = TestUtils.findRenderedComponentWithType(tree, RawSlider);
       slider.setState({ sliderStart: 0, sliderLength: 1000 });
-      TestUtils.Simulate.mouseDown(slider.refs.slider, { pageX: 900 });
+      TestUtils.Simulate.mouseDown(slider.sliderNode, { pageX: 900 });
       expect(onChangeSpy.called).toEqual(true);
     });
   });
