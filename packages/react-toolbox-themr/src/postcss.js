@@ -3,6 +3,7 @@ const postcss = require('postcss')
 const cssnext = require('postcss-cssnext')
 const modules = require('postcss-modules')
 const reporter = require('postcss-reporter')
+const apply = require('postcss-apply')
 const resolver = require('postcss-modules-resolve-path')
 const fsPath = require('path')
 
@@ -32,10 +33,10 @@ function getModulesConfig(rootPath, path, fn, fixed) {
 }
 
 function getScopedName(className, filePath) {
-  let fileName = fsPath.basename(filePath, '.css')
+  var fileName = fsPath.basename(filePath, '.css')
   // for anything except theme.css files we use file name
   // for theme.css files we use folder name
-  let file = '', folder = ''
+  var file = '', folder = ''
   if(fileName === 'theme') {
     folder = '-' + fsPath.basename(fsPath.dirname(filePath))
   } else {
@@ -46,10 +47,11 @@ function getScopedName(className, filePath) {
 
 function postcssWithModules(id, path, variables, rootPath, fixed) {
   var json
-  const cssContent = fs.readFileSync(path)
+  const cssContent = fs.readFileSync(path, 'utf-8')
   return new Promise(function (resolve) {
     postcss([
       getResolver(rootPath),
+      apply,
       getModulesConfig(rootPath, path, function (_json) { json = _json }, fixed),
       getCssNextConfig(variables),
       reporter()
@@ -61,6 +63,8 @@ function postcssWithModules(id, path, variables, rootPath, fixed) {
         css: result.css,
         json: json
       })
+    }).catch((error) => {
+      console.error(error.stack) // eslint-disable-line
     })
   })
 }
@@ -75,6 +79,8 @@ function postcssWithoutModules(path, variables) {
       return resolve({
         css: result.css
       })
+    }).catch((error) => {
+      console.error(error.stack) // eslint-disable-line
     })
   })
 }

@@ -26,21 +26,23 @@
     "react-toolbox"
   ],
   "dependencies": {
-    "clean-css": "^3.4.21",
+    "clean-css": "^4.0.2",
     "mkdirp": "^0.5.1",
+    "postcss": "^5.2.11",
+    "postcss-apply": "^0.4.0",
     "postcss-cssnext": "^2.9.0",
-    "postcss-import": "8.1.0",
-    "postcss-modules": "^0.5.2",
+    "postcss-import": "^9.1.0",
+    "postcss-modules": "^0.6.4",
     "postcss-modules-resolve-path": "^1.0.0",
-    "postcss-reporter": "^2.0.0",
-    "ramda": "^0.22.1",
-    "yargs": "^6.5.0"
+    "postcss-reporter": "^3.0.0",
+    "ramda": "^0.23.0",
+    "yargs": "^6.6.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
-    "eslint": "^3.12.0",
+    "eslint": "^3.14.1",
     "eslint-config-rackt": "^1.1.1",
-    "jest": "^17.0.3"
+    "jest": "^18.1.0"
   },
   "scripts": {
     "lint": "eslint src bin",
