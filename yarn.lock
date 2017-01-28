@@ -4374,9 +4374,9 @@ normalize-url@^1.4.0:
     query-string "^4.1.0"
     sort-keys "^1.0.0"
 
-normalize.css@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-4.2.0.tgz#21d66cc557154d4379fd1e079ec7de58a379b099"
+normalize.css@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-5.0.0.tgz#7cec875ce8178a5333c4de80b68ea9c18b9d7c37"
 
 npm-path@^2.0.2:
   version "2.0.3"
@@ -5492,9 +5492,9 @@ react-addons-test-utils@^15.4.2:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
-react-css-themr@^1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/react-css-themr/-/react-css-themr-1.7.1.tgz#ac0959ee64f020a05e2f3f4e1c9c7489964f8556"
+react-css-themr@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/react-css-themr/-/react-css-themr-1.7.2.tgz#424701383488f63966677f10a908d40861544ef3"
   dependencies:
     invariant "^2.2.1"
 
@@ -5516,6 +5516,10 @@ react-proxy@^1.1.7:
   dependencies:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
+
+react-style-proptype@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-style-proptype/-/react-style-proptype-2.0.0.tgz#268bef9c783e8997f3b5740c75673c98ba4a1639"
 
 react-transform-catch-errors@^1.0.2:
   version "1.0.2"
