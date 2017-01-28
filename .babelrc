@@ -3,6 +3,7 @@
   "env": {
     "development": {
       "plugins": [
+        "styled-jsx/babel",
         ["react-transform", {
           "transforms": [{
             "transform": "react-transform-hmr",

@@ -37,13 +37,20 @@
   ],
   "dependencies": {
     "classnames": "^2.2.5",
+    "color": "^1.0.3",
+    "colors": "^1.1.2",
     "core-js": "^2.4.0",
     "eslint-plugin-babel": "^4.0.1",
+    "fela": "^4.1.2",
     "gulp-rimraf": "^0.2.1",
     "ramda": "^0.23.0",
     "react-addons-css-transition-group": "^15.4.2",
     "react-css-themr": "^1.7.1",
-    "styled-components": "^1.4.0"
+    "react-fela": "^4.1.2",
+    "styled-components": "^1.4.0",
+    "styled-jsx": "^0.5.1",
+    "styletron-client": "^2.5.1",
+    "styletron-react": "^2.5.2"
   },
   "devDependencies": {
     "babel-cli": "^6.22.2",

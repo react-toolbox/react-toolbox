@@ -9,15 +9,17 @@ import map from 'ramda/src/map';
 const withTheme = (options) => {
   const name = options.name;
   const modifiers = options.modifiers || [];
-  const defaultTheme = options.theme;
+  const theme = options.theme;
   const removeProps = compose(...map(dissoc)(modifiers));
 
   return (target) => {
     class ThemePropsComponent extends Component { // eslint-disable-line
       static propTypes = {
         className: PropTypes.string,
-        innerRef: PropTypes.string,
-        theme: PropTypes.object, // eslint-disable-line
+        innerRef: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.func,
+        ]),
       };
 
       static displayName = typeof target === 'string'
@@ -25,7 +27,7 @@ const withTheme = (options) => {
         : `ThemeProps (${target.displayName})`;
 
       render() {
-        const { className: _className, innerRef, theme = defaultTheme, ...others } = this.props;
+        const { className: _className, innerRef, ...others } = this.props;
         const addPropClass = (result, prop) => assoc(theme[prop], this.props[prop], result);
         const propClasses = reduce(addPropClass, {}, modifiers);
         const buildProps = compose(

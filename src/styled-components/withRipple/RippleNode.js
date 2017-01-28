@@ -5,6 +5,7 @@ const RippleNode = styled.span`
   border-radius: 50%;
   left: 50%;
   pointer-events: none;
+  outline: none;
   position: absolute;
   top: 50%;
   transform-origin: 50% 50%;

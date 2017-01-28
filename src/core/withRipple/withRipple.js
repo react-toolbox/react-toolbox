@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
+import { findDOMNode } from 'react-dom';
 import dissoc from 'ramda/src/dissoc';
 import events from '../../../components/utils/events';
 import prefixer from '../../../components/utils/prefixer';
@@ -9,7 +9,6 @@ const defaults = {
   className: '',
   multiple: true,
   spread: 2,
-  theme: {},
 };
 
 const withRippleFactory = ({
@@ -22,7 +21,6 @@ const withRippleFactory = ({
     multiple: defaultMultiple,
     passthrough: defaultPassthrough,
     spread: defaultSpread,
-    ...props
   } = { ...defaults, ...options };
 
   return (ComposedComponent) => {
@@ -38,12 +36,6 @@ const withRippleFactory = ({
         rippleClassName: PropTypes.string,
         rippleMultiple: PropTypes.bool,
         rippleSpread: PropTypes.number,
-        theme: PropTypes.shape({
-          ripple: PropTypes.string,
-          rippleActive: PropTypes.string,
-          rippleRestarting: PropTypes.string,
-          rippleWrapper: PropTypes.string,
-        }),
       };
 
       static defaultProps = {
@@ -82,7 +74,7 @@ const withRippleFactory = ({
        * @return {Object} Descriptor element including position and size of the element
        */
       getDescriptor(x, y) {
-        const { left, top, height, width } = ReactDOM.findDOMNode(this).getBoundingClientRect();
+        const { left, top, height, width } = findDOMNode(this).getBoundingClientRect();
         const { rippleCentered: centered, rippleSpread: spread } = this.props;
         return {
           left: centered ? 0 : x - left - (width / 2),
@@ -92,7 +84,7 @@ const withRippleFactory = ({
       }
 
       getRef(key) {
-        return this.ripples[key].refs.ripple;
+        return this.ripples[key];
       }
 
       /**
@@ -153,11 +145,13 @@ const withRippleFactory = ({
           const runningState = { active: true, restarting: false };
           const ripples = { ...this.state.ripples, [key]: initialState };
           this.setState({ ripples }, () => {
-            this.getRef(key).offsetWidth; // eslint-disable-line
-            this.setState({ ripples: {
-              ...this.state.ripples,
-              [key]: Object.assign({}, this.state.ripples[key], runningState),
-            } });
+            requestAnimationFrame(() => {
+              this.getRef(key).offsetWidth; // eslint-disable-line
+              this.setState({ ripples: {
+                ...this.state.ripples,
+                [key]: Object.assign({}, this.state.ripples[key], runningState),
+              } });
+            });
           });
         }
       }
@@ -239,15 +233,13 @@ const withRippleFactory = ({
       renderRipple(key, className, { active, left, restarting, top, width }) {
         const scale = restarting ? 0 : 1;
         const transform = `translate3d(${(-width / 2) + left}px, ${(-width / 2) + top}px, 0) scale(${scale})`;
-        const { className: decoratedClassName, theme, ...other } = this.props; // eslint-disable-line
+        const self = this;
         return (
-          <RippleWrapper key={key} {...props} {...other}>
+          <RippleWrapper className={className} key={key}>
             <RippleNode
               active={active}
-              innerRef="ripple"
-              ref={(node) => { this.ripples[key] = node; }}
+              innerRef={(node) => { self.ripples[key] = node; }}
               restarting={restarting}
-              theme={theme}
               style={prefixer({ transform }, { width, height: width })}
             />
           </RippleWrapper>
@@ -264,7 +256,6 @@ const withRippleFactory = ({
           rippleClassName,
           rippleMultiple,  // eslint-disable-line
           rippleSpread,    // eslint-disable-line
-          theme,
           ...other
         } = this.props;
         const { ripples } = this.state;
@@ -277,7 +268,7 @@ const withRippleFactory = ({
           ...other,
         };
         const finalProps = defaultPassthrough
-          ? { ...childProps, theme, disabled }
+          ? { ...childProps, disabled }
           : childProps;
 
         return !ripple
