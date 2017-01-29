@@ -10,9 +10,10 @@ export default {
 
   shallowRenderComponent(component, props, ...children) {
     const shallowRenderer = TestUtils.createRenderer();
-    return shallowRenderer.render(React.createElement(component, props, children.length > 1
+    shallowRenderer.render(React.createElement(component, props, children.length > 1
       ? children
       : children[0],
-    )).getRenderOutput();
+    ));
+    return shallowRenderer.getRenderOutput();
   },
 };

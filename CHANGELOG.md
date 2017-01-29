@@ -1,3 +1,13 @@
+<a name="2.0.0-beta.6"></a>
+# 2.0.0-beta.6 (2017-01-28)
+
+* Update dependencies ([ff55f5a](https://github.com/react-toolbox/react-toolbox/commit/ff55f5afa5961951be901c0ff1436b7776caacd5))
+* Fix tests ([1427e75](https://github.com/react-toolbox/react-toolbox/commit/1427e75a27aad02b8dd6f7b5ac335c3d055592aa))
+* Update dependencies and linter (#1180) ([9d6ec1e](https://github.com/react-toolbox/react-toolbox/commit/9d6ec1eedd320610a5b3fcfaf1ad308ba3d53196))
+* Import TabTheme interface at Tabs TS definition ([bc18e56](https://github.com/react-toolbox/react-toolbox/commit/bc18e56065249eb8027dd6eb6e3ed4b2b1524547))
+
+
+
 <a name="2.0.0-beta.5"></a>
 # 2.0.0-beta.5 (2017-01-24)
 
