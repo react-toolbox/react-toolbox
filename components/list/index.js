@@ -1,7 +1,7 @@
 import { themr } from 'react-css-themr';
 import { LIST } from '../identifiers';
-import { Avatar } from '../avatar';
-import { Checkbox } from '../checkbox';
+import { Avatar } from '../Avatar';
+import { Checkbox } from '../Checkbox';
 import { ListItemText } from './ListItemText';
 import { ListItemAction } from './ListItemAction';
 import { ListSubHeader } from './ListSubHeader';
@@ -12,7 +12,7 @@ import { listCheckboxFactory } from './ListCheckbox';
 import { listItemActionsFactory } from './ListItemActions';
 import { listItemContentFactory } from './ListItemContent';
 import { listItemLayoutFactory } from './ListItemLayout';
-import themedRippleFactory from '../ripple';
+import themedRippleFactory from '../Ripple';
 import theme from './theme.css';
 
 const applyTheme = Component => themr(LIST, theme)(Component);

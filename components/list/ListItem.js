@@ -3,7 +3,7 @@ import { themr } from 'react-css-themr';
 import { LIST } from '../identifiers';
 import InjectListItemContent from './ListItemContent';
 import InjectListItemLayout from './ListItemLayout';
-import rippleFactory from '../ripple/Ripple';
+import rippleFactory from '../Ripple/Ripple';
 
 const factory = (ripple, ListItemLayout, ListItemContent) => {
   class ListItem extends Component {

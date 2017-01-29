@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { AUTOCOMPLETE } from '../identifiers.js';
-import InjectChip from '../chip/Chip.js';
-import InjectInput from '../input/Input.js';
+import InjectChip from '../Chip/Chip.js';
+import InjectInput from '../Input/Input.js';
 import events from '../utils/events.js';
 
 const POSITION = {

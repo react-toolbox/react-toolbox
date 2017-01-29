@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, MenuItem, MenuDivider } from '../../components/menu';
+import { Menu, MenuItem, MenuDivider } from '../../components/Menu';
 
 class MenuTest extends React.Component {
   state = {

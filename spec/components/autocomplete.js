@@ -1,5 +1,5 @@
 import React from 'react';
-import Autocomplete from '../../components/autocomplete';
+import Autocomplete from '../../components/Autocomplete';
 
 class AutocompleteTest extends React.Component {
   state = {

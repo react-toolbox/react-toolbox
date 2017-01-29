@@ -3,8 +3,8 @@ import { BUTTON } from '../identifiers';
 import { buttonFactory } from './Button';
 import { browseButtonFactory } from './BrowseButton';
 import { iconButtonFactory } from './IconButton';
-import { FontIcon } from '../font_icon/FontIcon';
-import themedRippleFactory from '../ripple';
+import { FontIcon } from '../FontIcon/FontIcon';
+import themedRippleFactory from '../Ripple';
 import theme from './theme.css';
 
 const Button = buttonFactory(themedRippleFactory({ centered: false }), FontIcon);

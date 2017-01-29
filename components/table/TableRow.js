@@ -2,7 +2,7 @@ import React, { cloneElement, Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { TABLE } from '../identifiers';
-import InjectCheckbox from '../checkbox/Checkbox';
+import InjectCheckbox from '../Checkbox/Checkbox';
 import InjectTableCell from './TableCell';
 
 const factory = (Checkbox, TableCell) => {

@@ -3,8 +3,8 @@ import { TABS } from '../identifiers';
 import { tabsFactory } from './Tabs';
 import { TabContent } from './TabContent';
 import { tabFactory } from './Tab';
-import themedRippleFactory from '../ripple';
-import { FontIcon } from '../font_icon/FontIcon';
+import themedRippleFactory from '../Ripple';
+import { FontIcon } from '../FontIcon/FontIcon';
 import theme from './theme.css';
 
 const applyTheme = Component => themr(TABS, theme)(Component);

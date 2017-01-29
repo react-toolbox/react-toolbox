@@ -5,9 +5,9 @@ import { DATE_PICKER } from '../identifiers';
 import events from '../utils/events';
 import time from '../utils/time';
 
-import InjectIconButton from '../button/IconButton';
-import InjectInput from '../input/Input';
-import InjectDialog from '../dialog/Dialog';
+import InjectIconButton from '../Button/IconButton';
+import InjectInput from '../Input/Input';
+import InjectDialog from '../Dialog/Dialog';
 import calendarFactory from './Calendar';
 import datePickerDialogFactory from './DatePickerDialog';
 

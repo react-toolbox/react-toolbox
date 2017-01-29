@@ -1,7 +1,7 @@
 import { themr } from 'react-css-themr';
 import { DROPDOWN } from '../identifiers';
 import { dropdownFactory } from './Dropdown';
-import { Input } from '../input';
+import { Input } from '../Input';
 import theme from './theme.css';
 
 const Dropdown = dropdownFactory(Input);

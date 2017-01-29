@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { FontIcon } from '../font_icon';
+import { FontIcon } from '../FontIcon';
 import { TABS } from '../identifiers';
-import rippleFactory from '../ripple/Ripple';
+import rippleFactory from '../Ripple/Ripple';
 
 const factory = (ripple) => {
   class Tab extends Component {

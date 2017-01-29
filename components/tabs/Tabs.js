@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { TABS } from '../identifiers';
-import InjectFontIcon from '../font_icon/FontIcon';
+import InjectFontIcon from '../FontIcon/FontIcon';
 import isComponentOfType from '../utils/is-component-of-type';
 import InjectTab from './Tab';
 import InjectTabContent from './TabContent';

@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import Portal from '../hoc/Portal';
 import { DRAWER } from '../identifiers';
 import ActivableRenderer from '../hoc/ActivableRenderer';
-import InjectOverlay from '../overlay/Overlay';
+import InjectOverlay from '../Overlay/Overlay';
 
 const factory = (Overlay) => {
   const Drawer = ({

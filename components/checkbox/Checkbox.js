@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import styleShape from 'react-style-proptype';
 import { themr } from 'react-css-themr';
 import { CHECKBOX } from '../identifiers';
-import rippleFactory from '../ripple/Ripple';
+import rippleFactory from '../Ripple/Ripple';
 import checkFactory from './Check';
 
 const factory = (Check) => {

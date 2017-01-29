@@ -1,5 +1,5 @@
 import React from 'react';
-import Switch from '../../components/switch';
+import Switch from '../../components/Switch';
 
 class SwitchTest extends React.Component {
   state = {

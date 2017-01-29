@@ -1,7 +1,7 @@
 import { themr } from 'react-css-themr';
 import { CHIP } from '../identifiers';
 import { chipFactory } from './Chip';
-import { Avatar } from '../avatar';
+import { Avatar } from '../Avatar';
 import theme from './theme.css';
 
 const Chip = chipFactory(Avatar);

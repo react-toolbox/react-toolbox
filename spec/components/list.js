@@ -1,8 +1,8 @@
 import React from 'react';
-import { ListCheckbox, ListSubHeader, List, ListItem, ListDivider, ListItemText, ListItemContent } from '../../components/list';
-import { Button } from '../../components/button';
-import Avatar from '../../components/avatar';
-import FontIcon from '../../components/font_icon';
+import { ListCheckbox, ListSubHeader, List, ListItem, ListDivider, ListItemText, ListItemContent } from '../../components/List';
+import { Button } from '../../components/Button';
+import Avatar from '../../components/Avatar';
+import FontIcon from '../../components/FontIcon';
 
 const listStyle = {
   border: '1px solid #EEE',

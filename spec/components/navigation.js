@@ -1,6 +1,6 @@
 import React from 'react';
-import Navigation from '../../components/navigation';
-import Link from '../../components/link';
+import Navigation from '../../components/Navigation';
+import Link from '../../components/Link';
 
 const actions = [
   { label: 'Alarm', raised: true, icon: 'access_alarm' },

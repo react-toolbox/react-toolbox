@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { DROPDOWN } from '../identifiers';
-import InjectInput from '../input/Input';
+import InjectInput from '../Input/Input';
 import events from '../utils/events';
 
 const factory = (Input) => {

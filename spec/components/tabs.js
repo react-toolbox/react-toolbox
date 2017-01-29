@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Tab } from '../../components/tabs';
+import { Tabs, Tab } from '../../components/Tabs';
 
 class TabsTest extends React.Component {
   state = {

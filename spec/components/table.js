@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Table, TableHead, TableRow, TableCell } from '../../components/table';
-import Tooltip from '../../components/tooltip';
+import { Table, TableHead, TableRow, TableCell } from '../../components/Table';
+import Tooltip from '../../components/Tooltip';
 
 const data = [
   { name: 'Cupcake', calories: 305, fat: 3.7, carbs: 67, protein: 4.3, sodium: 413, calcium: '3%', iron: '8%' },

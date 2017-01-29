@@ -1,5 +1,5 @@
 import React from 'react';
-import { MenuItem, IconMenu, MenuDivider } from '../../components/menu';
+import { MenuItem, IconMenu, MenuDivider } from '../../components/Menu';
 
 class IconMenuTest extends React.Component {
   state = {

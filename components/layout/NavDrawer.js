@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import InjectDrawer from '../drawer/Drawer';
+import InjectDrawer from '../Drawer/Drawer';
 import { LAYOUT } from '../identifiers';
 
 const factory = (Drawer) => {

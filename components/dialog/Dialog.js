@@ -5,8 +5,8 @@ import classnames from 'classnames';
 import { DIALOG } from '../identifiers';
 import Portal from '../hoc/Portal';
 import ActivableRenderer from '../hoc/ActivableRenderer';
-import InjectButton from '../button/Button';
-import InjectOverlay from '../overlay/Overlay';
+import InjectButton from '../Button/Button';
+import InjectOverlay from '../Overlay/Overlay';
 
 const factory = (Overlay, Button) => {
   const Dialog = (props) => {

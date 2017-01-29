@@ -5,7 +5,7 @@ import { CardActions } from './CardActions';
 import { CardMedia } from './CardMedia';
 import { CardText } from './CardText';
 import { cardTitleFactory } from './CardTitle';
-import { Avatar } from '../avatar';
+import { Avatar } from '../Avatar';
 import theme from './theme.css';
 
 const CardTitle = cardTitleFactory(Avatar);

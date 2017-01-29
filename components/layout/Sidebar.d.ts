@@ -1,5 +1,5 @@
 import * as React from "react";
-import { DrawerProps } from '../drawer/Drawer';
+import { DrawerProps } from '../Drawer/Drawer';
 
 export interface SidebarTheme {
   /**

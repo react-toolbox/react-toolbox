@@ -1,7 +1,7 @@
 import { themr } from 'react-css-themr';
 import { SLIDER } from '../identifiers';
-import { ProgressBar } from '../progress_bar';
-import { Input } from '../input';
+import { ProgressBar } from '../ProgressBar';
+import { Input } from '../Input';
 import { sliderFactory } from './Slider';
 import theme from './theme.css';
 

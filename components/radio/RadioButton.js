@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { RADIO } from '../identifiers';
-import rippleFactory from '../ripple/Ripple';
+import rippleFactory from '../Ripple/Ripple';
 import radioFactory from './Radio';
 
 const factory = (Radio) => {

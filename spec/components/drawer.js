@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from '../../components/button';
-import Drawer from '../../components/drawer';
+import Button from '../../components/Button';
+import Drawer from '../../components/Drawer';
 import style from '../style.css';
 
 class DrawerTest extends React.Component {

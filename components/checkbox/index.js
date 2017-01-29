@@ -1,6 +1,6 @@
 import { themr } from 'react-css-themr';
 import { CHECKBOX } from '../identifiers';
-import themedRippleFactory from '../ripple';
+import themedRippleFactory from '../Ripple';
 import { checkboxFactory } from './Checkbox';
 import checkFactory from './Check';
 import theme from './theme.css';

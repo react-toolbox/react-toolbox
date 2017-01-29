@@ -1,10 +1,10 @@
 import React from 'react';
-import Button from '../../components/button';
-import Input from '../../components/input';
-import FontIcon from '../../components/font_icon';
-import Tooltip, { tooltipFactory } from '../../components/tooltip';
-import Chip from '../../components/chip';
-import Avatar from '../../components/avatar';
+import Button from '../../components/Button';
+import Input from '../../components/Input';
+import FontIcon from '../../components/FontIcon';
+import Tooltip, { tooltipFactory } from '../../components/Tooltip';
+import Chip from '../../components/Chip';
+import Avatar from '../../components/Avatar';
 
 const TooltipFontIcon = tooltipFactory({ passthrough: false })(FontIcon);
 const TooltipButton = Tooltip(Button);

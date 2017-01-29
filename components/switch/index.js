@@ -2,7 +2,7 @@ import { themr } from 'react-css-themr';
 import { switchFactory } from './Switch';
 import { SWITCH } from '../identifiers';
 import thumbFactory from './Thumb';
-import themedRippleFactory from '../ripple';
+import themedRippleFactory from '../Ripple';
 import theme from './theme.css';
 
 const applyTheme = Component => themr(SWITCH, theme)(Component);

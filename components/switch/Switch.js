@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { SWITCH } from '../identifiers';
-import rippleFactory from '../ripple/Ripple';
+import rippleFactory from '../Ripple/Ripple';
 import thumbFactory from './Thumb';
 
 const factory = (Thumb) => {

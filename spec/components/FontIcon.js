@@ -1,5 +1,5 @@
 import React from 'react';
-import FontIcon from '../../components/font_icon';
+import FontIcon from '../../components/FontIcon';
 
 const FontIconTest = () => (
   <section>
