@@ -9,7 +9,7 @@
   @apply --reset;
 
   &.withIcon {
-    margin-left: var(--input-icon-size);
+    margin-left: calc(var(--input-icon-size) + var(--input-icon-right-space));
   }
 }
 
@@ -18,7 +18,7 @@
   display: block;
   font-size: var(--input-icon-font-size) !important;
   height: var(--input-icon-size);
-  left: calc(-1 * var(--input-icon-size));
+  left: calc(-1 * (var(--input-icon-size) + var(--input-icon-right-space)));
   line-height: var(--input-icon-size) !important;
   position: absolute;
   text-align: center;
