@@ -8,7 +8,7 @@ class Install extends React.Component {
   render () {
     return (
       <div>
-        <Appbar/>
+        <Appbar />
         <Markdown className={style.install} markdown={installMD} />
       </div>
     );

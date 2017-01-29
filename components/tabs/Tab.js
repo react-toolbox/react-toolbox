@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
-import { FontIcon } from '../font_icon';
 import { themr } from 'react-css-themr';
-import { TABS } from '../identifiers.js';
-import rippleFactory from '../ripple/Ripple.js';
+import { FontIcon } from '../font_icon';
+import { TABS } from '../identifiers';
+import rippleFactory from '../ripple/Ripple';
 
 const factory = (ripple) => {
   class Tab extends Component {
@@ -26,18 +26,18 @@ const factory = (ripple) => {
         label: PropTypes.string,
         rippleWrapper: PropTypes.string,
         withIcon: PropTypes.string,
-        withText: PropTypes.string
-      })
+        withText: PropTypes.string,
+      }),
     };
 
     static defaultProps = {
       active: false,
       className: '',
       disabled: false,
-      hidden: false
+      hidden: false,
     };
 
-    componentDidUpdate (prevProps) {
+    componentDidUpdate(prevProps) {
       if (!prevProps.active && this.props.active && this.props.onActive) {
         this.props.onActive();
       }
@@ -49,7 +49,7 @@ const factory = (ripple) => {
       }
     };
 
-    render () {
+    render() {
       const {
         index, onActive, // eslint-disable-line
         active, activeClassName, children, className, disabled, hidden, label, icon, theme, ...other
@@ -60,15 +60,15 @@ const factory = (ripple) => {
         [theme.withText]: label,
         [theme.withIcon]: icon,
         [theme.disabled]: disabled,
-        [activeClassName]: active
+        [activeClassName]: active,
       }, className);
 
       return (
-        <label {...other} data-react-toolbox='tab' className={_className} onClick={this.handleClick}>
-          {icon && <FontIcon className={theme.icon} value={icon}/>}
+        <div {...other} data-react-toolbox="tab" className={_className} onClick={this.handleClick}>
+          {icon && <FontIcon className={theme.icon} value={icon} />}
           {label}
           {children}
-        </label>
+        </div>
       );
     }
   }

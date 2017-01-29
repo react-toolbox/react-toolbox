@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { SWITCH } from '../identifiers.js';
-import rippleFactory from '../ripple/Ripple.js';
-import thumbFactory from './Thumb.js';
+import { SWITCH } from '../identifiers';
+import rippleFactory from '../ripple/Ripple';
+import thumbFactory from './Thumb';
 
 const factory = (Thumb) => {
   class Switch extends Component {
@@ -25,14 +25,14 @@ const factory = (Thumb) => {
         on: PropTypes.string,
         ripple: PropTypes.string,
         text: PropTypes.string,
-        thumb: PropTypes.string
-      })
+        thumb: PropTypes.string,
+      }),
     };
 
     static defaultProps = {
       checked: false,
       className: '',
-      disabled: false
+      disabled: false,
     };
 
     handleToggle = (event) => {
@@ -42,27 +42,35 @@ const factory = (Thumb) => {
       }
     };
 
-    blur () {
-      this.refs.input.blur();
+    blur() {
+      this.inputNode.blur();
     }
 
-    focus () {
-      this.refs.input.focus();
+    focus() {
+      this.inputNode.focus();
     }
 
-    render () {
-      const { className, checked, ripple, disabled, onChange, theme, ...others } = this.props; //eslint-disable-line no-unused-vars
+    render() {
+      const {
+        checked,
+        className,
+        disabled,
+        onChange, // eslint-disable-line no-unused-vars
+        ripple,
+        theme,
+        ...others
+      } = this.props;
       const _className = classnames(theme[disabled ? 'disabled' : 'field'], className);
       return (
-        <label data-react-toolbox='switch' className={_className}>
+        <label data-react-toolbox="switch" className={_className} htmlFor={this.props.name}>
           <input
             {...others}
             checked={this.props.checked}
             className={theme.input}
             onClick={this.handleToggle}
             readOnly
-            ref='input'
-            type='checkbox'
+            ref={(node) => { this.inputNode = node; }}
+            type="checkbox"
           />
           <span className={theme[checked ? 'on' : 'off']}>
             <Thumb disabled={this.props.disabled} theme={theme} ripple={ripple} />

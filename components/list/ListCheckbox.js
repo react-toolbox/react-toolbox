@@ -1,14 +1,25 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { LIST } from '../identifiers.js';
-import InjectCheckbox from '../checkbox/Checkbox.js';
-import InjectListItemContent from './ListItemContent.js';
+import { LIST } from '../identifiers';
+import InjectCheckbox from '../checkbox/Checkbox';
+import InjectListItemContent from './ListItemContent';
 
 const factory = (Checkbox, ListItemContent) => {
-  const ListCheckbox = ({ caption, checked, className, disabled, legend, name, onBlur, onChange, onFocus, theme }) => {
+  const ListCheckbox = ({
+    caption,
+    checked,
+    className,
+    disabled,
+    legend,
+    name,
+    onBlur,
+    onChange,
+    onFocus,
+    theme,
+  }) => {
     const _className = classnames(theme.item, theme.checkboxItem, {
-      [theme.disabled]: disabled
+      [theme.disabled]: disabled,
     }, className);
 
     return (
@@ -41,13 +52,13 @@ const factory = (Checkbox, ListItemContent) => {
       checkbox: PropTypes.string,
       checkboxItem: PropTypes.string,
       disabled: PropTypes.string,
-      item: PropTypes.string
-    })
+      item: PropTypes.string,
+    }),
   };
 
   ListCheckbox.defaultProps = {
     checked: false,
-    disabled: false
+    disabled: false,
   };
 
   return ListCheckbox;

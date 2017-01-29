@@ -5,7 +5,7 @@ let customChecker;
  *
  * @param providedChecker {Function} - Checker function
  */
-export function overrideComponentTypeChecker (providedChecker) {
+export function overrideComponentTypeChecker(providedChecker) {
   customChecker = providedChecker;
 }
 
@@ -15,7 +15,7 @@ export function overrideComponentTypeChecker (providedChecker) {
  * @param classType {ReactElement class} - the class of a React Element
  * @param reactElement {ReactElement} - any React Element (not a real DOM node)
  */
-export function defaultChecker (classType, reactElement) {
+export function defaultChecker(classType, reactElement) {
   return reactElement && reactElement.type === classType;
 }
 
@@ -26,7 +26,7 @@ export function defaultChecker (classType, reactElement) {
  * @param classType {ReactElement class} - the class of a React Element
  * @param reactElement {ReactElement} - any React Element (not a real DOM node)
  */
-export default function isComponentOfType (classType, reactElement) {
+export default function isComponentOfType(classType, reactElement) {
   return customChecker
     ? customChecker(classType, reactElement)
     : defaultChecker(classType, reactElement);

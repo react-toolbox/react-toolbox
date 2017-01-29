@@ -8,21 +8,21 @@ const countries = [
   { value: 'ES-es', label: 'Spain', img: 'http://' },
   { value: 'TH-th', label: 'Thailand', img: 'http://' },
   { value: 'EN-en', label: 'USA', img: 'http://' },
-  { value: 'FR-fr', label: 'France', img: 'http://' }
+  { value: 'FR-fr', label: 'France', img: 'http://' },
 ];
 
 const FormFields = {
-  autocomplete: {kind: 'Autocomplete', label: 'Autocomplete', source: countriesArray, value: ''},
-  input: {kind: 'Input', type: 'text', label: 'Input', value: '@soyjavi', required: true},
-  multiline: {kind: 'Input', type: 'text', label: 'Input (multiline)', multiline: true},
-  number: {kind: 'Input', type: 'number', label: 'Input (number)'},
-  checkbox: {kind: 'Checkbox', label: 'Checkbox'},
-  date: {kind: 'DatePicker', label: 'DatePicker', value: undefined},
-  dropdown: {kind: 'Dropdown', label: 'Dropdown', source: countries, value: countries[2].value},
-  time: {kind: 'TimePicker', label: 'TimePicker', value: undefined},
-  switch: {kind: 'Switch', label: 'Switch'},
-  slider: {kind: 'Slider', label: 'Slider', min: 0, max: 10, value: 4, pinned: true},
-  submit: {kind: 'Button', type: 'submit', label: 'Button () you a nomad?'}
+  autocomplete: { kind: 'Autocomplete', label: 'Autocomplete', source: countriesArray, value: '' },
+  input: { kind: 'Input', type: 'text', label: 'Input', value: '@soyjavi', required: true },
+  multiline: { kind: 'Input', type: 'text', label: 'Input (multiline)', multiline: true },
+  number: { kind: 'Input', type: 'number', label: 'Input (number)' },
+  checkbox: { kind: 'Checkbox', label: 'Checkbox' },
+  date: { kind: 'DatePicker', label: 'DatePicker', value: undefined },
+  dropdown: { kind: 'Dropdown', label: 'Dropdown', source: countries, value: countries[2].value },
+  time: { kind: 'TimePicker', label: 'TimePicker', value: undefined },
+  switch: { kind: 'Switch', label: 'Switch' },
+  slider: { kind: 'Slider', label: 'Slider', min: 0, max: 10, value: 4, pinned: true },
+  submit: { kind: 'Button', type: 'submit', label: 'Button () you a nomad?' },
 };
 
 class FormTest extends React.Component {
@@ -32,8 +32,8 @@ class FormTest extends React.Component {
       input: 'soyjavi',
       multiline: 'Overwritten',
       number: 0,
-      checkbox: true
-    }
+      checkbox: true,
+    },
   };
 
   handleEvent = (type, event, form) => {
@@ -44,12 +44,12 @@ class FormTest extends React.Component {
     console.log('FORM.change', field, value);
     const model = {
       ...this.state.model,
-     [field]: value
+      [field]: value,
     };
     this.setState({ model });
   };
 
-  render () {
+  render() {
     Object.keys(this.state.model).map((field) => {
       const formField = FormFields[field];
       formField[formField.hasOwnProperty('value') ? 'value' : 'checked'] = this.state.model[field];
@@ -67,7 +67,8 @@ class FormTest extends React.Component {
           onChange={this.handleChange}
           onError={this.handleEvent.bind(this, 'error')}
           onValid={this.handleEvent.bind(this, 'valid')}
-          onSubmit={this.handleEvent.bind(this, 'submit')} />
+          onSubmit={this.handleEvent.bind(this, 'submit')}
+        />
       </section>
     );
   }

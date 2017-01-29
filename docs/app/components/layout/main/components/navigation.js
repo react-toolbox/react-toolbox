@@ -13,7 +13,7 @@ const MainNavigation = ({ className }, { router }) => {
         caption={components[key].name}
         className={classnames(style.item, { [style.active]: isActive })}
         selectable
-        onClick={() => { router.push(components[key].path);}}
+        onClick={() => { router.push(components[key].path); }}
       />
     );
   });

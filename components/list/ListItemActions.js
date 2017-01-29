@@ -1,28 +1,30 @@
 import React, { PropTypes } from 'react';
 import { themr } from 'react-css-themr';
-import { LIST } from '../identifiers.js';
-import InjectListItemAction from './ListItemAction.js';
+import { LIST } from '../identifiers';
+import InjectListItemAction from './ListItemAction';
 
 const factory = (ListItemAction) => {
-  const ListItemActions = ({type, children, theme}) => {
+  const ListItemActions = ({ type, children, theme }) => {
     const validChildren = React.Children.toArray(children).filter(c => (
       React.isValidElement(c)
     ));
 
     return (
       <span className={theme[type]}>
-        {validChildren.map((action, i) => <ListItemAction key={i} theme={theme} action={action} />)}
+        {validChildren.map((action, i) => (
+          <ListItemAction key={i} theme={theme} action={action} /> // eslint-disable-line
+        ))}
       </span>
     );
   };
 
   ListItemActions.propTypes = {
-    children: PropTypes.any,
+    children: PropTypes.node,
     theme: PropTypes.shape({
       left: PropTypes.string,
-      right: PropTypes.string
+      right: PropTypes.string,
     }),
-    type: PropTypes.oneOf(['left', 'right'])
+    type: PropTypes.oneOf(['left', 'right']),
   };
 
   return ListItemActions;

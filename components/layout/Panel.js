@@ -1,31 +1,29 @@
 import React, { PropTypes } from 'react';
-import classnames from 'classnames';
+import cn from 'classnames';
 import { themr } from 'react-css-themr';
-import { LAYOUT } from '../identifiers.js';
+import { LAYOUT } from '../identifiers';
 
-const Panel = ({ bodyScroll, children, className, theme, ...other }) => (
-  <div
-    {...other}
-    data-react-toolbox='panel'
-    className={classnames(theme.panel, {
-      [theme.bodyScroll]: bodyScroll
-    }, className)}
-    children={children}
-  />
-);
+const Panel = ({ bodyScroll, children, className, theme, ...other }) => {
+  const _className = cn(theme.panel, { [theme.bodyScroll]: bodyScroll }, className);
+  return (
+    <div {...other} data-react-toolbox="panel" className={_className}>
+      {children}
+    </div>
+  );
+};
 
 Panel.propTypes = {
   bodyScroll: PropTypes.bool,
-  children: PropTypes.any,
+  children: PropTypes.node,
   className: PropTypes.string,
   theme: PropTypes.shape({
-    panel: PropTypes.string
-  })
+    panel: PropTypes.string,
+  }),
 };
 
 Panel.defaultProps = {
   bodyScroll: true,
-  className: ''
+  className: '',
 };
 
 export default themr(LAYOUT)(Panel);

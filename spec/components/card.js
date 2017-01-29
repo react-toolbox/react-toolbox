@@ -6,9 +6,9 @@ import style from '../style';
 
 const dummyText = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.';
 
-const Spacer = () => <div style={{display: 'flex', flex: '1 1 auto'}}/>;
-const CardList = ({children}) => <ul className={style.cardsGroup}>{children}</ul>;
-const CardListItem = ({component, name}) => (
+const Spacer = () => <div style={{ display: 'flex', flex: '1 1 auto' }} />;
+const CardList = ({ children }) => <ul className={style.cardsGroup}>{children}</ul>;
+const CardListItem = ({ component, name }) => (
   <li className={style.cardItem}>
     <div className={style.cardItemContent}>{component}</div>
     <div className={style.cardItemName}>{name}</div>
@@ -30,7 +30,7 @@ const cards = {
           <Button label="Action 2" />
         </CardActions>
       </Card>
-    )
+    ),
   }, {
     name: 'Raised Card',
     component: (
@@ -45,7 +45,7 @@ const cards = {
           <Button label="Action 2" />
         </CardActions>
       </Card>
-    )
+    ),
   }, {
     name: 'Customized header',
     component: (
@@ -60,7 +60,7 @@ const cards = {
           <Button label="Action 2" />
         </CardActions>
       </Card>
-    )
+    ),
   }],
   media: [{
     name: '16:9 Card Media Area',
@@ -75,7 +75,7 @@ const cards = {
         <CardTitle subtitle="You can also use a subtitle like this" />
         <CardText>{dummyText}</CardText>
       </Card>
-    )
+    ),
   }, {
     name: '16:9 Card Media Image',
     component: (
@@ -84,13 +84,13 @@ const cards = {
           aspectRatio="wide"
           image="https://placeimg.com/800/450/nature"
         />
-          <CardTitle
-            title="Title goes here"
-            subtitle="Subtitle here"
-          />
+        <CardTitle
+          title="Title goes here"
+          subtitle="Subtitle here"
+        />
         <CardText>{dummyText}</CardText>
       </Card>
-    )
+    ),
   }, {
     name: 'Square Media Card',
     component: (
@@ -110,7 +110,7 @@ const cards = {
           </CardActions>
         </CardMedia>
       </Card>
-    )
+    ),
   }],
   avatar: [{
     name: 'Avatar Card Title',
@@ -130,7 +130,7 @@ const cards = {
           <IconButton icon="favorite" />
         </CardActions>
       </Card>
-    )
+    ),
   }, {
     name: 'Video in a card',
     component: (
@@ -147,12 +147,12 @@ const cards = {
         </CardMedia>
         <CardActions style={{ justifyContent: 'flex-end' }}>
           <IconButton icon="report_problem" />
-          <Spacer/>
+          <Spacer />
           <IconButton icon="share" />
           <IconButton icon="favorite" />
         </CardActions>
       </Card>
-    )
+    ),
   }],
   horizontal: [{
     name: 'Alternative Layout Example',
@@ -173,7 +173,7 @@ const cards = {
           <Button label="Action 2" />
         </CardActions>
       </Card>
-    )
+    ),
   }, {
     name: 'Another Variation',
     component: (
@@ -189,7 +189,7 @@ const cards = {
           />
         </div>
       </Card>
-    )
+    ),
   }],
   small: [{
     name: 'Small Media Card',
@@ -201,31 +201,31 @@ const cards = {
         >
           <CardTitle>Test</CardTitle>
         </CardMedia>
-        <CardActions style={{justifyContent: 'center'}}>
+        <CardActions style={{ justifyContent: 'center' }}>
           <IconButton icon="thumb_down" />
           <IconButton icon="thumb_up" />
           <IconButton icon="turned_in_not" />
         </CardActions>
       </Card>
-    )
+    ),
   }, {
     name: 'Small Media Controls',
     component: (
-      <Card style={{width: '140px'}}>
+      <Card style={{ width: '140px' }}>
         <CardMedia
           contentOverlay
           aspectRatio="square"
           image="https://placeimg.com/280/280/people"
         >
-          <CardActions style={{justifyContent: 'center'}}>
+          <CardActions style={{ justifyContent: 'center' }}>
             <IconButton inverse icon="fast_rewind" />
             <IconButton inverse icon="play_arrow" />
             <IconButton inverse icon="fast_forward" />
           </CardActions>
         </CardMedia>
       </Card>
-    )
-  }]
+    ),
+  }],
 };
 
 const CardTest = () => (
@@ -234,7 +234,7 @@ const CardTest = () => (
     <p>You have multiple options for cards. Combine different subcomponents to create your own:</p>
 
     <div className={style.cards}>
-      {Object.keys(cards).map((key) => (
+      {Object.keys(cards).map(key => (
         <CardList key={key}>
           {cards[key].map((demo, i) => <CardListItem key={key + i} {...demo} />)}
         </CardList>

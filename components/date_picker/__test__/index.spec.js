@@ -1,82 +1,83 @@
+/* eslint-disable */
 import expect from 'expect';
 import theme from '../theme.css';
 import { DatePickerDialog } from '../DatePicker';
 import utils from '../../utils/testing';
 
-describe('DatePickerDialog', function () {
-  describe('#on mount', function () {
-    it('passes value through to calendar if no maxDate/minDate specified', function () {
+describe('DatePickerDialog', () => {
+  describe('#on mount', () => {
+    it('passes value through to calendar if no maxDate/minDate specified', () => {
       const value = new Date(2016, 1, 1);
-      const wrapper = utils.shallowRenderComponent(DatePickerDialog, {theme, value});
+      const wrapper = utils.shallowRenderComponent(DatePickerDialog, { theme, value });
       expect(getDatePassedToCalendar(wrapper)).toBe(value);
     });
 
-    describe('when minDate but not maxDate specified', function () {
+    describe('when minDate but not maxDate specified', () => {
       const minDate = new Date(2016, 1, 2);
 
-      it('passes through a value after minDate', function () {
+      it('passes through a value after minDate', () => {
         const value = new Date(2016, 1, 3);
-        const wrapper = utils.shallowRenderComponent(DatePickerDialog, {theme, value, minDate});
+        const wrapper = utils.shallowRenderComponent(DatePickerDialog, { theme, value, minDate });
         expect(getDatePassedToCalendar(wrapper)).toBe(value);
       });
 
-      it('sanitises a value before minDate to minDate', function () {
+      it('sanitises a value before minDate to minDate', () => {
         const wrapper = utils.shallowRenderComponent(DatePickerDialog, {
-          theme, value: new Date(2016, 1, 1), minDate
+          theme, value: new Date(2016, 1, 1), minDate,
         });
         expect(getDatePassedToCalendar(wrapper)).toBe(minDate);
       });
     });
 
-    describe('when maxDate but not minDate specified', function () {
+    describe('when maxDate but not minDate specified', () => {
       const maxDate = new Date(2016, 1, 2);
 
-      it('passes through a value before maxDate', function () {
+      it('passes through a value before maxDate', () => {
         const value = new Date(2016, 1, 1);
-        const wrapper = utils.shallowRenderComponent(DatePickerDialog, {theme, value, maxDate});
+        const wrapper = utils.shallowRenderComponent(DatePickerDialog, { theme, value, maxDate });
         expect(getDatePassedToCalendar(wrapper)).toBe(value);
       });
 
-      it('sanitises a value after maxDate to maxDate', function () {
+      it('sanitises a value after maxDate to maxDate', () => {
         const wrapper = utils.shallowRenderComponent(DatePickerDialog, {
-          theme, value: new Date(2016, 1, 3), maxDate
+          theme, value: new Date(2016, 1, 3), maxDate,
         });
         expect(getDatePassedToCalendar(wrapper)).toBe(maxDate);
       });
     });
 
-    describe('if both minDate and maxDate are set', function () {
+    describe('if both minDate and maxDate are set', () => {
       const minDate = new Date(2016, 1, 2);
       const maxDate = new Date(2016, 1, 4);
 
-      it('sanitises value to minDate if value is before minDate', function () {
+      it('sanitises value to minDate if value is before minDate', () => {
         const wrapper = utils.shallowRenderComponent(DatePickerDialog, {
           theme,
           value: new Date(2016, 1, 1),
           minDate,
-          maxDate
+          maxDate,
         });
         expect(getDatePassedToCalendar(wrapper)).toBe(minDate);
       });
 
-      it('sanitises value to maxDate if value is after maxDate', function () {
+      it('sanitises value to maxDate if value is after maxDate', () => {
         const wrapper = utils.shallowRenderComponent(DatePickerDialog, {
           theme,
           value: new Date(2016, 1, 5),
           minDate,
-          maxDate
+          maxDate,
         });
         expect(getDatePassedToCalendar(wrapper)).toBe(maxDate);
       });
 
-      it('doesn\'t sanitise when value is between maxDate/minDate', function () {
+      it('doesn\'t sanitise when value is between maxDate/minDate', () => {
         const value = new Date(2016, 1, 3);
-        const wrapper = utils.shallowRenderComponent(DatePickerDialog, {theme, value, minDate, maxDate});
+        const wrapper = utils.shallowRenderComponent(DatePickerDialog, { theme, value, minDate, maxDate });
         expect(getDatePassedToCalendar(wrapper)).toBe(value);
       });
     });
 
-    function getDatePassedToCalendar (wrapper) {
+    function getDatePassedToCalendar(wrapper) {
       return wrapper.props.children[1].props.children.props.selectedDate;
     }
   });

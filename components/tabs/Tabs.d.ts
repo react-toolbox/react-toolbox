@@ -1,5 +1,6 @@
 import * as React from "react";
 import ReactToolbox from "../index";
+import { TabTheme } from './Tab';
 import { TabContentTheme } from './TabContent';
 
 export interface TabsTheme extends TabTheme, TabContentTheme {

@@ -2,8 +2,8 @@ import React, { cloneElement, Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { getViewport } from '../utils/utils';
-import filterReactChildren from '../utils/filter-react-children.js';
-import isComponentOfType from '../utils/is-component-of-type.js';
+import filterReactChildren from '../utils/filter-react-children';
+import isComponentOfType from '../utils/is-component-of-type';
 import InjectAppBar from '../app_bar/AppBar';
 import InjectNavDrawer from './NavDrawer';
 import InjectSidebar from './Sidebar';
@@ -21,23 +21,31 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
     static propTypes = {
       children: PropTypes.node,
       className: PropTypes.string,
-      theme: PropTypes.object
+      theme: PropTypes.shape({
+        appbarFixed: PropTypes.string,
+        layout: PropTypes.string,
+        layoutInner: PropTypes.string,
+        navDrawerClipped: PropTypes.string,
+        navDrawerPinned: PropTypes.string,
+        sidebarClipped: PropTypes.string,
+        sidebarPinned: PropTypes.string,
+      }),
     };
 
     static defaultProps = {
-      className: ''
+      className: '',
     };
 
     state = {
-      width: isBrowser() && getViewport().width
+      width: isBrowser() && getViewport().width,
     };
 
-    componentDidMount () {
+    componentDidMount() {
       if (!this.state.width) this.handleResize();
       window.addEventListener('resize', this.handleResize);
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
       window.removeEventListener('resize', this.handleResize);
     }
 
@@ -45,7 +53,7 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
       this.setState({ width: getViewport().width });
     }
 
-    isPinned = sideNav => {
+    isPinned = (sideNav) => {
       if (sideNav) {
         const { permanentAt, pinned } = sideNav.props;
         const { width } = this.state;
@@ -54,7 +62,7 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
       return undefined;
     }
 
-    render () {
+    render() {
       const { children, className, theme, ...rest } = this.props;
       const appBar = filterReactChildren(children, isAppBar)[0];
       const navDrawer = filterReactChildren(children, isNavDrawer)[0];
@@ -69,17 +77,17 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
 
       const clonedAppBar = appBar && cloneElement(appBar, {
         theme,
-        themeNamespace: 'appbar'
+        themeNamespace: 'appbar',
       });
 
       const clonedLeftSideNav = navDrawer && cloneElement(navDrawer, {
         clipped: navDrawerClipped,
-        pinned: navDrawerPinned
+        pinned: navDrawerPinned,
       });
 
       const clonedRightSideNav = sidebar && cloneElement(sidebar, {
         clipped: sidebarClipped,
-        pinned: sidebarPinned
+        pinned: sidebarPinned,
       });
 
       const _className = classnames(theme.layout,
@@ -88,8 +96,8 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
           [theme.navDrawerClipped]: navDrawerClipped,
           [theme.sidebarPinned]: sidebarPinned,
           [theme.sidebarClipped]: sidebarClipped,
-          [theme.appbarFixed]: appBarFixed
-      }, className);
+          [theme.appbarFixed]: appBarFixed,
+        }, className);
 
       return (
         <div {...rest} className={_className}>

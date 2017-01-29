@@ -1,12 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
+import styleShape from 'react-style-proptype';
 import { themr } from 'react-css-themr';
 import { round, range } from '../utils/utils';
-import { SLIDER } from '../identifiers.js';
-import events from '../utils/events.js';
-import InjectProgressBar from '../progress_bar/ProgressBar.js';
-import InjectInput from '../input/Input.js';
+import { SLIDER } from '../identifiers';
+import events from '../utils/events';
+import InjectProgressBar from '../progress_bar/ProgressBar';
+import InjectInput from '../input/Input';
 
 const factory = (ProgressBar, Input) => {
   class Slider extends Component {
@@ -20,7 +21,7 @@ const factory = (ProgressBar, Input) => {
       pinned: PropTypes.bool,
       snaps: PropTypes.bool,
       step: PropTypes.number,
-      style: PropTypes.object,
+      style: styleShape,
       theme: PropTypes.shape({
         container: PropTypes.string,
         editable: PropTypes.string,
@@ -34,9 +35,9 @@ const factory = (ProgressBar, Input) => {
         ring: PropTypes.string,
         slider: PropTypes.string,
         snap: PropTypes.string,
-        snaps: PropTypes.string
+        snaps: PropTypes.string,
       }),
-      value: PropTypes.number
+      value: PropTypes.number,
     };
 
     static defaultProps = {
@@ -47,52 +48,84 @@ const factory = (ProgressBar, Input) => {
       pinned: false,
       snaps: false,
       step: 0.01,
-      value: 0
+      value: 0,
     };
 
     state = {
       inputFocused: false,
       inputValue: null,
       sliderLength: 0,
-      sliderStart: 0
+      sliderStart: 0,
     };
 
-    componentDidMount () {
+    componentDidMount() {
       window.addEventListener('resize', this.handleResize);
       this.handleResize();
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
       if (this.state.inputFocused && this.props.value !== nextProps.value) {
-        this.setState({inputValue: this.valueForInput(nextProps.value)});
+        this.setState({ inputValue: this.valueForInput(nextProps.value) });
       }
     }
 
-    shouldComponentUpdate (nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState) {
       return this.state.inputFocused || !nextState.inputFocused;
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
       window.removeEventListener('resize', this.handleResize);
       events.removeEventsFromDocument(this.getMouseEventMap());
       events.removeEventsFromDocument(this.getTouchEventMap());
       events.removeEventsFromDocument(this.getKeyboardEvents());
     }
 
+    getInput() {
+      return this.inputNode && this.inputNode.getWrappedInstance
+        ? this.inputNode.getWrappedInstance()
+        : this.inputNode;
+    }
+
+    getKeyboardEvents() {
+      return {
+        keydown: this.handleKeyDown,
+      };
+    }
+
+    getMouseEventMap() {
+      return {
+        mousemove: this.handleMouseMove,
+        mouseup: this.handleMouseUp,
+      };
+    }
+
+    getTouchEventMap() {
+      return {
+        touchmove: this.handleTouchMove,
+        touchend: this.handleTouchEnd,
+      };
+    }
+
+    addToValue(increment) {
+      let value = this.state.inputFocused ? parseFloat(this.state.inputValue) : this.props.value;
+      value = this.trimValue(value + increment);
+      if (value !== this.props.value) this.props.onChange(value);
+    }
+
     handleInputFocus = () => {
       this.setState({
         inputFocused: true,
-        inputValue: this.valueForInput(this.props.value)
+        inputValue: this.valueForInput(this.props.value),
       });
     };
 
     handleInputChange = (value) => {
-      this.setState({inputValue: value});
+      this.setState({ inputValue: value });
     };
 
     handleInputBlur = (event) => {
       const value = this.state.inputValue || 0;
-      this.setState({inputFocused: false, inputValue: null}, () => {
+      this.setState({ inputFocused: false, inputValue: null }, () => {
         this.props.onChange(this.trimValue(value), event);
       });
     };
@@ -120,9 +153,9 @@ const factory = (ProgressBar, Input) => {
     };
 
     handleResize = (event, callback) => {
-      const {left, right} = ReactDOM.findDOMNode(this.refs.progressbar).getBoundingClientRect();
+      const { left, right } = ReactDOM.findDOMNode(this.progressbarNode).getBoundingClientRect();
       const cb = (callback) || (() => {});
-      this.setState({sliderStart: left, sliderLength: right - left}, cb);
+      this.setState({ sliderStart: left, sliderLength: right - left }, cb);
     };
 
     handleSliderBlur = () => {
@@ -148,159 +181,126 @@ const factory = (ProgressBar, Input) => {
       events.pauseEvent(event);
     };
 
-    addToValue (increment) {
-      let value = this.state.inputFocused ? parseFloat(this.state.inputValue) : this.props.value;
-      value = this.trimValue(value + increment);
-      if (value !== this.props.value) this.props.onChange(value);
-    }
-
-    getInput () {
-      return this.refs.input && this.refs.input.getWrappedInstance
-        ? this.refs.input.getWrappedInstance()
-        : this.refs.input;
-    }
-
-    getKeyboardEvents () {
-      return {
-        keydown: this.handleKeyDown
-      };
-    }
-
-    getMouseEventMap () {
-      return {
-        mousemove: this.handleMouseMove,
-        mouseup: this.handleMouseUp
-      };
-    }
-
-    getTouchEventMap () {
-      return {
-        touchmove: this.handleTouchMove,
-        touchend: this.handleTouchEnd
-      };
-    }
-
-    end (revents) {
+    end(revents) {
       events.removeEventsFromDocument(revents);
       this.setState({ pressed: false });
     }
 
-    knobOffset () {
+    knobOffset() {
       const { max, min } = this.props;
-      const translated = this.state.sliderLength * (this.props.value - min) / (max - min);
-      return translated * 100 / this.state.sliderLength;
+      const translated = this.state.sliderLength * ((this.props.value - min) / (max - min));
+      return (translated * 100) / this.state.sliderLength;
     }
 
-    move (position) {
+    move(position) {
       const newValue = this.positionToValue(position);
       if (newValue !== this.props.value) this.props.onChange(newValue);
     }
 
-    positionToValue (position) {
+    positionToValue(position) {
       const { sliderStart: start, sliderLength: length } = this.state;
       const { max, min, step } = this.props;
-      const pos = (position.x - start) / length * (max - min);
-      return this.trimValue(Math.round(pos / step) * step + min);
+      const pos = ((position.x - start) / length) * (max - min);
+      return this.trimValue((Math.round(pos / step) * step) + min);
     }
 
-    start (position) {
+    start(position) {
       this.handleResize(null, () => {
-        this.setState({pressed: true});
+        this.setState({ pressed: true });
         this.props.onChange(this.positionToValue(position));
       });
     }
 
-    stepDecimals () {
+    stepDecimals() {
       return (this.props.step.toString().split('.')[1] || []).length;
     }
 
-    trimValue (value) {
+    trimValue(value) {
       if (value < this.props.min) return this.props.min;
       if (value > this.props.max) return this.props.max;
       return round(value, this.stepDecimals());
     }
 
-    valueForInput (value) {
+    valueForInput(value) {
       const decimals = this.stepDecimals();
       return decimals > 0 ? value.toFixed(decimals) : value.toString();
     }
 
-    renderSnaps () {
-      if (this.props.snaps) {
-        return (
-          <div ref='snaps' className={this.props.theme.snaps}>
-            {range(0, (this.props.max - this.props.min) / this.props.step).map(i => {
-              return <div key={`span-${i}`} className={this.props.theme.snap} />;
-            })}
-          </div>
-        );
-      }
+    renderSnaps() {
+      if (!this.props.snaps) return undefined;
+      return (
+        <div className={this.props.theme.snaps}>
+          {range(0, (this.props.max - this.props.min) / this.props.step).map(i =>
+            <div key={`span-${i}`} className={this.props.theme.snap} />,
+          )}
+        </div>
+      );
     }
 
-    renderInput () {
-      if (this.props.editable) {
-        const value = this.state.inputFocused ? this.state.inputValue : this.valueForInput(this.props.value);
-        return (
-          <Input
-            ref='input'
-            className={this.props.theme.input}
-            disabled={this.props.disabled}
-            onFocus={this.handleInputFocus}
-            onChange={this.handleInputChange}
-            onBlur={this.handleInputBlur}
-            value={value}
-            />
-        );
-      }
+    renderInput() {
+      if (!this.props.editable) return undefined;
+      return (
+        <Input
+          ref={(node) => { this.inputNode = node; }}
+          className={this.props.theme.input}
+          disabled={this.props.disabled}
+          onFocus={this.handleInputFocus}
+          onChange={this.handleInputChange}
+          onBlur={this.handleInputBlur}
+          value={this.state.inputFocused
+            ? this.state.inputValue
+            : this.valueForInput(this.props.value)}
+        />
+      );
     }
 
-    render () {
+    render() {
       const { theme } = this.props;
-      const knobStyles = {left: `${this.knobOffset()}%`};
+      const knobStyles = { left: `${this.knobOffset()}%` };
       const className = classnames(theme.slider, {
         [theme.editable]: this.props.editable,
         [theme.disabled]: this.props.disabled,
         [theme.pinned]: this.props.pinned,
         [theme.pressed]: this.state.pressed,
-        [theme.ring]: this.props.value === this.props.min
+        [theme.ring]: this.props.value === this.props.min,
       }, this.props.className);
 
       return (
         <div
           className={className}
           disabled={this.props.disabled}
-          data-react-toolbox='slider'
+          data-react-toolbox="slider"
           onBlur={this.handleSliderBlur}
           onFocus={this.handleSliderFocus}
           style={this.props.style}
-          tabIndex='0'
-          >
+          tabIndex="0"
+        >
           <div
-            ref='slider'
+            ref={(node) => { this.sliderNode = node; }}
             className={theme.container}
             onMouseDown={this.handleMouseDown}
             onTouchStart={this.handleTouchStart}
-            >
+          >
             <div
-              ref='knob'
+              ref={(node) => { this.knobNode = node; }}
               className={theme.knob}
               onMouseDown={this.handleMouseDown}
               onTouchStart={this.handleTouchStart}
               style={knobStyles}
-              >
-              <div className={theme.innerknob} data-value={parseInt(this.props.value)}/>
+            >
+              <div className={theme.innerknob} data-value={parseInt(this.props.value, 10)} />
             </div>
 
             <div className={theme.progress}>
               <ProgressBar
                 disabled={this.props.disabled}
-                ref='progressbar'
+                ref={(node) => { this.progressbarNode = node; }}
                 className={theme.innerprogress}
                 max={this.props.max}
                 min={this.props.min}
-                mode='determinate'
+                mode="determinate"
                 value={this.props.value}
-                />
+              />
               {this.renderSnaps()}
             </div>
           </div>
