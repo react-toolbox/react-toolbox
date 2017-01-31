@@ -7,14 +7,14 @@
   position: relative;
   padding: $input-padding 0;
   &.withIcon {
-    margin-left: $input-icon-size;
+    margin-left: $input-icon-size + $input-icon-right-space;
   }
 }
 
 .icon {
   position: absolute;
   top: $input-icon-offset;
-  left: -$input-icon-size;
+  left: -($input-icon-size + $input-icon-right-space);
   display: block;
   width: $input-icon-size;
   height: $input-icon-size;

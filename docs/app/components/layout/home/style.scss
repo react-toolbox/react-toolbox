@@ -2,7 +2,7 @@
 @import "./config";
 
 $twitter-color: #55acee;
-$content-offset: 4.8 * $unit;
+$content-offset: 2.8 * $unit;
 $content-width: 740px;
 
 .header {
@@ -173,5 +173,41 @@ $content-width: 740px;
 
   .second-content {
     background-color: transparent;
+  }
+}
+
+.ad {
+  display: block;
+  padding: $hero-item-spacing / 2 0;
+  margin: 0 auto;
+
+  > div {
+    display: inline-block;
+    max-width: 330px;
+    padding: 10px 10px 10px 160px;
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: left;
+    border: solid $palette-indigo-500;
+    border-width: 1px;
+    border-radius: 4px;
+
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+
+  :global {
+    .carbon-img {
+      float: left;
+      margin-left: -145px;
+    }
+
+    .carbon-poweredby {
+      display: block;
+      color: #cdbfe3 !important;
+    }
   }
 }
