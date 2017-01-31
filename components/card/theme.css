@@ -17,10 +17,6 @@
   &.raised {
     box-shadow: var(--shadow-8p);
   }
-
-  & [data-react-toolbox='avatar'] {
-    display: block;
-  }
 }
 
 .cardMedia {
