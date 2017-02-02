@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { LIST } from '../identifiers';
-import InjectCheckbox from '../checkbox/Checkbox';
+import InjectCheckbox from '../Checkbox/Checkbox';
 import InjectListItemContent from './ListItemContent';
 
 const factory = (Checkbox, ListItemContent) => {

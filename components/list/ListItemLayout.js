@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { LIST } from '../identifiers';
-import { FontIcon } from '../font_icon/FontIcon';
-import InjectAvatar from '../avatar/Avatar';
+import { FontIcon } from '../FontIcon/FontIcon';
+import InjectAvatar from '../Avatar/Avatar';
 import InjectListItemContent from './ListItemContent';
 import InjectListItemActions from './ListItemActions';
 

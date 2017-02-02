@@ -1,8 +1,8 @@
 @import '../colors.css';
 @import '../media.css';
 @import '../variables.css';
-@import '../app_bar/config.css';
-@import '../drawer/config.css';
+@import '../AppBar/config.css';
+@import '../Drawer/config.css';
 
 :root {
   --layout-side-transition: all var(--animation-duration) var(--animation-curve-default);

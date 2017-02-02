@@ -4,9 +4,9 @@ import { datePickerFactory } from './DatePicker';
 import datePickerDialogFactory from './DatePickerDialog';
 import calendarFactory from './Calendar';
 
-import { IconButton } from '../button';
-import { Input } from '../input';
-import { Dialog } from '../dialog';
+import { IconButton } from '../Button';
+import { Input } from '../Input';
+import { Dialog } from '../Dialog';
 import theme from './theme.css';
 
 const Calendar = calendarFactory(IconButton);

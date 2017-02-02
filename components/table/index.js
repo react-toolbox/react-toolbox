@@ -1,7 +1,7 @@
 import { themr } from 'react-css-themr';
 import { TABLE } from '../identifiers';
-import { Checkbox } from '../checkbox';
-import { FontIcon } from '../font_icon';
+import { Checkbox } from '../Checkbox';
+import { FontIcon } from '../FontIcon';
 
 import { tableFactory } from './Table';
 import { tableHeadFactory } from './TableHead';

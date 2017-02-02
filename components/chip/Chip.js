@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { CHIP } from '../identifiers';
-import InjectAvatar from '../avatar/Avatar';
+import InjectAvatar from '../Avatar/Avatar';
 
 const factory = (Avatar) => {
   const Chip = ({ children, className, deletable, onDeleteClick, theme, ...other }) => {

@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { BUTTON } from '../identifiers';
-import InjectFontIcon from '../font_icon/FontIcon';
-import rippleFactory from '../ripple/Ripple';
+import InjectFontIcon from '../FontIcon/FontIcon';
+import rippleFactory from '../Ripple/Ripple';
 
 const factory = (ripple, FontIcon) => {
   class Button extends Component {

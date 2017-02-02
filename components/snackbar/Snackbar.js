@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { SNACKBAR } from '../identifiers';
 import ActivableRenderer from '../hoc/ActivableRenderer';
-import InjectButton from '../button/Button';
+import InjectButton from '../Button/Button';
 import Portal from '../hoc/Portal';
 
 const factory = (Button) => {

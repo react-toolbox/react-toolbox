@@ -4,8 +4,8 @@ import { themr } from 'react-css-themr';
 import { TIME_PICKER } from '../identifiers';
 import events from '../utils/events';
 import time from '../utils/time';
-import InjectDialog from '../dialog/Dialog';
-import InjectInput from '../input/Input';
+import InjectDialog from '../Dialog/Dialog';
+import InjectInput from '../Input/Input';
 import timePickerDialogFactory from './TimePickerDialog';
 
 const factory = (TimePickerDialog, Input) => {

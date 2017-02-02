@@ -4,7 +4,7 @@ import { themr } from 'react-css-themr';
 import { getViewport } from '../utils/utils';
 import filterReactChildren from '../utils/filter-react-children';
 import isComponentOfType from '../utils/is-component-of-type';
-import InjectAppBar from '../app_bar/AppBar';
+import InjectAppBar from '../AppBar/AppBar';
 import InjectNavDrawer from './NavDrawer';
 import InjectSidebar from './Sidebar';
 import isBrowser from '../utils/is-browser';

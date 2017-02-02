@@ -1,5 +1,5 @@
 import React from 'react';
-import { RadioGroup, RadioButton } from '../../components/radio';
+import { RadioGroup, RadioButton } from '../../components/Radio';
 
 class RadioGroupTest extends React.Component {
   state = {

@@ -1,6 +1,6 @@
 import { themr } from 'react-css-themr';
 import { RADIO } from '../identifiers';
-import themedRippleFactory from '../ripple';
+import themedRippleFactory from '../Ripple';
 import radioFactory from './Radio';
 import { radioButtonFactory } from './RadioButton';
 import { radioGroupFactory } from './RadioGroup';

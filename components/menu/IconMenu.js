@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { MENU } from '../identifiers';
-import InjectIconButton from '../button/IconButton';
+import InjectIconButton from '../Button/IconButton';
 import InjectMenu from './Menu';
 
 const factory = (IconButton, Menu) => {

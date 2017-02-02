@@ -6,8 +6,8 @@ import { themr } from 'react-css-themr';
 import { round, range } from '../utils/utils';
 import { SLIDER } from '../identifiers';
 import events from '../utils/events';
-import InjectProgressBar from '../progress_bar/ProgressBar';
-import InjectInput from '../input/Input';
+import InjectProgressBar from '../ProgressBar/ProgressBar';
+import InjectInput from '../Input/Input';
 
 const factory = (ProgressBar, Input) => {
   class Slider extends Component {

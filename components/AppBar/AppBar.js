@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { APP_BAR } from '../identifiers';
-import InjectIconButton from '../button/IconButton';
+import InjectIconButton from '../Button/IconButton';
 
 const factory = (IconButton) => {
   class AppBar extends React.Component {

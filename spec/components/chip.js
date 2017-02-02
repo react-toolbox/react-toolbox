@@ -1,6 +1,6 @@
 import React from 'react';
-import Avatar from '../../components/avatar';
-import Chip from '../../components/chip';
+import Avatar from '../../components/Avatar';
+import Chip from '../../components/Chip';
 import style from '../style';
 
 class ChipTest extends React.Component {
@@ -63,4 +63,3 @@ class ChipTest extends React.Component {
 }
 
 export default ChipTest;
-

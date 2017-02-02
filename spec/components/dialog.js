@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
-import Button from '../../components/button';
-import Dialog from '../../components/dialog';
-import Dropdown from '../../components/dropdown';
+import Button from '../../components/Button';
+import Dialog from '../../components/Dialog';
+import Dropdown from '../../components/Dropdown';
 
 const dialogTypes = [
   { value: 'small', label: 'small' },

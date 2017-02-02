@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { MENU } from '../identifiers';
-import { FontIcon } from '../font_icon/FontIcon';
-import rippleFactory from '../ripple/Ripple';
+import { FontIcon } from '../FontIcon/FontIcon';
+import rippleFactory from '../Ripple/Ripple';
 
 const factory = (ripple) => {
   class MenuItem extends Component {

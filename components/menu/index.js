@@ -1,11 +1,11 @@
 import { themr } from 'react-css-themr';
 import { MENU } from '../identifiers';
-import { IconButton } from '../button';
+import { IconButton } from '../Button';
 import { MenuDivider } from './MenuDivider';
 import { menuItemFactory } from './MenuItem';
 import { menuFactory } from './Menu';
 import { iconMenuFactory } from './IconMenu';
-import themedRippleFactory from '../ripple';
+import themedRippleFactory from '../Ripple';
 import theme from './theme.css';
 
 const applyTheme = Component => themr(MENU, theme)(Component);

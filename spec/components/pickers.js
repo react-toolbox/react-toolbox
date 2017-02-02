@@ -1,6 +1,6 @@
 import React from 'react';
-import DatePicker from '../../components/date_picker';
-import TimePicker from '../../components/time_picker';
+import DatePicker from '../../components/DatePicker';
+import TimePicker from '../../components/TimePicker';
 
 const datetime = new Date(2015, 10, 16);
 const min_datetime = new Date(new Date(datetime).setDate(8));

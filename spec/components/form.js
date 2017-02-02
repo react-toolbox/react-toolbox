@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from '../../components/form';
+import Form from '../../components/Form';
 
 const countriesArray = ['Spain', 'England', 'USA', 'Thailand', 'France'];
 

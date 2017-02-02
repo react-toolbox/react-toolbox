@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { INPUT } from '../identifiers';
-import InjectedFontIcon from '../font_icon/FontIcon';
+import InjectedFontIcon from '../FontIcon/FontIcon';
 
 const factory = (FontIcon) => {
   class Input extends React.Component {

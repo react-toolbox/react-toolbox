@@ -1,5 +1,5 @@
 import React from 'react';
-import ProgressBar from '../../components/progress_bar';
+import ProgressBar from '../../components/ProgressBar';
 import style from '../style.css';
 
 const initialState = {

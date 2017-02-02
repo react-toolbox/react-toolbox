@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { LINK } from '../identifiers';
-import { FontIcon } from '../font_icon/FontIcon';
+import { FontIcon } from '../FontIcon/FontIcon';
 
 const Link = ({ active, children, className, count, icon, label, theme, ...others }) => {
   const _className = classnames(theme.link, {

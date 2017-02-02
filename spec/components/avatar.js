@@ -1,6 +1,6 @@
 import React from 'react';
-import Avatar from '../../components/avatar';
-import GithubIcon from './github_icon';
+import Avatar from '../../components/Avatar';
+import GithubIcon from './GithubIcon';
 
 const AvatarTest = () => (
   <section>

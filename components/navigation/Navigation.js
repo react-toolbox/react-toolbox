@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { NAVIGATION } from '../identifiers';
-import InjectButton from '../button/Button';
-import InjectLink from '../link/Link';
+import InjectButton from '../Button/Button';
+import InjectLink from '../Link/Link';
 
 const factory = (Button, Link) => {
   const Navigation = ({ actions, children, className, routes, theme, type }) => {

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { TABLE } from '../identifiers';
-import InjectFontIcon from '../font_icon/FontIcon';
+import InjectFontIcon from '../FontIcon/FontIcon';
 
 const ASC = 'asc';
 const DESC = 'desc';
