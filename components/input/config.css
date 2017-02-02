@@ -17,6 +17,7 @@
   --input-icon-font-size: calc(2.4 * var(--unit));
   --input-icon-size: calc(2 * var(--input-icon-font-size));
   --input-icon-offset: calc(1.6 * var(--unit));
+  --input-icon-right-space: calc(2 * var(--unit));
   --input-chevron-offset: calc(0.8 * var(--unit));
   --input-hint-opacity: 1;
 }

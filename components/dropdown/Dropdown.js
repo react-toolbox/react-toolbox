@@ -121,6 +121,7 @@ const factory = (Input) => {
     }
 
     open = (event) => {
+      if (this.state.active) return;
       const client = event.target.getBoundingClientRect();
       const screenHeight = window.innerHeight || document.documentElement.offsetHeight;
       const up = this.props.auto ? client.top > ((screenHeight / 2) + client.height) : false;

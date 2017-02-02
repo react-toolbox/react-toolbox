@@ -38,8 +38,6 @@ describe('ProgressBar', () => {
     it('renders the value and buffer bars when it is linear', () => {
       wrapper = utils.shallowRenderComponent(RawProgressBar, { theme }).props.children;
       expect(wrapper.props.children.length).toEqual(2);
-      expect(wrapper.props.children[0].ref).toEqual('buffer');
-      expect(wrapper.props.children[1].ref).toEqual('value');
     });
 
     it('renders the value and buffer bars when it is linear', () => {
