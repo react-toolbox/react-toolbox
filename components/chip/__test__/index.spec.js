@@ -42,7 +42,7 @@ describe('Chip', () => {
         </Chip>,
       );
       const chipNode = wrapper.find('div').node;
-      expect(chipNode.className).toNotMatch(/\bavatar-class\b/);
+      expect(chipNode.className).not.toMatch(/\bavatar-class\b/);
     });
   });
 });
