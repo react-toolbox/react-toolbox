@@ -7,7 +7,9 @@
     "jest": true,
     "es6": true
   },
+  "plugins": ["compat"],
   "rules": {
+    "compat/compat": 2,
     "func-names": "off",
     "global-require": "off",
     "no-use-before-define": 0,

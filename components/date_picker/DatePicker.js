@@ -169,4 +169,5 @@ export {
   DatePickerDialog,
   factory as datePickerFactory,
 };
+export { Calendar };
 export { DatePicker };
