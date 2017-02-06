@@ -4,7 +4,11 @@ const babel = require('gulp-babel');
 const postcss = require('gulp-postcss');
 
 gulp.task('js', function () {
-  return gulp.src(['./components/**/*.js'])
+  return gulp.src([
+    './components/**/*.js',
+    '!./components/**/__test__/*.js',
+    '!./components/__mocks__/**/*.js'
+  ])
     .pipe(babel())
     .pipe(gulp.dest('./lib'));
 });
