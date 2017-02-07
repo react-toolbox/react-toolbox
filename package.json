@@ -41,7 +41,6 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "core-js": "^2.4.0",
-    "eslint-plugin-babel": "^4.0.1",
     "ramda": "^0.23.0",
     "react-addons-css-transition-group": "^15.4.2",
     "react-css-themr": "^1.7.2",
@@ -65,6 +64,7 @@
     "eslint": "^3.15.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-import-resolver-webpack": "^0.8.1",
+    "eslint-plugin-babel": "^4.0.1",
     "eslint-plugin-compat": "^1.0.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
