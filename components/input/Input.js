@@ -53,6 +53,7 @@ const factory = (FontIcon) => {
       }),
       type: PropTypes.string,
       value: PropTypes.oneOfType([
+        PropTypes.number,
         PropTypes.object,
         PropTypes.string,
       ]),
