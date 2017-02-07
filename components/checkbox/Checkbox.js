@@ -65,7 +65,6 @@ const factory = (Check) => {
       return (
         <label
           data-react-toolbox="checkbox"
-          htmlFor={name}
           className={className}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}

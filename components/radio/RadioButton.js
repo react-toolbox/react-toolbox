@@ -72,7 +72,6 @@ const factory = (Radio) => {
       const _className = classnames(theme[this.props.disabled ? 'disabled' : 'field'], className);
       return (
         <label
-          htmlFor={name}
           data-react-toolbox="radio-button"
           className={_className}
           onMouseEnter={onMouseEnter}
