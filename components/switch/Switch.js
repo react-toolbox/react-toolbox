@@ -62,7 +62,7 @@ const factory = (Thumb) => {
       } = this.props;
       const _className = classnames(theme[disabled ? 'disabled' : 'field'], className);
       return (
-        <label data-react-toolbox="switch" className={_className} htmlFor={this.props.name}>
+        <label data-react-toolbox="switch" className={_className}>
           <input
             {...others}
             checked={this.props.checked}

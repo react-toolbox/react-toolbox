@@ -206,7 +206,7 @@ const factory = (FontIcon) => {
           {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
           <span className={theme.bar} />
           {labelText
-            ? <label className={labelClassName} htmlFor={name}>
+            ? <label className={labelClassName}>
               {labelText}
               {required ? <span className={theme.required}> * </span> : null}
             </label>

@@ -156,7 +156,7 @@ const factory = (Input) => {
           </div>
           {this.props.label
             ? (
-              <label htmlFor={this.props.name} className={theme.label}>
+              <label className={theme.label}>
                 {this.props.label}
                 {this.props.required ? <span className={theme.required}> * </span> : null}
               </label>
