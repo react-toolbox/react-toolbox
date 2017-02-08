@@ -199,10 +199,10 @@ const rippleFactory = (options = {}) => {
         const eventType = isTouch ? ['touchend', 'touchmove'] : 'mouseup';
         const endRipple = this.createRippleDeactivateCallback(eventType, rippleKey);
         if (Array.isArray(eventType)) {
-          eventType.map(eventType => document.addEventListener(eventType, endRipple));
+          eventType.map(eT => document.addEventListener(eT, endRipple));
         } else {
           document.addEventListener(eventType, endRipple);
-        } 
+        }
         return endRipple;
       }
 
@@ -219,10 +219,10 @@ const rippleFactory = (options = {}) => {
         const self = this;
         return function endRipple() {
           if (Array.isArray(eventType)) {
-            eventType.map(eventType => document.removeEventListener(eventType, endRipple));
+            eventType.map(eT => document.removeEventListener(eT, endRipple));
           } else {
             document.removeEventListener(eventType, endRipple);
-          }   
+          }
 
           self.setState({ ripples: {
             ...self.state.ripples,
