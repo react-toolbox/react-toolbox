@@ -3,9 +3,9 @@ import alpha from '../../utils/alpha';
 import lighten from '../../utils/lighten';
 
 const base = css`
-  appearance: none;
   align-content: center;
   align-items: center;
+  appearance: none;
   border: 0;
   cursor: pointer;
   display: inline-block;
@@ -18,6 +18,7 @@ const base = css`
   letter-spacing: 0;
   line-height: 36px;
   outline: none;
+  padding: 0;
   position: relative;
   text-align: center;
   text-decoration: none;
@@ -33,10 +34,6 @@ const base = css`
     border: 0;
   }
 
-  &:visited {
-    color: inherit;
-  }
-
   & > svg {
     display: inline-block;
     fill: currentColor;
@@ -46,7 +43,7 @@ const base = css`
     width: 1em;
   }
 
-  & > i {
+  & > span:first-child {
     display: inline-block;
     line-height: 36px;
     vertical-align: top;
@@ -72,20 +69,24 @@ const raised = (props) => {
     color: ${color};
     min-width: 90px;
     padding: 0 12px;
+
     &:hover {
       background: ${alpha(background, 0.8)};
     }
+
     &:focus:not(:active) {
       box-shadow:
         0 0 8px rgba(0, 0, 0, 0.18),
         0 8px 16px rgba(0, 0, 0, 0.36);
     }
+
     & > svg {
       margin-right: 5px;
     }
-    & > i {
+
+    & > span:first-child {
       font-size: 120%;
-      margin-right: 5px;
+      margin-right: 6px;
     }
   `;
 };
@@ -101,18 +102,22 @@ const flat = (props) => {
     color: ${color};
     min-width: 90px;
     padding: 0 12px;
+
     &:focus:not(:active) {
       background: ${alpha('rgba(33, 33, 33, 1)', 0.2)};
     }
+
     &:hover {
       background: ${alpha('rgba(33, 33, 33, 1)', 0.2)};
     }
+
     & > svg {
       margin-right: 5px;
     }
-    & > i {
+
+    & > span:first-child {
       font-size: 120%;
-      margin-right: 5px;
+      margin-right: 6px;
     }
   `;
 };
@@ -136,12 +141,14 @@ const floating = (props) => {
     font-size: 24px;
     height: 56px;
     width: 56px;
+
     &:focus:not(:active) {
       box-shadow:
         0 0 8px rgba(0, 0, 0, 0.18),
         0 8px 16px rgba(0, 0, 0, 0.36);
     }
-    & > i {
+
+    & > span:first-child {
       line-height: 56px;
     }
   `;
@@ -152,9 +159,9 @@ const mini = css`
   height: 40px;
   width: 40px;
 
-  & > i {
+  & > span:first-child {
+    font-size: calc(40px / 2.25);
     line-height: 40px;
-    vertical-align: top;
   }
 `;
 
@@ -168,11 +175,13 @@ const toggle = (props) => {
     border-radius: 50%;
     color: ${color};
     width: 36px;
+
     &:focus:not(:active) {
       background: ${alpha('rgba(33, 33, 33, 1)', 0.2)};
     }
-    & > i,
-    & svg {
+
+    & svg,
+    & > span:first-child {
       font-size: 20px;
       line-height: 36px;
       vertical-align: top;

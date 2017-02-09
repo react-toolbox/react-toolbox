@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import withOverride from '../utils/withOverride';
 
 const RippleNode = styled.span`
   background-color: currentColor;
@@ -11,9 +12,22 @@ const RippleNode = styled.span`
   transform-origin: 50% 50%;
   transition-duration: 800ms;
   z-index: 100;
-  opacity: ${props => (props.restarting || props.active) ? 0.3 : 0}
-  transition-property: ${props => props.restarting
-    ? 'none' : (props.active ? 'transform' : 'opacity, transform')};
+  opacity: ${getOpacity}
+  transition-property: ${getTransitionProperty};
+  ${withOverride('RippleNode')}
 `;
+
+function getOpacity(props) {
+  return props.restarting || props.active
+    ? 0.3
+    : 0;
+}
+
+function getTransitionProperty(props) {
+  if (props.restarting) return 'none';
+  return props.active
+    ? 'transform'
+    : 'opacity, transform';
+}
 
 export default RippleNode;
