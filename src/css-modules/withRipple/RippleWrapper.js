@@ -1,10 +1,7 @@
-import withTheme from '../withTheme';
+import createComponent from '../utils/createComponent';
 import theme from './withRipple.css';
 
-const enhance = withTheme({
+export default createComponent('span', {
   name: 'rippleWrapper',
-  modifiers: ['active', 'restarting'],
   theme,
 });
-
-export default enhance('span');
