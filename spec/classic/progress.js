@@ -14,8 +14,12 @@ class ProgressBarTest extends React.Component {
     this.simulateProgress();
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
+
   simulateProgress() {
-    setTimeout(() => {
+    this.timeout = setTimeout(() => {
       if (this.state.progress < 100) {
         this.increaseProgress();
         if (this.state.progress > this.state.buffer) this.increaseBuffer();

@@ -1,7 +1,7 @@
 import React from 'react';
-import Avatar from '../../components/avatar';
-import Chip from '../../components/chip';
-import style from '../style';
+import { Avatar } from '../../components/avatar';
+import { Chip } from '../../components/chip';
+import style from '../style.css';
 
 class ChipTest extends React.Component {
   state = {

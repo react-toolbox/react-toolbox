@@ -1,45 +1,36 @@
 /* global VERSION */
-import 'normalize.css';
-import React, { Component } from 'react';
-
+import React, { Component, PropTypes } from 'react';
+import { Switch, Redirect, Link, Route, withRouter } from 'react-router-dom';
 import { Layout, Panel, NavDrawer } from '../components/layout';
-import AppBar from '../components/app_bar';
-import ButtonToolbox from '../components/button';
-
-import Autocomplete from './components/autocomplete';
-import AppBarTest from './components/app_bar';
-import Avatar from './components/avatar';
-import FontIcon from './components/font_icon';
-import Button from './components/button';
-import Card from './components/card';
-import Checkbox from './components/checkbox';
-import Chip from './components/chip';
-import Dialog from './components/dialog';
-import Drawer from './components/drawer';
-import Dropdown from './components/dropdown';
-import IconMenu from './components/icon_menu';
-import InputTest from './components/input';
-import List from './components/list';
-import Menu from './components/menu';
-import Pickers from './components/pickers';
-import Progress from './components/progress';
-import Radio from './components/radio';
-import Slider from './components/slider';
-import Snackbar from './components/snackbar';
-import Switch from './components/switch';
-import Table from './components/table';
-import Tabs from './components/tabs';
-import Tooltip from './components/tooltip';
+import { AppBar } from '../components/app_bar';
+import { Button } from '../components/button';
+import Classic from './classic';
+import StyledComponents from './styled-components';
+import CSSModules from './css-modules';
+import Fela from './fela';
 import style from './style.css';
 
 class Root extends Component {
-  state = { pinned: false };
+  static propTypes = {
+    listen: PropTypes.func,
+  };
+
+  state = {
+    active: false,
+  };
+
+  componentDidMount() {
+    this.props.listen(() => {
+      this.setState({ active: false });
+    });
+  }
 
   handleSideBarToggle = () => {
-    this.setState({ pinned: !this.state.pinned });
+    this.setState({ active: !this.state.active });
   };
 
   render() {
+    const { active } = this.state;
     return (
       <Layout>
         <AppBar
@@ -50,7 +41,7 @@ class Root extends Component {
           fixed
           flat
         >
-          <ButtonToolbox
+          <Button
             className={style.github}
             href="http://react-toolbox.com/#/"
             target="_blank"
@@ -61,20 +52,29 @@ class Root extends Component {
         </AppBar>
 
         <NavDrawer
-          active={this.state.pinned}
+          active={active}
           onEscKeyDown={this.handleSideBarToggle}
           onOverlayClick={this.handleSideBarToggle}
           permanentAt="lg"
         >
-          This will content filter and indexes for examples
+          <Link to="/"><div>Classic</div></Link>
+          <Link to="/css-modules"><div>CSS Modules</div></Link>
+          <Link to="/styled-components"><div>Styled Components</div></Link>
+          <Link to="/fela"><div>Fela</div></Link>
         </NavDrawer>
 
         <Panel className={style.app}>
-          <Button />
+          <Switch>
+            <Route exact path="/" render={Classic} />
+            <Route exact path="/styled-components" render={StyledComponents} />
+            <Route exact path="/css-modules" render={CSSModules} />
+            <Route exact path="/fela" render={Fela} />
+            <Route component={() => (<Redirect to="/" />)} />
+          </Switch>
         </Panel>
       </Layout>
     );
   }
 }
 
-export default Root;
+export default withRouter(Root);

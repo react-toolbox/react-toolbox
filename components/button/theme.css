@@ -145,6 +145,7 @@
     width: var(--button-floating-mini-height);
 
     & .icon {
+      font-size: var(--button-floating-mini-font-size);
       line-height: var(--button-floating-mini-height);
     }
   }
