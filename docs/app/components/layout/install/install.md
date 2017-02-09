@@ -185,7 +185,7 @@ In order to import the fonts for you, we'd need to include them in the CSS which
 
 As mentioned in the theming section, you'd usually import a component with a theme already injected. To do this we use a [Higher Order Component](http://github.com/javivelasco/react-css-themr). If you add a `ref` property to a React Toolbox component, what you will get is the **HOC** instead of the **Wrapped** component.
 
-For components with imperative methods such as the `Input`, you can also get its real instance instead of the HOC. To do this, the HOC includes a `getWrappedInstance` method that returns the wrapped component instance. This way you can call methods directly on the component's instance.
+For components with imperative methods such as the `Input`, you can also get its real instance instead of the HOC. To do this, the HOC includes an `innerRef` method that is passed as `ref` callback component instance. This way you can call methods directly on the component's instance.
 
 ## Server Side Rendering
 

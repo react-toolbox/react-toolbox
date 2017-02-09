@@ -2,23 +2,26 @@ const path = require('path');
 const express = require('express');
 const webpack = require('webpack');
 const internalIp = require('internal-ip');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('./webpack/webpack.config.dev');
-
 const app = express();
 const compiler = webpack(config);
 
-app.use(require('webpack-dev-middleware')(compiler, {
+const middleware = webpackDevMiddleware(compiler, {
   noInfo: true,
   publicPath: config.output.publicPath,
   stats: {
     colors: true,
   },
-}));
+});
 
-app.use(require('webpack-hot-middleware')(compiler));
-
+app.use(middleware);
+app.use(webpackHotMiddleware(compiler));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './spec/index.html'));
+  res.send(middleware.fileSystem
+    .readFileSync(path.join(compiler.outputPath, 'index.html'))
+    .toString());
 });
 
 const port = 8080;

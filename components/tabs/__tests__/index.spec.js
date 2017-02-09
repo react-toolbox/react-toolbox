@@ -1,8 +1,9 @@
+/* eslint-disable import/no-named-as-default */
 import React, { Component } from 'react';
 import { mount } from 'enzyme';
-import { Tabs } from '../Tabs';
-import { Tab } from '../Tab';
-import { TabContent } from '../TabContent';
+import Tabs from '../Tabs';
+import Tab from '../Tab';
+import TabContent from '../TabContent';
 import theme from '../theme.css';
 
 describe('Tabs', () => {

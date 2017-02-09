@@ -1,7 +1,8 @@
+/* eslint-disable import/no-named-as-default */
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Menu } from '../Menu';
-import { MenuItem } from '../MenuItem';
+import Menu from '../Menu';
+import MenuItem from '../MenuItem';
 
 describe('MenuItem', () => {
   describe('#onClick', () => {

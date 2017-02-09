@@ -81,9 +81,7 @@ const factory = (ProgressBar, Input) => {
     }
 
     getInput() {
-      return this.inputNode && this.inputNode.getWrappedInstance
-        ? this.inputNode.getWrappedInstance()
-        : this.inputNode;
+      return this.inputNode;
     }
 
     getKeyboardEvents() {
@@ -241,12 +239,12 @@ const factory = (ProgressBar, Input) => {
       if (!this.props.editable) return undefined;
       return (
         <Input
-          ref={(node) => { this.inputNode = node; }}
           className={this.props.theme.input}
           disabled={this.props.disabled}
-          onFocus={this.handleInputFocus}
-          onChange={this.handleInputChange}
+          innerRef={(node) => { this.inputNode = node; }}
           onBlur={this.handleInputBlur}
+          onChange={this.handleInputChange}
+          onFocus={this.handleInputFocus}
           value={this.state.inputFocused
             ? this.state.inputValue
             : this.valueForInput(this.props.value)}
