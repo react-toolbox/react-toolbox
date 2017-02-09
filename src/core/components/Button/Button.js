@@ -1,22 +1,20 @@
 import React, { Component, PropTypes } from 'react';
-import { merge } from 'ramda';
+import getPassThrough from '../../utils/getPassThrough';
 
 const buttonFactory = ({
   ripple,
   ButtonNode,
-  FontIcon,
   LinkNode,
+  passthrough,
 }) => {
+  const passProps = getPassThrough(passthrough);
   class Button extends Component {
     static propTypes = {
       accent: PropTypes.bool,
       children: PropTypes.node,
       flat: PropTypes.bool,
+      floating: PropTypes.bool,
       href: PropTypes.string,
-      icon: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.object,
-      ]),
       label: PropTypes.string,
       mini: PropTypes.bool,
       neutral: PropTypes.bool,
@@ -54,23 +52,25 @@ const buttonFactory = ({
 
     render() {
       const self = this;
+      const nodeTag = this.props.href ? 'LinkNode' : 'ButtonNode';
       const ButtonElement = this.props.href ? LinkNode : ButtonNode;
-      const { children, icon, label, ...others } = this.props;
-      const parsed = merge(others, {
-        primary: others.primary || (!others.accent && !others.neutral),
-        flat: others.flat || (!others.raised && !others.floating && !others.toggle),
-      });
+      const { children, primary, flat, label, type, ...others } = this.props;
+      const isPrimary = primary || (!others.accent && !others.neutral);
+      const isFlat = flat || (!others.raised && !others.floating && !others.toggle);
 
       return (
         <ButtonElement
-          {...parsed}
+          {...others}
+          {...passProps(this.props, nodeTag)}
+          flat={isFlat}
+          primary={isPrimary}
+          type={!this.props.href && type}
           innerRef={(node) => { self.rootNode = node; }}
           onMouseLeave={this.handleMouseLeave}
           onMouseUp={this.handleMouseUp}
         >
-          {icon && <FontIcon value={icon} />}
-          {label}
           {children}
+          {label}
         </ButtonElement>
       );
     }

@@ -1,19 +1,22 @@
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import dissoc from 'ramda/src/dissoc';
-import events from '../../../components/utils/events';
-import prefixer from '../../../components/utils/prefixer';
+import getPassThrough from '../../utils/getPassThrough';
+import events from '../../../../components/utils/events';
+import prefixer from '../../../../components/utils/prefixer';
 
 const defaults = {
   centered: false,
   className: '',
   multiple: true,
+  passthrough: true,
   spread: 2,
 };
 
 const withRippleFactory = ({
   RippleNode,
   RippleWrapper,
+  passthrough,
 }) => (options = {}) => {
   const {
     centered: defaultCentered,
@@ -22,7 +25,7 @@ const withRippleFactory = ({
     passthrough: defaultPassthrough,
     spread: defaultSpread,
   } = { ...defaults, ...options };
-
+  const passProps = getPassThrough(passthrough);
   return (ComposedComponent) => {
     class RippledComponent extends Component {
       static propTypes = {
@@ -215,6 +218,7 @@ const withRippleFactory = ({
       }
 
       handleMouseDown = (event) => {
+        console.log('mouse down');
         if (this.props.onMouseDown) this.props.onMouseDown(event);
         if (!this.props.disabled) {
           const { x, y } = events.getMousePosition(event);
@@ -235,8 +239,13 @@ const withRippleFactory = ({
         const transform = `translate3d(${(-width / 2) + left}px, ${(-width / 2) + top}px, 0) scale(${scale})`;
         const self = this;
         return (
-          <RippleWrapper className={className} key={key}>
+          <RippleWrapper
+            {...passProps(this.props, 'RippleWrapper')}
+            className={className}
+            key={key}
+          >
             <RippleNode
+              {...passProps(this.props, 'RippleNode')}
               active={active}
               innerRef={(node) => { self.ripples[key] = node; }}
               restarting={restarting}
