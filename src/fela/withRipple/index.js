@@ -1,6 +1,8 @@
-import withRippleFactory from '../../core/withRipple/withRipple';
+import withRippleFactory from '../../core/hoc/withRipple/withRipple';
 import RippleNode from './RippleNode';
 import RippleWrapper from './RippleWrapper';
 
-const withRipple = withRippleFactory({ RippleNode, RippleWrapper });
-export default withRipple;
+export default withRippleFactory({
+  RippleNode,
+  RippleWrapper,
+});
