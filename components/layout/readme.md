@@ -264,7 +264,7 @@ class MyComponent extends React.Component {
 
   render() {
 +    const permanentAt = 'lg';
-+    const appBarIconVisible = this.state.width < breakpoints[permanentAt];
++    const appBarIconVisible = this.state.width <= breakpoints[permanentAt];
    
     return (
       <Layout>
