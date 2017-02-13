@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import styled from 'styled-components';
 import datePickerFactory from '../../core/components/DatePicker/DatePicker';
 import dayFactory from '../../core/components/DatePicker/Day';
@@ -108,42 +107,4 @@ const DatePicker = datePickerFactory({
   Month,
 });
 
-/**
- * TestPicker
- */
-class TestPicker extends Component {
-  state = {
-    value: null,
-  };
-
-  handleChange = (value) => {
-    this.setState({ value });
-  };
-
-  isDayBlocked = date => (
-    date.getMonth() === 1
-      && date.getDate() === 17
-  );
-
-  isDayDisabled = (date) => {
-    const now = new Date();
-    return date.getTime() < now.getTime();
-  }
-
-  render() {
-    return (
-      <DatePicker
-        isDayDisabled={this.isDayDisabled}
-        isDayBlocked={this.isDayBlocked}
-        sundayFirstDayOfWeek
-        onChange={this.handleChange}
-        selected={this.state.value}
-        viewDate={new Date()}
-      />
-    );
-  }
-}
-
-export default () => (
-  <TestPicker />
-);
+export default DatePicker;

@@ -7,10 +7,16 @@ gulp.task('js', function () {
   return gulp.src([
     './components/**/*.js',
     '!./components/**/__test__/*.js',
-    '!./components/__mocks__/**/*.js'
+    '!./components/__mocks__/**/*.js',
   ])
     .pipe(babel())
     .pipe(gulp.dest('./lib'));
+});
+
+gulp.task('js:core', function () {
+  return gulp.src(['./src/core/**/*.js'])
+    .pipe(babel())
+    .pipe(gulp.dest('./lib/core'));
 });
 
 gulp.task('css', function () {
@@ -32,4 +38,4 @@ gulp.task('css', function () {
     .pipe(gulp.dest('./lib'));
 });
 
-gulp.task('default', ['js', 'css']);
+gulp.task('default', ['js', 'js:core', 'css']);
