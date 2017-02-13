@@ -13,6 +13,7 @@ import isSameDay from './dateUtils/isSameDay';
 
 const monthFactory = ({
   Day,
+  DaysWeek,
   DaysWrapper,
   MonthTitle,
   MonthWrapper,
@@ -65,7 +66,7 @@ const monthFactory = ({
       }
 
       return false;
-    }
+    };
 
     isDaySelected = (dateForDay) => {
       const { selected } = this.props;
@@ -80,7 +81,7 @@ const monthFactory = ({
       }
 
       return false;
-    }
+    };
 
     isDayInRange = (dateForDay) => {
       const { selected } = this.props;
@@ -91,40 +92,58 @@ const monthFactory = ({
         }
       }
       return false;
-    }
+    };
+
+    isDayOutOfMonth = (dateForDay) => {
+      const { viewDate } = this.props;
+      return viewDate.getMonth() !== dateForDay.getMonth();
+    };
 
     renderDays = () => {
-      const { viewDate } = this.props;
-      const dateForDay = fromDateWithDay(viewDate, 1);
-      return range(1, getDaysInMonth(viewDate)).map((day) => {
-        dateForDay.setDate(day);
-        return this.renderDay(dateForDay);
-      });
+      const { sundayFirstDayOfWeek, viewDate } = this.props;
+      const daysBefore = getFirstWeekDay(viewDate) - (sundayFirstDayOfWeek ? 0 : 1);
+      const monthDays = getDaysInMonth(viewDate);
+      const finalSlots = 7 - daysBefore - (monthDays % 7);
+      const numberOfWeeks = (daysBefore + monthDays + finalSlots) / 7;
+      const firstDayToRender = fromDateWithDay(viewDate, 1);
+      firstDayToRender.setDate(firstDayToRender.getDate() - daysBefore - 1);
+      return range(0, numberOfWeeks).map(week => (
+        this.renderWeek(week, firstDayToRender)
+      ));
+    };
+
+    renderWeek = (week, weekFirstDay) => {
+      const key = `${week}${weekFirstDay.getMonth()}`;
+      return (
+        <DaysWeek {...passProps(this.props, 'DaysWeek')} key={key}>
+          {range(0, 7).map(() => {
+            weekFirstDay.setDate(weekFirstDay.getDate() + 1);
+            return this.renderDay(weekFirstDay);
+          })}
+        </DaysWeek>
+      );
     };
 
     renderDay = (dateForDay) => {
-      const day = dateForDay.getDate();
-      const { isDayBlocked, isDayDisabled, sundayFirstDayOfWeek, viewDate } = this.props;
-      const firstDay = getFirstWeekDay(viewDate) - (sundayFirstDayOfWeek ? 0 : 1);
-      const marginLeft = day === 1 && `${(firstDay >= 0 ? firstDay : 6) * (100 / 7)}%`;
+      const { isDayBlocked, isDayDisabled, viewDate } = this.props;
       return (
         <Day
           {...passProps(this.props, 'Day')}
-          key={day}
-          day={day}
+          key={`${dateForDay.getMonth()}-${dateForDay.getDate()}`}
           blocked={isDayBlocked && isDayBlocked(dateForDay)}
+          day={dateForDay.getDate()}
           disabled={isDayDisabled && isDayDisabled(dateForDay)}
           highlighted={this.isDayHighlighted(dateForDay)}
           inRange={this.isDayInRange(dateForDay)}
           onClick={this.handleDayClick}
           onMouseEnter={this.handleDayMouseEnter}
+          outOfMonth={this.isDayOutOfMonth(dateForDay)}
           selected={this.isDaySelected(dateForDay)}
-          style={{ marginLeft }}
           today={isSameDay(dateForDay, new Date())}
           viewDate={viewDate}
         />
       );
-    }
+    };
 
     renderWeekDays = () => {
       const { locale, sundayFirstDayOfWeek } = this.props;
@@ -135,7 +154,7 @@ const monthFactory = ({
           {weekDay}
         </Weekday>
       ));
-    }
+    };
 
     render() {
       const {

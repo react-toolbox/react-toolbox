@@ -20,6 +20,7 @@ const Day = dayFactory({
 });
 
 function getDayBackground(props) {
+  if (props.outOfMonth) return 'gray';
   if (props.today) return 'orange';
   if (props.disabled) return 'transparent';
   if (props.blocked) {
@@ -46,9 +47,14 @@ const Month = monthFactory({
     width: calc(100% / 7);
     ${withOverride('Day')}
   `,
-  DaysWrapper: styled.div`
+  DaysWeek: styled.div`
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
+    ${withOverride('DaysWeek')}
+  `,
+  DaysWrapper: styled.div`
+    display: block;
     width: 100%;
     ${withOverride('DayWrapper')}
   `,

@@ -15,6 +15,7 @@ const dayFactory = ({
       inRange: PropTypes.bool,
       onClick: PropTypes.func,
       onMouseEnter: PropTypes.func,
+      outOfMonth: PropTypes.bool,
       selected: PropTypes.bool,
       today: PropTypes.bool,
     };
@@ -39,9 +40,10 @@ const dayFactory = ({
         day,
         disabled,
         highlighted,
+        inRange,
         onClick,      // eslint-disable-line
         onMouseEnter, // eslint-disable-line
-        inRange,
+        outOfMonth,
         selected,
         today,
         ...others
@@ -54,9 +56,10 @@ const dayFactory = ({
           blocked={blocked}
           disabled={disabled}
           highlighted={highlighted}
-          onClick={this.handleClick}
           inRange={inRange}
+          onClick={this.handleClick}
           onMouseEnter={this.handleMouseEnter}
+          outOfMonth={outOfMonth}
           selected={selected}
           today={today}
         >
