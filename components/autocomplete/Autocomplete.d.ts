@@ -115,7 +115,7 @@ export interface AutocompleteProps extends InputProps {
    * Determines how suggestions are supplied.
    * @default start
    */
-  suggestionMatch?: "start" | "anywhere" | "word";
+  suggestionMatch?: "disabled" | "start" | "anywhere" | "word";
   /**
    * Classnames object defining the component style.
    */
