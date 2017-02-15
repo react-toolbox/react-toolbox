@@ -147,11 +147,15 @@ const monthFactory = ({
 
     renderWeekDays = () => {
       const { locale, sundayFirstDayOfWeek } = this.props;
-      const days = range(0, 7).map(weekDay => getFullDayOfWeek(weekDay, locale));
-      const sortedDays = sundayFirstDayOfWeek ? days : [...days.slice(1), days[0]];
-      return sortedDays.map(weekDay => (
-        <Weekday key={weekDay} {...passProps(this.props, 'Weekday')}>
-          {weekDay}
+      const indexes = range(0, 7);
+      const sortedDaysIdx = sundayFirstDayOfWeek ? indexes : [...indexes.slice(1), indexes[0]];
+      return sortedDaysIdx.map(weekDay => (
+        <Weekday
+          {...passProps(this.props, 'Weekday')}
+          key={getFullDayOfWeek(weekDay, locale)}
+          weekDay={weekDay}
+        >
+          {getFullDayOfWeek(weekDay, locale)}
         </Weekday>
       ));
     };
