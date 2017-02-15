@@ -102,11 +102,11 @@ const monthFactory = ({
     renderDays = () => {
       const { sundayFirstDayOfWeek, viewDate } = this.props;
       const daysBefore = getFirstWeekDay(viewDate) - (sundayFirstDayOfWeek ? 0 : 1);
+      const saneDaysBefore = daysBefore === -1 ? 6 : daysBefore;
       const monthDays = getDaysInMonth(viewDate);
-      const finalSlots = 7 - daysBefore - (monthDays % 7);
-      const numberOfWeeks = (daysBefore + monthDays + finalSlots) / 7;
+      const numberOfWeeks = Math.ceil((monthDays + saneDaysBefore) / 7);
       const firstDayToRender = fromDateWithDay(viewDate, 1);
-      firstDayToRender.setDate(firstDayToRender.getDate() - daysBefore - 1);
+      firstDayToRender.setDate(firstDayToRender.getDate() - saneDaysBefore - 1);
       return range(0, numberOfWeeks).map(week => (
         this.renderWeek(week, firstDayToRender)
       ));
