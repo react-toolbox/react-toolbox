@@ -111,7 +111,8 @@
     "stylelint-order": "^0.2.2",
     "webpack": "~2.2.0",
     "webpack-dev-middleware": "^1.10.0",
-    "webpack-hot-middleware": "^2.16.1"
+    "webpack-hot-middleware": "^2.16.1",
+    "lerna": "2.0.0-beta.37"
   },
   "scripts": {
     "babel": "babel ./components --out-dir ./lib",
