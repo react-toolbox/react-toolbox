@@ -6,7 +6,7 @@ import { Input } from '../input';
 import theme from './theme.css';
 
 const Autocomplete = autocompleteFactory(Chip, Input);
-const ThemedAutocomplete = themr(AUTOCOMPLETE, theme)(Autocomplete);
+const ThemedAutocomplete = themr(AUTOCOMPLETE, theme, { withRef: true })(Autocomplete);
 
 export default ThemedAutocomplete;
 export { ThemedAutocomplete as Autocomplete };
