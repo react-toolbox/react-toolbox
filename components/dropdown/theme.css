@@ -153,7 +153,7 @@
       color: var(--dropdown-color-primary);
     }
 
-    .disabled {
+    &.disabled {
       color: var(--dropdown-color-disabled);
       cursor: not-allowed;
     }

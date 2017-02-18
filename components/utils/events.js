@@ -1,4 +1,4 @@
-import { values } from 'ramda';
+import values from 'ramda/src/values';
 
 export default {
   getMousePosition(event) {

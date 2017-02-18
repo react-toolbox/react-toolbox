@@ -9,6 +9,7 @@ const factory = (FontIcon) => {
     static propTypes = {
       children: PropTypes.node,
       className: PropTypes.string,
+      defaultValue: PropTypes.string,
       disabled: PropTypes.bool,
       error: PropTypes.oneOfType([
         PropTypes.string,
@@ -52,6 +53,7 @@ const factory = (FontIcon) => {
       }),
       type: PropTypes.string,
       value: PropTypes.oneOfType([
+        PropTypes.number,
         PropTypes.object,
         PropTypes.string,
       ]),
@@ -154,8 +156,15 @@ const factory = (FontIcon) => {
       this.inputNode.focus();
     }
 
+    valuePresent = value => (
+      value !== null
+        && value !== undefined
+        && value !== ''
+        && !(typeof value === 'number' && isNaN(value))
+    )
+
     render() {
-      const { children, disabled, error, floating, hint, icon,
+      const { children, defaultValue, disabled, error, floating, hint, icon,
               name, label: labelText, maxLength, multiline, required,
               theme, type, value, onKeyPress, rows = 1, ...others } = this.props;
       const length = maxLength && value ? value.length : 0;
@@ -168,10 +177,7 @@ const factory = (FontIcon) => {
         [theme.withIcon]: icon,
       }, this.props.className);
 
-      const valuePresent = value !== null
-        && value !== undefined
-        && value !== ''
-        && !(typeof value === Number && isNaN(value)); // eslint-disable-line
+      const valuePresent = this.valuePresent(value) || this.valuePresent(defaultValue);
 
       const inputElementProps = {
         ...others,
@@ -180,6 +186,7 @@ const factory = (FontIcon) => {
         ref: (node) => { this.inputNode = node; },
         role: 'input',
         name,
+        defaultValue,
         disabled,
         required,
         type,
@@ -199,7 +206,7 @@ const factory = (FontIcon) => {
           {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
           <span className={theme.bar} />
           {labelText
-            ? <label className={labelClassName} htmlFor={name}>
+            ? <label className={labelClassName}>
               {labelText}
               {required ? <span className={theme.required}> * </span> : null}
             </label>
