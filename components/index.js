@@ -25,7 +25,7 @@ export Ripple from './ripple';
 export { default as Slider } from './slider';
 export { default as Snackbar } from './snackbar';
 export { default as Switch } from './switch';
-export { default as Table } from './table';
+export * from './table';
 export * from './tabs';
 export Tooltip from './tooltip';
 export { default as TimePicker } from './time_picker';
