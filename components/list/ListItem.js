@@ -68,11 +68,10 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
     render() {
       const {
         className,
-        hasRipple,    // eslint-disable-line no-unused-vars
+        ripple: hasRipple,    // eslint-disable-line no-unused-vars
         onClick,      // eslint-disable-line no-unused-vars
         onMouseDown,  // eslint-disable-line no-unused-vars
         onTouchStart, // eslint-disable-line no-unused-vars
-        ripple:
         theme,
         to,
         ...other
