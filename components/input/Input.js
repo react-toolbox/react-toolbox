@@ -114,10 +114,14 @@ const factory = (FontIcon) => {
         const heightOffset = style.boxSizing === 'content-box'
           ? -(parseFloat(style.paddingTop) + parseFloat(style.paddingBottom))
           : parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+        const scrollTop = window.pageYOffset ||
+            (document.documentElement || document.body.parentNode || document.body).scrollTop;
 
         // resize the input to its content size
         element.style.height = 'auto';
         element.style.height = `${element.scrollHeight + heightOffset}px`;
+
+        window.scrollTo(0, scrollTop);
       }
     }
 
