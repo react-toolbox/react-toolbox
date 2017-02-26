@@ -187,9 +187,8 @@ const factory = (ProgressBar, Input) => {
     }
 
     knobOffset() {
-      const { max, min } = this.props;
-      const translated = this.state.sliderLength * ((this.props.value - min) / (max - min));
-      return (translated * 100) / this.state.sliderLength;
+      const { max, min, value } = this.props;
+      return 100 * ((value - min) / (max - min));
     }
 
     move(position) {
