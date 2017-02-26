@@ -34,7 +34,7 @@ The `AppBar` component provides properties for the common use cases of `title`, 
 |:-----|:-----|:-----|:-----|
 | `className`        | `String`   | `''`    | Set a class for the root component.|
 | `fixed`            | `Bool`     | `false` | Determine if the bar should have position `fixed` or `relative`.|
-| `flat`             | `Bool`     | `false` | If true, the AppBar shows a shadow.|
+| `flat`             | `Bool`     | `false` | If true, the AppBar doesn't show a shadow.|
 | `theme`            | `Object`   | `null`  | Classnames object defining the component style.|
 | `title`            | `Element`  | `null`  | Title used for the appbar.|
 | `leftIcon`         | `String|Element`   | `null`  | Left icon.|
