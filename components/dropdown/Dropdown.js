@@ -182,8 +182,7 @@ const factory = (Input) => {
           className={className}
           onClick={!item.disabled && this.handleSelect.bind(this, item[valueKey])}
         >
-          {this.props.template ? this.props.template(item) : item[labelKey
-          ]}
+          {this.props.template ? this.props.template(item) : item[labelKey]}
         </li>
       );
     };
