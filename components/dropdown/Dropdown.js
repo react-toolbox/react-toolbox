@@ -90,7 +90,7 @@ const factory = (Input) => {
 
     getSelectedItem = () => {
       for (const item of this.props.source) {
-        if (item.value === this.props.value) return item;
+        if (item[this.props.valueKey] === this.props.value) return item;
       }
       return !this.props.allowBlank
         ? this.props.source[0]
@@ -173,7 +173,7 @@ const factory = (Input) => {
     renderValue = (item, idx) => {
       const { labelKey, theme, valueKey } = this.props;
       const className = classnames({
-        [theme.selected]: item.value === this.props.value,
+        [theme.selected]: item[valueKey] === this.props.value,
         [theme.disabled]: item.disabled,
       });
       return (
@@ -219,7 +219,7 @@ const factory = (Input) => {
             type={template && selected ? 'hidden' : null}
             theme={theme}
             themeNamespace="input"
-            value={selected && selected.label ? selected.label : ''}
+            value={selected && selected[labelKey] ? selected[labelKey] : ''}
           />
           {template && selected ? this.renderTemplateValue(selected) : null}
           <ul className={theme.values}>
