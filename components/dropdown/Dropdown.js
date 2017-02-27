@@ -16,6 +16,7 @@ const factory = (Input) => {
       disabled: PropTypes.bool,
       error: PropTypes.string,
       label: PropTypes.string,
+      labelKey: PropTypes.string,
       name: PropTypes.string,
       onBlur: PropTypes.func,
       onChange: PropTypes.func,
@@ -46,6 +47,7 @@ const factory = (Input) => {
         PropTypes.string,
         PropTypes.number,
       ]),
+      valueKey: PropTypes.string,
     };
 
     static defaultProps = {
@@ -53,7 +55,9 @@ const factory = (Input) => {
       className: '',
       allowBlank: true,
       disabled: false,
+      labelKey: 'label',
       required: false,
+      valueKey: 'value',
     };
 
     state = {
@@ -167,7 +171,7 @@ const factory = (Input) => {
     }
 
     renderValue = (item, idx) => {
-      const { theme } = this.props;
+      const { labelKey, theme, valueKey } = this.props;
       const className = classnames({
         [theme.selected]: item.value === this.props.value,
         [theme.disabled]: item.disabled,
@@ -176,9 +180,10 @@ const factory = (Input) => {
         <li
           key={idx}
           className={className}
-          onClick={!item.disabled && this.handleSelect.bind(this, item.value)}
+          onClick={!item.disabled && this.handleSelect.bind(this, item[valueKey])}
         >
-          {this.props.template ? this.props.template(item) : item.label}
+          {this.props.template ? this.props.template(item) : item[labelKey
+          ]}
         </li>
       );
     };
