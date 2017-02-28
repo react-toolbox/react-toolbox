@@ -18,6 +18,8 @@ const factory = (ProgressBar, Input) => {
       max: PropTypes.number,
       min: PropTypes.number,
       onChange: PropTypes.func,
+      onDragStart: PropTypes.func,
+      onDragStop: PropTypes.func,
       pinned: PropTypes.bool,
       snaps: PropTypes.bool,
       step: PropTypes.number,
@@ -45,6 +47,8 @@ const factory = (ProgressBar, Input) => {
       editable: false,
       max: 100,
       min: 0,
+      onDragStart: () => {},
+      onDragStop: () => {},
       pinned: false,
       snaps: false,
       step: 0.01,
@@ -71,6 +75,16 @@ const factory = (ProgressBar, Input) => {
 
     shouldComponentUpdate(nextProps, nextState) {
       return this.state.inputFocused || !nextState.inputFocused;
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+      if (nextState.pressed !== this.state.pressed) {
+        if (nextState.pressed) {
+          this.props.onDragStart();
+        } else {
+          this.props.onDragStop();
+        }
+      }
     }
 
     componentWillUnmount() {

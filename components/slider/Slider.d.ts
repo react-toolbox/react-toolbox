@@ -82,6 +82,14 @@ export interface SliderProps extends ReactToolbox.Props {
    */
   onChange?: Function;
   /**
+   * Callback function that will be invoked when the slider starts being dragged.
+   */
+  onDragStart?: Function;
+  /**
+   * Callback function that will be invoked when the slider stops being dragged.
+   */
+  onDragStop?: Function;
+  /**
    * If true, a pin with numeric value label is shown when the slider thumb is pressed. Use for settings for which users need to know the exact value of the setting.
    * @default false
    */
