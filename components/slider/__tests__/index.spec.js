@@ -57,9 +57,8 @@ describe('Slider', () => {
   });
 
   describe('#knobOffset', () => {
-    it('returns the corresponding offset for a given value and slider length/start', () => {
+    it('returns percentage offset of knob for slider with given min/max/value props', () => {
       const slider = shallow(<Slider min={-500} max={500} value={-250} />).instance();
-      slider.setState({ sliderStart: 500, sliderLength: 100 });
       expect(slider.knobOffset()).toEqual(25);
     });
   });
