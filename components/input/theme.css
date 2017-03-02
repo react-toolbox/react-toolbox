@@ -31,6 +31,7 @@
   background-color: var(--input-text-background-color);
   border-bottom: 1px solid var(--input-text-bottom-border-color);
   border-left: 0;
+  border-radius: 0;
   border-right: 0;
   border-top: 0;
   color: var(--color-text);
@@ -39,6 +40,7 @@
   outline: none;
   padding: var(--input-field-padding) 0;
   width: 100%;
+
 
   &:focus:not([disabled]):not([readonly]) {
     & ~ .bar::before,
