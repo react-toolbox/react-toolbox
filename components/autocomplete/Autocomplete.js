@@ -40,7 +40,7 @@ const factory = (Chip, Input) => {
       showSelectedWhenNotInSource: PropTypes.bool,
       showSuggestionsWhenValueIsSet: PropTypes.bool,
       source: PropTypes.any,
-      suggestionMatch: PropTypes.oneOf(['disabled', 'start', 'anywhere', 'word']),
+      suggestionMatch: PropTypes.oneOf(['disabled', 'start', 'anywhere', 'word', 'none']),
       theme: PropTypes.shape({
         active: PropTypes.string,
         autocomplete: PropTypes.string,
@@ -254,6 +254,8 @@ const factory = (Chip, Input) => {
       } else if (suggestionMatch === 'word') {
         const re = new RegExp(`\\b${query}`, 'g');
         return re.test(value);
+      }else if(suggestionMatch === 'none'){
+        return value
       }
 
       return false;
