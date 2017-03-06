@@ -19,13 +19,39 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.css', '.json'],
-    modules: ['node_modules']
+    modules: ['node_modules'],
+    alias: {
+      'react-toolbox-core/lib': path.join(__dirname, '../packages/react-toolbox-core/src'),
+      'react-toolbox-fela/lib': path.join(__dirname, '../packages/react-toolbox-fela/src'),
+      'react-toolbox-sc/lib': path.join(__dirname, '../packages/react-toolbox-sc/src'),
+      'react-toolbox/lib': path.join(__dirname, '../packages/react-toolbox/src'),
+    }
   },
   module: {
     rules: [{
       test: /\.js$/,
       loader: 'babel-loader',
+      query: {
+        "presets": ["es2015", "stage-0", "react"],
+        "plugins": [
+          ["react-transform", {
+            "transforms": [{
+              "transform": "react-transform-hmr",
+              "imports": ["react"],
+              "locals": ["module"]
+            }, {
+              "transform": "react-transform-catch-errors",
+              "imports": ["react", "redbox-react"]
+            }]
+          }]
+        ]
+      },
       include: [
+        path.join(__dirname, '../packages/react-toolbox-core/src'),
+        path.join(__dirname, '../packages/react-toolbox-fela/src'),
+        path.join(__dirname, '../packages/react-toolbox-css/src'),
+        path.join(__dirname, '../packages/react-toolbox-sc/src'),
+        path.join(__dirname, '../packages/react-toolbox/src'),
         path.join(__dirname, '../components'),
         path.join(__dirname, '../spec'),
         path.join(__dirname, '../src')
@@ -40,6 +66,8 @@ module.exports = {
     }, {
       test: /\.css$/,
       include: [
+        path.join(__dirname, '../packages/react-toolbox-css/src'),
+        path.join(__dirname, '../packages/react-toolbox/src'),
         path.join(__dirname, '../components'),
         path.join(__dirname, '../spec'),
         path.join(__dirname, '../src')

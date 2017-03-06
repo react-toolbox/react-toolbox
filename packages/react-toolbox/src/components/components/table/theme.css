@@ -1,0 +1,111 @@
+@import '../colors.css';
+@import '../variables.css';
+
+:root {
+  --table-font-size: calc(1.3 * var(--unit));
+  --table-header-font-size: calc(1.2 * var(--unit));
+  --table-header-sort-icon-size: calc(1.6 * var(--unit));
+  --table-header-color: color(#000 a(54%));
+  --table-header-sorted-color: color(#000 a(87%));
+  --table-header-sorted-icon-hover-color: color(#000 a(26%));
+  --table-dividers: 1px solid #e6e6e6;
+  --table-row-color: color(#000 a(87%));
+  --table-hover-color: #eee;
+  --table-selection-color: #f5f5f5;
+  --table-row-height: calc(4.8 * var(--unit));
+  --table-column-spacing: calc(3.6 * var(--unit));
+  --table-column-padding: calc(var(--table-column-spacing) / 2);
+  --table-cell-padding: calc(2.4 * var(--unit));
+  --table-cell-top: calc(var(--table-cell-padding) / 2);
+}
+
+.table {
+  background-color: var(--color-white);
+  border-collapse: collapse;
+  font-size: var(--table-font-size);
+  width: 100%;
+
+  @apply --reset;
+}
+
+.head {
+  padding-bottom: calc(0.3 * var(--unit));
+  white-space: nowrap;
+}
+
+.row {
+  color: var(--table-row-color);
+  height: var(--table-row-height);
+  transition-duration: 0.28s;
+  transition-property: background-color;
+  transition-timing-function: var(--animation-curve-default);
+
+  &:hover { background-color: var(--table-hover-color); }
+  &.selected { background-color: var(--table-selection-color); }
+}
+
+.rowCell,
+.headCell {
+  padding: 0 var(--table-column-padding) 12px var(--table-column-padding);
+  text-align: left;
+
+  &:first-of-type { padding-left: 24px; }
+  &:last-of-type { padding-right: 24px; }
+  &.numeric { text-align: right; }
+}
+
+.rowCell {
+  border-bottom: var(--table-dividers);
+  border-top: var(--table-dividers);
+  height: var(--table-row-height);
+  padding-top: var(--table-cell-top);
+  vertical-align: middle;
+
+  &.checkboxCell {
+    width: calc(1.8 * var(--unit));
+
+    & > * {
+      margin: 0;
+    }
+  }
+}
+
+.headCell {
+  color: var(--table-header-color);
+  font-size: var(--table-header-font-size);
+  font-weight: 500;
+  height: var(--table-row-height);
+  line-height: calc(2.4 * var(--unit));
+  padding-bottom: 8px;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+
+  &.checkboxCell {
+    width: calc(1.8 * var(--unit));
+
+    & > * {
+      margin: 0 0 3px;
+    }
+  }
+
+  &.sorted {
+    color: var(--table-header-sorted-color);
+    cursor: pointer;
+
+    &:hover .sortIcon {
+      color: var(--table-header-sorted-icon-hover-color);
+    }
+  }
+}
+
+.sortIcon {
+  display: inline-block;
+  font-size: calc(1.6 * var(--unit));
+  margin-right: 3px;
+  transition: 0.28s transform var(--animation-curve-default);
+  vertical-align: sub;
+
+  &.asc {
+    transform: rotate(180deg);
+  }
+}

@@ -1,0 +1,38 @@
+.rippleWrapper {
+  bottom: 0;
+  display: block;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+
+.rippleNode {
+  animation: spread 800ms linear;
+  background-color: currentColor;
+  border-radius: 50%;
+  left: 50%;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: scale(1);
+  transition-duration: 800ms;
+  transition-property: opacity;
+  z-index: 100;
+
+  &.active {
+    opacity: 0.3;
+  }
+}
+
+@keyframes spread {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

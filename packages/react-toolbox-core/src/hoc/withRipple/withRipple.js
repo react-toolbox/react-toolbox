@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import { findDOMNode } from 'react-dom';
+import assoc from 'ramda/src/assoc';
 import dissoc from 'ramda/src/dissoc';
-import prefixer from 'inline-style-prefixer/static';
-import getPassThrough from '../../utils/getPassThrough';
+import keys from 'ramda/src/keys';
 import getMousePosition from '../../utils/getMousePosition';
+import getPassThrough from '../../utils/getPassThrough';
 import getTouchPosition from '../../utils/getTouchPosition';
-import { addOnTransitionEnded, removeOnTransitionEnded } from '../../utils/onTransitionEnded';
+import measureElement from '../../utils/measureElement';
 
 const defaults = {
   centered: false,
@@ -34,7 +34,9 @@ const withRippleFactory = ({
         children: PropTypes.node,
         disabled: PropTypes.bool,
         onMouseDown: PropTypes.func,
+        onMouseUp: PropTypes.func,
         onRippleEnded: PropTypes.func,
+        onTouchEnd: PropTypes.func,
         onTouchStart: PropTypes.func,
         ripple: PropTypes.bool,
         rippleCentered: PropTypes.bool,
@@ -56,18 +58,10 @@ const withRippleFactory = ({
         ripples: {},
       };
 
-      componentDidUpdate(prevProps, prevState) {
-        // If a new ripple was just added, add a remove event listener to its animation
-        if (Object.keys(prevState.ripples).length < Object.keys(this.state.ripples).length) {
-          this.addRippleRemoveEventListener(this.getLastKey());
-        }
-      }
-
       componentWillUnmount() {
-        // Remove document event listeners for ripple if they still exists
-        Object.keys(this.state.ripples).forEach((key) => {
-          this.state.ripples[key].endRipple();
-        });
+        if (this.deactivateTimeout) {
+          clearTimeout(this.deactivateTimeout);
+        }
       }
 
       /**
@@ -76,21 +70,20 @@ const withRippleFactory = ({
        *
        * @param {Number} x Coordinate x in the viewport where ripple was triggered
        * @param {Number} y Coordinate y in the viewport where ripple was triggered
-       * @return {Object} Descriptor element including position and size of the element
+       * @return {Object} Descriptor element including starting position and width
        */
-      getDescriptor(x, y) {
-        const { left, top, height, width } = findDOMNode(this).getBoundingClientRect();
-        const { rippleCentered: centered, rippleSpread: spread } = this.props;
-        return {
-          left: centered ? 0 : x - left - (width / 2),
-          top: centered ? 0 : y - top - (height / 2),
-          width: width * spread,
-        };
-      }
-
-      getRef(key) {
-        return this.ripples[key];
-      }
+      getDescriptor = (x, y) => (
+        new Promise((resolve) => {
+          measureElement(this.rootNode).then(({ left, top, height, width }) => {
+            const { rippleCentered: centered, rippleSpread: spread } = this.props;
+            resolve({
+              x: centered ? left + (width / 2) : x - left,
+              y: centered ? top + (height / 2) : y - top,
+              width: Math.max(width, height) * spread,
+            });
+          });
+        })
+      )
 
       /**
        * Increments and internal counter and returns the next value as a string. It
@@ -98,18 +91,8 @@ const withRippleFactory = ({
        *
        * @return {String} Key to be assigned to a ripple.
        */
-      getNextKey() {
+      getNextKey = () => {
         this.currentCount = this.currentCount ? this.currentCount + 1 : 1;
-        return `ripple${this.currentCount}`;
-      }
-
-      /**
-       * Return the last generated key for a ripple element. When there is only one ripple
-       * and to get the reference when a ripple was just created.
-       *
-       * @return {String} The last generated ripple key.
-       */
-      getLastKey() {
         return `ripple${this.currentCount}`;
       }
 
@@ -128,133 +111,114 @@ const withRippleFactory = ({
       }
 
       /**
-       * Start a ripple animation on an specific point with touch or mouse events. First
-       * decides if the animation should trigger. If the ripple is multiple or there is no
-       * ripple present, it creates a new key. If it's a simple ripple and already exists,
-       * it just restarts the current ripple. The animation happens in two state changes
-       * to allow triggering via css.
+       * Create a ripple animation on an specific point with touch or mouse events. First
+       * decides if the animation should trigger. It retrieves a descriptor for the given
+       * interaction point and modifies the state with the data for a new ripple if its
+       * multiple or substitutes the current ripple if its unique.
        *
-       * @param {Number} x Coordinate X on the screen where animation should start
-       * @param {Number} y Coordinate Y on the screen where animation should start
-       * @param {Boolean} isTouch Use events from touch or mouse.
+       * @param {Number} interactionX Coordinate X on the screen where the interaction had happened.
+       * @param {Number} interactionY Coordinate Y on the screen where the interaction had happened.
+       * @param {Boolean} isTouch Determines if the event is a touch or mouse event.
        */
-      animateRipple(x, y, isTouch) {
+      createRipple(interactionX, interactionY, isTouch) {
         if (this.rippleShouldTrigger(isTouch)) {
-          const { top, left, width } = this.getDescriptor(x, y);
-          const noRipplesActive = Object.keys(this.state.ripples).length === 0;
-          const key = (this.props.rippleMultiple || noRipplesActive)
-            ? this.getNextKey()
-            : this.getLastKey();
-          const endRipple = this.addRippleDeactivateEventListener(isTouch, key);
-          const initialState = { active: false, restarting: true, top, left, width, endRipple };
-          const runningState = { active: true, restarting: false };
-          const ripples = { ...this.state.ripples, [key]: initialState };
-          this.setState({ ripples }, () => {
-            requestAnimationFrame(() => {
-              this.getRef(key).offsetWidth; // eslint-disable-line
-              this.setState({ ripples: {
-                ...this.state.ripples,
-                [key]: Object.assign({}, this.state.ripples[key], runningState),
-              } });
+          this.getDescriptor(interactionX, interactionY).then(({ x, y, width }) => {
+            const ripples = { [this.getNextKey()]: { active: true, x, y, width, isTouch } };
+            this.setState({
+              ripples: this.props.rippleMultiple
+                ? { ...this.state.ripples, ...ripples }
+                : ripples,
             });
           });
         }
       }
 
       /**
-       * Add an event listener to the reference with given key so when the animation transition
-       * ends we can be sure that it finished and it can be safely removed from the state.
-       * This function is called whenever a new ripple is added to the component.
-       *
-       * @param {String} rippleKey Is the key of the ripple to add the event.
+       * Modifies the state to set every ripple store in the state to inactive. All of them
+       * are deactivated because it's not possible to deactivate one and keep the rest. When
+       * the MouseUp happens there should be no ripples left.
        */
-      addRippleRemoveEventListener(rippleKey) {
-        const self = this;
-        const rippleNode = this.getRef(rippleKey);
-        addOnTransitionEnded(rippleNode, function onOpacityEnd(e) {
-          if (e.propertyName === 'opacity') {
-            if (self.props.onRippleEnded) self.props.onRippleEnded(e);
-            removeOnTransitionEnded(self.getRef(rippleKey), onOpacityEnd);
-            // delete self.rippleNodes[rippleKey];
-            self.setState({ ripples: dissoc(rippleKey, self.state.ripples) });
-          }
+      handleDeactivate = () => {
+        this.setState({
+          ripples: keys(this.state.ripples).reduce((result, rippleKey) => (
+            assoc(rippleKey, { ...this.state.ripples[rippleKey], active: false }, result)
+          ), []),
         });
+      }
+
+      /**
+       * Modifies the state to remove the ripple given as the first argument. This
+       * method should be called when the animation ripple is finish by the injected
+       * RippleNode component.
+       *
+       * @param {String} key Key of the ripple that has to be removed
+       */
+      handleRippleFinish = (key) => {
+        this.setState({ ripples: dissoc(key, this.state.ripples) });
       }
 
       ripples = [];
 
-      /**
-       * Add an event listener to the document needed to deactivate a ripple and make it dissappear.
-       * Deactivation can happen with a touchend or mouseup depending on the trigger type. The
-       * ending function is created from a factory function and returned.
-       *
-       * @param {Boolean} isTouch True in case the trigger was a touch event false otherwise.
-       * @param {String} rippleKey It's a key to identify the ripple that should be deactivated.
-       * @return {Function} Callback function that deactivates the ripple and removes the listener
-       */
-      addRippleDeactivateEventListener(isTouch, rippleKey) {
-        const eventType = isTouch ? 'touchend' : 'mouseup';
-        const endRipple = this.createRippleDeactivateCallback(eventType, rippleKey);
-        document.addEventListener(eventType, endRipple);
-        return endRipple;
-      }
-
-      /**
-       * Generates a function that can be called to deactivate a ripple and remove its finishing
-       * event listener. If is generated because we need to store it to be called on unmount in case
-       * the ripple is still running.
-       *
-       * @param {String} eventType Is the event type that can be touchend or mouseup
-       * @param {String} rippleKey Is the key representing the ripple
-       * @return {Function} Callback function that deactivates the ripple and removes the listener
-       */
-      createRippleDeactivateCallback(eventType, rippleKey) {
-        const self = this;
-        return function endRipple() {
-          document.removeEventListener(eventType, endRipple);
-          self.setState({ ripples: {
-            ...self.state.ripples,
-            [rippleKey]: Object.assign({}, self.state.ripples[rippleKey], { active: false }),
-          } });
-        };
-      }
+      handleInnerRef = (node) => {
+        this.rootNode = node;
+      };
 
       handleMouseDown = (event) => {
-        if (this.props.onMouseDown) this.props.onMouseDown(event);
-        if (!this.props.disabled) {
+        if (!this.props.disabled && this.props.ripple) {
           const { x, y } = getMousePosition(event);
-          this.animateRipple(x, y, false);
+          this.createRipple(x, y, false);
+        }
+
+        if (this.props.onMouseDown) {
+          this.props.onMouseDown(event);
         }
       };
 
       handleTouchStart = (event) => {
-        if (this.props.onTouchStart) this.props.onTouchStart(event);
         if (!this.props.disabled) {
           const { x, y } = getTouchPosition(event);
-          this.animateRipple(x, y, true);
+          this.createRipple(x, y, true);
+        }
+
+        if (this.props.onTouchStart) {
+          this.props.onTouchStart(event);
         }
       };
 
-      renderRipple(key, className, { active, left, restarting, top, width }) {
-        const scale = restarting ? 0 : 1;
-        const transform = `translate3d(${(-width / 2) + left}px, ${(-width / 2) + top}px, 0) scale(${scale})`;
-        const self = this;
-        return (
-          <RippleWrapper
-            {...passProps(this.props, 'RippleWrapper')}
-            className={className}
-            key={key}
-          >
-            <RippleNode
-              {...passProps(this.props, 'RippleNode')}
-              active={active}
-              innerRef={(node) => { self.ripples[key] = node; }}
-              restarting={restarting}
-              style={prefixer({ height: width, transform, width })}
-            />
-          </RippleWrapper>
-        );
+      handleMouseUp = (event) => {
+        this.deactivateTimeout = setTimeout(this.handleDeactivate, 100);
+        if (this.props.onMouseUp) {
+          this.props.onMouseUp(event);
+        }
       }
+
+      handleTouchEnd = () => {
+        this.deactivateTimeout = setTimeout(this.handleDeactivate, 100);
+        if (this.props.onMouseUp) {
+          this.props.onTouchEnd(event);
+        }
+      }
+
+      renderRipple = (key, className, { x, y, width, active, isTouch }) => (
+        <RippleWrapper
+          {...passProps(this.props, 'RippleWrapper')}
+          className={className}
+          key={key}
+        >
+          <RippleNode
+            {...passProps(this.props, 'RippleNode')}
+            active={active}
+            idx={key}
+            innerRef={(node) => { this.ripples[key] = node; }}
+            isTouch={isTouch}
+            onDeactivate={this.handleDeactivate}
+            onFinish={this.handleRippleFinish}
+            spreadSize={width}
+            startX={x}
+            startY={y}
+          />
+        </RippleWrapper>
+      );
 
       render() {
         const {
@@ -269,14 +233,19 @@ const withRippleFactory = ({
           ...other
         } = this.props;
         const { ripples } = this.state;
-        const childRipples = Object.keys(ripples).map(key =>
+        const childRipples = keys(ripples).map(key =>
           this.renderRipple(key, rippleClassName, ripples[key]),
         );
+
         const childProps = {
+          ...other,
           onMouseDown: this.handleMouseDown,
           onTouchStart: this.handleTouchStart,
-          ...other,
+          onTouchEnd: this.handleTouchEnd,
+          onMouseUp: this.handleMouseUp,
+          innerRef: this.handleInnerRef,
         };
+
         const finalProps = defaultPassthrough
           ? { ...childProps, disabled }
           : childProps;

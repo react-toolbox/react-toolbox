@@ -1,0 +1,36 @@
+{
+  "name": "react-toolbox-showcase-web",
+  "version": "0.0.1",
+  "description": "Showcase!",
+  "main": "./lib/index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server"
+  },
+  "keywords": [],
+  "author": "Javi Velasco <javier.velasco86@gmail.com> (http://javivelasco.com/)",
+  "license": "ISC",
+  "dependencies": {
+    "react-router-dom": "next",
+    "react-toolbox-css": "^0.0.1",
+    "react-toolbox-fela": "^0.0.1",
+    "react-toolbox-sc": "^0.0.1",
+    "react-toolbox": "^2.0.0-beta.6",
+    "styled-components": "next"
+  },
+  "peerDependencies": {
+    "react": "^0.14 || ~15.4.0",
+    "react-dom": "^0.14.0 || ~15.4.0"
+  },
+  "devDependencies": {
+    "cross-env": "^3.1.3"
+  },
+  "eslintConfig": {
+    "settings": {
+      "import/resolver": {
+        "webpack": {
+          "config": "../../webpack/webpack.config.dev.js"
+        }
+      }
+    }
+  }
+}

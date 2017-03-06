@@ -1,6 +1,6 @@
 import values from 'ramda/src/values';
 
-export function addEventListenerOnTransitionEnded(element, fn) {
+export function addOnTransitionEnded(element, fn) {
   const eventName = transitionEventNamesFor(element);
   if (!eventName) return false;
   element.addEventListener(eventName, fn);

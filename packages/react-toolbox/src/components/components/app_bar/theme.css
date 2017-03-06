@@ -1,0 +1,76 @@
+@import '../colors.css';
+@import '../media.css';
+@import '../variables.css';
+@import './config.css';
+
+.appBar {
+  background: var(--appbar-color);
+  color: var(--appbar-contrast);
+  font-family: var(--preferred-font);
+  height: var(--appbar-height);
+  padding: 0 var(--appbar-h-padding);
+  transition-duration: 0.5s;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+  @apply --reset;
+
+  &.scrollHide {
+    transform: translateY(-100%);
+  }
+
+  &:not(.flat) {
+    box-shadow: var(--shadow-4p);
+  }
+
+  &.fixed {
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: var(--z-index-highest);
+  }
+
+  & .inner {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    position: relative;
+    width: 100%;
+  }
+
+  & a {
+    color: var(--appbar-contrast);
+  }
+
+  @media screen and (--xxs-viewport) and (--portrait) {
+    height: var(--appbar-height-m-portrait);
+  }
+
+  @media screen and (--xs-viewport) and (--landscape) {
+    height: var(--appbar-height-m-landscape);
+  }
+}
+
+.title {
+  flex-grow: 1;
+  font-size: calc(1.8 * var(--unit));
+  font-weight: bold;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  & > small {
+    font-size: calc(1.8 * var(--unit));
+    font-weight: normal;
+  }
+}
+
+.leftIcon {
+  margin-left: calc(-1.2 * var(--unit));
+}
+
+.rightIcon {
+  margin-left: auto;
+  margin-right: calc(-1.2 * var(--unit));
+}

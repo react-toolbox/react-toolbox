@@ -1,0 +1,21 @@
+@import '../colors.css';
+@import '../variables.css';
+@import './config.css';
+
+.overlay {
+  background-color: var(--overlay-color);
+  bottom: 0;
+  height: 100vh;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  transition: opacity var(--animation-duration) var(--animation-curve-default);
+  width: 100vw;
+
+  &.active {
+    opacity: var(--overlay-opacity);
+    pointer-events: all;
+  }
+}

@@ -1,0 +1,30 @@
+@import '../colors.css';
+@import '../variables.css';
+@import './config.css';
+
+.horizontal {
+  & > [data-react-toolbox='button'],
+  & > [data-react-toolbox='link'] {
+    display: inline-block;
+    margin: 0 calc(var(--navigation-space) / 2);
+  }
+}
+
+.vertical {
+  & > [data-react-toolbox='button'],
+  & > [data-react-toolbox='link'] {
+    display: block;
+    margin: calc(var(--navigation-space) / 2);
+  }
+}
+
+.vertical,
+.horizontal {
+  padding: calc(var(--navigation-space) / 2);
+
+  @apply --reset;
+
+  & > [data-react-toolbox='link'] {
+    color: var(--navigation-color);
+  }
+}

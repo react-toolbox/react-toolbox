@@ -1,0 +1,23 @@
+:root {
+  --input-padding: calc(2 * var(--unit));
+  --input-field-padding: calc(0.8 * var(--unit));
+  --input-field-font-size: calc(1.6 * var(--unit));
+  --input-field-height: calc(var(--input-field-padding) * 2 + var(--input-field-font-size) * 1.4);
+  --input-label-font-size: calc(1.2 * var(--unit));
+  --input-focus-label-top: calc(0.6 * var(--unit));
+  --input-text-background-color: transparent;
+  --input-text-label-color: color(var(--color-black) a(26%));
+  --input-text-bottom-border-color: color(var(--color-black) a(12%));
+  --input-text-highlight-color: var(--color-primary);
+  --input-text-disabled-color: var(--input-text-bottom-border-color);
+  --input-text-disabled-text-color: var(--input-text-label-color);
+  --input-text-error-color: rgb(222, 50, 38);
+  --input-text-required-color: rgb(222, 50, 38);
+  --input-underline-height: calc(2 * var(--unit));
+  --input-icon-font-size: calc(2.4 * var(--unit));
+  --input-icon-size: calc(2 * var(--input-icon-font-size));
+  --input-icon-offset: calc(1.6 * var(--unit));
+  --input-icon-right-space: calc(2 * var(--unit));
+  --input-chevron-offset: calc(0.8 * var(--unit));
+  --input-hint-opacity: 1;
+}

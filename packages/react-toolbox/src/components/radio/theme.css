@@ -1,0 +1,103 @@
+@import '../colors.css';
+@import '../variables.css';
+@import './config.css';
+
+.radio {
+  border: calc(0.2 * var(--unit)) solid var(--radio-text-color);
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-block;
+  height: var(--radio-button-size);
+  position: relative;
+  vertical-align: top;
+  width: var(--radio-button-size);
+
+  @apply --reset;
+
+  &::before {
+    background-color: var(--radio-inner-color);
+    border-radius: 50%;
+    content: '';
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transform: scale(0);
+    transition: transform 0.2s var(--animation-curve-default);
+    width: 100%;
+  }
+
+  & .ripple {
+    background-color: var(--radio-inner-color);
+    opacity: 0.3;
+    transition-duration: 650ms;
+  }
+}
+
+.radioChecked {
+  border: calc(0.2 * var(--unit)) solid var(--radio-inner-color);
+  composes: radio;
+
+  &::before {
+    transform: scale(0.65);
+  }
+}
+
+.field {
+  display: block;
+  height: var(--radio-button-size);
+  margin-bottom: var(--radio-field-margin-bottom);
+  position: relative;
+  white-space: nowrap;
+}
+
+.text {
+  color: var(--radio-text-color);
+  display: inline-block;
+  font-size: var(--radio-text-font-size);
+  line-height: var(--radio-button-size);
+  padding-left: var(--unit);
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.input {
+  appearance: none;
+  border: 0;
+  height: 0;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  width: 0;
+
+  &:focus ~ .radio {
+    box-shadow: 0 0 0 var(--unit) var(--radio-focus-color);
+  }
+
+  &:focus ~ .radioChecked {
+    box-shadow: 0 0 0 var(--unit) var(--radio-checked-focus-color);
+  }
+}
+
+.disabled {
+  composes: field;
+
+  & .text {
+    color: var(--radio-disabled-color);
+  }
+
+  & .radio {
+    border-color: var(--radio-disabled-color);
+    cursor: auto;
+  }
+
+  & .radioChecked {
+    border-color: var(--radio-disabled-color);
+    cursor: auto;
+
+    &::before {
+      background-color: var(--radio-disabled-color);
+    }
+  }
+}

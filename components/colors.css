@@ -13,7 +13,6 @@
   --palette-red-a200: rgb(255, 82, 82);
   --palette-red-a400: rgb(255, 23, 68);
   --palette-red-a700: rgb(213, 0, 0);
-
   --palette-pink-50: rgb(252, 228, 236);
   --palette-pink-100: rgb(248, 187, 208);
   --palette-pink-200: rgb(244, 143, 177);
@@ -28,7 +27,6 @@
   --palette-pink-a200: rgb(255, 64, 129);
   --palette-pink-a400: rgb(245, 0, 87);
   --palette-pink-a700: rgb(197, 17, 98);
-
   --palette-purple-50: rgb(243, 229, 245);
   --palette-purple-100: rgb(225, 190, 231);
   --palette-purple-200: rgb(206, 147, 216);
@@ -43,7 +41,6 @@
   --palette-purple-a200: rgb(224, 64, 251);
   --palette-purple-a400: rgb(213, 0, 249);
   --palette-purple-a700: rgb(170, 0, 255);
-
   --palette-deep-purple-50: rgb(237, 231, 246);
   --palette-deep-purple-100: rgb(209, 196, 233);
   --palette-deep-purple-200: rgb(179, 157, 219);
@@ -58,7 +55,6 @@
   --palette-deep-purple-a200: rgb(124, 77, 255);
   --palette-deep-purple-a400: rgb(101, 31, 255);
   --palette-deep-purple-a700: rgb(98, 0, 234);
-
   --palette-indigo-50: rgb(232, 234, 246);
   --palette-indigo-100: rgb(197, 202, 233);
   --palette-indigo-200: rgb(159, 168, 218);
@@ -73,7 +69,6 @@
   --palette-indigo-a200: rgb(83, 109, 254);
   --palette-indigo-a400: rgb(61, 90, 254);
   --palette-indigo-a700: rgb(48, 79, 254);
-
   --palette-blue-50: rgb(227, 242, 253);
   --palette-blue-100: rgb(187, 222, 251);
   --palette-blue-200: rgb(144, 202, 249);
@@ -88,7 +83,6 @@
   --palette-blue-a200: rgb(68, 138, 255);
   --palette-blue-a400: rgb(41, 121, 255);
   --palette-blue-a700: rgb(41, 98, 255);
-
   --palette-light-blue-50: rgb(225, 245, 254);
   --palette-light-blue-100: rgb(179, 229, 252);
   --palette-light-blue-200: rgb(129, 212, 250);
@@ -103,7 +97,6 @@
   --palette-light-blue-a200: rgb(64, 196, 255);
   --palette-light-blue-a400: rgb(0, 176, 255);
   --palette-light-blue-a700: rgb(0, 145, 234);
-
   --palette-cyan-50: rgb(224, 247, 250);
   --palette-cyan-100: rgb(178, 235, 242);
   --palette-cyan-200: rgb(128, 222, 234);
@@ -118,7 +111,6 @@
   --palette-cyan-a200: rgb(24, 255, 255);
   --palette-cyan-a400: rgb(0, 229, 255);
   --palette-cyan-a700: rgb(0, 184, 212);
-
   --palette-teal-50: rgb(224, 242, 241);
   --palette-teal-100: rgb(178, 223, 219);
   --palette-teal-200: rgb(128, 203, 196);
@@ -133,7 +125,6 @@
   --palette-teal-a200: rgb(100, 255, 218);
   --palette-teal-a400: rgb(29, 233, 182);
   --palette-teal-a700: rgb(0, 191, 165);
-
   --palette-green-50: rgb(232, 245, 233);
   --palette-green-100: rgb(200, 230, 201);
   --palette-green-200: rgb(165, 214, 167);
@@ -148,7 +139,6 @@
   --palette-green-a200: rgb(105, 240, 174);
   --palette-green-a400: rgb(0, 230, 118);
   --palette-green-a700: rgb(0, 200, 83);
-
   --palette-light-green-50: rgb(241, 248, 233);
   --palette-light-green-100: rgb(220, 237, 200);
   --palette-light-green-200: rgb(197, 225, 165);
@@ -163,7 +153,6 @@
   --palette-light-green-a200: rgb(178, 255, 89);
   --palette-light-green-a400: rgb(118, 255, 3);
   --palette-light-green-a700: rgb(100, 221, 23);
-
   --palette-lime-50: rgb(249, 251, 231);
   --palette-lime-100: rgb(240, 244, 195);
   --palette-lime-200: rgb(230, 238, 156);
@@ -178,7 +167,6 @@
   --palette-lime-a200: rgb(238, 255, 65);
   --palette-lime-a400: rgb(198, 255, 0);
   --palette-lime-a700: rgb(174, 234, 0);
-
   --palette-yellow-50: rgb(255, 253, 231);
   --palette-yellow-100: rgb(255, 249, 196);
   --palette-yellow-200: rgb(255, 245, 157);
@@ -193,7 +181,6 @@
   --palette-yellow-a200: rgb(255, 255, 0);
   --palette-yellow-a400: rgb(255, 234, 0);
   --palette-yellow-a700: rgb(255, 214, 0);
-
   --palette-amber-50: rgb(255, 248, 225);
   --palette-amber-100: rgb(255, 236, 179);
   --palette-amber-200: rgb(255, 224, 130);
@@ -208,7 +195,6 @@
   --palette-amber-a200: rgb(255, 215, 64);
   --palette-amber-a400: rgb(255, 196, 0);
   --palette-amber-a700: rgb(255, 171, 0);
-
   --palette-orange-50: rgb(255, 243, 224);
   --palette-orange-100: rgb(255, 224, 178);
   --palette-orange-200: rgb(255, 204, 128);
@@ -223,7 +209,6 @@
   --palette-orange-a200: rgb(255, 171, 64);
   --palette-orange-a400: rgb(255, 145, 0);
   --palette-orange-a700: rgb(255, 109, 0);
-
   --palette-deep-orange-50: rgb(251, 233, 231);
   --palette-deep-orange-100: rgb(255, 204, 188);
   --palette-deep-orange-200: rgb(255, 171, 145);
@@ -238,7 +223,6 @@
   --palette-deep-orange-a200: rgb(255, 110, 64);
   --palette-deep-orange-a400: rgb(255, 61, 0);
   --palette-deep-orange-a700: rgb(221, 44, 0);
-
   --palette-brown-50: rgb(239, 235, 233);
   --palette-brown-100: rgb(215, 204, 200);
   --palette-brown-200: rgb(188, 170, 164);
@@ -249,7 +233,6 @@
   --palette-brown-700: rgb(93, 64, 55);
   --palette-brown-800: rgb(78, 52, 46);
   --palette-brown-900: rgb(62, 39, 35);
-
   --palette-grey-50: rgb(250, 250, 250);
   --palette-grey-100: rgb(245, 245, 245);
   --palette-grey-200: rgb(238, 238, 238);
@@ -260,7 +243,6 @@
   --palette-grey-700: rgb(97, 97, 97);
   --palette-grey-800: rgb(66, 66, 66);
   --palette-grey-900: rgb(33, 33, 33);
-
   --palette-blue-grey-50: rgb(236, 239, 241);
   --palette-blue-grey-100: rgb(207, 216, 220);
   --palette-blue-grey-200: rgb(176, 190, 197);
@@ -271,7 +253,6 @@
   --palette-blue-grey-700: rgb(69, 90, 100);
   --palette-blue-grey-800: rgb(55, 71, 79);
   --palette-blue-grey-900: rgb(38, 50, 56);
-
   --color-black: rgb(0, 0, 0);
   --color-white: rgb(255, 255, 255);
   --color-dark-contrast: var(--color-white);

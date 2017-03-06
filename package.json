@@ -14,7 +14,7 @@
     "url": "git+https://github.com/react-toolbox/react-toolbox.git"
   },
   "bugs": {
-    "email": "issues@react-toolbox.com",
+    "email": "javier.velasco86@gmail.com",
     "url": "https://github.com/react-toolbox/react-toolbox/issues"
   },
   "keywords": [
@@ -24,19 +24,24 @@
     "react-component",
     "toolkit"
   ],
-  "jest": {
-    "modulePaths": [
-      "<rootDir>"
-    ],
-    "moduleDirectories": [
-      "node_modules"
-    ],
-    "moduleNameMapper": {
-      "(\\.css$)|(normalize.css/normalize)|(^exports-loader)": "identity-obj-proxy"
-    },
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ]
+  "license": "MIT",
+  "scripts": {
+    "babel": "babel ./components --out-dir ./lib",
+    "build": "cross-env NODE_ENV=production gulp && npm run tsd",
+    "clean": "rimraf ./lib",
+    "css": "cpx \"./components/**/*.css\" ./lib",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:css": "stylelint ./components/**/*.css",
+    "lint:js": "eslint ./ --ext .js",
+    "lint:staged": "lint-staged",
+    "patch": "bumped release patch",
+    "prebuild": "npm run clean",
+    "prepublish": "npm run build",
+    "release": "bumped release",
+    "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
+    "test": "node --harmony_proxies node_modules/.bin/jest --maxWorkers 4",
+    "test:watch": "node --harmony_proxies node_modules/.bin/jest --watch --no-watchman",
+    "tsd": "cpx \"./components/**/*.d.ts\" ./lib"
   },
   "dependencies": {
     "classnames": "^2.2.5",
@@ -48,9 +53,15 @@
     "react-addons-css-transition-group": "^15.4.2",
     "react-css-themr": "^2.0.0",
     "react-fela": "^4.2.1",
-    "react-router-dom": "next",
     "react-style-proptype": "^2.0.0",
-    "styled-components": "^1.4.0"
+    "react-router-dom": "next",
+    "styled-components": "next"
+  },
+  "peerDependencies": {
+    "classnames": "^2.2.0",
+    "react": "^0.14 || ~15.4.0",
+    "react-addons-css-transition-group": "^0.14.0 || ~15.4.0",
+    "react-dom": "^0.14.0 || ~15.4.0"
   },
   "devDependencies": {
     "babel-cli": "^6.22.2",
@@ -114,30 +125,28 @@
     "webpack-hot-middleware": "^2.16.1",
     "lerna": "2.0.0-beta.37"
   },
-  "scripts": {
-    "babel": "babel ./components --out-dir ./lib",
-    "build": "cross-env NODE_ENV=production gulp && npm run tsd",
-    "clean": "rimraf ./lib",
-    "css": "cpx \"./components/**/*.css\" ./lib",
-    "lint": "npm run lint:js && npm run lint:css",
-    "lint:css": "stylelint ./components/**/*.css",
-    "lint:js": "eslint ./ --ext .js",
-    "lint:staged": "lint-staged",
-    "patch": "bumped release patch",
-    "prebuild": "npm run clean",
-    "prepublish": "npm run build",
-    "release": "bumped release",
-    "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
-    "test": "node --harmony_proxies node_modules/.bin/jest --maxWorkers 4",
-    "test:watch": "node --harmony_proxies node_modules/.bin/jest --watch --no-watchman",
-    "tsd": "cpx \"./components/**/*.d.ts\" ./lib"
+  "jest": {
+    "modulePaths": [
+      "<rootDir>"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "moduleNameMapper": {
+      "(\\.css$)|(normalize.css/normalize)|(^exports-loader)": "identity-obj-proxy"
+    },
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
-  "license": "MIT",
-  "peerDependencies": {
-    "classnames": "^2.2.0",
-    "react": "^0.14 || ~15.4.0",
-    "react-addons-css-transition-group": "^0.14.0 || ~15.4.0",
-    "react-dom": "^0.14.0 || ~15.4.0"
+  "pre-commit": "lint:staged",
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
-  "pre-commit": "lint:staged"
+  "babel": {
+    "presets": ["es2015", "stage-0", "react"]
+  }
 }

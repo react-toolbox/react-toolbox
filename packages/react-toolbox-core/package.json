@@ -1,7 +1,7 @@
 {
   "name": "react-toolbox-core",
   "version": "0.0.0-alpha.a1564456",
-  "description": "",
+  "description": "A set of factories to generate universal agnostic components",
   "main": "./lib/index.js",
   "scripts": {
     "build": "babel ./src --out-dir ./lib",
@@ -21,36 +21,15 @@
     "react-dom": "^0.14.0 || ~15.4.0"
   },
   "devDependencies": {
-    "babel-core": "^6.22.1",
-    "babel-eslint": "^7.1.1",
-    "babel-plugin-react-transform": "^2.0.2",
-    "babel-polyfill": "^6.22.0",
-    "babel-preset-es2015": "^6.22.0",
-    "babel-preset-react": "^6.22.0",
-    "babel-preset-stage-0": "^6.22.0",
-    "enzyme": "^2.7.1",
-    "enzyme-to-json": "^1.4.5",
-    "jest": "^18.1.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "react-style-proptype": "^2.0.0"
+    "jest": "^18.1.0"
   },
-  "babel": {
-    "presets": [
-      "es2015",
-      "stage-0",
-      "react"
-    ]
-  },
-  "jest": {
-    "modulePaths": [
-      "<rootDir>"
-    ],
-    "moduleDirectories": [
-      "node_modules"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ]
+  "eslintConfig": {
+    "settings": {
+      "import/resolver": {
+        "webpack": {
+          "config": "../../webpack/webpack.config.dev.js"
+        }
+      }
+    }
   }
 }

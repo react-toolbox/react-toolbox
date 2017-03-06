@@ -1,0 +1,68 @@
+@import '../colors.css';
+@import '../variables.css';
+@import './config.css';
+
+.chip {
+  background-color: var(--chip-background);
+  border-radius: var(--chip-height);
+  color: var(--chip-color);
+  display: inline-block;
+  font-size: var(--chip-font-size);
+  line-height: var(--chip-height);
+  margin-right: var(--chip-margin-right);
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0 var(--chip-padding);
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @apply --reset;
+}
+
+.avatar {
+  padding-left: 0;
+
+  & > [data-react-toolbox='avatar'] {
+    height: var(--chip-height);
+    margin-right: var(--chip-icon-margin-right);
+    vertical-align: middle;
+    width: var(--chip-height);
+
+    & > span {
+      font-size: var(--chip-icon-font-size);
+      line-height: var(--chip-height);
+    }
+  }
+}
+
+.deletable {
+  padding-right: calc(var(--chip-remove-size) + 2 * var(--chip-remove-margin));
+}
+
+.delete {
+  cursor: pointer;
+  display: inline-block;
+  height: var(--chip-remove-size);
+  margin: var(--chip-remove-margin);
+  padding: var(--chip-remove-margin);
+  position: absolute;
+  right: 0;
+  width: var(--chip-remove-size);
+}
+
+.delete:hover .deleteIcon {
+  background: var(--chip-remove-background-hover);
+}
+
+.deleteIcon {
+  background: var(--chip-remove-background);
+  border-radius: var(--chip-remove-size);
+  vertical-align: top;
+
+  & .deleteX {
+    fill: transparent;
+    stroke: var(--chip-remove-color);
+    stroke-width: var(--chip-remove-stroke-width);
+  }
+}

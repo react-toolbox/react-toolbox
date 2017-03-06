@@ -15,6 +15,7 @@ const buttonFactory = ({
       flat: PropTypes.bool,
       floating: PropTypes.bool,
       href: PropTypes.string,
+      innerRef: PropTypes.func,
       label: PropTypes.string,
       mini: PropTypes.bool,
       neutral: PropTypes.bool,
@@ -50,8 +51,13 @@ const buttonFactory = ({
       }
     };
 
+    handleInnerRef = (node) => {
+      const { innerRef } = this.props;
+      this.rootNode = node;
+      if (innerRef) innerRef(node);
+    };
+
     render() {
-      const self = this;
       const nodeTag = this.props.href ? 'LinkNode' : 'ButtonNode';
       const ButtonElement = this.props.href ? LinkNode : ButtonNode;
       const { children, primary, flat, label, type, ...others } = this.props;
@@ -65,7 +71,7 @@ const buttonFactory = ({
           flat={isFlat}
           primary={isPrimary}
           type={!this.props.href && type}
-          innerRef={(node) => { self.rootNode = node; }}
+          innerRef={this.handleInnerRef}
           onMouseLeave={this.handleMouseLeave}
           onMouseUp={this.handleMouseUp}
         >

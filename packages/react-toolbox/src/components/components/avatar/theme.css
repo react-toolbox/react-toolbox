@@ -1,0 +1,47 @@
+@import '../colors.css';
+@import '../variables.css';
+@import './config.css';
+
+.avatar {
+  background-color: var(--avatar-background);
+  border-radius: 50%;
+  color: var(--avatar-color);
+  display: inline-block;
+  font-size: var(--avatar-font-size);
+  height: var(--avatar-size);
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  width: var(--avatar-size);
+
+  @apply --reset;
+
+  & > svg {
+    fill: currentColor;
+    height: var(--avatar-size);
+    width: 1em;
+  }
+
+  & > img {
+    height: auto;
+    max-width: 100%;
+  }
+}
+
+.image {
+  background-color: transparent;
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+  display: block;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.letter {
+  display: block;
+  line-height: var(--avatar-size);
+  width: 100%;
+}

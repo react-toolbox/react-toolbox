@@ -1,0 +1,179 @@
+@import '../colors.css';
+@import '../variables.css';
+@import './config.css';
+
+.card {
+  background: var(--card-background-color);
+  border-radius: calc(0.2 * var(--unit));
+  box-shadow: var(--shadow-2p);
+  display: flex;
+  flex-direction: column;
+  font-size: var(--card-font-size);
+  overflow: hidden;
+  width: 100%;
+
+  @apply --reset;
+
+  &.raised {
+    box-shadow: var(--shadow-8p);
+  }
+}
+
+.cardMedia {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+  &.wide,
+  &.square {
+    width: 100%;
+
+    & .content {
+      height: 100%;
+      position: absolute;
+    }
+
+    & .content > iframe,
+    & .content > video,
+    & .content > img {
+      max-width: 100%;
+    }
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    height: 0;
+  }
+
+  &.wide::after {
+    padding-top: 56.25%;
+  }
+
+  &.square::after {
+    padding-top: 100%;
+  }
+
+  & .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    left: 0;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+    width: 100%;
+  }
+
+  & .contentOverlay {
+    & .cardTitle,
+    & .cardActions,
+    & .cardText {
+      background-color: var(--card-text-overlay);
+    }
+  }
+
+  & .cardTitle {
+    & .title,
+    & .subtitle {
+      color: var(--card-color-white);
+    }
+  }
+}
+
+.cardTitle {
+  align-items: center;
+  display: flex;
+
+  & [data-react-toolbox='avatar'] {
+    margin-right: calc(1.3 * var(--unit));
+  }
+
+  & .title {
+    font-size: calc(2 * var(--unit));
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+  }
+
+  & .subtitle {
+    color: var(--color-text-secondary);
+    font-size: calc(1.4 * var(--unit));
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: calc(2.4 * var(--unit));
+    margin: 0;
+    padding: 0;
+  }
+
+  &.large {
+    padding: var(--card-padding-lg) var(--card-padding) calc(var(--card-padding) - 0.2 * var(--unit));
+
+    & .title {
+      font-size: calc(2.4 * var(--unit));
+      -moz-osx-font-smoothing: grayscale;
+      font-weight: 400;
+      line-height: 1.25;
+    }
+  }
+
+  &.small {
+    padding: var(--card-padding);
+
+    & .title {
+      font-size: 1.4rem;
+      letter-spacing: 0;
+      line-height: 1.4;
+    }
+
+    & .subtitle {
+      font-weight: 500;
+      line-height: 1.4;
+    }
+  }
+}
+
+.cardTitle,
+.cardText {
+  padding: calc(var(--card-padding) - 0.2 * var(--unit)) var(--card-padding);
+
+  & p {
+    font-size: calc(1.4 * var(--unit));
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: calc(2.4 * var(--unit));
+    margin: 0;
+  }
+
+  &:last-child {
+    padding-bottom: var(--card-padding-lg);
+  }
+
+  & + .cardText {
+    padding-top: 0;
+  }
+}
+
+.cardActions {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  padding: var(--card-padding-sm);
+
+  & [data-react-toolbox='button'] {
+    margin: 0 calc(var(--card-padding-sm) / 2);
+    min-width: 0;
+    padding: 0 var(--card-padding-sm);
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

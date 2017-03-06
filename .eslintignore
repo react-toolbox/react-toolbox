@@ -8,3 +8,4 @@ gulpfile.js
 tests.webpack*
 server.js
 webpack*
+packages/*

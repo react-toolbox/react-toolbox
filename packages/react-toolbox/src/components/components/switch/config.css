@@ -1,0 +1,24 @@
+:root {
+  --switch-color: var(--color-primary);
+  --switch-text-color: var(--color-black);
+  --switch-thumb-off-color: var(--palette-grey-50);
+  --switch-track-on-color: color(var(--color-primary) a(50%));
+  --switch-track-off-color: color(var(--color-black) a(26%));
+  --switch-off-ripple-color: color(var(--color-black) a(40%));
+  --switch-on-focus-color: color(var(--color-primary) a(26%));
+  --switch-off-focus-color: color(var(--color-black) a(10%));
+  --switch-disabled-thumb-color: var(--palette-grey-400);
+  --switch-disabled-track-color: color(var(--color-black) a(12%));
+  --switch-disabled-text-color: color(var(--color-black) a(26%));
+  --switch-total-height: calc(2.4 * var(--unit));
+  --switch-track-length: calc(3.6 * var(--unit));
+  --switch-track-height: calc(1.4 * var(--unit));
+  --switch-thumb-size: calc(2 * var(--unit));
+  --switch-thumb-on-color: var(--switch-color);
+  --switch-focus-init-size: calc(0.8 * var(--unit));
+  --switch-focus-size: calc(var(--switch-total-height) * 2);
+  --switch-focus-diff: calc((var(--switch-focus-size) - var(--switch-focus-init-size)) / 2);
+  --switch-ripple-duration: 650ms;
+  --switch-font-size: var(--font-size-small);
+  --switch-field-margin-bottom: calc(1.5 * var(--unit));
+}

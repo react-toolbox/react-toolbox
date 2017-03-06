@@ -1,0 +1,32 @@
+{
+  "name": "react-toolbox-sc",
+  "version": "0.0.1",
+  "description": "A Material Design implementation based on React Toolbox core and Styled Components",
+  "main": "./lib/index.js",
+  "scripts": {
+    "build": "babel ./src --out-dir ./lib",
+    "prepublish": "npm run build"
+  },
+  "keywords": [],
+  "author": "Javi Velasco <javier.velasco86@gmail.com> (http://javivelasco.com/)",
+  "license": "ISC",
+  "dependencies": {
+    "color": "^1.0.3",
+    "ramda": "^0.23.0",
+    "react-toolbox-core": "^0.0.0-alpha.a1564456",
+    "styled-components": "next"
+  },
+  "peerDependencies": {
+    "react": "^0.14 || ~15.4.0",
+    "react-dom": "^0.14.0 || ~15.4.0"
+  },
+  "eslintConfig": {
+    "settings": {
+      "import/resolver": {
+        "webpack": {
+          "config": "../../webpack/webpack.config.dev.js"
+        }
+      }
+    }
+  }
+}

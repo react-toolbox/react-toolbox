@@ -1,0 +1,59 @@
+@import '../colors.css';
+@import '../variables.css';
+@import './config.css';
+
+.tooltip {
+  display: block;
+  font-family: var(--preferred-font);
+  font-size: var(--tooltip-font-size);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--font-size-small);
+  max-width: var(--tooltip-max-width);
+  padding: var(--tooltip-margin);
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  text-transform: none;
+  transform: scale(0) translateX(-50%);
+  transform-origin: top left;
+  transition: var(--animation-curve-default) var(--tooltip-animation-duration) transform;
+  z-index: var(--z-index-higher);
+
+  @apply --reset;
+
+  &.tooltipActive {
+    transform: scale(1) translateX(-50%);
+  }
+
+  &.tooltipTop {
+    transform: scale(0) translateX(-50%) translateY(-100%);
+
+    &.tooltipActive {
+      transform: scale(1) translateX(-50%) translateY(-100%);
+    }
+  }
+
+  &.tooltipLeft {
+    transform: scale(0) translateX(-100%) translateY(-50%);
+
+    &.tooltipActive {
+      transform: scale(1) translateX(-100%) translateY(-50%);
+    }
+  }
+
+  &.tooltipRight {
+    transform: scale(0) translateX(0) translateY(-50%);
+
+    &.tooltipActive {
+      transform: scale(1) translateX(0) translateY(-50%);
+    }
+  }
+}
+
+.tooltipInner {
+  background: var(--tooltip-background);
+  border-radius: var(--tooltip-border-radius);
+  color: var(--tooltip-color);
+  display: block;
+  padding: var(--tooltip-padding);
+}

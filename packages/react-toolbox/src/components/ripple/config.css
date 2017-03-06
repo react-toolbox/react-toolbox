@@ -1,0 +1,5 @@
+:root {
+  --ripple-duration: 800ms;
+  --ripple-final-opacity: 0.3;
+  --ripple-size: calc(15 * var(--unit));
+}

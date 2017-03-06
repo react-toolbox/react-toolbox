@@ -1,0 +1,9 @@
+:root {
+  --progress-height: calc(0.4 * var(--unit));
+  --progress-main-color: var(--color-primary);
+  --progress-secondary-color: color(var(--color-primary-contrast) a(70%));
+  --progress-disabled-color: color(var(--color-black) a(26%));
+  --circle-wrapper-width: 60;
+  --circle-radius: 25;
+  --scale-ratio: calc(var(--circle-radius) / 20);
+}
