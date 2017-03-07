@@ -71,6 +71,7 @@ const factory = (Overlay, Button) => {
       overlay: PropTypes.string,
       title: PropTypes.string,
       wrapper: PropTypes.string,
+      overflow: PropTypes.string,
     }),
     title: PropTypes.string,
     type: PropTypes.string,

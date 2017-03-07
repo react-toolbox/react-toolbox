@@ -30,6 +30,7 @@
     opacity var(--animation-duration) var(--animation-curve-default),
     transform var(--animation-duration) var(--animation-curve-default);
   transition-delay: var(--animation-delay);
+  overflow: var(--overflow);
 
   &.active {
     opacity: 1;
