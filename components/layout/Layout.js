@@ -24,7 +24,6 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
       theme: PropTypes.shape({
         appbarFixed: PropTypes.string,
         layout: PropTypes.string,
-        layoutInner: PropTypes.string,
         navDrawerClipped: PropTypes.string,
         navDrawerPinned: PropTypes.string,
         sidebarClipped: PropTypes.string,
@@ -103,9 +102,7 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
         <div {...rest} className={_className}>
           {clonedLeftSideNav}
           {clonedAppBar}
-          <div className={theme.layoutInner}>
-            {unknown}
-          </div>
+          {unknown}
           {clonedRightSideNav}
         </div>
       );
