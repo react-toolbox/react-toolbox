@@ -321,7 +321,7 @@ const factory = (Chip, Input) => {
     }
 
     isValueAnObject() {
-      return !Array.isArray(this.props.value) && typeof this.props.value === 'object';
+      return !Array.isArray(this.props.value) && typeof this.props.value === 'object' && this.props.value !== null;
     }
 
     mapToObject(map) {
