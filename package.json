@@ -2,11 +2,11 @@
   "name": "react-toolbox",
   "description": "A set of React components implementing Google's Material Design specification with the power of CSS Modules.",
   "homepage": "http://www.react-toolbox.com",
-  "version": "2.0.0-beta.6",
+  "version": "2.0.0-beta.7",
   "main": "./lib",
   "author": {
-    "name": "Javier Velasco Arjona",
     "email": "javier.velasco86@gmail.com",
+    "name": "Javier Velasco Arjona",
     "url": "http://javivelasco.com/"
   },
   "repository": {
@@ -24,20 +24,6 @@
     "react-component",
     "toolkit"
   ],
-  "jest": {
-    "modulePaths": [
-      "<rootDir>"
-    ],
-    "moduleDirectories": [
-      "node_modules"
-    ],
-    "moduleNameMapper": {
-      "(\\.css$)|(normalize.css/normalize)|(^exports-loader)": "identity-obj-proxy"
-    },
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ]
-  },
   "dependencies": {
     "classnames": "^2.2.5",
     "core-js": "^2.4.0",
@@ -125,6 +111,20 @@
     "tsd": "cpx \"./components/**/*.d.ts\" ./lib"
   },
   "license": "MIT",
+  "jest": {
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "moduleNameMapper": {
+      "(\\.css$)|(normalize.css/normalize)|(^exports-loader)": "identity-obj-proxy"
+    },
+    "modulePaths": [
+      "<rootDir>"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
+  },
   "peerDependencies": {
     "classnames": "^2.2.0",
     "react": "^0.14 || ~15.4.0",
