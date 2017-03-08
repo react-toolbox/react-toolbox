@@ -12,14 +12,23 @@ const factory = (TimePickerDialog, Input) => {
   class TimePicker extends Component {
     static propTypes = {
       active: PropTypes.bool,
-      cancelLabel: PropTypes.string,
+      cancelLabel: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+      ]),
       className: PropTypes.string,
       error: PropTypes.string,
       format: PropTypes.oneOf(['24hr', 'ampm']),
       inputClassName: PropTypes.string,
-      label: PropTypes.string,
+      label: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+      ]),
       name: PropTypes.string,
-      okLabel: PropTypes.string,
+      okLabel: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+      ]),
       onChange: PropTypes.func,
       onClick: PropTypes.func,
       onDismiss: PropTypes.func,

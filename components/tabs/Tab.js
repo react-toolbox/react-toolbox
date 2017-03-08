@@ -23,7 +23,10 @@ const factory = (ripple) => {
         active: PropTypes.string,
         disabled: PropTypes.string,
         hidden: PropTypes.string,
-        label: PropTypes.string,
+        label: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.element,
+        ]),
         rippleWrapper: PropTypes.string,
         withIcon: PropTypes.string,
         withText: PropTypes.string,

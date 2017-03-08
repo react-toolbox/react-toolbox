@@ -7,7 +7,10 @@ const factory = (Dialog, Calendar) => {
     static propTypes = {
       active: PropTypes.bool,
       autoOk: PropTypes.bool,
-      cancelLabel: PropTypes.string,
+      cancelLabel: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+      ]),
       className: PropTypes.string,
       disabledDates: React.PropTypes.arrayOf(PropTypes.instanceOf(Date)),
       enabledDates: React.PropTypes.arrayOf(PropTypes.instanceOf(Date)),
@@ -18,7 +21,10 @@ const factory = (Dialog, Calendar) => {
       maxDate: PropTypes.instanceOf(Date),
       minDate: PropTypes.instanceOf(Date),
       name: PropTypes.string,
-      okLabel: PropTypes.string,
+      okLabel: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+      ]),
       onDismiss: PropTypes.func,
       onEscKeyDown: PropTypes.func,
       onOverlayClick: PropTypes.func,
