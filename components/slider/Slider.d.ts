@@ -105,6 +105,11 @@ export interface SliderProps extends ReactToolbox.Props {
    * @default 0
    */
   value?: number;
+
+  /**
+   * Used to style the ProgressBar element
+   */
+  buffer?: number;
 }
 
 export class Slider extends React.Component<SliderProps, {}> { }
