@@ -109,6 +109,14 @@ export interface InputProps extends ReactToolbox.Props {
    */
   onFocus?: Function;
   /**
+   * Callback function that is fired when a key is pressed down.
+   */
+  onKeyDown?: Function;
+  /**
+   * Callback function that is fired when a key is released.
+   */
+  onKeyUp?: Function;
+  /**
    * Callback function that is fired when a key is pressed.
    */
   onKeyPress?: Function;
