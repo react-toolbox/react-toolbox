@@ -47,10 +47,13 @@ const factory = (Checkbox, TableCell) => {
               onChange={this.handleSelect}
             />}
           </TableCell>}
-          {React.Children.map(children, (child, index) => cloneElement(child, {
-            column: index,
-            tagName: 'th',
-          }))}
+          {React.Children.map(children, (child, index) => {
+            if (!child) return null;
+            return cloneElement(child, {
+              column: index,
+              tagName: 'th',
+            });
+          })}
         </tr>
       );
     }
