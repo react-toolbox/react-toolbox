@@ -34,6 +34,9 @@
     "moduleNameMapper": {
       "(\\.css$)|(normalize.css/normalize)|(^exports-loader)": "identity-obj-proxy"
     },
+    "setupFiles": [
+      "./jest.config.js"
+    ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ]
