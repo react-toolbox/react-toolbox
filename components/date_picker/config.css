@@ -24,7 +24,7 @@
   --calendar-year-font-size: 2.4;
   --calendar-day-font-size: calc(1.3 * var(--unit));
   --calendar-day-disable-opacity: 0.25;
-  --calendar-row-height: calc(3 * var(--unit));
+  --calendar-row-height: calc(3.6 * var(--unit));
   --calendar-day-padding-topbottom: calc(0.2 * var(--unit));
   --calendar-day-padding-leftright: 0;
   --calendar-title-height: calc(3.6 * var(--unit));

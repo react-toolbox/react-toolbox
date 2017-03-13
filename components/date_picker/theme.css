@@ -87,6 +87,10 @@
     position: absolute;
     top: 0;
     z-index: var(--z-index-high);
+
+    & > span {
+      vertical-align: top;
+    }
   }
 
   & .prev {
