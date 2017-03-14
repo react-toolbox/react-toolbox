@@ -80,16 +80,10 @@ const factory = (Chip, Input) => {
          query: this.query(nextProps.value)
        });
      }
-   }
-
-   shouldComponentUpdate (nextProps, nextState) {
-     if (!this.state.focus && nextState.focus && this.props.direction === POSITION.AUTO) {
-       const direction = this.calculateDirection();
-       if (this.state.direction !== direction) {
-         this.setState({ direction });
-       }
+     if (this.state.focus && this.props.direction !== nextProps.direction) {
+       const direction = this.calculateDirection(nextProps.direction);
+       this.setState({ direction });
      }
-     return true;
    }
 
    handleChange = (values, event) => {
@@ -122,7 +116,7 @@ const factory = (Chip, Input) => {
 
    handleQueryFocus = (event) => {
      this.suggestionsNode.scrollTop = 0;
-     this.setState({active: '', focus: true});
+     this.setState({active: '', focus: true, direction: this.calculateDirection(this.props.direction)});
      if (this.props.onFocus) this.props.onFocus(event);
    };
 
@@ -158,14 +152,14 @@ const factory = (Chip, Input) => {
      this.setState({active: event.target.id});
    };
 
-   calculateDirection () {
-     if (this.props.direction === 'auto') {
+   calculateDirection (propsDirection) {
+     if (propsDirection === 'auto') {
        const client = ReactDOM.findDOMNode(this.inputNode).getBoundingClientRect();
        const screen_height = window.innerHeight || document.documentElement.offsetHeight;
        const up = client.top > ((screen_height / 2) + client.height);
        return up ? 'up' : 'down';
      } else {
-       return this.props.direction;
+       return propsDirection;
      }
    }
 
