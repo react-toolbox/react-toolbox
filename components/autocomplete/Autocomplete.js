@@ -300,6 +300,10 @@ const factory = (Chip, Input) => {
           return obj;
         }, {});
 
+        if (Object.keys(newItem).length === 0 && newValue) {
+          newItem[newValue] = newValue;
+        }
+
         return this.handleChange(Object.assign(this.mapToObject(values), newItem), event);
       }
 
