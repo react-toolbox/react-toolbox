@@ -8,7 +8,7 @@ const FontIcon = ({ alt, children, className, theme, value, ...other}) => ( // e
     className={classnames({ 'material-icons': typeof value === 'string' || typeof children === 'string' }, className)}
     {...other}
   >
-    <span aria-hidden="true">{value}</span>
+    {value}
     {children}
   </span>
 );
