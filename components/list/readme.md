@@ -12,19 +12,19 @@ const ListTest = () => (
   <List selectable ripple>
     <ListSubHeader caption='Explore characters' />
     <ListItem
-      avatar='https://dl.dropboxusercontent.com/u/2247264/assets/m.jpg'
+      avatar='https://placeimg.com/80/80/animals'
       caption='Dr. Manhattan'
       legend="Jonathan 'Jon' Osterman"
       rightIcon='star'
     />
     <ListItem
-      avatar='https://dl.dropboxusercontent.com/u/2247264/assets/o.jpg'
+      avatar='https://placeimg.com/80/80/animals'
       caption='Ozymandias'
       legend='Adrian Veidt'
       rightIcon='star'
     />
     <ListItem
-      avatar='https://dl.dropboxusercontent.com/u/2247264/assets/r.jpg'
+      avatar='https://placeimg.com/80/80/animals'
       caption='Rorschach'
       legend='Walter Joseph Kovacs'
       rightIcon='star'
