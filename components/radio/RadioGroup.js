@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { themr } from 'react-css-themr';
 import { RADIO } from '../identifiers';
 import InjectRadioButton from './RadioButton';
-import { isComponentOfType } from '../utils/react';
+import isComponentOfType from '../utils/is-component-of-type';
 
 const factory = (RadioButton) => {
   class RadioGroup extends Component {
