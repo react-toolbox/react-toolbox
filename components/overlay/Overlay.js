@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { OVERLAY } from '../identifiers';
+import events from '../utils/events';
 
 class Overlay extends Component {
   static propTypes = {
@@ -23,12 +24,14 @@ class Overlay extends Component {
   };
 
   componentDidMount() {
-    const { active, lockScroll, onEscKeyDown } = this.props;
-    if (onEscKeyDown) document.body.addEventListener('keydown', this.handleEscKey.bind(this));
+    const { active, lockScroll } = this.props;
+    events.addEventsToDocument(this.getDocumentEvents());
     if (active && lockScroll) document.body.style.overflow = 'hidden';
   }
 
   componentWillUpdate(nextProps) {
+    events.addEventsToDocument(this.getDocumentEvents(nextProps));
+
     if (this.props.lockScroll) {
       const becomingActive = nextProps.active && !this.props.active;
       const becomingUnactive = !nextProps.active && this.props.active;
@@ -44,8 +47,8 @@ class Overlay extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.active && !prevProps.active && this.props.onEscKeyDown) {
-      document.body.addEventListener('keydown', this.handleEscKey.bind(this));
+    if (this.props.active && !prevProps.active) {
+      events.removeEventsFromDocument(this.getDocumentEvents());
     }
   }
 
@@ -56,10 +59,12 @@ class Overlay extends Component {
       }
     }
 
-    if (this.props.onEscKeyDown) {
-      document.body.removeEventListener('keydown', this.handleEscKey);
-    }
+    events.removeEventsFromDocument(this.getDocumentEvents());
   }
+
+  getDocumentEvents = (props = this.props) => ({
+    keydown: props.onEscKeyDown ? this.handleEscKey : null,
+  });
 
   handleEscKey = (e) => {
     if (this.props.active && this.props.onEscKeyDown && e.which === 27) {
