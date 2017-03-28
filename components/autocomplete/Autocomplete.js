@@ -127,7 +127,7 @@ const factory = (Chip, Input) => {
       this.clearQuery = false;
 
       this.updateQuery(query, true);
-      this.setState({ showAllSuggestions: this.props.showSuggestionsWhenValueIsSet, active: null });
+      this.setState({ showAllSuggestions: query ? false : this.props.showSuggestionsWhenValueIsSet, active: null });
     };
 
     handleQueryFocus = (event) => {
