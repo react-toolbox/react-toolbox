@@ -25,12 +25,12 @@
   max-height: 96vh;
   max-width: 96vw;
   opacity: 0;
+  overflow: var(--overflow);
   transform: translateY(calc(-1 * var(--dialog-translate-y)));
   transition:
     opacity var(--animation-duration) var(--animation-curve-default),
     transform var(--animation-duration) var(--animation-curve-default);
   transition-delay: var(--animation-delay);
-  overflow: var(--overflow);
 
   &.active {
     opacity: 1;
