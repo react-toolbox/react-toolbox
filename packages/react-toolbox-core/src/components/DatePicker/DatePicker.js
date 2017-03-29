@@ -1,9 +1,9 @@
-import React, { createElement, Component, PropTypes } from 'react';
+import React, { createElement, PureComponent, PropTypes } from 'react';
 import map from 'ramda/src/map';
 import range from 'ramda/src/range';
+import addMonths from 'date-fns/add_months';
 import getPassThrough from '../../utils/getPassThrough';
 import { SINGLE, RANGE, START_DATE, END_DATE } from './constants';
-import addMonths from './dateUtils/addMonths';
 import dateShape from './dateShape';
 
 const datePickerFactory = ({
@@ -16,7 +16,7 @@ const datePickerFactory = ({
   passthrough,
 }) => {
   const passProps = getPassThrough(passthrough);
-  class DatePicker extends Component {
+  class DatePicker extends PureComponent {
     static propTypes = {
       focusedInput: PropTypes.oneOf([START_DATE, END_DATE]),
       isDayBlocked: PropTypes.func,
@@ -103,11 +103,10 @@ const datePickerFactory = ({
         viewDate,             // eslint-disable-line
         ...rest
       } = this.props;
-
       return (
         <PickerWrapper {...rest} {...passProps(this.props, 'PickerWrapper')}>
-          <PrevNode {...passProps(this.props, 'PrevNode')} onClick={this.handlePrev}>{'<'}</PrevNode>
-          <NextNode {...passProps(this.props, 'NextNode')} onClick={this.handleNext}>{'>'}</NextNode>
+          <PrevNode {...passProps(this.props, 'PrevNode', this)} onClick={this.handlePrev}>{'<'}</PrevNode>
+          <NextNode {...passProps(this.props, 'NextNode', this)} onClick={this.handleNext}>{'>'}</NextNode>
           {this.renderPicker()}
         </PickerWrapper>
       );

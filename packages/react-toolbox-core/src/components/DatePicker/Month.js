@@ -1,15 +1,22 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PureComponent, PropTypes } from 'react';
 import range from 'ramda/src/range';
-import getPassThrough from '../../utils/getPassThrough';
+import getDaysInMonth from 'date-fns/get_days_in_month';
+import isWithinRange from 'date-fns/is_within_range';
+import startOfMonth from 'date-fns/start_of_month';
+import isSameDay from 'date-fns/is_same_day';
+import setDate from 'date-fns/set_date';
 import dateShape from './dateShape';
-import fromDateWithDay from './dateUtils/fromDateWithDay';
-import getDaysInMonth from './dateUtils/getDaysInMonth';
-import getFirstWeekDay from './dateUtils/getFirstWeekDay';
+import startOfWeek from 'date-fns/start_of_week';
+import lastDayOfWeek from 'date-fns/last_day_of_week';
+import subDays from 'date-fns/sub_days';
+import lastDayOfMonth from 'date-fns/last_day_of_month';
+import getDate from 'date-fns/get_date';
+import getPassThrough from '../../utils/getPassThrough';
+import isDateRange from './dateUtils/isDateRange';
 import getFullDayOfWeek from './dateLocale/getFullDayOfWeek';
 import getFullMonth from './dateLocale/getFullMonth';
-import isDateRange from './dateUtils/isDateRange';
-import isInclusivelyInRange from './dateUtils/isInclusivelyInRange';
-import isSameDay from './dateUtils/isSameDay';
+const addDays = require('date-fns/add_days');
+const differenceInCalendarDays = require('date-fns/difference_in_calendar_days');
 
 const monthFactory = ({
   Day,
@@ -22,7 +29,7 @@ const monthFactory = ({
   passthrough,
 }) => {
   const passProps = getPassThrough(passthrough);
-  class Month extends Component {
+  class Month extends PureComponent {
     static propTypes = {
       highlighted: dateShape,
       isDayBlocked: PropTypes.func,
@@ -38,111 +45,52 @@ const monthFactory = ({
       viewDate: PropTypes.instanceOf(Date),
     };
 
-    handleDayClick = (day) => {
-      const { onDayClick, viewDate } = this.props;
-      if (onDayClick) {
-        onDayClick(fromDateWithDay(viewDate, day));
-      }
-    };
-
-    handleDayMouseEnter = (day) => {
-      const { onDayMouseEnter, viewDate } = this.props;
-      if (onDayMouseEnter) {
-        onDayMouseEnter(fromDateWithDay(viewDate, day));
-      }
-    };
-
-    isDayHighlighted = (dateForDay) => {
-      const { highlighted } = this.props;
-      if (highlighted instanceof Date) {
-        return isSameDay(dateForDay, highlighted);
-      }
-
-      if (isDateRange(highlighted)) {
-        const { from, to } = highlighted;
-        return from && to
-          ? isInclusivelyInRange(dateForDay, from, to)
-          : isSameDay(dateForDay, from || to);
-      }
-
-      return false;
-    };
-
-    isDaySelected = (dateForDay) => {
-      const { selected } = this.props;
-      if (selected instanceof Date) {
-        return isSameDay(dateForDay, selected);
-      }
-
-      if (isDateRange(selected)) {
-        const { from, to } = selected;
-        return (from && isSameDay(dateForDay, from))
-          || (to && isSameDay(dateForDay, to));
-      }
-
-      return false;
-    };
-
-    isDayInRange = (dateForDay) => {
-      const { selected } = this.props;
-      if (isDateRange(selected)) {
-        const { from, to } = selected;
-        if (from && to) {
-          return isInclusivelyInRange(dateForDay, from, to);
-        }
-      }
-      return false;
-    };
-
-    isDayOutOfMonth = (dateForDay) => {
-      const { viewDate } = this.props;
-      return viewDate.getMonth() !== dateForDay.getMonth();
-    };
-
     renderDays = () => {
-      const { sundayFirstDayOfWeek, viewDate } = this.props;
-      const daysBefore = getFirstWeekDay(viewDate) - (sundayFirstDayOfWeek ? 0 : 1);
-      const saneDaysBefore = daysBefore === -1 ? 6 : daysBefore;
-      const monthDays = getDaysInMonth(viewDate);
-      const numberOfWeeks = Math.ceil((monthDays + saneDaysBefore) / 7);
-      const firstDayToRender = fromDateWithDay(viewDate, 1);
-      firstDayToRender.setDate(firstDayToRender.getDate() - saneDaysBefore - 1);
-      return range(0, numberOfWeeks).map(week => (
-        this.renderWeek(week, firstDayToRender)
-      ));
-    };
+      const { sundayFirstDayOfWeek, selected, onDayMouseEneter, isDayBlocked, onDayClick, isDayDisabled, viewDate } = this.props;
+      const firstDay = sundayFirstDayOfWeek
+        ? subDays(startOfWeek(viewDate), 1)
+        : startOfWeek(viewDate);
 
-    renderWeek = (week, weekFirstDay) => {
-      const key = `${week}${weekFirstDay.getMonth()}`;
-      return (
-        <DaysWeek {...passProps(this.props, 'DaysWeek')} key={key}>
-          {range(0, 7).map(() => {
-            weekFirstDay.setDate(weekFirstDay.getDate() + 1);
-            return this.renderDay(weekFirstDay);
-          })}
-        </DaysWeek>
-      );
-    };
+      const lastDay = sundayFirstDayOfWeek
+        ? subDays(lastDayOfWeek(lastDayOfMonth(viewDate)), 1)
+        : lastDayOfWeek(lastDayOfMonth(viewDate));
 
-    renderDay = (dateForDay) => {
-      const { isDayBlocked, isDayDisabled, viewDate } = this.props;
-      return (
-        <Day
-          {...passProps(this.props, 'Day')}
-          key={`${dateForDay.getMonth()}-${dateForDay.getDate()}`}
-          blocked={isDayBlocked && isDayBlocked(dateForDay)}
-          day={dateForDay.getDate()}
-          disabled={isDayDisabled && isDayDisabled(dateForDay)}
-          highlighted={this.isDayHighlighted(dateForDay)}
-          inRange={this.isDayInRange(dateForDay)}
-          onClick={this.handleDayClick}
-          onMouseEnter={this.handleDayMouseEnter}
-          outOfMonth={this.isDayOutOfMonth(dateForDay)}
-          selected={this.isDaySelected(dateForDay)}
-          today={isSameDay(dateForDay, new Date())}
-          viewDate={viewDate}
-        />
-      );
+      const nweeks = Math.ceil(differenceInCalendarDays(lastDay, firstDay) / 7);
+
+      const monthMatrix = [];
+      const weeks = [];
+      let days;
+
+      for (const i = 0; i < nweeks; i++) {
+        monthMatrix[i] = [];
+        days = [];
+
+        for (const j = 0; j < 7; j++) {
+          const monthDay = addDays(firstDay, j + i * 7);
+          monthMatrix[i][j] = monthDay;
+          days[j] = (
+            <Day
+              {...passProps(this.props, 'Day', this)}
+              day={monthDay}
+              isDayBlocked={isDayBlocked}
+              isDayDisabled={isDayDisabled}
+              key={monthDay.getTime()}
+              onClick={onDayClick}
+              onMouseEnter={onDayMouseEneter}
+              selected={selected}
+              viewDate={viewDate}
+            />
+          );
+        }
+
+        weeks[i] = (
+          <DaysWeek {...passProps(this.props, 'DaysWeek', this)} key={`${i}${viewDate.getMonth()}`}>
+            {days}
+          </DaysWeek>
+        );
+      }
+
+      return weeks;
     };
 
     renderWeekDays = () => {
@@ -151,7 +99,7 @@ const monthFactory = ({
       const sortedDaysIdx = sundayFirstDayOfWeek ? indexes : [...indexes.slice(1), indexes[0]];
       return sortedDaysIdx.map(weekDay => (
         <Weekday
-          {...passProps(this.props, 'Weekday')}
+          {...passProps(this.props, 'Weekday', this)}
           key={getFullDayOfWeek(weekDay, locale)}
           weekDay={weekDay}
         >
@@ -174,8 +122,8 @@ const monthFactory = ({
         ...rest
       } = this.props;
       return (
-        <MonthWrapper {...rest} {...passProps(this.props, 'MonthWrapper')}>
-          <MonthTitle {...passProps(this.props, 'MonthTitle')}>
+        <MonthWrapper {...rest} {...passProps(this.props, 'MonthWrapper', this)}>
+          <MonthTitle {...passProps(this.props, 'MonthTitle', this)}>
             {getFullMonth(viewDate)} {viewDate.getFullYear()}
           </MonthTitle>
           <WeekdaysWrapper>{this.renderWeekDays()}</WeekdaysWrapper>

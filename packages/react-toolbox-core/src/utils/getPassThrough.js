@@ -1,9 +1,9 @@
 import pick from 'ramda/src/pick';
 
 export default function getPassThroughProps(option = []) {
-  return (props, node) => (
+  return (props, node, instance) => (
     Array.isArray(option)
       ? pick(option, props)
-      : option(props, node)
+      : option(props, node, instance)
   );
 }
