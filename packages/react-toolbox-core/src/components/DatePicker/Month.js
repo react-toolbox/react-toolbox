@@ -61,11 +61,11 @@ const monthFactory = ({
       const weeks = [];
       let days;
 
-      for (const i = 0; i < nweeks; i++) {
+      for (let i = 0; i < nweeks; i++) {
         monthMatrix[i] = [];
         days = [];
 
-        for (const j = 0; j < 7; j++) {
+        for (let j = 0; j < 7; j++) {
           const monthDay = addDays(firstDay, j + i * 7);
           monthMatrix[i][j] = monthDay;
           days[j] = (
