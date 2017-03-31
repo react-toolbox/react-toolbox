@@ -46,7 +46,7 @@ If you want to provide a theme via context, the component key is `RTDatePicker`.
 
 | Name            | Type            | Default       | Description |
 |:-----|:-----|:-----|:-----|
-| `active`        | `Boolean`       | `false`       | Allows to control if the picker should be shown from outside. Beware you should update the prop when the Dialog is closed. |
+| `active`        | `Boolean`       | `false`       | Allows to control if the picker should be shown from outside. Use `onActiveChange` to update the prop when the Dialog is closed. |
 | `autoOk`        | `Boolean`       | `false`       | Automatically selects a date upon clicking on a day. |
 | `cancelLabel`   | `String`        | `'Cancel'`    | Label used for cancel button on date picker dialog. |
 | `className`     | `String`        |               | This class will be placed at the top of the `DatePickerDialog` component so you can provide custom styles.|
@@ -65,6 +65,7 @@ If you want to provide a theme via context, the component key is `RTDatePicker`.
 | `onEscKeyDown`  | `Function`      |               | Callback called when the ESC key is pressed with the overlay active. |
 | `onKeyPress`    | `Function`      |               | Callback invoked on Input key press.
 | `onOverlayClick`| `Function`      |               | Callback to be invoked when the dialog overlay is clicked.|
+| `onActiveChange`| `Function`      |               | Callback to be invoked when the active state is changed internally.  Use this if you are managing the `active` property yourself.|
 | `readonly`      | `Boolean`       |               | The input element will be readonly and look like disabled.|
 | `sundayFirstDayOfWeek` | `Boolean`| `false`       | Set week's first day to Sunday. Default week's first day is Monday ([ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Week_dates)). |
 | `value`         | `Date`          |               | Date object with the currently selected date. |
