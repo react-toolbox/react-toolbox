@@ -68,6 +68,7 @@ const factory = (Overlay, Button) => {
       button: PropTypes.string,
       dialog: PropTypes.string,
       navigation: PropTypes.string,
+      overflow: PropTypes.string,
       overlay: PropTypes.string,
       title: PropTypes.string,
       wrapper: PropTypes.string,
