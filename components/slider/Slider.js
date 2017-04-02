@@ -12,6 +12,7 @@ import InjectInput from '../input/Input';
 const factory = (ProgressBar, Input) => {
   class Slider extends Component {
     static propTypes = {
+      buffer: PropTypes.number,
       className: PropTypes.string,
       disabled: PropTypes.bool,
       editable: PropTypes.bool,
@@ -43,6 +44,7 @@ const factory = (ProgressBar, Input) => {
     };
 
     static defaultProps = {
+      buffer: 0,
       className: '',
       editable: false,
       max: 100,
@@ -313,6 +315,7 @@ const factory = (ProgressBar, Input) => {
                 min={this.props.min}
                 mode="determinate"
                 value={this.props.value}
+                buffer={this.props.buffer}
               />
               {this.renderSnaps()}
             </div>
