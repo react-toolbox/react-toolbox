@@ -112,14 +112,17 @@
   },
   "license": "MIT",
   "jest": {
+    "modulePaths": [
+      "<rootDir>"
+    ],
     "moduleDirectories": [
       "node_modules"
     ],
     "moduleNameMapper": {
       "(\\.css$)|(normalize.css/normalize)|(^exports-loader)": "identity-obj-proxy"
     },
-    "modulePaths": [
-      "<rootDir>"
+    "setupFiles": [
+      "./jest.config.js"
     ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
