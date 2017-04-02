@@ -24,7 +24,7 @@ class Overlay extends Component {
 
   componentDidMount() {
     const { active, lockScroll, onEscKeyDown } = this.props;
-    if (onEscKeyDown) document.body.addEventListener('keydown', this.handleEscKey.bind(this));
+    if (onEscKeyDown) document.body.addEventListener('keydown', this.handleEscKey);
     if (active && lockScroll) document.body.style.overflow = 'hidden';
   }
 
@@ -44,8 +44,12 @@ class Overlay extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.active && !prevProps.active && this.props.onEscKeyDown) {
-      document.body.addEventListener('keydown', this.handleEscKey.bind(this));
+    if (this.props.onEscKeyDown) {
+      if (this.props.active && !prevProps.active) {
+        document.body.addEventListener('keydown', this.handleEscKey);
+      } else if (!this.props.active && prevProps.active) {
+        document.body.removeEventListener('keydown', this.handleEscKey);
+      }
     }
   }
 
