@@ -61,6 +61,7 @@ const factory = (Radio) => {
           className={_className}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
+          onTouchEnd={this.handleClick}
         >
           <input
             {...others}
