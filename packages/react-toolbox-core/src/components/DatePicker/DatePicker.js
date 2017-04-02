@@ -28,6 +28,7 @@ const datePickerFactory = ({
       mode: PropTypes.oneOf([SINGLE, RANGE]),
       numberOfMonths: PropTypes.number,
       onChange: PropTypes.func,
+      onFocusedInputChange: PropTypes.func,
       selected: dateShape,
       sundayFirstDayOfWeek: PropTypes.bool,
       viewDate: PropTypes.instanceOf(Date),
@@ -75,12 +76,19 @@ const datePickerFactory = ({
     };
 
     renderPicker = () => {
-      const { focusedInput, mode, onChange, numberOfMonths, selected } = this.props;
+      const {
+        focusedInput,
+        mode,
+        onChange,
+        numberOfMonths,
+        selected,
+        onFocusedInputChange,
+      } = this.props;
       const Picker = mode === SINGLE ? SinglePicker : RangePicker;
       const children = map(this.renderMonth, range(0, numberOfMonths));
       const props = mode === SINGLE
         ? { ...passProps(this.props, 'SinglePicker') }
-        : { ...passProps(this.props, 'RangePicker'), focusedInput };
+        : { ...passProps(this.props, 'RangePicker'), focusedInput, onFocusedInputChange };
 
       return createElement(Picker, {
         ...props,

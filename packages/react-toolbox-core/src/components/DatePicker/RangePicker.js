@@ -1,4 +1,7 @@
+import { identity } from 'ramda';
 import React, { cloneElement, PropTypes, Children, PureComponent } from 'react';
+import isBefore from 'date-fns/is_before';
+import isAfter from 'date-fns/is_after';
 import isComponentOfType from '../../utils/isComponentOfType';
 import getPassThrough from '../../utils/getPassThrough';
 import { START_DATE, END_DATE } from './constants';
@@ -11,71 +14,123 @@ const rangePickerFactory = ({
 }) => {
   const passProps = getPassThrough(passthrough);
   class RangePicker extends PureComponent {
+
     static propTypes = {
       children: PropTypes.node,
       focusedInput: PropTypes.oneOf([START_DATE, END_DATE]),
       highlighted: dateShape,
       onChange: PropTypes.func,
+      onFocusedInputChange: PropTypes.func,
       onHighlightedChange: PropTypes.func,
       selected: dateShape,
     };
 
     static defaultProps = {
-      onHighlightedChange: () => {},
-      focusedInput: START_DATE,
       highlighted: {},
+      onFocusedInputChange: identity,
+      onHighlightedChange: identity,
     };
 
     selecting = false;
 
-    isDateInvalid = (dateForDay) => {
-      const { focusedInput, selected } = this.props;
-      const { from, to } = selected || {};
-      return focusedInput === START_DATE
-        ? (!from || dateForDay.getTime() < from.getTime())
-        : (!to || dateForDay.getTime() > to.getTime());
-    }
+    handleDayClick = (clickedDate) => {
+      const {
+        focusedInput,
+        onChange,
+        onFocusedInputChange,
+        onHighlightedChange,
+        selected,
+      } = this.props;
 
-    handleDayClick = (dateForDay) => {
-      const { selected, focusedInput, highlighted, onChange, onHighlightedChange } = this.props;
-      const { selecting } = this;
-      const firstSelect = focusedInput === START_DATE ? 'from' : 'to';
-
-      if (selecting) {
-        const secondSelect = focusedInput === START_DATE ? 'to' : 'from';
-        const invalidSelected = this.isDateInvalid(dateForDay);
-        if (invalidSelected) {
-          const newHighlighted = { [firstSelect]: dateForDay };
+      if (!selected.from && !selected.to) {
+        if (focusedInput === END_DATE) {
+          onChange({ to: clickedDate });
+          onFocusedInputChange(START_DATE);
+          onHighlightedChange({ to: clickedDate });
           this.selecting = true;
-          onHighlightedChange(newHighlighted);
-          onChange(newHighlighted);
         } else {
-          this.selecting = false;
-          onHighlightedChange({});
-          onChange({ ...selected, [secondSelect]: dateForDay });
+          onChange({ from: clickedDate });
+          onFocusedInputChange(END_DATE);
+          onHighlightedChange({ from: clickedDate });
+          this.selecting = true;
         }
-      } else {
-        const newHighlighted = { [firstSelect]: dateForDay };
-        this.selecting = true;
-        onHighlightedChange(newHighlighted);
-        onChange(newHighlighted);
       }
-    }
+
+      if (selected.from && !selected.to) {
+        if (focusedInput === START_DATE || isBefore(clickedDate, selected.from)) {
+          onChange({ from: clickedDate });
+          onFocusedInputChange(END_DATE);
+          onHighlightedChange({ from: clickedDate });
+          this.selecting = true;
+        } else {
+          onChange({ from: selected.from, to: clickedDate });
+          onFocusedInputChange(null);
+          onHighlightedChange({ });
+          this.selecting = false;
+        }
+      }
+
+      if (selected.to && !selected.from) {
+        if (focusedInput === END_DATE) {
+          onChange({ to: clickedDate });
+          onFocusedInputChange(START_DATE);
+          onHighlightedChange({ to: clickedDate });
+          this.selecting = true;
+        } else if (isAfter(clickedDate, selected.to)) {
+          onChange({ from: clickedDate });
+          onFocusedInputChange(END_DATE);
+          onHighlightedChange({ from: clickedDate });
+          this.selecting = true;
+        } else {
+          onChange({ from: clickedDate, to: selected.to });
+          onFocusedInputChange(null);
+          onHighlightedChange({});
+          this.selecting = false;
+        }
+      }
+
+      if (selected.to && selected.from) {
+        if (focusedInput === START_DATE) {
+          const to = isBefore(clickedDate, selected.to) ? selected.to : undefined;
+          onChange({ from: clickedDate, to });
+          onFocusedInputChange(END_DATE);
+          onHighlightedChange({ from: clickedDate });
+          this.selecting = true;
+        } else if (focusedInput === END_DATE) {
+          if (isAfter(clickedDate, selected.from)) {
+            onChange({ from: selected.from, to: clickedDate });
+            onFocusedInputChange(null);
+            onHighlightedChange({ });
+            this.selecting = false;
+          } else {
+            onChange({ from: clickedDate });
+            onFocusedInputChange(END_DATE);
+            onHighlightedChange({ from: clickedDate });
+            this.selecting = true;
+          }
+        } else if (isBefore(clickedDate, selected.to)) {
+          onChange({ from: clickedDate, to: selected.to });
+          onFocusedInputChange(END_DATE);
+          onHighlightedChange({ from: clickedDate });
+          this.selecting = true;
+        } else {
+          onChange({ from: selected.from, to: clickedDate });
+          onFocusedInputChange(null);
+          onHighlightedChange({ });
+          this.selecting = false;
+        }
+      }
+    };
 
     handleDayMouseEnter = (dateForDay) => {
-      const { focusedInput, highlighted, onHighlightedChange } = this.props;
-      const firstSelect = focusedInput === START_DATE ? 'from' : 'to';
-      const { selecting } = this;
+      const { focusedInput, onHighlightedChange } = this.props;
+      const { selected } = this.props;
 
-      if (selecting) {
-        const secondSelect = focusedInput === START_DATE ? 'to' : 'from';
-        const invalidEntered = this.isDateInvalid(dateForDay);
-        if (invalidEntered) {
-          const newHighlighted = { [firstSelect]: highlighted[firstSelect] };
-          onHighlightedChange(newHighlighted);
-        } else {
-          const newHighlighted = { ...highlighted, [secondSelect]: dateForDay };
-          onHighlightedChange(newHighlighted);
+      if (this.selecting) {
+        if (focusedInput === END_DATE && isAfter(dateForDay, selected.from)) {
+          onHighlightedChange({ from: selected.from, to: dateForDay });
+        } else if (focusedInput === START_DATE && isBefore(dateForDay, selected.to)) {
+          onHighlightedChange({ from: dateForDay, to: selected.to });
         }
       }
     };
