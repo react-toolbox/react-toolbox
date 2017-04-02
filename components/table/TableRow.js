@@ -36,10 +36,13 @@ const factory = (Checkbox, TableCell) => {
           {selectable && <TableCell className={theme.checkboxCell}>
             <Checkbox checked={selected} onChange={this.handleSelect} />
           </TableCell>}
-          {React.Children.map(children, (child, index) => cloneElement(child, {
-            column: index,
-            tagName: 'td',
-          }))}
+          {React.Children.map(children, (child, index) => {
+            if (!child) return null;
+            return cloneElement(child, {
+              column: index,
+              tagName: 'td',
+            });
+          })}
         </tr>
       );
     }
