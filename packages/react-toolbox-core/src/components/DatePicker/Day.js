@@ -63,14 +63,14 @@ const dayFactory = ({
 
     handleClick = (event) => {
       const { day, isDayDisabled, onClick } = this.props;
-      if (!isDayDisabled(day) && onClick) {
+      if (onClick && (!isDayDisabled || !isDayDisabled(day))) {
         onClick(day, event);
       }
     };
 
     handleMouseEnter = () => {
       const { day, isDayDisabled, onMouseEnter } = this.props;
-      if (!isDayDisabled(day) && onMouseEnter) {
+      if (onMouseEnter && (!isDayDisabled || !isDayDisabled(day))) {
         onMouseEnter(day, event);
       }
     };
@@ -96,8 +96,8 @@ const dayFactory = ({
         <DayNode
           {...others}
           {...passProps(this.props, 'DayNode')}
-          blocked={isDayBlocked(day)}
-          disabled={isDayDisabled(day)}
+          blocked={isDayBlocked && isDayBlocked(day)}
+          disabled={isDayDisabled && isDayDisabled(day)}
           highlighted={isHighlighted}
           inRange={selectedMatch.inRange}
           onClick={this.handleClick}
