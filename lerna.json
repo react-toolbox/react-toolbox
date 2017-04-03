@@ -1,3 +1,12 @@
 {
-  "lerna": "2.0.0-beta.37"
+  "lerna": "2.0.0-beta.37",
+  "version": "3.0.0",
+  "commands": {
+    "publish": {
+      "ignore": [
+        "react-toolbox"
+      ]
+    }
+  },
+  "packages": ["packages/*"]
 }

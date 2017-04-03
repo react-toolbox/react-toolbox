@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "A Material Design implementation based on React Toolbox core and CSS Modules",
   "main": "./lib/index.js",
+  "private": true,
   "scripts": {
     "build": "babel ./src --out-dir ./lib",
     "prepublish": "npm run build"

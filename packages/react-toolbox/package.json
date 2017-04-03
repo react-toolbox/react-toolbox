@@ -3,6 +3,7 @@
   "version": "2.0.0-beta.6",
   "description": "A Material Design implementation based on React Toolbox core and CSS Modules",
   "main": "./lib/index.js",
+  "private": true,
   "scripts": {
     "build": "cross-env NODE_ENV=production gulp && npm run tsd",
     "tsd": "cpx \"./src/components/**/*.d.ts\" ./lib",
