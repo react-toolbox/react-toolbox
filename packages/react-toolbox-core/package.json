@@ -5,6 +5,7 @@
   "main": "./lib/index.js",
   "scripts": {
     "build": "babel ./src --out-dir ./lib --ignore '__tests__'",
+    "build:watch": "babel ./src --out-dir ./lib --ignore '__tests__' --watch",
     "prepublish": "npm run build",
     "test": "node --harmony_proxies node_modules/.bin/jest --maxWorkers 4",
     "test:watch": "node --harmony_proxies node_modules/.bin/jest --watch"
@@ -23,7 +24,22 @@
   },
   "devDependencies": {
     "enzyme": "^2.7.1",
+    "enzyme-to-json": "^1.4.5",
     "jest": "^18.1.0"
+  },
+  "jest": {
+    "modulePaths": [
+      "<rootDir>"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "moduleNameMapper": {
+      "(\\.css$)|(normalize.css/normalize)|(^exports-loader)": "identity-obj-proxy"
+    },
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "eslintConfig": {
     "settings": {
