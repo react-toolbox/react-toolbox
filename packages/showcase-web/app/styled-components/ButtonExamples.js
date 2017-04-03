@@ -12,7 +12,7 @@ const ButtonTest = () => (
     <Button href="http://github.com/javivelasco" target="_blank" raised>
       <Github /> Github
     </Button>
-    <Button accent onRippleEnded={rippleEnded} overrides={overrides}>
+    <Button accent ben onRippleEnded={rippleEnded} overrides={overrides}>
       <FontIcon value="bookmark" />
       Bookmark
     </Button>
@@ -48,9 +48,9 @@ const overrides = {
   `,
   RippleNode: css`
     border-radius: 0;
-    background-color: ${props => props.primary && 'papayawhip'};
   `,
   ButtonNode: css`
+    color: ${props => props.ben && 'green'};
     &:hover {
       background-color: orange;
     }

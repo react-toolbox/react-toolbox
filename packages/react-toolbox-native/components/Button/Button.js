@@ -1,4 +1,5 @@
 import React from 'react';
+import { TouchableHighlight, Text } from 'react-native';
 import styled from 'styled-components/native';
 import buttonFactory from 'react-toolbox-core/src/components/Button';
 import withRippleFactory from 'react-toolbox-core/src/hoc/withRipple';
@@ -30,12 +31,16 @@ export default buttonFactory({
     ),
     RippleWrapper,
   })(),
-  ButtonNode: ({ children, primary, text, ...rest }) => (
-    <ButtonNode primary={primary} {...rest}>
-      {children}
-      <ButtonText primary={primary}>
-        {text}
-      </ButtonText>
-    </ButtonNode>
-  ),
+  ButtonNode: ({ children, primary, text, onPress, ...rest }) => {
+    return (
+      <ButtonNode primary={primary} {...rest}>
+        {children}
+        <TouchableHighlight onPress={onPress}>
+          <Text primary={primary} >
+            {text}
+          </Text>
+        </TouchableHighlight>
+      </ButtonNode>
+    );
+  },
 });
