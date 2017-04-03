@@ -4,10 +4,10 @@
   "description": "A set of factories to generate universal agnostic components",
   "main": "./lib/index.js",
   "scripts": {
-    "build": "babel ./src --out-dir ./lib",
+    "build": "babel ./src --out-dir ./lib --ignore '__tests__'",
     "prepublish": "npm run build",
     "test": "node --harmony_proxies node_modules/.bin/jest --maxWorkers 4",
-    "test:watch": "node --harmony_proxies node_modules/.bin/jest --watch --no-watchman"
+    "test:watch": "node --harmony_proxies node_modules/.bin/jest --watch"
   },
   "keywords": [],
   "author": "Javi Velasco <javier.velasco86@gmail.com> (http://javivelasco.com/)",
