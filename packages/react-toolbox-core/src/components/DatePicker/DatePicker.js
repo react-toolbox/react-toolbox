@@ -29,6 +29,7 @@ const datePickerFactory = ({
       numberOfMonths: PropTypes.number,
       onChange: PropTypes.func,
       onFocusedInputChange: PropTypes.func,
+      onHighlightedChange: PropTypes.func,
       selected: dateShape,
       sundayFirstDayOfWeek: PropTypes.bool,
       viewDate: PropTypes.instanceOf(Date),
@@ -78,11 +79,13 @@ const datePickerFactory = ({
     renderPicker = () => {
       const {
         focusedInput,
+        highlighted,
         mode,
-        onChange,
         numberOfMonths,
-        selected,
+        onChange,
         onFocusedInputChange,
+        onHighlightedChange,
+        selected,
       } = this.props;
       const Picker = mode === SINGLE ? SinglePicker : RangePicker;
       const children = map(this.renderMonth, range(0, numberOfMonths));
@@ -92,7 +95,9 @@ const datePickerFactory = ({
 
       return createElement(Picker, {
         ...props,
+        highlighted,
         onChange,
+        onHighlightedChange,
         selected,
       }, children);
     }

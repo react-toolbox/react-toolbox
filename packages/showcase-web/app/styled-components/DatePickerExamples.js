@@ -15,11 +15,9 @@ const DatePickerExamples = () => (
 
 class TestDatePicker extends Component {
   state = {
-    value: {
-      from: null,
-      to: null,
-    },
     focusedInput: null,
+    highlighted: { from: null, to: null },
+    value: { from: null, to: null },
   };
 
   handleChange = (value) => {
@@ -28,6 +26,10 @@ class TestDatePicker extends Component {
 
   handleFocusedInputChange = (focusedInput) => {
     this.setState({ focusedInput });
+  };
+
+  handleHighlightedChange = (highlighted) => {
+    this.setState({ highlighted });
   };
 
   isDayBlocked = date => (
@@ -62,12 +64,12 @@ class TestDatePicker extends Component {
         />
         <DatePicker
           focusedInput={this.state.focusedInput}
-          isDayDisabled={this.isDayDisabled}
-          isDayBlocked={this.isDayBlocked}
-          sundayFirstDayOfWeek
+          highlighted={this.state.highlighted}
           onChange={this.handleChange}
           onFocusedInputChange={this.handleFocusedInputChange}
+          onHighlightedChange={this.handleHighlightedChange}
           selected={this.state.value}
+          sundayFirstDayOfWeek
           viewDate={new Date()}
         />
       </div>

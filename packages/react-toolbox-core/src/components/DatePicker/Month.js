@@ -46,7 +46,17 @@ const monthFactory = ({
     };
 
     renderDays = () => {
-      const { sundayFirstDayOfWeek, selected, onDayMouseEneter, isDayBlocked, onDayClick, isDayDisabled, viewDate } = this.props;
+      const {
+        highlighted,
+        isDayBlocked,
+        isDayDisabled,
+        onDayClick,
+        onDayMouseEnter,
+        selected,
+        sundayFirstDayOfWeek,
+        viewDate,
+      } = this.props;
+
       const firstDay = sundayFirstDayOfWeek
         ? subDays(startOfWeek(viewDate), 1)
         : startOfWeek(viewDate);
@@ -72,11 +82,12 @@ const monthFactory = ({
             <Day
               {...passProps(this.props, 'Day', this)}
               day={monthDay}
+              highlighted={highlighted}
               isDayBlocked={isDayBlocked}
               isDayDisabled={isDayDisabled}
               key={monthDay.getTime()}
               onClick={onDayClick}
-              onMouseEnter={onDayMouseEneter}
+              onMouseEnter={onDayMouseEnter}
               selected={selected}
               viewDate={viewDate}
             />
