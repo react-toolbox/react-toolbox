@@ -112,6 +112,18 @@
   composes: button;
   composes: squared;
   composes: solid;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: var(--button-border-radius);
+    background: transparent;
+    transition: background-color 0.2s var(--animation-curve-default);
+  }
 }
 
 .flat {
@@ -148,6 +160,18 @@
       line-height: var(--button-floating-mini-height);
     }
   }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 50%;
+    background: transparent;
+    transition: background-color 0.2s var(--animation-curve-default);
+  }
 }
 
 .toggle {
@@ -174,6 +198,13 @@
   &.floating {
     background: var(--button-primary-color);
     color: var(--button-primary-color-contrast);
+
+    &:focus:not(:active),
+    &:hover {
+      &::after {
+        background: var(--button-primary-color-contrast-hover);
+      }
+    }
   }
 
   &.flat,
@@ -195,6 +226,13 @@
   &.floating {
     background: var(--button-accent-color);
     color: var(--button-accent-color-contrast);
+
+    &:focus:not(:active),
+    &:hover {
+      &::after {
+        background: var(--button-accent-color-contrast-hover);
+      }
+    }
   }
 
   &.flat,
@@ -216,6 +254,13 @@
   &.floating {
     background-color: var(--button-neutral-color);
     color: var(--button-neutral-color-contrast);
+
+    &:focus:not(:active),
+    &:hover {
+      &::after {
+        background: var(--button-neutral-color-hover);
+      }
+    }
   }
 
   &.flat,
@@ -236,6 +281,13 @@
     &.floating {
       background-color: var(--button-neutral-color-contrast);
       color: var(--button-neutral-color);
+
+      &:focus:not(:active),
+      &:hover {
+        &::after {
+          background: var(--button-neutral-color-contrast-hover);
+        }
+      }
     }
 
     &.flat,
@@ -248,7 +300,7 @@
     }
 
     &.flat:hover {
-      background: var(--button-neutral-color-hover);
+      background: var(--button-neutral-color-contrast-hover);
     }
   }
 }
