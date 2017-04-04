@@ -32,7 +32,10 @@ const factory = (IconButton) => {
         scrollHide: PropTypes.string,
         title: PropTypes.string,
       }),
-      title: PropTypes.node,
+      title: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+      ])
     };
 
     static defaultProps = {
@@ -48,7 +51,7 @@ const factory = (IconButton) => {
       if (this.props.scrollHide) {
         this.initializeScroll();
       }
-    }
+    };
 
     componentWillReceiveProps(nextProps) {
       if (!this.props.scrollHide && nextProps.scrollHide) {
@@ -58,13 +61,13 @@ const factory = (IconButton) => {
       if (this.props.scrollHide && !nextProps.scrollHide) {
         this.endScroll();
       }
-    }
+    };
 
     componentWillUnmount() {
       if (this.props.scrollHide) {
         this.endScroll();
       }
-    }
+    };
 
     initializeScroll = () => {
       window.addEventListener('scroll', this.handleScroll);
@@ -84,6 +87,15 @@ const factory = (IconButton) => {
         && window.scrollY > this.state.height;
       this.setState({ hidden });
       this.curScroll = window.scrollY;
+    };
+  
+    renderTitle = () => {
+      const {title} = this.props
+      if (!title) return;
+      if (typeof(title) === 'function') return title;
+      return (
+        <h1 className={classnames(theme.title)}>{title}</h1>
+      )
     };
 
     render() {
@@ -116,7 +128,7 @@ const factory = (IconButton) => {
               icon={leftIcon}
             />
             }
-            {title && <h1 className={classnames(theme.title)}>{title}</h1>}
+            {renderTitle(title)}
             {children}
             {rightIcon && <IconButton
               inverse
