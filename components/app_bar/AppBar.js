@@ -35,7 +35,7 @@ const factory = (IconButton) => {
       title: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.element,
-      ])
+      ]),
     };
 
     static defaultProps = {
@@ -51,7 +51,7 @@ const factory = (IconButton) => {
       if (this.props.scrollHide) {
         this.initializeScroll();
       }
-    };
+    }
 
     componentWillReceiveProps(nextProps) {
       if (!this.props.scrollHide && nextProps.scrollHide) {
@@ -61,44 +61,46 @@ const factory = (IconButton) => {
       if (this.props.scrollHide && !nextProps.scrollHide) {
         this.endScroll();
       }
-    };
+    }
 
     componentWillUnmount() {
       if (this.props.scrollHide) {
         this.endScroll();
       }
-    };
+    }
 
-    initializeScroll = () => {
+    initializeScroll() {
       window.addEventListener('scroll', this.handleScroll);
       const { height } = this.rootNode.getBoundingClientRect();
       this.curScroll = window.scrollY;
       this.setState({ height });
-    };
+    }
 
-    endScroll = () => {
+    endScroll() {
       window.removeEventListener('scroll', this.handleScroll);
-    };
+    }
 
-    handleScroll = () => {
+    handleScroll() {
       const scrollDiff = this.curScroll - window.scrollY;
       const hidden = scrollDiff < 0
         && window.scrollY !== undefined
         && window.scrollY > this.state.height;
       this.setState({ hidden });
       this.curScroll = window.scrollY;
-    };
-  
-    renderTitle = () => {
-      const {title} = this.props
-      if (!title) return;
-      if (typeof(title) === 'function') return title;
-      return (
-        <h1 className={classnames(theme.title)}>{title}</h1>
-      )
-    };
+    }
+
+    renderTitle() {
+      const { props } = this;
+      const { title, theme } = props;
+      if (!title) return undefined;
+
+      return typeof (title) === 'string'
+        ? <h1 className={classnames(theme.title)}>{title}</h1>
+        : React.createElement(title, props);
+    }
 
     render() {
+      const { props, renderTitle } = this;
       const {
         children,
         leftIcon,
@@ -107,7 +109,7 @@ const factory = (IconButton) => {
         rightIcon,
         theme,
         title,
-      } = this.props;
+      } = props;
       const className = classnames(theme.appBar, {
         [theme.fixed]: this.props.fixed,
         [theme.flat]: this.props.flat,
