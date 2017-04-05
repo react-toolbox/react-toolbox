@@ -97,7 +97,7 @@ If the component has no styles injected, you should provide a theme object imple
 
 ## Theming
 
-You can afford theming in multiple ways. First of all, you have to understand that React Toolbox stylesheets are written in SASS and configured using the **config** files we saw earlier. Also you may want to check [colors](https://github.com/react-toolbox/react-toolbox/blob/dev/components/_colors.scss) and [globals](https://github.com/react-toolbox/react-toolbox/blob/dev/components/_globals.scss) files to get an overview on the **variables** you have to override to get the results you want.
+You can afford theming in multiple ways. First of all, you have to understand that React Toolbox stylesheets are written in SASS and configured using the **config** files we saw earlier. Also you may want to check [colors](https://github.com/react-toolbox/react-toolbox/blob/dev/components/colors.css) and [variables](https://github.com/react-toolbox/react-toolbox/blob/dev/components/variables.css) files to get an overview on the **variables** you have to override to get the results you want.
 
 In most scenarios you can get more customized themes by overriding those variables and compiling stylesheets with them. For example, you can create a `_theme.scss` SASS file:
 
