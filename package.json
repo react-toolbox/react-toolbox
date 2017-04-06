@@ -93,7 +93,7 @@
     "webpack-hot-middleware": "^2.16.1"
   },
   "engines": {
-    "node": ">= 4"
+    "node": ">= 6"
   },
   "scripts": {
     "babel": "babel ./components --out-dir ./lib",
