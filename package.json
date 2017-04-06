@@ -92,6 +92,9 @@
     "webpack-dev-middleware": "^1.10.0",
     "webpack-hot-middleware": "^2.16.1"
   },
+  "engines": {
+    "node": ">= 6"
+  },
   "scripts": {
     "babel": "babel ./components --out-dir ./lib",
     "build": "cross-env NODE_ENV=production gulp && npm run tsd",
