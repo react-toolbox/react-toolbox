@@ -104,6 +104,7 @@
     "patch": "bumped release patch",
     "prebuild": "npm run clean",
     "prepublish": "npm run build",
+    "pretest": "npm run lint",
     "release": "bumped release",
     "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
     "test": "jest",
@@ -112,15 +113,15 @@
   },
   "license": "MIT",
   "jest": {
-    "modulePaths": [
-      "<rootDir>"
-    ],
     "moduleDirectories": [
       "node_modules"
     ],
     "moduleNameMapper": {
       "(\\.css$)|(normalize.css/normalize)|(^exports-loader)": "identity-obj-proxy"
     },
+    "modulePaths": [
+      "<rootDir>"
+    ],
     "setupFiles": [
       "./jest.config.js"
     ],

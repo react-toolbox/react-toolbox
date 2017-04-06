@@ -53,7 +53,7 @@ export interface TableCellProps extends ReactToolbox.Props {
   /**
    * If you provide a value the cell will show an arrow pointing down or up depending on the value to indicate it is a sorted element. Useful only for columns.
    */
-  sorted?: 'ASC' | 'DESC';
+  sorted?: 'asc' | 'desc';
   /**
    * The element tag, either `td` or `th`.
    * @default 'td'
