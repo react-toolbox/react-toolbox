@@ -1,3 +1,84 @@
+<a name="2.0.0-beta.8"></a>
+# 2.0.0-beta.8 (2017-04-06)
+
+* Add callback functions to slider for when slider starts being dragged, and when it stops. (#1287) ([f5c1138](https://github.com/react-toolbox/react-toolbox/
+commit/f5c1138))
+* Add chinese localization (#1290) ([9a916e0](https://github.com/react-toolbox/react-toolbox/commit/9a916e0))
+* Add npm pretest script (#1396) ([ade338f](https://github.com/react-toolbox/react-toolbox/commit/ade338f))
+* Add possibility to render component as AppBar title ([cd3fefc](https://github.com/react-toolbox/react-toolbox/commit/cd3fefc))
+* Added missing onKey(Down|Up) input property definitions (#1318) ([4ff1cc9](https://github.com/react-toolbox/react-toolbox/commit/4ff1cc9))
+* Autocomplete accepting suggestionMatch none (#1289) ([b75214c](https://github.com/react-toolbox/react-toolbox/commit/b75214c))
+* Bugfix[AutoComplete]: showAllSuggestions state should be true if showSuggestionsWhenValueIsSet is tr ([3e834cb](https://github.com/react-toolbox/react-toolb
+ox/commit/3e834cb))
+* Dev dialog overflow (#1303) ([3dde4c4](https://github.com/react-toolbox/react-toolbox/commit/3dde4c4))
+* Don't spread state in setState, it's already done by react (#1336) ([d5f2c98](https://github.com/react-toolbox/react-toolbox/commit/d5f2c98))
+* Esc key event listener leakage fixed (#1376) ([a4f8da5](https://github.com/react-toolbox/react-toolbox/commit/a4f8da5)), closes [#1376](https://github.com/r
+eact-toolbox/react-toolbox/issues/1376)
+* Fix #1368 (#1369) ([509e846](https://github.com/react-toolbox/react-toolbox/commit/509e846)), closes [#1368](https://github.com/react-toolbox/react-toolbox/
+issues/1368) [#1369](https://github.com/react-toolbox/react-toolbox/issues/1369)
+* Fix allowCreate in Autocomplete when value prop is an object (#1334) ([da85a69](https://github.com/react-toolbox/react-toolbox/commit/da85a69)), closes [#13
+34](https://github.com/react-toolbox/react-toolbox/issues/1334)
+* Fix error in events.js transitionEventNamesFor method (#1294) ([73bf3be](https://github.com/react-toolbox/react-toolbox/commit/73bf3be)), closes [#1294](htt
+ps://github.com/react-toolbox/react-toolbox/issues/1294)
+* Fix GitHub brand typo (#1356) ([9beb7fc](https://github.com/react-toolbox/react-toolbox/commit/9beb7fc)), closes [#1356](https://github.com/react-toolbox/re
+act-toolbox/issues/1356)
+* Fix TableCell definition (#1386) ([991a430](https://github.com/react-toolbox/react-toolbox/commit/991a430)), closes [#1386](https://github.com/react-toolbox
+/react-toolbox/issues/1386)
+* Fixes #1221 (#1324) ([ec5f15d](https://github.com/react-toolbox/react-toolbox/commit/ec5f15d)), closes [#1221](https://github.com/react-toolbox/react-toolbox/issues/1221) [#1324](https://github.com/react-toolbox/react-toolbox/issues/1324)
+* Fixes #1242 ([34faf74](https://github.com/react-toolbox/react-toolbox/commit/34faf74)), closes [#1242](https://github.com/react-toolbox/react-toolbox/issues/1242)
+* Fixes Ripple event error in case props.ripple === false (#1344) ([ad6f303](https://github.com/react-toolbox/react-toolbox/commit/ad6f303)), closes [#1344](https://github.com/react-toolbox/react-toolbox/issues/1344)
+* fixes table clone element when child is null (#1326) ([7231a7c](https://github.com/react-toolbox/react-toolbox/commit/7231a7c)), closes [#1326](https://github.com/react-toolbox/react-toolbox/issues/1326)
+* Lock node version on package.json (#1394) ([d86f774](https://github.com/react-toolbox/react-toolbox/commit/d86f774))
+* Release 2.0.0-beta.8 ([1181acd](https://github.com/react-toolbox/react-toolbox/commit/1181acd))
+* Restore linter run in travis ([bd926ae](https://github.com/react-toolbox/react-toolbox/commit/bd926ae))
+* Run builds from last node LTS and stable ([a5a9a0a](https://github.com/react-toolbox/react-toolbox/commit/a5a9a0a))
+* Small fixes ([56a730e](https://github.com/react-toolbox/react-toolbox/commit/56a730e))
+* Tabs pointer not being updated (#1224) (#1325) ([5de4e73](https://github.com/react-toolbox/react-toolbox/commit/5de4e73)), closes [#1224](https://github.com/react-toolbox/react-toolbox/issues/1224)
+* Update AppBar.js ([4ef719a](https://github.com/react-toolbox/react-toolbox/commit/4ef719a))
+* Update FontIcon.js (#1321) ([697b4d6](https://github.com/react-toolbox/react-toolbox/commit/697b4d6)), closes [#1320](https://github.com/react-toolbox/react-toolbox/issues/1320)
+* Update install.md (#1398) ([4cc87db](https://github.com/react-toolbox/react-toolbox/commit/4cc87db))
+* Update readme.md (#1363) ([c5bf439](https://github.com/react-toolbox/react-toolbox/commit/c5bf439)), closes [#1362](https://github.com/react-toolbox/react-toolbox/issues/1362) [#1363](https://github.com/react-toolbox/react-toolbox/issues/1363)
+* Upgrade nvm node version ([3477520](https://github.com/react-toolbox/react-toolbox/commit/3477520))
+* WIP ([fdd7873](https://github.com/react-toolbox/react-toolbox/commit/fdd7873))
+* WIP ([4b713c3](https://github.com/react-toolbox/react-toolbox/commit/4b713c3))
+* feat(slider): add buffer prop to Slider (#1317) ([0bd575f](https://github.com/react-toolbox/react-toolbox/commit/0bd575f))
+
+
+
+<a name="2.0.0-beta.7"></a>
+# 2.0.0-beta.7 (2017-03-08)
+
+* `disabled` suggestionMatch  in d.ts (#1241) ([8e2b688](https://github.com/react-toolbox/react-toolbox/commit/8e2b688))
+* Add $input-icon-right-space var to add the correct spacing to the input based on Material Spec. (#11 ([0360eb8](https://github.com/react-toolbox/react-toolbox/commit/0360eb8))
+* Allow numbers for Input value prop. Fixes #1180 ([ba29686](https://github.com/react-toolbox/react-toolbox/commit/ba29686)), closes [#1180](https://github.com/react-toolbox/react-toolbox/issues/1180)
+* Allow to reference Input via Autocomplete (#1255) ([3d2329a](https://github.com/react-toolbox/react-toolbox/commit/3d2329a))
+* Custom label and value keys for Dropdown (#1273) ([6295ca4](https://github.com/react-toolbox/react-toolbox/commit/6295ca4))
+* Eslint plugin compat ([dc60b07](https://github.com/react-toolbox/react-toolbox/commit/dc60b07))
+* Export all from table (#1244) ([6bbba4a](https://github.com/react-toolbox/react-toolbox/commit/6bbba4a))
+* Fix #1219 ([e366bed](https://github.com/react-toolbox/react-toolbox/commit/e366bed)), closes [#1219](https://github.com/react-toolbox/react-toolbox/issues/1219)
+* Fix error in "flat" property description (#1265) ([53e09d9](https://github.com/react-toolbox/react-toolbox/commit/53e09d9)), closes [#1265](https://github.com/react-toolbox/react-toolbox/issues/1265)
+* Fix ripple overflowing outside the boundaries of list item (#1215) ([8a4b628](https://github.com/react-toolbox/react-toolbox/commit/8a4b628)), closes [#1215](https://github.com/react-toolbox/react-toolbox/issues/1215) [#1205](https://github.com/react-toolbox/react-toolbox/issues/1205)
+* fix typo in app_bar readme.md (#1247) ([27535a9](https://github.com/react-toolbox/react-toolbox/commit/27535a9)), closes [#1247](https://github.com/react-toolbox/react-toolbox/issues/1247)
+* fixed broken link (#1181) ([61b4845](https://github.com/react-toolbox/react-toolbox/commit/61b4845)), closes [#1181](https://github.com/react-toolbox/react-toolbox/issues/1181)
+* Fixes #1086 (#1212) ([60b147f](https://github.com/react-toolbox/react-toolbox/commit/60b147f)), closes [#1086](https://github.com/react-toolbox/react-toolbox/issues/1086) [#1212](https://github.com/react-toolbox/react-toolbox/issues/1212)
+* Fixes #1195 ([0f4a16a](https://github.com/react-toolbox/react-toolbox/commit/0f4a16a)), closes [#1195](https://github.com/react-toolbox/react-toolbox/issues/1195)
+* handle defaultValue to <Input /> (#1178) ([c6ce6aa](https://github.com/react-toolbox/react-toolbox/commit/c6ce6aa))
+* How to hide AppBar icon based on permanentAt value (#1194) ([498bb46](https://github.com/react-toolbox/react-toolbox/commit/498bb46))
+* Import Ramda values function directly (#1209) ([75a219b](https://github.com/react-toolbox/react-toolbox/commit/75a219b))
+* Invalid appBarIconVisible calculation (#1239) ([bde478e](https://github.com/react-toolbox/react-toolbox/commit/bde478e)), closes [#1231](https://github.com/react-toolbox/react-toolbox/issues/1231)
+* Move `react-style-proptype` to non-dev deps (#1190) ([a0e1392](https://github.com/react-toolbox/react-toolbox/commit/a0e1392))
+* Move eslint-plugin-babel to devDependencies (#1222) ([558040d](https://github.com/react-toolbox/react-toolbox/commit/558040d))
+* Move gulp-rimraf to devDependencies (#1214) ([632411b](https://github.com/react-toolbox/react-toolbox/commit/632411b))
+* Release 2.0.0-beta.7 ([5baf015](https://github.com/react-toolbox/react-toolbox/commit/5baf015))
+* Remove tests from build and remove sinon ([23b4537](https://github.com/react-toolbox/react-toolbox/commit/23b4537))
+* Remove unnecessary reference to sliderLength in knobOffset method (#1271) ([e7f5210](https://github.com/react-toolbox/react-toolbox/commit/e7f5210))
+* Update Changelog ([fa3f5e9](https://github.com/react-toolbox/react-toolbox/commit/fa3f5e9))
+* Update README.md for PostCSS instead of SASS (#1251) ([9354f4b](https://github.com/react-toolbox/react-toolbox/commit/9354f4b))
+* Use Jest <U+1F0CF> and upgrade Webpack and other dependencies ([b48c17d](https://github.com/react-toolbox/react-toolbox/commit/b48c17d))
+* Bugfix: Propert selector for disabled value in Dropdown ([cec890b](https://github.com/react-toolbox/react-toolbox/commit/cec890b))
+
+
+
 <a name="2.0.0-beta.6"></a>
 # 2.0.0-beta.6 (2017-01-28)
 
