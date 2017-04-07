@@ -4,8 +4,8 @@
   "homepage": "http://www.react-toolbox.com",
   "main": "./lib",
   "scripts": {
-    "precommit": "lint-staged",
-    "prettier:core": "prettier --write --single-quote --trailing-comma=es5 \"packages/react-toolbox-core/src/**/*.js\""
+    "lint:staged": "lint-staged",
+    "prettier": "prettier --write --single-quote --trailing-comma=es5 \"packages/react-toolbox-core/src/**/*.js\""
   },
   "author": {
     "name": "Javier Velasco Arjona",
@@ -125,9 +125,10 @@
       "enzyme-to-json/serializer"
     ]
   },
+  "pre-commit": "lint:staged",
   "lint-staged": {
     "*.js": [
-      "npm run prettier:core",
+      "npm run prettier",
       "git add"
     ]
   },
