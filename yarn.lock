@@ -97,6 +97,12 @@ ansi-styles@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-2.2.1.tgz#b432dd3358b634cf75e1e4664368240533c1ddbe"
 
+ansi-styles@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.0.0.tgz#5404e93a544c4fec7f048262977bebfe3155e0c1"
+  dependencies:
+    color-convert "^1.0.0"
+
 ansicolors@~0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/ansicolors/-/ansicolors-0.2.1.tgz#be089599097b74a5c9c4a84a0cdbcdb62bd87aef"
@@ -250,6 +256,14 @@ ast-types-flow@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/ast-types-flow/-/ast-types-flow-0.0.7.tgz#f70b735c6bca1a5c9c22d982c3e39e7feba3bdad"
 
+ast-types@0.8.18:
+  version "0.8.18"
+  resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.8.18.tgz#c8b98574898e8914e9d8de74b947564a9fe929af"
+
+ast-types@0.9.4:
+  version "0.9.4"
+  resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.9.4.tgz#410d1f81890aeb8e0a38621558ba5869ae53c91b"
+
 async-each@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/async-each/-/async-each-1.0.1.tgz#19d386a1d9edc6e7c1c85d388aedbcc56d33602d"
@@ -312,7 +326,7 @@ babel-cli@^6.22.2:
   optionalDependencies:
     chokidar "^1.6.1"
 
-babel-code-frame@^6.11.0, babel-code-frame@^6.16.0, babel-code-frame@^6.22.0:
+babel-code-frame@6.22.0, babel-code-frame@^6.11.0, babel-code-frame@^6.16.0, babel-code-frame@^6.22.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-code-frame/-/babel-code-frame-6.22.0.tgz#027620bee567a88c32561574e7fd0801d33118e4"
   dependencies:
@@ -1034,7 +1048,7 @@ babel-types@^6.15.0, babel-types@^6.18.0, babel-types@^6.19.0, babel-types@^6.22
     lodash "^4.2.0"
     to-fast-properties "^1.0.1"
 
-babylon@^6.11.0, babylon@^6.13.0, babylon@^6.15.0:
+babylon@6.15.0, babylon@^6.11.0, babylon@^6.13.0, babylon@^6.15.0:
   version "6.15.0"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.15.0.tgz#ba65cfa1a80e1759b0e89fb562e27dccae70348e"
 
@@ -1299,7 +1313,7 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
-chalk@^1.0.0, chalk@^1.1.0, chalk@^1.1.1, chalk@^1.1.3:
+chalk@1.1.3, chalk@^1.0.0, chalk@^1.1.0, chalk@^1.1.1, chalk@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-1.1.3.tgz#a8115c55e4a702fe4d150abd3872822a7e09fc98"
   dependencies:
@@ -1475,7 +1489,7 @@ color-convert@^0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-0.5.3.tgz#bdb6c69ce660fadffe0b0007cc447e1b9f7282bd"
 
-color-convert@^1.3.0, color-convert@^1.8.2:
+color-convert@^1.0.0, color-convert@^1.3.0, color-convert@^1.8.2:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.0.tgz#1accf97dd739b983bf994d56fec8f95853641b7a"
   dependencies:
@@ -1555,7 +1569,7 @@ colors@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.0.3.tgz#0433f44d809680fdeb60ed260f1b0c262e82a40b"
 
-colors@^1.1.2, colors@~1.1.2:
+colors@>=0.6.2, colors@^1.1.2, colors@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.1.2.tgz#168a4701756b6a7f51a12ce0c97bfa28c084ed63"
 
@@ -2530,7 +2544,7 @@ estraverse@~4.1.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/estraverse/-/estraverse-4.1.1.tgz#f6caca728933a850ef90661d0e17982ba47111a2"
 
-esutils@^2.0.0, esutils@^2.0.2:
+esutils@2.0.2, esutils@^2.0.0, esutils@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.2.tgz#0abf4f1caa5bcb1f7a9d8acc6dea4faaa04bac9b"
 
@@ -2816,6 +2830,14 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
+flow-parser@0.40.0:
+  version "0.40.0"
+  resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.40.0.tgz#b3444742189093323c4319c4fe9d35391f46bcbc"
+  dependencies:
+    ast-types "0.8.18"
+    colors ">=0.6.2"
+    minimist ">=0.2.0"
+
 for-in@^0.1.5:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-0.1.6.tgz#c9f96e89bfad18a545af5ec3ed352a1d9e5b4dc8"
@@ -2936,13 +2958,13 @@ get-caller-file@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.2.tgz#f702e63127e7e231c160a80c1554acb70d5047e5"
 
+get-stdin@5.0.1, get-stdin@^5.0.0:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-5.0.1.tgz#122e161591e21ff4c52530305693f20e6393a398"
+
 get-stdin@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-4.0.1.tgz#b968c6b0a04384324902e8bf1a5df32579a450fe"
-
-get-stdin@^5.0.0:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-5.0.1.tgz#122e161591e21ff4c52530305693f20e6393a398"
 
 get-stream@^3.0.0:
   version "3.0.0"
@@ -3013,16 +3035,7 @@ glob@7.0.5:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^4.3.1:
-  version "4.5.3"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-4.5.3.tgz#c6cb73d3226c1efef04de3c56d012f03377ee15f"
-  dependencies:
-    inflight "^1.0.4"
-    inherits "2"
-    minimatch "^2.0.1"
-    once "^1.3.0"
-
-glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.0.6, glob@^7.1.1:
+glob@7.1.1, glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.0.6, glob@^7.1.1:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.1.tgz#805211df04faaf1c63a3600306cdf5ade50b2ec8"
   dependencies:
@@ -3032,6 +3045,15 @@ glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.0.6, glob@^7.1.1:
     minimatch "^3.0.2"
     once "^1.3.0"
     path-is-absolute "^1.0.0"
+
+glob@^4.3.1:
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-4.5.3.tgz#c6cb73d3226c1efef04de3c56d012f03377ee15f"
+  dependencies:
+    inflight "^1.0.4"
+    inherits "2"
+    minimatch "^2.0.1"
+    once "^1.3.0"
 
 glob@~3.1.21:
   version "3.1.21"
@@ -3951,6 +3973,13 @@ jest-matcher-utils@^18.1.0:
     chalk "^1.1.3"
     pretty-format "^18.1.0"
 
+jest-matcher-utils@^19.0.0:
+  version "19.0.0"
+  resolved "https://registry.yarnpkg.com/jest-matcher-utils/-/jest-matcher-utils-19.0.0.tgz#5ecd9b63565d2b001f61fbf7ec4c7f537964564d"
+  dependencies:
+    chalk "^1.1.3"
+    pretty-format "^19.0.0"
+
 jest-matchers@^18.1.0:
   version "18.1.0"
   resolved "https://registry.yarnpkg.com/jest-matchers/-/jest-matchers-18.1.0.tgz#0341484bf87a1fd0bac0a4d2c899e2b77a3f1ead"
@@ -4021,6 +4050,15 @@ jest-util@^18.1.0:
     jest-file-exists "^17.0.0"
     jest-mock "^18.0.0"
     mkdirp "^0.5.1"
+
+jest-validate@19.0.0:
+  version "19.0.0"
+  resolved "https://registry.yarnpkg.com/jest-validate/-/jest-validate-19.0.0.tgz#8c6318a20ecfeaba0ba5378bfbb8277abded4173"
+  dependencies:
+    chalk "^1.1.1"
+    jest-matcher-utils "^19.0.0"
+    leven "^2.0.0"
+    pretty-format "^19.0.0"
 
 jest@^18.1.0:
   version "18.1.0"
@@ -4197,6 +4235,10 @@ lerna@2.0.0-beta.38:
     rimraf "^2.4.4"
     semver "^5.1.0"
     signal-exit "^3.0.2"
+
+leven@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/leven/-/leven-2.1.0.tgz#c2e7a9f772094dee9d34202ae8acce4687875580"
 
 levn@^0.3.0, levn@~0.3.0:
   version "0.3.0"
@@ -4773,7 +4815,7 @@ minimist@0.0.8, minimist@~0.0.1:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
 
-minimist@^1.1.0, minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0:
+minimist@1.2.0, minimist@>=0.2.0, minimist@^1.1.0, minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
 
@@ -5979,6 +6021,21 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
+prettier@^0.22.0:
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-0.22.0.tgz#7b37c4480d0858180407e5a8e13f0f47da7385d2"
+  dependencies:
+    ast-types "0.9.4"
+    babel-code-frame "6.22.0"
+    babylon "6.15.0"
+    chalk "1.1.3"
+    esutils "2.0.2"
+    flow-parser "0.40.0"
+    get-stdin "5.0.1"
+    glob "7.1.1"
+    jest-validate "19.0.0"
+    minimist "1.2.0"
+
 pretty-error@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/pretty-error/-/pretty-error-2.0.2.tgz#a7db19cbb529ca9f0af3d3a2f77d5caf8e5dec23"
@@ -5991,6 +6048,12 @@ pretty-format@^18.1.0:
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-18.1.0.tgz#fb65a86f7a7f9194963eee91865c1bcf1039e284"
   dependencies:
     ansi-styles "^2.2.1"
+
+pretty-format@^19.0.0:
+  version "19.0.0"
+  resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-19.0.0.tgz#56530d32acb98a3fa4851c4e2b9d37b420684c84"
+  dependencies:
+    ansi-styles "^3.0.0"
 
 pretty-hrtime@^1.0.0:
   version "1.0.3"

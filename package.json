@@ -3,6 +3,10 @@
   "description": "A set of React components implementing Google's Material Design specification with the power of CSS Modules.",
   "homepage": "http://www.react-toolbox.com",
   "main": "./lib",
+  "scripts": {
+    "precommit": "lint-staged",
+    "prettier:core": "prettier --write --single-quote --trailing-comma=es5 \"packages/react-toolbox-core/src/**/*.js\""
+  },
   "author": {
     "name": "Javier Velasco Arjona",
     "email": "javier.velasco86@gmail.com",
@@ -89,6 +93,7 @@
     "postcss-mixins": "^5.4.0",
     "postcss-reporter": "^3.0.0",
     "pre-commit": "^1.2.2",
+    "prettier": "^0.22.0",
     "react": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
@@ -118,6 +123,12 @@
     },
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
+    ]
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run prettier:core",
+      "git add"
     ]
   },
   "babel": {
