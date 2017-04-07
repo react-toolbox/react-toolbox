@@ -1,1 +1,1 @@
- export { default } from './withRipple';
+export { default } from './withRipple';

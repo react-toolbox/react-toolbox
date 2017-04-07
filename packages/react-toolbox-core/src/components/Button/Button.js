@@ -1,12 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import getPassThrough from '../../utils/getPassThrough';
 
-const buttonFactory = ({
-  ripple,
-  ButtonNode,
-  LinkNode,
-  passthrough,
-}) => {
+const buttonFactory = (
+  {
+    ripple,
+    ButtonNode,
+    LinkNode,
+    passthrough,
+  }
+) => {
   const passProps = getPassThrough(passthrough);
   class Button extends Component {
     static propTypes = {
@@ -24,7 +26,7 @@ const buttonFactory = ({
       primary: PropTypes.bool,
       raised: PropTypes.bool,
       type: PropTypes.string,
-    }
+    };
 
     static defaultProps = {
       accent: false,
@@ -37,21 +39,21 @@ const buttonFactory = ({
       type: 'button',
     };
 
-    handleMouseUp = (event) => {
+    handleMouseUp = event => {
       this.rootNode.blur();
       if (this.props.onMouseUp) {
         this.props.onMouseUp(event);
       }
     };
 
-    handleMouseLeave = (event) => {
+    handleMouseLeave = event => {
       this.rootNode.blur();
       if (this.props.onMouseLeave) {
         this.props.onMouseLeave(event);
       }
     };
 
-    handleInnerRef = (node) => {
+    handleInnerRef = node => {
       const { innerRef } = this.props;
       this.rootNode = node;
       if (innerRef) innerRef(node);
@@ -62,7 +64,8 @@ const buttonFactory = ({
       const ButtonElement = this.props.href ? LinkNode : ButtonNode;
       const { children, primary, flat, label, type, ...others } = this.props;
       const isPrimary = primary || (!others.accent && !others.neutral);
-      const isFlat = flat || (!others.raised && !others.floating && !others.toggle);
+      const isNoneOther = !others.raised && !others.floating && !others.toggle;
+      const isFlat = flat || isNoneOther;
 
       return (
         <ButtonElement

@@ -6,25 +6,24 @@ import getPassThrough from '../../utils/getPassThrough';
 import { SINGLE, RANGE, START_DATE, END_DATE } from './constants';
 import dateShape from './dateShape';
 
-const datePickerFactory = ({
-  Month,
-  NextNode,
-  PickerWrapper,
-  PrevNode,
-  RangePicker,
-  SinglePicker,
-  passthrough,
-}) => {
+const datePickerFactory = (
+  {
+    Month,
+    NextNode,
+    PickerWrapper,
+    PrevNode,
+    RangePicker,
+    SinglePicker,
+    passthrough,
+  }
+) => {
   const passProps = getPassThrough(passthrough);
   class DatePicker extends PureComponent {
     static propTypes = {
       focusedInput: PropTypes.oneOf([START_DATE, END_DATE]),
       isDayBlocked: PropTypes.func,
       isDayDisabled: PropTypes.func,
-      locale: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.object,
-      ]),
+      locale: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
       mode: PropTypes.oneOf([SINGLE, RANGE]),
       numberOfMonths: PropTypes.number,
       onChange: PropTypes.func,
@@ -44,7 +43,7 @@ const datePickerFactory = ({
       viewDate: this.props.viewDate,
     };
 
-    changeViewDate = (viewDate) => {
+    changeViewDate = viewDate => {
       this.setState({ viewDate });
     };
 
@@ -58,8 +57,13 @@ const datePickerFactory = ({
       this.changeViewDate(addMonths(viewDate, -1));
     };
 
-    renderMonth = (month) => {
-      const { isDayBlocked, isDayDisabled, locale, sundayFirstDayOfWeek } = this.props;
+    renderMonth = month => {
+      const {
+        isDayBlocked,
+        isDayDisabled,
+        locale,
+        sundayFirstDayOfWeek,
+      } = this.props;
       const { viewDate } = this.state;
       const viewFullYear = viewDate.getFullYear();
       const viewMonth = viewDate.getMonth() + month;
@@ -91,35 +95,53 @@ const datePickerFactory = ({
       const children = map(this.renderMonth, range(0, numberOfMonths));
       const props = mode === SINGLE
         ? { ...passProps(this.props, 'SinglePicker') }
-        : { ...passProps(this.props, 'RangePicker'), focusedInput, onFocusedInputChange };
+        : {
+            ...passProps(this.props, 'RangePicker'),
+            focusedInput,
+            onFocusedInputChange,
+          };
 
-      return createElement(Picker, {
-        ...props,
-        highlighted,
-        onChange,
-        onHighlightedChange,
-        selected,
-      }, children);
-    }
+      return createElement(
+        Picker,
+        {
+          ...props,
+          highlighted,
+          onChange,
+          onHighlightedChange,
+          selected,
+        },
+        children
+      );
+    };
 
     render() {
       const {
-        focusedInput,         // eslint-disable-line
-        isDayBlocked,         // eslint-disable-line
-        isDayDisabled,        // eslint-disable-line
-        locale,               // eslint-disable-line
-        mode,                 // eslint-disable-line
-        numberOfMonths,       // eslint-disable-line
-        onChange,             // eslint-disable-line
-        selected,             // eslint-disable-line
-        sundayFirstDayOfWeek, // eslint-disable-line
-        viewDate,             // eslint-disable-line
+        focusedInput,
+        isDayBlocked,
+        isDayDisabled,
+        locale,
+        mode,
+        numberOfMonths,
+        onChange,
+        selected,
+        sundayFirstDayOfWeek,
+        viewDate,
         ...rest
       } = this.props;
       return (
         <PickerWrapper {...rest} {...passProps(this.props, 'PickerWrapper')}>
-          <PrevNode {...passProps(this.props, 'PrevNode', this)} onClick={this.handlePrev}>{'<'}</PrevNode>
-          <NextNode {...passProps(this.props, 'NextNode', this)} onClick={this.handleNext}>{'>'}</NextNode>
+          <PrevNode
+            {...passProps(this.props, 'PrevNode', this)}
+            onClick={this.handlePrev}
+          >
+            {'<'}
+          </PrevNode>
+          <NextNode
+            {...passProps(this.props, 'NextNode', this)}
+            onClick={this.handleNext}
+          >
+            {'>'}
+          </NextNode>
           {this.renderPicker()}
         </PickerWrapper>
       );

@@ -1,7 +1,7 @@
 import isReactNative from './isReactNative';
 
 export default function measureElement(element) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     if (isReactNative()) {
       element.measure((x, y, width, height, pageX, pageY) => {
         resolve({ left: pageX, top: pageY, width, height });

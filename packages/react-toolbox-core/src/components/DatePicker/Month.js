@@ -18,26 +18,25 @@ import getFullMonth from './dateLocale/getFullMonth';
 const addDays = require('date-fns/add_days');
 const differenceInCalendarDays = require('date-fns/difference_in_calendar_days');
 
-const monthFactory = ({
-  Day,
-  DaysWeek,
-  DaysWrapper,
-  MonthTitle,
-  MonthWrapper,
-  Weekday,
-  WeekdaysWrapper,
-  passthrough,
-}) => {
+const monthFactory = (
+  {
+    Day,
+    DaysWeek,
+    DaysWrapper,
+    MonthTitle,
+    MonthWrapper,
+    Weekday,
+    WeekdaysWrapper,
+    passthrough,
+  }
+) => {
   const passProps = getPassThrough(passthrough);
   class Month extends PureComponent {
     static propTypes = {
       highlighted: dateShape,
       isDayBlocked: PropTypes.func,
       isDayDisabled: PropTypes.func,
-      locale: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.object,
-      ]),
+      locale: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
       onDayClick: PropTypes.func,
       onDayMouseEnter: PropTypes.func,
       selected: dateShape,
@@ -95,7 +94,10 @@ const monthFactory = ({
         }
 
         weeks[i] = (
-          <DaysWeek {...passProps(this.props, 'DaysWeek', this)} key={`${i}${viewDate.getMonth()}`}>
+          <DaysWeek
+            {...passProps(this.props, 'DaysWeek', this)}
+            key={`${i}${viewDate.getMonth()}`}
+          >
             {days}
           </DaysWeek>
         );
@@ -107,7 +109,9 @@ const monthFactory = ({
     renderWeekDays = () => {
       const { locale, sundayFirstDayOfWeek } = this.props;
       const indexes = range(0, 7);
-      const sortedDaysIdx = sundayFirstDayOfWeek ? indexes : [...indexes.slice(1), indexes[0]];
+      const sortedDaysIdx = sundayFirstDayOfWeek
+        ? indexes
+        : [...indexes.slice(1), indexes[0]];
       return sortedDaysIdx.map(weekDay => (
         <Weekday
           {...passProps(this.props, 'Weekday', this)}
@@ -121,19 +125,22 @@ const monthFactory = ({
 
     render() {
       const {
-        highlighted,          // eslint-disable-line
-        isDayBlocked,         // eslint-disable-line
-        isDayDisabled,        // eslint-disable-line
-        locale,               // eslint-disable-line
-        onDayClick,           // eslint-disable-line
-        onDayMouseEnter,      // eslint-disable-line
-        selected,             // eslint-disable-line
-        sundayFirstDayOfWeek, // eslint-disable-line
+        highlighted,
+        isDayBlocked,
+        isDayDisabled,
+        locale,
+        onDayClick,
+        onDayMouseEnter,
+        selected,
+        sundayFirstDayOfWeek,
         viewDate,
         ...rest
       } = this.props;
       return (
-        <MonthWrapper {...rest} {...passProps(this.props, 'MonthWrapper', this)}>
+        <MonthWrapper
+          {...rest}
+          {...passProps(this.props, 'MonthWrapper', this)}
+        >
           <MonthTitle {...passProps(this.props, 'MonthTitle', this)}>
             {getFullMonth(viewDate)} {viewDate.getFullYear()}
           </MonthTitle>

@@ -22,9 +22,10 @@ const TRANSITIONS = {
 };
 
 function transitionEventNamesFor(element) {
-  return values(TRANSITIONS).reduce((result, transition) => (
-    !result && (element && element.style[transition] !== undefined)
-      ? TRANSITIONS[transition]
-      : result
-  ));
+  return values(TRANSITIONS).reduce(
+    (result, transition) =>
+      !result && (element && element.style[transition] !== undefined)
+        ? TRANSITIONS[transition]
+        : result
+  );
 }

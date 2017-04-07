@@ -33,7 +33,7 @@ describe('<Day />', () => {
       expect(isToday).toEqual(true);
       expect(mockIsToday).toHaveBeenCalledWith(day);
     });
-  })
+  });
 
   describe('when day is not Today', () => {
     beforeAll(() => {
@@ -46,7 +46,7 @@ describe('<Day />', () => {
 
     it('passes today prop as false', () => {
       const day = new Date(2017, 2, 1);
-      const wrapper = shallow(<Day day={day} />)
+      const wrapper = shallow(<Day day={day} />);
       const isToday = wrapper.find(DayNode).prop('today');
       expect(isToday).toEqual(false);
       expect(mockIsToday).toHaveBeenCalledWith(day);
@@ -55,11 +55,7 @@ describe('<Day />', () => {
     it('passes disabled when day is disabled', () => {
       const isDayDisabled = jest.fn(() => true);
       const wrapper = shallow(
-        <Day
-          day={day}
-          isDayDisabled={isDayDisabled}
-          viewDate={day}
-        />
+        <Day day={day} isDayDisabled={isDayDisabled} viewDate={day} />
       );
       const disabled = wrapper.find(DayNode).prop('disabled');
       expect(disabled).toEqual(true);
@@ -67,52 +63,48 @@ describe('<Day />', () => {
     });
 
     it('passes highlighted when day is in highlighted range', () => {
-      const highlighted = { from: new Date(2017, 1, 15), to: new Date(2017, 2, 15) };
+      const highlighted = {
+        from: new Date(2017, 1, 15),
+        to: new Date(2017, 2, 15),
+      };
       const wrapper = shallow(
-        <Day
-          day={day}
-          highlighted={highlighted}
-          viewDate={day}
-        />
+        <Day day={day} highlighted={highlighted} viewDate={day} />
       );
       const isHighlighted = wrapper.find(DayNode).prop('highlighted');
       expect(isHighlighted).toEqual(true);
     });
 
     it('passes inRange when day is in selected range', () => {
-      const selected = { from: new Date(2017, 1, 15), to: new Date(2017, 2, 15) };
+      const selected = {
+        from: new Date(2017, 1, 15),
+        to: new Date(2017, 2, 15),
+      };
       const wrapper = shallow(
-        <Day
-          day={day}
-          selected={selected}
-          viewDate={day}
-        />
+        <Day day={day} selected={selected} viewDate={day} />
       );
       const inRange = wrapper.find(DayNode).prop('inRange');
       expect(inRange).toEqual(true);
     });
 
     it('passes selected when day is selected in from', () => {
-      const selected = { from: new Date(2017, 1, 15), to: new Date(2017, 2, 15) };
+      const selected = {
+        from: new Date(2017, 1, 15),
+        to: new Date(2017, 2, 15),
+      };
       const wrapper = shallow(
-        <Day
-          day={selected.from}
-          selected={selected}
-          viewDate={selected.from}
-        />
+        <Day day={selected.from} selected={selected} viewDate={selected.from} />
       );
       expect(wrapper.find(DayNode).prop('selected')).toEqual(true);
       expect(wrapper.find(DayNode).prop('selectedSource')).toEqual('from');
     });
 
     it('passes selected when day is selected in to', () => {
-      const selected = { from: new Date(2017, 1, 15), to: new Date(2017, 2, 15) };
+      const selected = {
+        from: new Date(2017, 1, 15),
+        to: new Date(2017, 2, 15),
+      };
       const wrapper = shallow(
-        <Day
-          day={selected.to}
-          selected={selected}
-          viewDate={selected.to}
-        />
+        <Day day={selected.to} selected={selected} viewDate={selected.to} />
       );
       expect(wrapper.find(DayNode).prop('selected')).toEqual(true);
       expect(wrapper.find(DayNode).prop('selectedSource')).toEqual('to');

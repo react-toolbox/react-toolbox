@@ -7,14 +7,15 @@ import getPassThrough from '../../utils/getPassThrough';
 import { START_DATE, END_DATE } from './constants';
 import dateShape from './dateShape';
 
-const rangePickerFactory = ({
-  MonthsWrapper,
-  Month,
-  passthrough,
-}) => {
+const rangePickerFactory = (
+  {
+    MonthsWrapper,
+    Month,
+    passthrough,
+  }
+) => {
   const passProps = getPassThrough(passthrough);
   class RangePicker extends PureComponent {
-
     static propTypes = {
       children: PropTypes.node,
       focusedInput: PropTypes.oneOf([START_DATE, END_DATE]),
@@ -33,7 +34,7 @@ const rangePickerFactory = ({
 
     selecting = false;
 
-    handleDayClick = (clickedDate) => {
+    handleDayClick = clickedDate => {
       const {
         focusedInput,
         onChange,
@@ -57,7 +58,9 @@ const rangePickerFactory = ({
       }
 
       if (selected.from && !selected.to) {
-        if (focusedInput === START_DATE || isBefore(clickedDate, selected.from)) {
+        if (
+          focusedInput === START_DATE || isBefore(clickedDate, selected.from)
+        ) {
           onChange({ from: clickedDate });
           onFocusedInputChange(END_DATE);
           onHighlightedChange({ from: clickedDate });
@@ -65,7 +68,7 @@ const rangePickerFactory = ({
         } else {
           onChange({ from: selected.from, to: clickedDate });
           onFocusedInputChange(null);
-          onHighlightedChange({ });
+          onHighlightedChange({});
           this.selecting = false;
         }
       }
@@ -91,7 +94,9 @@ const rangePickerFactory = ({
 
       if (selected.to && selected.from) {
         if (focusedInput === START_DATE) {
-          const to = isBefore(clickedDate, selected.to) ? selected.to : undefined;
+          const to = isBefore(clickedDate, selected.to)
+            ? selected.to
+            : undefined;
           onChange({ from: clickedDate, to });
           onFocusedInputChange(END_DATE);
           onHighlightedChange({ from: clickedDate });
@@ -100,7 +105,7 @@ const rangePickerFactory = ({
           if (isAfter(clickedDate, selected.from)) {
             onChange({ from: selected.from, to: clickedDate });
             onFocusedInputChange(null);
-            onHighlightedChange({ });
+            onHighlightedChange({});
             this.selecting = false;
           } else {
             onChange({ from: clickedDate });
@@ -116,49 +121,50 @@ const rangePickerFactory = ({
         } else {
           onChange({ from: selected.from, to: clickedDate });
           onFocusedInputChange(null);
-          onHighlightedChange({ });
+          onHighlightedChange({});
           this.selecting = false;
         }
       }
     };
 
-    handleDayMouseEnter = (dateForDay) => {
+    handleDayMouseEnter = dateForDay => {
       const { focusedInput, onHighlightedChange } = this.props;
       const { selected } = this.props;
 
       if (this.selecting) {
         if (focusedInput === END_DATE && isAfter(dateForDay, selected.from)) {
           onHighlightedChange({ from: selected.from, to: dateForDay });
-        } else if (focusedInput === START_DATE && isBefore(dateForDay, selected.to)) {
+        } else if (
+          focusedInput === START_DATE && isBefore(dateForDay, selected.to)
+        ) {
           onHighlightedChange({ from: dateForDay, to: selected.to });
         }
       }
     };
 
-    renderMonth = month => (
+    renderMonth = month =>
       cloneElement(month, {
         highlighted: this.props.highlighted,
         onDayClick: this.handleDayClick,
         onDayMouseEnter: this.handleDayMouseEnter,
         selected: this.props.selected,
-      })
-    );
+      });
 
     render() {
       const {
         children,
-        focusedInput, // eslint-disable-line
-        onChange,     // eslint-disable-line
-        selected,     // eslint-disable-line
+        focusedInput,
+        onChange,
+        selected,
         ...rest
       } = this.props;
       return (
         <MonthsWrapper {...rest} {...passProps(this.props, 'MonthsWrapper')}>
-          {Children.map(children, child => (
-            isComponentOfType(Month, child)
-              ? this.renderMonth(child)
-              : child
-          ))}
+          {Children.map(
+            children,
+            child =>
+              isComponentOfType(Month, child) ? this.renderMonth(child) : child
+          )}
         </MonthsWrapper>
       );
     }
