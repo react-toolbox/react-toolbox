@@ -1,12 +1,8 @@
 {
-  "lerna": "2.0.0-beta.37",
-  "version": "3.0.0",
-  "commands": {
-    "publish": {
-      "ignore": [
-        "react-toolbox"
-      ]
-    }
-  },
-  "packages": ["packages/*"]
+  "lerna": "2.0.0-beta.38",
+  "version": "independent",
+  "npmClient": "yarn",
+  "packages": [
+    "packages/*"
+  ]
 }
