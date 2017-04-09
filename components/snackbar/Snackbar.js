@@ -24,7 +24,10 @@ const factory = (Button) => {
         active: PropTypes.string,
         button: PropTypes.string,
         cancel: PropTypes.string,
-        label: PropTypes.string,
+        label: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.element,
+        ]),
         snackbar: PropTypes.string,
         warning: PropTypes.string,
       }),

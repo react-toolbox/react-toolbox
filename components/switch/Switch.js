@@ -11,7 +11,10 @@ const factory = (Thumb) => {
       checked: PropTypes.bool,
       className: PropTypes.string,
       disabled: PropTypes.bool,
-      label: PropTypes.string,
+      label: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+      ]),
       name: PropTypes.string,
       onBlur: PropTypes.func,
       onChange: PropTypes.func,

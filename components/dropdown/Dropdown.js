@@ -15,7 +15,10 @@ const factory = (Input) => {
       className: PropTypes.string,
       disabled: PropTypes.bool,
       error: PropTypes.string,
-      label: PropTypes.string,
+      label: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+      ]),
       labelKey: PropTypes.string,
       name: PropTypes.string,
       onBlur: PropTypes.func,
@@ -35,7 +38,10 @@ const factory = (Input) => {
         error: PropTypes.string,
         errored: PropTypes.string,
         field: PropTypes.string,
-        label: PropTypes.string,
+        label: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.element,
+        ]),
         required: PropTypes.string,
         selected: PropTypes.string,
         templateValue: PropTypes.string,

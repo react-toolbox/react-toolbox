@@ -16,7 +16,10 @@ const factory = (Input, DatePickerDialog) => {
     static propTypes = {
       active: PropTypes.bool,
       autoOk: PropTypes.bool,
-      cancelLabel: PropTypes.string,
+      cancelLabel: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+      ]),
       className: PropTypes.string,
       disabledDates: React.PropTypes.arrayOf(PropTypes.instanceOf(Date)),
       enabledDates: React.PropTypes.arrayOf(PropTypes.instanceOf(Date)),
@@ -27,7 +30,10 @@ const factory = (Input, DatePickerDialog) => {
       ]),
       inputClassName: PropTypes.string,
       inputFormat: PropTypes.func,
-      label: PropTypes.string,
+      label: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+      ]),
       locale: React.PropTypes.oneOfType([
         React.PropTypes.string,
         React.PropTypes.object,
@@ -35,7 +41,10 @@ const factory = (Input, DatePickerDialog) => {
       maxDate: PropTypes.instanceOf(Date),
       minDate: PropTypes.instanceOf(Date),
       name: PropTypes.string,
-      okLabel: PropTypes.string,
+      okLabel: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+      ]),
       onChange: PropTypes.func,
       onClick: PropTypes.func,
       onDismiss: PropTypes.func,

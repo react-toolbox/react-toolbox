@@ -7,11 +7,17 @@ const factory = (Dialog) => {
   class TimePickerDialog extends Component {
     static propTypes = {
       active: PropTypes.bool,
-      cancelLabel: PropTypes.string,
+      cancelLabel: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+      ]),
       className: PropTypes.string,
       format: PropTypes.oneOf(['24hr', 'ampm']),
       name: PropTypes.string,
-      okLabel: PropTypes.string,
+      okLabel: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+      ]),
       onDismiss: PropTypes.func,
       onEscKeyDown: PropTypes.func,
       onOverlayClick: PropTypes.func,
