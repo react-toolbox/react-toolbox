@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import CssTransitionGroup from 'react-addons-css-transition-group';
 import { getAnimationModule } from '../utils/utils';
 import time from '../utils/time';

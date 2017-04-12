@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { AppBar } from 'react-toolbox';
 import { Link } from 'react-router';
 import Logo from '../logo';
@@ -20,7 +21,7 @@ const MainAppBar = (props) => {
 };
 
 MainAppBar.propTypes = {
-  className: React.PropTypes.string
+  className: PropTypes.string
 };
 
 MainAppBar.defaultProps = {

@@ -1,5 +1,6 @@
 import 'highlight.js/styles/github-gist';
 import React from 'react';
+import PropTypes from 'prop-types';
 import style from './style.css';
 
 const Markdown = (props) => {
@@ -14,8 +15,8 @@ const Markdown = (props) => {
 };
 
 Markdown.propTypes = {
-  className: React.PropTypes.string,
-  markdown: React.PropTypes.string.isRequired
+  className: PropTypes.string,
+  markdown: PropTypes.string.isRequired
 };
 
 Markdown.defaultProps = {
