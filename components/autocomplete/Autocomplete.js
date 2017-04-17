@@ -1,5 +1,6 @@
 /* eslint-disable */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
@@ -21,14 +22,14 @@ const factory = (Chip, Input) => {
       className: PropTypes.string,
       direction: PropTypes.oneOf(['auto', 'up', 'down']),
       disabled: PropTypes.bool,
-      error: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.node,
+      error: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node,
       ]),
       keepFocusOnChange: PropTypes.bool,
-      label: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.node,
+      label: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node,
       ]),
       multiple: PropTypes.bool,
       onBlur: PropTypes.func,

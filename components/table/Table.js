@@ -1,4 +1,5 @@
-import React, { PropTypes, Component, cloneElement } from 'react';
+import React, { Component, cloneElement } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import filterReactChildren from '../utils/filter-react-children';

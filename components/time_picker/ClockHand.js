@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { angle360FromPositions } from '../utils/utils';
 import events from '../utils/events';
 import prefixer from '../utils/prefixer';
