@@ -1,0 +1,11 @@
+:root {
+  --radio-field-margin-bottom: calc(1.5 * var(--unit));
+  --radio-button-size: calc(2 * var(--unit));
+  --radio-inner-margin: calc(var(--radio-button-size) / 4);
+  --radio-inner-color: var(--color-primary);
+  --radio-focus-color: color(var(--color-black) a(10%));
+  --radio-checked-focus-color: color(var(--color-primary) a(26%));
+  --radio-text-color: var(--color-black);
+  --radio-disabled-color: color(var(--color-black) a(26%));
+  --radio-text-font-size: calc(1.4 * var(--unit));
+}

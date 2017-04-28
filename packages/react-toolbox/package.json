@@ -1,0 +1,53 @@
+{
+  "name": "react-toolbox",
+  "description": "A set of React components implementing Google's Material Design specification with the power of CSS Modules.",
+  "homepage": "http://www.react-toolbox.com",
+  "version": "2.0.0-beta.9",
+  "main": "./lib",
+  "author": {
+    "name": "Javier Velasco Arjona",
+    "email": "javier.velasco86@gmail.com",
+    "url": "http://javivelasco.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/react-toolbox/react-toolbox.git"
+  },
+  "bugs": {
+    "email": "javier.velasco86@gmail.com",
+    "url": "https://github.com/react-toolbox/react-toolbox/issues"
+  },
+  "keywords": [
+    "components",
+    "material design",
+    "react",
+    "react-component",
+    "toolkit"
+  ],
+  "scripts": {
+    "build": "cross-env NODE_ENV=production gulp && yarn run tsd",
+    "clean": "rimraf ./lib",
+    "prepublish": "yarn run build",
+    "tsd": "cpx \"./components/**/*.d.ts\" ./lib"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "core-js": "^2.4.0",
+    "ramda": "^0.23.0",
+    "react-addons-css-transition-group": "^15.4.2",
+    "react-css-themr": "^2.0.0",
+    "react-style-proptype": "^2.0.0"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.5.7",
+    "react": "^0.14 || ~15.4.0",
+    "react-addons-css-transition-group": "^0.14.0 || ~15.4.0",
+    "react-dom": "^0.14.0 || ~15.4.0"
+  },
+  "devDependencies": {
+    "cpx": "^1.5.0",
+    "cross-env": "^4.0.0",
+    "gulp": "^3.9.1"
+  },
+  "license": "MIT"
+}

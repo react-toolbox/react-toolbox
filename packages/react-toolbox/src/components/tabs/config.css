@@ -1,0 +1,20 @@
+:root {
+  --tab-label-disabled-opacity: 0.2;
+  --tab-label-h-padding: calc(1.2 * var(--unit));
+  --tab-label-height: calc(4.8 * var(--unit));
+  --tab-icon-height: calc(2.4 * var(--unit));
+  --tab-icon-margin-bottom: calc(0.8 * var(--unit));
+  --tab-text-height: calc(1.4 * var(--unit));
+  --tab-label-v-padding: calc((var(--tab-label-height) - var(--tab-text-height)) / 2);
+  --tab-navigation-border-color: var(--color-divider);
+  --tab-pointer-color: var(--color-primary);
+  --tab-pointer-height: calc(0.2 * var(--unit));
+  --tab-text: var(--color-black);
+  --tab-text-color: var(--tab-text);
+  --tab-text-inactive-color: color(var(--tab-text) a(70%));
+  --tab-inverse-bar-color: var(--color-primary);
+  --tab-inverse-pointer-color: var(--color-accent);
+  --tab-inverse-text: var(--color-primary-contrast);
+  --tab-inverse-text-color: var(--tab-inverse-text);
+  --tab-inverse-text-inactive-color: color(var(--tab-inverse-text) a(30%));
+}
