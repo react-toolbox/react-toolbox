@@ -36,7 +36,7 @@
     "ramda": "^0.23.0",
     "react-addons-css-transition-group": "^15.4.2",
     "react-css-themr": "^2.0.0",
-    "react-style-proptype": "^2.0.0"
+    "react-style-proptype": "^3.0.0"
   },
   "peerDependencies": {
     "prop-types": "^15.5.7",

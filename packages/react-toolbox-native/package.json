@@ -8,10 +8,10 @@
   },
   "dependencies": {
     "color": "^1.0.3",
-    "date-fns": "^1.28.0",
+    "date-fns": "^1.28.4",
     "ramda": "^0.23.0",
     "react": "16.0.0-alpha.3",
-    "react-native": "0.43.0-rc.0",
+    "react-native": "^0.44.0",
     "react-native-vector-icons": "^4.0.0",
     "react-toolbox-core": "^0.0.0-alpha.a1564456",
     "styled-components": "2.0.0-4"
@@ -20,8 +20,8 @@
     "babel-jest": "19.0.0",
     "babel-preset-react-native": "1.9.1",
     "jest": "19.0.2",
-    "react-test-renderer": "~15.4.0",
-    "redbox-react": "^1.3.3"
+    "react-test-renderer": "^15.5.4",
+    "redbox-react": "^1.3.6"
   },
   "jest": {
     "preset": "react-native"

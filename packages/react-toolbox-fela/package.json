@@ -6,16 +6,16 @@
   "private": true,
   "scripts": {
     "build": "babel ./src --out-dir ./lib",
-    "prepublish": "npm run build"
+    "prepublish": "yarn run build"
   },
   "keywords": [],
   "author": "Javi Velasco <javier.velasco86@gmail.com> (http://javivelasco.com/)",
   "license": "ISC",
   "dependencies": {
     "color": "^1.0.3",
-    "fela": "^4.2.1",
+    "fela": "^4.3.5",
     "ramda": "^0.23.0",
-    "react-fela": "^4.2.1",
+    "react-fela": "^4.3.5",
     "react-toolbox-core": "^0.0.0-alpha.a1564456"
   },
   "peerDependencies": {

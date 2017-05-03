@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "build": "babel ./src --out-dir ./lib",
-    "prepublish": "npm run build"
+    "prepublish": "yarn run build"
   },
   "keywords": [],
   "author": "Javi Velasco <javier.velasco86@gmail.com> (http://javivelasco.com/)",
@@ -20,6 +20,9 @@
   "peerDependencies": {
     "react": "^0.14 || ~15.4.0",
     "react-dom": "^0.14.0 || ~15.4.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1"
   },
   "eslintConfig": {
     "settings": {
