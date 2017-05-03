@@ -33,6 +33,7 @@ If you want to provide a theme via context, the component key is `RTInput`.
 
 | Name            | Type                    | Default         | Description|
 |:-----|:-----|:-----|:-----|
+| `autoResize`    | `Boolean`               | `true`          | If true, a textarea height is adjusted to rows.|
 | `className`     | `String`                | `''`            | Sets a class name to give custom styles.|
 | `disabled`      | `Boolean`               | `false`         | If true, component will be disabled.|
 | `error`         | `String` or `Node`      |                 | Give an error node to display under the field.|

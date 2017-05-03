@@ -166,7 +166,7 @@ const factory = (FontIcon) => {
     )
 
     render() {
-      const { autoResize = true, children, defaultValue, disabled, error, floating, hint, icon,
+      const { children, defaultValue, disabled, error, floating, hint, icon,
               name, label: labelText, maxLength, multiline, required,
               theme, type, value, onKeyPress, rows = 1, ...others } = this.props;
       const length = maxLength && value ? value.length : 0;

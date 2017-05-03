@@ -54,6 +54,10 @@ export interface InputTheme {
 
 export interface InputProps extends ReactToolbox.Props {
   /**
+   * If true, a textarea height is adjusted to rows.
+   */
+   autoResize?: boolean,
+  /**
    * Children to pass through the component.
    */
   children?: React.ReactNode;
