@@ -62,6 +62,7 @@ const factory = (FontIcon) => {
     };
 
     static defaultProps = {
+      autoResize: true,
       className: '',
       hint: '',
       disabled: false,
