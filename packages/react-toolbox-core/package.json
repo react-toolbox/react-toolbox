@@ -1,6 +1,6 @@
 {
   "name": "react-toolbox-core",
-  "version": "0.0.0-alpha.a1564456",
+  "version": "0.0.0-alpha.0",
   "description": "A set of factories to generate universal agnostic components",
   "main": "./lib/index.js",
   "scripts": {
