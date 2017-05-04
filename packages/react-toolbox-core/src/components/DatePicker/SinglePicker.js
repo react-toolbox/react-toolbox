@@ -2,13 +2,7 @@ import React, { cloneElement, PropTypes, Children, Component } from 'react';
 import isComponentOfType from '../../utils/isComponentOfType';
 import getPassThrough from '../../utils/getPassThrough';
 
-const singlePickerFactory = (
-  {
-    MonthsWrapper,
-    Month,
-    passthrough,
-  }
-) => {
+const singlePickerFactory = ({ MonthsWrapper, Month, passthrough }) => {
   const passProps = getPassThrough(passthrough);
   class SinglePicker extends Component {
     static propTypes = {
@@ -39,12 +33,7 @@ const singlePickerFactory = (
       });
 
     render() {
-      const {
-        children,
-        onChange,
-        selected,
-        ...rest
-      } = this.props;
+      const { children, onChange, selected, ...rest } = this.props;
       return (
         <MonthsWrapper {...rest} {...passProps(this.props, 'MonthsWrapper')}>
           {Children.map(

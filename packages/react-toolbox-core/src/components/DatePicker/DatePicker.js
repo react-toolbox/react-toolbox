@@ -6,17 +6,15 @@ import getPassThrough from '../../utils/getPassThrough';
 import { SINGLE, RANGE, START_DATE, END_DATE } from './constants';
 import dateShape from './dateShape';
 
-const datePickerFactory = (
-  {
-    Month,
-    NextNode,
-    PickerWrapper,
-    PrevNode,
-    RangePicker,
-    SinglePicker,
-    passthrough,
-  }
-) => {
+const datePickerFactory = ({
+  Month,
+  NextNode,
+  PickerWrapper,
+  PrevNode,
+  RangePicker,
+  SinglePicker,
+  passthrough,
+}) => {
   const passProps = getPassThrough(passthrough);
   class DatePicker extends PureComponent {
     static propTypes = {

@@ -18,18 +18,16 @@ import getFullMonth from './dateLocale/getFullMonth';
 const addDays = require('date-fns/add_days');
 const differenceInCalendarDays = require('date-fns/difference_in_calendar_days');
 
-const monthFactory = (
-  {
-    Day,
-    DaysWeek,
-    DaysWrapper,
-    MonthTitle,
-    MonthWrapper,
-    Weekday,
-    WeekdaysWrapper,
-    passthrough,
-  }
-) => {
+const monthFactory = ({
+  Day,
+  DaysWeek,
+  DaysWrapper,
+  MonthTitle,
+  MonthWrapper,
+  Weekday,
+  WeekdaysWrapper,
+  passthrough,
+}) => {
   const passProps = getPassThrough(passthrough);
   class Month extends PureComponent {
     static propTypes = {

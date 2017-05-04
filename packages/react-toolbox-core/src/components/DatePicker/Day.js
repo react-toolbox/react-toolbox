@@ -10,12 +10,7 @@ import dateShape from './dateShape';
 import isDateRange from './dateUtils/isDateRange';
 import getPassThrough from '../../utils/getPassThrough';
 
-const dayFactory = (
-  {
-    DayNode,
-    passthrough,
-  }
-) => {
+const dayFactory = ({ DayNode, passthrough }) => {
   const passProps = getPassThrough(passthrough);
   class Day extends PureComponent {
     static propTypes = {
@@ -47,13 +42,17 @@ const dayFactory = (
       } = nextProps;
 
       if (selected !== nextSelected) {
-        return isAffected(day, selected, viewDate) ||
-          isAffected(nextDay, nextSelected, nextViewDate);
+        return (
+          isAffected(day, selected, viewDate) ||
+          isAffected(nextDay, nextSelected, nextViewDate)
+        );
       }
 
       if (highlighted !== nextHighlighted) {
-        return isAffected(day, highlighted, viewDate) ||
-          isAffected(nextDay, nextHighlighted, nextViewDate);
+        return (
+          isAffected(day, highlighted, viewDate) ||
+          isAffected(nextDay, nextHighlighted, nextViewDate)
+        );
       }
 
       if (isDayDisabled !== nextIsDayDisabled) {
@@ -92,8 +91,8 @@ const dayFactory = (
 
       const selectedMatch = matchSelected(selected, day, viewDate);
       const highlightedMatch = matchSelected(highlighted, day, viewDate);
-      const isHighlighted = highlightedMatch.selected ||
-        highlightedMatch.inRange;
+      const isHighlighted =
+        highlightedMatch.selected || highlightedMatch.inRange;
 
       return (
         <DayNode

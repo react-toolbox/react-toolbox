@@ -1,14 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import getPassThrough from '../../utils/getPassThrough';
 
-const buttonFactory = (
-  {
-    ripple,
-    ButtonNode,
-    LinkNode,
-    passthrough,
-  }
-) => {
+const buttonFactory = ({ ripple, ButtonNode, LinkNode, passthrough }) => {
   const passProps = getPassThrough(passthrough);
   class Button extends Component {
     static propTypes = {

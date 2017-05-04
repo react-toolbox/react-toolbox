@@ -7,13 +7,7 @@ import getPassThrough from '../../utils/getPassThrough';
 import { START_DATE, END_DATE } from './constants';
 import dateShape from './dateShape';
 
-const rangePickerFactory = (
-  {
-    MonthsWrapper,
-    Month,
-    passthrough,
-  }
-) => {
+const rangePickerFactory = ({ MonthsWrapper, Month, passthrough }) => {
   const passProps = getPassThrough(passthrough);
   class RangePicker extends PureComponent {
     static propTypes = {
@@ -59,7 +53,8 @@ const rangePickerFactory = (
 
       if (selected.from && !selected.to) {
         if (
-          focusedInput === START_DATE || isBefore(clickedDate, selected.from)
+          focusedInput === START_DATE ||
+          isBefore(clickedDate, selected.from)
         ) {
           onChange({ from: clickedDate });
           onFocusedInputChange(END_DATE);
@@ -135,7 +130,8 @@ const rangePickerFactory = (
         if (focusedInput === END_DATE && isAfter(dateForDay, selected.from)) {
           onHighlightedChange({ from: selected.from, to: dateForDay });
         } else if (
-          focusedInput === START_DATE && isBefore(dateForDay, selected.to)
+          focusedInput === START_DATE &&
+          isBefore(dateForDay, selected.to)
         ) {
           onHighlightedChange({ from: dateForDay, to: selected.to });
         }
