@@ -1667,6 +1667,13 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-toolbox-core@^0.0.0-alpha.a1564456:
+  version "0.0.0-alpha.fd8abcdb"
+  resolved "https://registry.yarnpkg.com/react-toolbox-core/-/react-toolbox-core-0.0.0-alpha.fd8abcdb.tgz#c6b447c65bbb5afe08cc0b015b52c14d1461663b"
+  dependencies:
+    inline-style-prefixer "^2.0.5"
+    ramda "^0.23.0"
+
 "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.0.2, readable-stream@^2.1.4:
   version "2.2.7"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.2.7.tgz#07057acbe2467b22042d36f98c5ad507054e95b1"
