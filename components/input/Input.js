@@ -203,6 +203,8 @@ const factory = (FontIcon) => {
         inputElementProps.onKeyPress = this.handleKeyPress;
       }
 
+      delete inputElementProps.autoResize;
+
       return (
         <div data-react-toolbox="input" className={className}>
           {React.createElement(multiline ? 'textarea' : 'input', inputElementProps)}
