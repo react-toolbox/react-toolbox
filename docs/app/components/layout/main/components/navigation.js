@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { List, ListItem } from 'react-toolbox';
 import classnames from 'classnames';
 import components from '../modules/components';
