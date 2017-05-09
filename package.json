@@ -4,6 +4,7 @@
   "homepage": "http://www.react-toolbox.com",
   "version": "2.0.0-beta.8",
   "main": "./lib",
+  "module": "./components",
   "author": {
     "email": "javier.velasco86@gmail.com",
     "name": "Javier Velasco Arjona",
