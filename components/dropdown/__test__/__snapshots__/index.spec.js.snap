@@ -1,0 +1,451 @@
+exports[`Dropdown snapshot testing Spain selected 1`] = `
+<div
+  className="dropdown"
+  data-react-toolbox="dropdown"
+  onBlur={[Function]}
+  onFocus={[Function]}>
+  <Input
+    className="value"
+    disabled={false}
+    floating={true}
+    hint=""
+    multiline={false}
+    onClick={[Function]}
+    readOnly={true}
+    required={false}
+    tabIndex="0"
+    theme={Object {}}
+    type={null}
+    value="Spain" />
+  <ul
+    className="values">
+    <li
+      className=""
+      onClick={[Function]}>
+      England
+    </li>
+    <li
+      className="selected"
+      onClick={[Function]}>
+      Spain
+    </li>
+    <li
+      className="disabled"
+      onClick={false}>
+      Thailand
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      USA
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Dropdown snapshot testing allowBlank=false 1`] = `
+<div
+  className="dropdown"
+  data-react-toolbox="dropdown"
+  onBlur={[Function]}
+  onFocus={[Function]}>
+  <Input
+    className="value"
+    disabled={false}
+    floating={true}
+    hint=""
+    multiline={false}
+    onClick={[Function]}
+    readOnly={true}
+    required={false}
+    tabIndex="0"
+    theme={Object {}}
+    type={null}
+    value="England" />
+  <ul
+    className="values">
+    <li
+      className=""
+      onClick={[Function]}>
+      England
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      Spain
+    </li>
+    <li
+      className="disabled"
+      onClick={false}>
+      Thailand
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      USA
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Dropdown snapshot testing disabled 1`] = `
+<div
+  className="dropdown disabled"
+  data-react-toolbox="dropdown"
+  onBlur={[Function]}
+  onFocus={[Function]}>
+  <Input
+    className="value"
+    disabled={true}
+    floating={true}
+    hint=""
+    multiline={false}
+    onClick={[Function]}
+    readOnly={true}
+    required={false}
+    tabIndex="0"
+    theme={Object {}}
+    type={null}
+    value="" />
+  <ul
+    className="values">
+    <li
+      className=""
+      onClick={[Function]}>
+      England
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      Spain
+    </li>
+    <li
+      className="disabled"
+      onClick={false}>
+      Thailand
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      USA
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Dropdown snapshot testing none selected 1`] = `
+<div
+  className="dropdown"
+  data-react-toolbox="dropdown"
+  onBlur={[Function]}
+  onFocus={[Function]}>
+  <Input
+    className="value"
+    disabled={false}
+    floating={true}
+    hint=""
+    multiline={false}
+    onClick={[Function]}
+    readOnly={true}
+    required={false}
+    tabIndex="0"
+    theme={Object {}}
+    type={null}
+    value="" />
+  <ul
+    className="values">
+    <li
+      className=""
+      onClick={[Function]}>
+      England
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      Spain
+    </li>
+    <li
+      className="disabled"
+      onClick={false}>
+      Thailand
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      USA
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Dropdown snapshot testing required=true 1`] = `
+<div
+  className="dropdown required"
+  data-react-toolbox="dropdown"
+  onBlur={[Function]}
+  onFocus={[Function]}>
+  <Input
+    className="value"
+    disabled={false}
+    floating={true}
+    hint=""
+    multiline={false}
+    onClick={[Function]}
+    readOnly={true}
+    required={true}
+    tabIndex="0"
+    theme={Object {}}
+    type={null}
+    value="" />
+  <ul
+    className="values">
+    <li
+      className=""
+      onClick={[Function]}>
+      England
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      Spain
+    </li>
+    <li
+      className="disabled"
+      onClick={false}>
+      Thailand
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      USA
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Dropdown snapshot testing with className 1`] = `
+<div
+  className="dropdown something fancy"
+  data-react-toolbox="dropdown"
+  onBlur={[Function]}
+  onFocus={[Function]}>
+  <Input
+    className="value"
+    disabled={false}
+    floating={true}
+    hint=""
+    multiline={false}
+    onClick={[Function]}
+    readOnly={true}
+    required={false}
+    tabIndex="0"
+    theme={Object {}}
+    type={null}
+    value="" />
+  <ul
+    className="values">
+    <li
+      className=""
+      onClick={[Function]}>
+      England
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      Spain
+    </li>
+    <li
+      className="disabled"
+      onClick={false}>
+      Thailand
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      USA
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Dropdown snapshot testing with error message 1`] = `
+<div
+  className="dropdown"
+  data-react-toolbox="dropdown"
+  onBlur={[Function]}
+  onFocus={[Function]}>
+  <Input
+    className="value"
+    disabled={false}
+    error="some error message"
+    floating={true}
+    hint=""
+    multiline={false}
+    onClick={[Function]}
+    readOnly={true}
+    required={false}
+    tabIndex="0"
+    theme={Object {}}
+    type={null}
+    value="" />
+  <ul
+    className="values">
+    <li
+      className=""
+      onClick={[Function]}>
+      England
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      Spain
+    </li>
+    <li
+      className="disabled"
+      onClick={false}>
+      Thailand
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      USA
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Dropdown snapshot testing with label 1`] = `
+<div
+  className="dropdown"
+  data-react-toolbox="dropdown"
+  onBlur={[Function]}
+  onFocus={[Function]}>
+  <Input
+    className="value"
+    disabled={false}
+    floating={true}
+    hint=""
+    label="Select country"
+    multiline={false}
+    onClick={[Function]}
+    readOnly={true}
+    required={false}
+    tabIndex="0"
+    theme={Object {}}
+    type={null}
+    value="" />
+  <ul
+    className="values">
+    <li
+      className=""
+      onClick={[Function]}>
+      England
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      Spain
+    </li>
+    <li
+      className="disabled"
+      onClick={false}>
+      Thailand
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      USA
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Dropdown snapshot testing with minimum properties 1`] = `
+<div
+  className="dropdown"
+  data-react-toolbox="dropdown"
+  onBlur={[Function]}
+  onFocus={[Function]}>
+  <Input
+    className="value"
+    disabled={false}
+    floating={true}
+    hint=""
+    multiline={false}
+    onClick={[Function]}
+    readOnly={true}
+    required={false}
+    tabIndex="0"
+    theme={Object {}}
+    type={null}
+    value="" />
+  <ul
+    className="values">
+    <li
+      className=""
+      onClick={[Function]}>
+      England
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      Spain
+    </li>
+    <li
+      className="disabled"
+      onClick={false}>
+      Thailand
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      USA
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Dropdown snapshot testing with template 1`] = `
+<div
+  className="dropdown"
+  data-react-toolbox="dropdown"
+  onBlur={[Function]}
+  onFocus={[Function]}>
+  <Input
+    className="value"
+    disabled={false}
+    floating={true}
+    hint=""
+    multiline={false}
+    onClick={[Function]}
+    readOnly={true}
+    required={false}
+    tabIndex="0"
+    theme={Object {}}
+    type={null}
+    value="" />
+  <ul
+    className="values">
+    <li
+      className=""
+      onClick={[Function]}>
+      {\"value\":\"EN-gb\",\"label\":\"England\"}
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      {\"value\":\"ES-es\",\"label\":\"Spain\"}
+    </li>
+    <li
+      className="disabled"
+      onClick={false}>
+      {\"value\":\"TH-th\",\"label\":\"Thailand\",\"disabled\":true}
+    </li>
+    <li
+      className=""
+      onClick={[Function]}>
+      {\"value\":\"EN-en\",\"label\":\"USA\"}
+    </li>
+  </ul>
+</div>
+`;
