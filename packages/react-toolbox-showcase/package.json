@@ -1,5 +1,5 @@
 {
-  "name": "showcase",
+  "name": "react-toolbox-showcase",
   "version": "0.0.1",
   "description": "Showcase project to visually test components",
   "private": true,
@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "fela": "^4.2.1",
-    "html-webpack-plugin": "^2.28.0",
+    "normalize.css": "^5.0.0",
     "react-fela": "^4.2.1",
     "react-router-dom": "^4.0.0-beta.8",
     "react-toolbox-css": "^0.0.1",

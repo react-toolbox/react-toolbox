@@ -62,6 +62,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        exclude: /node_modules/,
         include: [
           path.join(__dirname, '../app'),
           path.join(__dirname, '../../react-toolbox'),
@@ -76,7 +77,7 @@ module.exports = {
               sourceMap: true,
             },
           },
-          'postcss-loader',
+          'postcss-loader'
         ],
       },
     ],
@@ -88,8 +89,7 @@ module.exports = {
         postcss() {
           return [
             require('postcss-import')({
-              root: path.join(__dirname, '../'),
-              path: [path.join(__dirname, '../app')],
+              root: path.join(__dirname, '../')
             }),
             require('postcss-mixins')(),
             require('postcss-each')(),

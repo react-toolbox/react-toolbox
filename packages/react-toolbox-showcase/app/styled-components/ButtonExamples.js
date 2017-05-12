@@ -12,7 +12,7 @@ const ButtonTest = () => (
     <Button href="http://github.com/javivelasco" target="_blank" raised>
       <Github /> Github
     </Button>
-    <Button accent ben onRippleEnded={rippleEnded} overrides={overrides}>
+    <Button cta onRippleEnded={rippleEnded} overrides={overrides}>
       <FontIcon value="bookmark" />
       Bookmark
     </Button>
@@ -55,7 +55,7 @@ const overrides = {
     border-radius: 0;
   `,
   ButtonNode: css`
-    color: ${props => props.ben && 'green'};
+    color: ${props => props.cta && 'red'};
     &:hover {
       background-color: orange;
     }
