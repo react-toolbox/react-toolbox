@@ -1,0 +1,8 @@
+@import 'variables.css';
+
+.logo {
+  display: inline-block;
+  fill: #fff;
+  height: calc(20 * var(--unit));
+  width: calc(20 * var(--unit));
+}
