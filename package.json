@@ -3,12 +3,12 @@
   "description": "A set of React components implementing Google's Material Design specification with the power of CSS Modules.",
   "main": "./lib",
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "clean": "lerna exec -- yarn clean",
+    "bootstrap": "make bootstrap",
+    "clean": "make clean-all",
     "lint:staged": "lint-staged",
-    "prettier": "prettier --write --single-quote --trailing-comma=es5 \"packages/react-toolbox-core/src/**/*.js\"",
-    "test": "node --harmony_proxies node_modules/.bin/jest",
-    "test:watch": "node --harmony_proxies node_modules/.bin/jest --watch --no-watchman"
+    "prettier": "make prettier",
+    "test": "make test",
+    "test:watch": "make test:watch"
   },
   "author": {
     "name": "Javier Velasco Arjona",
@@ -49,25 +49,28 @@
     "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-compat": "^1.0.2",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.3",
+    "eslint-plugin-jsx-a11y": "^5.0.1",
+    "eslint-plugin-react": "^7.0.0",
+    "express": "^4.15.2",
     "extract-text-webpack-plugin": "^2.1.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
-    "gulp-postcss": "^6.4.0",
+    "gulp-postcss": "^7.0.0",
     "gulp-rimraf": "^0.2.1",
+    "html-webpack-plugin": "^2.28.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^19.0.2",
+    "internal-ip": "^1.2.0",
+    "jest": "^20.0.1",
     "lerna": "^2.0.0-rc.4",
     "lint-staged": "^3.4.1",
     "postcss-cssnext": "^2.10.0",
     "postcss-each": "^0.9.3",
     "postcss-import": "^9.1.0",
     "postcss-loader": "^1.3.3",
-    "postcss-mixins": "^5.4.0",
+    "postcss-mixins": "^6.0.0",
     "postcss-reporter": "^3.0.0",
     "pre-commit": "^1.2.2",
-    "prettier": "^1.3.0",
+    "prettier": "^1.3.1",
     "react": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
@@ -79,6 +82,7 @@
     "stylelint": "^7.10.1",
     "stylelint-config-standard": "^16.0.0",
     "stylelint-order": "^0.4.4",
+    "typescript": "^2.3.2",
     "webpack": "^2.4.1",
     "webpack-dev-middleware": "^1.10.2",
     "webpack-hot-middleware": "^2.18.0"
@@ -91,11 +95,22 @@
     ]
   },
   "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "roots": [
+      "<rootDir>/packages/react-toolbox",
+      "<rootDir>/packages/react-toolbox-core",
+      "<rootDir>/packages/react-toolbox-css"
+    ],
     "modulePathIgnorePatterns": [
       "packages/.*/lib"
     ],
     "testPathIgnorePatterns": [
-      "packages/react-toolbox-native"
+      "lib"
     ],
     "moduleDirectories": [
       "node_modules"
@@ -105,7 +120,11 @@
     },
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
-    ]
+    ],
+    "transform": {
+      "^.+\\.(js)": "<rootDir>/transformers/babel.js",
+      "^.+\\.(ts|tsx)$": "<rootDir>/transformers/typescript.js"
+    }
   },
   "pre-commit": "lint:staged",
   "lint-staged": {
