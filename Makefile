@@ -24,6 +24,7 @@ test-only:
 test-ci:
 	make bootstrap
 	make test
+  make lint
 
 test:
 	node --harmony_proxies node_modules/.bin/jest
@@ -33,3 +34,16 @@ test-watch:
 
 prettier:
 	prettier --write --single-quote --trailing-comma=es5 \"packages/react-toolbox-core/src/**/*.js\"
+
+lint:
+  make lint-js
+  make lint-css
+
+lint-js:
+	./node_modules/.bin/eslint scripts packages *.js --format=codeframe
+
+lint-css:
+	./node_modules/.bin/stylelint packages/*/src/**/*.css
+
+fix:
+	./node_modules/.bin/eslint scripts packages *.js --format=codeframe --fix

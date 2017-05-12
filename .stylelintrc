@@ -14,11 +14,11 @@
       ]
     }],
     "color-hex-case": "lower",
-    "order/declaration-block-order": [
+    "order/order": [
       "custom-properties",
       "declarations"
     ],
-    "order/declaration-block-properties-alphabetical-order": true,
+    "order/properties-alphabetical-order": true,
     "font-family-name-quotes": "always-where-recommended",
     "string-quotes": "single",
     "selector-pseudo-class-no-unknown": [

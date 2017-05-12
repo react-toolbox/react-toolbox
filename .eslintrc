@@ -29,12 +29,5 @@
         "optionalDependencies": false
       }
     ]
-  },
-  "settings": {
-    "import/resolver": {
-      "webpack": {
-        "config": "webpack/webpack.config.dev.js"
-      }
-    }
   }
 }

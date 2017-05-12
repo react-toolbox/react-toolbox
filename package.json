@@ -6,9 +6,10 @@
     "bootstrap": "make bootstrap",
     "clean": "make clean-all",
     "lint:staged": "lint-staged",
+    "lint": "make lint",
     "prettier": "make prettier",
     "test": "make test",
-    "test:watch": "make test:watch"
+    "test:watch": "make test-watch"
   },
   "author": {
     "name": "Javier Velasco Arjona",
