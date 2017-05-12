@@ -4,7 +4,11 @@ import { mount } from 'enzyme';
 import Tabs from '../Tabs';
 import Tab from '../Tab';
 import TabContent from '../TabContent';
-import theme from '../theme.css';
+
+const theme = {
+  fixed: 'fixed',
+  inverse: 'inverse'
+};
 
 describe('Tabs', () => {
   class Composition extends Component {
