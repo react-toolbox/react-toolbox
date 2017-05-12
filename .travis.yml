@@ -12,11 +12,6 @@ node_js:
 script:
   - make test-ci
 
-matrix:
-  fast_finish: true
-  include:
-    - node_js: "node"
-
 cache:
   yarn: true
   directories:
