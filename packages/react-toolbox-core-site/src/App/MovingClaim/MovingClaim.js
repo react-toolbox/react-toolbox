@@ -83,6 +83,7 @@ const slideViewport = keyframes`
 const MovingClaimWrapper = styled.div`
   min-height: 20px;
   margin-top: 36px;
+  overflow: hidden;
   position: relative;
 `
 

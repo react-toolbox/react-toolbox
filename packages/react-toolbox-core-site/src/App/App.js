@@ -154,9 +154,10 @@ const Claims = styled.div`
 `;
 
 const Claim = styled.div`
-  text-align: center;
   flex: 1;
   padding: 10px;
+  text-align: center;
+  text-transform: lowercase;
 `;
 
 const ClaimImage = styled.img`
