@@ -1,29 +1,38 @@
+import * as React from 'react';
+import { ReactNode, cloneElement, ComponentClass, PropTypes, Children, PureComponent } from 'react';
 import { identity } from 'ramda';
-import React, { cloneElement, PropTypes, Children, PureComponent } from 'react';
-import isBefore from 'date-fns/is_before';
-import isAfter from 'date-fns/is_after';
+import { isBefore, isAfter } from 'date-fns';
 import isComponentOfType from '../../utils/isComponentOfType';
-import getPassThrough from '../../utils/getPassThrough';
+import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 import { START_DATE, END_DATE } from './constants';
-import dateShape from './dateShape';
+import { FocusedInput, DateRange } from './types';
+import { Month } from './Month';
 
-const rangePickerFactory = ({ MonthsWrapper, Month, passthrough }) => {
+export interface RangePickerProps {
+  children: ReactNode,
+  focusedInput: FocusedInput,
+  highlighted: DateRange,
+  onChange: (date: DateRange) => void,
+  onFocusedInputChange: (focus?: FocusedInput) => void,
+  onHighlightedChange: (date: DateRange) => void,
+  selected: DateRange,
+}
+
+export interface RangePickerArgs {
+  MonthsWrapper: ComponentClass<any>,
+  Month: Month,
+  passthrough: PassTroughFunction<RangePickerProps, 'MonthsWrapper'>
+}
+
+export type RangePicker = ComponentClass<RangePickerProps>;
+
+export default function rangePickerFactory({ MonthsWrapper, Month, passthrough }: RangePickerArgs): RangePicker {
   const passProps = getPassThrough(passthrough);
-  class RangePicker extends PureComponent {
-    static propTypes = {
-      children: PropTypes.node,
-      focusedInput: PropTypes.oneOf([START_DATE, END_DATE]),
-      highlighted: dateShape,
-      onChange: PropTypes.func,
-      onFocusedInputChange: PropTypes.func,
-      onHighlightedChange: PropTypes.func,
-      selected: dateShape,
-    };
-
+  return class RangePicker extends PureComponent<RangePickerProps, void> {
     static defaultProps = {
       highlighted: {},
-      onFocusedInputChange: identity,
-      onHighlightedChange: identity,
+      onFocusedInputChange: () => {},
+      onHighlightedChange: () => {},
     };
 
     selecting = false;
@@ -62,7 +71,7 @@ const rangePickerFactory = ({ MonthsWrapper, Month, passthrough }) => {
           this.selecting = true;
         } else {
           onChange({ from: selected.from, to: clickedDate });
-          onFocusedInputChange(null);
+          onFocusedInputChange(undefined);
           onHighlightedChange({});
           this.selecting = false;
         }
@@ -81,7 +90,7 @@ const rangePickerFactory = ({ MonthsWrapper, Month, passthrough }) => {
           this.selecting = true;
         } else {
           onChange({ from: clickedDate, to: selected.to });
-          onFocusedInputChange(null);
+          onFocusedInputChange(undefined);
           onHighlightedChange({});
           this.selecting = false;
         }
@@ -99,7 +108,7 @@ const rangePickerFactory = ({ MonthsWrapper, Month, passthrough }) => {
         } else if (focusedInput === END_DATE) {
           if (isAfter(clickedDate, selected.from)) {
             onChange({ from: selected.from, to: clickedDate });
-            onFocusedInputChange(null);
+            onFocusedInputChange(undefined);
             onHighlightedChange({});
             this.selecting = false;
           } else {
@@ -115,7 +124,7 @@ const rangePickerFactory = ({ MonthsWrapper, Month, passthrough }) => {
           this.selecting = true;
         } else {
           onChange({ from: selected.from, to: clickedDate });
-          onFocusedInputChange(null);
+          onFocusedInputChange(undefined);
           onHighlightedChange({});
           this.selecting = false;
         }
@@ -127,13 +136,23 @@ const rangePickerFactory = ({ MonthsWrapper, Month, passthrough }) => {
       const { selected } = this.props;
 
       if (this.selecting) {
-        if (focusedInput === END_DATE && isAfter(dateForDay, selected.from)) {
+        if (focusedInput === END_DATE && selected.from && isAfter(dateForDay, selected.from)) {
           onHighlightedChange({ from: selected.from, to: dateForDay });
-        } else if (
-          focusedInput === START_DATE &&
-          isBefore(dateForDay, selected.to)
-        ) {
+        } else if (focusedInput === START_DATE && selected.to && isBefore(dateForDay, selected.to)) {
           onHighlightedChange({ from: dateForDay, to: selected.to });
+        }
+      }
+    };
+
+    handleDayMouseLeave = dateForDay => {
+      const { focusedInput, onHighlightedChange } = this.props;
+      const { selected } = this.props;
+
+      if (this.selecting) {
+        if (focusedInput === END_DATE && selected.from && isAfter(dateForDay, selected.from)) {
+          onHighlightedChange({ from: selected.from, to: undefined });
+        } else if (focusedInput === START_DATE && selected.to && isBefore(dateForDay, selected.to)) {
+          onHighlightedChange({ from: undefined, to: selected.to });
         }
       }
     };
@@ -143,6 +162,7 @@ const rangePickerFactory = ({ MonthsWrapper, Month, passthrough }) => {
         highlighted: this.props.highlighted,
         onDayClick: this.handleDayClick,
         onDayMouseEnter: this.handleDayMouseEnter,
+        onDayMouseLeave: this.handleDayMouseLeave,
         selected: this.props.selected,
       });
 
@@ -155,18 +175,13 @@ const rangePickerFactory = ({ MonthsWrapper, Month, passthrough }) => {
         ...rest
       } = this.props;
       return (
-        <MonthsWrapper {...rest} {...passProps(this.props, 'MonthsWrapper')}>
+        <MonthsWrapper {...rest} {...passProps(this.props, 'MonthsWrapper', this)}>
           {Children.map(
             children,
-            child =>
-              isComponentOfType(Month, child) ? this.renderMonth(child) : child
+            child => isComponentOfType(Month, child) ? this.renderMonth(child) : child
           )}
         </MonthsWrapper>
       );
     }
   }
-
-  return RangePicker;
 };
-
-export default rangePickerFactory;

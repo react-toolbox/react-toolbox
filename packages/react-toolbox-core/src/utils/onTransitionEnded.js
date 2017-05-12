@@ -1,4 +1,4 @@
-import values from 'ramda/src/values';
+import { values } from 'ramda';
 
 export function addOnTransitionEnded(element, fn) {
   const eventName = transitionEventNamesFor(element);

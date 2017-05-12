@@ -1,7 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import assoc from 'ramda/src/assoc';
-import dissoc from 'ramda/src/dissoc';
-import keys from 'ramda/src/keys';
+import * as React from 'react';
+import { assoc, keys, dissoc } from 'ramda';
+import { Component, PropTypes } from 'react';
 import getMousePosition from '../../utils/getMousePosition';
 import getPassThrough from '../../utils/getPassThrough';
 import getTouchPosition from '../../utils/getTouchPosition';

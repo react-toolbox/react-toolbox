@@ -6,6 +6,9 @@
   "scripts": {
     "build": "babel ./src --out-dir ./lib --ignore '__tests__'",
     "build:watch": "babel ./src --out-dir ./lib --ignore '__tests__' --watch",
+    "build:ts": "tsc",
+    "build:ts:watch": "tsc --watch",
+    "build:docs": "typedoc --out ./docs",
     "prepublish": "yarn run build",
     "test": "node --harmony_proxies node_modules/.bin/jest --maxWorkers 4",
     "test:watch": "node --harmony_proxies node_modules/.bin/jest --watch"
@@ -23,6 +26,12 @@
     "react-dom": "^0.14.0 || ~15.4.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1"
+    "@types/date-fns": "^2.6.0",
+    "@types/jest": "^19.2.3",
+    "@types/ramda": "^0.0.8",
+    "@types/react": "^15.0.24",
+    "babel-cli": "^6.24.1",
+    "typedoc": "^0.6.0",
+    "typescript": "next"
   }
 }

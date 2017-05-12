@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
+import { Component, PropTypes } from 'react';
 import getPassThrough from '../../utils/getPassThrough';
 
 const buttonFactory = ({ ripple, ButtonNode, LinkNode, passthrough }) => {
