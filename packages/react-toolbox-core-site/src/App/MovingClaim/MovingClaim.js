@@ -54,7 +54,7 @@ export default class MovingClaim extends Component {
     for (let i = 0; i < claims.length; i++) {
       claimElements.push(
         <Claim
-          key={claims[i]}
+          key={i}
           innerRef={node => { this.nodes[claims[i]] = node; }}
           duration={duration}
         >

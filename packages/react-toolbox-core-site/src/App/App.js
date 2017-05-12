@@ -18,7 +18,7 @@ class App extends Component {
         <ContentWrapper>
           <Header>
             <Banner><Box src={box} />react-toolbox-core</Banner>
-            <Menu>Menu <MenuIcon src={menu} /></Menu>
+            <Menu><MenuLabel>Menu</MenuLabel> <MenuIcon src={menu} /></Menu>
           </Header>
         </ContentWrapper>
 
@@ -65,6 +65,7 @@ class App extends Component {
 const ContentWrapper = styled.div`
   margin: 0 auto;
   max-width: 1224px;
+  padding: 0 14px;
   text-align: center;
 `;
 
@@ -74,7 +75,7 @@ const Header = styled.header`
   display: flex;
   flex-direction: flex-start;
   line-height: 20px;
-  padding: 14px;
+  padding: 14px 0;
 `;
 
 const Banner = styled.div`
@@ -93,6 +94,12 @@ const Menu = styled.div`
   text-transform: uppercase;
 `;
 
+const MenuLabel = styled.span`
+  @media (max-width: 480px) {
+    display: none;
+  }
+`;
+
 const MenuIcon = styled.img`
   height: 20px;
   margin-left: 10px;
@@ -102,6 +109,7 @@ const MenuIcon = styled.img`
 // -- Title section
 const Logo = styled.img`
   height: auto;
+  margin-top: 20px;
   width: 120px;
 `
 
@@ -117,6 +125,11 @@ const Title = styled.h2`
   line-height: 44px;
   margin: 24px auto 0;
   max-width: 600px;
+
+  @media (max-width: 480px) {
+    font-size: 17px;
+    line-height: 32px;
+  }
 `
 
 const Strong = styled.strong`
@@ -151,6 +164,12 @@ const Claims = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 32px;
+
+  @media (max-width: 770px) {
+    flex-direction: column;
+    margin: 32px auto 0;
+    max-width: 340px;
+  }
 `;
 
 const Claim = styled.div`
@@ -181,9 +200,13 @@ const ClaimDescription = styled.p`
 
 // -- Buttons section
 const ButtonsSection = styled.div`
-  border-top: 1px solid #000;
+  border: 1px solid #000;
   display: flex;
   flex-direction: row;
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+  }
 `;
 
 const BigButton = styled.button`
