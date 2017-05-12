@@ -1,6 +1,0 @@
-@import 'variables.css';
-@import 'app_bar/config.css';
-
-.install {
-  margin-top: var(--appbar-height);
-}
