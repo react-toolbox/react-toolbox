@@ -1,3 +1,6 @@
+git:
+  depth: 10
+
 sudo: false
 
 language: node_js
@@ -5,7 +8,22 @@ language: node_js
 node_js:
   - 6
   - 4
-  
+
 script:
-  - npm run lint
-  - npm test
+  - make test-ci
+
+matrix:
+  fast_finish: true
+  include:
+    - node_js: "node"
+
+cache:
+  yarn: true
+  directories:
+  - node_modules
+
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
+
+install: yarn --frozen-lockfile

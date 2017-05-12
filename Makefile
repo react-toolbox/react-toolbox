@@ -21,15 +21,15 @@ test-only:
 	./scripts/test.sh
 	make test-clean
 
+test-ci:
+	make bootstrap
+	make test
+
 test:
 	node --harmony_proxies node_modules/.bin/jest
 
 test-watch:
 	node --harmony_proxies node_modules/.bin/jest --watch --no-watchman
-
-test-ci:
-	make bootstrap
-	make test
 
 prettier:
 	prettier --write --single-quote --trailing-comma=es5 \"packages/react-toolbox-core/src/**/*.js\"
