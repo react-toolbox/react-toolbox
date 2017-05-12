@@ -1,0 +1,20 @@
+{
+  "name": "react-toolbox-core-site",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "normalize.css": "^7.0.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  },
+  "devDependencies": {
+    "react-scripts": "0.9.5",
+    "styled-components": "^1.4.6"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
