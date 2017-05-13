@@ -215,7 +215,7 @@ const factory = (Input) => {
             onClick={this.handleClick}
             required={this.props.required}
             readOnly
-            ref={(node) => { this.inputNode = node && node.getWrappedInstance(); }}
+            ref={(node) => { this.inputNode = node && node.inputNode; }}
             type={template && selected ? 'hidden' : null}
             theme={theme}
             themeNamespace="input"
