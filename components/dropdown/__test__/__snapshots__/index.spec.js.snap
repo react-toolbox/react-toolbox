@@ -20,26 +20,27 @@ exports[`Dropdown snapshot testing Spain selected 1`] = `
     value="Spain" />
   <ul
     className="values">
-    <li
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      England
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="England"
+      value="EN-gb" />
+    <DropdownItem
       className="selected"
-      onClick={[Function]}>
-      Spain
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="Spain"
+      value="ES-es" />
+    <DropdownItem
       className="disabled"
-      onClick={false}>
-      Thailand
-    </li>
-    <li
+      disabled={true}
+      handleSelect={[Function]}
+      label="Thailand"
+      value="TH-th" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      USA
-    </li>
+      handleSelect={[Function]}
+      label="USA"
+      value="EN-en" />
   </ul>
 </div>
 `;
@@ -66,26 +67,27 @@ exports[`Dropdown snapshot testing allowBlank=false 1`] = `
     value="England" />
   <ul
     className="values">
-    <li
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      England
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="England"
+      value="EN-gb" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      Spain
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="Spain"
+      value="ES-es" />
+    <DropdownItem
       className="disabled"
-      onClick={false}>
-      Thailand
-    </li>
-    <li
+      disabled={true}
+      handleSelect={[Function]}
+      label="Thailand"
+      value="TH-th" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      USA
-    </li>
+      handleSelect={[Function]}
+      label="USA"
+      value="EN-en" />
   </ul>
 </div>
 `;
@@ -112,26 +114,27 @@ exports[`Dropdown snapshot testing disabled 1`] = `
     value="" />
   <ul
     className="values">
-    <li
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      England
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="England"
+      value="EN-gb" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      Spain
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="Spain"
+      value="ES-es" />
+    <DropdownItem
       className="disabled"
-      onClick={false}>
-      Thailand
-    </li>
-    <li
+      disabled={true}
+      handleSelect={[Function]}
+      label="Thailand"
+      value="TH-th" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      USA
-    </li>
+      handleSelect={[Function]}
+      label="USA"
+      value="EN-en" />
   </ul>
 </div>
 `;
@@ -158,26 +161,27 @@ exports[`Dropdown snapshot testing none selected 1`] = `
     value="" />
   <ul
     className="values">
-    <li
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      England
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="England"
+      value="EN-gb" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      Spain
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="Spain"
+      value="ES-es" />
+    <DropdownItem
       className="disabled"
-      onClick={false}>
-      Thailand
-    </li>
-    <li
+      disabled={true}
+      handleSelect={[Function]}
+      label="Thailand"
+      value="TH-th" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      USA
-    </li>
+      handleSelect={[Function]}
+      label="USA"
+      value="EN-en" />
   </ul>
 </div>
 `;
@@ -204,26 +208,27 @@ exports[`Dropdown snapshot testing required=true 1`] = `
     value="" />
   <ul
     className="values">
-    <li
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      England
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="England"
+      value="EN-gb" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      Spain
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="Spain"
+      value="ES-es" />
+    <DropdownItem
       className="disabled"
-      onClick={false}>
-      Thailand
-    </li>
-    <li
+      disabled={true}
+      handleSelect={[Function]}
+      label="Thailand"
+      value="TH-th" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      USA
-    </li>
+      handleSelect={[Function]}
+      label="USA"
+      value="EN-en" />
   </ul>
 </div>
 `;
@@ -250,26 +255,27 @@ exports[`Dropdown snapshot testing with className 1`] = `
     value="" />
   <ul
     className="values">
-    <li
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      England
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="England"
+      value="EN-gb" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      Spain
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="Spain"
+      value="ES-es" />
+    <DropdownItem
       className="disabled"
-      onClick={false}>
-      Thailand
-    </li>
-    <li
+      disabled={true}
+      handleSelect={[Function]}
+      label="Thailand"
+      value="TH-th" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      USA
-    </li>
+      handleSelect={[Function]}
+      label="USA"
+      value="EN-en" />
   </ul>
 </div>
 `;
@@ -297,26 +303,27 @@ exports[`Dropdown snapshot testing with error message 1`] = `
     value="" />
   <ul
     className="values">
-    <li
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      England
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="England"
+      value="EN-gb" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      Spain
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="Spain"
+      value="ES-es" />
+    <DropdownItem
       className="disabled"
-      onClick={false}>
-      Thailand
-    </li>
-    <li
+      disabled={true}
+      handleSelect={[Function]}
+      label="Thailand"
+      value="TH-th" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      USA
-    </li>
+      handleSelect={[Function]}
+      label="USA"
+      value="EN-en" />
   </ul>
 </div>
 `;
@@ -344,26 +351,27 @@ exports[`Dropdown snapshot testing with label 1`] = `
     value="" />
   <ul
     className="values">
-    <li
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      England
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="England"
+      value="EN-gb" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      Spain
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="Spain"
+      value="ES-es" />
+    <DropdownItem
       className="disabled"
-      onClick={false}>
-      Thailand
-    </li>
-    <li
+      disabled={true}
+      handleSelect={[Function]}
+      label="Thailand"
+      value="TH-th" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      USA
-    </li>
+      handleSelect={[Function]}
+      label="USA"
+      value="EN-en" />
   </ul>
 </div>
 `;
@@ -390,26 +398,27 @@ exports[`Dropdown snapshot testing with minimum properties 1`] = `
     value="" />
   <ul
     className="values">
-    <li
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      England
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="England"
+      value="EN-gb" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      Spain
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="Spain"
+      value="ES-es" />
+    <DropdownItem
       className="disabled"
-      onClick={false}>
-      Thailand
-    </li>
-    <li
+      disabled={true}
+      handleSelect={[Function]}
+      label="Thailand"
+      value="TH-th" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      USA
-    </li>
+      handleSelect={[Function]}
+      label="USA"
+      value="EN-en" />
   </ul>
 </div>
 `;
@@ -436,26 +445,27 @@ exports[`Dropdown snapshot testing with template 1`] = `
     value="" />
   <ul
     className="values">
-    <li
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      {\"value\":\"EN-gb\",\"label\":\"England\"}
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="{\"value\":\"EN-gb\",\"label\":\"England\"}"
+      value="EN-gb" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      {\"value\":\"ES-es\",\"label\":\"Spain\"}
-    </li>
-    <li
+      handleSelect={[Function]}
+      label="{\"value\":\"ES-es\",\"label\":\"Spain\"}"
+      value="ES-es" />
+    <DropdownItem
       className="disabled"
-      onClick={false}>
-      {\"value\":\"TH-th\",\"label\":\"Thailand\",\"disabled\":true}
-    </li>
-    <li
+      disabled={true}
+      handleSelect={[Function]}
+      label="{\"value\":\"TH-th\",\"label\":\"Thailand\",\"disabled\":true}"
+      value="TH-th" />
+    <DropdownItem
       className=""
-      onClick={[Function]}>
-      {\"value\":\"EN-en\",\"label\":\"USA\"}
-    </li>
+      handleSelect={[Function]}
+      label="{\"value\":\"EN-en\",\"label\":\"USA\"}"
+      value="EN-en" />
   </ul>
 </div>
 `;
