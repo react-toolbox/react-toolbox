@@ -48,7 +48,7 @@ class App extends Component {
               <ClaimDescription>Use the same core logic to build both react and react native components </ClaimDescription>
             </Claim>
           </Claims>
-          <MovingClaim duration={10}>
+          <MovingClaim duration={30}>
             highly tested —·— beautiful developer experience —·— only well crafted components
           </MovingClaim>
         </ClaimsSection>
