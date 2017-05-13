@@ -4,6 +4,7 @@ lib
 gulpfile.js
 packages/react-toolbox
 packages/react-toolbox-core
+packages/react-toolbox-core-site
 packages/react-toolbox-css
 packages/react-toolbox-docs
 packages/react-toolbox-fela
