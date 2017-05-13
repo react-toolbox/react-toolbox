@@ -161,12 +161,14 @@ const ClaimsSection = styled.div`
   border-top: 1px solid #000;
   margin-top: 32px;
   min-height: 200px;
-  padding: 32px 0;
+  padding: 32px 0 52px;
 `;
 
 const Claims = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   margin-top: 32px;
 
   @media (max-width: 770px) {
@@ -178,7 +180,8 @@ const Claims = styled.div`
 
 const Claim = styled.div`
   flex: 1;
-  padding: 10px;
+  margin: 20px;
+  max-width: 280px;
   text-align: center;
   text-transform: lowercase;
 `;
