@@ -48,7 +48,7 @@ class App extends Component {
               <ClaimDescription>Use the same core logic to build both react and react native components </ClaimDescription>
             </Claim>
           </Claims>
-          <MovingClaim duration={30}>
+          <MovingClaim duration={15}>
             highly tested —·— beautiful developer experience —·— only well crafted components
           </MovingClaim>
         </ClaimsSection>
@@ -159,9 +159,14 @@ const Strong = styled.strong`
 const ClaimsSection = styled.div`
   background-color: #FAFAFA;
   border-top: 1px solid #000;
+  margin-bottom: 70px;
   margin-top: 32px;
   min-height: 200px;
   padding: 32px 0 52px;
+
+  @media (max-width: 550px) {
+    margin-bottom: 120px;
+  }
 `;
 
 const Claims = styled.div`
@@ -207,9 +212,12 @@ const ClaimDescription = styled.p`
 
 // -- Buttons section
 const ButtonsSection = styled.div`
-  border-top: 1px solid #000;
+  border: 1px solid #000;
+  bottom: 0;
   display: flex;
   flex-direction: row;
+  position: fixed;
+  width: 100%;
 
   @media (max-width: 550px) {
     flex-direction: column;
@@ -225,6 +233,10 @@ const BigButton = styled.button`
   line-height: 70px;
   margin: 0;
   padding: 0;
+
+  @media (max-width: 550px) {
+    line-height: 60px;
+  }
 `;
 
 export default App;

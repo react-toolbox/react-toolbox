@@ -21,7 +21,7 @@ export default class MovingClaim extends Component {
 
   componentDidMount() {
     this.setState({ claims: [this.count] });
-    this.interval = setInterval(this.handleInterval, 10);
+    this.interval = setInterval(this.handleInterval, 100);
     this.count += 1;
   }
 
@@ -34,15 +34,17 @@ export default class MovingClaim extends Component {
     const firstNode = this.nodes[firstIndex];
     const { width } = getViewport();
 
-    const { left, right } = firstNode.getBoundingClientRect();
-    if (right >= width && this.state.claims.length === 1 && left > 0) {
-      this.setState({ claims: [...this.state.claims, this.count] });
-      this.count += 1;
-    }
+    if (width > 650) {
+      const { left, right } = firstNode.getBoundingClientRect();
+      if (right >= width && this.state.claims.length === 1 && left > 0) {
+        this.setState({ claims: [...this.state.claims, this.count] });
+        this.count += 1;
+      }
 
-    if (left >= width && this.state.claims.length === 2) {
-      this.setState({ claims: this.state.claims.slice(1) });
-      delete this.nodes[firstNode];
+      if (left >= width && this.state.claims.length === 2) {
+        this.setState({ claims: this.state.claims.slice(1) });
+        delete this.nodes[firstIndex];
+      }
     }
   };
 
@@ -76,25 +78,34 @@ export default class MovingClaim extends Component {
 }
 
 const slideViewport = keyframes`
-  from { transform: translateX(-100%); }
-  to { transform: translateX(calc(120vw)); }
+  0% { transform: translate3d(-100%, 0, 0); }
+  100% { transform: translate3d(calc(100vw + 100%), 0, 0); }
 `;
 
 const MovingClaimWrapper = styled.div`
-  min-height: 20px;
+  height: 20px;
   margin-top: 36px;
   overflow: hidden;
   position: relative;
-`
+  width: 100%;
+`;
 
 const Claim = styled.span`
-  animation: ${slideViewport} ${props => props.duration}s linear infinite;
+  animation: ${slideViewport} ${props => props.duration}s linear;
+  backface-visibility: hidden;
   color: #333438;
   display: inline-block;
   font-size: 14px;
+  left: 0;
   line-height: 20px;
   opacity: 0.6;
   padding: 0 20px;
   position: absolute;
+  top: 0;
+  transform: translate3d(-100%, 0, 0);
   white-space: nowrap;
+
+  @media (max-width: 650px) {
+    animation: ${slideViewport} ${props => props.duration}s linear infinite;
+  }
 `;
