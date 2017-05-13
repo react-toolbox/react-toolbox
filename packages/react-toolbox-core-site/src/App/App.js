@@ -14,7 +14,7 @@ import star from './star.svg';
 class App extends Component {
   render() {
     return (
-      <div>
+      <MainWrapper>
         <ContentWrapper>
           <Header>
             <Banner><Box src={box} />react-toolbox-core</Banner>
@@ -57,10 +57,14 @@ class App extends Component {
           <BigButton primary>github</BigButton>
           <BigButton>read the article 👍</BigButton>
         </ButtonsSection>
-      </div>
+      </MainWrapper>
     );
   }
 }
+
+const MainWrapper = styled.div`
+  border: 1px solid #000;
+`;
 
 const ContentWrapper = styled.div`
   margin: 0 auto;
@@ -200,7 +204,7 @@ const ClaimDescription = styled.p`
 
 // -- Buttons section
 const ButtonsSection = styled.div`
-  border: 1px solid #000;
+  border-top: 1px solid #000;
   display: flex;
   flex-direction: row;
 

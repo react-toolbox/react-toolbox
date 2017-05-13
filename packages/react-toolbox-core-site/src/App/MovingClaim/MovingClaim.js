@@ -35,7 +35,7 @@ export default class MovingClaim extends Component {
     const { width } = getViewport();
 
     const { left, right } = firstNode.getBoundingClientRect();
-    if (right >= width && this.state.claims.length === 1) {
+    if (right >= width && this.state.claims.length === 1 && left > 0) {
       this.setState({ claims: [...this.state.claims, this.count] });
       this.count += 1;
     }
