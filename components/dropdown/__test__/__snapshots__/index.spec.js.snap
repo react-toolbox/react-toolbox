@@ -15,6 +15,7 @@ exports[`Dropdown snapshot testing Spain selected 1`] = `
     required={false}
     tabIndex="0"
     theme={Object {}}
+    themeNamespace="input"
     type={null}
     value="Spain" />
   <ul
@@ -60,6 +61,7 @@ exports[`Dropdown snapshot testing allowBlank=false 1`] = `
     required={false}
     tabIndex="0"
     theme={Object {}}
+    themeNamespace="input"
     type={null}
     value="England" />
   <ul
@@ -105,6 +107,7 @@ exports[`Dropdown snapshot testing disabled 1`] = `
     required={false}
     tabIndex="0"
     theme={Object {}}
+    themeNamespace="input"
     type={null}
     value="" />
   <ul
@@ -150,6 +153,7 @@ exports[`Dropdown snapshot testing none selected 1`] = `
     required={false}
     tabIndex="0"
     theme={Object {}}
+    themeNamespace="input"
     type={null}
     value="" />
   <ul
@@ -195,6 +199,7 @@ exports[`Dropdown snapshot testing required=true 1`] = `
     required={true}
     tabIndex="0"
     theme={Object {}}
+    themeNamespace="input"
     type={null}
     value="" />
   <ul
@@ -240,6 +245,7 @@ exports[`Dropdown snapshot testing with className 1`] = `
     required={false}
     tabIndex="0"
     theme={Object {}}
+    themeNamespace="input"
     type={null}
     value="" />
   <ul
@@ -286,6 +292,7 @@ exports[`Dropdown snapshot testing with error message 1`] = `
     required={false}
     tabIndex="0"
     theme={Object {}}
+    themeNamespace="input"
     type={null}
     value="" />
   <ul
@@ -332,6 +339,7 @@ exports[`Dropdown snapshot testing with label 1`] = `
     required={false}
     tabIndex="0"
     theme={Object {}}
+    themeNamespace="input"
     type={null}
     value="" />
   <ul
@@ -377,6 +385,7 @@ exports[`Dropdown snapshot testing with minimum properties 1`] = `
     required={false}
     tabIndex="0"
     theme={Object {}}
+    themeNamespace="input"
     type={null}
     value="" />
   <ul
@@ -422,6 +431,7 @@ exports[`Dropdown snapshot testing with template 1`] = `
     required={false}
     tabIndex="0"
     theme={Object {}}
+    themeNamespace="input"
     type={null}
     value="" />
   <ul
