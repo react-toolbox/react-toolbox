@@ -94,5 +94,7 @@ const Claim = styled.span`
   font-size: 14px;
   line-height: 20px;
   opacity: 0.6;
+  padding: 0 20px;
   position: absolute;
+  white-space: nowrap;
 `;
