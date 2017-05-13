@@ -20,9 +20,9 @@ export default class MovingClaim extends Component {
   state = { claims: [] };
 
   componentDidMount() {
-    this.count += 1;
     this.setState({ claims: [this.count] });
     this.interval = setInterval(this.handleInterval, 10);
+    this.count += 1;
   }
 
   componentWillUnmount() {
@@ -54,7 +54,7 @@ export default class MovingClaim extends Component {
     for (let i = 0; i < claims.length; i++) {
       claimElements.push(
         <Claim
-          key={i}
+          key={claims[i]}
           innerRef={node => { this.nodes[claims[i]] = node; }}
           duration={duration}
         >
