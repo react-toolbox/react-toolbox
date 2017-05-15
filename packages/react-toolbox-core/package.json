@@ -4,10 +4,8 @@
   "description": "A set of factories to generate universal agnostic components",
   "main": "./lib/index.js",
   "scripts": {
-    "build": "babel ./src --out-dir ./lib --ignore '__tests__'",
-    "build:watch": "babel ./src --out-dir ./lib --ignore '__tests__' --watch",
-    "build:ts": "tsc",
-    "build:ts:watch": "tsc --watch",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
     "build:docs": "typedoc --out ./docs",
     "prepublish": "yarn run build",
     "test": "node --harmony_proxies node_modules/.bin/jest --maxWorkers 4",
@@ -32,6 +30,7 @@
     "@types/react": "^15.0.24",
     "@types/react-native": "^0.44.0",
     "babel-cli": "^6.24.1",
+    "tslint": "^5.2.0",
     "typedoc": "^0.6.0",
     "typescript": "next"
   }

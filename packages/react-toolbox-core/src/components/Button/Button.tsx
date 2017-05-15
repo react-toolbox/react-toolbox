@@ -1,47 +1,47 @@
 import * as React from 'react';
-import { ComponentClass, MouseEvent, ReactNode, PureComponent, PropTypes } from 'react';
+import { ComponentClass, MouseEvent, PureComponent, ReactNode } from 'react';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 import { Component }  from '../../types';
 
-export interface ButtonProps {
-  accent: boolean,
-  children: ReactNode,
-  flat: boolean,
-  floating: boolean,
-  href: string,
-  innerRef: (instance: HTMLElement) => void,
-  label: string,
-  mini: boolean,
-  neutral: boolean,
-  onMouseLeave: (event: MouseEvent<any>) => void,
-  onMouseUp: (event: MouseEvent<any>) => void,
-  primary: boolean,
-  raised: boolean,
-  toggle: boolean,
-  type: string,
+export interface ButtonNodeProps {
+  flat: boolean;
+  innerRef(instance: HTMLElement): void;
+  onMouseLeave(event: MouseEvent<any>): void;
+  onMouseUp(event: MouseEvent<any>): void;
+  primary: boolean;
+  type: string | null;
 }
 
-export interface ButtonNodeProps {
-  flat: boolean,
-  innerRef: (instance: HTMLElement) => void,
-  onMouseLeave: (event: MouseEvent<any>) => void,
-  onMouseUp: (event: MouseEvent<any>) => void,
-  primary: boolean,
-  type: string | null,
+export interface ButtonProps {
+  accent: boolean;
+  children: ReactNode;
+  flat: boolean;
+  floating: boolean;
+  href: string;
+  innerRef(instance: HTMLElement): void;
+  label: string;
+  mini: boolean;
+  neutral: boolean;
+  onMouseLeave(event: MouseEvent<any>): void;
+  onMouseUp(event: MouseEvent<any>): void;
+  primary: boolean;
+  raised: boolean;
+  toggle: boolean;
+  type: string;
 }
 
 export interface ButtonFactoryArgs {
-  ButtonNode: Component<ButtonNodeProps>,
-  LinkNode: Component<ButtonNodeProps>,
-  passthrough: PassTroughFunction<ButtonProps, 'ButtonNode' | 'LinkNode'>
+  ButtonNode: Component<ButtonNodeProps>;
+  LinkNode: Component<ButtonNodeProps>;
+  passthrough: PassTroughFunction<ButtonProps, 'ButtonNode' | 'LinkNode'>;
 }
 
-export type Button = ComponentClass<ButtonProps>;
-
-const buttonFactory = ({ ButtonNode, LinkNode, passthrough }: ButtonFactoryArgs): Button => {
+export default function buttonFactory(
+  { ButtonNode, LinkNode, passthrough }: ButtonFactoryArgs,
+): ComponentClass<ButtonProps> {
   const passProps = getPassThrough(passthrough);
   return class Button extends PureComponent<ButtonProps, void> {
-    static defaultProps = {
+    public static defaultProps = {
       accent: false,
       flat: false,
       floating: false,
@@ -52,29 +52,37 @@ const buttonFactory = ({ ButtonNode, LinkNode, passthrough }: ButtonFactoryArgs)
       type: 'button',
     };
 
-    rootNode: HTMLElement | null = null;
+    private rootNode: HTMLElement | null = null;
 
-    handleMouseUp = event => {
-      if (this.rootNode) this.rootNode.blur();
+    private handleMouseUp = event => {
+      if (this.rootNode) {
+        this.rootNode.blur();
+      }
+
       if (this.props.onMouseUp) {
         this.props.onMouseUp(event);
       }
-    };
+    }
 
-    handleMouseLeave = event => {
-      if (this.rootNode) this.rootNode.blur();
+    private handleMouseLeave = event => {
+      if (this.rootNode) {
+        this.rootNode.blur();
+      }
+
       if (this.props.onMouseLeave) {
         this.props.onMouseLeave(event);
       }
-    };
+    }
 
-    handleInnerRef = node => {
+    private handleInnerRef = node => {
       const { innerRef } = this.props;
       this.rootNode = node;
-      if (innerRef) innerRef(node);
-    };
+      if (innerRef) {
+        innerRef(node);
+      }
+    }
 
-    render() {
+    public render() {
       const nodeTag = this.props.href ? 'LinkNode' : 'ButtonNode';
       const ButtonElement = this.props.href ? LinkNode : ButtonNode;
       const { children, primary, flat, label, type, ...others } = this.props;
@@ -98,7 +106,5 @@ const buttonFactory = ({ ButtonNode, LinkNode, passthrough }: ButtonFactoryArgs)
         </ButtonElement>
       );
     }
-  }
-};
-
-export default buttonFactory;
+  };
+}

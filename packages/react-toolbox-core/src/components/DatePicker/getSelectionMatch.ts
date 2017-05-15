@@ -2,9 +2,9 @@ import { addMonths, isBefore, isSameDay, isSameMonth, isWithinRange, setDate } f
 import { PickerDate, SelectedSource } from './types';
 
 export interface SelectionMatch {
-  inRange: boolean,
-  selected: boolean,
-  source: SelectedSource,
+  inRange: boolean;
+  selected: boolean;
+  source: SelectedSource;
 }
 
 export default function getSelectionMatch(day: Date, selected: PickerDate): SelectionMatch {

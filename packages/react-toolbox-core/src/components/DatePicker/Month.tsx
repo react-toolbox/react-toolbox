@@ -1,7 +1,14 @@
 import * as React from 'react';
 import { range } from 'ramda';
 import { ComponentClass, PureComponent, PropTypes } from 'react';
-import { addDays, differenceInCalendarDays, lastDayOfMonth, lastDayOfWeek, startOfWeek, subDays } from 'date-fns';
+import {
+  addDays,
+  differenceInCalendarDays,
+  lastDayOfMonth,
+  lastDayOfWeek,
+  startOfWeek,
+  subDays,
+} from 'date-fns';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 import getFullDayOfWeek from '../../locale/getFullDayOfWeek';
 import getFullMonth from '../../locale/getFullMonth';
@@ -9,68 +16,87 @@ import { PickerDate, DateChecker } from './types';
 import { Day } from './Day';
 
 export interface MonthTitleProps {
-  viewDate: Date
-};
-
-export interface WeekdayProps {
-  children: string,
-  weekDay: number,
-};
-
-export type MonthProps = {
-  highlighted: PickerDate,
-  isDayBlocked: DateChecker,
-  isDayDisabled: DateChecker,
-  locale: string | object,
-  onDayClick: (day: Date, event: React.MouseEvent<any>) => void,
-  onDayMouseEnter: (day: Date, event: React.MouseEvent<any>) => void,
-  onDayMouseLeave: (day: Date, event: React.MouseEvent<any>) => void,
-  selected: PickerDate,
-  sundayFirstDayOfWeek: boolean,
-  viewDate: Date,
+  viewDate: Date;
 }
 
-export type Month = ComponentClass<MonthProps>;
+export interface WeekdayProps {
+  children: string;
+  weekDay: number;
+}
+
+export interface MonthProps {
+  highlighted?: PickerDate;
+  isDayBlocked: DateChecker;
+  isDayDisabled: DateChecker;
+  locale: string | object;
+  onDayClick(day: Date, event: React.MouseEvent<any>): void;
+  onDayMouseEnter(day: Date, event: React.MouseEvent<any>): void;
+  onDayMouseLeave(day: Date, event: React.MouseEvent<any>): void;
+  selected?: PickerDate;
+  sundayFirstDayOfWeek: boolean;
+  viewDate: Date;
+}
+
+export type MonthNodes =
+  'Day' |
+  'DaysWeek' |
+  'DaysWrapper' |
+  'Weekday' |
+  'MonthTitle' |
+  'MonthWrapper' |
+  'WeekDay' |
+  'WeekdaysWrapper';
 
 export interface MonthFactoryArgs {
   /**
    * Used to render each Day of the Month.
    */
-  Day: Day,
+  Day: Day;
   /**
    * Used wrap each bunch of days that compose a week.
    */
-  DaysWeek: ComponentClass<any>,
+  DaysWeek: ComponentClass<any>;
   /**
    * Used to render a wrapper around all weeks..
    */
-  DaysWrapper: ComponentClass<any>,
+  DaysWrapper: ComponentClass<any>;
   /**
    * Used to render the month title
    */
-  MonthTitle: ComponentClass<MonthTitleProps>,
+  MonthTitle: ComponentClass<MonthTitleProps>;
   /**
    * Used as a wrapper of the whole month component.
    */
-  MonthWrapper: ComponentClass<any>,
+  MonthWrapper: ComponentClass<any>;
   /**
    * Use it to render each Weekday
    */
-  Weekday: ComponentClass<WeekdayProps>,
+  Weekday: ComponentClass<WeekdayProps>;
   /**
    * Used to render a wrapper around all weekdays
    */
-  WeekdaysWrapper: ComponentClass<any>
+  WeekdaysWrapper: ComponentClass<any>;
   /**
    * Use it to customize how props are passed around.
    */
-  passthrough: PassTroughFunction<MonthProps, 'Day' | 'DaysWeek' | 'DaysWrapper' | 'Weekday' | 'MonthTitle' | 'MonthWrapper' | 'WeekDay' | 'WeekdaysWrapper'>,
-};
+  passthrough: PassTroughFunction<MonthProps, MonthNodes>;
+}
 
-const monthFactory = ({ Day, DaysWeek, DaysWrapper, MonthTitle, MonthWrapper, Weekday, WeekdaysWrapper, passthrough }: MonthFactoryArgs): Month => {
+export type Month = ComponentClass<MonthProps>;
+
+export default function monthFactory({
+  Day,
+  DaysWeek,
+  DaysWrapper,
+  MonthTitle,
+  MonthWrapper,
+  Weekday,
+  WeekdaysWrapper,
+  passthrough,
+}: MonthFactoryArgs): Month {
   const passProps = getPassThrough(passthrough);
   return class Month extends PureComponent<MonthProps, void> {
-    renderDays = () => {
+    private renderDays = () => {
       const {
         highlighted,
         isDayBlocked,
@@ -131,9 +157,9 @@ const monthFactory = ({ Day, DaysWeek, DaysWrapper, MonthTitle, MonthWrapper, We
       }
 
       return weeks;
-    };
+    }
 
-    renderWeekDays = () => {
+    private renderWeekDays = () => {
       const { locale, sundayFirstDayOfWeek } = this.props;
       const indexes = range(0, 7);
       const sortedDaysIdx = sundayFirstDayOfWeek
@@ -148,9 +174,9 @@ const monthFactory = ({ Day, DaysWeek, DaysWrapper, MonthTitle, MonthWrapper, We
           {getFullDayOfWeek(weekDay, locale)}
         </Weekday>
       ));
-    };
+    }
 
-    render() {
+    public render() {
       const {
         highlighted,
         isDayBlocked,
@@ -161,7 +187,7 @@ const monthFactory = ({ Day, DaysWeek, DaysWrapper, MonthTitle, MonthWrapper, We
         selected,
         sundayFirstDayOfWeek,
         viewDate,
-        ...rest
+        ...rest,
       } = this.props;
       return (
         <MonthWrapper {...rest} {...passProps(this.props, 'MonthWrapper', this)}>
@@ -177,7 +203,5 @@ const monthFactory = ({ Day, DaysWeek, DaysWrapper, MonthTitle, MonthWrapper, We
         </MonthWrapper>
       );
     }
-  }
-};
-
-export default monthFactory;
+  };
+}

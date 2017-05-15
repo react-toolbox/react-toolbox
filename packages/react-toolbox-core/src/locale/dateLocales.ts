@@ -1,3 +1,5 @@
+/* tslint:disable */
+
 export interface Locale {
   /**
    * Month names.
@@ -25,84 +27,84 @@ export interface Locales {
   /**
    * German.
    */
-  de: Locale,
+  de: Locale;
   /**
    * Norwegian.
    */
-  no: Locale,
+  no: Locale;
   /**
    * English.
    */
-  en: Locale,
+  en: Locale;
   /**
    * Spanish.
    */
-  es: Locale,
+  es: Locale;
   /**
    * Afrikaans.
    */
-  af: Locale,
+  af: Locale;
   /**
    * Arabic.
    */
-  ar: Locale,
+  ar: Locale;
   /**
    * Belarusian.
    */
-  be: Locale,
+  be: Locale;
   /**
    * Bulgarian.
    */
-  bg: Locale,
+  bg: Locale;
   /**
    * Bengali - Indian.
    */
-  bn: Locale,
+  bn: Locale;
   /**
    * Tibetan.
    */
-  bo: Locale,
+  bo: Locale;
   /**
    * Breton.
    */
-  br: Locale,
+  br: Locale;
   /**
    * Bosnian.
    */
-  bs: Locale,
+  bs: Locale;
   /**
    * Catalan.
    */
-  ca: Locale,
+  ca: Locale;
   /**
    * Galician.
    */
-  gl: Locale,
+  gl: Locale;
   /**
    * Basque.
    */
-  eu: Locale,
+  eu: Locale;
   /**
    * Portuguese.
    */
-  pt: Locale,
+  pt: Locale;
   /**
    * Italian.
    */
-  it: Locale,
+  it: Locale;
   /**
    * French.
    */
-  fr: Locale,
+  fr: Locale;
   /**
    * Russian.
    */
-  ru: Locale,
+  ru: Locale;
   /**
    * Ukrainian.
    */
-  ua: Locale,
-};
+  ua: Locale;
+}
 
 export default function getLocaleObject(locale: keyof Locales | Locale): Locale {
   return typeof locale === 'string'

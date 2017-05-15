@@ -83,6 +83,7 @@
     "stylelint": "^7.10.1",
     "stylelint-config-standard": "^16.0.0",
     "stylelint-order": "^0.4.4",
+    "tslint": "^5.2.0",
     "typescript": "^2.3.2",
     "webpack": "^2.4.1",
     "webpack-dev-middleware": "^1.10.2",

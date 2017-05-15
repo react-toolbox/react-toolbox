@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { assoc, keys, dissoc } from 'ramda';
-import { ComponentClass, ReactNode, Component, PropTypes, MouseEvent } from 'react';
-import { Component as GenericComponent }  from '../../types';
+import { assoc, dissoc, keys } from 'ramda';
+import { Component, ComponentClass, MouseEvent, ReactNode } from 'react';
 import { NativeComponent } from 'react-native';
+import { Component as GenericComponent }  from '../../types';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 import getMousePosition from '../../utils/getMousePosition';
 import getTouchPosition from '../../utils/getTouchPosition';
@@ -17,47 +17,47 @@ export type RippleOptions = {
 };
 
 export interface RippleWrapperProps {
-  className: string,
-  innerRef: (instance: HTMLElement) => void,
+  className: string;
+  innerRef(instance: HTMLElement): void;
 }
 
 export interface RippleNodeProps {
-  active: boolean,
-  idx: string,
-  innerRef: (instance: HTMLElement) => void,
-  isTouch: boolean,
-  onDeactivate: () => void,
-  onFinish: (idx: string) => void,
-  spreadSize: number
-  startX: number,
-  startY: number,
+  active: boolean;
+  idx: string;
+  innerRef(instance: HTMLElement): void;
+  isTouch: boolean;
+  onDeactivate(): void;
+  onFinish(idx: string): void;
+  spreadSize: number;
+  startX: number;
+  startY: number;
 }
 
 export interface WithRippleFactoryArgs {
-  RippleNode: GenericComponent<RippleNodeProps>,
-  RippleWrapper: GenericComponent<RippleWrapperProps>,
-  passthrough: PassTroughFunction<RippledProps, 'RippleWrapper' | 'RippleNode'>,
+  RippleNode: GenericComponent<RippleNodeProps>;
+  RippleWrapper: GenericComponent<RippleWrapperProps>;
+  passthrough: PassTroughFunction<RippledProps, 'RippleWrapper' | 'RippleNode'>;
 }
 
 export interface RippledProps {
-  children: ReactNode,
-  disabled: boolean,
-  onMouseDown: (event: MouseEvent<any>) => void,
-  onMouseUp: (event: MouseEvent<any>) => void,
-  onTouchEnd: (event: MouseEvent<any>) => void,
-  onTouchStart: (event: MouseEvent<any>) => void,
-  ripple: boolean,
-  rippleCentered: boolean,
-  rippleClassName: string,
-  rippleMultiple: boolean,
-  rippleSpread: number,
+  children: ReactNode;
+  disabled: boolean;
+  onMouseDown(event: MouseEvent<any>): void;
+  onMouseUp(event: MouseEvent<any>): void;
+  onTouchEnd(event: MouseEvent<any>): void;
+  onTouchStart(event: MouseEvent<any>): void;
+  ripple: boolean;
+  rippleCentered: boolean;
+  rippleClassName: string;
+  rippleMultiple: boolean;
+  rippleSpread: number;
 }
 
 export type RippleWrapperDescriptor = {
   width: number,
   x: number,
   y: number,
-}
+};
 
 export type RippleDescriptor = {
   active: boolean,
@@ -65,12 +65,12 @@ export type RippleDescriptor = {
   width: number,
   x: number,
   y: number,
-}
+};
 
 export interface RippledState {
   ripples: {
-    [key: string]: RippleDescriptor
-  },
+    [key: string]: RippleDescriptor,
+  };
 }
 
 const defaults: RippleOptions = {
@@ -82,10 +82,10 @@ const defaults: RippleOptions = {
 };
 
 export interface DecoratedProps {
-  onMouseDown: (event: MouseEvent<any>) => void,
-  onMouseUp: (event: MouseEvent<any>) => void,
-  onTouchEnd: (event: MouseEvent<any>) => void,
-  onTouchStart: (event: MouseEvent<any>) => void,
+  onMouseDown(event: MouseEvent<any>): void;
+  onMouseUp(event: MouseEvent<any>): void;
+  onTouchEnd(event: MouseEvent<any>): void;
+  onTouchStart(event: MouseEvent<any>): void;
 }
 
 const withRippleFactory = ({ RippleNode, RippleWrapper, passthrough }: WithRippleFactoryArgs) => (
@@ -99,9 +99,11 @@ const withRippleFactory = ({ RippleNode, RippleWrapper, passthrough }: WithRippl
       spread: defaultSpread,
     }: RippleOptions = { ...defaults, ...options };
 
-    return function withRipple<P extends DecoratedProps>(ComposedComponent: ComponentClass<P>): ComponentClass<RippledProps> {
+    return function withRipple<P extends DecoratedProps>(
+      ComposedComponent: ComponentClass<P>,
+    ): ComponentClass<RippledProps> {
       return class RippledComponent extends Component<RippledProps, RippledState> {
-        static defaultProps = {
+        public static defaultProps = {
           disabled: false,
           ripple: true,
           rippleCentered: defaultCentered,
@@ -110,31 +112,23 @@ const withRippleFactory = ({ RippleNode, RippleWrapper, passthrough }: WithRippl
           rippleSpread: defaultSpread,
         };
 
-        state = {
+        public state = {
           ripples: {},
         };
 
-        currentCount = 0;
-        deactivateTimeout: number | null = null;
-        ripples: {[key: string]: HTMLElement} = {};
-        rootNode: HTMLElement | NativeComponent | null = null;
-        touchCache = false;
+        private currentCount = 0;
+        private deactivateTimeout: number | null = null;
+        private ripples: {[key: string]: HTMLElement} = {};
+        private rootNode: HTMLElement | NativeComponent | null = null;
+        private touchCache = false;
 
-        componentWillUnmount() {
+        private componentWillUnmount() {
           if (this.deactivateTimeout) {
             clearTimeout(this.deactivateTimeout);
           }
         }
 
-        /**
-         * Find out a descriptor object for the ripple element being created depending on
-         * the position where the it was triggered and the component's dimensions.
-         *
-         * @param {Number} x Coordinate x in the viewport where ripple was triggered
-         * @param {Number} y Coordinate y in the viewport where ripple was triggered
-         * @return {Object} Descriptor element including starting position and width
-         */
-        getDescriptor = (x: number, y: number, isTouch: boolean) => (
+        private getDescriptor = (x: number, y: number, isTouch: boolean) => (
           new Promise<RippleDescriptor>(resolve => {
             if (this.rootNode) {
               measureElement(this.rootNode).then(({ left, top, height, width }) => {
@@ -156,44 +150,20 @@ const withRippleFactory = ({ RippleNode, RippleWrapper, passthrough }: WithRippl
               });
             }
           })
-        );
+        )
 
-        /**
-         * Increments and internal counter and returns the next value as a string. It
-         * is used to assign key references to new ripple elements.
-         *
-         * @return {String} Key to be assigned to a ripple.
-         */
-        getNextKey = () => {
+        private getNextKey = () => {
           this.currentCount += 1;
           return `ripple${this.currentCount}`;
-        };
+        }
 
-        /**
-         * Determine if a ripple should start depending if its a touch event. For mobile both
-         * touchStart and mouseDown are launched so in case is touch we should always trigger
-         * but if its not we should check if a touch was already triggered to decide.
-         *
-         * @param {Boolean} isTouch True in case a touch event triggered the ripple false otherwise.
-         * @return {Boolean} True in case the ripple should trigger or false if it shouldn't.
-         */
-        rippleShouldTrigger(isTouch) {
+        private rippleShouldTrigger(isTouch) {
           const shouldStart = isTouch ? true : !this.touchCache;
           this.touchCache = isTouch;
           return shouldStart;
         }
 
-        /**
-         * Create a ripple animation on an specific point with touch or mouse events. First
-         * decides if the animation should trigger. It retrieves a descriptor for the given
-         * interaction point and modifies the state with the data for a new ripple if its
-         * multiple or substitutes the current ripple if its unique.
-         *
-         * @param {Number} interactionX Coordinate X on the screen where the interaction had happened.
-         * @param {Number} interactionY Coordinate Y on the screen where the interaction had happened.
-         * @param {Boolean} isTouch Determines if the event is a touch or mouse event.
-         */
-        createRipple(interactionX, interactionY, isTouch) {
+        private createRipple(interactionX, interactionY, isTouch) {
           if (this.rippleShouldTrigger(isTouch)) {
             this.getDescriptor(interactionX, interactionY, isTouch).then((descriptor) => {
               const ripples = { [this.getNextKey()]: descriptor };
@@ -206,42 +176,30 @@ const withRippleFactory = ({ RippleNode, RippleWrapper, passthrough }: WithRippl
           }
         }
 
-        /**
-         * Modifies the state to set every ripple store in the state to inactive. All of them
-         * are deactivated because it's not possible to deactivate one and keep the rest. When
-         * the MouseUp happens there should be no ripples left.
-         */
-        handleDeactivate = () => {
+        private handleDeactivate = () => {
           this.setState({
             ripples: keys(this.state.ripples).reduce(
               (result: {[key: string]: RippleDescriptor}, rippleKey: string) =>
                 assoc(
                   rippleKey,
                   { ...this.state.ripples[rippleKey], active: false },
-                  result
+                  result,
                 ),
-              {}
+              {},
             ),
           });
-        };
+        }
 
-        /**
-         * Modifies the state to remove the ripple given as the first argument. This
-         * method should be called when the animation ripple is finish by the injected
-         * RippleNode component.
-         *
-         * @param {String} key Key of the ripple that has to be removed
-         */
-        handleRippleFinish = (key: string) => {
+        private handleRippleFinish = (key: string) => {
           const ripples = dissoc(key, this.state.ripples) as {[key: string]: RippleDescriptor};
           this.setState({ ripples });
-        };
+        }
 
-        handleInnerRef = node => {
+        private handleInnerRef = node => {
           this.rootNode = node;
-        };
+        }
 
-        handleMouseDown = event => {
+        private handleMouseDown = event => {
           if (!this.props.disabled && this.props.ripple) {
             const { x, y } = getMousePosition(event);
             this.createRipple(x, y, false);
@@ -250,9 +208,9 @@ const withRippleFactory = ({ RippleNode, RippleWrapper, passthrough }: WithRippl
           if (this.props.onMouseDown) {
             this.props.onMouseDown(event);
           }
-        };
+        }
 
-        handleTouchStart = event => {
+        private handleTouchStart = event => {
           if (!this.props.disabled) {
             const { x, y } = getTouchPosition(event);
             this.createRipple(x, y, true);
@@ -261,23 +219,23 @@ const withRippleFactory = ({ RippleNode, RippleWrapper, passthrough }: WithRippl
           if (this.props.onTouchStart) {
             this.props.onTouchStart(event);
           }
-        };
+        }
 
-        handleMouseUp = event => {
-          this.deactivateTimeout = setTimeout(this.handleDeactivate, 100);
+        private handleMouseUp = event => {
+          this.deactivateTimeout = window.setTimeout(this.handleDeactivate, 100);
           if (this.props.onMouseUp) {
             this.props.onMouseUp(event);
           }
-        };
+        }
 
-        handleTouchEnd = (event) => {
-          this.deactivateTimeout = setTimeout(this.handleDeactivate, 100);
+        private handleTouchEnd = (event) => {
+          this.deactivateTimeout = window.setTimeout(this.handleDeactivate, 100);
           if (this.props.onMouseUp) {
             this.props.onTouchEnd(event);
           }
-        };
+        }
 
-        renderRipple = (key, className, { x, y, width, active, isTouch }) => (
+        private renderRipple = (key, className, { x, y, width, active, isTouch }) => (
           <RippleWrapper
             {...passProps(this.props, 'RippleWrapper', this)}
             className={className}
@@ -297,9 +255,9 @@ const withRippleFactory = ({ RippleNode, RippleWrapper, passthrough }: WithRippl
               startY={y}
             />
           </RippleWrapper>
-        );
+        )
 
-        render() {
+        public render() {
           const {
             children,
             disabled,
@@ -308,11 +266,11 @@ const withRippleFactory = ({ RippleNode, RippleWrapper, passthrough }: WithRippl
             rippleClassName,
             rippleMultiple,
             rippleSpread,
-            ...other
+            ...other,
           } = this.props;
           const { ripples } = this.state;
           const childRipples = keys(ripples).map(key =>
-            this.renderRipple(key, rippleClassName, ripples[key])
+            this.renderRipple(key, rippleClassName, ripples[key]),
           );
 
           const childProps = {
@@ -333,8 +291,8 @@ const withRippleFactory = ({ RippleNode, RippleWrapper, passthrough }: WithRippl
             ? React.createElement(ComposedComponent, finalProps, children)
             : React.createElement(ComposedComponent, finalProps, [ children, childRipples ]);
         }
-      }
-    }
+      };
+    };
   }
 );
 

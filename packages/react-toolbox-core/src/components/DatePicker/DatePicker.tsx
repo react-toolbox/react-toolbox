@@ -1,81 +1,101 @@
 import * as React from 'react';
-import { createElement, PureComponent, PropTypes, Component, ComponentClass } from 'react';
+import { addMonths } from 'date-fns';
 import { map, range } from 'ramda';
-import * as addMonths from 'date-fns/add_months';
+import { createElement, PureComponent, Component, ComponentClass } from 'react';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
-import { FocusedInput, DateRange, PickerDate, DateChecker } from './types';
-import { SINGLE, RANGE, START_DATE, END_DATE } from './constants';
+import { DateChecker, DateRange, FocusedInput, PickerDate, PickerMode } from './types';
 import { RangePicker } from './RangePicker';
 import { Month } from './Month';
 
 export interface DatePickerProps {
-  focusedInput: FocusedInput,
-  highlighted: PickerDate,
-  isDayBlocked: DateChecker,
-  isDayDisabled: DateChecker,
-  locale: string | object,
-  mode: 'SINGLE' | 'RANGE',
-  numberOfMonths: number,
-  onChange: (date: DateRange) => void,
-  onFocusedInputChange: (focus?: FocusedInput) => void,
-  onHighlightedChange: (date: DateRange) => void,
-  selected: PickerDate,
-  sundayFirstDayOfWeek: boolean,
-  viewDate: Date,
-};
+  focusedInput: FocusedInput;
+  highlighted?: PickerDate;
+  isDayBlocked: DateChecker;
+  isDayDisabled: DateChecker;
+  locale: string | object;
+  mode: PickerMode;
+  numberOfMonths: number;
+  onChange(date: DateRange): void;
+  onDayClick(day: Date, event: React.MouseEvent<any>): void;
+  onDayMouseEnter(day: Date, event: React.MouseEvent<any>): void;
+  onDayMouseLeave(day: Date, event: React.MouseEvent<any>): void;
+  onFocusedInputChange(focus?: FocusedInput): void;
+  onHighlightedChange(date: DateRange): void;
+  selected: PickerDate;
+  sundayFirstDayOfWeek: boolean;
+  viewDate: Date;
+}
 
 export interface DatePickerState {
-  viewDate: Date,
-};
+  viewDate: Date;
+}
 
 export interface ArrowNodeProps {
-  children: string,
-  onClick: (event: React.MouseEvent<any>) => void
-};
+  children: string;
+  onClick(event: React.MouseEvent<any>): void;
+}
+
+export type DatePickerNodes =
+  'NextNode' |
+  'Month' |
+  'PickerWrapper' |
+  'PrevNode' |
+  'SinglePicker' |
+  'RangePicker';
 
 export interface DatePickerArgs {
-  Month: Month,
-  NextNode: ComponentClass<ArrowNodeProps>,
-  PickerWrapper: ComponentClass<any>,
-  PrevNode: ComponentClass<ArrowNodeProps>,
-  RangePicker: RangePicker,
-  SinglePicker: ComponentClass<any>,
-  passthrough: PassTroughFunction<DatePickerProps, 'SinglePicker' | 'RangePicker'>
-};
+  Month: Month;
+  NextNode: ComponentClass<ArrowNodeProps>;
+  PickerWrapper: ComponentClass<any>;
+  PrevNode: ComponentClass<ArrowNodeProps>;
+  RangePicker: RangePicker;
+  SinglePicker: ComponentClass<any>;
+  passthrough: PassTroughFunction<DatePickerProps, DatePickerNodes>;
+}
 
-export type DatePicker = ComponentClass<DatePickerProps>;
-
-const datePickerFactory = ({ Month, NextNode, PickerWrapper, PrevNode, RangePicker, SinglePicker, passthrough }): DatePicker => {
+export default function datePickerFactory({
+  Month,
+  NextNode,
+  PickerWrapper,
+  PrevNode,
+  RangePicker,
+  SinglePicker,
+  passthrough,
+}: DatePickerArgs): ComponentClass<DatePickerProps> {
   const passProps = getPassThrough(passthrough);
   return class DatePicker extends PureComponent<DatePickerProps, DatePickerState> {
-    static defaultProps = {
+    public static defaultProps = {
       mode: 'RANGE',
       numberOfMonths: 2,
     } as DatePickerProps;
 
-    state = {
+    public state = {
       viewDate: this.props.viewDate,
     };
 
-    changeViewDate = viewDate => {
+    private changeViewDate = viewDate => {
       this.setState({ viewDate });
-    };
+    }
 
-    handleNext = () => {
+    private handleNext = () => {
       const { viewDate } = this.state;
       this.changeViewDate(addMonths(viewDate, +1));
-    };
+    }
 
-    handlePrev = () => {
+    private handlePrev = () => {
       const { viewDate } = this.state;
       this.changeViewDate(addMonths(viewDate, -1));
-    };
+    }
 
-    renderMonth = month => {
+    private renderMonth = month => {
       const {
+        highlighted,
         isDayBlocked,
         isDayDisabled,
         locale,
+        onDayClick,
+        onDayMouseEnter,
+        onDayMouseLeave,
         sundayFirstDayOfWeek,
       } = this.props;
       const { viewDate } = this.state;
@@ -84,17 +104,20 @@ const datePickerFactory = ({ Month, NextNode, PickerWrapper, PrevNode, RangePick
       return (
         <Month
           {...passProps(this.props, 'Month', this)}
-          key={`${viewFullYear}${viewMonth}`}
           isDayBlocked={isDayBlocked}
           isDayDisabled={isDayDisabled}
+          key={`${viewFullYear}${viewMonth}`}
           locale={locale}
+          onDayClick={onDayClick}
+          onDayMouseEnter={onDayMouseEnter}
+          onDayMouseLeave={onDayMouseLeave}
           sundayFirstDayOfWeek={sundayFirstDayOfWeek}
           viewDate={new Date(viewFullYear, viewMonth, 1)}
         />
       );
-    };
+    }
 
-    renderPicker = () => {
+    private renderPicker = () => {
       const {
         focusedInput,
         highlighted,
@@ -105,9 +128,9 @@ const datePickerFactory = ({ Month, NextNode, PickerWrapper, PrevNode, RangePick
         onHighlightedChange,
         selected,
       } = this.props;
-      const Picker = mode === SINGLE ? SinglePicker : RangePicker;
+      const Picker = mode === 'SINGLE' ? SinglePicker : RangePicker;
       const children = map(this.renderMonth, range(0, numberOfMonths));
-      const props = mode === SINGLE
+      const props = mode === 'SINGLE'
         ? { ...passProps(this.props, 'SinglePicker', this) }
         : { ...passProps(this.props, 'RangePicker', this), focusedInput, onFocusedInputChange };
 
@@ -118,9 +141,9 @@ const datePickerFactory = ({ Month, NextNode, PickerWrapper, PrevNode, RangePick
         onHighlightedChange,
         selected,
       }, children);
-    };
+    }
 
-    render() {
+    public render() {
       const {
         focusedInput,
         isDayBlocked,
@@ -132,8 +155,9 @@ const datePickerFactory = ({ Month, NextNode, PickerWrapper, PrevNode, RangePick
         selected,
         sundayFirstDayOfWeek,
         viewDate,
-        ...rest
+        ...rest,
       } = this.props;
+
       return (
         <PickerWrapper {...rest} {...passProps(this.props, 'PickerWrapper', this)}>
           <PrevNode
@@ -152,7 +176,5 @@ const datePickerFactory = ({ Month, NextNode, PickerWrapper, PrevNode, RangePick
         </PickerWrapper>
       );
     }
-  }
-};
-
-export default datePickerFactory;
+  };
+}

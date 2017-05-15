@@ -8,14 +8,16 @@ export type PositionDescriptor = {
   height: number,
 };
 
-export default function measureElement(element: HTMLElement | NativeComponent): Promise<PositionDescriptor> {
+export default function measureElement(
+  element: HTMLElement | NativeComponent,
+): Promise<PositionDescriptor> {
   return new Promise<PositionDescriptor>(resolve => {
     if (isReactNative()) {
-      (<NativeComponent>element).measure((x, y, width, height, pageX, pageY) => {
+      (element as NativeComponent).measure((x, y, width, height, pageX, pageY) => {
         resolve({ left: pageX, top: pageY, width, height });
       });
     } else {
-      const { left, top, width, height } = (<HTMLElement>element).getBoundingClientRect();
+      const { left, top, width, height } = (element as HTMLElement).getBoundingClientRect();
       resolve({ left, top, width, height });
     }
   });
