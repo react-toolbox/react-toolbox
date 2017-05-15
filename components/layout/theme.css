@@ -70,19 +70,23 @@
   }
 
   & .panel {
+    height: calc(100vh - var(--appbar-height));
+    max-height: calc(100vh - var(--appbar-height));
     top: var(--appbar-height);
 
     &:not(.bodyScroll) {
-      height: calc(100vh - var(--appbar-height));
-      max-height: calc(100vh - var(--appbar-height));
       overflow-y: scroll;
     }
 
     @media screen and (--xxs-viewport) and (--portrait) {
+      height: calc(100vh - var(--appbar-height-m-portrait));
+      max-height: calc(100vh - var(--appbar-height-m-portrait));
       top: var(--appbar-height-m-portrait);
     }
 
     @media screen and (--xs-viewport) and (--landscape) {
+      height: calc(100vh - var(--appbar-height-m-landscape));
+      max-height: calc(100vh - var(--appbar-height-m-landscape));
       top: var(--appbar-height-m-landscape);
     }
   }
