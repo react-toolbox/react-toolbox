@@ -30,6 +30,7 @@
     "@types/jest": "^19.2.3",
     "@types/ramda": "^0.0.8",
     "@types/react": "^15.0.24",
+    "@types/react-native": "^0.44.0",
     "babel-cli": "^6.24.1",
     "typedoc": "^0.6.0",
     "typescript": "next"

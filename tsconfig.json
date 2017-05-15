@@ -1,11 +1,15 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "allowJs": true,
+    "allowJs": false,
     "declaration": true,
     "jsx": "react",
     "noImplicitAny": false,
-    "outDir": "lib",
+    "outDir": "packages/react-toolbox-core/lib",
+    "lib": [
+      "es2015",
+      "dom"
+    ],
     "module": "commonjs",
     "preserveConstEnums": true,
     "removeComments": false,
@@ -17,6 +21,7 @@
     "packages/react-toolbox-core/src"
   ],
   "exclude": [
+    "**/__tests__/*",
     "node_modules"
   ]
 }

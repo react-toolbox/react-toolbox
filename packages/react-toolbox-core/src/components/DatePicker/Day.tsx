@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { F } from 'ramda';
-import { ComponentClass, PropTypes, PureComponent } from 'react';
+import { ComponentClass, PropTypes, PureComponent, MouseEvent } from 'react';
 import { addMonths, isBefore, isSameDay, isSameMonth, isToday, isWithinRange, setDate } from 'date-fns';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
-import { Component }  from '../../types';
 import { DateChecker,  PickerDate, SelectedSource } from './types';
+import { Component }  from '../../types';
 import getSelectionMatch from './getSelectionMatch';
 
 export interface DayNodeProps {
@@ -12,9 +12,9 @@ export interface DayNodeProps {
   disabled: boolean,
   highlighted: boolean,
   inRange: boolean,
-  onClick: (event: React.MouseEvent<any>) => void,
-  onMouseEnter: (event: React.MouseEvent<any>) => void,
-  onMouseLeave: (event: React.MouseEvent<any>) => void,
+  onClick: (event: MouseEvent<any>) => void,
+  onMouseEnter: (event: MouseEvent<any>) => void,
+  onMouseLeave: (event: MouseEvent<any>) => void,
   outOfMonth: boolean,
   selected: boolean,
   selectedSource: SelectedSource
@@ -31,9 +31,9 @@ export interface DayProps {
   highlighted: PickerDate,
   isDayBlocked: DateChecker,
   isDayDisabled: DateChecker,
-  onClick: (day: Date, event: React.MouseEvent<any>) => void,
-  onMouseEnter: (day: Date, event: React.MouseEvent<any>) => void,
-  onMouseLeave: (day: Date, event: React.MouseEvent<any>) => void,
+  onClick: (day: Date, event: MouseEvent<any>) => void,
+  onMouseEnter: (day: Date, event: MouseEvent<any>) => void,
+  onMouseLeave: (day: Date, event: MouseEvent<any>) => void,
   selected: PickerDate,
   viewDate: Date,
 };
