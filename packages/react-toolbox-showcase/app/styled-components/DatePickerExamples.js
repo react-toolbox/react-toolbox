@@ -15,8 +15,8 @@ const DatePickerExamples = () => (
 class TestDatePicker extends Component {
   state = {
     focusedInput: null,
-    highlighted: { from: null, to: null },
-    value: { from: null, to: null },
+    highlighted: null,
+    value: null,
   };
 
   handleChange = value => {

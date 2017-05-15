@@ -14,7 +14,7 @@
   "dependencies": {
     "color": "^1.0.3",
     "ramda": "^0.23.0",
-    "react-toolbox-core": "^0.0.0-alpha.a1564456",
+    "react-toolbox-core": "^0.0.0-alpha.1",
     "styled-components": "next"
   },
   "peerDependencies": {
