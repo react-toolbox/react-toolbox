@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { addMonths } from 'date-fns';
 import { map, range } from 'ramda';
-import { createElement, PureComponent, Component, ComponentClass } from 'react';
+import { createElement, Component, ComponentClass } from 'react';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 import { DateChecker, DateRange, FocusedInput, PickerDate, PickerMode } from './types';
 import { RangePicker } from './RangePicker';
@@ -63,7 +63,7 @@ export default function datePickerFactory({
   passthrough,
 }: DatePickerArgs): ComponentClass<DatePickerProps> {
   const passProps = getPassThrough(passthrough);
-  return class DatePicker extends PureComponent<DatePickerProps, DatePickerState> {
+  return class DatePicker extends Component<DatePickerProps, DatePickerState> {
     public static defaultProps = {
       mode: 'RANGE',
       numberOfMonths: 2,
@@ -101,18 +101,19 @@ export default function datePickerFactory({
       const { viewDate } = this.state;
       const viewFullYear = viewDate.getFullYear();
       const viewMonth = viewDate.getMonth() + month;
+      const monthViewDate = new Date(viewFullYear, viewMonth, 1);
       return (
         <Month
           {...passProps(this.props, 'Month', this)}
           isDayBlocked={isDayBlocked}
           isDayDisabled={isDayDisabled}
-          key={`${viewFullYear}${viewMonth}`}
+          key={monthViewDate.getTime().toString()}
           locale={locale}
           onDayClick={onDayClick}
           onDayMouseEnter={onDayMouseEnter}
           onDayMouseLeave={onDayMouseLeave}
           sundayFirstDayOfWeek={sundayFirstDayOfWeek}
-          viewDate={new Date(viewFullYear, viewMonth, 1)}
+          viewDate={monthViewDate}
         />
       );
     }
@@ -160,16 +161,10 @@ export default function datePickerFactory({
 
       return (
         <PickerWrapper {...rest} {...passProps(this.props, 'PickerWrapper', this)}>
-          <PrevNode
-            {...passProps(this.props, 'PrevNode', this)}
-            onClick={this.handlePrev}
-          >
+          <PrevNode {...passProps(this.props, 'PrevNode', this)} onClick={this.handlePrev}>
             {'<'}
           </PrevNode>
-          <NextNode
-            {...passProps(this.props, 'NextNode', this)}
-            onClick={this.handleNext}
-          >
+          <NextNode {...passProps(this.props, 'NextNode', this)} onClick={this.handleNext}>
             {'>'}
           </NextNode>
           {this.renderPicker()}

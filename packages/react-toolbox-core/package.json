@@ -20,8 +20,8 @@
     "ramda": "^0.23.0"
   },
   "peerDependencies": {
-    "react": "^0.14 || ~15.4.0",
-    "react-dom": "^0.14.0 || ~15.4.0"
+    "react": "^0.14 || ~15.5.0",
+    "react-dom": "^0.14.0 || ~15.5.0"
   },
   "devDependencies": {
     "@types/date-fns": "^2.6.0",

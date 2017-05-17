@@ -1,17 +1,10 @@
 import * as React from 'react';
-import { range } from 'ramda';
-import { ComponentClass, PureComponent, PropTypes } from 'react';
-import {
-  addDays,
-  differenceInCalendarDays,
-  lastDayOfMonth,
-  lastDayOfWeek,
-  startOfWeek,
-  subDays,
-} from 'date-fns';
+import { range, memoize } from 'ramda';
+import { ComponentClass, Component, PropTypes } from 'react';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 import getFullDayOfWeek from '../../locale/getFullDayOfWeek';
 import getFullMonth from '../../locale/getFullMonth';
+import getMonthMatrix from './getMonthMatrix';
 import { PickerDate, DateChecker } from './types';
 import { Day } from './Day';
 
@@ -95,7 +88,9 @@ export default function monthFactory({
   passthrough,
 }: MonthFactoryArgs): Month {
   const passProps = getPassThrough(passthrough);
-  return class Month extends PureComponent<MonthProps, void> {
+  return class Month extends Component<MonthProps, void> {
+    private getMonthMatrix = memoize(getMonthMatrix);
+
     private renderDays = () => {
       const {
         highlighted,
@@ -108,27 +103,14 @@ export default function monthFactory({
         sundayFirstDayOfWeek,
         viewDate,
       } = this.props;
-
-      const firstDay = sundayFirstDayOfWeek
-        ? subDays(startOfWeek(viewDate), 1)
-        : startOfWeek(viewDate);
-
-      const lastDay = sundayFirstDayOfWeek
-        ? subDays(lastDayOfWeek(lastDayOfMonth(viewDate)), 1)
-        : lastDayOfWeek(lastDayOfMonth(viewDate));
-
-      const nweeks = Math.ceil(differenceInCalendarDays(lastDay, firstDay) / 7);
-      const monthMatrix: Date[][] = [];
+      const monthMatrix = this.getMonthMatrix(viewDate.getTime(), sundayFirstDayOfWeek);
       const weeks: JSX.Element[] = [];
       let days;
 
-      for (let i = 0; i < nweeks; i++) {
-        monthMatrix[i] = [];
+      for (let i = 0; i < monthMatrix.length; i++) {
         days = [];
-
         for (let j = 0; j < 7; j++) {
-          const monthDay = addDays(firstDay, j + i * 7);
-          monthMatrix[i][j] = monthDay;
+          const monthDay = monthMatrix[i][j];
           days[j] = (
             <Day
               {...passProps(this.props, 'Day', this)}
@@ -136,7 +118,7 @@ export default function monthFactory({
               highlighted={highlighted}
               isDayBlocked={isDayBlocked}
               isDayDisabled={isDayDisabled}
-              key={monthDay.getTime()}
+              key={monthDay.getTime().toString()}
               onClick={onDayClick}
               onMouseEnter={onDayMouseEnter}
               onMouseLeave={onDayMouseLeave}
@@ -149,7 +131,7 @@ export default function monthFactory({
         weeks[i] = (
           <DaysWeek
             {...passProps(this.props, 'DaysWeek', this)}
-            key={`${i}${viewDate.getMonth()}`}
+            key={`${i}${viewDate.getTime().toString()}`}
           >
             {days}
           </DaysWeek>
@@ -159,21 +141,21 @@ export default function monthFactory({
       return weeks;
     }
 
+    private renderWeekDay = (weekDay) => (
+      <Weekday
+        {...passProps(this.props, 'Weekday', this)}
+        key={getFullDayOfWeek(weekDay, this.props.locale)}
+        weekDay={weekDay}
+      >
+        {getFullDayOfWeek(weekDay, this.props.locale)}
+      </Weekday>
+    )
+
     private renderWeekDays = () => {
+      const idxs = range(0, 7);
       const { locale, sundayFirstDayOfWeek } = this.props;
-      const indexes = range(0, 7);
-      const sortedDaysIdx = sundayFirstDayOfWeek
-        ? indexes
-        : [...indexes.slice(1), indexes[0]];
-      return sortedDaysIdx.map(weekDay => (
-        <Weekday
-          {...passProps(this.props, 'Weekday', this)}
-          key={getFullDayOfWeek(weekDay, locale)}
-          weekDay={weekDay}
-        >
-          {getFullDayOfWeek(weekDay, locale)}
-        </Weekday>
-      ));
+      const sortedDaysIdx = sundayFirstDayOfWeek ? idxs : [...idxs.slice(1), idxs[0]];
+      return sortedDaysIdx.map(this.renderWeekDay);
     }
 
     public render() {

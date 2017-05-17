@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { F } from 'ramda';
+import { F, memoize } from 'ramda';
 import { ComponentClass, MouseEvent, PureComponent } from 'react';
-import { isSameMonth, isToday } from 'date-fns';
+import { isSameMonth, isToday, isWithinRange } from 'date-fns';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 import { DateChecker,  PickerDate, SelectedSource } from './types';
+import getSelectionMatch, { equalSelectionMatch } from './getSelectionMatch';
 import { Component }  from '../../types';
-import getSelectionMatch from './getSelectionMatch';
 
 export interface DayNodeProps {
   blocked: boolean;
@@ -48,6 +48,39 @@ export default function dayFactory({ DayNode, passthrough }: DayFactoryArgs): Da
       isDayDisabled: F,
     };
 
+    public shouldComponentUpdate(nextProps) {
+      if (nextProps.isDayBlocked !== this.props.isDayBlocked) {
+        return true;
+      }
+
+      if (nextProps.isDayDisabled !== this.props.isDayDisabled) {
+        return true;
+      }
+
+      if (nextProps.day.getTime() !== this.props.day.getTime()) {
+        return true;
+      }
+
+      if (!equalSelectionMatch(
+        this.getSelectedMatch(nextProps.day, this.props.selected),
+        this.getSelectedMatch(nextProps.day, nextProps.selected),
+      )) {
+        return true;
+      }
+
+      if (!equalSelectionMatch(
+        this.getHighlightedMatch(nextProps.day, this.props.highlighted),
+        this.getHighlightedMatch(nextProps.day, nextProps.highlighted),
+      )) {
+        return true;
+      }
+
+      return false;
+    }
+
+    private getSelectedMatch = memoize(getSelectionMatch);
+    private getHighlightedMatch = memoize(getSelectionMatch);
+
     private handleClick = event => {
       const { day, isDayDisabled, onClick, viewDate } = this.props;
       if (isSameMonth(day, viewDate) && !isDayDisabled(day)) {
@@ -79,8 +112,8 @@ export default function dayFactory({ DayNode, passthrough }: DayFactoryArgs): Da
         viewDate,
         ...rest,
       } = this.props;
-      const selectedMatch = getSelectionMatch(day, selected);
-      const highlightedMatch = getSelectionMatch(day, highlighted);
+      const selectedMatch = this.getSelectedMatch(day, selected);
+      const highlightedMatch = this.getHighlightedMatch(day, highlighted);
       const isHighlighted = highlightedMatch.selected || highlightedMatch.inRange;
 
       return (
