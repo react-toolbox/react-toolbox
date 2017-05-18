@@ -1,5 +1,12 @@
-import { addMonths, isBefore, isSameDay, isSameMonth, isWithinRange, setDate } from 'date-fns';
 import { PickerDate, SelectedSource } from './types';
+import {
+  isBefore,
+  isSameDay,
+  isSameMonth,
+  isWithinRange,
+  startOfMonth,
+  endOfMonth,
+} from 'date-fns';
 
 export interface SelectionMatch {
   inRange: boolean;
@@ -13,7 +20,11 @@ export function equalSelectionMatch(match1: SelectionMatch, match2: SelectionMat
     (match1.source === match2.source);
 }
 
-export default function getSelectionMatch(day: Date, selected: PickerDate): SelectionMatch {
+export default function getSelectionMatch(
+  day: Date,
+  selected: PickerDate,
+  viewDate: Date,
+): SelectionMatch {
   if (!selected) {
     return { inRange: false, selected: false, source: null };
   }
@@ -24,19 +35,27 @@ export default function getSelectionMatch(day: Date, selected: PickerDate): Sele
 
   if (!(selected instanceof Date)) {
     const { from, to } = selected;
+    const isOutOfRange = from && to && !isSameMonth(day, viewDate);
+    const dayToCompare = isOutOfRange ? getDayToCompare(day, viewDate) : day;
 
-    if (from && isSameDay(day, from)) {
+    if (from && isSameDay(dayToCompare, from) && !isOutOfRange) {
       return { inRange: false, selected: true, source: 'from' };
     }
 
-    if (to && isSameDay(day, to)) {
+    if (to && isSameDay(dayToCompare, to) && !isOutOfRange) {
       return { inRange: false, selected: true, source: 'to' };
     }
 
-    if (from && to && isWithinRange(day, from, to)) {
+    if (from && to && isWithinRange(dayToCompare, from, to)) {
       return { inRange: true, selected: false, source: null };
     }
   }
 
   return { inRange: false, selected: false, source: null };
+}
+
+function getDayToCompare(day: Date, viewDate: Date): Date {
+  return isBefore(day, viewDate)
+    ? startOfMonth(viewDate)
+    : endOfMonth(viewDate);
 }

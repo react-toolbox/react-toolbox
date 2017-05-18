@@ -61,16 +61,16 @@ export default function dayFactory({ DayNode, passthrough }: DayFactoryArgs): Da
         return true;
       }
 
-      if (!equalSelectionMatch(
-        this.getSelectedMatch(nextProps.day, this.props.selected),
-        this.getSelectedMatch(nextProps.day, nextProps.selected),
+      if ((this.props.selected || nextProps.selected) && !equalSelectionMatch(
+        this.getSelectedMatch(nextProps.day, this.props.selected, this.props.viewDate),
+        this.getSelectedMatch(nextProps.day, nextProps.selected, nextProps.viewDate),
       )) {
         return true;
       }
 
-      if (!equalSelectionMatch(
-        this.getHighlightedMatch(nextProps.day, this.props.highlighted),
-        this.getHighlightedMatch(nextProps.day, nextProps.highlighted),
+      if ((this.props.highlighted || nextProps.highlighted) && !equalSelectionMatch(
+        this.getHighlightedMatch(nextProps.day, this.props.highlighted, this.props.viewDate),
+        this.getHighlightedMatch(nextProps.day, nextProps.highlighted, nextProps.viewDate),
       )) {
         return true;
       }
@@ -112,8 +112,8 @@ export default function dayFactory({ DayNode, passthrough }: DayFactoryArgs): Da
         viewDate,
         ...rest,
       } = this.props;
-      const selectedMatch = this.getSelectedMatch(day, selected);
-      const highlightedMatch = this.getHighlightedMatch(day, highlighted);
+      const selectedMatch = this.getSelectedMatch(day, selected, viewDate);
+      const highlightedMatch = this.getHighlightedMatch(day, highlighted, viewDate);
       const isHighlighted = highlightedMatch.selected || highlightedMatch.inRange;
 
       return (
