@@ -38,14 +38,27 @@ export default function getSelectionMatch(
     const isOutOfRange = from && to && !isSameMonth(day, viewDate);
     const dayToCompare = isOutOfRange ? getDayToCompare(day, viewDate) : day;
 
-    if (from && isSameDay(dayToCompare, from) && !isOutOfRange) {
+    // Check if it is selected
+    if (from && isSameDay(day, from) && !isOutOfRange) {
       return { inRange: false, selected: true, source: 'from' };
     }
 
-    if (to && isSameDay(dayToCompare, to) && !isOutOfRange) {
+    if (to && isSameDay(day, to) && !isOutOfRange) {
       return { inRange: false, selected: true, source: 'to' };
     }
 
+    // Check when it is a day out of range
+    if (isOutOfRange) {
+      if (isBefore(day, viewDate)) {
+        if (from && isSameDay(dayToCompare, from)) {
+          return { inRange: false, selected: false, source: null };
+        }
+      } else if (to && isSameDay(dayToCompare, to)) {
+        return { inRange: false, selected: false, source: null };
+      }
+    }
+
+    // Check when it is within range
     if (from && to && isWithinRange(dayToCompare, from, to)) {
       return { inRange: true, selected: false, source: null };
     }

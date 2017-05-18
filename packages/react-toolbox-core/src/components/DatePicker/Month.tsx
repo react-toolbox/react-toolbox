@@ -5,6 +5,7 @@ import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 import getFullDayOfWeek from '../../locale/getFullDayOfWeek';
 import getFullMonth from '../../locale/getFullMonth';
 import getMonthMatrix from './getMonthMatrix';
+import getMonthAffected from './getMonthAffected';
 import { PickerDate, DateChecker } from './types';
 import { Day } from './Day';
 
@@ -89,6 +90,31 @@ export default function monthFactory({
 }: MonthFactoryArgs): Month {
   const passProps = getPassThrough(passthrough);
   return class Month extends Component<MonthProps, void> {
+    public shouldComponentUpdate(nextProps) {
+      if (
+        this.props.viewDate.getTime() !== nextProps.viewDate.getTime() ||
+        this.props.isDayBlocked !== nextProps.isDayBlocked ||
+        this.props.isDayDisabled !== nextProps.isDayDisabled ||
+        this.props.onDayClick !== nextProps.onDayClick ||
+        this.props.onDayMouseEnter !== nextProps.onDayMouseEnter ||
+        this.props.onDayMouseLeave !== nextProps.onDayMouseLeave ||
+        this.props.sundayFirstDayOfWeek !== nextProps.sundayFirstDayOfWeek
+      ) {
+        return true;
+      }
+
+      if (
+        getMonthAffected(this.props.viewDate, this.props.selected) ||
+        getMonthAffected(nextProps.viewDate, nextProps.selected) ||
+        getMonthAffected(this.props.viewDate, this.props.highlighted) ||
+        getMonthAffected(nextProps.viewDate, nextProps.highlighted)
+      ) {
+        return true;
+      }
+
+      return false;
+    }
+
     private getMonthMatrix = memoize(getMonthMatrix);
 
     private renderDays = () => {

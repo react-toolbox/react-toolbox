@@ -49,15 +49,12 @@ export default function dayFactory({ DayNode, passthrough }: DayFactoryArgs): Da
     };
 
     public shouldComponentUpdate(nextProps) {
-      if (nextProps.isDayBlocked !== this.props.isDayBlocked) {
-        return true;
-      }
-
-      if (nextProps.isDayDisabled !== this.props.isDayDisabled) {
-        return true;
-      }
-
-      if (nextProps.day.getTime() !== this.props.day.getTime()) {
+      if (
+        nextProps.isDayBlocked !== this.props.isDayBlocked ||
+        nextProps.isDayDisabled !== this.props.isDayDisabled ||
+        nextProps.day.getTime() !== this.props.day.getTime() ||
+        nextProps.viewDate.getTime() !== this.props.viewDate.getTime()
+      ) {
         return true;
       }
 
