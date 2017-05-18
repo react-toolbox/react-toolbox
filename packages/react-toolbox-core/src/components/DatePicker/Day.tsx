@@ -4,7 +4,7 @@ import { ComponentClass, MouseEvent, PureComponent } from 'react';
 import { isSameMonth, isToday, isWithinRange } from 'date-fns';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 import { DateChecker,  PickerDate, SelectedSource } from './types';
-import getSelectionMatch, { equalSelectionMatch } from './getSelectionMatch';
+import getSelectionMatch, { getDayToCompare, equalSelectionMatch } from './getSelectionMatch';
 import { Component }  from '../../types';
 
 export interface DayNodeProps {
@@ -49,30 +49,34 @@ export default function dayFactory({ DayNode, passthrough }: DayFactoryArgs): Da
     };
 
     public shouldComponentUpdate(nextProps) {
-      if (nextProps.isDayBlocked !== this.props.isDayBlocked) {
+      if (
+        nextProps.isDayBlocked !== this.props.isDayBlocked ||
+        nextProps.isDayDisabled !== this.props.isDayDisabled ||
+        nextProps.day.getTime() !== this.props.day.getTime() ||
+        nextProps.viewDate.getTime() !== this.props.viewDate.getTime()
+      ) {
         return true;
       }
 
-      if (nextProps.isDayDisabled !== this.props.isDayDisabled) {
-        return true;
-      }
+      if (
+        this.props.selected || nextProps.selected || this.props.highlighted || nextProps.highlighted
+      ) {
+        const day = getDayToCompare(this.props.day, this.props.viewDate);
+        const nextDay = getDayToCompare(nextProps.day, nextProps.viewDate);
 
-      if (nextProps.day.getTime() !== this.props.day.getTime()) {
-        return true;
-      }
+        if ((this.props.selected || nextProps.selected) && !equalSelectionMatch(
+          this.getSelectedMatch(day, this.props.selected),
+          this.getSelectedMatch(nextDay, nextProps.selected),
+        )) {
+          return true;
+        }
 
-      if (!equalSelectionMatch(
-        this.getSelectedMatch(nextProps.day, this.props.selected),
-        this.getSelectedMatch(nextProps.day, nextProps.selected),
-      )) {
-        return true;
-      }
-
-      if (!equalSelectionMatch(
-        this.getHighlightedMatch(nextProps.day, this.props.highlighted),
-        this.getHighlightedMatch(nextProps.day, nextProps.highlighted),
-      )) {
-        return true;
+        if ((this.props.highlighted || nextProps.highlighted) && !equalSelectionMatch(
+          this.getHighlightedMatch(day, this.props.highlighted),
+          this.getHighlightedMatch(nextDay, nextProps.highlighted),
+        )) {
+          return true;
+        }
       }
 
       return false;

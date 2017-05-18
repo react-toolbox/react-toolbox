@@ -1,10 +1,31 @@
-import { addMonths, isBefore, isSameDay, isSameMonth, isWithinRange, setDate } from 'date-fns';
 import { PickerDate, SelectedSource } from './types';
+import {
+  addMonths,
+  endOfMonth,
+  startOfMonth,
+  isBefore,
+  isSameDay,
+  isSameMonth,
+  isWithinRange,
+} from 'date-fns';
+
 
 export interface SelectionMatch {
   inRange: boolean;
   selected: boolean;
   source: SelectedSource;
+}
+
+export function getDayToCompare(day: Date, viewDate: Date): Date {
+  if (isSameMonth(day, viewDate)) {
+    return day;
+  }
+
+  if (isBefore(day, viewDate)) {
+    return startOfMonth(viewDate);
+  }
+
+  return endOfMonth(viewDate);
 }
 
 export function equalSelectionMatch(match1: SelectionMatch, match2: SelectionMatch): boolean {
