@@ -236,25 +236,19 @@ const withRippleFactory = ({ RippleNode, RippleWrapper, passthrough }: WithRippl
         }
 
         private renderRipple = (key, className, { x, y, width, active, isTouch }) => (
-          <RippleWrapper
-            {...passProps(this.props, 'RippleWrapper', this)}
-            className={className}
-            innerRef={this.handleInnerRef}
+          <RippleNode
+            {...passProps(this.props, 'RippleNode', this)}
+            active={active}
+            idx={key}
+            innerRef={node => { this.ripples[key] = node; }}
+            isTouch={isTouch}
             key={key}
-          >
-            <RippleNode
-              {...passProps(this.props, 'RippleNode', this)}
-              active={active}
-              idx={key}
-              innerRef={node => { this.ripples[key] = node; }}
-              isTouch={isTouch}
-              onDeactivate={this.handleDeactivate}
-              onFinish={this.handleRippleFinish}
-              spreadSize={width}
-              startX={x}
-              startY={y}
-            />
-          </RippleWrapper>
+            onDeactivate={this.handleDeactivate}
+            onFinish={this.handleRippleFinish}
+            spreadSize={width}
+            startX={x}
+            startY={y}
+          />
         )
 
         public render() {
@@ -287,9 +281,19 @@ const withRippleFactory = ({ RippleNode, RippleWrapper, passthrough }: WithRippl
               : childProps
           ) as P;
 
-          return !ripple
-            ? React.createElement(ComposedComponent, finalProps, children)
-            : React.createElement(ComposedComponent, finalProps, [ children, childRipples ]);
+          if (!ripple) {
+            return React.createElement(ComposedComponent, finalProps, children);
+          }
+
+          return React.createElement(ComposedComponent, finalProps, children, (
+            <RippleWrapper
+              {...passProps(this.props, 'RippleWrapper', this)}
+              className={rippleClassName}
+              innerRef={this.handleInnerRef}
+            >
+              {childRipples}
+            </RippleWrapper>
+          ));
         }
       };
     };

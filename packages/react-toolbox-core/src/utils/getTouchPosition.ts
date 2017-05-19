@@ -3,7 +3,7 @@ import { Coordinates } from './types';
 import isReactNative from './isReactNative';
 
 function getNativeTouchPosition(event: TouchEvent): Coordinates {
-  const firstTouch = event.touches.item(0);
+  const firstTouch = event.touches[0];
   return firstTouch
     ? { x: firstTouch.pageX, y: firstTouch.pageY }
     : { x: 0, y: 0 };
