@@ -2,6 +2,30 @@
 # yarn lockfile v1
 
 
+"@types/date-fns@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@types/date-fns/-/date-fns-2.6.0.tgz#b062ca46562002909be0c63a6467ed173136acc1"
+  dependencies:
+    date-fns "*"
+
+"@types/jest@^19.2.3":
+  version "19.2.3"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-19.2.3.tgz#61748040e8589a891dfc2ec1d16a2dd74482980e"
+
+"@types/ramda@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.0.9.tgz#c1b56c643688bf1c27a543ccfbc502cbda6772b6"
+
+"@types/react-native@^0.44.2":
+  version "0.44.2"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.44.2.tgz#58b4258f6fc898b9f03cf5402108be5ea491349b"
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*", "@types/react@^15.0.24":
+  version "15.0.24"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.24.tgz#8a75299dc37906df327c18ca918bf97a55e7123b"
+
 JSONStream@^0.8.4:
   version "0.8.4"
   resolved "https://registry.yarnpkg.com/JSONStream/-/JSONStream-0.8.4.tgz#91657dfe6ff857483066132b4618b62e8f4887bd"
@@ -2012,7 +2036,7 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-date-fns@^1.27.2:
+date-fns@*, date-fns@^1.27.2:
   version "1.28.4"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.28.4.tgz#7938aec34ba31fc8bd134d2344bc2e0bbfd95165"
 

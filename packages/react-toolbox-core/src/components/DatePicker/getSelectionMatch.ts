@@ -37,14 +37,15 @@ export default function getSelectionMatch(
     const { from, to } = selected;
     const isOutOfRange = from && to && !isSameMonth(day, viewDate);
     const dayToCompare = isOutOfRange ? getDayToCompare(day, viewDate) : day;
+    const rangeIsDefined = !!from && !!to;
 
     // Check if it is selected
     if (from && isSameDay(day, from) && !isOutOfRange) {
-      return { inRange: false, selected: true, source: 'from' };
+      return { inRange: rangeIsDefined, selected: true, source: 'from' };
     }
 
     if (to && isSameDay(day, to) && !isOutOfRange) {
-      return { inRange: false, selected: true, source: 'to' };
+      return { inRange: rangeIsDefined, selected: true, source: 'to' };
     }
 
     // Check when it is a day out of range

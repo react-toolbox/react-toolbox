@@ -122,7 +122,7 @@ const withRippleFactory = ({ RippleNode, RippleWrapper, passthrough }: WithRippl
         private rootNode: HTMLElement | NativeComponent | null = null;
         private touchCache = false;
 
-        private componentWillUnmount() {
+        public componentWillUnmount() {
           if (this.deactivateTimeout) {
             clearTimeout(this.deactivateTimeout);
           }

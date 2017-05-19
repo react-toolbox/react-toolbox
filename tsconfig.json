@@ -1,25 +1,5 @@
 {
-  "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "allowJs": false,
-    "declaration": true,
-    "jsx": "react",
-    "noImplicitAny": false,
-    "outDir": "packages/react-toolbox-core/lib",
-    "lib": [
-      "es2015",
-      "dom"
-    ],
-    "module": "commonjs",
-    "preserveConstEnums": true,
-    "removeComments": false,
-    "sourceMap": true,
-    "strictNullChecks": true,
-    "target": "es5"
-  },
-  "include": [
-    "packages/react-toolbox-core/src"
-  ],
+  "extends": "./tsconfig.base.json",
   "exclude": [
     "**/__tests__/*",
     "node_modules"

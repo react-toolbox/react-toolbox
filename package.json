@@ -33,6 +33,11 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "@types/date-fns": "^2.6.0",
+    "@types/jest": "^19.2.3",
+    "@types/ramda": "^0.0.9",
+    "@types/react": "^15.0.24",
+    "@types/react-native": "^0.44.2",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.0.0",

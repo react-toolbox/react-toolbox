@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { T } from 'ramda';
 import { shallow } from 'enzyme';
 import createElement from '../../../utils/createElement';
 
@@ -45,17 +44,17 @@ describe('<Day />', () => {
     });
 
     it('passes today prop as false', () => {
-      const day = new Date(2017, 2, 1);
-      const wrapper = shallow(<Day day={day} />);
+      const _day = new Date(2017, 2, 1);
+      const wrapper = shallow(<Day day={_day} />);
       const isToday = wrapper.find(DayNode).prop('today');
       expect(isToday).toEqual(false);
-      expect(mockIsToday).toHaveBeenCalledWith(day);
+      expect(mockIsToday).toHaveBeenCalledWith(_day);
     });
 
     it('passes disabled when day is disabled', () => {
       const isDayDisabled = jest.fn(() => true);
       const wrapper = shallow(
-        <Day day={day} isDayDisabled={isDayDisabled} viewDate={day} />
+        <Day day={day} isDayDisabled={isDayDisabled} viewDate={day} />,
       );
       const disabled = wrapper.find(DayNode).prop('disabled');
       expect(disabled).toEqual(true);
@@ -68,7 +67,7 @@ describe('<Day />', () => {
         to: new Date(2017, 2, 15),
       };
       const wrapper = shallow(
-        <Day day={day} highlighted={highlighted} viewDate={day} />
+        <Day day={day} highlighted={highlighted} viewDate={day} />,
       );
       const isHighlighted = wrapper.find(DayNode).prop('highlighted');
       expect(isHighlighted).toEqual(true);
@@ -80,7 +79,7 @@ describe('<Day />', () => {
         to: new Date(2017, 2, 15),
       };
       const wrapper = shallow(
-        <Day day={day} selected={selected} viewDate={day} />
+        <Day day={day} selected={selected} viewDate={day} />,
       );
       const inRange = wrapper.find(DayNode).prop('inRange');
       expect(inRange).toEqual(true);
@@ -92,7 +91,7 @@ describe('<Day />', () => {
         to: new Date(2017, 2, 15),
       };
       const wrapper = shallow(
-        <Day day={selected.from} selected={selected} viewDate={selected.from} />
+        <Day day={selected.from} selected={selected} viewDate={selected.from} />,
       );
       expect(wrapper.find(DayNode).prop('selected')).toEqual(true);
       expect(wrapper.find(DayNode).prop('selectedSource')).toEqual('from');
@@ -104,7 +103,7 @@ describe('<Day />', () => {
         to: new Date(2017, 2, 15),
       };
       const wrapper = shallow(
-        <Day day={selected.to} selected={selected} viewDate={selected.to} />
+        <Day day={selected.to} selected={selected} viewDate={selected.to} />,
       );
       expect(wrapper.find(DayNode).prop('selected')).toEqual(true);
       expect(wrapper.find(DayNode).prop('selectedSource')).toEqual('to');

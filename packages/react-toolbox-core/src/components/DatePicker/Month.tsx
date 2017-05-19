@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { range, memoize } from 'ramda';
-import { ComponentClass, Component, PropTypes } from 'react';
+import { ComponentClass, Component } from 'react';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 import getFullDayOfWeek from '../../locale/getFullDayOfWeek';
 import getFullMonth from '../../locale/getFullMonth';
@@ -179,7 +179,7 @@ export default function monthFactory({
 
     private renderWeekDays = () => {
       const idxs = range(0, 7);
-      const { locale, sundayFirstDayOfWeek } = this.props;
+      const { sundayFirstDayOfWeek } = this.props;
       const sortedDaysIdx = sundayFirstDayOfWeek ? idxs : [...idxs.slice(1), idxs[0]];
       return sortedDaysIdx.map(this.renderWeekDay);
     }

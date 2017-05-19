@@ -1,5 +1,5 @@
 import { isSameMonth, isWithinRange } from 'date-fns';
-import { PickerDate, DateChecker } from './types';
+import { PickerDate } from './types';
 
 export default function getMonthAffected(date: Date, selected: PickerDate): boolean {
   if (!selected) {
@@ -28,4 +28,3 @@ export default function getMonthAffected(date: Date, selected: PickerDate): bool
 
   return false;
 }
-

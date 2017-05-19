@@ -21,6 +21,7 @@ export interface DatePickerProps {
   onDayMouseLeave(day: Date, event: React.MouseEvent<any>): void;
   onFocusedInputChange(focus?: FocusedInput): void;
   onHighlightedChange(date: DateRange): void;
+  resetToWhenFromChanges: boolean;
   selected: PickerDate;
   sundayFirstDayOfWeek: boolean;
   viewDate: Date;
@@ -89,7 +90,6 @@ export default function datePickerFactory({
 
     private renderMonth = month => {
       const {
-        highlighted,
         isDayBlocked,
         isDayDisabled,
         locale,
@@ -127,16 +127,19 @@ export default function datePickerFactory({
         onChange,
         onFocusedInputChange,
         onHighlightedChange,
+        resetToWhenFromChanges,
         selected,
       } = this.props;
       const Picker = mode === 'SINGLE' ? SinglePicker : RangePicker;
       const children = map(this.renderMonth, range(0, numberOfMonths));
-      const props = mode === 'SINGLE'
-        ? { ...passProps(this.props, 'SinglePicker', this) }
-        : { ...passProps(this.props, 'RangePicker', this), focusedInput, onFocusedInputChange };
+      const pickerTypeName = mode === 'SINGLE' ? 'SinglePicker' : 'RangePicker';
+      const rangePickerProps =  { focusedInput, onFocusedInputChange, resetToWhenFromChanges };
+      const pickerTypeProps = mode === 'SINGLE' ? {} : rangePickerProps;
+      const baseProps = passProps(this.props, pickerTypeName, this);
 
       return createElement(Picker, {
-        ...props,
+        ...baseProps,
+        ...pickerTypeProps,
         highlighted,
         onChange,
         onHighlightedChange,

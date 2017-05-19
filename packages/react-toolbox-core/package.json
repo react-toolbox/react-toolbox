@@ -20,17 +20,9 @@
     "ramda": "^0.23.0"
   },
   "peerDependencies": {
-    "react": "^0.14 || ~15.5.0",
-    "react-dom": "^0.14.0 || ~15.5.0"
+    "react": "^0.14 || ~15.5.0"
   },
   "devDependencies": {
-    "@types/date-fns": "^2.6.0",
-    "@types/jest": "^19.2.3",
-    "@types/ramda": "^0.0.8",
-    "@types/react": "^15.0.24",
-    "@types/react-native": "^0.44.0",
-    "babel-cli": "^6.24.1",
-    "tslint": "^5.2.0",
     "typedoc": "^0.6.0",
     "typescript": "next"
   }

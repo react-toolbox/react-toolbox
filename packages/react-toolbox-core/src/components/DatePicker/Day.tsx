@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { F, memoize } from 'ramda';
 import { ComponentClass, MouseEvent, PureComponent } from 'react';
-import { isSameMonth, isToday, isWithinRange } from 'date-fns';
+import { isSameMonth, isToday } from 'date-fns';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 import { DateChecker,  PickerDate, SelectedSource } from './types';
 import getSelectionMatch, { equalSelectionMatch } from './getSelectionMatch';

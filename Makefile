@@ -38,12 +38,16 @@ prettier:
 lint:
 	make lint-js
 	make lint-css
+	make lint-ts
 
 lint-js:
 	./node_modules/.bin/eslint scripts packages *.js --format=codeframe
 
 lint-css:
 	./node_modules/.bin/stylelint packages/*/src/**/*.css
+
+lint-ts:
+	./node_modules/.bin/tslint "packages/react-toolbox-core/src/**/*.{ts,tsx}" --type-check --project tsconfig.base.json
 
 fix:
 	./node_modules/.bin/eslint scripts packages *.js --format=codeframe --fix

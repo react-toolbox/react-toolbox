@@ -1,4 +1,4 @@
-import { MouseEvent, TouchEvent as ReactTouchEvent } from 'react';
+import { TouchEvent as ReactTouchEvent } from 'react';
 import { Coordinates } from './types';
 import isReactNative from './isReactNative';
 

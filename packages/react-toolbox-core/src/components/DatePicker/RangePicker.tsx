@@ -1,15 +1,6 @@
 import * as React from 'react';
-import { identity } from 'ramda';
 import { isBefore, isAfter } from 'date-fns';
-import {
-  Children,
-  cloneElement,
-  ComponentClass,
-  Component,
-  PureComponent,
-  ReactElement,
-  ReactNode,
-} from 'react';
+import { Children, cloneElement, ComponentClass, Component, ReactElement, ReactNode } from 'react';
 import isComponentOfType from '../../utils/isComponentOfType';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 import { FocusedInput, DateRange } from './types';
@@ -22,6 +13,7 @@ export interface RangePickerProps {
   onChange(date: DateRange): void;
   onFocusedInputChange(focus?: FocusedInput): void;
   onHighlightedChange(date: DateRange): void;
+  resetToWhenFromChanges: boolean;
   selected?: DateRange;
 }
 
@@ -53,8 +45,17 @@ export default function rangePickerFactory({
         onChange,
         onFocusedInputChange,
         onHighlightedChange,
+        resetToWhenFromChanges,
         selected = {},
       } = this.props;
+
+      if (resetToWhenFromChanges && focusedInput !== 'END_DATE') {
+        onChange({ from: clickedDate, to: undefined });
+        onFocusedInputChange('END_DATE');
+        onHighlightedChange({ from: clickedDate, to: undefined });
+        this.selecting = true;
+        return undefined;
+      }
 
       if (!selected.from && !selected.to) {
         if (focusedInput === 'END_DATE') {
