@@ -1,5 +1,5 @@
 import getLocale, { Locales, Locale } from './dateLocales';
-import hasOwnProperty from '../utils/hasOwnProperty';
+import hasOwnProperty from '../../../utils/hasOwnProperty';
 
 export default function getShortMonth(date: Date, locale: keyof Locales | Locale = 'en'): string {
   const month = date.getMonth();
