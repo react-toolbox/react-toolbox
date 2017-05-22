@@ -23,7 +23,13 @@ Although we recommend [webpack](https://webpack.github.io/), you are free to use
 
 Of course this is a set of React components so you should be familiar with [React](https://facebook.github.io/react/). If want to customize your components via themes, you may want to take a look to [react-css-themr](https://github.com/javivelasco/react-css-themr) which is used by React Toolbox to make components easily themeable.
 
-### Setting up PostCSS+cssnext in Webpack:
+### Usage in Create React App Projects
+
+[Create React App](https://github.com/facebookincubator/create-react-app) does not allow to change the default configuration, so you need an additional build step to configure `react-toolbox` in its project.
+
+Follow [these instructions](https://github.com/react-toolbox/react-toolbox-themr) to add `react-toolbox` to a project created with Create React App.
+
+### Usage in Webpack Projects (*Not* Create React App)
 
 ```bash
 npm install postcss-loader --save-dev
@@ -66,6 +72,13 @@ ReactDOM.render(
   document.getElementById('app')
 );
 ```
+
+>**Note:** if you use it with Create React App, you need to make this additional change:
+>
+>```diff
+>- import {Button} from 'react-toolbox/lib/button';
+>+ import Button from 'react-toolbox/lib/button/Button';
+>```
 
 Take into account that any required style will be included in the final CSS so your final CSS would include `Button` styles in this case. It's more efficient to import components this way (`from 'react-toolbox/lib/button'`) (or with raw imports) because if you require from the project root (i.e. `from 'react-toolbox'`), every stylesheet of React Toolbox will be included, even if you don't use it.
 
