@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import CssTransitionGroup from 'react-addons-css-transition-group';
+import CssTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { getAnimationModule } from '../utils/utils';
 import time from '../utils/time';
 import Hours from './ClockHours';
