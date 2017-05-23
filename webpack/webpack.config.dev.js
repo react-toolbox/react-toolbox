@@ -23,7 +23,7 @@ module.exports = {
   module: {
     rules: [{
       test: /\.js$/,
-      loader: 'babel-loader',
+      use: 'babel-loader',
       include: [
         path.join(__dirname, '../components'),
         path.join(__dirname, '../spec')
@@ -31,7 +31,7 @@ module.exports = {
     }, {
       test: /\.css$/,
       include: /node_modules/,
-      loader: ExtractTextPlugin.extract({
+      use: ExtractTextPlugin.extract({
         fallback: 'style-loader',
         loader: 'css-loader',
       })
@@ -44,33 +44,24 @@ module.exports = {
       use: ['style-loader', {
         loader: 'css-loader',
         query: {
-          modules: true,
+          import: false,
+          importLoaders: 1,
           localIdentName: '[name]__[local]___[hash:base64:5]',
+          modules: true,
           sourceMap: true
         },
-      }, 'postcss-loader']
+      }, {
+        loader: 'postcss-loader',
+        options: {
+          // context: path.join(__dirname, '../'),
+          config: {
+            path: path.join(__dirname, './postcss.config.js')
+          }
+        }
+      }]
     }]
   },
   plugins: [
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        context: path.join(__dirname, '../'),
-        postcss () {
-          return [
-            require('postcss-import')({
-              root: path.join(__dirname, '../'),
-              path: [path.join(__dirname, '../components')]
-            }),
-            require('postcss-mixins')(),
-            require('postcss-each')(),
-            require('postcss-cssnext')(),
-            require('postcss-reporter')({
-              clearMessages: true
-            })
-          ];
-        }
-      }
-    }),
     new ExtractTextPlugin({ filename: 'spec.css', allChunks: true }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.EvalSourceMapDevToolPlugin(),
