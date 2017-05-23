@@ -1,6 +1,6 @@
-@import 'react-toolbox/lib/colors.css';
-@import 'react-toolbox/lib/variables.css';
-@import 'react-toolbox/lib/button/config.css';
+@import 'react-toolbox/src/components/colors.css';
+@import 'react-toolbox/src/components/variables.css';
+@import 'react-toolbox/src/components/button/config.css';
 
 :root {
   --offset: calc(1.8 * var(--unit));

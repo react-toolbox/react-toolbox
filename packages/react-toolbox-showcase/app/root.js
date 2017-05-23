@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Redirect, Link, Route, withRouter } from 'react-router-dom';
-import { Layout, Panel, NavDrawer } from 'react-toolbox/lib/layout';
-import { AppBar } from 'react-toolbox/lib/app_bar';
-import { Button } from 'react-toolbox/lib/button';
+import { Layout, Panel, NavDrawer } from 'react-toolbox/src/components/layout';
+import { AppBar } from 'react-toolbox/src/components/app_bar';
+import { Button } from 'react-toolbox/src/components/button';
 import Classic from './classic';
 import StyledComponents from './styled-components';
 import CSSModules from './css-modules';

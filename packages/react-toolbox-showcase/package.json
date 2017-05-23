@@ -15,14 +15,14 @@
   "license": "ISC",
   "dependencies": {
     "fela": "^4.2.1",
-    "normalize.css": "^5.0.0",
+    "normalize.css": "^7.0.0",
     "react-fela": "^4.2.1",
     "react-router-dom": "^4.1.1",
     "react-toolbox-css": "^0.0.1",
     "react-toolbox-fela": "^0.0.1",
     "react-toolbox-sc": "^0.0.1",
     "react-toolbox": "^2.0.0-beta.9",
-    "styled-components": "next"
+    "styled-components": "1.4.6"
   },
   "peerDependencies": {
     "react": "^15.5.0",
