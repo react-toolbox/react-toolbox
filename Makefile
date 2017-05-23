@@ -8,6 +8,7 @@ bootstrap:
 	./node_modules/.bin/lerna bootstrap
 
 clean-all:
+	rm -rf packages/*/build
 	rm -rf packages/*/lib
 	rm -rf node_modules
 	rm -rf packages/*/node_modules
