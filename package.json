@@ -140,5 +140,8 @@
       "yarn run prettier",
       "git add"
     ]
+  },
+  "dependencies": {
+    "postcss-nested": "^2.0.2"
   }
 }

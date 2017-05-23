@@ -62,45 +62,31 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: /node_modules/,
         include: [
-          path.join(__dirname, '../app'),
-          path.join(__dirname, '../../react-toolbox'),
+          path.join(__dirname, '../components'),
+          path.join(__dirname, '../spec')
         ],
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            query: {
-              modules: true,
-              localIdentName: '[name]__[local]___[hash:base64:5]',
-              sourceMap: true,
-            },
+        use: ['style-loader', {
+          loader: 'css-loader',
+          query: {
+            import: false,
+            importLoaders: 1,
+            localIdentName: '[name]__[local]___[hash:base64:5]',
+            modules: true,
+            sourceMap: true
           },
-          'postcss-loader'
-        ],
+        }, {
+          loader: 'postcss-loader',
+          options: {
+            config: {
+              path: path.join(__dirname, './postcss.config.js')
+            }
+          }
+        }]
       },
     ],
   },
   plugins: [
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        context: path.join(__dirname, '../'),
-        postcss() {
-          return [
-            require('postcss-import')({
-              root: path.join(__dirname, '../')
-            }),
-            require('postcss-mixins')(),
-            require('postcss-each')(),
-            require('postcss-cssnext')(),
-            require('postcss-reporter')({
-              clearMessages: true,
-            }),
-          ];
-        },
-      },
-    }),
     new ExtractTextPlugin({ filename: 'spec.css', allChunks: true }),
     new HtmlWebpackPlugin({ template: 'app/index.html', inject: true }),
     new webpack.HotModuleReplacementPlugin(),
