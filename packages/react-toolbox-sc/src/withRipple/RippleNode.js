@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { addOnTransitionEnded, removeOnTransitionEnded } from 'react-toolbox-core/lib/utils/onTransitionEnded';
+import { addOnTransitionEnded, removeOnTransitionEnded } from '../utils/transitions';
 import withOverride from '../utils/withOverride';
 
 class RippleNode extends Component {

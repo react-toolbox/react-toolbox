@@ -1,6 +1,7 @@
-import { createElement, Component, PropTypes } from 'react';
+import { createElement, Component } from 'react';
 import { themeable } from 'react-css-themr';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
 import assoc from 'ramda/src/assoc';
 import dissoc from 'ramda/src/dissoc';
 import flip from 'ramda/src/flip';

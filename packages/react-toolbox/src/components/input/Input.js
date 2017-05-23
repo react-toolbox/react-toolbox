@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { INPUT } from '../identifiers';
@@ -253,6 +254,6 @@ const factory = FontIcon => {
 };
 
 const Input = factory(InjectedFontIcon);
-export default themr(INPUT, null, { withRef: true })(Input);
+export default themr(INPUT, null)(Input);
 export { factory as inputFactory };
 export { Input };

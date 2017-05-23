@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "build": "babel ./src --out-dir ./lib",
+    "build:watch": "babel ./src --out-dir ./lib --watch",
     "prepublish": "yarn run build"
   },
   "keywords": [],
@@ -16,7 +17,7 @@
     "fela": "^4.3.5",
     "ramda": "^0.23.0",
     "react-fela": "^4.3.5",
-    "react-toolbox-core": "^0.0.0-alpha.a1564456"
+    "react-toolbox-core": "^0.0.0-alpha.11"
   },
   "peerDependencies": {
     "react": "^0.14 || ~15.4.0",

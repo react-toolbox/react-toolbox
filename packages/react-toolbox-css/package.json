@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "build": "babel ./src --out-dir ./lib",
+    "build:watch": "babel ./src --out-dir ./lib --watch",
     "prepublish": "yarn run build"
   },
   "keywords": [],
@@ -14,12 +15,13 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "ramda": "^0.23.0",
-    "react-css-themr": "^2.0.0",
-    "react-toolbox-core": "^0.0.0-alpha.a1564456"
+    "react-css-themr": "^2.1.2",
+    "react-toolbox-core": "^0.0.0-alpha.11"
   },
   "peerDependencies": {
-    "react": "^0.14 || ~15.4.0",
-    "react-dom": "^0.14.0 || ~15.4.0"
+    "prop-types": "^15.5.7",
+    "react": "^15.5.0",
+    "react-dom": "^15.5.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1"

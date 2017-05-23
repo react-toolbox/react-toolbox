@@ -1,4 +1,4 @@
-import withRippleFactory from 'react-toolbox-core/lib/hoc/withRipple';
+import { withRippleFactory } from 'react-toolbox-core';
 import RippleNode from './RippleNode';
 import RippleWrapper from './RippleWrapper';
 

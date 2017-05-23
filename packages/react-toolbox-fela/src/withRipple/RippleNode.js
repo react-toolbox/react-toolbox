@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-fela';
-import { addOnTransitionEnded, removeOnTransitionEnded } from 'react-toolbox-core/lib/utils/onTransitionEnded';
+import { addOnTransitionEnded, removeOnTransitionEnded } from '../utils/transitions';
 
 class RippleNode extends Component {
   static propTypes = {

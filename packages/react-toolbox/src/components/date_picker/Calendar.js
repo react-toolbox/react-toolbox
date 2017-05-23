@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import CssTransitionGroup from 'react-addons-css-transition-group';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import CssTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { range, getAnimationModule } from '../utils/utils';
 import time from '../utils/time';
 import CalendarMonth from './CalendarMonth';
@@ -9,19 +10,19 @@ const DIRECTION_STEPS = { left: -1, right: 1 };
 const factory = IconButton => {
   class Calendar extends Component {
     static propTypes = {
-      disabledDates: React.PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+      disabledDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
       display: PropTypes.oneOf(['months', 'years']),
-      enabledDates: React.PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+      enabledDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
       handleSelect: PropTypes.func,
-      locale: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.object,
+      locale: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.object,
       ]),
       maxDate: PropTypes.instanceOf(Date),
       minDate: PropTypes.instanceOf(Date),
       onChange: PropTypes.func,
       selectedDate: PropTypes.instanceOf(Date),
-      sundayFirstDayOfWeek: React.PropTypes.bool,
+      sundayFirstDayOfWeek: PropTypes.bool,
       theme: PropTypes.shape({
         active: PropTypes.string,
         calendar: PropTypes.string,

@@ -1,4 +1,4 @@
-import values from 'ramda/src/values';
+import keys from 'ramda/src/keys';
 
 export default {
   getMousePosition(event) {
@@ -64,10 +64,9 @@ const TRANSITIONS = {
 };
 
 function transitionEventNamesFor(element) {
-  return values(TRANSITIONS).reduce(
-    (result, transition) =>
-      !result && (element && element.style[transition] !== undefined)
-        ? TRANSITIONS[transition]
-        : result
-  );
+  return keys(TRANSITIONS).reduce((result, transition) => (
+    !result && (element && element.style[transition] !== undefined)
+      ? TRANSITIONS[transition]
+      : result
+  ), null);
 }

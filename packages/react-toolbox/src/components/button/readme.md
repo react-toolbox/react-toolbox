@@ -54,7 +54,7 @@ If you want to provide a theme via context, the component key is `RTButton`.
 | `primary`         | `Boolean`             | `false`     | Indicates if the button should have primary color.|
 | `raised`          | `Boolean`             | `false`     | If true, the button will have a raised look. |
 | `ripple`          | `Boolean`             | `true`      | If true, component will have a ripple effect on click.|
-| `theme`           | `Object`              |             | Theme object will classnames that will be used to style the component.|
+| `theme`           | `Object`              |             | Theme object with classnames that will be used to style the component.|
 | `type`            | `String`              | `button`    | Component root container type.|
 
 By default it will have neutral colors and a flat aspect even though the `flat` property is `false` by default. Also, some properties exclude others, for example a button cannot be `flat` and `raised` at the same time.

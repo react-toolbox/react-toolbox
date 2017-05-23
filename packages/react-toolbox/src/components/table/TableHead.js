@@ -1,4 +1,5 @@
-import React, { Component, PropTypes, cloneElement } from 'react';
+import React, { Component, cloneElement } from 'react';
+import PropTypes from 'prop-types';
 import { themr } from 'react-css-themr';
 import { TABLE } from '../identifiers';
 import InjectCheckbox from '../checkbox/Checkbox';
@@ -40,20 +41,20 @@ const factory = (Checkbox, TableCell) => {
       } = this.props;
       return (
         <tr {...other}>
-          {selectable &&
-            <TableCell className={theme.checkboxCell} tagName="th">
-              {displaySelect &&
-                <Checkbox
-                  checked={selected}
-                  disabled={!multiSelectable}
-                  onChange={this.handleSelect}
-                />}
-            </TableCell>}
-          {React.Children.map(children, (child, index) =>
-            cloneElement(child, {
+          {selectable && <TableCell className={theme.checkboxCell} tagName="th">
+            {displaySelect && <Checkbox
+              checked={selected}
+              disabled={!multiSelectable}
+              onChange={this.handleSelect}
+            />}
+          </TableCell>}
+          {React.Children.map(children, (child, index) => {
+            if (!child) return null;
+            return cloneElement(child, {
               column: index,
               tagName: 'th',
-            }))}
+            });
+          })}
         </tr>
       );
     }

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 const Navigation = props => (
@@ -6,14 +7,14 @@ const Navigation = props => (
     <ul>
       <li><Link activeClassName={props.activeClassName} to="/install">Installation</Link></li>
       <li><Link activeClassName={props.activeClassName} to="/components">Components</Link></li>
-      <li><a href="http://www.github.com/react-toolbox/react-toolbox" target="_blank">Github</a></li>
+      <li><a href="http://www.github.com/react-toolbox/react-toolbox" target="_blank">GitHub</a></li>
     </ul>
   </nav>
   );
 
 Navigation.propTypes = {
-  activeClassName: React.PropTypes.string,
-  className: React.PropTypes.string
+  activeClassName: PropTypes.string,
+  className: PropTypes.string
 };
 
 

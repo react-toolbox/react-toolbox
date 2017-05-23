@@ -9,18 +9,18 @@ import Input from 'react-toolbox/lib/input';
 class InputTest extends React.Component {
   state = { name: '', phone: '', email: '', hint: '' };
 
-  handleChange = (name, value) => {
-    this.setState({...this.state, [name]: value});
+  handleChange = (value, ev) => {
+    this.setState({ [ev.target.name]: value });
   };
 
   render () {
     return (
       <section>
-        <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange.bind(this, 'name')} maxLength={16 } />
+        <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange} maxLength={16 } />
         <Input type='text' label='Disabled field' disabled />
-        <Input type='email' label='Email address' icon='email' value={this.state.email} onChange={this.handleChange.bind(this, 'email')} />
-        <Input type='tel' label='Phone' name='phone' icon='phone' value={this.state.phone} onChange={this.handleChange.bind(this, 'phone')} />
-        <Input type='text' value={this.state.hint} label='Required Field' hint='With Hint' required onChange={this.handleChange.bind(this, 'hint')} icon={<span>J</span>} />
+        <Input type='email' label='Email address' name='email' icon='email' value={this.state.email} onChange={this.handleChange} />
+        <Input type='tel' label='Phone' name='phone' icon='phone' value={this.state.phone} onChange={this.handleChange} />
+        <Input type='text' label='Required Field' name='hint' hint='With Hint' required value={this.state.hint} onChange={this.handleChange} icon={<span>J</span>} />
       </section>
     );
   }

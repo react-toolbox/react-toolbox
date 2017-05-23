@@ -5,7 +5,7 @@ import { FontIcon } from '../font_icon/FontIcon';
 import theme from './theme.css';
 
 const Input = inputFactory(FontIcon);
-const ThemedInput = themr(INPUT, theme, { withRef: true })(Input);
+const ThemedInput = themr(INPUT, theme)(Input);
 
 export default ThemedInput;
 export { ThemedInput as Input };

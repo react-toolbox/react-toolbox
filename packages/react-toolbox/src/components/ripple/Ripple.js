@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
@@ -248,9 +249,11 @@ const rippleFactory = (options = {}) => {
         };
       }
 
-      handleMouseDown = event => {
+      doRipple = () => (!this.props.disabled && this.props.ripple)
+
+      handleMouseDown = (event) => {
         if (this.props.onMouseDown) this.props.onMouseDown(event);
-        if (!this.props.disabled) {
+        if (this.doRipple()) {
           const { x, y } = events.getMousePosition(event);
           this.animateRipple(x, y, false);
         }
@@ -258,7 +261,7 @@ const rippleFactory = (options = {}) => {
 
       handleTouchStart = event => {
         if (this.props.onTouchStart) this.props.onTouchStart(event);
-        if (!this.props.disabled) {
+        if (this.doRipple()) {
           const { x, y } = events.getTouchPosition(event);
           this.animateRipple(x, y, true);
         }

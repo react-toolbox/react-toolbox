@@ -1,4 +1,5 @@
-import React, { cloneElement, Component, PropTypes } from 'react';
+import React, { cloneElement, Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { getViewport } from '../utils/utils';
@@ -25,7 +26,6 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
       theme: PropTypes.shape({
         appbarFixed: PropTypes.string,
         layout: PropTypes.string,
-        layoutInner: PropTypes.string,
         navDrawerClipped: PropTypes.string,
         navDrawerPinned: PropTypes.string,
         sidebarClipped: PropTypes.string,
@@ -111,9 +111,7 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
         <div {...rest} className={_className}>
           {clonedLeftSideNav}
           {clonedAppBar}
-          <div className={theme.layoutInner}>
-            {unknown}
-          </div>
+          {unknown}
           {clonedRightSideNav}
         </div>
       );

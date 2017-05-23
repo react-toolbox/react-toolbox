@@ -17,19 +17,19 @@
     "fela": "^4.2.1",
     "normalize.css": "^5.0.0",
     "react-fela": "^4.2.1",
-    "react-router-dom": "^4.0.0-beta.8",
+    "react-router-dom": "^4.1.1",
     "react-toolbox-css": "^0.0.1",
     "react-toolbox-fela": "^0.0.1",
     "react-toolbox-sc": "^0.0.1",
-    "react-toolbox": "^2.0.0-beta.6",
+    "react-toolbox": "^2.0.0-beta.9",
     "styled-components": "next"
   },
   "peerDependencies": {
-    "react": "^0.14 || ~15.4.0",
-    "react-dom": "^0.14.0 || ~15.4.0"
+    "react": "^15.5.0",
+    "react-dom": "^15.5.0"
   },
   "devDependencies": {
-    "cross-env": "^4.0.0"
+    "cross-env": "^5.0.0"
   },
   "eslintConfig": {
     "settings": {

@@ -1,5 +1,6 @@
 /* global VERSION */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Switch, Redirect, Link, Route, withRouter } from 'react-router-dom';
 import { Layout, Panel, NavDrawer } from 'react-toolbox/lib/layout';
 import { AppBar } from 'react-toolbox/lib/app_bar';
@@ -11,19 +12,9 @@ import Fela from './fela';
 import style from './style.css';
 
 class Root extends Component {
-  static propTypes = {
-    listen: PropTypes.func,
-  };
-
   state = {
     active: false,
   };
-
-  componentDidMount() {
-    this.props.listen(() => {
-      this.setState({ active: false });
-    });
-  }
 
   handleSideBarToggle = () => {
     this.setState({ active: !this.state.active });

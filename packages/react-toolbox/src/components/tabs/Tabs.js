@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { TABS } from '../identifiers';
@@ -51,8 +52,13 @@ const factory = (Tab, TabContent, FontIcon) => {
       this.handleResize();
     }
 
-    componentWillReceiveProps(nextProps) {
-      this.updatePointer(nextProps.index);
+    componentDidUpdate(prevProps) {
+      const { index, children } = this.props;
+      const { index: prevIndex, children: prevChildren } = prevProps;
+
+      if (index !== prevIndex || children !== prevChildren) {
+        this.updatePointer(index);
+      }
     }
 
     componentWillUnmount() {
@@ -79,15 +85,17 @@ const factory = (Tab, TabContent, FontIcon) => {
 
     updatePointer = idx => {
       if (this.navigationNode && this.navigationNode.children[idx]) {
-        const nav = this.navigationNode.getBoundingClientRect();
-        const label = this.navigationNode.children[idx].getBoundingClientRect();
-        const scrollLeft = this.navigationNode.scrollLeft;
-        this.setState({
-          pointer: {
-            top: `${nav.height}px`,
-            left: `${label.left - (nav.left + scrollLeft)}px`,
-            width: `${label.width}px`,
-          },
+        requestAnimationFrame(() => {
+          const nav = this.navigationNode.getBoundingClientRect();
+          const label = this.navigationNode.children[idx].getBoundingClientRect();
+          const scrollLeft = this.navigationNode.scrollLeft;
+          this.setState({
+            pointer: {
+              top: `${nav.height}px`,
+              left: `${(label.left + scrollLeft) - nav.left}px`,
+              width: `${label.width}px`,
+            },
+          });
         });
       }
     };

@@ -1,5 +1,6 @@
 /* eslint-disable */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
@@ -21,14 +22,14 @@ const factory = (Chip, Input) => {
       className: PropTypes.string,
       direction: PropTypes.oneOf(['auto', 'up', 'down']),
       disabled: PropTypes.bool,
-      error: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.node,
+      error: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node,
       ]),
       keepFocusOnChange: PropTypes.bool,
-      label: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.node,
+      label: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node,
       ]),
       multiple: PropTypes.bool,
       onBlur: PropTypes.func,
@@ -40,12 +41,7 @@ const factory = (Chip, Input) => {
       showSelectedWhenNotInSource: PropTypes.bool,
       showSuggestionsWhenValueIsSet: PropTypes.bool,
       source: PropTypes.any,
-      suggestionMatch: PropTypes.oneOf([
-        'disabled',
-        'start',
-        'anywhere',
-        'word',
-      ]),
+      suggestionMatch: PropTypes.oneOf(['disabled', 'start', 'anywhere', 'word', 'none']),
       theme: PropTypes.shape({
         active: PropTypes.string,
         autocomplete: PropTypes.string,
@@ -138,7 +134,7 @@ const factory = (Chip, Input) => {
       this.clearQuery = false;
 
       this.updateQuery(query, true);
-      this.setState({ showAllSuggestions: false, active: null });
+      this.setState({ showAllSuggestions: query ? false : this.props.showSuggestionsWhenValueIsSet, active: null });
     };
 
     handleQueryFocus = event => {
@@ -269,6 +265,8 @@ const factory = (Chip, Input) => {
       } else if (suggestionMatch === 'word') {
         const re = new RegExp(`\\b${query}`, 'g');
         return re.test(value);
+      }else if(suggestionMatch === 'none'){
+        return value
       }
 
       return false;
@@ -320,10 +318,11 @@ const factory = (Chip, Input) => {
           {}
         );
 
-        return this.handleChange(
-          Object.assign(this.mapToObject(values), newItem),
-          event
-        );
+        if (Object.keys(newItem).length === 0 && newValue) {
+          newItem[newValue] = newValue;
+        }
+
+        return this.handleChange(Object.assign(this.mapToObject(values), newItem), event);
       }
 
       this.handleChange([newValue, ...values.keys()], event);

@@ -15,15 +15,15 @@
   "author": "Javi Velasco <javier.velasco86@gmail.com> (http://javivelasco.com/)",
   "license": "ISC",
   "dependencies": {
-    "date-fns": "^1.28.4",
-    "inline-style-prefixer": "^3.0.3",
+    "date-fns": "^1.28.5",
+    "inline-style-prefixer": "^3.0.5",
     "ramda": "^0.23.0"
   },
   "peerDependencies": {
     "react": "^0.14 || ~15.5.0"
   },
   "devDependencies": {
-    "typedoc": "^0.6.0",
+    "typedoc": "^0.7.1",
     "typescript": "next"
   }
 }

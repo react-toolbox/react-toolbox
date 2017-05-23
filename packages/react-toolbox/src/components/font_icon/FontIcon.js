@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 const FontIcon = (
@@ -16,7 +17,7 @@ const FontIcon = (
     )}
     {...other}
   >
-    <span aria-hidden="true">{value}</span>
+    {value}
     {children}
   </span>
 );

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import DatePicker from 'react-toolbox-sc/src/DatePicker';
-import { constants as C } from 'react-toolbox-sc/src/DatePicker';
+import DatePicker from 'react-toolbox-sc/lib/DatePicker';
 
 const DatePickerExamples = () => (
   <section>
@@ -16,7 +15,7 @@ class TestDatePicker extends Component {
   state = {
     focusedInput: null,
     highlighted: null,
-    value: null,
+    value: {},
   };
 
   handleChange = value => {
@@ -48,14 +47,14 @@ class TestDatePicker extends Component {
       <div>
         <DateInput
           value={this.format(this.state.value.from)}
-          onFocus={() => this.setState({ focusedInput: C.START_DATE })}
-          active={this.state.focusedInput === C.START_DATE}
+          onFocus={() => this.setState({ focusedInput: 'START_DATE' })}
+          active={this.state.focusedInput === 'START_DATE'}
           readOnly
         />
         <DateInput
           value={this.format(this.state.value.to)}
-          onFocus={() => this.setState({ focusedInput: C.END_DATE })}
-          active={this.state.focusedInput === C.END_DATE}
+          onFocus={() => this.setState({ focusedInput: 'END_DATE' })}
+          active={this.state.focusedInput === 'END_DATE'}
           readOnly
         />
         <DatePicker

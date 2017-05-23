@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { addOnTransitionEnded, removeOnTransitionEnded } from 'react-toolbox-core/lib/utils/onTransitionEnded';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { addOnTransitionEnded, removeOnTransitionEnded } from '../../utils/transitions';
 import createComponent from '../../utils/createComponent';
 import theme from './withRipple.css';
 

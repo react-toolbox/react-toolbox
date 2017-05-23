@@ -12,11 +12,11 @@ const ButtonTest = () => (
     <Button href="http://github.com/javivelasco" target="_blank" raised>
       <Github /> Github
     </Button>
-    <Button cta onRippleEnded={rippleEnded} overrides={overrides}>
+    <Button cta overrides={overrides}>
       <FontIcon value="bookmark" />
       Bookmark
     </Button>
-    <Button raised primary rippleMultiple={false} onRippleEnded={rippleEnded}>
+    <Button raised primary rippleMultiple={false}>
       <FontIcon value="bookmark" />
       Bookmark
     </Button>
@@ -61,9 +61,5 @@ const overrides = {
     }
   `,
 };
-
-function rippleEnded() {
-  console.log('Ripple animation ended!'); // eslint-disable-line
-}
 
 export default ButtonTest;

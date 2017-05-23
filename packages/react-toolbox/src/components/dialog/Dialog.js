@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/aria-role */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
 import { DIALOG } from '../identifiers';
@@ -77,6 +78,7 @@ const factory = (Overlay, Button) => {
       button: PropTypes.string,
       dialog: PropTypes.string,
       navigation: PropTypes.string,
+      overflow: PropTypes.string,
       overlay: PropTypes.string,
       title: PropTypes.string,
       wrapper: PropTypes.string,
