@@ -254,6 +254,6 @@ const factory = FontIcon => {
 };
 
 const Input = factory(InjectedFontIcon);
-export default themr(INPUT, null)(Input);
+export default themr(INPUT)(Input);
 export { factory as inputFactory };
 export { Input };

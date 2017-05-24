@@ -28,10 +28,10 @@ test-ci:
 	make lint
 
 test:
-	node --harmony_proxies node_modules/.bin/jest
+	node node_modules/.bin/jest
 
 test-watch:
-	node --harmony_proxies node_modules/.bin/jest --watch --no-watchman
+	node node_modules/.bin/jest --watch --no-watchman
 
 prettier:
 	prettier --write --single-quote --trailing-comma=es5 \"packages/react-toolbox-core/src/**/*.js\"

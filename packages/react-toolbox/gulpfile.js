@@ -8,6 +8,7 @@ gulp.task('js', function() {
     .src([
       './src/components/**/*.js',
       '!./src/components/**/__test__/*.js',
+      '!./src/components/**/*.spec.js',
       '!./src/components/__mocks__/**/*.js',
     ])
     .pipe(babel())
