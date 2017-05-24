@@ -87,7 +87,7 @@
     "react-transform-hmr": "^1.0.4",
     "redbox-react": "^1.3.6",
     "rimraf": "^2.6.1",
-    "style-loader": "^0.18.0",
+    "style-loader": "^0.18.1",
     "stylelint": "^7.10.1",
     "stylelint-config-standard": "^16.0.0",
     "stylelint-order": "^0.4.4",
@@ -125,10 +125,10 @@
       "(\\.css$)|(normalize.css/normalize)|(^exports-loader)": "identity-obj-proxy"
     },
     "modulePaths": [
-      "<rootDir>"
+      "<rootDir>/components"
     ],
     "setupFiles": [
-      "./jest.config.js"
+      "./jest.setup.js"
     ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"

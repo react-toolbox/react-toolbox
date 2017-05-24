@@ -6656,9 +6656,9 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
-style-loader@^0.18.0:
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-0.18.0.tgz#5b7a895860bda966286c8bb80ffd4ccbaf0411f5"
+style-loader@^0.18.1:
+  version "0.18.1"
+  resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-0.18.1.tgz#6afca8953c842830e5e2dc84796309880a97f7e8"
   dependencies:
     loader-utils "^1.0.2"
     schema-utils "^0.3.0"

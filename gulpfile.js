@@ -6,7 +6,8 @@ const postcss = require('gulp-postcss');
 gulp.task('js', function () {
   return gulp.src([
     './components/**/*.js',
-    '!./components/**/__test__/*.js',
+    '!./components/**/*.spec.js',
+    '!./components/**/__test__',
     '!./components/__mocks__/**/*.js'
   ])
     .pipe(babel())
