@@ -191,6 +191,10 @@ export interface DatePickerProps extends ReactToolbox.Props {
    * Date object with the currently selected date.
    */
   value?: Date | string;
+  /**
+   * Used in case the input is required.
+   */
+  required?: boolean;
 }
 
 export interface DatePickerLocale {
