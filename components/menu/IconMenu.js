@@ -16,6 +16,7 @@ const factory = (IconButton, Menu) => {
         PropTypes.element,
       ]),
       iconRipple: PropTypes.bool,
+      inverse: PropTypes.bool,
       menuRipple: PropTypes.bool,
       onClick: PropTypes.func,
       onHide: PropTypes.func,
