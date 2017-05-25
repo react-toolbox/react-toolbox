@@ -8,8 +8,9 @@ module.exports = {
     },
     'postcss-mixins': {},
     'postcss-each': {},
+    'postcss-apply': {},
+    'postcss-nesting': {},
     'postcss-cssnext': {},
-    'postcss-nested': {},
     'postcss-reporter': {
       clearMessages: true
     }

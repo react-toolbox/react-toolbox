@@ -23,7 +23,8 @@ gulp.task('css', function() {
     }),
     require('postcss-mixins')(),
     require('postcss-each')(),
-    require('postcss-nested')(),
+    require('postcss-apply')(),
+    require('postcss-nesting')(),
     require('postcss-reporter')({ clearMessages: true })
   ];
 
