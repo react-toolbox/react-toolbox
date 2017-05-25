@@ -264,9 +264,9 @@ The only requirement for SSR is to be able to require ES6 and CSS Modules in the
 
 ## Examples
 
-For now we have a [1.x repository example](https://github.com/react-toolbox/react-toolbox-example) demonstrating configuration and some basic customization. It hasn't yet been updated for 2.0! For now it's not using SSR rendering but it shouldn't be difficult to implement an example so it will come soon. Feel free to PR your example project or to add some use cases to the repository:
+For now we have a [repository example](https://github.com/react-toolbox/react-toolbox-example) demonstrating configuration and some basic customization. For now it's not using SSR rendering but it shouldn't be difficult to implement an example so it will come soon. Feel free to PR your example project or to add some use cases to the repository:
 
-2.x demo project - https://github.com/alexhisen/mobx-forms-demo
+Another 2.x demo project is https://github.com/alexhisen/mobx-forms-demo
 
 ## TypeScript
 
