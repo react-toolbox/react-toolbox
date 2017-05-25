@@ -33,7 +33,7 @@ module.exports = {
       include: /node_modules/,
       use: ExtractTextPlugin.extract({
         fallback: 'style-loader',
-        loader: 'css-loader',
+        use: 'css-loader',
       })
     }, {
       test: /\.css$/,
@@ -53,7 +53,6 @@ module.exports = {
       }, {
         loader: 'postcss-loader',
         options: {
-          // context: path.join(__dirname, '../'),
           config: {
             path: path.join(__dirname, './postcss.config.js')
           }
