@@ -34,7 +34,7 @@ test-watch:
 	node node_modules/.bin/jest --watch --no-watchman
 
 prettier:
-	prettier --write --single-quote --trailing-comma=es5 \"packages/react-toolbox-core/src/**/*.js\"
+	./node_modules/.bin/prettier --write --single-quote "packages/react-toolbox-themr/{src,bin}/**/*.js"
 
 lint:
 	make lint-js

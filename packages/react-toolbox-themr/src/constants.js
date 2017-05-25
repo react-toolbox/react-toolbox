@@ -1,11 +1,18 @@
-const CSS_OPTION       = 'styles'
-const JS_OPTION        = 'javascript'
-const OUTPUT_OPTION    = 'output'
-const DEFAULT_FILENAME = 'theme'
-const DEFAULT_OUTPUT   = 'src/toolbox'
-const DEFAULT_PATH     = './node_modules/react-toolbox/lib'
-const OUTPUT_OPTIONS   = [ 'path', 'include', 'customProperties', 'css', 'js', 'fixed' ]
-const INPUT_OPTIONS    = [
+const CSS_OPTION = 'styles';
+const JS_OPTION = 'javascript';
+const OUTPUT_OPTION = 'output';
+const DEFAULT_FILENAME = 'theme';
+const DEFAULT_OUTPUT = 'src/toolbox';
+const DEFAULT_PATH = './node_modules/react-toolbox/lib';
+const OUTPUT_OPTIONS = [
+  'path',
+  'include',
+  'customProperties',
+  'css',
+  'js',
+  'fixed'
+];
+const INPUT_OPTIONS = [
   'path',
   'include',
   'customProperties',
@@ -13,7 +20,7 @@ const INPUT_OPTIONS    = [
   CSS_OPTION,
   JS_OPTION,
   OUTPUT_OPTION
-]
+];
 
 const DEFAULT_OPTIONS = {
   include: [
@@ -50,13 +57,13 @@ const DEFAULT_OPTIONS = {
   output: DEFAULT_OUTPUT,
   path: DEFAULT_PATH,
   fixed: false
-}
+};
 
-module.exports.OUTPUT_OPTION    = OUTPUT_OPTION
-module.exports.CSS_OPTION       = CSS_OPTION
-module.exports.JS_OPTION        = JS_OPTION
-module.exports.DEFAULT_OPTIONS  = DEFAULT_OPTIONS
-module.exports.DEFAULT_OUTPUT   = DEFAULT_OUTPUT
-module.exports.DEFAULT_FILENAME = DEFAULT_FILENAME
-module.exports.INPUT_OPTIONS    = INPUT_OPTIONS
-module.exports.OUTPUT_OPTIONS   = OUTPUT_OPTIONS
+module.exports.OUTPUT_OPTION = OUTPUT_OPTION;
+module.exports.CSS_OPTION = CSS_OPTION;
+module.exports.JS_OPTION = JS_OPTION;
+module.exports.DEFAULT_OPTIONS = DEFAULT_OPTIONS;
+module.exports.DEFAULT_OUTPUT = DEFAULT_OUTPUT;
+module.exports.DEFAULT_FILENAME = DEFAULT_FILENAME;
+module.exports.INPUT_OPTIONS = INPUT_OPTIONS;
+module.exports.OUTPUT_OPTIONS = OUTPUT_OPTIONS;

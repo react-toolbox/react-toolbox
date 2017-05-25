@@ -27,8 +27,8 @@ const THEME_FILES = {
   TABS: '/tabs/theme.css',
   TOOLTIP: '/tooltip/theme.css',
   TIME_PICKER: '/time_picker/theme.css'
-}
+};
 
 module.exports = function getPath(component) {
-  return THEME_FILES[component]
-}
+  return THEME_FILES[component];
+};
