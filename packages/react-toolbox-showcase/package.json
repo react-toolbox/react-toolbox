@@ -21,7 +21,7 @@
     "react-toolbox-css": "^0.0.1",
     "react-toolbox-fela": "^0.0.1",
     "react-toolbox-sc": "^0.0.1",
-    "react-toolbox": "^2.0.0-beta.9",
+    "react-toolbox": "^2.0.0-beta.10",
     "styled-components": "1.4.6"
   },
   "peerDependencies": {

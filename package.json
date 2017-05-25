@@ -69,12 +69,13 @@
     "jest": "^20.0.1",
     "lerna": "^2.0.0-rc.4",
     "lint-staged": "^3.4.1",
+    "postcss-apply": "^0.7.0",
     "postcss-cssnext": "^2.11.0",
     "postcss-each": "^0.10.0",
     "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.5",
     "postcss-mixins": "^6.0.0",
-    "postcss-nested": "^2.0.2",
+    "postcss-nesting": "^4.0.1",
     "postcss-reporter": "^3.0.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.3.1",
@@ -113,7 +114,8 @@
     "roots": [
       "<rootDir>/packages/react-toolbox",
       "<rootDir>/packages/react-toolbox-core",
-      "<rootDir>/packages/react-toolbox-css"
+      "<rootDir>/packages/react-toolbox-css",
+      "<rootDir>/packages/react-toolbox-themr"
     ],
     "modulePathIgnorePatterns": [
       "packages/.*/lib"
