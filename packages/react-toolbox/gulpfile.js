@@ -35,7 +35,7 @@ gulp.task('css', function() {
 });
 
 gulp.task('tsd', function () {
-  gulp.src('./components/**/*.d.ts')
+  gulp.src('./src/components/**/*.d.ts')
     .pipe(gulp.dest('./lib'));
 });
 

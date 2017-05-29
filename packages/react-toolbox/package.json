@@ -25,10 +25,9 @@
     "toolkit"
   ],
   "scripts": {
-    "build": "cross-env NODE_ENV=production gulp && yarn run tsd",
+    "build": "cross-env NODE_ENV=production gulp",
     "clean": "rimraf ./lib",
-    "prepublish": "yarn run build",
-    "tsd": "cpx \"./components/**/*.d.ts\" ./lib"
+    "prepublish": "yarn run build"
   },
   "dependencies": {
     "classnames": "^2.2.5",
