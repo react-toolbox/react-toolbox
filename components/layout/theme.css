@@ -36,7 +36,7 @@
 
 .sidebarDrawer,
 .navDrawerDrawer {
-  z-index: var(--z-index-high);
+  z-index: var(--z-index-highest);
 
   &.pinned {
     box-shadow: none;
