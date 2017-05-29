@@ -106,6 +106,9 @@
       "react"
     ]
   },
+  "engines": {
+    "node": ">= 6"
+  },
   "jest": {
     "moduleFileExtensions": [
       "ts",
