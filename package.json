@@ -2,7 +2,7 @@
   "name": "react-toolbox",
   "description": "A set of React components implementing Google's Material Design specification with the power of CSS Modules.",
   "homepage": "http://www.react-toolbox.com",
-  "version": "2.0.0-beta.8",
+  "version": "2.0.0-beta.11",
   "main": "./lib",
   "module": "./components",
   "author": {
@@ -99,7 +99,7 @@
   },
   "scripts": {
     "babel": "babel ./components --out-dir ./lib",
-    "build": "cross-env NODE_ENV=production gulp && npm run tsd",
+    "build": "cross-env NODE_ENV=production gulp",
     "clean": "rimraf ./lib",
     "css": "cpx \"./components/**/*.css\" ./lib",
     "lint": "npm run lint:js && npm run lint:css",
@@ -112,8 +112,7 @@
     "release": "bumped release",
     "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
     "test": "jest",
-    "test:watch": "jest --watch --no-watchman",
-    "tsd": "cpx \"./components/**/*.d.ts\" ./lib"
+    "test:watch": "jest --watch --no-watchman"
   },
   "license": "MIT",
   "jest": {
