@@ -197,10 +197,10 @@ const factory = (Tab, TabContent, FontIcon) => {
             {hasLeftArrow && <div className={theme.arrowContainer} onClick={this.scrollRight}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_left" />
             </div>}
-            <nav className={theme.navigation} role='tablist' ref={(node) => { this.navigationNode = node; }}>
+            <div className={theme.navigation} role="tablist" ref={(node) => { this.navigationNode = node; }}>
               {this.renderHeaders(headers)}
               <span className={classNamePointer} style={this.state.pointer} />
-            </nav>
+            </div>
             {hasRightArrow && <div className={theme.arrowContainer} onClick={this.scrollLeft}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_right" />
             </div>}
