@@ -1,7 +1,8 @@
 # <a href='http://react-toolbox.com'><img src='http://i.imgur.com/VCSElQX.png' height='50'></a>
 
-[![npm version](https://img.shields.io/npm/v/react-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/react-toolbox) [![Build Status](http://img.shields.io/travis/react-toolbox/react-toolbox/master.svg?style=flat-square)](https://travis-ci.org/react-toolbox/react-toolbox) [![NPM Status](http://img.shields.io/npm/dm/react-toolbox.svg?style=flat-square)](https://www.npmjs.org/package/react-toolbox) [![react-toolbox channel on discord](https://img.shields.io/badge/discord-%23react--toolbox%20%40%20reactiflux-61dafb.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bW9FLzM) [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://paypal.me/javivelasco) [![OpenCollective](https://opencollective.com/react-toolbox/backers/badge.svg)](#backers) 
-[![OpenCollective](https://opencollective.com/react-toolbox/sponsors/badge.svg)](#sponsors)
+[![npm version](https://img.shields.io/npm/v/react-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/react-toolbox) [![Build Status](http://img.shields.io/travis/react-toolbox/react-toolbox/master.svg?style=flat-square)](https://travis-ci.org/react-toolbox/react-toolbox) [![NPM Status](http://img.shields.io/npm/dm/react-toolbox.svg?style=flat-square)](https://www.npmjs.org/package/react-toolbox) [![react-toolbox channel on discord](https://img.shields.io/badge/discord-%23react--toolbox-61dafb.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bW9FLzM) [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://paypal.me/javivelasco) [![OpenCollective](https://opencollective.com/react-toolbox/backers/badge.svg?style=flat-square)](#backers) 
+[![OpenCollective](https://opencollective.com/react-toolbox/sponsors/badge.svg?style=flat-square)](#sponsors)
+[![create-react-app supported](https://img.shields.io/badge/CRA-supported-green.svg?style=flat-square)](#create-react-app)
 
 React Toolbox is a set of [React](http://facebook.github.io/react/) components that implement [Google's Material Design specification](https://material.google.com/). It's powered by [CSS Modules](https://github.com/css-modules/css-modules) and harmoniously integrates with your [webpack](http://webpack.github.io/) workflow, although you can use any other module bundler. You can take a tour through our documentation website and try the components live!
 
@@ -56,6 +57,39 @@ Declare plugins to be used by postcss (as part of webpack's config object):
       /* eslint-enable global-require */
     ];
   },
+```
+
+## create-react-app
+
+To use with create-react-app
+
+```bash
+npm install --save react-toolbox
+npm install react-toolbox-themr --save-dev
+```
+
+Add in `package.json`
+
+```diff
+"scripts": {
++    "toolbox": "react-toolbox-themr"
+```
+
+Run
+
+```bash
+npm run toolbox
+```
+
+And finally in `index.js`
+
+```diff
++import ThemeProvider from 'react-toolbox/lib/ThemeProvider'
++import theme from './toolbox/theme.js'
++import './toolbox/theme.css'
+
+-render(<App />, rootElement)
++render(<ThemeProvider theme={theme}><App /></ThemeProvider>, rootElement)
 ```
 
 ## Basic usage
