@@ -9,6 +9,7 @@ class TabContent extends Component {
     active: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
+    hidden: PropTypes.bool,
     tabIndex: PropTypes.number,
     theme: PropTypes.shape({
       active: PropTypes.string,
@@ -19,6 +20,7 @@ class TabContent extends Component {
   static defaultProps = {
     active: false,
     className: '',
+    hidden: true,
   };
 
   render() {
@@ -27,7 +29,7 @@ class TabContent extends Component {
     }, this.props.className);
 
     return (
-      <section className={className} tabIndex={this.props.tabIndex}>
+      <section className={className} role="tabpanel" aria-expanded={hidden} tabIndex={this.props.tabIndex}>
         {this.props.children}
       </section>
     );
