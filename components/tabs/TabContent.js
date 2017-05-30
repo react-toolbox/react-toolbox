@@ -29,7 +29,7 @@ class TabContent extends Component {
     }, this.props.className);
 
     return (
-      <section className={className} role="tabpanel" aria-expanded={hidden} tabIndex={this.props.tabIndex}>
+      <section className={className} role="tabpanel" aria-expanded={hidden}>
         {this.props.children}
       </section>
     );
