@@ -65,7 +65,7 @@ const factory = (ripple) => {
       }, className);
 
       return (
-        <div {...other} data-react-toolbox="tab" className={_className} onClick={this.handleClick}>
+        <div {...other} data-react-toolbox="tab" role="tab" tabIndex="0" className={_className} onClick={this.handleClick}>
           {icon && <FontIcon className={theme.icon} value={icon} />}
           {label}
           {children}
