@@ -37,6 +37,7 @@ const factory = (Input, DatePickerDialog) => {
       minDate: PropTypes.instanceOf(Date),
       name: PropTypes.string,
       okLabel: PropTypes.string,
+      onActiveChange: PropTypes.func,
       onChange: PropTypes.func,
       onClick: PropTypes.func,
       onDismiss: PropTypes.func,
@@ -71,8 +72,13 @@ const factory = (Input, DatePickerDialog) => {
       }
     }
 
+    toggleActive = (active) => {
+      if (this.props.onActiveChange) this.props.onActiveChange(active);
+      this.setState({ active });
+    };
+
     handleDismiss = () => {
-      this.setState({ active: false });
+      this.toggleActive(false);
       if (this.props.onDismiss) {
         this.props.onDismiss();
       }
@@ -80,31 +86,31 @@ const factory = (Input, DatePickerDialog) => {
 
     handleInputFocus = (event) => {
       events.pauseEvent(event);
-      this.setState({ active: true });
+      this.toggleActive(true);
     };
 
     handleInputBlur = (event) => {
       events.pauseEvent(event);
-      this.setState({ active: false });
+      this.toggleActive(false);
     };
 
     handleInputClick = (event) => {
       events.pauseEvent(event);
-      this.setState({ active: true });
+      this.toggleActive(true);
       if (this.props.onClick) this.props.onClick(event);
     };
 
     handleInputKeyPress = (event) => {
       if (event.charCode === 13) {
         events.pauseEvent(event);
-        this.setState({ active: true });
+        this.toggleActive(true);
       }
       if (this.props.onKeyPress) this.props.onKeyPress(event);
     };
 
     handleSelect = (value, event) => {
       if (this.props.onChange) this.props.onChange(value, event);
-      this.setState({ active: false });
+      this.toggleActive(true);
     };
 
     render() {
