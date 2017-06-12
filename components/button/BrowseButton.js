@@ -10,6 +10,7 @@ const factory = (ripple, FontIcon) => {
   class SimpleBrowseButton extends Component {
     static propTypes = {
       accent: PropTypes.bool,
+      accept: PropTypes.string,
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
@@ -47,6 +48,7 @@ const factory = (ripple, FontIcon) => {
 
     static defaultProps = {
       accent: false,
+      accept: '*/*',
       className: '',
       flat: false,
       floating: false,
@@ -85,6 +87,7 @@ const factory = (ripple, FontIcon) => {
     render() {
       const {
         accent,    // eslint-disable-line
+        accept,
         children,
         className,
         flat,      // eslint-disable-line
@@ -122,7 +125,12 @@ const factory = (ripple, FontIcon) => {
       return React.createElement(element, props,
           icon ? <FontIcon className={theme.icon} value={icon} /> : null,
         <span>{label}</span>,
-        <input className={classes} type="file" onChange={this.handleFileChange} />,
+        <input
+          className={classes}
+          type="file"
+          accept={accept}
+          onChange={this.handleFileChange}
+        />,
           children,
         );
     }
