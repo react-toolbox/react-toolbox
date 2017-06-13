@@ -103,7 +103,7 @@ const factory = (Tab, TabContent, FontIcon) => {
     }
 
     updateArrows = () => {
-      const navigationNode = this.navigationNode
+      const navigationNode = this.navigationNode;
       const idx = navigationNode.children.length - 2;
 
       if (idx >= 0) {
