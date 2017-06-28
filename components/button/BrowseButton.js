@@ -112,6 +112,7 @@ const factory = (ripple, FontIcon) => {
       const props = {
         ...others,
         ref: (node) => { this.labelNode = node; },
+        onChange: null,
         className: classes,
         disabled: this.props.disabled,
         onMouseUp: this.handleMouseUp,
