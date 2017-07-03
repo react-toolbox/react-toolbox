@@ -47,8 +47,12 @@ const factory = (Tab, TabContent, FontIcon) => {
       this.handleResize();
     }
 
-    componentWillReceiveProps (nextProps) {
-      this.updatePointer(nextProps.index);
+    componentDidUpdate (prevProps) {
+      const { index, children } = this.props;
+      const { index: prevIndex, children: prevChildren } = prevProps;
+      if (index !== prevIndex || children !== prevChildren) {
+        this.updatePointer(index);
+      }
     }
 
     componentWillUnmount () {
