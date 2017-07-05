@@ -54,7 +54,7 @@ export interface LayoutProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
    */
-  children?: [NavDrawer | Panel | Sidebar];
+  children?: JSX.Element | JSX.Element[];
   /**
    * Classnames object defining the component style.
    */
