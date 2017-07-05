@@ -142,6 +142,10 @@ export interface InputProps extends ReactToolbox.Props {
    * Current value of the input element.
    */
   value?: any;
+  /**
+   * innerRef callback for access to HOC-wrapped innner elements
+   */
+  innerRef?: (ref: React.Component<InputProps,{}>) => void;
 }
 
 export class Input extends React.Component<InputProps, {}> {
