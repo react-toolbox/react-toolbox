@@ -1,8 +1,5 @@
 import * as React from "react";
 import ReactToolbox from "../index";
-import { NavDrawer } from './NavDrawer';
-import { Panel } from './Panel';
-import { Sidebar } from './Sidebar';
 
 export interface LayoutTheme {
   appbarFixed?: string;
