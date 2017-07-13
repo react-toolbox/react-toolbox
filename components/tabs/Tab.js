@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { FontIcon } from '../font_icon';
 import { TABS } from '../identifiers';
 import rippleFactory from '../ripple/Ripple';
+import InjectFontIcon from '../font_icon/FontIcon';
 
-const factory = (ripple) => {
+const factory = (ripple, FontIcon) => {
   class Tab extends Component {
     static propTypes = {
       active: PropTypes.bool,
@@ -77,7 +77,7 @@ const factory = (ripple) => {
   return ripple(Tab);
 };
 
-const Tab = factory(rippleFactory({ centered: false }));
+const Tab = factory(rippleFactory({ centered: false }), InjectFontIcon);
 export default themr(TABS)(Tab);
 export { factory as tabFactory };
 export { Tab };

@@ -9,7 +9,7 @@ import theme from './theme.css';
 
 const applyTheme = Component => themr(TABS, theme)(Component);
 const ThemedTabContent = applyTheme(TabContent);
-const ThemedTab = applyTheme(tabFactory(themedRippleFactory({ centered: false })));
+const ThemedTab = applyTheme(tabFactory(themedRippleFactory({ centered: false }), FontIcon));
 const ThemedTabs = applyTheme(tabsFactory(ThemedTab, ThemedTabContent, FontIcon));
 
 export { ThemedTab as Tab };
