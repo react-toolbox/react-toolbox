@@ -82,7 +82,6 @@ class ProgressBar extends Component {
   render() {
     const { className, disabled, max, min, mode, multicolor, type, theme, value } = this.props;
     const _className = classnames(theme[type], {
-      [theme[mode]]: mode,
       [theme.multicolor]: multicolor,
     }, className);
 
