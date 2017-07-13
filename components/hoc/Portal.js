@@ -7,6 +7,7 @@ class Portal extends Component {
     children: PropTypes.node,
     className: PropTypes.string,
     container: PropTypes.node,
+    style: PropTypes.style,
   }
 
   static defaultProps = {
@@ -55,7 +56,11 @@ class Portal extends Component {
 
   _getOverlay() {
     if (!this.props.children) return null;
-    return <div className={this.props.className}>{this.props.children}</div>;
+    return (
+      <div className={this.props.className} style={this.props.style}>
+        {this.props.children}
+      </div>
+    );
   }
 
   _renderOverlay() {
