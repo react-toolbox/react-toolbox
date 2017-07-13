@@ -8,6 +8,7 @@ import InjectedFontIcon from '../font_icon/FontIcon';
 const factory = (FontIcon) => {
   class Input extends React.Component {
     static propTypes = {
+      autoResize: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
       defaultValue: PropTypes.string,
@@ -61,6 +62,7 @@ const factory = (FontIcon) => {
     };
 
     static defaultProps = {
+      autoResize: true,
       className: '',
       hint: '',
       disabled: false,
@@ -110,9 +112,9 @@ const factory = (FontIcon) => {
 
     handleAutoresize = () => {
       const element = this.inputNode;
-      const rows = this.props.rows;
+      const autoResize = this.props.autoResize;
 
-      if (typeof rows === 'number' && !isNaN(rows)) {
+      if (!autoResize) {
         element.style.height = null;
       } else {
         // compute the height difference between inner height and outer height
@@ -200,6 +202,8 @@ const factory = (FontIcon) => {
         inputElementProps.rows = rows;
         inputElementProps.onKeyPress = this.handleKeyPress;
       }
+
+      delete inputElementProps.autoResize;
 
       return (
         <div data-react-toolbox="input" className={className}>
