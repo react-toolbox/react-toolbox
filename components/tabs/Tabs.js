@@ -81,19 +81,44 @@ const factory = (Tab, TabContent, FontIcon) => {
     };
 
     updatePointer = (idx) => {
-      if (this.navigationNode && this.navigationNode.children[idx]) {
-        requestAnimationFrame(() => {
-          const nav = this.navigationNode.getBoundingClientRect();
-          const label = this.navigationNode.children[idx].getBoundingClientRect();
-          const scrollLeft = this.navigationNode.scrollLeft;
-          this.setState({
-            pointer: {
-              top: `${nav.height}px`,
-              left: `${(label.left + scrollLeft) - nav.left}px`,
-              width: `${label.width}px`,
-            },
+      if (idx % 1 === 0) {
+        if (this.navigationNode && this.navigationNode.children[idx]) {
+          requestAnimationFrame(() => {
+            const nav = this.navigationNode.getBoundingClientRect();
+            const label = this.navigationNode.children[idx].getBoundingClientRect();
+            const scrollLeft = this.navigationNode.scrollLeft;
+            this.setState({
+              pointer: {
+                top: `${nav.height}px`,
+                left: `${(label.left + scrollLeft) - nav.left}px`,
+                width: `${label.width}px`,
+              },
+            });
           });
-        });
+        }
+      } else {
+        const leftIdx = Math.floor(idx);
+        const rightIdx = Math.ceil(idx);
+        if (
+          this.navigationNode
+          && this.navigationNode.children[leftIdx]
+          && this.navigationNode.children[rightIdx]
+        ) {
+          requestAnimationFrame(() => {
+            const nav = this.navigationNode.getBoundingClientRect();
+            const leftLabel = this.navigationNode.children[leftIdx].getBoundingClientRect();
+            const rightLabel = this.navigationNode.children[rightIdx].getBoundingClientRect();
+            const scrollLeft = this.navigationNode.scrollLeft;
+            const add = idx % 1;
+            this.setState({
+              pointer: {
+                top: `${nav.height}px`,
+                left: `${(((1 - add) * leftLabel.left) + (add * rightLabel.left) + scrollLeft) - nav.left}px`,
+                width: `${((1 - add) * leftLabel.width) + (add * rightLabel.width)}px`,
+              },
+            });
+          });
+        }
       }
     }
 

@@ -1,11 +1,13 @@
 import React from 'react';
 import { Tabs, Tab } from '../../components/tabs';
+import Slider from '../../components/slider'
 
 class TabsTest extends React.Component {
   state = {
     index: 1,
     fixedIndex: 1,
     inverseIndex: 1,
+    floatIndex: 1,
   };
 
   handleTabChange = (index) => {
@@ -20,6 +22,10 @@ class TabsTest extends React.Component {
     this.setState({ inverseIndex: index });
   };
 
+  handleFloatTabChange = (index) => {
+    this.setState({ floatIndex: index })
+  }
+
   handleActive = () => {
     console.log('Special one activated');
   };
@@ -29,7 +35,7 @@ class TabsTest extends React.Component {
       <section>
         <h5>Tabs</h5>
         <p>This tabs can be disabled or hidden</p>
-        <Tabs disableAnimatedBottomBorder index={this.state.index} onChange={this.handleTabChange}>
+        <Tabs disableAnimatedBottomBorder index={1} onChange={this.handleTabChange}>
           <Tab ripple={false} label="Primary"><small>Primary content (no ripple)</small></Tab>
           <Tab label="Secondary" onActive={this.handleActive}><small>Secondary content</small></Tab>
           <Tab label="Third" disabled><small>Disabled content</small></Tab>
@@ -65,6 +71,20 @@ class TabsTest extends React.Component {
           <Tab icon="favorite"><small>Second Content</small></Tab>
           <Tab icon="call"><small>Third Content</small></Tab>
         </Tabs>
+        <h5>Tabs with float index</h5>
+        <p>
+          If you pass an index value that is not an int, the pointer will render somewhere between the two nearest ints.
+          This could be useful for integration with libraries
+          like <a href="https://github.com/oliviertassinari/react-swipeable-views">react-swipeable-views</a>.
+        </p>
+        <Tabs index={this.state.floatIndex} onChange={this.handleFloatTabChange}>
+          <Tab label="First"><small>First Content</small></Tab>
+          <Tab label="Second"><small>Second Content</small></Tab>
+          <Tab label="Third"><small>Third Content</small></Tab>
+          <Tab label="Fourth"><small>Fourth Content</small></Tab>
+          <Tab label="Fifth"><small>Fifth Content</small></Tab>
+        </Tabs>
+        <Slider min={0} max={4} value={this.state.floatIndex} onChange={this.handleFloatTabChange} />
       </section>
     );
   }
