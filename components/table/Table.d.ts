@@ -31,6 +31,14 @@ export interface TableProps extends ReactToolbox.Props {
    * Classnames object defining the component style.
    */
   theme?: TableTheme;
+  /**
+   * Array of objects representing each item to show.
+   */
+  source?: any[];
+  /**
+   * Object describing the data model that represents each object in the source
+   */
+  model?: any;
 }
 
 export class Table extends React.Component<TableProps, {}> { }
