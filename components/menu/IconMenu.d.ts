@@ -28,6 +28,11 @@ export interface IconMenuProps extends ReactToolbox.Props {
    */
   iconRipple?: boolean;
   /**
+   * If true, the neutral colors are inverted. Useful if the icon is over a dark background.
+   * @default false
+   */
+  inverse?: boolean;
+  /**
    * Transferred to the Menu component.
    * @default true
    */
