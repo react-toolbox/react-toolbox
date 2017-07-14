@@ -180,6 +180,7 @@
 
 .month {
   background-color: var(--calendar-primary-contrast-color);
+  width: 100%;
 }
 
 .slideRightEnter,
