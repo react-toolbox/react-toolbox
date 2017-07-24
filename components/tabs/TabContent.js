@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
@@ -24,7 +25,7 @@ class TabContent extends Component {
 
   componentDidMount() {
     if (!this.props.click) {
-      this.content.focus();
+      ReactDOM.findDOMNode(this).focus();
     }
   }
 
@@ -37,7 +38,6 @@ class TabContent extends Component {
       <section
         className={className}
         tabIndex={this.props.tabIndex}
-        ref={(section) => { this.content = section; }}
       >
         {this.props.children}
       </section>
