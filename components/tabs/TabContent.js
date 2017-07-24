@@ -9,6 +9,7 @@ class TabContent extends Component {
     active: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
+    click: PropTypes.bool,
     tabIndex: PropTypes.number,
     theme: PropTypes.shape({
       active: PropTypes.string,
@@ -21,13 +22,23 @@ class TabContent extends Component {
     className: '',
   };
 
+  componentDidMount() {
+    if (!this.props.click) {
+      this.content.focus();
+    }
+  }
+
   render() {
     const className = classnames(this.props.theme.tab, {
       [this.props.theme.active]: this.props.active,
     }, this.props.className);
 
     return (
-      <section className={className} tabIndex={this.props.tabIndex}>
+      <section
+        className={className}
+        tabIndex={this.props.tabIndex}
+        ref={(section) => { this.content = section; }}
+      >
         {this.props.children}
       </section>
     );
