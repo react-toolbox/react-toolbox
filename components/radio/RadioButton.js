@@ -44,6 +44,12 @@ const factory = (Radio) => {
       if (!disabled && !checked && onChange) onChange(event, this);
     };
 
+    handleEnter = (event) => {
+      if (event.keyCode === 13) {
+        this.handleClick(event);
+      }
+    };
+
     blur() {
       if (this.inputNode) {
         this.inputNode.blur();
@@ -88,6 +94,8 @@ const factory = (Radio) => {
             onClick={this.handleClick}
             ref={(node) => { this.inputNode = node; }}
             type="radio"
+            onKeyDown={this.handleEnter}
+            aria-checked={checked}
           />
           <Radio checked={checked} disabled={disabled} theme={theme} />
           {label ? <span className={theme.text}>{label}</span> : null}
