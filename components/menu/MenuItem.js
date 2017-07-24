@@ -42,6 +42,12 @@ const factory = (ripple) => {
       }
     };
 
+    handleEnter = (event) => {
+      if (event.keyCode === 13) {
+        this.handleClick(event);
+      }
+    }
+
     render() {
       const {
         caption,
@@ -59,7 +65,15 @@ const factory = (ripple) => {
       }, this.props.className);
 
       return (
-        <li {...others} data-react-toolbox="menu-item" className={className} onClick={this.handleClick}>
+        <li
+          {...others}
+          data-react-toolbox="menu-item"
+          className={className}
+          onClick={this.handleClick}
+          onKeyDown={this.handleEnter}
+          role="menuitem"
+          tabIndex={0}
+        >
           {icon ? <FontIcon value={icon} className={theme.icon} /> : null}
           <span className={theme.caption}>{caption}</span>
           {shortcut ? <small className={theme.shortcut}>{shortcut}</small> : null}

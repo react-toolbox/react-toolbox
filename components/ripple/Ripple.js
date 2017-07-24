@@ -33,6 +33,7 @@ const rippleFactory = (options = {}) => {
       static propTypes = {
         children: PropTypes.node,
         disabled: PropTypes.bool,
+        onKeyDown: PropTypes.func,
         onMouseDown: PropTypes.func,
         onRippleEnded: PropTypes.func,
         onTouchStart: PropTypes.func,
@@ -199,7 +200,9 @@ const rippleFactory = (options = {}) => {
       addRippleDeactivateEventListener(isTouch, rippleKey) {
         const eventType = isTouch ? 'touchend' : 'mouseup';
         const endRipple = this.createRippleDeactivateCallback(eventType, rippleKey);
+        const endRippleKeyUp = this.createRippleDeactivateCallback('keyup', rippleKey);
         document.addEventListener(eventType, endRipple);
+        document.addEventListener('keyup', endRippleKeyUp);
         return endRipple;
       }
 
@@ -241,6 +244,22 @@ const rippleFactory = (options = {}) => {
         }
       };
 
+      /**
+       * Instead of using the coordinates of where the mouse or touch action occured, use
+       * the center of the element to initiate the ripple on enter.
+       *
+       * @param {SyntheticEvent} event Is the event that triggers enter being pressed
+       */
+      handleEnter = (event) => {
+        if (this.props.onKeyDown) this.props.onKeyDown(event);
+        const { height, width, top, left } = ReactDOM.findDOMNode(this).getBoundingClientRect();
+        const centerX = left + (width / 2);
+        const centerY = top + (height / 2);
+        if (this.doRipple()) {
+          this.animateRipple(centerX, centerY, false);
+        }
+      };
+
       renderRipple(key, className, { active, left, restarting, top, width }) {
         const scale = restarting ? 0 : 1;
         const transform = `translate3d(${(-width / 2) + left}px, ${(-width / 2) + top}px, 0) scale(${scale})`;
@@ -279,6 +298,7 @@ const rippleFactory = (options = {}) => {
         const childProps = {
           onMouseDown: this.handleMouseDown,
           onTouchStart: this.handleTouchStart,
+          onKeyPress: this.handleEnter,
           ...other,
         };
         const finalProps = defaultPassthrough
