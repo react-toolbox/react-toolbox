@@ -43,6 +43,10 @@ export interface DrawerProps extends ReactToolbox.Props {
    * @default false
    */
   insideTree?: boolean;
+    /**
+   * Callback function to be invoked when the escape key is pressed.
+   */
+  onEscKeyDown?: Function;
   /**
    * Callback function to be invoked when the overlay is clicked.
    */
