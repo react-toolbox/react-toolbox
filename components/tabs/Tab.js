@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
@@ -38,9 +39,21 @@ const factory = (ripple, FontIcon) => {
       hidden: false,
     };
 
+    componentDidMount() {
+      this.handleFocus();
+    }
+
     componentDidUpdate(prevProps) {
       if (!prevProps.active && this.props.active && this.props.onActive) {
         this.props.onActive();
+      }
+      this.handleFocus();
+    }
+
+
+    handleFocus() {
+      if (this.props.active) {
+        ReactDOM.findDOMNode(this).focus();
       }
     }
 
@@ -64,8 +77,17 @@ const factory = (ripple, FontIcon) => {
         [activeClassName]: active,
       }, className);
 
+      const tabIndex = active ? 0 : -1;
       return (
-        <div {...other} data-react-toolbox="tab" className={_className} onClick={this.handleClick}>
+        <div
+          {...other}
+          data-react-toolbox="tab"
+          role="tab"
+          aria-selected={active}
+          tabIndex={tabIndex}
+          className={_className}
+          onClick={this.handleClick}
+        >
           {icon && <FontIcon className={theme.icon} value={icon} />}
           {label}
           {children}
