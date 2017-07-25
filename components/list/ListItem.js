@@ -35,6 +35,12 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       }
     };
 
+    handleEnter = (event) => {
+      if (event.keyCode === 13) {
+        this.handleClick(event);
+      }
+    };
+
     groupChildren() {
       const children = {
         leftActions: [],
@@ -80,7 +86,14 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       const children = this.groupChildren();
       const content = <ListItemLayout theme={theme} {...children} {...other} />;
       return (
-        <li className={`${theme.listItem} ${className}`} onClick={this.handleClick} onMouseDown={onMouseDown} onTouchStart={onTouchStart}>
+        <li
+          className={`${theme.listItem} ${className}`}
+          onClick={this.handleClick}
+          onMouseDown={onMouseDown}
+          onTouchStart={onTouchStart}
+          onKeyDown={this.handleEnter}
+          tabIndex={0}
+        >
           {to ? <a href={this.props.to}>{content}</a> : content}
           {children.ignored}
         </li>

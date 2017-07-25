@@ -47,7 +47,7 @@ const factory = (ripple) => {
         this.handleClick(event);
       }
     }
-
+    l
     render() {
       const {
         caption,
