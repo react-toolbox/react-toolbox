@@ -45,6 +45,7 @@ const factory = (Tab, TabContent, FontIcon) => {
     state = {
       pointer: {},
       arrows: {},
+      click: true,
     };
 
     componentDidMount() {
@@ -64,6 +65,10 @@ const factory = (Tab, TabContent, FontIcon) => {
     componentWillUnmount() {
       window.removeEventListener('resize', this.handleResize);
       clearTimeout(this.resizeTimeout);
+    }
+
+    setClickState = (click) => {
+      this.setState({ click });
     }
 
     handleHeaderClick = (idx) => {
@@ -137,7 +142,7 @@ const factory = (Tab, TabContent, FontIcon) => {
           headers.push(item);
           if (item.props.children) {
             contents.push(
-              <TabContent theme={this.props.theme}>
+              <TabContent theme={this.props.theme} click={this.state.click}>
                 {item.props.children}
               </TabContent>,
             );
@@ -159,8 +164,10 @@ const factory = (Tab, TabContent, FontIcon) => {
         active: this.props.index === idx,
         onClick: (event, index) => {
           this.handleHeaderClick(index);
+          event.target.blur();
           if (item.props.onClick) item.props.onClick(event);
         },
+        setClickState: this.setClickState,
       }));
     }
 

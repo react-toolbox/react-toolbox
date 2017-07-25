@@ -20,6 +20,7 @@ const factory = (ripple, FontIcon) => {
       label: PropTypes.node,
       onActive: PropTypes.func,
       onClick: PropTypes.func,
+      setClickState: PropTypes.func,
       theme: PropTypes.shape({
         active: PropTypes.string,
         disabled: PropTypes.string,
@@ -46,14 +47,23 @@ const factory = (ripple, FontIcon) => {
 
     handleClick = (event) => {
       if (!this.props.disabled && this.props.onClick) {
+        this.props.setClickState(true);
         this.props.onClick(event, this.props.index);
       }
-    };
+    }
+
+    handleEnterPress = (event) => {
+      if (event.key === 'Enter' && !this.props.disabled && this.props.onClick) {
+        this.props.setClickState(false);
+        this.props.onClick(event, this.props.index);
+      }
+    }
 
     render() {
       const {
         index, onActive, // eslint-disable-line
-        active, activeClassName, children, className, disabled, hidden, label, icon, theme, ...other
+        active, activeClassName, children, className, disabled, hidden, label, icon,
+        theme, setClickState, ...other
       } = this.props;
       const _className = classnames(theme.label, {
         [theme.active]: active,
@@ -64,8 +74,19 @@ const factory = (ripple, FontIcon) => {
         [activeClassName]: active,
       }, className);
 
+      const tabIndex = disabled ? -1 : 0;
+
       return (
-        <div {...other} data-react-toolbox="tab" className={_className} onClick={this.handleClick}>
+        <div
+          {...other}
+          aria-selected={active}
+          tabIndex={tabIndex}
+          role="tab"
+          data-react-toolbox="tab"
+          className={_className}
+          onClick={this.handleClick}
+          onKeyDown={this.handleEnterPress}
+        >
           {icon && <FontIcon className={theme.icon} value={icon} />}
           {label}
           {children}
