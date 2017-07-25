@@ -1,14 +1,28 @@
 {
   "parser": "babel-eslint",
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/react"
+  ],
   "env": {
     "browser": true,
     "node": true,
     "jest": true,
     "es6": true
   },
-  "plugins": ["compat"],
+  "plugins": [
+    "compat",
+    "prettier"
+  ],
   "rules": {
+    "prettier/prettier": [
+      "error", {
+        "singleQuote": true,
+        "trailingComma": "es5",
+        "printWidth": 100
+      }
+    ],
     "compat/compat": 2,
     "func-names": "off",
     "global-require": "off",

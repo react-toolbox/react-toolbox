@@ -1,4 +1,8 @@
 {
+  "*.ts": [
+    "prettier --write --print-width 100 --trailing-comma es5 --single-quote '**/*.ts'",
+    "git add"
+  ],
   "*.js": [
     "eslint --fix",
     "git add"
