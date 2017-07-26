@@ -68,7 +68,7 @@ class Root extends Component {
         >
           This will content filter and indexes for examples
         </NavDrawer>
-
+        <Tabs />
         <Panel className={style.app}>
           <Autocomplete />
           <AppBarTest />
