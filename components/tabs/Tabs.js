@@ -66,6 +66,18 @@ const factory = (Tab, TabContent, FontIcon) => {
       clearTimeout(this.resizeTimeout);
     }
 
+    getNewIndex(headers, delta) {
+      let newIndex = (this.props.index + delta) % headers.length;
+      if (newIndex < 0) newIndex = headers.length - 1;
+
+      while (headers[newIndex].props.disabled || headers[newIndex].props.hidden) {
+        newIndex = (newIndex + delta) % headers.length;
+        if (newIndex < 0) newIndex = headers.length - 1;
+      }
+
+      return newIndex;
+    }
+
     handleHeaderClick = (idx) => {
       if (this.props.onChange) {
         this.props.onChange(idx);
@@ -150,6 +162,16 @@ const factory = (Tab, TabContent, FontIcon) => {
       return { headers, contents };
     }
 
+    handleArrowPress(headers) {
+      return (event) => {
+        if (event.key === 'ArrowRight') {
+          this.handleHeaderClick(this.getNewIndex(headers, 1));
+        } else if (event.key === 'ArrowLeft') {
+          this.handleHeaderClick(this.getNewIndex(headers, -1));
+        }
+      };
+    }
+
     renderHeaders(headers) {
       return headers.map((item, idx) => React.cloneElement(item, {
         children: null,
@@ -193,7 +215,7 @@ const factory = (Tab, TabContent, FontIcon) => {
 
       return (
         <div data-react-toolbox="tabs" className={classNames}>
-          <div className={theme.navigationContainer}>
+          <div className={theme.navigationContainer} onKeyDown={this.handleArrowPress(headers)}>
             {hasLeftArrow && <div className={theme.arrowContainer} onClick={this.scrollRight}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_left" />
             </div>}
