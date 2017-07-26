@@ -13,6 +13,10 @@ export interface ListItemTheme {
 
 export interface ListItemProps extends ReactToolbox.Props {
   /**
+   * Optional text to inform of actions and be read by screen readers.
+   */
+  altText?: string;
+  /**
    * Children to pass through the component.
    */
   children?: React.ReactNode;
