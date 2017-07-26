@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
@@ -9,6 +10,7 @@ class TabContent extends Component {
     active: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
+    click: PropTypes.bool,
     tabIndex: PropTypes.number,
     theme: PropTypes.shape({
       active: PropTypes.string,
@@ -21,13 +23,22 @@ class TabContent extends Component {
     className: '',
   };
 
+  componentDidMount() {
+    if (!this.props.click) {
+      ReactDOM.findDOMNode(this).focus();
+    }
+  }
+
   render() {
     const className = classnames(this.props.theme.tab, {
       [this.props.theme.active]: this.props.active,
     }, this.props.className);
 
     return (
-      <section className={className} tabIndex={this.props.tabIndex}>
+      <section
+        className={className}
+        tabIndex={this.props.tabIndex}
+      >
         {this.props.children}
       </section>
     );
