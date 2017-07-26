@@ -104,6 +104,8 @@
     box-shadow:
       0 0 8px rgba(0, 0, 0, 0.18),
       0 8px 16px rgba(0, 0, 0, 0.36);
+      outline: 1px dotted #212121;
+      outline: 5px auto -webkit-focus-ring-color;
   }
 }
 
@@ -182,6 +184,8 @@
 
     &:focus:not(:active) {
       background: var(--button-primary-color-hover);
+      outline: 1px dotted #212121;
+      outline: 5px auto -webkit-focus-ring-color;
     }
   }
 
@@ -203,6 +207,8 @@
 
     &:focus:not(:active) {
       background: var(--button-accent-color-hover);
+      outline: 1px dotted #212121;
+      outline: 5px auto -webkit-focus-ring-color;
     }
   }
 
@@ -224,6 +230,8 @@
 
     &:focus:not(:active) {
       background: var(--button-neutral-color-hover);
+      outline: 1px dotted #212121;
+      outline: 5px auto -webkit-focus-ring-color;
     }
   }
 
@@ -244,6 +252,8 @@
 
       &:focus:not(:active) {
         background: var(--button-neutral-color-hover);
+        outline: 1px dotted #212121;
+        outline: 5px auto -webkit-focus-ring-color;
       }
     }
 
