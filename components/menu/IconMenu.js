@@ -11,10 +11,7 @@ const factory = (IconButton, Menu) => {
     static propTypes = {
       children: PropTypes.node,
       className: PropTypes.string,
-      icon: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.element,
-      ]),
+      icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
       iconRipple: PropTypes.bool,
       inverse: PropTypes.bool,
       menuRipple: PropTypes.bool,
@@ -42,9 +39,9 @@ const factory = (IconButton, Menu) => {
 
     state = {
       active: false,
-    }
+    };
 
-    handleButtonClick = (event) => {
+    handleButtonClick = event => {
       this.setState({ active: !this.state.active });
       if (this.props.onClick) this.props.onClick(event);
     };
@@ -52,12 +49,24 @@ const factory = (IconButton, Menu) => {
     handleMenuHide = () => {
       this.setState({ active: false });
       if (this.props.onHide) this.props.onHide();
-    }
+    };
 
     render() {
       const {
-        children, className, icon, iconRipple, inverse, menuRipple, onHide, // eslint-disable-line
-        onSelect, onShow, position, selectable, selected, theme, ...other
+        children,
+        className,
+        icon,
+        iconRipple,
+        inverse,
+        menuRipple,
+        onHide, // eslint-disable-line
+        onSelect,
+        onShow,
+        position,
+        selectable,
+        selected,
+        theme,
+        ...other
       } = this.props;
       return (
         <div {...other} className={classnames(theme.iconMenu, className)}>

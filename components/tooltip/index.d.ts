@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 
 export interface TooltipTheme {
   /**
@@ -54,7 +54,7 @@ export interface TooltipProps {
    * Tooltip position.
    * @default "vertical"
    */
-  tooltipPosition?: "bottom" | "top" | "left" | "right" | "horizontal" | "vertical";
+  tooltipPosition?: 'bottom' | 'top' | 'left' | 'right' | 'horizontal' | 'vertical';
   /**
    * Determines the tooltip should be toggled when clicked. This is useful for mobile where there is no mouse enter.
    * @default false

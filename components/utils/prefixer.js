@@ -18,7 +18,8 @@ function getPrefixes(property, value) {
 
 function addPrefixesTo(style, property, value) {
   const vendor = getPrefixes(property, value);
-  for (const prefix in vendor) { // eslint-disable-line no-restricted-syntax
+  // eslint-disable-next-line no-restricted-syntax
+  for (const prefix in vendor) {
     if ({}.hasOwnProperty.call(vendor, prefix)) {
       style[prefix] = vendor[prefix]; // eslint-disable-line no-param-reassign
     }
@@ -29,7 +30,8 @@ function addPrefixesTo(style, property, value) {
 
 function prefixer(style, defaultValue = {}) {
   const _style = defaultValue;
-  for (const property in style) {  // eslint-disable-line no-restricted-syntax
+  // eslint-disable-next-line no-restricted-syntax
+  for (const property in style) {
     if ({}.hasOwnProperty.call(style, property)) {
       _style[property] = style[property];
       if (properties[property]) {

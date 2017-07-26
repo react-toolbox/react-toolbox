@@ -12,10 +12,7 @@ const factory = (Dialog, Calendar) => {
       className: PropTypes.string,
       disabledDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
       enabledDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
-      locale: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.object,
-      ]),
+      locale: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
       maxDate: PropTypes.instanceOf(Date),
       minDate: PropTypes.instanceOf(Date),
       name: PropTypes.string,
@@ -74,30 +71,33 @@ const factory = (Dialog, Calendar) => {
       }
     };
 
-    handleSelect = (event) => {
+    handleSelect = event => {
       if (this.props.onSelect) this.props.onSelect(this.state.date, event);
     };
 
-    handleSwitchDisplay = (event) => {
+    handleSwitchDisplay = event => {
       this.setState({ display: event.target.id });
     };
 
-    updateStateDate = (date) => {
+    updateStateDate = date => {
       if (Object.prototype.toString.call(date) === '[object Date]') {
         this.handleNewDate(date, false);
       }
     };
 
-    actions = [{
-      label: this.props.cancelLabel,
-      className: this.props.theme.button,
-      onClick: this.props.onDismiss,
-    }, {
-      label: this.props.okLabel,
-      className: this.props.theme.button,
-      name: this.props.name,
-      onClick: this.handleSelect,
-    }];
+    actions = [
+      {
+        label: this.props.cancelLabel,
+        className: this.props.theme.button,
+        onClick: this.props.onDismiss,
+      },
+      {
+        label: this.props.okLabel,
+        className: this.props.theme.button,
+        name: this.props.name,
+        onClick: this.handleSelect,
+      },
+    ];
 
     render() {
       const { theme } = this.props;

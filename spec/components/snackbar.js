@@ -1,6 +1,6 @@
-import React from 'react';
-import Button from '../../components/button';
-import Snackbar from '../../components/snackbar';
+import React from "react";
+import Button from "../../components/button";
+import Snackbar from "../../components/snackbar";
 
 class SnackbarTest extends React.Component {
   state = {

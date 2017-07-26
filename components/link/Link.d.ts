@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface LinkTheme {
   /**
@@ -52,6 +52,6 @@ export interface LinkProps extends ReactToolbox.Props {
   [key: string]: any;
 }
 
-export class Link extends React.Component<LinkProps, {}> { }
+export class Link extends React.Component<LinkProps, {}> {}
 
 export default Link;

@@ -7,17 +7,14 @@ import { CHECKBOX } from '../identifiers';
 import rippleFactory from '../ripple/Ripple';
 import checkFactory from './Check';
 
-const factory = (Check) => {
+const factory = Check => {
   class Checkbox extends Component {
     static propTypes = {
       checked: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
-      label: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node,
-      ]),
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
       name: PropTypes.string,
       onChange: PropTypes.func,
       onMouseEnter: PropTypes.func,
@@ -37,7 +34,7 @@ const factory = (Check) => {
       disabled: false,
     };
 
-    handleToggle = (event) => {
+    handleToggle = event => {
       if (event.pageX !== 0 && event.pageY !== 0) this.blur();
       if (!this.props.disabled && this.props.onChange) {
         this.props.onChange(!this.props.checked, event);
@@ -57,11 +54,26 @@ const factory = (Check) => {
     }
 
     render() {
-      const { checked, children, disabled, label, name, style, onChange, // eslint-disable-line
-        onMouseEnter, onMouseLeave, theme, ...others } = this.props;
-      const className = classnames(theme.field, {
-        [theme.disabled]: this.props.disabled,
-      }, this.props.className);
+      const {
+        checked,
+        children,
+        disabled,
+        label,
+        name,
+        style,
+        onChange, // eslint-disable-line
+        onMouseEnter,
+        onMouseLeave,
+        theme,
+        ...others
+      } = this.props;
+      const className = classnames(
+        theme.field,
+        {
+          [theme.disabled]: this.props.disabled,
+        },
+        this.props.className
+      );
 
       return (
         <label
@@ -78,7 +90,9 @@ const factory = (Check) => {
             name={name}
             onChange={() => {}}
             onClick={this.handleToggle}
-            ref={(node) => { this.inputNode = node; }}
+            ref={node => {
+              this.inputNode = node;
+            }}
             type="checkbox"
           />
           <Check
@@ -88,7 +102,11 @@ const factory = (Check) => {
             style={style}
             theme={theme}
           />
-          {label ? <span data-react-toolbox="label" className={theme.text}>{label}</span> : null}
+          {label
+            ? <span data-react-toolbox="label" className={theme.text}>
+                {label}
+              </span>
+            : null}
           {children}
         </label>
       );

@@ -5,8 +5,8 @@ import reduce from 'ramda/src/reduce';
 import pickBy from 'ramda/src/pickBy';
 
 export const angleFromPositions = (cx, cy, ex, ey) => {
-  const theta = Math.atan2(ey - cy, ex - cx) + (Math.PI / 2);
-  return (theta * 180) / Math.PI;
+  const theta = Math.atan2(ey - cy, ex - cx) + Math.PI / 2;
+  return theta * 180 / Math.PI;
 };
 
 export const angle360FromPositions = (cx, cy, ex, ey) => {
@@ -42,10 +42,9 @@ export const getViewport = () => ({
   width: window.innerWidth || document.documentElement.offsetWidth,
 });
 
-export const cloneObject = object =>
-  JSON.parse(JSON.stringify(object));
+export const cloneObject = object => JSON.parse(JSON.stringify(object));
 
-export const inputTypeForPrototype = (prototype) => {
+export const inputTypeForPrototype = prototype => {
   if (prototype === Date) return 'date';
   if (prototype === Number) return 'number';
   if (prototype === Boolean) return 'checkbox';
@@ -60,17 +59,17 @@ export const prepareValueForInput = (value, type) => {
   return value;
 };
 
-export const transformKeys = fn => (obj) => {
+export const transformKeys = fn => obj => {
   const addTransformedKey = (result, key) => assoc(fn(key), obj[key], result);
   return reduce(addTransformedKey, {}, keys(obj));
 };
 
-export const removeNamespace = namespace => (key) => {
+export const removeNamespace = namespace => key => {
   const capitalized = key.substr(namespace.length);
   return capitalized.slice(0, 1).toLowerCase() + capitalized.slice(1);
 };
 
-export const getAnimationModule = (animation, theme) => compose(
-  transformKeys(removeNamespace(animation)),
-  pickBy((v, k) => k.startsWith(animation)),
-)(theme);
+export const getAnimationModule = (animation, theme) =>
+  compose(transformKeys(removeNamespace(animation)), pickBy((v, k) => k.startsWith(animation)))(
+    theme
+  );

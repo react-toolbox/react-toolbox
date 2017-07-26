@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface RippleTheme {
   /**
@@ -50,12 +50,12 @@ export interface RippleProps {
 }
 
 export interface RippledComponentFactory {
-  <P, RippledComponent extends (React.ComponentClass<P> | React.SFC<P>)>(component: RippledComponent): RippledComponent;
+  <P, RippledComponent extends React.ComponentClass<P> | React.SFC<P>>(
+    component: RippledComponent
+  ): RippledComponent;
 }
 
-export function rippleFactory(
-  options: RippleProps
-): RippledComponentFactory;
+export function rippleFactory(options: RippleProps): RippledComponentFactory;
 
 export { rippleFactory as Ripple };
 export default rippleFactory;

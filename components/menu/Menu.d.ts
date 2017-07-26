@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface MenuTheme {
   /**
@@ -75,7 +75,7 @@ export interface MenuProps extends ReactToolbox.Props {
    * Determine the position of the menu. With static value the menu will be always shown, auto means that the it will decide the opening direction based on the current position. To force a position use topLeft, topRight, bottomLeft, bottomRight.
    * @default static
    */
-  position?: "auto" | "static" | "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
+  position?: 'auto' | 'static' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
   /**
    * If true, the menu items will show a ripple effect on click.
    * @default true
@@ -96,6 +96,6 @@ export interface MenuProps extends ReactToolbox.Props {
   theme?: MenuTheme;
 }
 
-export class Menu extends React.Component<MenuProps, {}> { }
+export class Menu extends React.Component<MenuProps, {}> {}
 
 export default Menu;

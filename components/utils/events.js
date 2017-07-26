@@ -21,13 +21,13 @@ export default {
   },
 
   addEventsToDocument(eventMap) {
-    Object.keys(eventMap).forEach((key) => {
+    Object.keys(eventMap).forEach(key => {
       document.addEventListener(key, eventMap[key], false);
     });
   },
 
   removeEventsFromDocument(eventMap) {
-    Object.keys(eventMap).forEach((key) => {
+    Object.keys(eventMap).forEach(key => {
       document.removeEventListener(key, eventMap[key], false);
     });
   },
@@ -64,9 +64,11 @@ const TRANSITIONS = {
 };
 
 function transitionEventNamesFor(element) {
-  return keys(TRANSITIONS).reduce((result, transition) => (
-    !result && (element && element.style[transition] !== undefined)
-      ? TRANSITIONS[transition]
-      : result
-  ), null);
+  return keys(TRANSITIONS).reduce(
+    (result, transition) =>
+      !result && (element && element.style[transition] !== undefined)
+        ? TRANSITIONS[transition]
+        : result,
+    null
+  );
 }

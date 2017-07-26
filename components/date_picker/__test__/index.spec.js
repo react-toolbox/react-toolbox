@@ -22,11 +22,7 @@ describe('DatePickerDialog', () => {
 
       it('sanitises a value before minDate to minDate', () => {
         const wrapper = shallow(
-          <DatePickerDialog
-            theme={theme}
-            minDate={minDate}
-            value={new Date(2016, 1, 1)}
-          />,
+          <DatePickerDialog theme={theme} minDate={minDate} value={new Date(2016, 1, 1)} />
         );
         expect(wrapper.find(Calendar).props().selectedDate).toBe(minDate);
       });
@@ -37,23 +33,13 @@ describe('DatePickerDialog', () => {
 
       it('passes through a value before maxDate', () => {
         const value = new Date(2016, 1, 1);
-        const wrapper = shallow(
-          <DatePickerDialog
-            theme={theme}
-            maxDate={maxDate}
-            value={value}
-          />,
-        );
+        const wrapper = shallow(<DatePickerDialog theme={theme} maxDate={maxDate} value={value} />);
         expect(wrapper.find(Calendar).props().selectedDate).toBe(value);
       });
 
       it('sanitises a value after maxDate to maxDate', () => {
         const wrapper = shallow(
-          <DatePickerDialog
-            theme={theme}
-            maxDate={maxDate}
-            value={new Date(2016, 1, 3)}
-          />,
+          <DatePickerDialog theme={theme} maxDate={maxDate} value={new Date(2016, 1, 3)} />
         );
         expect(wrapper.find(Calendar).props().selectedDate).toBe(maxDate);
       });
@@ -70,7 +56,7 @@ describe('DatePickerDialog', () => {
             minDate={minDate}
             maxDate={maxDate}
             value={new Date(2016, 1, 1)}
-          />,
+          />
         );
         expect(wrapper.find(Calendar).props().selectedDate).toBe(minDate);
       });
@@ -82,20 +68,15 @@ describe('DatePickerDialog', () => {
             minDate={minDate}
             maxDate={maxDate}
             value={new Date(2016, 1, 5)}
-          />,
+          />
         );
         expect(wrapper.find(Calendar).props().selectedDate).toBe(maxDate);
       });
 
-      it('doesn\'t sanitise when value is between maxDate/minDate', () => {
+      it("doesn't sanitise when value is between maxDate/minDate", () => {
         const value = new Date(2016, 1, 3);
         const wrapper = shallow(
-          <DatePickerDialog
-            theme={theme}
-            minDate={minDate}
-            maxDate={maxDate}
-            value={value}
-          />,
+          <DatePickerDialog theme={theme} minDate={minDate} maxDate={maxDate} value={value} />
         );
         expect(wrapper.find(Calendar).props().selectedDate).toBe(value);
       });

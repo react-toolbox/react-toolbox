@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface ChipTheme {
   /**
@@ -48,6 +48,6 @@ export interface ChipProps extends ReactToolbox.Props {
   theme?: ChipTheme;
 }
 
-export class Chip extends React.Component<ChipProps, {}> { }
+export class Chip extends React.Component<ChipProps, {}> {}
 
 export default Chip;

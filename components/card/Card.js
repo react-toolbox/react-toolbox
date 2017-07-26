@@ -5,9 +5,13 @@ import classnames from 'classnames';
 import { CARD } from '../identifiers';
 
 const Card = ({ children, className, raised, theme, ...other }) => {
-  const classes = classnames(theme.card, {
-    [theme.raised]: raised,
-  }, className);
+  const classes = classnames(
+    theme.card,
+    {
+      [theme.raised]: raised,
+    },
+    className
+  );
 
   return (
     <div data-react-toolbox="card" className={classes} {...other}>

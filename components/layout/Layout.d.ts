@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 import { NavDrawer } from './NavDrawer';
 import { Panel } from './Panel';
 import { Sidebar } from './Sidebar';
@@ -61,4 +61,4 @@ export interface LayoutProps extends ReactToolbox.Props {
   theme?: LayoutTheme;
 }
 
-export class Layout extends React.Component<LayoutProps, {}> { }
+export class Layout extends React.Component<LayoutProps, {}> {}

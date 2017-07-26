@@ -1,14 +1,14 @@
 /* eslint-disable */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
-import classnames from 'classnames';
-import { themr } from 'react-css-themr';
-import { DROPDOWN } from '../identifiers';
-import InjectInput from '../input/Input';
-import events from '../utils/events';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import ReactDOM from "react-dom";
+import classnames from "classnames";
+import { themr } from "react-css-themr";
+import { DROPDOWN } from "../identifiers";
+import InjectInput from "../input/Input";
+import events from "../utils/events";
 
-const factory = (Input) => {
+const factory = Input => {
   class Dropdown extends Component {
     static propTypes = {
       allowBlank: PropTypes.bool,
@@ -24,10 +24,8 @@ const factory = (Input) => {
       onClick: PropTypes.func,
       onFocus: PropTypes.func,
       required: PropTypes.bool,
-      source: PropTypes.arrayOf(PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.object,
-      ])).isRequired,
+      source: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.object]))
+        .isRequired,
       template: PropTypes.func,
       theme: PropTypes.shape({
         active: PropTypes.string,
@@ -44,21 +42,18 @@ const factory = (Input) => {
         value: PropTypes.string,
         values: PropTypes.string,
       }),
-      value: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-      ]),
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       valueKey: PropTypes.string,
     };
 
     static defaultProps = {
       auto: true,
-      className: '',
+      className: "",
       allowBlank: true,
       disabled: false,
-      labelKey: 'label',
+      labelKey: "label",
       required: false,
-      valueKey: 'value',
+      valueKey: "value",
     };
 
     state = {
@@ -93,9 +88,7 @@ const factory = (Input) => {
       for (const item of this.props.source) {
         if (item[this.props.valueKey] === this.props.value) return item;
       }
-      return !this.props.allowBlank
-        ? this.props.source[0]
-        : undefined;
+      return !this.props.allowBlank ? this.props.source[0] : undefined;
     };
 
     handleSelect = (item, event) => {
@@ -107,13 +100,13 @@ const factory = (Input) => {
       }
     };
 
-    handleClick = (event) => {
+    handleClick = event => {
       this.open(event);
       events.pauseEvent(event);
       if (this.props.onClick) this.props.onClick(event);
     };
 
-    handleDocumentClick = (event) => {
+    handleDocumentClick = event => {
       if (this.state.active && !events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
         this.setState({ active: false });
       }
@@ -123,28 +116,28 @@ const factory = (Input) => {
       if (this.state.active) {
         this.setState({ active: false });
       }
-    }
+    };
 
-    open = (event) => {
+    open = event => {
       if (this.state.active) return;
       const client = event.target.getBoundingClientRect();
       const screenHeight = window.innerHeight || document.documentElement.offsetHeight;
-      const up = this.props.auto ? client.top > ((screenHeight / 2) + client.height) : false;
+      const up = this.props.auto ? client.top > screenHeight / 2 + client.height : false;
       if (this.inputNode) this.inputNode.blur();
       this.setState({ active: true, up });
     };
 
-    handleFocus = (event) => {
+    handleFocus = event => {
       event.stopPropagation();
       if (!this.props.disabled) this.open(event);
       if (this.props.onFocus) this.props.onFocus(event);
     };
 
-    handleBlur = (event) => {
+    handleBlur = event => {
       event.stopPropagation();
       if (this.state.active) this.close();
       if (this.props.onBlur) this.props.onBlur(event);
-    }
+    };
 
     renderTemplateValue(selected) {
       const { theme } = this.props;
@@ -160,13 +153,16 @@ const factory = (Input) => {
             {this.props.template(selected)}
           </div>
           {this.props.label
-            ? (
-              <label className={theme.label}>
+            ? <label className={theme.label}>
                 {this.props.label}
                 {this.props.required ? <span className={theme.required}> * </span> : null}
               </label>
-            ) : null}
-          {this.props.error ? <span className={theme.error}>{this.props.error}</span> : null}
+            : null}
+          {this.props.error
+            ? <span className={theme.error}>
+                {this.props.error}
+              </span>
+            : null}
         </div>
       );
     }
@@ -190,16 +186,30 @@ const factory = (Input) => {
 
     render() {
       const {
-        allowBlank, auto, labelKey, required, onChange, onFocus, onBlur, // eslint-disable-line no-unused-vars
-        source, template, theme, valueKey, ...others
+        allowBlank,
+        auto,
+        labelKey,
+        required,
+        onChange,
+        onFocus,
+        onBlur, // eslint-disable-line no-unused-vars
+        source,
+        template,
+        theme,
+        valueKey,
+        ...others
       } = this.props;
       const selected = this.getSelectedItem();
-      const className = classnames(theme.dropdown, {
-        [theme.up]: this.state.up,
-        [theme.active]: this.state.active,
-        [theme.disabled]: this.props.disabled,
-        [theme.required]: this.props.required,
-      }, this.props.className);
+      const className = classnames(
+        theme.dropdown,
+        {
+          [theme.up]: this.state.up,
+          [theme.active]: this.state.active,
+          [theme.disabled]: this.props.disabled,
+          [theme.required]: this.props.required,
+        },
+        this.props.className
+      );
 
       return (
         <div
@@ -215,11 +225,13 @@ const factory = (Input) => {
             onClick={this.handleClick}
             required={this.props.required}
             readOnly
-            ref={(node) => { this.inputNode = node && node.getWrappedInstance(); }}
-            type={template && selected ? 'hidden' : null}
+            ref={node => {
+              this.inputNode = node && node.getWrappedInstance();
+            }}
+            type={template && selected ? "hidden" : null}
             theme={theme}
             themeNamespace="input"
-            value={selected && selected[labelKey] ? selected[labelKey] : ''}
+            value={selected && selected[labelKey] ? selected[labelKey] : ""}
           />
           {template && selected ? this.renderTemplateValue(selected) : null}
           <ul className={theme.values}>

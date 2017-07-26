@@ -10,15 +10,21 @@ import InjectButton from '../button/Button';
 import InjectOverlay from '../overlay/Overlay';
 
 const factory = (Overlay, Button) => {
-  const Dialog = (props) => {
+  const Dialog = props => {
     const actions = props.actions.map((action, idx) => {
-      const className = classnames(props.theme.button, { [action.className]: action.className });
+      const className = classnames(props.theme.button, {
+        [action.className]: action.className,
+      });
       return <Button key={idx} {...action} className={className} />; // eslint-disable-line
     });
 
-    const className = classnames([props.theme.dialog, props.theme[props.type]], {
-      [props.theme.active]: props.active,
-    }, props.className);
+    const className = classnames(
+      [props.theme.dialog, props.theme[props.type]],
+      {
+        [props.theme.active]: props.active,
+      },
+      props.className
+    );
 
     return (
       <Portal className={props.theme.wrapper}>
@@ -35,26 +41,31 @@ const factory = (Overlay, Button) => {
         />
         <div data-react-toolbox="dialog" className={className}>
           <section role="body" className={props.theme.body}>
-            {props.title ? <h6 className={props.theme.title}>{props.title}</h6> : null}
+            {props.title
+              ? <h6 className={props.theme.title}>
+                  {props.title}
+                </h6>
+              : null}
             {props.children}
           </section>
           {actions.length
             ? <nav className={props.theme.navigation}>
-              {actions}
-            </nav>
-            : null
-          }
+                {actions}
+              </nav>
+            : null}
         </div>
       </Portal>
     );
   };
 
   Dialog.propTypes = {
-    actions: PropTypes.arrayOf(PropTypes.shape({
-      className: PropTypes.string,
-      label: PropTypes.string,
-      children: PropTypes.node,
-    })),
+    actions: PropTypes.arrayOf(
+      PropTypes.shape({
+        className: PropTypes.string,
+        label: PropTypes.string,
+        children: PropTypes.node,
+      })
+    ),
     active: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,

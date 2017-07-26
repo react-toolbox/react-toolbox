@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface SnackbarTheme {
   /**
@@ -69,9 +69,9 @@ export interface SnackbarProps extends ReactToolbox.Props {
   /**
    * Indicates the action type. Can be accept, warning or cancel
    */
-  type?: "accept" | "cancel" | "warning";
+  type?: 'accept' | 'cancel' | 'warning';
 }
 
-export class Snackbar extends React.Component<SnackbarProps, {}> { }
+export class Snackbar extends React.Component<SnackbarProps, {}> {}
 
 export default Snackbar;

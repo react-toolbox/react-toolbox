@@ -5,7 +5,7 @@ import { RADIO } from '../identifiers';
 import InjectRadioButton from './RadioButton';
 import isComponentOfType from '../utils/is-component-of-type';
 
-const factory = (RadioButton) => {
+const factory = RadioButton => {
   class RadioGroup extends Component {
     static propTypes = {
       children: PropTypes.node,
@@ -20,20 +20,22 @@ const factory = (RadioButton) => {
       disabled: false,
     };
 
-    handleChange = (value) => {
+    handleChange = value => {
       if (this.props.onChange) this.props.onChange(value);
     };
 
     renderRadioButtons() {
-      return React.Children.map(this.props.children, child => (
-        !isComponentOfType(RadioButton, child)
-          ? child
-          : React.cloneElement(child, {
-            checked: child.props.value === this.props.value,
-            disabled: this.props.disabled || child.props.disabled,
-            onChange: this.handleChange.bind(this, child.props.value),
-          })
-      ));
+      return React.Children.map(
+        this.props.children,
+        child =>
+          !isComponentOfType(RadioButton, child)
+            ? child
+            : React.cloneElement(child, {
+                checked: child.props.value === this.props.value,
+                disabled: this.props.disabled || child.props.disabled,
+                onChange: this.handleChange.bind(this, child.props.value),
+              })
+      );
     }
 
     render() {

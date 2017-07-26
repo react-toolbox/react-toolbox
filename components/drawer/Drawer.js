@@ -7,7 +7,7 @@ import { DRAWER } from '../identifiers';
 import ActivableRenderer from '../hoc/ActivableRenderer';
 import InjectOverlay from '../overlay/Overlay';
 
-const factory = (Overlay) => {
+const factory = Overlay => {
   const Drawer = ({
     active,
     children,
@@ -19,9 +19,13 @@ const factory = (Overlay) => {
     type,
     withOverlay,
   }) => {
-    const _className = classnames([theme.drawer, theme[type]], {
-      [theme.active]: active,
-    }, className);
+    const _className = classnames(
+      [theme.drawer, theme[type]],
+      {
+        [theme.active]: active,
+      },
+      className
+    );
 
     const content = (
       <aside data-react-toolbox="drawer" className={_className}>
@@ -32,16 +36,15 @@ const factory = (Overlay) => {
     return React.createElement(
       insideTree ? 'div' : Portal,
       { className: theme.wrapper },
-      withOverlay && (
+      withOverlay &&
         <Overlay
           active={active}
           onClick={onOverlayClick}
           onEscKeyDown={onEscKeyDown}
           theme={theme}
           themeNamespace="overlay"
-        />
-      ),
-      content,
+        />,
+      content
     );
   };
 
@@ -58,9 +61,7 @@ const factory = (Overlay) => {
       left: PropTypes.string,
       right: PropTypes.string,
     }),
-    type: PropTypes.oneOf([
-      'left', 'right',
-    ]),
+    type: PropTypes.oneOf(['left', 'right']),
     withOverlay: PropTypes.bool,
   };
 

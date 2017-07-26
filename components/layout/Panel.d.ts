@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface PanelTheme {
   /**
@@ -23,4 +23,4 @@ export interface PanelProps extends ReactToolbox.Props {
   theme?: PanelTheme;
 }
 
-export class Panel extends React.Component<PanelProps, {}> { }
+export class Panel extends React.Component<PanelProps, {}> {}

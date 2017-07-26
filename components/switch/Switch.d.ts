@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface SwitchTheme {
   /**
@@ -73,6 +73,6 @@ export interface SwitchProps extends ReactToolbox.Props {
   theme?: SwitchTheme;
 }
 
-export class Switch extends React.Component<SwitchProps, {}> { }
+export class Switch extends React.Component<SwitchProps, {}> {}
 
 export default Switch;

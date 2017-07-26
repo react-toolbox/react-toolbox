@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface ListCheckboxTheme {
   /**
@@ -61,4 +61,4 @@ export interface ListCheckboxProps extends ReactToolbox.Props {
   theme?: ListCheckboxTheme;
 }
 
-export class ListCheckbox extends React.Component<ListCheckboxProps, {}> { }
+export class ListCheckbox extends React.Component<ListCheckboxProps, {}> {}

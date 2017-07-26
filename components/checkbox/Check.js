@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import styleShape from 'react-style-proptype';
 
-const factory = (ripple) => {
-  const Check = ({ checked, children, onMouseDown, theme, style }) => (
+const factory = ripple => {
+  const Check = ({ checked, children, onMouseDown, theme, style }) =>
     <div
       data-react-toolbox="check"
       className={classnames(theme.check, { [theme.checked]: checked })}
@@ -12,8 +12,7 @@ const factory = (ripple) => {
       style={style}
     >
       {children}
-    </div>
-  );
+    </div>;
 
   Check.propTypes = {
     checked: PropTypes.bool,

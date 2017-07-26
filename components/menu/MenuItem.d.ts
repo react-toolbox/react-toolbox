@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface MenuItemTheme {
   /**
@@ -61,6 +61,6 @@ export interface MenuItemProps extends ReactToolbox.Props {
   theme?: MenuItemTheme;
 }
 
-export class MenuItem extends React.Component<MenuItemProps, {}> { }
+export class MenuItem extends React.Component<MenuItemProps, {}> {}
 
 export default MenuItem;

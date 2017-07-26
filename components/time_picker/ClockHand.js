@@ -61,7 +61,7 @@ class Hand extends Component {
   getPositionRadius(position) {
     const x = this.props.origin.x - position.x;
     const y = this.props.origin.y - position.y;
-    return Math.sqrt((x * x) + (y * y));
+    return Math.sqrt(x * x + y * y);
   }
 
   mouseStart(event) {
@@ -75,11 +75,11 @@ class Hand extends Component {
     events.pauseEvent(event);
   }
 
-  handleMouseMove = (event) => {
+  handleMouseMove = event => {
     this.move(events.getMousePosition(event));
   };
 
-  handleTouchMove = (event) => {
+  handleTouchMove = event => {
     this.move(events.getTouchPosition(event));
   };
 
@@ -114,13 +114,18 @@ class Hand extends Component {
     const { theme } = this.props;
     const className = `${theme.hand} ${this.props.className}`;
     const handStyle = prefixer({
-      height: this.props.length - (this.state.knobWidth / 2),
+      height: this.props.length - this.state.knobWidth / 2,
       transform: `rotate(${this.props.angle}deg)`,
     });
 
     return (
       <div className={className} style={handStyle}>
-        <div ref={(node) => { this.knobNode = node; }} className={theme.knob} />
+        <div
+          ref={node => {
+            this.knobNode = node;
+          }}
+          className={theme.knob}
+        />
       </div>
     );
   }

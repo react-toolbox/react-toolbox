@@ -22,17 +22,11 @@ const factory = (Input, DatePickerDialog) => {
       disabledDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
       enabledDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
       error: PropTypes.string,
-      icon: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.element,
-      ]),
+      icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
       inputClassName: PropTypes.string,
       inputFormat: PropTypes.func,
       label: PropTypes.string,
-      locale: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.object,
-      ]),
+      locale: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
       maxDate: PropTypes.instanceOf(Date),
       minDate: PropTypes.instanceOf(Date),
       name: PropTypes.string,
@@ -49,10 +43,7 @@ const factory = (Input, DatePickerDialog) => {
         container: PropTypes.string,
         input: PropTypes.string,
       }),
-      value: PropTypes.oneOfType([
-        PropTypes.instanceOf(Date),
-        PropTypes.string,
-      ]),
+      value: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
     };
 
     static defaultProps = {
@@ -78,23 +69,23 @@ const factory = (Input, DatePickerDialog) => {
       }
     };
 
-    handleInputFocus = (event) => {
+    handleInputFocus = event => {
       events.pauseEvent(event);
       this.setState({ active: true });
     };
 
-    handleInputBlur = (event) => {
+    handleInputBlur = event => {
       events.pauseEvent(event);
       this.setState({ active: false });
     };
 
-    handleInputClick = (event) => {
+    handleInputClick = event => {
       events.pauseEvent(event);
       this.setState({ active: true });
       if (this.props.onClick) this.props.onClick(event);
     };
 
-    handleInputKeyPress = (event) => {
+    handleInputKeyPress = event => {
       if (event.charCode === 13) {
         events.pauseEvent(event);
         this.setState({ active: true });
@@ -108,10 +99,26 @@ const factory = (Input, DatePickerDialog) => {
     };
 
     render() {
-      const { active, onDismiss,// eslint-disable-line
-        autoOk, cancelLabel, enabledDates, disabledDates, inputClassName, inputFormat,
-        locale, maxDate, minDate, okLabel, onEscKeyDown, onOverlayClick, readonly,
-        sundayFirstDayOfWeek, value, ...others } = this.props;
+      const {
+        active,
+        onDismiss, // eslint-disable-line
+        autoOk,
+        cancelLabel,
+        enabledDates,
+        disabledDates,
+        inputClassName,
+        inputFormat,
+        locale,
+        maxDate,
+        minDate,
+        okLabel,
+        onEscKeyDown,
+        onOverlayClick,
+        readonly,
+        sundayFirstDayOfWeek,
+        value,
+        ...others
+      } = this.props;
       const finalInputFormat = inputFormat || time.formatDate;
       const date = Object.prototype.toString.call(value) === '[object Date]' ? value : undefined;
       const formattedDate = date === undefined ? '' : finalInputFormat(value, locale);
@@ -120,7 +127,9 @@ const factory = (Input, DatePickerDialog) => {
         <div data-react-toolbox="date-picker" className={this.props.theme.container}>
           <Input
             {...others}
-            className={classnames(this.props.theme.input, { [inputClassName]: inputClassName })}
+            className={classnames(this.props.theme.input, {
+              [inputClassName]: inputClassName,
+            })}
             disabled={readonly}
             error={this.props.error}
             icon={this.props.icon}
@@ -166,9 +175,6 @@ const DatePickerDialog = datePickerDialogFactory(InjectDialog, Calendar);
 const DatePicker = factory(InjectInput, DatePickerDialog);
 
 export default themr(DATE_PICKER)(DatePicker);
-export {
-  DatePickerDialog,
-  factory as datePickerFactory,
-};
+export { DatePickerDialog, factory as datePickerFactory };
 export { Calendar };
 export { DatePicker };

@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface ListItemContentTheme {
   /**
@@ -40,7 +40,7 @@ export interface ListItemContentProps {
   /**
    * List item content type.
    */
-  type?: "auto" | "normal" | "large";
+  type?: 'auto' | 'normal' | 'large';
 }
 
-export class ListItemContent extends React.Component<ListItemContentProps, {}> { }
+export class ListItemContent extends React.Component<ListItemContentProps, {}> {}

@@ -5,7 +5,11 @@ import { CHIP } from '../../identifiers';
 import { tooltipFactory } from '../../tooltip';
 import { chipFactory } from '../Chip';
 
-const Avatar = ({ title }) => <span>{title}</span>; // eslint-disable-line react/prop-types
+// eslint-disable-next-line react/prop-types
+const Avatar = ({ title }) =>
+  <span>
+    {title}
+  </span>;
 const Chip = themr(CHIP)(chipFactory(Avatar));
 
 describe('Chip', () => {
@@ -15,7 +19,7 @@ describe('Chip', () => {
         <Chip theme={{ avatar: 'avatar-class' }}>
           <Avatar title="Test" />
           <span>Test</span>
-        </Chip>,
+        </Chip>
       );
       const chipNode = wrapper.find('div').node;
       expect(chipNode.className).toMatch(/\bavatar-class\b/);
@@ -27,7 +31,7 @@ describe('Chip', () => {
         <TooltippedChip theme={{ avatar: 'avatar-class' }} tooltip="Test tooltip">
           <Avatar title="Test" />
           <span>Test</span>
-        </TooltippedChip>,
+        </TooltippedChip>
       );
       const chipNode = wrapper.find('div').node;
       expect(chipNode.className).toMatch(/\bavatar-class\b/);
@@ -39,7 +43,7 @@ describe('Chip', () => {
       const wrapper = mount(
         <Chip theme={{ avatar: 'avatar-class' }}>
           <span>Test</span>
-        </Chip>,
+        </Chip>
       );
       const chipNode = wrapper.find('div').node;
       expect(chipNode.className).not.toMatch(/\bavatar-class\b/);

@@ -7,7 +7,7 @@ import React from 'react';
  * @param {Array/Object} children - colleciton of >=1 react elements
  * @param {function} predicate - function returning true when provided with an entry as argument
  */
-export default function (children, predicate) {
+export default function(children, predicate) {
   if (children) {
     const result = [];
     React.Children.forEach(children, (entry, idx) => {

@@ -22,21 +22,26 @@ const factory = (Checkbox, TableCell) => {
       }),
     };
 
-    handleSelect = (value) => {
+    handleSelect = value => {
       const { idx, onSelect } = this.props;
       if (onSelect) onSelect(idx, value);
     };
 
     render() {
       const { children, className, selectable, idx, selected, theme, ...other } = this.props; // eslint-disable-line
-      const _className = classnames(theme.row, {
-        [theme.selected]: selectable && selected,
-      }, className);
+      const _className = classnames(
+        theme.row,
+        {
+          [theme.selected]: selectable && selected,
+        },
+        className
+      );
       return (
         <tr {...other} className={_className}>
-          {selectable && <TableCell className={theme.checkboxCell}>
-            <Checkbox checked={selected} onChange={this.handleSelect} />
-          </TableCell>}
+          {selectable &&
+            <TableCell className={theme.checkboxCell}>
+              <Checkbox checked={selected} onChange={this.handleSelect} />
+            </TableCell>}
           {React.Children.map(children, (child, index) => {
             if (!child) return null;
             return cloneElement(child, {

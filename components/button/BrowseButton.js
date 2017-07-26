@@ -15,10 +15,7 @@ const factory = (ripple, FontIcon) => {
       disabled: PropTypes.bool,
       flat: PropTypes.bool,
       floating: PropTypes.bool,
-      icon: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.element,
-      ]),
+      icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
       inverse: PropTypes.bool,
       label: PropTypes.string,
       mini: PropTypes.bool,
@@ -60,42 +57,42 @@ const factory = (ripple, FontIcon) => {
       if (this.props.primary) return 'primary';
       if (this.props.accent) return 'accent';
       return 'neutral';
-    }
+    };
 
     getShape = () => {
       if (this.props.raised) return 'raised';
       if (this.props.floating) return 'floating';
       return 'flat';
-    }
+    };
 
-    handleMouseUp = (event) => {
+    handleMouseUp = event => {
       this.labelNode.blur();
       if (this.props.onMouseUp) this.props.onMouseUp(event);
     };
 
-    handleMouseLeave = (event) => {
+    handleMouseLeave = event => {
       this.labelNode.blur();
       if (this.props.onMouseLeave) this.props.onMouseLeave(event);
     };
 
-    handleFileChange = (event) => {
+    handleFileChange = event => {
       if (this.props.onChange) this.props.onChange(event);
     };
 
     render() {
       const {
-        accent,    // eslint-disable-line
+        accent, // eslint-disable-line
         children,
         className,
-        flat,      // eslint-disable-line
-        floating,  // eslint-disable-line
+        flat, // eslint-disable-line
+        floating, // eslint-disable-line
         icon,
         inverse,
         label,
         mini,
         neutral,
-        primary,   // eslint-disable-line
-        raised,    // eslint-disable-line
+        primary, // eslint-disable-line
+        raised, // eslint-disable-line
         theme,
         ...others
       } = this.props;
@@ -103,15 +100,22 @@ const factory = (ripple, FontIcon) => {
       const level = this.getLevel();
       const shape = this.getShape();
 
-      const classes = classnames(theme.button, [theme[shape]], {
-        [theme[level]]: neutral,
-        [theme.mini]: mini,
-        [theme.inverse]: inverse,
-      }, className);
+      const classes = classnames(
+        theme.button,
+        [theme[shape]],
+        {
+          [theme[level]]: neutral,
+          [theme.mini]: mini,
+          [theme.inverse]: inverse,
+        },
+        className
+      );
 
       const props = {
         ...others,
-        ref: (node) => { this.labelNode = node; },
+        ref: node => {
+          this.labelNode = node;
+        },
         className: classes,
         disabled: this.props.disabled,
         onMouseUp: this.handleMouseUp,
@@ -119,12 +123,16 @@ const factory = (ripple, FontIcon) => {
         'data-react-toolbox': 'label',
       };
 
-      return React.createElement(element, props,
-          icon ? <FontIcon className={theme.icon} value={icon} /> : null,
-        <span>{label}</span>,
+      return React.createElement(
+        element,
+        props,
+        icon ? <FontIcon className={theme.icon} value={icon} /> : null,
+        <span>
+          {label}
+        </span>,
         <input className={classes} type="file" onChange={this.handleFileChange} />,
-          children,
-        );
+        children
+      );
     }
   }
 

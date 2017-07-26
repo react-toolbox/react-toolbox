@@ -1,5 +1,5 @@
-import React from 'react';
-import { MenuItem, IconMenu, MenuDivider } from '../../components/menu';
+import React from "react";
+import { MenuItem, IconMenu, MenuDivider } from "../../components/menu";
 
 class IconMenuTest extends React.Component {
   state = {
@@ -7,27 +7,30 @@ class IconMenuTest extends React.Component {
   };
 
   handleShow = () => {
-    console.log('Showing menu...');
+    console.log("Showing menu...");
   };
 
   handleHide = () => {
-    console.log('Hiding menu...');
+    console.log("Hiding menu...");
   };
 
-  handleSelect = (value) => {
-    console.log('Option selected', value);
+  handleSelect = value => {
+    console.log("Option selected", value);
     this.setState({ selected: value });
   };
 
   handleItem = () => {
-    console.log('Refresh clicked');
+    console.log("Refresh clicked");
   };
 
   render() {
     return (
       <section>
         <h5>Icon Menus</h5>
-        <p>Although a menu can be used indepently with any component, we are providing a common use case with the icon menu.</p>
+        <p>
+          Although a menu can be used indepently with any component, we are providing a common use
+          case with the icon menu.
+        </p>
         <IconMenu
           icon="more_vert"
           position="auto"

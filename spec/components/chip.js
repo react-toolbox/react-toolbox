@@ -1,7 +1,7 @@
-import React from 'react';
-import Avatar from '../../components/avatar';
-import Chip from '../../components/chip';
-import style from '../style';
+import React from "react";
+import Avatar from "../../components/avatar";
+import Chip from "../../components/chip";
+import style from "../style";
 
 class ChipTest extends React.Component {
   state = {
@@ -22,32 +22,30 @@ class ChipTest extends React.Component {
 
         <Chip>Example chip</Chip>
         <Chip>
-          <span style={{ textDecoration: 'line-through' }}>Standard</span>
+          <span style={{ textDecoration: "line-through" }}>Standard</span>
           <strong>Custom</strong> chip <small>(custom markup)</small>
         </Chip>
 
-        {
-          this.state.deleted ? null : (
-            <Chip
-              deletable
-              onDeleteClick={this.handleDeleteClick}
-            >
+        {this.state.deleted
+          ? null
+          : <Chip deletable onDeleteClick={this.handleDeleteClick}>
               Deletable Chip
-            </Chip>
-          )
-        }
+            </Chip>}
 
         <Chip>
-          <Avatar style={{ backgroundColor: 'deepskyblue' }} icon="folder" />
+          <Avatar style={{ backgroundColor: "deepskyblue" }} icon="folder" />
           <span>Avatar Chip</span>
         </Chip>
 
         <Chip>
-          <Avatar title="A" /><span>Initial chip</span>
+          <Avatar title="A" />
+          <span>Initial chip</span>
         </Chip>
 
         <Chip>
-          <Avatar><img src="https://placeimg.com/80/80/animals" /></Avatar>
+          <Avatar>
+            <img src="https://placeimg.com/80/80/animals" />
+          </Avatar>
           <span>Image contact chip</span>
         </Chip>
 
@@ -56,11 +54,9 @@ class ChipTest extends React.Component {
             Truncated chip with long label. Lorem ipsum Amet quis mollit Excepteur id dolore.
           </Chip>
         </div>
-
       </section>
     );
   }
 }
 
 export default ChipTest;
-

@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface CardTheme {
   /**
@@ -32,6 +32,6 @@ export interface CardProps extends ReactToolbox.Props {
   [key: string]: any;
 }
 
-export class Card extends React.Component<CardProps, {}> { }
+export class Card extends React.Component<CardProps, {}> {}
 
 export default Card;

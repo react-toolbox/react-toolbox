@@ -22,9 +22,13 @@ class TabContent extends Component {
   };
 
   render() {
-    const className = classnames(this.props.theme.tab, {
-      [this.props.theme.active]: this.props.active,
-    }, this.props.className);
+    const className = classnames(
+      this.props.theme.tab,
+      {
+        [this.props.theme.active]: this.props.active,
+      },
+      this.props.className
+    );
 
     return (
       <section className={className} tabIndex={this.props.tabIndex}>

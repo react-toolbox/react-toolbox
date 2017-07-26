@@ -9,11 +9,15 @@ import InjectListItemContent from './ListItemContent';
 import InjectListItemActions from './ListItemActions';
 
 const factory = (Avatar, ListItemContent, ListItemActions) => {
-  const ListItemLayout = (props) => {
-    const className = classnames(props.theme.item, {
-      [props.theme.disabled]: props.disabled,
-      [props.theme.selectable]: props.selectable,
-    }, props.className);
+  const ListItemLayout = props => {
+    const className = classnames(
+      props.theme.item,
+      {
+        [props.theme.disabled]: props.disabled,
+        [props.theme.selectable]: props.selectable,
+      },
+      props.className
+    );
 
     const leftActions = [
       props.leftIcon && <FontIcon value={props.leftIcon} key="leftIcon" />,
@@ -25,39 +29,36 @@ const factory = (Avatar, ListItemContent, ListItemActions) => {
       ...props.rightActions,
     ];
     const emptyActions = item => !item[0] && !item[1] && !item[2];
-    const content = props.itemContent || (
-      <ListItemContent theme={props.theme} caption={props.caption} legend={props.legend} />
-    );
+    const content =
+      props.itemContent ||
+      <ListItemContent theme={props.theme} caption={props.caption} legend={props.legend} />;
 
     return (
       <span className={className}>
-        {!emptyActions(leftActions) > 0 && <ListItemActions type="left" theme={props.theme}>{leftActions}</ListItemActions>}
+        {!emptyActions(leftActions) > 0 &&
+          <ListItemActions type="left" theme={props.theme}>
+            {leftActions}
+          </ListItemActions>}
         {content}
-        {!emptyActions(rightActions) > 0 && <ListItemActions type="right" theme={props.theme}>{rightActions}</ListItemActions>}
+        {!emptyActions(rightActions) > 0 &&
+          <ListItemActions type="right" theme={props.theme}>
+            {rightActions}
+          </ListItemActions>}
       </span>
     );
   };
 
   ListItemLayout.propTypes = {
-    avatar: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.element,
-    ]),
+    avatar: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
     caption: PropTypes.string,
     className: PropTypes.string,
     disabled: PropTypes.bool,
     itemContent: PropTypes.element,
     leftActions: PropTypes.arrayOf(PropTypes.node),
-    leftIcon: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.element,
-    ]),
+    leftIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
     legend: PropTypes.string,
     rightActions: PropTypes.arrayOf(PropTypes.node),
-    rightIcon: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.element,
-    ]),
+    rightIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
     selectable: PropTypes.bool,
     theme: PropTypes.shape({
       disabled: PropTypes.string,

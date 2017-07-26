@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface DatePickerTheme {
   /**
@@ -132,7 +132,31 @@ export interface DatePickerProps extends ReactToolbox.Props {
    * Sets locale for the Dialog.
    * @default "en"
    */
-  locale?: "de" | "no" | "en" | "es" | "af" | "ar" | "be" | "bg" | "bn" | "bo" | "br" | "bs" | "ca" | "gl" | "eu" | "pt" | "it" | "fr" | "ru" | "ua" | "zh-cn" | "zh-hk" | "zh-tw" | DatePickerLocale;
+  locale?:
+    | 'de'
+    | 'no'
+    | 'en'
+    | 'es'
+    | 'af'
+    | 'ar'
+    | 'be'
+    | 'bg'
+    | 'bn'
+    | 'bo'
+    | 'br'
+    | 'bs'
+    | 'ca'
+    | 'gl'
+    | 'eu'
+    | 'pt'
+    | 'it'
+    | 'fr'
+    | 'ru'
+    | 'ua'
+    | 'zh-cn'
+    | 'zh-hk'
+    | 'zh-tw'
+    | DatePickerLocale;
   /**
    * Date object with the maximum selectable date.
    */
@@ -220,6 +244,6 @@ export interface DatePickerLocale {
   weekdaysLetter?: string[];
 }
 
-export class DatePicker extends React.Component<DatePickerProps, {}> { }
+export class DatePicker extends React.Component<DatePickerProps, {}> {}
 
 export default DatePicker;

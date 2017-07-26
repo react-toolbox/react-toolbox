@@ -8,7 +8,7 @@ import InjectFontIcon from '../font_icon/FontIcon';
 const ASC = 'asc';
 const DESC = 'desc';
 
-const factory = (FontIcon) => {
+const factory = FontIcon => {
   class TableCell extends Component {
     static propTypes = {
       children: PropTypes.node,
@@ -37,17 +37,17 @@ const factory = (FontIcon) => {
       tagName: 'td',
     };
 
-    handleClick = (event) => {
+    handleClick = event => {
       const { onClick, row, column } = this.props;
       if (onClick) onClick(event, column, row);
-    }
+    };
 
     render() {
       const {
         children,
         className,
         numeric,
-        row,    // eslint-disable-line
+        row, // eslint-disable-line
         column, // eslint-disable-line
         sorted,
         tagName,
@@ -55,12 +55,16 @@ const factory = (FontIcon) => {
         ...other
       } = this.props;
 
-      const _className = classnames(theme.tableCell, {
-        [theme.headCell]: tagName === 'th',
-        [theme.rowCell]: tagName === 'td',
-        [theme.sorted]: sorted,
-        [theme.numeric]: numeric,
-      }, className);
+      const _className = classnames(
+        theme.tableCell,
+        {
+          [theme.headCell]: tagName === 'th',
+          [theme.rowCell]: tagName === 'td',
+          [theme.sorted]: sorted,
+          [theme.numeric]: numeric,
+        },
+        className
+      );
 
       const props = {
         ...other,
@@ -68,16 +72,17 @@ const factory = (FontIcon) => {
         onClick: this.handleClick,
       };
 
-      return (
-        React.createElement(tagName, props, [
-          sorted && <FontIcon
-            className={classnames(theme.sortIcon, { [theme.asc]: sorted === ASC })}
+      return React.createElement(tagName, props, [
+        sorted &&
+          <FontIcon
+            className={classnames(theme.sortIcon, {
+              [theme.asc]: sorted === ASC,
+            })}
             key="icon"
             value="arrow_downward"
           />,
-          children,
-        ])
-      );
+        children,
+      ]);
     }
   }
 

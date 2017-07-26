@@ -136,31 +136,31 @@ const factory = (ProgressBar, Input) => {
       });
     };
 
-    handleInputChange = (value) => {
+    handleInputChange = value => {
       this.setState({ inputValue: value });
     };
 
-    handleInputBlur = (event) => {
+    handleInputBlur = event => {
       const value = this.state.inputValue || 0;
       this.setState({ inputFocused: false, inputValue: null }, () => {
         this.props.onChange(this.trimValue(value), event);
       });
     };
 
-    handleKeyDown = (event) => {
+    handleKeyDown = event => {
       if ([13, 27].indexOf(event.keyCode) !== -1) this.getInput().blur();
       if (event.keyCode === 38) this.addToValue(this.props.step);
       if (event.keyCode === 40) this.addToValue(-this.props.step);
     };
 
-    handleMouseDown = (event) => {
+    handleMouseDown = event => {
       if (this.state.inputFocused) this.getInput().blur();
       events.addEventsToDocument(this.getMouseEventMap());
       this.start(events.getMousePosition(event));
       events.pauseEvent(event);
     };
 
-    handleMouseMove = (event) => {
+    handleMouseMove = event => {
       events.pauseEvent(event);
       this.move(events.getMousePosition(event));
     };
@@ -171,7 +171,7 @@ const factory = (ProgressBar, Input) => {
 
     handleResize = (event, callback) => {
       const { left, right } = ReactDOM.findDOMNode(this.progressbarNode).getBoundingClientRect();
-      const cb = (callback) || (() => {});
+      const cb = callback || (() => {});
       this.setState({ sliderStart: left, sliderLength: right - left }, cb);
     };
 
@@ -187,11 +187,11 @@ const factory = (ProgressBar, Input) => {
       this.end(this.getTouchEventMap());
     };
 
-    handleTouchMove = (event) => {
+    handleTouchMove = event => {
       this.move(events.getTouchPosition(event));
     };
 
-    handleTouchStart = (event) => {
+    handleTouchStart = event => {
       if (this.state.inputFocused) this.getInput().blur();
       this.start(events.getTouchPosition(event));
       events.addEventsToDocument(this.getTouchEventMap());
@@ -216,8 +216,8 @@ const factory = (ProgressBar, Input) => {
     positionToValue(position) {
       const { sliderStart: start, sliderLength: length } = this.state;
       const { max, min, step } = this.props;
-      const pos = ((position.x - start) / length) * (max - min);
-      return this.trimValue((Math.round(pos / step) * step) + min);
+      const pos = (position.x - start) / length * (max - min);
+      return this.trimValue(Math.round(pos / step) * step + min);
     }
 
     start(position) {
@@ -247,7 +247,7 @@ const factory = (ProgressBar, Input) => {
       return (
         <div className={this.props.theme.snaps}>
           {range(0, (this.props.max - this.props.min) / this.props.step).map(i =>
-            <div key={`span-${i}`} className={this.props.theme.snap} />,
+            <div key={`span-${i}`} className={this.props.theme.snap} />
           )}
         </div>
       );
@@ -257,15 +257,17 @@ const factory = (ProgressBar, Input) => {
       if (!this.props.editable) return undefined;
       return (
         <Input
-          ref={(node) => { this.inputNode = node; }}
+          ref={node => {
+            this.inputNode = node;
+          }}
           className={this.props.theme.input}
           disabled={this.props.disabled}
           onFocus={this.handleInputFocus}
           onChange={this.handleInputChange}
           onBlur={this.handleInputBlur}
-          value={this.state.inputFocused
-            ? this.state.inputValue
-            : this.valueForInput(this.props.value)}
+          value={
+            this.state.inputFocused ? this.state.inputValue : this.valueForInput(this.props.value)
+          }
         />
       );
     }
@@ -273,13 +275,17 @@ const factory = (ProgressBar, Input) => {
     render() {
       const { theme } = this.props;
       const knobStyles = { left: `${this.knobOffset()}%` };
-      const className = classnames(theme.slider, {
-        [theme.editable]: this.props.editable,
-        [theme.disabled]: this.props.disabled,
-        [theme.pinned]: this.props.pinned,
-        [theme.pressed]: this.state.pressed,
-        [theme.ring]: this.props.value === this.props.min,
-      }, this.props.className);
+      const className = classnames(
+        theme.slider,
+        {
+          [theme.editable]: this.props.editable,
+          [theme.disabled]: this.props.disabled,
+          [theme.pinned]: this.props.pinned,
+          [theme.pressed]: this.state.pressed,
+          [theme.ring]: this.props.value === this.props.min,
+        },
+        this.props.className
+      );
 
       return (
         <div
@@ -292,13 +298,17 @@ const factory = (ProgressBar, Input) => {
           tabIndex="0"
         >
           <div
-            ref={(node) => { this.sliderNode = node; }}
+            ref={node => {
+              this.sliderNode = node;
+            }}
             className={theme.container}
             onMouseDown={this.handleMouseDown}
             onTouchStart={this.handleTouchStart}
           >
             <div
-              ref={(node) => { this.knobNode = node; }}
+              ref={node => {
+                this.knobNode = node;
+              }}
               className={theme.knob}
               onMouseDown={this.handleMouseDown}
               onTouchStart={this.handleTouchStart}
@@ -310,7 +320,9 @@ const factory = (ProgressBar, Input) => {
             <div className={theme.progress}>
               <ProgressBar
                 disabled={this.props.disabled}
-                ref={(node) => { this.progressbarNode = node; }}
+                ref={node => {
+                  this.progressbarNode = node;
+                }}
                 className={theme.innerprogress}
                 max={this.props.max}
                 min={this.props.min}

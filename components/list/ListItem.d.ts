@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import ReactToolbox from '../index';
 import { ListItemContentTheme } from './ListItemContent';
 import { ListItemActionsTheme } from './ListItemActions';
@@ -36,4 +36,4 @@ export interface ListItemProps extends ReactToolbox.Props {
   to?: string;
 }
 
-export class ListItem extends React.Component<ListItemProps & ListItemLayoutProps, {}> { }
+export class ListItem extends React.Component<ListItemProps & ListItemLayoutProps, {}> {}

@@ -5,13 +5,10 @@ import { themr } from 'react-css-themr';
 import { LIST } from '../identifiers';
 import InjectListItem from './ListItem';
 
-const mergeProp = (propName, child, parent) => (
-  child[propName] !== undefined
-  ? child[propName]
-  : parent[propName]
-);
+const mergeProp = (propName, child, parent) =>
+  child[propName] !== undefined ? child[propName] : parent[propName];
 
-const factory = (ListItem) => {
+const factory = ListItem => {
   class List extends Component {
     static propTypes = {
       children: PropTypes.node,
@@ -28,7 +25,7 @@ const factory = (ListItem) => {
     };
 
     renderItems() {
-      return React.Children.map(this.props.children, (item) => {
+      return React.Children.map(this.props.children, item => {
         if (item === null || item === undefined) {
           return item;
         } else if (item.type === ListItem) {
@@ -42,7 +39,10 @@ const factory = (ListItem) => {
 
     render() {
       return (
-        <ul data-react-toolbox="list" className={classnames(this.props.theme.list, this.props.className)}>
+        <ul
+          data-react-toolbox="list"
+          className={classnames(this.props.theme.list, this.props.className)}
+        >
           {this.renderItems()}
         </ul>
       );

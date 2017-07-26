@@ -1,28 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Editor from '../../../editor';
-import Preview from '../../../preview';
-import codeText from '../modules/examples/example.txt';
-import style from './playground.css';
+import React from "react";
+import PropTypes from "prop-types";
+import Editor from "../../../editor";
+import Preview from "../../../preview";
+import codeText from "../modules/examples/example.txt";
+import style from "./playground.css";
 
 class Playground extends React.Component {
   static propTypes = {
-    className: PropTypes.string
+    className: PropTypes.string,
   };
 
   state = {
-    code: codeText
+    code: codeText,
   };
 
-  handleCodeChange = (code) => {
+  handleCodeChange = code => {
     this.setState({ code });
   };
 
-  loadCode (code) {
+  loadCode(code) {
     this.refs.editor.setCode(code);
   }
 
-  render () {
+  render() {
     return (
       <aside className={this.props.className}>
         <Editor
@@ -31,10 +31,7 @@ class Playground extends React.Component {
           codeText={this.state.code}
           onChange={this.handleCodeChange}
         />
-        <Preview
-          className={style.preview}
-          code={this.state.code}
-        />
+        <Preview className={style.preview} code={this.state.code} />
       </aside>
     );
   }

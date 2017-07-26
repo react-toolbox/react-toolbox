@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface ProgressBarTheme {
   /**
@@ -61,7 +61,7 @@ export interface ProgressBarProps extends ReactToolbox.Props {
    * Mode of the progress bar, it can be determinate or indeterminate.
    * @default indeterminate
    */
-  mode?: "determinate" | "indeterminate";
+  mode?: 'determinate' | 'indeterminate';
   /**
    * If true, the circular progress bar will be changing its color.
    * @default false
@@ -75,7 +75,7 @@ export interface ProgressBarProps extends ReactToolbox.Props {
    * Type of the progress bar, it can be circular or linear.
    * @default linear
    */
-  type?: "linear" | "circular";
+  type?: 'linear' | 'circular';
   /**
    * Value of the current progress.
    * @default 0
@@ -83,6 +83,6 @@ export interface ProgressBarProps extends ReactToolbox.Props {
   value?: number;
 }
 
-export class ProgressBar extends React.Component<ProgressBarProps, {}> { }
+export class ProgressBar extends React.Component<ProgressBarProps, {}> {}
 
 export default ProgressBar;

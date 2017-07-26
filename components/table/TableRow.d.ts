@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ReactToolbox from "../index";
+import ReactToolbox from '../index';
 
 export interface TableRowTheme {
   /**
@@ -40,5 +40,5 @@ export interface TableRowProps extends ReactToolbox.Props {
   theme?: TableRowTheme;
 }
 
-export class TableRow extends React.Component<TableRowProps, {}> { }
+export class TableRow extends React.Component<TableRowProps, {}> {}
 export default TableRow;

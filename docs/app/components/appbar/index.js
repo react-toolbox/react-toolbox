@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { AppBar } from 'react-toolbox';
-import { Link } from 'react-router';
-import Logo from '../logo';
-import Navigation from '../navigation';
-import style from './style.css';
+import React from "react";
+import PropTypes from "prop-types";
+import { AppBar } from "react-toolbox";
+import { Link } from "react-router";
+import Logo from "../logo";
+import Navigation from "../navigation";
+import style from "./style.css";
 
-const MainAppBar = (props) => {
+const MainAppBar = props => {
   let className = style.appbar;
   if (props.className) className += ` ${props.className}`;
 
@@ -21,11 +21,11 @@ const MainAppBar = (props) => {
 };
 
 MainAppBar.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 MainAppBar.defaultProps = {
-  className: ''
+  className: "",
 };
 
 export default MainAppBar;

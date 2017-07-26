@@ -43,13 +43,13 @@ class Clock extends Component {
     window.removeEventListener('resize', this.handleCalculateShape);
   }
 
-  handleHourChange = (hours) => {
+  handleHourChange = hours => {
     if (this.props.time.getHours() !== hours) {
       this.props.onChange(time.setHours(this.props.time, this.adaptHourToFormat(hours)));
     }
   };
 
-  handleMinuteChange = (minutes) => {
+  handleMinuteChange = minutes => {
     if (this.props.time.getMinutes() !== minutes) {
       this.props.onChange(time.setMinutes(this.props.time, minutes));
     }
@@ -59,8 +59,8 @@ class Clock extends Component {
     const { top, left, width } = this.placeholderNode.getBoundingClientRect();
     this.setState({
       center: {
-        x: left + ((width / 2) - window.pageXOffset),
-        y: top + ((width / 2) - window.pageXOffset),
+        x: left + (width / 2 - window.pageXOffset),
+        y: top + (width / 2 - window.pageXOffset),
       },
       radius: width / 2,
     });
@@ -114,7 +114,9 @@ class Clock extends Component {
         <div
           className={theme.placeholder}
           style={{ height: this.state.radius * 2 }}
-          ref={(node) => { this.placeholderNode = node; }}
+          ref={node => {
+            this.placeholderNode = node;
+          }}
         >
           <CssTransitionGroup
             transitionName={animationModule}

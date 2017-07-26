@@ -9,13 +9,13 @@ import InjectLink from '../link/Link';
 const factory = (Button, Link) => {
   const Navigation = ({ actions, children, className, routes, theme, type }) => {
     const _className = classnames(theme[type], className);
-    const buttons = actions.map((action, index) => (
-      <Button className={theme.button} key={index} {...action} /> // eslint-disable-line
-    ));
+    const buttons = actions.map(
+      (action, index) => <Button className={theme.button} key={index} {...action} /> // eslint-disable-line
+    );
 
-    const links = routes.map((route, index) => (
-      <Link className={theme.link} key={index} {...route} /> // eslint-disable-line
-    ));
+    const links = routes.map(
+      (route, index) => <Link className={theme.link} key={index} {...route} /> // eslint-disable-line
+    );
 
     return (
       <nav data-react-toolbox="navigation" className={_className}>

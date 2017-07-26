@@ -66,7 +66,7 @@ const factory = (Tab, TabContent, FontIcon) => {
       clearTimeout(this.resizeTimeout);
     }
 
-    handleHeaderClick = (idx) => {
+    handleHeaderClick = idx => {
       if (this.props.onChange) {
         this.props.onChange(idx);
       }
@@ -80,7 +80,7 @@ const factory = (Tab, TabContent, FontIcon) => {
       }, 100);
     };
 
-    updatePointer = (idx) => {
+    updatePointer = idx => {
       if (this.navigationNode && this.navigationNode.children[idx]) {
         requestAnimationFrame(() => {
           const nav = this.navigationNode.getBoundingClientRect();
@@ -89,13 +89,13 @@ const factory = (Tab, TabContent, FontIcon) => {
           this.setState({
             pointer: {
               top: `${nav.height}px`,
-              left: `${(label.left + scrollLeft) - nav.left}px`,
+              left: `${label.left + scrollLeft - nav.left}px`,
               width: `${label.width}px`,
             },
           });
         });
       }
-    }
+    };
 
     updateArrows = () => {
       const idx = this.navigationNode.children.length - 2;
@@ -108,38 +108,36 @@ const factory = (Tab, TabContent, FontIcon) => {
         this.setState({
           arrows: {
             left: scrollLeft > 0,
-            right: nav.right < (lastLabel.right - 5),
+            right: nav.right < lastLabel.right - 5,
           },
         });
       }
-    }
+    };
 
-    scrollNavigation = (factor) => {
+    scrollNavigation = factor => {
       const oldScrollLeft = this.navigationNode.scrollLeft;
       this.navigationNode.scrollLeft += factor * this.navigationNode.clientWidth;
       if (this.navigationNode.scrollLeft !== oldScrollLeft) {
         this.updateArrows();
       }
-    }
+    };
 
-    scrollRight = () =>
-      this.scrollNavigation(-1);
+    scrollRight = () => this.scrollNavigation(-1);
 
-    scrollLeft = () =>
-      this.scrollNavigation(+1);
+    scrollLeft = () => this.scrollNavigation(+1);
 
     parseChildren() {
       const headers = [];
       const contents = [];
 
-      React.Children.forEach(this.props.children, (item) => {
+      React.Children.forEach(this.props.children, item => {
         if (isTab(item)) {
           headers.push(item);
           if (item.props.children) {
             contents.push(
               <TabContent theme={this.props.theme}>
                 {item.props.children}
-              </TabContent>,
+              </TabContent>
             );
           }
         } else if (isTabContent(item)) {
@@ -151,31 +149,35 @@ const factory = (Tab, TabContent, FontIcon) => {
     }
 
     renderHeaders(headers) {
-      return headers.map((item, idx) => React.cloneElement(item, {
-        children: null,
-        key: idx, // eslint-disable-line
-        index: idx,
-        theme: this.props.theme,
-        active: this.props.index === idx,
-        onClick: (event, index) => {
-          this.handleHeaderClick(index);
-          if (item.props.onClick) item.props.onClick(event);
-        },
-      }));
+      return headers.map((item, idx) =>
+        React.cloneElement(item, {
+          children: null,
+          key: idx, // eslint-disable-line
+          index: idx,
+          theme: this.props.theme,
+          active: this.props.index === idx,
+          onClick: (event, index) => {
+            this.handleHeaderClick(index);
+            if (item.props.onClick) item.props.onClick(event);
+          },
+        })
+      );
     }
 
     renderContents(contents) {
-      const contentElements = contents.map((item, idx) => React.cloneElement(item, {
-        key: idx, // eslint-disable-line
-        theme: this.props.theme,
-        active: this.props.index === idx,
-        hidden: this.props.index !== idx && this.props.hideMode === 'display',
-        tabIndex: idx,
-      }));
+      const contentElements = contents.map((item, idx) =>
+        React.cloneElement(item, {
+          key: idx, // eslint-disable-line
+          theme: this.props.theme,
+          active: this.props.index === idx,
+          hidden: this.props.index !== idx && this.props.hideMode === 'display',
+          tabIndex: idx,
+        })
+      );
 
       return this.props.hideMode === 'display'
         ? contentElements
-        : contentElements.filter((item, idx) => (idx === this.props.index));
+        : contentElements.filter((item, idx) => idx === this.props.index);
     }
 
     render() {
@@ -186,24 +188,35 @@ const factory = (Tab, TabContent, FontIcon) => {
         [theme.disableAnimation]: disableAnimatedBottomBorder,
       });
 
-      const classNames = classnames(theme.tabs, {
-        [theme.fixed]: fixed,
-        [theme.inverse]: inverse,
-      }, className);
+      const classNames = classnames(
+        theme.tabs,
+        {
+          [theme.fixed]: fixed,
+          [theme.inverse]: inverse,
+        },
+        className
+      );
 
       return (
         <div data-react-toolbox="tabs" className={classNames}>
           <div className={theme.navigationContainer}>
-            {hasLeftArrow && <div className={theme.arrowContainer} onClick={this.scrollRight}>
-              <FontIcon className={theme.arrow} value="keyboard_arrow_left" />
-            </div>}
-            <nav className={theme.navigation} ref={(node) => { this.navigationNode = node; }}>
+            {hasLeftArrow &&
+              <div className={theme.arrowContainer} onClick={this.scrollRight}>
+                <FontIcon className={theme.arrow} value="keyboard_arrow_left" />
+              </div>}
+            <nav
+              className={theme.navigation}
+              ref={node => {
+                this.navigationNode = node;
+              }}
+            >
               {this.renderHeaders(headers)}
               <span className={classNamePointer} style={this.state.pointer} />
             </nav>
-            {hasRightArrow && <div className={theme.arrowContainer} onClick={this.scrollLeft}>
-              <FontIcon className={theme.arrow} value="keyboard_arrow_right" />
-            </div>}
+            {hasRightArrow &&
+              <div className={theme.arrowContainer} onClick={this.scrollLeft}>
+                <FontIcon className={theme.arrow} value="keyboard_arrow_right" />
+              </div>}
           </div>
           {this.renderContents(contents)}
         </div>

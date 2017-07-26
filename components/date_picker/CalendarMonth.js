@@ -8,10 +8,7 @@ class Month extends Component {
   static propTypes = {
     disabledDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
     enabledDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
-    locale: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object,
-    ]),
+    locale: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     maxDate: PropTypes.instanceOf(Date),
     minDate: PropTypes.instanceOf(Date),
     onDayClick: PropTypes.func,
@@ -31,7 +28,7 @@ class Month extends Component {
     enabledDates: [],
   };
 
-  handleDayClick = (day) => {
+  handleDayClick = day => {
     if (this.props.onDayClick) this.props.onDayClick(day);
   };
 
@@ -40,19 +37,26 @@ class Month extends Component {
     const compareDate = compDate => date.getTime() === compDate.getTime();
     const dateInDisabled = disabledDates.filter(compareDate).length > 0;
     const dateInEnabled = enabledDates.filter(compareDate).length > 0;
-    return time.dateOutOfRange(date, minDate, maxDate)
-      || (enabledDates.length > 0 && !dateInEnabled)
-      || dateInDisabled;
+    return (
+      time.dateOutOfRange(date, minDate, maxDate) ||
+      (enabledDates.length > 0 && !dateInEnabled) ||
+      dateInDisabled
+    );
   }
 
   renderWeeks() {
     const days = range(0, 7).map(d => time.getDayOfWeekLetter(d, this.props.locale));
-    const source = (this.props.sundayFirstDayOfWeek) ? days : [...days.slice(1), days[0]];
-    return source.map((day, i) => (<span key={i}>{day}</span>)); // eslint-disable-line
+    const source = this.props.sundayFirstDayOfWeek ? days : [...days.slice(1), days[0]];
+    return source.map((day, i) =>
+      // eslint-disable-next-line
+      <span key={i}>
+        {day}
+      </span>
+    );
   }
 
   renderDays() {
-    return range(1, time.getDaysInMonth(this.props.viewDate) + 1).map((i) => {
+    return range(1, time.getDaysInMonth(this.props.viewDate) + 1).map(i => {
       const date = new Date(this.props.viewDate.getFullYear(), this.props.viewDate.getMonth(), i);
       return (
         <CalendarDay
@@ -77,8 +81,12 @@ class Month extends Component {
         <span className={this.props.theme.title}>
           {fullMonth} {fullYear}
         </span>
-        <div className={this.props.theme.week}>{this.renderWeeks()}</div>
-        <div className={this.props.theme.days}>{this.renderDays()}</div>
+        <div className={this.props.theme.week}>
+          {this.renderWeeks()}
+        </div>
+        <div className={this.props.theme.days}>
+          {this.renderDays()}
+        </div>
       </div>
     );
   }

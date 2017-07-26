@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface RadioGroupProps extends ReactToolbox.Props {
   /**
@@ -25,4 +25,4 @@ export interface RadioGroupProps extends ReactToolbox.Props {
   value?: any;
 }
 
-export class RadioGroup extends React.Component<RadioGroupProps, {}> { }
+export class RadioGroup extends React.Component<RadioGroupProps, {}> {}

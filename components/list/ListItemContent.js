@@ -7,18 +7,12 @@ import InjectListItemText from './ListItemText';
 
 const types = ['auto', 'normal', 'large'];
 
-const factory = (ListItemText) => {
+const factory = ListItemText => {
   class ListItemContent extends Component {
     static propTypes = {
-      caption: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node,
-      ]),
+      caption: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
       children: PropTypes.node,
-      legend: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node,
-      ]),
+      legend: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
       theme: PropTypes.shape({
         auto: PropTypes.string,
         itemContentRoot: PropTypes.string,
@@ -32,7 +26,9 @@ const factory = (ListItemText) => {
       const { type, children, caption, legend } = this.props;
 
       let count = React.Children.count(children);
-      [caption, legend].forEach((s) => { count += s ? 1 : 0; });
+      [caption, legend].forEach(s => {
+        count += s ? 1 : 0;
+      });
       const typeIndex = Math.min(count, types.length);
 
       return type || types[typeIndex];
@@ -47,8 +43,14 @@ const factory = (ListItemText) => {
 
       return (
         <span className={className}>
-          {caption && <ListItemText theme={theme} primary>{caption}</ListItemText>}
-          {legend && <ListItemText theme={theme}>{legend}</ListItemText>}
+          {caption &&
+            <ListItemText theme={theme} primary>
+              {caption}
+            </ListItemText>}
+          {legend &&
+            <ListItemText theme={theme}>
+              {legend}
+            </ListItemText>}
           {children}
         </span>
       );

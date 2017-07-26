@@ -7,17 +7,14 @@ import ActivableRenderer from '../hoc/ActivableRenderer';
 import InjectButton from '../button/Button';
 import Portal from '../hoc/Portal';
 
-const factory = (Button) => {
+const factory = Button => {
   class Snackbar extends Component {
     static propTypes = {
       action: PropTypes.string,
       active: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
-      label: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.element,
-      ]),
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
       onClick: PropTypes.func,
       onTimeout: PropTypes.func,
       theme: PropTypes.shape({
@@ -49,20 +46,24 @@ const factory = (Button) => {
       clearTimeout(this.curTimeout);
     }
 
-    scheduleTimeout = (props) => {
+    scheduleTimeout = props => {
       const { onTimeout, timeout } = props;
       if (this.curTimeout) clearTimeout(this.curTimeout);
       this.curTimeout = setTimeout(() => {
         if (onTimeout) onTimeout();
         this.curTimeout = null;
       }, timeout);
-    }
+    };
 
     render() {
       const { action, active, children, label, onClick, theme, type } = this.props;
-      const className = classnames([theme.snackbar, theme[type]], {
-        [theme.active]: active,
-      }, this.props.className);
+      const className = classnames(
+        [theme.snackbar, theme[type]],
+        {
+          [theme.active]: active,
+        },
+        this.props.className
+      );
 
       return (
         <Portal className={theme.portal}>

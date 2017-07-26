@@ -6,7 +6,7 @@ import { SWITCH } from '../identifiers';
 import rippleFactory from '../ripple/Ripple';
 import thumbFactory from './Thumb';
 
-const factory = (Thumb) => {
+const factory = Thumb => {
   class Switch extends Component {
     static propTypes = {
       checked: PropTypes.bool,
@@ -36,7 +36,7 @@ const factory = (Thumb) => {
       disabled: false,
     };
 
-    handleToggle = (event) => {
+    handleToggle = event => {
       if (event.pageX !== 0 && event.pageY !== 0) this.blur();
       if (!this.props.disabled && this.props.onChange) {
         this.props.onChange(!this.props.checked, event);
@@ -70,13 +70,19 @@ const factory = (Thumb) => {
             className={theme.input}
             onClick={this.handleToggle}
             readOnly
-            ref={(node) => { this.inputNode = node; }}
+            ref={node => {
+              this.inputNode = node;
+            }}
             type="checkbox"
           />
           <span className={theme[checked ? 'on' : 'off']}>
             <Thumb disabled={this.props.disabled} theme={theme} ripple={ripple} />
           </span>
-          {this.props.label ? <span className={theme.text}>{this.props.label}</span> : null}
+          {this.props.label
+            ? <span className={theme.text}>
+                {this.props.label}
+              </span>
+            : null}
         </label>
       );
     }

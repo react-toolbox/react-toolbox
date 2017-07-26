@@ -18,11 +18,11 @@ const factory = (Checkbox, TableCell) => {
       theme: PropTypes.shape({
         checkboxCell: PropTypes.string,
       }),
-    }
+    };
 
     static defaultProps = {
       displaySelect: true,
-    }
+    };
 
     handleSelect = (value, event) => {
       this.props.onSelect(value, event);
@@ -33,7 +33,7 @@ const factory = (Checkbox, TableCell) => {
         children,
         displaySelect,
         multiSelectable,
-        onSelect,        // eslint-disable-line
+        onSelect, // eslint-disable-line
         selectable,
         selected,
         theme,
@@ -41,13 +41,15 @@ const factory = (Checkbox, TableCell) => {
       } = this.props;
       return (
         <tr {...other}>
-          {selectable && <TableCell className={theme.checkboxCell} tagName="th">
-            {displaySelect && <Checkbox
-              checked={selected}
-              disabled={!multiSelectable}
-              onChange={this.handleSelect}
-            />}
-          </TableCell>}
+          {selectable &&
+            <TableCell className={theme.checkboxCell} tagName="th">
+              {displaySelect &&
+                <Checkbox
+                  checked={selected}
+                  disabled={!multiSelectable}
+                  onChange={this.handleSelect}
+                />}
+            </TableCell>}
           {React.Children.map(children, (child, index) => {
             if (!child) return null;
             return cloneElement(child, {

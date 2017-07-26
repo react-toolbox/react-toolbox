@@ -28,7 +28,7 @@ const rippleFactory = (options = {}) => {
     ...props
   } = { ...defaults, ...options };
 
-  return (ComposedComponent) => {
+  return ComposedComponent => {
     class RippledComponent extends Component {
       static propTypes = {
         children: PropTypes.node,
@@ -71,7 +71,7 @@ const rippleFactory = (options = {}) => {
 
       componentWillUnmount() {
         // Remove document event listeners for ripple if they still exists
-        Object.keys(this.state.ripples).forEach((key) => {
+        Object.keys(this.state.ripples).forEach(key => {
           this.state.ripples[key].endRipple();
         });
       }
@@ -88,8 +88,8 @@ const rippleFactory = (options = {}) => {
         const { left, top, height, width } = ReactDOM.findDOMNode(this).getBoundingClientRect();
         const { rippleCentered: centered, rippleSpread: spread } = this.props;
         return {
-          left: centered ? 0 : x - left - (width / 2),
-          top: centered ? 0 : y - top - (height / 2),
+          left: centered ? 0 : x - left - width / 2,
+          top: centered ? 0 : y - top - height / 2,
           width: width * spread,
         };
       }
@@ -149,19 +149,27 @@ const rippleFactory = (options = {}) => {
         if (this.rippleShouldTrigger(isTouch)) {
           const { top, left, width } = this.getDescriptor(x, y);
           const noRipplesActive = Object.keys(this.state.ripples).length === 0;
-          const key = (this.props.rippleMultiple || noRipplesActive)
-            ? this.getNextKey()
-            : this.getLastKey();
+          const key =
+            this.props.rippleMultiple || noRipplesActive ? this.getNextKey() : this.getLastKey();
           const endRipple = this.addRippleDeactivateEventListener(isTouch, key);
-          const initialState = { active: false, restarting: true, top, left, width, endRipple };
+          const initialState = {
+            active: false,
+            restarting: true,
+            top,
+            left,
+            width,
+            endRipple,
+          };
           const runningState = { active: true, restarting: false };
           const ripples = { ...this.state.ripples, [key]: initialState };
           this.setState({ ripples }, () => {
             if (this.rippleNodes[key]) this.rippleNodes[key].offsetWidth; // eslint-disable-line
-            this.setState({ ripples: {
-              ...this.state.ripples,
-              [key]: Object.assign({}, this.state.ripples[key], runningState),
-            } });
+            this.setState({
+              ripples: {
+                ...this.state.ripples,
+                [key]: Object.assign({}, this.state.ripples[key], runningState),
+              },
+            });
           });
         }
       }
@@ -216,16 +224,20 @@ const rippleFactory = (options = {}) => {
         const self = this;
         return function endRipple() {
           document.removeEventListener(eventType, endRipple);
-          self.setState({ ripples: {
-            ...self.state.ripples,
-            [rippleKey]: Object.assign({}, self.state.ripples[rippleKey], { active: false }),
-          } });
+          self.setState({
+            ripples: {
+              ...self.state.ripples,
+              [rippleKey]: Object.assign({}, self.state.ripples[rippleKey], {
+                active: false,
+              }),
+            },
+          });
         };
       }
 
-      doRipple = () => (!this.props.disabled && this.props.ripple)
+      doRipple = () => !this.props.disabled && this.props.ripple;
 
-      handleMouseDown = (event) => {
+      handleMouseDown = event => {
         if (this.props.onMouseDown) this.props.onMouseDown(event);
         if (this.doRipple()) {
           const { x, y } = events.getMousePosition(event);
@@ -233,7 +245,7 @@ const rippleFactory = (options = {}) => {
         }
       };
 
-      handleTouchStart = (event) => {
+      handleTouchStart = event => {
         if (this.props.onTouchStart) this.props.onTouchStart(event);
         if (this.doRipple()) {
           const { x, y } = events.getTouchPosition(event);
@@ -243,16 +255,28 @@ const rippleFactory = (options = {}) => {
 
       renderRipple(key, className, { active, left, restarting, top, width }) {
         const scale = restarting ? 0 : 1;
-        const transform = `translate3d(${(-width / 2) + left}px, ${(-width / 2) + top}px, 0) scale(${scale})`;
-        const _className = classnames(this.props.theme.ripple, {
-          [this.props.theme.rippleActive]: active,
-          [this.props.theme.rippleRestarting]: restarting,
-        }, className);
+        const transform = `translate3d(${-width / 2 + left}px, ${-width / 2 +
+          top}px, 0) scale(${scale})`;
+        const _className = classnames(
+          this.props.theme.ripple,
+          {
+            [this.props.theme.rippleActive]: active,
+            [this.props.theme.rippleRestarting]: restarting,
+          },
+          className
+        );
         return (
-          <span key={key} data-react-toolbox="ripple" className={this.props.theme.rippleWrapper} {...props}>
+          <span
+            key={key}
+            data-react-toolbox="ripple"
+            className={this.props.theme.rippleWrapper}
+            {...props}
+          >
             <span
               className={_className}
-              ref={(node) => { if (node) this.rippleNodes[key] = node; }}
+              ref={node => {
+                if (node) this.rippleNodes[key] = node;
+              }}
               style={prefixer({ transform }, { width, height: width })}
             />
           </span>
@@ -264,26 +288,24 @@ const rippleFactory = (options = {}) => {
           children,
           disabled,
           ripple,
-          onRippleEnded,   // eslint-disable-line
-          rippleCentered,  // eslint-disable-line
+          onRippleEnded, // eslint-disable-line
+          rippleCentered, // eslint-disable-line
           rippleClassName, // eslint-disable-line
-          rippleMultiple,  // eslint-disable-line
-          rippleSpread,    // eslint-disable-line
+          rippleMultiple, // eslint-disable-line
+          rippleSpread, // eslint-disable-line
           theme,
           ...other
         } = this.props;
         const { ripples } = this.state;
         const childRipples = Object.keys(ripples).map(key =>
-          this.renderRipple(key, rippleClassName, ripples[key]),
+          this.renderRipple(key, rippleClassName, ripples[key])
         );
         const childProps = {
           onMouseDown: this.handleMouseDown,
           onTouchStart: this.handleTouchStart,
           ...other,
         };
-        const finalProps = defaultPassthrough
-          ? { ...childProps, theme, disabled }
-          : childProps;
+        const finalProps = defaultPassthrough ? { ...childProps, theme, disabled } : childProps;
 
         return !ripple
           ? React.createElement(ComposedComponent, finalProps, children)

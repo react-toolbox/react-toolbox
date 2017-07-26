@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface ListDividerTheme {
   /**
@@ -23,4 +23,4 @@ export interface ListDividerProps extends ReactToolbox.Props {
   theme?: ListDividerTheme;
 }
 
-export class ListDivider extends React.Component<ListDividerProps, {}> { }
+export class ListDivider extends React.Component<ListDividerProps, {}> {}

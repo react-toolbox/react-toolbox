@@ -1,5 +1,5 @@
-import React from 'react';
-import Checkbox from '../../components/checkbox';
+import React from "react";
+import Checkbox from "../../components/checkbox";
 
 class CheckboxTest extends React.Component {
   state = {
@@ -13,30 +13,30 @@ class CheckboxTest extends React.Component {
   };
 
   handleFocus = () => {
-    console.log('Focused');
+    console.log("Focused");
   };
 
   handleBlur = () => {
-    console.log('Blur');
+    console.log("Blur");
   };
 
   render() {
     return (
       <section>
         <h5>Checkbox</h5>
-        <p style={{ marginBottom: '10px' }}>Lorem ipsum...</p>
+        <p style={{ marginBottom: "10px" }}>Lorem ipsum...</p>
 
         <Checkbox
           checked={this.state.checkbox_1}
           label="Checked checkbox"
-          onChange={this.handleChange.bind(this, 'checkbox_1')}
+          onChange={this.handleChange.bind(this, "checkbox_1")}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
         />
         <Checkbox
           checked={this.state.checkbox_2}
           label="Not checked checkbox"
-          onChange={this.handleChange.bind(this, 'checkbox_2')}
+          onChange={this.handleChange.bind(this, "checkbox_2")}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
         />
@@ -44,7 +44,7 @@ class CheckboxTest extends React.Component {
           checked={this.state.checkbox_3}
           label="Disabled checkbox"
           disabled
-          onChange={this.handleChange.bind(this, 'checkbox_3')}
+          onChange={this.handleChange.bind(this, "checkbox_3")}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
         />

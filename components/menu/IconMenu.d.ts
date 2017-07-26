@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface IconMenuTheme {
   /**
@@ -53,7 +53,7 @@ export interface IconMenuProps extends ReactToolbox.Props {
    * Determines the position of the menu. This property is transferred to the inner Menu component.
    * @default auto
    */
-  position?: "auto" | "static" | "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
+  position?: 'auto' | 'static' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
   /**
    * If true, the menu will keep a value to highlight the active child item.
    * @default false
@@ -69,6 +69,6 @@ export interface IconMenuProps extends ReactToolbox.Props {
   theme?: IconMenuTheme;
 }
 
-export class IconMenu extends React.Component<IconMenuProps, {}> { }
+export class IconMenu extends React.Component<IconMenuProps, {}> {}
 
 export default IconMenu;

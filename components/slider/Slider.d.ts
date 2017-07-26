@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface SliderTheme {
   /**
@@ -120,6 +120,6 @@ export interface SliderProps extends ReactToolbox.Props {
   buffer?: number;
 }
 
-export class Slider extends React.Component<SliderProps, {}> { }
+export class Slider extends React.Component<SliderProps, {}> {}
 
 export default Slider;

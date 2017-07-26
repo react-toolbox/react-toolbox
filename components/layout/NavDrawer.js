@@ -5,7 +5,7 @@ import { themr } from 'react-css-themr';
 import InjectDrawer from '../drawer/Drawer';
 import { LAYOUT } from '../identifiers';
 
-const factory = (Drawer) => {
+const factory = Drawer => {
   const NavDrawer = ({
     active,
     className,
@@ -15,10 +15,13 @@ const factory = (Drawer) => {
     theme,
     ...rest
   }) => {
-    const _className = classnames({
-      [theme.pinned]: pinned,
-      [theme.clipped]: clipped,
-    }, className);
+    const _className = classnames(
+      {
+        [theme.pinned]: pinned,
+        [theme.clipped]: clipped,
+      },
+      className
+    );
 
     return (
       <Drawer

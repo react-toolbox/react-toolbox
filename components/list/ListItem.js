@@ -29,7 +29,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       ripple: false,
     };
 
-    handleClick = (event) => {
+    handleClick = event => {
       if (this.props.onClick && !this.props.disabled) {
         this.props.onClick(event);
       }
@@ -69,9 +69,9 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
     render() {
       const {
         className,
-        ripple: hasRipple,    // eslint-disable-line no-unused-vars
-        onClick,      // eslint-disable-line no-unused-vars
-        onMouseDown,  // eslint-disable-line no-unused-vars
+        ripple: hasRipple, // eslint-disable-line no-unused-vars
+        onClick, // eslint-disable-line no-unused-vars
+        onMouseDown, // eslint-disable-line no-unused-vars
         onTouchStart, // eslint-disable-line no-unused-vars
         theme,
         to,
@@ -80,8 +80,17 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       const children = this.groupChildren();
       const content = <ListItemLayout theme={theme} {...children} {...other} />;
       return (
-        <li className={`${theme.listItem} ${className}`} onClick={this.handleClick} onMouseDown={onMouseDown} onTouchStart={onTouchStart}>
-          {to ? <a href={this.props.to}>{content}</a> : content}
+        <li
+          className={`${theme.listItem} ${className}`}
+          onClick={this.handleClick}
+          onMouseDown={onMouseDown}
+          onTouchStart={onTouchStart}
+        >
+          {to
+            ? <a href={this.props.to}>
+                {content}
+              </a>
+            : content}
           {children.ignored}
         </li>
       );

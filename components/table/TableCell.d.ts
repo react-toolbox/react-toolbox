@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ReactToolbox from "../index";
+import ReactToolbox from '../index';
 
 export interface TableCellTheme {
   /**
@@ -65,5 +65,5 @@ export interface TableCellProps extends ReactToolbox.Props {
   theme?: TableCellTheme;
 }
 
-export class TableCell extends React.Component<TableCellProps, {}> { }
+export class TableCell extends React.Component<TableCellProps, {}> {}
 export default TableCell;

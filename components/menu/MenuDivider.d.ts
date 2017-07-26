@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface MenuDividerTheme {
   /**
@@ -15,6 +15,6 @@ export interface MenuDividerProps extends ReactToolbox.Props {
   theme?: MenuDividerTheme;
 }
 
-export class MenuDivider extends React.Component<MenuDividerProps, {}> { }
+export class MenuDivider extends React.Component<MenuDividerProps, {}> {}
 
 export default MenuDivider;

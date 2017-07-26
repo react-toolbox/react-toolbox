@@ -1,18 +1,18 @@
 /* eslint-disable */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
-import classnames from 'classnames';
-import { themr } from 'react-css-themr';
-import { AUTOCOMPLETE } from '../identifiers.js';
-import InjectChip from '../chip/Chip.js';
-import InjectInput from '../input/Input.js';
-import events from '../utils/events.js';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import ReactDOM from "react-dom";
+import classnames from "classnames";
+import { themr } from "react-css-themr";
+import { AUTOCOMPLETE } from "../identifiers.js";
+import InjectChip from "../chip/Chip.js";
+import InjectInput from "../input/Input.js";
+import events from "../utils/events.js";
 
 const POSITION = {
-  AUTO: 'auto',
-  DOWN: 'down',
-  UP: 'up',
+  AUTO: "auto",
+  DOWN: "down",
+  UP: "up",
 };
 
 const factory = (Chip, Input) => {
@@ -20,28 +20,22 @@ const factory = (Chip, Input) => {
     static propTypes = {
       allowCreate: PropTypes.bool,
       className: PropTypes.string,
-      direction: PropTypes.oneOf(['auto', 'up', 'down']),
+      direction: PropTypes.oneOf(["auto", "up", "down"]),
       disabled: PropTypes.bool,
-      error: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node,
-      ]),
+      error: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
       keepFocusOnChange: PropTypes.bool,
-      label: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node,
-      ]),
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
       multiple: PropTypes.bool,
       onBlur: PropTypes.func,
       onChange: PropTypes.func,
       onFocus: PropTypes.func,
       onQueryChange: PropTypes.func,
       query: PropTypes.string,
-      selectedPosition: PropTypes.oneOf(['above', 'below', 'none']),
+      selectedPosition: PropTypes.oneOf(["above", "below", "none"]),
       showSelectedWhenNotInSource: PropTypes.bool,
       showSuggestionsWhenValueIsSet: PropTypes.bool,
       source: PropTypes.any,
-      suggestionMatch: PropTypes.oneOf(['disabled', 'start', 'anywhere', 'word', 'none']),
+      suggestionMatch: PropTypes.oneOf(["disabled", "start", "anywhere", "word", "none"]),
       theme: PropTypes.shape({
         active: PropTypes.string,
         autocomplete: PropTypes.string,
@@ -58,15 +52,15 @@ const factory = (Chip, Input) => {
 
     static defaultProps = {
       allowCreate: false,
-      className: '',
-      direction: 'auto',
+      className: "",
+      direction: "auto",
       keepFocusOnChange: false,
       multiple: true,
-      selectedPosition: 'above',
+      selectedPosition: "above",
       showSelectedWhenNotInSource: false,
       showSuggestionsWhenValueIsSet: false,
       source: {},
-      suggestionMatch: 'start',
+      suggestionMatch: "start",
     };
 
     state = {
@@ -103,17 +97,17 @@ const factory = (Chip, Input) => {
         this.setState({ query, showAllSuggestions });
       } else {
         this.setState({ focus: false, query, showAllSuggestions }, () => {
-          ReactDOM.findDOMNode(this).querySelector('input').blur();
+          ReactDOM.findDOMNode(this).querySelector("input").blur();
         });
       }
       this.updateQuery(query, this.props.query);
     };
 
-    handleMouseDown = (event) => {
+    handleMouseDown = event => {
       this.selectOrCreateActiveItem(event);
-    }
+    };
 
-    handleQueryBlur = (event) => {
+    handleQueryBlur = event => {
       if (this.state.focus) this.setState({ focus: false });
       if (this.props.onBlur) this.props.onBlur(event, this.state.active);
     };
@@ -121,37 +115,39 @@ const factory = (Chip, Input) => {
     updateQuery = (query, notify) => {
       if (notify && this.props.onQueryChange) this.props.onQueryChange(query);
       this.setState({ query });
-    }
+    };
 
-    handleQueryChange = (value) => {
-      const query = this.clearQuery ? '' : value;
+    handleQueryChange = value => {
+      const query = this.clearQuery ? "" : value;
       this.clearQuery = false;
 
       this.updateQuery(query, true);
-      this.setState({ showAllSuggestions: query ? false : this.props.showSuggestionsWhenValueIsSet, active: null });
+      this.setState({
+        showAllSuggestions: query ? false : this.props.showSuggestionsWhenValueIsSet,
+        active: null,
+      });
     };
 
-    handleQueryFocus = (event) => {
+    handleQueryFocus = event => {
       this.suggestionsNode.scrollTop = 0;
-      this.setState({ active: '', focus: true });
+      this.setState({ active: "", focus: true });
       if (this.props.onFocus) this.props.onFocus(event);
     };
 
-    handleQueryKeyDown = (event) => {
-     // Mark query for clearing in handleQueryChange when pressing backspace and showing all suggestions.
-      this.clearQuery = (
-       event.which === 8
-       && this.props.showSuggestionsWhenValueIsSet
-       && this.state.showAllSuggestions
-     );
+    handleQueryKeyDown = event => {
+      // Mark query for clearing in handleQueryChange when pressing backspace and showing all suggestions.
+      this.clearQuery =
+        event.which === 8 &&
+        this.props.showSuggestionsWhenValueIsSet &&
+        this.state.showAllSuggestions;
 
       if (event.which === 13) {
         this.selectOrCreateActiveItem(event);
       }
     };
 
-    handleQueryKeyUp = (event) => {
-      if (event.which === 27) ReactDOM.findDOMNode(this).querySelector('input').blur();
+    handleQueryKeyUp = event => {
+      if (event.which === 27) ReactDOM.findDOMNode(this).querySelector("input").blur();
 
       if ([40, 38].indexOf(event.which) !== -1) {
         const suggestionsKeys = [...this.suggestions().keys()];
@@ -162,22 +158,22 @@ const factory = (Chip, Input) => {
       }
     };
 
-    handleSuggestionHover = (event) => {
+    handleSuggestionHover = event => {
       this.setState({ active: event.target.id });
     };
 
     calculateDirection() {
-      if (this.props.direction === 'auto') {
+      if (this.props.direction === "auto") {
         const client = ReactDOM.findDOMNode(this.inputNode).getBoundingClientRect();
         const screen_height = window.innerHeight || document.documentElement.offsetHeight;
-        const up = client.top > ((screen_height / 2) + client.height);
-        return up ? 'up' : 'down';
+        const up = client.top > screen_height / 2 + client.height;
+        return up ? "up" : "down";
       }
       return this.props.direction;
     }
 
     query(key) {
-      let query_value = '';
+      let query_value = "";
       if (!this.props.multiple && key) {
         const source_value = this.source().get(`${key}`);
         query_value = source_value || key;
@@ -188,19 +184,19 @@ const factory = (Chip, Input) => {
     selectOrCreateActiveItem(event) {
       let target = this.state.active;
       if (!target) {
-        target = this.props.allowCreate
-         ? this.state.query
-         : [...this.suggestions().keys()][0];
+        target = this.props.allowCreate ? this.state.query : [...this.suggestions().keys()][0];
         this.setState({ active: target });
       }
       this.select(event, target);
     }
 
     normalise(value) {
-      const sdiak = 'áâäąáâäąččććççĉĉďđďđééěëēėęéěëēėęĝĝğğġġģģĥĥħħíîíîĩĩīīĭĭįįi̇ıĵĵķķĸĺĺļļŀŀłłĺľĺľňńņŋŋņňńŉóöôőøōōóöőôøřřŕŕŗŗššśśŝŝşşţţťťŧŧũũūūŭŭůůűűúüúüűųųŵŵýyŷŷýyžžźźżżß';
-      const bdiak = 'AAAAAAAACCCCCCCCDDDDEEEEEEEEEEEEEGGGGGGGGHHHHIIIIIIIIIIIIIIJJKKKLLLLLLLLLLLLNNNNNNNNNOOOOOOOOOOOORRRRRRSSSSSSSSTTTTTTUUUUUUUUUUUUUUUUUWWYYYYYYZZZZZZS';
+      const sdiak =
+        "áâäąáâäąččććççĉĉďđďđééěëēėęéěëēėęĝĝğğġġģģĥĥħħíîíîĩĩīīĭĭįįi̇ıĵĵķķĸĺĺļļŀŀłłĺľĺľňńņŋŋņňńŉóöôőøōōóöőôøřřŕŕŗŗššśśŝŝşşţţťťŧŧũũūūŭŭůůűűúüúüűųųŵŵýyŷŷýyžžźźżżß";
+      const bdiak =
+        "AAAAAAAACCCCCCCCDDDDEEEEEEEEEEEEEGGGGGGGGHHHHIIIIIIIIIIIIIIJJKKKLLLLLLLLLLLLNNNNNNNNNOOOOOOOOOOOORRRRRRSSSSSSSSTTTTTTUUUUUUUUUUUUUUUUUWWYYYYYYZZZZZZS";
 
-      let normalised = '';
+      let normalised = "";
       for (let p = 0; p < value.length; p++) {
         if (sdiak.indexOf(value.charAt(p)) !== -1) {
           normalised += bdiak.charAt(sdiak.indexOf(value.charAt(p)));
@@ -214,12 +210,12 @@ const factory = (Chip, Input) => {
 
     suggestions() {
       let suggest = new Map();
-      const rawQuery = this.state.query || (this.props.multiple ? '' : this.props.value);
-      const query = this.normalise((`${rawQuery}`));
+      const rawQuery = this.state.query || (this.props.multiple ? "" : this.props.value);
+      const query = this.normalise(`${rawQuery}`);
       const values = this.values();
       const source = this.source();
 
-     // Suggest any non-set value which matches the query
+      // Suggest any non-set value which matches the query
       if (this.props.multiple) {
         for (const [key, value] of source) {
           if (!values.has(key) && this.matches(this.normalise(value), query)) {
@@ -227,7 +223,7 @@ const factory = (Chip, Input) => {
           }
         }
 
-     // When multiple is false, suggest any value which matches the query if showAllSuggestions is false
+        // When multiple is false, suggest any value which matches the query if showAllSuggestions is false
       } else if (query && !this.state.showAllSuggestions) {
         for (const [key, value] of source) {
           if (this.matches(this.normalise(value), query)) {
@@ -235,7 +231,7 @@ const factory = (Chip, Input) => {
           }
         }
 
-     // When multiple is false, suggest all values when showAllSuggestions is true
+        // When multiple is false, suggest all values when showAllSuggestions is true
       } else {
         suggest = source;
       }
@@ -246,17 +242,17 @@ const factory = (Chip, Input) => {
     matches(value, query) {
       const { suggestionMatch } = this.props;
 
-      if (suggestionMatch === 'disabled') {
+      if (suggestionMatch === "disabled") {
         return true;
-      } else if (suggestionMatch === 'start') {
+      } else if (suggestionMatch === "start") {
         return value.startsWith(query);
-      } else if (suggestionMatch === 'anywhere') {
+      } else if (suggestionMatch === "anywhere") {
         return value.includes(query);
-      } else if (suggestionMatch === 'word') {
-        const re = new RegExp(`\\b${query}`, 'g');
+      } else if (suggestionMatch === "word") {
+        const re = new RegExp(`\\b${query}`, "g");
         return re.test(value);
-      }else if(suggestionMatch === 'none'){
-        return value
+      } else if (suggestionMatch === "none") {
+        return value;
       }
 
       return false;
@@ -264,8 +260,8 @@ const factory = (Chip, Input) => {
 
     source() {
       const { source: src } = this.props;
-      if (src.hasOwnProperty('length')) {
-        return new Map(src.map(item => Array.isArray(item) ? [...item] : [item, item]));
+      if (src.hasOwnProperty("length")) {
+        return new Map(src.map(item => (Array.isArray(item) ? [...item] : [item, item])));
       }
       return new Map(Object.keys(src).map(key => [`${key}`, src[key]]));
     }
@@ -328,7 +324,7 @@ const factory = (Chip, Input) => {
     }
 
     isValueAnObject() {
-      return !Array.isArray(this.props.value) && typeof this.props.value === 'object';
+      return !Array.isArray(this.props.value) && typeof this.props.value === "object";
     }
 
     mapToObject(map) {
@@ -340,7 +336,7 @@ const factory = (Chip, Input) => {
 
     renderSelected() {
       if (this.props.multiple) {
-        const selectedItems = [...this.values()].map(([key, value]) => (
+        const selectedItems = [...this.values()].map(([key, value]) =>
           <Chip
             key={key}
             className={this.props.theme.value}
@@ -349,16 +345,22 @@ const factory = (Chip, Input) => {
           >
             {value}
           </Chip>
-         ));
+        );
 
-        return <ul className={this.props.theme.values}>{selectedItems}</ul>;
+        return (
+          <ul className={this.props.theme.values}>
+            {selectedItems}
+          </ul>
+        );
       }
     }
 
     renderSuggestions() {
       const { theme } = this.props;
       const suggestions = [...this.suggestions()].map(([key, value]) => {
-        const className = classnames(theme.suggestion, { [theme.active]: this.state.active === key });
+        const className = classnames(theme.suggestion, {
+          [theme.active]: this.state.active === key,
+        });
         return (
           <li
             id={key}
@@ -374,8 +376,10 @@ const factory = (Chip, Input) => {
 
       return (
         <ul
-          className={classnames(theme.suggestions, { [theme.up]: this.state.direction === 'up' })}
-          ref={(node) => { this.suggestionsNode = node; }}
+          className={classnames(theme.suggestions, { [theme.up]: this.state.direction === "up" })}
+          ref={node => {
+            this.suggestionsNode = node;
+          }}
         >
           {suggestions}
         </ul>
@@ -384,20 +388,36 @@ const factory = (Chip, Input) => {
 
     render() {
       const {
-      allowCreate, error, label, source, suggestionMatch, query, // eslint-disable-line no-unused-vars
-      selectedPosition, keepFocusOnChange, showSuggestionsWhenValueIsSet, showSelectedWhenNotInSource, onQueryChange,   // eslint-disable-line no-unused-vars
-      theme, ...other
-    } = this.props;
-      const className = classnames(theme.autocomplete, {
-        [theme.focus]: this.state.focus,
-      }, this.props.className);
+        allowCreate,
+        error,
+        label,
+        source,
+        suggestionMatch,
+        query, // eslint-disable-line no-unused-vars
+        selectedPosition,
+        keepFocusOnChange,
+        showSuggestionsWhenValueIsSet,
+        showSelectedWhenNotInSource,
+        onQueryChange, // eslint-disable-line no-unused-vars
+        theme,
+        ...other
+      } = this.props;
+      const className = classnames(
+        theme.autocomplete,
+        {
+          [theme.focus]: this.state.focus,
+        },
+        this.props.className
+      );
 
       return (
         <div data-react-toolbox="autocomplete" className={className}>
-          {this.props.selectedPosition === 'above' ? this.renderSelected() : null}
+          {this.props.selectedPosition === "above" ? this.renderSelected() : null}
           <Input
             {...other}
-            ref={(node) => { this.inputNode = node; }}
+            ref={node => {
+              this.inputNode = node;
+            }}
             autoComplete="off"
             className={theme.input}
             error={error}
@@ -412,7 +432,7 @@ const factory = (Chip, Input) => {
             value={this.state.query}
           />
           {this.renderSuggestions()}
-          {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
+          {this.props.selectedPosition === "below" ? this.renderSelected() : null}
         </div>
       );
     }

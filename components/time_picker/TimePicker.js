@@ -58,23 +58,23 @@ const factory = (TimePickerDialog, Input) => {
       }
     };
 
-    handleInputFocus = (event) => {
+    handleInputFocus = event => {
       events.pauseEvent(event);
       this.setState({ active: true });
     };
 
-    handleInputBlur = (event) => {
+    handleInputBlur = event => {
       events.pauseEvent(event);
       this.setState({ active: false });
     };
 
-    handleInputClick = (event) => {
+    handleInputClick = event => {
       events.pauseEvent(event);
       this.setState({ active: true });
       if (this.props.onClick) this.props.onClick(event);
     };
 
-    handleInputKeyPress = (event) => {
+    handleInputKeyPress = event => {
       if (event.charCode === 13) {
         events.pauseEvent(event);
         this.setState({ active: true });
@@ -89,16 +89,26 @@ const factory = (TimePickerDialog, Input) => {
 
     render() {
       const {
-        active, onDismiss, // eslint-disable-line
-        cancelLabel, format, inputClassName, okLabel, onEscKeyDown, onOverlayClick,
-        readonly, value, ...others
+        active,
+        onDismiss, // eslint-disable-line
+        cancelLabel,
+        format,
+        inputClassName,
+        okLabel,
+        onEscKeyDown,
+        onOverlayClick,
+        readonly,
+        value,
+        ...others
       } = this.props;
       const formattedTime = value ? time.formatTime(value, format) : '';
       return (
         <div data-react-toolbox="time-picker" className={this.props.theme.container}>
           <Input
             {...others}
-            className={classnames(this.props.theme.input, { [inputClassName]: inputClassName })}
+            className={classnames(this.props.theme.input, {
+              [inputClassName]: inputClassName,
+            })}
             disabled={readonly}
             error={this.props.error}
             label={this.props.label}

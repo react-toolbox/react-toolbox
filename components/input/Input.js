@@ -5,30 +5,18 @@ import { themr } from 'react-css-themr';
 import { INPUT } from '../identifiers';
 import InjectedFontIcon from '../font_icon/FontIcon';
 
-const factory = (FontIcon) => {
+const factory = FontIcon => {
   class Input extends React.Component {
     static propTypes = {
       children: PropTypes.node,
       className: PropTypes.string,
       defaultValue: PropTypes.string,
       disabled: PropTypes.bool,
-      error: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node,
-      ]),
+      error: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
       floating: PropTypes.bool,
-      hint: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node,
-      ]),
-      icon: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.element,
-      ]),
-      label: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node,
-      ]),
+      hint: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+      icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
       maxLength: PropTypes.number,
       multiline: PropTypes.bool,
       name: PropTypes.string,
@@ -53,11 +41,7 @@ const factory = (FontIcon) => {
         withIcon: PropTypes.string,
       }),
       type: PropTypes.string,
-      value: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.object,
-        PropTypes.string,
-      ]),
+      value: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.string]),
     };
 
     static defaultProps = {
@@ -94,14 +78,14 @@ const factory = (FontIcon) => {
       if (this.props.multiline) window.removeEventListener('resize', this.handleAutoresize);
     }
 
-    handleChange = (event) => {
+    handleChange = event => {
       const { onChange, multiline, maxLength } = this.props;
       const valueFromEvent = event.target.value;
 
       // Trim value to maxLength if that exists (only on multiline inputs).
       // Note that this is still required even tho we have the onKeyPress filter
       // because the user could paste smt in the textarea.
-      const haveToTrim = (multiline && maxLength && event.target.value.length > maxLength);
+      const haveToTrim = multiline && maxLength && event.target.value.length > maxLength;
       const value = haveToTrim ? valueFromEvent.substr(0, maxLength) : valueFromEvent;
 
       // propagate to to store and therefore to the input
@@ -117,17 +101,18 @@ const factory = (FontIcon) => {
       } else {
         // compute the height difference between inner height and outer height
         const style = getComputedStyle(element, null);
-        const heightOffset = style.boxSizing === 'content-box'
-          ? -(parseFloat(style.paddingTop) + parseFloat(style.paddingBottom))
-          : parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+        const heightOffset =
+          style.boxSizing === 'content-box'
+            ? -(parseFloat(style.paddingTop) + parseFloat(style.paddingBottom))
+            : parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
 
         // resize the input to its content size
         element.style.height = 'auto';
         element.style.height = `${element.scrollHeight + heightOffset}px`;
       }
-    }
+    };
 
-    handleKeyPress = (event) => {
+    handleKeyPress = event => {
       // prevent insertion of more characters if we're a multiline input
       // and maxLength exists
       const { multiline, maxLength, onKeyPress } = this.props;
@@ -157,34 +142,60 @@ const factory = (FontIcon) => {
       this.inputNode.focus();
     }
 
-    valuePresent = value => (
-      value !== null
-        && value !== undefined
-        && value !== ''
-        && !(typeof value === 'number' && isNaN(value))
-    )
+    valuePresent = value =>
+      value !== null &&
+      value !== undefined &&
+      value !== '' &&
+      !(typeof value === 'number' && isNaN(value));
 
     render() {
-      const { children, defaultValue, disabled, error, floating, hint, icon,
-              name, label: labelText, maxLength, multiline, required,
-              theme, type, value, onKeyPress, rows = 1, ...others } = this.props;
+      const {
+        children,
+        defaultValue,
+        disabled,
+        error,
+        floating,
+        hint,
+        icon,
+        name,
+        label: labelText,
+        maxLength,
+        multiline,
+        required,
+        theme,
+        type,
+        value,
+        onKeyPress,
+        rows = 1,
+        ...others
+      } = this.props;
       const length = maxLength && value ? value.length : 0;
-      const labelClassName = classnames(theme.label, { [theme.fixed]: !floating });
+      const labelClassName = classnames(theme.label, {
+        [theme.fixed]: !floating,
+      });
 
-      const className = classnames(theme.input, {
-        [theme.disabled]: disabled,
-        [theme.errored]: error,
-        [theme.hidden]: type === 'hidden',
-        [theme.withIcon]: icon,
-      }, this.props.className);
+      const className = classnames(
+        theme.input,
+        {
+          [theme.disabled]: disabled,
+          [theme.errored]: error,
+          [theme.hidden]: type === 'hidden',
+          [theme.withIcon]: icon,
+        },
+        this.props.className
+      );
 
       const valuePresent = this.valuePresent(value) || this.valuePresent(defaultValue);
 
       const inputElementProps = {
         ...others,
-        className: classnames(theme.inputElement, { [theme.filled]: valuePresent }),
+        className: classnames(theme.inputElement, {
+          [theme.filled]: valuePresent,
+        }),
         onChange: this.handleChange,
-        ref: (node) => { this.inputNode = node; },
+        ref: node => {
+          this.inputNode = node;
+        },
         role: 'input',
         name,
         defaultValue,
@@ -208,13 +219,25 @@ const factory = (FontIcon) => {
           <span className={theme.bar} />
           {labelText
             ? <label className={labelClassName}>
-              {labelText}
-              {required ? <span className={theme.required}> * </span> : null}
-            </label>
+                {labelText}
+                {required ? <span className={theme.required}> * </span> : null}
+              </label>
             : null}
-          {hint ? <span hidden={labelText} className={theme.hint}>{hint}</span> : null}
-          {error ? <span className={theme.error}>{error}</span> : null}
-          {maxLength ? <span className={theme.counter}>{length}/{maxLength}</span> : null}
+          {hint
+            ? <span hidden={labelText} className={theme.hint}>
+                {hint}
+              </span>
+            : null}
+          {error
+            ? <span className={theme.error}>
+                {error}
+              </span>
+            : null}
+          {maxLength
+            ? <span className={theme.counter}>
+                {length}/{maxLength}
+              </span>
+            : null}
           {children}
         </div>
       );

@@ -29,7 +29,7 @@ class Hours extends Component {
   };
 
   handleHandMove = (degrees, radius) => {
-    const currentInner = radius < this.props.radius - (this.props.spacing * innerSpacing);
+    const currentInner = radius < this.props.radius - this.props.spacing * innerSpacing;
     if (this.props.format === '24hr' && this.state.inner !== currentInner) {
       this.setState({ inner: currentInner }, () => {
         this.props.onChange(this.valueFromDegrees(degrees));
@@ -39,11 +39,11 @@ class Hours extends Component {
     }
   };
 
-  handleMouseDown = (event) => {
+  handleMouseDown = event => {
     this.handNode.mouseStart(event);
   };
 
-  handleTouchStart = (event) => {
+  handleTouchStart = event => {
     this.handNode.touchStart(event);
   };
 
@@ -82,14 +82,16 @@ class Hours extends Component {
           spacing={spacing}
           radius={radius}
           twoDigits={is24hr}
-          active={is24hr ? selected : (selected % 12 || 12)}
+          active={is24hr ? selected : selected % 12 || 12}
           theme={this.props.theme}
         />
-        {this.renderInnerFace(radius - (spacing * innerSpacing))}
+        {this.renderInnerFace(radius - spacing * innerSpacing)}
         <Hand
-          ref={(node) => { this.handNode = node; }}
+          ref={node => {
+            this.handNode = node;
+          }}
           angle={selected * step}
-          length={(this.state.inner ? radius - (spacing * innerSpacing) : radius) - spacing}
+          length={(this.state.inner ? radius - spacing * innerSpacing : radius) - spacing}
           onMove={this.handleHandMove}
           theme={this.props.theme}
           onMoved={onHandMoved}

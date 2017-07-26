@@ -44,7 +44,7 @@ const factory = (ripple, FontIcon) => {
       }
     }
 
-    handleClick = (event) => {
+    handleClick = event => {
       if (!this.props.disabled && this.props.onClick) {
         this.props.onClick(event, this.props.index);
       }
@@ -52,17 +52,31 @@ const factory = (ripple, FontIcon) => {
 
     render() {
       const {
-        index, onActive, // eslint-disable-line
-        active, activeClassName, children, className, disabled, hidden, label, icon, theme, ...other
+        index,
+        onActive, // eslint-disable-line
+        active,
+        activeClassName,
+        children,
+        className,
+        disabled,
+        hidden,
+        label,
+        icon,
+        theme,
+        ...other
       } = this.props;
-      const _className = classnames(theme.label, {
-        [theme.active]: active,
-        [theme.hidden]: hidden,
-        [theme.withText]: label,
-        [theme.withIcon]: icon,
-        [theme.disabled]: disabled,
-        [activeClassName]: active,
-      }, className);
+      const _className = classnames(
+        theme.label,
+        {
+          [theme.active]: active,
+          [theme.hidden]: hidden,
+          [theme.withText]: label,
+          [theme.withIcon]: icon,
+          [theme.disabled]: disabled,
+          [activeClassName]: active,
+        },
+        className
+      );
 
       return (
         <div {...other} data-react-toolbox="tab" className={_className} onClick={this.handleClick}>

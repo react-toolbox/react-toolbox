@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import { DrawerProps } from '../drawer/Drawer';
 
 export interface NavDrawerTheme {
@@ -30,7 +30,7 @@ export interface NavDrawerProps extends DrawerProps {
   /**
    * The breakpoint at which the drawer is automatically pinned.
    */
-  permanentAt?: "sm" | "smTablet" | "md" | "lg" | "lgTablet" | "xl" | "xxl" | "xxxl";
+  permanentAt?: 'sm' | 'smTablet' | 'md' | 'lg' | 'lgTablet' | 'xl' | 'xxl' | 'xxxl';
   /**
    * If true, the drawer will be pinned open. pinned takes precedence over active.
    * @default false
@@ -42,4 +42,4 @@ export interface NavDrawerProps extends DrawerProps {
   theme?: NavDrawerTheme;
 }
 
-export class NavDrawer extends React.Component<NavDrawerProps, {}> { }
+export class NavDrawer extends React.Component<NavDrawerProps, {}> {}

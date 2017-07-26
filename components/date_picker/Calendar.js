@@ -7,17 +7,14 @@ import CalendarMonth from './CalendarMonth';
 
 const DIRECTION_STEPS = { left: -1, right: 1 };
 
-const factory = (IconButton) => {
+const factory = IconButton => {
   class Calendar extends Component {
     static propTypes = {
       disabledDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
       display: PropTypes.oneOf(['months', 'years']),
       enabledDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
       handleSelect: PropTypes.func,
-      locale: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.object,
-      ]),
+      locale: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
       maxDate: PropTypes.instanceOf(Date),
       minDate: PropTypes.instanceOf(Date),
       onChange: PropTypes.func,
@@ -56,22 +53,22 @@ const factory = (IconButton) => {
     }
 
     scrollToActive() {
-      const offset = (this.yearsNode.offsetHeight / 2) + (this.activeYearNode.offsetHeight / 2);
+      const offset = this.yearsNode.offsetHeight / 2 + this.activeYearNode.offsetHeight / 2;
       this.yearsNode.scrollTop = this.activeYearNode.offsetTop - offset;
     }
 
-    handleDayClick = (day) => {
+    handleDayClick = day => {
       this.props.onChange(time.setDay(this.state.viewDate, day), true);
     };
 
-    handleYearClick = (event) => {
+    handleYearClick = event => {
       const year = parseInt(event.currentTarget.id, 10);
       const viewDate = time.setYear(this.props.selectedDate, year);
       this.setState({ viewDate });
       this.props.onChange(viewDate, false);
     };
 
-    handleKeys = (e) => {
+    handleKeys = e => {
       const { selectedDate } = this.props;
 
       if (e.which === 37 || e.which === 38 || e.which === 39 || e.which === 40 || e.which === 13) {
@@ -79,21 +76,32 @@ const factory = (IconButton) => {
       }
 
       switch (e.which) {
-        case 13: this.props.handleSelect(); break; // enter
-        case 37: this.handleDayArrowKey(time.addDays(selectedDate, -1)); break; // left
-        case 38: this.handleDayArrowKey(time.addDays(selectedDate, -7)); break; // up
-        case 39: this.handleDayArrowKey(time.addDays(selectedDate, 1)); break; // right
-        case 40: this.handleDayArrowKey(time.addDays(selectedDate, 7)); break; // down
-        default: break;
+        case 13:
+          this.props.handleSelect();
+          break; // enter
+        case 37:
+          this.handleDayArrowKey(time.addDays(selectedDate, -1));
+          break; // left
+        case 38:
+          this.handleDayArrowKey(time.addDays(selectedDate, -7));
+          break; // up
+        case 39:
+          this.handleDayArrowKey(time.addDays(selectedDate, 1));
+          break; // right
+        case 40:
+          this.handleDayArrowKey(time.addDays(selectedDate, 7));
+          break; // down
+        default:
+          break;
       }
-    }
+    };
 
-    handleDayArrowKey = (date) => {
+    handleDayArrowKey = date => {
       this.setState({ viewDate: date });
       this.props.onChange(date, false);
-    }
+    };
 
-    changeViewMonth = (event) => {
+    changeViewMonth = event => {
       const direction = event.currentTarget.id;
       this.setState({
         direction,
@@ -106,15 +114,17 @@ const factory = (IconButton) => {
         <ul
           data-react-toolbox="years"
           className={this.props.theme.years}
-          ref={(node) => { this.yearsNode = node; }}
+          ref={node => {
+            this.yearsNode = node;
+          }}
         >
-          {range(1900, 2100).map(year => (
+          {range(1900, 2100).map(year =>
             <li
               className={year === this.state.viewDate.getFullYear() ? this.props.theme.active : ''}
               id={year}
               key={year}
               onClick={this.handleYearClick}
-              ref={(node) => {
+              ref={node => {
                 if (year === this.state.viewDate.getFullYear()) {
                   this.activeYearNode = node;
                 }
@@ -122,7 +132,7 @@ const factory = (IconButton) => {
             >
               {year}
             </li>
-          ))}
+          )}
         </ul>
       );
     }
@@ -133,8 +143,18 @@ const factory = (IconButton) => {
       const animationModule = getAnimationModule(animation, theme);
       return (
         <div data-react-toolbox="calendar">
-          <IconButton id="left" className={theme.prev} icon="chevron_left" onClick={this.changeViewMonth} />
-          <IconButton id="right" className={theme.next} icon="chevron_right" onClick={this.changeViewMonth} />
+          <IconButton
+            id="left"
+            className={theme.prev}
+            icon="chevron_left"
+            onClick={this.changeViewMonth}
+          />
+          <IconButton
+            id="right"
+            className={theme.next}
+            icon="chevron_right"
+            onClick={this.changeViewMonth}
+          />
           <CssTransitionGroup
             transitionName={animationModule}
             transitionEnterTimeout={350}

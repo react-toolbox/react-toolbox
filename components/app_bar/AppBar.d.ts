@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface AppBarTheme {
   /**
@@ -78,6 +78,6 @@ export interface AppBarProps extends ReactToolbox.Props {
   theme?: AppBarTheme;
 }
 
-export class AppBar extends React.Component<AppBarProps, {}> { }
+export class AppBar extends React.Component<AppBarProps, {}> {}
 
 export default AppBar;

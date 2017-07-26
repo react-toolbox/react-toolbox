@@ -1,6 +1,6 @@
-import * as React from "react";
-import ReactToolbox from "../index";
-import { ButtonProps } from "../button/index";
+import * as React from 'react';
+import ReactToolbox from '../index';
+import { ButtonProps } from '../button/index';
 
 export interface DialogTheme {
   /**
@@ -86,9 +86,9 @@ export interface DialogProps extends ReactToolbox.Props {
    * Used to determine the size of the dialog. It can be small, normal or large.
    * @default "normal"
    */
-  type?: "small" | "normal" | "large" | string;
+  type?: 'small' | 'normal' | 'large' | string;
 }
 
-export class Dialog extends React.Component<DialogProps, {}> { }
+export class Dialog extends React.Component<DialogProps, {}> {}
 
 export default Dialog;

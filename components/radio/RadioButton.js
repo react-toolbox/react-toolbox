@@ -6,17 +6,14 @@ import { RADIO } from '../identifiers';
 import rippleFactory from '../ripple/Ripple';
 import radioFactory from './Radio';
 
-const factory = (Radio) => {
+const factory = Radio => {
   class RadioButton extends Component {
     static propTypes = {
       checked: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
-      label: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node,
-      ]),
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
       name: PropTypes.string,
       onBlur: PropTypes.func,
       onChange: PropTypes.func,
@@ -38,7 +35,7 @@ const factory = (Radio) => {
       disabled: false,
     };
 
-    handleClick = (event) => {
+    handleClick = event => {
       const { checked, disabled, onChange } = this.props;
       if (event.pageX !== 0 && event.pageY !== 0) this.blur();
       if (!disabled && !checked && onChange) onChange(event, this);
@@ -86,11 +83,17 @@ const factory = (Radio) => {
             name={name}
             onChange={() => {}}
             onClick={this.handleClick}
-            ref={(node) => { this.inputNode = node; }}
+            ref={node => {
+              this.inputNode = node;
+            }}
             type="radio"
           />
           <Radio checked={checked} disabled={disabled} theme={theme} />
-          {label ? <span className={theme.text}>{label}</span> : null}
+          {label
+            ? <span className={theme.text}>
+                {label}
+              </span>
+            : null}
           {children}
         </label>
       );

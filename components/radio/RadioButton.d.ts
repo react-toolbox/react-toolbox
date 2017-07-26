@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 import { RadioTheme } from './base';
 
 export interface RadioButtonTheme {
@@ -66,4 +66,4 @@ export interface RadioButtonProps extends ReactToolbox.Props {
   value?: any;
 }
 
-export class RadioButton extends React.Component<RadioButtonProps, {}> { }
+export class RadioButton extends React.Component<RadioButtonProps, {}> {}

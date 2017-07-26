@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface FontIconProps extends ReactToolbox.Props {
   /**
@@ -13,9 +13,9 @@ export interface FontIconProps extends ReactToolbox.Props {
   /**
    * Additional properties passed to component root.
    */
-  [key: string]: any
+  [key: string]: any;
 }
 
-export class FontIcon extends React.Component<FontIconProps, {}> { }
+export class FontIcon extends React.Component<FontIconProps, {}> {}
 
 export default FontIcon;

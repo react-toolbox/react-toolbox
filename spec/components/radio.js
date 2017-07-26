@@ -1,29 +1,29 @@
-import React from 'react';
-import { RadioGroup, RadioButton } from '../../components/radio';
+import React from "react";
+import { RadioGroup, RadioButton } from "../../components/radio";
 
 class RadioGroupTest extends React.Component {
   state = {
-    value: 'vvendetta',
+    value: "vvendetta",
   };
 
-  handleChange = (value) => {
-    console.log('Changed!', { comic: value });
+  handleChange = value => {
+    console.log("Changed!", { comic: value });
     this.setState({ value });
   };
 
   handleFocus = () => {
-    console.log('Focused V for a Vendetta');
+    console.log("Focused V for a Vendetta");
   };
 
   handleBlur = () => {
-    console.log('Blurred Watchmen');
+    console.log("Blurred Watchmen");
   };
 
   render() {
     return (
       <section>
         <h5>Radio Button</h5>
-        <p style={{ marginBottom: '10px' }}>Lorem ipsum...</p>
+        <p style={{ marginBottom: "10px" }}>Lorem ipsum...</p>
 
         <RadioGroup name="comic" value={this.state.value} onChange={this.handleChange}>
           <RadioButton label="The Walking Dead" value="thewalkingdead" />

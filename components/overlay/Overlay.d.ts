@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 
 export interface OverlayTheme {
   /**
@@ -18,7 +18,6 @@ export interface OverlayTheme {
    */
   overlay?: string;
 }
-
 
 export interface OverlayProps {
   /**
@@ -52,6 +51,6 @@ export interface OverlayProps {
   theme?: OverlayTheme;
 }
 
-export class Overlay extends React.Component<OverlayProps, {}> { }
+export class Overlay extends React.Component<OverlayProps, {}> {}
 
 export default Overlay;

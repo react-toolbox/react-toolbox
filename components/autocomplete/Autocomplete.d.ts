@@ -1,6 +1,6 @@
-import * as React from "react";
-import ReactToolbox from "../index";
-import { InputProps, InputTheme } from "../input/Input";
+import * as React from 'react';
+import ReactToolbox from '../index';
+import { InputProps, InputTheme } from '../input/Input';
 
 export interface AutocompleteTheme {
   /**
@@ -51,7 +51,7 @@ export interface AutocompleteProps extends InputProps {
    * Determines the opening direction. It can be auto, up or down.
    * @default auto
    */
-  direction?: "auto" | "up" | "down";
+  direction?: 'auto' | 'up' | 'down';
   /**
    * If true, component will be disabled.
    * @default false
@@ -96,7 +96,7 @@ export interface AutocompleteProps extends InputProps {
    * Determines if the selected list is shown above or below input. It can be above or below.
    * @default above
    */
-  selectedPosition?: "above" | "below" | "none";
+  selectedPosition?: 'above' | 'below' | 'none';
   /**
    * Determines if the selected list is shown if the `value` keys don't exist in the source. Only works if passing the `value` prop as an Object.
    * @default false
@@ -115,7 +115,7 @@ export interface AutocompleteProps extends InputProps {
    * Determines how suggestions are supplied.
    * @default start
    */
-  suggestionMatch?: "disabled" | "start" | "anywhere" | "word";
+  suggestionMatch?: 'disabled' | 'start' | 'anywhere' | 'word';
   /**
    * Classnames object defining the component style.
    */
@@ -130,6 +130,6 @@ export interface AutocompleteProps extends InputProps {
   [key: string]: any;
 }
 
-export class Autocomplete extends React.Component<AutocompleteProps, {}> { }
+export class Autocomplete extends React.Component<AutocompleteProps, {}> {}
 
 export default Autocomplete;

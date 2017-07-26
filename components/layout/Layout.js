@@ -51,16 +51,16 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
 
     handleResize = () => {
       this.setState({ width: getViewport().width });
-    }
+    };
 
-    isPinned = (sideNav) => {
+    isPinned = sideNav => {
       if (sideNav) {
         const { permanentAt, pinned } = sideNav.props;
         const { width } = this.state;
         return width > breakpoints[permanentAt] || pinned;
       }
       return undefined;
-    }
+    };
 
     render() {
       const { children, className, theme, ...rest } = this.props;
@@ -75,29 +75,39 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
       const sidebarPinned = this.isPinned(sidebar);
       const sidebarClipped = sidebar && sidebar.props.clipped;
 
-      const clonedAppBar = appBar && cloneElement(appBar, {
-        theme,
-        themeNamespace: 'appbar',
-      });
+      const clonedAppBar =
+        appBar &&
+        cloneElement(appBar, {
+          theme,
+          themeNamespace: 'appbar',
+        });
 
-      const clonedLeftSideNav = navDrawer && cloneElement(navDrawer, {
-        clipped: navDrawerClipped,
-        pinned: navDrawerPinned,
-      });
+      const clonedLeftSideNav =
+        navDrawer &&
+        cloneElement(navDrawer, {
+          clipped: navDrawerClipped,
+          pinned: navDrawerPinned,
+        });
 
-      const clonedRightSideNav = sidebar && cloneElement(sidebar, {
-        clipped: sidebarClipped,
-        pinned: sidebarPinned,
-      });
+      const clonedRightSideNav =
+        sidebar &&
+        cloneElement(sidebar, {
+          clipped: sidebarClipped,
+          pinned: sidebarPinned,
+        });
 
-      const _className = classnames(theme.layout,
-        theme[`sidebarWidth${sidebarWidth}`], {
+      const _className = classnames(
+        theme.layout,
+        theme[`sidebarWidth${sidebarWidth}`],
+        {
           [theme.navDrawerPinned]: navDrawerPinned,
           [theme.navDrawerClipped]: navDrawerClipped,
           [theme.sidebarPinned]: sidebarPinned,
           [theme.sidebarClipped]: sidebarClipped,
           [theme.appbarFixed]: appBarFixed,
-        }, className);
+        },
+        className
+      );
 
       return (
         <div {...rest} className={_className}>

@@ -1,12 +1,20 @@
-import React from 'react';
-import { ListCheckbox, ListSubHeader, List, ListItem, ListDivider, ListItemText, ListItemContent } from '../../components/list';
-import { Button } from '../../components/button';
-import Avatar from '../../components/avatar';
-import FontIcon from '../../components/font_icon';
+import React from "react";
+import {
+  ListCheckbox,
+  ListSubHeader,
+  List,
+  ListItem,
+  ListDivider,
+  ListItemText,
+  ListItemContent,
+} from "../../components/list";
+import { Button } from "../../components/button";
+import Avatar from "../../components/avatar";
+import FontIcon from "../../components/font_icon";
 
 const listStyle = {
-  border: '1px solid #EEE',
-  display: 'inline-block',
+  border: "1px solid #EEE",
+  display: "inline-block",
   minWidth: 340,
 };
 
@@ -17,7 +25,7 @@ class ListTest extends React.Component {
     checkbox3: true,
   };
 
-  handleCheckboxChange = (field) => {
+  handleCheckboxChange = field => {
     const newState = {};
     newState[field] = !this.state[field];
     this.setState(newState);
@@ -76,7 +84,11 @@ class ListTest extends React.Component {
           <List>
             <ListSubHeader caption="General" />
             <ListItem caption="Profile Photo" legend="Change your Google+ profile photo" />
-            <ListItem disabled caption="Show your status" legend="Your status is visible to everyone you use with" />
+            <ListItem
+              disabled
+              caption="Show your status"
+              legend="Your status is visible to everyone you use with"
+            />
           </List>
           <ListDivider />
           <List>
@@ -85,20 +97,15 @@ class ListTest extends React.Component {
               caption="Notifications"
               checked={this.state.checkbox1}
               legend="Allow notifications"
-              onChange={this.handleCheckboxChange.bind(this, 'checkbox1')}
+              onChange={this.handleCheckboxChange.bind(this, "checkbox1")}
             />
             <ListCheckbox
               caption="Sound"
               checked={this.state.checkbox2}
               legend="Hangouts message"
-              onChange={this.handleCheckboxChange.bind(this, 'checkbox2')}
+              onChange={this.handleCheckboxChange.bind(this, "checkbox2")}
             />
-            <ListCheckbox
-              caption="Video sounds"
-              checked
-              disabled
-              legend="Hangouts video call"
-            />
+            <ListCheckbox caption="Video sounds" checked disabled legend="Hangouts video call" />
           </List>
         </div>
 
@@ -152,7 +159,10 @@ class ListTest extends React.Component {
               <Avatar image="https://pbs.twimg.com/profile_images/693578804808278017/a5y4h8MN_400x400.png" />
             </ListItem>
             <ListItem leftIcon="send">
-              <ListItemContent caption="custom right icons" legend="ListItemContent acts as a divider" />
+              <ListItemContent
+                caption="custom right icons"
+                legend="ListItemContent acts as a divider"
+              />
               <FontIcon value="done" />
               <FontIcon value="undo" />
             </ListItem>
@@ -163,21 +173,29 @@ class ListTest extends React.Component {
             </ListItem>
             <ListItem leftIcon="save" rightIcon="delete">
               <ListItemContent>
-                <ListItemText primary onClick={() => { console.log('clicked caption'); }}>
+                <ListItemText
+                  primary
+                  onClick={() => {
+                    console.log("clicked caption");
+                  }}
+                >
                   Custom caption with events
                 </ListItemText>
                 <ListItemText> Custom legend with correct height </ListItemText>
               </ListItemContent>
             </ListItem>
             <ListItem caption="Item with a button">
-              <Button icon="save" label="save" onClick={() => console.log('clicked button')} />
+              <Button icon="save" label="save" onClick={() => console.log("clicked button")} />
             </ListItem>
-            <ListItem caption="Item with overlayed click events" onClick={() => console.log('clicked row')}>
-              <FontIcon value="send" onClick={() => console.log('clicked icon')} />
+            <ListItem
+              caption="Item with overlayed click events"
+              onClick={() => console.log("clicked row")}
+            >
+              <FontIcon value="send" onClick={() => console.log("clicked icon")} />
               <Avatar
                 image="https://pbs.twimg.com/profile_images/693578804808278017/a5y4h8MN_400x400.png"
-                onMouseDown={() => console.log('avatar mouse down, should see ripple')}
-                onClick={() => console.log('clicked avatar')}
+                onMouseDown={() => console.log("avatar mouse down, should see ripple")}
+                onClick={() => console.log("clicked avatar")}
               />
             </ListItem>
           </List>

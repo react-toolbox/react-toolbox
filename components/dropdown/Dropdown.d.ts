@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface DropdownTheme {
   /**
@@ -127,6 +127,6 @@ export interface DropdownProps extends ReactToolbox.Props {
   required?: boolean;
 }
 
-export class Dropdown extends React.Component<DropdownProps, {}> { }
+export class Dropdown extends React.Component<DropdownProps, {}> {}
 
 export default Dropdown;

@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface DrawerTheme {
   /**
@@ -55,7 +55,7 @@ export interface DrawerProps extends ReactToolbox.Props {
    * Type of drawer. It can be left or right to display the drawer on the left or right side of the screen.
    * @default left
    */
-  type?: "left" | "right";
+  type?: 'left' | 'right';
   /**
    * If true display an Overlay that locks the scroll when the Drawer is active.
    * @default true
@@ -63,6 +63,6 @@ export interface DrawerProps extends ReactToolbox.Props {
   withOverlay?: boolean;
 }
 
-export class Drawer extends React.Component<DrawerProps, {}> { }
+export class Drawer extends React.Component<DrawerProps, {}> {}
 
 export default Drawer;

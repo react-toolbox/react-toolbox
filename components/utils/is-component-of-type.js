@@ -19,7 +19,6 @@ export function defaultChecker(classType, reactElement) {
   return reactElement && reactElement.type === classType;
 }
 
-
 /**
  * Executes customChecker if it's set or defaultChecker.
  *

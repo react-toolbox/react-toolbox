@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface TabContentTheme {
   /**
@@ -31,6 +31,6 @@ export interface TabContentProps extends ReactToolbox.Props {
   theme?: TabContentTheme;
 }
 
-export class TabContent extends React.Component<TabContentProps, {}> { }
+export class TabContent extends React.Component<TabContentProps, {}> {}
 
 export default TabContent;

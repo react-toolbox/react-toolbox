@@ -47,15 +47,21 @@ class ProgressBar extends Component {
 
   circularStyle() {
     return this.props.mode !== 'indeterminate'
-      ? { strokeDasharray: `${2 * Math.PI * 25 * this.calculateRatio(this.props.value)}, 400` }
+      ? {
+          strokeDasharray: `${2 * Math.PI * 25 * this.calculateRatio(this.props.value)}, 400`,
+        }
       : undefined;
   }
 
   linearStyle() {
     if (this.props.mode !== 'indeterminate') {
       return {
-        buffer: prefixer({ transform: `scaleX(${this.calculateRatio(this.props.buffer)})` }),
-        value: prefixer({ transform: `scaleX(${this.calculateRatio(this.props.value)})` }),
+        buffer: prefixer({
+          transform: `scaleX(${this.calculateRatio(this.props.buffer)})`,
+        }),
+        value: prefixer({
+          transform: `scaleX(${this.calculateRatio(this.props.value)})`,
+        }),
       };
     }
     return {};
@@ -64,7 +70,13 @@ class ProgressBar extends Component {
   renderCircular() {
     return (
       <svg className={this.props.theme.circle} viewBox="0 0 60 60">
-        <circle className={this.props.theme.path} style={this.circularStyle()} cx="30" cy="30" r="25" />
+        <circle
+          className={this.props.theme.path}
+          style={this.circularStyle()}
+          cx="30"
+          cy="30"
+          r="25"
+        />
       </svg>
     );
   }
@@ -81,10 +93,14 @@ class ProgressBar extends Component {
 
   render() {
     const { className, disabled, max, min, mode, multicolor, type, theme, value } = this.props;
-    const _className = classnames(theme[type], {
-      [theme.indeterminate]: mode === 'indeterminate',
-      [theme.multicolor]: multicolor,
-    }, className);
+    const _className = classnames(
+      theme[type],
+      {
+        [theme.indeterminate]: mode === 'indeterminate',
+        [theme.multicolor]: multicolor,
+      },
+      className
+    );
 
     return (
       <div

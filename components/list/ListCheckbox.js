@@ -19,9 +19,14 @@ const factory = (Checkbox, ListItemContent) => {
     onFocus,
     theme,
   }) => {
-    const _className = classnames(theme.item, theme.checkboxItem, {
-      [theme.disabled]: disabled,
-    }, className);
+    const _className = classnames(
+      theme.item,
+      theme.checkboxItem,
+      {
+        [theme.disabled]: disabled,
+      },
+      className
+    );
 
     return (
       <li className={_className}>

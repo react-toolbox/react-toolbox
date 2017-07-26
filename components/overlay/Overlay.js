@@ -66,19 +66,19 @@ class Overlay extends Component {
     }
   }
 
-  handleEscKey = (e) => {
+  handleEscKey = e => {
     if (this.props.active && this.props.onEscKeyDown && e.which === 27) {
       this.props.onEscKeyDown(e);
     }
-  }
+  };
 
-  handleClick = (event) => {
+  handleClick = event => {
     event.preventDefault();
     event.stopPropagation();
     if (this.props.onClick) {
       this.props.onClick(event);
     }
-  }
+  };
 
   render() {
     const { active, className, lockScroll, theme, onEscKeyDown, ...other } = this.props; // eslint-disable-line
@@ -86,9 +86,13 @@ class Overlay extends Component {
       <div
         {...other}
         onClick={this.handleClick}
-        className={classnames(theme.overlay, {
-          [theme.active]: active,
-        }, className)}
+        className={classnames(
+          theme.overlay,
+          {
+            [theme.active]: active,
+          },
+          className
+        )}
       />
     );
   }

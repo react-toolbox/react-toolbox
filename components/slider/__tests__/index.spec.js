@@ -30,7 +30,7 @@ describe('Slider', () => {
     it('rounds to the proper number', () => {
       const instance = shallow(<Slider min={0} max={100} step={0.1} />).instance();
       expect(instance.trimValue(57.16)).toEqual(57.2);
-      expect(instance.trimValue(57.12)).toEqual(57.10);
+      expect(instance.trimValue(57.12)).toEqual(57.1);
     });
 
     it('returns min if number is less than min', () => {
@@ -113,7 +113,9 @@ describe('Slider', () => {
       const wrapper = mount(<Slider min={-500} max={500} onChange={onChange} />);
       const instance = wrapper.instance();
       instance.setState({ sliderStart: 0, sliderLength: 1000 });
-      instance.handleResize = (evt, callback) => { callback(); };
+      instance.handleResize = (evt, callback) => {
+        callback();
+      };
       wrapper.childAt(0).simulate('mouseDown', event);
       expect(onChange).toHaveBeenCalledWith(-300);
     });
@@ -124,7 +126,9 @@ describe('Slider', () => {
       const wrapper = mount(<Slider min={-500} max={500} onChange={onChange} />);
       const instance = wrapper.instance();
       instance.setState({ sliderStart: 0, sliderLength: 1000 });
-      instance.handleResize = (evt, callback) => { callback(); };
+      instance.handleResize = (evt, callback) => {
+        callback();
+      };
       wrapper.childAt(0).simulate('touchStart', event);
       expect(onChange).toHaveBeenCalledWith(-300);
     });
@@ -135,7 +139,9 @@ describe('Slider', () => {
       const wrapper = mount(<Slider editable onChange={onChange} />);
       const instance = wrapper.instance();
       instance.setState({ sliderStart: 0, sliderLength: 1000 });
-      instance.handleResize = (evt, callback) => { callback(); };
+      instance.handleResize = (evt, callback) => {
+        callback();
+      };
       wrapper.childAt(0).simulate('mouseDown', event);
       expect(onChange).toHaveBeenCalledWith(90);
     });

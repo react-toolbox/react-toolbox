@@ -14,10 +14,7 @@ const factory = (ripple, FontIcon) => {
       className: PropTypes.string,
       disabled: PropTypes.bool,
       href: PropTypes.string,
-      icon: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.element,
-      ]),
+      icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
       inverse: PropTypes.bool,
       neutral: PropTypes.bool,
       onMouseLeave: PropTypes.func,
@@ -52,43 +49,49 @@ const factory = (ripple, FontIcon) => {
       if (this.props.primary) return 'primary';
       if (this.props.accent) return 'accent';
       return 'neutral';
-    }
+    };
 
-    handleMouseUp = (event) => {
+    handleMouseUp = event => {
       this.buttonNode.blur();
       if (this.props.onMouseUp) this.props.onMouseUp(event);
     };
 
-    handleMouseLeave = (event) => {
+    handleMouseLeave = event => {
       this.buttonNode.blur();
       if (this.props.onMouseLeave) this.props.onMouseLeave(event);
     };
 
     render() {
       const {
-        accent,    // eslint-disable-line
+        accent, // eslint-disable-line
         children,
         className,
         href,
         icon,
         inverse,
         neutral,
-        primary,   // eslint-disable-line
+        primary, // eslint-disable-line
         theme,
         type,
         ...others
       } = this.props;
       const element = href ? 'a' : 'button';
       const level = this.getLevel();
-      const classes = classnames([theme.toggle], {
-        [theme[level]]: neutral,
-        [theme.inverse]: inverse,
-      }, className);
+      const classes = classnames(
+        [theme.toggle],
+        {
+          [theme[level]]: neutral,
+          [theme.inverse]: inverse,
+        },
+        className
+      );
 
       const props = {
         ...others,
         href,
-        ref: (node) => { this.buttonNode = node; },
+        ref: node => {
+          this.buttonNode = node;
+        },
         className: classes,
         disabled: this.props.disabled,
         onMouseUp: this.handleMouseUp,
@@ -97,14 +100,10 @@ const factory = (ripple, FontIcon) => {
         'data-react-toolbox': 'button',
       };
 
-      const iconElement = typeof icon === 'string'
-        ? <FontIcon className={theme.icon} value={icon} />
-        : icon;
+      const iconElement =
+        typeof icon === 'string' ? <FontIcon className={theme.icon} value={icon} /> : icon;
 
-      return React.createElement(element, props,
-        icon && iconElement,
-        children,
-      );
+      return React.createElement(element, props, icon && iconElement, children);
     }
   }
 

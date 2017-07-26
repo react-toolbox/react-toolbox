@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface TimePickerTheme {
   /**
@@ -123,7 +123,7 @@ export interface TimePickerProps {
    * Format to display the clock. It can be 24hr or ampm.
    * @default "24hr"
    */
-  format?: "24hr" | "ampm";
+  format?: '24hr' | 'ampm';
   /**
    * The text string to use for the floating label element in the input component.
    */
@@ -175,6 +175,6 @@ export interface TimePickerProps {
   [key: string]: any;
 }
 
-export class TimePicker extends React.Component<TimePickerProps, {}> { }
+export class TimePicker extends React.Component<TimePickerProps, {}> {}
 
 export default TimePicker;

@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface AvatarTheme {
   /**
@@ -48,6 +48,6 @@ export interface AvatarProps extends ReactToolbox.Props {
   [key: string]: any;
 }
 
-export class Avatar extends React.Component<AvatarProps, {}> { }
+export class Avatar extends React.Component<AvatarProps, {}> {}
 
 export default Avatar;

@@ -5,7 +5,7 @@ import { themr } from 'react-css-themr';
 import { CHIP } from '../identifiers';
 import InjectAvatar from '../avatar/Avatar';
 
-const factory = (Avatar) => {
+const factory = Avatar => {
   const Chip = ({ children, className, deletable, onDeleteClick, theme, ...other }) => {
     let hasAvatar = false;
     if (React.Children.count(children)) {
@@ -14,23 +14,29 @@ const factory = (Avatar) => {
       hasAvatar = firstChild && firstChild.type && firstChild.type === Avatar;
     }
 
-    const classes = classnames(theme.chip, {
-      [theme.deletable]: !!deletable,
-      [theme.avatar]: !!hasAvatar,
-    }, className);
+    const classes = classnames(
+      theme.chip,
+      {
+        [theme.deletable]: !!deletable,
+        [theme.avatar]: !!hasAvatar,
+      },
+      className
+    );
 
     return (
       <div data-react-toolbox="chip" className={classes} {...other}>
-        {typeof children === 'string' ? <span>{children}</span> : children}
-        {
-          deletable ? (
-            <span className={theme.delete} onClick={onDeleteClick}>
+        {typeof children === 'string'
+          ? <span>
+              {children}
+            </span>
+          : children}
+        {deletable
+          ? <span className={theme.delete} onClick={onDeleteClick}>
               <svg viewBox="0 0 40 40" className={theme.deleteIcon}>
                 <path className={theme.deleteX} d="M 12,12 L 28,28 M 28,12 L 12,28" />
               </svg>
             </span>
-          ) : null
-        }
+          : null}
       </div>
     );
   };

@@ -10,7 +10,7 @@ describe('MenuItem', () => {
       const wrapper = shallow(
         <Menu>
           <MenuItem key="1" onClick={onClick} />
-        </Menu>,
+        </Menu>
       );
 
       wrapper.find(MenuItem).first().simulate('click', { persist: () => {} });

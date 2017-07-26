@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface NavigationTheme {
   /**
@@ -41,9 +41,9 @@ export interface NavigationProps extends ReactToolbox.Props {
    * Type of the navigation, it can be vertical or horizontal.
    * @default horizontal
    */
-  type?: "vertical" | "horizontal";
+  type?: 'vertical' | 'horizontal';
 }
 
-export class Navigation extends React.Component<NavigationProps, {}> { }
+export class Navigation extends React.Component<NavigationProps, {}> {}
 
 export default Navigation;

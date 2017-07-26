@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 import { TabTheme } from './Tab';
 import { TabContentTheme } from './TabContent';
 
@@ -82,6 +82,6 @@ export interface TabsProps extends ReactToolbox.Props {
   theme?: TabsTheme;
 }
 
-export class Tabs extends React.Component<TabsProps, {}> { }
+export class Tabs extends React.Component<TabsProps, {}> {}
 
 export default Tabs;

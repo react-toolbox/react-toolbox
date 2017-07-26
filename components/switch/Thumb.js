@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const factory = (ripple) => {
-  const Thumb = ({ onMouseDown, theme, ...other }) => (
-    <span className={theme.thumb} onMouseDown={onMouseDown} {...other} />
-  );
+const factory = ripple => {
+  const Thumb = ({ onMouseDown, theme, ...other }) =>
+    <span className={theme.thumb} onMouseDown={onMouseDown} {...other} />;
 
   Thumb.propTypes = {
     children: PropTypes.node,

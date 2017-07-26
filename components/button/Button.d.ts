@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 import { ButtonBaseProps, ButtonTheme } from './base';
 
 export interface ButtonProps extends ButtonBaseProps {
@@ -37,6 +37,6 @@ export interface ButtonProps extends ButtonBaseProps {
   theme?: ButtonTheme;
 }
 
-export class Button extends React.Component<ButtonProps, {}> { }
+export class Button extends React.Component<ButtonProps, {}> {}
 
 export default Button;

@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface CardMediaTheme {
   /**
@@ -28,7 +28,7 @@ export interface CardMediaProps extends ReactToolbox.Props {
   /**
    * Forces a 16:9 or 1:1 aspect ratio respectively. Unset, the media area will have a flexible height.
    */
-  aspectRatio?: "wide" | "square";
+  aspectRatio?: 'wide' | 'square';
   /**
    * Children to pass through the component.
    */
@@ -55,5 +55,5 @@ export interface CardMediaProps extends ReactToolbox.Props {
   [key: string]: any;
 }
 
-export class CardMedia extends React.Component<CardMediaProps, {}> { }
+export class CardMedia extends React.Component<CardMediaProps, {}> {}
 export default CardMedia;

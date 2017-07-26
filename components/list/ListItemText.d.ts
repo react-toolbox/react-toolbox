@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface ListItemTextTheme {
   /**
@@ -32,4 +32,4 @@ export interface ListItemTextProps extends ReactToolbox.Props {
   [key: string]: any;
 }
 
-export class ListItemText extends React.Component<ListItemTextProps, {}> { }
+export class ListItemText extends React.Component<ListItemTextProps, {}> {}

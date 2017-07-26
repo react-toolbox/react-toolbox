@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const ActivableRendererFactory = (options = { delay: 500 }) =>
-  ActivableComponent => class ActivableRenderer extends Component {
+const ActivableRendererFactory = (options = { delay: 500 }) => ActivableComponent =>
+  class ActivableRenderer extends Component {
     static propTypes = {
       active: PropTypes.bool.isRequired,
       children: PropTypes.node,
@@ -11,7 +11,7 @@ const ActivableRendererFactory = (options = { delay: 500 }) =>
 
     static defaultProps = {
       delay: options.delay,
-    }
+    };
 
     state = {
       active: this.props.active,
@@ -47,9 +47,7 @@ const ActivableRendererFactory = (options = { delay: 500 }) =>
     render() {
       const { delay, ...others } = this.props; // eslint-disable-line no-unused-vars
       const { active, rendered } = this.state;
-      return rendered
-        ? <ActivableComponent {...others} active={active} />
-        : null;
+      return rendered ? <ActivableComponent {...others} active={active} /> : null;
     }
   };
 

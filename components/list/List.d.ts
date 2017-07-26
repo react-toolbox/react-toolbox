@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface ListTheme {
   /**
@@ -29,4 +29,4 @@ export interface ListProps extends ReactToolbox.Props {
   theme?: ListTheme;
 }
 
-export class List extends React.Component<ListProps, {}> { }
+export class List extends React.Component<ListProps, {}> {}

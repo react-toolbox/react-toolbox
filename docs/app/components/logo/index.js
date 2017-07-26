@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import style from './style.css';
+import React from "react";
+import PropTypes from "prop-types";
+import style from "./style.css";
 
-const Logo = (props) => {
+const Logo = props => {
   let className = style.logo;
   if (props.className) className += ` ${props.className}`;
 
@@ -17,7 +17,7 @@ const Logo = (props) => {
 };
 
 Logo.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default Logo;

@@ -1,7 +1,7 @@
-import React from 'react';
-import FontIcon from '../../components/font_icon';
+import React from "react";
+import FontIcon from "../../components/font_icon";
 
-const FontIconTest = () => (
+const FontIconTest = () =>
   <section>
     <h5>Font Icons</h5>
     <p>lorem ipsum...</p>
@@ -11,7 +11,6 @@ const FontIconTest = () => (
     <FontIcon value="explore" alt="explore icon" />
     <FontIcon value="zoom_in" alt="zoom icon" />
     <FontIcon alt="input icon">input</FontIcon>
-  </section>
-);
+  </section>;
 
 export default FontIconTest;

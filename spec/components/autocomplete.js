@@ -1,46 +1,46 @@
-import React from 'react';
-import Autocomplete from '../../components/autocomplete';
+import React from "react";
+import Autocomplete from "../../components/autocomplete";
 
 class AutocompleteTest extends React.Component {
   state = {
-    simple: 'Spain',
-    simpleShowAll: 'England',
-    multipleArray: ['ES-es', 'TH-th'],
-    multipleObject: { 'ES-es': 'Spain', 'TH-th': 'Thailand' },
-    countriesArray: ['Spain', 'England', 'USA', 'Thailand', 'Tongo', 'Slovenia'],
+    simple: "Spain",
+    simpleShowAll: "England",
+    multipleArray: ["ES-es", "TH-th"],
+    multipleObject: { "ES-es": "Spain", "TH-th": "Thailand" },
+    countriesArray: ["Spain", "England", "USA", "Thailand", "Tongo", "Slovenia"],
     countriesObject: {
-      'EN-gb': 'England',
-      'EN-en': 'United States of America',
-      'EN-nz': 'New Zealand',
+      "EN-gb": "England",
+      "EN-en": "United States of America",
+      "EN-nz": "New Zealand",
     },
   };
 
-  handleFocus = (event) => {
-    console.log('This is focused');
+  handleFocus = event => {
+    console.log("This is focused");
     console.log(event);
   };
 
-  handleMultipleArrayChange = (value) => {
+  handleMultipleArrayChange = value => {
     this.setState({
       multipleArray: value,
       countriesObject: {
         ...this.state.countriesObject,
-        ...(value[0] && !this.state.countriesObject[value[0]]) ? { [value[0]]: value[0] } : {},
+        ...(value[0] && !this.state.countriesObject[value[0]] ? { [value[0]]: value[0] } : {}),
       },
     });
   };
 
-  handleMultipleObjectChange = (value) => {
+  handleMultipleObjectChange = value => {
     this.setState({
       multipleObject: value,
     });
   };
 
-  handleSimpleChange = (value) => {
+  handleSimpleChange = value => {
     this.setState({ simple: value });
   };
 
-  handleSimpleShowAllChange = (value) => {
+  handleSimpleShowAllChange = value => {
     this.setState({ simpleShowAll: value });
   };
 

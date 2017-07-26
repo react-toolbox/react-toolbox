@@ -5,23 +5,17 @@ import { themr } from 'react-css-themr';
 import { APP_BAR } from '../identifiers';
 import InjectIconButton from '../button/IconButton';
 
-const factory = (IconButton) => {
+const factory = IconButton => {
   class AppBar extends React.Component {
     static propTypes = {
       children: PropTypes.node,
       className: PropTypes.string,
       fixed: PropTypes.bool,
       flat: PropTypes.bool,
-      leftIcon: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.element,
-      ]),
+      leftIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
       onLeftIconClick: PropTypes.func,
       onRightIconClick: PropTypes.func,
-      rightIcon: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.element,
-      ]),
+      rightIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
       scrollHide: PropTypes.bool,
       theme: PropTypes.shape({
         appBar: PropTypes.string,
@@ -33,10 +27,7 @@ const factory = (IconButton) => {
         scrollHide: PropTypes.string,
         title: PropTypes.string,
       }),
-      title: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.element,
-      ]),
+      title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
     };
 
     static defaultProps = {
@@ -83,9 +74,8 @@ const factory = (IconButton) => {
 
     handleScroll = () => {
       const scrollDiff = this.curScroll - window.scrollY;
-      const hidden = scrollDiff < 0
-        && window.scrollY !== undefined
-        && window.scrollY > this.state.height;
+      const hidden =
+        scrollDiff < 0 && window.scrollY !== undefined && window.scrollY > this.state.height;
       this.setState({ hidden });
       this.curScroll = window.scrollY;
     };
@@ -101,39 +91,48 @@ const factory = (IconButton) => {
         title,
       } = this.props;
 
-      const className = cn(theme.appBar, {
-        [theme.fixed]: this.props.fixed,
-        [theme.flat]: this.props.flat,
-        [theme.scrollHide]: this.state.hidden,
-      }, this.props.className);
+      const className = cn(
+        theme.appBar,
+        {
+          [theme.fixed]: this.props.fixed,
+          [theme.flat]: this.props.flat,
+          [theme.scrollHide]: this.state.hidden,
+        },
+        this.props.className
+      );
 
-      const renderedTitle = typeof title === 'string'
-        ? <h1 className={cn(theme.title)}>{title}</h1>
-        : title;
+      const renderedTitle =
+        typeof title === 'string'
+          ? <h1 className={cn(theme.title)}>
+              {title}
+            </h1>
+          : title;
 
-      const renderedLeftIcon = leftIcon && (
+      const renderedLeftIcon =
+        leftIcon &&
         <IconButton
           inverse
           className={cn(theme.leftIcon)}
           onClick={onLeftIconClick}
           icon={leftIcon}
-        />
-      );
+        />;
 
-      const renderedRightIcon = rightIcon && (
+      const renderedRightIcon =
+        rightIcon &&
         <IconButton
           inverse
           className={cn(theme.rightIcon)}
           onClick={onRightIconClick}
           icon={rightIcon}
-        />
-      );
+        />;
 
       return (
         <header
           className={className}
           data-react-toolbox="app-bar"
-          ref={(node) => { this.rootNode = node; }}
+          ref={node => {
+            this.rootNode = node;
+          }}
         >
           <div className={theme.inner}>
             {renderedLeftIcon}

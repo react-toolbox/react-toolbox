@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface ListSubHeaderTheme {
   /**
@@ -19,4 +19,4 @@ export interface ListSubHeaderProps extends ReactToolbox.Props {
   theme?: ListSubHeaderTheme;
 }
 
-export class ListSubHeader extends React.Component<ListSubHeaderProps, {}> { }
+export class ListSubHeader extends React.Component<ListSubHeaderProps, {}> {}

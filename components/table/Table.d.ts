@@ -1,5 +1,5 @@
-import * as React from "react";
-import ReactToolbox from "../index";
+import * as React from 'react';
+import ReactToolbox from '../index';
 
 export interface TableTheme {
   /**
@@ -33,6 +33,6 @@ export interface TableProps extends ReactToolbox.Props {
   theme?: TableTheme;
 }
 
-export class Table extends React.Component<TableProps, {}> { }
+export class Table extends React.Component<TableProps, {}> {}
 
 export default Table;

@@ -14,9 +14,13 @@ const CardMedia = ({
   theme,
   ...other
 }) => {
-  const classes = classnames(theme.cardMedia, {
-    [theme[aspectRatio]]: aspectRatio,
-  }, className);
+  const classes = classnames(
+    theme.cardMedia,
+    {
+      [theme[aspectRatio]]: aspectRatio,
+    },
+    className
+  );
 
   const innerClasses = classnames(theme.content, {
     [theme.contentOverlay]: contentOverlay,
@@ -42,10 +46,7 @@ CardMedia.propTypes = {
   className: PropTypes.string,
   color: PropTypes.string,
   contentOverlay: PropTypes.bool,
-  image: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.element,
-  ]),
+  image: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   theme: PropTypes.shape({
     cardMedia: PropTypes.string,
     content: PropTypes.string,

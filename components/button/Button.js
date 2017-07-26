@@ -16,10 +16,7 @@ const factory = (ripple, FontIcon) => {
       flat: PropTypes.bool,
       floating: PropTypes.bool,
       href: PropTypes.string,
-      icon: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.element,
-      ]),
+      icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
       inverse: PropTypes.bool,
       label: PropTypes.string,
       mini: PropTypes.bool,
@@ -61,39 +58,39 @@ const factory = (ripple, FontIcon) => {
       if (this.props.primary) return 'primary';
       if (this.props.accent) return 'accent';
       return 'neutral';
-    }
+    };
 
     getShape = () => {
       if (this.props.raised) return 'raised';
       if (this.props.floating) return 'floating';
       return 'flat';
-    }
+    };
 
-    handleMouseUp = (event) => {
+    handleMouseUp = event => {
       this.buttonNode.blur();
       if (this.props.onMouseUp) this.props.onMouseUp(event);
     };
 
-    handleMouseLeave = (event) => {
+    handleMouseLeave = event => {
       this.buttonNode.blur();
       if (this.props.onMouseLeave) this.props.onMouseLeave(event);
     };
 
     render() {
       const {
-        accent,    // eslint-disable-line
+        accent, // eslint-disable-line
         children,
         className,
-        flat,      // eslint-disable-line
-        floating,  // eslint-disable-line
+        flat, // eslint-disable-line
+        floating, // eslint-disable-line
         href,
         icon,
         inverse,
         label,
         mini,
         neutral,
-        primary,   // eslint-disable-line
-        raised,    // eslint-disable-line
+        primary, // eslint-disable-line
+        raised, // eslint-disable-line
         theme,
         type,
         ...others
@@ -102,16 +99,23 @@ const factory = (ripple, FontIcon) => {
       const level = this.getLevel();
       const shape = this.getShape();
 
-      const classes = classnames(theme.button, [theme[shape]], {
-        [theme[level]]: neutral,
-        [theme.mini]: mini,
-        [theme.inverse]: inverse,
-      }, className);
+      const classes = classnames(
+        theme.button,
+        [theme[shape]],
+        {
+          [theme[level]]: neutral,
+          [theme.mini]: mini,
+          [theme.inverse]: inverse,
+        },
+        className
+      );
 
       const props = {
         ...others,
         href,
-        ref: (node) => { this.buttonNode = node; },
+        ref: node => {
+          this.buttonNode = node;
+        },
         className: classes,
         disabled: this.props.disabled,
         onMouseUp: this.handleMouseUp,
@@ -120,10 +124,12 @@ const factory = (ripple, FontIcon) => {
         'data-react-toolbox': 'button',
       };
 
-      return React.createElement(element, props,
+      return React.createElement(
+        element,
+        props,
         icon ? <FontIcon className={theme.icon} value={icon} /> : null,
         label,
-        children,
+        children
       );
     }
   }

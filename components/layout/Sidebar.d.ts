@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import { DrawerProps } from '../drawer/Drawer';
 
 export interface SidebarTheme {
@@ -21,7 +21,7 @@ export interface SidebarProps extends DrawerProps {
   /**
    * The breakpoint at which the drawer is automatically pinned.
    */
-  permanentAt?: "sm" | "smTablet" | "md" | "lg" | "lgTablet" | "xl" | "xxl" | "xxxl";
+  permanentAt?: 'sm' | 'smTablet' | 'md' | 'lg' | 'lgTablet' | 'xl' | 'xxl' | 'xxxl';
   /**
    * If true, the sidebar will be pinned open.
    * @default false
@@ -38,4 +38,4 @@ export interface SidebarProps extends DrawerProps {
   width?: number; // 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 25 | 33 | 50 | 66 | 75 | 100;
 }
 
-export class Sidebar extends React.Component<SidebarProps, {}> { }
+export class Sidebar extends React.Component<SidebarProps, {}> {}

@@ -6,4 +6,4 @@ export interface PortalProps extends ReactToolbox.Props {
   lockBody?: boolean;
 }
 
-export default class Portal extends React.Component<PortalProps, {}> { }
+export default class Portal extends React.Component<PortalProps, {}> {}

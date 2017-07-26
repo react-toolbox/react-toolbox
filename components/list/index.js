@@ -24,11 +24,11 @@ const ThemedListDivider = applyTheme(ListDivider);
 const ThemedListItemContent = applyTheme(listItemContentFactory(ThemedListItemText));
 const ThemedListItemActions = applyTheme(listItemActionsFactory(ThemedListItemAction));
 const ThemedListItemLayout = applyTheme(
-  listItemLayoutFactory(Avatar, ThemedListItemContent, ThemedListItemActions),
+  listItemLayoutFactory(Avatar, ThemedListItemContent, ThemedListItemActions)
 );
 const ThemedListCheckbox = applyTheme(listCheckboxFactory(Checkbox, ThemedListItemContent));
 const ThemedListItem = applyTheme(
-  listItemFactory(ripple, ThemedListItemLayout, ThemedListItemContent),
+  listItemFactory(ripple, ThemedListItemLayout, ThemedListItemContent)
 );
 const ThemedList = applyTheme(listFactory(ThemedListItem));
 
