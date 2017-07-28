@@ -9,6 +9,7 @@ import rippleFactory from '../ripple/Ripple';
 const factory = (ripple, ListItemLayout, ListItemContent) => {
   class ListItem extends Component {
     static propTypes = {
+      altText: PropTypes.string,
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
@@ -74,6 +75,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
 
     render() {
       const {
+        altText,
         className,
         ripple: hasRipple,    // eslint-disable-line no-unused-vars
         onClick,      // eslint-disable-line no-unused-vars
@@ -85,6 +87,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       } = this.props;
       const children = this.groupChildren();
       const content = <ListItemLayout theme={theme} {...children} {...other} />;
+
       return (
         <li
           className={`${theme.listItem} ${className}`}
@@ -96,6 +99,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
         >
           {to ? <a tabIndex={0} href={this.props.to}>{content}</a> : content}
           {children.ignored}
+          {altText ? <span className={theme.screenReader}>{altText}</span> : null}
         </li>
       );
     }
