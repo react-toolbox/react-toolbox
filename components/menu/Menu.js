@@ -192,13 +192,14 @@ const factory = (MenuItem) => {
       this.setState({ active: true, width, height });
     }
 
-    hide() {
-      this.setState({ active: false });
+    hide(onSuccess) {
+      this.setState({ active: false }, onSuccess);
     }
 
     handleEscape = (e) => {
       if (e.key === 'Escape') {
-        this.hide();
+        const menuIcon = ReactDOM.findDOMNode(this).parentNode.firstChild;
+        this.hide(menuIcon.focus()); // keyboard focus returns to menu icon on hide
       }
     }
 
