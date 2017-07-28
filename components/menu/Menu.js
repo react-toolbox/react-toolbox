@@ -196,6 +196,12 @@ const factory = (MenuItem) => {
       this.setState({ active: false });
     }
 
+    handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        this.hide();
+      }
+    }
+
     renderItems() {
       return React.Children.map(this.props.children, (item) => {
         if (!item) return item;
@@ -221,7 +227,7 @@ const factory = (MenuItem) => {
       }, this.props.className);
 
       return (
-        <div data-react-toolbox="menu" className={className} style={this.getRootStyle()}>
+        <div data-react-toolbox="menu" className={className} style={this.getRootStyle()} onKeyDown={this.handleEscape}>
           {this.props.outline ? <div className={theme.outline} style={outlineStyle} /> : null}
           <ul
             ref={(node) => { this.menuNode = node; }}
