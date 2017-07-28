@@ -92,9 +92,9 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
           onMouseDown={onMouseDown}
           onTouchStart={onTouchStart}
           onKeyDown={this.handleEnter}
-          tabIndex={0}
+          tabIndex={to ? -1 : 0}
         >
-          {to ? <a href={this.props.to}>{content}</a> : content}
+          {to ? <a tabIndex={0} href={this.props.to}>{content}</a> : content}
           {children.ignored}
         </li>
       );
