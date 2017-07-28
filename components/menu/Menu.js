@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { MENU } from '../identifiers';
 import { events } from '../utils';
+import { previousElementKeyboardTrap, nextElementKeyboardTrap } from '../utils/keyboardTrap';
 import { getViewport } from '../utils/utils';
 import InjectMenuItem from './MenuItem';
 
@@ -110,6 +111,7 @@ const factory = (MenuItem) => {
         events.addEventsToDocument({
           click: this.handleDocumentClick,
           touchstart: this.handleDocumentClick,
+          keydown: this.handleKeyboardTrap,
         });
       }
     }
@@ -120,6 +122,7 @@ const factory = (MenuItem) => {
         events.removeEventsFromDocument({
           click: this.handleDocumentClick,
           touchstart: this.handleDocumentClick,
+          keydown: this.handleKeyboardTrap,
         });
       } else if (!prevState.active && this.state.active && this.props.onShow) {
         this.props.onShow();
@@ -131,6 +134,7 @@ const factory = (MenuItem) => {
         events.removeEventsFromDocument({
           click: this.handleDocumentClick,
           touchstart: this.handleDocumentClick,
+          keydown: this.handleKeyboardTrap,
         });
       }
       clearTimeout(this.positionTimeoutHandle);
@@ -160,6 +164,20 @@ const factory = (MenuItem) => {
       return this.state.position !== POSITION.STATIC
         ? { width: this.state.width, height: this.state.height }
         : undefined;
+    }
+
+    handleKeyboardTrap = (event) => {
+      const focusableMenuItems = this.menuNode.querySelectorAll('[tabindex]');
+      const firstItem = focusableMenuItems[0];
+      const lastItem = focusableMenuItems[focusableMenuItems.length - 1];
+
+      if (event.which === 40) { // on down arrow keyboard event
+        nextElementKeyboardTrap(event.target, firstItem, lastItem);
+      } else if (event.which === 38) { // on up arrow keyboard event
+        previousElementKeyboardTrap(event.target, firstItem, lastItem);
+      } else if (event.key === 'Tab') {
+        this.hide();
+      }
     }
 
     calculatePosition() {
