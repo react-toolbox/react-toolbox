@@ -31,7 +31,9 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
     };
 
     handleClick = (event) => {
-      if (this.props.onClick && !this.props.disabled) {
+      if (this.props.to) {
+        window.location = this.props.to;
+      } else if (this.props.onClick && !this.props.disabled) {
         this.props.onClick(event);
       }
     };
@@ -95,9 +97,9 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
           onMouseDown={onMouseDown}
           onTouchStart={onTouchStart}
           onKeyDown={this.handleEnter}
-          tabIndex={to ? -1 : 0}
+          tabIndex={0}
         >
-          {to ? <a tabIndex={0} href={this.props.to}>{content}</a> : content}
+          {to ? <a tabIndex={-1} href={this.props.to}>{content}</a> : content}
           {children.ignored}
           {altText ? <span className={theme.screenReader}>{altText}</span> : null}
         </li>
