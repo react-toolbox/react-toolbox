@@ -74,7 +74,7 @@ const factory = (ripple) => {
           onClick={this.handleClick}
           onKeyDown={this.handleEnter}
           role="menuitem"
-          tabIndex={tabIndex}
+          tabIndex={disabled ? '-1' : tabIndex}
           aria-disabled={disabled}
         >
           {icon ? <FontIcon value={icon} className={theme.icon} /> : null}

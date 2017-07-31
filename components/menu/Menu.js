@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { MENU } from '../identifiers';
 import { events } from '../utils';
-import { previousElementKeyboardTrap, nextElementKeyboardTrap } from '../utils/keyboardTrap';
+import { getFocusableElements, previousElementKeyboardTrap, nextElementKeyboardTrap } from '../utils/keyboardTrap';
 import { getViewport } from '../utils/utils';
 import InjectMenuItem from './MenuItem';
 
@@ -57,6 +57,7 @@ const factory = (MenuItem) => {
     state = {
       active: this.props.active,
       rippled: false,
+      tabIndex: '-1',
     };
 
     componentDidMount() {
@@ -86,7 +87,7 @@ const factory = (MenuItem) => {
         if (nextProps.position === POSITION.AUTO) {
           const position = this.calculatePosition();
           if (this.state.position !== position) {
-            this.setState({ position, active: false }, () => {
+            this.setState({ position, active: false, tabIndex: '-1' }, () => {
               this.activateTimeoutHandle = setTimeout(() => { this.show(); }, 20);
             });
           } else {
@@ -167,14 +168,12 @@ const factory = (MenuItem) => {
     }
 
     handleKeyboardTrap = (event) => {
-      const focusableMenuItems = this.menuNode.querySelectorAll('[tabindex]');
-      const firstItem = focusableMenuItems[0];
-      const lastItem = focusableMenuItems[focusableMenuItems.length - 1];
+      const menuItems = getFocusableElements(this.menuNode);
 
       if (event.which === 40) { // on down arrow keyboard event
-        nextElementKeyboardTrap(event.target, firstItem, lastItem);
+        nextElementKeyboardTrap(event.target, menuItems);
       } else if (event.which === 38) { // on up arrow keyboard event
-        previousElementKeyboardTrap(event.target, firstItem, lastItem);
+        previousElementKeyboardTrap(event.target, menuItems);
       } else if (event.key === 'Tab') {
         this.hide();
       }
@@ -192,14 +191,14 @@ const factory = (MenuItem) => {
 
     handleDocumentClick = (event) => {
       if (this.state.active && !events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
-        this.setState({ active: false, rippled: false });
+        this.setState({ active: false, rippled: false, tabIndex: '-1' });
       }
     };
 
     handleSelect = (item, event) => {
       const { value, onClick } = item.props;
       if (onClick) event.persist();
-      this.setState({ active: false, rippled: this.props.ripple }, () => {
+      this.setState({ active: false, rippled: this.props.ripple, tabIndex: '-1' }, () => {
         if (onClick) onClick(event);
         if (this.props.onSelect) this.props.onSelect(value);
       });
@@ -207,11 +206,11 @@ const factory = (MenuItem) => {
 
     show() {
       const { width, height } = this.menuNode.getBoundingClientRect();
-      this.setState({ active: true, width, height });
+      this.setState({ active: true, width, height, tabIndex: '0' });
     }
 
     hide(onSuccess) {
-      this.setState({ active: false }, onSuccess);
+      this.setState({ active: false, tabIndex: '-1' }, onSuccess);
     }
 
     handleEscape = (e) => {
@@ -231,6 +230,7 @@ const factory = (MenuItem) => {
               && this.props.selectable
               && item.props.value === this.props.selected,
             onClick: this.handleSelect.bind(this, item),
+            tabIndex: this.state.tabIndex,
           });
         }
         return React.cloneElement(item);
@@ -246,7 +246,7 @@ const factory = (MenuItem) => {
       }, this.props.className);
 
       return (
-        <div data-react-toolbox="menu" role="menu" className={className} style={this.getRootStyle()} onKeyDown={this.handleEscape} tabIndex={0}>
+        <div data-react-toolbox="menu" role="menu" className={className} style={this.getRootStyle()} onKeyDown={this.handleEscape} tabIndex={this.state.tabIndex}>
           {this.props.outline ? <div className={theme.outline} style={outlineStyle} /> : null}
           <ul
             ref={(node) => { this.menuNode = node; }}
