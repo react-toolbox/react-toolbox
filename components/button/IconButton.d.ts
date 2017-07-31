@@ -39,6 +39,10 @@ export interface IconButtonTheme {
 
 export interface IconButtonProps extends ButtonBaseProps {
   /**
+   * Adds aria-expanded attribute useful for screen readers
+   */
+  ariaExpanded?: bool;
+  /**
    * Creates a link for the button.
    */
   href?: string;

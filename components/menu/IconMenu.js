@@ -67,6 +67,7 @@ const factory = (IconButton, Menu) => {
             inverse={inverse}
             onClick={this.handleButtonClick}
             ripple={iconRipple}
+            ariaExpanded={this.state.active}
           />
           <Menu
             active={this.state.active}

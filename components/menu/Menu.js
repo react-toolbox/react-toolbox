@@ -246,7 +246,7 @@ const factory = (MenuItem) => {
       }, this.props.className);
 
       return (
-        <div data-react-toolbox="menu" className={className} style={this.getRootStyle()} onKeyDown={this.handleEscape}>
+        <div data-react-toolbox="menu" role="menu" className={className} style={this.getRootStyle()} onKeyDown={this.handleEscape} tabIndex={0}>
           {this.props.outline ? <div className={theme.outline} style={outlineStyle} /> : null}
           <ul
             ref={(node) => { this.menuNode = node; }}

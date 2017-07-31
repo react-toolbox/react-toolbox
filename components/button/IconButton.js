@@ -10,6 +10,7 @@ const factory = (ripple, FontIcon) => {
   class IconButton extends Component {
     static propTypes = {
       accent: PropTypes.bool,
+      ariaExpanded: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
@@ -67,6 +68,7 @@ const factory = (ripple, FontIcon) => {
     render() {
       const {
         accent,    // eslint-disable-line
+        ariaExpanded,
         children,
         className,
         href,
@@ -89,6 +91,8 @@ const factory = (ripple, FontIcon) => {
         ...others,
         href,
         ref: (node) => { this.buttonNode = node; },
+        'aria-expanded': ariaExpanded,
+        'aria-haspopup': true,
         className: classes,
         disabled: this.props.disabled,
         onMouseUp: this.handleMouseUp,

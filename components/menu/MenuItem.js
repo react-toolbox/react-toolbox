@@ -75,6 +75,7 @@ const factory = (ripple) => {
           onKeyDown={this.handleEnter}
           role="menuitem"
           tabIndex={tabIndex}
+          aria-disabled={disabled}
         >
           {icon ? <FontIcon value={icon} className={theme.icon} /> : null}
           <span className={theme.caption}>{caption}</span>
