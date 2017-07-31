@@ -179,6 +179,7 @@ const factory = (FontIcon) => {
       }, this.props.className);
 
       const valuePresent = this.valuePresent(value) || this.valuePresent(defaultValue);
+      const errorId = `${labelText && labelText.split(' ').join('-')}-error`;
 
       const inputElementProps = {
         ...others,
@@ -194,6 +195,8 @@ const factory = (FontIcon) => {
         'aria-required': required,
         type,
         value,
+        'aria-invalid': error,
+        'aria-describedby': errorId,
       };
       if (!multiline) {
         inputElementProps.maxLength = maxLength;
@@ -215,7 +218,7 @@ const factory = (FontIcon) => {
             </label>
             : null}
           {hint ? <span hidden={labelText} className={theme.hint}>{hint}</span> : null}
-          {error ? <span className={theme.error}>{error}</span> : null}
+          {error ? <span id={errorId} role="alert" className={theme.error}>{error}</span> : null}
           {maxLength ? <span className={theme.counter}>{length}/{maxLength}</span> : null}
           {children}
         </div>
