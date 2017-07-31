@@ -31,8 +31,16 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
     };
 
     handleClick = (event) => {
-      if (this.props.onClick && !this.props.disabled) {
+      if (this.props.to) {
+        window.location = this.props.to;
+      } else if (this.props.onClick && !this.props.disabled) {
         this.props.onClick(event);
+      }
+    };
+
+    handleEnter = (event) => {
+      if (event.keyCode === 13) {
+        this.handleClick(event);
       }
     };
 
@@ -88,8 +96,10 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
           onClick={this.handleClick}
           onMouseDown={onMouseDown}
           onTouchStart={onTouchStart}
+          onKeyDown={this.handleEnter}
+          tabIndex={0}
         >
-          {to ? <a href={this.props.to}>{content}</a> : content}
+          {to ? <a tabIndex={-1} href={this.props.to}>{content}</a> : content}
           {children.ignored}
           {altText ? <span className={theme.screenReader}>{altText}</span> : null}
         </li>
