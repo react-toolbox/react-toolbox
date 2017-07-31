@@ -1,19 +1,33 @@
-export const nextElementKeyboardTrap = (element, firstItem, lastItem) => {
-  event.preventDefault();
+export default {
+  nextElementKeyboardTrap(element, focusableElements) {
+    event.preventDefault();
 
-  if (element !== lastItem) {
-    element.nextSibling.focus();
-  } else {
-    firstItem.focus();
-  }
-};
+    const firstItem = focusableElements[0];
+    const lastItem = focusableElements[focusableElements.length - 1];
+    const index = focusableElements.indexOf(element);
 
-export const previousElementKeyboardTrap = (element, firstItem, lastItem) => {
-  event.preventDefault();
+    if (element !== lastItem) {
+      focusableElements[index + 1].focus();
+    } else {
+      firstItem.focus();
+    }
+  },
 
-  if (element !== firstItem) {
-    element.previousSibling.focus();
-  } else {
-    lastItem.focus();
-  }
+  previousElementKeyboardTrap(element, focusableElements) {
+    event.preventDefault();
+
+    const firstItem = focusableElements[0];
+    const lastItem = focusableElements[focusableElements.length - 1];
+    const index = focusableElements.indexOf(element);
+
+    if (element !== firstItem) {
+      focusableElements[index - 1].focus();
+    } else {
+      lastItem.focus();
+    }
+  },
+
+  getFocusableElements(elementList) {
+    return [...elementList.querySelectorAll('[tabindex]')];
+  },
 };
