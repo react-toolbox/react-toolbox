@@ -201,14 +201,15 @@ const factory = (MenuItem) => {
       this.setState({ active: true, width, height, tabIndex: '0' });
     }
 
-    hide(onSuccess) {
-      this.setState({ active: false, tabIndex: '-1' }, onSuccess);
+    hide() {
+      this.setState({ active: false, tabIndex: '-1' });
     }
 
-    handleEscape = (e) => {
-      if (e.key === 'Escape') {
+    handleEscape = (event) => {
+      if (event.key === 'Escape') {
         const menuIcon = ReactDOM.findDOMNode(this).parentNode.firstChild;
-        this.hide(menuIcon.focus()); // keyboard focus returns to menu icon on hide
+        this.hide();
+        menuIcon.focus(); // keyboard focus returns to menu icon on hide
       }
     }
 
