@@ -2,9 +2,9 @@ export const handleMenuKeyboardTrap = (element, component) => {
   const focusableElements = getFocusableElements(component.menuNode);
 
   if (event.key === 'ArrowDown') { // on down arrow keyboard event
-    getNextElement(element, focusableElements);
+    focusNextElement(element, focusableElements);
   } else if (event.key === 'ArrowUp') { // on up arrow keyboard event
-    getNextElement(element, focusableElements, false);
+    focusPreviousElement(element, focusableElements, false);
   } else if (event.key === 'Tab') {
     component.hide();
   }
@@ -15,21 +15,30 @@ function getFocusableElements(elementList) {
   return [...elementList.querySelectorAll('[tabindex]')];
 }
 
-// By default, #getNextElement gets the next element in a downward direction.
-// It assigns the start as the first element and gets the next element by adding 1 to that index.
-// If false is passed in, it gets the next element in an upwards direction.
-// It assigns the start as the last element and gets next element by substracting 1 to that index
-function getNextElement(element, focusableElements, down = true) {
+function focusNextElement(currentElement, focusableElements) {
   event.preventDefault();
 
-  const index = focusableElements.indexOf(element);
-  const nextIndex = down ? index + 1 : index - 1;
-  const start = down ? focusableElements[0] : focusableElements[focusableElements.length - 1];
-  const end = down ? focusableElements[focusableElements.length - 1] : focusableElements[0];
+  const firstItem = focusableElements[0];
+  const lastItem = focusableElements[focusableElements.length - 1];
+  const index = focusableElements.indexOf(currentElement);
 
-  if (element !== end) {
-    focusableElements[nextIndex].focus();
+  if (currentElement !== lastItem) {
+    focusableElements[index + 1].focus();
   } else {
-    start.focus();
+    firstItem.focus();
+  }
+}
+
+function focusPreviousElement(currentElement, focusableElements) {
+  event.preventDefault();
+
+  const firstItem = focusableElements[0];
+  const lastItem = focusableElements[focusableElements.length - 1];
+  const index = focusableElements.indexOf(currentElement);
+
+  if (currentElement !== firstItem) {
+    focusableElements[index - 1].focus();
+  } else {
+    lastItem.focus();
   }
 }
