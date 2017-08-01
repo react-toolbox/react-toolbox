@@ -4,7 +4,8 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { MENU } from '../identifiers';
-import { events, keyboardTrap } from '../utils';
+import { handleMenuKeyboardTrap } from '../utils/keyboardTrap';
+import { events } from '../utils';
 import { getViewport } from '../utils/utils';
 import InjectMenuItem from './MenuItem';
 
@@ -166,18 +167,6 @@ const factory = (MenuItem) => {
         : undefined;
     }
 
-    handleKeyboardTrap = (event) => {
-      const menuItems = keyboardTrap.getFocusableElements(this.menuNode);
-
-      if (event.which === 40) { // on down arrow keyboard event
-        keyboardTrap.nextElementKeyboardTrap(event.target, menuItems);
-      } else if (event.which === 38) { // on up arrow keyboard event
-        keyboardTrap.previousElementKeyboardTrap(event.target, menuItems);
-      } else if (event.key === 'Tab') {
-        this.hide();
-      }
-    }
-
     calculatePosition() {
       const parentNode = ReactDOM.findDOMNode(this).parentNode;
       if (!parentNode) return undefined;
@@ -193,6 +182,10 @@ const factory = (MenuItem) => {
         this.setState({ active: false, rippled: false, tabIndex: '-1' });
       }
     };
+
+    handleKeyboardTrap = (event) => {
+      handleMenuKeyboardTrap(event.target, this);
+    }
 
     handleSelect = (item, event) => {
       const { value, onClick } = item.props;
