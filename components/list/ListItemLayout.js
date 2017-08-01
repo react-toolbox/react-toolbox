@@ -43,7 +43,10 @@ const factory = (Avatar, ListItemContent, ListItemActions) => {
       PropTypes.string,
       PropTypes.element,
     ]),
-    caption: PropTypes.string,
+    caption: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node,
+    ]),
     className: PropTypes.string,
     disabled: PropTypes.bool,
     itemContent: PropTypes.element,
@@ -52,7 +55,10 @@ const factory = (Avatar, ListItemContent, ListItemActions) => {
       PropTypes.string,
       PropTypes.element,
     ]),
-    legend: PropTypes.string,
+    legend: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node,
+    ]),
     rightActions: PropTypes.arrayOf(PropTypes.node),
     rightIcon: PropTypes.oneOfType([
       PropTypes.string,
