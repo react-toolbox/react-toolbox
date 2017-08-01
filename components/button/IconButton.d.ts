@@ -41,7 +41,7 @@ export interface IconButtonProps extends ButtonBaseProps {
   /**
    * Adds aria-expanded attribute useful for screen readers
    */
-  ariaExpanded?: bool;
+  ariaExpanded?: boolean;
   /**
    * Creates a link for the button.
    */
