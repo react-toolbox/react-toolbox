@@ -57,7 +57,6 @@ const factory = (MenuItem) => {
     state = {
       active: this.props.active,
       rippled: false,
-      tabIndex: '-1',
     };
 
     componentDidMount() {
@@ -87,7 +86,7 @@ const factory = (MenuItem) => {
         if (nextProps.position === POSITION.AUTO) {
           const position = this.calculatePosition();
           if (this.state.position !== position) {
-            this.setState({ position, active: false, tabIndex: '-1' }, () => {
+            this.setState({ position, active: false }, () => {
               this.activateTimeoutHandle = setTimeout(() => { this.show(); }, 20);
             });
           } else {
@@ -167,6 +166,10 @@ const factory = (MenuItem) => {
         : undefined;
     }
 
+    getTabIndex() {
+      return this.state.active ? '0' : '-1';
+    }
+
     calculatePosition() {
       const parentNode = ReactDOM.findDOMNode(this).parentNode;
       if (!parentNode) return undefined;
@@ -179,7 +182,7 @@ const factory = (MenuItem) => {
 
     handleDocumentClick = (event) => {
       if (this.state.active && !events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
-        this.setState({ active: false, rippled: false, tabIndex: '-1' });
+        this.setState({ active: false, rippled: false });
       }
     };
 
@@ -190,7 +193,7 @@ const factory = (MenuItem) => {
     handleSelect = (item, event) => {
       const { value, onClick } = item.props;
       if (onClick) event.persist();
-      this.setState({ active: false, rippled: this.props.ripple, tabIndex: '-1' }, () => {
+      this.setState({ active: false, rippled: this.props.ripple }, () => {
         if (onClick) onClick(event);
         if (this.props.onSelect) this.props.onSelect(value);
       });
@@ -198,11 +201,11 @@ const factory = (MenuItem) => {
 
     show() {
       const { width, height } = this.menuNode.getBoundingClientRect();
-      this.setState({ active: true, width, height, tabIndex: '0' });
+      this.setState({ active: true, width, height });
     }
 
     hide() {
-      this.setState({ active: false, tabIndex: '-1' });
+      this.setState({ active: false });
     }
 
     handleEscape = (event) => {
@@ -223,7 +226,7 @@ const factory = (MenuItem) => {
               && this.props.selectable
               && item.props.value === this.props.selected,
             onClick: this.handleSelect.bind(this, item),
-            tabIndex: this.state.tabIndex,
+            tabIndex: this.getTabIndex(),
           });
         }
         return React.cloneElement(item);
@@ -239,7 +242,7 @@ const factory = (MenuItem) => {
       }, this.props.className);
 
       return (
-        <div data-react-toolbox="menu" role="menu" className={className} style={this.getRootStyle()} onKeyDown={this.handleEscape} tabIndex={this.state.tabIndex}>
+        <div data-react-toolbox="menu" role="menu" className={className} style={this.getRootStyle()} onKeyDown={this.handleEscape} tabIndex={this.getTabIndex()}>
           {this.props.outline ? <div className={theme.outline} style={outlineStyle} /> : null}
           <ul
             ref={(node) => { this.menuNode = node; }}
