@@ -9,6 +9,7 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: [
     'webpack-hot-middleware/client',
+    'babel-polyfill',
     './app/index.js'
   ],
   output: {
