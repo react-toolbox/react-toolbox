@@ -20,6 +20,7 @@ const factory = (ripple) => {
       onClick: PropTypes.func,
       selected: PropTypes.bool,
       shortcut: PropTypes.string,
+      tabIndex: PropTypes.string,
       theme: PropTypes.shape({
         caption: PropTypes.string,
         disabled: PropTypes.string,
@@ -46,8 +47,8 @@ const factory = (ripple) => {
       if (event.keyCode === 13) {
         this.handleClick(event);
       }
-    }
-    l
+    };
+
     render() {
       const {
         caption,
@@ -57,6 +58,7 @@ const factory = (ripple) => {
         selected,
         shortcut,
         theme,
+        tabIndex,
         ...others
       } = this.props;
       const className = classnames(theme.menuItem, {
@@ -72,7 +74,8 @@ const factory = (ripple) => {
           onClick={this.handleClick}
           onKeyDown={this.handleEnter}
           role="menuitem"
-          tabIndex={0}
+          tabIndex={disabled ? '-1' : tabIndex}
+          aria-disabled={disabled}
         >
           {icon ? <FontIcon value={icon} className={theme.icon} /> : null}
           <span className={theme.caption}>{caption}</span>
