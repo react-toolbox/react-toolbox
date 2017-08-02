@@ -58,6 +58,26 @@ Declare plugins to be used by postcss (as part of webpack's config object):
   },
 ```
 
+Configure webpack 2.x or 3.x loader for .css files to use postcss:
+```js
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true, // default is false
+              sourceMap: true,
+              importLoaders: 1,
+              localIdentName: "[name]--[local]--[hash:base64:8]"
+            }
+          },
+          "postcss-loader"
+        ]
+      }
+```
+
 ## Basic usage
 
 In this minimal example, we import a `Button` with styles already bundled:
