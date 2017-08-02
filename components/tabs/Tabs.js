@@ -48,6 +48,7 @@ const factory = (Tab, TabContent, FontIcon) => {
     };
 
     componentDidMount() {
+      this._mounted = true;
       window.addEventListener('resize', this.handleResize);
       this.handleResize();
     }
@@ -62,6 +63,7 @@ const factory = (Tab, TabContent, FontIcon) => {
     }
 
     componentWillUnmount() {
+      this._mounted = false;
       window.removeEventListener('resize', this.handleResize);
       clearTimeout(this.resizeTimeout);
     }
@@ -81,43 +83,50 @@ const factory = (Tab, TabContent, FontIcon) => {
     };
 
     updatePointer = (idx) => {
-      if (this.navigationNode && this.navigationNode.children[idx]) {
+      const navigationNode = this.navigationNode;
+      if (navigationNode && navigationNode.children[idx]) {
         requestAnimationFrame(() => {
-          const nav = this.navigationNode.getBoundingClientRect();
-          const label = this.navigationNode.children[idx].getBoundingClientRect();
-          const scrollLeft = this.navigationNode.scrollLeft;
-          this.setState({
-            pointer: {
-              top: `${nav.height}px`,
-              left: `${(label.left + scrollLeft) - nav.left}px`,
-              width: `${label.width}px`,
-            },
-          });
+          const nav = navigationNode.getBoundingClientRect();
+          const label = navigationNode.children[idx].getBoundingClientRect();
+          const scrollLeft = navigationNode.scrollLeft;
+          if (this._mounted) {
+            this.setState({
+              pointer: {
+                top: `${nav.height}px`,
+                left: `${(label.left + scrollLeft) - nav.left}px`,
+                width: `${label.width}px`,
+              },
+            });
+          }
         });
       }
     }
 
     updateArrows = () => {
-      const idx = this.navigationNode.children.length - 2;
+      const navigationNode = this.navigationNode;
+      const idx = navigationNode.children.length - 2;
 
       if (idx >= 0) {
-        const scrollLeft = this.navigationNode.scrollLeft;
-        const nav = this.navigationNode.getBoundingClientRect();
-        const lastLabel = this.navigationNode.children[idx].getBoundingClientRect();
+        const scrollLeft = navigationNode.scrollLeft;
+        const nav = navigationNode.getBoundingClientRect();
+        const lastLabel = navigationNode.children[idx].getBoundingClientRect();
 
-        this.setState({
-          arrows: {
-            left: scrollLeft > 0,
-            right: nav.right < (lastLabel.right - 5),
-          },
-        });
+        if (this._mounted) {
+          this.setState({
+            arrows: {
+              left: scrollLeft > 0,
+              right: nav.right < (lastLabel.right - 5),
+            },
+          });
+        }
       }
     }
 
     scrollNavigation = (factor) => {
-      const oldScrollLeft = this.navigationNode.scrollLeft;
-      this.navigationNode.scrollLeft += factor * this.navigationNode.clientWidth;
-      if (this.navigationNode.scrollLeft !== oldScrollLeft) {
+      const navigationNode = this.navigationNode;
+      const oldScrollLeft = navigationNode.scrollLeft;
+      navigationNode.scrollLeft += factor * navigationNode.clientWidth;
+      if (navigationNode.scrollLeft !== oldScrollLeft) {
         this.updateArrows();
       }
     }
