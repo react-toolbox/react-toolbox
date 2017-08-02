@@ -130,7 +130,6 @@ const factory = (Input) => {
       const client = event.target.getBoundingClientRect();
       const screenHeight = window.innerHeight || document.documentElement.offsetHeight;
       const up = this.props.auto ? client.top > ((screenHeight / 2) + client.height) : false;
-      if (this.inputNode) this.inputNode.blur();
       this.setState({ active: true, up });
     };
 
@@ -207,6 +206,7 @@ const factory = (Input) => {
           data-react-toolbox="dropdown"
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
+          tabIndex="-1"
         >
           <Input
             {...others}
@@ -215,7 +215,6 @@ const factory = (Input) => {
             onClick={this.handleClick}
             required={this.props.required}
             readOnly
-            ref={(node) => { this.inputNode = node && node.getWrappedInstance(); }}
             type={template && selected ? 'hidden' : null}
             theme={theme}
             themeNamespace="input"
