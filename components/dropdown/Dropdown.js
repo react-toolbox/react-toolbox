@@ -8,6 +8,20 @@ import { DROPDOWN } from '../identifiers';
 import InjectInput from '../input/Input';
 import events from '../utils/events';
 
+function DropdownItem({ label, value, disabled, handleSelect, className  }) {
+  const onClick = (ev) => {
+    if (!disabled) handleSelect(value, ev);
+  }
+  return (
+    <li
+      className={className}
+      onClick={onClick}
+    >
+      {label}
+    </li>
+  );
+}
+
 const factory = (Input) => {
   class Dropdown extends Component {
     static propTypes = {
@@ -172,19 +186,20 @@ const factory = (Input) => {
     }
 
     renderValue = (item, idx) => {
-      const { labelKey, theme, valueKey } = this.props;
+      const { labelKey, theme, valueKey, template } = this.props;
       const className = classnames({
         [theme.selected]: item[valueKey] === this.props.value,
         [theme.disabled]: item.disabled,
       });
       return (
-        <li
+        <DropdownItem
           key={idx}
+          label={template ? template(item) : item[labelKey]}
+          value={item[valueKey]}
+          disabled={item.disabled}
           className={className}
-          onClick={!item.disabled && this.handleSelect.bind(this, item[valueKey])}
-        >
-          {this.props.template ? this.props.template(item) : item[labelKey]}
-        </li>
+          handleSelect={this.handleSelect}
+        />
       );
     };
 
@@ -215,7 +230,7 @@ const factory = (Input) => {
             onClick={this.handleClick}
             required={this.props.required}
             readOnly
-            ref={(node) => { this.inputNode = node && node.getWrappedInstance(); }}
+            ref={(node) => { this.inputNode = node && node.inputNode; }}
             type={template && selected ? 'hidden' : null}
             theme={theme}
             themeNamespace="input"
