@@ -167,7 +167,7 @@ const factory = (MenuItem) => {
     }
 
     getTabIndex() {
-      return this.state.active ? '0' : '-1';
+      return this.state.active ? 0 : -1;
     }
 
     calculatePosition() {
