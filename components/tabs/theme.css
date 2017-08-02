@@ -103,7 +103,9 @@
 .tab {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   padding: var(--tab-label-v-padding) var(--tab-label-h-padding);
+  position: relative;
 
   &:not(.active) {
     display: none;
