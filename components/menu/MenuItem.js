@@ -20,7 +20,7 @@ const factory = (ripple) => {
       onClick: PropTypes.func,
       selected: PropTypes.bool,
       shortcut: PropTypes.string,
-      tabIndex: PropTypes.string,
+      tabIndex: PropTypes.number,
       theme: PropTypes.shape({
         caption: PropTypes.string,
         disabled: PropTypes.string,
