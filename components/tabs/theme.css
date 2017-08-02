@@ -46,8 +46,13 @@
   position: relative;
   text-transform: uppercase;
   transition-duration: var(--animation-duration);
-  transition-property: box-shadow, color;
+  transition-property: background-color, box-shadow, color;
   transition-timing-function: var(--animation-curve-default);
+
+  &:focus {
+    background-color: var(--tab-focus-color);
+    outline: none;
+  }
 
   & > .rippleWrapper {
     overflow: hidden;
