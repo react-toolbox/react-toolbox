@@ -64,6 +64,7 @@ const factory = (Tab, TabContent, FontIcon) => {
     componentWillUnmount() {
       window.removeEventListener('resize', this.handleResize);
       clearTimeout(this.resizeTimeout);
+      if (this.updatePointerAnimationFrame) cancelAnimationFrame(this.updatePointerAnimationFrame);
     }
 
     getNewIndex(headers, delta) {
@@ -94,7 +95,7 @@ const factory = (Tab, TabContent, FontIcon) => {
 
     updatePointer = (idx) => {
       if (this.navigationNode && this.navigationNode.children[idx]) {
-        requestAnimationFrame(() => {
+        this.updatePointerAnimationFrame = requestAnimationFrame(() => {
           const nav = this.navigationNode.getBoundingClientRect();
           const label = this.navigationNode.children[idx].getBoundingClientRect();
           const scrollLeft = this.navigationNode.scrollLeft;
