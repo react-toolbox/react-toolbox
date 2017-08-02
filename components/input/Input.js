@@ -37,6 +37,7 @@ const factory = (FontIcon) => {
       onFocus: PropTypes.func,
       onKeyPress: PropTypes.func,
       required: PropTypes.bool,
+      role: PropTypes.string,
       rows: PropTypes.number,
       theme: PropTypes.shape({
         bar: PropTypes.string,
@@ -67,6 +68,7 @@ const factory = (FontIcon) => {
       floating: true,
       multiline: false,
       required: false,
+      role: 'input',
       type: 'text',
     };
 
@@ -166,7 +168,7 @@ const factory = (FontIcon) => {
 
     render() {
       const { children, defaultValue, disabled, error, floating, hint, icon,
-              name, label: labelText, maxLength, multiline, required,
+              name, label: labelText, maxLength, multiline, required, role,
               theme, type, value, onKeyPress, rows = 1, ...others } = this.props;
       const length = maxLength && value ? value.length : 0;
       const labelClassName = classnames(theme.label, { [theme.fixed]: !floating });
@@ -185,7 +187,7 @@ const factory = (FontIcon) => {
         className: classnames(theme.inputElement, { [theme.filled]: valuePresent }),
         onChange: this.handleChange,
         ref: (node) => { this.inputNode = node; },
-        role: 'input',
+        role,
         name,
         defaultValue,
         disabled,
