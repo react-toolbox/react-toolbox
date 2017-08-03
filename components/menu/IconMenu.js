@@ -68,6 +68,7 @@ const factory = (IconButton, Menu) => {
             onClick={this.handleButtonClick}
             ripple={iconRipple}
             ariaExpanded={this.state.active}
+            ariaHaspopup
           />
           <Menu
             active={this.state.active}
