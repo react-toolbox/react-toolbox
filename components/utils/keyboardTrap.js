@@ -5,7 +5,7 @@ export const handleMenuKeyboardTrap = (element, component) => {
     focusNextElement(element, focusableElements);
   } else if (event.key === 'ArrowUp') { // on up arrow keyboard event
     focusPreviousElement(element, focusableElements, false);
-  } else if (event.key === 'Tab') {
+  } else if (event.key === 'Tab' || event.key === 'Escape') {
     component.hide();
   }
 };

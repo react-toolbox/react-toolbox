@@ -208,14 +208,6 @@ const factory = (MenuItem) => {
       this.setState({ active: false });
     }
 
-    handleEscape = (event) => {
-      if (event.key === 'Escape') {
-        const menuIcon = ReactDOM.findDOMNode(this).parentNode.firstChild;
-        this.hide();
-        menuIcon.focus(); // keyboard focus returns to menu icon on hide
-      }
-    }
-
     renderItems() {
       return React.Children.map(this.props.children, (item) => {
         if (!item) return item;
@@ -242,7 +234,7 @@ const factory = (MenuItem) => {
       }, this.props.className);
 
       return (
-        <div data-react-toolbox="menu" role="menu" className={className} style={this.getRootStyle()} onKeyDown={this.handleEscape} tabIndex={this.getTabIndex()}>
+        <div data-react-toolbox="menu" role="menu" className={className} style={this.getRootStyle()} tabIndex={this.getTabIndex()}>
           {this.props.outline ? <div className={theme.outline} style={outlineStyle} /> : null}
           <ul
             ref={(node) => { this.menuNode = node; }}
