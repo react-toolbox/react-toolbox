@@ -11,6 +11,7 @@ const factory = (ripple, FontIcon) => {
     static propTypes = {
       accent: PropTypes.bool,
       ariaExpanded: PropTypes.bool,
+      ariaHaspopup: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
@@ -69,6 +70,7 @@ const factory = (ripple, FontIcon) => {
       const {
         accent,    // eslint-disable-line
         ariaExpanded,
+        ariaHaspopup,
         children,
         className,
         href,
@@ -92,7 +94,7 @@ const factory = (ripple, FontIcon) => {
         href,
         ref: (node) => { this.buttonNode = node; },
         'aria-expanded': ariaExpanded,
-        'aria-haspopup': true,
+        'aria-haspopup': ariaHaspopup,
         className: classes,
         disabled: this.props.disabled,
         onMouseUp: this.handleMouseUp,
