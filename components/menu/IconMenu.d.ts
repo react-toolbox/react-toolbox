@@ -26,6 +26,10 @@ export interface IconMenuProps extends ReactToolbox.Props {
    * If true, the icon will show a ripple when is clicked.
    * @default true
    */
+  iconAriaLabel?: string;
+  /**
+   * Adds an aria-label attribute to the menu's IconButton 
+   */
   iconRipple?: boolean;
   /**
    * If true, the neutral colors are inverted. Useful if the icon is over a dark background.

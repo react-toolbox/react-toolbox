@@ -15,6 +15,7 @@ const factory = (IconButton, Menu) => {
         PropTypes.string,
         PropTypes.element,
       ]),
+      iconAriaLabel: PropTypes.string,
       iconRipple: PropTypes.bool,
       inverse: PropTypes.bool,
       menuRipple: PropTypes.bool,
@@ -56,7 +57,7 @@ const factory = (IconButton, Menu) => {
 
     render() {
       const {
-        children, className, icon, iconRipple, inverse, menuRipple, onHide, // eslint-disable-line
+        children, className, icon, iconAriaLabel, iconRipple, inverse, menuRipple, onHide, // eslint-disable-line
         onSelect, onShow, position, selectable, selected, theme, ...other
       } = this.props;
       return (
@@ -68,6 +69,7 @@ const factory = (IconButton, Menu) => {
             onClick={this.handleButtonClick}
             ripple={iconRipple}
             ariaExpanded={this.state.active}
+            ariaLabel={iconAriaLabel}
             ariaHaspopup
           />
           <Menu
