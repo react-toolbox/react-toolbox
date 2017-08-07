@@ -10,6 +10,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
   class ListItem extends Component {
     static propTypes = {
       altText: PropTypes.string,
+      ariaLabel: PropTypes.string,
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
@@ -77,6 +78,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
 
     render() {
       const {
+        ariaLabel,
         altText,
         className,
         ripple: hasRipple,    // eslint-disable-line no-unused-vars
@@ -92,6 +94,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
 
       return (
         <li
+          aria-label={ariaLabel}
           className={`${theme.listItem} ${className}`}
           onClick={this.handleClick}
           onMouseDown={onMouseDown}

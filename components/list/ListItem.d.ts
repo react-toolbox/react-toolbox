@@ -13,6 +13,10 @@ export interface ListItemTheme {
 
 export interface ListItemProps extends ReactToolbox.Props {
   /**
+   * Optional text to add aria-label to <li> DOM element
+   */
+  ariaLabel?: string;
+  /**
    * Optional text to inform of actions and be read by screen readers.
    */
   altText?: string;
