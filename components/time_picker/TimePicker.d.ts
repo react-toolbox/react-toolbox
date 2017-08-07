@@ -173,6 +173,10 @@ export interface TimePickerProps {
    * Additional attributes passed to inner Input component.
    */
   [key: string]: any;
+  /**
+   * Option to round to the given minute when picking a time
+   */
+  roundTo?: number;
 }
 
 export class TimePicker extends React.Component<TimePickerProps, {}> { }

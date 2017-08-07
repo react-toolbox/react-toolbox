@@ -17,6 +17,7 @@ const factory = (Dialog) => {
       onEscKeyDown: PropTypes.func,
       onOverlayClick: PropTypes.func,
       onSelect: PropTypes.func,
+      roundTo: PropTypes.number,
       theme: PropTypes.shape({
         am: PropTypes.string,
         amFormat: PropTypes.string,
@@ -61,6 +62,9 @@ const factory = (Dialog) => {
     }
 
     handleClockChange = (value) => {
+      if (this.props.roundTo) {
+        value.setMinutes(Math.round(value.getMinutes() / this.props.roundTo) * this.props.roundTo);
+      }
       this.setState({ displayTime: value });
     };
 

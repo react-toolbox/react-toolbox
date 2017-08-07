@@ -28,6 +28,7 @@ const factory = (TimePickerDialog, Input) => {
       onKeyPress: PropTypes.func,
       onOverlayClick: PropTypes.func,
       readonly: PropTypes.bool,
+      roundTo: PropTypes.number,
       theme: PropTypes.shape({
         container: PropTypes.string,
         input: PropTypes.string,
@@ -122,6 +123,7 @@ const factory = (TimePickerDialog, Input) => {
             onSelect={this.handleSelect}
             theme={this.props.theme}
             value={this.props.value}
+            roundTo={this.props.roundTo}
           />
         </div>
       );
