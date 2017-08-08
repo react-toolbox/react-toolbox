@@ -43,7 +43,7 @@ export interface AppBarProps extends ReactToolbox.Props {
    */
   fixed?: boolean;
   /**
-   * If true, the AppBar shows a shadow.
+   * If true, the AppBar doesn't show a shadow.
    * @default false
    */
   flat?: boolean;
