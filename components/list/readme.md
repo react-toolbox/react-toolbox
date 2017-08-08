@@ -64,13 +64,13 @@ Represents a list item that can have avatar, icons, title, subtitle, etc. Note: 
 | Name              | Type                  | Default       | Description|
 |:-----|:-----|:-----|:-----|
 | `avatar`          | `String` or `Element` |               | A string URL to specify an avatar in the left side of the item.|
-| `caption`         | `String`              |               | Main text of the item.|
+| `caption`         | `String` or `Element` |               | Main text of the item.|
 | `className`       | `String`              | `''`          | Set a class to give custom styles to the list item.|
 | `disabled`        | `String`              | `false`       | If true, the item is displayed as disabled and is not clickable.|
 | `itemContent`     | `Element`             |               | An element that will be displayed as the item. If set, this will override `caption` and `legend`.|
 | `leftActions`     | `Array of Elements`   |               | A list of elements that are placed on the left side of the item and after the avatar attribute.|
 | `leftIcon`        | `String` or `Element` |               | A string key of a font icon or element to display an icon in the left side of the item. |
-| `legend`          | `String`              |               | Secondary text to display under the caption.|
+| `legend`          | `String` or `Element` |               | Secondary text to display under the caption.|
 | `onClick`         | `Function`            |               | Callback the is invoked when the item is clicked if it's not disabled. |
 | `rightIcon`       | `String` or `Element` |               | The same as the `leftIcon` but in this case the icon is displayed in the right side.|
 | `rightActions`    | `Array of Elements`   |               | A list of elements that are placed on the right side of the item and after the rightIcon attribute.|

@@ -43,6 +43,10 @@ export interface InputTheme {
    */
   inputElement?: string;
   /**
+   * Used for the label when the input has a label.
+   */
+  label?: string;
+  /**
    * Used in case the input is required.
    */
   required?: string;

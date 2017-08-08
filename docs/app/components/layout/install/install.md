@@ -16,7 +16,7 @@ React Toolbox uses [CSS Modules](https://github.com/css-modules/css-modules) by 
 
 Although we recommend [webpack](https://webpack.github.io/), you are free to use whatever module bundler you want as long as it can compile and require SASS files located in your `node_modules`. If you are experiencing require errors, make sure your configuration satisfies this requirement.
 
-Of course this is a set of React components so you should be familiar with [React](https://facebook.github.io/react/). If want to customize your components via themes, you may want to take a look to [react-css-themr](https://github.com/javivelasco/react-css-themr) which is used by React Toolbox to make component easily themeable.
+Of course this is a set of React components so you should be familiar with [React](https://facebook.github.io/react/). If want to customize your components via themes, you may want to take a look at [react-css-themr](https://github.com/javivelasco/react-css-themr) which is used by React Toolbox to make component easily themeable.
 
 ## Basic usage
 
@@ -68,7 +68,7 @@ import AppBar from 'react-toolbox/lib/app_bar/AppBar.js';
 
 ## Customizing components
 
-Every component accepts a `theme` property intended to provide a [CSS Module import object](https://github.com/css-modules/css-modules) that will be used by the component to assign local classnames to its DOM nodes. Therefore, each one implements a documented **classname API** so if you want to customize a component, you just need to provide a theme object with the appropriated classname  mapping.  
+Every component accepts a `theme` property intended to provide a [CSS Module import object](https://github.com/css-modules/css-modules) that will be used by the component to assign local classnames to its DOM nodes. Therefore, each one implements a documented **classname API** so if you want to customize a component, you just need to provide a theme object with the appropriate classname  mapping.  
 
 If the component has already a theme injected, the properties you pass will be merged with the injected. In this way, you can **add** classnames to the nodes of a specific component and use them to add or to override styles. For example, if you want to customize the `AppBar` to be purple:
 
@@ -97,7 +97,7 @@ If the component has no styles injected, you should provide a theme object imple
 
 ## Theming
 
-You can afford theming in multiple ways. First of all, you have to understand that React Toolbox stylesheets are written in SASS and configured using the **config** files we saw earlier. Also you may want to check [colors](https://github.com/react-toolbox/react-toolbox/blob/dev/components/colors.css) and [variables](https://github.com/react-toolbox/react-toolbox/blob/dev/components/variables.css) files to get an overview on the **variables** you have to override to get the results you want.
+You can afford theming in multiple ways. First of all, you have to understand that React Toolbox stylesheets are written in SASS and configured using the **config** files we saw earlier. Also you may want to check [colors](https://github.com/react-toolbox/react-toolbox/blob/dev/components/colors.css) and [variables](https://github.com/react-toolbox/react-toolbox/blob/dev/components/variables.css) files to get an overview of the **variables** you have to override to get the results you want.
 
 In most scenarios you can get more customized themes by overriding those variables and compiling stylesheets with them. For example, you can create a `_theme.scss` SASS file:
 
@@ -108,7 +108,7 @@ $color-primary: $palette-blue-500;
 $color-primary-dark: $palette-blue-700;
 ```
 
-This file should be prepended to each stylesheet compilation which be achieved in multiple ways.
+This file should be prepended to each stylesheet compilation which can be achieved in multiple ways.
 
 ### Using SASS Loader
 
@@ -131,7 +131,7 @@ Remember that you can import components without styles and provide those styles 
 @import "~react-toolbox/lib/button/theme";
 ```
 
-Then, when you use a button you can inject the appropriated theme:
+Then, when you use a button you can inject the appropriate theme:
 
 ```js
 import Button from 'react-toolbox/lib/button/Button';
@@ -148,7 +148,7 @@ With this technique you have to create wrappers for every component and this is 
 
 ### Using SASS imports and context
 
-This is a good moment to check out [react-css-themr](http://github.com/javivelasco/react-css-themr) if you still didn't. Every component in React Toolbox has a key assigned that can be used to provide a default CSS Module. You can create a theme like:
+This is a good moment to check out [react-css-themr](http://github.com/javivelasco/react-css-themr) if you still haven't. Every component in React Toolbox has a key assigned that can be used to provide a default CSS Module. You can create a theme like:
 
 ```js
 export default {
@@ -157,7 +157,7 @@ export default {
 }
 ```
 
-Check for each component what key uses. Then, when you have a theme object fully imported and customized for each component your application uses, you can use it like we list here:
+Check for each component what key to use. Then, when you have a theme object fully imported and customized for each component your application uses, you can use it like we list here:
 
 ```js
 import React from 'react';
@@ -173,7 +173,7 @@ render(
 , document.getElementById('app'))
 ```
 
-A couple of things here. First you need to use raw components to get this styles properly applied. Second, you have to add dependency themes by yourself. For example, the `Button` requires `Ripple` so you have to provide styles for both of them.
+A couple of things here. First you need to use raw components to get the styles properly applied. Second, you have to add dependency themes by yourself. For example, the `Button` requires `Ripple` so you have to provide styles for both of them.
 
 ## Roboto Font and Material Design Icons
 
@@ -193,7 +193,7 @@ The only requirement for SSR is to be able to require ES6 and CSS Modules in the
 
 ## Examples
 
-For now we have a [repository example](https://github.com/react-toolbox/react-toolbox-example) demonstrating configuration and some basic customization. For now it's not using SSR rendering but it shouldn't be difficult to implement an example so it will come soon. Feel free to PR your example project or to add some use cases to the repository.
+We have an [example repository](https://github.com/react-toolbox/react-toolbox-example) demonstrating configuration and some basic customization. For now it's not using SSR rendering but it shouldn't be difficult to implement an example so it will come soon. Feel free to PR your example project or to add some use cases to the repository.
 
 ## TypeScript
 

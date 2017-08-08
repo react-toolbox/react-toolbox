@@ -54,16 +54,11 @@
 
 .title {
   flex-grow: 1;
-  font-size: calc(1.8 * var(--unit));
-  font-weight: bold;
+  font-size: var(--appbar-title-font-size);
+  font-weight: var(--appbar-title-font-weight);
   overflow-x: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  & > small {
-    font-size: calc(1.8 * var(--unit));
-    font-weight: normal;
-  }
 }
 
 .leftIcon {

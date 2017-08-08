@@ -64,6 +64,7 @@ const factory = (Tab, TabContent, FontIcon) => {
     componentWillUnmount() {
       window.removeEventListener('resize', this.handleResize);
       clearTimeout(this.resizeTimeout);
+      if (this.updatePointerAnimationFrame) cancelAnimationFrame(this.updatePointerAnimationFrame);
     }
 
     handleHeaderClick = (idx) => {
@@ -82,7 +83,7 @@ const factory = (Tab, TabContent, FontIcon) => {
 
     updatePointer = (idx) => {
       if (this.navigationNode && this.navigationNode.children[idx]) {
-        requestAnimationFrame(() => {
+        this.updatePointerAnimationFrame = requestAnimationFrame(() => {
           const nav = this.navigationNode.getBoundingClientRect();
           const label = this.navigationNode.children[idx].getBoundingClientRect();
           const scrollLeft = this.navigationNode.scrollLeft;
@@ -197,10 +198,10 @@ const factory = (Tab, TabContent, FontIcon) => {
             {hasLeftArrow && <div className={theme.arrowContainer} onClick={this.scrollRight}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_left" />
             </div>}
-            <nav className={theme.navigation} ref={(node) => { this.navigationNode = node; }}>
+            <div className={theme.navigation} role="tablist" ref={(node) => { this.navigationNode = node; }}>
               {this.renderHeaders(headers)}
               <span className={classNamePointer} style={this.state.pointer} />
-            </nav>
+            </div>
             {hasRightArrow && <div className={theme.arrowContainer} onClick={this.scrollLeft}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_right" />
             </div>}
