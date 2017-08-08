@@ -116,7 +116,7 @@
   display: flex;
   margin: var(--list-item-child-margin) var(--list-horizontal-padding) var(--list-item-child-margin) 0;
 
-  & > * {
+  & > :not(button) {
     padding: 0;
   }
 
