@@ -63,6 +63,7 @@
 
   &.checkboxCell {
     width: calc(1.8 * var(--unit));
+    padding-right: 5px;
 
     & > * {
       margin: 0;
@@ -82,6 +83,7 @@
 
   &.checkboxCell {
     width: calc(1.8 * var(--unit));
+    padding-right: 5px;
 
     & > * {
       margin: 0 0 3px;
