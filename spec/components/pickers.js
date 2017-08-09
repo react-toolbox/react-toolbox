@@ -123,6 +123,16 @@ class PickersTest extends React.Component {
           onChange={this.handleChange.bind(this, 'time2')}
           value={this.state.time2}
         />
+
+        <TimePicker
+          format="ampm"
+          label="Time rounded to nearest 5 minute interval"
+          onChange={this.handleChange.bind(this, 'time3')}
+          onEscKeyDown={() => console.log('esc key down')}
+          onOverlayClick={() => console.log('overlay click')}
+          value={this.state.time3}
+          step={5}
+        />
       </section>
     );
   }
