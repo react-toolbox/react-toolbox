@@ -43,6 +43,7 @@ If you want to provide a theme via context, the component key is `RTTimePicker`.
 | `label`         | `String`    |             | The text string to use for the floating label element in the input component.|
 | `onChange`      | `Function`  |             | Callback called when the picker value is changed.|
 | `readonly`      | `Boolean`   |             | The input element will be readonly and look like disabled.|
+| `step`          | `Number`    |             | If step is set, minutes will be rounded to the nearest given interval. For example if step is 5 the minute hand can only select 5 minute marks.|
 | `value`         | `Date`      |             | Datetime object with currrently selected time. |
 
 ## Theme

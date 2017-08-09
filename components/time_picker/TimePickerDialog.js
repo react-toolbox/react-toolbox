@@ -17,7 +17,7 @@ const factory = (Dialog) => {
       onEscKeyDown: PropTypes.func,
       onOverlayClick: PropTypes.func,
       onSelect: PropTypes.func,
-      roundTo: PropTypes.number,
+      step: PropTypes.number,
       theme: PropTypes.shape({
         am: PropTypes.string,
         amFormat: PropTypes.string,
@@ -46,12 +46,12 @@ const factory = (Dialog) => {
 
     state = {
       display: 'hours',
-      displayTime: new Date(this.props.value.getTime()),
+      displayTime: this.stepTime(new Date(this.props.value.getTime())),
     };
 
     componentWillReceiveProps(nextProps) {
       if (nextProps.value.getTime() !== this.state.displayTime.getTime()) {
-        this.setState({ displayTime: new Date(nextProps.value.getTime()) });
+        this.setState({ displayTime: this.stepTime(new Date(nextProps.value.getTime())) });
       }
     }
 
@@ -62,10 +62,7 @@ const factory = (Dialog) => {
     }
 
     handleClockChange = (value) => {
-      if (this.props.roundTo) {
-        value.setMinutes(Math.round(value.getMinutes() / this.props.roundTo) * this.props.roundTo);
-      }
-      this.setState({ displayTime: value });
+      this.setState({ displayTime: this.stepTime(value) });
     };
 
     handleSelect = (event) => {
@@ -79,6 +76,13 @@ const factory = (Dialog) => {
     handleHandMoved = () => {
       if (this.state.display === 'hours') this.setState({ display: 'minutes' });
     };
+
+    stepTime(value) {
+      if (this.props.step && value) {
+        value.setMinutes((Math.round(value.getMinutes() / this.props.step) * this.props.step) % 60);
+      }
+      return value;
+    }
 
     switchDisplay = (event) => {
       this.setState({ display: event.target.id });
