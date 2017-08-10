@@ -63,7 +63,6 @@
 
 .leftIcon {
   margin-left: calc(-1.2 * var(--unit));
-  margin-right: calc(1.2 * var(--unit));
 }
 
 .rightIcon {
