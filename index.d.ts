@@ -13,6 +13,7 @@ import { DatePicker } from "./lib/date_picker";
 import { Dialog } from "./lib/dialog";
 import { Drawer } from "./lib/drawer";
 import { Dropdown } from "./lib/dropdown";
+import { DurationPicker } from "./lib/duration_picker";
 import { FontIcon } from "./lib/font_icon";
 import { Input } from "./lib/input";
 import { Layout, Panel, NavDrawer, Sidebar } from "./lib/layout";
@@ -42,6 +43,7 @@ import { DatePickerTheme } from "./lib/date_picker";
 import { DialogTheme } from "./lib/dialog";
 import { DrawerTheme } from "./lib/drawer";
 import { DropdownTheme } from "./lib/dropdown";
+import { DurationPickerTheme } from "./lib/duration_picker";
 import { InputTheme } from "./lib/input";
 import { LayoutTheme, PanelTheme, NavDrawerTheme, SidebarTheme } from "./lib/layout";
 import { LinkTheme } from "./lib/link";
@@ -71,6 +73,7 @@ export {
   Dialog,
   Drawer,
   Dropdown,
+  DurationPicker,
   FontIcon,
   Input,
   Layout, Panel, NavDrawer, Sidebar,
@@ -100,6 +103,7 @@ export {
   DialogTheme,
   DrawerTheme,
   DropdownTheme,
+  DurationPickerTheme,
   InputTheme,
   LayoutTheme, PanelTheme, NavDrawerTheme, SidebarTheme,
   LinkTheme,

@@ -1,6 +1,7 @@
 import React from 'react';
 import DatePicker from '../../components/date_picker';
 import TimePicker from '../../components/time_picker';
+import DurationPicker from '../../components/duration_picker';
 
 const datetime = new Date(2015, 10, 16);
 const min_datetime = new Date(new Date(datetime).setDate(8));
@@ -10,12 +11,16 @@ datetime.setMinutes(28);
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 const enabledDisabledDates = [new Date(today.getTime()), new Date(today.setDate(today.getDate() - 1))];
+const durationTime = new Date(new Date(datetime).setHours(11));
+durationTime.setMinutes(0);
 
 class PickersTest extends React.Component {
   state = {
     date2: datetime,
     firstActive: false,
     time2: datetime,
+    durationStart: durationTime,
+    duration: undefined
   };
 
   handleChange = (item, value) => {
@@ -24,6 +29,10 @@ class PickersTest extends React.Component {
     newState[item] = value;
     this.setState(newState);
   };
+
+  handleDurationChange = (value) => {
+      this.setState({duration: value});
+  }
 
   makeFirstUnactive = () => {
     this.setState({ firstActive: false });
@@ -132,6 +141,19 @@ class PickersTest extends React.Component {
           onOverlayClick={() => console.log('overlay click')}
           value={this.state.time3}
           step={5}
+        />
+        <DurationPicker
+          format="ampm"
+          label="Select duration"
+          onChange={this.handleDurationChange.bind(this)}
+          onEscKeyDown={() => console.log('esc key down')}
+          onOverlayClick={() => console.log('overlay click')}
+          duration={this.state.duration}
+          startTime={this.state.durationStart}
+          duration={this.state.duration}
+          minDuration={15}
+          maxDuration={120}
+          step={15}
         />
       </section>
     );
