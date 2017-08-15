@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
@@ -79,9 +80,15 @@ const factory = (Tab, TabContent, FontIcon) => {
       return newIndex;
     }
 
+    focusTab = (index) => {
+      const tabs = [...ReactDOM.findDOMNode(this).firstChild.querySelectorAll('[role=tab]')];
+      tabs[index].focus();
+    }
+
     handleHeaderClick = (idx) => {
       if (this.props.onChange) {
         this.props.onChange(idx);
+        this.focusTab(idx);
       }
     };
 
