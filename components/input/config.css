@@ -12,6 +12,7 @@
   --input-text-disabled-color: var(--input-text-bottom-border-color);
   --input-text-disabled-text-color: var(--input-text-label-color);
   --input-text-error-color: rgb(222, 50, 38);
+  --input-text-helper-color: color(var(--color-black) a(26%));
   --input-text-required-color: rgb(222, 50, 38);
   --input-underline-height: calc(2 * var(--unit));
   --input-icon-font-size: calc(2.4 * var(--unit));

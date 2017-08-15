@@ -8,6 +8,7 @@ class InputTest extends React.Component {
     withIcon: '',
     withCustomIcon: '',
     withHintCustomIcon: '',
+    withHelperText: '',
     multilineHint: 'Long Description here',
     multilineRows: 'A\n\B\nC\nD\nE\nF',
   };
@@ -36,6 +37,8 @@ class InputTest extends React.Component {
         <Input type="tel" name="withIcon" value={this.state.withIcon} required label="With icon" onChange={this.handleChange} icon="phone" />
         <Input type="tel" name="withCustomIcon" value={this.state.withCustomIcon} label="With custom icon" onChange={this.handleChange} icon="favorite" />
         <Input type="text" name="withHintCustomIcon" value={this.state.withHintCustomIcon} label="With Hint Text Icon" hint="Hint Text" onChange={this.handleChange} icon="share" />
+        <Input type="text" name="withHelperText" value={this.state.withHelperText} label="With Helper Text" helper="Some Helper Text" onChange={this.handleChange} icon="home" />
+        <Input type="text" name="withErrorText" value={this.state.withHelperText} label="With Error" error="Some Error" onChange={this.handleChange} icon="error" />
       </section>
     );
   }
