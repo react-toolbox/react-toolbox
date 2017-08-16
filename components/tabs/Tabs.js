@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
@@ -79,9 +80,15 @@ const factory = (Tab, TabContent, FontIcon) => {
       return newIndex;
     }
 
+    focusTab = (index) => {
+      const tabs = [...ReactDOM.findDOMNode(this).firstChild.querySelectorAll('[role=tab]')];
+      tabs[index].focus();
+    }
+
     handleHeaderClick = (idx) => {
       if (this.props.onChange) {
         this.props.onChange(idx);
+        this.focusTab(idx);
       }
     };
 
@@ -220,10 +227,10 @@ const factory = (Tab, TabContent, FontIcon) => {
             {hasLeftArrow && <div className={theme.arrowContainer} onClick={this.scrollRight}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_left" />
             </div>}
-            <nav className={theme.navigation} ref={(node) => { this.navigationNode = node; }}>
+            <div className={theme.navigation} role="tablist" ref={(node) => { this.navigationNode = node; }}>
               {this.renderHeaders(headers)}
               <span className={classNamePointer} style={this.state.pointer} />
-            </nav>
+            </div>
             {hasRightArrow && <div className={theme.arrowContainer} onClick={this.scrollLeft}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_right" />
             </div>}
