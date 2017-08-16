@@ -183,6 +183,6 @@ export interface DurationPickerProps {
   [key: string]: any;
 }
 
-export class DurationPicker extends React.Component<DurationPicker, {}> { }
+export class DurationPicker extends React.Component<DurationPickerProps, {}> { }
 
 export default DurationPicker;
