@@ -26,6 +26,7 @@ const factory = (ripple, FontIcon) => {
       onMouseLeave: PropTypes.func,
       onMouseUp: PropTypes.func,
       primary: PropTypes.bool,
+      ref: PropTypes.func,
       theme: PropTypes.shape({
         accent: PropTypes.string,
         button: PropTypes.string,
@@ -80,6 +81,7 @@ const factory = (ripple, FontIcon) => {
         inverse,
         neutral,
         primary,   // eslint-disable-line
+        ref,
         theme,
         type,
         ...others
@@ -94,7 +96,12 @@ const factory = (ripple, FontIcon) => {
       const props = {
         ...others,
         href,
-        ref: (node) => { this.buttonNode = node; },
+        ref: (node) => {
+          this.buttonNode = node;
+          if (ref instanceof Function) {
+            ref(node);
+          }
+        },
         'aria-expanded': ariaExpanded,
         'aria-haspopup': ariaHaspopup,
         'aria-label': ariaLabel,
