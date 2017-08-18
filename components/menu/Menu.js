@@ -187,7 +187,7 @@ const factory = (MenuItem) => {
     };
 
     handleKeyboardTrap = (event) => {
-      handleMenuKeyboardTrap(event.target, this);
+      handleMenuKeyboardTrap(event, this);
     }
 
     handleSelect = (item, event) => {
