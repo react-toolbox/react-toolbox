@@ -102,7 +102,6 @@ const factory = (ripple, FontIcon) => {
             setRef(node);
           }
         },
-        setRef,
         'aria-expanded': ariaExpanded,
         'aria-haspopup': ariaHaspopup,
         'aria-label': ariaLabel,
