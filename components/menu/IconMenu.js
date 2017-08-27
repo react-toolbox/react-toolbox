@@ -64,8 +64,8 @@ const factory = (IconButton, Menu) => {
 
     render() {
       const {
-        active, children, className, icon, iconRipple, inverse, menuRipple, // eslint-disable-line
-        onHide, onSelect, onShow, position, selectable, selected, theme, ...other
+        active, children, className, icon, iconRipple, inverse, menuRipple, onHide, // eslint-disable-line
+        onSelect, onShow, position, selectable, selected, theme, ...other
       } = this.props;
       return (
         <div {...other} className={classnames(theme.iconMenu, className)}>
