@@ -1,7 +1,39 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
+import { IconMenu } from '../IconMenu';
 import { Menu } from '../Menu';
 import { MenuItem } from '../MenuItem';
+
+describe('IconMenu', () => {
+  describe('#on mount', () => {
+    describe('when \'active\' prop is not set', () => {
+      it('sets \'active\' Menu prop correctly', () => {
+        const wrapper = shallow(<IconMenu />);
+        expect(wrapper.find('Menu').props().active).toBe(false);
+      });
+    });
+
+    describe('when \'active\' prop is set to false', () => {
+      it('sets \'active\' Menu prop correctly', () => {
+        const wrapper = shallow(<IconMenu active={false} />);
+        expect(wrapper.find('Menu').props().active).toBe(false);
+      });
+    });
+
+    describe('when \'active\' prop is set to true', () => {
+      it('sets \'active\' Menu prop correctly', () => {
+        const wrapper = shallow(<IconMenu active />);
+        expect(wrapper.find('Menu').props().active).toBe(true);
+      });
+
+      it('sets \'active\' Menu prop correctly after IconButton click', () => {
+        const wrapper = mount(<IconMenu active />);
+        wrapper.find('IconButton').simulate('click');
+        expect(wrapper.find('Menu').props().active).toBe(false);
+      });
+    });
+  });
+});
 
 describe('MenuItem', () => {
   describe('#onClick', () => {

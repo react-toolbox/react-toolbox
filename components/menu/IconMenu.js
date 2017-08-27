@@ -9,6 +9,7 @@ import InjectMenu from './Menu';
 const factory = (IconButton, Menu) => {
   class IconMenu extends Component {
     static propTypes = {
+      active: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
       icon: PropTypes.oneOfType([
@@ -32,6 +33,7 @@ const factory = (IconButton, Menu) => {
     };
 
     static defaultProps = {
+      active: false,
       className: '',
       icon: 'more_vert',
       iconRipple: true,
@@ -41,7 +43,13 @@ const factory = (IconButton, Menu) => {
     };
 
     state = {
-      active: false,
+      active: this.props.active,
+    }
+
+    componentWillReceiveProps(nextProps) {
+      if (nextProps.active !== this.props.active && this.state.active !== nextProps.active) {
+        this.setState({ active: nextProps.active });
+      }
     }
 
     handleButtonClick = (event) => {
@@ -56,8 +64,8 @@ const factory = (IconButton, Menu) => {
 
     render() {
       const {
-        children, className, icon, iconRipple, inverse, menuRipple, onHide, // eslint-disable-line
-        onSelect, onShow, position, selectable, selected, theme, ...other
+        active, children, className, icon, iconRipple, inverse, menuRipple, // eslint-disable-line
+        onHide, onSelect, onShow, position, selectable, selected, theme, ...other
       } = this.props;
       return (
         <div {...other} className={classnames(theme.iconMenu, className)}>
