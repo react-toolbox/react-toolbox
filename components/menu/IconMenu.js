@@ -47,7 +47,7 @@ const factory = (IconButton, Menu) => {
     }
 
     componentWillReceiveProps(nextProps) {
-      if (nextProps.active !== this.props.active && this.state.active !== nextProps.active) {
+      if (this.state.active !== nextProps.active) {
         this.setState({ active: nextProps.active });
       }
     }
