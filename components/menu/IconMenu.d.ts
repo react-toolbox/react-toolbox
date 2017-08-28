@@ -14,6 +14,11 @@ export interface IconMenuTheme {
 
 export interface IconMenuProps extends ReactToolbox.Props {
   /**
+   * If true, the inner Menu component will be active.
+   * @default false
+   */
+  active?: boolean;
+  /**
    * Children to pass through the component.
    */
   children?: React.ReactNode;
