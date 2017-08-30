@@ -7,7 +7,7 @@ class Portal extends Component {
     children: PropTypes.node,
     className: PropTypes.string,
     container: PropTypes.node,
-    style: PropTypes.style,
+    style: PropTypes.string,
   }
 
   static defaultProps = {
