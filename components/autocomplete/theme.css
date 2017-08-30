@@ -13,8 +13,8 @@
     & .suggestions {
       box-shadow: var(--zdepth-shadow-1);
       max-height: var(--autocomplete-overflow-max-height);
+      -ms-overflow-style: none;
       visibility: visible;
-      -ms-overflow-style:none;
     }
   }
 }
