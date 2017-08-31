@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
+import styleShape from 'react-style-proptype';
 
 class Portal extends Component {
   static propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
     container: PropTypes.node,
-    style: PropTypes.string,
+    style: styleShape,
   }
 
   static defaultProps = {
