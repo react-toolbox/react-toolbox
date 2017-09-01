@@ -45,7 +45,7 @@ If you want to provide a theme via context, the component key is `RTAutocomplete
 |:-----|:-----|:-----|:-----|
 | `allowCreate`                   | `Bool`                        | `false` | Determines if user can create a new option with the current typed value |
 | `className`                     | `String`                      | `''`    | Sets a class to style of the Component.|
-| `direction`                     | `String`                      | `auto`  | Determines the opening direction. It can be `auto`, `top` or `down`. |
+| `direction`                     | `String`                      | `auto`  | Determines the opening direction. It can be `auto`, `up` or `down`. |
 | `disabled`                      | `Bool`                        | `false` | If true, component will be disabled. |
 | `error`                         | `String` or `Node`            |         | Sets the error string for the internal input element. |
 | `keepFocusOnChange`             | `Bool`                        | `false` | Whether component should keep focus after value change. |
