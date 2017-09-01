@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
-import classnames from 'classnames';
+import React from 'react';
+import PropTypes from 'prop-types';
+import cn from 'classnames';
 import { themr } from 'react-css-themr';
 import { APP_BAR } from '../identifiers';
 import InjectIconButton from '../button/IconButton';
@@ -32,7 +33,10 @@ const factory = (IconButton) => {
         scrollHide: PropTypes.string,
         title: PropTypes.string,
       }),
-      title: PropTypes.node,
+      title: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+      ]),
     };
 
     static defaultProps = {
@@ -66,16 +70,16 @@ const factory = (IconButton) => {
       }
     }
 
-    initializeScroll = () => {
+    initializeScroll() {
       window.addEventListener('scroll', this.handleScroll);
       const { height } = this.rootNode.getBoundingClientRect();
       this.curScroll = window.scrollY;
       this.setState({ height });
-    };
+    }
 
-    endScroll = () => {
+    endScroll() {
       window.removeEventListener('scroll', this.handleScroll);
-    };
+    }
 
     handleScroll = () => {
       const scrollDiff = this.curScroll - window.scrollY;
@@ -96,11 +100,34 @@ const factory = (IconButton) => {
         theme,
         title,
       } = this.props;
-      const className = classnames(theme.appBar, {
+
+      const className = cn(theme.appBar, {
         [theme.fixed]: this.props.fixed,
         [theme.flat]: this.props.flat,
         [theme.scrollHide]: this.state.hidden,
       }, this.props.className);
+
+      const renderedTitle = typeof title === 'string'
+        ? <h1 className={cn(theme.title)}>{title}</h1>
+        : title;
+
+      const renderedLeftIcon = leftIcon && (
+        <IconButton
+          inverse
+          className={cn(theme.leftIcon)}
+          onClick={onLeftIconClick}
+          icon={leftIcon}
+        />
+      );
+
+      const renderedRightIcon = rightIcon && (
+        <IconButton
+          inverse
+          className={cn(theme.rightIcon)}
+          onClick={onRightIconClick}
+          icon={rightIcon}
+        />
+      );
 
       return (
         <header
@@ -109,22 +136,10 @@ const factory = (IconButton) => {
           ref={(node) => { this.rootNode = node; }}
         >
           <div className={theme.inner}>
-            {leftIcon && <IconButton
-              inverse
-              className={classnames(theme.leftIcon)}
-              onClick={onLeftIconClick}
-              icon={leftIcon}
-            />
-            }
-            {title && <h1 className={classnames(theme.title)}>{title}</h1>}
+            {renderedLeftIcon}
+            {renderedTitle}
             {children}
-            {rightIcon && <IconButton
-              inverse
-              className={classnames(theme.rightIcon)}
-              onClick={onRightIconClick}
-              icon={rightIcon}
-            />
-            }
+            {renderedRightIcon}
           </div>
         </header>
       );

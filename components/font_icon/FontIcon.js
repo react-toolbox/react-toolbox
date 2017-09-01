@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 const FontIcon = ({ alt, children, className, theme, value, ...other}) => ( // eslint-disable-line
@@ -8,7 +9,7 @@ const FontIcon = ({ alt, children, className, theme, value, ...other}) => ( // e
     className={classnames({ 'material-icons': typeof value === 'string' || typeof children === 'string' }, className)}
     {...other}
   >
-    <span aria-hidden="true">{value}</span>
+    {value}
     {children}
   </span>
 );

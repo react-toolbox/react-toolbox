@@ -7,7 +7,9 @@
     "jest": true,
     "es6": true
   },
+  "plugins": ["compat"],
   "rules": {
+    "compat/compat": 2,
     "func-names": "off",
     "global-require": "off",
     "no-use-before-define": 0,
@@ -18,7 +20,10 @@
     "react/no-find-dom-node": 0,
     "react/jsx-filename-extension": 0,
     "import/prefer-default-export": 0,
+    "jsx-a11y/no-noninteractive-tabindex": 0,
+    "jsx-a11y/no-noninteractive-element-interactions": 0,
     "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/label-has-for": 0,
     "import/no-extraneous-dependencies": [
       "error", {
         "devDependencies": true,

@@ -1,5 +1,6 @@
 /* eslint-disable */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
@@ -16,6 +17,7 @@ const factory = (Input) => {
       disabled: PropTypes.bool,
       error: PropTypes.string,
       label: PropTypes.string,
+      labelKey: PropTypes.string,
       name: PropTypes.string,
       onBlur: PropTypes.func,
       onChange: PropTypes.func,
@@ -46,6 +48,7 @@ const factory = (Input) => {
         PropTypes.string,
         PropTypes.number,
       ]),
+      valueKey: PropTypes.string,
     };
 
     static defaultProps = {
@@ -53,7 +56,9 @@ const factory = (Input) => {
       className: '',
       allowBlank: true,
       disabled: false,
+      labelKey: 'label',
       required: false,
+      valueKey: 'value',
     };
 
     state = {
@@ -86,7 +91,7 @@ const factory = (Input) => {
 
     getSelectedItem = () => {
       for (const item of this.props.source) {
-        if (item.value === this.props.value) return item;
+        if (item[this.props.valueKey] === this.props.value) return item;
       }
       return !this.props.allowBlank
         ? this.props.source[0]
@@ -121,10 +126,10 @@ const factory = (Input) => {
     }
 
     open = (event) => {
+      if (this.state.active) return;
       const client = event.target.getBoundingClientRect();
       const screenHeight = window.innerHeight || document.documentElement.offsetHeight;
       const up = this.props.auto ? client.top > ((screenHeight / 2) + client.height) : false;
-      if (this.inputNode) this.inputNode.blur();
       this.setState({ active: true, up });
     };
 
@@ -155,7 +160,7 @@ const factory = (Input) => {
           </div>
           {this.props.label
             ? (
-              <label htmlFor={this.props.name} className={theme.label}>
+              <label className={theme.label}>
                 {this.props.label}
                 {this.props.required ? <span className={theme.required}> * </span> : null}
               </label>
@@ -166,26 +171,26 @@ const factory = (Input) => {
     }
 
     renderValue = (item, idx) => {
-      const { theme } = this.props;
+      const { labelKey, theme, valueKey } = this.props;
       const className = classnames({
-        [theme.selected]: item.value === this.props.value,
+        [theme.selected]: item[valueKey] === this.props.value,
         [theme.disabled]: item.disabled,
       });
       return (
         <li
           key={idx}
           className={className}
-          onClick={!item.disabled && this.handleSelect.bind(this, item.value)}
+          onMouseDown={!item.disabled && this.handleSelect.bind(this, item[valueKey])}
         >
-          {this.props.template ? this.props.template(item) : item.label}
+          {this.props.template ? this.props.template(item) : item[labelKey]}
         </li>
       );
     };
 
     render() {
       const {
-        allowBlank, auto, required, onChange, onFocus, onBlur, // eslint-disable-line no-unused-vars
-        source, template, theme, ...others
+        allowBlank, auto, labelKey, required, onChange, onFocus, onBlur, // eslint-disable-line no-unused-vars
+        source, template, theme, valueKey, ...others
       } = this.props;
       const selected = this.getSelectedItem();
       const className = classnames(theme.dropdown, {
@@ -201,6 +206,7 @@ const factory = (Input) => {
           data-react-toolbox="dropdown"
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
+          tabIndex="-1"
         >
           <Input
             {...others}
@@ -209,11 +215,10 @@ const factory = (Input) => {
             onClick={this.handleClick}
             required={this.props.required}
             readOnly
-            ref={(node) => { this.inputNode = node && node.getWrappedInstance(); }}
             type={template && selected ? 'hidden' : null}
             theme={theme}
             themeNamespace="input"
-            value={selected && selected.label ? selected.label : ''}
+            value={selected && selected[labelKey] ? selected[labelKey] : ''}
           />
           {template && selected ? this.renderTemplateValue(selected) : null}
           <ul className={theme.values}>

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { themr } from 'react-css-themr';
 import { LIST } from '../identifiers';
 import InjectListItemContent from './ListItemContent';
@@ -68,11 +69,10 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
     render() {
       const {
         className,
-        hasRipple,    // eslint-disable-line no-unused-vars
+        ripple: hasRipple,    // eslint-disable-line no-unused-vars
         onClick,      // eslint-disable-line no-unused-vars
         onMouseDown,  // eslint-disable-line no-unused-vars
         onTouchStart, // eslint-disable-line no-unused-vars
-        ripple:
         theme,
         to,
         ...other

@@ -43,6 +43,10 @@ export interface InputTheme {
    */
   inputElement?: string;
   /**
+   * Used for the label when the input has a label.
+   */
+  label?: string;
+  /**
    * Used in case the input is required.
    */
   required?: string;
@@ -108,6 +112,14 @@ export interface InputProps extends ReactToolbox.Props {
    * Callback function that is fired when component is focused.
    */
   onFocus?: Function;
+  /**
+   * Callback function that is fired when a key is pressed down.
+   */
+  onKeyDown?: Function;
+  /**
+   * Callback function that is fired when a key is released.
+   */
+  onKeyUp?: Function;
   /**
    * Callback function that is fired when a key is pressed.
    */

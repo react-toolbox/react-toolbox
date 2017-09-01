@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { BUTTON } from '../identifiers';
@@ -9,6 +10,7 @@ const factory = (ripple, FontIcon) => {
   class SimpleBrowseButton extends Component {
     static propTypes = {
       accent: PropTypes.bool,
+      accept: PropTypes.string,
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
@@ -46,6 +48,7 @@ const factory = (ripple, FontIcon) => {
 
     static defaultProps = {
       accent: false,
+      accept: '*/*',
       className: '',
       flat: false,
       floating: false,
@@ -84,6 +87,7 @@ const factory = (ripple, FontIcon) => {
     render() {
       const {
         accent,    // eslint-disable-line
+        accept,
         children,
         className,
         flat,      // eslint-disable-line
@@ -111,6 +115,7 @@ const factory = (ripple, FontIcon) => {
       const props = {
         ...others,
         ref: (node) => { this.labelNode = node; },
+        onChange: null,
         className: classes,
         disabled: this.props.disabled,
         onMouseUp: this.handleMouseUp,
@@ -121,7 +126,12 @@ const factory = (ripple, FontIcon) => {
       return React.createElement(element, props,
           icon ? <FontIcon className={theme.icon} value={icon} /> : null,
         <span>{label}</span>,
-        <input className={classes} type="file" onChange={this.handleFileChange} />,
+        <input
+          className={classes}
+          type="file"
+          accept={accept}
+          onChange={this.handleFileChange}
+        />,
           children,
         );
     }

@@ -4,7 +4,12 @@ const babel = require('gulp-babel');
 const postcss = require('gulp-postcss');
 
 gulp.task('js', function () {
-  return gulp.src(['./components/**/*.js'])
+  return gulp.src([
+    './components/**/*.js',
+    '!./components/**/*.spec.js',
+    '!./components/**/__test__',
+    '!./components/__mocks__/**/*.js'
+  ])
     .pipe(babel())
     .pipe(gulp.dest('./lib'));
 });
@@ -17,6 +22,8 @@ gulp.task('css', function () {
     }),
     require('postcss-mixins')(),
     require('postcss-each')(),
+    require('postcss-apply')(),
+    require('postcss-nesting')(),
     require('postcss-reporter')({ clearMessages: true })
   ];
 
@@ -28,4 +35,9 @@ gulp.task('css', function () {
     .pipe(gulp.dest('./lib'));
 });
 
-gulp.task('default', ['js', 'css']);
+gulp.task('tsd', function () {
+  gulp.src('./components/**/*.d.ts')
+    .pipe(gulp.dest('./lib'));
+});
+
+gulp.task('default', ['js', 'css', 'tsd']);

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { INPUT } from '../identifiers';
@@ -9,6 +10,7 @@ const factory = (FontIcon) => {
     static propTypes = {
       children: PropTypes.node,
       className: PropTypes.string,
+      defaultValue: PropTypes.string,
       disabled: PropTypes.bool,
       error: PropTypes.oneOfType([
         PropTypes.string,
@@ -35,6 +37,7 @@ const factory = (FontIcon) => {
       onFocus: PropTypes.func,
       onKeyPress: PropTypes.func,
       required: PropTypes.bool,
+      role: PropTypes.string,
       rows: PropTypes.number,
       theme: PropTypes.shape({
         bar: PropTypes.string,
@@ -52,6 +55,7 @@ const factory = (FontIcon) => {
       }),
       type: PropTypes.string,
       value: PropTypes.oneOfType([
+        PropTypes.number,
         PropTypes.object,
         PropTypes.string,
       ]),
@@ -64,6 +68,7 @@ const factory = (FontIcon) => {
       floating: true,
       multiline: false,
       required: false,
+      role: 'input',
       type: 'text',
     };
 
@@ -154,9 +159,16 @@ const factory = (FontIcon) => {
       this.inputNode.focus();
     }
 
+    valuePresent = value => (
+      value !== null
+        && value !== undefined
+        && value !== ''
+        && !(typeof value === 'number' && isNaN(value))
+    )
+
     render() {
-      const { children, disabled, error, floating, hint, icon,
-              name, label: labelText, maxLength, multiline, required,
+      const { children, defaultValue, disabled, error, floating, hint, icon,
+              name, label: labelText, maxLength, multiline, required, role,
               theme, type, value, onKeyPress, rows = 1, ...others } = this.props;
       const length = maxLength && value ? value.length : 0;
       const labelClassName = classnames(theme.label, { [theme.fixed]: !floating });
@@ -168,18 +180,16 @@ const factory = (FontIcon) => {
         [theme.withIcon]: icon,
       }, this.props.className);
 
-      const valuePresent = value !== null
-        && value !== undefined
-        && value !== ''
-        && !(typeof value === Number && isNaN(value)); // eslint-disable-line
+      const valuePresent = this.valuePresent(value) || this.valuePresent(defaultValue);
 
       const inputElementProps = {
         ...others,
         className: classnames(theme.inputElement, { [theme.filled]: valuePresent }),
         onChange: this.handleChange,
         ref: (node) => { this.inputNode = node; },
-        role: 'input',
+        role,
         name,
+        defaultValue,
         disabled,
         required,
         type,
@@ -199,7 +209,7 @@ const factory = (FontIcon) => {
           {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
           <span className={theme.bar} />
           {labelText
-            ? <label className={labelClassName} htmlFor={name}>
+            ? <label className={labelClassName}>
               {labelText}
               {required ? <span className={theme.required}> * </span> : null}
             </label>
@@ -217,6 +227,6 @@ const factory = (FontIcon) => {
 };
 
 const Input = factory(InjectedFontIcon);
-export default themr(INPUT, null, { withRef: true })(Input);
+export default themr(INPUT)(Input);
 export { factory as inputFactory };
 export { Input };

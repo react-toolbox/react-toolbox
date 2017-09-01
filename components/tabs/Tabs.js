@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { TABS } from '../identifiers';
@@ -51,13 +52,19 @@ const factory = (Tab, TabContent, FontIcon) => {
       this.handleResize();
     }
 
-    componentWillReceiveProps(nextProps) {
-      this.updatePointer(nextProps.index);
+    componentDidUpdate(prevProps) {
+      const { index, children } = this.props;
+      const { index: prevIndex, children: prevChildren } = prevProps;
+
+      if (index !== prevIndex || children !== prevChildren) {
+        this.updatePointer(index);
+      }
     }
 
     componentWillUnmount() {
       window.removeEventListener('resize', this.handleResize);
       clearTimeout(this.resizeTimeout);
+      if (this.updatePointerAnimationFrame) cancelAnimationFrame(this.updatePointerAnimationFrame);
     }
 
     handleHeaderClick = (idx) => {
@@ -76,15 +83,17 @@ const factory = (Tab, TabContent, FontIcon) => {
 
     updatePointer = (idx) => {
       if (this.navigationNode && this.navigationNode.children[idx]) {
-        const nav = this.navigationNode.getBoundingClientRect();
-        const label = this.navigationNode.children[idx].getBoundingClientRect();
-        const scrollLeft = this.navigationNode.scrollLeft;
-        this.setState({
-          pointer: {
-            top: `${nav.height}px`,
-            left: `${label.left - (nav.left + scrollLeft)}px`,
-            width: `${label.width}px`,
-          },
+        this.updatePointerAnimationFrame = requestAnimationFrame(() => {
+          const nav = this.navigationNode.getBoundingClientRect();
+          const label = this.navigationNode.children[idx].getBoundingClientRect();
+          const scrollLeft = this.navigationNode.scrollLeft;
+          this.setState({
+            pointer: {
+              top: `${nav.height}px`,
+              left: `${(label.left + scrollLeft) - nav.left}px`,
+              width: `${label.width}px`,
+            },
+          });
         });
       }
     }
@@ -189,10 +198,10 @@ const factory = (Tab, TabContent, FontIcon) => {
             {hasLeftArrow && <div className={theme.arrowContainer} onClick={this.scrollRight}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_left" />
             </div>}
-            <nav className={theme.navigation} ref={(node) => { this.navigationNode = node; }}>
+            <div className={theme.navigation} role="tablist" ref={(node) => { this.navigationNode = node; }}>
               {this.renderHeaders(headers)}
               <span className={classNamePointer} style={this.state.pointer} />
-            </nav>
+            </div>
             {hasRightArrow && <div className={theme.arrowContainer} onClick={this.scrollLeft}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_right" />
             </div>}

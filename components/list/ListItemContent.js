@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { LIST } from '../identifiers';
@@ -14,7 +15,10 @@ const factory = (ListItemText) => {
         PropTypes.node,
       ]),
       children: PropTypes.node,
-      legend: PropTypes.string,
+      legend: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node,
+      ]),
       theme: PropTypes.shape({
         auto: PropTypes.string,
         itemContentRoot: PropTypes.string,

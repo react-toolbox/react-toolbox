@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { PROGRESS_BAR } from '../identifiers';
@@ -81,7 +82,7 @@ class ProgressBar extends Component {
   render() {
     const { className, disabled, max, min, mode, multicolor, type, theme, value } = this.props;
     const _className = classnames(theme[type], {
-      [theme[mode]]: mode,
+      [theme.indeterminate]: mode === 'indeterminate',
       [theme.multicolor]: multicolor,
     }, className);
 

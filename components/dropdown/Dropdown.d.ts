@@ -31,6 +31,10 @@ export interface DropdownTheme {
    */
   label?: string;
   /**
+   * Used for setting the label from source
+   */
+  labelKey?: string;
+  /**
    * Used when dropdown has required attribute.
    */
   required?: string;
@@ -54,6 +58,10 @@ export interface DropdownTheme {
    * Used for the list of values.
    */
   values?: string;
+  /**
+   * Used for setting the value from source
+   */
+  valueKey: string;
 }
 
 export interface DropdownProps extends ReactToolbox.Props {

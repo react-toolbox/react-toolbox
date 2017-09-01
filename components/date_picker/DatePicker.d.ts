@@ -132,7 +132,7 @@ export interface DatePickerProps extends ReactToolbox.Props {
    * Sets locale for the Dialog.
    * @default "en"
    */
-  locale?: "de" | "no" | "en" | "es" | "af" | "ar" | "be" | "bg" | "bn" | "bo" | "br" | "bs" | "ca" | "gl" | "eu" | "pt" | "it" | "fr" | "ru" | "ua" | DatePickerLocale;
+  locale?: "de" | "no" | "en" | "es" | "af" | "ar" | "be" | "bg" | "bn" | "bo" | "br" | "bs" | "ca" | "gl" | "eu" | "pt" | "it" | "fr" | "ru" | "ua" | "zh-cn" | "zh-hk" | "zh-tw" | DatePickerLocale;
   /**
    * Date object with the maximum selectable date.
    */
@@ -191,6 +191,10 @@ export interface DatePickerProps extends ReactToolbox.Props {
    * Date object with the currently selected date.
    */
   value?: Date | string;
+  /**
+   * Used in case the input is required.
+   */
+  required?: boolean;
 }
 
 export interface DatePickerLocale {

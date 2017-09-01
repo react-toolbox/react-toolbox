@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { SWITCH } from '../identifiers';
@@ -62,7 +63,7 @@ const factory = (Thumb) => {
       } = this.props;
       const _className = classnames(theme[disabled ? 'disabled' : 'field'], className);
       return (
-        <label data-react-toolbox="switch" className={_className} htmlFor={this.props.name}>
+        <label data-react-toolbox="switch" className={_className}>
           <input
             {...others}
             checked={this.props.checked}

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { RADIO } from '../identifiers';
@@ -72,7 +73,6 @@ const factory = (Radio) => {
       const _className = classnames(theme[this.props.disabled ? 'disabled' : 'field'], className);
       return (
         <label
-          htmlFor={name}
           data-react-toolbox="radio-button"
           className={_className}
           onMouseEnter={onMouseEnter}

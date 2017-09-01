@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { LIST } from '../identifiers';
@@ -42,7 +43,10 @@ const factory = (Avatar, ListItemContent, ListItemActions) => {
       PropTypes.string,
       PropTypes.element,
     ]),
-    caption: PropTypes.string,
+    caption: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node,
+    ]),
     className: PropTypes.string,
     disabled: PropTypes.bool,
     itemContent: PropTypes.element,
@@ -51,7 +55,10 @@ const factory = (Avatar, ListItemContent, ListItemActions) => {
       PropTypes.string,
       PropTypes.element,
     ]),
-    legend: PropTypes.string,
+    legend: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node,
+    ]),
     rightActions: PropTypes.arrayOf(PropTypes.node),
     rightIcon: PropTypes.oneOfType([
       PropTypes.string,

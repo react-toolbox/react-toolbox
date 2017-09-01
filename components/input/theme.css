@@ -9,7 +9,7 @@
   @apply --reset;
 
   &.withIcon {
-    margin-left: var(--input-icon-size);
+    margin-left: calc(var(--input-icon-size) + var(--input-icon-right-space));
   }
 }
 
@@ -18,7 +18,7 @@
   display: block;
   font-size: var(--input-icon-font-size) !important;
   height: var(--input-icon-size);
-  left: calc(-1 * var(--input-icon-size));
+  left: calc(-1 * (var(--input-icon-size) + var(--input-icon-right-space)));
   line-height: var(--input-icon-size) !important;
   position: absolute;
   text-align: center;
@@ -31,6 +31,7 @@
   background-color: var(--input-text-background-color);
   border-bottom: 1px solid var(--input-text-bottom-border-color);
   border-left: 0;
+  border-radius: 0;
   border-right: 0;
   border-top: 0;
   color: var(--color-text);

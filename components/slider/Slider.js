@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import styleShape from 'react-style-proptype';
@@ -12,12 +13,15 @@ import InjectInput from '../input/Input';
 const factory = (ProgressBar, Input) => {
   class Slider extends Component {
     static propTypes = {
+      buffer: PropTypes.number,
       className: PropTypes.string,
       disabled: PropTypes.bool,
       editable: PropTypes.bool,
       max: PropTypes.number,
       min: PropTypes.number,
       onChange: PropTypes.func,
+      onDragStart: PropTypes.func,
+      onDragStop: PropTypes.func,
       pinned: PropTypes.bool,
       snaps: PropTypes.bool,
       step: PropTypes.number,
@@ -41,10 +45,13 @@ const factory = (ProgressBar, Input) => {
     };
 
     static defaultProps = {
+      buffer: 0,
       className: '',
       editable: false,
       max: 100,
       min: 0,
+      onDragStart: () => {},
+      onDragStop: () => {},
       pinned: false,
       snaps: false,
       step: 0.01,
@@ -71,6 +78,16 @@ const factory = (ProgressBar, Input) => {
 
     shouldComponentUpdate(nextProps, nextState) {
       return this.state.inputFocused || !nextState.inputFocused;
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+      if (nextState.pressed !== this.state.pressed) {
+        if (nextState.pressed) {
+          this.props.onDragStart();
+        } else {
+          this.props.onDragStop();
+        }
+      }
     }
 
     componentWillUnmount() {
@@ -187,9 +204,8 @@ const factory = (ProgressBar, Input) => {
     }
 
     knobOffset() {
-      const { max, min } = this.props;
-      const translated = this.state.sliderLength * ((this.props.value - min) / (max - min));
-      return (translated * 100) / this.state.sliderLength;
+      const { max, min, value } = this.props;
+      return 100 * ((value - min) / (max - min));
     }
 
     move(position) {
@@ -300,6 +316,7 @@ const factory = (ProgressBar, Input) => {
                 min={this.props.min}
                 mode="determinate"
                 value={this.props.value}
+                buffer={this.props.buffer}
               />
               {this.renderSnaps()}
             </div>

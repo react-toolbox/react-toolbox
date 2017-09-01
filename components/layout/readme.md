@@ -222,3 +222,68 @@ The `Sidebar` uses a `Drawer` component under the covers the theme is the same a
 |:---------|:-----------|
 | `clipped` | Added to the root class when it is clipped.|
 | `pinned` | Added to the root class when it is pinned.|
+
+## Hiding icon in `AppBar` when permanentAt rule is active
+
+When screen size is large enough and `Layout` makes `NavDrawer` constantly visible based on `permanentAt` prop of `NavDrawer` it is useful to hide menu icon in `AppBar`. Here are the code changes you have to perform to hide an element depending on the value provided to `permanentAt` property (based on how `Layout` component does this itself):
+
+```diff
+import React from 'react';
+import { Layout, AppBar } from 'react-toolbox';
++import isBrowser from 'react-toolbox/lib/utils/is-browser';
++import breakpoints from 'react-toolbox/lib/utils/breakpoints';
++import { getViewport } from 'react-toolbox/lib/utils/utils';
+
+class MyComponent extends React.Component {
+  state = {
+    drawerActive: false,
+    drawerPinned: false,
++    width: isBrowser() && getViewport().width
+  }
+
+  toggleDrawerActive = () => {
+    this.setState({ drawerActive: !this.state.drawerActive });
+  }
+
+  toggleDrawerPinned = () => {
+    this.setState({ drawerPinned: !this.state.drawerPinned });
+  }
+
++  componentDidMount () {
++    if (!this.state.width) this.handleResize();
++    window.addEventListener('resize', this.handleResize);
++  }
+
++  componentWillUnmount () {
++    window.removeEventListener('resize', this.handleResize);
++  }
+
++  handleResize = () => {
++    this.setState({ width: getViewport().width });
++  }
+
+  render() {
++    const permanentAt = 'lg';
++    const appBarIconVisible = this.state.width <= breakpoints[permanentAt];
+   
+    return (
+      <Layout>
+        <NavDrawer active={this.state.drawerActive}
+-                   pinned={this.state.drawerPinned} permanentAt="lg"
++                   pinned={this.state.drawerPinned} permanentAt={permanentAt}
+                   onOverlayClick={ this.toggleDrawerActive }>
+           { /* yout nav */ }
+        </NavDrawer>
+        <Panel>
+-          <AppBar title="Test" leftIcon="menu" onLeftIconClick={this.toggleDrawerActive}>
++          <AppBar title="Test" leftIcon={appBarIconVisible ? "menu" : null} onLeftIconClick={this.toggleDrawerActive}>
+          </AppBar>
+          <div>
+            {this.props.children}
+          </div>
+        </Panel>
+      </Layout>
+    );
+  }
+}
+```

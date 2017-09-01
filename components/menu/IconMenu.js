@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { MENU } from '../identifiers';
@@ -15,6 +16,7 @@ const factory = (IconButton, Menu) => {
         PropTypes.element,
       ]),
       iconRipple: PropTypes.bool,
+      inverse: PropTypes.bool,
       menuRipple: PropTypes.bool,
       onClick: PropTypes.func,
       onHide: PropTypes.func,

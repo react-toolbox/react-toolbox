@@ -22,9 +22,9 @@
   box-shadow: var(--zdepth-shadow-5);
   display: flex;
   flex-direction: column;
-  max-height: 96vh;
   max-width: 96vw;
   opacity: 0;
+  overflow: var(--overflow);
   transform: translateY(calc(-1 * var(--dialog-translate-y)));
   transition:
     opacity var(--animation-duration) var(--animation-curve-default),

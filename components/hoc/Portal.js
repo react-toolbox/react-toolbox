@@ -1,11 +1,14 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
+import styleShape from 'react-style-proptype';
 
 class Portal extends Component {
   static propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
     container: PropTypes.node,
+    style: styleShape,
   }
 
   static defaultProps = {
@@ -54,7 +57,11 @@ class Portal extends Component {
 
   _getOverlay() {
     if (!this.props.children) return null;
-    return <div className={this.props.className}>{this.props.children}</div>;
+    return (
+      <div className={this.props.className} style={this.props.style}>
+        {this.props.children}
+      </div>
+    );
   }
 
   _renderOverlay() {
