@@ -59,6 +59,10 @@ export interface MenuItemProps extends ReactToolbox.Props {
    * Classnames object defining the component style.
    */
   theme?: MenuItemTheme;
+  /**
+   * Passed down to the root element
+   */
+  value?: any;
 }
 
 export class MenuItem extends React.Component<MenuItemProps, {}> { }
