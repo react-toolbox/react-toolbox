@@ -96,7 +96,7 @@
     "typescript": "^2.1.5",
     "webpack": "^2.6.0",
     "webpack-dev-middleware": "^1.10.2",
-    "webpack-hot-middleware": "^2.18.0"    
+    "webpack-hot-middleware": "^2.18.0"
   },
   "engines": {
     "node": ">= 6"
@@ -116,7 +116,7 @@
     "release": "bumped release",
     "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
     "ts": "tsc",
-    "tsd": "cpx \"./components/**/*.d.ts\" ./lib"
+    "tsd": "cpx \"./components/**/*.d.ts\" ./lib",
     "test": "jest",
     "test:watch": "jest --watch --no-watchman"
   },
