@@ -9,7 +9,7 @@
     "no-angle-bracket-type-assertion": true,
     "max-line-length": [true, 100],
     "no-consecutive-blank-lines": [true, 1],
-    "member-access": true,
+    "member-access": false,
     "no-trailing-whitespace": true,
     "no-bitwise": true,
     "no-debugger": true,

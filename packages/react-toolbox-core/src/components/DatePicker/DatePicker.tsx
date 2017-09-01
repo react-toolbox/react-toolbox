@@ -3,7 +3,13 @@ import { addMonths } from 'date-fns';
 import { map, range } from 'ramda';
 import { createElement, Component, ComponentClass } from 'react';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
-import { DateChecker, DateRange, FocusedInput, PickerDate, PickerMode } from './types';
+import {
+  DateChecker,
+  DateRange,
+  FocusedInput,
+  PickerDate,
+  PickerMode,
+} from './types';
 import { RangePicker } from './RangePicker';
 import { Month } from './Month';
 
@@ -37,12 +43,12 @@ export interface ArrowNodeProps {
 }
 
 export type DatePickerNodes =
-  'NextNode' |
-  'Month' |
-  'PickerWrapper' |
-  'PrevNode' |
-  'SinglePicker' |
-  'RangePicker';
+  | 'NextNode'
+  | 'Month'
+  | 'PickerWrapper'
+  | 'PrevNode'
+  | 'SinglePicker'
+  | 'RangePicker';
 
 export interface DatePickerArgs {
   Month: Month;
@@ -76,17 +82,17 @@ export default function datePickerFactory({
 
     private changeViewDate = viewDate => {
       this.setState({ viewDate });
-    }
+    };
 
     private handleNext = () => {
       const { viewDate } = this.state;
       this.changeViewDate(addMonths(viewDate, +1));
-    }
+    };
 
     private handlePrev = () => {
       const { viewDate } = this.state;
       this.changeViewDate(addMonths(viewDate, -1));
-    }
+    };
 
     private renderMonth = month => {
       const {
@@ -116,7 +122,7 @@ export default function datePickerFactory({
           viewDate={monthViewDate}
         />
       );
-    }
+    };
 
     private renderPicker = () => {
       const {
@@ -133,19 +139,27 @@ export default function datePickerFactory({
       const Picker = mode === 'SINGLE' ? SinglePicker : RangePicker;
       const children = map(this.renderMonth, range(0, numberOfMonths));
       const pickerTypeName = mode === 'SINGLE' ? 'SinglePicker' : 'RangePicker';
-      const rangePickerProps =  { focusedInput, onFocusedInputChange, resetToWhenFromChanges };
+      const rangePickerProps = {
+        focusedInput,
+        onFocusedInputChange,
+        resetToWhenFromChanges,
+      };
       const pickerTypeProps = mode === 'SINGLE' ? {} : rangePickerProps;
       const baseProps = passProps(this.props, pickerTypeName, this);
 
-      return createElement(Picker, {
-        ...baseProps,
-        ...pickerTypeProps,
-        highlighted,
-        onChange,
-        onHighlightedChange,
-        selected,
-      }, children);
-    }
+      return createElement(
+        Picker,
+        {
+          ...baseProps,
+          ...pickerTypeProps,
+          highlighted,
+          onChange,
+          onHighlightedChange,
+          selected,
+        },
+        children,
+      );
+    };
 
     public render() {
       const {
@@ -163,11 +177,20 @@ export default function datePickerFactory({
       } = this.props;
 
       return (
-        <PickerWrapper {...rest} {...passProps(this.props, 'PickerWrapper', this)}>
-          <PrevNode {...passProps(this.props, 'PrevNode', this)} onClick={this.handlePrev}>
+        <PickerWrapper
+          {...rest}
+          {...passProps(this.props, 'PickerWrapper', this)}
+        >
+          <PrevNode
+            {...passProps(this.props, 'PrevNode', this)}
+            onClick={this.handlePrev}
+          >
             {'<'}
           </PrevNode>
-          <NextNode {...passProps(this.props, 'NextNode', this)} onClick={this.handleNext}>
+          <NextNode
+            {...passProps(this.props, 'NextNode', this)}
+            onClick={this.handleNext}
+          >
             {'>'}
           </NextNode>
           {this.renderPicker()}

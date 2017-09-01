@@ -3,9 +3,9 @@ import { F, memoize } from 'ramda';
 import { ComponentClass, MouseEvent, PureComponent } from 'react';
 import { isSameMonth, isToday } from 'date-fns';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
-import { DateChecker,  PickerDate, SelectedSource } from './types';
+import { DateChecker, PickerDate, SelectedSource } from './types';
 import getSelectionMatch, { equalSelectionMatch } from './getSelectionMatch';
-import { Component }  from '../../types';
+import { Component } from '../../types';
 
 export interface DayNodeProps {
   blocked: boolean;
@@ -40,7 +40,10 @@ export interface DayProps {
 
 export type Day = ComponentClass<DayProps>;
 
-export default function dayFactory({ DayNode, passthrough }: DayFactoryArgs): Day {
+export default function dayFactory({
+  DayNode,
+  passthrough,
+}: DayFactoryArgs): Day {
   const passProps = getPassThrough(passthrough);
   return class Day extends PureComponent<DayProps, void> {
     public static defaultProps = {
@@ -58,17 +61,39 @@ export default function dayFactory({ DayNode, passthrough }: DayFactoryArgs): Da
         return true;
       }
 
-      if ((this.props.selected || nextProps.selected) && !equalSelectionMatch(
-        this.getSelectedMatch(nextProps.day, this.props.selected, this.props.viewDate),
-        this.getSelectedMatch(nextProps.day, nextProps.selected, nextProps.viewDate),
-      )) {
+      if (
+        (this.props.selected || nextProps.selected) &&
+        !equalSelectionMatch(
+          this.getSelectedMatch(
+            nextProps.day,
+            this.props.selected,
+            this.props.viewDate,
+          ),
+          this.getSelectedMatch(
+            nextProps.day,
+            nextProps.selected,
+            nextProps.viewDate,
+          ),
+        )
+      ) {
         return true;
       }
 
-      if ((this.props.highlighted || nextProps.highlighted) && !equalSelectionMatch(
-        this.getHighlightedMatch(nextProps.day, this.props.highlighted, this.props.viewDate),
-        this.getHighlightedMatch(nextProps.day, nextProps.highlighted, nextProps.viewDate),
-      )) {
+      if (
+        (this.props.highlighted || nextProps.highlighted) &&
+        !equalSelectionMatch(
+          this.getHighlightedMatch(
+            nextProps.day,
+            this.props.highlighted,
+            this.props.viewDate,
+          ),
+          this.getHighlightedMatch(
+            nextProps.day,
+            nextProps.highlighted,
+            nextProps.viewDate,
+          ),
+        )
+      ) {
         return true;
       }
 
@@ -83,21 +108,21 @@ export default function dayFactory({ DayNode, passthrough }: DayFactoryArgs): Da
       if (isSameMonth(day, viewDate) && !isDayDisabled(day)) {
         onClick(day, event);
       }
-    }
+    };
 
-    private handleMouseEnter = (event) => {
+    private handleMouseEnter = event => {
       const { day, isDayDisabled, onMouseEnter, viewDate } = this.props;
       if (isSameMonth(day, viewDate) && !isDayDisabled(day)) {
         onMouseEnter(day, event);
       }
-    }
+    };
 
-    private handleMouseLeave = (event) => {
+    private handleMouseLeave = event => {
       const { day, isDayDisabled, onMouseLeave, viewDate } = this.props;
       if (isSameMonth(day, viewDate) && !isDayDisabled(day)) {
         onMouseLeave(day, event);
       }
-    }
+    };
 
     public render() {
       const {
@@ -110,8 +135,13 @@ export default function dayFactory({ DayNode, passthrough }: DayFactoryArgs): Da
         ...rest,
       } = this.props;
       const selectedMatch = this.getSelectedMatch(day, selected, viewDate);
-      const highlightedMatch = this.getHighlightedMatch(day, highlighted, viewDate);
-      const isHighlighted = highlightedMatch.selected || highlightedMatch.inRange;
+      const highlightedMatch = this.getHighlightedMatch(
+        day,
+        highlighted,
+        viewDate,
+      );
+      const isHighlighted =
+        highlightedMatch.selected || highlightedMatch.inRange;
 
       return (
         <DayNode

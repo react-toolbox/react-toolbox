@@ -14,10 +14,15 @@ export interface SelectionMatch {
   source: SelectedSource;
 }
 
-export function equalSelectionMatch(match1: SelectionMatch, match2: SelectionMatch): boolean {
-  return (match1.inRange === match2.inRange) &&
-    (match1.selected === match2.selected) &&
-    (match1.source === match2.source);
+export function equalSelectionMatch(
+  match1: SelectionMatch,
+  match2: SelectionMatch,
+): boolean {
+  return (
+    match1.inRange === match2.inRange &&
+    match1.selected === match2.selected &&
+    match1.source === match2.source
+  );
 }
 
 export default function getSelectionMatch(

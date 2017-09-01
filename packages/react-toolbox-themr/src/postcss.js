@@ -35,7 +35,8 @@ function getScopedName(className, filePath) {
   var fileName = fsPath.basename(filePath, '.css');
   // for anything except theme.css files we use file name
   // for theme.css files we use folder name
-  var file = '', folder = '';
+  var file = '',
+    folder = '';
   if (fileName === 'theme') {
     folder = '-' + fsPath.basename(fsPath.dirname(filePath));
   } else {

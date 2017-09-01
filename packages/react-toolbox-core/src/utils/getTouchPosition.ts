@@ -16,7 +16,9 @@ function getWebTouchPosition(event: ReactTouchEvent<any>): Coordinates {
   };
 }
 
-export default function getTouchPosition(event: ReactTouchEvent<any>): Coordinates {
+export default function getTouchPosition(
+  event: ReactTouchEvent<any>,
+): Coordinates {
   return isReactNative()
     ? getNativeTouchPosition(event.nativeEvent)
     : getWebTouchPosition(event);

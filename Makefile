@@ -35,6 +35,7 @@ test-watch:
 
 prettier:
 	./node_modules/.bin/prettier --write --single-quote "packages/react-toolbox-themr/{src,bin}/**/*.js"
+	./node_modules/.bin/prettier --write --single-quote --trailing-comma all "packages/react-toolbox-core/{src,bin}/**/*.{ts,tsx}"
 
 lint:
 	make lint-js

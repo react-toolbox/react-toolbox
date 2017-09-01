@@ -1,6 +1,13 @@
 import * as React from 'react';
 import { isBefore, isAfter } from 'date-fns';
-import { Children, cloneElement, ComponentClass, Component, ReactElement, ReactNode } from 'react';
+import {
+  Children,
+  cloneElement,
+  ComponentClass,
+  Component,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import isComponentOfType from '../../utils/isComponentOfType';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 import { FocusedInput, DateRange } from './types';
@@ -140,47 +147,58 @@ export default function rangePickerFactory({
           this.selecting = false;
         }
       }
-    }
+    };
 
     private handleDayMouseEnter = (dateForDay, event) => {
       const { focusedInput, onHighlightedChange } = this.props;
       const { selected = {} } = this.props;
 
       if (this.selecting) {
-        if (focusedInput === 'END_DATE' && selected.from && isAfter(dateForDay, selected.from)) {
+        if (
+          focusedInput === 'END_DATE' &&
+          selected.from &&
+          isAfter(dateForDay, selected.from)
+        ) {
           onHighlightedChange({ from: selected.from, to: dateForDay });
         } else if (
-          focusedInput === 'START_DATE' && selected.to && isBefore(dateForDay, selected.to)
+          focusedInput === 'START_DATE' &&
+          selected.to &&
+          isBefore(dateForDay, selected.to)
         ) {
           onHighlightedChange({ from: dateForDay, to: selected.to });
         }
       }
-    }
+    };
 
     private handleDayMouseLeave = (dateForDay, event) => {
       const { focusedInput, onHighlightedChange } = this.props;
       const { selected = {} } = this.props;
 
       if (this.selecting) {
-        if (focusedInput === 'END_DATE' && selected.from && isAfter(dateForDay, selected.from)) {
+        if (
+          focusedInput === 'END_DATE' &&
+          selected.from &&
+          isAfter(dateForDay, selected.from)
+        ) {
           onHighlightedChange({ from: selected.from, to: undefined });
         } else if (
-          focusedInput === 'START_DATE' && selected.to && isBefore(dateForDay, selected.to)
+          focusedInput === 'START_DATE' &&
+          selected.to &&
+          isBefore(dateForDay, selected.to)
         ) {
           onHighlightedChange({ from: undefined, to: selected.to });
         }
       }
-    }
+    };
 
-    private renderMonth = month => (
+    private renderMonth = month =>
       cloneElement(month, {
         highlighted: this.props.highlighted,
         onDayClick: this.handleDayClick,
         onDayMouseEnter: this.handleDayMouseEnter,
         onDayMouseLeave: this.handleDayMouseLeave,
         selected: this.props.selected,
-      })
-    )
+      });
 
     public render(): JSX.Element {
       const {
@@ -192,12 +210,17 @@ export default function rangePickerFactory({
       } = this.props;
 
       return (
-        <MonthsWrapper {...rest} {...passProps(this.props, 'MonthsWrapper', this)}>
-          {Children.map(children, child => (
-            isComponentOfType(Month, child)
-              ? this.renderMonth(child as ReactElement<MonthProps>)
-              : child
-          ))}
+        <MonthsWrapper
+          {...rest}
+          {...passProps(this.props, 'MonthsWrapper', this)}
+        >
+          {Children.map(
+            children,
+            child =>
+              isComponentOfType(Month, child)
+                ? this.renderMonth(child as ReactElement<MonthProps>)
+                : child,
+          )}
         </MonthsWrapper>
       );
     }

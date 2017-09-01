@@ -32,14 +32,14 @@ export interface MonthProps {
 }
 
 export type MonthNodes =
-  'Day' |
-  'DaysWeek' |
-  'DaysWrapper' |
-  'Weekday' |
-  'MonthTitle' |
-  'MonthWrapper' |
-  'WeekDay' |
-  'WeekdaysWrapper';
+  | 'Day'
+  | 'DaysWeek'
+  | 'DaysWrapper'
+  | 'Weekday'
+  | 'MonthTitle'
+  | 'MonthWrapper'
+  | 'WeekDay'
+  | 'WeekdaysWrapper';
 
 export interface MonthFactoryArgs {
   /**
@@ -129,7 +129,10 @@ export default function monthFactory({
         sundayFirstDayOfWeek,
         viewDate,
       } = this.props;
-      const monthMatrix = this.getMonthMatrix(viewDate.getTime(), sundayFirstDayOfWeek);
+      const monthMatrix = this.getMonthMatrix(
+        viewDate.getTime(),
+        sundayFirstDayOfWeek,
+      );
       const weeks: JSX.Element[] = [];
       let days;
 
@@ -165,9 +168,9 @@ export default function monthFactory({
       }
 
       return weeks;
-    }
+    };
 
-    private renderWeekDay = (weekDay) => (
+    private renderWeekDay = weekDay => (
       <Weekday
         {...passProps(this.props, 'Weekday', this)}
         key={getFullDayOfWeek(weekDay, this.props.locale)}
@@ -175,14 +178,16 @@ export default function monthFactory({
       >
         {getFullDayOfWeek(weekDay, this.props.locale)}
       </Weekday>
-    )
+    );
 
     private renderWeekDays = () => {
       const idxs = range(0, 7);
       const { sundayFirstDayOfWeek } = this.props;
-      const sortedDaysIdx = sundayFirstDayOfWeek ? idxs : [...idxs.slice(1), idxs[0]];
+      const sortedDaysIdx = sundayFirstDayOfWeek
+        ? idxs
+        : [...idxs.slice(1), idxs[0]];
       return sortedDaysIdx.map(this.renderWeekDay);
-    }
+    };
 
     public render() {
       const {
@@ -198,8 +203,14 @@ export default function monthFactory({
         ...rest,
       } = this.props;
       return (
-        <MonthWrapper {...rest} {...passProps(this.props, 'MonthWrapper', this)}>
-          <MonthTitle {...passProps(this.props, 'MonthTitle', this)} viewDate={viewDate}>
+        <MonthWrapper
+          {...rest}
+          {...passProps(this.props, 'MonthWrapper', this)}
+        >
+          <MonthTitle
+            {...passProps(this.props, 'MonthTitle', this)}
+            viewDate={viewDate}
+          >
             {getFullMonth(viewDate)} {viewDate.getFullYear()}
           </MonthTitle>
           <WeekdaysWrapper {...passProps(this.props, 'WeekdaysWrapper', this)}>

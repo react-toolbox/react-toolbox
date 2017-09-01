@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ComponentClass, MouseEvent, PureComponent, ReactNode } from 'react';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
-import { Component }  from '../../types';
+import { Component } from '../../types';
 
 export interface ButtonNodeProps {
   flat: boolean;
@@ -36,9 +36,11 @@ export interface ButtonFactoryArgs {
   passthrough: PassTroughFunction<ButtonProps, 'ButtonNode' | 'LinkNode'>;
 }
 
-export default function buttonFactory(
-  { ButtonNode, LinkNode, passthrough }: ButtonFactoryArgs,
-): ComponentClass<ButtonProps> {
+export default function buttonFactory({
+  ButtonNode,
+  LinkNode,
+  passthrough,
+}: ButtonFactoryArgs): ComponentClass<ButtonProps> {
   const passProps = getPassThrough(passthrough);
   return class Button extends PureComponent<ButtonProps, void> {
     public static defaultProps = {
@@ -62,7 +64,7 @@ export default function buttonFactory(
       if (this.props.onMouseUp) {
         this.props.onMouseUp(event);
       }
-    }
+    };
 
     private handleMouseLeave = event => {
       if (this.rootNode) {
@@ -72,7 +74,7 @@ export default function buttonFactory(
       if (this.props.onMouseLeave) {
         this.props.onMouseLeave(event);
       }
-    }
+    };
 
     private handleInnerRef = node => {
       const { innerRef } = this.props;
@@ -80,7 +82,7 @@ export default function buttonFactory(
       if (innerRef) {
         innerRef(node);
       }
-    }
+    };
 
     public render() {
       const nodeTag = this.props.href ? 'LinkNode' : 'ButtonNode';

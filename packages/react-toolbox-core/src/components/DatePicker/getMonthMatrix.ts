@@ -7,7 +7,10 @@ import {
   subDays,
 } from 'date-fns';
 
-export default function getMonthMatrix(time: number, sundayFirstDayOfWeek: boolean): Date[][] {
+export default function getMonthMatrix(
+  time: number,
+  sundayFirstDayOfWeek: boolean,
+): Date[][] {
   const monthMatrix: Date[][] = [];
   const viewDate = new Date(time);
 

@@ -91,7 +91,11 @@ describe('<Day />', () => {
         to: new Date(2017, 2, 15),
       };
       const wrapper = shallow(
-        <Day day={selected.from} selected={selected} viewDate={selected.from} />,
+        <Day
+          day={selected.from}
+          selected={selected}
+          viewDate={selected.from}
+        />,
       );
       expect(wrapper.find(DayNode).prop('selected')).toEqual(true);
       expect(wrapper.find(DayNode).prop('selectedSource')).toEqual('from');
