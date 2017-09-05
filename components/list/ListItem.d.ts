@@ -34,6 +34,10 @@ export interface ListItemProps extends ReactToolbox.Props {
    */
   ripple?: boolean;
   /**
+   * Sets a tabIndex attribute which specifies the tab order of the element.
+   */
+  tabIndex?: number;
+  /**
    * Classnames object defining the component style.
    * @default false
    */

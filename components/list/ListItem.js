@@ -19,6 +19,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       onMouseDown: PropTypes.func,
       onTouchStart: PropTypes.func,
       ripple: PropTypes.bool,
+      tabIndex: PropTypes.number,
       theme: PropTypes.shape({
         listItem: PropTypes.string,
       }),
@@ -29,6 +30,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       className: '',
       disabled: false,
       ripple: false,
+      tabIndex: 0,
     };
 
     handleClick = (event) => {
@@ -41,6 +43,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
 
     handleEnter = (event) => {
       if (event.keyCode === 13) {
+        event.preventDefault();
         this.handleClick(event);
       }
     };
@@ -85,6 +88,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
         onClick,      // eslint-disable-line no-unused-vars
         onMouseDown,  // eslint-disable-line no-unused-vars
         onTouchStart, // eslint-disable-line no-unused-vars
+        tabIndex,
         theme,
         to,
         ...other
@@ -100,7 +104,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
           onMouseDown={onMouseDown}
           onTouchStart={onTouchStart}
           onKeyDown={this.handleEnter}
-          tabIndex={0}
+          tabIndex={tabIndex}
         >
           {to ? <a tabIndex={-1} href={this.props.to}>{content}</a> : content}
           {children.ignored}
