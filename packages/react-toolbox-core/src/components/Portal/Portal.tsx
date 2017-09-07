@@ -1,4 +1,4 @@
-import { Children, Component, ReactNode } from 'react';
+import { Children, Component, ComponentClass, ReactNode } from 'react';
 import {
   findDOMNode,
   unmountComponentAtNode,
@@ -8,13 +8,13 @@ import {
 export interface PortalProps {
   children: ReactNode;
   className?: string;
-  container: HTMLElement | (() => HTMLElement);
-  onMount(): void;
-  onUnmount(): void;
-  parentId: string;
+  container?: HTMLElement | (() => HTMLElement);
+  onMount?(): void;
+  onUnmount?(): void;
+  parentId?: string;
 }
 
-export default function portalFactory() {
+export default function portalFactory(): ComponentClass<PortalProps> {
   return class Portal extends Component<PortalProps, void> {
     childRootNode: HTMLElement | null = null;
 
@@ -86,12 +86,14 @@ export default function portalFactory() {
   };
 }
 
+export type PortalType = ComponentClass<PortalProps>;
+
 function getChildren(children) {
   return children ? Children.only(children) : null;
 }
 
 function getContainer(
-  container: HTMLElement | (() => HTMLElement),
+  container?: HTMLElement | (() => HTMLElement),
 ): HTMLElement {
   return (
     findDOMNode(typeof container === 'function' ? container() : container) ||
