@@ -13,16 +13,17 @@
   "author": "Javi Velasco <javier.velasco86@gmail.com> (http://javivelasco.com/)",
   "license": "ISC",
   "dependencies": {
-    "color": "^1.0.3",
-    "ramda": "^0.23.0",
+    "color": "^2.0.0",
+    "ramda": "^0.24.1",
     "react-toolbox-core": "^0.0.0-alpha.11",
-    "styled-components": "^1.4.6"
+    "recompose": "^0.25.0",
+    "styled-components": "^2.1.2"
   },
   "peerDependencies": {
     "react": "^15.5.0",
     "react-dom": "^15.5.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1"
+    "babel-cli": "^6.26.0"
   }
 }
