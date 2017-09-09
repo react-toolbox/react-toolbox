@@ -12,10 +12,11 @@ const Day = dayFactory({
     background: ${getDayBackground};
     cursor: pointer;
     opacity: ${props => (props.disabled ? 0.3 : 1)};
-    pointer-events: ${props => ((props.disabled || props.blocked) ? 'none' : 'all')};
+    pointer-events: ${props =>
+      props.disabled || props.blocked ? 'none' : 'all'};
     text-align: center;
     position: relative;
-    ${withOverride('DayNode')}
+    ${withOverride('DayNode')};
   `,
 });
 
@@ -45,43 +46,43 @@ const Month = monthFactory({
   Day: styled(Day)`
     line-height: 30px;
     width: calc(100% / 7);
-    ${withOverride('Day')}
+    ${withOverride('Day')};
   `,
   DaysWeek: styled.div`
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    ${withOverride('DaysWeek')}
+    ${withOverride('DaysWeek')};
   `,
   DaysWrapper: styled.div`
     display: block;
     width: 100%;
-    ${withOverride('DayWrapper')}
+    ${withOverride('DayWrapper')};
   `,
   MonthTitle: styled.div`
     line-height: 40px;
     text-align: center;
     width: 100%;
-    ${withOverride('MonthTitle')}
+    ${withOverride('MonthTitle')};
   `,
   MonthWrapper: styled.div`
     border: 1px solid red;
     display: block;
     width: 100%;
-    ${withOverride('MonthWrapper')}
+    ${withOverride('MonthWrapper')};
   `,
   Weekday: styled.span`
     line-height: 30px;
     text-align: center;
     width: calc(100% / 7);
-    ${withOverride('Weekday')}
+    ${withOverride('Weekday')};
   `,
   WeekdaysWrapper: styled.div`
     background-color: gray;
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    ${withOverride('WeekdaysWrapper')}
+    ${withOverride('WeekdaysWrapper')};
   `,
 });
 

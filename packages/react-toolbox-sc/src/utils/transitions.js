@@ -26,6 +26,6 @@ function transitionEventNamesFor(element) {
     (result, transition) =>
       !result && (element && element.style[transition] !== undefined)
         ? TRANSITIONS[transition]
-        : result
+        : result,
   );
 }

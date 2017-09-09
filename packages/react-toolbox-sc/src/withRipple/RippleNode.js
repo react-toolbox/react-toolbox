@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { addOnTransitionEnded, removeOnTransitionEnded } from '../utils/transitions';
+import {
+  addOnTransitionEnded,
+  removeOnTransitionEnded,
+} from '../utils/transitions';
 import withOverride from '../utils/withOverride';
 
 class RippleNode extends Component {
@@ -19,7 +22,7 @@ class RippleNode extends Component {
 
   componentWillMount() {
     const { isTouch } = this.props;
-    getEventTypes(isTouch).forEach((eventType) => {
+    getEventTypes(isTouch).forEach(eventType => {
       document.addEventListener(eventType, this.handleDeactivate);
     });
   }
@@ -30,21 +33,21 @@ class RippleNode extends Component {
 
   componentWillUnmount() {
     const { isTouch } = this.props;
-    getEventTypes(isTouch).forEach((eventType) => {
+    getEventTypes(isTouch).forEach(eventType => {
       document.removeEventListener(eventType, this.handleDeactivate);
     });
   }
 
   handleDeactivate = () => {
     this.props.onDeactivate(this.props.idx);
-  }
+  };
 
   handleOpacityEnd = () => {
     removeOnTransitionEnded(this.rootNode, this.handleOpacityEnd);
     this.props.onFinish(this.props.idx);
-  }
+  };
 
-  handleRef = (node) => {
+  handleRef = node => {
     const { innerRef } = this.props;
     this.rootNode = node;
     if (innerRef) innerRef(node);
@@ -53,11 +56,11 @@ class RippleNode extends Component {
   render() {
     const {
       active,
-      idx,          // eslint-disable-line
-      innerRef,     // eslint-disable-line
-      isTouch,      // eslint-disable-line
+      idx, // eslint-disable-line
+      innerRef, // eslint-disable-line
+      isTouch, // eslint-disable-line
       onDeactivate, // eslint-disable-line
-      onFinish,     // eslint-disable-line
+      onFinish, // eslint-disable-line
       spreadSize,
       startX,
       startY,
@@ -76,9 +79,7 @@ class RippleNode extends Component {
 }
 
 function getEventTypes(isTouch) {
-  return isTouch
-    ? ['touchend', 'touchmove']
-    : ['mouseup'];
+  return isTouch ? ['touchend', 'touchmove'] : ['mouseup'];
 }
 
 const scale = keyframes`
@@ -104,7 +105,7 @@ const Node = styled.span`
   transition-property: opacity;
   width: ${props => props.spreadSize}px;
   z-index: 100;
-  ${withOverride('RippleNode')}
+  ${withOverride('RippleNode')};
 `;
 
 export default RippleNode;

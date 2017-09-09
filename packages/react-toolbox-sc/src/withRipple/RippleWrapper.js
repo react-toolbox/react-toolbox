@@ -11,7 +11,7 @@ const RippleWrapper = styled.span`
   right: 0;
   top: 0;
   z-index: 1;
-  ${withOverride('RippleWrapper')}
+  ${withOverride('RippleWrapper')};
 `;
 
 export default RippleWrapper;

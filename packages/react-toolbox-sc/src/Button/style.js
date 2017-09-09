@@ -23,13 +23,12 @@ const base = css`
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
-  transition:
-    box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
     background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
     color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   vertical-align: middle;
   white-space: nowrap;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
   &::-moz-focus-inner {
     border: 0;
@@ -51,7 +50,7 @@ const base = css`
   }
 `;
 
-const raised = (props) => {
+const raised = props => {
   const color = props.inverse
     ? 'rgba(255, 255, 255, 1)'
     : 'rgba(33, 33, 33, 1)';
@@ -61,12 +60,10 @@ const raised = (props) => {
     : 'rgba(255, 255, 255, 1)';
 
   return css`
-    background: ${background} ;
+    background: ${background};
     border-radius: 2px;
-    box-shadow:
-      0 2px 2px 0 rgba(0, 0, 0, 0.14),
-      0 3px 1px -2px rgba(0, 0, 0, 0.2),
-      0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+      0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
     color: ${color};
     min-width: 90px;
     padding: 0 12px;
@@ -76,23 +73,21 @@ const raised = (props) => {
     }
 
     &:focus:not(:active) {
-      box-shadow:
-        0 0 8px rgba(0, 0, 0, 0.18),
-        0 8px 16px rgba(0, 0, 0, 0.36);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.18), 0 8px 16px rgba(0, 0, 0, 0.36);
     }
 
     & > svg {
       margin-right: 5px;
     }
 
-    & > span:first-child {
+    & > [data-react-toolbox='font-icon'] {
       font-size: 120%;
       margin-right: 6px;
     }
   `;
 };
 
-const flat = (props) => {
+const flat = props => {
   const color = props.inverse
     ? 'rgba(255, 255, 255, 1)'
     : 'rgba(33, 33, 33, 1)';
@@ -116,14 +111,14 @@ const flat = (props) => {
       margin-right: 5px;
     }
 
-    & > span:first-child {
+    & > [data-react-toolbox='font-icon'] {
       font-size: 120%;
       margin-right: 6px;
     }
   `;
 };
 
-const floating = (props) => {
+const floating = props => {
   const color = props.inverse
     ? 'rgba(255, 255, 255, 1)'
     : 'rgba(33, 33, 33, 1)';
@@ -133,10 +128,9 @@ const floating = (props) => {
     : 'rgba(255, 255, 255, 1)';
 
   return css`
-    background: ${background} ;
+    background: ${background};
     border-radius: 50%;
-    box-shadow:
-      0 1px 1.5px 0 rgba(0, 0, 0, 0.12),
+    box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12),
       0 1px 1px 0 rgba(0, 0, 0, 0.24);
     color: ${color};
     font-size: 24px;
@@ -144,9 +138,7 @@ const floating = (props) => {
     width: 56px;
 
     &:focus:not(:active) {
-      box-shadow:
-        0 0 8px rgba(0, 0, 0, 0.18),
-        0 8px 16px rgba(0, 0, 0, 0.36);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.18), 0 8px 16px rgba(0, 0, 0, 0.36);
     }
 
     & > span:first-child {
@@ -166,7 +158,7 @@ const mini = css`
   }
 `;
 
-const toggle = (props) => {
+const toggle = props => {
   const color = props.inverse
     ? 'rgba(255, 255, 255, 1)'
     : 'rgba(33, 33, 33, 1)';
@@ -201,7 +193,9 @@ const colored = (props, normal, contrast) => {
 
   if (props.raised || props.floating) {
     return css`
-      background-color: ${props.disabled ? alpha('rgba(0, 0, 0, 1)', 0.12) : normal};
+      background-color: ${props.disabled
+        ? alpha('rgba(0, 0, 0, 1)', 0.12)
+        : normal};
       color: ${props.disabled ? disabledColor : contrast};
       &:hover {
         background: ${lighten(normal, 0.12)};
@@ -234,26 +228,14 @@ const primaryColorContrast = 'rgba(255, 255, 255, 1)';
 const accentColor = 'rgba(255, 64, 129, 1)';
 const accentColorContrast = 'rgba(255, 255, 255, 1)';
 
-const primary = props => colored(
-  props,
-  primaryColor,
-  primaryColorContrast,
-);
+const primary = props => colored(props, primaryColor, primaryColorContrast);
 
-const accent = props => colored(
-  props,
-  accentColor,
-  accentColorContrast,
-);
+const accent = props => colored(props, accentColor, accentColorContrast);
 
 export default css`
-  ${base}
-  ${props => props.flat && flat}
-  ${props => props.floating && floating}
-  ${props => props.raised && raised}
-  ${props => props.toggle && toggle}
-  ${props => props.disabled && disabled}
-  ${props => props.mini && mini}
-  ${props => props.primary && primary(props)}
-  ${props => props.accent && accent(props)}
+  ${base} ${props => props.flat && flat} ${props =>
+      props.floating && floating} ${props => props.raised && raised} ${props =>
+      props.toggle && toggle} ${props => props.disabled && disabled} ${props =>
+      props.mini && mini} ${props => props.primary && primary(props)} ${props =>
+      props.accent && accent(props)};
 `;

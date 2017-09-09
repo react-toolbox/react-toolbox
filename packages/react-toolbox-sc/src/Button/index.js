@@ -18,7 +18,7 @@ const withRipple = withRippleFactory({
   RippleWrapper: styled(RippleWrapper)`
     border-radius: ${props => (props.floating ? '50%' : '2px')};
     overflow: hidden;
-    ${withOverride('RippleWrapper')}
+    ${withOverride('RippleWrapper')};
   `,
 });
 
