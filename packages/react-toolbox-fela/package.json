@@ -17,7 +17,7 @@
     "fela": "^4.3.5",
     "ramda": "^0.23.0",
     "react-fela": "^4.3.5",
-    "react-toolbox-core": "^0.0.0-alpha.11"
+    "react-toolbox-core": "^0.0.0-alpha.12"
   },
   "peerDependencies": {
     "react": "^0.14 || ~15.4.0",
