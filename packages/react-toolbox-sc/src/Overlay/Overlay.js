@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import { withHandlers } from 'recompose';
 import overlayFactory from 'react-toolbox-core/lib/components/Overlay';
 import { addPortal, removePortal } from './bodyLocker';
+import withOverride from '../utils/withOverride';
 import Portal from '../Portal';
 
 const addPortalHandlers = withHandlers({
@@ -34,18 +35,15 @@ const Overlay = overlayFactory({
     width: 100%;
     z-index: -1;
 
-    ${props =>
-      props.active &&
-      css`
-        opacity: 0.6;
-        pointer-events: all;
-      `};
+    ${getActiveStyle};
+    ${withOverride('BackdropNode')};
   `,
   ContainerNode: styled.div`
     min-height: 100%;
     position: absolute;
     top: 0;
     width: 100%;
+    ${withOverride('ContainerNode')};
   `,
   Portal: addPortalHandlers(styled(Portal)`
     align-content: center;
@@ -60,7 +58,17 @@ const Overlay = overlayFactory({
     top: 0;
     width: 100vw;
     z-index: 200;
+    ${withOverride('Portal')};
   `),
 });
+
+function getActiveStyle(props) {
+  if (props.active) {
+    return css`
+      opacity: 0.6;
+      pointer-events: all;
+    `;
+  }
+}
 
 export default Overlay;

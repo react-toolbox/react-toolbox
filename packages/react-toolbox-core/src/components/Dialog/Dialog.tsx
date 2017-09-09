@@ -6,10 +6,7 @@ import { OverlayProps } from '../Overlay';
 export interface DialogFactoryArgs {
   Overlay: ComponentClass<OverlayProps>;
   WrapperNode: ComponentClass<WrapperNodeProps>;
-  passthrough: PassTroughFunction<
-    DialogProps,
-    'Overlay' | 'ContainerNode' | 'BackdropNode'
-  >;
+  passthrough: PassTroughFunction<DialogProps, 'Overlay' | 'WrapperNode'>;
 }
 
 export interface DialogProps {
@@ -37,7 +34,12 @@ export default function dialogFactory({
           active={active}
           onClick={onOverlayClick}
         >
-          <WrapperNode active={active}>{children}</WrapperNode>
+          <WrapperNode
+            {...passProps(this.props, 'WrapperNode', this)}
+            active={active}
+          >
+            {children}
+          </WrapperNode>
         </Overlay>
       );
     }

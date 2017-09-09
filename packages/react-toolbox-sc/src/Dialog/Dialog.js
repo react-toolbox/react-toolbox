@@ -1,6 +1,8 @@
+import { path } from 'ramda';
 import styled, { css } from 'styled-components';
 import dialogFactory from 'react-toolbox-core/lib/components/Dialog';
 import withActiveMount from 'react-toolbox-core/lib/hoc/withActiveMount';
+import withOverride from '../utils/withOverride';
 import Overlay from '../Overlay';
 
 export const SIZES = {
@@ -11,11 +13,20 @@ export const SIZES = {
 };
 
 const Dialog = dialogFactory({
-  passthrough: ['overrides'],
+  passthrough: function(props, nodeName) {
+    switch (nodeName) {
+      case 'Overlay':
+        return { overrides: props.overrides };
+      case 'WrapperNode': {
+        return { overrides: props.overrides, size: props.size };
+      }
+    }
+  },
   Overlay: styled(Overlay)`
     align-items: center;
     display: flex;
     justify-content: center;
+    ${withOverride('Overlay')};
   `,
   WrapperNode: styled.div`
     background-color: rgb(255, 255, 255);
@@ -31,6 +42,7 @@ const Dialog = dialogFactory({
 
     ${getActiveStyle};
     ${getSizeStyle};
+    ${withOverride('WrapperNode')};
   `,
 });
 
@@ -49,11 +61,11 @@ function getSizeStyle(props) {
       return css`
         width: 30vw;
 
-        @media screen and (max - width: 720px) {
+        @media screen and (max-width: 720px) {
           width: 50vw;
         }
 
-        @media screen and (max - width: 600px) {
+        @media screen and (max-width: 600px) {
           width: 75vw;
         }
       `;

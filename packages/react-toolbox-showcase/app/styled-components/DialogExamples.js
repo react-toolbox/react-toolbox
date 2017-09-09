@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { css } from 'styled-components';
 import Button from 'react-toolbox-sc/lib/Button';
 import Dialog, { DialogActions, DialogBody } from 'react-toolbox-sc/lib/Dialog';
 
@@ -18,7 +19,7 @@ class DialogExamples extends Component {
       <section>
         <h5>Dialog</h5>
         <Button onClick={this.handleToggle}>Show it</Button>
-        <Dialog active={this.state.active}>
+        <Dialog active={this.state.active} size="small">
           <DialogBody>
             <h1>Use Google's location service?</h1>
             <p>
