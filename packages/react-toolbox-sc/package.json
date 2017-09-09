@@ -3,7 +3,7 @@
   "version": "0.0.0-alpha.0",
   "description": "A Material Design implementation based on React Toolbox core and Styled Components",
   "main": "./lib/index.js",
-  "private": true,
+  "private": false,
   "scripts": {
     "build": "babel ./src --out-dir ./lib",
     "build:watch": "babel ./src --out-dir ./lib --watch",
