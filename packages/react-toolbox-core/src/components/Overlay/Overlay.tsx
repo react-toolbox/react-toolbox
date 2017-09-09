@@ -5,6 +5,7 @@ import { PortalType } from '../Portal';
 
 export interface ContainerNodeProps {
   active: boolean;
+  className?: string;
 }
 
 export interface BackdropNodeProps {
@@ -25,10 +26,11 @@ export interface OverlayFactoryArgs {
 export interface OverlayProps {
   active: boolean;
   children: ReactNode;
+  className?: string;
   container?: HTMLElement | (() => HTMLElement);
   onClick(event: MouseEvent<any>);
-  onPortalMount(): void;
-  onPortalUnmount(): void;
+  onPortalMount?(): void;
+  onPortalUnmount?(): void;
   parentId?: string;
 }
 
@@ -44,6 +46,7 @@ export default function overlayFactory({
       const {
         active,
         children,
+        className,
         container,
         onClick,
         onPortalMount,
@@ -62,6 +65,7 @@ export default function overlayFactory({
           <ContainerNode
             {...passProps(this.props, 'ContainerNode', this)}
             active={active}
+            className={className}
           >
             <BackdropNode
               {...passProps(this.props, 'BackdropNode', this)}
