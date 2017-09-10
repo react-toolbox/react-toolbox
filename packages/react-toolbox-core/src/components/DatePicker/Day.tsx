@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { F, memoize } from 'ramda';
-import { ComponentClass, MouseEvent, PureComponent } from 'react';
+import { ComponentClass, MouseEvent, Component } from 'react';
 import { isSameMonth, isToday } from 'date-fns';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 import { DateChecker, PickerDate, SelectedSource } from './types';
 import getSelectionMatch, { equalSelectionMatch } from './getSelectionMatch';
-import { Component } from '../../types';
 
 export interface DayNodeProps {
   blocked: boolean;
@@ -22,7 +21,7 @@ export interface DayNodeProps {
 }
 
 export interface DayFactoryArgs {
-  DayNode: Component<DayNodeProps>;
+  DayNode: ComponentClass<DayNodeProps>;
   passthrough: PassTroughFunction<DayProps, 'DayNode'>;
 }
 
@@ -45,7 +44,7 @@ export default function dayFactory({
   passthrough,
 }: DayFactoryArgs): Day {
   const passProps = getPassThrough(passthrough);
-  return class Day extends PureComponent<DayProps, void> {
+  return class Day extends Component<DayProps, void> {
     public static defaultProps = {
       isDayBlocked: F,
       isDayDisabled: F,
