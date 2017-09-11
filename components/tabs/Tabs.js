@@ -101,8 +101,8 @@ const factory = (Tab, TabContent, FontIcon) => {
     };
 
     updatePointer = (idx) => {
-      if (this.navigationNode && this.navigationNode.children[idx]) {
-        this.updatePointerAnimationFrame = requestAnimationFrame(() => {
+      this.updatePointerAnimationFrame = requestAnimationFrame(() => {
+        if (this.navigationNode && this.navigationNode.children[idx]) {
           const nav = this.navigationNode.getBoundingClientRect();
           const label = this.navigationNode.children[idx].getBoundingClientRect();
           const scrollLeft = this.navigationNode.scrollLeft;
@@ -113,32 +113,36 @@ const factory = (Tab, TabContent, FontIcon) => {
               width: `${label.width}px`,
             },
           });
-        });
-      }
+        }
+      });
     }
 
     updateArrows = () => {
-      const idx = this.navigationNode.children.length - 2;
+      if (this.navigationNode) {
+        const idx = this.navigationNode.children.length - 2;
 
-      if (idx >= 0) {
-        const scrollLeft = this.navigationNode.scrollLeft;
-        const nav = this.navigationNode.getBoundingClientRect();
-        const lastLabel = this.navigationNode.children[idx].getBoundingClientRect();
+        if (idx >= 0) {
+          const scrollLeft = this.navigationNode.scrollLeft;
+          const nav = this.navigationNode.getBoundingClientRect();
+          const lastLabel = this.navigationNode.children[idx].getBoundingClientRect();
 
-        this.setState({
-          arrows: {
-            left: scrollLeft > 0,
-            right: nav.right < (lastLabel.right - 5),
-          },
-        });
+          this.setState({
+            arrows: {
+              left: scrollLeft > 0,
+              right: nav.right < (lastLabel.right - 5),
+            },
+          });
+        }
       }
     }
 
     scrollNavigation = (factor) => {
-      const oldScrollLeft = this.navigationNode.scrollLeft;
-      this.navigationNode.scrollLeft += factor * this.navigationNode.clientWidth;
-      if (this.navigationNode.scrollLeft !== oldScrollLeft) {
-        this.updateArrows();
+      if (this.navigationNode) {
+        const oldScrollLeft = this.navigationNode.scrollLeft;
+        this.navigationNode.scrollLeft += factor * this.navigationNode.clientWidth;
+        if (this.navigationNode.scrollLeft !== oldScrollLeft) {
+          this.updateArrows();
+        }
       }
     }
 
