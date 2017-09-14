@@ -15,6 +15,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       className: PropTypes.string,
       disabled: PropTypes.bool,
       hasRipple: PropTypes.bool,
+      id: PropTypes.string,
       onClick: PropTypes.func,
       onMouseDown: PropTypes.func,
       onTouchStart: PropTypes.func,
@@ -84,6 +85,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
         ariaLabel,
         altText,
         className,
+        id,
         ripple: hasRipple,    // eslint-disable-line no-unused-vars
         onClick,      // eslint-disable-line no-unused-vars
         onMouseDown,  // eslint-disable-line no-unused-vars
@@ -100,6 +102,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
         <li
           aria-label={ariaLabel}
           className={`${theme.listItem} ${className}`}
+          id={id}
           onClick={this.handleClick}
           onMouseDown={onMouseDown}
           onTouchStart={onTouchStart}
