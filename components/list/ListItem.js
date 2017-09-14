@@ -23,6 +23,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       theme: PropTypes.shape({
         listItem: PropTypes.string,
       }),
+      id: PropTypes.string,
       to: PropTypes.string,
     };
 
@@ -84,6 +85,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
         ariaLabel,
         altText,
         className,
+        id,
         ripple: hasRipple,    // eslint-disable-line no-unused-vars
         onClick,      // eslint-disable-line no-unused-vars
         onMouseDown,  // eslint-disable-line no-unused-vars
@@ -105,6 +107,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
           onTouchStart={onTouchStart}
           onKeyDown={this.handleEnter}
           tabIndex={tabIndex}
+          id={id}
         >
           {to ? <a tabIndex={-1} href={this.props.to}>{content}</a> : content}
           {children.ignored}
