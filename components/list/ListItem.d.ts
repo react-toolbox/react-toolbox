@@ -30,6 +30,10 @@ export interface ListItemProps extends ReactToolbox.Props {
    */
   disabled?: boolean;
   /**
+   * Optional id for <li> DOM element
+   */
+  id?: string;
+  /**
    * If true, the item displays a ripple effect on click. By default it's inherited from the parent element.
    */
   ripple?: boolean;
