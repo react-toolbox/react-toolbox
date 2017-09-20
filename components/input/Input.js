@@ -97,13 +97,13 @@ const factory = (FontIcon) => {
     }
 
     handleChange = (event) => {
-      const { onChange, multiline, maxLength } = this.props;
+      const { onChange, maxLength } = this.props;
       const valueFromEvent = event.target.value;
 
       // Trim value to maxLength if that exists (only on multiline inputs).
       // Note that this is still required even tho we have the onKeyPress filter
       // because the user could paste smt in the textarea.
-      const haveToTrim = (multiline && maxLength && event.target.value.length > maxLength);
+      const haveToTrim = (maxLength && event.target.value.length > maxLength);
       const value = haveToTrim ? valueFromEvent.substr(0, maxLength) : valueFromEvent;
 
       // propagate to to store and therefore to the input
@@ -132,8 +132,8 @@ const factory = (FontIcon) => {
     handleKeyPress = (event) => {
       // prevent insertion of more characters if we're a multiline input
       // and maxLength exists
-      const { multiline, maxLength, onKeyPress } = this.props;
-      if (multiline && maxLength) {
+      const { maxLength, onKeyPress } = this.props;
+      if (maxLength) {
         // check if smt is selected, in which case the newly added charcter would
         // replace the selected characters, so the length of value doesn't actually
         // increase.

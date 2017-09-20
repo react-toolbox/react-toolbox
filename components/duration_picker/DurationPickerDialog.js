@@ -1,22 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import Dial from '../dial/Dial';
 import time from '../utils/time';
-import Clock from './Clock';
+
+function calculateEndTime(startTime, duration) {
+  const endTime = new Date(startTime.getTime());
+  endTime.setMinutes(endTime.getMinutes() + duration);
+  return endTime;
+}
 
 const factory = (Dialog) => {
-  class TimePickerDialog extends Component {
+  class DurationPickerDialog extends Component {
     static propTypes = {
       active: PropTypes.bool,
       cancelLabel: PropTypes.string,
       className: PropTypes.string,
+      duration: PropTypes.number,
       format: PropTypes.oneOf(['24hr', 'ampm']),
+      maxDuration: PropTypes.number,
+      minDuration: PropTypes.number,
       name: PropTypes.string,
       okLabel: PropTypes.string,
       onDismiss: PropTypes.func,
       onEscKeyDown: PropTypes.func,
       onOverlayClick: PropTypes.func,
       onSelect: PropTypes.func,
+      startTime: PropTypes.instanceOf(Date),
       step: PropTypes.number,
       theme: PropTypes.shape({
         am: PropTypes.string,
@@ -33,7 +43,6 @@ const factory = (Dialog) => {
         pmFormat: PropTypes.string,
         separator: PropTypes.string,
       }),
-      value: PropTypes.instanceOf(Date),
     };
 
     static defaultProps = {
@@ -41,51 +50,38 @@ const factory = (Dialog) => {
       cancelLabel: 'Cancel',
       format: '24hr',
       okLabel: 'Ok',
-      value: new Date(),
+      startTime: new Date(),
     };
 
     state = {
-      display: 'hours',
-      displayTime: this.stepTime(new Date(this.props.value.getTime())),
+      displayTime: this.props.startTime,
+      selected: 0,
     };
 
     componentWillReceiveProps(nextProps) {
-      if (nextProps.value.getTime() !== this.state.displayTime.getTime()) {
-        this.setState({ displayTime: this.stepTime(new Date(nextProps.value.getTime())) });
+      if (calculateEndTime(nextProps.startTime, nextProps.duration).getTime() !==
+        this.state.displayTime.getTime()) {
+        this.setState({
+          displayTime: calculateEndTime(nextProps.startTime, nextProps.duration),
+        });
       }
     }
 
     componentDidUpdate(prevProps) {
       if (!prevProps.active && this.props.active) {
-        setTimeout(this.clockNode.handleCalculateShape, 1000);
+        setTimeout(this.dialNode.handleCalculateShape, 1000);
       }
     }
 
-    handleClockChange = (value) => {
-      this.setState({ displayTime: this.stepTime(value) });
+    handleDialChange = (value) => {
+      this.setState({
+        displayTime: calculateEndTime(this.props.startTime, value),
+        selected: (value / this.props.step) - 1,
+      });
     };
 
     handleSelect = (event) => {
-      this.props.onSelect(this.state.displayTime, event);
-    };
-
-    toggleTimeMode = () => {
-      this.setState({ displayTime: time.toggleTimeMode(this.state.displayTime) });
-    };
-
-    handleHandMoved = () => {
-      if (this.state.display === 'hours') this.setState({ display: 'minutes' });
-    };
-
-    stepTime(value) {
-      if (this.props.step && value) {
-        value.setMinutes((Math.round(value.getMinutes() / this.props.step) * this.props.step) % 60);
-      }
-      return value;
-    }
-
-    switchDisplay = (event) => {
-      this.setState({ display: event.target.id });
+      this.props.onSelect((this.state.selected * this.props.step) + this.props.minDuration, event);
     };
 
     actions = [{
@@ -111,17 +107,20 @@ const factory = (Dialog) => {
       if (this.props.format !== 'ampm') return undefined;
       return (
         <div className={theme.ampm}>
-          <span className={theme.am} onClick={this.toggleTimeMode}>AM</span>
-          <span className={theme.pm} onClick={this.toggleTimeMode}>PM</span>
+          <span className={theme.am}>AM</span>
+          <span className={theme.pm}>PM</span>
         </div>
       );
     }
 
     render() {
       const { theme } = this.props;
-      const display = `${this.state.display}Display`;
       const format = `${time.getTimeMode(this.state.displayTime)}Format`;
-      const className = cn([theme.dialog, theme[display], theme[format]], this.props.className);
+      const className = cn([theme.dialog, theme.minutes, theme[format]], this.props.className);
+      const numbers = [];
+      for (let i = this.props.minDuration; i <= this.props.maxDuration; i += this.props.step) {
+        numbers.push(i);
+      }
       return (
         <Dialog
           actions={this.actions}
@@ -131,30 +130,31 @@ const factory = (Dialog) => {
           onOverlayClick={this.props.onOverlayClick}
         >
           <header className={theme.header}>
-            <span id="hours" className={theme.hours} onClick={this.switchDisplay}>
+            <span id="hours" className={theme.hours}>
               {(`0${this.formatHours()}`).slice(-2)}
             </span>
             <span className={theme.separator}>:</span>
-            <span id="minutes" className={theme.minutes} onClick={this.switchDisplay}>
+            <span id="minutes" className={theme.minutes}>
               {(`0${this.state.displayTime.getMinutes()}`).slice(-2)}
             </span>
             {this.renderAMPMLabels()}
           </header>
-          <Clock
-            ref={(node) => { this.clockNode = node; }}
-            display={this.state.display}
+          <div style={{ textAlign: 'center' }}>Duration (minutes)</div>
+          <Dial
+            ref={(node) => { this.dialNode = node; }}
             format={this.props.format}
-            onChange={this.handleClockChange}
-            onHandMoved={this.handleHandMoved}
+            onChange={this.handleDialChange}
             theme={this.props.theme}
             time={this.state.displayTime}
+            numbers={numbers}
+            selected={this.state.selected}
           />
         </Dialog>
       );
     }
   }
 
-  return TimePickerDialog;
+  return DurationPickerDialog;
 };
 
 export default factory;

@@ -1,7 +1,7 @@
 import * as React from "react";
 import ReactToolbox from "../index";
 
-export interface TimePickerTheme {
+export interface DurationPickerTheme {
   /**
    * Added to the number which is active in clock face.
    */
@@ -96,7 +96,7 @@ export interface TimePickerTheme {
   small?: string;
 }
 
-export interface TimePickerProps {
+export interface DurationPickerProps {
   /**
    * Whether time picker is active.
    * @default false
@@ -107,6 +107,7 @@ export interface TimePickerProps {
    * @default "Cancel"
    */
   cancelLabel?: string;
+  duration: number | undefined;
   /**
    * Provide error text which will be displayed under the field.
    */
@@ -128,6 +129,8 @@ export interface TimePickerProps {
    * The text string to use for the floating label element in the input component.
    */
   label?: string;
+  maxDuration: number;
+  minDuration: number;
   /**
    * Label used for 'OK' button on Dialog.
    * @default "Ok"
@@ -161,14 +164,15 @@ export interface TimePickerProps {
    * The input element will be readonly and look like disabled.
    */
   readonly?: boolean;
+  startTime: Date | undefined;
   /**
    * Option to round to the given minute when picking a time
    */
-  step?: number;
+  step: number;
   /**
    * Classnames object defining the component style.
    */
-  theme?: TimePickerTheme;
+  theme?: DurationPickerTheme;
   /**
    * Datetime object with currrently selected time.
    */
@@ -179,6 +183,6 @@ export interface TimePickerProps {
   [key: string]: any;
 }
 
-export class TimePicker extends React.Component<TimePickerProps, {}> { }
+export class DurationPicker extends React.Component<DurationPickerProps, {}> { }
 
-export default TimePicker;
+export default DurationPicker;

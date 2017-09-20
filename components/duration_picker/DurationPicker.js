@@ -7,18 +7,21 @@ import events from '../utils/events';
 import time from '../utils/time';
 import InjectDialog from '../dialog/Dialog';
 import InjectInput from '../input/Input';
-import timePickerDialogFactory from './TimePickerDialog';
+import durationPickerDialogFactory from './DurationPickerDialog';
 
-const factory = (TimePickerDialog, Input) => {
-  class TimePicker extends Component {
+const factory = (DurationPickerDialog, Input) => {
+  class DurationPicker extends Component {
     static propTypes = {
       active: PropTypes.bool,
       cancelLabel: PropTypes.string,
       className: PropTypes.string,
+      duration: PropTypes.number,
       error: PropTypes.string,
       format: PropTypes.oneOf(['24hr', 'ampm']),
       inputClassName: PropTypes.string,
       label: PropTypes.string,
+      maxDuration: PropTypes.number,
+      minDuration: PropTypes.number,
       name: PropTypes.string,
       okLabel: PropTypes.string,
       onChange: PropTypes.func,
@@ -28,12 +31,12 @@ const factory = (TimePickerDialog, Input) => {
       onKeyPress: PropTypes.func,
       onOverlayClick: PropTypes.func,
       readonly: PropTypes.bool,
+      startTime: PropTypes.instanceOf(Date),
       step: PropTypes.number,
       theme: PropTypes.shape({
         container: PropTypes.string,
         input: PropTypes.string,
       }),
-      value: PropTypes.instanceOf(Date),
     };
 
     static defaultProps = {
@@ -70,9 +73,11 @@ const factory = (TimePickerDialog, Input) => {
     };
 
     handleInputClick = (event) => {
-      events.pauseEvent(event);
-      this.setState({ active: true });
-      if (this.props.onClick) this.props.onClick(event);
+      if (this.props.startTime) {
+        events.pauseEvent(event);
+        this.setState({ active: true });
+        if (this.props.onClick) this.props.onClick(event);
+      }
     };
 
     handleInputKeyPress = (event) => {
@@ -92,9 +97,16 @@ const factory = (TimePickerDialog, Input) => {
       const {
         active, onDismiss, // eslint-disable-line
         cancelLabel, format, inputClassName, okLabel, onEscKeyDown, onOverlayClick,
-        readonly, value, step, ...others
+        readonly, startTime, step, minDuration, maxDuration, duration, ...others
       } = this.props;
-      const formattedTime = value ? time.formatTime(value, format) : '';
+      let inputDisplay = '';
+      if (startTime) {
+        const endTime = new Date(startTime.getTime());
+        endTime.setMinutes(startTime.getMinutes() + this.props.duration || this.props.minDuration);
+        if (startTime && duration) {
+          inputDisplay = `${duration} min (${time.formatTime(endTime, format)})`;
+        }
+      }
       return (
         <div data-react-toolbox="time-picker" className={this.props.theme.container}>
           <Input
@@ -108,13 +120,16 @@ const factory = (TimePickerDialog, Input) => {
             onClick={this.handleInputClick}
             readOnly
             type="text"
-            value={formattedTime}
+            value={inputDisplay}
           />
-          <TimePickerDialog
+          <DurationPickerDialog
             active={this.state.active}
             cancelLabel={cancelLabel}
             className={this.props.className}
+            duration={this.props.duration || this.props.minDuration}
             format={format}
+            maxDuration={this.props.maxDuration}
+            minDuration={this.props.minDuration}
             name={this.props.name}
             okLabel={okLabel}
             onDismiss={this.handleDismiss}
@@ -122,7 +137,7 @@ const factory = (TimePickerDialog, Input) => {
             onOverlayClick={onOverlayClick}
             onSelect={this.handleSelect}
             theme={this.props.theme}
-            value={this.props.value}
+            startTime={this.props.startTime}
             step={this.props.step}
           />
         </div>
@@ -130,11 +145,11 @@ const factory = (TimePickerDialog, Input) => {
     }
   }
 
-  return TimePicker;
+  return DurationPicker;
 };
 
-const TimePickerDialog = timePickerDialogFactory(InjectDialog);
-const TimePicker = factory(TimePickerDialog, InjectInput);
-export default themr(TIME_PICKER)(TimePicker);
-export { factory as timePickerFactory };
-export { TimePicker };
+const DurationPickerDialog = durationPickerDialogFactory(InjectDialog);
+const DurationPicker = factory(DurationPickerDialog, InjectInput);
+export default themr(TIME_PICKER)(DurationPicker);
+export { factory as durationPickerFactory };
+export { DurationPicker };

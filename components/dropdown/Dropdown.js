@@ -206,7 +206,6 @@ const factory = (Input) => {
           data-react-toolbox="dropdown"
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
-          tabIndex="-1"
         >
           <Input
             {...others}
