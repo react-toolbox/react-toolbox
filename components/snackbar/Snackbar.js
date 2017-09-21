@@ -66,7 +66,7 @@ const factory = (Button) => {
 
       return (
         <Portal className={theme.portal}>
-          <div data-react-toolbox="snackbar" className={className}>
+          <div data-react-toolbox="snackbar" role="alert" className={className}>
             <span className={theme.label}>
               {label}
               {children}
