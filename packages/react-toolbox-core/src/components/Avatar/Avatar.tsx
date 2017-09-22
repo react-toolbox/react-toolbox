@@ -69,7 +69,7 @@ export default function avatarFactory({
 
       return (
         <WrapperNode
-          {...passProps(this.props, 'WrapperNode', this) }
+          {...passProps(this.props, 'WrapperNode', this)}
           className={className}
           cover={cover}
           image={image}
@@ -77,7 +77,7 @@ export default function avatarFactory({
         >
           {image && (
             <ImgNode
-              {...passProps(this.props, 'ImgNode', this) }
+              {...passProps(this.props, 'ImgNode', this)}
               alt={alt}
               cover={cover}
               onError={this.handleError}
@@ -93,7 +93,5 @@ export default function avatarFactory({
 }
 
 function getFirstLetter(title) {
-  return title
-    ? title[0].toUpperCase()
-    : '';
+  return title ? title[0].toUpperCase() : '';
 }
