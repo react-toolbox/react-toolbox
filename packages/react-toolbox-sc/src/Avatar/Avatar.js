@@ -1,5 +1,6 @@
 import avatarFactory from 'react-toolbox-core/lib/components/Avatar';
 import styled, { css } from 'styled-components';
+import withStyled from '../utils/withStyled';
 
 const Avatar = avatarFactory({
   WrapperNode: styled.div`
@@ -48,4 +49,4 @@ const Avatar = avatarFactory({
   `,
 });
 
-export default Avatar;
+export default withStyled()(Avatar);
