@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Children, cloneElement, Component } from 'react';
 import styled, { css } from 'styled-components';
+import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 
 class Collapsable extends Component {
@@ -30,7 +31,7 @@ class Collapsable extends Component {
   calculateHeight = () => {
     this.frame = requestAnimationFrame(() => {
       this.setState({
-        height: this.rootNode.getBoundingClientRect().height,
+        height: findDOMNode(this.rootNode).getBoundingClientRect().height,
       });
     });
   };
@@ -46,7 +47,9 @@ class Collapsable extends Component {
         collapsed={this.props.collapsed}
         height={this.state.height}
       >
-        <div ref={this.handleRef}>{this.props.children}</div>
+        {cloneElement(Children.only(this.props.children), {
+          ref: this.handleRef,
+        })}
       </Collapse>
     );
   }
@@ -57,7 +60,6 @@ const Collapse = styled.div`
   overflow: hidden;
   transition: max-height 0.3s ease-out;
   width: 100%;
-
   ${props => props.collapsed && css`max-height: 0;`};
 `;
 

@@ -1,9 +1,9 @@
 import React from 'react';
+import styled from 'styled-components';
 import withStyled from '../utils/withStyled';
 
 const FontIcon = ({ alt, children, className, theme, value, ...other }) => (
-  <span
-    data-react-toolbox="font-icon"
+  <SpanNode
     aria-label={alt}
     className={
       typeof value === 'string' || typeof children === 'string' ? (
@@ -12,12 +12,13 @@ const FontIcon = ({ alt, children, className, theme, value, ...other }) => (
         className
       )
     }
-    {...other}
   >
     {value}
     {children}
-  </span>
+  </SpanNode>
 );
+
+const SpanNode = styled.span``;
 
 FontIcon.defaultProps = {
   alt: '',
