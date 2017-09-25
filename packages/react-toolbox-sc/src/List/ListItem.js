@@ -69,6 +69,15 @@ const ListItem = listItemFactory({
         background-color: rgb(238, 238, 238);
         cursor: pointer;
       `};
+
+    ${props =>
+      props.selectable &&
+      css`
+        &:hover {
+          background-color: rgb(238, 238, 238);
+          cursor: pointer;
+        }
+      `};
   `,
 });
 
