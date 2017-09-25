@@ -19,28 +19,28 @@ export const BINDINGS = {
   TAB: keyIs(KEYS.TAB),
 };
 
-export type Handler = (
+export type Handler<I> = (
   event: KeyboardEvent<any>,
   props: object,
+  instance: I,
 ) => void | string;
 
-export interface Handlers {
-  ARROW_LEFT?: Handler;
-  ARROW_RIGHT?: Handler;
-  ARROW_DOWN?: Handler;
-  ARROW_UP?: Handler;
-  BACKSPACE?: Handler;
-  ENTER?: Handler;
-  TAB?: Handler;
-  COMMA?: Handler;
-  ESC?: Handler;
-  SPACEBAR?: Handler;
-  ENTER_OR_SPACEBAR?: Handler;
+export interface Handlers<I> {
+  ARROW_LEFT?: Handler<I>;
+  ARROW_RIGHT?: Handler<I>;
+  ARROW_DOWN?: Handler<I>;
+  ARROW_UP?: Handler<I>;
+  BACKSPACE?: Handler<I>;
+  ENTER?: Handler<I>;
+  TAB?: Handler<I>;
+  COMMA?: Handler<I>;
+  ESC?: Handler<I>;
+  SPACEBAR?: Handler<I>;
+  ENTER_OR_SPACEBAR?: Handler<I>;
 }
 
-export interface WithKeysArgs {
-  handlers: Handlers;
-  passProps: boolean;
+export interface WithKeysArgs<I> {
+  handlers: Handlers<I>;
 }
 
 export interface WithKeysProps {
@@ -51,10 +51,9 @@ export type WithKeysHOC = <T>(
   decorated: ComponentClass<T & WithKeysProps>,
 ) => ComponentClass<T>;
 
-export default function withKeys({
+export default function withKeys<I>({
   handlers,
-  passProps,
-}: WithKeysArgs): WithKeysHOC {
+}: WithKeysArgs<I>): WithKeysHOC {
   return function<T>(DecoratedComponent) {
     return class WithKeysComponent extends Component<T & WithKeysProps, void> {
       rootNode: Component<T, any> | undefined;
@@ -92,11 +91,16 @@ export default function withKeys({
 
           if (binding && binding(event) && handler) {
             if (typeof handler === 'string' && this.rootNode) {
-              this.rootNode[handler].call(this, event);
+              this.rootNode[handler].call(
+                this,
+                event,
+                this.props,
+                this.rootNode,
+              );
             }
 
             if (typeof handler !== 'string') {
-              handler.call(this, event, this.props);
+              handler.call(this, event, this.props, this.rootNode);
             }
           }
         });

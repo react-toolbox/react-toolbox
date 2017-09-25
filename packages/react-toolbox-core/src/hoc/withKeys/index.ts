@@ -1,1 +1,1 @@
-export { default } from './withKeys';
+export { default, WithKeysProps, WithKeysHOC } from './withKeys';
