@@ -19,28 +19,28 @@ export const BINDINGS = {
   TAB: keyIs(KEYS.TAB),
 };
 
-export type Handler<I> = (
+export type Handler<P, I> = (
   event: KeyboardEvent<any>,
-  props: object,
+  props: P,
   instance: I,
 ) => void | string;
 
-export interface Handlers<I> {
-  ARROW_LEFT?: Handler<I>;
-  ARROW_RIGHT?: Handler<I>;
-  ARROW_DOWN?: Handler<I>;
-  ARROW_UP?: Handler<I>;
-  BACKSPACE?: Handler<I>;
-  ENTER?: Handler<I>;
-  TAB?: Handler<I>;
-  COMMA?: Handler<I>;
-  ESC?: Handler<I>;
-  SPACEBAR?: Handler<I>;
-  ENTER_OR_SPACEBAR?: Handler<I>;
+export interface Handlers<P, I> {
+  ARROW_LEFT?: Handler<P, I>;
+  ARROW_RIGHT?: Handler<P, I>;
+  ARROW_DOWN?: Handler<P, I>;
+  ARROW_UP?: Handler<P, I>;
+  BACKSPACE?: Handler<P, I>;
+  ENTER?: Handler<P, I>;
+  TAB?: Handler<P, I>;
+  COMMA?: Handler<P, I>;
+  ESC?: Handler<P, I>;
+  SPACEBAR?: Handler<P, I>;
+  ENTER_OR_SPACEBAR?: Handler<P, I>;
 }
 
-export interface WithKeysArgs<I> {
-  handlers: Handlers<I>;
+export interface WithKeysArgs<P, I> {
+  handlers: Handlers<P, I>;
 }
 
 export interface WithKeysProps {
@@ -51,9 +51,9 @@ export type WithKeysHOC = <T>(
   decorated: ComponentClass<T & WithKeysProps>,
 ) => ComponentClass<T>;
 
-export default function withKeys<I>({
+export default function withKeys<P, I>({
   handlers,
-}: WithKeysArgs<I>): WithKeysHOC {
+}: WithKeysArgs<P, I>): WithKeysHOC {
   return function<T>(DecoratedComponent) {
     return class WithKeysComponent extends Component<T & WithKeysProps, void> {
       rootNode: Component<T, any> | undefined;
