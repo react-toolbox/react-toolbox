@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { compose, memoize } from 'ramda';
+import { findDOMNode } from 'react-dom';
 import {
   Children,
   cloneElement,
@@ -18,12 +19,16 @@ export interface WithNavigationArgs {
 
 export interface WithNavigationProps {
   children: ReactChildren;
-  onHoverChange(idx: number | undefined): void;
+  hoverIdx?: number;
+  onEndReached?(): void;
+  onHoverChange(
+    idx: number | undefined,
+    node: Component<any, any> | undefined,
+  ): void;
   onMouseLeave(event: MouseEvent<any>): void;
-}
-
-export interface WithNavigationState {
-  hoverIdx: number | undefined;
+  onStartReached?(): void;
+  restartOnEnd: boolean;
+  rootNode?: HTMLElement;
 }
 
 export type WithNavigationHOC = <T>(
@@ -31,9 +36,9 @@ export type WithNavigationHOC = <T>(
 ) => ComponentClass<T>;
 
 export interface INavigableComponent
-  extends Component<WithNavigationProps, WithNavigationState> {
-  justPressedKeyTimeout: number | undefined;
-  handleHoverChange(increment: number): void;
+  extends Component<WithNavigationProps, void> {
+  getNextIndex(increment: number): number;
+  justPressedKey(): void;
 }
 
 export default function withNavigation({
@@ -44,74 +49,88 @@ export default function withNavigation({
     ComponentClass<WithKeysProps>,
     ComponentClass<any>
   >(
-    withKeys<INavigableComponent>({
+    withKeys<WithNavigationProps, INavigableComponent>({
       handlers: {
         ARROW_DOWN: (event, props, instance) => {
           event.preventDefault();
-          if (instance.justPressedKeyTimeout) {
-            clearTimeout(instance.justPressedKeyTimeout);
+          const index = instance.getNextIndex(1);
+          if (index !== props.hoverIdx) {
+            instance.justPressedKey();
+            props.onHoverChange(index, instance[childId(index)]);
+          } else if (props.onEndReached) {
+            props.onEndReached();
           }
-          instance.handleHoverChange(1);
         },
         ARROW_UP: (event, props, instance) => {
           event.preventDefault();
-          if (instance.justPressedKeyTimeout) {
-            clearTimeout(instance.justPressedKeyTimeout);
+          const index = instance.getNextIndex(-1);
+          if (index !== props.hoverIdx) {
+            instance.justPressedKey();
+            props.onHoverChange(index, instance[childId(index)]);
+
+          } else if (props.onStartReached) {
+            props.onStartReached();
           }
-          instance.handleHoverChange(-1);
         },
         ENTER_OR_SPACEBAR: (event, props, instance) => {
-          const { hoverIdx } = instance.state;
+          const { hoverIdx } = props;
           event.preventDefault();
-          if (instance.justPressedKeyTimeout) {
-            clearTimeout(instance.justPressedKeyTimeout);
-          }
-          if (hoverIdx && instance[itemId(hoverIdx)]) {
+          if (hoverIdx !== undefined && instance[itemId(hoverIdx)]) {
             instance[itemId(hoverIdx)].click();
           }
         },
         ESC: (event, props, instance) => {
           event.preventDefault();
-          instance.setState({ hoverIdx: undefined });
-          if (instance.justPressedKeyTimeout) {
-            clearTimeout(instance.justPressedKeyTimeout);
-          }
+          props.onHoverChange(undefined, undefined);
         },
       },
     }),
     function addNavigation<T>(DecoratedComponent) {
       return class NavigableComponent extends Component<
         T & WithKeysProps & WithNavigationProps,
-        WithNavigationState
+        void
       > {
-        rootNode: HTMLElement | undefined;
+        fromKeyboard = false;
         justPressedKeyTimeout: number | undefined;
+        rootNode: HTMLElement | undefined;
 
-        state = {
-          hoverIdx: undefined,
+        componentDidUpdate(prevProps) {
+          if (
+            this.props.hoverIdx !== prevProps.hoverIdx &&
+            this.fromKeyboard &&
+            this.props.hoverIdx !== undefined
+          ) {
+            this.adjustScroll();
+          }
+        }
+
+        handleRootRef = node => {
+          this.rootNode = node;
         };
 
         handleChildRef = memoize(idx => node => {
           this[itemId(idx)] = node;
         });
 
-        handleItemEnter = (idx, params) => {
-          if (!this.justPressedKeyTimeout) {
-            this.setState({ hoverIdx: idx }, () => {
-              if (this.props.onHoverChange) {
-                this.props.onHoverChange(idx);
-              }
-            });
+        handleChildComponentRef = memoize(idx => node => {
+          this[childId(idx)] = node;
+        });
+
+        handleItemEnter = (idx, child, params) => {
+          if (this.justPressedKeyTimeout === undefined) {
+            this.fromKeyboard = false;
+            if (this.props.onHoverChange) {
+              this.props.onHoverChange(idx, child);
+            }
           }
         };
 
         handleMouseLeave = (event: MouseEvent<any>) => {
-          if (!this.justPressedKeyTimeout) {
-            this.setState({ hoverIdx: undefined }, () => {
-              if (this.props.onHoverChange) {
-                this.props.onHoverChange(undefined);
-              }
-            });
+          if (this.justPressedKeyTimeout === undefined) {
+            this.fromKeyboard = false;
+            if (this.props.onHoverChange) {
+              this.props.onHoverChange(undefined, undefined);
+            }
           }
 
           if (this.props.onMouseLeave) {
@@ -119,68 +138,70 @@ export default function withNavigation({
           }
         };
 
-        handleRootRef = node => {
-          this.rootNode = node;
-        };
+        justPressedKey = () => {
+          this.fromKeyboard = true;
+          this.justPressedKeyTimeout = setTimeout(() => {
+            this.justPressedKeyTimeout = undefined;
+          }, 200);
+        }
 
-        handleHoverChange = increment => {
-          const SCROLL_NAVIGATE_OFFSET = 10;
-          const hoverIdx = this.getNextIndex(increment);
-
-          if (this.rootNode) {
-            const list = this.rootNode.getBoundingClientRect();
-            const item = this[`item${hoverIdx}`].getBoundingClientRect();
-
-            // Adjust scroll for this item
-            if (item.bottom > list.bottom) {
-              const diff = item.bottom - list.bottom + SCROLL_NAVIGATE_OFFSET;
-              this.rootNode.scrollTop = this.rootNode.scrollTop + diff;
-            } else if (item.top < list.top) {
-              const diff = list.top - item.top + SCROLL_NAVIGATE_OFFSET;
-              this.rootNode.scrollTop = this.rootNode.scrollTop - diff;
-            }
-
-            // Set a safety timeout to avoid mouseEnter triggerings after
-            // the scroll is modified
-            this.justPressedKeyTimeout = setTimeout(() => {
-              this.justPressedKeyTimeout = undefined;
-            }, 200);
-
-            this.setState({ hoverIdx }, () => {
-              if (this.props.onHoverChange) {
-                this.props.onHoverChange(hoverIdx);
-              }
-            });
-          }
-        };
+        getRootNode = () => this.props.rootNode || this.rootNode;
 
         getNextIndex = increment => {
-          const { children } = this.props;
-          const { hoverIdx } = this.state;
+          const { children, hoverIdx, restartOnEnd } = this.props;
           const indexes = getFilteredReactChildrenIndexes(
             children,
             isSelectable,
           );
           let nextIndex =
-            hoverIdx !== undefined ? indexes.indexOf(hoverIdx) + increment : 0;
+            hoverIdx !== undefined
+              ? indexes.indexOf(hoverIdx as number) + increment
+              : 0;
 
           if (nextIndex < 0) {
-            nextIndex = indexes.length - 1;
+            nextIndex = restartOnEnd ? indexes.length - 1 : 0;
           }
 
           if (nextIndex >= indexes.length) {
-            nextIndex = 0;
+            nextIndex = !restartOnEnd ? indexes.length - 1 : 0;
           }
 
           return indexes[nextIndex];
         };
 
+        adjustScroll = () => {
+          const SCROLL_NAVIGATE_OFFSET = 8;
+          const rootNode = findDOMNode(this.getRootNode());
+          if (rootNode && this.props.hoverIdx !== undefined) {
+            const list = rootNode.getBoundingClientRect();
+            const item = this[
+              itemId(this.props.hoverIdx as number)
+            ].getBoundingClientRect();
+
+            // Adjust scroll for this item
+            if (item.bottom > list.bottom) {
+              const diff = item.bottom - list.bottom + SCROLL_NAVIGATE_OFFSET;
+              rootNode.scrollTop = rootNode.scrollTop + diff;
+            } else if (item.top < list.top) {
+              const diff = list.top - item.top + SCROLL_NAVIGATE_OFFSET;
+              rootNode.scrollTop = rootNode.scrollTop - diff;
+            }
+          }
+        };
+
         injectSelectableProps = (child, idx) =>
           cloneElement(child, {
             getRef: this.handleChildRef(idx),
-            highlighted: idx === this.state.hoverIdx,
+            ref: this.handleChildComponentRef(idx),
+            highlighted: idx === this.props.hoverIdx,
+            onMouseLeave: (event, ...params) => {
+              this.handleMouseLeave(event);
+              if (child.props.onMouseLeave) {
+                child.props.onMouseLeave(event, ...params);
+              }
+            },
             onMouseEnter: (...params) => {
-              this.handleItemEnter(idx, params);
+              this.handleItemEnter(idx, child, params);
               if (child.props.onMouseEnter) {
                 child.props.onMouseEnter(...params);
               }
@@ -213,4 +234,8 @@ export default function withNavigation({
 
 function itemId(idx: number): string {
   return `item${idx}`;
+}
+
+function childId(idx: number): string {
+  return `child${idx}`;
 }
