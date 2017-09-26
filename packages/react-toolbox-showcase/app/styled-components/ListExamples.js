@@ -1,7 +1,6 @@
-import { T } from 'ramda';
 import { withProps } from 'recompose';
 import React, { Component } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Avatar from 'react-toolbox-sc/lib/Avatar';
 import FontIcon from 'react-toolbox-sc/lib/FontIcon';
 import Collapsable from 'react-toolbox-sc/lib/Collapsable';
@@ -27,7 +26,7 @@ class ListExamples extends Component {
     });
   }
 
-  handleMainHoverChange = (idx, node) => {
+  handleMainHoverChange = (idx) => {
     const { nestedOpen, mainHoverIdx } = this.state;
     if (mainHoverIdx === 0 && idx === 2 && nestedOpen) {
       this.setState({
@@ -54,7 +53,7 @@ class ListExamples extends Component {
     });
   }
 
-  handleNestedHoverChange = (idx, node) => {
+  handleNestedHoverChange = (idx) => {
     this.setState({
       mainHoverIdx: undefined,
       nestedHoverIdx: idx,
@@ -72,15 +71,15 @@ class ListExamples extends Component {
     this.rootList = node;
   }
 
-  mainUseKeys = () => {
-    return this.state.navigable &&
-      this.state.nestedHoverIdx === undefined;
-  }
+  mainUseKeys = () => (
+    this.state.navigable &&
+      this.state.nestedHoverIdx === undefined
+  );
 
-  nestedUseKeys = () => {
-    return this.state.navigable &&
-      !this.mainUseKeys();
-  }
+  nestedUseKeys = () => (
+    this.state.navigable &&
+      !this.mainUseKeys()
+  );
 
   handleToggleNavigation = (event) => {
     event.preventDefault();
@@ -90,7 +89,7 @@ class ListExamples extends Component {
   }
 
   render() {
-    const { nestedHovered, nestedOpen, mainHovered } = this.state;
+    const { nestedOpen } = this.state;
     return (
       <section>
         <h5>List with two text lines, avatar and right icon</h5>
@@ -134,10 +133,9 @@ class ListExamples extends Component {
         <h5>Collapsible nested lists</h5>
         <p>
           You can nest lists into list items and make them collapsible and even navigate them!
-          Toggle navigation clicking <a href="#" onClick={this.handleToggleNavigation}>here</a>.
-          Now it's {this.state.navigable ? 'enabled' : 'disabled'}.
+          Toggle navigation clicking <a href="#foo" onClick={this.handleToggleNavigation}>here</a>.
+          Now its {this.state.navigable ? 'enabled' : 'disabled'}.
         </p>
-
         <SList
           hoverIdx={this.state.mainHoverIdx}
           innerRef={this.handleRootList}
@@ -152,10 +150,7 @@ class ListExamples extends Component {
               <ListTextPrimary>Photos</ListTextPrimary>
               <ListTextSecondary>Jan 9, 2014</ListTextSecondary>
             </ListText>
-            <FontIcon value={nestedOpen
-              ? "keyboard_arrow_up"
-              : "keyboard_arrow_down"
-            } />
+            <FontIcon value={nestedOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down'} />
           </ListItem>
           <ListItem nested={1}>
             <Collapsable collapsed={!nestedOpen}>
@@ -210,7 +205,6 @@ class ListExamples extends Component {
 
         <h5>One line with inset divider, icon and right avatar.</h5>
         <p>Same as in Google spec site.</p>
-
         <SList>
           <ListSubheader>Contacts</ListSubheader>
           <ListItem>
@@ -258,7 +252,6 @@ class ListExamples extends Component {
 
         <h5>Simple list</h5>
         <p>Simple list without icons or avatars.</p>
-
         <SList>
           <ListItem selectable>John Wick</ListItem>
           <ListItem selectable>Kevin Garvey</ListItem>
@@ -274,6 +267,7 @@ class ListExamples extends Component {
 const SList = styled(List) `
   border: 1px solid rgb(238, 238, 238);
   margin-top: 20px;
+  max-width: 360px;
 `;
 
 const Thumbnail = styled.img`
@@ -281,7 +275,7 @@ const Thumbnail = styled.img`
 `;
 
 const Star = withProps({ value: 'star' })(styled(FontIcon) `
-  opacity: ${props => props.starred ? 1 : 0};
+  opacity: ${props => (props.starred ? 1 : 0)};
 `);
 
 export default ListExamples;
