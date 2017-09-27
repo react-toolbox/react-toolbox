@@ -287,7 +287,7 @@ const time = {
     const newDate = this.clone(d);
     const hours = newDate.getHours();
 
-    newDate.setHours(hours - (hours > 12 ? -12 : 12));
+    newDate.setHours(hours + (hours > 12 ? -12 : 12));
     return newDate;
   },
 
