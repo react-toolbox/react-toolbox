@@ -2,6 +2,7 @@ import React from 'react';
 import { injectGlobal } from 'styled-components';
 import AvatarExamples from './AvatarExamples';
 import ButtonExamples from './ButtonExamples';
+import CardExamples from './CardExamples';
 import DatePickerExamples from './DatePickerExamples';
 import DialogExamples from './DialogExamples';
 
@@ -25,6 +26,7 @@ const StyledComponents = () => (
   <div>
     <AvatarExamples />
     <ButtonExamples />
+    <CardExamples />
     <DatePickerExamples />
     <DialogExamples />
   </div>
