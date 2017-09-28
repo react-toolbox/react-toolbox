@@ -27,7 +27,7 @@ export default function withClickOutside({
       WithClickOutsideProps & T,
       {}
     > {
-      attachTimeout: number | null = null;
+      attachTimeout;
       isAttached = false;
       rootNode: HTMLElement | null = null;
 

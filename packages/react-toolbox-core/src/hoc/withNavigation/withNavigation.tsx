@@ -93,7 +93,7 @@ export default function withNavigation({
         {}
       > {
         fromKeyboard = false;
-        justPressedKeyTimeout: number | undefined;
+        justPressedKeyTimeout;
         rootNode: HTMLElement | undefined;
 
         componentDidUpdate(prevProps) {

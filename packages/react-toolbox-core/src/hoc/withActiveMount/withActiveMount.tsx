@@ -21,8 +21,8 @@ export default function withActiveMount({ delay: defaultDelay }: Args) {
     DecoratedComponent: ComponentClass<P>,
   ): ComponentClass<P & Props> {
     return class ActivableRenderer extends Component<P & Props, State> {
-      activateTimeout = 0;
-      unrenderTimeout = 0;
+      activateTimeout;
+      unrenderTimeout;
 
       state = {
         active: this.props.active,
