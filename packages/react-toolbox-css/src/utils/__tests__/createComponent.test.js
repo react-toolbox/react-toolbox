@@ -43,7 +43,7 @@ describe('createComponent', () => {
     const Component = createComponent('span');
     const wrapper = mount(<Component innerRef={referenceFunction} />);
     const element = wrapper.find('span');
-    expect(referenceFunction).toHaveBeenCalledWith(element.getNode());
+    expect(referenceFunction).toHaveBeenCalledWith(element.instance());
     expect(element.props()).not.toContain('innerRef');
   });
 

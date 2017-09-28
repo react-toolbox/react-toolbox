@@ -1,8 +1,7 @@
-import Enzyme from 'enzyme';
+import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-Enzyme.configure({ adapter: new Adapter() });
-
-global.requestAnimationFrame = (callback) => {
-  setTimeout(callback, 0);
-};
+configure({
+  adapter: new Adapter(),
+  disableLifecycleMethods: true,
+});

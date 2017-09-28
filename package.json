@@ -135,6 +135,7 @@
       "(\\.css$)|(normalize.css/normalize)|(^exports-loader)": "identity-obj-proxy"
     },
     "setupFiles": [
+      "./jest.polyfills.js",
       "./jest.setup.js"
     ],
     "snapshotSerializers": [
