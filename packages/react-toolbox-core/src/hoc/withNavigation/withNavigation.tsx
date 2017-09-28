@@ -2,7 +2,6 @@ import * as React from 'react';
 import { compose, memoize } from 'ramda';
 import { findDOMNode } from 'react-dom';
 import {
-  Children,
   cloneElement,
   Component,
   ComponentClass,
@@ -222,7 +221,7 @@ export default function withNavigation({
               getRef={this.handleRootRef}
               onMouseLeave={this.handleMouseLeave}
             >
-              {Children.map(
+              {React.Children.map(
                 this.props.children,
                 (child, idx) =>
                   isSelectable(child)
