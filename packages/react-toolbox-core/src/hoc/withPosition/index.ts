@@ -1,1 +1,1 @@
-export { default } from './withPosition';
+export { default, POSITIONS } from './withPosition';

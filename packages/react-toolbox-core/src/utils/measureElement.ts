@@ -12,11 +12,9 @@ export default function measureElement(
 ): Promise<PositionDescriptor> {
   return new Promise<PositionDescriptor>(resolve => {
     if (isReactNative()) {
-      (element as any).measure(
-        (x, y, width, height, pageX, pageY) => {
-          resolve({ left: pageX, top: pageY, width, height });
-        },
-      );
+      (element as any).measure((x, y, width, height, pageX, pageY) => {
+        resolve({ left: pageX, top: pageY, width, height });
+      });
     } else {
       const {
         left,

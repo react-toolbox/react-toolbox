@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 import { withProps } from 'recompose';
 import { merge, path } from 'ramda';
-import { POSITIONS } from 'react-toolbox-core/lib/components/Menu/Menu';
+import { POSITIONS } from 'react-toolbox-core/lib/hoc/withPosition';
 import ClippingBox, { ORIGINS } from '../ClippingBox';
 
 const MenuNode = withProps(props => ({
