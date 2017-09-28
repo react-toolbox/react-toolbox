@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { assoc, dissoc, keys } from 'ramda';
 import { Component, ComponentClass, MouseEvent, ReactNode } from 'react';
-import { NativeComponent } from 'react-native';
 import { Component as GenericComponent } from '../../types';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 import getMousePosition from '../../utils/getMousePosition';
@@ -125,7 +124,8 @@ const withRippleFactory = ({
       private currentCount = 0;
       private deactivateTimeout: number | null = null;
       private ripples: { [key: string]: HTMLElement } = {};
-      private rootNode: HTMLElement | NativeComponent | null = null;
+      // due to https://github.com/DefinitelyTyped/DefinitelyTyped/issues/16825
+      private rootNode: HTMLElement | any = null;
       private touchCache = false;
 
       public componentWillUnmount() {

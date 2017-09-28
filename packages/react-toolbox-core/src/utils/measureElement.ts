@@ -1,4 +1,3 @@
-import { NativeComponent } from 'react-native';
 import isReactNative from './isReactNative';
 
 export type PositionDescriptor = {
@@ -9,11 +8,11 @@ export type PositionDescriptor = {
 };
 
 export default function measureElement(
-  element: HTMLElement | NativeComponent,
+  element: HTMLElement | any,
 ): Promise<PositionDescriptor> {
   return new Promise<PositionDescriptor>(resolve => {
     if (isReactNative()) {
-      (element as NativeComponent).measure(
+      (element as any).measure(
         (x, y, width, height, pageX, pageY) => {
           resolve({ left: pageX, top: pageY, width, height });
         },

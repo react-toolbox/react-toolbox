@@ -20,9 +20,9 @@
   version "0.24.14"
   resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.24.14.tgz#bdd312c461934bc09a79745d77b6952302bf6b02"
 
-"@types/react-native@^0.48.9":
-  version "0.48.9"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.48.9.tgz#7c4530643f5d77820f17c7a69278f4556cdb2f4a"
+"@types/react-native@0.48.1":
+  version "0.48.1"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.48.1.tgz#f34fa7c193596b8c922ff03542106fd0e1e643f7"
   dependencies:
     "@types/react" "*"
 
@@ -7639,9 +7639,9 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^2.5.3:
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.5.3.tgz#df3dcdc38f3beb800d4bc322646b04a3f6ca7f0d"
+typescript@2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.5.2.tgz#038a95f7d9bbb420b1bf35ba31d4c5c1dd3ffe34"
 
 ua-parser-js@^0.7.9:
   version "0.7.12"

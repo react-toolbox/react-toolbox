@@ -37,7 +37,6 @@
     "@types/jest": "^21.1.1",
     "@types/ramda": "^0.24.14",
     "@types/react": "^16.0.7",
-    "@types/react-native": "^0.48.9",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",
@@ -95,7 +94,7 @@
     "stylelint-config-standard": "^16.0.0",
     "stylelint-order": "^0.4.4",
     "tslint": "^5.2.0",
-    "typescript": "^2.5.3",
+    "typescript": "2.5.2",
     "webpack": "^2.6.0",
     "webpack-dev-middleware": "^1.10.2",
     "webpack-hot-middleware": "^2.18.0"
