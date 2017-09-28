@@ -9,7 +9,7 @@ export default function withPortalFactory() {
     class WithPortalComponent extends Component {
       static propTypes = {
         children: PropTypes.node,
-        providerNode: PropTypes.element,
+        providerNode: PropTypes.object, // eslint-disable-line
         withPortal: PropTypes.bool,
       };
 
