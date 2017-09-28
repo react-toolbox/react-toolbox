@@ -8,5 +8,5 @@ ReactDOM.render(
   <BrowserRouter>
     <Root />
   </BrowserRouter>,
-  document.getElementById('spec')
+  document.getElementById('spec'),
 );

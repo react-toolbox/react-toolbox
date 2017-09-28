@@ -3,9 +3,8 @@ import React from 'react';
 import { injectGlobal } from 'styled-components';
 import AvatarExamples from './AvatarExamples';
 import ButtonExamples from './ButtonExamples';
-// import DatePickerExamples from './DatePickerExamples';
-// import DialogExamples from './DialogExamples';
 import ListExamples from './ListExamples';
+import MenuExamples from './MenuExamples';
 
 injectGlobal`
   body {
@@ -28,6 +27,7 @@ const StyledComponents = () => (
     <AvatarExamples />
     <ButtonExamples />
     <ListExamples />
+    <MenuExamples />
   </div>
 );
 

@@ -13,6 +13,8 @@ import {
 import getFilteredReactChildrenIndexes from '../../utils/getFilteredReactChildrenIndexes';
 import withKeys, { WithKeysProps } from '../withKeys';
 
+const SCROLL_NAVIGATE_OFFSET = 8;
+
 export interface WithNavigationArgs {
   isSelectable(child: ReactChild): boolean;
 }
@@ -29,6 +31,7 @@ export interface WithNavigationProps {
   onStartReached?(): void;
   restartOnEnd: boolean;
   rootNode?: HTMLElement;
+  scrollOffset?: number;
 }
 
 export type WithNavigationHOC = <T>(
@@ -67,7 +70,6 @@ export default function withNavigation({
           if (index !== props.hoverIdx) {
             instance.justPressedKey();
             props.onHoverChange(index, instance[childId(index)]);
-
           } else if (props.onStartReached) {
             props.onStartReached();
           }
@@ -88,7 +90,7 @@ export default function withNavigation({
     function addNavigation<T>(DecoratedComponent) {
       return class NavigableComponent extends Component<
         T & WithKeysProps & WithNavigationProps,
-        void
+        {}
       > {
         fromKeyboard = false;
         justPressedKeyTimeout: number | undefined;
@@ -143,7 +145,7 @@ export default function withNavigation({
           this.justPressedKeyTimeout = setTimeout(() => {
             this.justPressedKeyTimeout = undefined;
           }, 200);
-        }
+        };
 
         getRootNode = () => this.props.rootNode || this.rootNode;
 
@@ -170,7 +172,10 @@ export default function withNavigation({
         };
 
         adjustScroll = () => {
-          const SCROLL_NAVIGATE_OFFSET = 8;
+          const scrollOffset =
+            this.props.scrollOffset !== undefined
+              ? this.props.scrollOffset as number
+              : SCROLL_NAVIGATE_OFFSET;
           const rootNode = findDOMNode(this.getRootNode());
           if (rootNode && this.props.hoverIdx !== undefined) {
             const list = rootNode.getBoundingClientRect();
@@ -180,10 +185,10 @@ export default function withNavigation({
 
             // Adjust scroll for this item
             if (item.bottom > list.bottom) {
-              const diff = item.bottom - list.bottom + SCROLL_NAVIGATE_OFFSET;
+              const diff = item.bottom - list.bottom + scrollOffset;
               rootNode.scrollTop = rootNode.scrollTop + diff;
             } else if (item.top < list.top) {
-              const diff = list.top - item.top + SCROLL_NAVIGATE_OFFSET;
+              const diff = list.top - item.top + scrollOffset;
               rootNode.scrollTop = rootNode.scrollTop - diff;
             }
           }
@@ -214,7 +219,7 @@ export default function withNavigation({
           return (
             <DecoratedComponent
               {...rest}
-              innerRef={this.handleRootRef}
+              getRef={this.handleRootRef}
               onMouseLeave={this.handleMouseLeave}
             >
               {Children.map(

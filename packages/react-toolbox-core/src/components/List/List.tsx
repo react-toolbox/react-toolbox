@@ -21,7 +21,7 @@ export default function listFactory({
   passthrough,
 }: ListFactoryArgs): ComponentClass<ListProps> {
   const passProps = getPassThrough(passthrough);
-  return class List extends Component<ListProps, void> {
+  return class List extends Component<ListProps, {}> {
     render() {
       const { className, children, ...rest } = this.props;
       return (

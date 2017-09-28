@@ -20,9 +20,16 @@ export const ORIGINS = {
   TOP_RIGHT: 'topRight' as OriginTopRight,
 };
 
+export interface ClippingBoxProps {
+  active: boolean;
+  children: ReactNode;
+  className?: string;
+  innerRef(instance: HTMLElement): void;
+  origin: Origin;
+}
+
 export interface InnerNodeProps {
   active: boolean;
-  className?: string;
   height?: number;
   innerRef(instance: HTMLElement): void;
   origin: Origin;
@@ -30,7 +37,10 @@ export interface InnerNodeProps {
 }
 
 export interface WrapperNodeProps {
+  active: boolean;
+  className?: string;
   height?: number;
+  innerRef(instance: HTMLElement): void;
   width?: number;
 }
 
@@ -39,13 +49,6 @@ export interface OutlineNodeProps {
   height?: number;
   origin: Origin;
   width?: number;
-}
-
-export interface ClippingBoxProps {
-  active: boolean;
-  children: ReactNode;
-  className?: string;
-  origin: Origin;
 }
 
 export interface ClippingBoxState {
@@ -81,7 +84,7 @@ export default function clippingBoxFactory({
     };
 
     state = {
-      active: false,
+      active: this.props.active,
       height: undefined,
       width: undefined,
     };
@@ -130,11 +133,18 @@ export default function clippingBoxFactory({
 
     render() {
       const { active, height, width } = this.state;
-      const { children, className, origin } = this.props;
+      const { children, className, innerRef, origin } = this.props;
 
       return createElement(
         WrapperNode,
-        { ...passProps(this.props, 'WrapperNode', this), height, width },
+        {
+          ...passProps(this.props, 'WrapperNode', this),
+          active,
+          className,
+          height,
+          innerRef,
+          width,
+        },
         createElement(OutlineNode, {
           ...passProps(this.props, 'OutlineNode', this),
           active,
@@ -148,7 +158,6 @@ export default function clippingBoxFactory({
             ...passProps(this.props, 'InnerNode', this),
             innerRef: this.handleInnerNode,
             active,
-            className,
             height,
             origin,
             width,

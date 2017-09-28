@@ -1,6 +1,5 @@
 /* global VERSION */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Switch, Redirect, Link, Route, withRouter } from 'react-router-dom';
 import { Layout, Panel, NavDrawer } from 'react-toolbox/src/components/layout';
 import { AppBar } from 'react-toolbox/src/components/app_bar';

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { css } from 'styled-components';
 import Button from 'react-toolbox-sc/lib/Button';
 import Dialog, { DialogActions, DialogBody } from 'react-toolbox-sc/lib/Dialog';
 
 class DialogExamples extends Component {
   state = {
-    active: false
+    active: false,
   }
 
   handleToggle = () => {
@@ -21,7 +20,7 @@ class DialogExamples extends Component {
         <Button onClick={this.handleToggle}>Show it</Button>
         <Dialog active={this.state.active} size="small">
           <DialogBody>
-            <h1>Use Google's location service?</h1>
+            <h1>Use Google location service?</h1>
             <p>
               Let Google help apps <strong>determine location</strong>.
               This means sending anonymous location data to Google, even when no apps are running.

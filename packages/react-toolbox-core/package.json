@@ -23,7 +23,6 @@
     "react": "^0.14 || ~15.5.0"
   },
   "devDependencies": {
-    "typedoc": "^0.7.1",
-    "typescript": "next"
+    "typedoc": "^0.7.1"
   }
 }

@@ -18,7 +18,7 @@ class Collapsable extends Component {
     this.calculateHeight();
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     this.calculateHeight();
   }
 

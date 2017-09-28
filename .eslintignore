@@ -8,7 +8,10 @@ packages/react-toolbox-core-site
 packages/react-toolbox-css
 packages/react-toolbox-docs
 packages/react-toolbox-fela
-packages/react-toolbox-sc
-packages/react-toolbox-showcase
+packages/react-toolbox-showcase/app/classic
+packages/react-toolbox-showcase/app/css-modules
+packages/react-toolbox-showcase/app/fela
+packages/react-toolbox-showcase/webpack
+packages/react-toolbox-showcase/server.js
 packages/react-toolbox-themr
 transformers

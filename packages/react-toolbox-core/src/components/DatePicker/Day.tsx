@@ -37,14 +37,14 @@ export interface DayProps {
   viewDate: Date;
 }
 
-export type Day = ComponentClass<DayProps>;
+export type DayType = ComponentClass<DayProps>;
 
 export default function dayFactory({
   DayNode,
   passthrough,
-}: DayFactoryArgs): Day {
+}: DayFactoryArgs): DayType {
   const passProps = getPassThrough(passthrough);
-  return class Day extends Component<DayProps, void> {
+  return class DayComponent extends Component<DayProps, {}> {
     public static defaultProps = {
       isDayBlocked: F,
       isDayDisabled: F,

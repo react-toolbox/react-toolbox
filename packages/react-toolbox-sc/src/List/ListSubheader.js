@@ -16,6 +16,6 @@ const ListSubheader = styled.li`
   ${props => props.inset && css`padding-left: 72px;`};
 `;
 
-export default withProps(props => ({
+export default withProps(() => ({
   role: 'separator',
 }))(ListSubheader);

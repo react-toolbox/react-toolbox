@@ -15,7 +15,7 @@ export interface PortalProps {
 }
 
 export default function portalFactory(): ComponentClass<PortalProps> {
-  return class Portal extends Component<PortalProps, void> {
+  return class Portal extends Component<PortalProps, {}> {
     childRootNode: HTMLElement | null = null;
 
     componentDidMount() {

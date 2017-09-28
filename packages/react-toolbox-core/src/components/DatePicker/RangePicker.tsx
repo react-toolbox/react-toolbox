@@ -11,7 +11,7 @@ import {
 import isComponentOfType from '../../utils/isComponentOfType';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 import { FocusedInput, DateRange } from './types';
-import { Month, MonthProps } from './Month';
+import { MonthType, MonthProps } from './Month';
 
 export interface RangePickerProps {
   children: ReactNode;
@@ -26,17 +26,17 @@ export interface RangePickerProps {
 
 export interface RangePickerArgs {
   MonthsWrapper: ComponentClass<any>;
-  Month: Month;
+  Month: MonthType;
   passthrough: PassTroughFunction<RangePickerProps, 'MonthsWrapper'>;
 }
 
-export type RangePicker = ComponentClass<RangePickerProps>;
+export type RangePickerType = ComponentClass<RangePickerProps>;
 
 export default function rangePickerFactory({
   MonthsWrapper,
   Month,
   passthrough,
-}: RangePickerArgs): RangePicker {
+}: RangePickerArgs): RangePickerType {
   const passProps = getPassThrough(passthrough);
   return class RangePicker extends Component<RangePickerProps, {}> {
     public static defaultProps = {

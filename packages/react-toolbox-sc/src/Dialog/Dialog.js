@@ -1,4 +1,3 @@
-import { path } from 'ramda';
 import styled, { css } from 'styled-components';
 import dialogFactory from 'react-toolbox-core/lib/components/Dialog';
 import withActiveMount from 'react-toolbox-core/lib/hoc/withActiveMount';
@@ -13,13 +12,14 @@ export const SIZES = {
 };
 
 const Dialog = dialogFactory({
-  passthrough: function(props, nodeName) {
+  passthrough: (props, nodeName) => {
     switch (nodeName) {
       case 'Overlay':
         return { overrides: props.overrides };
-      case 'WrapperNode': {
+      case 'WrapperNode':
         return { overrides: props.overrides, size: props.size };
-      }
+      default:
+        return {};
     }
   },
   Overlay: styled(Overlay)`
@@ -53,6 +53,7 @@ function getActiveStyle(props) {
       transform: translateY(0%);
     `;
   }
+  return '';
 }
 
 function getSizeStyle(props) {

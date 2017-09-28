@@ -296,7 +296,7 @@ const withRippleFactory = ({
 
         const finalProps = (defaultPassthrough
           ? { ...childProps, disabled }
-          : childProps) as P;
+          : childProps) as any;
 
         if (!ripple) {
           return React.createElement(ComposedComponent, finalProps, children);

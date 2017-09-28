@@ -41,7 +41,7 @@ export default function overlayFactory({
   passthrough,
 }: OverlayFactoryArgs): ComponentClass<OverlayProps> {
   const passProps = getPassThrough(passthrough);
-  return class Overlay extends Component<OverlayProps, void> {
+  return class Overlay extends Component<OverlayProps, {}> {
     render() {
       const {
         active,

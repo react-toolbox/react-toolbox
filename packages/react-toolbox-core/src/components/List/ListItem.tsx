@@ -7,6 +7,8 @@ export interface ListItemNodeProps {
   disabled?: boolean;
   onClick(event: MouseEvent<any>): void;
   onMouseDown(event: MouseEvent<any>): void;
+  onMouseEnter(event: MouseEvent<any>): void;
+  onMouseLeave(event: MouseEvent<any>): void;
 }
 
 export interface ListItemFactoryArgs<T> {
@@ -18,8 +20,10 @@ export interface ListItemProps<T> {
   children: ReactNode;
   className?: string;
   disabled?: boolean;
-  onClick(event: MouseEvent<any>, value: T);
-  onMouseDown(event: MouseEvent<any>, value: T): void;
+  onClick?(event: MouseEvent<any>, value: T): void;
+  onMouseDown?(event: MouseEvent<any>, value: T): void;
+  onMouseEnter?(event: MouseEvent<any>, value: T): void;
+  onMouseLeave?(event: MouseEvent<any>, value: T): void;
   value: T;
 }
 
@@ -28,7 +32,7 @@ export default function listItemFactory<T>({
   passthrough,
 }: ListItemFactoryArgs<T>): ComponentClass<ListItemProps<T>> {
   const passProps = getPassThrough(passthrough);
-  return class ListItem extends Component<ListItemProps<T>, void> {
+  return class ListItem extends Component<ListItemProps<T>, {}> {
     static defaultProps = {
       disabled: false,
     };
@@ -47,6 +51,20 @@ export default function listItemFactory<T>({
       }
     };
 
+    handleMouseEnter = (event: MouseEvent<any>) => {
+      const { disabled, onMouseEnter, value } = this.props;
+      if (!disabled && onMouseEnter) {
+        onMouseEnter(event, value);
+      }
+    };
+
+    handleMouseLeave = (event: MouseEvent<any>) => {
+      const { disabled, onMouseLeave, value } = this.props;
+      if (!disabled && onMouseLeave) {
+        onMouseLeave(event, value);
+      }
+    };
+
     render() {
       const {
         children,
@@ -54,6 +72,8 @@ export default function listItemFactory<T>({
         disabled,
         onClick,
         onMouseDown,
+        onMouseEnter,
+        onMouseLeave,
         value,
         ...rest,
       } = this.props;
@@ -64,6 +84,8 @@ export default function listItemFactory<T>({
           disabled={disabled}
           onClick={this.handleClick}
           onMouseDown={this.handleMouseDown}
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
           {...rest}
         >
           {children}

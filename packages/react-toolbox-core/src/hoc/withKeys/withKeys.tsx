@@ -55,7 +55,7 @@ export default function withKeys<P, I>({
   handlers,
 }: WithKeysArgs<P, I>): WithKeysHOC {
   return function<T>(DecoratedComponent) {
-    return class WithKeysComponent extends Component<T & WithKeysProps, void> {
+    return class WithKeysComponent extends Component<T & WithKeysProps, {}> {
       rootNode: Component<T, any> | undefined;
 
       componentDidMount() {

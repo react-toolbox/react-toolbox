@@ -10,8 +10,8 @@ import {
   PickerDate,
   PickerMode,
 } from './types';
-import { RangePicker } from './RangePicker';
-import { Month } from './Month';
+import { RangePickerType } from './RangePicker';
+import { MonthType } from './Month';
 
 export interface DatePickerProps {
   focusedInput: FocusedInput;
@@ -51,11 +51,11 @@ export type DatePickerNodes =
   | 'RangePicker';
 
 export interface DatePickerArgs {
-  Month: Month;
+  Month: MonthType;
   NextNode: ComponentClass<ArrowNodeProps>;
   PickerWrapper: ComponentClass<any>;
   PrevNode: ComponentClass<ArrowNodeProps>;
-  RangePicker: RangePicker;
+  RangePicker: RangePickerType;
   SinglePicker: ComponentClass<any>;
   passthrough: PassTroughFunction<DatePickerProps, DatePickerNodes>;
 }

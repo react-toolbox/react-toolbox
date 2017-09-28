@@ -52,7 +52,7 @@ const ListItem = listItemFactory({
         padding-left: 0;
         padding-right: 0;
         & > ${List} {
-          padding-left: ${props => props.nested * 16}px;
+          padding-left: ${props.nested * 16}px;
         }
       `};
 

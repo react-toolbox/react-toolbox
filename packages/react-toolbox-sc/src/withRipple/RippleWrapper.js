@@ -5,8 +5,9 @@ const RippleWrapper = styled.span`
   bottom: 0;
   display: block;
   left: 0;
-  pointer-events: none;
   outline: none;
+  overflow: hidden;
+  pointer-events: none;
   position: absolute;
   right: 0;
   top: 0;

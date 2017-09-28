@@ -18,41 +18,36 @@ class TestDatePicker extends Component {
     value: {},
   };
 
-  handleChange = value => {
+  handleChange = (value) => {
     this.setState({ value });
   };
 
-  handleFocusedInputChange = focusedInput => {
+  handleFocusedInputChange = (focusedInput) => {
     this.setState({ focusedInput });
   };
 
-  handleHighlightedChange = highlighted => {
+  handleHighlightedChange = (highlighted) => {
     this.setState({ highlighted });
   };
 
   isDayBlocked = date => date.getMonth() === 1 && date.getDate() === 17;
 
-  isDayDisabled = date => {
+  isDayDisabled = (date) => {
     const now = new Date();
     return date.getTime() < now.getTime();
   };
-
-  format(date) {
-    if (!date) return '';
-    return date.toISOString();
-  }
 
   render() {
     return (
       <div>
         <DateInput
-          value={this.format(this.state.value.from)}
+          value={formatDate(this.state.value.from)}
           onFocus={() => this.setState({ focusedInput: 'START_DATE' })}
           active={this.state.focusedInput === 'START_DATE'}
           readOnly
         />
         <DateInput
-          value={this.format(this.state.value.to)}
+          value={formatDate(this.state.value.to)}
           onFocus={() => this.setState({ focusedInput: 'END_DATE' })}
           active={this.state.focusedInput === 'END_DATE'}
           readOnly
@@ -70,6 +65,11 @@ class TestDatePicker extends Component {
       </div>
     );
   }
+}
+
+function formatDate(date) {
+  if (!date) return '';
+  return date.toISOString();
 }
 
 const DateInput = styled.input`

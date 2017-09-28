@@ -18,6 +18,6 @@ const ListDivider = styled.li`
   ${props => props.inset && css`margin-left: 72px;`};
 `;
 
-export default withProps(props => ({
+export default withProps(() => ({
   role: 'separator',
 }))(ListDivider);

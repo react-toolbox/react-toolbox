@@ -21,6 +21,8 @@ function getActiveStyle(props) {
         clip 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     `;
   }
+
+  return '';
 }
 
 function getClipStyle(props) {
@@ -30,21 +32,25 @@ function getClipStyle(props) {
     `;
   } else if (props.origin === ORIGINS.TOP_RIGHT) {
     return css`
-      clip: rect(0 ${width}px 0 ${width}px);
+      clip: rect(0 ${props.width}px 0 ${props.width}px);
     `;
   } else if (props.origin === ORIGINS.BOTTOM_RIGHT) {
     return css`
-      clip: rect(${height}px ${width}px ${height}px ${width}px);
+      clip: rect(
+        ${props.height}px ${props.width}px ${props.height}px ${props.width}px
+      );
     `;
   } else if (props.origin === ORIGINS.BOTTOM_LEFT) {
     return css`
-      clip: rect(${height}px 0 ${height}px 0);
+      clip: rect(${props.height}px 0 ${props.height}px 0);
     `;
   } else if (props.origin === ORIGINS.TOP_LEFT) {
     return css`
       clip: rect(0 0 0 0);
     `;
   }
+
+  return '';
 }
 
 export default InnerNode;

@@ -1,6 +1,6 @@
-import { withProps } from 'recompose';
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { withProps } from 'recompose';
 import Avatar from 'react-toolbox-sc/lib/Avatar';
 import FontIcon from 'react-toolbox-sc/lib/FontIcon';
 import Collapsable from 'react-toolbox-sc/lib/Collapsable';

@@ -1,1 +1,1 @@
-export { default } from './ClippingBox';
+export { default, ORIGINS } from './ClippingBox';

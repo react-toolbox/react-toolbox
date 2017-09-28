@@ -7,7 +7,7 @@ import getFullMonth from './locale/getFullMonth';
 import getMonthMatrix from './getMonthMatrix';
 import getMonthAffected from './getMonthAffected';
 import { PickerDate, DateChecker } from './types';
-import { Day } from './Day';
+import { DayType } from './Day';
 
 export interface MonthTitleProps {
   viewDate: Date;
@@ -45,7 +45,7 @@ export interface MonthFactoryArgs {
   /**
    * Used to render each Day of the Month.
    */
-  Day: Day;
+  Day: DayType;
   /**
    * Used wrap each bunch of days that compose a week.
    */
@@ -76,7 +76,7 @@ export interface MonthFactoryArgs {
   passthrough: PassTroughFunction<MonthProps, MonthNodes>;
 }
 
-export type Month = ComponentClass<MonthProps>;
+export type MonthType = ComponentClass<MonthProps>;
 
 export default function monthFactory({
   Day,
@@ -87,9 +87,9 @@ export default function monthFactory({
   Weekday,
   WeekdaysWrapper,
   passthrough,
-}: MonthFactoryArgs): Month {
+}: MonthFactoryArgs): MonthType {
   const passProps = getPassThrough(passthrough);
-  return class Month extends Component<MonthProps, void> {
+  return class MonthComponent extends Component<MonthProps, {}> {
     public shouldComponentUpdate(nextProps) {
       if (
         this.props.viewDate.getTime() !== nextProps.viewDate.getTime() ||

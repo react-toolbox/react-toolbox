@@ -1,4 +1,6 @@
-import clippingBoxFactory from 'react-toolbox-core/lib/components/ClippingBox';
+import clippingBoxFactory, {
+  ORIGINS,
+} from 'react-toolbox-core/lib/components/ClippingBox';
 import InnerNode from './InnerNode';
 import OutlineNode from './OutlineNode';
 import WrapperNode from './WrapperNode';
@@ -11,3 +13,4 @@ const ClippingBox = clippingBoxFactory({
 });
 
 export default ClippingBox;
+export { ORIGINS };

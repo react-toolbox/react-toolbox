@@ -69,6 +69,8 @@ function getActiveStyle(props) {
       pointer-events: all;
     `;
   }
+
+  return '';
 }
 
 export default Overlay;

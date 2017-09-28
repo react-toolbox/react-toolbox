@@ -7,6 +7,7 @@ import ListItem from './ListItem';
 import withStyled from '../utils/withStyled';
 
 const List = listFactory({
+  passthrough: props => ({ innerRef: props.getRef }),
   ListNode: styled.ul`
     display: inline-block;
     list-style: none;
@@ -15,6 +16,7 @@ const List = listFactory({
     padding: 0;
     position: relative;
     text-align: left;
+    vertical-align: middle;
     white-space: nowrap;
     width: 100%;
 

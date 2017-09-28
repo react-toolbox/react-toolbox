@@ -1075,6 +1075,12 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
+prop-types@15.5.0:
+  version "15.5.0"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.0.tgz#489d10598b03121cd11e7e656cb22de72421be2c"
+  dependencies:
+    fbjs "^0.8.9"
+
 prop-types@^15.5.4:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
@@ -1114,7 +1120,7 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-toolbox-core@^0.0.0-alpha.11:
+react-toolbox-core@^0.0.0-alpha.15:
   version "0.0.0-alpha.fd8abcdb"
   resolved "https://registry.yarnpkg.com/react-toolbox-core/-/react-toolbox-core-0.0.0-alpha.fd8abcdb.tgz#c6b447c65bbb5afe08cc0b015b52c14d1461663b"
   dependencies:

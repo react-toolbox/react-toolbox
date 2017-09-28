@@ -25,7 +25,7 @@ export default function dialogFactory({
   passthrough,
 }: DialogFactoryArgs): ComponentClass<DialogProps> {
   const passProps = getPassThrough(passthrough);
-  return class Dialog extends Component<DialogProps, void> {
+  return class Dialog extends Component<DialogProps, {}> {
     render() {
       const { active, children, onOverlayClick } = this.props;
       return (
