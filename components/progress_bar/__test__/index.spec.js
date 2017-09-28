@@ -1,7 +1,10 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { configure, mount, shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import { ProgressBar } from '../ProgressBar';
 import theme from '../theme.css';
+
+configure({ adapter: new Adapter() });
 
 describe('ProgressBar', () => {
   describe('#calculateRatio', () => {
@@ -27,32 +30,37 @@ describe('ProgressBar', () => {
   describe('#render', () => {
     it('renders the value and buffer bars when it is linear', () => {
       const wrapper = mount(<ProgressBar theme={theme} />);
-      expect(wrapper.childAt(0).props().children.length).toEqual(2);
+      const progresbar = wrapper.childAt(0);
+      expect(progresbar.childAt(0).props().children.length).toEqual(2);
     });
 
     it('renders the value and buffer bars when it is linear', () => {
       const wrapper = mount(<ProgressBar mode="determinate" value={30} buffer={60} theme={theme} />);
-      const buffer = wrapper.childAt(0).childAt(0);
-      const value = wrapper.childAt(0).childAt(1);
+      const progresbar = wrapper.childAt(0);
+      const buffer = progresbar.childAt(0).childAt(0);
+      const value = progresbar.childAt(0).childAt(1);
       expect(buffer.props().style.transform).toEqual(`scaleX(${0.6})`);
       expect(value.props().style.transform).toEqual(`scaleX(${0.3})`);
     });
 
     it('renders the svg circle when it is circular', () => {
       const wrapper = mount(<ProgressBar type="circular" theme={theme} />);
-      expect(wrapper.childAt(0).props().children.type).toEqual('circle');
+      const progresbar = wrapper.childAt(0);
+      expect(progresbar.childAt(0).props().children.type).toEqual('circle');
     });
 
     it('renders the proper circle length style when it is circular and determinate', () => {
       const wrapper = mount(<ProgressBar type="circular" mode="determinate" value={30} theme={theme} />);
-      const circle = wrapper.childAt(0).props().children;
+      const progresbar = wrapper.childAt(0);
+      const circle = progresbar.childAt(0).props().children;
       const strokeLength = 2 * Math.PI * circle.props.r * 0.3;
       expect(circle.props.style.strokeDasharray).toEqual(`${strokeLength}, 400`);
     });
 
     it('contains className in its className', () => {
       const wrapper = mount(<ProgressBar className="tight" mode="determinate" theme={theme} />);
-      expect(wrapper.props().className).toContain('tight');
+      const progresbar = wrapper.childAt(0);
+      expect(progresbar.props().className).toContain('tight');
     });
   });
 });

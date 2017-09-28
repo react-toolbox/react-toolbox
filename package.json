@@ -27,15 +27,16 @@
   ],
   "dependencies": {
     "classnames": "^2.2.5",
-    "core-js": "^2.4.0",
-    "ramda": "^0.23.0",
+    "core-js": "^2.5.1",
+    "ramda": "^0.24.1",
     "react-css-themr": "^2.1.2",
     "react-style-proptype": "^3.0.0",
-    "react-transition-group": "^1.1.3"
+    "react-transition-group": "^2.2.0",
+    "prop-types": "^15.6.0"
   },
   "devDependencies": {
     "@types/node": "^7.0.4",
-    "@types/react": "^15.0.0",
+    "@types/react": "^16.0.7",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
@@ -48,8 +49,9 @@
     "cpx": "^1.5.0",
     "cross-env": "^5.0.0",
     "css-loader": "^0.28.2",
-    "enzyme": "^2.8.2",
-    "enzyme-to-json": "^1.5.1",
+    "enzyme": "^3.0.0",
+    "enzyme-to-json": "^3.0.1",
+    "enzyme-adapter-react-16": "^1.0.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-import-resolver-webpack": "^0.8.1",
@@ -68,7 +70,7 @@
     "gulp-rimraf": "^0.2.1",
     "identity-obj-proxy": "^3.0.0",
     "internal-ip": "^1.2.0",
-    "jest": "^20.0.4",
+    "jest": "^21.2.1",
     "lint-staged": "^3.4.2",
     "normalize.css": "^7.0.0",
     "postcss-cssnext": "^2.11.0",
@@ -79,14 +81,12 @@
     "postcss-nesting": "^4.0.1",
     "postcss-reporter": "^3.0.0",
     "pre-commit": "^1.2.2",
-    "prop-types": "^15.5.10",
-    "react": "^15.5.0",
-    "react-addons-test-utils": "^15.5.0",
-    "react-dom": "^15.5.0",
-    "react-test-renderer": "^15.5.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-test-renderer": "^16.0.0",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
-    "redbox-react": "^1.3.6",
+    "redbox-react": "^1.5.0",
     "rimraf": "^2.6.1",
     "sinon": "^2.0.0-pre.2",
     "style-loader": "^0.18.1",
@@ -139,11 +139,8 @@
     ]
   },
   "peerDependencies": {
-    "classnames": "^2.2.0",
-    "prop-types": "^15.5.7",
-    "react": "^15.5.0",
-    "react-dom": "^15.5.0",
-    "react-transition-group": "^1.1.3"
+    "react": "^15.5.0 || ^16.0.0",
+    "react-dom": "^15.5.0 || ^16.0.0"
   },
   "pre-commit": "lint:staged"
 }

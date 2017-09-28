@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { mount } from 'enzyme';
+import { configure, mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import { Tabs } from '../Tabs';
 import { Tab } from '../Tab';
 import { TabContent } from '../TabContent';
 import theme from '../theme.css';
+
+configure({ adapter: new Adapter() });
 
 describe('Tabs', () => {
   class Composition extends Component {
@@ -24,24 +27,26 @@ describe('Tabs', () => {
 
   it('defaults to only rendering the current tab', () => {
     const wrapper = mount(<Composition />);
-    expect(wrapper.find(TabContent).length).toEqual(1);
-    expect(wrapper.find(TabContent).first().prop('tabIndex')).toEqual(0);
+    expect(wrapper.childAt(0).find(TabContent).length).toEqual(1);
+    expect(wrapper.childAt(0).find(TabContent).first().prop('tabIndex')).toEqual(0);
 
     wrapper.instance().setState({ index: 1 });
-    expect(wrapper.find(TabContent).length).toEqual(1);
-    expect(wrapper.find(TabContent).first().prop('tabIndex')).toEqual(1);
+    wrapper.update();
+    expect(wrapper.childAt(0).find(TabContent).length).toEqual(1);
+    expect(wrapper.childAt(0).find(TabContent).first().prop('tabIndex')).toEqual(1);
   });
 
   it('renders inactive tabs when hideMode is set to display', () => {
     const wrapper = mount(<Composition hideMode="display" />);
-    expect(wrapper.find(TabContent).length).toEqual(2);
-    expect(wrapper.find(TabContent).at(0).prop('hidden')).toEqual(false);
-    expect(wrapper.find(TabContent).at(1).prop('hidden')).toEqual(true);
+    expect(wrapper.childAt(0).find(TabContent).length).toEqual(2);
+    expect(wrapper.childAt(0).find(TabContent).at(0).prop('hidden')).toEqual(false);
+    expect(wrapper.childAt(0).find(TabContent).at(1).prop('hidden')).toEqual(true);
 
     wrapper.instance().setState({ index: 1 });
-    expect(wrapper.find(TabContent).length).toEqual(2);
-    expect(wrapper.find(TabContent).at(0).prop('hidden')).toEqual(true);
-    expect(wrapper.find(TabContent).at(1).prop('hidden')).toEqual(false);
+    wrapper.update();
+    expect(wrapper.childAt(0).find(TabContent).length).toEqual(2);
+    expect(wrapper.childAt(0).find(TabContent).at(0).prop('hidden')).toEqual(true);
+    expect(wrapper.childAt(0).find(TabContent).at(1).prop('hidden')).toEqual(false);
   });
 
   describe('#render', () => {

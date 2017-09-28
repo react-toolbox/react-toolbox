@@ -1,7 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { configure, shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import theme from '../theme.css';
 import { DatePickerDialog, Calendar } from '../DatePicker';
+
+configure({ adapter: new Adapter() });
 
 describe('DatePickerDialog', () => {
   describe('#on mount', () => {

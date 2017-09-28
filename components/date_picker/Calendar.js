@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import CssTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 import { range, getAnimationModule } from '../utils/utils';
 import time from '../utils/time';
 import CalendarMonth from './CalendarMonth';
@@ -135,10 +135,9 @@ const factory = (IconButton) => {
         <div data-react-toolbox="calendar">
           <IconButton id="left" className={theme.prev} icon="chevron_left" onClick={this.changeViewMonth} />
           <IconButton id="right" className={theme.next} icon="chevron_right" onClick={this.changeViewMonth} />
-          <CssTransitionGroup
-            transitionName={animationModule}
-            transitionEnterTimeout={350}
-            transitionLeaveTimeout={350}
+          <TransitionGroup
+            classNames={animationModule}
+            timeout={{ exit: 300, enter: 300 }}
           >
             <CalendarMonth
               enabledDates={this.props.enabledDates}
@@ -153,7 +152,7 @@ const factory = (IconButton) => {
               theme={this.props.theme}
               viewDate={this.state.viewDate}
             />
-          </CssTransitionGroup>
+          </TransitionGroup>
         </div>
       );
     }

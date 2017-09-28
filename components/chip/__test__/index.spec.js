@@ -1,9 +1,12 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { configure, mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import { themr } from 'react-css-themr';
 import { CHIP } from '../../identifiers';
 import { tooltipFactory } from '../../tooltip';
 import { chipFactory } from '../Chip';
+
+configure({ adapter: new Adapter() });
 
 const Avatar = ({ title }) => <span>{title}</span>; // eslint-disable-line react/prop-types
 const Chip = themr(CHIP)(chipFactory(Avatar));
@@ -17,8 +20,7 @@ describe('Chip', () => {
           <span>Test</span>
         </Chip>,
       );
-      const chipNode = wrapper.find('div').node;
-      expect(chipNode.className).toMatch(/\bavatar-class\b/);
+      expect(wrapper.find('div').prop('className')).toMatch(/\bavatar-class\b/);
     });
 
     it('works with non-flat children', () => {
@@ -29,8 +31,7 @@ describe('Chip', () => {
           <span>Test</span>
         </TooltippedChip>,
       );
-      const chipNode = wrapper.find('div').node;
-      expect(chipNode.className).toMatch(/\bavatar-class\b/);
+      expect(wrapper.find('div').prop('className')).toMatch(/\bavatar-class\b/);
     });
   });
 
@@ -41,8 +42,7 @@ describe('Chip', () => {
           <span>Test</span>
         </Chip>,
       );
-      const chipNode = wrapper.find('div').node;
-      expect(chipNode.className).not.toMatch(/\bavatar-class\b/);
+      expect(wrapper.find('div').prop('className')).not.toMatch(/\bavatar-class\b/);
     });
   });
 });

@@ -1,65 +1,71 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { configure, mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import { Input } from '../../input/Input';
 import { ProgressBar } from '../../progress_bar/ProgressBar';
 import { Slider } from '../Slider';
 import theme from '../theme.css';
 
+configure({ adapter: new Adapter() });
+
 describe('Slider', () => {
   describe('#positionToValue', () => {
     it('returns min when position is less than origin', () => {
-      const instance = shallow(<Slider min={-500} max={500} />).instance();
-      instance.setState({ sliderStart: 500, sliderLength: 100 });
-      expect(instance.positionToValue({ x: 400 })).toEqual(-500);
+      const wrapper = mount(<Slider min={-500} max={500} />);
+      wrapper.instance().setState({ sliderStart: 500, sliderLength: 100 });
+      wrapper.update();
+      expect(wrapper.instance().positionToValue({ x: 400 })).toEqual(-500);
     });
 
     it('returns max when position is more and origin plus length', () => {
-      const instance = shallow(<Slider min={-500} max={500} />).instance();
-      instance.setState({ sliderStart: 500, sliderLength: 100 });
-      expect(instance.positionToValue({ x: 900 })).toEqual(500);
+      const wrapper = mount(<Slider min={-500} max={500} />);
+      wrapper.instance().setState({ sliderStart: 500, sliderLength: 100 });
+      wrapper.update();
+      expect(wrapper.instance().positionToValue({ x: 900 })).toEqual(500);
     });
 
     it('returns the proper position when the position is inside slider', () => {
-      const instance = shallow(<Slider min={-500} max={500} />).instance();
-      instance.setState({ sliderStart: 500, sliderLength: 100 });
-      expect(instance.positionToValue({ x: 520 })).toEqual(-300);
+      const wrapper = mount(<Slider min={-500} max={500} />);
+      wrapper.instance().setState({ sliderStart: 500, sliderLength: 100 });
+      wrapper.update();
+      expect(wrapper.instance().positionToValue({ x: 520 })).toEqual(-300);
     });
   });
 
   describe('#trimValue', () => {
     it('rounds to the proper number', () => {
-      const instance = shallow(<Slider min={0} max={100} step={0.1} />).instance();
-      expect(instance.trimValue(57.16)).toEqual(57.2);
-      expect(instance.trimValue(57.12)).toEqual(57.10);
+      const wrapper = mount(<Slider min={0} max={100} step={0.1} />);
+      expect(wrapper.instance().trimValue(57.16)).toEqual(57.2);
+      expect(wrapper.instance().trimValue(57.12)).toEqual(57.10);
     });
 
     it('returns min if number is less than min', () => {
-      const instance = shallow(<Slider min={0} max={100} step={0.1} />).instance();
-      expect(instance.trimValue(-57.16)).toEqual(0);
+      const wrapper = mount(<Slider min={0} max={100} step={0.1} />);
+      expect(wrapper.instance().trimValue(-57.16)).toEqual(0);
     });
 
     it('returns max if number is more than max', () => {
-      const instance = shallow(<Slider min={0} max={100} step={0.1} />).instance();
-      expect(instance.trimValue(257.16)).toEqual(100);
+      const wrapper = mount(<Slider min={0} max={100} step={0.1} />);
+      expect(wrapper.instance().trimValue(257.16)).toEqual(100);
     });
   });
 
   describe('#valueForInput', () => {
     it('returns a fixed number when an integer is given', () => {
-      const instance = shallow(<Slider min={0} max={100} step={0.01} />).instance();
-      expect(instance.valueForInput(4)).toEqual('4.00');
+      const wrapper = mount(<Slider min={0} max={100} step={0.01} />);
+      expect(wrapper.instance().valueForInput(4)).toEqual('4.00');
     });
 
     it('returns a fixed number when a float is given', () => {
-      const instance = shallow(<Slider min={0} max={100} step={0.01} />).instance();
-      expect(instance.valueForInput(4.06)).toEqual('4.06');
+      const wrapper = mount(<Slider min={0} max={100} step={0.01} />);
+      expect(wrapper.instance().valueForInput(4.06)).toEqual('4.06');
     });
   });
 
   describe('#knobOffset', () => {
     it('returns percentage offset of knob for slider with given min/max/value props', () => {
-      const slider = shallow(<Slider min={-500} max={500} value={-250} />).instance();
-      expect(slider.knobOffset()).toEqual(25);
+      const wrapper = mount(<Slider min={-500} max={500} value={-250} />);
+      expect(wrapper.instance().knobOffset()).toEqual(25);
     });
   });
 
@@ -95,6 +101,7 @@ describe('Slider', () => {
       const wrapper = mount(<Slider min={-500} max={500} onChange={onChange} />);
       const knob = wrapper.childAt(0).childAt(0);
       knob.simulate('mouseDown');
+      wrapper.update();
       expect(wrapper.state().pressed).toEqual(true);
     });
 
@@ -114,7 +121,8 @@ describe('Slider', () => {
       const instance = wrapper.instance();
       instance.setState({ sliderStart: 0, sliderLength: 1000 });
       instance.handleResize = (evt, callback) => { callback(); };
-      wrapper.childAt(0).simulate('mouseDown', event);
+      wrapper.childAt(0).childAt(0).childAt(0).simulate('mouseDown', event);
+      wrapper.update();
       expect(onChange).toHaveBeenCalledWith(-300);
     });
 
@@ -125,7 +133,8 @@ describe('Slider', () => {
       const instance = wrapper.instance();
       instance.setState({ sliderStart: 0, sliderLength: 1000 });
       instance.handleResize = (evt, callback) => { callback(); };
-      wrapper.childAt(0).simulate('touchStart', event);
+      wrapper.childAt(0).childAt(0).simulate('touchStart', event);
+      wrapper.update();
       expect(onChange).toHaveBeenCalledWith(-300);
     });
 
@@ -136,7 +145,8 @@ describe('Slider', () => {
       const instance = wrapper.instance();
       instance.setState({ sliderStart: 0, sliderLength: 1000 });
       instance.handleResize = (evt, callback) => { callback(); };
-      wrapper.childAt(0).simulate('mouseDown', event);
+      wrapper.childAt(0).childAt(0).simulate('mouseDown', event);
+      wrapper.update();
       expect(onChange).toHaveBeenCalledWith(90);
     });
 
@@ -146,6 +156,7 @@ describe('Slider', () => {
       const wrapper = mount(<Slider editable value={50} onChange={onChange} />);
       wrapper.find('input').simulate('change', event);
       wrapper.find('input').simulate('blur');
+      wrapper.update();
       expect(onChange).toHaveBeenCalled();
       expect(onChange.mock.calls[0][0]).toEqual(80);
     });
@@ -154,7 +165,9 @@ describe('Slider', () => {
       const onChange = jest.fn();
       const wrapper = mount(<Slider editable value={50} onChange={onChange} />);
       wrapper.instance().setState({ sliderStart: 0, sliderLength: 1000 });
-      wrapper.childAt(0).simulate('mouseDown', { pageX: 900, pageY: 0 });
+      wrapper.update();
+      wrapper.childAt(0).childAt(0).simulate('mouseDown', { pageX: 900, pageY: 0 });
+      wrapper.update();
       expect(onChange).toHaveBeenCalled();
     });
   });
