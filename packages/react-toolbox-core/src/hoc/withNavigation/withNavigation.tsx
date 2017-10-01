@@ -9,10 +9,9 @@ import {
   ReactChild,
   ReactChildren,
 } from 'react';
+import RenderChildren from '../../components/RenderChildren';
 import getFilteredReactChildrenIndexes from '../../utils/getFilteredReactChildrenIndexes';
-import withKeys, { WithKeysProps } from '../withKeys';
-
-const SCROLL_NAVIGATE_OFFSET = 8;
+import withKeys from '../withKeys';
 
 export interface WithNavigationArgs {
   isSelectable(child: ReactChild): boolean;
@@ -21,16 +20,15 @@ export interface WithNavigationArgs {
 export interface WithNavigationProps {
   children: ReactChildren;
   hoverIdx?: number;
+  isSelectable?(child: ReactChild): boolean;
   onEndReached?(): void;
-  onHoverChange(
-    idx: number | undefined,
-    node: Component<any, any> | undefined,
-  ): void;
+  onHoverChange(idx: number | undefined, node: Component<any, any> | undefined): void;
   onMouseLeave(event: MouseEvent<any>): void;
   onStartReached?(): void;
   restartOnEnd: boolean;
   rootNode?: HTMLElement;
   scrollOffset?: number;
+  useKeys?: boolean;
 }
 
 export type WithNavigationHOC = <T>(
@@ -43,52 +41,19 @@ export interface INavigableComponent
   justPressedKey(): void;
 }
 
+const SCROLL_NAVIGATE_OFFSET = 8;
+const Keybindings = withKeys()(RenderChildren);
+
 export default function withNavigation({
-  isSelectable,
+  isSelectable: defaultIsSelectable,
 }: WithNavigationArgs): WithNavigationHOC {
   return compose<
-    ComponentClass<WithNavigationProps & WithKeysProps>,
-    ComponentClass<WithKeysProps>,
+    ComponentClass<WithNavigationProps>,
     ComponentClass<any>
   >(
-    withKeys<WithNavigationProps, INavigableComponent>({
-      handlers: {
-        ARROW_DOWN: (event, props, instance) => {
-          event.preventDefault();
-          const index = instance.getNextIndex(1);
-          if (index !== props.hoverIdx) {
-            instance.justPressedKey();
-            props.onHoverChange(index, instance[childId(index)]);
-          } else if (props.onEndReached) {
-            props.onEndReached();
-          }
-        },
-        ARROW_UP: (event, props, instance) => {
-          event.preventDefault();
-          const index = instance.getNextIndex(-1);
-          if (index !== props.hoverIdx) {
-            instance.justPressedKey();
-            props.onHoverChange(index, instance[childId(index)]);
-          } else if (props.onStartReached) {
-            props.onStartReached();
-          }
-        },
-        ENTER_OR_SPACEBAR: (event, props, instance) => {
-          const { hoverIdx } = props;
-          event.preventDefault();
-          if (hoverIdx !== undefined && instance[itemId(hoverIdx)]) {
-            instance[itemId(hoverIdx)].click();
-          }
-        },
-        ESC: (event, props, instance) => {
-          event.preventDefault();
-          props.onHoverChange(undefined, undefined);
-        },
-      },
-    }),
     function addNavigation<T>(DecoratedComponent) {
       return class NavigableComponent extends Component<
-        T & WithKeysProps & WithNavigationProps,
+        T & WithNavigationProps,
         {}
       > {
         fromKeyboard = false;
@@ -139,6 +104,36 @@ export default function withNavigation({
           }
         };
 
+        handleArrowDown = (event) => {
+          event.preventDefault();
+          const index = this.getNextIndex(1);
+          if (index !== this.props.hoverIdx) {
+            this.justPressedKey();
+            this.props.onHoverChange(index, this[childId(index)]);
+          } else if (this.props.onEndReached) {
+            this.props.onEndReached();
+          }
+        };
+
+        handleArrowUp = (event) => {
+          event.preventDefault();
+          const index = this.getNextIndex(-1);
+          if (index !== this.props.hoverIdx) {
+            this.justPressedKey();
+            this.props.onHoverChange(index, this[childId(index)]);
+          } else if (this.props.onStartReached) {
+            this.props.onStartReached();
+          }
+        };
+
+        handleEnterOrSpacebar = (event) => {
+          event.preventDefault();
+          const { hoverIdx } = this.props;
+          if (hoverIdx !== undefined && this[itemId(hoverIdx as number)]) {
+            this[itemId(hoverIdx as number)].click();
+          }
+        };
+
         justPressedKey = () => {
           this.fromKeyboard = true;
           this.justPressedKeyTimeout = setTimeout(() => {
@@ -152,7 +147,7 @@ export default function withNavigation({
           const { children, hoverIdx, restartOnEnd } = this.props;
           const indexes = getFilteredReactChildrenIndexes(
             children,
-            isSelectable,
+            this.isSelectable,
           );
           let nextIndex =
             hoverIdx !== undefined
@@ -176,11 +171,11 @@ export default function withNavigation({
               ? this.props.scrollOffset as number
               : SCROLL_NAVIGATE_OFFSET;
           const rootNode = findDOMNode(this.getRootNode());
-          if (rootNode && this.props.hoverIdx !== undefined) {
+          const itemNode = this[itemId(this.props.hoverIdx as number)];
+
+          if (rootNode && itemNode && this.props.hoverIdx !== undefined) {
             const list = rootNode.getBoundingClientRect();
-            const item = this[
-              itemId(this.props.hoverIdx as number)
-            ].getBoundingClientRect();
+            const item = itemNode.getBoundingClientRect();
 
             // Adjust scroll for this item
             if (item.bottom > list.bottom) {
@@ -192,6 +187,12 @@ export default function withNavigation({
             }
           }
         };
+
+        isSelectable = (child: ReactChild) => (
+          this.props.isSelectable !== undefined
+            ? this.props.isSelectable(child)
+            : defaultIsSelectable(child)
+        )
 
         injectSelectableProps = (child, idx) =>
           cloneElement(child, {
@@ -212,23 +213,43 @@ export default function withNavigation({
             },
           });
 
+        handleEsc = (event) => {
+          event.preventDefault();
+          this.props.onHoverChange(undefined, undefined);
+        };
+
         render() {
-          const { onMouseLeave, onHoverChange, ...rest } = this.props as any;
+          const {
+            onMouseLeave,
+            onHoverChange,
+            useKeys,
+            ...rest,
+          } = this.props as any;
 
           return (
-            <DecoratedComponent
-              {...rest}
-              getRef={this.handleRootRef}
-              onMouseLeave={this.handleMouseLeave}
+            <Keybindings
+              handlers={{
+                ARROW_DOWN: this.handleArrowDown,
+                ARROW_UP: this.handleArrowUp,
+                ENTER_OR_SPACEBAR: this.handleEnterOrSpacebar,
+                ESC: this.handleEsc,
+              }}
+              useKeys={useKeys}
             >
-              {React.Children.map(
-                this.props.children,
-                (child, idx) =>
-                  isSelectable(child)
-                    ? this.injectSelectableProps(child, idx)
-                    : child,
-              )}
-            </DecoratedComponent>
+              <DecoratedComponent
+                {...rest}
+                getRef={this.handleRootRef}
+                onMouseLeave={this.handleMouseLeave}
+              >
+                {React.Children.map(
+                  this.props.children,
+                  (child, idx) =>
+                    this.isSelectable(child)
+                      ? this.injectSelectableProps(child, idx)
+                      : child,
+                )}
+              </DecoratedComponent>
+            </Keybindings>
           );
         }
       };
