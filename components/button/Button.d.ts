@@ -1,8 +1,9 @@
 import * as React from "react";
 import ReactToolbox from "../index";
+import { RippleProps } from '../ripple/index';
 import { ButtonBaseProps, ButtonTheme } from './base';
 
-export interface ButtonProps extends ButtonBaseProps {
+export interface ButtonProps extends ButtonBaseProps, RippleProps {
   /**
    * If true, the button will have a flat look.
    * @default false
@@ -31,6 +32,10 @@ export interface ButtonProps extends ButtonBaseProps {
    * @default false
    */
   raised?: boolean;
+  /**
+   * Passed down to the root element
+   */
+  target?: string;
   /**
    * Classnames object defining the component style.
    */
