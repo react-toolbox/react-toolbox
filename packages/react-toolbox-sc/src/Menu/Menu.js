@@ -11,6 +11,7 @@ import withPortal from './withPortal';
 const MenuList = ({
   children, // eslint-disable-line
   hoverIdx, // eslint-disable-line
+  isSelectable, // eslint-disable-line
   onEndReached, // eslint-disable-line
   onHoverChange, // eslint-disable-line
   onMouseEnter, // eslint-disable-line
@@ -26,6 +27,7 @@ const MenuList = ({
   <MenuNode overrides={overrides} {...other}>
     <List
       hoverIdx={hoverIdx}
+      isSelectable={isSelectable}
       onEndReached={onEndReached}
       onHoverChange={onHoverChange}
       onMouseEnter={onMouseEnter}
