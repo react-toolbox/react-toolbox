@@ -14,10 +14,7 @@ export type WithKeysHOC = <T>(
 ) => ComponentClass<T & WithKeysProps<T>>;
 
 export interface IHandlers<T> {
-  [key: string]: (
-    event: KeyboardEvent<any>,
-    props: T,
-  ) => void | string;
+  [key: string]: (event: KeyboardEvent<any>, props: T) => void | string;
 }
 
 export interface IMatchers {
@@ -52,7 +49,7 @@ export default function withKeys(): WithKeysHOC {
           ? { ...KEY_MATCHERS, ...(this.props.matchers as {}) }
           : KEY_MATCHERS;
         return matchers[bindingKey];
-      }
+      };
 
       handleKeyDown = event => {
         keys(this.props.handlers).forEach(bindingKey => {

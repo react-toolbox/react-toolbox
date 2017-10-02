@@ -17,7 +17,8 @@ export const ARROW_RIGHT = keyIs(ARROW_RIGHT_KEY);
 export const ARROW_UP = keyIs(ARROW_UP_KEY);
 export const BACKSPACE = keyIs(BACKSPACE_KEY);
 export const COMMA = keyIs(COMMA_KEY);
-export const ENTER_OR_SPACEBAR = e => keyIs(ENTER_KEY)(e) || keyIs(SPACEBAR_KEY)(e);
+export const ENTER_OR_SPACEBAR = e =>
+  keyIs(ENTER_KEY)(e) || keyIs(SPACEBAR_KEY)(e);
 export const ENTER = keyIs(ENTER_KEY);
 export const ESC = keyIs(ESC_KEY);
 export const SPACEBAR = keyIs(SPACEBAR_KEY);
