@@ -71,16 +71,6 @@ class ListExamples extends Component {
     this.rootList = node;
   }
 
-  mainUseKeys = () => (
-    this.state.navigable &&
-      this.state.nestedHoverIdx === undefined
-  );
-
-  nestedUseKeys = () => (
-    this.state.navigable &&
-      !this.mainUseKeys()
-  );
-
   handleToggleNavigation = (event) => {
     event.preventDefault();
     this.setState({
@@ -89,7 +79,9 @@ class ListExamples extends Component {
   }
 
   render() {
-    const { nestedOpen } = this.state;
+    const { navigable, nestedOpen, nestedHoverIdx } = this.state;
+    const mainUseKeys = navigable && nestedHoverIdx === undefined;
+    const nestedUseKeys = navigable && !mainUseKeys;
     return (
       <section>
         <h5>List with two text lines, avatar and right icon</h5>
@@ -142,7 +134,7 @@ class ListExamples extends Component {
           onHoverChange={this.handleMainHoverChange}
           restartOnEnd
           style={{ maxHeight: 260 }}
-          useKeys={this.mainUseKeys}
+          useKeys={mainUseKeys}
         >
           <ListItem ripple onClick={this.toggleNested}>
             <Avatar><FontIcon value="folder" /></Avatar>
@@ -161,9 +153,9 @@ class ListExamples extends Component {
                 onHoverChange={this.handleNestedHoverChange}
                 onStartReached={this.handleNestedStartReached}
                 rootNode={this.rootList}
-                useKeys={this.nestedUseKeys}
+                useKeys={nestedUseKeys}
               >
-                <ListItem>
+                <ListItem ripple>
                   <ListText>
                     <ListTextPrimary>kinkaku-ji.jpg</ListTextPrimary>
                     <ListTextSecondary>Size: 240kb</ListTextSecondary>
