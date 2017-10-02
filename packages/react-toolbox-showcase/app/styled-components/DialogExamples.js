@@ -23,8 +23,8 @@ class DialogExamples extends Component {
             <h1>Use Google location service?</h1>
             <p>
               Let Google help apps <strong>determine location</strong>.
-              This means sending anonymous location data to Google, even when no apps are running.
-            </p>
+            This means sending anonymous location data to Google, even when no apps are running.
+          </p>
           </DialogBody>
           <DialogActions>
             <Button primary onClick={this.handleToggle}>Disagree</Button>

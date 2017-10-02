@@ -3,6 +3,7 @@ import React from 'react';
 import { injectGlobal } from 'styled-components';
 import AvatarExamples from './AvatarExamples';
 import ButtonExamples from './ButtonExamples';
+import DialogExamples from './DialogExamples';
 import ListExamples from './ListExamples';
 import MenuExamples from './MenuExamples';
 
@@ -26,6 +27,7 @@ const StyledComponents = () => (
   <div>
     <AvatarExamples />
     <ButtonExamples />
+    <DialogExamples />
     <ListExamples />
     <MenuExamples />
   </div>
