@@ -10,6 +10,7 @@ import measureElement from '../../utils/measureElement';
 export type RippleOptions = {
   centered: boolean;
   className: string;
+  enabled: boolean;
   multiple: boolean;
   passthrough: boolean;
   spread: number;
@@ -75,6 +76,7 @@ export interface RippledState {
 const defaults: RippleOptions = {
   centered: false,
   className: '',
+  enabled: true,
   multiple: true,
   passthrough: true,
   spread: 2,
@@ -96,6 +98,7 @@ const withRippleFactory = ({
   const {
     centered: defaultCentered,
     className: defaultClassName,
+    enabled: defaultEnabled,
     multiple: defaultMultiple,
     passthrough: defaultPassthrough,
     spread: defaultSpread,
@@ -110,7 +113,7 @@ const withRippleFactory = ({
     > {
       public static defaultProps = {
         disabled: false,
-        ripple: true,
+        ripple: defaultEnabled,
         rippleCentered: defaultCentered,
         rippleClassName: defaultClassName,
         rippleMultiple: defaultMultiple,
