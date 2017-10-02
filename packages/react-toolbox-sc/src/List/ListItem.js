@@ -83,6 +83,6 @@ const ListItem = listItemFactory({
 
 export default compose(
   withStyled(),
-  defaultProps({ ripple: false, selectable: false }),
-  withRipple(),
+  withRipple({ enabled: false }),
+  defaultProps({ selectable: false }),
 )(ListItem);
