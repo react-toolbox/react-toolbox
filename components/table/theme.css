@@ -62,8 +62,8 @@
   vertical-align: middle;
 
   &.checkboxCell {
-    width: calc(1.8 * var(--unit));
     padding-right: 5px;
+    width: calc(1.8 * var(--unit));
 
     & > * {
       margin: 0;
@@ -82,8 +82,8 @@
   vertical-align: bottom;
 
   &.checkboxCell {
-    width: calc(1.8 * var(--unit));
     padding-right: 5px;
+    width: calc(1.8 * var(--unit));
 
     & > * {
       margin: 0 0 3px;
