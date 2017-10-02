@@ -9,7 +9,6 @@ import withStyled from '../utils/withStyled';
 const List = listFactory({
   passthrough: props => ({ innerRef: props.getRef }),
   ListNode: styled.ul`
-    display: inline-block;
     list-style: none;
     margin: 0;
     overflow: scroll;
