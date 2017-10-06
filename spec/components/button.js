@@ -8,7 +8,7 @@ const ButtonTest = () => (
     <p>lorem ipsum...</p>
 
     <Button href="http://github.com/javivelasco" target="_blank" raised>
-      <GithubIcon /> Github
+      <GithubIcon /> GitHub
     </Button>
     <Button icon="bookmark" label="Bookmark" accent onRippleEnded={rippleEnded} />
     <Button icon="bookmark" label="Bookmark" raised primary rippleMultiple={false} onRippleEnded={rippleEnded} />
@@ -35,7 +35,7 @@ const ButtonTest = () => (
     <IconButton icon="menu" />
     <span style={{ verticalAlign: 'middle' }}>Menu</span>
     <IconButton><GithubIcon /></IconButton>
-    <span style={{ verticalAlign: 'middle' }}>Github</span>
+    <span style={{ verticalAlign: 'middle' }}>GitHub</span>
     <h5>Browse Button</h5>
     <br />
     <BrowseButton icon="folder_open" label="BROWSE" raised primary />

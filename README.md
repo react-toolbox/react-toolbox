@@ -1,6 +1,6 @@
 # <a href='http://react-toolbox.com'><img src='http://i.imgur.com/VCSElQX.png' height='50'></a>
 
-[![npm version](https://img.shields.io/npm/v/react-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/react-toolbox) [![Build Status](http://img.shields.io/travis/react-toolbox/react-toolbox/master.svg?style=flat-square)](https://travis-ci.org/react-toolbox/react-toolbox) [![NPM Status](http://img.shields.io/npm/dm/react-toolbox.svg?style=flat-square)](https://www.npmjs.org/package/react-toolbox) [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://paypal.me/javivelasco) [![OpenCollective](https://opencollective.com/react-toolbox/backers/badge.svg)](#backers) 
+[![npm version](https://img.shields.io/npm/v/react-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/react-toolbox) [![Build Status](http://img.shields.io/travis/react-toolbox/react-toolbox/master.svg?style=flat-square)](https://travis-ci.org/react-toolbox/react-toolbox) [![NPM Status](http://img.shields.io/npm/dm/react-toolbox.svg?style=flat-square)](https://www.npmjs.org/package/react-toolbox) [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://paypal.me/javivelasco) [![OpenCollective](https://opencollective.com/react-toolbox/backers/badge.svg)](#backers)
 [![OpenCollective](https://opencollective.com/react-toolbox/sponsors/badge.svg)](#sponsors)
 
 React Toolbox is a set of [React](http://facebook.github.io/react/) components that implement [Google's Material Design specification](https://material.google.com/). It's powered by [CSS Modules](https://github.com/css-modules/css-modules) and harmoniously integrates with your [webpack](http://webpack.github.io/) workflow, although you can use any other module bundler. You can take a tour through our documentation website and try the components live!
@@ -221,7 +221,7 @@ You can override both the global and component-specific CSS Custom Properties at
 ```js
 
 // This can also be stored in a separate file:
-const reactToolboxVariables = { 
+const reactToolboxVariables = {
   'color-text': '#444548',
   /* Note that you can use global colors and variables */
   'color-primary': 'var(--palette-blue-500)',
@@ -359,7 +359,7 @@ Support us with a monthly donation and help us continue our activities. [[Become
 
 
 ### Sponsors
-Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/react-toolbox#sponsor)]
+Become a sponsor and get your logo on our README on GitHub with a link to your site. [[Become a sponsor](https://opencollective.com/react-toolbox#sponsor)]
 
 <a href="https://opencollective.com/react-toolbox/sponsor/0/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/0/avatar.svg"></a>
 <a href="https://opencollective.com/react-toolbox/sponsor/1/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/1/avatar.svg"></a>

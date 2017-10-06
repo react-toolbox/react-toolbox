@@ -15,7 +15,7 @@ const GithubIcon = () => (
 const TestButtons = () => (
   <div>
     <Button href='http://github.com/javivelasco' target='_blank' raised>
-      <GithubIcon /> Github
+      <GithubIcon /> GitHub
     </Button>
     <Button icon='bookmark' label='Bookmark' accent />
     <Button icon='bookmark' label='Bookmark' raised primary />

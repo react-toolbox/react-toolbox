@@ -1488,7 +1488,7 @@
 * added bumped configuration ([6ad44d7](https://github.com/react-toolbox/react-toolbox/commit/6ad44d7))
 * Added component to Package and Bundle ([193ba8b](https://github.com/react-toolbox/react-toolbox/commit/193ba8b))
 * Added one-dark theme for editor ([236a373](https://github.com/react-toolbox/react-toolbox/commit/236a373))
-* Added publish in Github and NPM ([226d83d](https://github.com/react-toolbox/react-toolbox/commit/226d83d))
+* Added publish in GitHub and NPM ([226d83d](https://github.com/react-toolbox/react-toolbox/commit/226d83d))
 * Authors data for <Card> ([2f489eb](https://github.com/react-toolbox/react-toolbox/commit/2f489eb))
 * Babel to stage 2 and remove decorators ([7c43f93](https://github.com/react-toolbox/react-toolbox/commit/7c43f93))
 * Basic transition for Playground ([962b321](https://github.com/react-toolbox/react-toolbox/commit/962b321))
@@ -2006,6 +2006,3 @@
 * Bugfix: set animation iteration count as infinite in ripple loading ([76774a0](https://github.com/react-toolbox/react-toolbox/commit/76774a0))
 * Bugfix: set proper height for buttons ([0780c5a](https://github.com/react-toolbox/react-toolbox/commit/0780c5a))
 * Bugfix: take into account 24hr format when trimming hours in clock ([efdc0fa](https://github.com/react-toolbox/react-toolbox/commit/efdc0fa))
-
-
-

@@ -29,7 +29,7 @@ plugins:
       plugin: 'bumped-terminal'
       command: 'git-dirty'
 
-    'Publishing tag at Github':
+    'Publishing tag at GitHub':
       plugin: 'bumped-terminal'
       command: 'git tag $newVersion && git push origin dev && git push --tags origin dev'
 

@@ -63,7 +63,7 @@ const Home = () => (
           <CardTitle title="Javi Velasco" subtitle="@javivelasco" />
           <CardText>Software gardener • Film, music & comic lover • Frontend Engineer at Audiense  • Any biographer in the room?</CardText>
           <CardActions>
-            <Button href="http://github.com/javivelasco" target="_blank"><GithubIcon /> Github</Button>
+            <Button href="http://github.com/javivelasco" target="_blank"><GithubIcon /> GitHub</Button>
             <Button href="http://twitter.com/javivelasco" theme={style} target="_blank" className={style.twitterButton}><TwitterIcon /> Twitter</Button>
           </CardActions>
         </Card>
@@ -73,7 +73,7 @@ const Home = () => (
           <CardTitle title="Javi Jiménez" subtitle="@soyjavi" />
           <CardText>Creative Doer · A complicated #human who builds stuff · #author · #opensource lover · #traveller · with a dark past being CEO & CTO</CardText>
           <CardActions>
-            <Button href="http://github.com/soyjavi" target="_blank"><GithubIcon /> Github</Button>
+            <Button href="http://github.com/soyjavi" target="_blank"><GithubIcon /> GitHub</Button>
             <Button href="http://twitter.com/soyjavi" theme={style} target="_blank" className={style.twitterButton}><TwitterIcon /> Twitter</Button>
           </CardActions>
         </Card>
