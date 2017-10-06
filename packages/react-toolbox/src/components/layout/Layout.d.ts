@@ -53,8 +53,10 @@ export interface LayoutTheme {
 export interface LayoutProps extends ReactToolbox.Props {
   /**
    * Children to pass through the component.
+   * 
+   * Ideally, this should be narrowed to only allow [NavDrawer | Panel | Sidebar]
    */
-  children?: [NavDrawer | Panel | Sidebar];
+  children?: any;
   /**
    * Classnames object defining the component style.
    */
