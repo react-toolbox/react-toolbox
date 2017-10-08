@@ -33,6 +33,7 @@ const Avatar = avatarFactory({
     ${props =>
       props.cover &&
       props.image &&
+      !props.errored &&
       css`
         background-color: transparent;
         background-image: url(${props.image});
