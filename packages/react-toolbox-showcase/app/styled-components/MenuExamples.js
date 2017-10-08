@@ -160,8 +160,12 @@ class MenuTest extends Component {
   }
 }
 
+// This wrapper is used so when then menu is painted at the bottom or top
+// of the document, the scroll never gets painted.
 const WrapperNode = styled.div`
   display: inline-block;
+  max-height: 36px;
+  overflow" hidden;
   position: relative;
 `;
 
