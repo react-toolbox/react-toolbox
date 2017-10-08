@@ -2,15 +2,26 @@ import * as React from 'react';
 import { Component, ComponentClass, ReactNode } from 'react';
 import getPassThrough, { PassTroughFunction } from '../../utils/getPassThrough';
 
+export interface AvatarProps {
+  alt?: string;
+  children?: ReactNode;
+  className?: string;
+  cover?: boolean;
+  image?: string;
+  title?: string;
+}
+
 export interface WrapperNodeProps {
   className?: string;
   cover?: boolean;
+  errored?: boolean;
   image?: string;
 }
 
 export interface ImgNodeProps {
   alt?: string;
   cover?: boolean;
+  errored?: boolean;
   onError(): void;
   src: string;
 }
@@ -19,15 +30,6 @@ export interface AvatarFactoryArgs {
   ImgNode: ComponentClass<ImgNodeProps>;
   WrapperNode: ComponentClass<WrapperNodeProps>;
   passthrough: PassTroughFunction<AvatarProps, 'WrapperNode' | 'ImgNode'>;
-}
-
-export interface AvatarProps {
-  alt?: string;
-  children?: ReactNode;
-  className?: string;
-  cover?: boolean;
-  image?: string;
-  title?: string;
 }
 
 export interface AvatarState {
@@ -72,6 +74,7 @@ export default function avatarFactory({
           {...passProps(this.props, 'WrapperNode', this)}
           className={className}
           cover={cover}
+          errored={errored}
           image={image}
           {...other}
         >
@@ -79,7 +82,6 @@ export default function avatarFactory({
             <ImgNode
               {...passProps(this.props, 'ImgNode', this)}
               alt={alt}
-              cover={cover}
               onError={this.handleError}
               src={image!}
             />
