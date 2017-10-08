@@ -26,8 +26,13 @@ const List = listFactory({
           padding-left: ${(props.nested + 1) * 16}px;
         }
       `};
+    ${props => props.overrides.ListNode};
   `,
 });
+
+List.defaultProps = {
+  overrides: {},
+};
 
 export default compose(
   withStyled(),
