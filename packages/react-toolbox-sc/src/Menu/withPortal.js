@@ -49,11 +49,7 @@ export default function withPortalFactory() {
         const parentId = uniqueId();
 
         return (
-          <DecoratedComponent
-            {...other}
-            active={false}
-            ref={this.handleContentRef}
-          >
+          <DecoratedComponent {...other} active={false} useKeys={false}>
             <div id={parentId} />
             <Portal parentId={parentId}>
               <div style={{ top, left, position: 'absolute' }}>
