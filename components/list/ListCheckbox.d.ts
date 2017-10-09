@@ -24,7 +24,7 @@ export interface ListCheckboxProps extends ReactToolbox.Props {
   /**
    * Main text of the item. Required.
    */
-  caption?: string;
+  caption?: React.ReactNode;
   /**
    * If true the checkbox appears checked by default.
    * @default false

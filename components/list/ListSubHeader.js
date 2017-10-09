@@ -9,7 +9,10 @@ const ListSubHeader = ({ caption, className, theme }) => (
 );
 
 ListSubHeader.propTypes = {
-  caption: PropTypes.string,
+  caption: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+  ]),
   className: PropTypes.string,
   theme: PropTypes.object, // eslint-disable-line
 };

@@ -12,7 +12,7 @@ export interface ListSubHeaderProps extends ReactToolbox.Props {
   /**
    * Text that will be displayed.
    */
-  caption?: string;
+  caption?: React.ReactNode;
   /**
    * Classnames object defining the component style.
    */
