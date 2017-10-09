@@ -82,6 +82,7 @@ export default function avatarFactory({
             <ImgNode
               {...passProps(this.props, 'ImgNode', this)}
               alt={alt}
+              cover={cover}
               onError={this.handleError}
               src={image!}
             />

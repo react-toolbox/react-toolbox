@@ -4,17 +4,17 @@ import withStyled from '../utils/withStyled';
 
 const Avatar = avatarFactory({
   WrapperNode: styled.div`
+    align-items: center;
     background-color: rgb(158, 158, 158);
     border-radius: 50%;
     color: rgb(255, 255, 255);
     display: inline-flex;
     font-size: 24px;
     height: 40px;
+    justify-content: center;
     overflow: hidden;
     position: relative;
     text-align: center;
-    align-items: center;
-    justify-content: center;
     vertical-align: middle;
     width: 40px;
 

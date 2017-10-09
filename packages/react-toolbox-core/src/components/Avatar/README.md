@@ -42,5 +42,6 @@ The rendering structure is composed by a `WrapperNode` which is the main element
 | Name            | Type        | Default         | Description|
 |:----------------|:------------|:----------------|:-----------|
 | `alt`       | `string`    |            | Alt property given as a native replacement if the image fails. |
+| `cover`     | `boolean`   |                   | If true, it can be used to hide the image so `WrapperNode` can display it as a cover background image.|
 | `onError`     | `boolean`   |                   | A handler that should be called when there is an error loading the image.|
 | `src`     | `string`    |            | Will be used to pass the source given in the `image` attribute. |
