@@ -55,6 +55,10 @@ export interface MenuProps extends ReactToolbox.Props {
    */
   children?: React.ReactNode;
   /**
+   * If true, the first non-disabled menu item will receive keyboard focus upon opening
+   */
+  focusMenu?: boolean;
+  /**
    * Callback that will be called when the menu is being hidden.
    */
   onHide?: Function;

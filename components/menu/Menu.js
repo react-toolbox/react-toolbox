@@ -24,6 +24,7 @@ const factory = (MenuItem) => {
       active: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
+      focusMenu: PropTypes.bool,
       onHide: PropTypes.func,
       onSelect: PropTypes.func,
       onShow: PropTypes.func,
@@ -180,6 +181,12 @@ const factory = (MenuItem) => {
       return `${toTop ? 'top' : 'bottom'}${toLeft ? 'Left' : 'Right'}`;
     }
 
+    focusFirstMenuItem() {
+      if (this.props.focusMenu) {
+        [...this.menuNode.querySelectorAll('[aria-disabled]:not([aria-disabled="true"])')][0].focus();
+      }
+    }
+
     handleDocumentClick = (event) => {
       if (this.state.active && !events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
         this.setState({ active: false, rippled: false });
@@ -201,7 +208,7 @@ const factory = (MenuItem) => {
 
     show() {
       const { width, height } = this.menuNode.getBoundingClientRect();
-      this.setState({ active: true, width, height });
+      this.setState({ active: true, width, height }, this.focusFirstMenuItem);
     }
 
     hide() {

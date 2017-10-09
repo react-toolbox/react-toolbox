@@ -45,6 +45,7 @@ const factory = (ripple) => {
 
     handleEnter = (event) => {
       if (event.keyCode === 13) {
+        event.preventDefault();
         this.handleClick(event);
       }
     };
