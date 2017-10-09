@@ -18,6 +18,10 @@ export interface IconMenuProps extends ReactToolbox.Props {
    */
   children?: React.ReactNode;
   /**
+   * If true, the first non-disabled menu item will receive keyboard focus upon opening
+   */
+  focusMenu?: boolean;
+  /**
    * Icon font key string or Element to display the opener icon.
    * @default more_vert
    */
