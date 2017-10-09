@@ -29,7 +29,10 @@ Link.propTypes = {
     PropTypes.string,
     PropTypes.element,
   ]),
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+  ]),
   theme: PropTypes.shape({
     active: PropTypes.string,
     icon: PropTypes.string,

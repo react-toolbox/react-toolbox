@@ -45,7 +45,7 @@ If you want to provide a theme via context, the component key is `RTButton`.
 | `href`            | `String`              |             | Creates a link for the button. |
 | `icon`            | `String` or `Element` |             | Value of the icon (See Font Icon Component). |
 | `inverse`         | `Boolean`             |             | If true, the neutral colors are inverted. Useful to put a button over a dark background. |
-| `label`           | `String`              |             | The text string to use for the name of the button.|
+| `label`           | `String` or `Element` |             | The text string to use for the name of the button.|
 | `mini`            | `Boolean`             | `false`     | To be used with floating button. If true, the button will be smaller.|
 | `neutral`         | `Boolean`             | `true`      | Set it to `false` if you don't want the neutral styles to be included.|
 | `onMouseEnter`    | `Function`            |             | Fires after the mouse enters the Component.|

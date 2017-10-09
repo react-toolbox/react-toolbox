@@ -50,7 +50,7 @@ export interface SwitchProps extends ReactToolbox.Props {
   /**
    * The text string to use for the floating label element.
    */
-  label?: string;
+  label?: React.ReactNode;
   /**
    * The text string used as name of the input.
    */

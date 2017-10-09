@@ -41,7 +41,7 @@ export interface LinkProps extends ReactToolbox.Props {
   /**
    * The text string used for the text content of the link.
    */
-  label?: string;
+  label?: React.ReactNode;
   /**
    * Classnames object defining the component style.
    */
