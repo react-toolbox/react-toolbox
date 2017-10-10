@@ -10,8 +10,7 @@ const theme = {
   inverse: 'inverse'
 };
 
-// TODO: https://github.com/airbnb/enzyme/issues/1163
-xdescribe('Tabs', () => {
+describe('Tabs', () => {
   class Composition extends Component {
     constructor() {
       super();
@@ -30,10 +29,12 @@ xdescribe('Tabs', () => {
 
   it('defaults to only rendering the current tab', () => {
     const wrapper = mount(<Composition />);
+
     expect(wrapper.find(TabContent).length).toEqual(1);
     expect(wrapper.find(TabContent).first().prop('tabIndex')).toEqual(0);
 
     wrapper.instance().setState({ index: 1 });
+    wrapper.update();
     expect(wrapper.find(TabContent).length).toEqual(1);
     expect(wrapper.find(TabContent).first().prop('tabIndex')).toEqual(1);
   });
@@ -45,6 +46,7 @@ xdescribe('Tabs', () => {
     expect(wrapper.find(TabContent).at(1).prop('hidden')).toEqual(true);
 
     wrapper.instance().setState({ index: 1 });
+    wrapper.update();
     expect(wrapper.find(TabContent).length).toEqual(2);
     expect(wrapper.find(TabContent).at(0).prop('hidden')).toEqual(true);
     expect(wrapper.find(TabContent).at(1).prop('hidden')).toEqual(false);
