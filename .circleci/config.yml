@@ -1,0 +1,34 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:latest
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          # Increment prefix to v2 when it's needed to manually reset cache
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          - v1-dependencies-
+
+      # Yarn is included in the image
+      - run: yarn install --frozen-lockfile
+
+      # Fetch npx to easily run testing suite on any node version (or other dependencies versions like React 16)
+      - run: sudo npm install -g npx
+
+      # Runs in latest release of node
+      - run: make test-ci
+
+      # Run suite on LTS node
+      - run: npx -p node-bin@lts -- make test-ci
+      
+      # Example how to run the suite on a different version of react
+      # - run: npx -p react@15.6.1 -p react-dom@15.6.1 react-test-renderer@15.6.1 -- make test-ci
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
