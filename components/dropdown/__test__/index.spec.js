@@ -4,7 +4,7 @@ import {
   renderIntoDocument,
   scryRenderedDOMComponentsWithClass,
   Simulate
-} from 'react-addons-test-utils';
+} from 'react-dom/test-utils';
 import sinon from 'sinon';
 import theme from '../theme.scss';
 import Dropdown from '../Dropdown';

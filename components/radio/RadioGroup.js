@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { themr } from 'react-css-themr';
 import { RADIO } from '../identifiers.js';
 import InjectRadioButton from './RadioButton.js';

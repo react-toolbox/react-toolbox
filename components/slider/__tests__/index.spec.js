@@ -1,5 +1,5 @@
 import React from 'react';
-import TestUtils from 'react-addons-test-utils';
+import TestUtils from 'react-dom/test-utils';
 import sinon from 'sinon';
 import expect from 'expect';
 import { ProgressBar } from '../../progress_bar/ProgressBar.js';

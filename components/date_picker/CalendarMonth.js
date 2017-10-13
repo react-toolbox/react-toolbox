@@ -1,21 +1,22 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import time from '../utils/time.js';
 import utils from '../utils/utils.js';
 import CalendarDay from './CalendarDay.js';
 
 class Month extends Component {
   static propTypes = {
-    disabledDates: React.PropTypes.array,
-    enabledDates: React.PropTypes.array,
-    locale: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.object
+    disabledDates: PropTypes.array,
+    enabledDates: PropTypes.array,
+    locale: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
     ]),
     maxDate: PropTypes.object,
     minDate: PropTypes.object,
     onDayClick: PropTypes.func,
     selectedDate: PropTypes.object,
-    sundayFirstDayOfWeek: React.PropTypes.bool,
+    sundayFirstDayOfWeek: PropTypes.bool,
     theme: PropTypes.shape({
       days: PropTypes.string,
       month: PropTypes.string,
