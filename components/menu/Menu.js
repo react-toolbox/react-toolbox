@@ -237,6 +237,7 @@ const factory = (MenuItem) => {
       const outlineStyle = { width: this.state.width, height: this.state.height };
       const className = classnames([theme.menu, theme[this.state.position]], {
         [theme.active]: this.state.active,
+        [theme.inactive]: !this.state.active,
         [theme.rippled]: this.state.rippled,
       }, this.props.className);
 
