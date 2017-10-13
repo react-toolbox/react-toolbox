@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { List, ListItem } from 'react-toolbox';
 import classnames from 'classnames';
 import Carbon from '../../../Carbon';

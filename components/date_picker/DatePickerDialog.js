@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import classnames from 'classnames';
 import time from '../utils/time.js';
 
@@ -11,9 +12,9 @@ const factory = (Dialog, Calendar) => {
       className: PropTypes.string,
       disabledDates: PropTypes.array,
       enabledDates: PropTypes.array,
-      locale: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.object
+      locale: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.object
       ]),
       maxDate: PropTypes.object,
       minDate: PropTypes.object,
@@ -23,7 +24,7 @@ const factory = (Dialog, Calendar) => {
       onEscKeyDown: PropTypes.func,
       onOverlayClick: PropTypes.func,
       onSelect: PropTypes.func,
-      sundayFirstDayOfWeek: React.PropTypes.bool,
+      sundayFirstDayOfWeek: PropTypes.bool,
       theme: PropTypes.shape({
         button: PropTypes.string,
         calendarWrapper: PropTypes.string,

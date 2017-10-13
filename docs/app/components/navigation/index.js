@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 
@@ -14,8 +15,8 @@ const Navigation = (props) => {
 };
 
 Navigation.propTypes = {
-  activeClassName: React.PropTypes.string,
-  className: React.PropTypes.string
+  activeClassName: PropTypes.string,
+  className: PropTypes.string
 };
 
 

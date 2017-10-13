@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Editor from '../../../editor';
 import Preview from '../../../preview';
@@ -6,7 +7,7 @@ import style from './playground.scss';
 
 class Playground extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string
+    className: PropTypes.string
   };
 
   state = {
