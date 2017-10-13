@@ -89,6 +89,10 @@
       }
     }
 
+    &.inactive {
+      visibility: hidden;
+    }
+
     &.active {
       pointer-events: all;
 
