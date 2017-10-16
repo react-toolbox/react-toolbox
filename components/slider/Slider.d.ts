@@ -58,6 +58,10 @@ export interface SliderTheme {
 
 export interface SliderProps extends ReactToolbox.Props {
   /**
+   * Function that will be invoked withe the slider value as parameter used to customize the displayed value.
+   */
+  customValueComponent?: Function;
+  /**
    * If true, an input is shown and the user can set the slider from keyboard value.
    * @default false
    */
@@ -94,6 +98,11 @@ export interface SliderProps extends ReactToolbox.Props {
    * @default false
    */
   pinned?: boolean;
+  /**
+   * If true, the slider value will be showed on the right end of the slider.
+   * @default false
+   */
+  showValue?: boolean;
   /**
    * If true, the slider thumb snaps to tick marks evenly spaced based on the step property value.
    * @default false

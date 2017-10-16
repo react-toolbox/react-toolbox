@@ -15,6 +15,7 @@ const factory = (ProgressBar, Input) => {
     static propTypes = {
       buffer: PropTypes.number,
       className: PropTypes.string,
+      customValueComponent: PropTypes.func,
       disabled: PropTypes.bool,
       editable: PropTypes.bool,
       max: PropTypes.number,
@@ -23,6 +24,7 @@ const factory = (ProgressBar, Input) => {
       onDragStart: PropTypes.func,
       onDragStop: PropTypes.func,
       pinned: PropTypes.bool,
+      showValue: PropTypes.bool,
       snaps: PropTypes.bool,
       step: PropTypes.number,
       style: styleShape,
@@ -47,12 +49,14 @@ const factory = (ProgressBar, Input) => {
     static defaultProps = {
       buffer: 0,
       className: '',
+      customValueComponent: value => value,
       editable: false,
       max: 100,
       min: 0,
       onDragStart: () => {},
       onDragStop: () => {},
       pinned: false,
+      showValue: false,
       snaps: false,
       step: 0.01,
       value: 0,
@@ -304,7 +308,9 @@ const factory = (ProgressBar, Input) => {
               onTouchStart={this.handleTouchStart}
               style={knobStyles}
             >
-              <div className={theme.innerknob} data-value={parseInt(this.props.value, 10)} />
+              <div className={theme.innerknob} data-value={parseInt(this.props.value, 10)}>
+                {this.props.showValue && this.props.customValueComponent(this.props.value)}
+              </div>
             </div>
 
             <div className={theme.progress}>
