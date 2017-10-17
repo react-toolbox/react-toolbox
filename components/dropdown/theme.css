@@ -145,8 +145,10 @@
     padding: var(--unit);
     position: relative;
 
-    &:hover:not(.disabled) {
+    &:hover:not(.disabled),
+    &.focused:not(.disabled) {
       background-color: var(--dropdown-value-hover-background);
+      outline: none;
     }
 
     &.selected {
