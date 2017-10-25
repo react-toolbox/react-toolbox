@@ -72,6 +72,12 @@ const factory = (FontIcon) => {
       type: 'text',
     };
 
+    // This state is only used to force repaint the counter
+    // @see https://github.com/react-toolbox/react-toolbox/issues/1440
+    state = {
+      forceSafariErrorRepaint: false,
+    };
+
     componentDidMount() {
       if (this.props.multiline) {
         window.addEventListener('resize', this.handleAutoresize);
@@ -84,6 +90,25 @@ const factory = (FontIcon) => {
         window.addEventListener('resize', this.handleAutoresize);
       } else if (this.props.multiline && !nextProps.multiline) {
         window.removeEventListener('resize', this.handleAutoresize);
+      } else if (!this.props.error && nextProps.error) {
+        // This is only needed for safari but it doesn't hurt other browsers
+        // Safari has an issue rendering the counter when an error is passed in as
+        // a prop after the initial rendering. The only way to fix it is to force
+        // a repaint of the counter
+        // @see https://github.com/react-toolbox/react-toolbox/issues/1440
+        const me = this;
+        this.setState({
+          forceSafariErrorRepaint: true,
+        });
+        // The above state change will temporarily change the positioning of
+        // the counter element to relative so that it is forced to repaint.
+        // Then, we immediately change the positioning back to normal so the user
+        // shouldn't see any flickers.
+        setTimeout(() => {
+          me.setState({
+            forceSafariErrorRepaint: false,
+          });
+        }, 1);
       }
     }
 
@@ -170,6 +195,7 @@ const factory = (FontIcon) => {
       const { children, defaultValue, disabled, error, floating, hint, icon,
               name, label: labelText, maxLength, multiline, required, role,
               theme, type, value, onKeyPress, rows = 1, ...others } = this.props;
+      const { forceSafariErrorRepaint } = this.state;
       const length = maxLength && value ? value.length : 0;
       const labelClassName = classnames(theme.label, { [theme.fixed]: !floating });
 
@@ -216,7 +242,7 @@ const factory = (FontIcon) => {
             : null}
           {hint ? <span hidden={labelText} className={theme.hint}>{hint}</span> : null}
           {error ? <span className={theme.error}>{error}</span> : null}
-          {maxLength ? <span className={theme.counter}>{length}/{maxLength}</span> : null}
+          {maxLength ? <span className={`${theme.counter} ${forceSafariErrorRepaint ? theme.forceRepaint : ''}`}>{length}/{maxLength}</span> : null}
           {children}
         </div>
       );
