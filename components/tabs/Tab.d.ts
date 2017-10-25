@@ -52,9 +52,9 @@ export interface TabProps extends ReactToolbox.Props {
    */
   icon?: React.ReactNode;
   /**
-   * Label text for navigation header. Required.
+   * Label text for navigation header.
    */
-  label: string;
+  label?: string;
   /**
    * Callback function that is fired when the tab is activated.
    */

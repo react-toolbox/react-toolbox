@@ -28,7 +28,7 @@ export interface DrawerTheme {
   wrapper?: string;
 }
 
-export interface DrawerProps extends ReactToolbox.Props {
+export interface DrawerCommonProps {
   /**
    * If true, the drawer will be visible.
    * @default false
@@ -52,10 +52,6 @@ export interface DrawerProps extends ReactToolbox.Props {
    */
   onOverlayClick?: Function;
   /**
-   * Classnames object defining the component style.
-   */
-  theme?: DrawerTheme;
-  /**
    * Type of drawer. It can be left or right to display the drawer on the left or right side of the screen.
    * @default left
    */
@@ -65,6 +61,13 @@ export interface DrawerProps extends ReactToolbox.Props {
    * @default true
    */
   withOverlay?: boolean;
+}
+
+export interface DrawerProps extends ReactToolbox.Props, DrawerCommonProps {
+  /**
+   * Classnames object defining the component style.
+   */
+  theme?: DrawerTheme;
 }
 
 export class Drawer extends React.Component<DrawerProps, {}> { }
