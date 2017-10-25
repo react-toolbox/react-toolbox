@@ -70,10 +70,21 @@ declare class TooltipComponent<P, S> extends React.Component<P, S> {
   props: P & TooltipProps;
 }
 
-interface TooltippedComponentClass<P> extends TooltipProps {
+declare interface TooltippedComponentClass<P> extends TooltipProps {
   new (props?: P, context?: any): TooltipComponent<P, any>;
 }
 
-export function Tooltip<P>(componentClass: React.ComponentClass<P>): TooltippedComponentClass<P>;
+declare interface TooltipOptions {
+  className?: string;
+  delay?: number;
+  hideOnClick?: boolean;
+  passthrough?: boolean;
+  showOnClick?: boolean;
+  position?: 'bottom' | 'horizontal' | 'left' | 'right' | 'top' | 'vertical'
+}
 
-export default Tooltip;
+declare type tooltipHOC<P> = (componentClass: React.ComponentClass<P>) => TooltippedComponentClass<P>
+
+export function tooltipFactory<P>(options?: TooltipOptions): tooltipHOC<P>;
+
+export default function Tooltip<P>(component: React.ReactType): TooltippedComponentClass<P>;

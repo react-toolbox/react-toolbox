@@ -1,5 +1,5 @@
 import * as React from "react";
-import { DrawerProps } from '../drawer/Drawer';
+import { DrawerCommonProps } from '../drawer/Drawer';
 
 export interface SidebarTheme {
   /**
@@ -12,7 +12,7 @@ export interface SidebarTheme {
   pinned?: string;
 }
 
-export interface SidebarProps extends DrawerProps {
+export interface SidebarProps extends DrawerCommonProps {
   /**
    * If true, when the `AppBar` gets pinned, it will stand over the `Drawer`.
    * @default false

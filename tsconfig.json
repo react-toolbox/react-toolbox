@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "noEmit": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "baseUrl": ".",
+    "paths": {
+      "components/*": [
+        "./components/*"
+      ]
+    }
+  },
+  "exclude": [
+    "./index.d.ts",
+    "node_modules",
+    "docs/node_modules",
+    "lib"
+  ]
+}
