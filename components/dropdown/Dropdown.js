@@ -99,6 +99,7 @@ const factory = (Input) => {
     };
 
     handleSelect = (item, event) => {
+      event.preventDefault()
       if (this.props.onBlur) this.props.onBlur(event);
       if (!this.props.disabled && this.props.onChange) {
         if (this.props.name) event.target.name = this.props.name;
