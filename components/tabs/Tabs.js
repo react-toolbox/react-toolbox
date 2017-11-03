@@ -55,10 +55,7 @@ const factory = (Tab, TabContent, FontIcon) => {
     componentDidUpdate(prevProps) {
       const { index, children } = this.props;
       const { index: prevIndex, children: prevChildren } = prevProps;
-
-      if (index !== prevIndex || children !== prevChildren) {
-        this.updatePointer(index);
-      }
+      this.updatePointer(index);
     }
 
     componentWillUnmount() {
@@ -84,6 +81,7 @@ const factory = (Tab, TabContent, FontIcon) => {
     updatePointer = (idx) => {
       if (this.navigationNode && this.navigationNode.children[idx]) {
         this.updatePointerAnimationFrame = requestAnimationFrame(() => {
+          if(!this.navigationNode){return;}
           const nav = this.navigationNode.getBoundingClientRect();
           const label = this.navigationNode.children[idx].getBoundingClientRect();
           const scrollLeft = this.navigationNode.scrollLeft;
