@@ -103,16 +103,18 @@ const factory = (Tab, TabContent, FontIcon) => {
     updatePointer = (idx) => {
       if (this.navigationNode && this.navigationNode.children[idx]) {
         this.updatePointerAnimationFrame = requestAnimationFrame(() => {
-          const nav = this.navigationNode.getBoundingClientRect();
-          const label = this.navigationNode.children[idx].getBoundingClientRect();
-          const scrollLeft = this.navigationNode.scrollLeft;
-          this.setState({
-            pointer: {
-              top: `${nav.height}px`,
-              left: `${(label.left + scrollLeft) - nav.left}px`,
-              width: `${label.width}px`,
-            },
-          });
+          if (this.navigationNode && this.navigationNode.children[idx]) {
+            const nav = this.navigationNode.getBoundingClientRect();
+            const label = this.navigationNode.children[idx].getBoundingClientRect();
+            const scrollLeft = this.navigationNode.scrollLeft;
+            this.setState({
+              pointer: {
+                top: `${nav.height}px`,
+                left: `${(label.left + scrollLeft) - nav.left}px`,
+                width: `${label.width}px`,
+              },
+            });
+          }
         });
       }
     }
