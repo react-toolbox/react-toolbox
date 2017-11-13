@@ -20,6 +20,7 @@ const TooltipTest = () => (
   <section>
     <h5>Tooltip</h5>
     <p>Give information on :hover</p>
+    <TooltipButton label="Bookmark" icon="bookmark" raised primary disabled={true} tooltip="Bookmark Tooltip" tooltipDelay={1000} />
     <TooltipButton label="Bookmark" icon="bookmark" raised primary tooltip="Bookmark Tooltip" tooltipDelay={1000} />
     <TooltipButton icon="add" floating accent tooltip="Floating Tooltip" />
     <TooltipButton icon="add" floating disabled tooltip="Floating can not be shown" />
