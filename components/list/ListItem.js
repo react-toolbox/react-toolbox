@@ -36,8 +36,9 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
 
     handleClick = (event) => {
       if (this.props.to) {
-        window.location = this.props.to;
-      } else if (this.props.onClick && !this.props.disabled) {
+        event.preventDefault();
+      }
+      if (this.props.onClick && !this.props.disabled) {
         this.props.onClick(event);
       }
     };
