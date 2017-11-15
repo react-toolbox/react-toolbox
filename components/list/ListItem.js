@@ -108,9 +108,9 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
           onMouseDown={onMouseDown}
           onTouchStart={onTouchStart}
           onKeyDown={this.handleEnter}
-          tabIndex={tabIndex}
+          tabIndex={to || !onClick ? -1 : tabIndex}
         >
-          {to ? <a tabIndex={-1} href={this.props.to}>{content}</a> : content}
+          {to ? <a href={this.props.to}>{content}</a> : content}
           {children.ignored}
           {altText ? <span className={theme.screenReader}>{altText}</span> : null}
         </li>
