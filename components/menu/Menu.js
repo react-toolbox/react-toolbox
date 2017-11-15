@@ -187,6 +187,7 @@ const factory = (MenuItem) => {
     };
 
     handleKeyboardTrap = (event) => {
+      event.preventDefault();
       handleMenuKeyboardTrap(event, this);
     }
 
@@ -234,7 +235,14 @@ const factory = (MenuItem) => {
       }, this.props.className);
 
       return (
-        <div data-react-toolbox="menu" role="menu" className={className} style={this.getRootStyle()} tabIndex={this.getTabIndex()}>
+        <div
+          data-react-toolbox="menu"
+          role="menu"
+          className={className}
+          style={this.getRootStyle()}
+          tabIndex={this.getTabIndex()}
+          onKeyDown={this.handleKeyboardTrap}
+        >
           {this.props.outline ? <div className={theme.outline} style={outlineStyle} /> : null}
           <ul
             ref={(node) => { this.menuNode = node; }}
