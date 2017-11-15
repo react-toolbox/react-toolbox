@@ -33,8 +33,16 @@ const factory = (Overlay, Button) => {
           theme={props.theme}
           themeNamespace="overlay"
         />
-        <div data-react-toolbox="dialog" className={className}>
-          <section role="body" className={props.theme.body}>
+        <div
+          data-react-toolbox="dialog"
+          className={className}
+          role="dialog"
+          aria-modal="true" // eslint-disable-line
+          aria-label={props.ariaLabel}
+          aria-labelledby={props.ariaLabelledby}
+          aria-describedby={props.ariaDescribedby}
+        >
+          <section className={props.theme.body}>
             {props.title ? <h6 className={props.theme.title}>{props.title}</h6> : null}
             {props.children}
           </section>
@@ -56,6 +64,9 @@ const factory = (Overlay, Button) => {
       children: PropTypes.node,
     })),
     active: PropTypes.bool,
+    ariaDescribedby: PropTypes.string,
+    ariaLabel: PropTypes.string,
+    ariaLabelledby: PropTypes.string,
     children: PropTypes.node,
     className: PropTypes.string,
     onEscKeyDown: PropTypes.func,

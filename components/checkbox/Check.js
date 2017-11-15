@@ -10,6 +10,9 @@ const factory = (ripple) => {
       className={classnames(theme.check, { [theme.checked]: checked })}
       onMouseDown={onMouseDown}
       style={style}
+      tabIndex={-1}
+      role="checkbox"
+      aria-checked={checked}
     >
       {children}
     </div>
