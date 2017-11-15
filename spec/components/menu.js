@@ -21,7 +21,7 @@ class MenuTest extends React.Component {
         <h5>Menus</h5>
         <p>This tabs can be disabled or hidden</p>
 
-        <Menu onSelect={this.handleSelect} selectable={false} selected={this.state.value}>
+        <Menu active={true} onSelect={this.handleSelect} selectable={false} selected={this.state.value}>
           <MenuItem value="foo" caption="Caption" />
           <MenuItem onClick={this.handleItemClick} value="bar" caption="Caption & Shortcut" shortcut="Ctrl + P" />
           <MenuItem caption="Disabled ..." disabled shortcut="Ctrl + P" />

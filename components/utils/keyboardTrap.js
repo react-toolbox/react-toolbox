@@ -1,9 +1,10 @@
 export const handleMenuKeyboardTrap = (event, component) => {
+  event.preventDefault();
   const focusableElements = getFocusableElements(component.menuNode);
 
-  if (event.key === 'ArrowDown') { // on down arrow keyboard event
+  if (event.keyCode === 40) { // on down arrow keyboard event
     focusNextElement(event, focusableElements);
-  } else if (event.key === 'ArrowUp') { // on up arrow keyboard event
+  } else if (event.keyCode === 38) { // on up arrow keyboard event
     focusPreviousElement(event, focusableElements);
   } else if (event.key === 'Tab' || event.key === 'Escape') {
     component.hide();
@@ -16,8 +17,6 @@ function getFocusableElements(elementList) {
 }
 
 function focusNextElement(event, focusableElements) {
-  event.preventDefault();
-
   const firstItem = focusableElements[0];
   const lastItem = focusableElements[focusableElements.length - 1];
   const index = focusableElements.indexOf(event.target);
@@ -30,8 +29,6 @@ function focusNextElement(event, focusableElements) {
 }
 
 function focusPreviousElement(event, focusableElements) {
-  event.preventDefault();
-
   const firstItem = focusableElements[0];
   const lastItem = focusableElements[focusableElements.length - 1];
   const index = focusableElements.indexOf(event.target);
