@@ -43,6 +43,10 @@ export interface DrawerCommonProps {
    * @default false
    */
   insideTree?: boolean;
+    /**
+   * Callback function to be invoked when the escape key is pressed.
+   */
+  onEscKeyDown?: Function;
   /**
    * Callback function to be invoked when the overlay is clicked.
    */

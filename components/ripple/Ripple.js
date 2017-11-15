@@ -33,6 +33,7 @@ const rippleFactory = (options = {}) => {
       static propTypes = {
         children: PropTypes.node,
         disabled: PropTypes.bool,
+        onKeyDown: PropTypes.func,
         onMouseDown: PropTypes.func,
         onRippleEnded: PropTypes.func,
         onTouchStart: PropTypes.func,
@@ -125,12 +126,12 @@ const rippleFactory = (options = {}) => {
        * touchStart and mouseDown are launched so in case is touch we should always trigger
        * but if its not we should check if a touch was already triggered to decide.
        *
-       * @param {Boolean} isTouch True in case a touch event triggered the ripple false otherwise.
-       * @return {Boolean} True in case the ripple should trigger or false if it shouldn't.
+       * @param {String} eventType either 'touchend', 'mouseup', 'keyup'.
+       * @return {Boolean} True in the case of a touch event which should trigger ripple
        */
-      rippleShouldTrigger(isTouch) {
-        const shouldStart = isTouch ? true : !this.touchCache;
-        this.touchCache = isTouch;
+      rippleShouldTrigger(eventType) {
+        const shouldStart = eventType ? 'touchend' : !this.touchCache;
+        this.touchCache = eventType === 'touchend';
         return shouldStart;
       }
 
@@ -143,16 +144,16 @@ const rippleFactory = (options = {}) => {
        *
        * @param {Number} x Coordinate X on the screen where animation should start
        * @param {Number} y Coordinate Y on the screen where animation should start
-       * @param {Boolean} isTouch Use events from touch or mouse.
+       * @param {Boolean} eventType Use events from touch, mouse or keyboard.
        */
-      animateRipple(x, y, isTouch) {
-        if (this.rippleShouldTrigger(isTouch)) {
+      animateRipple(x, y, eventType) {
+        if (this.rippleShouldTrigger(eventType)) {
           const { top, left, width } = this.getDescriptor(x, y);
           const noRipplesActive = Object.keys(this.state.ripples).length === 0;
           const key = (this.props.rippleMultiple || noRipplesActive)
             ? this.getNextKey()
             : this.getLastKey();
-          const endRipple = this.addRippleDeactivateEventListener(isTouch, key);
+          const endRipple = this.addRippleDeactivateEventListener(eventType, key);
           const initialState = { active: false, restarting: true, top, left, width, endRipple };
           const runningState = { active: true, restarting: false };
           const ripples = { ...this.state.ripples, [key]: initialState };
@@ -192,12 +193,11 @@ const rippleFactory = (options = {}) => {
        * Deactivation can happen with a touchend or mouseup depending on the trigger type. The
        * ending function is created from a factory function and returned.
        *
-       * @param {Boolean} isTouch True in case the trigger was a touch event false otherwise.
+       * @param {Boolean} eventType True in case the trigger was a touch event false otherwise.
        * @param {String} rippleKey It's a key to identify the ripple that should be deactivated.
        * @return {Function} Callback function that deactivates the ripple and removes the listener
        */
-      addRippleDeactivateEventListener(isTouch, rippleKey) {
-        const eventType = isTouch ? 'touchend' : 'mouseup';
+      addRippleDeactivateEventListener(eventType, rippleKey) {
         const endRipple = this.createRippleDeactivateCallback(eventType, rippleKey);
         document.addEventListener(eventType, endRipple);
         return endRipple;
@@ -208,7 +208,7 @@ const rippleFactory = (options = {}) => {
        * event listener. If is generated because we need to store it to be called on unmount in case
        * the ripple is still running.
        *
-       * @param {String} eventType Is the event type that can be touchend or mouseup
+       * @param {String} eventType Is the event type that can be touchend, mouseup or keyup.
        * @param {String} rippleKey Is the key representing the ripple
        * @return {Function} Callback function that deactivates the ripple and removes the listener
        */
@@ -229,7 +229,7 @@ const rippleFactory = (options = {}) => {
         if (this.props.onMouseDown) this.props.onMouseDown(event);
         if (this.doRipple()) {
           const { x, y } = events.getMousePosition(event);
-          this.animateRipple(x, y, false);
+          this.animateRipple(x, y, 'mouseup');
         }
       };
 
@@ -237,7 +237,23 @@ const rippleFactory = (options = {}) => {
         if (this.props.onTouchStart) this.props.onTouchStart(event);
         if (this.doRipple()) {
           const { x, y } = events.getTouchPosition(event);
-          this.animateRipple(x, y, true);
+          this.animateRipple(x, y, 'touchend');
+        }
+      };
+
+      /**
+       * Instead of using the coordinates of where the mouse or touch action occured, use
+       * the center of the element to initiate the ripple on enter.
+       *
+       * @param {SyntheticEvent} event Is the event that triggers enter being pressed
+       */
+      handleEnter = (event) => {
+        if (this.props.onKeyDown) this.props.onKeyDown(event);
+        const { height, width, top, left } = ReactDOM.findDOMNode(this).getBoundingClientRect();
+        const centerX = left + (width / 2);
+        const centerY = top + (height / 2);
+        if (this.doRipple()) {
+          this.animateRipple(centerX, centerY, 'keyup');
         }
       };
 
@@ -279,6 +295,7 @@ const rippleFactory = (options = {}) => {
         const childProps = {
           onMouseDown: this.handleMouseDown,
           onTouchStart: this.handleTouchStart,
+          onKeyPress: this.handleEnter,
           ...other,
         };
         const finalProps = defaultPassthrough

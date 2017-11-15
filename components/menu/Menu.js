@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { MENU } from '../identifiers';
+import { handleMenuKeyboardTrap } from '../utils/keyboardTrap';
 import { events } from '../utils';
 import { getViewport } from '../utils/utils';
 import InjectMenuItem from './MenuItem';
@@ -23,6 +24,7 @@ const factory = (MenuItem) => {
       active: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
+      focusMenu: PropTypes.bool,
       onHide: PropTypes.func,
       onSelect: PropTypes.func,
       onShow: PropTypes.func,
@@ -110,6 +112,7 @@ const factory = (MenuItem) => {
         events.addEventsToDocument({
           click: this.handleDocumentClick,
           touchstart: this.handleDocumentClick,
+          keydown: this.handleKeyboardTrap,
         });
       }
     }
@@ -120,6 +123,7 @@ const factory = (MenuItem) => {
         events.removeEventsFromDocument({
           click: this.handleDocumentClick,
           touchstart: this.handleDocumentClick,
+          keydown: this.handleKeyboardTrap,
         });
       } else if (!prevState.active && this.state.active && this.props.onShow) {
         this.props.onShow();
@@ -131,6 +135,7 @@ const factory = (MenuItem) => {
         events.removeEventsFromDocument({
           click: this.handleDocumentClick,
           touchstart: this.handleDocumentClick,
+          keydown: this.handleKeyboardTrap,
         });
       }
       clearTimeout(this.positionTimeoutHandle);
@@ -162,6 +167,10 @@ const factory = (MenuItem) => {
         : undefined;
     }
 
+    getTabIndex() {
+      return this.state.active ? 0 : -1;
+    }
+
     calculatePosition() {
       const parentNode = ReactDOM.findDOMNode(this).parentNode;
       if (!parentNode) return undefined;
@@ -172,11 +181,21 @@ const factory = (MenuItem) => {
       return `${toTop ? 'top' : 'bottom'}${toLeft ? 'Left' : 'Right'}`;
     }
 
+    focusFirstMenuItem() {
+      if (this.props.focusMenu) {
+        [...this.menuNode.querySelectorAll('[aria-disabled]:not([aria-disabled="true"])')][0].focus();
+      }
+    }
+
     handleDocumentClick = (event) => {
       if (this.state.active && !events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
         this.setState({ active: false, rippled: false });
       }
     };
+
+    handleKeyboardTrap = (event) => {
+      handleMenuKeyboardTrap(event, this);
+    }
 
     handleSelect = (item, event) => {
       const { value, onClick } = item.props;
@@ -189,7 +208,7 @@ const factory = (MenuItem) => {
 
     show() {
       const { width, height } = this.menuNode.getBoundingClientRect();
-      this.setState({ active: true, width, height });
+      this.setState({ active: true, width, height }, this.focusFirstMenuItem);
     }
 
     hide() {
@@ -206,6 +225,7 @@ const factory = (MenuItem) => {
               && this.props.selectable
               && item.props.value === this.props.selected,
             onClick: this.handleSelect.bind(this, item),
+            tabIndex: this.getTabIndex(),
           });
         }
         return React.cloneElement(item);
@@ -217,11 +237,12 @@ const factory = (MenuItem) => {
       const outlineStyle = { width: this.state.width, height: this.state.height };
       const className = classnames([theme.menu, theme[this.state.position]], {
         [theme.active]: this.state.active,
+        [theme.inactive]: !this.state.active,
         [theme.rippled]: this.state.rippled,
       }, this.props.className);
 
       return (
-        <div data-react-toolbox="menu" className={className} style={this.getRootStyle()}>
+        <div data-react-toolbox="menu" role="menu" className={className} style={this.getRootStyle()} tabIndex={this.getTabIndex()}>
           {this.props.outline ? <div className={theme.outline} style={outlineStyle} /> : null}
           <ul
             ref={(node) => { this.menuNode = node; }}

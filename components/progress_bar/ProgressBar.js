@@ -85,11 +85,13 @@ class ProgressBar extends Component {
       [theme.indeterminate]: mode === 'indeterminate',
       [theme.multicolor]: multicolor,
     }, className);
-
+    const roundedPercentage = Math.round(value * 100);
     return (
       <div
         disabled={disabled}
+        role="progressbar"
         data-react-toolbox="progress-bar"
+        aria-valuetext={`${roundedPercentage}%`}
         aria-valuenow={value}
         aria-valuemin={min}
         aria-valuemax={max}

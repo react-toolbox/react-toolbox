@@ -80,6 +80,7 @@ const factory = (Check) => {
             onClick={this.handleToggle}
             ref={(node) => { this.inputNode = node; }}
             type="checkbox"
+            tabIndex={0}
           />
           <Check
             checked={checked}

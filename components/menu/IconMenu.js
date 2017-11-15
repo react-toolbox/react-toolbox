@@ -11,10 +11,12 @@ const factory = (IconButton, Menu) => {
     static propTypes = {
       children: PropTypes.node,
       className: PropTypes.string,
+      focusMenu: PropTypes.bool,
       icon: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.element,
       ]),
+      iconAriaLabel: PropTypes.string,
       iconRipple: PropTypes.bool,
       inverse: PropTypes.bool,
       menuRipple: PropTypes.bool,
@@ -56,7 +58,7 @@ const factory = (IconButton, Menu) => {
 
     render() {
       const {
-        children, className, icon, iconRipple, inverse, menuRipple, onHide, // eslint-disable-line
+        children, className, focusMenu, icon, iconAriaLabel, iconRipple, inverse, menuRipple, onHide, // eslint-disable-line
         onSelect, onShow, position, selectable, selected, theme, ...other
       } = this.props;
       return (
@@ -67,6 +69,9 @@ const factory = (IconButton, Menu) => {
             inverse={inverse}
             onClick={this.handleButtonClick}
             ripple={iconRipple}
+            ariaExpanded={this.state.active}
+            ariaLabel={iconAriaLabel}
+            ariaHaspopup
           />
           <Menu
             active={this.state.active}
@@ -78,6 +83,7 @@ const factory = (IconButton, Menu) => {
             selectable={selectable}
             selected={selected}
             theme={theme}
+            focusMenu={focusMenu}
           >
             {children}
           </Menu>
