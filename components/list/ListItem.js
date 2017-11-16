@@ -35,7 +35,9 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
     };
 
     handleClick = (event) => {
-      if (this.props.to) {
+      if (this.props.to && this.isModifiedEvent(event)) {
+        return;
+      } else if (this.props.to) {
         event.preventDefault();
       }
       if (this.props.onClick && !this.props.disabled) {
@@ -48,6 +50,13 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
         event.preventDefault();
         this.handleClick(event);
       }
+    };
+
+    isModifiedEvent = (event) => {
+      if (event.metaKey || event.altKey || event.ctrlKey || event.shiftKey) {
+        return true;
+      }
+      return false;
     };
 
     groupChildren() {
