@@ -1,4 +1,4 @@
-This document defines a manifesto and the main Roadmap 🚵 ideas for [React Toolbox](www.react-toolbox.com). It's not a fixed document and of course it's open to change. You can leave your feedback in [this gist](https://gist.github.com/javivelasco/259d2087c2a8c3e8f2c5c720d1fd3f2e) or you can also do it [through an issue](https://github.com/react-toolbox/react-toolbox/issues/new).
+This document defines a manifesto and the main Roadmap 🚵 ideas for [React Toolbox](www.react-toolbox.io). It's not a fixed document and of course it's open to change. You can leave your feedback in [this gist](https://gist.github.com/javivelasco/259d2087c2a8c3e8f2c5c720d1fd3f2e) or you can also do it [through an issue](https://github.com/react-toolbox/react-toolbox/issues/new).
 
 ## The Manifesto 
 
