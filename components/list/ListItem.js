@@ -37,11 +37,14 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
     handleClick = (event) => {
       if (this.props.to && this.isModifiedEvent(event)) {
         return;
-      } else if (this.props.to) {
-        event.preventDefault();
       }
-      if (this.props.onClick && !this.props.disabled) {
-        this.props.onClick(event);
+      if (this.props.onClick) {
+        if (this.props.to) {
+          event.preventDefault();
+        }
+        if (!this.props.disabled) {
+          this.props.onClick(event);
+        }
       }
     };
 
