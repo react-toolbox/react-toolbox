@@ -21,6 +21,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       onTouchStart: PropTypes.func,
       ripple: PropTypes.bool,
       tabIndex: PropTypes.number,
+      target: PropTypes.string,
       theme: PropTypes.shape({
         listItem: PropTypes.string,
       }),
@@ -32,6 +33,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       disabled: false,
       ripple: false,
       tabIndex: 0,
+      target: '',
     };
 
     handleClick = (event) => {
@@ -104,6 +106,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
         onMouseDown,  // eslint-disable-line no-unused-vars
         onTouchStart, // eslint-disable-line no-unused-vars
         tabIndex,
+        target,
         theme,
         to,
         ...other
@@ -122,7 +125,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
           onKeyDown={this.handleEnter}
           tabIndex={to || !onClick ? -1 : tabIndex}
         >
-          {to ? <a href={this.props.to}>{content}</a> : content}
+          {to ? <a href={this.props.to} target={target}>{content}</a> : content}
           {children.ignored}
           {altText ? <span className={theme.screenReader}>{altText}</span> : null}
         </li>
