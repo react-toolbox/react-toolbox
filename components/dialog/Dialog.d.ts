@@ -51,6 +51,18 @@ export interface DialogProps extends ReactToolbox.Props {
    */
   active?: boolean;
   /**
+   * Element Id to be used by screen readers for dialog description.
+   */
+  ariaDescribedby?: string;
+  /**
+   * Aria Label useful for screenreaders.
+   */
+  ariaLabel?: string;
+  /**
+   * Element Id to be used by screen readers for dialog label.
+   */
+  ariaLabelledby?: string;
+  /**
    * Children to pass through the component.
    */
   children?: React.ReactNode;

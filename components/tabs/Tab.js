@@ -64,8 +64,17 @@ const factory = (ripple, FontIcon) => {
         [activeClassName]: active,
       }, className);
 
+      const tabIndex = active ? 0 : -1;
       return (
-        <div {...other} data-react-toolbox="tab" role="tab" tabIndex="0" className={_className} onClick={this.handleClick}>
+        <div
+          {...other}
+          data-react-toolbox="tab"
+          role="tab"
+          aria-selected={active}
+          tabIndex={tabIndex}
+          className={_className}
+          onClick={this.handleClick}
+        >
           {icon && <FontIcon className={theme.icon} value={icon} />}
           {label}
           {children}

@@ -38,6 +38,19 @@ class ListTest extends React.Component {
           </List>
         </div>
 
+        <h5>With a `to` prop</h5>
+        <div style={listStyle}>
+          <List selectable ripple>
+            <ListItem
+              avatar="https://pbs.twimg.com/profile_images/614407428/s6pTalMzZs-nusCGWqoV.0_400x400.jpeg"
+              caption="Alfonso Rocha"
+              legend="Product Manager at Fon"
+              rightIcon="star"
+              to="/"
+            />
+          </List>
+        </div>
+
         <h5>Two text lines, avatar and right icon</h5>
         <p>Useful for a list of contacts or similar.</p>
         <div style={listStyle}>

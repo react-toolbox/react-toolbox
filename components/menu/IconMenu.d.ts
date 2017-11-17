@@ -18,6 +18,10 @@ export interface IconMenuProps extends ReactToolbox.Props {
    */
   children?: React.ReactNode;
   /**
+   * If true, the first non-disabled menu item will receive keyboard focus upon opening
+   */
+  focusMenu?: boolean;
+  /**
    * Icon font key string or Element to display the opener icon.
    * @default more_vert
    */
@@ -25,6 +29,10 @@ export interface IconMenuProps extends ReactToolbox.Props {
   /**
    * If true, the icon will show a ripple when is clicked.
    * @default true
+   */
+  iconAriaLabel?: string;
+  /**
+   * Adds an aria-label attribute to the menu's IconButton 
    */
   iconRipple?: boolean;
   /**

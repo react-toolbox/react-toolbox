@@ -117,6 +117,7 @@ const factory = (IconButton) => {
           className={cn(theme.leftIcon)}
           onClick={onLeftIconClick}
           icon={leftIcon}
+          ariaHaspopup
         />
       );
 
@@ -126,6 +127,7 @@ const factory = (IconButton) => {
           className={cn(theme.rightIcon)}
           onClick={onRightIconClick}
           icon={rightIcon}
+          ariaHaspopup
         />
       );
 

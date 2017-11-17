@@ -20,6 +20,7 @@ const factory = (ripple) => {
       onClick: PropTypes.func,
       selected: PropTypes.bool,
       shortcut: PropTypes.string,
+      tabIndex: PropTypes.number,
       theme: PropTypes.shape({
         caption: PropTypes.string,
         disabled: PropTypes.string,
@@ -42,6 +43,13 @@ const factory = (ripple) => {
       }
     };
 
+    handleEnter = (event) => {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        this.handleClick(event);
+      }
+    };
+
     render() {
       const {
         caption,
@@ -51,6 +59,7 @@ const factory = (ripple) => {
         selected,
         shortcut,
         theme,
+        tabIndex,
         ...others
       } = this.props;
       const className = classnames(theme.menuItem, {
@@ -59,7 +68,16 @@ const factory = (ripple) => {
       }, this.props.className);
 
       return (
-        <li {...others} data-react-toolbox="menu-item" className={className} onClick={this.handleClick}>
+        <li
+          {...others}
+          data-react-toolbox="menu-item"
+          className={className}
+          onClick={this.handleClick}
+          onKeyDown={this.handleEnter}
+          role="menuitem"
+          tabIndex={disabled ? '-1' : tabIndex}
+          aria-disabled={disabled}
+        >
           {icon ? <FontIcon value={icon} className={theme.icon} /> : null}
           <span className={theme.caption}>{caption}</span>
           {shortcut ? <small className={theme.shortcut}>{shortcut}</small> : null}

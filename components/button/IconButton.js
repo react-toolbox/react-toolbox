@@ -10,6 +10,9 @@ const factory = (ripple, FontIcon) => {
   class IconButton extends Component {
     static propTypes = {
       accent: PropTypes.bool,
+      ariaExpanded: PropTypes.bool,
+      ariaHaspopup: PropTypes.bool,
+      ariaLabel: PropTypes.string,
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
@@ -23,6 +26,7 @@ const factory = (ripple, FontIcon) => {
       onMouseLeave: PropTypes.func,
       onMouseUp: PropTypes.func,
       primary: PropTypes.bool,
+      setRef: PropTypes.func,
       theme: PropTypes.shape({
         accent: PropTypes.string,
         button: PropTypes.string,
@@ -67,6 +71,9 @@ const factory = (ripple, FontIcon) => {
     render() {
       const {
         accent,    // eslint-disable-line
+        ariaExpanded,
+        ariaHaspopup,
+        ariaLabel,
         children,
         className,
         href,
@@ -74,6 +81,7 @@ const factory = (ripple, FontIcon) => {
         inverse,
         neutral,
         primary,   // eslint-disable-line
+        setRef,
         theme,
         type,
         ...others
@@ -88,7 +96,15 @@ const factory = (ripple, FontIcon) => {
       const props = {
         ...others,
         href,
-        ref: (node) => { this.buttonNode = node; },
+        ref: (node) => {
+          this.buttonNode = node;
+          if (setRef instanceof Function) {
+            setRef(node);
+          }
+        },
+        'aria-expanded': ariaExpanded,
+        'aria-haspopup': ariaHaspopup,
+        'aria-label': ariaLabel,
         className: classes,
         disabled: this.props.disabled,
         onMouseUp: this.handleMouseUp,

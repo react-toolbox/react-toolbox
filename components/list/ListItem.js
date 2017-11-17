@@ -9,14 +9,19 @@ import rippleFactory from '../ripple/Ripple';
 const factory = (ripple, ListItemLayout, ListItemContent) => {
   class ListItem extends Component {
     static propTypes = {
+      altText: PropTypes.string,
+      ariaLabel: PropTypes.string,
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
       hasRipple: PropTypes.bool,
+      id: PropTypes.string,
       onClick: PropTypes.func,
       onMouseDown: PropTypes.func,
       onTouchStart: PropTypes.func,
       ripple: PropTypes.bool,
+      tabIndex: PropTypes.number,
+      target: PropTypes.string,
       theme: PropTypes.shape({
         listItem: PropTypes.string,
       }),
@@ -27,12 +32,36 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       className: '',
       disabled: false,
       ripple: false,
+      tabIndex: 0,
+      target: '',
     };
 
     handleClick = (event) => {
-      if (this.props.onClick && !this.props.disabled) {
-        this.props.onClick(event);
+      if (this.props.to && this.isModifiedEvent(event)) {
+        return;
       }
+      if (this.props.onClick) {
+        if (this.props.to) {
+          event.preventDefault();
+        }
+        if (!this.props.disabled) {
+          this.props.onClick(event);
+        }
+      }
+    };
+
+    handleEnter = (event) => {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        this.handleClick(event);
+      }
+    };
+
+    isModifiedEvent = (event) => {
+      if (event.metaKey || event.altKey || event.ctrlKey || event.shiftKey) {
+        return true;
+      }
+      return false;
     };
 
     groupChildren() {
@@ -68,21 +97,37 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
 
     render() {
       const {
+        ariaLabel,
+        altText,
         className,
+        id,
         ripple: hasRipple,    // eslint-disable-line no-unused-vars
         onClick,      // eslint-disable-line no-unused-vars
         onMouseDown,  // eslint-disable-line no-unused-vars
         onTouchStart, // eslint-disable-line no-unused-vars
+        tabIndex,
+        target,
         theme,
         to,
         ...other
       } = this.props;
       const children = this.groupChildren();
       const content = <ListItemLayout theme={theme} {...children} {...other} />;
+
       return (
-        <li className={`${theme.listItem} ${className}`} onClick={this.handleClick} onMouseDown={onMouseDown} onTouchStart={onTouchStart}>
-          {to ? <a href={this.props.to}>{content}</a> : content}
+        <li
+          aria-label={ariaLabel}
+          className={`${theme.listItem} ${className}`}
+          id={id}
+          onClick={this.handleClick}
+          onMouseDown={onMouseDown}
+          onTouchStart={onTouchStart}
+          onKeyDown={this.handleEnter}
+          tabIndex={to || !onClick ? -1 : tabIndex}
+        >
+          {to ? <a href={this.props.to} target={target}>{content}</a> : content}
           {children.ignored}
+          {altText ? <span className={theme.screenReader}>{altText}</span> : null}
         </li>
       );
     }
