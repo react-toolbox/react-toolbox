@@ -42,6 +42,10 @@ export interface ListItemProps extends ReactToolbox.Props {
    */
   tabIndex?: number;
   /**
+   * Sets the target property for the <a> tag inside the list item, useful for opening a new window on click
+   */
+  target?: string;
+  /**
    * Classnames object defining the component style.
    * @default false
    */
