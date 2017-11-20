@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
@@ -67,9 +68,27 @@ const factory = (Tab, TabContent, FontIcon) => {
       if (this.updatePointerAnimationFrame) cancelAnimationFrame(this.updatePointerAnimationFrame);
     }
 
+    getNewIndex(headers, delta) {
+      let newIndex = (this.props.index + delta) % headers.length;
+      if (newIndex < 0) newIndex = headers.length - 1;
+
+      while (headers[newIndex].props.disabled || headers[newIndex].props.hidden) {
+        newIndex = (newIndex + delta) % headers.length;
+        if (newIndex < 0) newIndex = headers.length - 1;
+      }
+
+      return newIndex;
+    }
+
+    focusTab = (index) => {
+      const tabs = [...ReactDOM.findDOMNode(this).firstChild.querySelectorAll('[role=tab]')];
+      tabs[index].focus();
+    }
+
     handleHeaderClick = (idx) => {
       if (this.props.onChange) {
         this.props.onChange(idx);
+        this.focusTab(idx);
       }
     };
 
@@ -84,42 +103,48 @@ const factory = (Tab, TabContent, FontIcon) => {
     updatePointer = (idx) => {
       if (this.navigationNode && this.navigationNode.children[idx]) {
         this.updatePointerAnimationFrame = requestAnimationFrame(() => {
-          const nav = this.navigationNode.getBoundingClientRect();
-          const label = this.navigationNode.children[idx].getBoundingClientRect();
-          const scrollLeft = this.navigationNode.scrollLeft;
-          this.setState({
-            pointer: {
-              top: `${nav.height}px`,
-              left: `${(label.left + scrollLeft) - nav.left}px`,
-              width: `${label.width}px`,
-            },
-          });
+          if (this.navigationNode && this.navigationNode.children[idx]) {
+            const nav = this.navigationNode.getBoundingClientRect();
+            const label = this.navigationNode.children[idx].getBoundingClientRect();
+            const scrollLeft = this.navigationNode.scrollLeft;
+            this.setState({
+              pointer: {
+                top: `${nav.height}px`,
+                left: `${(label.left + scrollLeft) - nav.left}px`,
+                width: `${label.width}px`,
+              },
+            });
+          }
         });
       }
     }
 
     updateArrows = () => {
-      const idx = this.navigationNode.children.length - 2;
+      if (this.navigationNode) {
+        const idx = this.navigationNode.children.length - 2;
 
-      if (idx >= 0) {
-        const scrollLeft = this.navigationNode.scrollLeft;
-        const nav = this.navigationNode.getBoundingClientRect();
-        const lastLabel = this.navigationNode.children[idx].getBoundingClientRect();
+        if (idx >= 0) {
+          const scrollLeft = this.navigationNode.scrollLeft;
+          const nav = this.navigationNode.getBoundingClientRect();
+          const lastLabel = this.navigationNode.children[idx].getBoundingClientRect();
 
-        this.setState({
-          arrows: {
-            left: scrollLeft > 0,
-            right: nav.right < (lastLabel.right - 5),
-          },
-        });
+          this.setState({
+            arrows: {
+              left: scrollLeft > 0,
+              right: nav.right < (lastLabel.right - 5),
+            },
+          });
+        }
       }
     }
 
     scrollNavigation = (factor) => {
-      const oldScrollLeft = this.navigationNode.scrollLeft;
-      this.navigationNode.scrollLeft += factor * this.navigationNode.clientWidth;
-      if (this.navigationNode.scrollLeft !== oldScrollLeft) {
-        this.updateArrows();
+      if (this.navigationNode) {
+        const oldScrollLeft = this.navigationNode.scrollLeft;
+        this.navigationNode.scrollLeft += factor * this.navigationNode.clientWidth;
+        if (this.navigationNode.scrollLeft !== oldScrollLeft) {
+          this.updateArrows();
+        }
       }
     }
 
@@ -149,6 +174,16 @@ const factory = (Tab, TabContent, FontIcon) => {
       });
 
       return { headers, contents };
+    }
+
+    handleArrowPress(headers) {
+      return (event) => {
+        if (event.key === 'ArrowRight') {
+          this.handleHeaderClick(this.getNewIndex(headers, 1));
+        } else if (event.key === 'ArrowLeft') {
+          this.handleHeaderClick(this.getNewIndex(headers, -1));
+        }
+      };
     }
 
     renderHeaders(headers) {
@@ -194,7 +229,7 @@ const factory = (Tab, TabContent, FontIcon) => {
 
       return (
         <div data-react-toolbox="tabs" className={classNames}>
-          <div className={theme.navigationContainer}>
+          <div className={theme.navigationContainer} onKeyDown={this.handleArrowPress(headers)}>
             {hasLeftArrow && <div className={theme.arrowContainer} onClick={this.scrollRight}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_left" />
             </div>}

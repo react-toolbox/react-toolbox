@@ -56,6 +56,10 @@ export interface MenuItemProps extends ReactToolbox.Props {
    */
   shortcut?: string;
   /**
+   * Sets a tabIndex attribute which specifies the tab order of the element.
+   */
+  tabIndex?: number;
+  /**
    * Classnames object defining the component style.
    */
   theme?: MenuItemTheme;

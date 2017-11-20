@@ -72,8 +72,9 @@ const factory = (Thumb) => {
             readOnly
             ref={(node) => { this.inputNode = node; }}
             type="checkbox"
+            tabIndex={-1}
           />
-          <span className={theme[checked ? 'on' : 'off']}>
+          <span className={theme[checked ? 'on' : 'off']} tabIndex={0} onClick={!disabled && this.handleToggle} aria-label={disabled ? 'disabled ' : ''}>
             <Thumb disabled={this.props.disabled} theme={theme} ripple={ripple} />
           </span>
           {this.props.label ? <span className={theme.text}>{this.props.label}</span> : null}
