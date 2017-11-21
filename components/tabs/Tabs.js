@@ -84,6 +84,8 @@ const factory = (Tab, TabContent, FontIcon) => {
     updatePointer = (idx) => {
       if (this.navigationNode && this.navigationNode.children[idx]) {
         this.updatePointerAnimationFrame = requestAnimationFrame(() => {
+          if (!this.navigationNode || !this.navigationNode.children[idx])
+            return;
           const nav = this.navigationNode.getBoundingClientRect();
           const label = this.navigationNode.children[idx].getBoundingClientRect();
           const scrollLeft = this.navigationNode.scrollLeft;
