@@ -185,8 +185,6 @@ In order to import the fonts for you, we'd need to include them in the CSS which
 
 As mentioned in the theming section, you'd usually import a component with a theme already injected. To do this we use a [Higher Order Component](http://github.com/javivelasco/react-css-themr). If you add a `ref` property to a React Toolbox component, what you will get is the **HOC** instead of the **Wrapped** component.
 
-For components with imperative methods such as the `Input`, you can also get its real instance instead of the HOC. To do this, the HOC includes a `getWrappedInstance` method that returns the wrapped component instance. This way you can call methods directly on the component's instance.
-
 ## Server Side Rendering
 
 The only requirement for SSR is to be able to require ES6 and CSS Modules in the backend. To make it possible you can check projects like [CSS Modules register hook](https://github.com/css-modules/css-modules-require-hook) or [Webpack Isomorphic tools](https://github.com/halt-hammerzeit/webpack-isomorphic-tools). Also, make sure you can import from `node_modules`.
