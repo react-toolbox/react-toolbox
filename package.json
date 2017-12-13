@@ -71,7 +71,6 @@
     "immutability-helper": "^2.0.0",
     "internal-ip": "^1.2.0",
     "karma": "^1.3.0",
-    "karma-chrome-launcher": "^2.2.0",
     "karma-cli": "^1.0.0",
     "karma-mocha": "^1.3.0",
     "karma-phantomjs-launcher": "^1.0.0",
