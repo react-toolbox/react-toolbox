@@ -1,12 +1,12 @@
 {
   "name": "@bionikspoon/react-toolbox",
   "description": "A set of React components implementing Google's Material Design specification with the power of CSS Modules.",
-  "homepage": "http://www.react-toolbox.com",
-  "version": "1.3.4",
+  "homepage": "http://www.react-toolbox.io",
+  "version": "1.4.0-beta.1",
   "main": "./lib",
   "author": {
     "name": "React Toolbox Team",
-    "url": "http://github.com/react-toolbox"
+    "url": "http://www.react-toolbox.io"
   },
   "contributors": [
     {
@@ -22,11 +22,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/react-toolbox/react-toolbox.git"
+    "url": "git+https://github.com/bionikspoon/react-toolbox.git"
   },
   "bugs": {
     "email": "issues@react-toolbox.com",
-    "url": "https://github.com/react-toolbox/react-toolbox/issues"
+    "url": "https://github.com/bionikspoon/react-toolbox/issues"
   },
   "keywords": [
     "components",
@@ -119,7 +119,6 @@
   "license": "MIT",
   "peerDependencies": {
     "react": "^0.14 || ~15.4.0 || ^16.0.0",
-    "react-addons-css-transition-group": "^0.14.0 || ~15.4.0",
     "react-dom": "^0.14.0 || ~15.4.0 || ^16.0.0"
   },
   "pre-commit": "lint:staged"
