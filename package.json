@@ -1,7 +1,7 @@
 {
   "name": "react-toolbox",
   "description": "A set of React components implementing Google's Material Design specification with the power of CSS Modules.",
-  "homepage": "http://www.react-toolbox.com",
+  "homepage": "http://www.react-toolbox.io",
   "version": "1.3.4",
   "main": "./lib",
   "author": {
@@ -41,7 +41,7 @@
     "immutability-helper": "^2.0.0",
     "normalize.css": "^4.2.0",
     "prop-types": "^15.6.0",
-    "react-css-themr": "git://github.com/bionikspoon/react-css-themr.git#react_16_build"
+    "react-css-themr": "^2.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.4",
@@ -71,6 +71,7 @@
     "immutability-helper": "^2.0.0",
     "internal-ip": "^1.2.0",
     "karma": "^1.3.0",
+    "karma-chrome-launcher": "^2.2.0",
     "karma-cli": "^1.0.0",
     "karma-mocha": "^1.3.0",
     "karma-phantomjs-launcher": "^1.0.0",
@@ -118,7 +119,6 @@
   "license": "MIT",
   "peerDependencies": {
     "react": "^0.14 || ~15.4.0 || ^16.0.0",
-    "react-addons-css-transition-group": "^0.14.0 || ~15.4.0",
     "react-dom": "^0.14.0 || ~15.4.0 || ^16.0.0"
   },
   "pre-commit": "lint:staged"

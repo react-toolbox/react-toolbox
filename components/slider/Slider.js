@@ -155,9 +155,7 @@ const factory = (ProgressBar, Input) => {
     }
 
     getInput () {
-      return this.refs.input && this.refs.input.getWrappedInstance
-        ? this.refs.input.getWrappedInstance()
-        : this.refs.input;
+      return this.refs.input && this.refs.input.ref;
     }
 
     getKeyboardEvents () {
