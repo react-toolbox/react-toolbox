@@ -37,6 +37,8 @@ export interface BrowseButtonProps extends ButtonBaseProps {
    * Classnames object defining the component style.
    */
   theme?: BrowseButtonTheme;
+  
+  onChange?: Function;
 }
 
 export class BrowseButton extends React.Component<BrowseButtonProps, {}> { }
