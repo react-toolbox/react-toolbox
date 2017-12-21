@@ -35,6 +35,8 @@ const factory = (Chip, Input) => {
       onBlur: PropTypes.func,
       onChange: PropTypes.func,
       onFocus: PropTypes.func,
+      onKeyDown: PropTypes.func,
+      onKeyUp: PropTypes.func,
       onQueryChange: PropTypes.func,
       query: PropTypes.string,
       selectedPosition: PropTypes.oneOf(['above', 'below', 'none']),
@@ -148,6 +150,8 @@ const factory = (Chip, Input) => {
       if (event.which === 13) {
         this.selectOrCreateActiveItem(event);
       }
+
+      if(this.props.onKeyDown) this.props.onKeyDown(event);
     };
 
     handleQueryKeyUp = (event) => {
@@ -160,6 +164,8 @@ const factory = (Chip, Input) => {
         if (index >= suggestionsKeys.length) index = 0;
         this.setState({ active: suggestionsKeys[index] });
       }
+
+      if(this.props.onKeyUp) this.props.onKeyUp(event);
     };
 
     handleSuggestionHover = (event) => {
