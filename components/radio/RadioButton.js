@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import { v4 as uuidv4 } from 'uuid';
 import { RADIO } from '../identifiers';
 import rippleFactory from '../ripple/Ripple';
 import radioFactory from './Radio';
@@ -71,10 +72,13 @@ const factory = (Radio) => {
         ...others
       } = this.props;
       const _className = classnames(theme[this.props.disabled ? 'disabled' : 'field'], className);
+      const id = `field_${uuidv4()}`;
+
       return (
         <label
           data-react-toolbox="radio-button"
           className={_className}
+          htmlFor={id}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
         >
@@ -83,6 +87,7 @@ const factory = (Radio) => {
             checked={checked}
             className={theme.input}
             disabled={disabled}
+            id={id}
             name={name}
             onChange={() => {}}
             onClick={this.handleClick}

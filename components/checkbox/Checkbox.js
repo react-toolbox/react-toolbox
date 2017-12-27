@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import styleShape from 'react-style-proptype';
 import { themr } from 'react-css-themr';
+import { v4 as uuidv4 } from 'uuid';
 import { CHECKBOX } from '../identifiers';
 import rippleFactory from '../ripple/Ripple';
 import checkFactory from './Check';
@@ -62,11 +63,13 @@ const factory = (Check) => {
       const className = classnames(theme.field, {
         [theme.disabled]: this.props.disabled,
       }, this.props.className);
+      const id = `field_${uuidv4()}`;
 
       return (
         <label
           data-react-toolbox="checkbox"
           className={className}
+          htmlFor={id}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
         >
@@ -75,6 +78,7 @@ const factory = (Check) => {
             checked={checked}
             className={theme.input}
             disabled={disabled}
+            id={id}
             name={name}
             onChange={() => {}}
             onClick={this.handleToggle}
