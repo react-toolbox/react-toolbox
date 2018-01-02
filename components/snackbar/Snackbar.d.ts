@@ -49,7 +49,7 @@ export interface SnackbarProps extends ReactToolbox.Props {
   /**
    * Text to display in the content.
    */
-  label?: string;
+  label?: string | React.ReactElement<any>;
   /**
    * Callback function that will be called when the button action is clicked.
    */
