@@ -30,6 +30,10 @@ export interface MenuItemTheme {
 
 export interface MenuItemProps extends ReactToolbox.Props {
   /**
+   * Aria-label for the <li> DOM element
+   */
+  ariaLabel?: string;
+  /**
    * The text to include in the menu item. Required.
    */
   caption: string;

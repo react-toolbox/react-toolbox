@@ -9,6 +9,7 @@ import rippleFactory from '../ripple/Ripple';
 const factory = (ripple) => {
   class MenuItem extends Component {
     static propTypes = {
+      ariaLabel: PropTypes.string,
       caption: PropTypes.string,
       children: PropTypes.node,
       className: PropTypes.string,
@@ -52,6 +53,7 @@ const factory = (ripple) => {
 
     render() {
       const {
+        ariaLabel,
         caption,
         children,
         disabled,
@@ -77,6 +79,7 @@ const factory = (ripple) => {
           role="menuitem"
           tabIndex={disabled ? '-1' : tabIndex}
           aria-disabled={disabled}
+          aria-label={ariaLabel}
         >
           {icon ? <FontIcon value={icon} className={theme.icon} /> : null}
           <span className={theme.caption}>{caption}</span>
