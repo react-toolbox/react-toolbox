@@ -19,6 +19,10 @@ export interface ButtonTheme {
    */
   floating?: string;
   /**
+   * For the label inside a button.
+   */
+  label?: string;
+  /**
    * For the icon inside a button.
    */
   icon?: string;

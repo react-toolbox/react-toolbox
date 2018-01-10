@@ -33,6 +33,7 @@ const factory = (ripple, FontIcon) => {
         button: PropTypes.string,
         flat: PropTypes.string,
         floating: PropTypes.string,
+        label: PropTypes.string,
         icon: PropTypes.string,
         inverse: PropTypes.string,
         mini: PropTypes.string,
@@ -122,7 +123,7 @@ const factory = (ripple, FontIcon) => {
 
       return React.createElement(element, props,
         icon ? <FontIcon className={theme.icon} value={icon} /> : null,
-        label,
+        <span className={theme.label}>{label}</span>,
         children,
       );
     }
