@@ -88,7 +88,7 @@ const factory = (ripple, FontIcon) => {
       } = this.props;
       const element = href ? 'a' : 'button';
       const level = this.getLevel();
-      const classes = classnames([theme.toggle], {
+      const classes = classnames(theme.button, [theme.toggle], {
         [theme[level]]: neutral,
         [theme.inverse]: inverse,
       }, className);
