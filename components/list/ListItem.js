@@ -113,6 +113,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       } = this.props;
       const children = this.groupChildren();
       const content = <ListItemLayout theme={theme} {...children} {...other} />;
+      const tabIndexProp = onClick && !to ? { tabIndex } : {};
 
       return (
         <li
@@ -123,7 +124,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
           onMouseDown={onMouseDown}
           onTouchStart={onTouchStart}
           onKeyDown={this.handleEnter}
-          tabIndex={to || !onClick ? -1 : tabIndex}
+          {...tabIndexProp}
         >
           {to ? <a href={this.props.to} target={target}>{content}</a> : content}
           {children.ignored}
