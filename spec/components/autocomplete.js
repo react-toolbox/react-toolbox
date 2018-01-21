@@ -50,7 +50,7 @@ class AutocompleteTest extends React.Component {
         <h5>Autocomplete</h5>
         <p>You can have a multiple or simple autocomplete.</p>
 
-        <Autocomplete
+        <Autocomplete 
           allowCreate
           keepFocusOnChange
           label="Pick multiple elements..."
@@ -59,6 +59,7 @@ class AutocompleteTest extends React.Component {
           source={this.state.countriesObject}
           suggestionMatch="anywhere"
           value={this.state.multipleArray}
+          submitKeys={[13, 188, 186]}
         />
 
         <Autocomplete
