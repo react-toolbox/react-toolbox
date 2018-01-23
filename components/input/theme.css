@@ -159,6 +159,10 @@
   color: var(--input-text-label-color);
   position: absolute;
   right: 0;
+
+  &.forceRepaint {
+    position: relative;
+  }
 }
 
 .disabled > .inputElement {

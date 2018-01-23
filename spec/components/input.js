@@ -10,11 +10,25 @@ class InputTest extends React.Component {
     withHintCustomIcon: '',
     multilineHint: 'Long Description here',
     multilineRows: 'A\n\B\nC\nD\nE\nF',
+    touched: false,
   };
 
   handleChange = (value, ev) => {
     this.setState({[ev.target.name]: value });
   };
+
+  focused() {
+    this.setState({
+      touched: true
+    });
+  }
+
+  getError() {
+    if (this.state.touched) {
+      return (<span>Error!!</span>);
+    }
+    return null;
+  }
 
   render() {
     return (
@@ -36,6 +50,7 @@ class InputTest extends React.Component {
         <Input type="tel" name="withIcon" value={this.state.withIcon} required label="With icon" onChange={this.handleChange} icon="phone" />
         <Input type="tel" name="withCustomIcon" value={this.state.withCustomIcon} label="With custom icon" onChange={this.handleChange} icon="favorite" />
         <Input type="text" name="withHintCustomIcon" value={this.state.withHintCustomIcon} label="With Hint Text Icon" hint="Hint Text" onChange={this.handleChange} icon="share" />
+        <Input onFocus={this.focused.bind(this)} type='text' label='With error on focus' maxLength={20} error={this.getError()} />
       </section>
     );
   }
