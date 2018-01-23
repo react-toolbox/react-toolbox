@@ -89,6 +89,14 @@ export interface AutocompleteProps extends InputProps {
    */
   onFocus?: Function;
   /**
+   * Callback function that is fired when a key is pressed down.
+   */
+  onKeyDown?: Function;
+  /**
+   * Callback function that is fired when a key is lifted up.
+   */
+  onKeyUp?: Function;
+  /**
    * Callback function that is fired when the components's query value changes.
    */
   onQueryChange?: Function;

@@ -5,8 +5,9 @@ A Tooltip is useful to show information on hover in any kind of component. We ha
 <!-- example -->
 ```jsx
 import Button from 'react-toolbox/lib/button';
-import Tooltip from 'react-toolbox/lib/tooltip';
+import Input from 'react-toolbox/lib/input';
 import Link from 'react-toolbox/lib/link';
+import Tooltip from 'react-toolbox/lib/tooltip';
 
 const TooltipButton = Tooltip(Button);
 const TooltipInput = Tooltip(Input);

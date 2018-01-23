@@ -71,7 +71,7 @@ Represents a list item that can have avatar, icons, title, subtitle, etc. Note: 
 | `leftActions`     | `Array of Elements`   |               | A list of elements that are placed on the left side of the item and after the avatar attribute.|
 | `leftIcon`        | `String` or `Element` |               | A string key of a font icon or element to display an icon in the left side of the item. |
 | `legend`          | `String` or `Element` |               | Secondary text to display under the caption.|
-| `onClick`         | `Function`            |               | Callback the is invoked when the item is clicked if it's not disabled. |
+| `onClick`         | `Function`            |               | Callback that is invoked when the item is clicked if it's not disabled. |
 | `rightIcon`       | `String` or `Element` |               | The same as the `leftIcon` but in this case the icon is displayed in the right side.|
 | `rightActions`    | `Array of Elements`   |               | A list of elements that are placed on the right side of the item and after the rightIcon attribute.|
 | `ripple`          | `Boolean`             | `false`       | If true, the item displays a ripple effect on click. By default it's inherited from the parent element.|
