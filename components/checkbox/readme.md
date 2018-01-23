@@ -47,7 +47,7 @@ If you want to provide a theme via context, the component key is `RTCheckbox`.
 | `children`      | `String`, `Element` or `Array` |  | Children to pass through the component. |
 | `className`     | `String`        | `''`            | Sets a class to give customized styles to the checkbox field.|
 | `disabled`      | `Boolean`       | `false`         | If true, the checkbox shown as disabled and cannot be modified.|
-| `label`         | `String` of `node`        |                 | Text label to attach next to the checkbox element.|
+| `label`         | `String` or `node`        |                 | Text label to attach next to the checkbox element.|
 | `name`          | `String`        | `false`         | The name of the field to set in the input checkbox.|
 | `onBlur`        | `Function`      |                 | Callback called when the checkbox is blurred.|
 | `onChange`      | `Function`      |                 | Callback called when the checkbox value is changed.|
