@@ -30,7 +30,7 @@ class InputTest extends React.Component {
         />
         <Input type="email" name="fixedLabel" value={this.state.fixedLabel} label="Label fixed" floating={false} onChange={this.handleChange} />
         <Input type="text" value="Read only" readOnly label="Phone Number" />
-        <Input type="email" name="multilineHint" multilineHint value={this.state.multilineHint} label="Description" hint="Enter Description" multiline onChange={this.handleChange} />
+        <Input type="email" name="multilineHint" value={this.state.multilineHint} label="Description" hint="Enter Description" multiline onChange={this.handleChange} />
         <Input type="text" name="multilineRows" value={this.state.multilineRows} label="Row Limited Description" hint="Enter Description" multiline rows={4} onChange={this.handleChange} />
         <Input type="text" label="Disabled field" disabled />
         <Input type="tel" name="withIcon" value={this.state.withIcon} required label="With icon" onChange={this.handleChange} icon="phone" />
