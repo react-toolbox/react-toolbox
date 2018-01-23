@@ -41,6 +41,10 @@
   padding: var(--input-field-padding) 0;
   width: 100%;
 
+  &:required {
+    box-shadow: none;
+  }
+
   &:focus:not([disabled]):not([readonly]) {
     & ~ .bar::before,
     & ~ .bar::after {
