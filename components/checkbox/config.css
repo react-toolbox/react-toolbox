@@ -8,6 +8,7 @@
   --checkbox-focus-color: color(var(--color-black) a(1%));
   --checkbox-focus-size: calc(var(--checkbox-size) * 2.3);
   --checkbox-text-color: var(--color-black);
+  --checkbox-border-color: var(--palette-grey-600);
   --checkbox-text-font-size: var(--font-size-small);
   --checkbox-total-height: calc(1.8 * var(--unit));
   --checkbox-transition-duration: 0.2s;
