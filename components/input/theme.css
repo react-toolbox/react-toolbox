@@ -162,7 +162,7 @@
 }
 
 .disabled > .inputElement {
-  border-bottom-style: dotted;
+  border-bottom-style: dashed;
   color: var(--input-text-disabled-text-color);
 }
 
