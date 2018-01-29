@@ -104,12 +104,6 @@ const factory = (ProgressBar, Input) => {
       events.removeEventsFromDocument(this.getKeyboardEvents());
     }
 
-    getInput() {
-      return this.inputNode && this.inputNode.getWrappedInstance
-        ? this.inputNode.getWrappedInstance()
-        : this.inputNode;
-    }
-
     getKeyboardEvents() {
       return {
         keydown: this.handleKeyDown,
@@ -159,13 +153,13 @@ const factory = (ProgressBar, Input) => {
       const { ARROW_DOWN, ARROW_UP, ENTER, ESC } = KEYS;
 
       if (disabled) return;
-      if ([ENTER, ESC].includes(event.keyCode)) this.getInput().blur();
+      if ([ENTER, ESC].includes(event.keyCode)) this.inputNode.blur();
       if (event.keyCode === ARROW_UP) this.addToValue(step);
       if (event.keyCode === ARROW_DOWN) this.addToValue(-step);
     };
 
     handleMouseDown = (event) => {
-      if (this.state.inputFocused) this.getInput().blur();
+      if (this.state.inputFocused) this.inputNode.blur();
       events.addEventsToDocument(this.getMouseEventMap());
       this.start(events.getMousePosition(event));
       events.pauseEvent(event);
@@ -203,7 +197,7 @@ const factory = (ProgressBar, Input) => {
     };
 
     handleTouchStart = (event) => {
-      if (this.state.inputFocused) this.getInput().blur();
+      if (this.state.inputFocused) this.inputNode.blur();
       this.start(events.getTouchPosition(event));
       events.addEventsToDocument(this.getTouchEventMap());
       events.pauseEvent(event);
@@ -268,7 +262,7 @@ const factory = (ProgressBar, Input) => {
       if (!this.props.editable) return undefined;
       return (
         <Input
-          ref={(node) => { this.inputNode = node; }}
+          innerRef={(node) => { this.inputNode = node; }}
           className={this.props.theme.input}
           disabled={this.props.disabled}
           onFocus={this.handleInputFocus}
