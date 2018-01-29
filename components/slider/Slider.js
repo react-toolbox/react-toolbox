@@ -10,6 +10,13 @@ import events from '../utils/events';
 import InjectProgressBar from '../progress_bar/ProgressBar';
 import InjectInput from '../input/Input';
 
+const KEYS = {
+  ENTER: 13,
+  ESC: 27,
+  ARROW_UP: 38,
+  ARROW_DOWN: 40,
+};
+
 const factory = (ProgressBar, Input) => {
   class Slider extends Component {
     static propTypes = {
@@ -148,9 +155,13 @@ const factory = (ProgressBar, Input) => {
     };
 
     handleKeyDown = (event) => {
-      if ([13, 27].indexOf(event.keyCode) !== -1) this.getInput().blur();
-      if (event.keyCode === 38) this.addToValue(this.props.step);
-      if (event.keyCode === 40) this.addToValue(-this.props.step);
+      const { disabled, step } = this.props;
+      const { ARROW_DOWN, ARROW_UP, ENTER, ESC } = KEYS;
+
+      if (disabled) return;
+      if ([ENTER, ESC].includes(event.keyCode)) this.getInput().blur();
+      if (event.keyCode === ARROW_UP) this.addToValue(step);
+      if (event.keyCode === ARROW_DOWN) this.addToValue(-step);
     };
 
     handleMouseDown = (event) => {

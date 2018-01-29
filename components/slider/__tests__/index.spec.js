@@ -63,6 +63,17 @@ describe('Slider', () => {
     });
   });
 
+  describe('#handleKeyDown', () => {
+    it('does not call addToValue if is disabled', () => {
+      const slider = shallow(<Slider disabled />).instance();
+      slider.addToValue = jest.fn();
+
+      slider.handleKeyDown({ keyCode: 40 });
+
+      expect(slider.addToValue).not.toHaveBeenCalled();
+    });
+  });
+
   describe('#render', () => {
     it('contains a linear progress bar with proper properties', () => {
       const wrapper = mount(<Slider min={100} max={1000} value={140} />);
