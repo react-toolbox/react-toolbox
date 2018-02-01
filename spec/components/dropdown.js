@@ -5,7 +5,7 @@ import style from '../style';
 const countries = [
   { value: 'EN-gb', label: 'England', img: 'http://' },
   { value: 'ES-es', label: 'Spain', img: 'http://' },
-  { value: 'TH-th', label: 'Thailand', img: 'http://' },
+  { value: 'TH-th', label: 'Thailand', img: 'http://', disabled: true },
   { value: 'EN-en', label: 'USA', img: 'http://' },
   { value: 'FR-fr', label: 'France', img: 'http://' },
 ];

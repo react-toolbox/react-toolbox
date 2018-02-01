@@ -39,6 +39,10 @@ export interface DropdownTheme {
    */
   selected?: string;
   /**
+   * Used to highlight the currently focused value.
+   */
+  focused?: string;
+  /**
    * Used as a wrapper for the given template value.
    */
   templateValue?: string;
