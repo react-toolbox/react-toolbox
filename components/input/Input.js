@@ -124,7 +124,6 @@ const factory = (FontIcon) => {
           : parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
 
         // resize the input to its content size
-        element.style.height = 'auto';
         element.style.height = `${element.scrollHeight + heightOffset}px`;
       }
     }
