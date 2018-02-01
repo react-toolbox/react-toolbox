@@ -10,6 +10,7 @@ class ProgressBar extends Component {
     buffer: PropTypes.number,
     className: PropTypes.string,
     disabled: PropTypes.bool,
+    hiddenFromScreenReader: PropTypes.bool,
     max: PropTypes.number,
     min: PropTypes.number,
     mode: PropTypes.oneOf(['determinate', 'indeterminate']),
@@ -36,6 +37,7 @@ class ProgressBar extends Component {
     mode: 'indeterminate',
     multicolor: false,
     type: 'linear',
+    hiddenFromScreenReader: false,
     value: 0,
   };
 
@@ -80,7 +82,18 @@ class ProgressBar extends Component {
   }
 
   render() {
-    const { className, disabled, max, min, mode, multicolor, type, theme, value } = this.props;
+    const {
+      className,
+      disabled,
+      hiddenFromScreenReader,
+      max,
+      min,
+      mode,
+      multicolor,
+      type,
+      theme,
+      value,
+    } = this.props;
     const _className = classnames(theme[type], {
       [theme.indeterminate]: mode === 'indeterminate',
       [theme.multicolor]: multicolor,
@@ -95,6 +108,7 @@ class ProgressBar extends Component {
         aria-valuenow={value}
         aria-valuemin={min}
         aria-valuemax={max}
+        aria-hidden={hiddenFromScreenReader}
         className={_className}
       >
         {type === 'circular' ? this.renderCircular() : this.renderLinear()}

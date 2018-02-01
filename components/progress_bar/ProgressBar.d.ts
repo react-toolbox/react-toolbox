@@ -48,6 +48,16 @@ export interface ProgressBarProps extends ReactToolbox.Props {
    */
   disabled?: boolean;
   /**
+   * Whether or not the progress bar should be hidden from the screen reader.
+   *
+   * Can be used if the caller wishes to provide more context for progress updates than just
+   * the percent. Also useful to work around an issue with IE11 + JAWS reading the aria-valuenow
+   * attribute instead of the aria-valuetext attribute on updates.
+   *
+   * @default false
+   */
+  hiddenFromScreenReader?: boolean
+  /**
    * Maximum value permitted.
    * @default 100
    */
