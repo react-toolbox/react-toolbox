@@ -64,6 +64,9 @@
   min-height: var(--list-item-min-height);
   padding: 0 var(--list-horizontal-padding);
   position: relative;
+  transition-duration: 0.28s;
+  transition-property: background-color;
+  transition-timing-function: var(--animation-curve-default);
 
   &.selectable:not(.disabled):hover {
     background-color: var(--list-item-hover-color);

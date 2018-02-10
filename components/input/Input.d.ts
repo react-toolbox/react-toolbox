@@ -132,7 +132,7 @@ export interface InputProps extends ReactToolbox.Props {
   /**
    * The number of rows the multiline input field has.
    */
-  rows?:number;
+  rows?: number;
   /**
    * Classnames object defining the component style.
    */

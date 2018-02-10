@@ -23,6 +23,7 @@ const factory = (ripple, FontIcon) => {
       inverse: PropTypes.bool,
       label: PropTypes.string,
       mini: PropTypes.bool,
+      multiple: PropTypes.bool,
       neutral: PropTypes.bool,
       onChange: PropTypes.func,
       onMouseLeave: PropTypes.func,
@@ -53,6 +54,7 @@ const factory = (ripple, FontIcon) => {
       flat: false,
       floating: false,
       mini: false,
+      multiple: false,
       neutral: true,
       primary: false,
       raised: false,
@@ -96,6 +98,7 @@ const factory = (ripple, FontIcon) => {
         inverse,
         label,
         mini,
+        multiple,
         neutral,
         primary,   // eslint-disable-line
         raised,    // eslint-disable-line
@@ -130,6 +133,7 @@ const factory = (ripple, FontIcon) => {
           className={classes}
           type="file"
           accept={accept}
+          multiple={multiple}
           onChange={this.handleFileChange}
         />,
           children,

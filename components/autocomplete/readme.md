@@ -45,7 +45,7 @@ If you want to provide a theme via context, the component key is `RTAutocomplete
 |:-----|:-----|:-----|:-----|
 | `allowCreate`                   | `Bool`                        | `false` | Determines if user can create a new option with the current typed value |
 | `className`                     | `String`                      | `''`    | Sets a class to style of the Component.|
-| `direction`                     | `String`                      | `auto`  | Determines the opening direction. It can be `auto`, `top` or `down`. |
+| `direction`                     | `String`                      | `auto`  | Determines the opening direction. It can be `auto`, `up` or `down`. |
 | `disabled`                      | `Bool`                        | `false` | If true, component will be disabled. |
 | `error`                         | `String` or `Node`            |         | Sets the error string for the internal input element. |
 | `keepFocusOnChange`             | `Bool`                        | `false` | Whether component should keep focus after value change. |
@@ -53,8 +53,10 @@ If you want to provide a theme via context, the component key is `RTAutocomplete
 | `multiple`                      | `Bool`                        | `true`  | If true, component can hold multiple values. |
 | `onBlur`                        | `Function`                    |         | Callback function that is fired when component is blurred. |
 | `onChange`                      | `Function`                    |         | Callback function that is fired when the components's value changes. |
-| `onQueryChange`                 | `Function`                    |         | Callback function that is fired when the components's query input value changes. |
 | `onFocus`                       | `Function`                    |         | Callback function that is fired when component is focused. |
+| `onKeyDown`                     | `Function`                    |         | Callback function that is fired when a key is pressed down. |
+| `onKeyUp`                       | `Function`                    |         | Callback function that is fired when a key is lifted up. |
+| `onQueryChange`                 | `Function`                    |         | Callback function that is fired when the components's query input value changes. |
 | `query`                         | `String` |         | This property has to be used in case the `source` is not static and will be changing during search for `multiple={false}` autocomplete, content of the `query` has to be managed by the `onQueryChange` callback. |
 | `source`                        | `Object` or `Array`           |         | Object of key/values or array representing all items suggested. |
 | `selectedPosition`              | `String`                      | `above` | Determines if the selected list is shown above or below input. It can be `above`, `below` or `none`. |

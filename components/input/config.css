@@ -6,8 +6,9 @@
   --input-label-font-size: calc(1.2 * var(--unit));
   --input-focus-label-top: calc(0.6 * var(--unit));
   --input-text-background-color: transparent;
-  --input-text-label-color: color(var(--color-black) a(26%));
-  --input-text-bottom-border-color: color(var(--color-black) a(12%));
+  --input-text-label-color: color(var(--color-text) a(26%));
+  --input-text-input-element-color: var(--color-text);
+  --input-text-bottom-border-color: color(var(--color-text) a(12%));
   --input-text-highlight-color: var(--color-primary);
   --input-text-disabled-color: var(--input-text-bottom-border-color);
   --input-text-disabled-text-color: var(--input-text-label-color);

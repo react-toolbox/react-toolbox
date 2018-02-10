@@ -101,6 +101,10 @@ const factory = (ripple, FontIcon) => {
       const element = href ? 'a' : 'button';
       const level = this.getLevel();
       const shape = this.getShape();
+      const mouseEvents = {
+        onMouseUp: this.handleMouseUp,
+        onMouseLeave: this.handleMouseLeave,
+      };
 
       const classes = classnames(theme.button, [theme[shape]], {
         [theme[level]]: neutral,
@@ -110,21 +114,24 @@ const factory = (ripple, FontIcon) => {
 
       const props = {
         ...others,
+        ...mouseEvents,
         href,
         ref: (node) => { this.buttonNode = node; },
         className: classes,
         disabled: this.props.disabled,
-        onMouseUp: this.handleMouseUp,
-        onMouseLeave: this.handleMouseLeave,
         type: !href ? type : null,
         'data-react-toolbox': 'button',
       };
 
-      return React.createElement(element, props,
+      const buttonElement = React.createElement(element, props,
         icon ? <FontIcon className={theme.icon} value={icon} /> : null,
         label,
         children,
       );
+
+      return others.onMouseEnter && this.props.disabled
+        ? <span {...mouseEvents}>{buttonElement}</span>
+        : buttonElement;
     }
   }
 

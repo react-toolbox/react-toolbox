@@ -1,7 +1,7 @@
 {
   "name": "react-toolbox",
   "description": "A set of React components implementing Google's Material Design specification with the power of CSS Modules.",
-  "homepage": "http://www.react-toolbox.com",
+  "homepage": "http://www.react-toolbox.io",
   "version": "2.0.0-beta.11",
   "main": "./lib",
   "module": "./components",
@@ -15,7 +15,7 @@
     "url": "git+https://github.com/react-toolbox/react-toolbox.git"
   },
   "bugs": {
-    "email": "issues@react-toolbox.com",
+    "email": "issues@react-toolbox.io",
     "url": "https://github.com/react-toolbox/react-toolbox/issues"
   },
   "keywords": [
@@ -34,6 +34,8 @@
     "react-transition-group": "^1.1.3"
   },
   "devDependencies": {
+    "@types/node": "^7.0.4",
+    "@types/react": "^15.0.0",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
@@ -86,10 +88,12 @@
     "react-transform-hmr": "^1.0.4",
     "redbox-react": "^1.3.6",
     "rimraf": "^2.6.1",
+    "sinon": "^2.0.0-pre.2",
     "style-loader": "^0.18.1",
     "stylelint": "^7.10.1",
     "stylelint-config-standard": "^16.0.0",
     "stylelint-order": "^0.4.4",
+    "typescript": "^2.1.5",
     "webpack": "^2.6.0",
     "webpack-dev-middleware": "^1.10.2",
     "webpack-hot-middleware": "^2.18.0"
@@ -111,6 +115,8 @@
     "prepublish": "npm run build",
     "release": "bumped release",
     "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
+    "ts": "tsc",
+    "tsd": "cpx \"./components/**/*.d.ts\" ./lib",
     "test": "jest",
     "test:watch": "jest --watch --no-watchman"
   },

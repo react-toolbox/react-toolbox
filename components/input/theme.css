@@ -34,12 +34,16 @@
   border-radius: 0;
   border-right: 0;
   border-top: 0;
-  color: var(--color-text);
+  color: var(--input-text-input-element-color);
   display: block;
   font-size: var(--input-field-font-size);
   outline: none;
   padding: var(--input-field-padding) 0;
   width: 100%;
+
+  &:required {
+    box-shadow: none;
+  }
 
   &:focus:not([disabled]):not([readonly]) {
     & ~ .bar::before,
@@ -158,7 +162,7 @@
 }
 
 .disabled > .inputElement {
-  border-bottom-style: dotted;
+  border-bottom-style: dashed;
   color: var(--input-text-disabled-text-color);
 }
 

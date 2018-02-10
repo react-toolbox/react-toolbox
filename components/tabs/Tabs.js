@@ -59,6 +59,8 @@ const factory = (Tab, TabContent, FontIcon) => {
       if (index !== prevIndex || children !== prevChildren) {
         this.updatePointer(index);
       }
+
+      this.updateArrows();
     }
 
     componentWillUnmount() {
@@ -83,7 +85,7 @@ const factory = (Tab, TabContent, FontIcon) => {
 
     updatePointer = (idx) => {
       if (this.navigationNode && this.navigationNode.children[idx]) {
-        this.updatePointerAnimationFrame = requestAnimationFrame(() => {
+        this.updatePointerAnimationFrame = window.requestAnimationFrame(() => {
           const nav = this.navigationNode.getBoundingClientRect();
           const label = this.navigationNode.children[idx].getBoundingClientRect();
           const scrollLeft = this.navigationNode.scrollLeft;
@@ -105,13 +107,18 @@ const factory = (Tab, TabContent, FontIcon) => {
         const scrollLeft = this.navigationNode.scrollLeft;
         const nav = this.navigationNode.getBoundingClientRect();
         const lastLabel = this.navigationNode.children[idx].getBoundingClientRect();
+        const left = scrollLeft > 0;
+        const right = nav.right < (lastLabel.right - 5);
+        const { left: prevLeft, right: prevRight } = this.state.arrows;
 
-        this.setState({
-          arrows: {
-            left: scrollLeft > 0,
-            right: nav.right < (lastLabel.right - 5),
-          },
-        });
+        if (left !== prevLeft || right !== prevRight) {
+          this.setState({
+            arrows: {
+              left,
+              right,
+            },
+          });
+        }
       }
     }
 

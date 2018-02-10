@@ -57,7 +57,7 @@
 }
 
 .check {
-  border-color: var(--checkbox-text-color);
+  border-color: var(--checkbox-border-color);
   border-radius: 2px;
   border-style: solid;
   border-width: 2px;

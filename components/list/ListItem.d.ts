@@ -3,6 +3,7 @@ import ReactToolbox from '../index';
 import { ListItemContentTheme } from './ListItemContent';
 import { ListItemActionsTheme } from './ListItemActions';
 import { ListItemLayoutProps, ListItemLayoutTheme } from './ListItemLayout';
+import { ListItemTextTheme } from './ListItemText';
 
 export interface ListItemTheme {
   /**
@@ -29,7 +30,7 @@ export interface ListItemProps extends ReactToolbox.Props {
    * Classnames object defining the component style.
    * @default false
    */
-  theme?: ListItemTheme & ListItemActionsTheme & ListItemContentTheme & ListItemLayoutTheme;
+  theme?: ListItemTheme & ListItemActionsTheme & ListItemContentTheme & ListItemLayoutTheme & ListItemTextTheme;
   /**
    * In case you want to provide the item as a link, you can pass this property to specify the href.
    */
