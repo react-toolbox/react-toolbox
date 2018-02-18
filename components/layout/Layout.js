@@ -64,9 +64,9 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
 
     render() {
       const { children, className, theme, ...rest } = this.props;
-      const appBar = filterReactChildren(children, isAppBar)[0];
-      const navDrawer = filterReactChildren(children, isNavDrawer)[0];
-      const sidebar = filterReactChildren(children, isSidebar)[0];
+      const isNavDrawer = child =>  child.props && child.props.navDrawerBar || isComponentOfType(NavDrawer, child);
+      const isSidebar = child => child.props && child.props.layoutSidebar || isComponentOfType(Sidebar, child);
+      const isAppBar = child => child.props && child.props.layouAppBar ||isComponentOfType(AppBar, child);
       const unknown = filterReactChildren(children, isUnknown);
       const appBarFixed = appBar && appBar.props.fixed;
       const navDrawerPinned = this.isPinned(navDrawer);
