@@ -13,9 +13,10 @@ import breakpoints from '../utils/breakpoints';
 import { LAYOUT } from '../identifiers';
 
 const factory = (AppBar, NavDrawer, Sidebar) => {
-  const isNavDrawer = child => isComponentOfType(NavDrawer, child);
-  const isSidebar = child => isComponentOfType(Sidebar, child);
-  const isAppBar = child => isComponentOfType(AppBar, child);
+	
+  const isNavDrawer = child => child.props && child.props.layoutNavDrawer || isComponentOfType(NavDrawer, child);
+  const isSidebar = child => child.props && child.props.layoutSidebar ||  isComponentOfType(Sidebar, child);
+  const isAppBar = child => child.props && child.props.layoutAppBar ||  isComponentOfType(AppBar, child);
   const isUnknown = child => !isNavDrawer(child) && !isSidebar(child) && !isAppBar(child);
 
   class Layout extends Component {
