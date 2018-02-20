@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import CssTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 import { getAnimationModule } from '../utils/utils';
 import time from '../utils/time';
 import Hours from './ClockHours';
@@ -116,10 +116,9 @@ class Clock extends Component {
           style={{ height: this.state.radius * 2 }}
           ref={(node) => { this.placeholderNode = node; }}
         >
-          <CssTransitionGroup
-            transitionName={animationModule}
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={500}
+          <TransitionGroup
+            classNames={animationModule}
+            timeout={{ exit: 500, enter: 500 }}
           >
             <div
               key={this.props.display}
@@ -129,7 +128,7 @@ class Clock extends Component {
               {this.props.display === 'hours' ? this.renderHours() : null}
               {this.props.display === 'minutes' ? this.renderMinutes() : null}
             </div>
-          </CssTransitionGroup>
+          </TransitionGroup>
         </div>
       </div>
     );
