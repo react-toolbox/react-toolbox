@@ -113,11 +113,13 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       } = this.props;
       const children = this.groupChildren();
       const content = <ListItemLayout theme={theme} {...children} {...other} />;
-      const tabIndexProp = onClick && !to ? { tabIndex } : {};
+      const tabIndexProp = onClick && !to ? {
+        tabIndex,
+        'aria-label': ariaLabel,
+      } : {};
 
       return (
         <li
-          aria-label={ariaLabel}
           className={`${theme.listItem} ${className}`}
           id={id}
           onClick={this.handleClick}
@@ -126,7 +128,9 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
           onKeyDown={this.handleEnter}
           {...tabIndexProp}
         >
-          {to ? <a href={this.props.to} target={target}>{content}</a> : content}
+          {to ? (
+            <a href={this.props.to} target={target} aria-label={ariaLabel}>{content}</a>
+          ) : content}
           {children.ignored}
           {altText ? <span className={theme.screenReader}>{altText}</span> : null}
         </li>
