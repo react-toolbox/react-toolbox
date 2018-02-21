@@ -146,6 +146,10 @@ const factory = (Chip, Input) => {
      );
 
       if (event.which === 13) {
+        if (!this.state.query.trim().length && !this.state.active) {
+          events.pauseEvent(event)
+          return
+        }
         this.selectOrCreateActiveItem(event);
       }
     };
