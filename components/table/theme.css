@@ -40,7 +40,8 @@
   transition-property: background-color;
   transition-timing-function: var(--animation-curve-default);
 
-  &:hover { background-color: var(--table-hover-color); }
+  &:hover,
+  &.selected:hover { background-color: var(--table-hover-color); }
   &.selected { background-color: var(--table-selection-color); }
 }
 

@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { TABS } from '../identifiers';
 
-class TabContent extends Component {
+class TabContent extends Component { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     active: PropTypes.bool,
     children: PropTypes.node,

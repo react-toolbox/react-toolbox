@@ -17,7 +17,7 @@ describe('Chip', () => {
           <span>Test</span>
         </Chip>,
       );
-      const chipNode = wrapper.find('div').node;
+      const chipNode = wrapper.find('div').instance();
       expect(chipNode.className).toMatch(/\bavatar-class\b/);
     });
 
@@ -29,7 +29,7 @@ describe('Chip', () => {
           <span>Test</span>
         </TooltippedChip>,
       );
-      const chipNode = wrapper.find('div').node;
+      const chipNode = wrapper.find('div').instance();
       expect(chipNode.className).toMatch(/\bavatar-class\b/);
     });
   });
@@ -41,7 +41,7 @@ describe('Chip', () => {
           <span>Test</span>
         </Chip>,
       );
-      const chipNode = wrapper.find('div').node;
+      const chipNode = wrapper.find('div').instance();
       expect(chipNode.className).not.toMatch(/\bavatar-class\b/);
     });
   });

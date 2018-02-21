@@ -52,7 +52,7 @@ class Root extends Component {
         >
           <ButtonToolbox
             className={style.github}
-            href="http://react-toolbox.com/#/"
+            href="http://react-toolbox.io/#/"
             target="_blank"
             icon="web"
             floating

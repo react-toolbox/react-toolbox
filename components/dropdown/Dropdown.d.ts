@@ -31,10 +31,6 @@ export interface DropdownTheme {
    */
   label?: string;
   /**
-   * Used for setting the label from source
-   */
-  labelKey?: string;
-  /**
    * Used when dropdown has required attribute.
    */
   required?: string;
@@ -58,10 +54,6 @@ export interface DropdownTheme {
    * Used for the list of values.
    */
   values?: string;
-  /**
-   * Used for setting the value from source
-   */
-  valueKey: string;
 }
 
 export interface DropdownProps extends ReactToolbox.Props {
@@ -89,6 +81,10 @@ export interface DropdownProps extends ReactToolbox.Props {
    */
   label?: string;
   /**
+   * Used for setting the label from source
+   */
+  labelKey?: string;
+  /**
    * Name for the input field.
    */
   name?: string;
@@ -104,6 +100,11 @@ export interface DropdownProps extends ReactToolbox.Props {
    * Callback function that is fired when the component is focused.
    */
   onFocus?: Function;
+  /**
+   * If true, the dropdown has a required attribute.
+   * @default false
+   */
+  required?: boolean;
   /**
    * Array of data objects with the data to represent in the dropdown.
    */
@@ -121,10 +122,9 @@ export interface DropdownProps extends ReactToolbox.Props {
    */
   value?: string | number;
   /**
-   * If true, the dropdown has a required attribute.
-   * @default false
+   * Used for setting the value from source
    */
-  required?: boolean;
+  valueKey?: string;
 }
 
 export class Dropdown extends React.Component<DropdownProps, {}> { }
