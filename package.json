@@ -147,7 +147,7 @@
     "prop-types": "^15.6.0",
     "react": "^15.5.0 || ^16.0.0",
     "react-dom": "^15.5.0 || ^16.0.0",
-    "react-transition-group": "^2.2.1"
+    "react-transition-group": "^2.2.0"
   },
   "pre-commit": "lint:staged"
 }
