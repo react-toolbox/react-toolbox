@@ -153,9 +153,9 @@ const factory = (ProgressBar, Input) => {
       const { ARROW_DOWN, ARROW_UP, ENTER, ESC } = KEYS;
 
       if (disabled) return;
-      if ([ENTER, ESC].includes(event.keyCode)) this.inputNode.blur();
-      if (event.keyCode === ARROW_UP) this.addToValue(step);
-      if (event.keyCode === ARROW_DOWN) this.addToValue(-step);
+      if ([ENTER, ESC].includes(event.code)) this.inputNode.blur();
+      if (event.code === ARROW_UP) this.addToValue(step);
+      if (event.code === ARROW_DOWN) this.addToValue(-step);
     };
 
     handleMouseDown = (event) => {
