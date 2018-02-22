@@ -13,7 +13,9 @@ const MenuList = ({
   hoverIdx, // eslint-disable-line
   isSelectable, // eslint-disable-line
   onEndReached, // eslint-disable-line
+  onClick, // eslint-disable-line
   onHoverChange, // eslint-disable-line
+  getListRef,
   onMouseEnter, // eslint-disable-line
   onMouseLeave, // eslint-disable-line
   onStartReached, // eslint-disable-line
@@ -24,16 +26,18 @@ const MenuList = ({
   useKeys, // eslint-disable-line
   ...other
 }) => (
-  <MenuNode overrides={overrides} {...other}>
+  <MenuNode overrides={overrides.MenuNode} {...other}>
     <List
       hoverIdx={hoverIdx}
       isSelectable={isSelectable}
+      onClick={onClick}
       onEndReached={onEndReached}
       onHoverChange={onHoverChange}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onStartReached={onStartReached}
-      overrides={overrides}
+      getRef={getListRef}
+      overrides={overrides.List}
       restartOnEnd={restartOnEnd}
       rootNode={rootNode}
       scrollOffset={scrollOffset}
@@ -43,6 +47,10 @@ const MenuList = ({
     </List>
   </MenuNode>
 );
+
+MenuList.defaultProps = {
+  overrides: {},
+};
 
 const enhance = compose(
   withHandlers({

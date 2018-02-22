@@ -1,5 +1,5 @@
 /* eslint-disable no-eval*/
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { transform } from 'babel-standalone';
@@ -8,41 +8,37 @@ import style from './style.css';
 
 const ERROR_TIMEOUT = 500;
 
-const Preview = React.createClass({
-  propTypes: {
+class Preview extends Component {
+  static propTypes = {
     className: PropTypes.string,
     code: PropTypes.string.isRequired,
     scope: PropTypes.object
-  },
+  }
 
-  getDefaultProps () {
-    return {
-      className: '',
-      scope: { React, ...ReactToolbox }
-    };
-  },
+  static defaultProps = {
+    className: '',
+    scope: { React, ...ReactToolbox }
+  }
 
-  getInitialState () {
-    return {
-      error: null
-    };
-  },
+  state = {
+    error: null
+  }
 
   componentDidMount () {
     this.executeCode();
-  },
+  }
 
   componentDidUpdate (prevProps) {
     clearTimeout(this.timeoutID);
     if (this.props.code !== prevProps.code) {
       this.executeCode();
     }
-  },
+  }
 
   setTimeout () {
     clearTimeout(this.timeoutID);
     this.timeoutID = setTimeout(...arguments);
-  },
+  }
 
   compileCode () {
     const code = `
@@ -53,11 +49,11 @@ const Preview = React.createClass({
     return transform(code, {
       presets: ['es2015', 'stage-0', 'react']
     }).code;
-  },
+  }
 
   buildScope (mountNode) {
     return Object.keys(this.props.scope).map(key => this.props.scope[key]).concat(mountNode);
-  },
+  }
 
   executeCode () {
     const mountNode = this.refs.mount;
@@ -79,7 +75,7 @@ const Preview = React.createClass({
         this.setState({ error: err.toString() });
       }, ERROR_TIMEOUT);
     }
-  },
+  }
 
   render () {
     let className = style.preview;
@@ -92,6 +88,6 @@ const Preview = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default Preview;

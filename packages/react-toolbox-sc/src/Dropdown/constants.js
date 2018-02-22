@@ -1,0 +1,3 @@
+export const TEMPLATE_ITEM_HEIGHT = 36;
+export const FILLED_LABEL_HEIGHT = 16;
+export const DEFAULT_TEMPLATE_OFFSET_X = 16;

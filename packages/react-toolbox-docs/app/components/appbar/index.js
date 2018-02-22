@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AppBar } from 'react-toolbox';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
+import { AppBar } from 'react-toolbox/lib/app_bar';
 import Logo from '../logo';
 import Navigation from '../navigation';
 import style from './style.css';

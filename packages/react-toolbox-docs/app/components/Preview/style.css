@@ -1,4 +1,4 @@
-@import 'variables';
+@import 'react-toolbox/lib/variables';
 
 :root {
   --preview-error-background: #f2777a;

@@ -1,5 +1,5 @@
-@import 'colors.css';
-@import 'variables.css';
+@import 'react-toolbox/lib/colors.css';
+@import 'react-toolbox/lib/variables.css';
 
 :root {
   --documentation-h1-size: calc(3.4 * var(--unit));

@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { List, ListItem } from 'react-toolbox';
 import classnames from 'classnames';
+import { withRouter } from 'react-router-dom';
+import { List, ListItem } from 'react-toolbox/lib/list';
 import components from '../modules/components';
 import style from './navigation.css';
 
-const MainNavigation = ({ className }, { router }) => {
+const MainNavigation = ({ className, component, history }) => {
   const drawerItems = Object.keys(components).map((key) => {
-    const isActive = router.isActive(components[key].path);
     return (
       <ListItem
         key={key}
         caption={components[key].name}
-        className={classnames(style.item, { [style.active]: isActive })}
+        className={classnames(style.item, { [style.active]: key === component })}
         selectable
-        onClick={() => { router.push(components[key].path); }}
+        onClick={() => { history.push(components[key].path); }}
       />
     );
   });
@@ -35,8 +35,4 @@ MainNavigation.propTypes = {
   className: PropTypes.string
 };
 
-MainNavigation.contextTypes = {
-  router: PropTypes.object
-};
-
-export default MainNavigation;
+export default withRouter(MainNavigation);

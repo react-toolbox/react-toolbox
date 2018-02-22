@@ -1,8 +1,8 @@
-@import 'colors.css';
-@import 'variables.css';
-@import 'app_bar/config.css';
-@import 'button/config.css';
-@import 'button/theme.css';
+@import 'react-toolbox/lib/colors.css';
+@import 'react-toolbox/lib/variables.css';
+@import 'react-toolbox/lib/app_bar/config.css';
+@import 'react-toolbox/lib/button/config.css';
+@import 'react-toolbox/lib/button/theme.css';
 @import './config.css';
 
 hr {

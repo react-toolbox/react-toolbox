@@ -39,4 +39,9 @@ gulp.task('tsd', function () {
     .pipe(gulp.dest('./lib'));
 });
 
-gulp.task('default', ['js', 'css', 'tsd']);
+gulp.task('md', function () {
+  gulp.src('./src/components/**/*.md')
+    .pipe(gulp.dest('./lib'));
+});
+
+gulp.task('default', ['js', 'css', 'tsd', 'md']);

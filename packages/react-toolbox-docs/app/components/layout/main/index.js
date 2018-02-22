@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import { Button } from 'react-toolbox';
+import { Button } from 'react-toolbox/lib/button';
 import Appbar from '../../../components/appbar';
 import Markdown from '../../../components/markdown';
 import Playground from './components/playground.js';
@@ -90,7 +90,7 @@ class Main extends React.Component {
           icon={this.state.playground ? 'close' : 'code'}
           onClick={this.handlePlayGroundClick}
         />
-        <MainNavigation className={style.navigation} />
+        <MainNavigation className={style.navigation} component={this.props.params.component} />
         <Markdown className={style.documentation} markdown={docs} />
         <Playground ref="playground" className={style.playground} />
       </div>

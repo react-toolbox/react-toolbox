@@ -1,0 +1,27 @@
+@import 'normalize.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  text-size-adjust: 100%;
+  -webkit-touch-callout: none;
+}
+
+body,
+button {
+  color: #333438;
+  font-family: Roboto, sans-serif;
+  letter-spacing: 0;
+}
+
+button {
+  border: 0;
+  outline: 0;
+}
+
+a {
+  text-decoration: none;
+}

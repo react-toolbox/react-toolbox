@@ -1,4 +1,4 @@
-@import 'variables.css';
+@import 'react-toolbox/lib/variables.css';
 
 :root {
   --editor-height: 28 * var(--unit);

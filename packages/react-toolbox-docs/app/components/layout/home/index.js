@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router';
-import Button from 'react-toolbox/button';
-import { Card, CardTitle, CardMedia, CardText, CardActions } from 'react-toolbox/card';
+import { Link } from 'react-router-dom';
+import { Button } from 'react-toolbox/lib/button';
+import { Card, CardTitle, CardMedia, CardText, CardActions } from 'react-toolbox/lib/card';
 import Logo from '../../logo';
 import Navigation from '../../navigation';
 import style from './style.css';
@@ -17,7 +17,6 @@ const TwitterIcon = () => (
     <g><path d="M273.39,26.301 C263.331,30.762 252.521,33.777 241.175,35.133 C252.756,28.191 261.649,17.199 265.837,4.102 C255,10.529 242.996,15.197 230.22,17.713 C219.988,6.812 205.411,0 189.279,0 C158.302,0 133.188,25.113 133.188,56.088 C133.188,60.484 133.685,64.765 134.641,68.87 C88.025,66.531 46.696,44.201 19.032,10.267 C14.204,18.551 11.438,28.186 11.438,38.465 C11.438,57.924 21.341,75.092 36.391,85.15 C27.196,84.859 18.548,82.336 10.985,78.135 C10.981,78.369 10.981,78.604 10.981,78.84 C10.981,106.016 30.315,128.686 55.974,133.838 C51.267,135.12 46.312,135.805 41.196,135.805 C37.582,135.805 34.068,135.454 30.644,134.799 C37.781,157.083 58.495,173.299 83.039,173.752 C63.843,188.795 39.658,197.762 13.38,197.762 C8.853,197.762 4.388,197.497 0,196.979 C24.822,212.893 54.305,222.178 85.98,222.178 C189.148,222.178 245.564,136.711 245.564,62.592 C245.564,60.16 245.51,57.741 245.402,55.336 C256.36,47.428 265.87,37.549 273.39,26.301" /></g>
   </svg>
 );
-
 
 const Home = () => (
   <article>
@@ -51,7 +50,9 @@ const Home = () => (
       </p>
 
       <Link to="/components">
-        <Button label="Try it now!" raised accent />
+        <Button raised accent>
+          Try it now!
+        </Button>
       </Link>
     </section>
 

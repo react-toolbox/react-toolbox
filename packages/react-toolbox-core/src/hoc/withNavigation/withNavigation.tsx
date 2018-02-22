@@ -20,14 +20,15 @@ export interface WithNavigationArgs {
 export interface WithNavigationProps {
   children: ReactChildren;
   hoverIdx?: number;
-  isSelectable?(child: ReactChild): boolean;
-  onEndReached?(): void;
+  isSelectable(child: ReactChild): boolean;
+  getRef(node: HTMLElement): void;
+  onEndReached(): void;
   onHoverChange(
     idx: number | undefined,
     node: Component<any, any> | undefined,
   ): void;
   onMouseLeave(event: MouseEvent<any>): void;
-  onStartReached?(): void;
+  onStartReached(): void;
   restartOnEnd: boolean;
   rootNode?: HTMLElement;
   scrollOffset?: number;
@@ -74,6 +75,9 @@ export default function withNavigation({
 
       handleRootRef = node => {
         this.rootNode = node;
+        if (this.props.getRef) {
+          this.props.getRef(node);
+        }
       };
 
       handleChildRef = memoize(idx => node => {

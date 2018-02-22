@@ -1,5 +1,5 @@
-@import 'colors.css';
-@import 'variables.css';
+@import 'react-toolbox/lib/colors.css';
+@import 'react-toolbox/lib/variables.css';
 @import '../config.css';
 
 .root {
@@ -31,7 +31,7 @@
 }
 
 .active {
-  background: $color-divider;
+  background: var(--color-divider);
 }
 
 .footer {

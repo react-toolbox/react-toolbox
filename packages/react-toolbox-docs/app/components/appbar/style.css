@@ -1,5 +1,5 @@
-@import 'colors.css';
-@import 'variables.css';
+@import 'react-toolbox/lib/colors.css';
+@import 'react-toolbox/lib/variables.css';
 
 :root {
   --appbar-height: calc(6.4 * var(--unit));
@@ -22,7 +22,6 @@
   display: block;
   fill: var(--color-primary-contrast);
   height: var(--appbar-logo-size);
-  margin-top: calc((var(--appbar-height) - var(--appbar-logo-size)) / 2);
   width: var(--appbar-logo-size);
 }
 
@@ -39,7 +38,7 @@
       & > a {
         color: var(--color-primary-contrast);
         display: inline-block;
-        font-size: 1.4rem;
+        font-size: calc(1.4 * var(--unit));
         font-weight: 500;
         letter-spacing: 0;
         line-height: var(--appbar-height);

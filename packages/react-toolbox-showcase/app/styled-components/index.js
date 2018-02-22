@@ -4,6 +4,7 @@ import { injectGlobal } from 'styled-components';
 import AvatarExamples from './AvatarExamples';
 import ButtonExamples from './ButtonExamples';
 import DialogExamples from './DialogExamples';
+import DropdownExamples from './DropdownExamples';
 import ListExamples from './ListExamples';
 import MenuExamples from './MenuExamples';
 
@@ -28,6 +29,7 @@ const StyledComponents = () => (
     <AvatarExamples />
     <ButtonExamples />
     <DialogExamples />
+    <DropdownExamples />
     <ListExamples />
     <MenuExamples />
   </div>

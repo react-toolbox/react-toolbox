@@ -1,18 +1,26 @@
-import 'react-toolbox/commons.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, useRouterHistory } from 'react-router';
-import createHashHistory from 'history/lib/createHashHistory';
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Home from './components/layout/home';
 import Install from './components/layout/install';
 import Main from './components/layout/main';
+import './index.css';
 
 ReactDOM.render((
-  <Router history={useRouterHistory(createHashHistory)({ queryKey: false })}>
-    <Route path="/" component={Home} />
-    <Route path="/install" component={Install} />
-    <Route path="/components" component={Main}>
-      <Route path=":component" />
-    </Route>
-  </Router>
+  <HashRouter>
+    <Switch>
+      <Route exact path="/" render={() => <Home />} />
+      <Route exact path="/install" render={() => <Install />} />
+      <Route
+        exact
+        path="/components"
+        render={({ match }) => <Main params={match.params} />}
+      />
+      <Route
+        path="/components/:component"
+        render={({ match }) => <Main params={match.params} />}
+      />
+      <Route component={() => <Redirect to="/" />} />
+    </Switch>
+  </HashRouter>
 ), document.getElementById('app'));
