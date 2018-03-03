@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import { isValuePresent } from '../utils/utils';
 import { AUTOCOMPLETE } from '../identifiers.js';
 import InjectChip from '../chip/Chip.js';
 import InjectInput from '../input/Input.js';
@@ -184,7 +185,7 @@ const factory = (Chip, Input) => {
 
     query(key) {
       let query_value = '';
-      if (!this.props.multiple && key) {
+      if (!this.props.multiple && isValuePresent(key)) {
         const source_value = this.source().get(`${key}`);
         query_value = source_value || key;
       }

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import { isValuePresent } from '../utils/utils';
 import { INPUT } from '../identifiers';
 import InjectedFontIcon from '../font_icon/FontIcon';
 
@@ -159,13 +160,6 @@ const factory = (FontIcon) => {
       this.inputNode.focus();
     }
 
-    valuePresent = value => (
-      value !== null
-        && value !== undefined
-        && value !== ''
-        && !(typeof value === 'number' && isNaN(value))
-    )
-
     render() {
       const { children, defaultValue, disabled, error, floating, hint, icon,
               name, label: labelText, maxLength, multiline, required, role,
@@ -180,7 +174,7 @@ const factory = (FontIcon) => {
         [theme.withIcon]: icon,
       }, this.props.className);
 
-      const valuePresent = this.valuePresent(value) || this.valuePresent(defaultValue);
+      const valuePresent = isValuePresent(value) || isValuePresent(defaultValue);
 
       const inputElementProps = {
         ...others,

@@ -74,3 +74,10 @@ export const getAnimationModule = (animation, theme) => compose(
   transformKeys(removeNamespace(animation)),
   pickBy((v, k) => k.startsWith(animation)),
 )(theme);
+
+export const isValuePresent = value => (
+  value !== null
+    && value !== undefined
+    && value !== ''
+    && !(typeof value === 'number' && isNaN(value))
+);

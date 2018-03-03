@@ -13,6 +13,21 @@ class AutocompleteTest extends React.Component {
       'EN-en': 'United States of America',
       'EN-nz': 'New Zealand',
     },
+    simpleMonth: 0,
+    monthsObject: {
+      0: 'January',
+      1: 'February',
+      2: 'March',
+      3: 'April',
+      4: 'May',
+      5: 'June',
+      6: 'July',
+      7: 'August',
+      8: 'September',
+      9: 'October',
+      10: 'November',
+      11: 'December',
+    }
   };
 
   handleFocus = (event) => {
@@ -42,6 +57,10 @@ class AutocompleteTest extends React.Component {
 
   handleSimpleShowAllChange = (value) => {
     this.setState({ simpleShowAll: value });
+  };
+
+  handleSimpleMonthChange = (value) => {
+    this.setState({ simpleMonth: parseInt(value, 10) });
   };
 
   render() {
@@ -88,6 +107,16 @@ class AutocompleteTest extends React.Component {
           showSuggestionsWhenValueIsSet
           source={this.state.countriesArray}
           value={this.state.simpleShowAll}
+        />
+
+        <Autocomplete
+          hint="Months (Falsy object key example)"
+          label="Months (Falsy object key example)"
+          multiple={false}
+          onChange={this.handleSimpleMonthChange}
+          showSuggestionsWhenValueIsSet
+          source={this.state.monthsObject}
+          value={this.state.simpleMonth}
         />
       </section>
     );
