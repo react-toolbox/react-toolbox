@@ -61,6 +61,7 @@ As the most usual scenario will be to open the menu from a click in an Icon, we 
 
 | Name            | Type                  | Default         | Description|
 |:-----|:-----|:-----|:-----|
+| `active`        | `Boolean`             | `false`         | If true, the inner `Menu` component will be active. |
 | `className`     | `String`              |  `''`           | Set a class to give custom styles to the icon wrapper.|
 | `icon`          | `String` or `Element` | `more_vert`     | Icon font key string or Element to display the opener icon. |
 | `iconRipple`    | `Boolean`             | `true`          | If true, the icon will show a ripple when is clicked. |
