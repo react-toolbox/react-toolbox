@@ -3,8 +3,8 @@ import DatePicker from '../../components/date_picker';
 import TimePicker from '../../components/time_picker';
 
 const datetime = new Date(2015, 10, 16);
-const min_datetime = new Date(new Date(datetime).setDate(8));
-const max_datetime = new Date(new Date(datetime).setDate(24));
+const min_datetime = new Date(new Date(datetime.toString()).setDate(8));
+const max_datetime = new Date(new Date(datetime.toString()).setDate(24));
 datetime.setHours(17);
 datetime.setMinutes(28);
 const today = new Date();
