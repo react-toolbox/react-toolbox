@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import Button from '../../components/button';
 import Dialog from '../../components/dialog';
 import Dropdown from '../../components/dropdown';
@@ -64,11 +65,11 @@ class DialogTest extends React.Component<any, any> {
 
 class ContextComponent extends React.Component<any, any> {
   static propTypes = {
-    children: React.PropTypes.any,
+    children: PropTypes.any,
   };
 
   static childContextTypes = {
-    message: React.PropTypes.string,
+    message: PropTypes.string,
   }
 
   getChildContext() {
@@ -84,7 +85,7 @@ class ContextComponent extends React.Component<any, any> {
 
 class DialogChild extends React.Component<any, any> {
   static contextTypes = {
-    message: React.PropTypes.string,
+    message: PropTypes.string,
   }
 
   render() {
