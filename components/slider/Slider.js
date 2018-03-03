@@ -11,10 +11,10 @@ import InjectProgressBar from '../progress_bar/ProgressBar';
 import InjectInput from '../input/Input';
 
 const KEYS = {
-  ENTER: 13,
-  ESC: 27,
-  ARROW_UP: 38,
-  ARROW_DOWN: 40,
+  ENTER: 'Enter',
+  ESC: 'Escape',
+  ARROW_UP: 'ArrowUp',
+  ARROW_DOWN: 'ArrowDown',
 };
 
 const factory = (ProgressBar, Input) => {
