@@ -38,12 +38,15 @@
 
 .label {
   padding: $tab-label-v-padding $tab-label-h-padding;
+  font-family: inherit;
   font-size: $tab-text-height;
   font-weight: $font-weight-semi-bold;
   line-height: 1;
   color: $tab-text-inactive-color;
   text-align: center;
   text-transform: uppercase;
+  background: none;
+  border: 0;
   transition-timing-function: $animation-curve-default;
   transition-duration: $animation-duration;
   transition-property: box-shadow, color;
