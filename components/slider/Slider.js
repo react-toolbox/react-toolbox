@@ -10,6 +10,13 @@ import events from '../utils/events';
 import InjectProgressBar from '../progress_bar/ProgressBar';
 import InjectInput from '../input/Input';
 
+const KEYS = {
+  ENTER: 'Enter',
+  ESC: 'Escape',
+  ARROW_UP: 'ArrowUp',
+  ARROW_DOWN: 'ArrowDown',
+};
+
 const factory = (ProgressBar, Input) => {
   class Slider extends Component {
     static propTypes = {
@@ -97,12 +104,6 @@ const factory = (ProgressBar, Input) => {
       events.removeEventsFromDocument(this.getKeyboardEvents());
     }
 
-    getInput() {
-      return this.inputNode && this.inputNode.getWrappedInstance
-        ? this.inputNode.getWrappedInstance()
-        : this.inputNode;
-    }
-
     getKeyboardEvents() {
       return {
         keydown: this.handleKeyDown,
@@ -148,13 +149,17 @@ const factory = (ProgressBar, Input) => {
     };
 
     handleKeyDown = (event) => {
-      if ([13, 27].indexOf(event.keyCode) !== -1) this.getInput().blur();
-      if (event.keyCode === 38) this.addToValue(this.props.step);
-      if (event.keyCode === 40) this.addToValue(-this.props.step);
+      const { disabled, step } = this.props;
+      const { ARROW_DOWN, ARROW_UP, ENTER, ESC } = KEYS;
+
+      if (disabled) return;
+      if ([ENTER, ESC].includes(event.code)) this.inputNode.blur();
+      if (event.code === ARROW_UP) this.addToValue(step);
+      if (event.code === ARROW_DOWN) this.addToValue(-step);
     };
 
     handleMouseDown = (event) => {
-      if (this.state.inputFocused) this.getInput().blur();
+      if (this.state.inputFocused) this.inputNode.blur();
       events.addEventsToDocument(this.getMouseEventMap());
       this.start(events.getMousePosition(event));
       events.pauseEvent(event);
@@ -192,7 +197,7 @@ const factory = (ProgressBar, Input) => {
     };
 
     handleTouchStart = (event) => {
-      if (this.state.inputFocused) this.getInput().blur();
+      if (this.state.inputFocused) this.inputNode.blur();
       this.start(events.getTouchPosition(event));
       events.addEventsToDocument(this.getTouchEventMap());
       events.pauseEvent(event);
@@ -257,7 +262,7 @@ const factory = (ProgressBar, Input) => {
       if (!this.props.editable) return undefined;
       return (
         <Input
-          ref={(node) => { this.inputNode = node; }}
+          innerRef={(node) => { this.inputNode = node; }}
           className={this.props.theme.input}
           disabled={this.props.disabled}
           onFocus={this.handleInputFocus}
