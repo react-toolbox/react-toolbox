@@ -61,7 +61,7 @@ const factory = (ripple, FontIcon) => {
         [theme.withText]: label,
         [theme.withIcon]: icon,
         [theme.disabled]: disabled,
-        [activeClassName]: active,
+        [activeClassName]: active && activeClassName,
       }, className);
 
       return (
