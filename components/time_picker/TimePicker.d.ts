@@ -162,6 +162,10 @@ export interface TimePickerProps {
    */
   readonly?: boolean;
   /**
+   * Option to round to the given minute when picking a time
+   */
+  step?: number;
+  /**
    * Classnames object defining the component style.
    */
   theme?: TimePickerTheme;

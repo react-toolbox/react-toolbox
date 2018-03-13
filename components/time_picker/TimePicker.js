@@ -28,6 +28,7 @@ const factory = (TimePickerDialog, Input) => {
       onKeyPress: PropTypes.func,
       onOverlayClick: PropTypes.func,
       readonly: PropTypes.bool,
+      step: PropTypes.number,
       theme: PropTypes.shape({
         container: PropTypes.string,
         input: PropTypes.string,
@@ -91,7 +92,7 @@ const factory = (TimePickerDialog, Input) => {
       const {
         active, onDismiss, // eslint-disable-line
         cancelLabel, format, inputClassName, okLabel, onEscKeyDown, onOverlayClick,
-        readonly, value, ...others
+        readonly, value, step, ...others
       } = this.props;
       const formattedTime = value ? time.formatTime(value, format) : '';
       return (
@@ -122,6 +123,7 @@ const factory = (TimePickerDialog, Input) => {
             onSelect={this.handleSelect}
             theme={this.props.theme}
             value={this.props.value}
+            step={this.props.step}
           />
         </div>
       );
