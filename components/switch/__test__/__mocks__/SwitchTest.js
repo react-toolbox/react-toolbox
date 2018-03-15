@@ -5,34 +5,45 @@ export class SwitchTest extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      switch_1: true,
-      switch_2: false,
-      switch_3: true,
+      switchOne: true,
+      switchTwo: false,
+      switchThree: true,
     };
   }
 
-  handleChange = (field, value) => {
-    this.setState({ [field]: value });
+  handleChangeOne = () => {
+    this.setState({ switchOne: !this.state.switchOne });
+  };
+
+  handleChangeTwo = () => {
+    this.setState({ switchTwo: !this.state.switchTwo });
+  };
+
+  handleChangeThree = () => {
+    this.setState({ switchThree: !this.state.switchThree });
   };
 
   render() {
     return (
       <section>
         <Switch
-          checked={this.state.switch_1}
+          checked={this.state.switchOne}
           label="Push notifications"
-          onChange={this.handleChange('switch_1')}
+          name="switchOne"
+          onChange={this.handleChangeOne}
         />
         <Switch
-          checked={this.state.switch_2}
+          checked={this.state.switchTwo}
           label="Mail notifications"
-          onChange={this.handleChange('switch_2')}
+          name="switchTwo"
+          onChange={this.handleChangeTwo}
         />
         <Switch
-          checked={this.state.switch_3}
+          checked={this.state.switchThree}
           disabled
           label="Nothing, thanks"
-          onChange={this.handleChange('switch_3')}
+          name="switchThree"
+          onChange={this.handleChangeThree}
         />
       </section>
     );
