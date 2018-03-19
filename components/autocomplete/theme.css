@@ -19,6 +19,20 @@
   }
 }
 
+.clear {
+  cursor: pointer;
+  z-index: 10;
+  position: absolute;
+  display: block;
+  top: 12px;
+  left: -4px;
+  padding: 4px;
+}
+
+.withclear input {
+  text-indent: 28px !important;
+}
+
 .values {
   flex-direction: row;
   flex-wrap: wrap;

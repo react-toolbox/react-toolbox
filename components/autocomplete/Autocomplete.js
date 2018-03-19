@@ -19,6 +19,8 @@ const POSITION = {
 const factory = (Chip, Input) => {
   class Autocomplete extends Component {
     static propTypes = {
+      allowClear: PropTypes.bool,
+      clearTooltip: PropTypes.string,
       allowCreate: PropTypes.bool,
       className: PropTypes.string,
       direction: PropTypes.oneOf(['auto', 'up', 'down']),
@@ -60,6 +62,8 @@ const factory = (Chip, Input) => {
     };
 
     static defaultProps = {
+      allowClear: false,
+      clearTooltip: 'Clear',
       allowCreate: false,
       className: '',
       direction: 'auto',
@@ -390,22 +394,26 @@ const factory = (Chip, Input) => {
 
     render() {
       const {
-      allowCreate, error, label, source, suggestionMatch, query, // eslint-disable-line no-unused-vars
-      selectedPosition, keepFocusOnChange, showSuggestionsWhenValueIsSet, showSelectedWhenNotInSource, onQueryChange,   // eslint-disable-line no-unused-vars
-      theme, ...other
-    } = this.props;
+        allowClear, allowCreate, clearTooltip, error, label, source, suggestionMatch, query, // eslint-disable-line no-unused-vars
+        selectedPosition, keepFocusOnChange, showSuggestionsWhenValueIsSet, showSelectedWhenNotInSource, onQueryChange,   // eslint-disable-line no-unused-vars
+        theme, ...other
+      } = this.props;
       const className = classnames(theme.autocomplete, {
         [theme.focus]: this.state.focus,
       }, this.props.className);
 
       return (
         <div data-react-toolbox="autocomplete" className={className}>
-          {this.props.selectedPosition === 'above' ? this.renderSelected() : null}
+          {selectedPosition === 'above' ? this.renderSelected() : null}
+          {allowClear && this.state.query != '' ? <span
+            className={'material-icons '+theme.clear}
+            title={clearTooltip}
+            onClick={(e) => this.handleChange([], e)}>clear</span> : null}
           <Input
             {...other}
             ref={(node) => { this.inputNode = node; }}
             autoComplete="off"
-            className={theme.input}
+            className={theme.input+(allowClear && this.state.query != '' ? ' '+theme.withclear : '')}
             error={error}
             label={label}
             onBlur={this.handleQueryBlur}

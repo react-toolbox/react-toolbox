@@ -12,6 +12,8 @@ const factory = (Input) => {
   class Dropdown extends Component {
     static propTypes = {
       allowBlank: PropTypes.bool,
+      allowClear: PropTypes.bool,
+      clearTooltip: PropTypes.string,
       auto: PropTypes.bool,
       className: PropTypes.string,
       disabled: PropTypes.bool,
@@ -55,6 +57,8 @@ const factory = (Input) => {
       auto: true,
       className: '',
       allowBlank: true,
+      allowClear: false,
+      clearTooltip: 'Clear',
       disabled: false,
       labelKey: 'label',
       required: false,
@@ -99,7 +103,6 @@ const factory = (Input) => {
     };
 
     handleSelect = (item, event) => {
-      if (this.props.onBlur) this.props.onBlur(event);
       if (!this.props.disabled && this.props.onChange) {
         if (this.props.name) event.target.name = this.props.name;
         this.props.onChange(item, event);
@@ -122,6 +125,7 @@ const factory = (Input) => {
     close = () => {
       if (this.state.active) {
         this.setState({ active: false });
+        if (this.props.onBlur) this.props.onBlur(event);
       }
     }
 
@@ -131,18 +135,17 @@ const factory = (Input) => {
       const screenHeight = window.innerHeight || document.documentElement.offsetHeight;
       const up = this.props.auto ? client.top > ((screenHeight / 2) + client.height) : false;
       this.setState({ active: true, up });
+      if (this.props.onFocus) this.props.onFocus(event);
     };
 
     handleFocus = (event) => {
       event.stopPropagation();
       if (!this.props.disabled) this.open(event);
-      if (this.props.onFocus) this.props.onFocus(event);
     };
 
     handleBlur = (event) => {
       event.stopPropagation();
       if (this.state.active) this.close();
-      if (this.props.onBlur) this.props.onBlur(event);
     }
 
     renderTemplateValue(selected) {
@@ -189,7 +192,7 @@ const factory = (Input) => {
 
     render() {
       const {
-        allowBlank, auto, labelKey, required, onChange, onFocus, onBlur, // eslint-disable-line no-unused-vars
+        allowBlank, allowClear, clearTooltip, auto, labelKey, required, onChange, onFocus, onBlur, // eslint-disable-line no-unused-vars
         source, template, theme, valueKey, ...others
       } = this.props;
       const selected = this.getSelectedItem();
@@ -198,21 +201,27 @@ const factory = (Input) => {
         [theme.active]: this.state.active,
         [theme.disabled]: this.props.disabled,
         [theme.required]: this.props.required,
+        [theme.withclear]: allowClear && selected,
       }, this.props.className);
 
       return (
         <div
           className={className}
+          style={{outline: 'none'}}
           data-react-toolbox="dropdown"
-          onBlur={this.handleBlur}
-          onFocus={this.handleFocus}
           tabIndex="-1"
         >
+          {allowClear && selected ? <span
+            className={'material-icons '+theme.clear}
+            title={clearTooltip}
+            onClick={(e) => this.props.onChange(null, e)}>clear</span> : null}
           <Input
             {...others}
             tabIndex="0"
             className={theme.value}
             onClick={this.handleClick}
+            onBlur={this.handleBlur}
+            onFocus={this.handleFocus}
             required={this.props.required}
             readOnly
             type={template && selected ? 'hidden' : null}
@@ -221,7 +230,7 @@ const factory = (Input) => {
             value={selected && selected[labelKey] ? selected[labelKey] : ''}
           />
           {template && selected ? this.renderTemplateValue(selected) : null}
-          <ul className={theme.values}>
+          <ul className={theme.values} style={this.state.up ? {bottom: '100%'} : {top: '100%'}}>
             {source.map(this.renderValue)}
           </ul>
         </div>
