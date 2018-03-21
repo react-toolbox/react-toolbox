@@ -61,7 +61,7 @@ const factory = (Dialog) => {
     }
 
     handleClockChange = (value) => {
-      this.setState({ displayTime: value });
+      setTimeout(function() { this.setState({ displayTime: value }) }, 200);
     };
 
     handleSelect = (event) => {
