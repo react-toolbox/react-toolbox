@@ -68,7 +68,7 @@ There is no fixed date, sorry. Being an open source project, it depends on contr
 
 ### Is there any migration guide to 2.0?
 
-Not really. At the end we are just providing components and there are no big changes on them apart from huge refactors of some specific components that will be coming. If should be enough by checking changelogs and new documentation. In any case if you feel like a migration guide is needed, feel free to leave for feedback.
+There is a [migration guide](https://github.com/react-toolbox/react-toolbox/wiki/Migrating-from-version-1.3-to-2.0) in the wiki.
 
 ### When will be released the new playground?
 
