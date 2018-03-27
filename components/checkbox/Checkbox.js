@@ -63,24 +63,27 @@ const factory = (Check) => {
       const className = classnames(theme.field, {
         [theme.disabled]: this.props.disabled,
       }, this.props.className);
-      const id = `field_${uuidv4()}`;
+      const inputId = `input_${uuidv4()}`;
+      const labelId = `label_${uuidv4()}`;
 
       return (
         <label
           data-react-toolbox="checkbox"
           className={className}
-          htmlFor={id}
+          htmlFor={inputId}
+          id={labelId}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
         >
           <input
             {...others}
+            aria-labelledby={labelId}
             checked={checked}
             className={theme.input}
             disabled={disabled}
-            id={id}
+            id={inputId}
             name={name}
-            onChange={() => {}}
+            onChange={() => { }}
             onClick={this.handleToggle}
             ref={(node) => { this.inputNode = node; }}
             type="checkbox"
