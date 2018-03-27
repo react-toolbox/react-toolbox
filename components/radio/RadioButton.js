@@ -72,24 +72,27 @@ const factory = (Radio) => {
         ...others
       } = this.props;
       const _className = classnames(theme[this.props.disabled ? 'disabled' : 'field'], className);
-      const id = `field_${uuidv4()}`;
+      const inputId = `input_${uuidv4()}`;
+      const labelId = `label_${uuidv4()}`;
 
       return (
         <label
           data-react-toolbox="radio-button"
           className={_className}
-          htmlFor={id}
+          htmlFor={inputId}
+          id={labelId}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
         >
           <input
             {...others}
+            aria-labelledby={labelId}
             checked={checked}
             className={theme.input}
             disabled={disabled}
-            id={id}
+            id={inputId}
             name={name}
-            onChange={() => {}}
+            onChange={() => { }}
             onClick={this.handleClick}
             ref={(node) => { this.inputNode = node; }}
             type="radio"
