@@ -27,6 +27,10 @@ export interface DialogTheme {
    * Used for the title element of the dialog.
    */
   title?: string;
+  /**
+   * Used for the element that wraps the dialog.
+   */
+  wrapper?: string;
 }
 
 export interface DialogActionProps extends ButtonProps {
