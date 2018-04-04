@@ -40,6 +40,7 @@ const factory = (FontIcon) => {
       required: PropTypes.bool,
       role: PropTypes.string,
       rows: PropTypes.number,
+      tabindex: PropTypes.number,
       theme: PropTypes.shape({
         bar: PropTypes.string,
         counter: PropTypes.string,
@@ -186,6 +187,7 @@ const factory = (FontIcon) => {
         defaultValue,
         disabled,
         required,
+        tabindex,
         type,
         value,
       };
