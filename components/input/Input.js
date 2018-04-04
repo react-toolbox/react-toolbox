@@ -187,6 +187,7 @@ const factory = (FontIcon) => {
         defaultValue,
         disabled,
         required,
+        tabindex,
         type,
         value,
       };
