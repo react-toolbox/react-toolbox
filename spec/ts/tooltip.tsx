@@ -43,6 +43,26 @@ const TooltipTest = () => (
       {' '}. This is useful for mobile!
     </p>
     <TooltipFontIcon value="code" tooltip="This is a test with FontIcon" />
+    <br />
+    Using carets in tooltip:
+    <br />
+    <ChipTooltip tooltip="I am on top" tooltipPosition="top" showCaret>
+      <Avatar icon="home" />
+      <span>Tooltip in a chip on top</span>
+    </ChipTooltip>
+    <ChipTooltip tooltip="I am on bottom" tooltipPosition="bottom" showCaret>
+      <Avatar icon="home" />
+      <span>Tooltip in a chip on bottom</span>
+    </ChipTooltip>
+    <ChipTooltip tooltip="I am on right" tooltipPosition="right" showCaret>
+      <Avatar icon="home" />
+      <span>Tooltip in a chip on right</span>
+    </ChipTooltip>
+    <ChipTooltip tooltip="I am on left" tooltipPosition="left" showCaret>
+      <Avatar icon="home" />
+      <span>Tooltip in a chip on left</span>
+    </ChipTooltip>
+    <TooltipButton icon="add" floating accent tooltip="Floating Tooltip" showCaret/>
   </section>
 );
 
