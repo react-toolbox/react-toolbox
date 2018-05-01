@@ -64,6 +64,11 @@ export interface TooltipProps {
    * Additional attributes passed to composed component.
    */
   [key: string]: any;
+  /**
+   * Determines whether to show caret based upon tooltip position.
+   * @default false
+   */
+  showCaret: boolean;
 }
 
 declare class TooltipComponent<P, S> extends React.Component<P, S> {
@@ -81,6 +86,7 @@ declare interface TooltipOptions {
   passthrough?: boolean;
   showOnClick?: boolean;
   position?: 'bottom' | 'horizontal' | 'left' | 'right' | 'top' | 'vertical'
+  showCaret: boolean;
 }
 
 declare type tooltipHOC<P> = (componentClass: React.ComponentClass<P>) => TooltippedComponentClass<P>
