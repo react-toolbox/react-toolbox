@@ -7,4 +7,46 @@
   --tooltip-max-width: calc(17 * var(--unit));
   --tooltip-padding: calc(0.8 * var(--unit));
   --tooltip-animation-duration: 200ms;
+  --tooltip-arrow-width: 8px;
+  --tooltip-arrow-style: solid;
+  --tooltip-arrow-transparent: var(--tooltip-arrow-width) var(--tooltip-arrow-style) transparent;
+  --tooltip-arrow-color: var(--tooltip-arrow-width) var(--tooltip-arrow-style) var(--tooltip-background);
+  --tooltip-arrow-right: {
+    border-bottom: var(--tooltip-arrow-transparent);
+    border-left: var(--tooltip-arrow-color);
+    border-top: var(--tooltip-arrow-transparent);
+    left: 100%;
+    padding-left: 0;
+    position: absolute;
+    top: calc(100% - 20px);
+  }
+
+  --reset-padding: 0;
+  --tooltip-arrow-left: {
+    border-bottom: var(--tooltip-arrow-transparent);
+    border-right: var(--tooltip-arrow-color);
+    border-top: var(--tooltip-arrow-transparent);
+    padding-right: 0;
+    position: absolute;
+    right: 100%;
+    top: calc(100% - 20px);
+  };
+  --tooltip-arrow-down: {
+    border-left: var(--tooltip-arrow-transparent);
+    border-right: var(--tooltip-arrow-transparent);
+    border-top: var(--tooltip-arrow-color);
+    left: calc(100% - 50px);
+    padding-bottom: 0;
+    position: absolute;
+    top: 100%;
+  };
+  --tooltip-arrow-up: {
+    border-bottom: var(--tooltip-arrow-color);
+    border-left: var(--tooltip-arrow-transparent);
+    border-right: var(--tooltip-arrow-transparent);
+    bottom: 100%;
+    left: calc(100% - 50px);
+    padding-top: 0;
+    position: absolute;
+  };
 }

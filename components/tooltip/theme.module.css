@@ -57,3 +57,23 @@
   display: block;
   padding: var(--tooltip-padding);
 }
+
+.resetPadding {
+  padding: var(--reset-padding);
+}
+
+.arrowLeft {
+  @apply --tooltip-arrow-left;
+}
+
+.arrowRight {
+  @apply --tooltip-arrow-right;
+}
+
+.arrowDown {
+  @apply --tooltip-arrow-down;
+}
+
+.arrowUp {
+  @apply --tooltip-arrow-up;
+}
