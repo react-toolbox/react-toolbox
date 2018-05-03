@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { themr } from 'react-css-themr';
 import { LIST } from '../identifiers.js';
 
@@ -7,7 +8,7 @@ const ListItemAction = ({action, theme}) => {
   const stopRipple = onClick && !onMouseDown;
   const stop = e => e.stopPropagation();
   return (
-    <span className={theme.itemAction} onMouseDown={stopRipple && stop} onClick={onClick && stop}>
+    <span className={theme.itemAction} onMouseDown={stopRipple ? stop : undefined} onClick={onClick && stop}>
       {action}
     </span>
   );

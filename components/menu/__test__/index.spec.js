@@ -1,7 +1,7 @@
 import expect from 'expect';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import Menu from '../Menu';
 import MenuItem, {MenuItem as RawMenuItem} from '../MenuItem';
 

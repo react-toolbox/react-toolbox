@@ -1,6 +1,6 @@
 import expect from 'expect';
 import utils from '../../utils/testing';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
