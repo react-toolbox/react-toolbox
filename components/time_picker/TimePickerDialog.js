@@ -56,7 +56,9 @@ const factory = (Dialog) => {
 
     componentDidUpdate(prevProps) {
       if (!prevProps.active && this.props.active) {
-        setTimeout(this.clockNode.handleCalculateShape, 1000);
+        setTimeout(() => {
+          this.clockNode.handleCalculateShape();
+        }, 1000);
       }
     }
 
@@ -80,16 +82,19 @@ const factory = (Dialog) => {
       this.setState({ display: event.target.id });
     };
 
-    actions = [{
-      label: this.props.cancelLabel,
-      className: this.props.theme.button,
-      onClick: this.props.onDismiss,
-    }, {
-      label: this.props.okLabel,
-      className: this.props.theme.button,
-      name: this.props.name,
-      onClick: this.handleSelect,
-    }];
+    actions = [
+      {
+        label: this.props.cancelLabel,
+        className: this.props.theme.button,
+        onClick: this.props.onDismiss,
+      },
+      {
+        label: this.props.okLabel,
+        className: this.props.theme.button,
+        name: this.props.name,
+        onClick: this.handleSelect,
+      },
+    ];
 
     formatHours() {
       if (this.props.format === 'ampm') {
@@ -103,8 +108,12 @@ const factory = (Dialog) => {
       if (this.props.format !== 'ampm') return undefined;
       return (
         <div className={theme.ampm}>
-          <span className={theme.am} onClick={this.toggleTimeMode}>AM</span>
-          <span className={theme.pm} onClick={this.toggleTimeMode}>PM</span>
+          <span className={theme.am} onClick={this.toggleTimeMode}>
+            AM
+          </span>
+          <span className={theme.pm} onClick={this.toggleTimeMode}>
+            PM
+          </span>
         </div>
       );
     }
@@ -124,16 +133,18 @@ const factory = (Dialog) => {
         >
           <header className={theme.header}>
             <span id="hours" className={theme.hours} onClick={this.switchDisplay}>
-              {(`0${this.formatHours()}`).slice(-2)}
+              {`0${this.formatHours()}`.slice(-2)}
             </span>
             <span className={theme.separator}>:</span>
             <span id="minutes" className={theme.minutes} onClick={this.switchDisplay}>
-              {(`0${this.state.displayTime.getMinutes()}`).slice(-2)}
+              {`0${this.state.displayTime.getMinutes()}`.slice(-2)}
             </span>
             {this.renderAMPMLabels()}
           </header>
           <Clock
-            ref={(node) => { this.clockNode = node; }}
+            ref={(node) => {
+              this.clockNode = node;
+            }}
             display={this.state.display}
             format={this.props.format}
             onChange={this.handleClockChange}
