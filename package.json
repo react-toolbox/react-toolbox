@@ -2,7 +2,7 @@
   "name": "react-toolbox",
   "description": "A set of React components implementing Google's Material Design specification with the power of CSS Modules.",
   "homepage": "http://www.react-toolbox.io",
-  "version": "2.0.0-beta.11",
+  "version": "2.0.0-beta.12",
   "main": "./lib",
   "module": "./components",
   "author": {
@@ -118,10 +118,10 @@
     "prepublish": "npm run build",
     "release": "bumped release",
     "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
-    "ts": "tsc",
-    "tsd": "cpx \"./components/**/*.d.ts\" ./lib",
     "test": "jest",
-    "test:watch": "jest --watch --no-watchman"
+    "test:watch": "jest --watch --no-watchman",
+    "ts": "tsc",
+    "tsd": "cpx \"./components/**/*.d.ts\" ./lib"
   },
   "license": "MIT",
   "jest": {
