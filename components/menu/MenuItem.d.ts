@@ -32,7 +32,7 @@ export interface MenuItemProps extends ReactToolbox.Props {
   /**
    * The text to include in the menu item. Required.
    */
-  caption: string;
+  caption: React.ReactNode;
   /**
    * Children to pass through the component.
    */

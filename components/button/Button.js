@@ -21,7 +21,10 @@ const factory = (ripple, FontIcon) => {
         PropTypes.element,
       ]),
       inverse: PropTypes.bool,
-      label: PropTypes.string,
+      label: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+      ]),
       mini: PropTypes.bool,
       neutral: PropTypes.bool,
       onMouseLeave: PropTypes.func,

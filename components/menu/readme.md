@@ -90,7 +90,7 @@ The inner component for menus and describes the content of each option. It behav
 
 | Name              | Type              | Default     | Description|
 |:-----|:-----|:-----|:-----|
-| `caption`     | `String`              |             | The text to include in the menu item. Required.|
+| `caption`     | `String` or `Element` |             | The text to include in the menu item. Required.|
 | `className`   | `String`              | `''`        | Set a class to give custom styles to the item.|
 | `disabled`    | `Boolean`             | `false`     | If true, the item will be displayed as disabled and is not selectable.|
 | `icon`        | `String` or `Element` |             | Icon font key string or Element to display in the right side of the option. |

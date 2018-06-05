@@ -33,7 +33,7 @@ export interface DialogActionProps extends ButtonProps {
   /**
    * The text string to use for the name of the button.
    */
-  label?: string;
+  label?: React.ReactNode;
   /**
    * Callback called when the component is clicked.
    */

@@ -99,17 +99,17 @@ Represents a list item that can have avatar, icons, title, subtitle, etc. Note: 
 A special type of item that has a checkbox control on the left side. It implements similar methods to the `ListItem` component and some additional to control the checkbox.
 
 ### Properties
-| Name            | Type            | Default       | Description|
+| Name            | Type                  | Default       | Description|
 |:-----|:-----|:-----|:-----|
-| `caption`       | `String`        |               | Main text of the item. Required.|
-| `className`     | `String`        |               | Set a class to give custom styles to Component.|
-| `checked`       | `Boolean`       | `false`       | If true the checkbox appears checked by default.|
-| `disabled`      | `String`        | `false`       | If true, the item is displayed as disabled and it's not clickable.|
-| `legend`        | `String`        |               | Secondary text to display under the caption.|
-| `name`          | `String`        |               | Name for the checkbox input item.|
-| `onBlur`        | `Function`      |               | Callback called when the input element is blurred.|
-| `onChange`      | `Function`      |               | Callback called when the input element is changed.|
-| `onFocus`       | `Function`      |               | Callback called when the input element is focused.|
+| `caption`       | `String` or `Element` |               | Main text of the item. Required.|
+| `className`     | `String`              |               | Set a class to give custom styles to Component.|
+| `checked`       | `Boolean`             | `false`       | If true the checkbox appears checked by default.|
+| `disabled`      | `String`              | `false`       | If true, the item is displayed as disabled and it's not clickable.|
+| `legend`        | `String`              |               | Secondary text to display under the caption.|
+| `name`          | `String`              |               | Name for the checkbox input item.|
+| `onBlur`        | `Function`            |               | Callback called when the input element is blurred.|
+| `onChange`      | `Function`            |               | Callback called when the input element is changed.|
+| `onFocus`       | `Function`            |               | Callback called when the input element is focused.|
 
 ### Theme
 | Name     | Description|
@@ -129,10 +129,10 @@ A special type of item that has a checkbox control on the left side. It implemen
 Simple subcomponent used to give a title to a list area.
 
 ### Properties
-| Name          | Type        | Default       | Description|
+| Name          | Type                  | Default       | Description|
 |:-----|:-----|:-----|:-----|
-| `caption`     | `String`    |               | Text that will be displayed.|
-| `className`   | `String`    | `''`          | Set a class to give custom styles to the list subheader.|
+| `caption`     | `String` or `Element` |               | Text that will be displayed.|
+| `className`   | `String`              | `''`          | Set a class to give custom styles to the list subheader.|
 
 ### Theme
 | Name     | Description|

@@ -428,6 +428,6 @@ const factory = (Chip, Input) => {
 };
 
 const Autocomplete = factory(InjectChip, InjectInput);
-export default themr(AUTOCOMPLETE, null, { withRef: true })(Autocomplete);
+export default themr(AUTOCOMPLETE, {}, { withRef: true })(Autocomplete);
 export { factory as autocompleteFactory };
 export { Autocomplete };

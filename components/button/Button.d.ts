@@ -21,7 +21,7 @@ export interface ButtonProps extends ButtonBaseProps, RippleProps {
   /**
    * The text string to use for the name of the button.
    */
-  label?: string;
+  label?: React.ReactNode;
   /**
    * To be used with floating button. If true, the button will be smaller.
    * @default false

@@ -9,7 +9,10 @@ import rippleFactory from '../ripple/Ripple';
 const factory = (ripple) => {
   class MenuItem extends Component {
     static propTypes = {
-      caption: PropTypes.string,
+      caption: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+      ]),
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
