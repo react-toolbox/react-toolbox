@@ -99,6 +99,13 @@ const dateLocales = {
     weekdaysShort: 'Dom._Lun._Mar._Mér._Xov._Ven._Sáb.'.split('_'),
     weekdaysLetter: 'Do_Lu_Ma_Mé_Xo_Ve_Sá'.split('_'),
   },
+  el: {
+    months: 'Ιανουάριος_Φεβρουάριος_Μάρτιος_Απρίλιος_Μάιος_Ιούνιος_Ιούλιος_Αύγουστος_Σεπτέμβριος_Οκτώβριος_Νοέμβριος_Δεκέμβριος'.split('_'),
+    monthsShort: 'Ιαν_Φεβ_Μάρ_Απρ_Μάι_Ιούν_Ιούλ_Αύγ_Σεπ_Οκτ_Νοέ_Δεκ'.split('_'),
+    weekdays: 'Κυριακή_Δευτέρα_Τρίτη_Τετάρτη_Πέμπτη_Παρασκευή_Σάββατο'.split('_'),
+    weekdaysShort: 'Κυρ_Δευ_Τρί_Τετ_Πέμ_Παρ_Σάβ'.split('_'),
+    weekdaysLetter: 'Κ_Δ_Τ_Τ_Π_Π_Σ'.split('_'),
+  },
   eu: {
     months: 'urtarrila_otsaila_martxoa_apirila_maiatza_ekaina_uztaila_abuztua_iraila_urria_azaroa_abendua'.split('_'),
     monthsShort: 'urt._ots._mar._api._mai._eka._uzt._abu._ira._urr._aza._abe.'.split('_'),
