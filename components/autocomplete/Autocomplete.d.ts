@@ -136,6 +136,10 @@ export interface AutocompleteProps extends InputProps {
    * Additional properties passed to inner Input component.
    */
   [key: string]: any;
+  /**
+   * Array of numbers representing keyboard keys that will trigger active item creation or selection.
+   */
+  submitKeys?: Array<number>;
 }
 
 export class Autocomplete extends React.Component<AutocompleteProps, {}> { }

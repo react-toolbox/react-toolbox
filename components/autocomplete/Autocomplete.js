@@ -57,6 +57,7 @@ const factory = (Chip, Input) => {
         values: PropTypes.string,
       }),
       value: PropTypes.any,
+      submitKeys: PropTypes.arrayOf(PropTypes.number)
     };
 
     static defaultProps = {
@@ -70,6 +71,7 @@ const factory = (Chip, Input) => {
       showSuggestionsWhenValueIsSet: false,
       source: {},
       suggestionMatch: 'start',
+      submitKeys: [13]
     };
 
     state = {
@@ -148,8 +150,8 @@ const factory = (Chip, Input) => {
        && this.state.showAllSuggestions
      );
 
-      if (event.which === 13) {
-        this.selectOrCreateActiveItem(event);
+      if (this.props.submitKeys.includes(event.which)) {
+       this.selectOrCreateActiveItem(event);
       }
 
       if(this.props.onKeyDown) this.props.onKeyDown(event);
