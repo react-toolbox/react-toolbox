@@ -10,7 +10,9 @@ module.exports = {
     'postcss-each': {},
     'postcss-apply': {},
     'postcss-nesting': {},
-    'postcss-cssnext': {},
+    'postcss-preset-env': {
+      stage: 0,
+    },
     'postcss-reporter': {
       clearMessages: true
     }
