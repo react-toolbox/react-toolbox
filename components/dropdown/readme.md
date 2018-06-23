@@ -46,7 +46,7 @@ If you want to provide a theme via context, the component key is `RTDropdown`.
 | `error`      | `String`   |         | Give an error string to display under the field.|
 | `label`      | `String`   |         | The text string to use for the floating label element.|
 | `onBlur`     | `Function` |         | Callback function that is fired when the component is blurred.|
-| `onChange`   | `Function` |         | Callback function that is fired when the component's value changes.|
+| `onChange`   | `Function` |         | Called with (item.value, event) when the component's value changes.|
 | `onFocus`    | `Function` |         | Callback function that is fired when the component is focused.|
 | `source`     | `Array`    |         | Array of data objects with the data to represent in the dropdown.|
 | `template`   | `Function` |         | Callback function that returns a JSX template to represent the element.|

@@ -47,7 +47,7 @@ This component can be styled by context providing a theme with the key `RTSlider
 | `editable`    | `Boolean`     | `false`   | If true, an input is shown and the user can set the slider from keyboard value.|
 | `max`         | `Number`      | `100`     | Maximum value permitted.|
 | `min`         | `Number`      | `0`       | Minimum value permitted.|
-| `onChange`    | `Function`    |           | Callback function that will be invoked when the slider value changes.|
+| `onChange`    | `Function`    |           | Called with (value) when the slider value changes.|
 | `pinned`      | `Boolean`     | `false`   | If true, a pin with numeric value label is shown when the slider thumb is pressed. Use for settings for which users need to know the exact value of the setting.|
 | `snaps`       | `Boolean`     | `false`   | If true, the slider thumb snaps to tick marks evenly spaced based on the step property value.|
 | `step`        | `Number`      | `0.01`    | Amount to vary the value when the knob is moved or increase/decrease is called.|

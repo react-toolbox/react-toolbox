@@ -41,7 +41,7 @@ A radio selector is mean to get a value from a set of choices, that's why a radi
 | `className`   | `String`      | `''`        | Set a class to give custom styles to the group.|
 | `disabled`    | `Boolean`     | `false`     | If true, the group will be displayed as disabled.|
 | `name`        | `String`      |             | Name for the input element group. |
-| `onChange`    | `Function`    |             | Callback function that will be invoked when the value changes. |
+| `onChange`    | `Function`    |             | Called with (value, event) when the value changes.|
 | `value`       | `Any`         |             | Default value selected in the radio group. |
 
 
@@ -59,7 +59,7 @@ The inner component to compose radio selectors. They will be rendered as radio i
 | `label`       | `String` of `node`  | `''`        | Label for the radio button.|
 | `name`        | `String`      |             | Name for the input element. |
 | `onBlur`      | `Function`    |             | Callback function that will be invoked when the input is blurred. |
-| `onChange`    | `Function`    |             | Callback function that will be invoked when the value changes. |
+| `onChange`    | `Function`    |             | Called with (value, event) when the value changes. Context is bound to the parent RadioGroup.|
 | `onFocus`     | `Function`    |             | Callback function that will be invoked when the input is focused. |
 | `value`       | `Any`         |             | Value for the radio button. |
 

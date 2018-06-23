@@ -107,9 +107,9 @@ A special type of item that has a checkbox control on the left side. It implemen
 | `disabled`      | `String`        | `false`       | If true, the item is displayed as disabled and it's not clickable.|
 | `legend`        | `String`        |               | Secondary text to display under the caption.|
 | `name`          | `String`        |               | Name for the checkbox input item.|
-| `onBlur`        | `Function`      |               | Callback called when the input element is blurred.|
-| `onChange`      | `Function`      |               | Callback called when the input element is changed.|
-| `onFocus`       | `Function`      |               | Callback called when the input element is focused.|
+| `onBlur`        | `Function`      |               | Passed through to the wrapped Checkbox component.|
+| `onChange`      | `Function`      |               | Passed through to the wrapped Checkbox component.|
+| `onFocus`       | `Function`      |               | Passed through to the wrapped Checkbox component.|
 
 ### Theme
 | Name     | Description|
