@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import InjectAutocomplete from '../autocomplete/Autocomplete.js';
 import InjectButton from '../button/Button.js';
 import InjectCheckbox from '../checkbox/Checkbox.js';

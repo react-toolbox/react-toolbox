@@ -1,4 +1,6 @@
 /*eslint-disable no-eval*/
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'react-css-themr';
@@ -11,9 +13,9 @@ const ERROR_TIMEOUT = 500;
 
 const Preview = React.createClass({
   propTypes: {
-    className: React.PropTypes.string,
-    code: React.PropTypes.string.isRequired,
-    scope: React.PropTypes.object
+    className: PropTypes.string,
+    code: PropTypes.string.isRequired,
+    scope: PropTypes.object
   },
 
   getDefaultProps () {

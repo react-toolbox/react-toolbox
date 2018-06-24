@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import style from './style';
 
@@ -13,8 +14,8 @@ const Markdown = (props) => {
 };
 
 Markdown.propTypes = {
-  className: React.PropTypes.string,
-  markdown: React.PropTypes.string.isRequired
+  className: PropTypes.string,
+  markdown: PropTypes.string.isRequired
 };
 
 Markdown.defaultProps = {

@@ -1,5 +1,6 @@
 import React from 'react';
-import TestUtils from 'react-addons-test-utils';
+import TestUtils from 'react-dom/test-utils';
+import ShallowRenderer from 'react-test-renderer/shallow';
 
 export default {
   renderComponent (Component, props = {}, state = {}) {
@@ -9,7 +10,7 @@ export default {
   },
 
   shallowRenderComponent (component, props, ...children) {
-    const shallowRenderer = TestUtils.createRenderer();
+    const shallowRenderer = new ShallowRenderer();
     shallowRenderer.render(React.createElement(component, props, children.length > 1 ? children : children[0]));
     return shallowRenderer.getRenderOutput();
   }

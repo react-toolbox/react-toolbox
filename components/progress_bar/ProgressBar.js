@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { PROGRESS_BAR } from '../identifiers.js';

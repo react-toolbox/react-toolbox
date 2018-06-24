@@ -1,6 +1,6 @@
 import React from 'react';
 import expect from 'expect';
-import TestUtils from 'react-addons-test-utils';
+import TestUtils from 'react-dom/test-utils';
 import ProgressBar, { ProgressBar as RawProgressBar } from '../ProgressBar';
 import theme from '../theme.scss';
 import utils from '../../utils/testing';
