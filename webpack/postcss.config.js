@@ -12,6 +12,11 @@ module.exports = {
     'postcss-nesting': {},
     'postcss-preset-env': {
       stage: 0,
+      features: {
+        'custom-properties': {
+          preserve: false
+        }
+      }
     },
     'postcss-reporter': {
       clearMessages: true
