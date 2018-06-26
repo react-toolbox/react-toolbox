@@ -137,8 +137,8 @@ If the column layout does not suit your needs, simply fill the content area with
 ### Properties
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
-| `children` | `Nodes` |  | Can hold a `Panel`, along with a `NavDrawer`, a `Sidebar` and an `AppBar` |
-| `className` | `string` |  | Additional class(es) for custom styling. |
+| `children` | `Nodes` | &nbsp; | Can hold a `Panel`, along with a `NavDrawer`, a `Sidebar` and an `AppBar` |
+| `className` | `string` | &nbsp; | Additional class(es) for custom styling. |
 
 ### Theme
 The themed key the `Layout` in general is `ToolboxLayout`. We add classes to the root element depending on the parsed children:
@@ -162,7 +162,7 @@ The [navigation drawer](https://material.google.com/patterns/navigation-drawer.h
 | Breakpoint | Drawer Width | Notes |
 |:-----|:-----|:-----|
 | < `xs` | 280px or (Screen width - 85px) | whichever is smaller |
-| > `xs` | 320px | |
+| > `xs` | 320px | &nbsp; |
 | > `xs` | 400px | If property `width` is set to `wide` |
 
 The drawer can be docked to the left side of the screen or can float temporarily as an overlay. You can control the drawer's display manually `active` and `pinned` properties, and can also specify a breakpoint at which the drawer automatically becomes permanently docked. You can also use a `clipped` property when it's pinned so the `AppBar` would stick over the Drawer.
@@ -171,11 +171,11 @@ The drawer can be docked to the left side of the screen or can float temporarily
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
 | `active` | `bool` | `false` | If true, the drawer will be shown as an overlay. |
-| `className` | `string` |  | Additional class(es) for custom styling. |
+| `className` | `string` | &nbsp; | Additional class(es) for custom styling. |
 | `clipped` | `bool` | `false` | If true, when the `AppBar` gets pinned, it will stand over the `Drawer`. |
-| `permanentAt` | `enum`(`'sm'`,`'smTablet'`,`'md'`,`'lg'`,`'lgTablet'`,`'xl'`,`'xxl'`,`'xxxl'`) |  | The breakpoint at which the drawer is automatically pinned. |
+| `permanentAt` | `enum`(`'sm'`,`'smTablet'`,`'md'`,`'lg'`,`'lgTablet'`,`'xl'`,`'xxl'`,`'xxxl'`) | &nbsp; | The breakpoint at which the drawer is automatically pinned. |
 | `pinned` | `bool` | `false` | If true, the drawer will be pinned open. `pinned` takes precedence over `active`. |
-| `onOverlayClick` | `Function`     |            | Callback function to be invoked when the overlay is clicked. It only works if the `Drawer` is actually displaying and Overlay|
+| `onOverlayClick` | `Function`     |    &nbsp;   | Callback function to be invoked when the overlay is clicked. It only works if the `Drawer` is actually displaying and Overlay|
 
 ### Theme
 
@@ -193,8 +193,8 @@ The `Panel` is the main content area within a `Layout`.  By default we assume it
 ### Properties
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
-| `bodyScroll` | `Boolean` | | You can set it to true in case you are using a pinned Sidebar so it takes an scrolled `div` instead of using the document scroll. |
-| `className` | `string` |  | Additional class(es) for custom styling. |
+| `bodyScroll` | `Boolean` | &nbsp; | You can set it to true in case you are using a pinned Sidebar so it takes an scrolled `div` instead of using the document scroll. |
+| `className` | `string` | &nbsp; | Additional class(es) for custom styling. |
 
 ### Theme
 | Name     | Description|
@@ -212,7 +212,7 @@ The `Sidebar` is an extra drawer that docks to the right side of the `Layout`. T
 | `width` | `enum`(`1`,`2`,`3`,`4`,`5`,`6`,`7`,`8`,`9`,`10`,`11`,`12`,`25`,`33`,`50`,`66`,`75`,`100`) | `5` | Width in standard increments (1-12) or percentage (25, 33, 50, 66, 75, 100) |
 | `pinned` | `bool` | `false` | If true, the sidebar will be pinned open. |
 | `scrollY` | `bool` | `false` | If true, the sidebar will vertically scroll all content. |
-| `className` | `string` |  | Additional class(es) for custom styling. |
+| `className` | `string` | &nbsp; | Additional class(es) for custom styling. |
 
 ### Theme
 

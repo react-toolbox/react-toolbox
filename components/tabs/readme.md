@@ -74,7 +74,7 @@ This component acts as the wrapper and the main controller of the content that i
 | `hideMode`                    | `enum`(`'display'`,`'unmounted'`) | `unmounted`         | `unmounted` mode will not mount the tab content of inactive tabs. `display` mode will mount but hide inactive tabs. Consider holding state outside of the Tabs component before using `display` mode |
 | `index`                       | `Number`        | `0`             | Current <Tab> |
 | `inverse`                     | `Boolean`       | `false`         | If True, the tabs will have an inverse style.|
-| `onChange`                    | `Function`      |                 | Callback function that is fired when the tab changes.|
+| `onChange`                    | `Function`      |      &nbsp;     | Callback function that is fired when the tab changes.|
 
 ### Theming
 
@@ -101,10 +101,10 @@ Represent a single tab element and it should include some properties to describe
 | `className`       | `String`        | `''`            | Additional class name to provide custom styling for each tab.|
 | `disabled`        | `Boolean`       | `false`         | If true, the current component is not clickable.|
 | `hidden`          | `Boolean`       | `false`         | If true, the current component is not visible.|
-| `icon`            | `String`        |                 | Icon for navigation header. |
-| `label`           | `String`        |                 | Label text for navigation header. |
-| `onActive`        | `Function`      |                 | Callback function that is fired when the tab is activated. |
-| `onClick`         | `Function`      |                 | Callback function that is fired when the tab is clicked. |
+| `icon`            | `String`        |      &nbsp;     | Icon for navigation header. |
+| `label`           | `String`        |      &nbsp;     | Label text for navigation header. |
+| `onActive`        | `Function`      |      &nbsp;     | Callback function that is fired when the tab is activated. |
+| `onClick`         | `Function`      |      &nbsp;     | Callback function that is fired when the tab is clicked. |
 
 It is required to provide either a label or an icon (or both).
 
