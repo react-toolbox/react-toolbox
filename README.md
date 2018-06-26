@@ -17,7 +17,7 @@ $ npm install --save react-toolbox
 
 ## Prerequisites
 
-React Toolbox uses [CSS Modules](https://github.com/css-modules/css-modules) by default to import stylesheets written using PostCSS/[cssnext](http://cssnext.io/) features. In case you want to import the components already bundled with CSS, your module bundler should be able to require these PostCSS modules.
+React Toolbox uses [CSS Modules](https://github.com/css-modules/css-modules) by default to import stylesheets written using PostCSS/[preset-env](https://preset-env.cssdb.org/) features. In case you want to import the components already bundled with CSS, your module bundler should be able to require these PostCSS modules.
 
 Although we recommend [webpack](https://webpack.github.io/), you are free to use whatever module bundler you want as long as it can compile and require PostCSS files located in your `node_modules`. If you are experiencing require errors, make sure your configuration satisfies this requirement.
 
@@ -34,7 +34,7 @@ Follow [these instructions](https://github.com/react-toolbox/react-toolbox-themr
 ```bash
 npm install postcss-loader --save-dev
 npm install postcss --save
-npm install postcss-cssnext --save
+npm install postcss-preset-env --save
 ```
 
 Configure webpack 1.x loader for .css files to use postcss:
@@ -52,7 +52,14 @@ Declare plugins to be used by postcss (as part of webpack's config object):
   postcss: () => {
     return [
       /* eslint-disable global-require */
-      require('postcss-cssnext'),
+      require('postcss-preset-env')({
+        stage: 0, // enables all postcss-preset-env features
+        features: {
+        'custom-properties': {
+          preserve: false // returns calculated values instead of variable names
+        }
+      }
+      }),
       /* eslint-enable global-require */
     ];
   },
@@ -115,7 +122,7 @@ First let's take a look on how the components are structured in the project. The
  |---- theme.css
 ```
 
-As you can see in the previous block, each folder includes: a Javascript file for each component/subcomponent; a README with documentation, an index Javascript file that imports and injects styles and dependencies for you, a default theme PostCSS/cssnext stylesheet and a config.css with configuration variables (CSS Custom Properties). Depending on whether you want the styles to be directly bundled or not, you can import components in **two** different ways.
+As you can see in the previous block, each folder includes: a Javascript file for each component/subcomponent; a README with documentation, an index Javascript file that imports and injects styles and dependencies for you, a default theme PostCSS/preset-env stylesheet and a config.css with configuration variables (CSS Custom Properties). Depending on whether you want the styles to be directly bundled or not, you can import components in **two** different ways.
 
 ### Bundled component
 
@@ -212,7 +219,7 @@ export default App;
 
 ## Theming (configuration variables)
 
-You can apply theming in multiple ways. First of all, you have to understand that React Toolbox stylesheets are written using PostCSS with cssnext features and use CSS Custom Properties from the **config** files we saw earlier. In addition, there are some global CSS Properties imported by each component: [colors](https://github.com/react-toolbox/react-toolbox/blob/dev/components/colors.css) and [variables](https://github.com/react-toolbox/react-toolbox/blob/dev/components/variables.css). You can override both the global and component-specific **variables** to get the results you want using one of the methods below.
+You can apply theming in multiple ways. First of all, you have to understand that React Toolbox stylesheets are written using PostCSS with postcss-preset-env features and use CSS Custom Properties from the **config** files we saw earlier. In addition, there are some global CSS Properties imported by each component: [colors](https://github.com/react-toolbox/react-toolbox/blob/dev/components/colors.css) and [variables](https://github.com/react-toolbox/react-toolbox/blob/dev/components/variables.css). You can override both the global and component-specific **variables** to get the results you want using one of the methods below.
 
 ### Settings configuration variables in JavaScript
 
@@ -234,11 +241,12 @@ const config = {
     postcss: () => {
     return [
       /* eslint-disable global-require */
-      require('postcss-cssnext')({
+      require('postcss-preset-env')({
+        stage: 0,
         features: {
-          customProperties: {
-            variables: reactToolboxVariables,
-          },
+          'custom-properties': {
+            preserve: false
+          }
         },
       }),
       /* optional - see next section */
