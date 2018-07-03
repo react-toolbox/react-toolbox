@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ThemeProviderProps } from "react-css-themr";
 export declare namespace ReactToolbox {
   interface Props extends React.Attributes {
     /**
@@ -46,6 +47,7 @@ export declare namespace ReactToolbox {
      * Set inline style for the root component.
      */
     style?: React.CSSProperties;
+    innerRef?: ThemeProviderProps["innerRef"];
   }
 }
 
