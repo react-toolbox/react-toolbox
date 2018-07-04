@@ -245,7 +245,8 @@ const config = {
         stage: 0,
         features: {
           'custom-properties': {
-            preserve: false
+            preserve: false,
+            variables: reactToolboxVariables,
           }
         },
       }),
