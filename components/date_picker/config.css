@@ -3,7 +3,7 @@
   --datepicker-primary-contrast: var(--color-primary-contrast);
   --datepicker-primary-dark: var(--color-primary-dark);
   --datepicker-primary-color: var(--datepicker-primary);
-  --datepicker-primary-hover-color: color(var(--datepicker-primary) a(0.2));
+  --datepicker-primary-hover-color: color-mod(var(--datepicker-primary) a(0.2));
   --datepicker-primary-contrast-color: var(--datepicker-primary-contrast);
   --datepicker-primary-dark-color: var(--datepicker-primary-dark);
   --datepicker-dialog-width: calc(33 * var(--unit));
@@ -18,7 +18,7 @@
   --calendar-primary-contrast: var(--color-primary-contrast);
   --calendar-primary-color: var(--calendar-primary);
   --calendar-primary-contrast-color: var(--calendar-primary-contrast);
-  --calendar-primary-hover-color: color(var(--calendar-primary) a(0.21));
+  --calendar-primary-hover-color: color-mod(var(--calendar-primary) a(0.21));
   --calendar-arrows-color: var(--palette-grey-600);
   --calendar-arrows-font-size: calc(2 * var(--unit));
   --calendar-year-font-size: 2.4;

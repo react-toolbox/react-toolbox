@@ -38,15 +38,15 @@ This component can be styled by context providing a theme with the key `RTSnackb
 
 | Name          | Type                    | Default       | Description|
 |:-----|:-----|:-----|:-----|
-| `action`      | `String`                |               | Label for the action component inside the Snackbar.|
+| `action`      | `String`                |     &nbsp;    | Label for the action component inside the Snackbar.|
 | `active`      | `Boolean`               |  `false`      | If true, the snackbar will be active.|
 | `children`    | `String or Element`     |  `false`      | Text or node to be displayed in the content as alternative to `label`.|
 | `className`   | `String`                | `''`          | Additional class name to provide custom styling.|
-| `label`       | `String or Element`     |               | Text to display in the content.|
-| `onClick`     | `Function`              |               | Callback function that will be called when the button action is clicked.|
-| `onTimeout`   | `Function`              |               | Callback function when finish the set timeout.|
-| `timeout`     | `Number`                |               | Amount of time in milliseconds after the Snackbar will be automatically hidden.|
-| `type`        | `String`                |               | Indicates the action type. Can be `accept`, `warning` or `cancel`|
+| `label`       | `String or Element`     |     &nbsp;    | Text to display in the content.|
+| `onClick`     | `Function`              |     &nbsp;    | Callback function that will be called when the button action is clicked.|
+| `onTimeout`   | `Function`              |     &nbsp;    | Callback function when finish the set timeout.|
+| `timeout`     | `Number`                |     &nbsp;    | Amount of time in milliseconds after the Snackbar will be automatically hidden.|
+| `type`        | `String`                |     &nbsp;    | Indicates the action type. Can be `accept`, `warning` or `cancel`|
 
 ## Theme
 

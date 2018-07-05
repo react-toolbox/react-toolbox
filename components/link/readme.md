@@ -25,9 +25,9 @@ You can add as many properties as you want to be directly transferred to the out
 |:-----|:-----|:-----|:-----|
 | `active`     | `Boolean`             | `false`         | If true, adds active style to link.|
 | `className`  | `String`              | `''`            | Sets a custom class name to add styles to the link.|
-| `count`      | `Number`              |                 | Sets a count number.|
-| `icon`       | `String` or `Element` |                 | An icon key string to include a `FontIcon` component in front of the text.|
-| `label`      | `String`              |                 | The text string used for the text content of the link.|
+| `count`      | `Number`              |      &nbsp;     | Sets a count number.|
+| `icon`       | `String` or `Element` |      &nbsp;     | An icon key string to include a `FontIcon` component in front of the text.|
+| `label`      | `String`              |      &nbsp;     | The text string used for the text content of the link.|
 
 ## Theme
 

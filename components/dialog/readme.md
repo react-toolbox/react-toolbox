@@ -48,12 +48,12 @@ If you want to provide a theme via context, the component key is `RTDialog`.
 | `actions`               | `Array`         | `[]`            | A array of objects representing the buttons for the dialog navigation area. The properties will be transferred to the buttons.|
 | `active`                | `Boolean`       | `false`         | If true, the dialog will be active.|
 | `className`             | `String`        | `''`            | Sets a class to give customized styles to the dialog.|
-| `onEscKeyDown`          | `Function`      |                 | Callback called when the ESC key is pressed with the overlay active. |
-| `onOverlayClick`        | `Function`      |                 | Callback to be invoked when the dialog overlay is clicked.|
-| `onOverlayMouseDown`    | `Function`      |                 | Callback called when the mouse button is pressed on the overlay. |
-| `onOverlayMouseMove`    | `Function`      |                 | Callback called when the mouse is moving over the overlay. |
-| `onOverlayMouseUp`      | `Function`      |                 | Callback called when the mouse button is released over the overlay. |
-| `title`                 | `String`        |                 | The text string to use as standar title of the dialog.|
+| `onEscKeyDown`          | `Function`      |      &nbsp;     | Callback called when the ESC key is pressed with the overlay active. |
+| `onOverlayClick`        | `Function`      |      &nbsp;     | Callback to be invoked when the dialog overlay is clicked.|
+| `onOverlayMouseDown`    | `Function`      |      &nbsp;     | Callback called when the mouse button is pressed on the overlay. |
+| `onOverlayMouseMove`    | `Function`      |      &nbsp;     | Callback called when the mouse is moving over the overlay. |
+| `onOverlayMouseUp`      | `Function`      |      &nbsp;     | Callback called when the mouse button is released over the overlay. |
+| `title`                 | `String`        |      &nbsp;     | The text string to use as standar title of the dialog.|
 | `type`                  | `String`        | `normal`        | Used to determine the size of the dialog. It can be `small`, `normal`, `large` or `fullscreen`. |
 
 Notice that the `fullscreen` option only applies on mobile devices with small screens (i.e. cellphones), and on other devices it behaves as a `large` dialog.

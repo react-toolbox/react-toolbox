@@ -47,9 +47,9 @@ that all subcomponents are placed within.
 ### Properties
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
-| `children` | `Any` |  | Child components, usually Card subcomponents. |
-| `className` | `String` |  | Additional class(es) for custom styling. |
-| `raised` | `Boolean` |  | Increases the shadow depth to appear elevated. |
+| `children` | `Any` | &nbsp; | Child components, usually Card subcomponents. |
+| `className` | `String` | &nbsp; | Additional class(es) for custom styling. |
+| `raised` | `Boolean` | &nbsp; | Increases the shadow depth to appear elevated. |
 
 ### Theme
 
@@ -64,11 +64,11 @@ A versatile title block that can be used in various places on the card, includin
 ### Properties
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
-| `avatar` | `String` or `Element` |  | A string URL or Element to specify an avatar in the left side of the title. |
-| `children` | `String`, `Element` or `Array` |  | Children to pass through the component. |
-| `className` | `String` |  | Additional class(es) for custom styling. |
-| `subtitle` | `String` |  | Text used for the sub header of the card. |
-| `title` | `String` |  | Text used for the title of the card.  |
+| `avatar` | `String` or `Element` | &nbsp; | A string URL or Element to specify an avatar in the left side of the title. |
+| `children` | `String`, `Element` or `Array` | &nbsp; | Children to pass through the component. |
+| `className` | `String` | &nbsp; | Additional class(es) for custom styling. |
+| `subtitle` | `String` | &nbsp; | Text used for the sub header of the card. |
+| `title` | `String` | &nbsp; | Text used for the title of the card.  |
 
 ### Theme
 
@@ -87,12 +87,12 @@ Used for displaying media such as images or videos on a card. Can also be used w
 ### Properties
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
-| `aspectRatio` | `enum`(`'wide'`,`'square'`) |  | Forces a 16:9 or 1:1 aspect ratio respectively. Unset, the media area will have a flexible height. |
-| `children` | `Any` |  | Usually an image/video element or a `<CardTitle>` component. |
-| `className` | `String` |  | Additional class(es) for custom styling. |
-| `color` | `String` |  | Sets the background color. |
-| `contentOverlay` | `Boolean` |  | Creates a dark overlay underneath the child components. |
-| `image` | `String`, `Element` |  | Can be used instead of children. Accepts an element or a URL string. |
+| `aspectRatio` | `enum`(`'wide'`,`'square'`) | &nbsp; | Forces a 16:9 or 1:1 aspect ratio respectively. Unset, the media area will have a flexible height. |
+| `children` | `Any` | &nbsp; | Usually an image/video element or a `<CardTitle>` component. |
+| `className` | `String` | &nbsp; | Additional class(es) for custom styling. |
+| `color` | `String` | &nbsp; | Sets the background color. |
+| `contentOverlay` | `Boolean` | &nbsp; | Creates a dark overlay underneath the child components. |
+| `image` | `String`, `Element` | &nbsp; | Can be used instead of children. Accepts an element or a URL string. |
 
 ### Theme
 
@@ -110,8 +110,8 @@ Basic card content container. Good for small descriptions or other supplementary
 ### Properties
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
-| `children` | `Any` |  | Children to pass through the component. |
-| `className` | `String` |  | Additional class(es) for custom styling. |
+| `children` | `Any` | &nbsp; | Children to pass through the component. |
+| `className` | `String` | &nbsp; | Additional class(es) for custom styling. |
 
 ### Theme
 
@@ -127,8 +127,8 @@ This component is used as a container for supplemental card actions. Supplementa
 
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
-| `children` | `Any` |  | Children to pass through the component. |
-| `className` | `String` |  | Additional class(es) for custom styling. |
+| `children` | `Any` | &nbsp; | Children to pass through the component. |
+| `className` | `String` | &nbsp; | Additional class(es) for custom styling. |
 
 ### Theme
 
