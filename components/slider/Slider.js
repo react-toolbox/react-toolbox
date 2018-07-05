@@ -294,7 +294,7 @@ const factory = (ProgressBar, Input) => {
           onBlur={this.handleSliderBlur}
           onFocus={this.handleSliderFocus}
           style={this.props.style}
-          tabIndex="0"
+          tabIndex={this.props.disabled ? -1 : 0}
         >
           <div
             ref={(node) => { this.sliderNode = node; }}
