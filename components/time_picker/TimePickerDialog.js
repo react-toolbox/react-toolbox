@@ -56,7 +56,9 @@ const factory = (Dialog) => {
 
     componentDidUpdate(prevProps) {
       if (!prevProps.active && this.props.active) {
-        setTimeout(this.clockNode.handleCalculateShape, 1000);
+        setTimeout(() => {
+          this.clockNode.handleCalculateShape();
+        }, 1000);
       }
     }
 
