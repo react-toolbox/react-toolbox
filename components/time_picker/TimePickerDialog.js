@@ -54,11 +54,10 @@ const factory = (Dialog) => {
       }
     }
 
-    componentDidUpdate(prevProps) {
-      if (!prevProps.active && this.props.active) {
-        setTimeout(() => {
-          this.clockNode.handleCalculateShape();
-        }, 1000);
+    updateRefAndCalculateHandleShape = (node) => {
+      this.clockNode = node;
+      if (this.props.active) {
+        this.clockNode.handleCalculateShape();
       }
     }
 
@@ -135,7 +134,7 @@ const factory = (Dialog) => {
             {this.renderAMPMLabels()}
           </header>
           <Clock
-            ref={(node) => { this.clockNode = node; }}
+            ref={this.updateRefAndCalculateHandleShape}
             display={this.state.display}
             format={this.props.format}
             onChange={this.handleClockChange}
