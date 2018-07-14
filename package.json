@@ -2,7 +2,7 @@
   "name": "react-toolbox",
   "description": "A set of React components implementing Google's Material Design specification with the power of CSS Modules.",
   "homepage": "http://www.react-toolbox.io",
-  "version": "2.1.0",
+  "version": "2.0.0",
   "main": "./lib",
   "module": "./components",
   "author": {
