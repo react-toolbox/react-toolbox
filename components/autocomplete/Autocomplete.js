@@ -9,6 +9,7 @@ import { AUTOCOMPLETE } from '../identifiers.js';
 import InjectChip from '../chip/Chip.js';
 import InjectInput from '../input/Input.js';
 import events from '../utils/events.js';
+import Portal from '../hoc/Portal';
 
 const POSITION = {
   AUTO: 'auto',
@@ -77,7 +78,6 @@ const factory = (Chip, Input) => {
     };
 
     state = {
-      direction: this.props.direction,
       focus: false,
       showAllSuggestions: this.props.showSuggestionsWhenValueIsSet,
       query: this.props.query ? this.props.query : this.query(this.props.value),
@@ -92,11 +92,8 @@ const factory = (Chip, Input) => {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-      if (!this.state.focus && nextState.focus && this.props.direction === POSITION.AUTO) {
-        const direction = this.calculateDirection();
-        if (this.state.direction !== direction) {
-          this.setState({ direction });
-        }
+      if (!this.state.focus && nextState.focus) {
+        this.calculateDirection();
       }
       return true;
     }
@@ -178,13 +175,26 @@ const factory = (Chip, Input) => {
     };
 
     calculateDirection() {
+      const client = ReactDOM.findDOMNode(this.inputNode).getBoundingClientRect();
+      const screen_height = window.innerHeight || document.documentElement.offsetHeight;
+      let direction = this.props.direction;
       if (this.props.direction === 'auto') {
-        const client = ReactDOM.findDOMNode(this.inputNode).getBoundingClientRect();
-        const screen_height = window.innerHeight || document.documentElement.offsetHeight;
         const up = client.top > ((screen_height / 2) + client.height);
-        return up ? 'up' : 'down';
+        direction = up ? 'up' : 'down';
       }
-      return this.props.direction;
+      const top = direction == 'down' ? (client.top+client.height)+'px' : client.top+'px';
+      const bottom = direction == 'up' ? '0px' : undefined;
+      const left = client.left+'px';
+      const width = client.width+'px';
+      let maxHeight = direction == 'down' ? (screen_height-client.top-client.height) : client.top;
+      if (maxHeight > screen_height*0.45) {
+        maxHeight = Math.floor(screen_height*0.45);
+      }
+      if (this.state.top !== top || this.state.left !== left ||
+        this.state.width !== width || this.state.bottom !== bottom ||
+        this.state.maxHeight !== maxHeight) {
+        this.setState({ top, bottom, left, width, maxHeight });
+      }
     }
 
     query(key) {
@@ -383,13 +393,13 @@ const factory = (Chip, Input) => {
         );
       });
 
-      return (
-        <ul
-          className={classnames(theme.suggestions, { [theme.up]: this.state.direction === 'up' })}
-        >
+      const { top, bottom, maxHeight, left, width } = this.state;
+      return (<div style={{position: 'absolute', top, left, width}}>
+        <ul style={{bottom, maxHeight}}
+          className={theme.suggestions}>
           {suggestions}
         </ul>
-      );
+      </div>);
     }
 
     render() {
@@ -425,7 +435,9 @@ const factory = (Chip, Input) => {
             themeNamespace="input"
             value={this.state.query}
           />
-          {this.renderSuggestions()}
+          <Portal>
+            {this.state.focus ? this.renderSuggestions() : null}
+          </Portal>
           {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
         </div>
       );
