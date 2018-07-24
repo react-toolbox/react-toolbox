@@ -10,6 +10,8 @@ import InjectChip from '../chip/Chip.js';
 import InjectInput from '../input/Input.js';
 import events from '../utils/events.js';
 import Portal from '../hoc/Portal';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
+import Transition from 'react-transition-group/Transition';
 
 const POSITION = {
   AUTO: 'auto',
@@ -190,6 +192,7 @@ const factory = (Chip, Input) => {
       if (maxHeight > screen_height*0.45) {
         maxHeight = Math.floor(screen_height*0.45);
       }
+      maxHeight = maxHeight+'px';
       if (this.state.top !== top || this.state.left !== left ||
         this.state.width !== width || this.state.bottom !== bottom ||
         this.state.maxHeight !== maxHeight) {
@@ -378,7 +381,7 @@ const factory = (Chip, Input) => {
 
     renderSuggestions() {
       const { theme } = this.props;
-      const suggestions = [...this.suggestions()].map(([key, value]) => {
+      return [...this.suggestions()].map(([key, value]) => {
         const className = classnames(theme.suggestion, { [theme.active]: this.state.active === key });
         return (
           <li
@@ -392,14 +395,22 @@ const factory = (Chip, Input) => {
           </li>
         );
       });
+    }
 
+    renderSuggestionList() {
+      const { theme } = this.props;
       const { top, bottom, maxHeight, left, width } = this.state;
-      return (<div style={{position: 'absolute', top, left, width}}>
-        <ul style={{bottom, maxHeight}}
-          className={theme.suggestions}>
-          {suggestions}
-        </ul>
-      </div>);
+      return (<TransitionGroup style={{position: 'absolute', top, left, width}}>
+        <Transition
+          appear={true}
+          timeout={0}
+          onEntered={(node, appearing) => { node.style.maxHeight = maxHeight; }}>
+          <ul style={{bottom}}
+            className={theme.suggestions}>
+            {this.renderSuggestions()}
+          </ul>
+        </Transition>
+      </TransitionGroup>);
     }
 
     render() {
@@ -436,7 +447,7 @@ const factory = (Chip, Input) => {
             value={this.state.query}
           />
           <Portal>
-            {this.state.focus ? this.renderSuggestions() : null}
+            {this.state.focus ? this.renderSuggestionList() : null}
           </Portal>
           {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
         </div>

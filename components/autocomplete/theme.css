@@ -40,7 +40,7 @@
   position: absolute;
   background-color: var(--autocomplete-suggestions-background);
   list-style: none;
-  max-height: 0;
+  max-height: 1px;
   overflow-x: hidden;
   overflow-y: auto;
   padding: 0;
@@ -50,7 +50,6 @@
   width: 100%;
   z-index: var(--z-index-highest);
   box-shadow: var(--zdepth-shadow-1);
-  max-height: var(--autocomplete-overflow-max-height);
   -ms-overflow-style: none;
 
   &::-webkit-scrollbar {
