@@ -68,7 +68,6 @@ const factory = (Thumb) => {
             {...others}
             checked={this.props.checked}
             className={theme.input}
-            onClick={this.handleToggle}
             readOnly
             ref={(node) => { this.inputNode = node; }}
             type="checkbox"
