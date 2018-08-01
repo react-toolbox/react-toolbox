@@ -1,0 +1,29 @@
+/* Orientation */
+@custom-media --portrait (orientation: portrait);
+@custom-media --landscape (orientation: landscape);
+/* Devices (defined by max width) */
+@custom-media --xxs-viewport (max-width: 480px);
+@custom-media --xs-viewport (max-width: 600px);
+@custom-media --sm-tablet-viewport (max-width: 720px);
+@custom-media --sm-viewport (max-width: 840px);
+@custom-media --md-viewport (max-width: 960px);
+@custom-media --lg-tablet-viewport (max-width: 1024px);
+@custom-media --lg-viewport (max-width: 1280px);
+@custom-media --xl-viewport (max-width: 1440px);
+@custom-media --xxl-viewport (max-width: 1600px);
+@custom-media --xxxl-viewport (max-width: 1920px);
+/* Devices (defined by min-width) */
+@custom-media --larger-than-xxs-viewport (min-width: 480px);
+@custom-media --larger-than-xs-viewport (min-width: 600px);
+@custom-media --larger-than-sm-tablet-viewport (min-width: 720px);
+@custom-media --larger-than-sm-viewport (min-width: 840px);
+@custom-media --larger-than-md-viewport (min-width: 960px);
+@custom-media --larger-than-lg-tablet-viewport (min-width: 1024px);
+@custom-media --larger-than-lg-viewport (min-width: 1280px);
+@custom-media --larger-than-xl-viewport (min-width: 1440px);
+@custom-media --larger-than-xxl-viewport (min-width: 1600px);
+@custom-media --larger-than-xxxl-viewport (min-width: 1920px);
+:root {
+  --standard-increment-mobile: calc(5.6 * var(--unit));
+  --standard-increment-desktop: calc(6.4 * var(--unit));
+}

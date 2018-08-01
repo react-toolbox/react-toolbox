@@ -1,0 +1,117 @@
+:root {
+  --color-divider: var(--palette-grey-200);
+  --color-background: var(--color-white);
+  --color-text: var(--palette-grey-900);
+  --color-text-secondary: var(--palette-grey-600);
+
+  --color-primary: var(--palette-indigo-500);
+  --color-primary-dark: var(--palette-indigo-700);
+  --color-accent: var(--palette-pink-a200);
+  --color-accent-dark: var(--palette-pink-700);
+  --color-primary-contrast: var(--color-dark-contrast);
+  --color-accent-contrast: var(--color-dark-contrast);
+
+  --unit: 10px;
+
+  --preferred-font: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  --font-size: calc(1.6 * var(--unit));
+  --font-size-tiny: calc(1.2 * var(--unit));
+  --font-size-small: calc(1.4 * var(--unit));
+  --font-size-normal: var(--font-size);
+  --font-size-big: calc(1.8 * var(--unit));
+  --font-weight-thin: 300;
+  --font-weight-normal: 400;
+  --font-weight-semi-bold: 500;
+  --font-weight-bold: 700;
+
+  --shadow-2p:
+    0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+
+  --shadow-3p:
+    0 3px 4px 0 rgba(0, 0, 0, 0.14),
+    0 3px 3px -2px rgba(0, 0, 0, 0.2),
+    0 1px 8px 0 rgba(0, 0, 0, 0.12);
+
+  --shadow-4p:
+    0 4px 5px 0 rgba(0, 0, 0, 0.14),
+    0 1px 10px 0 rgba(0, 0, 0, 0.12),
+    0 2px 4px -1px rgba(0, 0, 0, 0.2);
+
+  --shadow-6p:
+    0 6px 10px 0 rgba(0, 0, 0, 0.14),
+    0 1px 18px 0 rgba(0, 0, 0, 0.12),
+    0 3px 5px -1px rgba(0, 0, 0, 0.2);
+
+  --shadow-8p:
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12),
+    0 5px 5px -3px rgba(0, 0, 0, 0.2);
+
+  --shadow-16p:
+    0 16px 24px 2px rgba(0, 0, 0, 0.14),
+    0 6px 30px 5px rgba(0, 0, 0, 0.12),
+    0 8px 10px -5px rgba(0, 0, 0, 0.2);
+
+  --shadow-key-umbra-opacity: 0.2;
+  --shadow-key-penumbra-opacity: 0.14;
+  --shadow-ambient-shadow-opacity: 0.12;
+
+  --zdepth-shadow-1: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+  --zdepth-shadow-2: 0 3px 10px rgba(0, 0, 0, 0.16), 0 3px 10px rgba(0, 0, 0, 0.23);
+  --zdepth-shadow-3: 0 10px 30px rgba(0, 0, 0, 0.19), 0 6px 10px rgba(0, 0, 0, 0.23);
+  --zdepth-shadow-4: 0 14px 45px rgba(0, 0, 0, 0.25), 0 10px 18px rgba(0, 0, 0, 0.22);
+  --zdepth-shadow-5: 0 19px 60px rgba(0, 0, 0, 0.3), 0 15px 20px rgba(0, 0, 0, 0.22);
+
+  --animation-duration: 0.35s;
+  --animation-delay: calc(var(--animation-duration) / 5);
+  --animation-curve-fast-out-slow-in: cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1);
+  --animation-curve-fast-out-linear-in: cubic-bezier(0.4, 0, 1, 1);
+  --animation-curve-default: var(--animation-curve-fast-out-slow-in);
+
+  --z-index-highest: 300;
+  --z-index-higher: 200;
+  --z-index-high: 100;
+  --z-index-normal: 1;
+  --z-index-low: -100;
+  --z-index-lower: -200
+}
+:root {
+  --ripple-duration: 800ms;
+  --ripple-final-opacity: 0.3;
+  --ripple-size: calc(15 * var(--unit));
+}
+.rippleWrapper {
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: var(--z-index-normal);
+}
+.ripple {
+  background-color: currentColor;
+  border-radius: 50%;
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform-origin: 50% 50%;
+  transition-duration: var(--ripple-duration);
+  z-index: var(--z-index-high)
+}
+.ripple.rippleRestarting {
+  opacity: var(--ripple-final-opacity);
+  transition-property: none;
+}
+.ripple.rippleActive {
+  opacity: var(--ripple-final-opacity);
+  transition-property: transform;
+}
+.ripple:not(.rippleActive):not(.rippleRestarting) {
+  opacity: 0;
+  transition-property: opacity, transform;
+}

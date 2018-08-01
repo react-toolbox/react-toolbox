@@ -1,0 +1,20 @@
+:root {
+  --list-vertical-padding: calc(0.8 * var(--unit));
+  --list-horizontal-padding: calc(1.6 * var(--unit));
+  --list-content-left-spacing: calc(7.2 * var(--unit));
+  --list-subheader-height: calc(4.8 * var(--unit));
+  --list-subheader-font-size: calc(1.4 * var(--unit));
+  --list-subheader-font-weight: 500;
+  --list-divider-height: calc(0.1 * var(--unit));
+  --list-item-min-height: calc(4.8 * var(--unit));
+  --list-item-min-height-legend: calc(7.2 * var(--unit));
+  --list-item-hover-color: var(--palette-grey-200);
+  --list-item-legend-margin-top: calc(0.3 * var(--unit));
+  --list-item-icon-font-size: calc(2.4 * var(--unit));
+  --list-item-icon-size: calc(1.8 * var(--unit));
+  --list-item-right-icon-margin: calc(var(--list-content-left-spacing) - 2 * var(--list-horizontal-padding) - var(--list-item-icon-size));
+  --list-item-right-checkbox-margin: calc(var(--list-item-right-icon-margin) + var(--list-horizontal-padding));
+  --list-item-avatar-height: calc(4 * var(--unit));
+  --list-item-avatar-margin: calc(0.8 * var(--unit));
+  --list-item-child-margin: calc(0.8 * var(--unit));
+}

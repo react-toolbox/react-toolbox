@@ -1,0 +1,10 @@
+:root {
+  --autocomplete-border-size: calc(var(--input-field-height) / 7);
+  --autocomplete-color-primary-contrast: var(--color-primary-contrast);
+  --autocomplete-color-primary: var(--color-primary);
+  --autocomplete-overflow-max-height: 45vh;
+  --autocomplete-suggestion-active-background: var(--palette-grey-200);
+  --autocomplete-suggestion-padding: var(--unit);
+  --autocomplete-suggestions-background: var(--color-white);
+  --autocomplete-value-margin: calc(var(--unit) * 0.25) calc(var(--unit) * 0.5) calc(var(--unit) * 0.25) 0;
+}
