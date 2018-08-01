@@ -24,6 +24,18 @@
   text-indent: 28px !important;
 }
 
+.withclear label {
+  transition-property: top, left, font-size, color !important;
+}
+
+.inputFilled {
+  composes: filled from '../input/theme.css';
+}
+
+.withclear input:not(:focus):not(.inputFilled) ~ label {
+  left: 28px !important;
+}
+
 .values {
   flex-direction: row;
   flex-wrap: wrap;

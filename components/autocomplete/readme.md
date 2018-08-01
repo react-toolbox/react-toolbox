@@ -43,7 +43,6 @@ If you want to provide a theme via context, the component key is `RTAutocomplete
 
 | Name                | Type      | Default         | Description|
 |:-----|:-----|:-----|:-----|
-| `allowCreate`                   | `Bool`                        | `false` | Determines if user can create a new option with the current typed value |
 | `className`                     | `String`                      | `''`    | Sets a class to style of the Component.|
 | `direction`                     | `String`                      | `auto`  | Determines the opening direction. It can be `auto`, `up` or `down`. |
 | `disabled`                      | `Bool`                        | `false` | If true, component will be disabled. |
@@ -60,8 +59,6 @@ If you want to provide a theme via context, the component key is `RTAutocomplete
 | `query`                         | `String` |         | This property has to be used in case the `source` is not static and will be changing during search for `multiple={false}` autocomplete, content of the `query` has to be managed by the `onQueryChange` callback. |
 | `source`                        | `Object` or `Array`           |         | Object of key/values or array representing all items suggested. |
 | `selectedPosition`              | `String`                      | `above` | Determines if the selected list is shown above or below input. It can be `above`, `below` or `none`. |
-| `showSelectedWhenNotInSource`   | `Bool`                        | `false` | Determines if the selected list is shown if the `value` keys don't exist in the source. Only works if passing the `value` prop as an Object. |
-| `showSuggestionsWhenValueIsSet` | `Bool`                        | `false` | If true, the list of suggestions will not be filtered when a value is selected, until the query is modified. |
 | `suggestionMatch`               | `String`                      | `start` | Determines how suggestions are supplied. It can be `start` (query matches the start of a suggestion), `anywhere` (query matches anywhere inside the suggestion), `word` (query matches the start of a word in the suggestion) or `disabled` (disable filtering of provided source, all items are shown). |
 | `value`                         | `String`, `Array` or `Object` |         | Value or array of values currently selected component. |
 

@@ -43,11 +43,6 @@ export interface AutocompleteTheme {
 
 export interface AutocompleteProps extends InputProps {
   /**
-   * Determines if user can create a new option with the current typed value.
-   * @default false
-   */
-  allowCreate?: boolean;
-  /**
    * Determines the opening direction. It can be auto, up or down.
    * @default auto
    */
@@ -105,16 +100,6 @@ export interface AutocompleteProps extends InputProps {
    * @default above
    */
   selectedPosition?: "above" | "below" | "none";
-  /**
-   * Determines if the selected list is shown if the `value` keys don't exist in the source. Only works if passing the `value` prop as an Object.
-   * @default false
-   */
-  showSelectedWhenNotInSource?: boolean;
-  /**
-   * If true, the list of suggestions will not be filtered when a value is selected.
-   * @default false
-   */
-  showSuggestionsWhenValueIsSet?: boolean;
   /**
    * Object of key/values or array representing all items suggested.
    */
