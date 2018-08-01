@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Swipeable from 'react-swipeable';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import { range, getAnimationModule } from '../utils/utils';
@@ -102,6 +103,14 @@ const factory = (IconButton) => {
       });
     };
 
+    swipingLeft = () => {
+      this.changeViewMonth({ currentTarget: { id: 'right' } });
+    };
+    swipingRight = () => {
+      this.changeViewMonth({ currentTarget: { id: 'left' } });
+    };
+
+
     renderYears() {
       return (
         <ul
@@ -159,9 +168,13 @@ const factory = (IconButton) => {
 
     render() {
       return (
-        <div className={this.props.theme.calendar}>
+        <Swipeable
+          className={this.props.theme.calendar}
+          onSwipingLeft={this.swipingLeft}
+          onSwipingRight={this.swipingRight}
+        >
           {this.props.display === 'months' ? this.renderMonths() : this.renderYears()}
-        </div>
+        </Swipeable>
       );
     }
   }

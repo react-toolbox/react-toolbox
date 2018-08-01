@@ -32,6 +32,7 @@
     "ramda": "^0.23.0",
     "react-css-themr": "^2.1.2",
     "react-style-proptype": "^3.0.0",
+    "react-swipeable": "^4.3.0",
     "react-transition-group": "^2.2.1"
   },
   "devDependencies": {
