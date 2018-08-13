@@ -222,9 +222,22 @@ const factory = (FontIcon) => {
             </label>
             : null}
           {hint ? <span hidden={labelText} className={theme.hint}>{hint}</span> : null}
-          {error ? <span id={errorId} role="alert" className={theme.error}>{error}</span> : null}
-          {description ? <span className={theme.description}>{description}</span> : null}
+
           {maxLength ? <span className={theme.counter}>{length}/{maxLength}</span> : null}
+          {error
+            ? <span
+              id={errorId}
+              role="alert"
+              className={classnames(theme.error, { [theme.withCounter]: !!maxLength })}
+            >
+              {error}
+            </span>
+            : null}
+          {description
+            ? <span className={classnames(theme.description, { [theme.withCounter]: !!maxLength })}>
+              {description}
+            </span>
+            : null}
           {children}
         </div>
       );

@@ -152,6 +152,7 @@
 
 .error {
   color: var(--input-text-error-color);
+  display: block;
 }
 
 .description {
@@ -163,6 +164,10 @@
   color: var(--input-text-label-color);
   position: absolute;
   right: 0;
+}
+
+.withCounter {
+  padding-right: 3.125rem;
 }
 
 .disabled > .inputElement {
