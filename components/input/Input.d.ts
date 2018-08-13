@@ -11,6 +11,10 @@ export interface InputTheme {
    */
   counter?: string;
   /**
+   * Used for the description element.
+   */
+  description?: string;
+  /**
    * Added to the root class when input is disabled.
    */
   disabled?: string;
@@ -66,6 +70,10 @@ export interface InputProps extends ReactToolbox.Props {
    * @default false
    */
   disabled?: boolean;
+  /**
+   * Text string to use for description element.
+   */
+  description?: string;
   /**
    * Give an error node to display under the field.
    */

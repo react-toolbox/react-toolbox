@@ -11,6 +11,7 @@ const factory = (FontIcon) => {
       children: PropTypes.node,
       className: PropTypes.string,
       defaultValue: PropTypes.string,
+      description: PropTypes.string,
       disabled: PropTypes.bool,
       error: PropTypes.oneOfType([
         PropTypes.string,
@@ -42,6 +43,7 @@ const factory = (FontIcon) => {
       theme: PropTypes.shape({
         bar: PropTypes.string,
         counter: PropTypes.string,
+        description: PropTypes.string,
         disabled: PropTypes.string,
         error: PropTypes.string,
         errored: PropTypes.string,
@@ -161,15 +163,15 @@ const factory = (FontIcon) => {
 
     valuePresent = value => (
       value !== null
-        && value !== undefined
-        && value !== ''
-        && !(typeof value === 'number' && isNaN(value))
+      && value !== undefined
+      && value !== ''
+      && !(typeof value === 'number' && isNaN(value))
     )
 
     render() {
-      const { children, defaultValue, disabled, error, floating, hint, icon,
-              name, label: labelText, maxLength, multiline, required, role,
-              theme, type, value, onKeyPress, rows = 1, ...others } = this.props;
+      const { children, defaultValue, description, disabled, error, floating, hint, icon,
+        name, label: labelText, maxLength, multiline, required, role,
+        theme, type, value, onKeyPress, rows = 1, ...others } = this.props;
       const length = maxLength && value ? value.length : 0;
       const labelClassName = classnames(theme.label, { [theme.fixed]: !floating });
 
@@ -221,6 +223,7 @@ const factory = (FontIcon) => {
             : null}
           {hint ? <span hidden={labelText} className={theme.hint}>{hint}</span> : null}
           {error ? <span id={errorId} role="alert" className={theme.error}>{error}</span> : null}
+          {description ? <span className={theme.description}>{description}</span> : null}
           {maxLength ? <span className={theme.counter}>{length}/{maxLength}</span> : null}
           {children}
         </div>

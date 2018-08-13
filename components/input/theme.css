@@ -144,11 +144,19 @@
 }
 
 .error,
+.description,
 .counter {
-  color: var(--input-text-error-color);
   font-size: var(--input-label-font-size);
   line-height: var(--input-underline-height);
-  margin-bottom: calc(-1 * var(--input-underline-height));
+}
+
+.error {
+  color: var(--input-text-error-color);
+}
+
+.description {
+  color: var(--input-text-label-color);
+  display: block;
 }
 
 .counter {
