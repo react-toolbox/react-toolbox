@@ -42,6 +42,10 @@
     cursor: normal;
     pointer-events: none;
   }
+
+  &.withclear input {
+    text-indent: 28px !important;
+  }
 }
 
 .value {
@@ -163,4 +167,14 @@
     height: 0;
     width: 0;
   }
+}
+
+.clear {
+  cursor: pointer;
+  z-index: 10;
+  position: absolute;
+  display: block;
+  top: 12px;
+  left: -4px;
+  padding: 4px;
 }
