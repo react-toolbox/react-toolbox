@@ -197,9 +197,13 @@ const rippleFactory = (options = {}) => {
        * @return {Function} Callback function that deactivates the ripple and removes the listener
        */
       addRippleDeactivateEventListener(isTouch, rippleKey) {
-        const eventType = isTouch ? 'touchend' : 'mouseup';
+        const eventType = isTouch ? ['touchend', 'touchmove'] : 'mouseup';
         const endRipple = this.createRippleDeactivateCallback(eventType, rippleKey);
-        document.addEventListener(eventType, endRipple);
+        if (Array.isArray(eventType)) {
+          eventType.map(eT => document.addEventListener(eT, endRipple));
+        } else {
+          document.addEventListener(eventType, endRipple);
+        }
         return endRipple;
       }
 
@@ -215,7 +219,12 @@ const rippleFactory = (options = {}) => {
       createRippleDeactivateCallback(eventType, rippleKey) {
         const self = this;
         return function endRipple() {
-          document.removeEventListener(eventType, endRipple);
+          if (Array.isArray(eventType)) {
+            eventType.map(eT => document.removeEventListener(eT, endRipple));
+          } else {
+            document.removeEventListener(eventType, endRipple);
+          }
+
           self.setState({ ripples: {
             ...self.state.ripples,
             [rippleKey]: Object.assign({}, self.state.ripples[rippleKey], { active: false }),
