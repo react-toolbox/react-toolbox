@@ -13,10 +13,6 @@
   width: 100%;
 
   @apply --reset;
-
-  & + .divider {
-    margin-top: calc(-1 * var(--list-vertical-padding));
-  }
 }
 
 .subheader {
@@ -32,11 +28,19 @@
   background-color: var(--color-divider);
   border: 0;
   height: var(--list-divider-height);
-  margin: calc(-1 * var(--list-divider-height)) 0 0;
+  margin: 0;
 
   &.inset {
     margin-left: var(--list-content-left-spacing);
-    margin-right: var(--list-horizontal-padding);
+  }
+
+  &.thick {
+    margin-bottom: var(--list-vertical-padding);
+    margin-top: var(--list-vertical-padding);
+  }
+
+  &:last-child {
+    display: none;
   }
 }
 
@@ -52,6 +56,10 @@
   }
 
   & ~ .divider {
+    margin-top: calc(-1 * var(--list-divider-height));
+  }
+
+  & ~ .divider.thick {
     margin-bottom: var(--list-vertical-padding);
     margin-top: var(--list-vertical-padding);
   }

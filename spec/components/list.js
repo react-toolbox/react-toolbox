@@ -49,24 +49,28 @@ class ListTest extends React.Component {
               legend="Product Manager at Fon"
               rightIcon="star"
             />
+            <ListDivider inset />
             <ListItem
               avatar="https://pbs.twimg.com/profile_images/693578804808278017/a5y4h8MN_400x400.png"
               caption="Javi Velasco"
               legend="Frontend engineer at Audiense"
               rightIcon="star"
             />
+            <ListDivider inset thick />
             <ListItem
               avatar="https://avatars2.githubusercontent.com/u/559654?v=3&s=460"
               caption="Javi Jiménez"
               legend="Frontend engineer at MediaSmart"
               rightIcon="star"
             />
+            <ListDivider inset />
             <ListItem
               avatar="https://pbs.twimg.com/profile_images/755797598565531649/Whsf9259.jpg"
               caption="Tobias Van Schneider"
               legend="Designer at Spotify"
               rightIcon="star"
             />
+            <ListDivider inset />
           </List>
         </div>
 
