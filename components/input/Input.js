@@ -18,6 +18,10 @@ const factory = (FontIcon) => {
         PropTypes.node,
       ]),
       floating: PropTypes.bool,
+      helper: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node,
+      ]),
       hint: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.node,
@@ -46,6 +50,7 @@ const factory = (FontIcon) => {
         disabled: PropTypes.string,
         error: PropTypes.string,
         errored: PropTypes.string,
+        helper: PropTypes.string,
         hidden: PropTypes.string,
         hint: PropTypes.string,
         icon: PropTypes.string,
@@ -64,6 +69,7 @@ const factory = (FontIcon) => {
 
     static defaultProps = {
       className: '',
+      helper: '',
       hint: '',
       disabled: false,
       floating: true,
@@ -161,7 +167,7 @@ const factory = (FontIcon) => {
     }
 
     render() {
-      const { children, defaultValue, disabled, error, floating, hint, icon,
+      const { children, defaultValue, disabled, error, floating, helper, hint, icon,
               name, label: labelText, maxLength, multiline, required, role,
               theme, type, value, onKeyPress, rows = 1, ...others } = this.props;
       const length = maxLength && value ? value.length : 0;
@@ -210,6 +216,7 @@ const factory = (FontIcon) => {
             : null}
           {hint ? <span hidden={labelText} className={theme.hint}>{hint}</span> : null}
           {error ? <span className={theme.error}>{error}</span> : null}
+          {helper ? <span className={theme.helper}>{helper}</span> : null}
           {maxLength ? <span className={theme.counter}>{length}/{maxLength}</span> : null}
           {children}
         </div>

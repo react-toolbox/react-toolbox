@@ -148,11 +148,16 @@
 }
 
 .error,
+.helper,
 .counter {
   color: var(--input-text-error-color);
   font-size: var(--input-label-font-size);
   line-height: var(--input-underline-height);
   margin-bottom: calc(-1 * var(--input-underline-height));
+}
+
+.helper {
+  color: var(--input-text-helper-color);
 }
 
 .counter {
