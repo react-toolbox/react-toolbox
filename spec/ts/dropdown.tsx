@@ -9,6 +9,9 @@ const countries = [
   { value: 'TH-th', label: 'Thailand', img: 'http://' },
   { value: 'EN-en', label: 'USA', img: 'http://' },
   { value: 'FR-fr', label: 'France', img: 'http://' },
+  { value: 'ZH-cn', label: 'China', img: 'http://' },
+  { value: 'NL-nl', label: 'Netherlands', img: 'http://' },
+  { value: 'NL-be', label: 'Belgium', img: 'http://' },
 ];
 
 class DropdownTest extends React.Component<any, any> {

@@ -53,11 +53,6 @@
   &.up {
     bottom: 0;
   }
-
-  &::-webkit-scrollbar {
-    height: 0;
-    width: 0;
-  }
 }
 
 .suggestion {
