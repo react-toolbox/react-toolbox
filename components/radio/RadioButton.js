@@ -9,6 +9,11 @@ import radioFactory from './Radio';
 
 const factory = (Radio) => {
   class RadioButton extends Component {
+    constructor(props) {
+      super(props);
+      this._id = uuidv4();
+    }
+
     static propTypes = {
       checked: PropTypes.bool,
       children: PropTypes.node,
@@ -72,8 +77,8 @@ const factory = (Radio) => {
         ...others
       } = this.props;
       const _className = classnames(theme[this.props.disabled ? 'disabled' : 'field'], className);
-      const inputId = `input_${uuidv4()}`;
-      const labelId = `label_${uuidv4()}`;
+      const inputId = `input_${this._id}`;
+      const labelId = `label_${this._id}`;
 
       return (
         <label

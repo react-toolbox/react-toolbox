@@ -10,6 +10,11 @@ import checkFactory from './Check';
 
 const factory = (Check) => {
   class Checkbox extends Component {
+    constructor(props) {
+      super(props);
+      this._id = uuidv4();
+    }
+
     static propTypes = {
       checked: PropTypes.bool,
       children: PropTypes.node,
@@ -63,8 +68,8 @@ const factory = (Check) => {
       const className = classnames(theme.field, {
         [theme.disabled]: this.props.disabled,
       }, this.props.className);
-      const inputId = `input_${uuidv4()}`;
-      const labelId = `label_${uuidv4()}`;
+      const inputId = `input_${this._id}`;
+      const labelId = `label_${this._id}`;
 
       return (
         <label
