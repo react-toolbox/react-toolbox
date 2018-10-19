@@ -1,10 +1,11 @@
 const pkg = require('../package');
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   target: 'web',
+  mode: 'development',
   context: path.join(__dirname, '../'),
   devtool: 'cheap-module-eval-source-map',
   entry: [
@@ -22,47 +23,51 @@ module.exports = {
     modules: ['node_modules']
   },
   module: {
-    rules: [{
-      test: /\.js$/,
-      use: 'babel-loader',
-      include: [
-        path.join(__dirname, '../components'),
-        path.join(__dirname, '../spec')
-      ]
-    }, {
-      test: /\.css$/,
-      include: /node_modules/,
-      use: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: 'css-loader',
-      })
-    }, {
-      test: /\.css$/,
-      include: [
-        path.join(__dirname, '../components'),
-        path.join(__dirname, '../spec')
-      ],
-      use: ['style-loader', {
-        loader: 'css-loader',
-        query: {
-          import: false,
-          importLoaders: 1,
-          localIdentName: '[name]__[local]___[hash:base64:5]',
-          modules: true,
-          sourceMap: true
-        },
-      }, {
-        loader: 'postcss-loader',
-        options: {
-          config: {
-            path: path.join(__dirname, './postcss.config.js')
+    rules: [
+      {
+        test: /\.js$/,
+        use: 'babel-loader',
+        include: [
+          path.join(__dirname, '../components'),
+          path.join(__dirname, '../spec')
+        ]
+      },
+      {
+        test: /\.css$/,
+        include: /node_modules/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
+      },
+      {
+        test: /\.css$/,
+        include: [
+          path.join(__dirname, '../components'),
+          path.join(__dirname, '../spec')
+        ],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            query: {
+              modules: true,
+              sourceMap: true,
+              importLoaders: 1,
+              localIdentName: '[name]__[local]___[hash:base64:5]',
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              config: {
+                path: path.join(__dirname, './postcss.config.js')
+              }
+            }
           }
-        }
-      }]
-    }]
+        ]
+      }
+    ]
   },
   plugins: [
-    new ExtractTextPlugin({ filename: 'spec.css', allChunks: true }),
+    new MiniCssExtractPlugin({ filename: 'spec.css', allChunks: true }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.EvalSourceMapDevToolPlugin(),
     new webpack.DefinePlugin({
