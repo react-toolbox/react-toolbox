@@ -61,25 +61,6 @@
   white-space: nowrap;
 }
 
-.input {
-  appearance: none;
-  border: 0;
-  height: 0;
-  margin: 0;
-  opacity: 0;
-  padding: 0;
-  position: absolute;
-  width: 0;
-
-  &:focus ~ .radio {
-    box-shadow: 0 0 0 var(--unit) var(--radio-focus-color);
-  }
-
-  &:focus ~ .radioChecked {
-    box-shadow: 0 0 0 var(--unit) var(--radio-checked-focus-color);
-  }
-}
-
 .disabled {
   composes: field;
 
@@ -99,5 +80,24 @@
     &::before {
       background-color: var(--radio-disabled-color);
     }
+  }
+}
+
+.input {
+  appearance: none;
+  border: 0;
+  height: 0;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  width: 0;
+
+  &:focus ~ .radio {
+    box-shadow: 0 0 0 var(--unit) var(--radio-focus-color);
+  }
+
+  &:focus ~ .radioChecked {
+    box-shadow: 0 0 0 var(--unit) var(--radio-checked-focus-color);
   }
 }
