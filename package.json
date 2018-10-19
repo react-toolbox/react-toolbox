@@ -72,7 +72,7 @@
     "gulp-rimraf": "^0.2.1",
     "identity-obj-proxy": "^3.0.0",
     "internal-ip": "^1.2.0",
-    "jest": "^20.0.4",
+    "jest": "^23.6.0",
     "lint-staged": "^3.4.2",
     "normalize.css": "^7.0.0",
     "postcss-apply": "^0.10.0",
@@ -125,24 +125,6 @@
     "tsd": "cpx \"./components/**/*.d.ts\" ./lib"
   },
   "license": "MIT",
-  "jest": {
-    "moduleDirectories": [
-      "node_modules"
-    ],
-    "moduleNameMapper": {
-      "(\\.css$)|(normalize.css/normalize)|(^exports-loader)": "identity-obj-proxy"
-    },
-    "modulePaths": [
-      "<rootDir>/components"
-    ],
-    "setupFiles": [
-      "./jest.polyfills.js",
-      "./jest.setup.js"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ]
-  },
   "peerDependencies": {
     "classnames": "^2.2.0",
     "prop-types": "^15.6.0",
