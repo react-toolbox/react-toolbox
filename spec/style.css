@@ -18,7 +18,7 @@ body {
   & > section,
   & > div > section {
     background-color: var(--color-white);
-    box-shadow: 0 1px 2px color(var(--color-black) a(25%));
+    box-shadow: 0 1px 2px color-mod(var(--color-black) a(25%));
     margin-bottom: var(--offset);
     padding: var(--offset);
 
