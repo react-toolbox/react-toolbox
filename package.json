@@ -29,7 +29,6 @@
     "@types/prop-types": "^15.5.2",
     "classnames": "^2.2.5",
     "core-js": "^2.4.0",
-    "ramda": "^0.23.0",
     "react-css-themr": "^2.1.2",
     "react-style-proptype": "^3.0.0",
     "react-transition-group": "^2.2.1"
@@ -85,6 +84,7 @@
     "postcss-reporter": "^3.0.0",
     "pre-commit": "^1.2.2",
     "prop-types": "^15.6.0",
+    "ramda": "^0.25.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-test-renderer": "^16.2.0",
