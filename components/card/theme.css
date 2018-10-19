@@ -19,69 +19,6 @@
   }
 }
 
-.cardMedia {
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-
-  &.wide,
-  &.square {
-    width: 100%;
-
-    & .content {
-      height: 100%;
-      position: absolute;
-    }
-
-    & .content > iframe,
-    & .content > video,
-    & .content > img {
-      max-width: 100%;
-    }
-  }
-
-  &::after {
-    content: '';
-    display: block;
-    height: 0;
-  }
-
-  &.wide::after {
-    padding-top: 56.25%;
-  }
-
-  &.square::after {
-    padding-top: 100%;
-  }
-
-  & .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    left: 0;
-    overflow: hidden;
-    position: relative;
-    top: 0;
-    width: 100%;
-  }
-
-  & .contentOverlay {
-    & .cardTitle,
-    & .cardActions,
-    & .cardText {
-      background-color: var(--card-text-overlay);
-    }
-  }
-
-  & .cardTitle {
-    & .title,
-    & .subtitle {
-      color: var(--card-color-white);
-    }
-  }
-}
-
 .cardTitle {
   align-items: center;
   display: flex;
@@ -174,6 +111,69 @@
 
     &:last-child {
       margin-right: 0;
+    }
+  }
+}
+
+.cardMedia {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+  & .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    left: 0;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+    width: 100%;
+  }
+
+  &.wide,
+  &.square {
+    width: 100%;
+
+    & .content {
+      height: 100%;
+      position: absolute;
+    }
+
+    & .content > iframe,
+    & .content > video,
+    & .content > img {
+      max-width: 100%;
+    }
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    height: 0;
+  }
+
+  &.wide::after {
+    padding-top: 56.25%;
+  }
+
+  &.square::after {
+    padding-top: 100%;
+  }
+
+  & .cardTitle {
+    & .title,
+    & .subtitle {
+      color: var(--card-color-white);
+    }
+  }
+
+  & .contentOverlay {
+    & .cardTitle,
+    & .cardActions,
+    & .cardText {
+      background-color: var(--card-text-overlay);
     }
   }
 }
