@@ -74,6 +74,7 @@
     "lint-staged": "^3.4.2",
     "mini-css-extract-plugin": "^0.4.4",
     "postcss-apply": "^0.11.0",
+    "postcss-calc": "^7.0.0",
     "postcss-each": "^0.10.0",
     "postcss-import": "^12.0.0",
     "postcss-loader": "^3.0.0",

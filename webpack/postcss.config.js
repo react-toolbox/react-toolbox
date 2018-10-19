@@ -18,6 +18,7 @@ module.exports = () => ({
         'color-mod-function': true, // required to use color-mod()
       }
     }),
+    require('postcss-calc'), // required as postcss-preset-env doesn't have a reduce calc() funtion
     require('postcss-normalize'),
     require('postcss-reporter')({
       clearReportedMessages: true
