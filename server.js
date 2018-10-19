@@ -22,7 +22,6 @@ app.get('*', (req, res) => {
 });
 
 const port = 8080;
-const ip = internalIp.v4();
 
 app.listen(port, (err) => {
   if (err) {
@@ -30,8 +29,10 @@ app.listen(port, (err) => {
     return;
   }
 
-  console.log(' --------------------------------------');
-  console.log(`    Local: http://0.0.0.0:${port}`);
-  console.log(` External: http://${ip}:${port}`);
-  console.log(' --------------------------------------');
+  internalIp.v4().then(ip => {
+    console.log(' --------------------------------------');
+    console.log(`    Local: http://0.0.0.0:${port}`);
+    console.log(` External: http://${ip}:${port}`);
+    console.log(' --------------------------------------');
+  })
 });
