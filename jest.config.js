@@ -3,7 +3,7 @@ module.exports = {
     'node_modules',
   ],
   moduleNameMapper: {
-    '(\\.css$)|(normalize.css/normalize)|(^exports-loader)': 'identity-obj-proxy',
+    '\\.css$': 'identity-obj-proxy',
   },
   modulePaths: [
     '<rootDir>/components',
