@@ -116,6 +116,18 @@
   }
 }
 
+.knob {
+  background-color: var(--clock-primary-color);
+  border-radius: 50%;
+  cursor: pointer;
+  height: var(--clock-knob-size);
+  left: 50%;
+  margin-left: calc(-1 * var(--clock-knob-size) / 2);
+  position: absolute;
+  top: calc(-1 * var(--clock-knob-size));
+  width: var(--clock-knob-size);
+}
+
 .hand {
   background-color: var(--clock-primary-color);
   bottom: 50%;
@@ -166,18 +178,6 @@
       width: var(--clock-hand-width);
     }
   }
-}
-
-.knob {
-  background-color: var(--clock-primary-color);
-  border-radius: 50%;
-  cursor: pointer;
-  height: var(--clock-knob-size);
-  left: 50%;
-  margin-left: calc(-1 * var(--clock-knob-size) / 2);
-  position: absolute;
-  top: calc(-1 * var(--clock-knob-size));
-  width: var(--clock-knob-size);
 }
 
 .zoomInEnter,
