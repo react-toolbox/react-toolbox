@@ -2,18 +2,8 @@
 @import '../variables.css';
 @import './config.css';
 
-.linear {
-  background: var(--color-divider);
-  display: inline-block;
-  height: var(--progress-height);
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-
-  &.indeterminate .value {
-    animation: linear-indeterminate-bar 1s linear infinite;
-    transform-origin: center center;
-  }
+.value {
+  background-color: var(--progress-main-color);
 }
 
 .value,
@@ -29,14 +19,40 @@
   transition-timing-function: var(--animation-curve-default);
 }
 
-.value {
-  background-color: var(--progress-main-color);
+.linear {
+  background: var(--color-divider);
+  display: inline-block;
+  height: var(--progress-height);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+
+  &.indeterminate .value {
+    animation: linear-indeterminate-bar 1s linear infinite;
+    transform-origin: center center;
+  }
 }
 
 .buffer {
   background-image:
     linear-gradient(to right, var(--progress-secondary-color), var(--progress-secondary-color)),
     linear-gradient(to right, var(--progress-main-color), var(--progress-main-color));
+}
+
+.circle {
+  height: 100%;
+  width: 100%;
+}
+
+.path {
+  fill: none;
+  stroke: var(--progress-main-color);
+  stroke-dasharray: 0, calc(var(--scale-ratio) * 200);
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  stroke-miterlimit: 20;
+  stroke-width: 4;
+  transition: stroke-dasharray var(--animation-duration) var(--animation-curve-default);
 }
 
 .circular {
@@ -57,10 +73,12 @@
       stroke-dashoffset: 0;
     }
 
-    &.multicolor .path {
-      animation:
-        circular-indeterminate-bar-dash 1.5s ease-in-out infinite,
-        colors calc(1.5s * 4) ease-in-out infinite;
+    &.multicolor {
+      & .path {
+        animation:
+          circular-indeterminate-bar-dash 1.5s ease-in-out infinite,
+          colors calc(1.5s * 4) ease-in-out infinite;
+      }
     }
   }
 }
@@ -76,22 +94,6 @@
       linear-gradient(to right, var(--progress-secondary-color), var(--progress-secondary-color)),
       linear-gradient(to right, var(--progress-disabled-color), var(--progress-disabled-color));
   }
-}
-
-.circle {
-  height: 100%;
-  width: 100%;
-}
-
-.path {
-  fill: none;
-  stroke: var(--progress-main-color);
-  stroke-dasharray: 0, calc(var(--scale-ratio) * 200);
-  stroke-dashoffset: 0;
-  stroke-linecap: round;
-  stroke-miterlimit: 20;
-  stroke-width: 4;
-  transition: stroke-dasharray var(--animation-duration) var(--animation-curve-default);
 }
 
 @keyframes linear-indeterminate-bar {
