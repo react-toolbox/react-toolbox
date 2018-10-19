@@ -40,19 +40,10 @@
   transition-property: background-color;
   transition-timing-function: var(--animation-curve-default);
 
+  &.selected { background-color: var(--table-selection-color); }
+
   &:hover,
   &.selected:hover { background-color: var(--table-hover-color); }
-  &.selected { background-color: var(--table-selection-color); }
-}
-
-.rowCell,
-.headCell {
-  padding: 0 var(--table-column-padding) 12px var(--table-column-padding);
-  text-align: left;
-
-  &:first-of-type { padding-left: 24px; }
-  &:last-of-type { padding-right: 24px; }
-  &.numeric { text-align: right; }
 }
 
 .rowCell {
@@ -69,6 +60,18 @@
     & > * {
       margin: 0;
     }
+  }
+}
+
+.sortIcon {
+  display: inline-block;
+  font-size: calc(1.6 * var(--unit));
+  margin-right: 3px;
+  transition: 0.28s transform var(--animation-curve-default);
+  vertical-align: sub;
+
+  &.asc {
+    transform: rotate(180deg);
   }
 }
 
@@ -101,14 +104,12 @@
   }
 }
 
-.sortIcon {
-  display: inline-block;
-  font-size: calc(1.6 * var(--unit));
-  margin-right: 3px;
-  transition: 0.28s transform var(--animation-curve-default);
-  vertical-align: sub;
+.rowCell,
+.headCell {
+  padding: 12px var(--table-column-padding);
+  text-align: left;
 
-  &.asc {
-    transform: rotate(180deg);
-  }
+  &:first-of-type { padding-left: 24px; }
+  &:last-of-type { padding-right: 24px; }
+  &.numeric { text-align: right; }
 }
