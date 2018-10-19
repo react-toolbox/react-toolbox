@@ -50,7 +50,7 @@ class ListTest extends React.Component {
               rightIcon="star"
             />
             <ListItem
-              avatar="https://pbs.twimg.com/profile_images/693578804808278017/a5y4h8MN_400x400.png"
+              avatar="https://placeimg.com/80/80/people"
               caption="Javi Velasco"
               legend="Frontend engineer at Audiense"
               rightIcon="star"
@@ -62,7 +62,7 @@ class ListTest extends React.Component {
               rightIcon="star"
             />
             <ListItem
-              avatar="https://pbs.twimg.com/profile_images/755797598565531649/Whsf9259.jpg"
+              avatar="https://placeimg.com/80/80/people"
               caption="Tobias Van Schneider"
               legend="Designer at Spotify"
               rightIcon="star"
@@ -112,7 +112,7 @@ class ListTest extends React.Component {
               rightIcon="mail"
             />
             <ListItem
-              avatar="https://pbs.twimg.com/profile_images/693578804808278017/a5y4h8MN_400x400.png"
+              avatar="https://placeimg.com/80/80/people"
               caption="Javi Velasco"
               rightIcon="mail"
             />
@@ -122,7 +122,7 @@ class ListTest extends React.Component {
               rightIcon="mail"
             />
             <ListItem
-              avatar="https://pbs.twimg.com/profile_images/755797598565531649/Whsf9259.jpg"
+              avatar="https://placeimg.com/80/80/people"
               caption="Tobias Van Schneider"
               rightIcon="mail"
             />
@@ -149,7 +149,7 @@ class ListTest extends React.Component {
             <ListItem leftIcon="send" rightIcon="done" caption="Reference item" />
             <ListItem rightIcon="done" caption="Item with custom left icons">
               <FontIcon value="send" />
-              <Avatar image="https://pbs.twimg.com/profile_images/693578804808278017/a5y4h8MN_400x400.png" />
+              <Avatar image="https://placeimg.com/80/80/people" />
             </ListItem>
             <ListItem leftIcon="send">
               <ListItemContent caption="custom right icons" legend="ListItemContent acts as a divider" />
@@ -175,7 +175,7 @@ class ListTest extends React.Component {
             <ListItem caption="Item with overlayed click events" onClick={() => console.log('clicked row')}>
               <FontIcon value="send" onClick={() => console.log('clicked icon')} />
               <Avatar
-                image="https://pbs.twimg.com/profile_images/693578804808278017/a5y4h8MN_400x400.png"
+                image="https://placeimg.com/80/80/people"
                 onMouseDown={() => console.log('avatar mouse down, should see ripple')}
                 onClick={() => console.log('clicked avatar')}
               />
