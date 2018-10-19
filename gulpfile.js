@@ -3,41 +3,75 @@ const gulp = require('gulp');
 const babel = require('gulp-babel');
 const postcss = require('gulp-postcss');
 
-gulp.task('js', function () {
-  return gulp.src([
-    './components/**/*.js',
-    '!./components/**/*.spec.js',
-    '!./components/**/__test__',
-    '!./components/__mocks__/**/*.js'
-  ])
-    .pipe(babel())
-    .pipe(gulp.dest('./lib'));
-});
-
-gulp.task('css', function () {
-  const plugins = [
-    require('postcss-import')({
-      root: __dirname,
-      path: [path.join(__dirname, './components')]
-    }),
-    require('postcss-mixins')(),
-    require('postcss-each')(),
-    require('postcss-apply')(),
-    require('postcss-nesting')(),
-    require('postcss-reporter')({ clearMessages: true })
-  ];
-
-  return gulp.src([
+const paths = {
+  js: {
+    src: [
+      './components/**/*.js',
+      '!./components/**/*.spec.js',
+      '!./components/**/__test__',
+      '!./components/__mocks__/**/*.js'
+    ],
+  },
+  css: {
+    src: [
       './components/*.css',
       './components/**/*.css'
-    ])
+    ],
+  },
+  tsd: {
+    src: './components/**/*.d.ts',
+  },
+  dest: './lib',
+}
+
+
+function js(cb) {
+  gulp.src(paths.js.src)
+    .pipe(babel())
+    .pipe(gulp.dest(paths.dest));
+
+  cb()
+};
+
+function css(cb) {
+  // Copied from webpack/postcss.config.js
+  const plugins = [
+    require('postcss-import')({
+      root: path.join(__dirname, '../'),
+      path: path.join(__dirname, '../components')
+    }),
+    require('postcss-mixins'),
+    require('postcss-each'),
+    require('postcss-apply'),
+    require('postcss-preset-env')({
+      stage: 0, // required to get all features that were from cssnext
+      features: {
+        'custom-properties': {
+          preserve: false // required to output values instead of variables
+        },
+        'color-mod-function': true, // required to use color-mod()
+      }
+    }),
+    require('postcss-normalize'),
+    require('postcss-reporter')({
+      clearReportedMessages: true
+    })
+  ]
+
+  gulp.src(paths.css.src)
     .pipe(postcss(plugins))
-    .pipe(gulp.dest('./lib'));
-});
+    .pipe(gulp.dest(paths.dest));
 
-gulp.task('tsd', function () {
-  gulp.src('./components/**/*.d.ts')
-    .pipe(gulp.dest('./lib'));
-});
+  cb()
+};
 
-gulp.task('default', ['js', 'css', 'tsd']);
+function tsd(cb) {
+  gulp.src(paths.tsd.src)
+    .pipe(gulp.dest(paths.dest));
+
+  cb()
+};
+
+const build = gulp.series(js, css, tsd)
+
+gulp.task('default', build)
