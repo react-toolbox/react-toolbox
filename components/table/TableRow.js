@@ -34,9 +34,11 @@ const factory = (Checkbox, TableCell) => {
       }, className);
       return (
         <tr {...other} className={_className}>
-          {selectable && <TableCell className={theme.checkboxCell}>
+          {selectable && (
+          <TableCell className={theme.checkboxCell}>
             <Checkbox theme={theme} checked={selected} onChange={this.handleSelect} />
-          </TableCell>}
+          </TableCell>
+          )}
           {React.Children.map(children, (child, index) => {
             if (!child) return null;
             return cloneElement(child, {

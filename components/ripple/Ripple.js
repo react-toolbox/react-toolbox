@@ -85,7 +85,9 @@ const rippleFactory = (options = {}) => {
        * @return {Object} Descriptor element including position and size of the element
        */
       getDescriptor(x, y) {
-        const { left, top, height, width } = ReactDOM.findDOMNode(this).getBoundingClientRect();
+        const {
+          left, top, height, width,
+        } = ReactDOM.findDOMNode(this).getBoundingClientRect();
         const { rippleCentered: centered, rippleSpread: spread } = this.props;
         return {
           left: centered ? 0 : x - left - (width / 2),
@@ -153,15 +155,19 @@ const rippleFactory = (options = {}) => {
             ? this.getNextKey()
             : this.getLastKey();
           const endRipple = this.addRippleDeactivateEventListener(isTouch, key);
-          const initialState = { active: false, restarting: true, top, left, width, endRipple };
+          const initialState = {
+            active: false, restarting: true, top, left, width, endRipple,
+          };
           const runningState = { active: true, restarting: false };
           const ripples = { ...this.state.ripples, [key]: initialState };
           this.setState({ ripples }, () => {
             if (this.rippleNodes[key]) this.rippleNodes[key].offsetWidth; // eslint-disable-line
-            this.setState({ ripples: {
-              ...this.state.ripples,
-              [key]: Object.assign({}, this.state.ripples[key], runningState),
-            } });
+            this.setState({
+              ripples: {
+                ...this.state.ripples,
+                [key]: Object.assign({}, this.state.ripples[key], runningState),
+              },
+            });
           });
         }
       }
@@ -216,10 +222,12 @@ const rippleFactory = (options = {}) => {
         const self = this;
         return function endRipple() {
           document.removeEventListener(eventType, endRipple);
-          self.setState({ ripples: {
-            ...self.state.ripples,
-            [rippleKey]: Object.assign({}, self.state.ripples[rippleKey], { active: false }),
-          } });
+          self.setState({
+            ripples: {
+              ...self.state.ripples,
+              [rippleKey]: Object.assign({}, self.state.ripples[rippleKey], { active: false }),
+            },
+          });
         };
       }
 
@@ -241,7 +249,9 @@ const rippleFactory = (options = {}) => {
         }
       };
 
-      renderRipple(key, className, { active, left, restarting, top, width }) {
+      renderRipple(key, className, {
+        active, left, restarting, top, width,
+      }) {
         const scale = restarting ? 0 : 1;
         const transform = `translate3d(${(-width / 2) + left}px, ${(-width / 2) + top}px, 0) scale(${scale})`;
         const _className = classnames(this.props.theme.ripple, {
@@ -273,9 +283,7 @@ const rippleFactory = (options = {}) => {
           ...other
         } = this.props;
         const { ripples } = this.state;
-        const childRipples = Object.keys(ripples).map(key =>
-          this.renderRipple(key, rippleClassName, ripples[key]),
-        );
+        const childRipples = Object.keys(ripples).map(key => this.renderRipple(key, rippleClassName, ripples[key]));
         const childProps = {
           onMouseDown: this.handleMouseDown,
           onTouchStart: this.handleTouchStart,

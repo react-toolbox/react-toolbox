@@ -25,9 +25,9 @@ const factory = (IconButton) => {
       scrollHide: PropTypes.bool,
       theme: PropTypes.shape({
         appBar: PropTypes.string,
-        inner: PropTypes.string,
         fixed: PropTypes.string,
         flat: PropTypes.string,
+        inner: PropTypes.string,
         leftIcon: PropTypes.string,
         rightIcon: PropTypes.string,
         scrollHide: PropTypes.string,

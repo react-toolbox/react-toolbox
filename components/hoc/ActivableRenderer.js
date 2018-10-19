@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const ActivableRendererFactory = (options = { delay: 500 }) =>
-  ActivableComponent => class ActivableRenderer extends Component {
+const ActivableRendererFactory = (options = { delay: 500 }) => ActivableComponent => class ActivableRenderer extends Component {
     static propTypes = {
       active: PropTypes.bool.isRequired,
       children: PropTypes.node,
@@ -51,6 +50,6 @@ const ActivableRendererFactory = (options = { delay: 500 }) =>
         ? <ActivableComponent {...others} active={active} />
         : null;
     }
-  };
+};
 
 export default ActivableRendererFactory;

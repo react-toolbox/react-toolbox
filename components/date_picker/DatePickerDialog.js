@@ -122,7 +122,7 @@ const factory = (Dialog, Calendar) => {
               {this.state.date.getFullYear()}
             </span>
             <h3 id="months" className={theme.date} onClick={this.handleSwitchDisplay}>
-              {shortDayOfWeek}, {shortMonth} {date}
+              {`${shortDayOfWeek}, ${shortMonth} ${date}`}
             </h3>
           </header>
 

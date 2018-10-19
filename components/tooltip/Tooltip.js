@@ -95,7 +95,7 @@ const tooltipFactory = (options = {}) => {
           const { width: ww } = getViewport();
           const toRight = origin.left < ((ww / 2) - (origin.width / 2));
           return toRight ? POSITION.RIGHT : POSITION.LEFT;
-        } else if (tooltipPosition === POSITION.VERTICAL) {
+        } if (tooltipPosition === POSITION.VERTICAL) {
           const origin = element.getBoundingClientRect();
           const { height: wh } = getViewport();
           const toBottom = origin.top < ((wh / 2) - (origin.height / 2));
@@ -124,7 +124,9 @@ const tooltipFactory = (options = {}) => {
 
       calculatePosition(element) {
         const position = this.getPosition(element);
-        const { top, left, height, width } = element.getBoundingClientRect();
+        const {
+          top, left, height, width,
+        } = element.getBoundingClientRect();
         const xOffset = window.scrollX || window.pageXOffset;
         const yOffset = window.scrollY || window.pageYOffset;
         if (position === POSITION.BOTTOM) {
@@ -133,19 +135,19 @@ const tooltipFactory = (options = {}) => {
             left: left + (width / 2) + xOffset,
             position,
           };
-        } else if (position === POSITION.TOP) {
+        } if (position === POSITION.TOP) {
           return {
             top: top + yOffset,
             left: left + (width / 2) + xOffset,
             position,
           };
-        } else if (position === POSITION.LEFT) {
+        } if (position === POSITION.LEFT) {
           return {
             top: top + (height / 2) + yOffset,
             left: left + xOffset,
             position,
           };
-        } else if (position === POSITION.RIGHT) {
+        } if (position === POSITION.RIGHT) {
           return {
             top: top + (height / 2) + yOffset,
             left: left + width + xOffset,
@@ -178,19 +180,21 @@ const tooltipFactory = (options = {}) => {
       };
 
       render() {
-        const { active, left, top, position, visible } = this.state;
+        const {
+          active, left, top, position, visible,
+        } = this.state;
         const positionClass = `tooltip${position.charAt(0).toUpperCase() + position.slice(1)}`;
         const {
           children,
           className,
           theme,
-          onClick,            // eslint-disable-line no-unused-vars
-          onMouseEnter,       // eslint-disable-line no-unused-vars
-          onMouseLeave,       // eslint-disable-line no-unused-vars
+          onClick, // eslint-disable-line no-unused-vars
+          onMouseEnter, // eslint-disable-line no-unused-vars
+          onMouseLeave, // eslint-disable-line no-unused-vars
           tooltip,
-          tooltipDelay,       // eslint-disable-line no-unused-vars
+          tooltipDelay, // eslint-disable-line no-unused-vars
           tooltipHideOnClick, // eslint-disable-line no-unused-vars
-          tooltipPosition,    // eslint-disable-line no-unused-vars
+          tooltipPosition, // eslint-disable-line no-unused-vars
           tooltipShowOnClick, // eslint-disable-line no-unused-vars
           ...other
         } = this.props;
@@ -223,8 +227,7 @@ const tooltipFactory = (options = {}) => {
                 <span className={theme.tooltipInner}>{tooltip}</span>
               </span>
             </Portal>
-          ),
-        );
+          ));
       }
     }
 

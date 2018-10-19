@@ -69,14 +69,20 @@ const factory = (FontIcon) => {
       };
 
       return (
-        React.createElement(tagName, props, [
-          sorted && <FontIcon
-            className={classnames(theme.sortIcon, { [theme.asc]: sorted === ASC })}
-            key="icon"
-            value="arrow_downward"
-          />,
-          children,
-        ])
+        React.createElement(
+          tagName,
+          props,
+          [
+            sorted && (
+            <FontIcon
+              className={classnames(theme.sortIcon, { [theme.asc]: sorted === ASC })}
+              key="icon"
+              value="arrow_downward"
+            />
+            ),
+            children,
+          ],
+        )
       );
     }
   }

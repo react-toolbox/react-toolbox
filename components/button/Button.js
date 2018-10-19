@@ -126,8 +126,7 @@ const factory = (ripple, FontIcon) => {
       const buttonElement = React.createElement(element, props,
         icon ? <FontIcon className={theme.icon} value={icon} /> : null,
         label,
-        children,
-      );
+        children);
 
       return others.onMouseEnter && this.props.disabled
         ? <span {...mouseEvents}>{buttonElement}</span>
