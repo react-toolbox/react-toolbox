@@ -1,5 +1,5 @@
 /* global VERSION */
-import 'normalize.css';
+import '@csstools/normalize.css';
 import React, { Component } from 'react';
 
 import { Layout, Panel, NavDrawer } from '../components/layout';

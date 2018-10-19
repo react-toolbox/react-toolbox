@@ -18,6 +18,7 @@ module.exports = () => ({
         'color-mod-function': true, // required to use color-mod()
       }
     }),
+    require('postcss-normalize'),
     require('postcss-reporter')({
       clearReportedMessages: true
     })
