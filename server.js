@@ -15,7 +15,10 @@ app.use(require('webpack-dev-middleware')(compiler, {
   },
 }));
 
-app.use(require('webpack-hot-middleware')(compiler));
+app.use(require('webpack-hot-middleware')(compiler, {
+  path: '/__webpack_hmr',
+  heartbeat: 20000,
+}));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './spec/index.html'));

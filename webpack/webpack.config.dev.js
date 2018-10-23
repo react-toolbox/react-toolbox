@@ -1,20 +1,20 @@
 const pkg = require('../package');
 const path = require('path');
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
 module.exports = {
   target: 'web',
   mode: 'development',
   context: path.join(__dirname, '../'),
-  devtool: 'cheap-module-eval-source-map',
-  entry: [
-    'webpack-hot-middleware/client',
-    './spec/index.js'
-  ],
+  devtool: 'source-map',
+  entry: {
+    spec: ['webpack-hot-middleware/client', './spec/index.js']
+  },
+
   output: {
     path: path.join(__dirname, 'build'),
-    filename: 'spec.js',
+    filename: '[name].js',
     publicPath: '/build/'
   },
   resolve: {
@@ -34,7 +34,14 @@ module.exports = {
       {
         test: /\.css$/,
         include: /node_modules/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        exclude: [
+          path.join(__dirname, '../components'),
+          path.join(__dirname, '../spec')
+        ],
+        use: [
+          ExtractCssChunks.loader,
+          'css-loader',
+        ]
       },
       {
         test: /\.css$/,
@@ -42,15 +49,16 @@ module.exports = {
           path.join(__dirname, '../components'),
           path.join(__dirname, '../spec')
         ],
+        exclude: /node_modules/,
         use: [
           'style-loader',
           {
             loader: 'css-loader',
-            query: {
+            options: {
               modules: true,
               sourceMap: true,
               importLoaders: 1,
-              localIdentName: '[name]__[local]___[hash:base64:5]',
+              localIdentName: '[name]__[local]--[hash:base64:5]',
             },
           },
           {
@@ -66,9 +74,14 @@ module.exports = {
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin({ filename: 'spec.css', allChunks: true }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.EvalSourceMapDevToolPlugin(),
+    new ExtractCssChunks({
+      filename: '[name].css',
+      hot: true,
+      cssModules: true
+    }),
+    new webpack.HotModuleReplacementPlugin({
+      multiStep: true,
+    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
       VERSION: JSON.stringify(pkg.version)
