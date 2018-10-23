@@ -113,7 +113,7 @@ const factory = (FontIcon) => {
 
     handleAutoresize = () => {
       const element = this.inputNode;
-      const rows = this.props.rows;
+      const { rows } = this.props;
 
       if (typeof rows === 'number' && !Number.isNaN(rows)) {
         element.style.height = null;
@@ -139,7 +139,7 @@ const factory = (FontIcon) => {
         // replace the selected characters, so the length of value doesn't actually
         // increase.
         const isReplacing = event.target.selectionEnd - event.target.selectionStart;
-        const value = event.target.value;
+        const { value } = event.target;
 
         if (!isReplacing && value.length === maxLength) {
           event.preventDefault();

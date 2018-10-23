@@ -124,12 +124,6 @@ const factory = (ProgressBar, Input) => {
       };
     }
 
-    addToValue(increment) {
-      let value = this.state.inputFocused ? parseFloat(this.state.inputValue) : this.props.value;
-      value = this.trimValue(value + increment);
-      if (value !== this.props.value) this.props.onChange(value);
-    }
-
     handleInputFocus = () => {
       this.setState({
         inputFocused: true,
@@ -204,6 +198,12 @@ const factory = (ProgressBar, Input) => {
       events.addEventsToDocument(this.getTouchEventMap());
       events.pauseEvent(event);
     };
+
+    addToValue(increment) {
+      let value = this.state.inputFocused ? parseFloat(this.state.inputValue) : this.props.value;
+      value = this.trimValue(value + increment);
+      if (value !== this.props.value) this.props.onChange(value);
+    }
 
     end(revents) {
       events.removeEventsFromDocument(revents);

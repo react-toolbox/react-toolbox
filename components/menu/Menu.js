@@ -170,18 +170,6 @@ const factory = (MenuItem) => {
         : undefined;
     }
 
-    calculatePosition() {
-      const parentNode = ReactDOM.findDOMNode(this).parentNode;
-      if (!parentNode) return undefined;
-      const {
-        top, left, height, width,
-      } = parentNode.getBoundingClientRect();
-      const { height: wh, width: ww } = getViewport();
-      const toTop = top < ((wh / 2) - (height / 2));
-      const toLeft = left < ((ww / 2) - (width / 2));
-      return `${toTop ? 'top' : 'bottom'}${toLeft ? 'Left' : 'Right'}`;
-    }
-
     handleDocumentClick = (event) => {
       if (this.state.active && !events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
         this.setState({ active: false, rippled: false });
@@ -196,6 +184,18 @@ const factory = (MenuItem) => {
         if (this.props.onSelect) this.props.onSelect(value);
       });
     };
+
+    calculatePosition() {
+      const { parentNode } = ReactDOM.findDOMNode(this);
+      if (!parentNode) return undefined;
+      const {
+        top, left, height, width,
+      } = parentNode.getBoundingClientRect();
+      const { height: wh, width: ww } = getViewport();
+      const toTop = top < ((wh / 2) - (height / 2));
+      const toLeft = left < ((ww / 2) - (width / 2));
+      return `${toTop ? 'top' : 'bottom'}${toLeft ? 'Left' : 'Right'}`;
+    }
 
     show() {
       const { width, height } = this.menuNode.getBoundingClientRect();

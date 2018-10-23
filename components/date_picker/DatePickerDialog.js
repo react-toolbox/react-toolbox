@@ -51,6 +51,17 @@ const factory = (Dialog, Calendar) => {
       date: this.props.value,
     };
 
+    actions = [{
+      label: this.props.cancelLabel,
+      className: this.props.theme.button,
+      onClick: this.props.onDismiss,
+    }, {
+      label: this.props.okLabel,
+      className: this.props.theme.button,
+      name: this.props.name,
+      onClick: this.handleSelect,
+    }];
+
     componentWillMount() {
       this.updateStateDate(this.props.value);
     }
@@ -87,17 +98,6 @@ const factory = (Dialog, Calendar) => {
         this.handleNewDate(date, false);
       }
     };
-
-    actions = [{
-      label: this.props.cancelLabel,
-      className: this.props.theme.button,
-      onClick: this.props.onDismiss,
-    }, {
-      label: this.props.okLabel,
-      className: this.props.theme.button,
-      name: this.props.name,
-      onClick: this.handleSelect,
-    }];
 
     render() {
       const { theme } = this.props;

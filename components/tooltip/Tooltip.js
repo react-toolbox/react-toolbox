@@ -104,6 +104,28 @@ const tooltipFactory = (options = {}) => {
         return tooltipPosition;
       }
 
+      handleMouseEnter = (event) => {
+        this.activate(this.calculatePosition(event.currentTarget));
+        if (this.props.onMouseEnter) this.props.onMouseEnter(event);
+      };
+
+      handleMouseLeave = (event) => {
+        this.deactivate();
+        if (this.props.onMouseLeave) this.props.onMouseLeave(event);
+      };
+
+      handleClick = (event) => {
+        if (this.props.tooltipHideOnClick && this.state.active) {
+          this.deactivate();
+        }
+
+        if (this.props.tooltipShowOnClick && !this.state.active) {
+          this.activate(this.calculatePosition(event.currentTarget));
+        }
+
+        if (this.props.onClick) this.props.onClick(event);
+      };
+
       activate({ top, left, position }) {
         if (this.timeout) clearTimeout(this.timeout);
         this.setState({ visible: true, position });
@@ -156,28 +178,6 @@ const tooltipFactory = (options = {}) => {
         }
         return undefined;
       }
-
-      handleMouseEnter = (event) => {
-        this.activate(this.calculatePosition(event.currentTarget));
-        if (this.props.onMouseEnter) this.props.onMouseEnter(event);
-      };
-
-      handleMouseLeave = (event) => {
-        this.deactivate();
-        if (this.props.onMouseLeave) this.props.onMouseLeave(event);
-      };
-
-      handleClick = (event) => {
-        if (this.props.tooltipHideOnClick && this.state.active) {
-          this.deactivate();
-        }
-
-        if (this.props.tooltipShowOnClick && !this.state.active) {
-          this.activate(this.calculatePosition(event.currentTarget));
-        }
-
-        if (this.props.onClick) this.props.onClick(event);
-      };
 
       render() {
         const {

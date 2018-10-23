@@ -22,7 +22,7 @@ class Clock extends Component {
   };
 
   static defaultProps = {
-    className: '',
+    className: '', // eslint-disable-line react/default-props-match-prop-types
     display: 'hours',
     format: '24hr',
     time: new Date(),

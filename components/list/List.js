@@ -16,6 +16,8 @@ const factory = (ListItem) => {
     static propTypes = {
       children: PropTypes.node,
       className: PropTypes.string,
+      ripple: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
+      selectable: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
       theme: PropTypes.shape({
         list: PropTypes.string,
       }),

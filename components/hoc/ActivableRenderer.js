@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const ActivableRendererFactory = (options = { delay: 500 }) => ActivableComponent => class ActivableRenderer extends Component {
+const ActivableRendererFactory = (options = { delay: 500 }) => ActivableComponent => class ActivableRenderer extends Component { // eslint-disable-line max-len
     static propTypes = {
       active: PropTypes.bool.isRequired,
       children: PropTypes.node,

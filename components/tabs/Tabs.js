@@ -86,7 +86,7 @@ const factory = (Tab, TabContent, FontIcon) => {
         this.updatePointerAnimationFrame = window.requestAnimationFrame(() => {
           const nav = this.navigationNode.getBoundingClientRect();
           const label = this.navigationNode.children[idx].getBoundingClientRect();
-          const scrollLeft = this.navigationNode.scrollLeft;
+          const { scrollLeft } = this.navigationNode;
           this.setState({
             pointer: {
               top: `${nav.height}px`,
@@ -102,7 +102,7 @@ const factory = (Tab, TabContent, FontIcon) => {
       const idx = this.navigationNode.children.length - 2;
 
       if (idx >= 0) {
-        const scrollLeft = this.navigationNode.scrollLeft;
+        const { scrollLeft } = this.navigationNode;
         const nav = this.navigationNode.getBoundingClientRect();
         const lastLabel = this.navigationNode.children[idx].getBoundingClientRect();
 
