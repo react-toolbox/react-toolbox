@@ -17,7 +17,7 @@ $ npm install --save react-toolbox
 
 ## Prerequisites
 
-React Toolbox uses [CSS Modules](https://github.com/css-modules/css-modules) by default to import stylesheets written using PostCSS/[preset-env](https://preset-env.cssdb.org/) features. In case you want to import the components already bundled with CSS, your module bundler should be able to require these PostCSS modules.
+React Toolbox uses [CSS Modules](https://github.com/css-modules/css-modules) by default to import stylesheets written using [PostCSS](https://github.com/postcss/postcss) & [postcss-preset-env](https://preset-env.cssdb.org/) features. In case you want to import the components already bundled with CSS, your module bundler should be able to require these PostCSS modules.
 
 Although we recommend [webpack](https://webpack.github.io/), you are free to use whatever module bundler you want as long as it can compile and require PostCSS files located in your `node_modules`. If you are experiencing require errors, make sure your configuration satisfies this requirement.
 
@@ -33,8 +33,7 @@ Follow [these instructions](https://github.com/react-toolbox/react-toolbox-themr
 
 ```bash
 npm install postcss-loader --save-dev
-npm install postcss --save
-npm install postcss-preset-env --save
+npm install postcss postcss-preset-env postcss-calc --save
 ```
 
 Configure webpack 1.x loader for .css files to use postcss:
@@ -49,17 +48,20 @@ Configure webpack 1.x loader for .css files to use postcss:
 ```
 Declare plugins to be used by postcss (as part of webpack's config object):
 ```js
+  // webpack.config.js
   postcss: () => {
     return [
       /* eslint-disable global-require */
       require('postcss-preset-env')({
-        stage: 0, // enables all postcss-preset-env features
+        stage: 0, // required to get all features that were from cssnext without enabling them one by one
         features: {
-        'custom-properties': {
-          preserve: false // returns calculated values instead of variable names
+          'custom-properties': {
+            preserve: false, // required to output values instead of variables
+          },
+          'color-mod-function': true, // required to use color-mod()
         }
-      }
       }),
+      require('postcss-calc'), // required as postcss-preset-env doesn't have a reduce calc() funtion that cssnext did
       /* eslint-enable global-require */
     ];
   },
@@ -67,22 +69,23 @@ Declare plugins to be used by postcss (as part of webpack's config object):
 
 Configure webpack 2.x or 3.x loader for .css files to use postcss:
 ```js
+  // webpack.config.js
+  {
+    test: /\.css$/,
+    use: [
+      "style-loader",
       {
-        test: /\.css$/,
-        use: [
-          "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              modules: true, // default is false
-              sourceMap: true,
-              importLoaders: 1,
-              localIdentName: "[name]--[local]--[hash:base64:8]"
-            }
-          },
-          "postcss-loader"
-        ]
-      }
+        loader: "css-loader",
+        options: {
+          modules: true, // default is false
+          sourceMap: true,
+          importLoaders: 1,
+          localIdentName: "[name]--[local]--[hash:base64:8]"
+        }
+      },
+      "postcss-loader"
+    ]
+  }
 ```
 
 ## Basic usage
@@ -223,10 +226,9 @@ You can apply theming in multiple ways. First of all, you have to understand tha
 
 ### Settings configuration variables in JavaScript
 
-You can override both the global and component-specific CSS Custom Properties at build-time by supplying an object with these variable names and your desired values to the PostCSS customProperties plugin. i.e. if using postcss-next in webpack:
+You can override both the global and component-specific CSS Custom Properties at build-time by supplying an object with these variable names and your desired values to the PostCSS `custom-properties` plugin. i.e. if using [postcss-preset-env](https://github.com/csstools/postcss-preset-env) in webpack:
 
 ```js
-
 // This can also be stored in a separate file:
 const reactToolboxVariables = { 
   'color-text': '#444548',
@@ -235,33 +237,34 @@ const reactToolboxVariables = {
   'button-height': '30px',
 };
 
-// webpack's config object:
+// webpack's config object: (webpack.config.js)
 const config = {
 ...
     postcss: () => {
     return [
       /* eslint-disable global-require */
       require('postcss-preset-env')({
-        stage: 0,
+        stage: 0, // required to get all features that were from cssnext without enabling them one by one
         features: {
           'custom-properties': {
-            preserve: false,
-            variables: reactToolboxVariables,
-          }
-        },
+            preserve: false, // required to output values instead of variables
+            importFrom: reactToolboxVariables, // see postcss-preset-env for config options
+          },
+          'color-mod-function': true, // required to use color-mod()
+        }
       }),
+      require('postcss-calc'), // required as postcss-preset-env doesn't have a reduce calc() funtion that cssnext did
       /* optional - see next section */
       require('postcss-modules-values'),
       /* eslint-enable global-require */
     ];
   },
 }
-
 ```
 
 ### Settings configuration variables using CSS Module Values
 
-Instead of using a JavaScript object for variables, you can use [CSS Module Values](https://github.com/css-modules/css-modules/blob/master/docs/values-variables.md) (`npm install postcss-modules-values --save`) and the [modules-values-extract](https://github.com/alexhisen/modules-values-extract) utility to declare these variables in component-specific theme .css files, where you would typically store additional style overrides.
+Instead of using a JavaScript object for variables, you can use [CSS Module Values](https://github.com/css-modules/css-modules/blob/master/docs/values-variables.md) (`npm install postcss-modules-values --save`) and the [modules-values-extract](https://github.com/alexhisen/modules-values-extract) utility to declare these variables in component-specific theme `.css` files, where you would typically store additional style overrides.
 
 CSS Module Values also offer the advantage that importing a css file with @value declarations makes these values properties of the imported style object, i.e.:
 
@@ -277,7 +280,7 @@ import styleVariables from './css/variables.css';
 styleVariables.buttonPrimaryBackgroundColor
 ```
 
-In [this demo project](https://github.com/alexhisen/mobx-forms-demo), modules-values-extract utility is used to extract all @values with dashes in their name from all css files in the /css folder and to feed them to customProperties in [webpack](https://github.com/alexhisen/mobx-forms-demo/blob/master/webpack.config.js). In the demo project, variables that are not specific to a particular component are in [variables.css](https://github.com/alexhisen/mobx-forms-demo/blob/master/src/css/variables.css) and button-specific variables are in [button.css](https://github.com/alexhisen/mobx-forms-demo/blob/master/src/css/button.css). Note that button.css also imports certain values from variables.css just to demonstrate this capability \(the import can also be used in a @value declaration\) and it uses CSS overrides instead of color variables that exist in the React-Toolbox Button component to show an alternative method if the variables are not sufficient.
+In [this demo project](https://github.com/alexhisen/mobx-forms-demo), modules-values-extract utility is used to extract all @values with dashes in their name from all css files in the `/css` folder and to feed them to customProperties in [webpack](https://github.com/alexhisen/mobx-forms-demo/blob/master/webpack.config.js). In the demo project, variables that are not specific to a particular component are in [variables.css](https://github.com/alexhisen/mobx-forms-demo/blob/master/src/css/variables.css) and button-specific variables are in [button.css](https://github.com/alexhisen/mobx-forms-demo/blob/master/src/css/button.css). Note that button.css also imports certain values from variables.css just to demonstrate this capability \(the import can also be used in a @value declaration\) and it uses CSS overrides instead of color variables that exist in the React-Toolbox Button component to show an alternative method if the variables are not sufficient.
 
 > **IMPORTANT: Changes to the module values do not take effect immediately with Webpack Hot-Module-Reload - webpack / webpack-dev-server must be restarted!**
 
