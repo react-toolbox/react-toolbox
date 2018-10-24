@@ -48,6 +48,17 @@ const factory = (Dialog) => {
       displayTime: new Date(this.props.value.getTime()),
     };
 
+    actions = [{
+      label: this.props.cancelLabel,
+      className: this.props.theme.button,
+      onClick: this.props.onDismiss,
+    }, {
+      label: this.props.okLabel,
+      className: this.props.theme.button,
+      name: this.props.name,
+      onClick: this.handleSelect,
+    }];
+
     componentWillReceiveProps(nextProps) {
       if (nextProps.value.getTime() !== this.state.displayTime.getTime()) {
         this.setState({ displayTime: new Date(nextProps.value.getTime()) });
@@ -70,7 +81,9 @@ const factory = (Dialog) => {
     };
 
     toggleTimeMode = () => {
-      this.setState({ displayTime: time.toggleTimeMode(this.state.displayTime) });
+      this.setState(state => ({
+        displayTime: time.toggleTimeMode(state.displayTime),
+      }));
     };
 
     handleHandMoved = () => {
@@ -80,17 +93,6 @@ const factory = (Dialog) => {
     switchDisplay = (event) => {
       this.setState({ display: event.target.id });
     };
-
-    actions = [{
-      label: this.props.cancelLabel,
-      className: this.props.theme.button,
-      onClick: this.props.onDismiss,
-    }, {
-      label: this.props.okLabel,
-      className: this.props.theme.button,
-      name: this.props.name,
-      onClick: this.handleSelect,
-    }];
 
     formatHours() {
       if (this.props.format === 'ampm') {

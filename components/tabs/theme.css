@@ -37,6 +37,13 @@
   display: flex;
 }
 
+.icon {
+  display: block;
+  height: var(--tab-icon-height);
+  line-height: var(--tab-icon-height);
+  margin: 0 auto;
+}
+
 .label {
   color: var(--tab-text-inactive-color);
   font-size: var(--tab-text-height);
@@ -85,13 +92,6 @@
       margin-bottom: var(--tab-icon-margin-bottom);
     }
   }
-}
-
-.icon {
-  display: block;
-  height: var(--tab-icon-height);
-  line-height: var(--tab-icon-height);
-  margin: 0 auto;
 }
 
 .pointer {

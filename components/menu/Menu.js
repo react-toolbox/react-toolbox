@@ -142,13 +142,21 @@ const factory = (MenuItem) => {
       if (position !== POSITION.STATIC) {
         if (this.state.active) {
           return { clip: `rect(0 ${width}px ${height}px 0)` };
-        } else if (position === POSITION.TOP_RIGHT) {
+        }
+
+        if (position === POSITION.TOP_RIGHT) {
           return { clip: `rect(0 ${width}px 0 ${width}px)` };
-        } else if (position === POSITION.BOTTOM_RIGHT) {
+        }
+
+        if (position === POSITION.BOTTOM_RIGHT) {
           return { clip: `rect(${height}px ${width}px ${height}px ${width}px)` };
-        } else if (position === POSITION.BOTTOM_LEFT) {
+        }
+
+        if (position === POSITION.BOTTOM_LEFT) {
           return { clip: `rect(${height}px 0 ${height}px 0)` };
-        } else if (position === POSITION.TOP_LEFT) {
+        }
+
+        if (position === POSITION.TOP_LEFT) {
           return { clip: 'rect(0 0 0 0)' };
         }
       }
@@ -160,16 +168,6 @@ const factory = (MenuItem) => {
       return this.state.position !== POSITION.STATIC
         ? { width: this.state.width, height: this.state.height }
         : undefined;
-    }
-
-    calculatePosition() {
-      const parentNode = ReactDOM.findDOMNode(this).parentNode;
-      if (!parentNode) return undefined;
-      const { top, left, height, width } = parentNode.getBoundingClientRect();
-      const { height: wh, width: ww } = getViewport();
-      const toTop = top < ((wh / 2) - (height / 2));
-      const toLeft = left < ((ww / 2) - (width / 2));
-      return `${toTop ? 'top' : 'bottom'}${toLeft ? 'Left' : 'Right'}`;
     }
 
     handleDocumentClick = (event) => {
@@ -186,6 +184,18 @@ const factory = (MenuItem) => {
         if (this.props.onSelect) this.props.onSelect(value);
       });
     };
+
+    calculatePosition() {
+      const { parentNode } = ReactDOM.findDOMNode(this);
+      if (!parentNode) return undefined;
+      const {
+        top, left, height, width,
+      } = parentNode.getBoundingClientRect();
+      const { height: wh, width: ww } = getViewport();
+      const toTop = top < ((wh / 2) - (height / 2));
+      const toLeft = left < ((ww / 2) - (width / 2));
+      return `${toTop ? 'top' : 'bottom'}${toLeft ? 'Left' : 'Right'}`;
+    }
 
     show() {
       const { width, height } = this.menuNode.getBoundingClientRect();

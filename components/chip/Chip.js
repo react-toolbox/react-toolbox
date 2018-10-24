@@ -6,7 +6,9 @@ import { CHIP } from '../identifiers';
 import InjectAvatar from '../avatar/Avatar';
 
 const factory = (Avatar) => {
-  const Chip = ({ children, className, deletable, onDeleteClick, theme, ...other }) => {
+  const Chip = ({
+    children, className, deletable, onDeleteClick, theme, ...other
+  }) => {
     let hasAvatar = false;
     if (React.Children.count(children)) {
       const flatChildren = React.Children.toArray(children);

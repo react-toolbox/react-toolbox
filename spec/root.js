@@ -1,6 +1,7 @@
 /* global VERSION */
-import 'normalize.css';
+import '@csstools/normalize.css';
 import React, { Component } from 'react';
+import { hot } from 'react-hot-loader';
 
 import { Layout, Panel, NavDrawer } from '../components/layout';
 import AppBar from '../components/app_bar';
@@ -100,4 +101,4 @@ class Root extends Component {
   }
 }
 
-export default Root;
+export default hot(module)(Root);

@@ -124,12 +124,6 @@ const factory = (ProgressBar, Input) => {
       };
     }
 
-    addToValue(increment) {
-      let value = this.state.inputFocused ? parseFloat(this.state.inputValue) : this.props.value;
-      value = this.trimValue(value + increment);
-      if (value !== this.props.value) this.props.onChange(value);
-    }
-
     handleInputFocus = () => {
       this.setState({
         inputFocused: true,
@@ -150,7 +144,9 @@ const factory = (ProgressBar, Input) => {
 
     handleKeyDown = (event) => {
       const { disabled, step } = this.props;
-      const { ARROW_DOWN, ARROW_UP, ENTER, ESC } = KEYS;
+      const {
+        ARROW_DOWN, ARROW_UP, ENTER, ESC,
+      } = KEYS;
 
       if (disabled) return;
       if ([ENTER, ESC].includes(event.code)) this.inputNode.blur();
@@ -203,6 +199,12 @@ const factory = (ProgressBar, Input) => {
       events.pauseEvent(event);
     };
 
+    addToValue(increment) {
+      let value = this.state.inputFocused ? parseFloat(this.state.inputValue) : this.props.value;
+      value = this.trimValue(value + increment);
+      if (value !== this.props.value) this.props.onChange(value);
+    }
+
     end(revents) {
       events.removeEventsFromDocument(revents);
       this.setState({ pressed: false });
@@ -251,9 +253,7 @@ const factory = (ProgressBar, Input) => {
       if (!this.props.snaps) return undefined;
       return (
         <div className={this.props.theme.snaps}>
-          {range(0, (this.props.max - this.props.min) / this.props.step).map(i =>
-            <div key={`span-${i}`} className={this.props.theme.snap} />,
-          )}
+          {range(0, (this.props.max - this.props.min) / this.props.step).map(i => <div key={`span-${i}`} className={this.props.theme.snap} />)}
         </div>
       );
     }

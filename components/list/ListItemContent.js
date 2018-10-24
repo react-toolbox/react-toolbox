@@ -29,7 +29,9 @@ const factory = (ListItemText) => {
     };
 
     getType() {
-      const { type, children, caption, legend } = this.props;
+      const {
+        type, children, caption, legend,
+      } = this.props;
 
       let count = React.Children.count(children);
       [caption, legend].forEach((s) => { count += s ? 1 : 0; });
@@ -39,7 +41,9 @@ const factory = (ListItemText) => {
     }
 
     render() {
-      const { children, caption, legend, theme } = this.props;
+      const {
+        children, caption, legend, theme,
+      } = this.props;
       const contentType = this.getType();
       const className = classnames(theme.itemContentRoot, {
         [theme[contentType]]: theme[contentType],

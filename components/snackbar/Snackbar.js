@@ -59,7 +59,9 @@ const factory = (Button) => {
     }
 
     render() {
-      const { action, active, children, label, onClick, theme, type } = this.props;
+      const {
+        action, active, children, label, onClick, theme, type,
+      } = this.props;
       const className = classnames([theme.snackbar, theme[type]], {
         [theme.active]: active,
       }, this.props.className);

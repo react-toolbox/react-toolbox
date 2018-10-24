@@ -56,11 +56,6 @@ const factory = (IconButton) => {
       document.body.removeEventListener('keydown', this.handleKeys);
     }
 
-    scrollToActive() {
-      const offset = (this.yearsNode.offsetHeight / 2) + (this.activeYearNode.offsetHeight / 2);
-      this.yearsNode.scrollTop = this.activeYearNode.offsetTop - offset;
-    }
-
     handleDayClick = (day) => {
       this.props.onChange(time.setDay(this.state.viewDate, day), true);
     };
@@ -96,11 +91,16 @@ const factory = (IconButton) => {
 
     changeViewMonth = (event) => {
       const direction = event.currentTarget.id;
-      this.setState({
+      this.setState(state => ({
         direction,
-        viewDate: time.addMonths(this.state.viewDate, DIRECTION_STEPS[direction]),
-      });
+        viewDate: time.addMonths(state.viewDate, DIRECTION_STEPS[direction]),
+      }));
     };
+
+    scrollToActive() {
+      const offset = (this.yearsNode.offsetHeight / 2) + (this.activeYearNode.offsetHeight / 2);
+      this.yearsNode.scrollTop = this.activeYearNode.offsetTop - offset;
+    }
 
     renderYears() {
       return (

@@ -70,7 +70,9 @@ class Hours extends Component {
   }
 
   render() {
-    const { format, selected, radius, spacing, center, onHandMoved } = this.props;
+    const {
+      format, selected, radius, spacing, center, onHandMoved,
+    } = this.props;
     const is24hr = format === '24hr';
 
     return (

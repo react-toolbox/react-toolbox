@@ -27,66 +27,32 @@
   width: var(--input-icon-size);
 }
 
-.inputElement {
-  background-color: var(--input-text-background-color);
-  border-bottom: 1px solid var(--input-text-bottom-border-color);
-  border-left: 0;
-  border-radius: 0;
-  border-right: 0;
-  border-top: 0;
-  color: var(--input-text-input-element-color);
-  display: block;
+.counter {
+  color: var(--input-text-label-color);
+  position: absolute;
+  right: 0;
+}
+
+.counter,
+.error {
+  color: var(--input-text-error-color);
+  font-size: var(--input-label-font-size);
+  line-height: var(--input-underline-height);
+  margin-bottom: calc(-1 * var(--input-underline-height));
+}
+
+.hint {
+  color: var(--input-text-label-color);
   font-size: var(--input-field-font-size);
-  outline: none;
-  padding: var(--input-field-padding) 0;
-  width: 100%;
-
-  &:required {
-    box-shadow: none;
-  }
-
-  &:focus:not([disabled]):not([readonly]) {
-    & ~ .bar::before,
-    & ~ .bar::after {
-      width: 50%;
-    }
-
-    & ~ .label:not(.fixed) {
-      color: var(--input-text-highlight-color);
-    }
-
-    & ~ .label > .required {
-      color: var(--input-text-required-color);
-    }
-
-    & ~ .hint {
-      display: block;
-      opacity: var(--input-hint-opacity);
-    }
-
-    & ~ .icon {
-      color: var(--input-text-highlight-color);
-    }
-
-    &.filled ~ .hint {
-      opacity: 0;
-    }
-  }
-
-  &:focus:not([disabled]):not([readonly]),
-  &.filled,
-  &[type='date'],
-  &[type='time'] {
-    & ~ .label:not(.fixed) {
-      font-size: var(--input-label-font-size);
-      top: var(--input-focus-label-top);
-    }
-  }
-
-  &.filled ~ .label.fixed,
-  &.filled ~ .hint {
-    display: none;
-  }
+  left: 0;
+  line-height: var(--input-field-font-size);
+  opacity: var(--input-hint-opacity);
+  pointer-events: none;
+  position: absolute;
+  top: calc(var(--input-padding) + 1.5 * var(--input-field-padding));
+  transition-duration: var(--animation-duration);
+  transition-property: opacity;
+  transition-timing-function: var(--animation-curve-default);
 }
 
 .label {
@@ -104,20 +70,6 @@
   &.fixed ~ .hint {
     display: none;
   }
-}
-
-.hint {
-  color: var(--input-text-label-color);
-  font-size: var(--input-field-font-size);
-  left: 0;
-  line-height: var(--input-field-font-size);
-  opacity: var(--input-hint-opacity);
-  pointer-events: none;
-  position: absolute;
-  top: calc(var(--input-padding) + 1.5 * var(--input-field-padding));
-  transition-duration: var(--animation-duration);
-  transition-property: opacity;
-  transition-timing-function: var(--animation-curve-default);
 }
 
 .bar {
@@ -147,23 +99,8 @@
   }
 }
 
-.error,
-.counter {
-  color: var(--input-text-error-color);
-  font-size: var(--input-label-font-size);
-  line-height: var(--input-underline-height);
-  margin-bottom: calc(-1 * var(--input-underline-height));
-}
-
-.counter {
-  color: var(--input-text-label-color);
-  position: absolute;
-  right: 0;
-}
-
-.disabled > .inputElement {
-  border-bottom-style: dashed;
-  color: var(--input-text-disabled-text-color);
+.hidden {
+  display: none;
 }
 
 .errored {
@@ -184,6 +121,70 @@
   }
 }
 
-.hidden {
-  display: none;
+.disabled > .inputElement {
+  border-bottom-style: dashed;
+  color: var(--input-text-disabled-text-color);
+}
+
+/* stylelint-disable */
+.inputElement {
+  background-color: var(--input-text-background-color);
+  border-bottom: 1px solid var(--input-text-bottom-border-color);
+  border-left: 0;
+  border-radius: 0;
+  border-right: 0;
+  border-top: 0;
+  color: var(--input-text-input-element-color);
+  display: block;
+  font-size: var(--input-field-font-size);
+  outline: none;
+  padding: var(--input-field-padding) 0;
+  width: 100%;
+
+  &:required {
+    box-shadow: none;
+  }
+
+  &.filled ~ .hint,
+  &.filled ~ .label.fixed {
+    display: none;
+  }
+
+  &.filled,
+  &[type='date'],
+  &[type='time'],
+  &:focus:not([disabled]):not([readonly]) {
+    & ~ .label:not(.fixed) {
+      font-size: var(--input-label-font-size);
+      top: var(--input-focus-label-top);
+    }
+  }
+
+  &:focus:not([disabled]):not([readonly]) {
+    & ~ .bar::before,
+    & ~ .bar::after {
+      width: 50%;
+    }
+
+    & ~ .label:not(.fixed) {
+      color: var(--input-text-highlight-color);
+    }
+
+    & ~ .label > .required {
+      color: var(--input-text-required-color);
+    }
+
+    & ~ .hint {
+      display: block;
+      opacity: var(--input-hint-opacity);
+    }
+
+    & ~ .icon {
+      color: var(--input-text-highlight-color);
+    }
+
+    &.filled ~ .hint {
+      opacity: 0;
+    }
+  }
 }
