@@ -1,7 +1,6 @@
 module.exports = function (api) {
-  // const env = api.env()
-  // api.cache.using(() => process.env.NODE_ENV === 'development')
-  api.cache.never();
+  const env = api.env()
+  api.cache.using(() => process.env.NODE_ENV === 'development')
 
   return {
     presets: ['@babel/preset-env', '@babel/preset-react'],
