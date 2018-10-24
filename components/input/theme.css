@@ -126,6 +126,7 @@
   color: var(--input-text-disabled-text-color);
 }
 
+/* stylelint-disable */
 .inputElement {
   background-color: var(--input-text-background-color);
   border-bottom: 1px solid var(--input-text-bottom-border-color);

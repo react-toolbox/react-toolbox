@@ -119,6 +119,7 @@
   flex: 0 0 calc(100% / 7);
   padding: var(--calendar-day-padding-topbottom) var(--calendar-day-padding-leftright);
 
+  /* stylelint-disable */
   & > span {
     border-radius: 50%;
     display: inline-block;
@@ -126,6 +127,7 @@
     line-height: var(--calendar-row-height);
     width: var(--calendar-row-height);
   }
+  /* stylelint-enable */
 
   &.active > span {
     background: var(--calendar-primary-color);
