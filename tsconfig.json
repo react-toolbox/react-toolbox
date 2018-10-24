@@ -2,11 +2,19 @@
   "compilerOptions": {
     "allowJs": true,
     "target": "es5",
+    "lib": [
+      "es5",
+      "es6",
+      "dom"
+    ],
     "moduleResolution": "node",
     "jsx": "react",
     "noEmit": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "outDir": "lib",
     "baseUrl": ".",
     "paths": {
       "components/*": [
