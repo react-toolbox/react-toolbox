@@ -2,7 +2,7 @@ import { themr } from 'react-css-themr';
 import { SNACKBAR } from '../identifiers';
 import { snackbarFactory } from './Snackbar';
 import { Button } from '../button';
-import theme from './theme.css';
+import theme from './theme.module.css';
 
 const ThemedSnackbar = themr(SNACKBAR, theme)(snackbarFactory(Button));
 

@@ -7,7 +7,7 @@ import { tableFactory } from './Table';
 import { tableHeadFactory } from './TableHead';
 import { tableRowFactory } from './TableRow';
 import { tableCellFactory } from './TableCell';
-import theme from './theme.css';
+import theme from './theme.module.css';
 
 const applyTheme = Component => themr(TABLE, theme)(Component);
 const ThemedTableCell = applyTheme(tableCellFactory(FontIcon));

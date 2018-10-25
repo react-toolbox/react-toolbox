@@ -3,7 +3,7 @@ import { DIALOG } from '../identifiers';
 import { dialogFactory } from './Dialog';
 import { Overlay } from '../overlay';
 import { Button } from '../button';
-import theme from './theme.css';
+import theme from './theme.module.css';
 
 const Dialog = dialogFactory(Overlay, Button);
 const ThemedDialog = themr(DIALOG, theme)(Dialog);

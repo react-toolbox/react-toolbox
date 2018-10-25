@@ -3,7 +3,7 @@ import { mount, shallow } from 'enzyme';
 import { Input } from '../../input/Input';
 import { ProgressBar } from '../../progress_bar/ProgressBar';
 import { Slider } from '../Slider';
-import theme from '../theme.css';
+import theme from '../theme.module.css';
 
 describe('Slider', () => {
   describe('#positionToValue', () => {

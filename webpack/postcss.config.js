@@ -14,7 +14,10 @@ module.exports = () => ({
       features: {
         'custom-properties': {
           preserve: false, // required to output values instead of variables
-          importFrom: ['./components/variables.css', './components/colors.css']
+          importFrom: [
+            './components/variables.module.css',
+            './components/colors.module.css',
+          ],
         },
         'color-mod-function': true, // required to use color-mod()
       }

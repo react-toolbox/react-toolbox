@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../../components/button';
 import Drawer from '../../components/drawer';
-import style from '../style.css';
+import style from '../style.module.css';
 
 class DrawerTest extends React.Component {
   state = {

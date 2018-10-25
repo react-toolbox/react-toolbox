@@ -2,7 +2,7 @@ import * as React from 'react';
 import Button from '../../components/button';
 import Drawer from '../../components/drawer';
 
-const style = require('../style.css');
+const style = require('../style.module.css');
 
 class DrawerTest extends React.Component<any, any> {
   state = {

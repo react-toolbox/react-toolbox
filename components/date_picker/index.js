@@ -7,7 +7,7 @@ import calendarFactory from './Calendar';
 import { IconButton } from '../button';
 import { Input } from '../input';
 import { Dialog } from '../dialog';
-import theme from './theme.css';
+import theme from './theme.module.css';
 
 const Calendar = calendarFactory(IconButton);
 const DatePickerDialog = datePickerDialogFactory(Dialog, Calendar);
