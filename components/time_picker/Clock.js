@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import CssTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
+import CSSTransition from 'react-transition-group/CSSTransition';
 import { getAnimationModule } from '../utils/utils';
 import time from '../utils/time';
 import Hours from './ClockHours';
@@ -21,7 +22,7 @@ class Clock extends Component {
   };
 
   static defaultProps = {
-    className: '',
+    className: '', // eslint-disable-line react/default-props-match-prop-types
     display: 'hours',
     format: '24hr',
     time: new Date(),
@@ -116,20 +117,18 @@ class Clock extends Component {
           style={{ height: this.state.radius * 2 }}
           ref={(node) => { this.placeholderNode = node; }}
         >
-          <CssTransitionGroup
-            transitionName={animationModule}
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={500}
-          >
-            <div
-              key={this.props.display}
-              className={theme.clockWrapper}
-              style={{ height: this.state.radius * 2 }}
-            >
-              {this.props.display === 'hours' ? this.renderHours() : null}
-              {this.props.display === 'minutes' ? this.renderMinutes() : null}
-            </div>
-          </CssTransitionGroup>
+          <TransitionGroup>
+            <CSSTransition classNames={animationModule} timeout={500}>
+              <div
+                key={this.props.display}
+                className={theme.clockWrapper}
+                style={{ height: this.state.radius * 2 }}
+              >
+                {this.props.display === 'hours' ? this.renderHours() : null}
+                {this.props.display === 'minutes' ? this.renderMinutes() : null}
+              </div>
+            </CSSTransition>
+          </TransitionGroup>
         </div>
       </div>
     );

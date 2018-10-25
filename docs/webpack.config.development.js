@@ -1,86 +1,100 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
-const toolboxVariables = require('./toolbox-variables');
 
 module.exports = {
   context: __dirname,
+  mode: 'development',
   devtool: 'inline-source-map',
   entry: [
-    'webpack-hot-middleware/client',
+    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
     'babel-polyfill',
     './app/index.js'
   ],
+
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'docs.js',
     publicPath: '/'
   },
+
   resolve: {
-    extensions: ['', '.js', '.scss', '.css', '.json', '.md'],
-    packageMains: ['browser', 'web', 'browserify', 'main', 'style'],
+    extensions: ['.js', '.scss', '.css', '.json', '.md'],
+    mainFields: ['browser', 'web', 'browserify', 'main', 'style'],
     alias: { 'react-toolbox': path.resolve(`${__dirname}./../components`) },
-    modulesDirectories: [
+    modules: [
       'node_modules',
       path.resolve(__dirname, './node_modules'),
       path.resolve(__dirname, './../node_modules'),
       path.resolve(__dirname, './../components')
     ]
   },
+
   module: {
-    loaders: [{
+    rules: [{
       test: /\.js$/,
       include: [path.resolve(__dirname, './app'), path.resolve(__dirname, './../components')],
-      loader: 'babel'
-    }, {
+      use: ['babel-loader']
+    },
+    {
       test: /\.css$/,
       include: /node_modules/,
-      loaders: ['style-loader', 'css-loader']
-    }, {
+      use: ['style-loader', 'css-loader']
+    },
+    {
       test: /\.css$/,
       include: [path.resolve(__dirname, './app'), path.resolve(`${__dirname}./../components`)],
-      loader: ExtractTextPlugin.extract('style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss')
-    }, {
-      test: /\.txt$/,
-      include: path.resolve(__dirname, './app/components/layout/main/modules'),
-      loader: 'raw'
-    }, {
-      test: /\.md$/,
-      include: [path.join(__dirname, './../components'), path.join(__dirname, './app')],
-      loader: 'html!highlight!markdown'
-    }]
-  },
-  postcss (webpackInstance) {
-    return [
-      require('postcss-import')({
-        addDependencyTo: webpackInstance,
-        root: path.join(__dirname, './../'),
-        path: [
-          path.join(__dirname, './app'),
-          path.join(__dirname, './../components')
-        ]
-      }),
-      require('postcss-mixins')(),
-      require('postcss-each')(),
-      require('postcss-cssnext')({
-        features: {
-          customProperties: {
-            variables: toolboxVariables
+      use: [
+        MiniCssExtractPlugin.loader,
+        {
+          loader: 'css-loader',
+          options: {
+            sourceMap: true,
+            modules: true,
+            importLoaders: 1,
+            localIdentName: '[name]__[local]___[hash:base64:5]',
+          }
+        },
+        {
+          loader: 'postcss-loader',
+          options: {
+            config: {
+              path: path.join(__dirname, './postcss.config.js')
+            }
           }
         }
-      }),
-      require('postcss-reporter')({ clearMessages: true })
-    ];
+      ]
+    },
+    {
+      test: /\.txt$/,
+      include: path.resolve(__dirname, './app/components/layout/main/modules'),
+      use: ['raw-loader']
+    },
+    {
+      test: /\.md$/,
+      include: [path.join(__dirname, './../components'), path.join(__dirname, './app')],
+      use: ['html-loader', 'highlight-loader',
+        {
+          loader: 'markdown-loader',
+          options: {
+            langPrefix: 'lang-'
+          }
+        }]
+    }]
   },
+
   plugins: [
-    new ExtractTextPlugin('docs.css', { allChunks: true }),
+    new MiniCssExtractPlugin({
+      filename: 'docs.css',
+      allChunks: true
+    }),
     new TransferWebpackPlugin([{
       from: 'www/images',
       to: 'images'
     }], path.resolve(__dirname, './')),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
     })

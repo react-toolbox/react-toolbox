@@ -17,7 +17,7 @@
 
 .error {
   background: var(--preview-error-background);
-  border-bottom: 1px solid color(var(--preview-error-background) blackness(60%));
+  border-bottom: 1px solid color-mod(var(--preview-error-background) blackness(60%));
   color: var(--preview-error-color);
   font-family: source-code-pro, Menlo, Consolas, Monaco, 'Andale Mono', 'Courier New', monospace;
   font-size: 13px;

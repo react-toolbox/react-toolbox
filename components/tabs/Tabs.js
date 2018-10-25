@@ -83,13 +83,13 @@ const factory = (Tab, TabContent, FontIcon) => {
 
     updatePointer = (idx) => {
       if (this.navigationNode && this.navigationNode.children[idx]) {
-        this.updatePointerAnimationFrame = requestAnimationFrame(() => {
+        this.updatePointerAnimationFrame = window.requestAnimationFrame(() => {
           if (!this.navigationNode || !this.navigationNode.children[idx]) {
             return;
           }
           const nav = this.navigationNode.getBoundingClientRect();
           const label = this.navigationNode.children[idx].getBoundingClientRect();
-          const scrollLeft = this.navigationNode.scrollLeft;
+          const { scrollLeft } = this.navigationNode;
           this.setState({
             pointer: {
               top: `${nav.height}px`,
@@ -105,7 +105,7 @@ const factory = (Tab, TabContent, FontIcon) => {
       const idx = this.navigationNode.children.length - 2;
 
       if (idx >= 0) {
-        const scrollLeft = this.navigationNode.scrollLeft;
+        const { scrollLeft } = this.navigationNode;
         const nav = this.navigationNode.getBoundingClientRect();
         const lastLabel = this.navigationNode.children[idx].getBoundingClientRect();
 
@@ -126,11 +126,9 @@ const factory = (Tab, TabContent, FontIcon) => {
       }
     }
 
-    scrollRight = () =>
-      this.scrollNavigation(-1);
+    scrollRight = () => this.scrollNavigation(-1);
 
-    scrollLeft = () =>
-      this.scrollNavigation(+1);
+    scrollLeft = () => this.scrollNavigation(+1);
 
     parseChildren() {
       const headers = [];
@@ -183,7 +181,9 @@ const factory = (Tab, TabContent, FontIcon) => {
     }
 
     render() {
-      const { className, disableAnimatedBottomBorder, theme, fixed, inverse } = this.props;
+      const {
+        className, disableAnimatedBottomBorder, theme, fixed, inverse,
+      } = this.props;
       const { left: hasLeftArrow, right: hasRightArrow } = this.state.arrows;
       const { headers, contents } = this.parseChildren();
       const classNamePointer = classnames(theme.pointer, {
@@ -198,16 +198,20 @@ const factory = (Tab, TabContent, FontIcon) => {
       return (
         <div data-react-toolbox="tabs" className={classNames}>
           <div className={theme.navigationContainer}>
-            {hasLeftArrow && <div className={theme.arrowContainer} onClick={this.scrollRight}>
+            {hasLeftArrow && (
+            <div className={theme.arrowContainer} onClick={this.scrollRight}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_left" />
-            </div>}
+            </div>
+            )}
             <div className={theme.navigation} role="tablist" ref={(node) => { this.navigationNode = node; }}>
               {this.renderHeaders(headers)}
               <span className={classNamePointer} style={this.state.pointer} />
             </div>
-            {hasRightArrow && <div className={theme.arrowContainer} onClick={this.scrollLeft}>
+            {hasRightArrow && (
+            <div className={theme.arrowContainer} onClick={this.scrollLeft}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_right" />
-            </div>}
+            </div>
+            )}
           </div>
           {this.renderContents(contents)}
         </div>

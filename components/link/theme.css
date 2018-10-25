@@ -32,10 +32,6 @@
     vertical-align: middle;
   }
 
-  & > abbr {
-    text-transform: capitalize;
-  }
-
   & > small {
     font-size: var(--font-size-tiny);
     margin-left: calc(0.8 * var(--unit));

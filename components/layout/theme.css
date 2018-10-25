@@ -8,17 +8,9 @@
   --layout-side-transition: all var(--animation-duration) var(--animation-curve-default);
 }
 
-.layout {
-  align-items: stretch;
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-  min-width: 100%;
-  position: relative;
-
-  @apply --reset;
+.panel,
+.appbarInner {
+  transition: var(--layout-side-transition);
 }
 
 .panel {
@@ -32,6 +24,19 @@
     max-height: 100vh;
     overflow-y: scroll;
   }
+}
+
+.layout {
+  align-items: stretch;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  min-width: 100%;
+  position: relative;
+
+  @apply --reset;
 }
 
 .sidebarDrawer,
@@ -54,39 +59,6 @@
 
     @media screen and (--xs-viewport) and (--landscape) {
       height: calc(100vh - var(--appbar-height-m-landscape));
-      top: var(--appbar-height-m-landscape);
-    }
-  }
-}
-
-.appbarInner,
-.panel {
-  transition: var(--layout-side-transition);
-}
-
-.appbarFixed {
-  &.appbarAppBar {
-    z-index: var(--z-index-high);
-  }
-
-  & .panel {
-    height: calc(100vh - var(--appbar-height));
-    max-height: calc(100vh - var(--appbar-height));
-    top: var(--appbar-height);
-
-    &:not(.bodyScroll) {
-      overflow-y: scroll;
-    }
-
-    @media screen and (--xxs-viewport) and (--portrait) {
-      height: calc(100vh - var(--appbar-height-m-portrait));
-      max-height: calc(100vh - var(--appbar-height-m-portrait));
-      top: var(--appbar-height-m-portrait);
-    }
-
-    @media screen and (--xs-viewport) and (--landscape) {
-      height: calc(100vh - var(--appbar-height-m-landscape));
-      max-height: calc(100vh - var(--appbar-height-m-landscape));
       top: var(--appbar-height-m-landscape);
     }
   }
@@ -120,13 +92,6 @@
   }
 }
 
-.navDrawerClipped {
-  & .navDrawerWrapper {
-    position: relative;
-    z-index: var(--z-index-normal);
-  }
-}
-
 .sidebarPinned {
   & .appbarLeftIcon {
     display: none;
@@ -152,6 +117,41 @@
         padding-right: calc(var(--drawer-desktop-width) + var(--appbar-h-padding));
       }
     }
+  }
+}
+
+.appbarFixed {
+  &.appbarAppBar {
+    z-index: var(--z-index-high);
+  }
+
+  & .panel {
+    height: calc(100vh - var(--appbar-height));
+    max-height: calc(100vh - var(--appbar-height));
+    top: var(--appbar-height);
+
+    &:not(.bodyScroll) {
+      overflow-y: scroll;
+    }
+
+    @media screen and (--xxs-viewport) and (--portrait) {
+      height: calc(100vh - var(--appbar-height-m-portrait));
+      max-height: calc(100vh - var(--appbar-height-m-portrait));
+      top: var(--appbar-height-m-portrait);
+    }
+
+    @media screen and (--xs-viewport) and (--landscape) {
+      height: calc(100vh - var(--appbar-height-m-landscape));
+      max-height: calc(100vh - var(--appbar-height-m-landscape));
+      top: var(--appbar-height-m-landscape);
+    }
+  }
+}
+
+.navDrawerClipped {
+  & .navDrawerWrapper {
+    position: relative;
+    z-index: var(--z-index-normal);
   }
 }
 

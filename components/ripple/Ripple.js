@@ -62,6 +62,11 @@ const rippleFactory = (options = {}) => {
         ripples: {},
       };
 
+      /**
+       * Variable to store the ripple references
+       */
+      rippleNodes = {};
+
       componentDidUpdate(prevProps, prevState) {
         // If a new ripple was just added, add a remove event listener to its animation
         if (Object.keys(prevState.ripples).length < Object.keys(this.state.ripples).length) {
@@ -85,7 +90,9 @@ const rippleFactory = (options = {}) => {
        * @return {Object} Descriptor element including position and size of the element
        */
       getDescriptor(x, y) {
-        const { left, top, height, width } = ReactDOM.findDOMNode(this).getBoundingClientRect();
+        const {
+          left, top, height, width,
+        } = ReactDOM.findDOMNode(this).getBoundingClientRect();
         const { rippleCentered: centered, rippleSpread: spread } = this.props;
         return {
           left: centered ? 0 : x - left - (width / 2),
@@ -115,10 +122,23 @@ const rippleFactory = (options = {}) => {
         return `ripple${this.currentCount}`;
       }
 
-      /**
-       * Variable to store the ripple references
-       */
-      rippleNodes = {};
+      doRipple = () => (!this.props.disabled && this.props.ripple)
+
+      handleMouseDown = (event) => {
+        if (this.props.onMouseDown) this.props.onMouseDown(event);
+        if (this.doRipple()) {
+          const { x, y } = events.getMousePosition(event);
+          this.animateRipple(x, y, false);
+        }
+      };
+
+      handleTouchStart = (event) => {
+        if (this.props.onTouchStart) this.props.onTouchStart(event);
+        if (this.doRipple()) {
+          const { x, y } = events.getTouchPosition(event);
+          this.animateRipple(x, y, true);
+        }
+      };
 
       /**
        * Determine if a ripple should start depending if its a touch event. For mobile both
@@ -153,15 +173,22 @@ const rippleFactory = (options = {}) => {
             ? this.getNextKey()
             : this.getLastKey();
           const endRipple = this.addRippleDeactivateEventListener(isTouch, key);
-          const initialState = { active: false, restarting: true, top, left, width, endRipple };
+          const initialState = {
+            active: false, restarting: true, top, left, width, endRipple,
+          };
           const runningState = { active: true, restarting: false };
-          const ripples = { ...this.state.ripples, [key]: initialState };
-          this.setState({ ripples }, () => {
+
+          this.setState(state => ({
+            ripples: { ...state.ripples, [key]: initialState },
+          }), () => {
             if (this.rippleNodes[key]) this.rippleNodes[key].offsetWidth; // eslint-disable-line
-            this.setState({ ripples: {
-              ...this.state.ripples,
-              [key]: Object.assign({}, this.state.ripples[key], runningState),
-            } });
+
+            this.setState(state => ({
+              ripples: {
+                ...state.ripples,
+                [key]: Object.assign({}, state.ripples[key], runningState),
+              },
+            }));
           });
         }
       }
@@ -216,32 +243,18 @@ const rippleFactory = (options = {}) => {
         const self = this;
         return function endRipple() {
           document.removeEventListener(eventType, endRipple);
-          self.setState({ ripples: {
-            ...self.state.ripples,
-            [rippleKey]: Object.assign({}, self.state.ripples[rippleKey], { active: false }),
-          } });
+          self.setState({
+            ripples: {
+              ...self.state.ripples,
+              [rippleKey]: Object.assign({}, self.state.ripples[rippleKey], { active: false }),
+            },
+          });
         };
       }
 
-      doRipple = () => (!this.props.disabled && this.props.ripple)
-
-      handleMouseDown = (event) => {
-        if (this.props.onMouseDown) this.props.onMouseDown(event);
-        if (this.doRipple()) {
-          const { x, y } = events.getMousePosition(event);
-          this.animateRipple(x, y, false);
-        }
-      };
-
-      handleTouchStart = (event) => {
-        if (this.props.onTouchStart) this.props.onTouchStart(event);
-        if (this.doRipple()) {
-          const { x, y } = events.getTouchPosition(event);
-          this.animateRipple(x, y, true);
-        }
-      };
-
-      renderRipple(key, className, { active, left, restarting, top, width }) {
+      renderRipple(key, className, {
+        active, left, restarting, top, width,
+      }) {
         const scale = restarting ? 0 : 1;
         const transform = `translate3d(${(-width / 2) + left}px, ${(-width / 2) + top}px, 0) scale(${scale})`;
         const _className = classnames(this.props.theme.ripple, {
@@ -273,9 +286,7 @@ const rippleFactory = (options = {}) => {
           ...other
         } = this.props;
         const { ripples } = this.state;
-        const childRipples = Object.keys(ripples).map(key =>
-          this.renderRipple(key, rippleClassName, ripples[key]),
-        );
+        const childRipples = Object.keys(ripples).map(key => this.renderRipple(key, rippleClassName, ripples[key])); // eslint-disable-line max-len
         const childProps = {
           onMouseDown: this.handleMouseDown,
           onTouchStart: this.handleTouchStart,

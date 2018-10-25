@@ -41,6 +41,7 @@ const factory = (Drawer) => {
     clipped: PropTypes.bool,
     permanentAt: PropTypes.oneOf(['sm', 'smTablet', 'md', 'lg', 'lgTablet', 'xl', 'xxl', 'xxxl']),
     pinned: PropTypes.bool,
+    right: PropTypes.bool,
     theme: PropTypes.shape({
       clipped: PropTypes.string,
       pinned: PropTypes.string,

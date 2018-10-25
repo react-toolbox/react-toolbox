@@ -5,11 +5,11 @@
   --table-font-size: calc(1.3 * var(--unit));
   --table-header-font-size: calc(1.2 * var(--unit));
   --table-header-sort-icon-size: calc(1.6 * var(--unit));
-  --table-header-color: color(#000 a(54%));
-  --table-header-sorted-color: color(#000 a(87%));
-  --table-header-sorted-icon-hover-color: color(#000 a(26%));
+  --table-header-color: color-mod(#000 a(54%));
+  --table-header-sorted-color: color-mod(#000 a(87%));
+  --table-header-sorted-icon-hover-color: color-mod(#000 a(26%));
   --table-dividers: 1px solid #e6e6e6;
-  --table-row-color: color(#000 a(87%));
+  --table-row-color: color-mod(#000 a(87%));
   --table-hover-color: #eee;
   --table-selection-color: #f5f5f5;
   --table-row-height: calc(4.8 * var(--unit));
@@ -40,18 +40,10 @@
   transition-property: background-color;
   transition-timing-function: var(--animation-curve-default);
 
-  &:hover { background-color: var(--table-hover-color); }
   &.selected { background-color: var(--table-selection-color); }
-}
 
-.rowCell,
-.headCell {
-  padding: 0 var(--table-column-padding) 12px var(--table-column-padding);
-  text-align: left;
-
-  &:first-of-type { padding-left: 24px; }
-  &:last-of-type { padding-right: 24px; }
-  &.numeric { text-align: right; }
+  &:hover,
+  &.selected:hover { background-color: var(--table-hover-color); }
 }
 
 .rowCell {
@@ -62,11 +54,24 @@
   vertical-align: middle;
 
   &.checkboxCell {
+    padding-right: 5px;
     width: calc(1.8 * var(--unit));
 
     & > * {
       margin: 0;
     }
+  }
+}
+
+.sortIcon {
+  display: inline-block;
+  font-size: calc(1.6 * var(--unit));
+  margin-right: 3px;
+  transition: 0.28s transform var(--animation-curve-default);
+  vertical-align: sub;
+
+  &.asc {
+    transform: rotate(180deg);
   }
 }
 
@@ -81,6 +86,7 @@
   vertical-align: bottom;
 
   &.checkboxCell {
+    padding-right: 5px;
     width: calc(1.8 * var(--unit));
 
     & > * {
@@ -98,14 +104,12 @@
   }
 }
 
-.sortIcon {
-  display: inline-block;
-  font-size: calc(1.6 * var(--unit));
-  margin-right: 3px;
-  transition: 0.28s transform var(--animation-curve-default);
-  vertical-align: sub;
+.rowCell,
+.headCell {
+  padding: 12px var(--table-column-padding);
+  text-align: left;
 
-  &.asc {
-    transform: rotate(180deg);
-  }
+  &:first-of-type { padding-left: 24px; }
+  &:last-of-type { padding-right: 24px; }
+  &.numeric { text-align: right; }
 }

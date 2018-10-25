@@ -29,7 +29,7 @@ function addPrefixesTo(style, property, value) {
 
 function prefixer(style, defaultValue = {}) {
   const _style = defaultValue;
-  for (const property in style) {  // eslint-disable-line no-restricted-syntax
+  for (const property in style) { // eslint-disable-line no-restricted-syntax
     if ({}.hasOwnProperty.call(style, property)) {
       _style[property] = style[property];
       if (properties[property]) {

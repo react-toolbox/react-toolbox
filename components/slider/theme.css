@@ -169,33 +169,6 @@
     }
   }
 
-  &.pressed {
-    &.pinned .innerknob {
-      &::before {
-        transform: rotate(-45deg) scale(1) translate(var(--slider-pin-elevation), calc(-1 * var(--slider-pin-elevation)));
-        transition-delay: 100ms;
-      }
-
-      &::after {
-        transform: scale(1) translate(0, calc(-1 * var(--slider-pin-elevation)));
-        transition-delay: 100ms;
-      }
-    }
-
-    &:not(.pinned) {
-      &.ring .progress {
-        left: calc(var(--slider-knob-size) / 2 + (var(--slider-knob-size) - var(--slider-empty-knob-border) * 2) / 2);
-        width: calc(100% - ((var(--slider-knob-size) - var(--slider-empty-knob-border) * 2) / 2));
-      }
-
-      & .innerknob {
-        height: 100%;
-        transform: translateZ(0);
-        width: 100%;
-      }
-    }
-  }
-
   &.ring {
     & .innerknob {
       background-color: transparent;
@@ -221,6 +194,33 @@
 
       & .progress {
         left: calc(var(--slider-knob-size) / 2);
+        width: 100%;
+      }
+    }
+  }
+
+  &.pressed {
+    &.pinned .innerknob {
+      &::before {
+        transform: rotate(-45deg) scale(1) translate(var(--slider-pin-elevation), calc(-1 * var(--slider-pin-elevation)));
+        transition-delay: 100ms;
+      }
+
+      &::after {
+        transform: scale(1) translate(0, calc(-1 * var(--slider-pin-elevation)));
+        transition-delay: 100ms;
+      }
+    }
+
+    &:not(.pinned) {
+      &.ring .progress {
+        left: calc(var(--slider-knob-size) / 2 + (var(--slider-knob-size) - var(--slider-empty-knob-border) * 2) / 2);
+        width: calc(100% - ((var(--slider-knob-size) - var(--slider-empty-knob-border) * 2) / 2));
+      }
+
+      & .innerknob {
+        height: 100%;
+        transform: translateZ(0);
         width: 100%;
       }
     }

@@ -13,6 +13,15 @@
   --snackbar-vertical-offset: calc(1.4 * var(--unit));
 }
 
+.button {
+  margin:
+    calc(-1 * var(--snackbar-vertical-offset) / 2)
+    calc(-1 * var(--snackbar-horizontal-offset) / 2)
+    calc(-1 * var(--snackbar-vertical-offset) / 2)
+    var(--snackbar-button-offset);
+  min-width: inherit;
+}
+
 .snackbar {
   align-items: center;
   background-color: var(--snackbar-background-color);
@@ -54,13 +63,4 @@
 .label {
   flex-grow: 1;
   font-size: var(--font-size-small);
-}
-
-.button {
-  margin:
-    calc(-1 * var(--snackbar-vertical-offset) / 2)
-    calc(-1 * var(--snackbar-horizontal-offset) / 2)
-    calc(-1 * var(--snackbar-vertical-offset) / 2)
-    var(--snackbar-button-offset);
-  min-width: inherit;
 }

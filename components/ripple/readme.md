@@ -36,7 +36,7 @@ In any component you decorate with the Ripple you'd get some additional props na
 
 | Name              | Type         | Default             | Description|
 |:-----|:-----|:-----|:-----|
-| `onRippleEnded`   | `Function`  |                     | Function that will be called when the ripple animation ends. Beware if your animation supports multiple waves this function will be called for each ended ripple. |
+| `onRippleEnded`   | `Function`  |        &nbsp;       | Function that will be called when the ripple animation ends. Beware if your animation supports multiple waves this function will be called for each ended ripple. |
 | `ripple`          | `Boolean`   | `true`              | False in case you want to deactivate the ripple.|
 | `rippleCentered`  | `Boolean`   | `options.centered`  | True in case you want a centered ripple.|
 | `rippleClassName` | `String`    | `options.className` | String to customize appearance (color and opacity for example).|

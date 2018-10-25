@@ -5,6 +5,9 @@ import FontIcon from '../../components/font_icon';
 import Tooltip, { tooltipFactory } from '../../components/tooltip';
 import Chip from '../../components/chip';
 import Avatar from '../../components/avatar';
+import { cold } from 'react-hot-loader';
+
+const ColdAvatar = cold(Avatar)
 
 const TooltipFontIcon = tooltipFactory({ passthrough: false })(FontIcon);
 const TooltipButton = Tooltip(Button);
@@ -20,6 +23,7 @@ const TooltipTest = () => (
   <section>
     <h5>Tooltip</h5>
     <p>Give information on :hover</p>
+    <TooltipButton label="Bookmark" icon="bookmark" raised primary disabled={true} tooltip="Bookmark Tooltip" tooltipDelay={1000} />
     <TooltipButton label="Bookmark" icon="bookmark" raised primary tooltip="Bookmark Tooltip" tooltipDelay={1000} />
     <TooltipButton icon="add" floating accent tooltip="Floating Tooltip" />
     <TooltipButton icon="add" floating disabled tooltip="Floating can not be shown" />
@@ -29,7 +33,7 @@ const TooltipTest = () => (
       tooltip={<div><p>An example with</p><p>Multiline!</p></div>}
     />
     <ChipTooltip tooltip="Dolor sit amet" tooltipPosition="top">
-      <Avatar icon="home" />
+      <ColdAvatar icon="home" />
       <span>Tooltip in a chip</span>
     </ChipTooltip>
     <TooltipInput tooltip="lorem ipsum..." />

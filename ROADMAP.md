@@ -1,4 +1,4 @@
-This document defines a manifesto and the main Roadmap 🚵 ideas for [React Toolbox](www.react-toolbox.com). It's not a fixed document and of course it's open to change. You can leave your feedback in [this gist](https://gist.github.com/javivelasco/259d2087c2a8c3e8f2c5c720d1fd3f2e) or you can also do it [through an issue](https://github.com/react-toolbox/react-toolbox/issues/new).
+This document defines a manifesto and the main Roadmap 🚵 ideas for [React Toolbox](www.react-toolbox.io). It's not a fixed document and of course it's open to change. You can leave your feedback in [this gist](https://gist.github.com/javivelasco/259d2087c2a8c3e8f2c5c720d1fd3f2e) or you can also do it [through an issue](https://github.com/react-toolbox/react-toolbox/issues/new).
 
 ## The Manifesto 
 
@@ -68,7 +68,7 @@ There is no fixed date, sorry. Being an open source project, it depends on contr
 
 ### Is there any migration guide to 2.0?
 
-Not really. At the end we are just providing components and there are no big changes on them apart from huge refactors of some specific components that will be coming. If should be enough by checking changelogs and new documentation. In any case if you feel like a migration guide is needed, feel free to leave for feedback.
+There is a [migration guide](https://github.com/react-toolbox/react-toolbox/wiki/Migrating-from-version-1.3-to-2.0) in the wiki.
 
 ### When will be released the new playground?
 

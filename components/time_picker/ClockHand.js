@@ -64,17 +64,6 @@ class Hand extends Component {
     return Math.sqrt((x * x) + (y * y));
   }
 
-  mouseStart(event) {
-    events.addEventsToDocument(this.getMouseEventMap());
-    this.move(events.getMousePosition(event));
-  }
-
-  touchStart(event) {
-    events.addEventsToDocument(this.getTouchEventMap());
-    this.move(events.getTouchPosition(event));
-    events.pauseEvent(event);
-  }
-
   handleMouseMove = (event) => {
     this.move(events.getMousePosition(event));
   };
@@ -90,6 +79,17 @@ class Hand extends Component {
   handleTouchEnd = () => {
     this.end(this.getTouchEventMap());
   };
+
+  mouseStart(event) {
+    events.addEventsToDocument(this.getMouseEventMap());
+    this.move(events.getMousePosition(event));
+  }
+
+  touchStart(event) {
+    events.addEventsToDocument(this.getTouchEventMap());
+    this.move(events.getTouchPosition(event));
+    events.pauseEvent(event);
+  }
 
   trimAngleToValue(angle) {
     return this.props.step * Math.round(angle / this.props.step);

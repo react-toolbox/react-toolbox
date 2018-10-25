@@ -40,10 +40,10 @@ If you want to provide a theme via context, the component key is `RTChip`.
 
 | Name            | Type        | Default         | Description|
 |:----------------|:------------|:----------------|:-----------|
-| `children`      | `Node`      |                 | Child components, usually `Avatar` and inline elements. |
+| `children`      | `Node`      |     &nbsp;      | Child components, usually `Avatar` and inline elements. |
 | `className`     | `String`    | `''`            | Additional class name to provide custom styling.|
 | `deletable`     | `Boolean`   | `false`         | If true, the chip will be rendered with a delete icon.|
-| `onDeleteClick` | `Function`  |                 | Callback to be invoked when the delete icon is clicked. |
+| `onDeleteClick` | `Function`  |     &nbsp;      | Callback to be invoked when the delete icon is clicked. |
 
 ## Theme
 

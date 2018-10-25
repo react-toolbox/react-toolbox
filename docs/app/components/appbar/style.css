@@ -22,7 +22,6 @@
   display: block;
   fill: var(--color-primary-contrast);
   height: var(--appbar-logo-size);
-  margin-top: calc((var(--appbar-height) - var(--appbar-logo-size)) / 2);
   width: var(--appbar-logo-size);
 }
 

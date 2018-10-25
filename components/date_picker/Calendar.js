@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import CssTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
+import CSSTransition from 'react-transition-group/CSSTransition';
 import { range, getAnimationModule } from '../utils/utils';
 import time from '../utils/time';
 import CalendarMonth from './CalendarMonth';
@@ -55,11 +56,6 @@ const factory = (IconButton) => {
       document.body.removeEventListener('keydown', this.handleKeys);
     }
 
-    scrollToActive() {
-      const offset = (this.yearsNode.offsetHeight / 2) + (this.activeYearNode.offsetHeight / 2);
-      this.yearsNode.scrollTop = this.activeYearNode.offsetTop - offset;
-    }
-
     handleDayClick = (day) => {
       this.props.onChange(time.setDay(this.state.viewDate, day), true);
     };
@@ -95,11 +91,16 @@ const factory = (IconButton) => {
 
     changeViewMonth = (event) => {
       const direction = event.currentTarget.id;
-      this.setState({
+      this.setState(state => ({
         direction,
-        viewDate: time.addMonths(this.state.viewDate, DIRECTION_STEPS[direction]),
-      });
+        viewDate: time.addMonths(state.viewDate, DIRECTION_STEPS[direction]),
+      }));
     };
+
+    scrollToActive() {
+      const offset = (this.yearsNode.offsetHeight / 2) + (this.activeYearNode.offsetHeight / 2);
+      this.yearsNode.scrollTop = this.activeYearNode.offsetTop - offset;
+    }
 
     renderYears() {
       return (
@@ -135,25 +136,23 @@ const factory = (IconButton) => {
         <div data-react-toolbox="calendar">
           <IconButton id="left" className={theme.prev} icon="chevron_left" onClick={this.changeViewMonth} />
           <IconButton id="right" className={theme.next} icon="chevron_right" onClick={this.changeViewMonth} />
-          <CssTransitionGroup
-            transitionName={animationModule}
-            transitionEnterTimeout={350}
-            transitionLeaveTimeout={350}
-          >
-            <CalendarMonth
-              enabledDates={this.props.enabledDates}
-              disabledDates={this.props.disabledDates}
-              key={this.state.viewDate.getMonth()}
-              locale={this.props.locale}
-              maxDate={this.props.maxDate}
-              minDate={this.props.minDate}
-              onDayClick={this.handleDayClick}
-              selectedDate={this.props.selectedDate}
-              sundayFirstDayOfWeek={this.props.sundayFirstDayOfWeek}
-              theme={this.props.theme}
-              viewDate={this.state.viewDate}
-            />
-          </CssTransitionGroup>
+          <TransitionGroup>
+            <CSSTransition classNames={animationModule} timeout={350}>
+              <CalendarMonth
+                enabledDates={this.props.enabledDates}
+                disabledDates={this.props.disabledDates}
+                key={this.state.viewDate.getMonth()}
+                locale={this.props.locale}
+                maxDate={this.props.maxDate}
+                minDate={this.props.minDate}
+                onDayClick={this.handleDayClick}
+                selectedDate={this.props.selectedDate}
+                sundayFirstDayOfWeek={this.props.sundayFirstDayOfWeek}
+                theme={this.props.theme}
+                viewDate={this.state.viewDate}
+              />
+            </CSSTransition>
+          </TransitionGroup>
         </div>
       );
     }

@@ -115,7 +115,7 @@
   padding: var(--content-offset);
 
   &:nth-child(3) {
-    background-color: color(var(--color-content) blackness(5%));
+    background-color: color-mod(var(--color-content) blackness(5%));
   }
 
   & > .authors {

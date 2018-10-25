@@ -51,10 +51,6 @@
   width: var(--chip-remove-size);
 }
 
-.delete:hover .deleteIcon {
-  background: var(--chip-remove-background-hover);
-}
-
 .deleteIcon {
   background: var(--chip-remove-background);
   border-radius: var(--chip-remove-size);
@@ -65,4 +61,8 @@
     stroke: var(--chip-remove-color);
     stroke-width: var(--chip-remove-stroke-width);
   }
+}
+
+.delete:hover .deleteIcon {
+  background: var(--chip-remove-background-hover);
 }

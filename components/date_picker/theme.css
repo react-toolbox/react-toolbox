@@ -70,6 +70,19 @@
   }
 }
 
+.week {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--calendar-day-font-size);
+  height: var(--calendar-row-height);
+  line-height: var(--calendar-row-height);
+  opacity: 0.5;
+
+  & > span {
+    flex: 0 0 calc(100% / 7);
+  }
+}
+
 .calendar {
   background: var(--calendar-primary-contrast-color);
   font-size: var(--font-size-small);
@@ -102,6 +115,39 @@
   }
 }
 
+.day {
+  flex: 0 0 calc(100% / 7);
+  padding: var(--calendar-day-padding-topbottom) var(--calendar-day-padding-leftright);
+
+  /* stylelint-disable */
+  & > span {
+    border-radius: 50%;
+    display: inline-block;
+    height: var(--calendar-row-height);
+    line-height: var(--calendar-row-height);
+    width: var(--calendar-row-height);
+  }
+  /* stylelint-enable */
+
+  &.active > span {
+    background: var(--calendar-primary-color);
+    color: var(--calendar-primary-contrast-color);
+  }
+
+  &:hover:not(.disabled) > span {
+    cursor: pointer;
+  }
+
+  &:hover:not(.active):not(.disabled) > span {
+    background: var(--calendar-primary-hover-color);
+    color: var(--calendar-primary-contrast-color);
+  }
+
+  &.disabled {
+    opacity: var(--calendar-day-disable-opacity);
+  }
+}
+
 .title {
   display: inline-block;
   font-weight: 500;
@@ -128,54 +174,10 @@
   }
 }
 
-.week {
-  display: flex;
-  flex-wrap: wrap;
-  font-size: var(--calendar-day-font-size);
-  height: var(--calendar-row-height);
-  line-height: var(--calendar-row-height);
-  opacity: 0.5;
-
-  & > span {
-    flex: 0 0 calc(100% / 7);
-  }
-}
-
 .days {
   display: flex;
   flex-wrap: wrap;
   font-size: var(--calendar-day-font-size);
-}
-
-.day {
-  flex: 0 0 calc(100% / 7);
-  padding: var(--calendar-day-padding-topbottom) var(--calendar-day-padding-leftright);
-
-  & > span {
-    border-radius: 50%;
-    display: inline-block;
-    height: var(--calendar-row-height);
-    line-height: var(--calendar-row-height);
-    width: var(--calendar-row-height);
-  }
-
-  &:hover:not(.active):not(.disabled) > span {
-    background: var(--calendar-primary-hover-color);
-    color: var(--calendar-primary-contrast-color);
-  }
-
-  &.active > span {
-    background: var(--calendar-primary-color);
-    color: var(--calendar-primary-contrast-color);
-  }
-
-  &:hover:not(.disabled) > span {
-    cursor: pointer;
-  }
-
-  &.disabled {
-    opacity: var(--calendar-day-disable-opacity);
-  }
 }
 
 .month {

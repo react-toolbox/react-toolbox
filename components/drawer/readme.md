@@ -38,7 +38,7 @@ If you want to provide a theme via context, the component key is `RTDrawer`.
 | `active`          | `Boolean`       | `false`       | If true, the drawer will be visible.|
 | `className`       | `String`        | `''`          | Sets a class to give customized styles to the drawer.|
 | `insideTree`      | `Boolean`       | `false`       | If true the Drawer is rendered inside the normal tree.|
-| `onOverlayClick`  | `Function`      |               | Callback function to be invoked when the overlay is clicked.|
+| `onOverlayClick`  | `Function`      |     &nbsp;    | Callback function to be invoked when the overlay is clicked.|
 | `type`            | `String`        | `left`        | Type of drawer. It can be `left` or `right` to display the drawer on the left or right side of the screen.|
 | `withOverlay`     | `String`        | `true`        | If true display an Overlay that locks the scroll when the Drawer is active.|
 
