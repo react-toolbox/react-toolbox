@@ -192,8 +192,8 @@
 
 .slideRightEnterActive,
 .slideRightExitActive {
-  transition-property: transform, opacity;
   transition-duration: 350ms;
+  transition-property: transform, opacity;
   transition-timing-function: ease-in-out;
 }
 
@@ -224,8 +224,8 @@
 
 .slideLeftEnterActive,
 .slideLeftExitActive {
-  transition-property: transform, opacity;
   transition-duration: 350ms;
+  transition-property: transform, opacity;
   transition-timing-function: ease-in-out;
 }
 

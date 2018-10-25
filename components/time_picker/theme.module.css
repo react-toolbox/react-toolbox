@@ -187,8 +187,8 @@
 
 .zoomInEnterActive,
 .zoomInExitActive {
-  transition-property: transform, opacity;
   transition-duration: 500ms;
+  transition-property: transform, opacity;
   transition-timing-function: var(--animation-curve-fast-out-slow-in);
 }
 
@@ -219,8 +219,8 @@
 
 .zoomOutEnterActive,
 .zoomOutExitActive {
-  transition-property: transform, opacity;
   transition-duration: 500ms;
+  transition-property: transform, opacity;
   transition-timing-function: var(--animation-curve-fast-out-slow-in);
 }
 
