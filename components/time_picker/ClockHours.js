@@ -76,7 +76,7 @@ class Hours extends Component {
     const is24hr = format === '24hr';
 
     return (
-      <div>
+      <React.Fragment>
         <Face
           onTouchStart={this.handleTouchStart}
           onMouseDown={this.handleMouseDown}
@@ -98,7 +98,7 @@ class Hours extends Component {
           origin={center}
           step={step}
         />
-      </div>
+      </React.Fragment>
     );
   }
 }

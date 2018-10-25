@@ -186,14 +186,14 @@
 }
 
 .slideRightEnter,
-.slideRightLeave {
+.slideRightExit {
   position: absolute;
 }
 
 .slideRightEnterActive,
-.slideRightLeaveActive {
-  transition-duration: 350ms;
+.slideRightExitActive {
   transition-property: transform, opacity;
+  transition-duration: 350ms;
   transition-timing-function: ease-in-out;
 }
 
@@ -207,40 +207,44 @@
   }
 }
 
-.slideRightLeave {
+.slideRightExit {
   opacity: 1;
   transform: translateX(0);
 
-  &.slideRightLeaveActive {
+  &.slideRightExitActive {
     opacity: 0;
     transform: translateX(-100%);
   }
 }
 
 .slideLeftEnter,
-.slideLeftLeave {
+.slideLeftExit {
   position: absolute;
-  transition-duration: 0.35s;
+}
+
+.slideLeftEnterActive,
+.slideLeftExitActive {
   transition-property: transform, opacity;
+  transition-duration: 350ms;
   transition-timing-function: ease-in-out;
 }
 
 .slideLeftEnter {
   opacity: 0;
-  transform: translate3d(-100%, 0, 0);
+  transform: translateX(-100%);
 
   &.slideLeftEnterActive {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: translateX(0);
   }
 }
 
-.slideLeftLeave {
+.slideLeftExit {
   opacity: 1;
-  transform: translate3d(0, 0, 0);
+  transform: translateX(0);
 
-  &.slideLeftLeaveActive {
+  &.slideLeftExitActive {
     opacity: 0;
-    transform: translate3d(100%, 0, 0);
+    transform: translateX(100%);
   }
 }
