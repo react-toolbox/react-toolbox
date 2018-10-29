@@ -3,7 +3,7 @@ import { AUTOCOMPLETE } from '../identifiers';
 import { autocompleteFactory } from './Autocomplete';
 import { Chip } from '../chip';
 import { Input } from '../input';
-import theme from './theme.css';
+import theme from './theme.module.css';
 
 const Autocomplete = autocompleteFactory(Chip, Input);
 const ThemedAutocomplete = themr(AUTOCOMPLETE, theme, { withRef: true })(Autocomplete);

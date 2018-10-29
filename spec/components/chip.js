@@ -1,7 +1,7 @@
 import React from 'react';
 import Avatar from '../../components/avatar';
 import Chip from '../../components/chip';
-import style from '../style';
+import style from '../style.module.css';
 import { cold } from 'react-hot-loader';
 
 const ColdAvatar = cold(Avatar)

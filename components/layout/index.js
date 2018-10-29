@@ -6,7 +6,7 @@ import { navDrawerFactory } from './NavDrawer';
 import { Panel } from './Panel';
 import { AppBar } from '../app_bar';
 import { Drawer } from '../drawer';
-import theme from './theme.css';
+import theme from './theme.module.css';
 
 const injectTheme = component => themr(LAYOUT, theme)(component);
 const ThemedNavDrawer = injectTheme(navDrawerFactory(Drawer));

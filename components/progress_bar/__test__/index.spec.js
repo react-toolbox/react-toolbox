@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import { ProgressBar } from '../ProgressBar';
-import theme from '../theme.css';
+import theme from '../theme.module.css';
 
 describe('ProgressBar', () => {
   describe('#calculateRatio', () => {

@@ -1,6 +1,6 @@
-import '../../components/variables.css';
-import '../../components/colors.css';
-import '../../components/media.css';
+import '../../components/variables.module.css';
+import '../../components/colors.module.css';
+import '../../components/media.module.css';
 import './commons.css';
 import 'normalize.css';
 

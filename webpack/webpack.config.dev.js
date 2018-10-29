@@ -44,7 +44,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.css$/,
+        test: /\.module\.css$/,
         include: [
           path.join(__dirname, '../components'),
           path.join(__dirname, '../spec')

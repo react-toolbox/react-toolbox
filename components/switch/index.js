@@ -3,7 +3,7 @@ import { switchFactory } from './Switch';
 import { SWITCH } from '../identifiers';
 import thumbFactory from './Thumb';
 import themedRippleFactory from '../ripple';
-import theme from './theme.css';
+import theme from './theme.module.css';
 
 const applyTheme = Component => themr(SWITCH, theme)(Component);
 const ripple = themedRippleFactory({ centered: true, spread: 2.6 });
