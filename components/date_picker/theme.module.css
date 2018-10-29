@@ -231,20 +231,20 @@
 
 .slideLeftEnter {
   opacity: 0;
-  transform: translateX(-100%);
+  transform: translate3d(-100%, 0, 0);
 
   &.slideLeftEnterActive {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 .slideLeftExit {
   opacity: 1;
-  transform: translateX(0);
+  transform: translate3d(0, 0, 0);
 
   &.slideLeftExitActive {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translate3d(100%, 0, 0);
   }
 }
