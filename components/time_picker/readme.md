@@ -40,10 +40,10 @@ If you want to provide a theme via context, the component key is `RTTimePicker`.
 | `error`         | `String`    |    &nbsp;   | Provide error text which will be displayed under the field.|
 | `inputClassName`| `String`        |  &nbsp; | This class will be applied to `Input` component of `TimePicker`. |
 | `format`        | `String`    | `24hr`      | Format to display the clock. It can be `24hr` or `ampm`.|
-| `label`         | `String`    |    &nbsp;   | The text string to use for the floating label element in the input component.|
-| `onChange`      | `Function`  |    &nbsp;   | Callback called when the picker value is changed.|
-| `readonly`      | `Boolean`   |    &nbsp;   | The input element will be readonly and look like disabled.|
-| `value`         | `Date`      |    &nbsp;   | Datetime object with currrently selected time. |
+| `label`         | `String`    |             | The text string to use for the floating label element in the input component.|
+| `onChange`      | `Function`  |             | Called with (value, event) when the picker value changes.|
+| `readonly`      | `Boolean`   |             | The input element will be readonly and look like disabled.|
+| `value`         | `Date`      |             | Datetime object with currrently selected time. |
 
 ## Theme
 

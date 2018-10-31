@@ -64,14 +64,12 @@ const factory = (ripple, FontIcon) => {
         [activeClassName]: active,
       }, className);
 
-      return (
-        <div {...other} data-react-toolbox="tab" role="tab" tabIndex="0" className={_className} onClick={this.handleClick}>
-          {icon && <FontIcon className={theme.icon} value={icon} />}
-          {label}
-          {children}
-        </div>
-      );
-    }
+    return (
+      <button type="button" {...other} data-react-toolbox='tab' className={_className} onClick={this.handleClick}>
+        {icon && <FontIcon className={theme.icon} value={icon}/>}
+        {label}
+      </button>
+    );
   }
 
   return ripple(Tab);

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { List, ListItem } from 'react-toolbox';
 import classnames from 'classnames';
+import Carbon from '../../../Carbon';
 import components from '../modules/components';
 import style from './navigation.css';
 
@@ -25,7 +26,8 @@ const MainNavigation = ({ className }, { router }) => {
         {drawerItems}
       </List>
       <footer className={style.footer}>
-        <span>React Toolbox © 2016</span>
+        <span className={style.footerLegend}>React Toolbox © 2017</span>
+        <Carbon className={style.ad} />
       </footer>
     </aside>
   );

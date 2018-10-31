@@ -89,9 +89,18 @@ const factory = (Input) => {
       touchend: this.handleDocumentClick,
     });
 
-    getSelectedItem = () => {
-      for (const item of this.props.source) {
-        if (item[this.props.valueKey] === this.props.value) return item;
+    open = (event) => {
+      if (this.state.active) return;
+      const client = event.target.getBoundingClientRect();
+      const screenHeight = window.innerHeight || document.documentElement.offsetHeight;
+      const up = this.props.auto ? client.top > ((screenHeight / 2) + client.height) : false;
+      if (this.inputNode) this.inputNode.blur();
+      this.setState({active: true, up});
+    };
+
+    close = () => {
+      if (this.state.active) {
+        this.setState({active: false});
       }
       return !this.props.allowBlank
         ? this.props.source[0]

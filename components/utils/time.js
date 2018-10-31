@@ -1,6 +1,13 @@
 import hasOwnProperty from './hasOwnProperty';
 
 const dateLocales = {
+  cs: {
+    months: 'Leden_Únor_Březen_Duben_Květen_Červen_Červenec_Srpen_Září_Říjen_Listopad_Prosinec'.split('_'),
+    monthsShort: 'Led_Úno_Bře_Dub_Kvě_Čvn_Čvc_Srp_Zář_Říj_Lis_Pro'.split('_'),
+    weekdays: 'Neděle_Pondělí_Úterý_Středa_Čtvrtek_Pátek_Sobota'.split('_'),
+    weekdaysShort: 'Ne_Po_Út_St_Čt_Pá_So'.split('_'),
+    weekdaysLetter: 'N_P_Ú_S_Č_P_S'.split('_')
+  },
   de: {
     months: 'Januar_Februar_März_April_Mai_Juni_Juli_August_September_Oktober_November_Dezember'.split('_'),
     monthsShort: 'Jan_Feb_März_Apr_Mai_Juni_Juli_Aug_Sept_Okt_Nov_Dez'.split('_'),
@@ -287,7 +294,7 @@ const time = {
     const newDate = this.clone(d);
     const hours = newDate.getHours();
 
-    newDate.setHours(hours - (hours > 12 ? -12 : 12));
+    newDate.setHours(hours + (hours > 12 ? -12 : 12));
     return newDate;
   },
 

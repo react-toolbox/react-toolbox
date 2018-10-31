@@ -43,14 +43,14 @@ If you want to provide a theme via context, the component key is `RTDropdown`.
 | `auto`       | `Boolean`  | `true`  | If true, the dropdown will open up or down depending on the position in the screen.|
 | `className`  | `String`   | `''`    | Set the class to give custom styles to the dropdown.|
 | `disabled`   | `Boolean`  | `false` | Set the component as disabled.|
-| `error`      | `String`   |  &nbsp; | Give an error string to display under the field.|
-| `label`      | `String`   |  &nbsp; | The text string to use for the floating label element.|
-| `onBlur`     | `Function` |  &nbsp; | Callback function that is fired when the component is blurred.|
-| `onChange`   | `Function` |  &nbsp; | Callback function that is fired when the component's value changes.|
-| `onFocus`    | `Function` |  &nbsp; | Callback function that is fired when the component is focused.|
-| `source`     | `Array`    |  &nbsp; | Array of data objects with the data to represent in the dropdown.|
-| `template`   | `Function` |  &nbsp; | Callback function that returns a JSX template to represent the element.|
-| `value`      | `String`   |  &nbsp; | Default value using JSON data.|
+| `error`      | `String`   |         | Give an error string to display under the field.|
+| `label`      | `String`   |         | The text string to use for the floating label element.|
+| `onBlur`     | `Function` |         | Callback function that is fired when the component is blurred.|
+| `onChange`   | `Function` |         | Called with (item.value, event) when the component's value changes.|
+| `onFocus`    | `Function` |         | Callback function that is fired when the component is focused.|
+| `source`     | `Array`    |         | Array of data objects with the data to represent in the dropdown.|
+| `template`   | `Function` |         | Callback function that returns a JSX template to represent the element.|
+| `value`      | `String`   |         | Default value using JSON data.|
 | `required`   | `Boolean`  | `false` | If true, the dropdown has a required attribute.|
 
 ## Theming

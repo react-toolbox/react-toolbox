@@ -20,21 +20,19 @@ const factory = (Overlay, Button) => {
       [props.theme.active]: props.active,
     }, props.className);
 
+    const bodyClassName = props.disableScrolling ? props.theme.body : classnames(props.theme.body, props.theme.scroll);
+
     return (
-      <Portal className={props.theme.wrapper}>
-        <Overlay
-          active={props.active}
-          className={props.theme.overlay}
-          onClick={props.onOverlayClick}
-          onEscKeyDown={props.onEscKeyDown}
-          onMouseDown={props.onOverlayMouseDown}
-          onMouseMove={props.onOverlayMouseMove}
-          onMouseUp={props.onOverlayMouseUp}
-          theme={props.theme}
-          themeNamespace="overlay"
-        />
-        <div data-react-toolbox="dialog" className={className}>
-          <section role="body" className={props.theme.body}>
+      <Overlay
+        active={props.active}
+        onClick={props.onOverlayClick}
+        onEscKeyDown={props.onEscKeyDown}
+        onMouseDown={props.onOverlayMouseDown}
+        onMouseMove={props.onOverlayMouseMove}
+        onMouseUp={props.onOverlayMouseUp}
+      >
+        <div data-react-toolbox='dialog' className={className}>
+          <section role='body' className={bodyClassName}>
             {props.title ? <h6 className={props.theme.title}>{props.title}</h6> : null}
             {props.children}
           </section>
@@ -58,6 +56,7 @@ const factory = (Overlay, Button) => {
     active: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
+    disableScrolling: PropTypes.bool,
     onEscKeyDown: PropTypes.func,
     onOverlayClick: PropTypes.func,
     onOverlayMouseDown: PropTypes.func,
@@ -69,10 +68,8 @@ const factory = (Overlay, Button) => {
       button: PropTypes.string,
       dialog: PropTypes.string,
       navigation: PropTypes.string,
-      overflow: PropTypes.string,
-      overlay: PropTypes.string,
-      title: PropTypes.string,
-      wrapper: PropTypes.string,
+      scroll: PropTypes.string,
+      title: PropTypes.string
     }),
     title: PropTypes.string,
     type: PropTypes.string,
@@ -81,7 +78,8 @@ const factory = (Overlay, Button) => {
   Dialog.defaultProps = {
     actions: [],
     active: false,
-    type: 'normal',
+    disableScrolling: false,
+    type: 'normal'
   };
 
   return ActivableRenderer()(Dialog);

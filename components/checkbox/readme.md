@@ -49,9 +49,9 @@ If you want to provide a theme via context, the component key is `RTCheckbox`.
 | `disabled`      | `Boolean`       | `false`         | If true, the checkbox shown as disabled and cannot be modified.|
 | `label`         | `String` or `node`        |      &nbsp;     | Text label to attach next to the checkbox element.|
 | `name`          | `String`        | `false`         | The name of the field to set in the input checkbox.|
-| `onBlur`        | `Function`      |      &nbsp;     | Callback called when the checkbox is blurred.|
-| `onChange`      | `Function`      |      &nbsp;     | Callback called when the checkbox value is changed.|
-| `onFocus`       | `Function`      |      &nbsp;     | Callback called when the checkbox is focused |
+| `onBlur`        | `Function`      |                 | Callback called when the checkbox is blurred.|
+| `onChange`      | `Function`      |                 | Called with (isChecked, event) when the checkbox value is changed.|
+| `onFocus`       | `Function`      |                 | Callback called when the checkbox is focused |
 
 ## Theme
 

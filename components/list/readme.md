@@ -105,11 +105,11 @@ A special type of item that has a checkbox control on the left side. It implemen
 | `className`     | `String`        |     &nbsp;    | Set a class to give custom styles to Component.|
 | `checked`       | `Boolean`       | `false`       | If true the checkbox appears checked by default.|
 | `disabled`      | `String`        | `false`       | If true, the item is displayed as disabled and it's not clickable.|
-| `legend`        | `String`        |     &nbsp;    | Secondary text to display under the caption.|
-| `name`          | `String`        |     &nbsp;    | Name for the checkbox input item.|
-| `onBlur`        | `Function`      |     &nbsp;    | Callback called when the input element is blurred.|
-| `onChange`      | `Function`      |     &nbsp;    | Callback called when the input element is changed.|
-| `onFocus`       | `Function`      |     &nbsp;    | Callback called when the input element is focused.|
+| `legend`        | `String`        |               | Secondary text to display under the caption.|
+| `name`          | `String`        |               | Name for the checkbox input item.|
+| `onBlur`        | `Function`      |               | Passed through to the wrapped Checkbox component.|
+| `onChange`      | `Function`      |               | Passed through to the wrapped Checkbox component.|
+| `onFocus`       | `Function`      |               | Passed through to the wrapped Checkbox component.|
 
 ### Theme
 | Name     | Description|
