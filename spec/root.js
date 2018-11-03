@@ -1,11 +1,11 @@
 /* global VERSION */
-import 'normalize.css';
+import '@csstools/normalize.css';
 import React, { Component } from 'react';
+import { hot } from 'react-hot-loader';
 
 import { Layout, Panel, NavDrawer } from '../components/layout';
 import AppBar from '../components/app_bar';
 import ButtonToolbox from '../components/button';
-
 import Autocomplete from './components/autocomplete';
 import AppBarTest from './components/app_bar';
 import Avatar from './components/avatar';
@@ -30,7 +30,7 @@ import Switch from './components/switch';
 import Table from './components/table';
 import Tabs from './components/tabs';
 import Tooltip from './components/tooltip';
-import style from './style.css';
+import style from './style.module.css';
 
 class Root extends Component {
   state = { pinned: false };
@@ -100,4 +100,4 @@ class Root extends Component {
   }
 }
 
-export default Root;
+export default hot(module)(Root);

@@ -51,6 +51,17 @@ const factory = (Dialog, Calendar) => {
       date: this.props.value,
     };
 
+    actions = [{
+      label: this.props.cancelLabel,
+      className: this.props.theme.button,
+      onClick: this.props.onDismiss,
+    }, {
+      label: this.props.okLabel,
+      className: this.props.theme.button,
+      name: this.props.name,
+      onClick: this.handleSelect,
+    }];
+
     componentWillMount() {
       this.updateStateDate(this.props.value);
     }
@@ -88,17 +99,6 @@ const factory = (Dialog, Calendar) => {
       }
     };
 
-    actions = [{
-      label: this.props.cancelLabel,
-      className: this.props.theme.button,
-      onClick: this.props.onDismiss,
-    }, {
-      label: this.props.okLabel,
-      className: this.props.theme.button,
-      name: this.props.name,
-      onClick: this.handleSelect,
-    }];
-
     render() {
       const { theme } = this.props;
       const display = `${this.state.display}Display`;
@@ -122,7 +122,7 @@ const factory = (Dialog, Calendar) => {
               {this.state.date.getFullYear()}
             </span>
             <h3 id="months" className={theme.date} onClick={this.handleSwitchDisplay}>
-              {shortDayOfWeek}, {shortMonth} {date}
+              {`${shortDayOfWeek}, ${shortMonth} ${date}`}
             </h3>
           </header>
 

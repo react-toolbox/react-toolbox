@@ -37,9 +37,11 @@ const factory = (Overlay, Button) => {
             {props.children}
           </section>
           {actions.length
-            ? <nav className={props.theme.navigation}>
-              {actions}
-            </nav>
+            ? (
+              <nav className={props.theme.navigation}>
+                {actions}
+              </nav>
+            )
             : null
           }
         </div>
@@ -49,9 +51,9 @@ const factory = (Overlay, Button) => {
 
   Dialog.propTypes = {
     actions: PropTypes.arrayOf(PropTypes.shape({
+      children: PropTypes.node,
       className: PropTypes.string,
       label: PropTypes.string,
-      children: PropTypes.node,
     })),
     active: PropTypes.bool,
     children: PropTypes.node,

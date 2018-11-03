@@ -2,7 +2,7 @@ import * as React from 'react';
 import Avatar from '../../components/avatar';
 import Chip from '../../components/chip';
 
-const style = require('../style.css');
+const style = require('../style.module.css');
 
 class ChipTest extends React.Component<any, any> {
   state = {

@@ -6,7 +6,9 @@ import { AVATAR } from '../identifiers';
 import InjectFontIcon from '../font_icon/FontIcon';
 
 const factory = (FontIcon) => {
-  const Avatar = ({ alt, children, className, cover, icon, image, theme, title, ...other }) => (
+  const Avatar = ({
+    alt, children, className, cover, icon, image, theme, title, ...other
+  }) => (
     <div data-react-toolbox="avatar" className={classnames(theme.avatar, className)} {...other}>
       {children}
       {cover && typeof image === 'string' && <span aria-label={alt} className={theme.image} style={{ backgroundImage: `url(${image})` }} />}

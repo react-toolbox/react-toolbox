@@ -4,7 +4,9 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { LIST } from '../identifiers';
 
-const ListItemText = ({ className, primary, children, theme, ...other }) => {
+const ListItemText = ({
+  className, primary, children, theme, ...other
+}) => {
   const _className = classnames(theme.itemText, { [theme.primary]: primary }, className);
   return (
     <span data-react-toolbox="list-item-text" className={_className} {...other}>

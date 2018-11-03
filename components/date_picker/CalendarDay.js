@@ -18,6 +18,12 @@ class Day extends Component {
     viewDate: PropTypes.instanceOf(Date),
   };
 
+  handleClick = () => {
+    if (!this.props.disabled && this.props.onClick) {
+      this.props.onClick(this.props.day);
+    }
+  };
+
   dayStyle() {
     if (this.props.day === 1) {
       const e = (this.props.sundayFirstDayOfWeek) ? 0 : 1;
@@ -35,12 +41,6 @@ class Day extends Component {
     const sameDay = this.props.day === this.props.selectedDate.getDate();
     return sameYear && sameMonth && sameDay;
   }
-
-  handleClick = () => {
-    if (!this.props.disabled && this.props.onClick) {
-      this.props.onClick(this.props.day);
-    }
-  };
 
   render() {
     const className = classnames(this.props.theme.day, {

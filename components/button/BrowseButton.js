@@ -127,7 +127,7 @@ const factory = (ripple, FontIcon) => {
       };
 
       return React.createElement(element, props,
-          icon ? <FontIcon className={theme.icon} value={icon} /> : null,
+        icon ? <FontIcon className={theme.icon} value={icon} /> : null,
         <span>{label}</span>,
         <input
           className={classes}
@@ -136,8 +136,7 @@ const factory = (ripple, FontIcon) => {
           multiple={multiple}
           onChange={this.handleFileChange}
         />,
-          children,
-        );
+        children);
     }
   }
 

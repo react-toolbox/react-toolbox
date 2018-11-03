@@ -7,7 +7,9 @@ import InjectButton from '../button/Button';
 import InjectLink from '../link/Link';
 
 const factory = (Button, Link) => {
-  const Navigation = ({ actions, children, className, routes, theme, type }) => {
+  const Navigation = ({
+    actions, children, className, routes, theme, type,
+  }) => {
     const _className = classnames(theme[type], className);
     const buttons = actions.map((action, index) => (
       <Button className={theme.button} key={index} {...action} /> // eslint-disable-line

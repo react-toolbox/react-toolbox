@@ -1,7 +1,10 @@
 import React from 'react';
 import Avatar from '../../components/avatar';
 import Chip from '../../components/chip';
-import style from '../style';
+import style from '../style.module.css';
+import { cold } from 'react-hot-loader';
+
+const ColdAvatar = cold(Avatar)
 
 class ChipTest extends React.Component {
   state = {
@@ -38,16 +41,16 @@ class ChipTest extends React.Component {
         }
 
         <Chip>
-          <Avatar style={{ backgroundColor: 'deepskyblue' }} icon="folder" />
+          <ColdAvatar style={{ backgroundColor: 'deepskyblue' }} icon="folder" />
           <span>Avatar Chip</span>
         </Chip>
 
         <Chip>
-          <Avatar title="A" /><span>Initial chip</span>
+          <ColdAvatar title="A" /><span>Initial chip</span>
         </Chip>
 
         <Chip>
-          <Avatar><img src="https://placeimg.com/80/80/animals" /></Avatar>
+          <ColdAvatar><img src="https://placeimg.com/80/80/animals" /></ColdAvatar>
           <span>Image contact chip</span>
         </Chip>
 

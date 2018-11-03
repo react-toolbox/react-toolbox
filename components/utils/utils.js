@@ -30,7 +30,7 @@ export const range = (start = 0, stop = null, step = 1) => {
 };
 
 export const round = (number, decimals) => {
-  if (!isNaN(parseFloat(number)) && isFinite(number)) {
+  if (!Number.isNaN(parseFloat(number)) && Number.isFinite(number)) {
     const decimalPower = 10 ** decimals;
     return Math.round(parseFloat(number) * decimalPower) / decimalPower;
   }
@@ -42,8 +42,7 @@ export const getViewport = () => ({
   width: window.innerWidth || document.documentElement.offsetWidth,
 });
 
-export const cloneObject = object =>
-  JSON.parse(JSON.stringify(object));
+export const cloneObject = object => JSON.parse(JSON.stringify(object));
 
 export const inputTypeForPrototype = (prototype) => {
   if (prototype === Date) return 'date';
@@ -79,5 +78,5 @@ export const isValuePresent = value => (
   value !== null
     && value !== undefined
     && value !== ''
-    && !(typeof value === 'number' && isNaN(value))
+    && !(typeof value === 'number' && Number.isNaN(value))
 );

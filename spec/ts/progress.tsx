@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ProgressBar from '../../components/progress_bar';
 
-const style = require('../style.css');
+const style = require('../style.module.css');
 
 const initialState = {
   progress: 0,

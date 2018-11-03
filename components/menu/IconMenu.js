@@ -53,7 +53,7 @@ const factory = (IconButton, Menu) => {
     }
 
     handleButtonClick = (event) => {
-      this.setState({ active: !this.state.active });
+      this.setState(state => ({ active: !state.active }));
       if (this.props.onClick) this.props.onClick(event);
     };
 

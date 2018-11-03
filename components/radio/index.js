@@ -4,7 +4,7 @@ import themedRippleFactory from '../ripple';
 import radioFactory from './Radio';
 import { radioButtonFactory } from './RadioButton';
 import { radioGroupFactory } from './RadioGroup';
-import theme from './theme.css';
+import theme from './theme.module.css';
 
 const ThemedRadio = radioFactory(themedRippleFactory({ centered: true, spread: 2.6 }));
 const ThemedRadioButton = themr(RADIO, theme)(radioButtonFactory(ThemedRadio));

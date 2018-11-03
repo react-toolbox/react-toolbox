@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import theme from '../theme.css';
+import theme from '../theme.module.css';
 import { DatePickerDialog, Calendar } from '../DatePicker';
 
 describe('DatePickerDialog', () => {

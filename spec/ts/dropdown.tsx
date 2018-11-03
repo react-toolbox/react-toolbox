@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Dropdown from '../../components/dropdown';
 
-const style = require('../style.css');
+const style = require('../style.module.css');
 
 const countries = [
   { value: 'EN-gb', label: 'England', img: 'http://' },

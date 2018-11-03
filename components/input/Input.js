@@ -113,9 +113,9 @@ const factory = (FontIcon) => {
 
     handleAutoresize = () => {
       const element = this.inputNode;
-      const rows = this.props.rows;
+      const { rows } = this.props;
 
-      if (typeof rows === 'number' && !isNaN(rows)) {
+      if (typeof rows === 'number' && !Number.isNaN(rows)) {
         element.style.height = null;
       } else {
         // compute the height difference between inner height and outer height
@@ -139,7 +139,7 @@ const factory = (FontIcon) => {
         // replace the selected characters, so the length of value doesn't actually
         // increase.
         const isReplacing = event.target.selectionEnd - event.target.selectionStart;
-        const value = event.target.value;
+        const { value } = event.target;
 
         if (!isReplacing && value.length === maxLength) {
           event.preventDefault();
@@ -161,9 +161,11 @@ const factory = (FontIcon) => {
     }
 
     render() {
-      const { children, defaultValue, disabled, error, floating, hint, icon,
-              name, label: labelText, maxLength, multiline, required, role,
-              theme, type, value, onKeyPress, rows = 1, ...others } = this.props;
+      const {
+        children, defaultValue, disabled, error, floating, hint, icon,
+        name, label: labelText, maxLength, multiline, required, role,
+        theme, type, value, onKeyPress, rows = 1, ...others
+      } = this.props;
       const length = maxLength && value ? value.length : 0;
       const labelClassName = classnames(theme.label, { [theme.fixed]: !floating });
 
@@ -203,14 +205,20 @@ const factory = (FontIcon) => {
           {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
           <span className={theme.bar} />
           {labelText
-            ? <label className={labelClassName}>
-              {labelText}
-              {required ? <span className={theme.required}> * </span> : null}
-            </label>
+            ? (
+              <label className={labelClassName}>
+                {labelText}
+                {required ? <span className={theme.required}> * </span> : null}
+              </label>
+            )
             : null}
           {hint ? <span hidden={labelText} className={theme.hint}>{hint}</span> : null}
           {error ? <span className={theme.error}>{error}</span> : null}
-          {maxLength ? <span className={theme.counter}>{length}/{maxLength}</span> : null}
+          {maxLength ? (
+            <span className={theme.counter}>
+              {`${length}/${maxLength}`}
+            </span>
+          ) : null}
           {children}
         </div>
       );

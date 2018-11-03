@@ -2,7 +2,7 @@ import { themr } from 'react-css-themr';
 import { DRAWER } from '../identifiers';
 import { Overlay } from '../overlay';
 import { drawerFactory } from './Drawer';
-import theme from './theme.css';
+import theme from './theme.module.css';
 
 const Drawer = drawerFactory(Overlay);
 const ThemedDrawer = themr(DRAWER, theme)(Drawer);

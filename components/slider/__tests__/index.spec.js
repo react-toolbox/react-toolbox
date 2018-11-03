@@ -3,7 +3,7 @@ import { mount, shallow } from 'enzyme';
 import { Input } from '../../input/Input';
 import { ProgressBar } from '../../progress_bar/ProgressBar';
 import { Slider } from '../Slider';
-import theme from '../theme.css';
+import theme from '../theme.module.css';
 
 describe('Slider', () => {
   describe('#positionToValue', () => {
@@ -153,7 +153,7 @@ describe('Slider', () => {
 
     it('changes its value when input is blurred', () => {
       const onChange = jest.fn();
-      const event = { target: { value: '80' } };
+      const event = { target: { value: 80 } };
       const wrapper = mount(<Slider editable value={50} onChange={onChange} />);
       wrapper.find('input').simulate('change', event);
       wrapper.find('input').simulate('blur');
