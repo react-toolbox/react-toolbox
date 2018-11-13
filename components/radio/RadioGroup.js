@@ -21,8 +21,8 @@ const factory = (RadioButton) => {
       disabled: false
     };
 
-    handleChange = (value) => {
-      if (this.props.onChange) this.props.onChange(value);
+    handleChange = (value, event) => {
+      if (this.props.onChange) this.props.onChange(value, event);
     };
 
     renderRadioButtons () {

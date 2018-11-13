@@ -60,10 +60,10 @@ class Tab extends Component {
     }, className);
 
     return (
-      <label {...other} data-react-toolbox='tab' className={_className} onClick={this.handleClick}>
+      <button type="button" {...other} data-react-toolbox='tab' className={_className} onClick={this.handleClick}>
         {icon && <FontIcon className={theme.icon} value={icon}/>}
         {label}
-      </label>
+      </button>
     );
   }
 }

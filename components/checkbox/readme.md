@@ -50,7 +50,7 @@ If you want to provide a theme via context, the component key is `RTCheckbox`.
 | `label`         | `String` of `node`        |                 | Text label to attach next to the checkbox element.|
 | `name`          | `String`        | `false`         | The name of the field to set in the input checkbox.|
 | `onBlur`        | `Function`      |                 | Callback called when the checkbox is blurred.|
-| `onChange`      | `Function`      |                 | Callback called when the checkbox value is changed.|
+| `onChange`      | `Function`      |                 | Called with (isChecked, event) when the checkbox value is changed.|
 | `onFocus`       | `Function`      |                 | Callback called when the checkbox is focused |
 
 ## Theme

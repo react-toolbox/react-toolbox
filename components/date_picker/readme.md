@@ -58,7 +58,7 @@ If you want to provide a theme via context, the component key is `RTDatePicker`.
 | `locale`        | `String` or `Object` | `'en'`     | Set the locale for the date picker dialog ('cs','de','no','en','es','af','ar','be','bg','bn','bo','br','bs','ca','gl','eu','pt','it','fr','ru','ua'). Object is supported too (see example above). |
 | `maxDate`       | `Date`          |               | Date object with the maximum selectable date. |
 | `minDate`       | `Date`          |               | Date object with the minimum selectable date. |
-| `onChange`      | `Function`      |               | Callback called when the picker value is changed.|
+| `onChange`      | `Function`      |               | Called with (date, event) when the picker value is changed.|
 | `onClick`       | `Function`      |               | Callback fired on Input click.|
 | `onDismiss`     | `Function`      |               | Callback fired after dismissing the Dialog.|
 | `onEscKeyDown`  | `Function`      |               | Callback called when the ESC key is pressed with the overlay active. |
