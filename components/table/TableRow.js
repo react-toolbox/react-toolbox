@@ -29,7 +29,7 @@ const factory = (Checkbox, TableCell) => {
 
     render() {
       const { children, className, selectable, idx, selected, theme, ...other } = this.props; // eslint-disable-line
-      const _className = classnames(theme.row, {
+      const _className = classnames({
         [theme.selected]: selectable && selected,
       }, className);
       return (

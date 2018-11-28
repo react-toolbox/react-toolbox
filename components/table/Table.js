@@ -92,7 +92,7 @@ const factory = (TableHead, TableRow) => {
       } = this.props;
       return (
         <table {...rest} className={classnames(theme.table, className)}>
-          <thead className={theme.head}>{this.renderHead()}</thead>
+          <thead>{this.renderHead()}</thead>
           <tbody>{this.renderRows()}</tbody>
         </table>
       );

@@ -28,12 +28,12 @@
   @apply --reset;
 }
 
-.head {
+.table > head, .head {
   padding-bottom: calc(0.3 * var(--unit));
   white-space: nowrap;
 }
 
-.row {
+.table > tbody > tr, .row {
   color: var(--table-row-color);
   height: var(--table-row-height);
   transition-duration: 0.28s;
@@ -45,6 +45,10 @@
   &.selected { background-color: var(--table-selection-color); }
 }
 
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
 .rowCell,
 .headCell {
   padding: 0 var(--table-column-padding) 12px var(--table-column-padding);
@@ -55,6 +59,8 @@
   &.numeric { text-align: right; }
 }
 
+.table > thead > tr > td,
+.table > tbody > tr > td,
 .rowCell {
   border-bottom: var(--table-dividers);
   border-top: var(--table-dividers);
@@ -72,6 +78,8 @@
   }
 }
 
+.table > thead > tr > th,
+.table > tbody > tr > th,
 .headCell {
   color: var(--table-header-color);
   font-size: var(--table-header-font-size);

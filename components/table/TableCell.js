@@ -56,8 +56,6 @@ const factory = (FontIcon) => {
       } = this.props;
 
       const _className = classnames(theme.tableCell, {
-        [theme.headCell]: tagName === 'th',
-        [theme.rowCell]: tagName === 'td',
         [theme.sorted]: sorted,
         [theme.numeric]: numeric,
       }, className);
