@@ -75,9 +75,10 @@
 
     &.multicolor {
       & .path {
-        animation:
-          circular-indeterminate-bar-dash 1.5s ease-in-out infinite,
-          colors calc(1.5s * 4) ease-in-out infinite;
+        animation-name: circular-indeterminate-bar-dash, colors;
+        animation-delay: 1.5s, calc(1.5s * 4);
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
       }
     }
   }
