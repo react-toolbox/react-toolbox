@@ -5,6 +5,7 @@
 .chip {
   background-color: var(--chip-background);
   border-radius: var(--chip-height);
+  min-height: var(--chip-height);
   color: var(--chip-color);
   display: inline-block;
   font-size: var(--chip-font-size);
