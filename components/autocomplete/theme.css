@@ -63,11 +63,6 @@
   z-index: var(--z-index-highest);
   box-shadow: var(--zdepth-shadow-1);
   -ms-overflow-style: none;
-
-  &::-webkit-scrollbar {
-    height: 0;
-    width: 0;
-  }
 }
 
 .suggestion {
@@ -96,4 +91,8 @@
     transition: transform var(--animation-duration) var(--animation-curve-default);
     width: 0;
   }
+}
+
+.inputInputElement {
+  padding: var(--input-field-padding) calc(3 * var(--input-chevron-offset)) var(--input-field-padding) 0;
 }
