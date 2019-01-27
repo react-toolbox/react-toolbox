@@ -266,8 +266,7 @@ const tooltipFactory = (options = {}) => {
                 style={{ top, left }}
               >
                 {
-                  showCaret &&
-                  <span className={theme[ARROW_PLACEMENT[position]]} />
+                  showCaret && <span className={theme[ARROW_PLACEMENT[position]]} />
                 }
                 <span className={theme.tooltipInner}>{tooltip}</span>
               </span>
