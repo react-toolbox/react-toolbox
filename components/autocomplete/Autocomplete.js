@@ -412,7 +412,11 @@ const factory = (Chip, Input) => {
             onKeyUp={this.handleQueryKeyUp}
             theme={theme}
             themeNamespace="input"
-            value={this.state.query == null ? (this.props.multiple || !this.props.value ? '' : this.source().get(''+this.props.value)) : this.state.query}
+            value={this.state.query == null
+              ? (this.props.multiple || this.props.value == null
+                ? ''
+                : this.source().get(''+this.props.value))
+              : this.state.query}
           />
           <Portal>
             {this.state.focus ? this.renderSuggestionList() : null}
