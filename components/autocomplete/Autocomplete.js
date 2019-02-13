@@ -61,6 +61,7 @@ const factory = (Chip, Input) => {
         values: PropTypes.string,
       }),
       value: PropTypes.any,
+      inputProps: PropTypes.object,
     };
 
     static defaultProps = {
@@ -121,7 +122,7 @@ const factory = (Chip, Input) => {
 
     handleQueryChange = (value, event) => {
       if (value === '' && !this.props.multiple &&
-        (this.props.allowBlank || this.props.allowClear) && this.props.onChange) {
+        this.props.allowClear && this.props.onChange) {
         this.props.onChange(null, event);
       }
       this.updateQuery(value);
@@ -379,30 +380,30 @@ const factory = (Chip, Input) => {
 
     render() {
       const {
-        allowClear, clearTooltip, error, label, source, suggestionMatch, query, // eslint-disable-line no-unused-vars
-        selectedPosition, keepFocusOnChange, onQueryChange,   // eslint-disable-line no-unused-vars
-        theme, multiple, minWidth, ...other
+        placeholder, allowClear, className, clearTooltip, disabled,
+        error, label, value, selectedPosition, theme, multiple
       } = this.props;
-      // outdated properties
-      delete other.showSelectedWhenNotInSource;
-      delete other.allowCreate;
-      const className = classnames(theme.autocomplete, {
+      const inputProps = this.props.inputProps || {};
+      const outerClassName = classnames(theme.autocomplete, {
         [theme.focus]: this.state.focus,
-      }, this.props.className);
-
-      const withClear = allowClear && (this.props.multiple ? this.props.value && Object.keys(this.props.value).length > 0 : this.props.value != null);
+      }, className);
+      const withClear = allowClear && (multiple
+        ? value && Object.keys(value).length > 0
+        : value != null);
       return (
-        <div data-react-toolbox="autocomplete" className={className}>
+        <div data-react-toolbox="autocomplete" className={outerClassName}>
           {selectedPosition === 'above' ? this.renderSelected() : null}
           {withClear ? <span
             className={'material-icons '+theme.clear}
             title={clearTooltip}
             onClick={e => this.handleChange(multiple ? [] : null, e)}>clear</span> : null}
           <Input
-            {...other}
+            {...inputProps}
             ref={(node) => { this.inputNode = node; }}
             autoComplete="off"
             className={theme.input+(withClear ? ' '+theme.withclear : '')}
+            placeholder={placeholder}
+            disabled={disabled}
             error={error}
             label={label}
             onBlur={this.handleQueryBlur}
@@ -413,15 +414,15 @@ const factory = (Chip, Input) => {
             theme={theme}
             themeNamespace="input"
             value={this.state.query == null
-              ? (this.props.multiple || this.props.value == null
+              ? (multiple || value == null
                 ? ''
-                : this.source().get(''+this.props.value))
+                : this.source().get(''+value))
               : this.state.query}
           />
           <Portal>
             {this.state.focus ? this.renderSuggestionList() : null}
           </Portal>
-          {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
+          {selectedPosition === 'below' ? this.renderSelected() : null}
         </div>
       );
     }

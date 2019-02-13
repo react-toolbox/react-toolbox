@@ -28,12 +28,14 @@
   @apply --reset;
 }
 
-.table > head, .head {
+.table > head,
+.head {
   padding-bottom: calc(0.3 * var(--unit));
   white-space: nowrap;
 }
 
-.table > tbody > tr, .row {
+.table > tbody > tr,
+.row {
   color: var(--table-row-color);
   height: var(--table-row-height);
   transition-duration: 0.28s;

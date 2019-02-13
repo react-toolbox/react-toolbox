@@ -171,10 +171,10 @@
 
 .clear {
   cursor: pointer;
-  z-index: 10;
-  position: absolute;
   display: block;
-  top: 12px;
   left: -4px;
   padding: 4px;
+  position: absolute;
+  top: 12px;
+  z-index: 10;
 }
