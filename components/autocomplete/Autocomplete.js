@@ -48,6 +48,7 @@ const factory = (Chip, Input) => {
       selectedPosition: PropTypes.oneOf(['above', 'below', 'none']),
       source: PropTypes.any,
       minWidth: PropTypes.number,
+      more: PropTypes.string,
       suggestionMatch: PropTypes.oneOf(['disabled', 'start', 'anywhere', 'word', 'none']),
       theme: PropTypes.shape({
         active: PropTypes.string,
@@ -373,6 +374,7 @@ const factory = (Chip, Input) => {
           <ul style={{bottom}}
             className={theme.suggestions}>
             {this.renderSuggestions()}
+            {this.props.more ? <li className={theme.suggestion}>{this.props.more}</li> : null}
           </ul>
         </Transition>
       </TransitionGroup>);
