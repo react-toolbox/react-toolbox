@@ -9,6 +9,14 @@
   },
   "plugins": ["compat"],
   "rules": {
+    "no-mixed-operators": [
+      "error", { "groups": [
+        ["&", "|", "^", "~", "<<", ">>", ">>>"],
+        ["==", "!=", "===", "!==", ">", ">=", "<", "<="],
+        ["&&", "||"],
+        ["in", "instanceof"]
+      ] }
+    ],
     "compat/compat": 2,
     "func-names": "off",
     "global-require": "off",

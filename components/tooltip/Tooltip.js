@@ -72,6 +72,8 @@ const tooltipFactory = (options = {}) => {
         active: false,
         position: this.props.tooltipPosition,
         visible: false,
+        top: 0,
+        left: 0,
       };
 
       componentWillUnmount() {
@@ -88,15 +90,44 @@ const tooltipFactory = (options = {}) => {
         }
       };
 
-      getPosition(element) {
+      setTooltipNode = (node) => {
+        this.tooltipNode = node;
+        if (node) {
+          const { width: vw, height: vh } = getViewport();
+          const { top, left, position } = this.state;
+          const width = this.tooltipNode.offsetWidth;
+          const height = this.tooltipNode.offsetHeight;
+          let x = -50;
+          let y = -50;
+          if (position === POSITION.TOP || position === POSITION.BOTTOM) {
+            y = position === POSITION.TOP ? -100 : 0;
+            if (left + width / 2 > vw) {
+              x = -Math.ceil(100 * (left + width - vw + 1) / width);
+            } else if (left - width / 2 < 0) {
+              x = Math.ceil(100 * (width - left) / width);
+            }
+          } else if (position === POSITION.LEFT || position === POSITION.RIGHT) {
+            x = position === POSITION.LEFT ? -100 : 0;
+            if (top + height / 2 > vh) {
+              y = -Math.ceil(100 * (top + height - vh + 1) / height);
+            } else if (top - height / 2 < 0) {
+              y = Math.ceil(100 * (height - top) / height);
+            }
+          }
+          this.setState({ transform: `scale(1) translateX(${x}%) translateY(${y}%)` });
+          this.timeout = setTimeout(() => {
+            this.setState({ active: true });
+          }, this.props.tooltipDelay);
+        }
+      }
+
+      getPosition(origin) {
         const { tooltipPosition } = this.props;
         if (tooltipPosition === POSITION.HORIZONTAL) {
-          const origin = element.getBoundingClientRect();
           const { width: ww } = getViewport();
           const toRight = origin.left < ((ww / 2) - (origin.width / 2));
           return toRight ? POSITION.RIGHT : POSITION.LEFT;
         } else if (tooltipPosition === POSITION.VERTICAL) {
-          const origin = element.getBoundingClientRect();
           const { height: wh } = getViewport();
           const toBottom = origin.top < ((wh / 2) - (origin.height / 2));
           return toBottom ? POSITION.BOTTOM : POSITION.TOP;
@@ -106,10 +137,7 @@ const tooltipFactory = (options = {}) => {
 
       activate({ top, left, position }) {
         if (this.timeout) clearTimeout(this.timeout);
-        this.setState({ visible: true, position });
-        this.timeout = setTimeout(() => {
-          this.setState({ active: true, top, left });
-        }, this.props.tooltipDelay);
+        this.setState({ active: false, visible: true, position, top, left });
       }
 
       deactivate() {
@@ -123,32 +151,31 @@ const tooltipFactory = (options = {}) => {
       }
 
       calculatePosition(element) {
-        const position = this.getPosition(element);
-        const { top, left, height, width } = element.getBoundingClientRect();
-        const xOffset = window.scrollX || window.pageXOffset;
-        const yOffset = window.scrollY || window.pageYOffset;
+        const origin = element.getBoundingClientRect();
+        const position = this.getPosition(origin);
+        const { top, left, height, width } = origin;
         if (position === POSITION.BOTTOM) {
           return {
-            top: top + height + yOffset,
-            left: left + (width / 2) + xOffset,
+            top: top + height,
+            left: left + (width / 2),
             position,
           };
         } else if (position === POSITION.TOP) {
           return {
-            top: top + yOffset,
-            left: left + (width / 2) + xOffset,
+            top,
+            left: left + (width / 2),
             position,
           };
         } else if (position === POSITION.LEFT) {
           return {
-            top: top + (height / 2) + yOffset,
-            left: left + xOffset,
+            top: top + (height / 2),
+            left,
             position,
           };
         } else if (position === POSITION.RIGHT) {
           return {
-            top: top + (height / 2) + yOffset,
-            left: left + width + xOffset,
+            top: top + (height / 2),
+            left: left + width,
             position,
           };
         }
@@ -178,7 +205,7 @@ const tooltipFactory = (options = {}) => {
       };
 
       render() {
-        const { active, left, top, position, visible } = this.state;
+        const { active, left, top, transform, position, visible } = this.state;
         const positionClass = `tooltip${position.charAt(0).toUpperCase() + position.slice(1)}`;
         const {
           children,
@@ -215,10 +242,10 @@ const tooltipFactory = (options = {}) => {
           visible && (
             <Portal>
               <span
-                ref={(node) => { this.tooltipNode = node; }}
+                ref={this.setTooltipNode}
                 className={_className}
                 data-react-toolbox="tooltip"
-                style={{ top, left }}
+                style={active ? { top, left, transform } : { top: '-1000px', left: 0 }}
               >
                 <span className={theme.tooltipInner}>{tooltip}</span>
               </span>
