@@ -56,6 +56,7 @@ const tooltipFactory = (options = {}) => {
         ]),
         tooltipDelay: PropTypes.number,
         tooltipHideOnClick: PropTypes.bool,
+        tooltipOnFocus: PropTypes.bool,
         tooltipPosition: PropTypes.oneOf(Object.keys(POSITION).map(key => POSITION[key])),
         tooltipShowOnClick: PropTypes.bool,
       };
@@ -215,6 +216,7 @@ const tooltipFactory = (options = {}) => {
           onMouseEnter,       // eslint-disable-line no-unused-vars
           onMouseLeave,       // eslint-disable-line no-unused-vars
           tooltip,
+          tooltipOnFocus,     // eslint-disable-line no-unused-vars
           tooltipDelay,       // eslint-disable-line no-unused-vars
           tooltipHideOnClick, // eslint-disable-line no-unused-vars
           tooltipPosition,    // eslint-disable-line no-unused-vars
@@ -231,9 +233,15 @@ const tooltipFactory = (options = {}) => {
           ...other,
           className,
           onClick: this.handleClick,
-          onMouseEnter: this.handleMouseEnter,
-          onMouseLeave: this.handleMouseLeave,
         };
+
+        if (tooltipOnFocus) {
+          childProps.onFocus = this.handleMouseEnter;
+          childProps.onBlur = this.handleMouseLeave;
+        } else {
+          childProps.onMouseEnter = this.handleMouseEnter;
+          childProps.onMouseLeave = this.handleMouseLeave;
+        }
 
         const shouldPass = typeof ComposedComponent !== 'string' && defaultPassthrough;
         const finalProps = shouldPass ? { ...childProps, theme } : childProps;

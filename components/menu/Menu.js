@@ -66,6 +66,12 @@ const factory = (MenuItem) => {
           : this.props.position;
         this.setState({ position, width, height });
       });
+      if (this.state.active) {
+        events.addEventsToDocument({
+          click: this.handleDocumentClick,
+          touchstart: this.handleDocumentClick,
+        });
+      }
     }
 
     componentWillReceiveProps(nextProps) {

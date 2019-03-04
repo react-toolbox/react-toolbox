@@ -7,7 +7,7 @@
   font-family: var(--preferred-font);
   font-size: var(--tooltip-font-size);
   font-weight: var(--font-weight-bold);
-  line-height: var(--font-size-small);
+  line-height: calc(1.1 * var(--tooltip-font-size));
   max-width: var(--tooltip-max-width);
   padding: var(--tooltip-margin);
   pointer-events: none;
