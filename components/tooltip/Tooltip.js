@@ -217,6 +217,9 @@ const tooltipFactory = (options = {}) => {
       };
 
       handleMouseLeaveForChildren = () => {
+        if (this.timeout) {
+          clearTimeout(this.timeout);
+        }
         this.timeout = setTimeout(() => {
           this.deactivate();
         }, 300);
