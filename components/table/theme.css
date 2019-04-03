@@ -53,6 +53,8 @@
 .table > tbody > tr > td,
 .rowCell,
 .headCell {
+  border-bottom: var(--table-dividers);
+  height: var(--table-row-height);
   padding: 0 var(--table-column-padding) 12px var(--table-column-padding);
   text-align: left;
 
@@ -64,9 +66,7 @@
 .table > thead > tr > td,
 .table > tbody > tr > td,
 .rowCell {
-  border-bottom: var(--table-dividers);
   border-top: var(--table-dividers);
-  height: var(--table-row-height);
   padding-top: var(--table-cell-top);
   vertical-align: middle;
 
