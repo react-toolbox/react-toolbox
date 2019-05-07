@@ -383,7 +383,7 @@ const factory = (Chip, Input) => {
     render() {
       const {
         placeholder, allowClear, className, clearTooltip, disabled,
-        error, label, value, selectedPosition, theme, multiple
+        error, label, value, selectedPosition, style, theme, multiple
       } = this.props;
       const inputProps = this.props.inputProps || {};
       const outerClassName = classnames(theme.autocomplete, {
@@ -393,7 +393,7 @@ const factory = (Chip, Input) => {
         ? value && Object.keys(value).length > 0
         : value != null);
       return (
-        <div data-react-toolbox="autocomplete" className={outerClassName}>
+        <div data-react-toolbox="autocomplete" className={outerClassName} style={style}>
           {selectedPosition === 'above' ? this.renderSelected() : null}
           {withClear ? <span
             className={'material-icons '+theme.clear}

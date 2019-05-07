@@ -163,7 +163,7 @@ const factory = (FontIcon) => {
     render() {
       const { children, defaultValue, disabled, error, floating, hint, icon,
               name, label: labelText, maxLength, multiline, required, role,
-              theme, type, value, onKeyPress, rows = 1, ...others } = this.props;
+              theme, type, value, onKeyPress, rows = 1, style, ...others } = this.props; // eslint-disable-line
       const length = maxLength && value ? value.length : 0;
       const labelClassName = classnames(theme.label, { [theme.fixed]: !floating });
 
@@ -198,7 +198,7 @@ const factory = (FontIcon) => {
       }
 
       return (
-        <div data-react-toolbox="input" className={className}>
+        <div data-react-toolbox="input" className={className} style={style}>
           {React.createElement(multiline ? 'textarea' : 'input', inputElementProps)}
           {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
           <span className={theme.bar} />

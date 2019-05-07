@@ -58,12 +58,13 @@ const factory = (Thumb) => {
         disabled,
         onChange, // eslint-disable-line no-unused-vars
         ripple,
+        style, // eslint-disable-line
         theme,
         ...others
       } = this.props;
       const _className = classnames(theme[disabled ? 'disabled' : 'field'], className);
       return (
-        <label data-react-toolbox="switch" className={_className}>
+        <label data-react-toolbox="switch" className={_className} style={style}>
           <input
             {...others}
             checked={this.props.checked}

@@ -20,6 +20,8 @@ const factory = (Overlay, Button) => {
       [props.theme.active]: props.active,
     }, props.className);
 
+    const style = props.style; // eslint-disable-line
+
     return (
       <Portal className={props.theme.wrapper}>
         <Overlay
@@ -33,7 +35,7 @@ const factory = (Overlay, Button) => {
           theme={props.theme}
           themeNamespace="overlay"
         />
-        <div data-react-toolbox="dialog" className={className}>
+        <div data-react-toolbox="dialog" className={className} style={style}>
           <section role="body" className={props.theme.body}>
             {props.title ? <h6 className={props.theme.title}>{props.title}</h6> : null}
             {props.children}

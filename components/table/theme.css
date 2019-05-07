@@ -47,6 +47,7 @@
   &.selected { background-color: var(--table-selection-color); }
 }
 
+/* common styles for all kinds of cells */
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > thead > tr > td,
@@ -61,9 +62,15 @@
   &:first-of-type { padding-left: 24px; }
   &:last-of-type { padding-right: 24px; }
   &.numeric { text-align: right; }
+
+  &.checkboxCell {
+    padding-right: 5px;
+    width: calc(1.8 * var(--unit));
+  }
 }
 
-.table > thead > tr > td,
+/* styles for both header and normal body cells */
+.table > tbody > tr > th,
 .table > tbody > tr > td,
 .rowCell {
   border-top: var(--table-dividers);
@@ -71,15 +78,13 @@
   vertical-align: middle;
 
   &.checkboxCell {
-    padding-right: 5px;
-    width: calc(1.8 * var(--unit));
-
     & > * {
       margin: 0;
     }
   }
 }
 
+/* styles for header cells both in body and header */
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .headCell {
@@ -88,14 +93,17 @@
   font-weight: 500;
   height: var(--table-row-height);
   line-height: calc(2.4 * var(--unit));
-  padding-bottom: 8px;
   text-overflow: ellipsis;
+}
+
+/* styles for all cells in header */
+.table > thead > tr > th,
+.table > thead > tr > td,
+.headCell {
+  padding-bottom: 8px;
   vertical-align: bottom;
 
   &.checkboxCell {
-    padding-right: 5px;
-    width: calc(1.8 * var(--unit));
-
     & > * {
       margin: 0 0 3px;
     }

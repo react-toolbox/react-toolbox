@@ -69,6 +69,7 @@ const factory = (Check) => {
           className={className}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
+          style={style}
         >
           <input
             {...others}
@@ -85,7 +86,6 @@ const factory = (Check) => {
             checked={checked}
             disabled={disabled}
             rippleClassName={theme.ripple}
-            style={style}
             theme={theme}
           />
           {label ? <span data-react-toolbox="label" className={theme.text}>{label}</span> : null}
