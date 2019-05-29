@@ -222,7 +222,7 @@ export default App;
 
 ## Theming (configuration variables)
 
-You can apply theming in multiple ways. First of all, you have to understand that React Toolbox stylesheets are written using PostCSS with postcss-preset-env features and use CSS Custom Properties from the **config** files we saw earlier. In addition, there are some global CSS Properties imported by each component: [colors](https://github.com/react-toolbox/react-toolbox/blob/dev/components/colors.css) and [variables](https://github.com/react-toolbox/react-toolbox/blob/dev/components/variables.css). You can override both the global and component-specific **variables** to get the results you want using one of the methods below.
+You can apply theming in multiple ways. First of all, you have to understand that React Toolbox stylesheets are written using PostCSS with postcss-preset-env features and use CSS Custom Properties from the **config** files we saw earlier. In addition, there are some global CSS Properties imported by each component: [colors](https://github.com/react-toolbox/react-toolbox/blob/dev/components/colors.module.css) and [variables](https://github.com/react-toolbox/react-toolbox/blob/dev/components/variables.module.css). You can override both the global and component-specific **variables** to get the results you want using one of the methods below.
 
 ### Settings configuration variables in JavaScript
 
