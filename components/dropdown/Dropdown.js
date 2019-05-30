@@ -214,7 +214,7 @@ const factory = (Input) => {
             className={theme.value}
             onClick={this.handleClick}
             required={this.props.required}
-            readOnly
+            readOnly={false}
             type={template && selected ? 'hidden' : null}
             theme={theme}
             themeNamespace="input"
