@@ -59,7 +59,7 @@ class TableTest extends React.Component<any, any> {
 
         <Table multiSelectable onRowSelect={this.handleRowSelect} style={{ marginTop: 10 }}>
           <TableHead>
-            <TooltippedCell tooltip="The total amount of food energy in the given serving size">
+            <TooltippedCell tooltip="The total amount of food energy in the given serving size" showCaret={false}>
               Dessert (100g serving)
             </TooltippedCell>
             <TableCell onClick={this.handleSortClick} numeric sorted={sorted}>Calories</TableCell>

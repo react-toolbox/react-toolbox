@@ -24,6 +24,14 @@ const defaults = {
   showOnClick: false,
   position: POSITION.VERTICAL,
   theme: {},
+  showCaret: false,
+};
+
+const ARROW_PLACEMENT = {
+  [POSITION.BOTTOM]: 'arrowUp',
+  [POSITION.TOP]: 'arrowDown',
+  [POSITION.RIGHT]: 'arrowLeft',
+  [POSITION.LEFT]: 'arrowRight',
 };
 
 const tooltipFactory = (options = {}) => {
@@ -35,6 +43,7 @@ const tooltipFactory = (options = {}) => {
     passthrough: defaultPassthrough,
     position: defaultPosition,
     theme: defaultTheme,
+    showCaret: defaultShowCaret,
   } = { ...defaults, ...options };
 
   return (ComposedComponent) => {
@@ -45,6 +54,7 @@ const tooltipFactory = (options = {}) => {
         onClick: PropTypes.func,
         onMouseEnter: PropTypes.func,
         onMouseLeave: PropTypes.func,
+        showCaret: PropTypes.bool,
         theme: PropTypes.shape({
           tooltip: PropTypes.string,
           tooltipActive: PropTypes.string,
@@ -66,6 +76,7 @@ const tooltipFactory = (options = {}) => {
         tooltipHideOnClick: defaultHideOnClick,
         tooltipPosition: defaultPosition,
         tooltipShowOnClick: defaultShowOnClick,
+        showCaret: defaultShowCaret,
       };
 
       state = {
@@ -152,24 +163,52 @@ const tooltipFactory = (options = {}) => {
         const xOffset = window.scrollX || window.pageXOffset;
         const yOffset = window.scrollY || window.pageYOffset;
         if (position === POSITION.BOTTOM) {
+          if (this.props.showCaret) {
+            return {
+              top: top + height + yOffset + 10,
+              left: left + (width / 2) + xOffset,
+              position,
+            };
+          }
           return {
             top: top + height + yOffset,
             left: left + (width / 2) + xOffset,
             position,
           };
         } if (position === POSITION.TOP) {
+          if (this.props.showCaret) {
+            return {
+              top: (top + yOffset) - 10,
+              left: left + (width / 2) + xOffset,
+              position,
+            };
+          }
           return {
             top: top + yOffset,
             left: left + (width / 2) + xOffset,
             position,
           };
         } if (position === POSITION.LEFT) {
+          if (this.props.showCaret) {
+            return {
+              top: top + (height / 2) + yOffset,
+              left: (left + xOffset) - 10,
+              position,
+            };
+          }
           return {
             top: top + (height / 2) + yOffset,
             left: left + xOffset,
             position,
           };
         } if (position === POSITION.RIGHT) {
+          if (this.props.showCaret) {
+            return {
+              top: top + (height / 2) + yOffset,
+              left: left + width + xOffset + 10,
+              position,
+            };
+          }
           return {
             top: top + (height / 2) + yOffset,
             left: left + width + xOffset,
@@ -196,12 +235,14 @@ const tooltipFactory = (options = {}) => {
           tooltipHideOnClick, // eslint-disable-line no-unused-vars
           tooltipPosition, // eslint-disable-line no-unused-vars
           tooltipShowOnClick, // eslint-disable-line no-unused-vars
+          showCaret,
           ...other
         } = this.props;
 
         const _className = classnames(theme.tooltip, {
           [theme.tooltipActive]: active,
           [theme[positionClass]]: theme[positionClass],
+          [theme.resetPadding]: showCaret,
         });
 
         const childProps = {
@@ -210,11 +251,11 @@ const tooltipFactory = (options = {}) => {
           onClick: this.handleClick,
           onMouseEnter: this.handleMouseEnter,
           onMouseLeave: this.handleMouseLeave,
+          showCaret,
         };
 
         const shouldPass = typeof ComposedComponent !== 'string' && defaultPassthrough;
         const finalProps = shouldPass ? { ...childProps, theme } : childProps;
-
         return React.createElement(ComposedComponent, finalProps, children,
           visible && (
             <Portal>
@@ -224,6 +265,9 @@ const tooltipFactory = (options = {}) => {
                 data-react-toolbox="tooltip"
                 style={{ top, left }}
               >
+                {
+                  showCaret && <span className={theme[ARROW_PLACEMENT[position]]} />
+                }
                 <span className={theme.tooltipInner}>{tooltip}</span>
               </span>
             </Portal>
