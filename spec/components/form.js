@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from '../../components/form';
 
-const countriesArray = ['Spain', 'England', 'USA', 'Thailand', 'France'];
+const countriesArray = ['Spain', 'England', 'USA', 'Thailand', 'France', 'China', 'Netherlands', 'Belgium'];
 
 const countries = [
   { value: 'EN-gb', label: 'England', img: 'http://' },
@@ -9,6 +9,9 @@ const countries = [
   { value: 'TH-th', label: 'Thailand', img: 'http://' },
   { value: 'EN-en', label: 'USA', img: 'http://' },
   { value: 'FR-fr', label: 'France', img: 'http://' },
+  { value: 'ZH-cn', label: 'China', img: 'http://' },
+  { value: 'NL-nl', label: 'Netherlands', img: 'http://' },
+  { value: 'NL-be', label: 'Belgium', img: 'http://' },
 ];
 
 const FormFields = {

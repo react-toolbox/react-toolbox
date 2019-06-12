@@ -1,0 +1,75 @@
+@import "../config";
+
+.root {
+  display: flex;
+  width: $navigation-width;
+  flex-direction: column;
+  background-color: $color-background;
+}
+
+.list {
+  @include no-webkit-scrollbar;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.item {
+  > span {
+    padding: $navigation-v-padding $navigation-h-padding;
+  }
+  [data-react-toolbox="list-item-text"] {
+    font-size: $font-size-small;
+    font-weight: $font-weight-semi-bold;
+  }
+}
+
+.active {
+  background: $color-divider;
+}
+
+.footer {
+  padding: 20px 10px 5px;
+  border-top: 1px solid rgb(224, 224, 224);
+}
+
+.footerLegend {
+  display: block;
+  font-size: $font-size-small;
+  color: $color-text-secondary;
+}
+
+.ad {
+  display: block;
+  margin: 10px auto 0;
+
+  > div {
+    display: inline-block;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: left;
+    border-radius: 4px;
+
+    a {
+      display: block;
+      width: 100%;
+      color: #757575 !important;
+      text-decoration: none;
+    }
+  }
+
+  :global {
+    .carbon-img {
+      display: block;
+      margin: 0 auto;
+    }
+
+    .carbon-poweredby {
+      display: inline-block;
+      color: #757575 !important;
+    }
+  }
+}
+

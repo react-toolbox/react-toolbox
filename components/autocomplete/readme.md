@@ -51,14 +51,11 @@ If you want to provide a theme via context, the component key is `RTAutocomplete
 | `keepFocusOnChange`             | `Bool`                        | `false` | Whether component should keep focus after value change. |
 | `label`                         | `String` or `Node`            |  &nbsp; | The text string to use for the floating label element. |
 | `multiple`                      | `Bool`                        | `true`  | If true, component can hold multiple values. |
-| `onBlur`                        | `Function`                    |  &nbsp; | Callback function that is fired when component is blurred. |
-| `onChange`                      | `Function`                    |  &nbsp; | Callback function that is fired when the components's value changes. |
-| `onFocus`                       | `Function`                    |  &nbsp; | Callback function that is fired when component is focused. |
-| `onKeyDown`                     | `Function`                    |  &nbsp; | Callback function that is fired when a key is pressed down. |
-| `onKeyUp`                       | `Function`                    |  &nbsp; | Callback function that is fired when a key is lifted up. |
-| `onQueryChange`                 | `Function`                    |  &nbsp; | Callback function that is fired when the components's query input value changes. |
-| `query`                         | `String` |  &nbsp; | This property has to be used in case the `source` is not static and will be changing during search for `multiple={false}` autocomplete, content of the `query` has to be managed by the `onQueryChange` callback. |
-| `source`                        | `Object` or `Array`           |  &nbsp; | Object of key/values or array representing all items suggested. |
+| `onBlur`                        | `Function`                    |         | Callback function that is fired when component is blurred. |
+| `onChange`                      | `Function`                    |         | Called with (value, event) when the components's value changes. |
+| `onQueryChange`                 | `Function`                    |         | Called with (value) when the components's query input value changes. |
+| `onFocus`                       | `Function`                    |         | Callback function that is fired when component is focused. |
+| `source`                        | `Object` or `Array`           |         | Object of key/values or array representing all items suggested. |
 | `selectedPosition`              | `String`                      | `above` | Determines if the selected list is shown above or below input. It can be `above`, `below` or `none`. |
 | `showSelectedWhenNotInSource`   | `Bool`                        | `false` | Determines if the selected list is shown if the `value` keys don't exist in the source. Only works if passing the `value` prop as an Object. |
 | `showSuggestionsWhenValueIsSet` | `Bool`                        | `false` | If true, the list of suggestions will not be filtered when a value is selected, until the query is modified. |
