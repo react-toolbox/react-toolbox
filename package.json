@@ -133,6 +133,7 @@
     "postcss-normalize": "^7.0.1",
     "postcss-preset-env": "^6.5.0",
     "postcss-reporter": "^6.0.0",
+    "postcss-color-mod-function": "^3.0.3",
     "pre-commit": "^1.2.2",
     "prop-types": "^15.6.2",
     "ramda": "^0.25.0",

@@ -51,6 +51,9 @@ function css(cb) {
       }
     }),
     require('postcss-calc'), // required as postcss-preset-env doesn't have a reduce calc() funtion
+    require('postcss-color-mod-function')({
+      unresolved: 'ignore',
+    }),
     require('postcss-normalize'),
     require('postcss-reporter')({
       clearReportedMessages: true
