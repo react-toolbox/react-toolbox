@@ -46,14 +46,15 @@ function css(cb) {
     require('postcss-preset-env')({
       stage: 0, // required to get all features that were from cssnext
       features: {
-        'custom-properties': false,
-        'color-mod-function': false,
+        'custom-properties': {
+          preserve: true,
+        },
+        'color-mod-function': {
+          unresolved: 'ignore',
+        },
       }
     }),
     require('postcss-calc'), // required as postcss-preset-env doesn't have a reduce calc() funtion
-    require('postcss-color-mod-function')({
-      unresolved: 'ignore',
-    }),
     require('postcss-normalize'),
     require('postcss-reporter')({
       clearReportedMessages: true
