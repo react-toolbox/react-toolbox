@@ -43,13 +43,12 @@ function css(cb) {
     require('postcss-mixins'),
     require('postcss-each'),
     require('postcss-apply'),
-    require('postcss-custom-properties')({
-      preserve: true,
-    }),
     require('postcss-preset-env')({
       stage: 0, // required to get all features that were from cssnext
       features: {
-        'custom-properties': false,
+        'custom-properties': {
+          preserve: true
+        },
         'color-mod-function': false,
       }
     }),
