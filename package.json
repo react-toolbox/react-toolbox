@@ -131,7 +131,7 @@
     "postcss-loader": "^3.0.0",
     "postcss-mixins": "^6.2.0",
     "postcss-normalize": "^7.0.1",
-    "postcss-preset-env": "^6.5.0",
+    "postcss-preset-env": "^6.6.0",
     "postcss-reporter": "^6.0.0",
     "postcss-custom-properties": "^7.0.0",
     "pre-commit": "^1.2.2",
