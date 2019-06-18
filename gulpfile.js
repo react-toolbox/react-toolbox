@@ -43,17 +43,15 @@ function css(cb) {
     require('postcss-mixins'),
     require('postcss-each'),
     require('postcss-apply'),
-    require('postcss-custom-properties')({
-      preserve: true,
-      appendVariables: true,
-    }),
+    // require('postcss-custom-properties')({
+    //   preserve: true,
+    //   appendVariables: true,
+    // }),
     require('postcss-preset-env')({
       stage: 0, // required to get all features that were from cssnext
       features: {
         'custom-properties': false,
-        'color-mod-function': {
-          unresolved: 'ignore',
-        },
+        'color-mod-function': false,
       }
     }),
     require('postcss-calc'), // required as postcss-preset-env doesn't have a reduce calc() funtion
