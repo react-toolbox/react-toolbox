@@ -50,7 +50,9 @@ function css(cb) {
       stage: 0, // required to get all features that were from cssnext
       features: {
         'custom-properties': false,
-        'color-mod-function': false,
+        'color-mod-function': {
+          unresolved: 'warn',
+        },
       }
     }),
     require('postcss-calc'), // required as postcss-preset-env doesn't have a reduce calc() funtion
