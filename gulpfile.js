@@ -46,9 +46,7 @@ function css(cb) {
     require('postcss-preset-env')({
       stage: 0, // required to get all features that were from cssnext
       features: {
-        'custom-properties': {
-          preserve: true
-        },
+        'custom-properties': false,
         'color-mod-function': false,
       }
     }),
