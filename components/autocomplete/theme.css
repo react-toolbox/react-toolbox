@@ -21,11 +21,11 @@
 }
 
 .withclear input {
-  text-indent: 28px !important;
+  text-indent: 28px;
 }
 
 .withclear label {
-  transition-property: top, left, font-size, color !important;
+  transition-property: top, left, font-size, color;
 }
 
 .inputFilled {
@@ -33,7 +33,7 @@
 }
 
 .withclear input:not(:focus):not(.inputFilled) ~ label {
-  left: 28px !important;
+  left: 28px;
 }
 
 .values {

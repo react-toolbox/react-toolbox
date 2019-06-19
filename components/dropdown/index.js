@@ -1,11 +1,26 @@
+/* eslint-disable */
+
 import { themr } from 'react-css-themr';
-import { DROPDOWN } from '../identifiers';
-import { dropdownFactory } from './Dropdown';
+import { autocompleteFactory } from '../autocomplete';
+import { Chip } from '../chip';
 import { Input } from '../input';
-import theme from './theme.css';
 
-const Dropdown = dropdownFactory(Input);
-const ThemedDropdown = themr(DROPDOWN, theme)(Dropdown);
+import theme from '../autocomplete/theme.css';
+import overrides from './overrides.css';
 
-export default ThemedDropdown;
-export { ThemedDropdown as Dropdown };
+const overriddenTheme = { ...theme, inputInputElement: theme.inputInputElement+' '+overrides.inputInputElement };
+
+const Autocomplete = autocompleteFactory(Chip, Input);
+const ThemedAutocomplete = themr(AUTOCOMPLETE, overriddenTheme, { withRef: true })(Autocomplete);
+
+export const Dropdown = (props) => <Autocomplete
+  readOnly
+  multiple={false}
+  keepFocusOnChange={false}
+  allowCreate={false}
+  showSelectedWhenNotInSource={false}
+  suggestionMatch="disabled"
+  {...props}
+/>;
+
+export default Dropdown;
