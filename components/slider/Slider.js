@@ -30,6 +30,7 @@ const factory = (ProgressBar, Input) => {
       onDragStart: PropTypes.func,
       onDragStop: PropTypes.func,
       pinned: PropTypes.bool,
+      renderKnob: PropTypes.func,
       snaps: PropTypes.bool,
       step: PropTypes.number,
       style: styleShape,
@@ -60,6 +61,7 @@ const factory = (ProgressBar, Input) => {
       onDragStart: () => {},
       onDragStop: () => {},
       pinned: false,
+      renderKnob: value => parseInt(value, 10),
       snaps: false,
       step: 0.01,
       value: 0,
@@ -309,7 +311,10 @@ const factory = (ProgressBar, Input) => {
               onTouchStart={this.handleTouchStart}
               style={knobStyles}
             >
-              <div className={theme.innerknob} data-value={parseInt(this.props.value, 10)} />
+              <div
+                className={theme.innerknob}
+                data-value={this.props.renderKnob(this.props.value)}
+              />
             </div>
 
             <div className={theme.progress}>
