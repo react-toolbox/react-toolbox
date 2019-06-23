@@ -133,18 +133,6 @@ const factory = (Input) => {
       this.setState({ active: true, up });
     };
 
-    handleFocus = (event) => {
-      event.stopPropagation();
-      if (!this.props.disabled) this.open(event);
-      if (this.props.onFocus) this.props.onFocus(event);
-    };
-
-    handleBlur = (event) => {
-      event.stopPropagation();
-      if (this.state.active) this.close();
-      if (this.props.onBlur) this.props.onBlur(event);
-    }
-
     renderTemplateValue(selected) {
       const { theme } = this.props;
       const className = classnames(theme.field, {
@@ -204,8 +192,6 @@ const factory = (Input) => {
         <div
           className={className}
           data-react-toolbox="dropdown"
-          onBlur={this.handleBlur}
-          onFocus={this.handleFocus}
           tabIndex="-1"
         >
           <Input
