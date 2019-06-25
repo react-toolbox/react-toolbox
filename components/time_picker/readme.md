@@ -1,6 +1,6 @@
 # Time Picker
 
-A [dialog picker](https://material.google.com/components/pickers.html#pickers-time-pickers) is used to select a single time (hours:minutes). The selected time is indicated by the filled circle at the end of the clock hand.
+A [dialog picker](https://material.google.com/components/pickers.html#pickers-time-pickers) is used to select a single time (hours:minutes). The selected time is indicated by the filled circle at the end of the clock hand. Time Picker requires React 16.
 
 <!-- example -->
 ```jsx
