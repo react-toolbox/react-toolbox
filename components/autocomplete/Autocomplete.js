@@ -389,7 +389,7 @@ const factory = (Chip, Input) => {
       const outerClassName = classnames(theme.autocomplete, {
         [theme.focus]: this.state.focus,
       }, className);
-      const withClear = allowClear && (multiple
+      const withClear = allowClear && !disabled && (multiple
         ? value && Object.keys(value).length > 0
         : value != null);
       return (
