@@ -56,7 +56,7 @@
   transition-property: background-color, box-shadow, color;
   transition-timing-function: var(--animation-curve-default);
 
-  &:focus {
+  &:focus:not(.disabled) {
     background-color: var(--tab-focus-color);
     outline: none;
   }
