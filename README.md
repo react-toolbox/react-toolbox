@@ -5,7 +5,7 @@
 
 React Toolbox is a set of [React](http://facebook.github.io/react/) components that implement [Google's Material Design specification](https://material.google.com/). It's powered by [CSS Modules](https://github.com/css-modules/css-modules) and harmoniously integrates with your [webpack](http://webpack.github.io/) workflow, although you can use any other module bundler. You can take a tour through our documentation website and try the components live!
 
-**Note:**  ⚠️ This source code refers to the [future version](https://github.com/react-toolbox/react-toolbox/blob/dev/ROADMAP.md). To check the source for `1.x` go to `master` branch. There is a [migration guide](https://github.com/react-toolbox/react-toolbox/wiki/Migrating-from-version-1.3-to-2.0) so you can start working with 2.0-beta.x now!
+**Note:**  ⚠️ This source code refers to the [future version](https://github.com/react-toolbox/react-toolbox/blob/dev/ROADMAP.md). To check the source for `1.x` go to `master` branch. There is a [migration guide from 1.3 to 2.0](https://github.com/react-toolbox/react-toolbox/wiki/Migrating-from-version-1.3-to-2.0) and [2.0 to 3.0](https://github.com/react-toolbox/react-toolbox/wiki/Migrating-from-version-2.0-to-3.0) so you can start working with 2.0-beta.x or 3.0 now!
 
 ## Installation
 
@@ -32,9 +32,12 @@ Follow [these instructions](https://github.com/react-toolbox/react-toolbox-themr
 ### Usage in Webpack Projects (*Not* Create React App)
 
 ```bash
+npm install postcss --save
 npm install postcss-loader --save-dev
-npm install postcss postcss-preset-env postcss-calc --save
+npm install postcss postcss-preset-env@^5.3.0 --save
+npm install postcss-calc --save
 ```
+(See the [2.0 to 3.0 migration guide](https://github.com/react-toolbox/react-toolbox/wiki/Migrating-from-version-2.0-to-3.0) Option 2b if you wish to use a 6+ version of postcss-preset-env)
 
 Configure webpack 1.x loader for .css files to use postcss:
 ```js
