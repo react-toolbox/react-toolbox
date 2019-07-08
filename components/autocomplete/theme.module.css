@@ -18,11 +18,6 @@
   width: 100%;
   z-index: var(--z-index-high);
 
-  &::-webkit-scrollbar {
-    height: 0;
-    width: 0;
-  }
-
   &:not(.up) {
     margin-top: calc(-1 * var(--input-padding));
   }
