@@ -37,8 +37,8 @@ function css(cb) {
   // Copied from webpack/postcss.config.js
   const plugins = [
     require('postcss-import')({
-      root: path.join(__dirname, '../'),
-      path: path.join(__dirname, '../components')
+      root: __dirname,
+      path: [path.join(__dirname, './components')]
     }),
     require('postcss-mixins'),
     require('postcss-each'),
@@ -46,10 +46,8 @@ function css(cb) {
     require('postcss-preset-env')({
       stage: 0, // required to get all features that were from cssnext
       features: {
-        'custom-properties': {
-          preserve: false // required to output values instead of variables
-        },
-        'color-mod-function': true, // required to use color-mod()
+        'custom-properties': false,
+        'color-mod-function': false,
       }
     }),
     require('postcss-calc'), // required as postcss-preset-env doesn't have a reduce calc() funtion
