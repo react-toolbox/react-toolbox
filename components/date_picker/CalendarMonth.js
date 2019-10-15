@@ -36,7 +36,9 @@ class Month extends Component {
   };
 
   isDayDisabled(date) {
-    const { minDate, maxDate, enabledDates, disabledDates } = this.props;
+    const {
+      minDate, maxDate, enabledDates, disabledDates,
+    } = this.props;
     const compareDate = compDate => date.getTime() === compDate.getTime();
     const dateInDisabled = disabledDates.filter(compareDate).length > 0;
     const dateInEnabled = enabledDates.filter(compareDate).length > 0;
@@ -75,7 +77,7 @@ class Month extends Component {
     return (
       <div data-react-toolbox="month" className={this.props.theme.month}>
         <span className={this.props.theme.title}>
-          {fullMonth} {fullYear}
+          {`${fullMonth} ${fullYear}`}
         </span>
         <div className={this.props.theme.week}>{this.renderWeeks()}</div>
         <div className={this.props.theme.days}>{this.renderDays()}</div>

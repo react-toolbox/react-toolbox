@@ -40,9 +40,9 @@ A radio selector is mean to get a value from a set of choices, that's why a radi
 |:-----|:-----|:-----|:-----|
 | `className`   | `String`      | `''`        | Set a class to give custom styles to the group.|
 | `disabled`    | `Boolean`     | `false`     | If true, the group will be displayed as disabled.|
-| `name`        | `String`      |             | Name for the input element group. |
-| `onChange`    | `Function`    |             | Callback function that will be invoked when the value changes. |
-| `value`       | `Any`         |             | Default value selected in the radio group. |
+| `name`        | `String`      |    &nbsp;   | Name for the input element group. |
+| `onChange`    | `Function`    |    &nbsp;   | Callback function that will be invoked when the value changes. |
+| `value`       | `Any`         |    &nbsp;   | Default value selected in the radio group. |
 
 
 ## Radio Button
@@ -56,12 +56,12 @@ The inner component to compose radio selectors. They will be rendered as radio i
 | `checked`     | `Boolean`     | `false`     | If true, the input element will be selected by default. Transferred from the parent. |
 | `className`   | `String`      | `''`        | Set a class to give custom styles to the radio button.|
 | `disabled`    | `Boolean`     | `false`     | If true, the item will be displayed as disabled.|
-| `label`       | `String` of `node`  | `''`        | Label for the radio button.|
-| `name`        | `String`      |             | Name for the input element. |
-| `onBlur`      | `Function`    |             | Callback function that will be invoked when the input is blurred. |
-| `onChange`    | `Function`    |             | Callback function that will be invoked when the value changes. |
-| `onFocus`     | `Function`    |             | Callback function that will be invoked when the input is focused. |
-| `value`       | `Any`         |             | Value for the radio button. |
+| `label`       | `String` or `node`  | `''`        | Label for the radio button.|
+| `name`        | `String`      |    &nbsp;   | Name for the input element. |
+| `onBlur`      | `Function`    |    &nbsp;   | Callback function that will be invoked when the input is blurred. |
+| `onChange`    | `Function`    |    &nbsp;   | Callback function that will be invoked when the value changes. |
+| `onFocus`     | `Function`    |    &nbsp;   | Callback function that will be invoked when the input is focused. |
+| `value`       | `Any`         |    &nbsp;   | Value for the radio button. |
 
 ### Theming
 

@@ -3,7 +3,7 @@ import { SLIDER } from '../identifiers';
 import { ProgressBar } from '../progress_bar';
 import { Input } from '../input';
 import { sliderFactory } from './Slider';
-import theme from './theme.css';
+import theme from './theme.module.css';
 
 const ThemedSlider = themr(SLIDER, theme)(sliderFactory(ProgressBar, Input));
 export default ThemedSlider;

@@ -44,14 +44,14 @@ If you want to provide a theme via context, the component key is `RTCheckbox`.
 | Name              | Type          | Default         | Description|
 |:-----|:-----|:-----|:-----|
 | `checked`       | `Boolean`       | `false`         | Value for the checkbox, can be `true` or `false`. |
-| `children`      | `String`, `Element` or `Array` |  | Children to pass through the component. |
+| `children`      | `String`, `Element` or `Array` | &nbsp; | Children to pass through the component. |
 | `className`     | `String`        | `''`            | Sets a class to give customized styles to the checkbox field.|
 | `disabled`      | `Boolean`       | `false`         | If true, the checkbox shown as disabled and cannot be modified.|
-| `label`         | `String` of `node`        |                 | Text label to attach next to the checkbox element.|
+| `label`         | `String` or `node`        |      &nbsp;     | Text label to attach next to the checkbox element.|
 | `name`          | `String`        | `false`         | The name of the field to set in the input checkbox.|
-| `onBlur`        | `Function`      |                 | Callback called when the checkbox is blurred.|
-| `onChange`      | `Function`      |                 | Callback called when the checkbox value is changed.|
-| `onFocus`       | `Function`      |                 | Callback called when the checkbox is focused |
+| `onBlur`        | `Function`      |      &nbsp;     | Callback called when the checkbox is blurred.|
+| `onChange`      | `Function`      |      &nbsp;     | Callback called when the checkbox value is changed.|
+| `onFocus`       | `Function`      |      &nbsp;     | Callback called when the checkbox is focused |
 
 ## Theme
 

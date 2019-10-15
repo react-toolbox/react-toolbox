@@ -4,12 +4,12 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { TABS } from '../identifiers';
 
-class TabContent extends Component {
+class TabContent extends Component { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     active: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
-    tabIndex: PropTypes.number,
+    hidden: PropTypes.bool,
     theme: PropTypes.shape({
       active: PropTypes.string,
       tab: PropTypes.string,
@@ -19,6 +19,7 @@ class TabContent extends Component {
   static defaultProps = {
     active: false,
     className: '',
+    hidden: true,
   };
 
   render() {
@@ -27,7 +28,7 @@ class TabContent extends Component {
     }, this.props.className);
 
     return (
-      <section className={className} tabIndex={this.props.tabIndex}>
+      <section className={className} role="tabpanel" aria-expanded={this.props.hidden}>
         {this.props.children}
       </section>
     );

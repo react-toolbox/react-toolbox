@@ -6,7 +6,7 @@ import { menuItemFactory } from './MenuItem';
 import { menuFactory } from './Menu';
 import { iconMenuFactory } from './IconMenu';
 import themedRippleFactory from '../ripple';
-import theme from './theme.css';
+import theme from './theme.module.css';
 
 const applyTheme = Component => themr(MENU, theme)(Component);
 const ThemedMenuDivider = applyTheme(MenuDivider);

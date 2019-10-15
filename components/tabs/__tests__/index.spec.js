@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { Tabs } from '../Tabs';
 import { Tab } from '../Tab';
 import { TabContent } from '../TabContent';
-import theme from '../theme.css';
+import theme from '../theme.module.css';
 
 describe('Tabs', () => {
   class Composition extends Component {
@@ -24,21 +24,27 @@ describe('Tabs', () => {
 
   it('defaults to only rendering the current tab', () => {
     const wrapper = mount(<Composition />);
+
     expect(wrapper.find(TabContent).length).toEqual(1);
     expect(wrapper.find(TabContent).first().prop('tabIndex')).toEqual(0);
 
     wrapper.instance().setState({ index: 1 });
+    wrapper.update();
+
     expect(wrapper.find(TabContent).length).toEqual(1);
     expect(wrapper.find(TabContent).first().prop('tabIndex')).toEqual(1);
   });
 
   it('renders inactive tabs when hideMode is set to display', () => {
     const wrapper = mount(<Composition hideMode="display" />);
+
     expect(wrapper.find(TabContent).length).toEqual(2);
     expect(wrapper.find(TabContent).at(0).prop('hidden')).toEqual(false);
     expect(wrapper.find(TabContent).at(1).prop('hidden')).toEqual(true);
 
     wrapper.instance().setState({ index: 1 });
+    wrapper.update();
+
     expect(wrapper.find(TabContent).length).toEqual(2);
     expect(wrapper.find(TabContent).at(0).prop('hidden')).toEqual(true);
     expect(wrapper.find(TabContent).at(1).prop('hidden')).toEqual(false);

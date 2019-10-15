@@ -43,6 +43,10 @@ export interface InputTheme {
    */
   inputElement?: string;
   /**
+   * Used for the label when the input has a label.
+   */
+  label?: string;
+  /**
    * Used in case the input is required.
    */
   required?: string;
@@ -128,7 +132,7 @@ export interface InputProps extends ReactToolbox.Props {
   /**
    * The number of rows the multiline input field has.
    */
-  rows?:number;
+  rows?: number;
   /**
    * Classnames object defining the component style.
    */

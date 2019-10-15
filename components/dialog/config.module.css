@@ -1,0 +1,9 @@
+:root {
+  --dialog-border-radius: calc(0.2 * var(--unit));
+  --dialog-color-title: var(--color-black);
+  --dialog-color-white: var(--color-white);
+  --dialog-content-padding: calc(2.4 * var(--unit));
+  --dialog-navigation-padding: calc(0.8 * var(--unit));
+  --dialog-translate-y: calc(4 * var(--unit));
+  --overflow: inherit;
+}

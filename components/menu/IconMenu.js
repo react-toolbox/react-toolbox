@@ -9,6 +9,7 @@ import InjectMenu from './Menu';
 const factory = (IconButton, Menu) => {
   class IconMenu extends Component {
     static propTypes = {
+      active: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
       icon: PropTypes.oneOfType([
@@ -16,6 +17,7 @@ const factory = (IconButton, Menu) => {
         PropTypes.element,
       ]),
       iconRipple: PropTypes.bool,
+      inverse: PropTypes.bool,
       menuRipple: PropTypes.bool,
       onClick: PropTypes.func,
       onHide: PropTypes.func,
@@ -31,6 +33,7 @@ const factory = (IconButton, Menu) => {
     };
 
     static defaultProps = {
+      active: false,
       className: '',
       icon: 'more_vert',
       iconRipple: true,
@@ -40,11 +43,17 @@ const factory = (IconButton, Menu) => {
     };
 
     state = {
-      active: false,
+      active: this.props.active,
+    }
+
+    componentWillReceiveProps(nextProps) {
+      if (this.state.active !== nextProps.active) {
+        this.setState({ active: nextProps.active });
+      }
     }
 
     handleButtonClick = (event) => {
-      this.setState({ active: !this.state.active });
+      this.setState(state => ({ active: !state.active }));
       if (this.props.onClick) this.props.onClick(event);
     };
 
@@ -55,7 +64,7 @@ const factory = (IconButton, Menu) => {
 
     render() {
       const {
-        children, className, icon, iconRipple, inverse, menuRipple, onHide, // eslint-disable-line
+        active, children, className, icon, iconRipple, inverse, menuRipple, onHide, // eslint-disable-line
         onSelect, onShow, position, selectable, selected, theme, ...other
       } = this.props;
       return (

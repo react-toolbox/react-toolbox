@@ -1,7 +1,0 @@
-{
-  "*.js": [
-    "eslint --fix",
-    "git add"
-  ],
-  "*.scss": "sass-lint --max-warnings 0 -v"
-}

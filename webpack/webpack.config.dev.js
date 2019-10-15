@@ -1,19 +1,20 @@
 const pkg = require('../package');
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
 module.exports = {
   target: 'web',
+  mode: 'development',
   context: path.join(__dirname, '../'),
-  devtool: 'cheap-module-eval-source-map',
-  entry: [
-    'webpack-hot-middleware/client',
-    './spec/index.js'
-  ],
+  devtool: 'source-map',
+  entry: {
+    spec: ['webpack-hot-middleware/client', './spec/index.js']
+  },
+
   output: {
     path: path.join(__dirname, 'build'),
-    filename: 'spec.js',
+    filename: '[name].js',
     publicPath: '/build/'
   },
   resolve: {
@@ -21,59 +22,64 @@ module.exports = {
     modules: ['node_modules']
   },
   module: {
-    rules: [{
-      test: /\.js$/,
-      loader: 'babel-loader',
-      include: [
-        path.join(__dirname, '../components'),
-        path.join(__dirname, '../spec')
-      ]
-    }, {
-      test: /\.css$/,
-      include: /node_modules/,
-      loader: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        loader: 'css-loader',
-      })
-    }, {
-      test: /\.css$/,
-      include: [
-        path.join(__dirname, '../components'),
-        path.join(__dirname, '../spec')
-      ],
-      use: ['style-loader', {
-        loader: 'css-loader',
-        query: {
-          modules: true,
-          localIdentName: '[name]__[local]___[hash:base64:5]',
-          sourceMap: true
-        },
-      }, 'postcss-loader']
-    }]
+    rules: [
+      {
+        test: /\.js$/,
+        use: 'babel-loader',
+        include: [
+          path.join(__dirname, '../components'),
+          path.join(__dirname, '../spec')
+        ]
+      },
+      {
+        test: /\.css$/,
+        include: /node_modules/,
+        exclude: [
+          path.join(__dirname, '../components'),
+          path.join(__dirname, '../spec')
+        ],
+        use: [
+          ExtractCssChunks.loader,
+          'css-loader',
+        ]
+      },
+      {
+        test: /\.module\.css$/,
+        include: [
+          path.join(__dirname, '../components'),
+          path.join(__dirname, '../spec')
+        ],
+        exclude: /node_modules/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: true,
+              importLoaders: 1,
+              localIdentName: '[name]__[local]--[hash:base64:5]',
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              config: {
+                path: path.join(__dirname, './postcss.config.js')
+              }
+            }
+          }
+        ]
+      }
+    ]
   },
   plugins: [
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        context: path.join(__dirname, '../'),
-        postcss () {
-          return [
-            require('postcss-import')({
-              root: path.join(__dirname, '../'),
-              path: [path.join(__dirname, '../components')]
-            }),
-            require('postcss-mixins')(),
-            require('postcss-each')(),
-            require('postcss-cssnext')(),
-            require('postcss-reporter')({
-              clearMessages: true
-            })
-          ];
-        }
-      }
+    new ExtractCssChunks({
+      filename: '[name].css',
+      hot: true,
+      cssModules: true
     }),
-    new ExtractTextPlugin({ filename: 'spec.css', allChunks: true }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.EvalSourceMapDevToolPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
       VERSION: JSON.stringify(pkg.version)

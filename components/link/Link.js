@@ -5,7 +5,9 @@ import { themr } from 'react-css-themr';
 import { LINK } from '../identifiers';
 import { FontIcon } from '../font_icon/FontIcon';
 
-const Link = ({ active, children, className, count, icon, label, theme, ...others }) => {
+const Link = ({
+  active, children, className, count, icon, label, theme, ...others
+}) => {
   const _className = classnames(theme.link, {
     [theme.active]: active,
   }, className);

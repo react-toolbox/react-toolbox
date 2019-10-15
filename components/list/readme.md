@@ -63,20 +63,20 @@ Represents a list item that can have avatar, icons, title, subtitle, etc. Note: 
 ### Properties
 | Name              | Type                  | Default       | Description|
 |:-----|:-----|:-----|:-----|
-| `avatar`          | `String` or `Element` |               | A string URL to specify an avatar in the left side of the item.|
-| `caption`         | `String`              |               | Main text of the item.|
+| `avatar`          | `String` or `Element` |     &nbsp;    | A string URL to specify an avatar in the left side of the item.|
+| `caption`         | `String` or `Element` |     &nbsp;    | Main text of the item.|
 | `className`       | `String`              | `''`          | Set a class to give custom styles to the list item.|
 | `disabled`        | `String`              | `false`       | If true, the item is displayed as disabled and is not clickable.|
-| `itemContent`     | `Element`             |               | An element that will be displayed as the item. If set, this will override `caption` and `legend`.|
-| `leftActions`     | `Array of Elements`   |               | A list of elements that are placed on the left side of the item and after the avatar attribute.|
-| `leftIcon`        | `String` or `Element` |               | A string key of a font icon or element to display an icon in the left side of the item. |
-| `legend`          | `String`              |               | Secondary text to display under the caption.|
-| `onClick`         | `Function`            |               | Callback the is invoked when the item is clicked if it's not disabled. |
-| `rightIcon`       | `String` or `Element` |               | The same as the `leftIcon` but in this case the icon is displayed in the right side.|
-| `rightActions`    | `Array of Elements`   |               | A list of elements that are placed on the right side of the item and after the rightIcon attribute.|
+| `itemContent`     | `Element`             |     &nbsp;    | An element that will be displayed as the item. If set, this will override `caption` and `legend`.|
+| `leftActions`     | `Array of Elements`   |     &nbsp;    | A list of elements that are placed on the left side of the item and after the avatar attribute.|
+| `leftIcon`        | `String` or `Element` |     &nbsp;    | A string key of a font icon or element to display an icon in the left side of the item. |
+| `legend`          | `String` or `Element` |     &nbsp;    | Secondary text to display under the caption.|
+| `onClick`         | `Function`            |     &nbsp;    | Callback that is invoked when the item is clicked if it's not disabled. |
+| `rightIcon`       | `String` or `Element` |     &nbsp;    | The same as the `leftIcon` but in this case the icon is displayed in the right side.|
+| `rightActions`    | `Array of Elements`   |     &nbsp;    | A list of elements that are placed on the right side of the item and after the rightIcon attribute.|
 | `ripple`          | `Boolean`             | `false`       | If true, the item displays a ripple effect on click. By default it's inherited from the parent element.|
 | `selectable`      | `Boolean`             | `false`       | If true, the elements in the list will display a hover effect and a pointer cursor. Inherited from the parent.|
-| `to`              | `String`              |               | In case you want to provide the item as a link, you can pass this property to specify the href. |
+| `to`              | `String`              |     &nbsp;    | In case you want to provide the item as a link, you can pass this property to specify the href. |
 
 ### Theme
 | Name     | Description|
@@ -101,15 +101,15 @@ A special type of item that has a checkbox control on the left side. It implemen
 ### Properties
 | Name            | Type            | Default       | Description|
 |:-----|:-----|:-----|:-----|
-| `caption`       | `String`        |               | Main text of the item. Required.|
-| `className`     | `String`        |               | Set a class to give custom styles to Component.|
+| `caption`       | `String`        |     &nbsp;    | Main text of the item. Required.|
+| `className`     | `String`        |     &nbsp;    | Set a class to give custom styles to Component.|
 | `checked`       | `Boolean`       | `false`       | If true the checkbox appears checked by default.|
 | `disabled`      | `String`        | `false`       | If true, the item is displayed as disabled and it's not clickable.|
-| `legend`        | `String`        |               | Secondary text to display under the caption.|
-| `name`          | `String`        |               | Name for the checkbox input item.|
-| `onBlur`        | `Function`      |               | Callback called when the input element is blurred.|
-| `onChange`      | `Function`      |               | Callback called when the input element is changed.|
-| `onFocus`       | `Function`      |               | Callback called when the input element is focused.|
+| `legend`        | `String`        |     &nbsp;    | Secondary text to display under the caption.|
+| `name`          | `String`        |     &nbsp;    | Name for the checkbox input item.|
+| `onBlur`        | `Function`      |     &nbsp;    | Callback called when the input element is blurred.|
+| `onChange`      | `Function`      |     &nbsp;    | Callback called when the input element is changed.|
+| `onFocus`       | `Function`      |     &nbsp;    | Callback called when the input element is focused.|
 
 ### Theme
 | Name     | Description|
@@ -131,7 +131,7 @@ Simple subcomponent used to give a title to a list area.
 ### Properties
 | Name          | Type        | Default       | Description|
 |:-----|:-----|:-----|:-----|
-| `caption`     | `String`    |               | Text that will be displayed.|
+| `caption`     | `String`    |     &nbsp;    | Text that will be displayed.|
 | `className`   | `String`    | `''`          | Set a class to give custom styles to the list subheader.|
 
 ### Theme

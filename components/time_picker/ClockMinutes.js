@@ -41,7 +41,7 @@ class Minutes extends Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <Face
           onTouchStart={this.handleTouchStart}
           onMouseDown={this.handleMouseDown}
@@ -62,7 +62,7 @@ class Minutes extends Component {
           theme={this.props.theme}
           step={step}
         />
-      </div>
+      </React.Fragment>
     );
   }
 }

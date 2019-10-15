@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { Button } from '../Button';
-import theme from '../theme.css';
+import theme from '../theme.module.css';
 
 describe('Button', () => {
   describe('#render', () => {

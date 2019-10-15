@@ -1,4 +1,9 @@
-import 'react-toolbox/commons.css';
+import '../../components/variables.module.css';
+import '../../components/colors.module.css';
+import '../../components/media.module.css';
+import './commons.css';
+import 'normalize.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, useRouterHistory } from 'react-router';

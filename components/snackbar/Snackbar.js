@@ -19,7 +19,7 @@ const factory = (Button) => {
         PropTypes.element,
       ]),
       onClick: PropTypes.func,
-      onTimeout: PropTypes.func,
+      onTimeout: PropTypes.func, // eslint-disable-line
       theme: PropTypes.shape({
         accept: PropTypes.string,
         active: PropTypes.string,
@@ -59,7 +59,9 @@ const factory = (Button) => {
     }
 
     render() {
-      const { action, active, children, label, onClick, theme, type } = this.props;
+      const {
+        action, active, children, label, onClick, theme, type,
+      } = this.props;
       const className = classnames([theme.snackbar, theme[type]], {
         [theme.active]: active,
       }, this.props.className);

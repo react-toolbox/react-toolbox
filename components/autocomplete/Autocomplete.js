@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import { isValuePresent } from '../utils/utils';
 import { AUTOCOMPLETE } from '../identifiers.js';
 import InjectChip from '../chip/Chip.js';
 import InjectInput from '../input/Input.js';
@@ -35,6 +36,8 @@ const factory = (Chip, Input) => {
       onBlur: PropTypes.func,
       onChange: PropTypes.func,
       onFocus: PropTypes.func,
+      onKeyDown: PropTypes.func,
+      onKeyUp: PropTypes.func,
       onQueryChange: PropTypes.func,
       query: PropTypes.string,
       selectedPosition: PropTypes.oneOf(['above', 'below', 'none']),
@@ -132,7 +135,7 @@ const factory = (Chip, Input) => {
     };
 
     handleQueryFocus = (event) => {
-      this.suggestionsNode.scrollTop = 0;
+      event.target.scrollTop = 0;
       this.setState({ active: '', focus: true });
       if (this.props.onFocus) this.props.onFocus(event);
     };
@@ -148,6 +151,8 @@ const factory = (Chip, Input) => {
       if (event.which === 13) {
         this.selectOrCreateActiveItem(event);
       }
+
+      if(this.props.onKeyDown) this.props.onKeyDown(event);
     };
 
     handleQueryKeyUp = (event) => {
@@ -160,6 +165,8 @@ const factory = (Chip, Input) => {
         if (index >= suggestionsKeys.length) index = 0;
         this.setState({ active: suggestionsKeys[index] });
       }
+
+      if(this.props.onKeyUp) this.props.onKeyUp(event);
     };
 
     handleSuggestionHover = (event) => {
@@ -178,7 +185,7 @@ const factory = (Chip, Input) => {
 
     query(key) {
       let query_value = '';
-      if (!this.props.multiple && key) {
+      if (!this.props.multiple && isValuePresent(key)) {
         const source_value = this.source().get(`${key}`);
         query_value = source_value || key;
       }
@@ -375,7 +382,6 @@ const factory = (Chip, Input) => {
       return (
         <ul
           className={classnames(theme.suggestions, { [theme.up]: this.state.direction === 'up' })}
-          ref={(node) => { this.suggestionsNode = node; }}
         >
           {suggestions}
         </ul>

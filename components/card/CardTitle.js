@@ -6,7 +6,9 @@ import { CARD } from '../identifiers';
 import InjectAvatar from '../avatar/Avatar';
 
 const factory = (Avatar) => {
-  const CardTitle = ({ avatar, children, className, subtitle, theme, title, ...other }) => {
+  const CardTitle = ({
+    avatar, children, className, subtitle, theme, title, ...other
+  }) => {
     const classes = classnames(theme.cardTitle, {
       [theme.small]: avatar,
       [theme.large]: !avatar,
@@ -44,9 +46,9 @@ const factory = (Avatar) => {
     ]),
     theme: PropTypes.shape({
       large: PropTypes.string,
-      title: PropTypes.string,
       small: PropTypes.string,
       subtitle: PropTypes.string,
+      title: PropTypes.string,
     }),
     title: PropTypes.oneOfType([
       PropTypes.string,

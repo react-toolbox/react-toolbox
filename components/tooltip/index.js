@@ -1,5 +1,5 @@
 import tooltipFactory from './Tooltip';
-import theme from './theme.css';
+import theme from './theme.module.css';
 
 const themedTooltipFactory = options => tooltipFactory({ ...options, theme });
 export default tooltipFactory({ theme });

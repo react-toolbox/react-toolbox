@@ -14,6 +14,11 @@ export interface IconMenuTheme {
 
 export interface IconMenuProps extends ReactToolbox.Props {
   /**
+   * If true, the inner Menu component will be active.
+   * @default false
+   */
+  active?: boolean;
+  /**
    * Children to pass through the component.
    */
   children?: React.ReactNode;
@@ -27,6 +32,11 @@ export interface IconMenuProps extends ReactToolbox.Props {
    * @default true
    */
   iconRipple?: boolean;
+  /**
+   * If true, the neutral colors are inverted. Useful if the icon is over a dark background.
+   * @default false
+   */
+  inverse?: boolean;
   /**
    * Transferred to the Menu component.
    * @default true

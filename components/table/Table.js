@@ -49,8 +49,8 @@ const factory = (TableHead, TableRow) => {
           const current = this.getRowTuples().filter(item => item[1]).map(item => item[0]);
           const rowIndex = current.indexOf(idx);
           const indexes = rowIndex !== -1
-          ? [...current.slice(0, rowIndex), ...current.slice(rowIndex + 1)]
-          : [...current, idx];
+            ? [...current.slice(0, rowIndex), ...current.slice(rowIndex + 1)]
+            : [...current, idx];
           this.props.onRowSelect(indexes);
         } else {
           this.props.onRowSelect([idx]);
