@@ -1,5 +1,5 @@
 import * as React from "react";
-import { DrawerProps } from '../drawer/Drawer';
+import { DrawerCommonProps } from '../drawer/Drawer';
 
 export interface NavDrawerTheme {
   /**
@@ -12,7 +12,7 @@ export interface NavDrawerTheme {
   clipped?: string;
 }
 
-export interface NavDrawerProps extends DrawerProps {
+export interface NavDrawerProps extends DrawerCommonProps {
   /**
    * If true, the drawer will be shown as an overlay.
    * @default false

@@ -10,6 +10,7 @@ const factory = (ripple, FontIcon) => {
   class SimpleBrowseButton extends Component {
     static propTypes = {
       accent: PropTypes.bool,
+      accept: PropTypes.string,
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
@@ -22,6 +23,7 @@ const factory = (ripple, FontIcon) => {
       inverse: PropTypes.bool,
       label: PropTypes.string,
       mini: PropTypes.bool,
+      multiple: PropTypes.bool,
       neutral: PropTypes.bool,
       onChange: PropTypes.func,
       onMouseLeave: PropTypes.func,
@@ -47,10 +49,12 @@ const factory = (ripple, FontIcon) => {
 
     static defaultProps = {
       accent: false,
+      accept: '*/*',
       className: '',
       flat: false,
       floating: false,
       mini: false,
+      multiple: false,
       neutral: true,
       primary: false,
       raised: false,
@@ -85,6 +89,7 @@ const factory = (ripple, FontIcon) => {
     render() {
       const {
         accent,    // eslint-disable-line
+        accept,
         children,
         className,
         flat,      // eslint-disable-line
@@ -93,6 +98,7 @@ const factory = (ripple, FontIcon) => {
         inverse,
         label,
         mini,
+        multiple,
         neutral,
         primary,   // eslint-disable-line
         raised,    // eslint-disable-line
@@ -112,6 +118,7 @@ const factory = (ripple, FontIcon) => {
       const props = {
         ...others,
         ref: (node) => { this.labelNode = node; },
+        onChange: null,
         className: classes,
         disabled: this.props.disabled,
         onMouseUp: this.handleMouseUp,
@@ -120,11 +127,16 @@ const factory = (ripple, FontIcon) => {
       };
 
       return React.createElement(element, props,
-          icon ? <FontIcon className={theme.icon} value={icon} /> : null,
+        icon ? <FontIcon className={theme.icon} value={icon} /> : null,
         <span>{label}</span>,
-        <input className={classes} type="file" onChange={this.handleFileChange} />,
-          children,
-        );
+        <input
+          className={classes}
+          type="file"
+          accept={accept}
+          multiple={multiple}
+          onChange={this.handleFileChange}
+        />,
+        children);
     }
   }
 

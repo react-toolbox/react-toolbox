@@ -3,7 +3,7 @@ import { NAVIGATION } from '../identifiers';
 import { navigationFactory } from './Navigation';
 import { Button } from '../button';
 import { Link } from '../link';
-import theme from './theme.css';
+import theme from './theme.module.css';
 
 const ThemedNavigation = themr(NAVIGATION, theme)(navigationFactory(Button, Link));
 export default ThemedNavigation;

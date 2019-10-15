@@ -99,10 +99,10 @@ This is the `Table` main wrapper component. It parses children to generate an ap
 
 Name              | Type       | Default | Description
 :---------------- | :--------- | :------ | :-------------------------------------------------------------
-`children`        | `Node`     |         | Pass `TableHead` and `TableRow` components as children always.
+`children`        | `Node`     |  &nbsp; | Pass `TableHead` and `TableRow` components as children always.
 `className`       | `String`   | `''`    | Sets a custom class to style the component.
 `multiSelectable` | `Boolean`  | `false` | If true, the header and each row will display a checkbox to allow the user to select multiple rows at the same time.
-`onRowSelect`     | `Function` |         | Will be called when the row selection changes. It passes an array of selected indexes as first parameter so you can figure out changes in your local state.
+`onRowSelect`     | `Function` |  &nbsp; | Will be called when the row selection changes. It passes an array of selected indexes as first parameter so you can figure out changes in your local state.
 `selectable`      | `Boolean`  | `true`  | If true, each row will display a checkbox to allow the user to select that one row.
 
 ## TableHead
@@ -113,7 +113,7 @@ Header element that should be place as a direct descendant of `Table` and whose 
 
 Name              | Type       | Default  | Description
 :---------------- | :--------- | :------  | :----------------------------------------------
-`children`        | `Node`     |          | Pass `TableCell` components always either decorated or not.
+`children`        | `Node`     |  &nbsp;  | Pass `TableCell` components always either decorated or not.
 `className`       | `String`   | `''`     | Sets a custom class to style the header row.
 `displaySelect`   | `Boolean`  | `true`   | If true, a checkbox will be displayed to select every row. In case the table is not multi-selectable, it will be disabled though.
 
@@ -125,7 +125,7 @@ An element that represents a row in the Table. It should be place as a direct de
 
 Name              | Type       | Default  | Description
 :---------------- | :--------- | :------  | :----------------------------------------------
-`children`        | `Node`     |          | Pass `TableCell` components always either decorated or not.
+`children`        | `Node`     |  &nbsp;  | Pass `TableCell` components always either decorated or not.
 `className`       | `String`   | `''`     | Sets a custom class to style the row.
 `selected`        | `Boolean`  | `false`  | If true, the row will be considered as selected so the row will display a selected style with the selection control activated. This property is used by `Table` to figure out the selection when you interact with the Table.
 
@@ -135,10 +135,10 @@ Displays a cell of the `Table`. It renders a tag `td` or `th` depending on if it
 
 Name              | Type       | Default  | Description
 :---------------- | :--------- | :------  | :----------------------------------------------
-`children`        | `Any`      |          | Any content you want to render inside the cell.
+`children`        | `Any`      |  &nbsp;  | Any content you want to render inside the cell.
 `className`       | `String`   | `''`     | Sets a custom class to style that particular cell.
 `numeric`         | `Boolean`  | `false`  | If true the cell is considered as numeric and the content will be displayed aligned to right.
-`onClick`         | `Function` |          | Called when the cell is clicked with the click event, column number and row number.
+`onClick`         | `Function` |  &nbsp;  | Called when the cell is clicked with the click event, column number and row number.
 `sorted`          | `Bool`     | `asc` or `desc` | Optional. If you provide a value the cell will show an arrow pointing down or up depending on the value to indicate it is a sorted element. Useful only for columns.
 
 ## Theme

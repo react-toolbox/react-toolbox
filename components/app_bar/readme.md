@@ -30,18 +30,18 @@ The `AppBar` component provides properties for the common use cases of `title`, 
 
 ## Properties
 
-| Name          | Type    | Default  | Description|
-|:-----|:-----|:-----|:-----|
-| `className`        | `String`   | `''`    | Set a class for the root component.|
-| `fixed`            | `Bool`     | `false` | Determine if the bar should have position `fixed` or `relative`.|
-| `flat`             | `Bool`     | `false` | If true, the AppBar doesn't show a shadow.|
-| `theme`            | `Object`   | `null`  | Classnames object defining the component style.|
-| `title`            | `String|Element`  | `null`  | Title used for the appbar.|
-| `leftIcon`         | `String|Element`   | `null`  | Left icon.|
-| `onLeftIconClick`  | `Function` | `null`  | Called on left icon click event.|
-| `rightIcon`        | `String|Element`   | `null`  | Right icon.|
-| `onRightIconClick` | `Function` | `null`  | Called on right icon click event.|
-| `scrollHide`       | `Bool`     | `false` | Whether AppBar should be hidden during scroll.|
+| Name               | Type             | Default | Description                                                     |
+|:-------------------|:-----------------|:--------|:----------------------------------------------------------------|
+| `className`        | `String`         | `''`    | Set a class for the root component.                             |
+| `fixed`            | `Bool`           | `false` | Determine if the bar should have position `fixed` or `relative`.|
+| `flat`             | `Bool`           | `false` | If true, the AppBar doesn't show a shadow.                      |
+| `theme`            | `Object`         | `null`  | Classnames object defining the component style.                 |
+| `title`            | `String\|Element` | `null`  | Title used for the appbar.                                      |
+| `leftIcon`         | `String\|Element` | `null`  | Left icon.                                                      |
+| `onLeftIconClick`  | `Function`       | `null`  | Called on left icon click event.                                |
+| `rightIcon`        | `String\|Element` | `null`  | Right icon.                                                     |
+| `onRightIconClick` | `Function`       | `null`  | Called on right icon click event.                               |
+| `scrollHide`       | `Bool`           | `false` | Whether AppBar should be hidden during scroll.                  |
 
 ## Theme
 

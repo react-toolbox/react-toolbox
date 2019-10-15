@@ -10,6 +10,13 @@ import events from '../utils/events';
 import InjectProgressBar from '../progress_bar/ProgressBar';
 import InjectInput from '../input/Input';
 
+const KEYS = {
+  ENTER: 'Enter',
+  ESC: 'Escape',
+  ARROW_UP: 'ArrowUp',
+  ARROW_DOWN: 'ArrowDown',
+};
+
 const factory = (ProgressBar, Input) => {
   class Slider extends Component {
     static propTypes = {
@@ -97,12 +104,6 @@ const factory = (ProgressBar, Input) => {
       events.removeEventsFromDocument(this.getKeyboardEvents());
     }
 
-    getInput() {
-      return this.inputNode && this.inputNode.getWrappedInstance
-        ? this.inputNode.getWrappedInstance()
-        : this.inputNode;
-    }
-
     getKeyboardEvents() {
       return {
         keydown: this.handleKeyDown,
@@ -121,12 +122,6 @@ const factory = (ProgressBar, Input) => {
         touchmove: this.handleTouchMove,
         touchend: this.handleTouchEnd,
       };
-    }
-
-    addToValue(increment) {
-      let value = this.state.inputFocused ? parseFloat(this.state.inputValue) : this.props.value;
-      value = this.trimValue(value + increment);
-      if (value !== this.props.value) this.props.onChange(value);
     }
 
     handleInputFocus = () => {
@@ -148,13 +143,19 @@ const factory = (ProgressBar, Input) => {
     };
 
     handleKeyDown = (event) => {
-      if ([13, 27].indexOf(event.keyCode) !== -1) this.getInput().blur();
-      if (event.keyCode === 38) this.addToValue(this.props.step);
-      if (event.keyCode === 40) this.addToValue(-this.props.step);
+      const { disabled, step } = this.props;
+      const {
+        ARROW_DOWN, ARROW_UP, ENTER, ESC,
+      } = KEYS;
+
+      if (disabled) return;
+      if ([ENTER, ESC].includes(event.code)) this.inputNode.blur();
+      if (event.code === ARROW_UP) this.addToValue(step);
+      if (event.code === ARROW_DOWN) this.addToValue(-step);
     };
 
     handleMouseDown = (event) => {
-      if (this.state.inputFocused) this.getInput().blur();
+      if (this.state.inputFocused) this.inputNode.blur();
       events.addEventsToDocument(this.getMouseEventMap());
       this.start(events.getMousePosition(event));
       events.pauseEvent(event);
@@ -192,11 +193,17 @@ const factory = (ProgressBar, Input) => {
     };
 
     handleTouchStart = (event) => {
-      if (this.state.inputFocused) this.getInput().blur();
+      if (this.state.inputFocused) this.inputNode.blur();
       this.start(events.getTouchPosition(event));
       events.addEventsToDocument(this.getTouchEventMap());
       events.pauseEvent(event);
     };
+
+    addToValue(increment) {
+      let value = this.state.inputFocused ? parseFloat(this.state.inputValue) : this.props.value;
+      value = this.trimValue(value + increment);
+      if (value !== this.props.value) this.props.onChange(value);
+    }
 
     end(revents) {
       events.removeEventsFromDocument(revents);
@@ -246,9 +253,7 @@ const factory = (ProgressBar, Input) => {
       if (!this.props.snaps) return undefined;
       return (
         <div className={this.props.theme.snaps}>
-          {range(0, (this.props.max - this.props.min) / this.props.step).map(i =>
-            <div key={`span-${i}`} className={this.props.theme.snap} />,
-          )}
+          {range(0, (this.props.max - this.props.min) / this.props.step).map(i => <div key={`span-${i}`} className={this.props.theme.snap} />)}
         </div>
       );
     }
@@ -257,7 +262,7 @@ const factory = (ProgressBar, Input) => {
       if (!this.props.editable) return undefined;
       return (
         <Input
-          ref={(node) => { this.inputNode = node; }}
+          innerRef={(node) => { this.inputNode = node; }}
           className={this.props.theme.input}
           disabled={this.props.disabled}
           onFocus={this.handleInputFocus}
@@ -289,7 +294,7 @@ const factory = (ProgressBar, Input) => {
           onBlur={this.handleSliderBlur}
           onFocus={this.handleSliderFocus}
           style={this.props.style}
-          tabIndex="0"
+          tabIndex={this.props.disabled ? -1 : 0}
         >
           <div
             ref={(node) => { this.sliderNode = node; }}

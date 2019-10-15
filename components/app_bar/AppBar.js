@@ -25,9 +25,9 @@ const factory = (IconButton) => {
       scrollHide: PropTypes.bool,
       theme: PropTypes.shape({
         appBar: PropTypes.string,
-        inner: PropTypes.string,
         fixed: PropTypes.string,
         flat: PropTypes.string,
+        inner: PropTypes.string,
         leftIcon: PropTypes.string,
         rightIcon: PropTypes.string,
         scrollHide: PropTypes.string,
@@ -46,7 +46,7 @@ const factory = (IconButton) => {
       scrollHide: false,
     };
 
-    state = { hidden: false, height: 0 };
+    state = { hidden: false, height: 0 }; // eslint-disable-line react/no-unused-state
 
     componentDidMount() {
       if (this.props.scrollHide) {
@@ -70,25 +70,26 @@ const factory = (IconButton) => {
       }
     }
 
-    initializeScroll() {
+    handleScroll = () => {
+      const scrollDiff = this.curScroll - window.scrollY;
+      this.setState(state => ({
+        hidden: scrollDiff < 0
+            && window.scrollY !== undefined
+            && window.scrollY > state.height,
+      }));
+      this.curScroll = window.scrollY;
+    };
+
+    initializeScroll = () => {
       window.addEventListener('scroll', this.handleScroll);
       const { height } = this.rootNode.getBoundingClientRect();
       this.curScroll = window.scrollY;
-      this.setState({ height });
+      this.setState({ height }); // eslint-disable-line react/no-unused-state
     }
 
     endScroll() {
       window.removeEventListener('scroll', this.handleScroll);
     }
-
-    handleScroll = () => {
-      const scrollDiff = this.curScroll - window.scrollY;
-      const hidden = scrollDiff < 0
-        && window.scrollY !== undefined
-        && window.scrollY > this.state.height;
-      this.setState({ hidden });
-      this.curScroll = window.scrollY;
-    };
 
     render() {
       const {

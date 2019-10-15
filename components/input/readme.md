@@ -9,18 +9,18 @@ import Input from 'react-toolbox/lib/input';
 class InputTest extends React.Component {
   state = { name: '', phone: '', email: '', hint: '' };
 
-  handleChange = (name, value) => {
-    this.setState({ [name]: value });
+  handleChange = (value, ev) => {
+    this.setState({ [ev.target.name]: value });
   };
 
   render () {
     return (
       <section>
-        <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange.bind(this, 'name')} maxLength={16 } />
+        <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange} maxLength={16 } />
         <Input type='text' label='Disabled field' disabled />
-        <Input type='email' label='Email address' icon='email' value={this.state.email} onChange={this.handleChange.bind(this, 'email')} />
-        <Input type='tel' label='Phone' name='phone' icon='phone' value={this.state.phone} onChange={this.handleChange.bind(this, 'phone')} />
-        <Input type='text' value={this.state.hint} label='Required Field' hint='With Hint' required onChange={this.handleChange.bind(this, 'hint')} icon={<span>J</span>} />
+        <Input type='email' label='Email address' name='email' icon='email' value={this.state.email} onChange={this.handleChange} />
+        <Input type='tel' label='Phone' name='phone' icon='phone' value={this.state.phone} onChange={this.handleChange} />
+        <Input type='text' label='Required Field' name='hint' hint='With Hint' required value={this.state.hint} onChange={this.handleChange} icon={<span>J</span>} />
       </section>
     );
   }
@@ -35,21 +35,21 @@ If you want to provide a theme via context, the component key is `RTInput`.
 |:-----|:-----|:-----|:-----|
 | `className`     | `String`                | `''`            | Sets a class name to give custom styles.|
 | `disabled`      | `Boolean`               | `false`         | If true, component will be disabled.|
-| `error`         | `String` or `Node`      |                 | Give an error node to display under the field.|
+| `error`         | `String` or `Node`      |      &nbsp;     | Give an error node to display under the field.|
 | `floating`      | `Boolean`               | `true`          | Indicates if the label is floating in the input field or not.|
 | `hint`          | `String` or `Node`      | `''`            | The text string to use for hint text element.|
-| `icon`          | `String` or `Element`   |                 | Name of an icon to use as a label for the input.|
-| `label`         | `String` or `Node`      |                 | The text string to use for the floating label element.|
-| `maxLength`     | `Number`                |                 | Specifies the maximum number of characters allowed in the component.|
+| `icon`          | `String` or `Element`   |      &nbsp;     | Name of an icon to use as a label for the input.|
+| `label`         | `String` or `Node`      |      &nbsp;     | The text string to use for the floating label element.|
+| `maxLength`     | `Number`                |      &nbsp;     | Specifies the maximum number of characters allowed in the component.|
 | `multiline`     | `Boolean`               | `false`         | If true, a textarea element will be rendered. The textarea also grows and shrinks according to the number of lines.|
-| `rows`          | `Number`                |                 | The number of rows the multiline input field has.|
-| `onBlur`        | `Function`              |                 | Callback function that is fired when component is blurred.|
-| `onChange`      | `Function`              |                 | Callback function that is fired when the component's value changes.|
-| `onFocus`       | `Function`              |                 | Callback function that is fired when component is focused.|
-| `onKeyPress`    | `Function`              |                 | Callback function that is fired when a key is pressed.|
+| `rows`          | `Number`                |      &nbsp;     | The number of rows the multiline input field has.|
+| `onBlur`        | `Function`              |      &nbsp;     | Callback function that is fired when component is blurred.|
+| `onChange`      | `Function`              |      &nbsp;     | Callback function that is fired when the component's value changes.|
+| `onFocus`       | `Function`              |      &nbsp;     | Callback function that is fired when component is focused.|
+| `onKeyPress`    | `Function`              |      &nbsp;     | Callback function that is fired when a key is pressed.|
 | `required`      | `Boolean`               | `false`         | If true, the html input has a required attribute.|
 | `type`          | `String`                | `text`          | Type of the input element. It can be a valid HTML5 input type|
-| `value`         | `Any`                   |                 | Current value of the input element.|
+| `value`         | `Any`                   |      &nbsp;     | Current value of the input element.|
 
 ## Theming
 
@@ -71,7 +71,7 @@ If you want to provide a theme via context, the component key is `RTInput`.
 
 ## Methods
 
-The `Input` component has some imperative methods that are used as a bypass to the native rendered DOM element. To call this methods you will need to retrieve the instance of the component. Check the [Install](http://react-toolbox.com/#/install) section for details on how to do this. The methods included for the `Input` are:
+The `Input` component has some imperative methods that are used as a bypass to the native rendered DOM element. To call this methods you will need to retrieve the instance of the component. Check the [Install](http://react-toolbox.io/#/install) section for details on how to do this. The methods included for the `Input` are:
 
 - `blur` used to blur the `input` element.
 - `focus` used to focus the `input` element.

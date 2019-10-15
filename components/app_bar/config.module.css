@@ -1,0 +1,12 @@
+:root {
+  --appbar-color: var(--color-primary-dark);
+  --appbar-contrast: var(--color-primary-contrast);
+  --appbar-title-font-size: calc(2 * var(--unit));
+  --appbar-title-font-weight: 500;
+  --appbar-title-total-distance: calc(8 * var(--unit));
+  --appbar-height: calc(6.4 * var(--unit));
+  --appbar-height-m-portrait: calc(5.6 * var(--unit));
+  --appbar-height-m-landscape: calc(4.8 * var(--unit));
+  --appbar-h-padding: calc(2.4 * var(--unit));
+  --appbar-title-distance: calc(var(--appbar-title-total-distance) - var(--appbar-h-padding));
+}

@@ -7,8 +7,8 @@ import InjectListItem from './ListItem';
 
 const mergeProp = (propName, child, parent) => (
   child[propName] !== undefined
-  ? child[propName]
-  : parent[propName]
+    ? child[propName]
+    : parent[propName]
 );
 
 const factory = (ListItem) => {
@@ -16,6 +16,8 @@ const factory = (ListItem) => {
     static propTypes = {
       children: PropTypes.node,
       className: PropTypes.string,
+      ripple: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
+      selectable: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
       theme: PropTypes.shape({
         list: PropTypes.string,
       }),
@@ -31,7 +33,7 @@ const factory = (ListItem) => {
       return React.Children.map(this.props.children, (item) => {
         if (item === null || item === undefined) {
           return item;
-        } else if (item.type === ListItem) {
+        } if (item.type === ListItem) {
           const selectable = mergeProp('selectable', item.props, this.props);
           const ripple = mergeProp('ripple', item.props, this.props);
           return React.cloneElement(item, { selectable, ripple });

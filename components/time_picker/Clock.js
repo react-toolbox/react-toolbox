@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import CssTransitionGroup from 'react-addons-css-transition-group';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { getAnimationModule } from '../utils/utils';
 import time from '../utils/time';
 import Hours from './ClockHours';
@@ -21,7 +21,7 @@ class Clock extends Component {
   };
 
   static defaultProps = {
-    className: '',
+    className: '', // eslint-disable-line react/default-props-match-prop-types
     display: 'hours',
     format: '24hr',
     time: new Date(),
@@ -106,9 +106,10 @@ class Clock extends Component {
   }
 
   render() {
-    const { theme } = this.props;
-    const animation = this.state.display === 'hours' ? 'zoomOut' : 'zoomIn';
+    const { display, theme } = this.props;
+    const animation = display === 'hours' ? 'zoomOut' : 'zoomIn';
     const animationModule = getAnimationModule(animation, theme);
+
     return (
       <div data-react-toolbox="clock" className={theme.clock}>
         <div
@@ -116,20 +117,30 @@ class Clock extends Component {
           style={{ height: this.state.radius * 2 }}
           ref={(node) => { this.placeholderNode = node; }}
         >
-          <CssTransitionGroup
-            transitionName={animationModule}
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={500}
+          <TransitionGroup
+            component={null}
+            childFactory={child => React.cloneElement(
+              child,
+              { classNames: animationModule },
+            )}
           >
-            <div
-              key={this.props.display}
-              className={theme.clockWrapper}
-              style={{ height: this.state.radius * 2 }}
+            <CSSTransition
+              mountOnEnter
+              unmountOnExit
+              key={display}
+              classNames={animationModule}
+              timeout={500}
             >
-              {this.props.display === 'hours' ? this.renderHours() : null}
-              {this.props.display === 'minutes' ? this.renderMinutes() : null}
-            </div>
-          </CssTransitionGroup>
+              <div
+                key={display}
+                className={theme.clockWrapper}
+                style={{ height: this.state.radius * 2 }}
+              >
+                {display === 'hours' ? this.renderHours() : null}
+                {display === 'minutes' ? this.renderMinutes() : null}
+              </div>
+            </CSSTransition>
+          </TransitionGroup>
         </div>
       </div>
     );

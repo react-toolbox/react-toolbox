@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const ActivableRendererFactory = (options = { delay: 500 }) =>
-  ActivableComponent => class ActivableRenderer extends Component {
+const ActivableRendererFactory = (options = { delay: 500 }) => ActivableComponent => class ActivableRenderer extends Component { // eslint-disable-line max-len
     static propTypes = {
       active: PropTypes.bool.isRequired,
       children: PropTypes.node,
@@ -28,19 +27,19 @@ const ActivableRendererFactory = (options = { delay: 500 }) =>
       clearTimeout(this.unrenderTimeout);
     }
 
-    renderAndActivate() {
-      if (this.unrenderTimeout) clearTimeout(this.unrenderTimeout);
-      this.setState({ rendered: true, active: false }, () => {
-        this.activateTimeout = setTimeout(() => this.setState({ active: true }), 20);
-      });
-    }
-
     deactivateAndUnrender() {
       this.setState({ rendered: true, active: false }, () => {
         this.unrenderTimeout = setTimeout(() => {
           this.setState({ rendered: false });
           this.unrenderTimeout = null;
         }, this.props.delay);
+      });
+    }
+
+    renderAndActivate() {
+      if (this.unrenderTimeout) clearTimeout(this.unrenderTimeout);
+      this.setState({ rendered: true, active: false }, () => {
+        this.activateTimeout = setTimeout(() => this.setState({ active: true }), 20);
       });
     }
 
@@ -51,6 +50,6 @@ const ActivableRendererFactory = (options = { delay: 500 }) =>
         ? <ActivableComponent {...others} active={active} />
         : null;
     }
-  };
+};
 
 export default ActivableRendererFactory;

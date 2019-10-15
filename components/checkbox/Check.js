@@ -4,7 +4,9 @@ import classnames from 'classnames';
 import styleShape from 'react-style-proptype';
 
 const factory = (ripple) => {
-  const Check = ({ checked, children, onMouseDown, theme, style }) => (
+  const Check = ({
+    checked, children, onMouseDown, theme, style,
+  }) => (
     <div
       data-react-toolbox="check"
       className={classnames(theme.check, { [theme.checked]: checked })}

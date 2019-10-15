@@ -63,7 +63,9 @@ const factory = (AppBar, NavDrawer, Sidebar) => {
     }
 
     render() {
-      const { children, className, theme, ...rest } = this.props;
+      const {
+        children, className, theme, ...rest
+      } = this.props;
       const appBar = filterReactChildren(children, isAppBar)[0];
       const navDrawer = filterReactChildren(children, isNavDrawer)[0];
       const sidebar = filterReactChildren(children, isSidebar)[0];

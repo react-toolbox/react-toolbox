@@ -111,7 +111,8 @@ const factory = (Input, DatePickerDialog) => {
       const { active, onDismiss,// eslint-disable-line
         autoOk, cancelLabel, enabledDates, disabledDates, inputClassName, inputFormat,
         locale, maxDate, minDate, okLabel, onEscKeyDown, onOverlayClick, readonly,
-        sundayFirstDayOfWeek, value, ...others } = this.props;
+        sundayFirstDayOfWeek, value, ...others
+      } = this.props;
       const finalInputFormat = inputFormat || time.formatDate;
       const date = Object.prototype.toString.call(value) === '[object Date]' ? value : undefined;
       const formattedDate = date === undefined ? '' : finalInputFormat(value, locale);
