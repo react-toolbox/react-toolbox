@@ -185,7 +185,6 @@ const factory = (FontIcon) => {
         className: classnames(theme.inputElement, { [theme.filled]: valuePresent }),
         onChange: this.handleChange,
         ref: (node) => { this.inputNode = node; },
-        role: 'input',
         name,
         defaultValue,
         disabled,
