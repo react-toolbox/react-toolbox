@@ -146,6 +146,11 @@ export interface InputProps extends ReactToolbox.Props {
    * Current value of the input element.
    */
   value?: any;
+  /**
+   * If true, the html input has an auto-focus attribute.
+   * @default false
+   */
+  autoFocus?: boolean;
 }
 
 export class Input extends React.Component<InputProps, {}> {
