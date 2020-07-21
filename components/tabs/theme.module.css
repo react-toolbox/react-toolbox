@@ -56,11 +56,6 @@
   transition-property: background-color, box-shadow, color;
   transition-timing-function: var(--animation-curve-default);
 
-  &:focus {
-    background-color: var(--tab-focus-color);
-    outline: none;
-  }
-
   & > .rippleWrapper {
     overflow: hidden;
   }
@@ -149,4 +144,9 @@
   & .pointer {
     background-color: var(--tab-inverse-pointer-color);
   }
+}
+
+.label:focus:not(.disabled) {
+  background-color: var(--tab-focus-color);
+  outline: none;
 }
