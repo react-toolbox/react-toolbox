@@ -138,7 +138,6 @@ const factory = (IconButton) => {
           <IconButton id="left" className={theme.prev} icon="chevron_left" onClick={this.changeViewMonth} />
           <IconButton id="right" className={theme.next} icon="chevron_right" onClick={this.changeViewMonth} />
           <TransitionGroup
-            component={null}
             childFactory={child => React.cloneElement(
               child,
               { classNames: animationModule },
