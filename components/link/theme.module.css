@@ -20,12 +20,12 @@
   @apply --reset;
 
   &:not(.active) {
-    opacity: 0.5;
+    opacity: var(--link-opacity);
   }
 
   &:hover,
   &:active {
-    opacity: 1;
+    opacity: var(--link-opacity-active);
   }
 
   & > * {
