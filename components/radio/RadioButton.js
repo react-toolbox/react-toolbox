@@ -29,7 +29,7 @@ const factory = (Radio) => {
         input: PropTypes.string,
         text: PropTypes.string,
       }),
-      value: PropTypes.string,
+      value: PropTypes.any,
     };
 
     static defaultProps = {
