@@ -12,7 +12,7 @@ const factory = (RadioButton) => {
       className: PropTypes.string,
       disabled: PropTypes.bool,
       onChange: PropTypes.func,
-      value: PropTypes.string,
+      value: PropTypes.any,
     };
 
     static defaultProps = {
