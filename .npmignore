@@ -8,3 +8,4 @@ server.js
 tests.webpack.js
 webpack.config.*
 spec
+docs
