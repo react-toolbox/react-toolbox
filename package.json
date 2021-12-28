@@ -108,7 +108,6 @@
   },
   "scripts": {
     "babel": "babel ./components --out-dir ./lib",
-    "build": "cross-env NODE_ENV=production gulp",
     "clean": "rimraf ./lib",
     "css": "cpx \"./components/**/*.css\" ./lib",
     "lint": "npm run lint:js && npm run lint:css",
@@ -116,10 +115,6 @@
     "lint:js": "eslint ./ --ext .js",
     "lint:staged": "lint-staged",
     "patch": "bumped release patch",
-    "prebuild": "npm run clean",
-    "prepublish": "npm run build",
-    "release": "bumped release",
-    "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
     "test": "jest",
     "test:watch": "jest --watch --no-watchman",
     "ts": "tsc",
