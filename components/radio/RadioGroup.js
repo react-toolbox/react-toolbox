@@ -8,6 +8,7 @@ import isComponentOfType from '../utils/is-component-of-type';
 const factory = (RadioButton) => {
   class RadioGroup extends Component {
     static propTypes = {
+      allowIndeterminate: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
@@ -18,10 +19,15 @@ const factory = (RadioButton) => {
     static defaultProps = {
       className: '',
       disabled: false,
+      allowIndeterminate: false,
     };
 
     handleChange = (value, event) => {
-      if (this.props.onChange) this.props.onChange(value, event);
+      const { onChange, value: selectedValue, allowIndeterminate } = this.props;
+
+      const newValue = allowIndeterminate && value === selectedValue ? null : value;
+
+      if (onChange) onChange(newValue, event);
     };
 
     renderRadioButtons() {
