@@ -170,6 +170,7 @@
   }
 
   &.primary {
+    text-wrap: auto;
     color: var(--color-text);
     font-size: var(--font-size-normal);
   }
