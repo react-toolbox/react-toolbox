@@ -1,0 +1,42 @@
+# Build & dependency folders
+node_modules/
+build/
+dist/
+out/
+lib/
+
+# Log & temp files
+logs/
+*.log
+*.pid
+*.seed
+*.pid.lock
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+deploy.log*
+
+# App/public folders
+public/styles
+public/js/*
+!public/js/plugins
+
+# Docs and spec folders
+docs/
+spec/
+coverage/
+.coverage
+
+# Config and root scripts
+.env
+karma.conf.js
+gulpfile.js
+tests.webpack*
+server.js
+webpack*
+
+# IDE/project files
+.idea/
+.vscode/
+.DS_Store
+._*
