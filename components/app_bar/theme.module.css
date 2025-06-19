@@ -30,35 +30,33 @@
     top: 0;
     z-index: var(--z-index-highest);
   }
-
-  & .inner {
-    align-items: center;
-    display: flex;
-    height: 100%;
-    position: relative;
-    width: 100%;
-  }
-
-  & a {
-    color: var(--appbar-contrast);
-  }
-
-  @media screen and (--xxs-viewport) and (--portrait) {
-    height: var(--appbar-height-m-portrait);
-  }
-
-  @media screen and (--xs-viewport) and (--landscape) {
-    height: var(--appbar-height-m-landscape);
-  }
 }
 
-.title {
+.innerResponsive {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  gap: 0.5rem;
+  padding: 0 1rem;
+}
+
+.left,
+.center,
+.right {
+  display: flex;
+  align-items: center;
+}
+
+.center {
   flex-grow: 1;
-  font-size: var(--appbar-title-font-size);
-  font-weight: var(--appbar-title-font-weight);
-  overflow-x: hidden;
-  text-overflow: ellipsis;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
   white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .leftIcon {
@@ -66,6 +64,42 @@
 }
 
 .rightIcon {
-  margin-left: auto;
   margin-right: calc(-1.2 * var(--unit));
+}
+
+.title {
+  font-size: var(--appbar-title-font-size);
+  font-weight: var(--appbar-title-font-weight);
+  color: var(--appbar-contrast);
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* ✅ Responsive behavior for mobile (portrait phones) */
+@media (max-width: 480px) {
+  .appBar {
+    height: var(--appbar-height-m-portrait);
+  }
+
+  .innerResponsive {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+  }
+
+  .title {
+    font-size: calc(1.6 * var(--unit));
+    text-align: left;
+  }
+}
+
+/* ✅ Responsive behavior for small landscape devices (e.g., phones sideways) */
+@media (max-width: 768px) and (orientation: landscape) {
+  .appBar {
+    height: var(--appbar-height-m-landscape);
+  }
 }

@@ -325,6 +325,14 @@ $ npm start
 
 Local documentation will then be available at `http://localhost:8081/`.
 
+
+### Recent Contributors
+
+- [Anvi] — [GitHub](https://github.com/Yanvi09)  
+  - Improved the `AppBar` component with a clean, responsive design using flexbox and media queries.  
+  - Now works better on all screen sizes including mobile.
+
+
 ## Extensions
 
 We don't officially support components that are not covered by [Google Material Design](https://www.google.com/design/spec/material-design/introduction.html). If you want to implement some complementary component feel free to open a PR adding your a link in this section:
