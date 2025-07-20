@@ -1,6 +1,6 @@
 # Avatar
 
-Avatars can be used to represent people. This offer users the ability to personalize their avatar or provide delightful defaults. When used with a specific logo, avatars can also be used to represent brand.
+🤖Avatars are used to represent individuals or brands. They allow users to personalize their own image or display a default one. When paired with a specific logo, avatars can also represent a brand identity in your application.
 
 <!-- example -->
 ```jsx
@@ -43,6 +43,10 @@ If you want to provide a theme via context, the component key is `RTAvatar`.
 
 | Name     | Description|
 |:---------|:-----------|
-| `avatar` | Used for the root class of the element.|
-| `image`  | Added to the root element when the component has image.|
-| `letter` | Used for the root element if the component shows the letter.|
+| `Avatar` | Used for the root class of the element.|
+|          | An Avatar is a small round icon or picture that represents a person, brand, or item.|
+|          | Think of it like your profile picture on WhatsApp or Instagram.|
+| `Image`  | Added to the root element when the component has image.|
+|          | This is the actual picture you want to show in the Avatar.|
+| `Letter` | Used for the root element if the component shows the letter.|
+|          | The letter shown if there's no picture.|
