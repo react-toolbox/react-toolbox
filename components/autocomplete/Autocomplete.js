@@ -131,7 +131,12 @@ const factory = (Chip, Input) => {
       this.clearQuery = false;
 
       this.updateQuery(query, true);
-      this.setState({ showAllSuggestions: query ? false : this.props.showSuggestionsWhenValueIsSet, active: null });
+      // Preserve backward compatibility: only change behavior when showSuggestionsWhenValueIsSet is explicitly true
+      // Default behavior (showSuggestionsWhenValueIsSet: false) remains unchanged
+      this.setState({ 
+        showAllSuggestions: query && this.props.showSuggestionsWhenValueIsSet ? true : (query ? false : this.props.showSuggestionsWhenValueIsSet), 
+        active: null 
+      });
     };
 
     handleQueryFocus = (event) => {
@@ -242,7 +247,18 @@ const factory = (Chip, Input) => {
           }
         }
 
-     // When multiple is false, suggest all values when showAllSuggestions is true
+     // When multiple is false and showAllSuggestions is true, show all values if no query
+     // or show matching values if there is a query
+      } else if (this.state.showAllSuggestions) {
+        if (!query) {
+          suggest = source;
+        } else {
+          for (const [key, value] of source) {
+            if (this.matches(this.normalise(value), query)) {
+              suggest.set(key, value);
+            }
+          }
+        }
       } else {
         suggest = source;
       }
@@ -258,9 +274,10 @@ const factory = (Chip, Input) => {
       } else if (suggestionMatch === 'start') {
         return value.startsWith(query);
       } else if (suggestionMatch === 'anywhere') {
-        return value.includes(query);
+        // Case-insensitive search
+        return value.toLowerCase().includes(query.toLowerCase());
       } else if (suggestionMatch === 'word') {
-        const re = new RegExp(`\\b${query}`, 'g');
+        const re = new RegExp(`\\b${query}`, 'gi'); // 'gi' for global, case-insensitive
         return re.test(value);
       }else if(suggestionMatch === 'none'){
         return value
