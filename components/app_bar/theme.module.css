@@ -69,3 +69,32 @@
   margin-left: auto;
   margin-right: calc(-1.2 * var(--unit));
 }
+@media screen and (max-width: 600px) {
+  .appBar .inner {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .title {
+    font-size: 1rem;
+    text-align: left;
+    width: 100%;
+  }
+
+  .leftIcon,
+  .rightIcon {
+    margin: 0;
+    align-self: flex-start;
+  }
+
+  .rightIcon {
+    margin-top: 4px;
+  }
+}
+.appBar {
+  overflow-x: hidden;
+}
+
