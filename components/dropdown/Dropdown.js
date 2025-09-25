@@ -24,6 +24,7 @@ const factory = (Input) => {
       onClick: PropTypes.func,
       onFocus: PropTypes.func,
       required: PropTypes.bool,
+      readOnly: PropTypes.bool, // <-- added
       source: PropTypes.arrayOf(PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.object,
@@ -58,6 +59,7 @@ const factory = (Input) => {
       disabled: false,
       labelKey: 'label',
       required: false,
+      readOnly: false, // <-- added
       valueKey: 'value',
     };
 
@@ -190,7 +192,7 @@ const factory = (Input) => {
     render() {
       const {
         allowBlank, auto, labelKey, required, onChange, onFocus, onBlur, // eslint-disable-line no-unused-vars
-        source, template, theme, valueKey, ...others
+        source, template, theme, valueKey, readOnly, ...others
       } = this.props;
       const selected = this.getSelectedItem();
       const className = classnames(theme.dropdown, {
@@ -214,7 +216,7 @@ const factory = (Input) => {
             className={theme.value}
             onClick={this.handleClick}
             required={this.props.required}
-            readOnly
+            readOnly={typeof readOnly !== 'undefined' ? readOnly : false}   // configurable
             type={template && selected ? 'hidden' : null}
             theme={theme}
             themeNamespace="input"
@@ -236,3 +238,4 @@ const Dropdown = factory(InjectInput);
 export default themr(DROPDOWN)(Dropdown);
 export { factory as dropdownFactory };
 export { Dropdown };
+
