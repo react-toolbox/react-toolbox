@@ -69,7 +69,6 @@ const factory = (FontIcon) => {
       floating: true,
       multiline: false,
       required: false,
-      role: 'input',
       type: 'text',
     };
 
@@ -183,7 +182,6 @@ const factory = (FontIcon) => {
         className: classnames(theme.inputElement, { [theme.filled]: valuePresent }),
         onChange: this.handleChange,
         ref: (node) => { this.inputNode = node; },
-        role,
         name,
         defaultValue,
         disabled,
