@@ -78,21 +78,40 @@ const factory = (Input, DatePickerDialog) => {
       }
     };
 
-    handleInputFocus = (event) => {
-      events.pauseEvent(event);
-      this.setState({ active: true });
-    };
+handleInputFocus = (event) => {
+  const isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+
+  if (isIE11) {
+    // Completely block focus behavior to prevent flickering
+    event.preventDefault();
+    event.target.blur();
+  }
+  events.pauseEvent(event);
+  this.setState({ active: true });
+};
+
 
     handleInputBlur = (event) => {
       events.pauseEvent(event);
       this.setState({ active: false });
     };
 
-    handleInputClick = (event) => {
-      events.pauseEvent(event);
-      this.setState({ active: true });
-      if (this.props.onClick) this.props.onClick(event);
-    };
+handleInputClick = (event) => {
+  const isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+
+  if (isIE11) {
+    // Don’t let IE11 focus this field at all
+    event.preventDefault();
+    event.target.blur();
+  } else {
+    events.pauseEvent(event);
+  }
+
+  this.setState({ active: true });
+
+  if (this.props.onClick) this.props.onClick(event);
+};
+
 
     handleInputKeyPress = (event) => {
       if (event.charCode === 13) {
@@ -130,9 +149,10 @@ const factory = (Input, DatePickerDialog) => {
             onFocus={this.handleInputFocus}
             onKeyPress={this.handleInputKeyPress}
             onClick={this.handleInputClick}
-            readOnly
             type="text"
             value={formattedDate}
+            tabIndex={-1}
+            style={{ caretColor: 'transparent', pointerEvents: 'auto' }}
           />
           <DatePickerDialog
             active={this.state.active}
