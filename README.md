@@ -7,9 +7,11 @@ React Toolbox is a set of [React](http://facebook.github.io/react/) components t
 
 **Note:**  ⚠️ This source code refers to the [future version](https://github.com/react-toolbox/react-toolbox/blob/dev/ROADMAP.md). To check the source for `1.x` go to `master` branch. There is a [migration guide](https://github.com/react-toolbox/react-toolbox/wiki/Migrating-from-version-1.3-to-2.0) so you can start working with 2.0-beta.x now!
 
-## Installation
+##Installation
 
-React Toolbox can be installed as an [npm package](https://www.npmjs.org/package/react-toolbox):
+React Toolbox can be installed via npm:
+
+ [npm package](https://www.npmjs.org/package/react-toolbox):
 
 ```bash
 $ npm install --save react-toolbox
@@ -97,14 +99,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from 'react-toolbox/lib/button';
 
-ReactDOM.render(
-  <Button label="Hello World!" />,
-  document.getElementById('app')
-);
-```
+import { createRoot } from 'react-dom/client';
 
->**Note:** if you use it with Create React App, you need to make this additional change:
->
+const container = document.getElementById('app');
+const root = createRoot(container);
+root.render(<Button label="Hello World!" />);
+
+
+### Using with Create React App
+
+Create React App does not allow modifying webpack config by default. To use React Toolbox with it, import components this way:
+
+
+
+>**Note:** if you use it with Create React App, you need to make this additional change:>
 >```diff
 >- import {Button} from 'react-toolbox/lib/button';
 >+ import Button from 'react-toolbox/lib/button/Button';
@@ -113,6 +121,13 @@ ReactDOM.render(
 Take into account that any required style will be included in the final CSS so your final CSS would include `Button` styles in this case. It's more efficient to import components this way (`from 'react-toolbox/lib/button'`) (or with raw imports) because if you require from the project root (i.e. `from 'react-toolbox'`), every stylesheet of React Toolbox will be included, even if you don't use it.
 
 ## Importing components
+
+This import style ensures components and styles are bundled correctly without extra configuration.
+
+---
+
+Make sure your module bundler supports CSS Modules and PostCSS features, or you might need additional setup as described in the Prerequisites section.
+
 
 First let's take a look on how the components are structured in the project. The [components](https://github.com/react-toolbox/react-toolbox/tree/dev/components) folder contains a folder for each component or set of related components. For example, the `app_bar`:
 
