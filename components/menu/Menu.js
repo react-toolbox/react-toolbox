@@ -117,10 +117,12 @@ const factory = (MenuItem) => {
     componentDidUpdate(prevProps, prevState) {
       if (prevState.active && !this.state.active) {
         if (this.props.onHide) this.props.onHide();
-        events.removeEventsFromDocument({
-          click: this.handleDocumentClick,
-          touchstart: this.handleDocumentClick,
-        });
+        if (events && events.removeEventsFromDocument) {
+          events.removeEventsFromDocument({
+            click: this.handleDocumentClick,
+            touchstart: this.handleDocumentClick,
+          });
+        }
       } else if (!prevState.active && this.state.active && this.props.onShow) {
         this.props.onShow();
       }
