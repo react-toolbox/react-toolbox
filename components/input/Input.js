@@ -61,7 +61,7 @@ const factory = (FontIcon) => {
         PropTypes.string,
       ]),
     };
-
+ 
     static defaultProps = {
       className: '',
       hint: '',
@@ -69,7 +69,6 @@ const factory = (FontIcon) => {
       floating: true,
       multiline: false,
       required: false,
-      role: 'input',
       type: 'text',
     };
 
