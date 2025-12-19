@@ -21,6 +21,7 @@ const factory = (IconButton) => {
       maxDate: PropTypes.instanceOf(Date),
       minDate: PropTypes.instanceOf(Date),
       onChange: PropTypes.func,
+      onDismiss: PropTypes.func,
       selectedDate: PropTypes.instanceOf(Date),
       sundayFirstDayOfWeek: PropTypes.bool,
       theme: PropTypes.shape({
@@ -74,6 +75,7 @@ const factory = (IconButton) => {
       }
 
       switch (e.which) {
+        case 27: this.props.onDismiss(); break; // escape
         case 13: this.props.handleSelect(); break; // enter
         case 37: this.handleDayArrowKey(time.addDays(selectedDate, -1)); break; // left
         case 38: this.handleDayArrowKey(time.addDays(selectedDate, -7)); break; // up
