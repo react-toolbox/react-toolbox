@@ -41,3 +41,7 @@ public/js/*
 # Test coverage folder
 .coverage
 /coverage
+.next/
+test-results/
+playwright-report/
+*.tsbuildinfo

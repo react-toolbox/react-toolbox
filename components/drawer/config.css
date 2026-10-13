@@ -1,0 +1,28 @@
+:root {
+  --drawer-background-color: var(--palette-grey-50);
+  --drawer-border-color: var(--palette-grey-300);
+  --drawer-text-color: var(--palette-grey-800);
+  --drawer-width: calc(24 * var(--unit));
+  --drawer-desktop-width: calc(5 * var(--standard-increment-desktop));
+  --drawer-mobile-width: calc(5 * var(--standard-increment-mobile));
+}
+[data-react-toolbox-tokens~="--palette-grey-50"] {
+  --drawer-background-color: var(--palette-grey-50);
+}
+[data-react-toolbox-tokens~="--palette-grey-300"] {
+  --drawer-border-color: var(--palette-grey-300);
+}
+[data-react-toolbox-tokens~="--palette-grey-800"] {
+  --drawer-text-color: var(--palette-grey-800);
+}
+[data-react-toolbox-tokens~="--unit"] {
+  --drawer-width: calc(24 * var(--unit));
+}
+[data-react-toolbox-tokens~="--standard-increment-desktop"],
+[data-react-toolbox-tokens~="--unit"] {
+  --drawer-desktop-width: calc(5 * var(--standard-increment-desktop));
+}
+[data-react-toolbox-tokens~="--standard-increment-mobile"],
+[data-react-toolbox-tokens~="--unit"] {
+  --drawer-mobile-width: calc(5 * var(--standard-increment-mobile));
+}

@@ -1,0 +1,37 @@
+:root {
+  --dropdown-value-border-size: calc(var(--input-field-height) / 7);
+  --dropdown-color-white: var(--color-white);
+  --dropdown-color-primary: var(--color-primary);
+  --dropdown-color-primary-contrast: var(--color-primary-contrast);
+  --dropdown-color-disabled: rgb(from var(--color-black) r g b / 26%);
+  --dropdown-value-hover-background: var(--palette-grey-200);
+  --dropdown-overflow-max-height: 45vh;
+  --dropdown-value-border-radius: calc(0.2 * var(--unit));
+}
+[data-react-toolbox-tokens~="--input-field-font-size"],
+[data-react-toolbox-tokens~="--input-field-height"],
+[data-react-toolbox-tokens~="--input-field-padding"],
+[data-react-toolbox-tokens~="--unit"] {
+  --dropdown-value-border-size: calc(var(--input-field-height) / 7);
+}
+[data-react-toolbox-tokens~="--color-white"] {
+  --dropdown-color-white: var(--color-white);
+}
+[data-react-toolbox-tokens~="--color-primary"],
+[data-react-toolbox-tokens~="--palette-indigo-500"] {
+  --dropdown-color-primary: var(--color-primary);
+}
+[data-react-toolbox-tokens~="--color-dark-contrast"],
+[data-react-toolbox-tokens~="--color-primary-contrast"],
+[data-react-toolbox-tokens~="--color-white"] {
+  --dropdown-color-primary-contrast: var(--color-primary-contrast);
+}
+[data-react-toolbox-tokens~="--color-black"] {
+  --dropdown-color-disabled: rgb(from var(--color-black) r g b / 26%);
+}
+[data-react-toolbox-tokens~="--palette-grey-200"] {
+  --dropdown-value-hover-background: var(--palette-grey-200);
+}
+[data-react-toolbox-tokens~="--unit"] {
+  --dropdown-value-border-radius: calc(0.2 * var(--unit));
+}

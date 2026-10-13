@@ -1,409 +1,151 @@
-# <a href='http://react-toolbox.io'><img src='http://i.imgur.com/VCSElQX.png' height='50'></a>
+# React Toolbox
 
-[![npm version](https://img.shields.io/npm/v/react-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/react-toolbox) [![Build Status](http://img.shields.io/travis/react-toolbox/react-toolbox/master.svg?style=flat-square)](https://travis-ci.org/react-toolbox/react-toolbox) [![NPM Status](http://img.shields.io/npm/dm/react-toolbox.svg?style=flat-square)](https://www.npmjs.org/package/react-toolbox) [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://paypal.me/javivelasco) [![OpenCollective](https://opencollective.com/react-toolbox/backers/badge.svg)](#backers) 
-[![OpenCollective](https://opencollective.com/react-toolbox/sponsors/badge.svg)](#sponsors)
+React Toolbox's original Material Design components, modernized for React 19.3, Next.js 16.4, and Tailwind CSS 4.3. The library is written in strict TypeScript with function components and hooks. The original palette, motion, and practical component props remain the foundation, with documented corrections against Google's Material Design 1 specification.
 
-React Toolbox is a set of [React](http://facebook.github.io/react/) components that implement [Google's Material Design specification](https://material.google.com/). It's powered by [CSS Modules](https://github.com/css-modules/css-modules) and harmoniously integrates with your [webpack](http://webpack.github.io/) workflow, although you can use any other module bundler. You can take a tour through our documentation website and try the components live!
+This is the `3.0.0-next.0` development version. It follows Material Design 1. See the [M1 audit](docs/material-1-audit.md) for corrected dimensions, states, keyboard behavior, sources, and remaining limitations. It does not adopt Material 2 or Material 3.
 
-**Note:**  ⚠️ This source code refers to the [future version](https://github.com/react-toolbox/react-toolbox/blob/dev/ROADMAP.md). To check the source for `1.x` go to `master` branch. There is a [migration guide](https://github.com/react-toolbox/react-toolbox/wiki/Migrating-from-version-1.3-to-2.0) so you can start working with 2.0-beta.x now!
+## Run the example
 
-## Installation
+Use Node.js 24.15 or newer in the 24.x line (see `.nvmrc`), then:
 
-React Toolbox can be installed as an [npm package](https://www.npmjs.org/package/react-toolbox):
-
-```bash
-$ npm install --save react-toolbox
+```sh
+npm ci
+npm run dev
 ```
 
-## Prerequisites
+Open http://localhost:3000. The Next.js App Router gallery exercises the component families with local Roboto and Material Icons fonts, including dialogs, pickers, dropdowns, ripples, tables, and a separate `/layout-demo` page. The example uses the built package itself; after editing library TypeScript, run `npm run build` to refresh it. Next.js reloads example changes automatically.
 
-React Toolbox uses [CSS Modules](https://github.com/css-modules/css-modules) by default to import stylesheets written using [PostCSS](https://github.com/postcss/postcss) & [postcss-preset-env](https://preset-env.cssdb.org/) features. In case you want to import the components already bundled with CSS, your module bundler should be able to require these PostCSS modules.
-
-Although we recommend [webpack](https://webpack.github.io/), you are free to use whatever module bundler you want as long as it can compile and require PostCSS files located in your `node_modules`. If you are experiencing require errors, make sure your configuration satisfies this requirement.
-
-Of course this is a set of React components so you should be familiar with [React](https://facebook.github.io/react/). If want to customize your components via themes, you may want to take a look to [react-css-themr](https://github.com/javivelasco/react-css-themr) which is used by React Toolbox to make components easily themeable.
-
-### Usage in Create React App Projects
-
-[Create React App](https://github.com/facebookincubator/create-react-app) does not allow to change the default configuration, so you need an additional build step to configure `react-toolbox` in its project.
-
-Follow [these instructions](https://github.com/react-toolbox/react-toolbox-themr) to add `react-toolbox` to a project created with Create React App.
-
-### Usage in Webpack Projects (*Not* Create React App)
-
-```bash
-npm install postcss-loader --save-dev
-npm install postcss postcss-preset-env postcss-calc --save
+```sh
+npm run example:build
+npm run example:start
 ```
 
-Configure webpack 1.x loader for .css files to use postcss:
-```js
-      {
-        test: /\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss?sourceMap&sourceComments',
-        ],
-      },
-```
-Declare plugins to be used by postcss (as part of webpack's config object):
-```js
-  // webpack.config.js
-  postcss: () => {
-    return [
-      /* eslint-disable global-require */
-      require('postcss-preset-env')({
-        stage: 0, // required to get all features that were from cssnext without enabling them one by one
-        features: {
-          'custom-properties': {
-            preserve: false, // required to output values instead of variables
-          },
-          'color-mod-function': true, // required to use color-mod()
-        }
-      }),
-      require('postcss-calc'), // required as postcss-preset-env doesn't have a reduce calc() funtion that cssnext did
-      /* eslint-enable global-require */
-    ];
-  },
+The production example runs on port 3100.
+
+## Use the library
+
+Import the stylesheet once in your application root. The library ships compiled ES modules with React client boundaries, TypeScript declarations, and plain CSS. Consumers do not need CSS Modules, a custom PostCSS pipeline, or Tailwind to render the original design.
+
+```jsx
+// app/layout.jsx
+import 'react-toolbox/styles.css';
+
+export default function RootLayout({ children }) {
+  return <html lang="en"><body>{children}</body></html>;
+}
 ```
 
-Configure webpack 2.x or 3.x loader for .css files to use postcss:
-```js
-  // webpack.config.js
-  {
-    test: /\.css$/,
-    use: [
-      "style-loader",
-      {
-        loader: "css-loader",
-        options: {
-          modules: true, // default is false
-          sourceMap: true,
-          importLoaders: 1,
-          localIdentName: "[name]--[local]--[hash:base64:8]"
-        }
-      },
-      "postcss-loader"
-    ]
-  }
+```jsx
+// app/page.jsx
+'use client';
+import { useState } from 'react';
+import { Button, Input } from 'react-toolbox';
+
+export default function Page() {
+  const [name, setName] = useState('');
+  return (
+    <>
+      <Input label="Name" value={name} onChange={setName} />
+      <Button primary raised label="Save" onClick={() => console.log(name)} />
+    </>
+  );
+}
 ```
 
-## Basic usage
+Component imports such as `react-toolbox/button` and the original `react-toolbox/lib/button` are also supported. Existing callbacks retain their value-first signatures. Controlled components synchronize when a prop value changes; rerendering with every prop unchanged no longer forces an internal state reset. Interactive event handlers belong in client components when using Next.js.
 
-In this minimal example, we import a `Button` with styles already bundled:
+Load Roboto and Material Icons in your application if you use the original typography and string icons. The example uses `@fontsource/roboto` and `material-icons` without remote font requests; SVG/React-node icons still work. Import the icon stylesheet with `@import 'material-icons/iconfont/material-icons.css' layer(base);` so the icon defaults respect the component styles.
 
-```js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Button } from 'react-toolbox/lib/button';
+## Tailwind CSS
 
-ReactDOM.render(
-  <Button label="Hello World!" />,
-  document.getElementById('app')
-);
+Tailwind utilities can customize the surrounding layout, root classes, and individual theme slots. Original component rules live in the `components` cascade layer, below `utilities`. Keep Tailwind Preflight disabled for the original visual baseline: its element resets change the old component styling.
+
+With `@tailwindcss/postcss`, import:
+
+```css
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'react-toolbox/tailwind.css';
+@import 'tailwindcss/utilities.css' layer(utilities);
 ```
 
->**Note:** if you use it with Create React App, you need to make this additional change:
+The Tailwind entry includes `styles.css`. The optional token bridge exposes utilities such as `bg-toolbox-primary`, `text-toolbox-accent`, and `ease-toolbox` using the original design tokens. Put utility names in source files scanned by Tailwind.
+
+Exact component geometry and animations remain explicit CSS. This avoids rounding the original values to a utility framework's defaults and preserves complex selectors and keyframes. There are no runtime CSS Modules or generated class-name hashes.
+
+## Themes and customization
+
+`ThemeProvider` scopes CSS custom properties and carries them through portals. Components import their own styles and dependencies directly; no component injection or styling wrapper is involved.
+
+```jsx
+import { Button, ThemeProvider } from 'react-toolbox';
+
+<ThemeProvider
+  variables={{ '--color-primary': '#00695c', '--color-accent': '#ff6d00' }}
 >
->```diff
->- import {Button} from 'react-toolbox/lib/button';
->+ import Button from 'react-toolbox/lib/button/Button';
->```
-
-Take into account that any required style will be included in the final CSS so your final CSS would include `Button` styles in this case. It's more efficient to import components this way (`from 'react-toolbox/lib/button'`) (or with raw imports) because if you require from the project root (i.e. `from 'react-toolbox'`), every stylesheet of React Toolbox will be included, even if you don't use it.
-
-## Importing components
-
-First let's take a look on how the components are structured in the project. The [components](https://github.com/react-toolbox/react-toolbox/tree/dev/components) folder contains a folder for each component or set of related components. For example, the `app_bar`:
-
-```
- |- /app_bar
- |---- AppBar.js
- |---- config.css
- |---- index.js
- |---- readme.md
- |---- theme.css
+  <Button primary raised label="Save" theme={{ button: 'tracking-wide' }} />
+</ThemeProvider>
 ```
 
-As you can see in the previous block, each folder includes: a Javascript file for each component/subcomponent; a README with documentation, an index Javascript file that imports and injects styles and dependencies for you, a default theme PostCSS/preset-env stylesheet and a config.css with configuration variables (CSS Custom Properties). Depending on whether you want the styles to be directly bundled or not, you can import components in **two** different ways.
+`variables` accepts CSS custom properties and creates a scoped wrapper. Only tokens affected by an explicit override recalculate inside that scope; unrelated global colors, fonts, sizing, and component overrides keep inheriting. Scoped variables follow dialogs, drawers, and tooltips into their portals. Nested providers inherit parent variables. A provider with no variables, class, or style adds no DOM wrapper.
 
-### Bundled component
+Use `className` for the root element and the typed component `theme` prop for local slot classes. These classes append to the structural defaults, so Tailwind utilities can override them without replacing the component stylesheet. Global changes belong in CSS variables, not identifier-indexed class maps. See `components/variables.css`, `components/colors.css`, and component `config.css` files for the original tokens.
 
-If you import from the index file, the imported component comes with all dependencies and themes already required and injected for you. This means that the CSS for each dependency will be bundled in your final CSS automatically and the component markup includes the classnames to be styled. For example:
+## TypeScript and refs
 
-```js
-import { AppBar } from 'react-toolbox/lib/app_bar';
-```
+Public props and handles are exported alongside each component. Use React's standard `ref` prop; inputs retain their useful imperative methods through `InputHandle`:
 
-### Raw component
+```tsx
+import { useRef } from 'react';
+import { Input, type InputHandle } from 'react-toolbox';
 
-If you import from the component definition, the imported component is bundled with its dependencies, but it does not include any styles. This means no CSS will be bundled, and the component markup will **not** include any classname. It's your responsibility to provide a theme to the component to be properly styled. You can do so via properties or context. For example:
-
-```js
-import { AppBar } from 'react-toolbox/lib/app_bar/AppBar.js';
-```
-
-## Customizing components
-
-Every component accepts a `theme` property intended to provide a [CSS Module import object](https://github.com/css-modules/css-modules) that will be used by the component to assign local classnames to its DOM nodes. Therefore, each one implements a documented **classname API**. So if you want to customize a component, you just need to provide a theme object with the appropriate classname mapping.  
-
-If the component already has a theme injected, the properties you pass will be merged with the injected theme. In this way, you can **add** classnames to the nodes of a specific component and use them to add or to override styles. For example, if you want to customize the `AppBar` to be purple:
-
-```js
-import React from 'react';
-import { AppBar } from 'react-toolbox/lib/app_bar';
-import theme from './PurpleAppBar.css';
-
-const PurpleAppBar = (props) => (
-  <AppBar {...props} theme={theme} />
-);
-
-export default PurpleAppBar;
-
-```
-
-```css
-.appBar {
-  background-color: #800080;
+function NameField() {
+  const input = useRef<InputHandle>(null);
+  return <Input ref={input} label="Name" />;
 }
-```
-
-In this case we are **adding** styles to a specific instance of an `AppBar` component that already has its default styles injected. It works because the component background by default has the same priority as the one we added. There will be cases where the original rule is more restrictive. For those cases you would need to boost priority using the same restrictions as in the original stylesheet. Feel free to take a look into the default theme.css files or just check the selectors you want to override in DevTools.
-
-If the component has no styles injected, you should provide a theme object implementing the full API. You are free to require the CSS Module you want but take into account that every classname is there for a reason. You can either provide a theme via prop or via context as described in the next section.
-
-### Customizing all instances of a component type
-
-Install [react-css-themr](https://github.com/javivelasco/react-css-themr) with `npm install react-css-themr --save`
-
-Create a CSS Module theme style file for each component type, for example for `Button`:
-
-```css
-# /css/button.css
-
-.button {
-  text-transform: uppercase;
-}
-```
-
-Create a theme file that imports each component's custom theme style under the special theme key listed in that widgets's documentation, i.e.:
-
-```js
-# theme.js
-
-import RTButton from './css/button.css';
-import RTDatePicker from './css/datepicker.css';
-
-export default {
-  RTButton, RTDatePicker,
-};
-```
-
-Wrap your component tree with ThemeProvider at the desired level in your component hierarchy. You can maintain different themes, each importing differently styled css files \(i.e. `import RTButton from './css/adminAreaButton.css'`\) and can provide each one at different points in the tree.
-
-```js
-import React from 'react';
-import { ThemeProvider } from 'react-css-themr';
-import theme from './theme';
-
-class App extends React.Component {
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <div>
-          ...
-        </div>
-      </ThemeProvider>
-    );
-  }
-}
-export default App;
-```
-
-## Theming (configuration variables)
-
-You can apply theming in multiple ways. First of all, you have to understand that React Toolbox stylesheets are written using PostCSS with postcss-preset-env features and use CSS Custom Properties from the **config** files we saw earlier. In addition, there are some global CSS Properties imported by each component: [colors](https://github.com/react-toolbox/react-toolbox/blob/dev/components/colors.module.css) and [variables](https://github.com/react-toolbox/react-toolbox/blob/dev/components/variables.module.css). You can override both the global and component-specific **variables** to get the results you want using one of the methods below.
-
-### Settings configuration variables in JavaScript
-
-You can override both the global and component-specific CSS Custom Properties at build-time by supplying an object with these variable names and your desired values to the PostCSS `custom-properties` plugin. i.e. if using [postcss-preset-env](https://github.com/csstools/postcss-preset-env) in webpack:
-
-```js
-// This can also be stored in a separate file:
-const reactToolboxVariables = { 
-  'color-text': '#444548',
-  /* Note that you can use global colors and variables */
-  'color-primary': 'var(--palette-blue-500)',
-  'button-height': '30px',
-};
-
-// webpack's config object: (webpack.config.js)
-const config = {
-...
-    postcss: () => {
-    return [
-      /* eslint-disable global-require */
-      require('postcss-preset-env')({
-        stage: 0, // required to get all features that were from cssnext without enabling them one by one
-        features: {
-          'custom-properties': {
-            preserve: false, // required to output values instead of variables
-            importFrom: reactToolboxVariables, // see postcss-preset-env for config options
-          },
-          'color-mod-function': true, // required to use color-mod()
-        }
-      }),
-      require('postcss-calc'), // required as postcss-preset-env doesn't have a reduce calc() funtion that cssnext did
-      /* optional - see next section */
-      require('postcss-modules-values'),
-      /* eslint-enable global-require */
-    ];
-  },
-}
-```
-
-### Settings configuration variables using CSS Module Values
-
-Instead of using a JavaScript object for variables, you can use [CSS Module Values](https://github.com/css-modules/css-modules/blob/master/docs/values-variables.md) (`npm install postcss-modules-values --save`) and the [modules-values-extract](https://github.com/alexhisen/modules-values-extract) utility to declare these variables in component-specific theme `.css` files, where you would typically store additional style overrides.
-
-CSS Module Values also offer the advantage that importing a css file with @value declarations makes these values properties of the imported style object, i.e.:
-
-```css
-# variables.css
-
-@value buttonPrimaryBackgroundColor: #9c3990;
-```
-
-```js
-import styleVariables from './css/variables.css';
-
-styleVariables.buttonPrimaryBackgroundColor
-```
-
-In [this demo project](https://github.com/alexhisen/mobx-forms-demo), modules-values-extract utility is used to extract all @values with dashes in their name from all css files in the `/css` folder and to feed them to customProperties in [webpack](https://github.com/alexhisen/mobx-forms-demo/blob/master/webpack.config.js). In the demo project, variables that are not specific to a particular component are in [variables.css](https://github.com/alexhisen/mobx-forms-demo/blob/master/src/css/variables.css) and button-specific variables are in [button.css](https://github.com/alexhisen/mobx-forms-demo/blob/master/src/css/button.css). Note that button.css also imports certain values from variables.css just to demonstrate this capability \(the import can also be used in a @value declaration\) and it uses CSS overrides instead of color variables that exist in the React-Toolbox Button component to show an alternative method if the variables are not sufficient.
-
-> **IMPORTANT: Changes to the module values do not take effect immediately with Webpack Hot-Module-Reload - webpack / webpack-dev-server must be restarted!**
-
-## Roboto Font and Material Design Icons
-
-React Toolbox assumes that you are importing [Roboto Font](https://fonts.google.com/specimen/Roboto) and [Material Design Icons](https://material.io/icons/).
-
-In order to import the fonts for you, we'd need to include them in the CSS which is considered a bad practice. If you are not including them in your app, go to the linked sites and follow the instructions.
-
-## Server Side Rendering
-
-The only requirement for SSR is to be able to require ES6 and CSS Modules in the backend. To make it possible you can check projects like [CSS Modules register hook](https://github.com/css-modules/css-modules-require-hook) or [Webpack Isomorphic tools](https://github.com/halt-hammerzeit/webpack-isomorphic-tools). Also, make sure you can import from `node_modules`.
-
-## Examples
-
-For now we have a [repository example](https://github.com/react-toolbox/react-toolbox-example) demonstrating configuration and some basic customization. For now it's not using SSR rendering but it shouldn't be difficult to implement an example so it will come soon. Feel free to PR your example project or to add some use cases to the repository:
-
-Another 2.x demo project is https://github.com/alexhisen/mobx-forms-demo
-
-## TypeScript
-
-TypeScript external module definition files are included, and should not require any manual steps to utilize. They will be picked up by the TypeScript compiler when importing from the npm package.
-
-Note that to comply with the official recommendation for npm typings, a triple-slash reference to `react.d.ts` is *NOT included*. You will need to reference [react.d.ts](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/react/react.d.ts) somewhere in your project.
-
-## Authors and Contributors
-
-The project is being initially developed and maintained by [Javier Velasco](http://javivelasco.com) and [Javier Jiménez](http://soyjavi.com) and the [contribution scene](https://github.com/react-toolbox/react-toolbox/graphs/contributors) is just getting warm. We want to create reference components so any contribution is very welcome.
-
-To work in the project you'd need a `node` version supporting ES6 syntax. Although the project is built using Babel we use some ES6 features in the development server. Also, the package has been tested with `node 4.2.1`. Consider using [nvm](https://github.com/creationix/nvm) or [n](https://github.com/tj/n) to handle different node versions!
-
-To start the documentation site locally, you'll need to install the dependencies from both the main package and the docs subproject:
 
 ```
-$ git clone https://github.com/react-toolbox/react-toolbox.git
-$ cd react-toolbox/
-$ npm install
-$ cd docs/
-$ npm install
-$ npm start
+
+`innerRef`, `themeNamespace`, `composeTheme`, `mapThemrProps`, named `ThemeProvider` class maps, injection identifiers, and the old global component-type checker have been removed. Replace them with `ref`, local class slots, or scoped CSS variables. Deep component imports now resolve to the same styled component as the package barrel. `useRipple` is available for custom components; the small `Ripple(options)(Component)` and `Tooltip(Component)` application helpers remain available without dependency injection.
+
+## Verification
+
+```sh
+npm run check                 # build, public TypeScript API, React tests, style parity
+npm run example:build         # production Next.js build and prerender
+npx playwright install chromium
+npm run test:browser           # interaction, hydration, responsive, visual parity
 ```
 
-Local documentation will then be available at `http://localhost:8081/`.
+Run the suite in WebKit, plus focused checks for token inheritance and gradient rendering in both engines:
 
-## Extensions
+```sh
+npx playwright install chromium webkit
+TOOLBOX_BROWSER=webkit npm run test:browser
+node scripts/verify-theme-scopes.mjs chromium webkit
+node scripts/verify-gradient-paint.mjs chromium webkit
+```
 
-We don't officially support components that are not covered by [Google Material Design](https://www.google.com/design/spec/material-design/introduction.html). If you want to implement some complementary component feel free to open a PR adding your a link in this section:
+The migration keeps all 55 original CSS sources under `tests/fixtures/legacy-styles`. `reference.css` was compiled independently using the original PostCSS pipeline. `npm run test:styles` compares modern defaults and all 334 style slots against that immutable reference plus individually reviewed corrections in `tests/fixtures/m1-style-corrections.json`. Each correction records its old/new value, M1 source, rationale, and cascade position for new selectors. Any unreviewed drift fails.
 
-[on github: react-toolbox-additions](https://github.com/MaximKomlev/react-toolbox-additions) and [on npm: react-toolbox-additions](https://www.npmjs.com/package/react-toolbox-additions).
+Browser comparisons apply those explicit corrections to the archived CSS without copying current styles into the reference. Circular progress still matches the untouched original at 11 animation times. Focused M1 tests cover geometry, colors, state changes, responsive layouts, and interaction. An independent React 16 fixture uses all 113 original component source files unchanged, with narrowly documented test adapters for corrected semantics; see `tests/fixtures/legacy-runtime.md`.
 
-Form generation and validation using React-Toolbox form widgets - [mobx-schema-form](https://github.com/alexhisen/mobx-schema-form)
+`node scripts/migrate-styles.mjs --output=/private/tmp/react-toolbox-historical-css` reproduces the historical translation in a scratch directory. It cannot overwrite maintained component sources, which now include M1 corrections. Reference regeneration is documented in `tests/fixtures/legacy-styles/README.md` and uses isolated legacy dependencies, never the modern application dependency graph.
 
-## Support
+Tests verify the covered states, not every browser, font rasterizer, or combination of props. Preserve the reference artifacts when making future changes; do not approve differences by replacing the baseline with the new output.
 
-### Backers
-Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/react-toolbox#backer)]
+## Migration details
 
-<a href="https://opencollective.com/react-toolbox/backer/0/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/0/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/1/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/1/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/2/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/2/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/3/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/3/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/4/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/4/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/5/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/5/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/6/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/6/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/7/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/7/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/8/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/8/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/9/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/9/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/10/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/10/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/11/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/11/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/12/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/12/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/13/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/13/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/14/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/14/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/15/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/15/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/16/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/16/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/17/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/17/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/18/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/18/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/19/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/19/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/20/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/20/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/21/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/21/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/22/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/22/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/23/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/23/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/24/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/24/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/25/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/25/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/26/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/26/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/27/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/27/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/28/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/28/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/backer/29/website" target="_blank"><img src="https://opencollective.com/react-toolbox/backer/29/avatar.svg"></a>
+- React 19.3 and modern context replace the React 15/16 and `react-css-themr` requirements.
+- Explicit refs and `createPortal` replace removed React DOM APIs. Calendar and clock transitions retain their original timing with explicit transition refs.
+- Function components and hooks replace class lifecycles. Effect cleanup supports Strict Mode and server rendering. Ripple behavior is a hook shared by direct components.
+- CSS Modules, experimental CSS mixins, `color-mod()`, and build-time theme substitution are replaced with stable namespaced CSS and live custom properties.
+- ES module packaging, esbuild, and TypeScript declaration emission replace the old Babel/Gulp/Webpack library toolchain. Vitest/Testing Library and Playwright cover the new runtime; the original Enzyme specs remain under `legacy/component-tests` as historical reference.
+- Strict TypeScript checks the implementations and generates the public declarations. Native props, events, value-first callbacks, and ref handles are typed at their source; there is no separate handwritten component declaration tree. The internal portal helper accepts DOM nodes, DOM refs, or functions returning them; mounted React component instances can no longer be resolved through the removed `findDOMNode` API.
+- The old README and root tooling are preserved in `legacy/`. The old `docs/` and `spec/` applications are historical sources; `examples/nextjs` is the maintained example.
 
-
-### Sponsors
-Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/react-toolbox#sponsor)]
-
-<a href="https://opencollective.com/react-toolbox/sponsor/0/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/1/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/2/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/3/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/4/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/5/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/6/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/7/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/8/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/9/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/9/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/10/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/10/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/11/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/11/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/12/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/12/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/13/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/13/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/14/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/14/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/15/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/15/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/16/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/16/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/17/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/17/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/18/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/18/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/19/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/19/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/20/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/20/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/21/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/21/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/22/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/22/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/23/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/23/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/24/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/24/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/25/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/25/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/26/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/26/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/27/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/27/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/28/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/28/avatar.svg"></a>
-<a href="https://opencollective.com/react-toolbox/sponsor/29/website" target="_blank"><img src="https://opencollective.com/react-toolbox/sponsor/29/avatar.svg"></a>
+The package is ES-module-only, targets current browsers, and requires a single explicit stylesheet import. Previous CSS Module import paths, IE11 polyfills, dependency-injection factories, and the `themr` styling layer are not supported. No release or deployment is performed by these scripts.
 
 ## License
 
-This project is licensed under the terms of the [MIT license](https://github.com/react-toolbox/react-toolbox/blob/master/LICENSE).
+[MIT](LICENSE). Original project and design implementation by Javier Velasco Arjona and the React Toolbox contributors.

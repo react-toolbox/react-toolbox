@@ -1,31 +1,15 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "target": "es5",
-    "lib": [
-      "es5",
-      "es6",
-      "dom"
-    ],
-    "moduleResolution": "node",
-    "jsx": "react",
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
     "noEmit": true,
-    "noImplicitAny": true,
-    "noUnusedLocals": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "outDir": "lib",
-    "baseUrl": ".",
-    "paths": {
-      "components/*": [
-        "./components/*"
-      ]
-    }
+    "skipLibCheck": false,
+    "types": ["react", "react-dom"]
   },
-  "exclude": [
-    "./index.d.ts",
-    "node_modules",
-    "docs/node_modules",
-    "lib"
-  ]
+  "include": ["components/**/*.ts", "components/**/*.tsx", "tests/types/**/*.tsx"],
+  "exclude": ["node_modules", "dist", "docs", "spec"]
 }

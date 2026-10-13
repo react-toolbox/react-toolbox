@@ -1,12 +1,11 @@
 {
   "name": "react-toolbox",
-  "description": "A set of React components implementing Google's Material Design specification with the power of CSS Modules.",
+  "description": "React components preserving Google's original Material Design, with modern React and Tailwind-compatible styles.",
   "homepage": "http://react-toolbox.io/",
   "license": "MIT",
-  "version": "2.0.0-beta.13",
-  "main": "./lib",
-  "module": "./components",
-  "typings": "./index.d.ts",
+  "version": "3.0.0-next.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "author": {
     "email": "javier.velasco86@gmail.com",
     "name": "Javier Velasco Arjona",
@@ -28,125 +27,451 @@
     "toolkit"
   ],
   "engines": {
-    "node": ">= 6"
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
   "scripts": {
-    "babel": "babel ./components --out-dir ./lib",
-    "build": "cross-env NODE_ENV=production gulp",
-    "clean": "rimraf ./lib",
-    "css": "cpx \"./components/**/*.css\" ./lib",
-    "lint": "npm run lint:js && npm run lint:css",
-    "lint:css": "stylelint ./components/**/*.css",
-    "lint:js": "eslint ./ --ext .js",
-    "lint:staged": "lint-staged",
-    "patch": "bumped release patch",
-    "prebuild": "npm run clean",
-    "prepare": "npm run build",
-    "release": "bumped release",
-    "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
-    "test": "jest",
-    "test:watch": "jest --watch --no-watchman",
-    "ts": "tsc",
-    "tsd": "cpx \"./components/**/*.d.ts\" ./lib"
+    "build": "node scripts/build.mjs",
+    "dev": "npm run build && next dev examples/nextjs --hostname 127.0.0.1",
+    "start": "npm run dev",
+    "example:dev": "npm run dev",
+    "example:build": "npm run build && next build examples/nextjs",
+    "example:start": "next start examples/nextjs --hostname 127.0.0.1 --port 3100",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:browser": "playwright test",
+    "test:styles": "node scripts/verify-styles.mjs",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run build && npm run typecheck && npm test && npm run test:styles",
+    "prepack": "npm run build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.1.2",
-    "@types/prop-types": "^15.5.6",
-    "classnames": "^2.2.6",
-    "core-js": "^2.5.7",
-    "react-css-themr": "^2.1.2",
-    "react-style-proptype": "^3.2.2",
-    "react-transition-group": "^2.5.0"
+    "classnames": "^2.5.1",
+    "react-transition-group": "^4.4.5"
   },
   "peerDependencies": {
-    "classnames": "^2.2.0",
-    "prop-types": "^15.6.0",
-    "react": "^15.5.0 || ^16.0.0",
-    "react-dom": "^15.5.0 || ^16.0.0",
-    "react-transition-group": "^2.5.0"
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.1.2",
-    "@babel/core": "^7.1.2",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/plugin-proposal-decorators": "^7.1.2",
-    "@babel/plugin-proposal-do-expressions": "^7.0.0",
-    "@babel/plugin-proposal-export-default-from": "^7.0.0",
-    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
-    "@babel/plugin-proposal-function-bind": "^7.0.0",
-    "@babel/plugin-proposal-function-sent": "^7.1.0",
-    "@babel/plugin-proposal-json-strings": "^7.0.0",
-    "@babel/plugin-proposal-logical-assignment-operators": "^7.0.0",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0",
-    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
-    "@babel/plugin-proposal-optional-chaining": "^7.0.0",
-    "@babel/plugin-proposal-pipeline-operator": "^7.0.0",
-    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/plugin-syntax-import-meta": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.1.0",
-    "@babel/polyfill": "^7.0.0",
-    "@babel/preset-env": "^7.1.0",
-    "@babel/preset-react": "^7.0.0",
-    "@types/node": "^10.12.0",
-    "@types/react": "^16.4.18",
-    "@types/webpack": "^4.4.17",
-    "ajv": "^6.5.4",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^10.0.1",
-    "babel-jest": "^23.6.0",
-    "babel-loader": "^8.0.4",
-    "cpx": "^1.5.0",
-    "cross-env": "^5.2.0",
-    "css-loader": "^1.0.0",
-    "enzyme": "^3.7.0",
-    "enzyme-adapter-react-16": "^1.6.0",
-    "enzyme-to-json": "^3.3.4",
-    "eslint": "^5.7.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-import-resolver-webpack": "^0.10.1",
-    "eslint-plugin-babel": "^5.2.1",
-    "eslint-plugin-compat": "^2.6.2",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jest": "^21.26.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.11.1",
-    "express": "^4.16.4",
-    "extract-css-chunks-webpack-plugin": "^3.2.1",
-    "git-dirty": "^1.0.2",
-    "gulp": "^4.0.0",
-    "gulp-babel": "^8.0.0",
-    "gulp-postcss": "^8.0.0",
-    "gulp-rimraf": "^0.2.2",
-    "husky": "^1.1.2",
-    "identity-obj-proxy": "^3.0.0",
-    "internal-ip": "^3.0.1",
-    "jest": "^23.6.0",
-    "lint-staged": "^7.3.0",
-    "postcss-apply": "^0.11.0",
-    "postcss-calc": "^7.0.0",
-    "postcss-each": "^0.10.0",
-    "postcss-import": "^12.0.0",
-    "postcss-loader": "^3.0.0",
-    "postcss-mixins": "^6.2.0",
-    "postcss-normalize": "^7.0.1",
-    "postcss-preset-env": "^6.2.0",
-    "postcss-reporter": "^6.0.0",
-    "pre-commit": "^1.2.2",
-    "prop-types": "^15.6.2",
-    "ramda": "^0.25.0",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-hot-loader": "^4.3.11",
-    "react-test-renderer": "^16.5.2",
-    "rimraf": "^2.6.2",
-    "style-loader": "^0.23.1",
-    "stylelint": "^9.6.0",
-    "stylelint-config-standard": "^18.2.0",
-    "stylelint-order": "^1.0.0",
-    "typescript": "^3.1.3",
-    "webpack": "^4.22.0",
-    "webpack-dev-middleware": "^3.4.0",
-    "webpack-hot-middleware": "^2.24.0"
+    "@fontsource/roboto": "^5.3.0",
+    "@playwright/test": "^1.64.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/react-transition-group": "^4.4.12",
+    "esbuild": "^0.28.2",
+    "jsdom": "^30.1.2",
+    "material-icons": "^1.13.14",
+    "next": "^16.4.0",
+    "postcss": "^8.5.29",
+    "postcss-calc": "^11.2.3",
+    "postcss-nested": "^8.0.1",
+    "postcss-selector-parser": "^7.1.6",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
+  },
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "components/**/*.css",
+    "components/**/*.ts",
+    "components/**/*.tsx",
+    "LICENSE",
+    "README.md"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./components/styles.css",
+    "./ThemeProvider": {
+      "types": "./dist/ThemeProvider.d.ts",
+      "import": "./dist/ThemeProvider.js"
+    },
+    "./package.json": "./package.json",
+    "./lib/*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js"
+    },
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/*/index.js"
+    },
+    "./tailwind.css": "./components/tailwind.css",
+    "./app_bar": {
+      "types": "./dist/app_bar/index.d.ts",
+      "import": "./dist/app_bar/index.js"
+    },
+    "./lib/app_bar": {
+      "types": "./dist/app_bar/index.d.ts",
+      "import": "./dist/app_bar/index.js"
+    },
+    "./app_bar/*": {
+      "types": "./dist/app_bar/*.d.ts",
+      "import": "./dist/app_bar/*.js"
+    },
+    "./autocomplete": {
+      "types": "./dist/autocomplete/index.d.ts",
+      "import": "./dist/autocomplete/index.js"
+    },
+    "./lib/autocomplete": {
+      "types": "./dist/autocomplete/index.d.ts",
+      "import": "./dist/autocomplete/index.js"
+    },
+    "./autocomplete/*": {
+      "types": "./dist/autocomplete/*.d.ts",
+      "import": "./dist/autocomplete/*.js"
+    },
+    "./avatar": {
+      "types": "./dist/avatar/index.d.ts",
+      "import": "./dist/avatar/index.js"
+    },
+    "./lib/avatar": {
+      "types": "./dist/avatar/index.d.ts",
+      "import": "./dist/avatar/index.js"
+    },
+    "./avatar/*": {
+      "types": "./dist/avatar/*.d.ts",
+      "import": "./dist/avatar/*.js"
+    },
+    "./button": {
+      "types": "./dist/button/index.d.ts",
+      "import": "./dist/button/index.js"
+    },
+    "./lib/button": {
+      "types": "./dist/button/index.d.ts",
+      "import": "./dist/button/index.js"
+    },
+    "./button/*": {
+      "types": "./dist/button/*.d.ts",
+      "import": "./dist/button/*.js"
+    },
+    "./card": {
+      "types": "./dist/card/index.d.ts",
+      "import": "./dist/card/index.js"
+    },
+    "./lib/card": {
+      "types": "./dist/card/index.d.ts",
+      "import": "./dist/card/index.js"
+    },
+    "./card/*": {
+      "types": "./dist/card/*.d.ts",
+      "import": "./dist/card/*.js"
+    },
+    "./checkbox": {
+      "types": "./dist/checkbox/index.d.ts",
+      "import": "./dist/checkbox/index.js"
+    },
+    "./lib/checkbox": {
+      "types": "./dist/checkbox/index.d.ts",
+      "import": "./dist/checkbox/index.js"
+    },
+    "./checkbox/*": {
+      "types": "./dist/checkbox/*.d.ts",
+      "import": "./dist/checkbox/*.js"
+    },
+    "./chip": {
+      "types": "./dist/chip/index.d.ts",
+      "import": "./dist/chip/index.js"
+    },
+    "./lib/chip": {
+      "types": "./dist/chip/index.d.ts",
+      "import": "./dist/chip/index.js"
+    },
+    "./chip/*": {
+      "types": "./dist/chip/*.d.ts",
+      "import": "./dist/chip/*.js"
+    },
+    "./date_picker": {
+      "types": "./dist/date_picker/index.d.ts",
+      "import": "./dist/date_picker/index.js"
+    },
+    "./lib/date_picker": {
+      "types": "./dist/date_picker/index.d.ts",
+      "import": "./dist/date_picker/index.js"
+    },
+    "./date_picker/*": {
+      "types": "./dist/date_picker/*.d.ts",
+      "import": "./dist/date_picker/*.js"
+    },
+    "./dialog": {
+      "types": "./dist/dialog/index.d.ts",
+      "import": "./dist/dialog/index.js"
+    },
+    "./lib/dialog": {
+      "types": "./dist/dialog/index.d.ts",
+      "import": "./dist/dialog/index.js"
+    },
+    "./dialog/*": {
+      "types": "./dist/dialog/*.d.ts",
+      "import": "./dist/dialog/*.js"
+    },
+    "./drawer": {
+      "types": "./dist/drawer/index.d.ts",
+      "import": "./dist/drawer/index.js"
+    },
+    "./lib/drawer": {
+      "types": "./dist/drawer/index.d.ts",
+      "import": "./dist/drawer/index.js"
+    },
+    "./drawer/*": {
+      "types": "./dist/drawer/*.d.ts",
+      "import": "./dist/drawer/*.js"
+    },
+    "./dropdown": {
+      "types": "./dist/dropdown/index.d.ts",
+      "import": "./dist/dropdown/index.js"
+    },
+    "./lib/dropdown": {
+      "types": "./dist/dropdown/index.d.ts",
+      "import": "./dist/dropdown/index.js"
+    },
+    "./dropdown/*": {
+      "types": "./dist/dropdown/*.d.ts",
+      "import": "./dist/dropdown/*.js"
+    },
+    "./font_icon": {
+      "types": "./dist/font_icon/index.d.ts",
+      "import": "./dist/font_icon/index.js"
+    },
+    "./lib/font_icon": {
+      "types": "./dist/font_icon/index.d.ts",
+      "import": "./dist/font_icon/index.js"
+    },
+    "./font_icon/*": {
+      "types": "./dist/font_icon/*.d.ts",
+      "import": "./dist/font_icon/*.js"
+    },
+    "./input": {
+      "types": "./dist/input/index.d.ts",
+      "import": "./dist/input/index.js"
+    },
+    "./lib/input": {
+      "types": "./dist/input/index.d.ts",
+      "import": "./dist/input/index.js"
+    },
+    "./input/*": {
+      "types": "./dist/input/*.d.ts",
+      "import": "./dist/input/*.js"
+    },
+    "./layout": {
+      "types": "./dist/layout/index.d.ts",
+      "import": "./dist/layout/index.js"
+    },
+    "./lib/layout": {
+      "types": "./dist/layout/index.d.ts",
+      "import": "./dist/layout/index.js"
+    },
+    "./layout/*": {
+      "types": "./dist/layout/*.d.ts",
+      "import": "./dist/layout/*.js"
+    },
+    "./link": {
+      "types": "./dist/link/index.d.ts",
+      "import": "./dist/link/index.js"
+    },
+    "./lib/link": {
+      "types": "./dist/link/index.d.ts",
+      "import": "./dist/link/index.js"
+    },
+    "./link/*": {
+      "types": "./dist/link/*.d.ts",
+      "import": "./dist/link/*.js"
+    },
+    "./list": {
+      "types": "./dist/list/index.d.ts",
+      "import": "./dist/list/index.js"
+    },
+    "./lib/list": {
+      "types": "./dist/list/index.d.ts",
+      "import": "./dist/list/index.js"
+    },
+    "./list/*": {
+      "types": "./dist/list/*.d.ts",
+      "import": "./dist/list/*.js"
+    },
+    "./menu": {
+      "types": "./dist/menu/index.d.ts",
+      "import": "./dist/menu/index.js"
+    },
+    "./lib/menu": {
+      "types": "./dist/menu/index.d.ts",
+      "import": "./dist/menu/index.js"
+    },
+    "./menu/*": {
+      "types": "./dist/menu/*.d.ts",
+      "import": "./dist/menu/*.js"
+    },
+    "./navigation": {
+      "types": "./dist/navigation/index.d.ts",
+      "import": "./dist/navigation/index.js"
+    },
+    "./lib/navigation": {
+      "types": "./dist/navigation/index.d.ts",
+      "import": "./dist/navigation/index.js"
+    },
+    "./navigation/*": {
+      "types": "./dist/navigation/*.d.ts",
+      "import": "./dist/navigation/*.js"
+    },
+    "./overlay": {
+      "types": "./dist/overlay/index.d.ts",
+      "import": "./dist/overlay/index.js"
+    },
+    "./lib/overlay": {
+      "types": "./dist/overlay/index.d.ts",
+      "import": "./dist/overlay/index.js"
+    },
+    "./overlay/*": {
+      "types": "./dist/overlay/*.d.ts",
+      "import": "./dist/overlay/*.js"
+    },
+    "./progress_bar": {
+      "types": "./dist/progress_bar/index.d.ts",
+      "import": "./dist/progress_bar/index.js"
+    },
+    "./lib/progress_bar": {
+      "types": "./dist/progress_bar/index.d.ts",
+      "import": "./dist/progress_bar/index.js"
+    },
+    "./progress_bar/*": {
+      "types": "./dist/progress_bar/*.d.ts",
+      "import": "./dist/progress_bar/*.js"
+    },
+    "./radio": {
+      "types": "./dist/radio/index.d.ts",
+      "import": "./dist/radio/index.js"
+    },
+    "./lib/radio": {
+      "types": "./dist/radio/index.d.ts",
+      "import": "./dist/radio/index.js"
+    },
+    "./radio/*": {
+      "types": "./dist/radio/*.d.ts",
+      "import": "./dist/radio/*.js"
+    },
+    "./ripple": {
+      "types": "./dist/ripple/index.d.ts",
+      "import": "./dist/ripple/index.js"
+    },
+    "./lib/ripple": {
+      "types": "./dist/ripple/index.d.ts",
+      "import": "./dist/ripple/index.js"
+    },
+    "./ripple/*": {
+      "types": "./dist/ripple/*.d.ts",
+      "import": "./dist/ripple/*.js"
+    },
+    "./slider": {
+      "types": "./dist/slider/index.d.ts",
+      "import": "./dist/slider/index.js"
+    },
+    "./lib/slider": {
+      "types": "./dist/slider/index.d.ts",
+      "import": "./dist/slider/index.js"
+    },
+    "./slider/*": {
+      "types": "./dist/slider/*.d.ts",
+      "import": "./dist/slider/*.js"
+    },
+    "./snackbar": {
+      "types": "./dist/snackbar/index.d.ts",
+      "import": "./dist/snackbar/index.js"
+    },
+    "./lib/snackbar": {
+      "types": "./dist/snackbar/index.d.ts",
+      "import": "./dist/snackbar/index.js"
+    },
+    "./snackbar/*": {
+      "types": "./dist/snackbar/*.d.ts",
+      "import": "./dist/snackbar/*.js"
+    },
+    "./switch": {
+      "types": "./dist/switch/index.d.ts",
+      "import": "./dist/switch/index.js"
+    },
+    "./lib/switch": {
+      "types": "./dist/switch/index.d.ts",
+      "import": "./dist/switch/index.js"
+    },
+    "./switch/*": {
+      "types": "./dist/switch/*.d.ts",
+      "import": "./dist/switch/*.js"
+    },
+    "./table": {
+      "types": "./dist/table/index.d.ts",
+      "import": "./dist/table/index.js"
+    },
+    "./lib/table": {
+      "types": "./dist/table/index.d.ts",
+      "import": "./dist/table/index.js"
+    },
+    "./table/*": {
+      "types": "./dist/table/*.d.ts",
+      "import": "./dist/table/*.js"
+    },
+    "./tabs": {
+      "types": "./dist/tabs/index.d.ts",
+      "import": "./dist/tabs/index.js"
+    },
+    "./lib/tabs": {
+      "types": "./dist/tabs/index.d.ts",
+      "import": "./dist/tabs/index.js"
+    },
+    "./tabs/*": {
+      "types": "./dist/tabs/*.d.ts",
+      "import": "./dist/tabs/*.js"
+    },
+    "./time_picker": {
+      "types": "./dist/time_picker/index.d.ts",
+      "import": "./dist/time_picker/index.js"
+    },
+    "./lib/time_picker": {
+      "types": "./dist/time_picker/index.d.ts",
+      "import": "./dist/time_picker/index.js"
+    },
+    "./time_picker/*": {
+      "types": "./dist/time_picker/*.d.ts",
+      "import": "./dist/time_picker/*.js"
+    },
+    "./tooltip": {
+      "types": "./dist/tooltip/index.d.ts",
+      "import": "./dist/tooltip/index.js"
+    },
+    "./lib/tooltip": {
+      "types": "./dist/tooltip/index.d.ts",
+      "import": "./dist/tooltip/index.js"
+    },
+    "./tooltip/*": {
+      "types": "./dist/tooltip/*.d.ts",
+      "import": "./dist/tooltip/*.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.js"
+    },
+    "./lib/utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.js"
+    },
+    "./utils/*": {
+      "types": "./dist/utils/*.d.ts",
+      "import": "./dist/utils/*.js"
+    },
+    "./lib/ThemeProvider": {
+      "types": "./dist/ThemeProvider.d.ts",
+      "import": "./dist/ThemeProvider.js"
+    }
   }
 }

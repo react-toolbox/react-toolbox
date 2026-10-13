@@ -1,0 +1,36 @@
+.rt-ripple-rippleWrapper {
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: var(--z-index-normal);
+}
+
+.rt-ripple-ripple {
+  background-color: currentColor;
+  border-radius: 50%;
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform-origin: 50% 50%;
+  transition-duration: var(--ripple-duration);
+  z-index: var(--z-index-high);
+}
+
+.rt-ripple-ripple.rt-ripple-rippleRestarting {
+    opacity: var(--ripple-final-opacity);
+    transition-property: none;
+  }
+
+.rt-ripple-ripple.rt-ripple-rippleActive {
+    opacity: var(--ripple-final-opacity);
+    transition-property: transform;
+  }
+
+.rt-ripple-ripple:not(.rt-ripple-rippleActive):not(.rt-ripple-rippleRestarting) {
+    opacity: 0;
+    transition-property: opacity, transform;
+  }
