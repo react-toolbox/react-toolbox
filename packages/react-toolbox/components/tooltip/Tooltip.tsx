@@ -1,4 +1,6 @@
 'use client';
+import { materialDescendants } from '../utils/styles';
+import type { TooltipTheme } from './types';
 
 import {
   createElement,
@@ -13,12 +15,10 @@ import {
   type ReactNode,
   type TransitionEvent,
 } from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
+import { cn } from '../utils/cn';
 import Portal from '../hoc/Portal';
-import defaults from './theme';
 
-export type TooltipTheme = Partial<typeof defaults>;
+export type { TooltipTheme } from './types';
 export type TooltipPosition = 'bottom' | 'horizontal' | 'left' | 'right' | 'top' | 'vertical';
 type Position = Exclude<TooltipPosition, 'horizontal' | 'vertical'>;
 export interface TooltipProps {
@@ -73,9 +73,8 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
     tooltipHideOnClick = true,
     tooltipPosition = 'vertical',
     tooltipShowOnClick = false,
-    theme: overrides,
+    theme,
   } = props;
-  const theme = mergeTheme(defaults, overrides);
   const id = `toolbox-tooltip-${useId()}`;
   const [state, setState] = useState<State>({ active: false, visible: false, position: 'bottom' });
   const current = useRef(state);
@@ -129,8 +128,7 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
           : requested;
     const x = window.scrollX || window.pageXOffset;
     const y = window.scrollY || window.pageYOffset;
-    if (position === 'bottom')
-      return { top: top + height + y, left: left + width / 2 + x, position };
+    if (position === 'bottom') return { top: top + height + y, left: left + width / 2 + x, position };
     if (position === 'top') return { top: top + y, left: left + width / 2 + x, position };
     if (position === 'left') return { top: top + height / 2 + y, left: left + x, position };
     return { top: top + height / 2 + y, left: left + width + x, position };
@@ -194,9 +192,7 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
       props.onFocus?.(event);
     },
     onBlur: (event) => {
-      if (!(
-        event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget)
-      )) {
+      if (!(event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget))) {
         interaction.current.focused = false;
         if (!interaction.current.hovered) deactivate();
       }
@@ -238,16 +234,27 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
       props.onTouchCancel?.(event);
     },
     'aria-describedby':
-      [props['aria-describedby'], state.visible ? id : undefined].filter(Boolean).join(' ') ||
-      undefined,
+      [props['aria-describedby'], state.visible ? id : undefined].filter(Boolean).join(' ') || undefined,
   };
   const positionClass =
     state.position === 'left'
-      ? theme.tooltipLeft
+      ? cn(
+          'rt-tooltip-tooltipLeft',
+          '[.rt-tooltip-tooltip&]:[transform:scale(0)_translateX(-100%)_translateY(-50%)]',
+          theme?.tooltipLeft,
+        )
       : state.position === 'right'
-        ? theme.tooltipRight
+        ? cn(
+            'rt-tooltip-tooltipRight',
+            '[.rt-tooltip-tooltip&]:[transform:scale(0)_translateX(0)_translateY(-50%)]',
+            theme?.tooltipRight,
+          )
         : state.position === 'top'
-          ? theme.tooltipTop
+          ? cn(
+              'rt-tooltip-tooltipTop',
+              '[.rt-tooltip-tooltip&]:[transform:scale(0)_translateX(-50%)_translateY(-100%)]',
+              theme?.tooltipTop,
+            )
           : undefined;
   const transitionEnd = (event: TransitionEvent<HTMLSpanElement>) => {
     if (event.propertyName === 'transform' && !state.active) {
@@ -263,12 +270,37 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
           id={id}
           role="tooltip"
           ref={node}
-          className={classnames(theme.tooltip, state.active && theme.tooltipActive, positionClass)}
+          className={cn(
+            'rt-tooltip-tooltip',
+            'block font-[family-name:var(--preferred-font)] text-[length:var(--tooltip-font-size)] [font-weight:var(--font-weight-semi-bold)] leading-[var(--font-size-small)] max-w-[var(--tooltip-max-width)] p-[var(--tooltip-margin)] pointer-events-none absolute text-center normal-case [transform:scale(0)_translateX(-50%)] [transform-origin:top_left] [transition:var(--animation-curve-fast-out-linear-in)_var(--tooltip-animation-duration)_transform] z-[var(--z-index-higher)] box-border [-webkit-font-smoothing:antialiased] [font-smoothing:antialiased] [-webkit-text-size-adjust:100%] [-moz-text-size-adjust:100%] [text-size-adjust:100%]',
+            materialDescendants,
+            '[@media_(hover:_none)_and_(pointer:_coarse)]:text-[length:calc(1.4_*_var(--unit))] [@media_(hover:_none)_and_(pointer:_coarse)]:leading-[calc(2_*_var(--unit))] [@media_(hover:_none)_and_(pointer:_coarse)]:p-[calc(2.4_*_var(--unit))]',
+            theme?.tooltip,
+            state.active &&
+              cn(
+                'rt-tooltip-tooltipActive',
+                '[.rt-tooltip-tooltip&]:[transform:scale(1)_translateX(-50%)] [.rt-tooltip-tooltip&]:[transition-timing-function:var(--animation-curve-linear-out-slow-in)]',
+                '[.rt-tooltip-tooltip.rt-tooltip-tooltipTop&]:[transform:scale(1)_translateX(-50%)_translateY(-100%)]',
+                '[.rt-tooltip-tooltip.rt-tooltip-tooltipLeft&]:[transform:scale(1)_translateX(-100%)_translateY(-50%)]',
+                '[.rt-tooltip-tooltip.rt-tooltip-tooltipRight&]:[transform:scale(1)_translateX(0)_translateY(-50%)]',
+                theme?.tooltipActive,
+              ),
+            positionClass,
+          )}
           data-react-toolbox="tooltip"
           style={{ top: state.top, left: state.left }}
           onTransitionEnd={transitionEnd}
         >
-          <span className={theme.tooltipInner}>{tooltip}</span>
+          <span
+            className={cn(
+              'rt-tooltip-tooltipInner',
+              '[background:var(--tooltip-background)] rounded-[var(--tooltip-border-radius)] text-[color:var(--tooltip-color)] block p-[calc(0.4_*_var(--unit))_var(--tooltip-padding)]',
+              '[@media_(hover:_none)_and_(pointer:_coarse)]:p-[calc(0.6_*_var(--unit))_calc(1.6_*_var(--unit))]',
+              theme?.tooltipInner,
+            )}
+          >
+            {tooltip}
+          </span>
         </span>
       </Portal>
     ) : null,
@@ -304,7 +336,12 @@ export function tooltipFactory(options: TooltipOptions = {}) {
         tooltipHideOnClick,
         tooltipPosition,
         tooltipShowOnClick,
-        theme: mergeTheme(mergeTheme(defaults, options.theme), theme),
+        theme: Object.fromEntries(
+          [...new Set([...Object.keys(options.theme || {}), ...Object.keys(theme || {})])].map((key) => [
+            key,
+            cn(options.theme?.[key as keyof TooltipTheme], theme?.[key as keyof TooltipTheme]),
+          ]),
+        ),
         onClick,
         onMouseEnter,
         onMouseLeave,

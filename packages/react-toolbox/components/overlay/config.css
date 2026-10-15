@@ -1,7 +1,0 @@
-:root {
-  --overlay-color: var(--rt-color-black);
-  --overlay-opacity: 0.6;
-}
-[data-react-toolbox-tokens~="--rt-color-black"] {
-  --overlay-color: var(--rt-color-black);
-}

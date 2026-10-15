@@ -1,10 +1,8 @@
 import { readFile } from 'node:fs/promises';
 import { test, expect } from '@playwright/test';
 
-const components = new URL('../../components/', import.meta.url);
-const entry = await readFile(new URL('styles.css', components), 'utf8');
-const sheets = [...entry.matchAll(/@import "\.\/([^"]+)"/g)].map(match => match[1]);
-const modern = (await Promise.all(sheets.map(name => readFile(new URL(name, components), 'utf8')))).join('\n');
+import { css as modern, setMaterialContent } from './material-fixture.js';
+
 const original = await readFile(new URL('../fixtures/legacy-styles/reference.css', import.meta.url), 'utf8');
 const times = [0, 250, 500, 750, 1000, 1250, 1499, 2250, 3250, 4750, 5999];
 
@@ -12,7 +10,9 @@ async function animationFrames(page, css, multicolor) {
   // Identical SVG/viewBox geometry from ProgressBar, with only its stylesheet
   // changed. Hold actual animations at intermediate times: disabling animations
   // would miss discrete interpolation between otherwise correct keyframes.
-  await page.setContent(`<style>${css}
+  await setMaterialContent(
+    page,
+    `<style>${css}
     body { margin:0; background:white; }
     #capture { width:120px; height:120px; padding:30px; box-sizing:border-box; }
     /* Start paused so the compositor cannot paint an advancing first frame
@@ -23,16 +23,17 @@ async function animationFrames(page, css, multicolor) {
       <svg class="rt-progress-bar-circle" viewBox="0 0 60 60">
         <circle class="rt-progress-bar-path" cx="30" cy="30" r="25" />
       </svg>
-    </div></div>`);
+    </div></div>`,
+  );
   const frames = [];
   for (const time of times) {
-    const styles = await page.evaluate(async currentTime => {
+    const styles = await page.evaluate(async (currentTime) => {
       const animations = document.getAnimations();
       for (const animation of animations) {
         animation.pause();
         animation.currentTime = currentTime;
       }
-      await Promise.all(animations.map(animation => animation.ready));
+      await Promise.all(animations.map((animation) => animation.ready));
       const path = document.querySelector('circle');
       const style = getComputedStyle(path);
       return {

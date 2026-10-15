@@ -1,6 +1,6 @@
 'use client';
 import type { ComponentPropsWithRef, ReactNode } from 'react';
-import classnames from 'classnames';
+import classnames from '../utils/cn';
 
 export interface FontIconProps extends ComponentPropsWithRef<'span'> {
   alt?: string;
@@ -11,10 +11,7 @@ export function FontIcon({ alt = '', children, className = '', value, ...other }
     <span
       data-react-toolbox="font-icon"
       aria-label={alt}
-      className={classnames(
-        { 'material-icons': typeof value === 'string' || typeof children === 'string' },
-        className,
-      )}
+      className={classnames({ 'material-icons': typeof value === 'string' || typeof children === 'string' }, className)}
       {...other}
     >
       {value}

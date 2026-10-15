@@ -1,16 +1,16 @@
 'use client';
+import { checkboxCellClasses } from './styles';
+import type { TableTheme } from './types';
 import { Children, cloneElement, isValidElement, type ComponentPropsWithRef } from 'react';
-import classnames from 'classnames';
+import { cn } from '../utils/cn';
 import Checkbox from '../checkbox';
-import { mergeTheme } from '../theming';
 import TableCell, { type TableCellProps } from './TableCell';
-import defaultTheme from './theme';
 export interface TableRowProps extends Omit<ComponentPropsWithRef<'tr'>, 'onSelect'> {
   idx?: number;
   onSelect?: (index: number, selected: boolean) => void;
   selectable?: boolean;
   selected?: boolean;
-  theme?: Partial<typeof defaultTheme>;
+  theme?: TableTheme;
 }
 export function TableRow({
   children,
@@ -19,24 +19,35 @@ export function TableRow({
   onSelect,
   selectable,
   selected,
-  theme: suppliedTheme,
+  theme,
   ...other
 }: TableRowProps) {
-  const theme = mergeTheme(defaultTheme, suppliedTheme);
   return (
     <tr
       {...other}
-      className={classnames(theme.row, { [theme.selected]: selectable && selected }, className)}
+      className={cn(
+        'rt-table-row',
+        'text-[color:var(--table-row-color)] h-[var(--table-row-height)] [transition-duration:0.28s] [transition-property:background-color] [transition-timing-function:var(--animation-curve-default)]',
+        '[&:hover]:bg-[var(--table-hover-color)]',
+        theme?.row,
+        selectable &&
+          selected &&
+          cn(
+            'rt-table-selected',
+            '[.rt-table-row&]:bg-[var(--table-selection-color)]',
+            '[.rt-table-row&:hover]:bg-[var(--table-hover-color)]',
+            theme?.selected,
+          ),
+        className,
+      )}
     >
       {selectable && (
-        <TableCell className={theme.checkboxCell}>
+        <TableCell className={cn(checkboxCellClasses, theme?.checkboxCell)}>
           <Checkbox checked={selected} onChange={(value) => onSelect?.(idx, value)} />
         </TableCell>
       )}
       {Children.map(children, (child, column) =>
-        isValidElement<TableCellProps>(child)
-          ? cloneElement(child, { column, tagName: 'td' })
-          : child,
+        isValidElement<TableCellProps>(child) ? cloneElement(child, { column, tagName: 'td' }) : child,
       )}
     </tr>
   );

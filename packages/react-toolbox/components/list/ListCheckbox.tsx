@@ -1,14 +1,11 @@
 'use client';
+import { itemClasses, disabledClasses } from './styles';
+import type { ListTheme } from './types';
 import type { ComponentPropsWithRef, ReactNode } from 'react';
-import classnames from 'classnames';
+import { cn } from '../utils/cn';
 import Checkbox, { type CheckboxProps } from '../checkbox';
-import { mergeTheme } from '../theming';
 import ListItemContent from './ListItemContent';
-import defaultTheme from './theme';
-export interface ListCheckboxProps extends Omit<
-  ComponentPropsWithRef<'li'>,
-  'onBlur' | 'onChange' | 'onFocus'
-> {
+export interface ListCheckboxProps extends Omit<ComponentPropsWithRef<'li'>, 'onBlur' | 'onChange' | 'onFocus'> {
   caption?: ReactNode;
   checked?: boolean;
   disabled?: boolean;
@@ -17,7 +14,7 @@ export interface ListCheckboxProps extends Omit<
   onBlur?: CheckboxProps['onBlur'];
   onChange?: CheckboxProps['onChange'];
   onFocus?: CheckboxProps['onFocus'];
-  theme?: Partial<typeof defaultTheme>;
+  theme?: ListTheme;
 }
 export function ListCheckbox({
   caption,
@@ -29,23 +26,31 @@ export function ListCheckbox({
   onBlur,
   onChange,
   onFocus,
-  theme: suppliedTheme,
+  theme,
   ...other
 }: ListCheckboxProps) {
-  const theme = mergeTheme(defaultTheme, suppliedTheme);
   return (
     <li
       {...other}
-      className={classnames(
-        theme.item,
-        theme.checkboxItem,
-        { [theme.disabled]: disabled },
+      className={cn(
+        itemClasses,
+        theme?.item,
+        'rt-list-checkboxItem',
+        theme?.checkboxItem,
+        disabled && cn(disabledClasses, theme?.disabled),
         className,
       )}
     >
       <Checkbox
         checked={checked}
-        className={theme.checkbox}
+        className={cn(
+          'rt-list-checkbox',
+          'items-center cursor-pointer flex h-full m-0 min-h-[var(--list-item-min-height)] w-full',
+          "[&>[data-react-toolbox='check']]:mr-[var(--list-item-right-checkbox-margin)]",
+          "[&>[data-react-toolbox='label']]:pl-0",
+          "[.rt-list-item.rt-list-disabled>&>[data-react-toolbox='label']]:opacity-[0.5]",
+          theme?.checkbox,
+        )}
         disabled={disabled}
         label={<ListItemContent caption={caption} legend={legend} />}
         name={name}

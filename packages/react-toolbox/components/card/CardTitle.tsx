@@ -1,39 +1,69 @@
 'use client';
+import type { CardTheme } from './types';
 import type { ComponentPropsWithRef, ReactNode } from 'react';
-import classnames from 'classnames';
+import { cn } from '../utils/cn';
 import Avatar from '../avatar';
-import { mergeTheme } from '../theming';
-import defaultTheme from './theme';
+const titleClasses = [
+  'rt-card-title',
+  '[.rt-card-cardTitle_&]:text-[length:calc(2_*_var(--unit))] [.rt-card-cardTitle_&]:[font-weight:500] [.rt-card-cardTitle_&]:tracking-[0.02em] [.rt-card-cardTitle_&]:leading-[1] [.rt-card-cardTitle_&]:m-0 [.rt-card-cardTitle_&]:p-0',
+  '[.rt-card-cardTitle.rt-card-large_&]:text-[length:calc(2.4_*_var(--unit))] [.rt-card-cardTitle.rt-card-large_&]:[-moz-osx-font-smoothing:grayscale] [.rt-card-cardTitle.rt-card-large_&]:[font-weight:400] [.rt-card-cardTitle.rt-card-large_&]:leading-[calc(3.2_*_var(--unit))]',
+  '[.rt-card-cardTitle.rt-card-small_&]:text-[length:calc(1.4_*_var(--unit))] [.rt-card-cardTitle.rt-card-small_&]:tracking-[0] [.rt-card-cardTitle.rt-card-small_&]:leading-[calc(2_*_var(--unit))]',
+  '[.rt-card-cardMedia_.rt-card-cardTitle_&]:text-[color:var(--card-color-white)]',
+].join(' ');
+
 export interface CardTitleProps extends Omit<ComponentPropsWithRef<'div'>, 'title'> {
   avatar?: ReactNode;
   subtitle?: ReactNode;
   title?: ReactNode;
-  theme?: Partial<typeof defaultTheme>;
+  theme?: CardTheme;
 }
-export function CardTitle({
-  avatar,
-  children,
-  className,
-  subtitle,
-  theme: suppliedTheme,
-  title,
-  ...other
-}: CardTitleProps) {
-  const theme = mergeTheme(defaultTheme, suppliedTheme);
+export function CardTitle({ avatar, children, className, subtitle, theme, title, ...other }: CardTitleProps) {
   return (
     <div
-      className={classnames(
-        theme.cardTitle,
-        { [theme.small]: avatar, [theme.large]: !avatar },
+      className={cn(
+        'rt-card-cardTitle',
+        'items-center flex p-[var(--card-padding)]',
+        "[&_[data-react-toolbox='avatar']]:mr-[var(--card-padding)]",
+        '[&_p]:text-[length:calc(1.4_*_var(--unit))] [&_p]:[font-weight:400] [&_p]:tracking-[0] [&_p]:leading-[calc(2.4_*_var(--unit))] [&_p]:m-0',
+        '[&:last-child]:pb-[var(--card-padding-lg)]',
+        '[.rt-card-cardMedia_.rt-card-contentOverlay_&]:bg-[var(--card-text-overlay)]',
+        theme?.cardTitle,
+        Boolean(avatar) &&
+          cn(
+            'rt-card-small',
+            '[.rt-card-cardTitle&]:p-[var(--card-padding)]',
+            '[@media_screen_and_(min-width:_600px)_and_(min-height:_600px)]:[.rt-card-cardTitle&]:pl-[var(--card-desktop-horizontal-padding,_calc(2.4_*_var(--unit)))] [@media_screen_and_(min-width:_600px)_and_(min-height:_600px)]:[.rt-card-cardTitle&]:pr-[var(--card-desktop-horizontal-padding,_calc(2.4_*_var(--unit)))]',
+            '[.rt-card-cardTitle&:last-child]:pb-[var(--card-padding)]',
+            theme?.small,
+          ),
+        !avatar &&
+          cn(
+            'rt-card-large',
+            '[.rt-card-cardTitle&]:p-[var(--card-padding-lg)_var(--card-padding)_var(--card-padding)]',
+            '[@media_screen_and_(min-width:_600px)_and_(min-height:_600px)]:[.rt-card-cardTitle&]:pl-[var(--card-desktop-horizontal-padding,_calc(2.4_*_var(--unit)))] [@media_screen_and_(min-width:_600px)_and_(min-height:_600px)]:[.rt-card-cardTitle&]:pr-[var(--card-desktop-horizontal-padding,_calc(2.4_*_var(--unit)))]',
+            theme?.large,
+          ),
         className,
       )}
       {...other}
     >
       {typeof avatar === 'string' ? <Avatar image={avatar} /> : avatar}
       <div>
-        {title && <h5 className={theme.title}>{title}</h5>}
-        {children && typeof children === 'string' && <h5 className={theme.title}>{children}</h5>}
-        {subtitle && <p className={theme.subtitle}>{subtitle}</p>}
+        {title && <h5 className={cn(titleClasses, theme?.title)}>{title}</h5>}
+        {children && typeof children === 'string' && <h5 className={cn(titleClasses, theme?.title)}>{children}</h5>}
+        {subtitle && (
+          <p
+            className={cn(
+              'rt-card-subtitle',
+              '[.rt-card-cardTitle_&]:text-[color:var(--rt-color-text-secondary)] [.rt-card-cardTitle_&]:text-[length:calc(1.4_*_var(--unit))] [.rt-card-cardTitle_&]:[font-weight:400] [.rt-card-cardTitle_&]:tracking-[0] [.rt-card-cardTitle_&]:leading-[calc(2.4_*_var(--unit))] [.rt-card-cardTitle_&]:m-0 [.rt-card-cardTitle_&]:p-0',
+              '[.rt-card-cardTitle.rt-card-small_&]:[font-weight:400] [.rt-card-cardTitle.rt-card-small_&]:leading-[calc(2_*_var(--unit))]',
+              '[.rt-card-cardMedia_.rt-card-cardTitle_&]:text-[color:var(--card-color-white)]',
+              theme?.subtitle,
+            )}
+          >
+            {subtitle}
+          </p>
+        )}
         {children && typeof children !== 'string' && children}
       </div>
     </div>

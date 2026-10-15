@@ -1,20 +1,21 @@
 'use client';
+import { materialRoot, materialDescendants } from '../utils/styles';
+import type { CheckboxTheme } from './types';
 
 import React, { useImperativeHandle, useRef } from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
+import { cn } from '../utils/cn';
 import Check from './Check';
-import defaults from './theme';
-export type CheckboxTheme = Partial<typeof defaults>;
+export type { CheckboxTheme } from './types';
 export interface CheckboxHandle {
   focus(): void;
   blur(): void;
   readonly inputElement: HTMLInputElement | null;
 }
-export interface CheckboxProps extends Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  'onChange' | 'type' | 'size' | 'onMouseEnter' | 'onMouseLeave'
-> {
+export interface CheckboxProps
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    'onChange' | 'type' | 'size' | 'onMouseEnter' | 'onMouseLeave'
+  > {
   label?: React.ReactNode;
   onMouseEnter?: React.MouseEventHandler<HTMLLabelElement>;
   onMouseLeave?: React.MouseEventHandler<HTMLLabelElement>;
@@ -33,13 +34,12 @@ export function Checkbox({
   onChange,
   onMouseEnter,
   onMouseLeave,
-  theme: overrides,
+  theme,
   ripple,
   ref,
   style,
   ...others
 }: CheckboxProps) {
-  const theme = mergeTheme(defaults, overrides);
   const input = useRef<HTMLInputElement>(null);
   const handle = {
     focus: () => input.current?.focus(),
@@ -56,14 +56,22 @@ export function Checkbox({
   return (
     <label
       data-react-toolbox="checkbox"
-      className={classnames(theme.field, { [theme.disabled]: disabled }, className)}
+      className={cn(
+        'rt-checkbox-field',
+        'block h-[var(--checkbox-size)] mb-[var(--checkbox-field-margin-bottom)] relative whitespace-nowrap',
+        materialRoot,
+        materialDescendants,
+        theme?.field,
+        disabled && cn('rt-checkbox-disabled', theme?.disabled),
+        className,
+      )}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
       <input
         {...others}
         checked={checked}
-        className={theme.input}
+        className={cn('rt-checkbox-input', 'h-0 opacity-0 overflow-hidden absolute w-0', theme?.input)}
         disabled={disabled}
         name={name}
         onChange={() => {}}
@@ -73,7 +81,15 @@ export function Checkbox({
       />
       <Check disabled={disabled} ripple={ripple} theme={theme} checked={checked} style={style} />
       {label ? (
-        <span data-react-toolbox="label" className={theme.text}>
+        <span
+          data-react-toolbox="label"
+          className={cn(
+            'rt-checkbox-text',
+            'text-[color:var(--checkbox-text-color)] inline-block text-[length:var(--checkbox-text-font-size)] leading-[var(--checkbox-size)] pl-[var(--unit)] align-top whitespace-nowrap',
+            '[.rt-checkbox-disabled>&]:text-[color:var(--checkbox-disabled-color)]',
+            theme?.text,
+          )}
+        >
           {label}
         </span>
       ) : null}

@@ -1,24 +1,28 @@
 'use client';
+import type { ListTheme } from './types';
 import type { ComponentPropsWithRef } from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
-import defaultTheme from './theme';
+import { cn } from '../utils/cn';
 export interface ListItemTextProps extends ComponentPropsWithRef<'span'> {
   primary?: boolean;
-  theme?: Partial<typeof defaultTheme>;
+  theme?: ListTheme;
 }
-export function ListItemText({
-  className,
-  primary = false,
-  children,
-  theme: suppliedTheme,
-  ...other
-}: ListItemTextProps) {
-  const theme = mergeTheme(defaultTheme, suppliedTheme);
+export function ListItemText({ className, primary = false, children, theme, ...other }: ListItemTextProps) {
   return (
     <span
       data-react-toolbox="list-item-text"
-      className={classnames(theme.itemText, { [theme.primary]: primary }, className)}
+      className={cn(
+        'rt-list-itemText',
+        'block',
+        '[&:not(.rt-list-primary)]:text-[color:var(--rt-color-text-secondary)] [&:not(.rt-list-primary)]:text-[length:var(--font-size-small)] [&:not(.rt-list-primary)]:pt-[var(--list-item-legend-margin-top)] [&:not(.rt-list-primary)]:whitespace-normal',
+        theme?.itemText,
+        primary &&
+          cn(
+            'rt-list-primary',
+            '[.rt-list-itemText&]:text-[color:var(--rt-color-text)] [.rt-list-itemText&]:text-[length:var(--font-size-normal)]',
+            theme?.primary,
+          ),
+        className,
+      )}
       {...other}
     >
       {children}

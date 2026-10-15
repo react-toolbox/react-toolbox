@@ -20,7 +20,6 @@ import Dropdown from '../components/dropdown';
 import { IconMenu, Menu, MenuItem } from '../components/menu';
 import Layout, { NavDrawer, Panel } from '../components/layout';
 import Clock from '../components/time_picker/Clock';
-import clockTheme from '../components/time_picker/theme';
 
 const strict = children => <StrictMode>{children}</StrictMode>;
 const advance = ms => act(() => vi.advanceTimersByTime(ms));
@@ -215,13 +214,13 @@ describe('React 19 runtime', () => {
 
   it('zooms clock views using DOM refs and preserves the 500ms transition', () => {
     vi.useFakeTimers();
-    const props = { theme: clockTheme, time: new Date(2026, 9, 13, 9, 30), onChange: vi.fn() };
+    const props = { time: new Date(2026, 9, 13, 9, 30), onChange: vi.fn() };
     const view = render(strict(<Clock {...props} display="hours" />));
     advance(0);
     view.rerender(strict(<Clock {...props} display="minutes" />));
-    expect(view.container.querySelectorAll(`.${clockTheme.clockWrapper}`)).toHaveLength(2);
+    expect(view.container.querySelectorAll('.rt-time-picker-clockWrapper')).toHaveLength(2);
     advance(500);
-    expect(view.container.querySelectorAll(`.${clockTheme.clockWrapper}`)).toHaveLength(1);
+    expect(view.container.querySelectorAll('.rt-time-picker-clockWrapper')).toHaveLength(1);
     view.unmount();
     advance(1000);
   });

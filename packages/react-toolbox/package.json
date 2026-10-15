@@ -48,7 +48,8 @@
   },
   "dependencies": {
     "classnames": "^2.5.1",
-    "react-transition-group": "^4.4.5"
+    "react-transition-group": "^4.4.5",
+    "tailwind-merge": "^3.7.0"
   },
   "peerDependencies": {
     "react": "^19.3.0",

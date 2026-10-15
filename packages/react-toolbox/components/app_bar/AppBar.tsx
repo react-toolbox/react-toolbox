@@ -1,17 +1,10 @@
 'use client';
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type ComponentPropsWithRef,
-  type ReactNode,
-} from 'react';
-import classnames from 'classnames';
+import { materialDescendants } from '../utils/styles';
+import type { AppBarTheme } from './types';
+import { useCallback, useEffect, useRef, useState, type ComponentPropsWithRef, type ReactNode } from 'react';
+import { cn } from '../utils/cn';
 import { IconButton } from '../button';
-import { mergeTheme } from '../theming';
-import defaultTheme from './theme';
-export type AppBarTheme = Partial<typeof defaultTheme>;
+export type { AppBarTheme } from './types';
 export interface AppBarProps extends Omit<ComponentPropsWithRef<'header'>, 'title'> {
   fixed?: boolean;
   flat?: boolean;
@@ -33,12 +26,11 @@ export function AppBar({
   onRightIconClick,
   rightIcon,
   scrollHide = false,
-  theme: suppliedTheme,
+  theme,
   title,
   ref,
   ...other
 }: AppBarProps) {
-  const theme = mergeTheme(defaultTheme, suppliedTheme);
   const root = useRef<HTMLElement | null>(null);
   const [hidden, setHidden] = useState(false);
   const attach = useCallback(
@@ -80,27 +72,68 @@ export function AppBar({
       {...other}
       ref={attach}
       data-react-toolbox="app-bar"
-      className={classnames(
-        theme.appBar,
-        { [theme.fixed]: fixed, [theme.flat]: flat, [theme.scrollHide]: hidden },
+      className={cn(
+        'rt-app-bar-appBar',
+        '[--appbar-current-h-padding:var(--appbar-h-padding)] [background:var(--appbar-color)] text-[color:var(--appbar-contrast)] font-[family-name:var(--preferred-font)] h-[var(--appbar-height)] p-[0_var(--appbar-current-h-padding)] [transition-duration:0.5s] [transition-property:transform] [transition-timing-function:cubic-bezier(0.215,_0.61,_0.355,_1)] box-border [-webkit-font-smoothing:antialiased] [font-smoothing:antialiased] [-webkit-text-size-adjust:100%] [-moz-text-size-adjust:100%] [text-size-adjust:100%]',
+        materialDescendants,
+        '[&:not(.rt-app-bar-flat)]:[box-shadow:var(--shadow-4p)]',
+        '[&_a]:text-[color:var(--appbar-contrast)]',
+        '[@media_screen_and_(max-width:_599.98px)_and_(orientation:_portrait)]:h-[var(--appbar-height-m-portrait)]',
+        '[@media_screen_and_(max-height:_599.98px)_and_(orientation:_landscape)]:h-[var(--appbar-height-m-landscape)]',
+        '[@media_screen_and_(max-width:_599.98px)_and_(orientation:_portrait),_screen_and_(max-height:_599.98px)_and_(orientation:_landscape)]:[--appbar-current-h-padding:var(--appbar-h-padding-mobile,_calc(1.6_*_var(--unit)))]',
+        theme?.appBar,
+        fixed &&
+          cn(
+            'rt-app-bar-fixed',
+            '[.rt-app-bar-appBar&]:left-0 [.rt-app-bar-appBar&]:fixed [.rt-app-bar-appBar&]:right-0 [.rt-app-bar-appBar&]:top-0 [.rt-app-bar-appBar&]:z-[var(--z-index-highest)]',
+            theme?.fixed,
+          ),
+        flat && cn('rt-app-bar-flat', theme?.flat),
+        hidden && cn('rt-app-bar-scrollHide', '[.rt-app-bar-appBar&]:[transform:translateY(-100%)]', theme?.scrollHide),
         className,
       )}
     >
-      <div className={theme.inner}>
+      <div
+        className={cn(
+          'rt-app-bar-inner',
+          '[.rt-app-bar-appBar_&]:items-center [.rt-app-bar-appBar_&]:flex [.rt-app-bar-appBar_&]:h-full [.rt-app-bar-appBar_&]:relative [.rt-app-bar-appBar_&]:w-full',
+          theme?.inner,
+        )}
+      >
         {leftIcon && (
           <IconButton
             inverse
-            className={theme.leftIcon}
+            className={cn(
+              'rt-app-bar-leftIcon',
+              'shrink-0 ml-[calc((var(--button-toggle-font-size)_-_var(--button-toggle-size))_/_2)] mr-[calc(var(--appbar-title-distance)_-_(var(--button-toggle-size)_+_var(--button-toggle-font-size))_/_2)]',
+              theme?.leftIcon,
+            )}
             onClick={onLeftIconClick}
             icon={leftIcon}
           />
         )}
-        {typeof title === 'string' ? <h1 className={theme.title}>{title}</h1> : title}
+        {typeof title === 'string' ? (
+          <h1
+            className={cn(
+              'rt-app-bar-title',
+              'grow-[1] m-0 text-[length:var(--appbar-title-font-size)] [font-weight:var(--appbar-title-font-weight)] overflow-x-hidden text-ellipsis whitespace-nowrap',
+              theme?.title,
+            )}
+          >
+            {title}
+          </h1>
+        ) : (
+          title
+        )}
         {children}
         {rightIcon && (
           <IconButton
             inverse
-            className={theme.rightIcon}
+            className={cn(
+              'rt-app-bar-rightIcon',
+              'ml-auto shrink-0 mr-[calc((var(--button-toggle-font-size)_-_var(--button-toggle-size))_/_2)]',
+              theme?.rightIcon,
+            )}
             onClick={onRightIconClick}
             icon={rightIcon}
           />

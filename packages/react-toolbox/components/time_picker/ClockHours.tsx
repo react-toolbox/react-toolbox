@@ -1,11 +1,11 @@
 'use client';
+import type { TimePickerTheme } from './types';
 
 import React, { useEffect, useRef, useState } from 'react';
 import { range } from '../utils/utils';
 import type { TimeFormat } from '../utils/time';
 import Hand, { type ClockHandHandle, type ClockPoint } from './ClockHand';
 import Face from './ClockFace';
-import defaults from './theme';
 const outerNumbers = [0, ...range(13, 24)];
 const innerNumbers = [12, ...range(1, 12)];
 const innerSpacing = 1.7;
@@ -18,7 +18,7 @@ export interface ClockHoursProps {
   radius: number;
   selected: number;
   spacing: number;
-  theme: typeof defaults;
+  theme?: TimePickerTheme;
 }
 export default function ClockHours({
   center,
@@ -32,10 +32,7 @@ export default function ClockHours({
 }: ClockHoursProps) {
   const [inner, setInner] = useState(format === '24hr' && selected > 0 && selected <= 12);
   const hand = useRef<ClockHandHandle>(null);
-  useEffect(
-    () => setInner(format === '24hr' && selected > 0 && selected <= 12),
-    [selected, format],
-  );
+  useEffect(() => setInner(format === '24hr' && selected > 0 && selected <= 12), [selected, format]);
   const mouseDown = (event: React.MouseEvent<HTMLDivElement>) => hand.current?.mouseStart(event);
   const touchStart = (event: React.TouchEvent<HTMLDivElement>) => hand.current?.touchStart(event);
   const is24hr = format === '24hr';

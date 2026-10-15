@@ -1,4 +1,6 @@
 'use client';
+import { materialRoot, materialDescendants } from '../utils/styles';
+import type { TabsTheme } from './types';
 
 import {
   Children,
@@ -16,14 +18,12 @@ import {
   type ReactElement,
   type Ref,
 } from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
+import { cn } from '../utils/cn';
 import { FontIcon } from '../font_icon';
 import Tab, { type TabProps } from './Tab';
 import TabContent, { type TabContentProps } from './TabContent';
-import defaults from './theme';
 
-export type TabsTheme = Partial<typeof defaults> & { disableAnimation?: string };
+export type { TabsTheme } from './types';
 export interface TabsHandle {
   updatePointer(index?: number): void;
   readonly node: HTMLDivElement | null;
@@ -47,11 +47,10 @@ export function Tabs({
   index = 0,
   inverse = false,
   onChange,
-  theme: overrides,
+  theme,
   ref,
   ...attributes
 }: TabsProps) {
-  const theme = mergeTheme(defaults, overrides);
   const id = `toolbox-tabs-${useId()}`;
   const root = useRef<HTMLDivElement>(null);
   const navigation = useRef<HTMLDivElement>(null);
@@ -114,8 +113,7 @@ export function Tabs({
   const previousChildren = useRef(children);
   const previousIndex = useRef(index);
   useEffect(() => {
-    if (previousChildren.current !== children || previousIndex.current !== index)
-      updatePointer(index);
+    if (previousChildren.current !== children || previousIndex.current !== index) updatePointer(index);
     previousChildren.current = children;
     previousIndex.current = index;
   }, [children, index, updatePointer]);
@@ -135,14 +133,11 @@ export function Tabs({
       return;
     const node = navigation.current;
     const tabs = Array.from(
-      node.querySelectorAll<HTMLElement>(
-        '[role="tab"]:not([aria-disabled="true"]):not([aria-hidden="true"])',
-      ),
+      node.querySelectorAll<HTMLElement>('[role="tab"]:not([aria-disabled="true"]):not([aria-hidden="true"])'),
     );
     if (!tabs.length) return;
     const current = tabs.findIndex((tab) => tab === document.activeElement);
-    const direction =
-      (event.key === 'ArrowRight' ? 1 : -1) * (getComputedStyle(node).direction === 'rtl' ? -1 : 1);
+    const direction = (event.key === 'ArrowRight' ? 1 : -1) * (getComputedStyle(node).direction === 'rtl' ? -1 : 1);
     const next =
       event.key === 'Home'
         ? tabs[0]
@@ -159,8 +154,7 @@ export function Tabs({
   const explicitContents: ReactElement<TabContentProps>[] = [];
   Children.forEach(children, (item) => {
     if (isValidElement<TabProps>(item) && item.type === Tab) headers.push(item);
-    else if (isValidElement<TabContentProps>(item) && item.type === TabContent)
-      explicitContents.push(item);
+    else if (isValidElement<TabContentProps>(item) && item.type === TabContent) explicitContents.push(item);
   });
   const contents = explicitContents.length
     ? explicitContents
@@ -174,7 +168,13 @@ export function Tabs({
       : headers.findIndex((item) => !item.props.disabled && !item.props.hidden);
   const arrow = (direction: 'left' | 'right') => (
     <div
-      className={theme.arrowContainer}
+      className={cn(
+        'rt-tabs-arrowContainer',
+        'items-center [box-shadow:inset_0_-1px_var(--tab-navigation-border-color)] cursor-pointer flex',
+        '[&:focus-visible]:[outline:2px_solid_currentColor] [&:focus-visible]:[outline-offset:-2px]',
+        '[.rt-tabs-inverse_&]:bg-[var(--tab-inverse-bar-color)]',
+        theme?.arrowContainer,
+      )}
       role="button"
       tabIndex={0}
       aria-label={`Scroll tabs ${direction}`}
@@ -186,7 +186,15 @@ export function Tabs({
         }
       }}
     >
-      <FontIcon className={theme.arrow} value={`keyboard_arrow_${direction}`} />
+      <FontIcon
+        className={cn(
+          'rt-tabs-arrow',
+          'text-[color:var(--tab-text-color)] p-[0_var(--tab-label-h-padding)]',
+          '[.rt-tabs-inverse_&]:text-[color:var(--tab-inverse-text-color)]',
+          theme?.arrow,
+        )}
+        value={`keyboard_arrow_${direction}`}
+      />
     </div>
   );
   return (
@@ -194,12 +202,27 @@ export function Tabs({
       {...attributes}
       ref={root}
       data-react-toolbox="tabs"
-      className={classnames(theme.tabs, fixed && theme.fixed, inverse && theme.inverse, className)}
+      className={cn(
+        'rt-tabs-tabs',
+        'flex flex-col',
+        materialRoot,
+        materialDescendants,
+        theme?.tabs,
+        fixed && cn('rt-tabs-fixed', theme?.fixed),
+        inverse && cn('rt-tabs-inverse', theme?.inverse),
+        className,
+      )}
     >
-      <div className={theme.navigationContainer}>
+      <div className={cn('rt-tabs-navigationContainer', 'flex', theme?.navigationContainer)}>
         {arrows.left && arrow('left')}
         <div
-          className={theme.navigation}
+          className={cn(
+            'rt-tabs-navigation',
+            '[box-shadow:inset_0_-1px_var(--tab-navigation-border-color)] flex flex-row overflow-x-hidden relative',
+            '[.rt-tabs-navigationContainer_&]:[flex:1]',
+            '[.rt-tabs-inverse_&]:bg-[var(--tab-inverse-bar-color)]',
+            theme?.navigation,
+          )}
           role="tablist"
           aria-label={attributes['aria-label']}
           aria-labelledby={attributes['aria-labelledby']}
@@ -211,7 +234,7 @@ export function Tabs({
               children: null,
               key: itemIndex,
               index: itemIndex,
-              theme: overrides,
+              theme,
               active: index === itemIndex,
               tabIndex: itemIndex === focusIndex ? 0 : -1,
               id: item.props.id || `${id}-tab-${itemIndex}`,
@@ -226,9 +249,12 @@ export function Tabs({
             }),
           )}
           <span
-            className={classnames(
-              theme.pointer,
-              disableAnimatedBottomBorder && overrides?.disableAnimation,
+            className={cn(
+              'rt-tabs-pointer',
+              'bg-[var(--tab-pointer-color)] h-[var(--tab-pointer-height)] mt-[calc(-1_*_var(--tab-pointer-height))] absolute [transition-duration:var(--animation-duration)] [transition-property:left,_width] [transition-timing-function:var(--animation-curve-default)] w-0',
+              '[.rt-tabs-inverse_&]:bg-[var(--tab-inverse-pointer-color)]',
+              theme?.pointer,
+              disableAnimatedBottomBorder && theme?.disableAnimation,
             )}
             style={pointer}
           />
@@ -240,7 +266,7 @@ export function Tabs({
           ? null
           : cloneElement(item, {
               key: itemIndex,
-              theme: overrides,
+              theme,
               active: index === itemIndex,
               hidden: index !== itemIndex && hideMode === 'display',
               id: item.props.id || `${id}-panel-${itemIndex}`,

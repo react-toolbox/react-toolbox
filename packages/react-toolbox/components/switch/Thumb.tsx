@@ -1,13 +1,14 @@
 'use client';
+import { materialRoot, materialDescendants } from '../utils/styles';
+import type { SwitchTheme } from './types';
 
 import React from 'react';
-import classnames from 'classnames';
+import { cn } from '../utils/cn';
 import { useRipple } from '../ripple';
-import defaults from './theme';
 export interface ThumbProps extends React.HTMLAttributes<HTMLElement> {
   disabled?: boolean;
   ripple?: boolean;
-  theme: typeof defaults;
+  theme?: SwitchTheme;
 }
 export default function Thumb({
   disabled,
@@ -25,7 +26,14 @@ export default function Thumb({
     spread: 2.6,
     disabled,
     ripple: enabled,
-    theme: { ripple: theme.ripple },
+    theme: {
+      ripple: cn(
+        'rt-switch-ripple',
+        '[.rt-switch-thumb_&]:bg-[var(--switch-color)] [.rt-switch-thumb_&]:opacity-[0.3] [.rt-switch-thumb_&]:[transition-duration:var(--switch-ripple-duration)]',
+        '[.rt-switch-off_&]:[background:var(--switch-off-ripple-color)]',
+        theme?.ripple,
+      ),
+    },
     onMouseDown,
     onTouchStart,
     onTouchEnd,
@@ -34,7 +42,18 @@ export default function Thumb({
   return (
     <span
       {...others}
-      className={theme.thumb}
+      className={cn(
+        'rt-switch-thumb',
+        'rounded-[50%] cursor-pointer h-[var(--switch-thumb-size)] absolute top-[calc((var(--switch-track-height)_-_var(--switch-thumb-size))_/_2)] [transition-duration:0.28s] [transition-property:left] [transition-timing-function:var(--animation-curve-default)] w-[var(--switch-thumb-size)]',
+        materialRoot,
+        materialDescendants,
+        '[.rt-switch-on_&]:[background:var(--switch-thumb-on-color)] [.rt-switch-on_&]:[box-shadow:var(--shadow-3p)] [.rt-switch-on_&]:left-[calc(var(--switch-track-length)_-_var(--switch-thumb-size))]',
+        '[.rt-switch-off_&]:[background:var(--switch-thumb-off-color)] [.rt-switch-off_&]:[box-shadow:var(--shadow-2p)] [.rt-switch-off_&]:left-0',
+        "[.rt-switch-input:focus:not(:active)+.rt-switch-switch-on>&::before]:bg-[var(--switch-on-focus-color)] [.rt-switch-input:focus:not(:active)+.rt-switch-switch-on>&::before]:rounded-[50%] [.rt-switch-input:focus:not(:active)+.rt-switch-switch-on>&::before]:box-border [.rt-switch-input:focus:not(:active)+.rt-switch-switch-on>&::before]:[content:''] [.rt-switch-input:focus:not(:active)+.rt-switch-switch-on>&::before]:inline-block [.rt-switch-input:focus:not(:active)+.rt-switch-switch-on>&::before]:h-[var(--switch-focus-init-size)] [.rt-switch-input:focus:not(:active)+.rt-switch-switch-on>&::before]:left-[50%] [.rt-switch-input:focus:not(:active)+.rt-switch-switch-on>&::before]:absolute [.rt-switch-input:focus:not(:active)+.rt-switch-switch-on>&::before]:top-[50%] [.rt-switch-input:focus:not(:active)+.rt-switch-switch-on>&::before]:[transform:translate(calc(-1_*_var(--switch-focus-init-size)_/_2),_calc(-1_*_var(--switch-focus-init-size)_/_2))] [.rt-switch-input:focus:not(:active)+.rt-switch-switch-on>&::before]:w-[var(--switch-focus-init-size)] [.rt-switch-input:focus:not(:active)+.rt-switch-switch-on>&::before]:[box-shadow:0_0_0_var(--switch-focus-diff)_var(--switch-on-focus-color)]",
+        "[.rt-switch-input:focus:not(:active)+.rt-switch-switch-off>&::before]:bg-[var(--switch-off-focus-color)] [.rt-switch-input:focus:not(:active)+.rt-switch-switch-off>&::before]:rounded-[50%] [.rt-switch-input:focus:not(:active)+.rt-switch-switch-off>&::before]:box-border [.rt-switch-input:focus:not(:active)+.rt-switch-switch-off>&::before]:[content:''] [.rt-switch-input:focus:not(:active)+.rt-switch-switch-off>&::before]:inline-block [.rt-switch-input:focus:not(:active)+.rt-switch-switch-off>&::before]:h-[var(--switch-focus-init-size)] [.rt-switch-input:focus:not(:active)+.rt-switch-switch-off>&::before]:left-[50%] [.rt-switch-input:focus:not(:active)+.rt-switch-switch-off>&::before]:absolute [.rt-switch-input:focus:not(:active)+.rt-switch-switch-off>&::before]:top-[50%] [.rt-switch-input:focus:not(:active)+.rt-switch-switch-off>&::before]:[transform:translate(calc(-1_*_var(--switch-focus-init-size)_/_2),_calc(-1_*_var(--switch-focus-init-size)_/_2))] [.rt-switch-input:focus:not(:active)+.rt-switch-switch-off>&::before]:w-[var(--switch-focus-init-size)] [.rt-switch-input:focus:not(:active)+.rt-switch-switch-off>&::before]:[box-shadow:0_0_0_var(--switch-focus-diff)_var(--switch-off-focus-color)]",
+        '[.rt-switch-disabled_&&]:bg-[var(--switch-disabled-thumb-color)] [.rt-switch-disabled_&&]:[border-color:transparent] [.rt-switch-disabled_&&]:[cursor:auto]',
+        theme?.thumb,
+      )}
       onMouseDown={effects.onMouseDown}
       onTouchStart={effects.onTouchStart}
       onTouchEnd={effects.onTouchEnd}

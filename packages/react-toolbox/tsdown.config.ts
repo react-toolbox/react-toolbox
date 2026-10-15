@@ -22,8 +22,8 @@ export default defineConfig({
   unbundle: true,
   dts: { sourcemap: false, compilerOptions: { declarationMap: false } },
   sourcemap: true,
-  // Preserve source boundaries in the private docs build. Pure utilities, theme
-  // maps, and the shadcn preset stay usable in Server Components.
+  // Preserve source boundaries in the private docs build. Pure utilities, shared
+  // style constants, and the shadcn preset stay usable in Server Components.
   banner: ({ fileName }) => ({ js: clientEntries.has(fileName) ? '"use client";' : '' }),
   logLevel: 'warn',
   inputOptions: {

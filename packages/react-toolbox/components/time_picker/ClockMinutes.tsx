@@ -1,10 +1,11 @@
 'use client';
+import { cn } from '../utils/cn';
+import type { TimePickerTheme } from './types';
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { range } from '../utils/utils';
 import Hand, { type ClockHandHandle, type ClockPoint } from './ClockHand';
 import Face from './ClockFace';
-import defaults from './theme';
 const minutes = range(0, 60, 5);
 const step = 360 / 60;
 export interface ClockMinutesProps {
@@ -14,16 +15,9 @@ export interface ClockMinutesProps {
   radius: number;
   selected?: number;
   spacing: number;
-  theme: typeof defaults;
+  theme?: TimePickerTheme;
 }
-export default function ClockMinutes({
-  center,
-  onChange,
-  radius,
-  selected = 0,
-  spacing,
-  theme,
-}: ClockMinutesProps) {
+export default function ClockMinutes({ center, onChange, radius, selected = 0, spacing, theme }: ClockMinutesProps) {
   const hand = useRef<ClockHandHandle>(null);
   return (
     <>
@@ -39,7 +33,7 @@ export default function ClockMinutes({
       />
       <Hand
         ref={hand}
-        className={!minutes.includes(selected) ? theme.small : ''}
+        className={!minutes.includes(selected) ? cn('rt-time-picker-small', theme?.small) : ''}
         angle={selected * step}
         length={radius - spacing}
         onMove={(degrees) => onChange?.(degrees / step)}

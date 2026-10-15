@@ -6,17 +6,22 @@ import { fileURLToPath } from 'node:url';
 import postcss from 'postcss';
 import calc from 'postcss-calc';
 import selectorParser from 'postcss-selector-parser';
+import { utilityRules } from './utility-rules.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const fixture = path.join(root, 'tests/fixtures/legacy-styles');
 const entry = await readFile(path.join(root, 'components/styles.css'), 'utf8');
-const sheets = [...entry.matchAll(/@import "\.\/([^"]+)"/g)].map(match => match[1]);
-const current = postcss.parse((await Promise.all(sheets.map(name =>
-  readFile(path.join(root, 'components', name), 'utf8')))).join('\n'));
+const sheets = [...entry.matchAll(/@import "\.\/([^"]+)"/g)].map((match) => match[1]);
+const current = postcss.parse(
+  (await Promise.all(sheets.map((name) => readFile(path.join(root, 'components', name), 'utf8')))).join('\n'),
+);
+// @theme is a build-time keyframe registration, not a runtime condition.
+current.walkAtRules('theme', (rule) => rule.replaceWith(...rule.nodes));
+current.append((await utilityRules(root)).nodes);
 const baseline = postcss.parse(await readFile(path.join(fixture, 'reference.css'), 'utf8'));
 const tokens = new Map();
 const runtimeTokens = new Set();
-current.walkDecls(/^--/, declaration => {
+current.walkDecls(/^--/, (declaration) => {
   if (declaration.parent.selector === ':root') tokens.set(declaration.prop, declaration.value);
   else if (!declaration.parent.selector?.includes('[data-react-toolbox-tokens')) runtimeTokens.add(declaration.prop);
 });
@@ -53,22 +58,23 @@ function resolveVariables(value, ancestors = new Set()) {
 }
 
 function resolveRelativeColors(value) {
-  return value.replace(/rgb\(from\s+(rgb\([^)]+\)|#[\da-f]+)\s+r g b\s*\/\s*([\d.]+%?)\)/gi,
-    (_, color, alpha) => {
-      let channels;
-      if (color[0] === '#') {
-        const hex = color.slice(1).length === 3 ? [...color.slice(1)].map(char => char + char).join('') : color.slice(1);
-        channels = [0, 2, 4].map(offset => parseInt(hex.slice(offset, offset + 2), 16));
-      } else {
-        channels = color.match(/[\d.]+/g).map(Number);
-      }
-      const opacity = alpha.endsWith('%') ? parseFloat(alpha) / 100 : Number(alpha);
-      return `rgba(${channels.join(', ')}, ${opacity})`;
-    });
+  return value.replace(/rgb\(from\s+(rgb\([^)]+\)|#[\da-f]+)\s+r g b\s*\/\s*([\d.]+%?)\)/gi, (_, color, alpha) => {
+    let channels;
+    if (color[0] === '#') {
+      const hex =
+        color.slice(1).length === 3 ? [...color.slice(1)].map((char) => char + char).join('') : color.slice(1);
+      channels = [0, 2, 4].map((offset) => parseInt(hex.slice(offset, offset + 2), 16));
+    } else {
+      channels = color.match(/[\d.]+/g).map(Number);
+    }
+    const opacity = alpha.endsWith('%') ? parseFloat(alpha) / 100 : Number(alpha);
+    return `rgba(${channels.join(', ')}, ${opacity})`;
+  });
 }
 
 let legacyGradientStops = 0;
-current.walkDecls(declaration => {
+const gradientValues = new Set();
+current.walkDecls((declaration) => {
   if (declaration.prop.startsWith('--') && !runtimeTokens.has(declaration.prop)) {
     declaration.remove();
     return;
@@ -78,9 +84,16 @@ current.walkDecls(declaration => {
   // Its epsilon corrects floating-point midpoint rounding in WebKit.
   // Compare its source color here; browser PNG parity verifies the actual paint.
   if (declaration.prop === 'background-image' && declaration.parent.selector.includes('.rt-progress-bar-')) {
+    const gradient = declaration.value;
+    const firstOccurrence = !gradientValues.has(gradient);
+    gradientValues.add(gradient);
     declaration.value = declaration.value.replace(
       /rgb\(from (var\(--progress-(?:secondary|main|disabled)-color\)) r g b \/ calc\(round\(alpha \* 255 \+ 0\.0001\) \/ 255\)\)/g,
-      (_, color) => { legacyGradientStops++; return color; });
+      (_, color) => {
+        if (firstOccurrence) legacyGradientStops++;
+        return color;
+      },
+    );
   }
   declaration.value = resolveRelativeColors(resolveVariables(declaration.value));
 });
@@ -90,15 +103,25 @@ const resolved = (await postcss([calc(calcOptions)]).process(current, { from: un
 const normalizedBaseline = (await postcss([calc(calcOptions)]).process(baseline, { from: undefined })).root;
 
 // The original postcss-calc emitted five decimal places for repeating values.
-const normalize = text => text.replace(/-?\d*\.\d+/g, value => String(Number(Number(value).toFixed(5))))
-  .replace(/\s+/g, ' ').replace(/\s*([(),:])\s*/g, '$1').trim();
+const normalize = (text) =>
+  text
+    .replace(/-?\d*\.\d+/g, (value) => String(Number(Number(value).toFixed(5))))
+    .replace(/\s+/g, ' ')
+    .replace(/\s*([(),:])\s*/g, '$1')
+    .trim();
 // Selector/media whitespace is syntax: removing the space after :not(...)
 // changes a descendant into a compound selector, and `and (` is not `and(`.
-const normalizeSyntax = text => text.replace(/\s+/g, ' ').trim();
+const normalizeSyntax = (text) =>
+  text
+    .replace(/(\.rt-[\w-]+)\1(?![\w-])/g, '$1')
+    .replace(/\s+/g, ' ')
+    .replace(/\*(?=[.#:\[])/g, '')
+    .replace(/\s*([>+~])\s*/g, ' $1 ')
+    .trim();
 export function declarationsBySelector(tree) {
   const selectors = new Map();
-  tree.walkRules(rule => {
-    const declarations = rule.nodes.filter(node => node.type === 'decl');
+  tree.walkRules((rule) => {
+    const declarations = rule.nodes.filter((node) => node.type === 'decl');
     if (!declarations.length) return;
     const conditions = [];
     for (let parent = rule.parent; parent && parent.type !== 'root'; parent = parent.parent) {
@@ -116,7 +139,8 @@ export function declarationsBySelector(tree) {
         const value = /^stroke-dash(?:array|offset)$/.test(declaration.prop)
           ? declaration.value.replace(/(^|[\s,])(-?[\d.]+)(?=$|[\s,])/g, '$1$2px')
           : declaration.value;
-        properties.set(declaration.prop, normalize(value) + (declaration.important ? '!important' : ''));
+        const equivalentValue = value.replace(/currentcolor/gi, 'currentColor').replace(/^center center$/, 'center');
+        properties.set(declaration.prop, normalize(equivalentValue) + (declaration.important ? '!important' : ''));
       }
       selectors.set(key, properties);
     }
@@ -128,7 +152,13 @@ export const legacyRules = declarationsBySelector(normalizedBaseline);
 export const modernRules = declarationsBySelector(resolved);
 export { root, fixture };
 
-export const corrections = JSON.parse(await readFile(path.join(root, 'tests/fixtures/m1-style-corrections.json'), 'utf8'));
+export const corrections = JSON.parse(
+  await readFile(path.join(root, 'tests/fixtures/m1-style-corrections.json'), 'utf8'),
+).map((correction) => ({
+  ...correction,
+  selector: normalizeSyntax(correction.selector),
+  ...(correction.afterSelector ? { afterSelector: normalizeSyntax(correction.afterSelector) } : {}),
+}));
 
 // Each correction records both values and its M1 source. Unexpected drift is
 // still an error; the original compiler output is never regenerated to pass.
@@ -138,7 +168,11 @@ export function correctedRules() {
     const { selector, property, before, after, source, reason } = correction;
     assert.ok(source?.startsWith('https://m1.material.io/'), `Missing M1 source: ${selector}`);
     assert.ok(reason, `Missing correction rationale: ${selector}`);
-    assert.equal(rules.get(selector)?.get(property) ?? null, before, `Archived value changed: ${selector}: ${property}`);
+    assert.equal(
+      rules.get(selector)?.get(property) ?? null,
+      before,
+      `Archived value changed: ${selector}: ${property}`,
+    );
     if (!rules.has(selector)) rules.set(selector, new Map());
     if (after === null) rules.get(selector).delete(property);
     else rules.get(selector).set(property, after);
@@ -150,7 +184,7 @@ export function correctedRules() {
 export function referenceCss() {
   correctedRules(); // Validate the immutable before-values and provenance first.
   const entries = [];
-  normalizedBaseline.walkRules(rule => {
+  normalizedBaseline.walkRules((rule) => {
     const conditions = [];
     for (let parent = rule.parent; parent && parent.type !== 'root'; parent = parent.parent) {
       if (parent.type === 'atrule') conditions.unshift(`@${parent.name} ${normalizeSyntax(parent.params)}`);
@@ -161,21 +195,23 @@ export function referenceCss() {
     }
   });
   for (const { selector: key, property, after, afterSelector } of corrections) {
-    let targets = entries.filter(entry => entry.key === key);
+    let targets = entries.filter((entry) => entry.key === key);
     if (!targets.length && after !== null) {
       const parts = key.split(' > ');
       const conditions = [];
       while (parts[0]?.startsWith('@')) conditions.push(parts.shift());
       const entry = { key, conditions, rule: postcss.rule({ selector: parts.join(' > ') }) };
-      const index = afterSelector === null ? -1 : entries.findLastIndex(item => item.key === afterSelector);
+      const index = afterSelector === null ? -1 : entries.findLastIndex((item) => item.key === afterSelector);
       assert.ok(afterSelector === null || index >= 0, `Missing reviewed cascade anchor: ${key}`);
       entries.splice(index + 1, 0, entry);
       targets = [entry];
     }
     // Preserve repeated rules and their cascade positions. A Map serialization
     // would merge them and could also split one animation into several @keyframes.
-    const declarations = targets.flatMap(entry => entry.rule.nodes || []).filter(node => node.type === 'decl' && node.prop === property);
-    if (after === null) declarations.forEach(node => node.remove());
+    const declarations = targets
+      .flatMap((entry) => entry.rule.nodes || [])
+      .filter((node) => node.type === 'decl' && node.prop === property);
+    if (after === null) declarations.forEach((node) => node.remove());
     else {
       const value = after.replace(/!important$/, '');
       const important = after.endsWith('!important');

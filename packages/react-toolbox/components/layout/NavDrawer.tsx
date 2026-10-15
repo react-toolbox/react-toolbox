@@ -1,8 +1,7 @@
 'use client';
-import classnames from 'classnames';
+import { pinnedClasses, clippedClasses } from './styles';
+import { cn } from '../utils/cn';
 import Drawer, { type DrawerProps } from '../drawer';
-import { mergeTheme } from '../theming';
-import defaultTheme from './theme';
 import type { LayoutTheme, LayoutBreakpoint } from './types';
 export interface NavDrawerProps extends Omit<DrawerProps, 'theme'> {
   clipped?: boolean;
@@ -16,17 +15,27 @@ export function NavDrawer({
   clipped,
   permanentAt: _permanentAt,
   pinned = false,
-  theme: suppliedTheme,
+  theme,
   ...other
 }: NavDrawerProps) {
-  const theme = mergeTheme(defaultTheme, suppliedTheme);
   return (
     <Drawer
       {...other}
       active={active || pinned}
-      className={classnames({ [theme.pinned]: pinned, [theme.clipped]: clipped }, className)}
+      className={cn(
+        pinned && cn(pinnedClasses, theme?.pinned),
+        clipped && cn(clippedClasses, theme?.clipped),
+        className,
+      )}
       insideTree
-      theme={{ drawer: theme.navDrawerDrawer, wrapper: theme.navDrawerWrapper }}
+      theme={{
+        drawer: cn('rt-layout-navDrawerDrawer', 'z-[var(--z-index-high)]', theme?.navDrawerDrawer),
+        wrapper: cn(
+          'rt-layout-navDrawerWrapper',
+          '[.rt-layout-navDrawerClipped_&]:relative [.rt-layout-navDrawerClipped_&]:z-[var(--z-index-normal)]',
+          theme?.navDrawerWrapper,
+        ),
+      }}
       withOverlay={!pinned}
     />
   );

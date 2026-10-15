@@ -68,17 +68,17 @@ components/ui/
 
 The `material/` directory avoids collisions with existing shadcn components without prefixing every filename. Each entry exports the named exports, types, and default export where available. `all` adds `material/index.tsx`, which re-exports the public collection. Standard imports use these entries so styles load automatically.
 
-Earlier installations used `toolbox-button`, `toolbox-theme`, and similar entry names. Rerun the relevant add command, change imports to `material/button`, `material/theme`, etc., and remove old entry files after updating their consumers. The CLI does not delete files from earlier installations or migrate imports automatically. The internal `react-toolbox/` directory stays in place.
+Earlier installations used `toolbox-button`, `toolbox-theme`, and similar entry names. Rerun the relevant add command, change imports to `material/button`, `material/theme`, etc., and remove old entry files after updating their consumers. The CLI does not delete files from earlier installations or migrate imports automatically. The internal `react-toolbox/` directory stays in place. After updating all installed components, obsolete internal `<family>/theme.ts` class-map files can also be removed; the public `material/theme.tsx` provider entry is still used for scoped color tokens.
 
-React Server Component boundaries stay in the source. Pure utilities, theme maps, and `shadcnThemeVariables` remain usable on the server through the adjacent implementation files. Event handlers still belong in a client component.
+React Server Component boundaries stay in the source. Pure utilities, shared style helpers, and `shadcnThemeVariables` remain usable on the server through the adjacent implementation files. Event handlers still belong in a client component.
 
-The shared foundation retains the complete original CSS, ordered custom-property definitions, local Roboto fonts, Material Icons, scoped Preflight compatibility, and the MIT license. It does not prune cross-component styles. Source files are copied byte-for-byte; entry files are generated from their exports.
+The shared foundation contains ordered custom-property definitions, local Roboto fonts, Material Icons, scoped Preflight compatibility, keyframe registrations, and the MIT license. Tailwind classes live beside the JSX they style, with small shared constants and variant helpers for related components. Optional `theme` props add classes to individual parts; they do not construct runtime style maps. The installed `setup.css` explicitly registers copied source with `@source`, including in hosts that disable automatic detection. Tailwind emits utilities for installed families and only their referenced keyframes; a Button installation no longer includes presentation rules for every component. Source files are copied byte-for-byte; entry files are generated from their exports.
 
 ## Themes and spacing
 
 The registry adds the maintained Tailwind theme aliases and responsive variant through shadcn’s `cssVars` and `css` fields. `bg-toolbox-primary`, `text-toolbox-text`, `shadow-toolbox-2p`, and the other utilities resolve against the nearest Toolbox scope. Standard spacing uses the M1 4px subgrid: `gap-2` is 8px and `p-6` is 24px. The `toolbox-desktop:` variant matches the component keyline breakpoint at 600px width and height.
 
-Keep the host’s ordinary Tailwind import. Component geometry and motion live in the copied CSS; they are not replaced by shadcn defaults. Internal colors use `--rt-color-*`, so a host shadcn theme does not silently change the M1 palette.
+Keep the host’s ordinary Tailwind import. Component geometry and motion use the classes in the copied components, with shared tokens and keyframes in CSS. They retain the M1 values. Internal colors use `--rt-color-*`, so a host shadcn theme does not silently change the M1 palette.
 
 ```tsx
 import { Button } from '@/components/ui/material/button';
@@ -90,6 +90,8 @@ import { ThemeProvider } from '@/components/ui/material/theme';
 ```
 
 For deliberate host-color mapping, import the installed `react-toolbox/shadcn.css` from your global stylesheet and use `shadcnThemeVariables` from the adjacent `react-toolbox/shadcn.ts` with `ThemeProvider`. This optional bridge preserves Material geometry and motion. Pass host colors through `ThemeProvider.variables` if they are scoped below the root and must follow portaled content.
+
+Use `className` for root utilities and `theme={{ slot: "..." }}` for internal slots. The shared merger resolves conflicting base utilities in favor of the consumer. State and responsive variants still follow normal Tailwind precedence. To override every CardText inset, including its sibling and desktop rules, use `className="p-6!"`; for palette changes across states, prefer the scoped color tokens.
 
 ## Updates
 

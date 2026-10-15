@@ -105,12 +105,11 @@ import Input from '@/widgets/ui/material/input';
 import Slider from '@/widgets/ui/material/slider';
 import { ThemeProvider } from '@/widgets/ui/material/theme';
 import { shadcnThemeVariables } from '@/widgets/ui/react-toolbox/shadcn';
-import buttonTheme from '@/widgets/ui/react-toolbox/button/theme';
 import { range } from '@/widgets/ui/react-toolbox/utils';
 import Interaction from './interaction';
 export default function Page() {
   return <main data-server-theme={shadcnThemeVariables['--rt-shadcn']}
-    data-server-class={buttonTheme.button} data-server-values={range(3).join(',')}>
+    data-server-values={range(3).join(',')}>
     <h1>Copied Material components</h1>
     <Interaction />
     <div data-testid="spacing" className="p-6 bg-toolbox-primary" />
@@ -134,7 +133,6 @@ export default function Page() {
     'Server rendered input',
     'Source slider',
     'data-server-theme="1"',
-    'data-server-class="rt-button-button"',
     'data-server-values="0,1,2"',
   ]) {
     assert(html.includes(content), `Next.js did not server-render copied source content: ${content}`);

@@ -4,8 +4,7 @@ The ripple is a surface reaction that happens when the user interacts with the c
 
 <!-- example -->
 ```jsx
-import Ripple from 'react-toolbox/lib/ripple';
-import theme from 'react-toolbox/lib/ripple/theme';
+import Ripple from '@/components/ui/material/ripple';
 
 const Link = (props) => (
   <a {...props} style={{position: 'relative'}}>
@@ -14,7 +13,7 @@ const Link = (props) => (
 );
 
 const RippleLink = Ripple({spread: 3})(Link);
-const RippleTest = () => <RippleLink href='#' theme={theme}>Test</RippleLink>;
+const RippleTest = () => <RippleLink href='#'>Test</RippleLink>;
 ```
 
 ## Options
@@ -28,7 +27,7 @@ You can pass some options to configure the default props for the ripple when dec
 | `multiple`      | `Boolean`   | `true`      | If true each touch produces a different wave. If false the same wave is restarted. |
 | `passthrough`   | `Boolean`   | `true`      | If true it passes down `theme` and `disabled` properties when present.|
 | `spread`        | `Number`    | `2`         | Factor to indicate how much should the ripple spread under the component.|
-| `theme`         | `Object`    | `null`      | Classnames object defining the ripple style.|
+| `theme`         | `Object`    | `null`      | Optional class overrides for the rendered ripple parts.|
 
 ## Properties
 
@@ -42,11 +41,11 @@ In any component you decorate with the Ripple you'd get some additional props na
 | `rippleClassName` | `String`    | `options.className` | String to customize appearance (color and opacity for example).|
 | `rippleMultiple`  | `Boolean`   | `options.multiple`  | If true each touch produces a different wave. If false the same wave is restarted. |
 | `rippleSpread`    | `Number`    | `options.spread`    | Factor to indicate how much should the ripple spread under the component.|
-| `theme`           | `Object`    | `options.theme`     | Classnames object defining the ripple style.|
+| `theme`           | `Object`    | `options.theme`     | Optional class overrides for the rendered ripple parts.|
 
 ## Theming
 
-You can take a look to the `_config.scss` variables. The themed key for this component is `ToolboxRipple`, it should implement the following interface:
+Default Tailwind classes are included. Use `theme` only to customize individual parts, or scoped CSS variables to adjust shared tokens:
 
 | Name               | Description|
 |:-------------------|:-----------|

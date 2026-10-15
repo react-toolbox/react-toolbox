@@ -1,4 +1,5 @@
 'use client';
+import type { RippleTheme } from './types';
 
 import {
   createElement,
@@ -13,11 +14,9 @@ import {
   type TouchEventHandler,
   type TransitionEventHandler,
 } from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
-import defaultTheme from './theme';
+import { cn } from '../utils/cn';
 
-export type RippleTheme = Partial<typeof defaultTheme>;
+export type { RippleTheme } from './types';
 export interface RippleOptions {
   centered?: boolean;
   className?: string;
@@ -64,7 +63,7 @@ export function useRipple({
   disabled = false,
   multiple = true,
   spread = 2,
-  theme: suppliedTheme,
+  theme,
   ripple = true,
   onRippleEnded,
   onMouseDown: suppliedMouseDown,
@@ -72,7 +71,6 @@ export function useRipple({
   onTouchEnd: suppliedTouchEnd,
   onTouchCancel: suppliedTouchCancel,
 }: RippleOptions = {}): RippleBehavior {
-  const theme = mergeTheme(defaultTheme, suppliedTheme);
   const [inks, setInks] = useState<Ink[]>([]);
   const nodes = useRef(new Map<number, HTMLSpanElement>());
   const listeners = useRef(new Map<number, () => void>());
@@ -94,16 +92,13 @@ export function useRipple({
   useLayoutEffect(() => {
     if (!inks.some((ink) => ink.restarting)) return;
     for (const ink of inks) if (ink.restarting) void nodes.current.get(ink.id)?.offsetWidth;
-    setInks((current) =>
-      current.map((ink) => (ink.restarting ? { ...ink, restarting: false, active: true } : ink)),
-    );
+    setInks((current) => current.map((ink) => (ink.restarting ? { ...ink, restarting: false, active: true } : ink)));
   }, [inks]);
 
   function deactivate(id: number) {
     listeners.current.get(id)?.();
     listeners.current.delete(id);
-    if (mounted.current)
-      setInks((current) => current.map((ink) => (ink.id === id ? { ...ink, active: false } : ink)));
+    if (mounted.current) setInks((current) => current.map((ink) => (ink.id === id ? { ...ink, active: false } : ink)));
   }
   function start(origin: HTMLElement, x: number, y: number, touch: boolean) {
     if (disabled || !ripple) return;
@@ -136,8 +131,7 @@ export function useRipple({
   }
   const onMouseDown: MouseEventHandler<HTMLElement> = (event) => {
     suppliedMouseDown?.(event);
-    if (!event.defaultPrevented && event.button === 0)
-      start(event.currentTarget, event.clientX, event.clientY, false);
+    if (!event.defaultPrevented && event.button === 0) start(event.currentTarget, event.clientX, event.clientY, false);
   };
   const onTouchStart: TouchEventHandler<HTMLElement> = (event) => {
     suppliedTouchStart?.(event);
@@ -161,15 +155,37 @@ export function useRipple({
     onTouchCancel,
     ripple: ripple
       ? inks.map((ink) => (
-          <span key={ink.id} data-react-toolbox="ripple" className={theme.rippleWrapper}>
+          <span
+            key={ink.id}
+            data-react-toolbox="ripple"
+            className={cn(
+              'rt-ripple-rippleWrapper',
+              'bottom-0 left-0 pointer-events-none absolute right-0 top-0 z-[var(--z-index-normal)]',
+              theme?.rippleWrapper,
+            )}
+          >
             <span
               ref={(node) => {
                 if (node) nodes.current.set(ink.id, node);
                 else nodes.current.delete(ink.id);
               }}
-              className={classnames(
-                theme.ripple,
-                { [theme.rippleActive]: ink.active, [theme.rippleRestarting]: ink.restarting },
+              className={cn(
+                'rt-ripple-ripple',
+                'bg-[currentColor] rounded-[50%] left-[50%] pointer-events-none absolute top-[50%] [transform-origin:50%_50%] [transition-duration:var(--ripple-duration)] z-[var(--z-index-high)]',
+                '[&:not(.rt-ripple-rippleActive):not(.rt-ripple-rippleRestarting)]:opacity-0 [&:not(.rt-ripple-rippleActive):not(.rt-ripple-rippleRestarting)]:[transition-property:opacity,_transform]',
+                theme?.ripple,
+                ink.active &&
+                  cn(
+                    'rt-ripple-rippleActive',
+                    '[.rt-ripple-ripple&]:opacity-[var(--ripple-final-opacity)] [.rt-ripple-ripple&]:[transition-property:transform]',
+                    theme?.rippleActive,
+                  ),
+                ink.restarting &&
+                  cn(
+                    'rt-ripple-rippleRestarting',
+                    '[.rt-ripple-ripple&]:opacity-[var(--ripple-final-opacity)] [.rt-ripple-ripple&]:[transition-property:none]',
+                    theme?.rippleRestarting,
+                  ),
                 className,
               )}
               style={{
@@ -178,8 +194,7 @@ export function useRipple({
                 height: ink.width,
               }}
               onTransitionEnd={(event) => {
-                if (event.target !== event.currentTarget || event.propertyName !== 'opacity')
-                  return;
+                if (event.target !== event.currentTarget || event.propertyName !== 'opacity') return;
                 onRippleEnded?.(event);
                 listeners.current.get(ink.id)?.();
                 listeners.current.delete(ink.id);

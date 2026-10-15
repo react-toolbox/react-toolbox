@@ -2,7 +2,7 @@ import React, { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { renderToString } from 'react-dom/server';
-import { Button, Input, ThemeProvider } from '../components';
+import { Button, BrowseButton, IconButton, Input, ThemeProvider } from '../components';
 
 describe('modern theme API', () => {
   it('adds local class overrides without replacing structural classes', () => {
@@ -10,6 +10,33 @@ describe('modern theme API', () => {
     const button = screen.getByRole('button');
     expect(button).toHaveClass('rt-button-button', 'rounded-none', 'custom');
     expect(button.className.split(' ').filter((item) => item === 'custom')).toHaveLength(1);
+  });
+
+  it.each([
+    ['flat', {}],
+    ['raised', { raised: true }],
+    ['floating', { floating: true }],
+  ])('keeps root overrides ahead of %s defaults and specific overrides last', (variant, shape) => {
+    const theme = { button: 'h-16 rounded-none', [variant]: 'h-20' };
+    const view = render(<Button {...shape} label="Custom" theme={theme} />);
+    const button = screen.getByRole('button');
+    expect(button).toHaveClass('h-20', 'rounded-none');
+    expect(button).not.toHaveClass('h-16');
+    view.rerender(<Button {...shape} label="Custom" theme={theme} className="h-24" />);
+    expect(button).toHaveClass('h-24');
+    expect(button).not.toHaveClass('h-20');
+  });
+
+  it('applies shared overrides to file-picker labels and icon buttons', () => {
+    const theme = { button: 'h-16 rounded-none' };
+    const { container } = render(
+      <>
+        <BrowseButton raised label="Upload" theme={theme} />
+        <IconButton icon="add" aria-label="Add" theme={theme} />
+      </>,
+    );
+    expect(container.querySelector('label')).toHaveClass('h-16', 'rounded-none');
+    expect(screen.getByRole('button', { name: 'Add' })).toHaveClass('h-16', 'rounded-none');
   });
 
   it('forwards typed input handles and keeps unscoped providers wrapper-free', () => {

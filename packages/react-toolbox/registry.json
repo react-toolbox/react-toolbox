@@ -47,9 +47,11 @@
       },
       "dependencies": [
         "@fontsource/roboto@^5.3.0",
+        "classnames@^2.5.1",
         "material-icons@^1.13.14",
         "react-dom@^19.3.0",
-        "react@^19.3.0"
+        "react@^19.3.0",
+        "tailwind-merge@^3.7.0"
       ],
       "devDependencies": [],
       "registryDependencies": [],
@@ -65,119 +67,14 @@
           "target": "@ui/react-toolbox/ThemeProvider.ts"
         },
         {
-          "path": "components/app_bar/config.css",
+          "path": "components/animations.css",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/app_bar/config.css"
-        },
-        {
-          "path": "components/app_bar/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/app_bar/theme.css"
-        },
-        {
-          "path": "components/autocomplete/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/autocomplete/config.css"
-        },
-        {
-          "path": "components/autocomplete/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/autocomplete/theme.css"
-        },
-        {
-          "path": "components/avatar/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/avatar/config.css"
-        },
-        {
-          "path": "components/avatar/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/avatar/theme.css"
-        },
-        {
-          "path": "components/button/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/button/config.css"
-        },
-        {
-          "path": "components/button/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/button/theme.css"
-        },
-        {
-          "path": "components/card/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/card/config.css"
-        },
-        {
-          "path": "components/card/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/card/theme.css"
-        },
-        {
-          "path": "components/checkbox/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/checkbox/config.css"
-        },
-        {
-          "path": "components/checkbox/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/checkbox/theme.css"
-        },
-        {
-          "path": "components/chip/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/chip/config.css"
-        },
-        {
-          "path": "components/chip/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/chip/theme.css"
+          "target": "@ui/react-toolbox/animations.css"
         },
         {
           "path": "components/colors.css",
           "type": "registry:file",
           "target": "@ui/react-toolbox/colors.css"
-        },
-        {
-          "path": "components/date_picker/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/date_picker/config.css"
-        },
-        {
-          "path": "components/date_picker/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/date_picker/theme.css"
-        },
-        {
-          "path": "components/dialog/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/dialog/config.css"
-        },
-        {
-          "path": "components/dialog/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/dialog/theme.css"
-        },
-        {
-          "path": "components/drawer/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/drawer/config.css"
-        },
-        {
-          "path": "components/drawer/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/drawer/theme.css"
-        },
-        {
-          "path": "components/dropdown/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/dropdown/config.css"
-        },
-        {
-          "path": "components/dropdown/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/dropdown/theme.css"
         },
         {
           "path": "components/hoc/Portal.tsx",
@@ -195,101 +92,6 @@
           "target": "@ui/react-toolbox/hoc/usePresence.ts"
         },
         {
-          "path": "components/input/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/input/config.css"
-        },
-        {
-          "path": "components/input/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/input/theme.css"
-        },
-        {
-          "path": "components/layout/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/layout/theme.css"
-        },
-        {
-          "path": "components/link/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/link/theme.css"
-        },
-        {
-          "path": "components/list/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/list/config.css"
-        },
-        {
-          "path": "components/list/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/list/theme.css"
-        },
-        {
-          "path": "components/media.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/media.css"
-        },
-        {
-          "path": "components/menu/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/menu/config.css"
-        },
-        {
-          "path": "components/menu/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/menu/theme.css"
-        },
-        {
-          "path": "components/navigation/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/navigation/config.css"
-        },
-        {
-          "path": "components/navigation/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/navigation/theme.css"
-        },
-        {
-          "path": "components/overlay/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/overlay/config.css"
-        },
-        {
-          "path": "components/overlay/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/overlay/theme.css"
-        },
-        {
-          "path": "components/progress_bar/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/progress_bar/config.css"
-        },
-        {
-          "path": "components/progress_bar/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/progress_bar/theme.css"
-        },
-        {
-          "path": "components/radio/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/radio/config.css"
-        },
-        {
-          "path": "components/radio/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/radio/theme.css"
-        },
-        {
-          "path": "components/ripple/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/ripple/config.css"
-        },
-        {
-          "path": "components/ripple/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/ripple/theme.css"
-        },
-        {
           "path": "components/shadcn.css",
           "type": "registry:file",
           "target": "@ui/react-toolbox/shadcn.css"
@@ -300,49 +102,9 @@
           "target": "@ui/react-toolbox/shadcn.ts"
         },
         {
-          "path": "components/slider/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/slider/config.css"
-        },
-        {
-          "path": "components/slider/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/slider/theme.css"
-        },
-        {
-          "path": "components/snackbar/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/snackbar/theme.css"
-        },
-        {
           "path": "components/styles.css",
           "type": "registry:file",
           "target": "@ui/react-toolbox/styles.css"
-        },
-        {
-          "path": "components/switch/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/switch/config.css"
-        },
-        {
-          "path": "components/switch/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/switch/theme.css"
-        },
-        {
-          "path": "components/table/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/table/theme.css"
-        },
-        {
-          "path": "components/tabs/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/tabs/config.css"
-        },
-        {
-          "path": "components/tabs/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/tabs/theme.css"
         },
         {
           "path": "components/tailwind-preflight.css",
@@ -360,29 +122,19 @@
           "target": "@ui/react-toolbox/theming.tsx"
         },
         {
-          "path": "components/time_picker/config.css",
+          "path": "components/tokens.css",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/time_picker/config.css"
-        },
-        {
-          "path": "components/time_picker/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/time_picker/theme.css"
-        },
-        {
-          "path": "components/tooltip/config.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/tooltip/config.css"
-        },
-        {
-          "path": "components/tooltip/theme.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/tooltip/theme.css"
+          "target": "@ui/react-toolbox/tokens.css"
         },
         {
           "path": "components/utils/breakpoints.ts",
           "type": "registry:file",
           "target": "@ui/react-toolbox/utils/breakpoints.ts"
+        },
+        {
+          "path": "components/utils/cn.ts",
+          "type": "registry:file",
+          "target": "@ui/react-toolbox/utils/cn.ts"
         },
         {
           "path": "components/utils/events.ts",
@@ -393,6 +145,11 @@
           "path": "components/utils/index.ts",
           "type": "registry:file",
           "target": "@ui/react-toolbox/utils/index.ts"
+        },
+        {
+          "path": "components/utils/styles.ts",
+          "type": "registry:file",
+          "target": "@ui/react-toolbox/utils/styles.ts"
         },
         {
           "path": "components/utils/time.ts",
@@ -432,7 +189,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "e39516df5502dbe132a962c724ad9caf09f9a770cc43a4f0f57f4ccb9095621f",
+        "sourceSha256": "2c8f1d4398340b028048d88306437af41ae07d18f8551c9742bc4787a14b3c7e",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -444,7 +201,6 @@
       "title": "React Toolbox app bar",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -464,9 +220,9 @@
           "target": "@ui/react-toolbox/app_bar/index.ts"
         },
         {
-          "path": "components/app_bar/theme.ts",
+          "path": "components/app_bar/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/app_bar/theme.ts"
+          "target": "@ui/react-toolbox/app_bar/types.ts"
         },
         {
           "path": "registry/generated/app-bar.tsx",
@@ -481,7 +237,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "2289fe600c7f2f18f4a963fbec62b3c71336556ae8d20d09fb133a9c26750d51",
+        "sourceSha256": "dbf2dae3a96a105fa8ebbc085e07d980fc7e13dbd6f1ac4d1d1f18e8d2196579",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -493,7 +249,6 @@
       "title": "React Toolbox autocomplete",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -514,9 +269,9 @@
           "target": "@ui/react-toolbox/autocomplete/index.ts"
         },
         {
-          "path": "components/autocomplete/theme.ts",
+          "path": "components/autocomplete/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/autocomplete/theme.ts"
+          "target": "@ui/react-toolbox/autocomplete/types.ts"
         },
         {
           "path": "registry/generated/autocomplete.tsx",
@@ -531,7 +286,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "3d4f10128346c4ff7c7ef6f2bb53be75db09283b04c02f20df4817c8ffb73c67",
+        "sourceSha256": "f5acb14a984fff4a0a95df1fbcbd62f7c33111253c8b44c2eabc6d5ebeefce8d",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -543,7 +298,6 @@
       "title": "React Toolbox avatar",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -563,9 +317,9 @@
           "target": "@ui/react-toolbox/avatar/index.ts"
         },
         {
-          "path": "components/avatar/theme.ts",
+          "path": "components/avatar/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/avatar/theme.ts"
+          "target": "@ui/react-toolbox/avatar/types.ts"
         },
         {
           "path": "registry/generated/avatar.tsx",
@@ -580,7 +334,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "25f9386ab17274641d60cb687da10e271c2442c8e4b4fc33666749652d20b9ac",
+        "sourceSha256": "74581ddd7a33f71369b8c5c2e7c98fceb3b7e1af10f5c71aac896c67a8380360",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -592,7 +346,6 @@
       "title": "React Toolbox button",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -623,9 +376,9 @@
           "target": "@ui/react-toolbox/button/index.ts"
         },
         {
-          "path": "components/button/theme.ts",
+          "path": "components/button/styles.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/button/theme.ts"
+          "target": "@ui/react-toolbox/button/styles.ts"
         },
         {
           "path": "components/button/types.ts",
@@ -645,7 +398,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "8e3738e84f50148c2b7f23701dbbe0ff4a4548dfebad9e9014f084908e30bc1f",
+        "sourceSha256": "6043c54e489d6a5b9a20e3eb8d0f59b1adac3d240d2db8ec340b3deada4a2a9c",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -657,7 +410,6 @@
       "title": "React Toolbox card",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -697,9 +449,9 @@
           "target": "@ui/react-toolbox/card/index.ts"
         },
         {
-          "path": "components/card/theme.ts",
+          "path": "components/card/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/card/theme.ts"
+          "target": "@ui/react-toolbox/card/types.ts"
         },
         {
           "path": "registry/generated/card.tsx",
@@ -714,7 +466,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "c71aabfe8727b32e4c1d9e9e0acce49bf2214ca6179543ad8f09d9184caf4507",
+        "sourceSha256": "a87442ae15ff35fb5cb7ef300bfd3964b3c268c849f49c25e37dc2c57bf4ffe9",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -726,7 +478,6 @@
       "title": "React Toolbox checkbox",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -751,9 +502,9 @@
           "target": "@ui/react-toolbox/checkbox/index.ts"
         },
         {
-          "path": "components/checkbox/theme.ts",
+          "path": "components/checkbox/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/checkbox/theme.ts"
+          "target": "@ui/react-toolbox/checkbox/types.ts"
         },
         {
           "path": "registry/generated/checkbox.tsx",
@@ -768,7 +519,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "e7642b13c6287151e5146be9c9f2e1258346650dee8987498f9bc67fdbd5a977",
+        "sourceSha256": "5670ab14292207f5abe62f389220f10b41ce225b777124e0a92e2d86f27e292a",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -780,7 +531,6 @@
       "title": "React Toolbox chip",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -800,9 +550,9 @@
           "target": "@ui/react-toolbox/chip/index.ts"
         },
         {
-          "path": "components/chip/theme.ts",
+          "path": "components/chip/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/chip/theme.ts"
+          "target": "@ui/react-toolbox/chip/types.ts"
         },
         {
           "path": "registry/generated/chip.tsx",
@@ -817,7 +567,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "8542fc4e4c199656d37ee2823a398bea468d23daefd4b6dea0a9342615749b65",
+        "sourceSha256": "c856cd0b6c09ff5b17a162c818b776b66c12aa4223e2f0aefab97145cc39a413",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -829,7 +579,6 @@
       "title": "React Toolbox date picker",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react-transition-group@^4.4.5",
         "react@^19.3.0"
       ],
@@ -879,9 +628,14 @@
           "target": "@ui/react-toolbox/date_picker/is-date-disabled.ts"
         },
         {
-          "path": "components/date_picker/theme.ts",
+          "path": "components/date_picker/styles.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/date_picker/theme.ts"
+          "target": "@ui/react-toolbox/date_picker/styles.ts"
+        },
+        {
+          "path": "components/date_picker/types.ts",
+          "type": "registry:file",
+          "target": "@ui/react-toolbox/date_picker/types.ts"
         },
         {
           "path": "registry/generated/date-picker.tsx",
@@ -896,7 +650,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "c368d2f0e715571c5ee702fe4130243fe8ca7fdf61a41b35ec0ad30ff819b08b",
+        "sourceSha256": "6baab265d247859d6166332b32f42ca328e39398b5474d0f4a0a4591be891d82",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -908,7 +662,6 @@
       "title": "React Toolbox dialog",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -929,9 +682,9 @@
           "target": "@ui/react-toolbox/dialog/index.ts"
         },
         {
-          "path": "components/dialog/theme.ts",
+          "path": "components/dialog/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/dialog/theme.ts"
+          "target": "@ui/react-toolbox/dialog/types.ts"
         },
         {
           "path": "registry/generated/dialog.tsx",
@@ -946,7 +699,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "bf49b76b9edfacd63dc994bbb09b86eea7eb87946384a32ecc110a3b4ff17862",
+        "sourceSha256": "3f131a06cf4917e48468de1cecf99ed943b8380988e93f570e55c8637b956a95",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -958,7 +711,6 @@
       "title": "React Toolbox drawer",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -978,9 +730,9 @@
           "target": "@ui/react-toolbox/drawer/index.ts"
         },
         {
-          "path": "components/drawer/theme.ts",
+          "path": "components/drawer/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/drawer/theme.ts"
+          "target": "@ui/react-toolbox/drawer/types.ts"
         },
         {
           "path": "registry/generated/drawer.tsx",
@@ -995,7 +747,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "55b2e770c3c8d95678a96961f75dba5ee101ccac07625c152ce68e6d9e17e9cd",
+        "sourceSha256": "d4999dcbacfdcf7bab39924464d5072c91bb3eae4a123d36c5b5cf652b9f05cb",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1007,7 +759,6 @@
       "title": "React Toolbox dropdown",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -1027,9 +778,9 @@
           "target": "@ui/react-toolbox/dropdown/index.ts"
         },
         {
-          "path": "components/dropdown/theme.ts",
+          "path": "components/dropdown/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/dropdown/theme.ts"
+          "target": "@ui/react-toolbox/dropdown/types.ts"
         },
         {
           "path": "registry/generated/dropdown.tsx",
@@ -1044,7 +795,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "efd92bdda61d4191c8a1bce278a40e3af6e16930b2ddc00796332bfa478fc76a",
+        "sourceSha256": "5ec858d46c4e95088be0d9cef58fb4ba9b01c9104dc4f4d6feb44bdbe3fad3b3",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1056,7 +807,6 @@
       "title": "React Toolbox font icon",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -1087,7 +837,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "71f2c586bd1e2e7e480a8667a13fd3da9537ba031067bfc2c11fb70a0386068f",
+        "sourceSha256": "359a43806970f587fee6a306d5378ed749b02195f6dbf143292246f80ce98aff",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1099,7 +849,6 @@
       "title": "React Toolbox input",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -1119,9 +868,9 @@
           "target": "@ui/react-toolbox/input/index.ts"
         },
         {
-          "path": "components/input/theme.ts",
+          "path": "components/input/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/input/theme.ts"
+          "target": "@ui/react-toolbox/input/types.ts"
         },
         {
           "path": "registry/generated/input.tsx",
@@ -1136,7 +885,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "d0fd47435094ffb42517325c493dd9b8103002e92182032dccdb6af577573af4",
+        "sourceSha256": "039956d14d387c5a8042de22c55a353bc7400d78607e2af10deeb6e88775eabb",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1148,7 +897,6 @@
       "title": "React Toolbox layout",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -1184,9 +932,9 @@
           "target": "@ui/react-toolbox/layout/index.ts"
         },
         {
-          "path": "components/layout/theme.ts",
+          "path": "components/layout/styles.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/layout/theme.ts"
+          "target": "@ui/react-toolbox/layout/styles.ts"
         },
         {
           "path": "components/layout/types.ts",
@@ -1206,7 +954,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "a98e6b1440b118c6455e0de29f88cf94bdce8a72cc5aead5fda55d20f8b88b34",
+        "sourceSha256": "e6ca77c813b241cc11ff1174c9027af38fead6f8c0e583f5334586accdea28f2",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1218,7 +966,6 @@
       "title": "React Toolbox list",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -1286,9 +1033,14 @@
           "target": "@ui/react-toolbox/list/index.ts"
         },
         {
-          "path": "components/list/theme.ts",
+          "path": "components/list/styles.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/list/theme.ts"
+          "target": "@ui/react-toolbox/list/styles.ts"
+        },
+        {
+          "path": "components/list/types.ts",
+          "type": "registry:file",
+          "target": "@ui/react-toolbox/list/types.ts"
         },
         {
           "path": "registry/generated/list.tsx",
@@ -1303,7 +1055,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "2aa7628fe4c693197b4ea287f0bcfb943a188e2965440eeb04b4ebfffd71c684",
+        "sourceSha256": "e43117a09ff93a1a6507bdd08fdbd4af23d100bb945bd419a3aaf51b00d1ea27",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1315,7 +1067,6 @@
       "title": "React Toolbox menu",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -1352,9 +1103,14 @@
           "target": "@ui/react-toolbox/menu/index.ts"
         },
         {
-          "path": "components/menu/theme.ts",
+          "path": "components/menu/styles.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/menu/theme.ts"
+          "target": "@ui/react-toolbox/menu/styles.ts"
+        },
+        {
+          "path": "components/menu/types.ts",
+          "type": "registry:file",
+          "target": "@ui/react-toolbox/menu/types.ts"
         },
         {
           "path": "registry/generated/menu.tsx",
@@ -1369,7 +1125,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "05f726567a502ccc6403ce3aafdd0e404a55cc7048a7aeef67e13c7584d80491",
+        "sourceSha256": "66e4fbbd361cac467fd34a6c833fd409fa689bfaab414199f4a425b039a030df",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1381,7 +1137,6 @@
       "title": "React Toolbox overlay",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -1400,9 +1155,9 @@
           "target": "@ui/react-toolbox/overlay/index.ts"
         },
         {
-          "path": "components/overlay/theme.ts",
+          "path": "components/overlay/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/overlay/theme.ts"
+          "target": "@ui/react-toolbox/overlay/types.ts"
         },
         {
           "path": "components/overlay/useModalFocus.ts",
@@ -1422,7 +1177,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "1a7b7235572efcd7d1cf22941a7df039f4f9babf1cb279edb64643d22a9b26cf",
+        "sourceSha256": "969ff9ea7d947a43c6c04c71e34a35a2cfda17d21122d07a099d4a43c348b05a",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1434,7 +1189,6 @@
       "title": "React Toolbox progress bar",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -1453,9 +1207,9 @@
           "target": "@ui/react-toolbox/progress_bar/index.ts"
         },
         {
-          "path": "components/progress_bar/theme.ts",
+          "path": "components/progress_bar/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/progress_bar/theme.ts"
+          "target": "@ui/react-toolbox/progress_bar/types.ts"
         },
         {
           "path": "registry/generated/progress-bar.tsx",
@@ -1470,7 +1224,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "ce9091bec12fd46a77fa0427c0faadfe56d3b03df202e243d035359b87f067c6",
+        "sourceSha256": "29c76226130f580a7b28430d4c048f3859f236982cdd11d951a87906b64be618",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1482,7 +1236,6 @@
       "title": "React Toolbox radio",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -1512,9 +1265,9 @@
           "target": "@ui/react-toolbox/radio/index.ts"
         },
         {
-          "path": "components/radio/theme.ts",
+          "path": "components/radio/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/radio/theme.ts"
+          "target": "@ui/react-toolbox/radio/types.ts"
         },
         {
           "path": "registry/generated/radio.tsx",
@@ -1529,7 +1282,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "f0834a6cc844be329fec261fba271d67cbcc7e8941e4d5a5c6e1ebf68a70d322",
+        "sourceSha256": "5fbb5ea884bbb93b9eefae6b0f8dd62f6892a40304ad43147b0c15eff5e1eea2",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1541,7 +1294,6 @@
       "title": "React Toolbox ripple",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -1560,9 +1312,9 @@
           "target": "@ui/react-toolbox/ripple/index.ts"
         },
         {
-          "path": "components/ripple/theme.ts",
+          "path": "components/ripple/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/ripple/theme.ts"
+          "target": "@ui/react-toolbox/ripple/types.ts"
         },
         {
           "path": "registry/generated/ripple.tsx",
@@ -1577,7 +1329,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "d11c0daf2360c7d1951b7885549882ce7e98a19676286f907f90ce55f7ff8f75",
+        "sourceSha256": "e1fb64580961aa9e6b6bcffcb33b3e816b36207deedcdd3b344dfd09a024050a",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1589,7 +1341,6 @@
       "title": "React Toolbox slider",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -1610,9 +1361,9 @@
           "target": "@ui/react-toolbox/slider/index.ts"
         },
         {
-          "path": "components/slider/theme.ts",
+          "path": "components/slider/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/slider/theme.ts"
+          "target": "@ui/react-toolbox/slider/types.ts"
         },
         {
           "path": "registry/generated/slider.tsx",
@@ -1627,7 +1378,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "9f23e7b7169c139f1023d801355c7af4a8776bc3d6f0334c6660192d8a222c7a",
+        "sourceSha256": "9c9d7f14ec35d4adbe8c067773308b29a456e6675e432799d352d224b15e0874",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1639,7 +1390,6 @@
       "title": "React Toolbox snackbar",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -1659,9 +1409,9 @@
           "target": "@ui/react-toolbox/snackbar/index.ts"
         },
         {
-          "path": "components/snackbar/theme.ts",
+          "path": "components/snackbar/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/snackbar/theme.ts"
+          "target": "@ui/react-toolbox/snackbar/types.ts"
         },
         {
           "path": "registry/generated/snackbar.tsx",
@@ -1676,7 +1426,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "dc00cd04d01fa76f39638a29a158948b6ffe4b726f43e2452edf072998fc43a2",
+        "sourceSha256": "70fe41d754417192ec7a813b13ec9ec6f5557b4acda802351625e7ffa3e9ddf3",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1688,7 +1438,6 @@
       "title": "React Toolbox switch",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -1713,9 +1462,9 @@
           "target": "@ui/react-toolbox/switch/index.ts"
         },
         {
-          "path": "components/switch/theme.ts",
+          "path": "components/switch/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/switch/theme.ts"
+          "target": "@ui/react-toolbox/switch/types.ts"
         },
         {
           "path": "registry/generated/switch.tsx",
@@ -1730,7 +1479,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "4aad3871efded047ddeb9c41ed217ce0046744a9cb9efcc3820ebbf0cc409f10",
+        "sourceSha256": "b8cb9523280e43b05188c7fe63b605fcfbba9087470859281ddf1dc9a5b53471",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1742,7 +1491,6 @@
       "title": "React Toolbox table",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -1778,9 +1526,14 @@
           "target": "@ui/react-toolbox/table/index.ts"
         },
         {
-          "path": "components/table/theme.ts",
+          "path": "components/table/styles.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/table/theme.ts"
+          "target": "@ui/react-toolbox/table/styles.ts"
+        },
+        {
+          "path": "components/table/types.ts",
+          "type": "registry:file",
+          "target": "@ui/react-toolbox/table/types.ts"
         },
         {
           "path": "registry/generated/table.tsx",
@@ -1795,7 +1548,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "7d41bb5c1b1ce7d17005d0440193ea5a90403ed19ec79c397be6a011652ecd22",
+        "sourceSha256": "8e2f31c56c1d2bce8f68a83aa2e37e771c17769df29a9c8f5828283ff90fb9f4",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1807,7 +1560,6 @@
       "title": "React Toolbox tabs",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -1838,9 +1590,14 @@
           "target": "@ui/react-toolbox/tabs/index.ts"
         },
         {
-          "path": "components/tabs/theme.ts",
+          "path": "components/tabs/styles.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/tabs/theme.ts"
+          "target": "@ui/react-toolbox/tabs/styles.ts"
+        },
+        {
+          "path": "components/tabs/types.ts",
+          "type": "registry:file",
+          "target": "@ui/react-toolbox/tabs/types.ts"
         },
         {
           "path": "registry/generated/tabs.tsx",
@@ -1855,7 +1612,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "22539612c1203eb879511adad63897332a5f1b510fea7a86477fe075ee255fec",
+        "sourceSha256": "cf6c861b45dd6a3ab33a8601d12dc4747997d5cea258fe4f61030ac7e9f84399",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1867,7 +1624,6 @@
       "title": "React Toolbox time picker",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react-transition-group@^4.4.5",
         "react@^19.3.0"
       ],
@@ -1921,9 +1677,9 @@
           "target": "@ui/react-toolbox/time_picker/index.ts"
         },
         {
-          "path": "components/time_picker/theme.ts",
+          "path": "components/time_picker/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/time_picker/theme.ts"
+          "target": "@ui/react-toolbox/time_picker/types.ts"
         },
         {
           "path": "registry/generated/time-picker.tsx",
@@ -1938,7 +1694,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "07d5a06aac3c7534c890229bb0d166267a5f447fac348837cff517c44756522a",
+        "sourceSha256": "10ce2e3f22c3b27807210edf88f0e59295f07323fc216e17f382e749db425017",
         "source": "components/",
         "distribution": "copy-source"
       }
@@ -1950,7 +1706,6 @@
       "title": "React Toolbox tooltip",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "classnames@^2.5.1",
         "react@^19.3.0"
       ],
       "devDependencies": [],
@@ -1969,9 +1724,9 @@
           "target": "@ui/react-toolbox/tooltip/index.ts"
         },
         {
-          "path": "components/tooltip/theme.ts",
+          "path": "components/tooltip/types.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/tooltip/theme.ts"
+          "target": "@ui/react-toolbox/tooltip/types.ts"
         },
         {
           "path": "registry/generated/tooltip.tsx",
@@ -1986,7 +1741,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "bd3b96848bc65252edca93005015a2641317fd7e5945257b3784f76a3feec29e",
+        "sourceSha256": "3a111f9f311f2b944b747a66175805351c49f5e73fc7ffbf20b6cb80e3243a49",
         "source": "components/",
         "distribution": "copy-source"
       }

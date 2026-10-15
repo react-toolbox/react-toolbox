@@ -4,13 +4,25 @@ import { componentCapture, useOriginalStyles, prepare, renderedStyles } from './
 
 async function assertParity(page, selector, name, testInfo) {
   const target = componentCapture(page, selector);
-  await target.scrollIntoViewIfNeeded();
+  await target.evaluate((node) => node.scrollIntoView({ block: 'center', behavior: 'instant' }));
   // Opening a picker leaves the pointer where the input was. As its entrance
   // transition finishes, that coordinate can hover a different calendar day.
   await page.mouse.move(0, 0);
+  await target.evaluate(async (node) => {
+    await Promise.all(
+      node
+        .getAnimations({ subtree: true })
+        .filter((animation) => animation.effect?.getComputedTiming().iterations !== Infinity)
+        .map((animation) => animation.finished.catch(() => {})),
+    );
+  });
   const modernImage = await target.screenshot({ animations: 'disabled' });
   const modernStyles = await renderedStyles(page, selector);
   await useOriginalStyles(page);
+  // Loading the independent stylesheet can change the document's scroll
+  // anchor. Keep the canvas fully inside the viewport before the second capture
+  // so a fractional final row is not clipped by the viewport edge.
+  await target.evaluate((node) => node.scrollIntoView({ block: 'center', behavior: 'instant' }));
   const originalImage = await target.screenshot({ animations: 'disabled' });
   const originalStyles = await renderedStyles(page, selector);
 
@@ -20,11 +32,27 @@ async function assertParity(page, selector, name, testInfo) {
     await writeFile(testInfo.outputPath(`${name}-modern.png`), modernImage);
     await writeFile(testInfo.outputPath(`${name}-original.png`), originalImage);
   }
-  expect(modernStyles, `${name}: geometry, colors, typography, and motion declarations match the archived stylesheet plus reviewed M1 corrections`).toEqual(originalStyles);
-  expect(modernImage.equals(originalImage), `${name}: screenshots must be pixel-identical to the independent reference plus reviewed M1 corrections`).toBe(true);
+  expect(
+    modernStyles,
+    `${name}: geometry, colors, typography, and motion declarations match the archived stylesheet plus reviewed M1 corrections`,
+  ).toEqual(originalStyles);
+  expect(
+    modernImage.equals(originalImage),
+    `${name}: screenshots must be pixel-identical to the independent reference plus reviewed M1 corrections`,
+  ).toBe(true);
 }
 
-for (const section of ['buttons', 'inputs', 'selection', 'identity', 'cards', 'navigation', 'pickers', 'progress', 'tables']) {
+for (const section of [
+  'buttons',
+  'inputs',
+  'selection',
+  'identity',
+  'cards',
+  'navigation',
+  'pickers',
+  'progress',
+  'tables',
+]) {
   test(`M1 corrected reference parity: ${section}`, async ({ page }, testInfo) => {
     await prepare(page);
     await assertParity(page, `#${section}`, section, testInfo);
@@ -54,6 +82,9 @@ test('M1 corrected reference parity: open clock', async ({ page }, testInfo) => 
 
 test('M1 corrected reference parity: disabled buffered progress', async ({ page }, testInfo) => {
   await prepare(page);
-  await page.locator('#progress [data-react-toolbox="progress-bar"]').first().evaluate(element => element.setAttribute('disabled', ''));
+  await page
+    .locator('#progress [data-react-toolbox="progress-bar"]')
+    .first()
+    .evaluate((element) => element.setAttribute('disabled', ''));
   await assertParity(page, '#progress', 'disabled-progress', testInfo);
 });

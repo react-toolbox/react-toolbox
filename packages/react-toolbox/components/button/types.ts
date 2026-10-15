@@ -1,7 +1,25 @@
+/** Optional class overrides for the component's rendered parts. */
+export type ButtonTheme = Partial<
+  Record<
+    | 'accent'
+    | 'button'
+    | 'flat'
+    | 'floating'
+    | 'icon'
+    | 'inverse'
+    | 'mini'
+    | 'neutral'
+    | 'primary'
+    | 'raised'
+    | 'rippleWrapper'
+    | 'solid'
+    | 'squared'
+    | 'toggle',
+    string
+  >
+>;
 import type { ComponentPropsWithRef, ReactNode } from 'react';
 import type { RippleProps } from '../ripple';
-import type defaultTheme from './theme';
-export type ButtonTheme = Partial<typeof defaultTheme>;
 export interface ButtonAppearanceProps extends RippleProps {
   accent?: boolean;
   disabled?: boolean;

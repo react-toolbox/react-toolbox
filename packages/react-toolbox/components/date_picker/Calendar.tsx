@@ -1,14 +1,15 @@
 'use client';
+import { activeClasses } from './styles';
+import { cn } from '../utils/cn';
+import type { DatePickerTheme } from './types';
 
-import { mergeTheme } from '../theming';
 import React, { useEffect, useRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { range, getAnimationModule } from '../utils/utils';
+import { range } from '../utils/utils';
 import IconButton from '../button/IconButton';
 import time, { type DatePickerLocale } from '../utils/time';
 import CalendarMonth from './CalendarMonth';
 import isDateDisabled, { dayStamp, type DateConstraints } from './is-date-disabled';
-import defaults from './theme';
 export interface CalendarProps extends DateConstraints {
   display?: 'months' | 'years';
   handleSelect?: (event: React.KeyboardEvent<HTMLElement>) => void;
@@ -16,7 +17,7 @@ export interface CalendarProps extends DateConstraints {
   onChange?: (date: Date, dayClick: boolean) => void;
   selectedDate?: Date;
   sundayFirstDayOfWeek?: boolean;
-  theme?: Partial<typeof defaults>;
+  theme?: DatePickerTheme;
 }
 export default function Calendar({
   display = 'months',
@@ -25,10 +26,9 @@ export default function Calendar({
   onChange,
   selectedDate: suppliedDate,
   sundayFirstDayOfWeek,
-  theme: overrides,
+  theme,
   ...constraints
 }: CalendarProps) {
-  const theme = mergeTheme(defaults, overrides);
   const [initialDate] = useState(() => new Date());
   const selectedDate = suppliedDate ?? initialDate;
   const [viewDate, setViewDate] = useState(selectedDate);
@@ -40,8 +40,7 @@ export default function Calendar({
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   useEffect(() => {
     setViewDate((current) =>
-      current.getFullYear() !== selectedDate.getFullYear() ||
-      current.getMonth() !== selectedDate.getMonth()
+      current.getFullYear() !== selectedDate.getFullYear() || current.getMonth() !== selectedDate.getMonth()
         ? selectedDate
         : current,
     );
@@ -49,8 +48,7 @@ export default function Calendar({
   useEffect(() => {
     if (years.current && activeYear.current)
       years.current.scrollTop =
-        activeYear.current.offsetTop -
-        (years.current.offsetHeight / 2 + activeYear.current.offsetHeight / 2);
+        activeYear.current.offsetTop - (years.current.offsetHeight / 2 + activeYear.current.offsetHeight / 2);
     if (focusSelectedDay.current) {
       focusSelectedDay.current = false;
       monthRefs.current[viewDate.getMonth()].current
@@ -67,11 +65,65 @@ export default function Calendar({
     setViewDate(next);
     onChange?.(next, false);
   };
-  const animation = getAnimationModule(direction === 'left' ? 'slideLeft' : 'slideRight', theme);
+  const animation =
+    direction === 'left'
+      ? {
+          enter: cn(
+            'rt-date-picker-slideLeftEnter',
+            'absolute opacity-0 [transform:translate3d(-100%,_0,_0)]',
+            theme?.slideLeftEnter,
+          ),
+          enterActive: cn(
+            'rt-date-picker-slideLeftEnterActive',
+            '[transition-duration:350ms] [transition-property:transform,_opacity] [transition-timing-function:ease-in-out]',
+            '[.rt-date-picker-slideLeftEnter&]:opacity-[1] [.rt-date-picker-slideLeftEnter&]:[transform:translate3d(0,_0,_0)]',
+            theme?.slideLeftEnterActive,
+          ),
+          exit: cn(
+            'rt-date-picker-slideLeftExit',
+            'absolute opacity-[1] [transform:translate3d(0,_0,_0)]',
+            theme?.slideLeftExit,
+          ),
+          exitActive: cn(
+            'rt-date-picker-slideLeftExitActive',
+            '[transition-duration:350ms] [transition-property:transform,_opacity] [transition-timing-function:ease-in-out]',
+            '[.rt-date-picker-slideLeftExit&]:opacity-0 [.rt-date-picker-slideLeftExit&]:[transform:translate3d(100%,_0,_0)]',
+            theme?.slideLeftExitActive,
+          ),
+        }
+      : {
+          enter: cn(
+            'rt-date-picker-slideRightEnter',
+            'absolute opacity-0 [transform:translateX(100%)]',
+            theme?.slideRightEnter,
+          ),
+          enterActive: cn(
+            'rt-date-picker-slideRightEnterActive',
+            '[transition-duration:350ms] [transition-property:transform,_opacity] [transition-timing-function:ease-in-out]',
+            '[.rt-date-picker-slideRightEnter&]:opacity-[1] [.rt-date-picker-slideRightEnter&]:[transform:translateX(0)]',
+            theme?.slideRightEnterActive,
+          ),
+          exit: cn(
+            'rt-date-picker-slideRightExit',
+            'absolute opacity-[1] [transform:translateX(0)]',
+            theme?.slideRightExit,
+          ),
+          exitActive: cn(
+            'rt-date-picker-slideRightExitActive',
+            '[transition-duration:350ms] [transition-property:transform,_opacity] [transition-timing-function:ease-in-out]',
+            '[.rt-date-picker-slideRightExit&]:opacity-0 [.rt-date-picker-slideRightExit&]:[transform:translateX(-100%)]',
+            theme?.slideRightExitActive,
+          ),
+        };
   const month = viewDate.getMonth();
   return (
     <div
-      className={theme.calendar}
+      className={cn(
+        'rt-date-picker-calendar',
+        '[background:var(--calendar-primary-contrast-color)] text-[length:var(--font-size-small)] h-[var(--calendar-total-height)] leading-[var(--calendar-row-height)] overflow-hidden relative text-center',
+        '[&:focus-visible]:[outline:2px_solid_var(--calendar-primary-color)] [&:focus-visible]:[outline-offset:2px]',
+        theme?.calendar,
+      )}
       role="group"
       aria-label="Calendar"
       tabIndex={0}
@@ -92,8 +144,7 @@ export default function Calendar({
             date = constraints.enabledDates
               .filter(
                 (candidate) =>
-                  (dayStamp(candidate) - dayStamp(selectedDate)) * step > 0 &&
-                  !isDateDisabled(candidate, constraints),
+                  (dayStamp(candidate) - dayStamp(selectedDate)) * step > 0 && !isDateDisabled(candidate, constraints),
               )
               .sort((a, b) => (dayStamp(a) - dayStamp(b)) * Math.sign(step))[0];
           else
@@ -108,23 +159,30 @@ export default function Calendar({
             setViewDate(date);
             onChange?.(date, false);
           }
-        } else if (
-          (event.key === 'Enter' || event.which === 13) &&
-          event.target === event.currentTarget
-        ) {
+        } else if ((event.key === 'Enter' || event.which === 13) && event.target === event.currentTarget) {
           event.preventDefault();
           handleSelect?.(event);
         }
       }}
     >
       {display === 'years' ? (
-        <ul data-react-toolbox="years" className={theme.years} ref={years}>
+        <ul
+          data-react-toolbox="years"
+          className={cn(
+            'rt-date-picker-years',
+            '[&>li:focus-visible]:[outline:2px_solid_var(--calendar-primary-color)] [&>li:focus-visible]:[outline-offset:2px]',
+            'text-[length:var(--font-size-big)] h-full [list-style:none] m-0 overflow-y-auto p-0',
+            '[&>li]:cursor-pointer [&>li]:leading-[2.4]',
+            theme?.years,
+          )}
+          ref={years}
+        >
           {range(1900, 2100).map((year) => (
             <li
               role="button"
               tabIndex={year === viewDate.getFullYear() ? 0 : -1}
               aria-pressed={year === viewDate.getFullYear()}
-              className={year === viewDate.getFullYear() ? theme.active : ''}
+              className={year === viewDate.getFullYear() ? cn(activeClasses, theme?.active) : ''}
               id={String(year)}
               key={year}
               onClick={() => yearClick(year)}
@@ -156,9 +214,7 @@ export default function Calendar({
           data-react-toolbox="calendar"
           onTouchStart={(event) => {
             touchStart.current =
-              event.touches.length === 1
-                ? { x: event.touches[0].clientX, y: event.touches[0].clientY }
-                : null;
+              event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null;
           }}
           onTouchCancel={() => {
             touchStart.current = null;
@@ -178,14 +234,24 @@ export default function Calendar({
           <IconButton
             id="left"
             aria-label="Previous month"
-            className={theme.prev}
+            className={cn(
+              'rt-date-picker-prev',
+              '[.rt-date-picker-calendar_&]:cursor-pointer [.rt-date-picker-calendar_&]:h-[calc(3.6_*_var(--unit))] [.rt-date-picker-calendar_&]:opacity-[0.7] [.rt-date-picker-calendar_&]:absolute [.rt-date-picker-calendar_&]:top-0 [.rt-date-picker-calendar_&]:z-[var(--z-index-high)] [.rt-date-picker-calendar_&]:left-0',
+              '[.rt-date-picker-calendar_&>span]:align-top',
+              theme?.prev,
+            )}
             icon="chevron_left"
             onClick={() => moveViewMonth('left')}
           />
           <IconButton
             id="right"
             aria-label="Next month"
-            className={theme.next}
+            className={cn(
+              'rt-date-picker-next',
+              '[.rt-date-picker-calendar_&]:cursor-pointer [.rt-date-picker-calendar_&]:h-[calc(3.6_*_var(--unit))] [.rt-date-picker-calendar_&]:opacity-[0.7] [.rt-date-picker-calendar_&]:absolute [.rt-date-picker-calendar_&]:top-0 [.rt-date-picker-calendar_&]:z-[var(--z-index-high)] [.rt-date-picker-calendar_&]:right-0',
+              '[.rt-date-picker-calendar_&>span]:align-top',
+              theme?.next,
+            )}
             icon="chevron_right"
             onClick={() => moveViewMonth('right')}
           />

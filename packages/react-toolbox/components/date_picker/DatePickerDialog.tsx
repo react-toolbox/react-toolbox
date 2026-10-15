@@ -1,15 +1,20 @@
 'use client';
+import type { DatePickerTheme } from './types';
 
-import { mergeTheme } from '../theming';
 import React, { useEffect, useState } from 'react';
-import classnames from 'classnames';
+import { cn } from '../utils/cn';
 import Dialog, { type DialogProps } from '../dialog/Dialog';
 import time, { type DatePickerLocale } from '../utils/time';
 import Calendar from './Calendar';
 import isDateDisabled, { dayStamp, type DateConstraints } from './is-date-disabled';
-import defaults from './theme';
-export type DatePickerSelectEvent =
-  React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;
+const buttonClasses = [
+  'rt-date-picker-button',
+  '[.rt-date-picker-dialog>nav>&:not([disabled])]:text-[color:var(--datepicker-primary-color)]',
+  '[.rt-date-picker-dialog>nav>&:not([disabled]):hover]:[background:var(--datepicker-primary-hover-color)]',
+  '[.rt-date-picker-dialog>nav>&:not([disabled]):focus:not(:active)]:[background:var(--datepicker-primary-hover-color)]',
+].join(' ');
+
+export type DatePickerSelectEvent = React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;
 export interface DatePickerDialogProps extends DateConstraints {
   active?: boolean;
   autoOk?: boolean;
@@ -23,7 +28,7 @@ export interface DatePickerDialogProps extends DateConstraints {
   onOverlayClick?: DialogProps['onOverlayClick'];
   onSelect?: (date: Date, event?: DatePickerSelectEvent) => void;
   sundayFirstDayOfWeek?: boolean;
-  theme?: Partial<typeof defaults>;
+  theme?: DatePickerTheme;
   value?: Date;
 }
 export default function DatePickerDialog({
@@ -39,11 +44,10 @@ export default function DatePickerDialog({
   onOverlayClick,
   onSelect,
   sundayFirstDayOfWeek,
-  theme: overrides,
+  theme,
   value,
   ...constraints
 }: DatePickerDialogProps) {
-  const theme = mergeTheme(defaults, overrides);
   const [initialDate] = useState(() => new Date());
   const sourceDate = value ?? initialDate;
   const clamp = (date: Date) => {
@@ -62,12 +66,7 @@ export default function DatePickerDialog({
   useEffect(() => {
     setDate(clamp(sourceDate));
     setDisplay('months');
-  }, [
-    sourceDate.getTime(),
-    active,
-    constraints.minDate?.getTime(),
-    constraints.maxDate?.getTime(),
-  ]);
+  }, [sourceDate.getTime(), active, constraints.minDate?.getTime(), constraints.maxDate?.getTime()]);
   const select = (event?: DatePickerSelectEvent) => {
     if (!isDateDisabled(date, constraints)) onSelect?.(date, event);
   };
@@ -82,10 +81,10 @@ export default function DatePickerDialog({
   return (
     <Dialog
       actions={[
-        { label: cancelLabel, className: theme.button, onClick: onDismiss },
+        { label: cancelLabel, className: cn(buttonClasses, theme?.button), onClick: onDismiss },
         {
           label: okLabel,
-          className: theme.button,
+          className: cn(buttonClasses, theme?.button),
           name,
           onClick: select,
           disabled: isDateDisabled(date, constraints),
@@ -93,19 +92,41 @@ export default function DatePickerDialog({
       ]}
       type="custom"
       active={active}
-      className={classnames(theme.dialog, className)}
+      className={cn(
+        'rt-date-picker-dialog',
+        'w-[var(--datepicker-dialog-width)]',
+        '[&>section]:p-0',
+        theme?.dialog,
+        className,
+      )}
       onEscKeyDown={onEscKeyDown}
       onOverlayClick={onOverlayClick}
       aria-label="Choose date"
     >
-      <header className={classnames(theme.header, theme[`${display}Display`])}>
+      <header
+        className={cn(
+          'rt-date-picker-header',
+          'bg-[var(--datepicker-primary-color)] text-[color:var(--datepicker-primary-contrast-color)] cursor-pointer p-[calc(1.6_*_var(--unit))_calc(2_*_var(--unit))]',
+          "[&_[role='button']:focus-visible]:[outline:2px_solid_currentColor] [&_[role='button']:focus-visible]:[outline-offset:2px]",
+          theme?.header,
+          display === 'months'
+            ? cn('rt-date-picker-monthsDisplay', theme?.monthsDisplay)
+            : cn('rt-date-picker-yearsDisplay', theme?.yearsDisplay),
+        )}
+      >
         <span
           id="years"
           role="button"
           tabIndex={0}
           aria-label="Choose year"
           aria-pressed={display === 'years'}
-          className={theme.year}
+          className={cn(
+            'rt-date-picker-year',
+            'inline-block text-[length:var(--datepicker-year-font-size)] [transition:opacity,_font-size_var(--animation-duration)_var(--animation-curve-default)]',
+            '[.rt-date-picker-yearsDisplay_&]:text-[length:var(--font-size-normal)]',
+            '[.rt-date-picker-monthsDisplay_&]:opacity-[var(--datepicker-inactive-opacity)]',
+            theme?.year,
+          )}
           onClick={switchDisplay}
           onKeyDown={displayKeyDown}
         >
@@ -117,12 +138,23 @@ export default function DatePickerDialog({
           tabIndex={0}
           aria-label="Choose day"
           aria-pressed={display === 'months'}
-          className={theme.date}
+          className={cn(
+            'rt-date-picker-date',
+            'block text-[length:calc(3.4_*_var(--unit))] [font-weight:var(--font-weight-semi-bold)] leading-[calc(4_*_var(--unit))] m-0 [text-transform:capitalize] [transition:opacity_var(--animation-duration)_var(--animation-curve-default)]',
+            '[.rt-date-picker-yearsDisplay_&]:opacity-[var(--datepicker-inactive-opacity)]',
+            theme?.date,
+          )}
           onClick={switchDisplay}
           onKeyDown={displayKeyDown}
         >{`${time.getShortDayOfWeek(date.getDay(), locale)}, ${time.getShortMonth(date, locale)} ${date.getDate()}`}</h3>
       </header>
-      <div className={theme.calendarWrapper}>
+      <div
+        className={cn(
+          'rt-date-picker-calendarWrapper',
+          'p-[var(--unit)_calc(0.5_*_var(--unit))_0]',
+          theme?.calendarWrapper,
+        )}
+      >
         <Calendar
           {...constraints}
           display={display}

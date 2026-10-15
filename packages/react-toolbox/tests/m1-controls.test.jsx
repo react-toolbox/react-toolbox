@@ -6,7 +6,6 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { Input, Dropdown, Autocomplete, Checkbox, RadioButton, RadioGroup, Switch, Chip, DatePicker, TimePicker } from '../components';
 import { DatePickerDialog } from '../components/date_picker';
 import Calendar from '../components/date_picker/Calendar';
-import dateTheme from '../components/date_picker/theme';
 
 afterEach(() => { cleanup(); vi.useRealTimers(); });
 const strict = children => <StrictMode>{children}</StrictMode>;
@@ -154,7 +153,7 @@ describe('Material 1 control behavior', () => {
     const onChange = vi.fn();
     const today = new Date();
     const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1, 18);
-    render(<><input aria-label="Unrelated" /><Calendar selectedDate={today} disabledDates={[tomorrow]} theme={dateTheme} onChange={onChange} /></>);
+    render(<><input aria-label="Unrelated" /><Calendar selectedDate={today} disabledDates={[tomorrow]} onChange={onChange} /></>);
     fireEvent.keyDown(screen.getByRole('textbox', { name: 'Unrelated' }), { key: 'ArrowRight' });
     expect(onChange).not.toHaveBeenCalled();
     fireEvent.keyDown(screen.getByRole('group', { name: 'Calendar' }), { key: 'ArrowRight' });

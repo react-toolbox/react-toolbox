@@ -1,19 +1,16 @@
 'use client';
+import type { DatePickerTheme } from './types';
 
 import React, { useEffect, useState } from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
+import { cn } from '../utils/cn';
 import Input, { type InputProps, type InputElement } from '../input/Input';
 import time, { type DatePickerLocale } from '../utils/time';
-import DatePickerDialog, {
-  type DatePickerDialogProps,
-  type DatePickerSelectEvent,
-} from './DatePickerDialog';
+import DatePickerDialog, { type DatePickerDialogProps, type DatePickerSelectEvent } from './DatePickerDialog';
 import type { DateConstraints } from './is-date-disabled';
-import defaults from './theme';
-export type DatePickerTheme = Partial<typeof defaults> & { container?: string };
+export type { DatePickerTheme } from './types';
 export interface DatePickerProps
-  extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'theme'>, DateConstraints {
+  extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'theme'>,
+    DateConstraints {
   active?: boolean;
   autoOk?: boolean;
   cancelLabel?: string;
@@ -53,12 +50,11 @@ export function DatePicker({
   onOverlayClick,
   readonly,
   sundayFirstDayOfWeek = false,
-  theme: overrides,
+  theme,
   value,
   ref,
   ...others
 }: DatePickerProps) {
-  const theme = mergeTheme(defaults, overrides);
   const [active, setActive] = useState(controlledActive);
   useEffect(() => setActive(controlledActive), [controlledActive]);
   const dismiss = () => {
@@ -72,11 +68,11 @@ export function DatePicker({
   };
   const date = value instanceof Date ? value : undefined;
   return (
-    <div data-react-toolbox="date-picker" className={overrides?.container}>
+    <div data-react-toolbox="date-picker" className={theme?.container}>
       <Input
         {...others}
         ref={ref}
-        className={classnames(theme.input, inputClassName)}
+        className={cn('rt-date-picker-input', theme?.input, inputClassName)}
         disabled={readonly || disabled}
         aria-haspopup="dialog"
         aria-expanded={active}
@@ -86,12 +82,7 @@ export function DatePicker({
         }}
         onKeyDown={(event) => {
           onKeyDown?.(event);
-          if (
-            !event.defaultPrevented &&
-            !disabled &&
-            !readonly &&
-            (event.key === 'Enter' || event.key === ' ')
-          )
+          if (!event.defaultPrevented && !disabled && !readonly && (event.key === 'Enter' || event.key === ' '))
             open(event);
         }}
         onClick={(event) => {
@@ -100,7 +91,14 @@ export function DatePicker({
             onClick?.(event);
           }
         }}
-        theme={{ input: theme.input, inputElement: theme.inputElement }}
+        theme={{
+          input: cn('rt-date-picker-input', theme?.input),
+          inputElement: cn(
+            'rt-date-picker-inputElement',
+            '[.rt-date-picker-input:not(.rt-date-picker-disabled)>&]:cursor-pointer',
+            theme?.inputElement,
+          ),
+        }}
         readOnly
         type="text"
         value={date ? inputFormat(date, locale) : ''}

@@ -1,34 +1,42 @@
 'use client';
+import { materialRoot, materialDescendants } from '../utils/styles';
+import type { LinkTheme } from './types';
 import type { ComponentPropsWithRef, ReactNode } from 'react';
-import classnames from 'classnames';
+import { cn } from '../utils/cn';
 import FontIcon from '../font_icon';
-import { mergeTheme } from '../theming';
-import defaultTheme from './theme';
 export interface LinkProps extends ComponentPropsWithRef<'a'> {
   active?: boolean;
   count?: number;
   icon?: ReactNode;
   label?: string;
-  theme?: Partial<typeof defaultTheme>;
+  theme?: LinkTheme;
 }
-export function Link({
-  active = false,
-  children,
-  className = '',
-  count,
-  icon,
-  label,
-  theme: suppliedTheme,
-  ...other
-}: LinkProps) {
-  const theme = mergeTheme(defaultTheme, suppliedTheme);
+export function Link({ active = false, children, className = '', count, icon, label, theme, ...other }: LinkProps) {
   return (
     <a
       data-react-toolbox="link"
-      className={classnames(theme.link, { [theme.active]: active }, className)}
+      className={cn(
+        'rt-link-link',
+        '[align-content:center] items-center cursor-pointer flex flex-row justify-center leading-[1.5] relative [transition:opacity_var(--animation-duration)_var(--animation-curve-default)]',
+        materialRoot,
+        materialDescendants,
+        '[&:not(.rt-link-active)]:opacity-[0.5]',
+        '[&:hover]:opacity-[1]',
+        '[&:active]:opacity-[1]',
+        '[&>*]:align-middle',
+        '[&>small]:text-[length:var(--font-size-tiny)] [&>small]:ml-[calc(0.8_*_var(--unit))] [&>small]:text-center',
+        theme?.link,
+        active && cn('rt-link-active', theme?.active),
+        className,
+      )}
       {...other}
     >
-      {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
+      {icon ? (
+        <FontIcon
+          className={cn('rt-link-icon', 'text-[length:calc(1.8_*_var(--unit))] mr-[var(--unit)]', theme?.icon)}
+          value={icon}
+        />
+      ) : null}
       {label ? <abbr>{label}</abbr> : null}
       {count ? <small>{count}</small> : null}
       {children}

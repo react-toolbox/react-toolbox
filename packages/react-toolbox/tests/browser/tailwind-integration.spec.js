@@ -23,9 +23,9 @@ function Bridge() { return <>
   </ThemeProvider>
 </> }
 function App() { return <main id="fixture" style={{ width: 1000, padding: 24, display:'grid',gridTemplateColumns:'1fr 1fr', gap:24,background:'white',color:'#212121' }}>
-  <section><Button primary raised label="Primary" /><Button accent label="Accent" /><IconButton icon="+" /><BrowseButton label="Upload" />
+  <section><Button className={window.__CLASSES__?.button} primary raised label="Primary" /><Button accent label="Accent" /><IconButton icon="+" /><BrowseButton label="Upload" />
     <AppBar title="Heading" leftIcon="+" /><Avatar title="Name" />
-    <Card><CardTitle title="Card title" subtitle="Card subtitle" /><CardText>Card body text.</CardText><CardActions><Button label="Read" /></CardActions></Card>
+    <Card className={window.__CLASSES__?.card}><CardTitle title="Card title" subtitle="Card subtitle" /><CardText className={window.__CLASSES__?.text}>Card body text.</CardText><CardActions className={window.__CLASSES__?.actions}><Button label="Read" /></CardActions></Card>
     <Navigation actions={[{label:'Save'}]} routes={[{label:'Home',href:'#home',count:5}]} />
     <List selectable><ListSubHeader caption="Contacts" /><ListItem caption="One line" /><ListItem caption="Two lines" legend="More text" /><ListDivider /></List>
   </section>
@@ -63,17 +63,20 @@ test.beforeAll(async () => {
     })
   ).outputFiles[0].text;
   plain = (
-    await postcss([tailwind()]).process('@import "./components/styles.css";', { from: `${root}/integration.css` })
+    await postcss([tailwind()]).process(
+      '@layer theme, base, components, utilities; @import "tailwindcss/theme.css" layer(theme); @import "tailwindcss/utilities.css" layer(utilities) source(none); @import "./components/styles.css"; @source "./components";',
+      { from: `${root}/integration.css` },
+    )
   ).css;
   integrated = (
     await postcss([tailwind()]).process(
-      '@import "tailwindcss"; @import "./components/tailwind.css"; @source inline("h-20 bg-toolbox-primary text-toolbox-accent p-4 p-6 gap-2 p-toolbox px-2 toolbox-desktop:px-4");',
+      '@import "tailwindcss"; @import "./components/tailwind.css"; @source inline("h-20 bg-toolbox-primary! text-toolbox-accent! p-4 p-6! gap-2 p-toolbox px-2 toolbox-desktop:px-4");',
       { from: `${root}/integration.css` },
     )
   ).css;
   customSpacing = (
     await postcss([tailwind()]).process(
-      '@import "tailwindcss"; @import "./components/tailwind.css"; @theme { --spacing: 6px; } @source inline("p-4 p-6 gap-2 p-toolbox");',
+      '@import "tailwindcss"; @import "./components/tailwind.css"; @theme { --spacing: 6px; } @source inline("p-4 p-6! gap-2 p-toolbox");',
       { from: `${root}/integration.css` },
     )
   ).css;
@@ -84,7 +87,7 @@ test.beforeAll(async () => {
     )
   ).css;
 });
-async function fixture(page, css, lineHeight = 'normal') {
+async function fixture(page, css, lineHeight = 'normal', classes = {}) {
   // Match the host environment on both pages, including the body containing
   // portals. Host typography is intentionally inherited: this compatibility
   // entry reverses element resets without overriding application typography.
@@ -95,6 +98,9 @@ async function fixture(page, css, lineHeight = 'normal') {
     await Promise.all([300, 400, 500, 700].map((weight) => document.fonts.load(`${weight} 14px Roboto`)));
     await document.fonts.load('24px "Material Icons"');
   });
+  await page.evaluate((classes) => {
+    window.__CLASSES__ = classes;
+  }, classes);
   await page.addScriptTag({ content: javascript });
   await page.locator('#fixture [data-react-toolbox="input"]').first().waitFor();
   await page.evaluate(() => document.fonts.ready);
@@ -176,10 +182,11 @@ test('standard Tailwind Preflight retains exact Material component geometry and 
 });
 
 test('Tailwind utilities override component geometry and resolve scoped Toolbox colors', async ({ page }) => {
-  await fixture(page, integrated);
+  // Color overrides intentionally supersede the primary/disabled appearance
+  // variants. Base geometry overrides merge without requiring important.
+  await fixture(page, integrated, 'normal', { button: 'h-20 bg-toolbox-primary! text-toolbox-accent!' });
   const button = page.locator('#fixture button').first();
   await button.evaluate((node) => {
-    node.classList.add('h-20', 'bg-toolbox-primary', 'text-toolbox-accent');
     node.style.setProperty('--rt-color-primary', '#00695c');
     node.style.setProperty('--rt-color-accent', '#aabbcc');
   });
@@ -192,7 +199,13 @@ for (const override of [false, true]) {
   test(`Tailwind spacing uses ${override ? 'a later application theme override' : 'the M1 subgrid'} without resizing components`, async ({
     page,
   }) => {
-    await fixture(page, override ? customSpacing : integrated);
+    // Important padding intentionally overrides CardText's sibling and responsive
+    // keylines as well as its base spacing; exercise the public className API.
+    await fixture(page, override ? customSpacing : integrated, 'normal', {
+      card: 'p-4',
+      text: 'p-6!',
+      actions: 'gap-2',
+    });
     // A 20px host root would turn Tailwind's default .25rem spacing into 5px.
     // The shipped M1 scale is explicitly 4px, independent of that font choice.
     await page.evaluate(() => {
@@ -201,9 +214,6 @@ for (const override of [false, true]) {
     const card = page.locator('.rt-card-card').first();
     const text = card.locator('.rt-card-cardText');
     const actions = card.locator('.rt-card-cardActions');
-    await card.evaluate((node) => node.classList.add('p-4'));
-    await text.evaluate((node) => node.classList.add('p-6'));
-    await actions.evaluate((node) => node.classList.add('gap-2'));
     await page.locator('#fixture').evaluate((node) => {
       const probe = document.createElement('div');
       probe.id = 'legacy-spacing';
@@ -228,12 +238,11 @@ for (const override of [false, true]) {
 }
 
 test('Toolbox desktop spacing matches both card breakpoint boundaries', async ({ page }) => {
-  await fixture(page, integrated);
+  await fixture(page, integrated, 'normal', { actions: 'px-2 toolbox-desktop:px-4' });
   const card = page.locator('.rt-card-card').first();
   const title = card.locator('.rt-card-cardTitle');
   const text = card.locator('.rt-card-cardText');
   const actions = card.locator('.rt-card-cardActions');
-  await actions.evaluate((node) => node.classList.add('px-2', 'toolbox-desktop:px-4'));
   for (const width of [599, 600]) {
     for (const height of [599, 600]) {
       await page.setViewportSize({ width, height });

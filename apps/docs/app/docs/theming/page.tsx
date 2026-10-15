@@ -65,9 +65,15 @@ export default function ThemingPage() {
       </DocsSection>
       <DocsSection id="source" title="Go beyond the defaults">
         <p className="text-sm leading-7 text-toolbox-text-secondary">
-          Use className for layout around a component and the theme prop for individual style slots. The installed CSS
-          and TypeScript are yours to edit. Component styles live in your UI directory under <code>react-toolbox/</code>
-          , with public entries in <code>material/</code>.
+          Use <code>className</code> for the root and the <code>theme</code> prop for individual style slots. Component
+          styles are Tailwind classes beside the JSX in <code>react-toolbox/</code>, with shared helpers for related
+          components in your UI directory. Shared CSS holds tokens, keyframes, and Preflight compatibility. All of it is
+          yours to edit.
+        </p>
+        <p className="mt-4 text-sm leading-7 text-toolbox-text-secondary">
+          Consumer classes override conflicting base utilities. State and responsive variants retain normal Tailwind
+          precedence: match the variant, or use an intentional important utility such as <code>p-6!</code> to override
+          all CardText insets. Use theme variables to change colors consistently across interaction states.
         </p>
         <p className="mt-4 text-sm leading-7 text-toolbox-text-secondary">
           Keep importing the public entries so their styles and fonts load automatically. Standard shadcn colors do not

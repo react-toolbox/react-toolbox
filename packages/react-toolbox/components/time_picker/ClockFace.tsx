@@ -1,14 +1,14 @@
 'use client';
+import type { TimePickerTheme } from './types';
 
 import React from 'react';
-import classnames from 'classnames';
-import defaults from './theme';
+import { cn } from '../utils/cn';
 export interface ClockFaceProps {
   active?: number;
   numbers?: readonly number[];
   radius?: number;
   spacing: number;
-  theme: typeof defaults;
+  theme?: TimePickerTheme;
   twoDigits?: boolean;
   onTouchStart?: React.TouchEventHandler<HTMLDivElement>;
   onMouseDown?: React.MouseEventHandler<HTMLDivElement>;
@@ -26,7 +26,11 @@ export default function ClockFace({
   const rad = radius - spacing;
   return (
     <div
-      className={theme.face}
+      className={cn(
+        'rt-time-picker-face',
+        'rounded-[50%] cursor-pointer left-[50%] absolute top-[50%] [transform:translateX(-50%)_translateY(-50%)] z-[var(--z-index-high)]',
+        theme?.face,
+      )}
       onTouchStart={onTouchStart}
       onMouseDown={onMouseDown}
       style={{ height: radius * 2, width: radius * 2 }}
@@ -34,7 +38,17 @@ export default function ClockFace({
       {numbers.map((number, index) => (
         <span
           key={number}
-          className={classnames(theme.number, { [theme.active]: number === active })}
+          className={cn(
+            'rt-time-picker-number',
+            'h-[var(--clock-number-size)] ml-[calc(-1_*_var(--clock-number-size)_/_2)] mt-[calc(-1_*_var(--clock-number-size)_/_2)] pointer-events-none relative text-center [-webkit-user-select:none] [-moz-user-select:none] select-none w-[var(--clock-number-size)]',
+            theme?.number,
+            number === active &&
+              cn(
+                'rt-time-picker-active',
+                '[.rt-time-picker-number&]:text-[color:var(--clock-primary-contrast-color)]',
+                theme?.active,
+              ),
+          )}
           style={{
             position: 'absolute',
             left: rad + rad * Math.sin(((360 * (Math.PI / 180)) / 12) * index) + spacing,

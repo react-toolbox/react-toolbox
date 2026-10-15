@@ -10,8 +10,8 @@ Consumer installation uses the [source registry](../../docs/source-registry.md).
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/components/ui/toolbox-button';
-import { Input } from '@/components/ui/toolbox-input';
+import { Button } from '@/components/ui/material/button';
+import { Input } from '@/components/ui/material/input';
 
 export default function NameForm() {
   const [name, setName] = useState('');
@@ -26,13 +26,13 @@ Component entries preserve React client boundaries. Server Components can render
 
 ## Styling and customization
 
-The CLI adds Tailwind theme aliases such as `bg-toolbox-primary` and the `toolbox-desktop:` variant. The spacing unit is 4px: `gap-2` is 8px, `p-4` is 16px, and `p-6` is 24px. Exact component geometry, keyframes, and animation curves remain in editable CSS beside the implementation.
+The CLI adds Tailwind theme aliases such as `bg-toolbox-primary` and the `toolbox-desktop:` variant. The spacing unit is 4px: `gap-2` is 8px, `p-4` is 16px, and `p-6` is 24px. Component presentation uses Tailwind classes beside the JSX they style. Shared constants and variant helpers cover styles reused by related components; no per-component theme maps are built at runtime. Shared CSS contains the original tokens, scoped Preflight compatibility, and keyframe definitions. Tailwind generates utilities from installed source and only includes referenced keyframes.
 
-Use `className` for the root and the typed `theme` prop for local slot classes. Use `ThemeProvider` for scoped custom properties that follow components into portals:
+Use `className` for the root and the typed `theme` prop for local slot classes. Conflicting base utilities are merged with consumer classes last. State, descendant, and responsive styles keep normal Tailwind specificity; match the variant or use an intentional important utility such as `p-6!` to override all CardText keylines. Use `ThemeProvider` for scoped custom properties that follow components into portals:
 
 ```tsx
-import { ThemeProvider } from '@/components/ui/toolbox-theme';
-import { Button } from '@/components/ui/toolbox-button';
+import { ThemeProvider } from '@/components/ui/material/theme';
+import { Button } from '@/components/ui/material/button';
 
 <ThemeProvider variables={{ '--rt-color-primary': '#455a64' }}>
   <Button primary raised label="Save" />
@@ -56,7 +56,7 @@ pnpm test:registry
 pnpm test:registry:install
 ```
 
-The registry covers 29 component families, shared foundations, and `all`. The builder derives family dependencies from imports, preserves source bytes, generates the public UI entries, and emits the snapshot served by the docs app. Keep one implementation tree; do not edit generated files.
+The registry covers 27 public component families, shared foundations, and `all`. The builder derives family dependencies from imports, preserves source bytes, generates the public UI entries, and emits the snapshot served by the docs app. Keep one implementation tree; do not edit generated files.
 
 The docs app still consumes the internal compiled exports and styles. This keeps its development build efficient without adding a second public installation model. Package-style import examples in internal type tests protect those workspace contracts.
 

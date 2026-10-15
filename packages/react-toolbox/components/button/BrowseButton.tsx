@@ -1,14 +1,12 @@
 'use client';
+import { buttonClassName, rippleWrapperClasses, iconClasses } from './styles';
 import type { ChangeEventHandler, ComponentPropsWithRef, Ref } from 'react';
-import classnames from 'classnames';
+import { cn } from '../utils/cn';
 import FontIcon from '../font_icon';
-import { mergeTheme } from '../theming';
 import { useRipple } from '../ripple';
-import defaultTheme from './theme';
 import type { ButtonAppearanceProps, ButtonShapeProps } from './types';
 export interface BrowseButtonProps
-  extends
-    Omit<ComponentPropsWithRef<'label'>, 'onChange'>,
+  extends Omit<ComponentPropsWithRef<'label'>, 'onChange'>,
     ButtonAppearanceProps,
     ButtonShapeProps {
   accept?: string;
@@ -35,7 +33,7 @@ export function BrowseButton({
   onChange,
   primary = false,
   raised,
-  theme: suppliedTheme,
+  theme,
   inputRef,
   ripple = true,
   rippleCentered = false,
@@ -49,24 +47,27 @@ export function BrowseButton({
   onTouchCancel,
   ...other
 }: BrowseButtonProps) {
-  const theme = mergeTheme(defaultTheme, suppliedTheme);
   const ink = useRipple({
     disabled,
     centered: rippleCentered,
     className: rippleClassName,
     multiple: rippleMultiple,
     spread: rippleSpread,
-    theme: { rippleWrapper: theme.rippleWrapper },
+    theme: { rippleWrapper: cn(rippleWrapperClasses, theme?.rippleWrapper) },
     ripple,
     onRippleEnded,
   });
-  const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
-  const classes = classnames(
-    theme.button,
-    theme[raised ? 'raised' : floating ? 'floating' : 'flat'],
-    { [theme[level]]: neutral, [theme.mini]: mini, [theme.inverse]: inverse },
+  const classes = buttonClassName({
+    accent,
     className,
-  );
+    floating,
+    inverse,
+    mini,
+    neutral,
+    primary,
+    raised,
+    theme,
+  });
   return (
     <label
       {...other}
@@ -90,7 +91,7 @@ export function BrowseButton({
         ink.onTouchCancel(event);
       }}
     >
-      {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
+      {icon ? <FontIcon className={cn(iconClasses, theme?.icon)} value={icon} /> : null}
       <span>{label}</span>
       <input
         ref={inputRef}

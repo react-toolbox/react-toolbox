@@ -1,4 +1,6 @@
 'use client';
+import { materialRoot, materialDescendants } from '../utils/styles';
+import type { SliderTheme } from './types';
 
 import {
   useEffect,
@@ -11,26 +13,18 @@ import {
   type SyntheticEvent,
   type TouchEvent,
 } from 'react';
-import classnames from 'classnames';
+import { cn } from '../utils/cn';
 import Input, { type InputHandle } from '../input';
 import ProgressBar from '../progress_bar';
-import { mergeTheme } from '../theming';
-import defaultTheme from './theme';
 
-export type SliderTheme = Partial<typeof defaultTheme>;
-export interface SliderProps extends Omit<
-  HTMLAttributes<HTMLDivElement>,
-  'onChange' | 'onDragStart'
-> {
+export type { SliderTheme } from './types';
+export interface SliderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart'> {
   buffer?: number;
   disabled?: boolean;
   editable?: boolean;
   max?: number;
   min?: number;
-  onChange?: (
-    value: number,
-    event?: SyntheticEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => void;
+  onChange?: (value: number, event?: SyntheticEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onDragStart?: () => void;
   onDragStop?: () => void;
   pinned?: boolean;
@@ -63,12 +57,11 @@ export function Slider({
   step = 0.01,
   style,
   tabIndex,
-  theme: suppliedTheme,
+  theme,
   value = 0,
   ref,
   ...other
 }: SliderProps) {
-  const theme = mergeTheme(defaultTheme, suppliedTheme);
   const container = useRef<HTMLDivElement>(null);
   const knob = useRef<HTMLDivElement>(null);
   const input = useRef<InputHandle>(null);
@@ -77,12 +70,8 @@ export function Slider({
   const [pressed, setPressed] = useState(false);
   const [inputValue, setInputValue] = useState<string | null>(null);
   const stepSize = Number.isFinite(step) && step > 0 ? step : 1;
-  const decimals = Math.min(
-    20,
-    Math.max(decimalPlaces(stepSize), decimalPlaces(min), decimalPlaces(max)),
-  );
-  const forInput = (number: number) =>
-    decimals > 0 ? number.toFixed(decimals) : number.toString();
+  const decimals = Math.min(20, Math.max(decimalPlaces(stepSize), decimalPlaces(min), decimalPlaces(max)));
+  const forInput = (number: number) => (decimals > 0 ? number.toFixed(decimals) : number.toString());
   function trim(number: number) {
     if (!Number.isFinite(number) || number <= min) return min;
     if (number >= max) return max;
@@ -90,9 +79,7 @@ export function Slider({
     return Math.round(number * precision) / precision;
   }
   useEffect(() => {
-    setInputValue((current) =>
-      current === null ? null : decimals > 0 ? value.toFixed(decimals) : value.toString(),
-    );
+    setInputValue((current) => (current === null ? null : decimals > 0 ? value.toFixed(decimals) : value.toString()));
   }, [value, decimals]);
 
   function positionToValue(x: number) {
@@ -100,9 +87,7 @@ export function Slider({
     if (!bounds || bounds.length <= 0 || max <= min) return trim(value);
     if (x <= bounds.start) return min;
     if (x >= bounds.start + bounds.length) return max;
-    return trim(
-      Math.round((((x - bounds.start) / bounds.length) * (max - min)) / stepSize) * stepSize + min,
-    );
+    return trim(Math.round((((x - bounds.start) / bounds.length) * (max - min)) / stepSize) * stepSize + min);
   }
   function end() {
     if (!drag.current) return;
@@ -184,9 +169,7 @@ export function Slider({
     event.preventDefault();
     const position = (value - min) / stepSize;
     const stop =
-      key === 'ArrowUp' || key === 'ArrowRight'
-        ? Math.floor(position + 1e-9) + 1
-        : Math.ceil(position - 1e-9) - 1;
+      key === 'ArrowUp' || key === 'ArrowRight' ? Math.floor(position + 1e-9) + 1 : Math.ceil(position - 1e-9) - 1;
     const next = key === 'Home' ? min : key === 'End' ? max : trim(min + stop * stepSize);
     if (next !== value) onChange?.(next);
   }
@@ -195,21 +178,23 @@ export function Slider({
   const stride = Math.max(1, Math.ceil(count / 1000));
   const stops =
     snaps && span > 0
-      ? [
-          ...Array.from({ length: Math.ceil(count / stride) }, (_, i) => i * stride * stepSize),
-          span,
-        ]
+      ? [...Array.from({ length: Math.ceil(count / stride) }, (_, i) => i * stride * stepSize), span]
       : [];
   return (
     <div
-      className={classnames(
-        theme.slider,
-        {
-          [theme.editable]: editable,
-          [theme.pinned]: pinned,
-          [theme.pressed]: pressed,
-          [theme.ring]: value === min,
-        },
+      className={cn(
+        'rt-slider-slider',
+        '[&[disabled]]:[cursor:auto] [&[disabled]]:pointer-events-none',
+        theme?.slider,
+        editable &&
+          cn(
+            'rt-slider-editable',
+            '[.rt-slider-slider&]:items-center [.rt-slider-slider&]:flex [.rt-slider-slider&]:flex-row',
+            theme?.editable,
+          ),
+        pinned && cn('rt-slider-pinned', theme?.pinned),
+        pressed && cn('rt-slider-pressed', theme?.pressed),
+        value === min && cn('rt-slider-ring', theme?.ring),
         className,
       )}
       {...{ disabled }}
@@ -227,23 +212,73 @@ export function Slider({
         aria-valuenow={trim(value)}
         aria-disabled={disabled || undefined}
         tabIndex={disabled ? -1 : (tabIndex ?? 0)}
-        className={theme.container}
+        className={cn(
+          'rt-slider-container',
+          'h-[var(--slider-knob-size)] mr-[var(--slider-knob-size)] relative [outline:none] [touch-action:pan-y] [-webkit-user-select:none] [-moz-user-select:none] select-none w-[calc(100%_-_var(--slider-knob-size))]',
+          materialRoot,
+          materialDescendants,
+          '[&:not(:last-child)]:mr-[calc(var(--slider-side-separation)_+_var(--slider-knob-size))]',
+          '[&:not(:first-child)]:ml-[var(--slider-side-separation)]',
+          theme?.container,
+        )}
         onKeyDown={handleKeyDown}
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
       >
         <div
           ref={knob}
-          className={theme.knob}
+          className={cn(
+            'rt-slider-knob',
+            'items-center bg-[transparent] flex flex-row h-[var(--slider-knob-size)] justify-center left-0 relative top-0 w-[var(--slider-knob-size)] z-[var(--z-index-higher)]',
+            "[.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:bg-[var(--slider-main-color)] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:rounded-[50%] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:bottom-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:[content:''] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:left-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:opacity-[0.26] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:absolute [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:right-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:top-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:z-[var(--z-index-normal)]",
+            '[.rt-slider-slider.rt-slider-ring:has(.rt-slider-container:focus-visible)_&&::before]:bg-[var(--slider-track-focus-color)]',
+            theme?.knob,
+          )}
           style={{ left: `${span > 0 ? (100 * (trim(value) - min)) / span : 0}%` }}
         >
-          <div className={theme.innerknob} data-value={trim(value)} />
+          <div
+            className={cn(
+              'rt-slider-innerknob',
+              'bg-[var(--slider-main-color)] rounded-[50%] h-[var(--slider-inner-knob-size)] [transition-duration:0.1s] [transition-property:height,_width,_background-color,_border] [transition-timing-function:var(--animation-curve-default)] w-[var(--slider-inner-knob-size)] z-[var(--z-index-high)]',
+              '[.rt-slider-slider[disabled]_&]:bg-[var(--slider-disabled-color)] [.rt-slider-slider[disabled]_&]:h-[calc(0.8_*_var(--unit))] [.rt-slider-slider[disabled]_&]:w-[calc(0.8_*_var(--unit))] [.rt-slider-slider[disabled]_&]:[box-shadow:0_0_0_calc(0.2_*_var(--unit))_var(--rt-color-background)]',
+              "[.rt-slider-slider.rt-slider-pinned_&::before]:bg-[var(--slider-main-color)] [.rt-slider-slider.rt-slider-pinned_&::before]:rounded-[50%_50%_50%_0] [.rt-slider-slider.rt-slider-pinned_&::before]:[content:''] [.rt-slider-slider.rt-slider-pinned_&::before]:h-[var(--slider-pin-size)] [.rt-slider-slider.rt-slider-pinned_&::before]:left-0 [.rt-slider-slider.rt-slider-pinned_&::before]:ml-[calc((var(--slider-knob-size)_-_var(--slider-pin-size))_/_2)] [.rt-slider-slider.rt-slider-pinned_&::before]:absolute [.rt-slider-slider.rt-slider-pinned_&::before]:top-0 [.rt-slider-slider.rt-slider-pinned_&::before]:[transform:rotate(-45deg)_scale(0)_translate(0)] [.rt-slider-slider.rt-slider-pinned_&::before]:[transition:transform_0.2s_ease,_background-color_0.18s_ease] [.rt-slider-slider.rt-slider-pinned_&::before]:w-[var(--slider-pin-size)]",
+              '[.rt-slider-slider.rt-slider-pinned_&::after]:text-[color:var(--rt-color-background)] [.rt-slider-slider.rt-slider-pinned_&::after]:[content:attr(data-value)] [.rt-slider-slider.rt-slider-pinned_&::after]:text-[length:10px] [.rt-slider-slider.rt-slider-pinned_&::after]:h-[var(--slider-pin-size)] [.rt-slider-slider.rt-slider-pinned_&::after]:left-0 [.rt-slider-slider.rt-slider-pinned_&::after]:absolute [.rt-slider-slider.rt-slider-pinned_&::after]:text-center [.rt-slider-slider.rt-slider-pinned_&::after]:top-0 [.rt-slider-slider.rt-slider-pinned_&::after]:[transform:scale(0)_translate(0)] [.rt-slider-slider.rt-slider-pinned_&::after]:[transition:transform_0.2s_ease,_background-color_0.18s_ease] [.rt-slider-slider.rt-slider-pinned_&::after]:w-[var(--slider-knob-size)]',
+              '[.rt-slider-slider.rt-slider-ring_&]:bg-[transparent] [.rt-slider-slider.rt-slider-ring_&]:[border:var(--slider-empty-knob-border)_solid_var(--slider-track-color)]',
+              '[.rt-slider-slider.rt-slider-ring_&::before]:bg-[var(--slider-main-color)]',
+              '[.rt-slider-slider.rt-slider-ring.rt-slider-pinned_&]:bg-[var(--rt-color-background)]',
+              '[.rt-slider-slider.rt-slider-pressed.rt-slider-pinned_&::before]:[transform:rotate(-45deg)_scale(1)_translate(var(--slider-pin-elevation),_calc(-1_*_var(--slider-pin-elevation)))] [.rt-slider-slider.rt-slider-pressed.rt-slider-pinned_&::before]:[transition-delay:100ms]',
+              '[.rt-slider-slider.rt-slider-pressed.rt-slider-pinned_&::after]:[transform:scale(1)_translate(0,_calc(-1_*_var(--slider-pin-elevation)))] [.rt-slider-slider.rt-slider-pressed.rt-slider-pinned_&::after]:[transition-delay:100ms]',
+              '[.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned)_&]:h-[var(--slider-pressed-knob-size)] [.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned)_&]:[transform:translateZ(0)] [.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned)_&]:w-[var(--slider-pressed-knob-size)]',
+              '[@media_(hover:_hover)]:[.rt-slider-slider:not([disabled]):not(.rt-slider-pinned):not(.rt-slider-pressed)_.rt-slider-knob:hover_&]:h-[var(--slider-hover-knob-size)] [@media_(hover:_hover)]:[.rt-slider-slider:not([disabled]):not(.rt-slider-pinned):not(.rt-slider-pressed)_.rt-slider-knob:hover_&]:w-[var(--slider-hover-knob-size)]',
+              '[.rt-slider-slider:not([disabled]).rt-slider-ring:has(.rt-slider-container:focus-visible)_&]:[border-color:var(--slider-track-focus-color)]',
+              '[.rt-slider-slider:not([disabled]).rt-slider-ring.rt-slider-pressed_&]:[border-color:var(--slider-track-focus-color)]',
+              theme?.innerknob,
+            )}
+            data-value={trim(value)}
+          />
         </div>
-        <div className={theme.progress}>
+        <div
+          className={cn(
+            'rt-slider-progress',
+            'h-full left-[calc(var(--slider-knob-size)_/_2)] absolute top-0 w-full',
+            '[.rt-slider-slider.rt-slider-ring_&]:left-[calc(var(--slider-knob-size)_/_2_+_var(--slider-empty-knob-border)_*_2)] [.rt-slider-slider.rt-slider-ring_&]:[transition:left_0.18s_ease,_width_0.18s_ease] [.rt-slider-slider.rt-slider-ring_&]:w-[calc(100%_-_var(--slider-empty-knob-border)_*_2)]',
+            '[.rt-slider-slider.rt-slider-ring.rt-slider-pinned_&]:left-[calc(var(--slider-knob-size)_/_2)] [.rt-slider-slider.rt-slider-ring.rt-slider-pinned_&]:w-full',
+            '[.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned).rt-slider-ring_&]:left-[calc(var(--slider-knob-size)_/_2_+_(var(--slider-pressed-knob-size)_-_var(--slider-empty-knob-border)_*_2)_/_2)] [.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned).rt-slider-ring_&]:w-[calc(100%_-_((var(--slider-pressed-knob-size)_-_var(--slider-empty-knob-border)_*_2)_/_2))]',
+            theme?.progress,
+          )}
+        >
           <ProgressBar
             aria-hidden="true"
             disabled={disabled}
-            className={theme.innerprogress}
+            className={cn(
+              'rt-slider-innerprogress',
+              '[.rt-slider-progress_&]:[background:var(--slider-track-color)] [.rt-slider-progress_&]:h-[var(--slider-bar-height)] [.rt-slider-progress_&]:absolute [.rt-slider-progress_&]:top-[calc(var(--slider-knob-size)_/_2_-_var(--slider-bar-height)_/_2)]',
+              "[.rt-slider-progress_&_[data-ref='value']]:[transition-duration:0s]",
+              '[.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&]:[background:var(--slider-track-focus-color)]',
+              '[.rt-slider-slider:not([disabled]).rt-slider-pressed_&]:[background:var(--slider-track-focus-color)]',
+              "[.rt-slider-slider[disabled]_&_[data-ref='value']]:bg-[var(--slider-disabled-color)]",
+              theme?.innerprogress,
+            )}
             max={max}
             min={min}
             mode="determinate"
@@ -251,11 +286,23 @@ export function Slider({
             buffer={buffer}
           />
           {stops.length > 0 && (
-            <div className={theme.snaps}>
+            <div
+              className={cn(
+                'rt-slider-snaps',
+                'flex flex-row h-[var(--slider-snap-size)] left-0 pointer-events-none absolute top-[calc(var(--slider-knob-size)_/_2_-_var(--slider-snap-size)_/_2)] w-full',
+                "[&::after]:bg-[var(--slider-snap-color)] [&::after]:rounded-[50%] [&::after]:[content:''] [&::after]:hidden [&::after]:h-[var(--slider-snap-size)] [&::after]:w-[var(--slider-snap-size)]",
+                theme?.snaps,
+              )}
+            >
               {stops.map((stop) => (
                 <div
                   key={stop}
-                  className={theme.snap}
+                  className={cn(
+                    'rt-slider-snap',
+                    'absolute [transform:translateX(-50%)]',
+                    "[&::after]:bg-[var(--slider-snap-color)] [&::after]:rounded-[50%] [&::after]:[content:''] [&::after]:block [&::after]:h-[var(--slider-snap-size)] [&::after]:w-[var(--slider-snap-size)]",
+                    theme?.snap,
+                  )}
                   style={{ left: `${(100 * stop) / span}%` }}
                 />
               ))}
@@ -266,7 +313,12 @@ export function Slider({
       {editable && (
         <Input
           ref={input}
-          className={theme.input}
+          className={cn(
+            'rt-slider-input',
+            'mb-0 p-0 w-[var(--slider-input-width)]',
+            '[&>input]:text-center',
+            theme?.input,
+          )}
           disabled={disabled}
           aria-label={other['aria-label'] ? `${other['aria-label']} value` : undefined}
           aria-labelledby={other['aria-labelledby']}
@@ -276,8 +328,7 @@ export function Slider({
           onBlur={(event) => {
             const parsed = parseFloat(inputValue ?? '');
             setInputValue(null);
-            if (!cancelled.current)
-              onChange?.(trim(Number.isFinite(parsed) ? parsed : value), event);
+            if (!cancelled.current) onChange?.(trim(Number.isFinite(parsed) ? parsed : value), event);
             cancelled.current = false;
           }}
           onKeyDown={(event) => {

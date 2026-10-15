@@ -3,6 +3,7 @@
  * Inline aliases resolve inside the nearest React Toolbox theme scope. */
 @import "./tailwind-preflight.css";
 @import "./styles.css";
+@source "./";
 
 /* M1 uses an 8dp layout grid and a 4dp icon/type subgrid. Keep utility
  * spacing independent of the host root font size and the legacy --unit.

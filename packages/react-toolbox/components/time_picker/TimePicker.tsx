@@ -1,20 +1,13 @@
 'use client';
+import type { TimePickerTheme } from './types';
 
 import React, { useEffect, useState } from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
+import { cn } from '../utils/cn';
 import Input, { type InputProps, type InputElement } from '../input/Input';
 import time, { type TimeFormat } from '../utils/time';
-import TimePickerDialog, {
-  type TimePickerDialogProps,
-  type TimePickerSelectEvent,
-} from './TimePickerDialog';
-import defaults from './theme';
-export type TimePickerTheme = Partial<typeof defaults> & { container?: string };
-export interface TimePickerProps extends Omit<
-  InputProps,
-  'value' | 'defaultValue' | 'onChange' | 'theme'
-> {
+import TimePickerDialog, { type TimePickerDialogProps, type TimePickerSelectEvent } from './TimePickerDialog';
+export type { TimePickerTheme } from './types';
+export interface TimePickerProps extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'theme'> {
   active?: boolean;
   cancelLabel?: string;
   format?: TimeFormat;
@@ -44,12 +37,11 @@ export function TimePicker({
   onKeyPress,
   onOverlayClick,
   readonly,
-  theme: overrides,
+  theme,
   value,
   ref,
   ...others
 }: TimePickerProps) {
-  const theme = mergeTheme(defaults, overrides);
   const [active, setActive] = useState(controlledActive);
   useEffect(() => setActive(controlledActive), [controlledActive]);
   const dismiss = () => {
@@ -62,11 +54,11 @@ export function TimePicker({
     setActive(true);
   };
   return (
-    <div data-react-toolbox="time-picker" className={overrides?.container}>
+    <div data-react-toolbox="time-picker" className={theme?.container}>
       <Input
         {...others}
         ref={ref}
-        className={classnames(theme.input, inputClassName)}
+        className={cn('rt-time-picker-input', theme?.input, inputClassName)}
         disabled={readonly || disabled}
         aria-haspopup="dialog"
         aria-expanded={active}
@@ -76,12 +68,7 @@ export function TimePicker({
         }}
         onKeyDown={(event) => {
           onKeyDown?.(event);
-          if (
-            !event.defaultPrevented &&
-            !disabled &&
-            !readonly &&
-            (event.key === 'Enter' || event.key === ' ')
-          )
+          if (!event.defaultPrevented && !disabled && !readonly && (event.key === 'Enter' || event.key === ' '))
             open(event);
         }}
         onClick={(event) => {
@@ -90,7 +77,14 @@ export function TimePicker({
             onClick?.(event);
           }
         }}
-        theme={{ input: theme.input, inputElement: theme.inputElement }}
+        theme={{
+          input: cn('rt-time-picker-input', theme?.input),
+          inputElement: cn(
+            'rt-time-picker-inputElement',
+            '[.rt-time-picker-input:not(.rt-time-picker-disabled)>&]:cursor-pointer',
+            theme?.inputElement,
+          ),
+        }}
         readOnly
         type="text"
         value={value ? time.formatTime(value, format) : ''}

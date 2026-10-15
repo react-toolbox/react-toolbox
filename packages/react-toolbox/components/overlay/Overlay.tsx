@@ -1,11 +1,10 @@
 'use client';
+import type { OverlayTheme } from './types';
 
 import { useEffect, useRef, type HTMLAttributes, type Ref } from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
-import defaults from './theme';
+import { cn } from '../utils/cn';
 
-export type OverlayTheme = Partial<typeof defaults>;
+export type { OverlayTheme } from './types';
 export interface OverlayProps extends HTMLAttributes<HTMLDivElement> {
   active?: boolean;
   lockScroll?: boolean;
@@ -21,12 +20,11 @@ export function Overlay({
   lockScroll = true,
   onEscKeyDown,
   onClick,
-  theme: overrides,
+  theme,
   className,
   ref,
   ...attributes
 }: OverlayProps) {
-  const theme = mergeTheme(defaults, overrides);
   const identity = useRef({});
   const escape = useRef(onEscKeyDown);
   escape.current = onEscKeyDown;
@@ -58,8 +56,7 @@ export function Overlay({
     scrollLocks.add(token);
     document.body.style.overflow = 'hidden';
     return () => {
-      if (scrollLocks.delete(token) && !scrollLocks.size)
-        document.body.style.overflow = previousOverflow;
+      if (scrollLocks.delete(token) && !scrollLocks.size) document.body.style.overflow = previousOverflow;
     };
   }, [active, lockScroll]);
   return (
@@ -71,7 +68,18 @@ export function Overlay({
         event.stopPropagation();
         onClick?.(event);
       }}
-      className={classnames(theme.overlay, active && theme.active, className)}
+      className={cn(
+        'rt-overlay-overlay',
+        'bg-[var(--overlay-color)] bottom-0 h-[100vh] left-0 opacity-0 pointer-events-none fixed top-0 [transition:opacity_var(--animation-duration)_var(--animation-curve-default)] w-[100vw]',
+        theme?.overlay,
+        active &&
+          cn(
+            'rt-overlay-active',
+            '[.rt-overlay-overlay&]:opacity-[var(--overlay-opacity)] [.rt-overlay-overlay&]:[pointer-events:all]',
+            theme?.active,
+          ),
+        className,
+      )}
     />
   );
 }

@@ -1,10 +1,32 @@
 'use client';
+import { materialRoot, materialDescendants } from '../utils/styles';
+import type { DropdownTheme } from './types';
 
 import React, { useEffect, useId, useRef, useState } from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
+import { cn } from '../utils/cn';
 import Input, { type InputProps, type InputHandle } from '../input/Input';
-import defaults from './theme';
+
+const disabledClasses = [
+  'rt-dropdown-disabled',
+  '[.rt-dropdown-values>*&]:text-[color:var(--dropdown-color-disabled)] [.rt-dropdown-values>*&]:cursor-not-allowed',
+  '[.rt-dropdown-dropdown&]:[cursor:normal] [.rt-dropdown-dropdown&]:pointer-events-none',
+  '[.rt-dropdown-field&]:[cursor:normal] [.rt-dropdown-field&]:pointer-events-none',
+].join(' ');
+
+const requiredClasses = [
+  'rt-dropdown-required',
+  '[.rt-dropdown-label_&]:text-[color:var(--input-text-error-color)]',
+  '[.rt-dropdown-field.rt-dropdown-errored>.rt-dropdown-label>&]:text-[color:var(--input-text-error-color)]',
+].join(' ');
+
+const valueClasses = [
+  'rt-dropdown-value',
+  '[&>input]:cursor-pointer',
+  "[&::after]:[border-left:var(--dropdown-value-border-size)_solid_transparent] [&::after]:[border-right:var(--dropdown-value-border-size)_solid_transparent] [&::after]:[border-top:var(--dropdown-value-border-size)_solid_var(--input-chevron-color)] [&::after]:[content:''] [&::after]:h-0 [&::after]:pointer-events-none [&::after]:absolute [&::after]:right-[var(--input-chevron-offset)] [&::after]:top-[50%] [&::after]:[transition:transform_var(--animation-duration)_var(--animation-curve-default)] [&::after]:w-0",
+  '[.rt-dropdown-dropdown:focus-within:not(.rt-dropdown-disabled)_&::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_87%)]',
+  '[.rt-dropdown-disabled_&::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_38%)]',
+  '[.rt-dropdown-dropdown.rt-dropdown-active>&]:opacity-[0.5]',
+].join(' ');
 
 export type DropdownValue = string | number;
 export interface DropdownItem {
@@ -12,12 +34,13 @@ export interface DropdownItem {
   label: React.ReactNode;
   disabled?: boolean;
 }
-export type DropdownTheme = Partial<typeof defaults>;
+export type { DropdownTheme } from './types';
 export type DropdownEvent = React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;
-export interface DropdownProps<T extends object = DropdownItem> extends Omit<
-  InputProps,
-  'value' | 'defaultValue' | 'onChange' | 'onBlur' | 'onFocus' | 'onKeyDown' | 'onClick' | 'theme'
-> {
+export interface DropdownProps<T extends object = DropdownItem>
+  extends Omit<
+    InputProps,
+    'value' | 'defaultValue' | 'onChange' | 'onBlur' | 'onFocus' | 'onKeyDown' | 'onClick' | 'theme'
+  > {
   allowBlank?: boolean;
   auto?: boolean;
   source: readonly (T | DropdownValue)[];
@@ -50,13 +73,12 @@ export function Dropdown<T extends object = DropdownItem>({
   required = false,
   source,
   template,
-  theme: overrides,
+  theme,
   value,
   id: suppliedId,
   ref,
   ...others
 }: DropdownProps<T>) {
-  const theme = mergeTheme(defaults, overrides);
   const generatedId = useId();
   const id = suppliedId || `dropdown-${generatedId}`;
   const root = useRef<HTMLDivElement>(null);
@@ -93,8 +115,7 @@ export function Dropdown<T extends object = DropdownItem>({
     };
   });
   const selected =
-    items.find((item) => item.value === value) ||
-    (!allowBlank ? items.find((item) => !item.disabled) : undefined);
+    items.find((item) => item.value === value) || (!allowBlank ? items.find((item) => !item.disabled) : undefined);
   useEffect(() => {
     if (disabled) setActive(false);
   }, [disabled]);
@@ -119,13 +140,8 @@ export function Dropdown<T extends object = DropdownItem>({
   const open = () => {
     if (active || disabled || !root.current) return;
     const rect = root.current.getBoundingClientRect();
-    setUp(
-      auto &&
-        rect.top > (window.innerHeight || document.documentElement.offsetHeight) / 2 + rect.height,
-    );
-    const selectedIndex = items.findIndex(
-      (item) => !item.disabled && selected && item.value === selected.value,
-    );
+    setUp(auto && rect.top > (window.innerHeight || document.documentElement.offsetHeight) / 2 + rect.height);
+    const selectedIndex = items.findIndex((item) => !item.disabled && selected && item.value === selected.value);
     setActiveIndex(selectedIndex < 0 ? items.findIndex((item) => !item.disabled) : selectedIndex);
     setActive(true);
   };
@@ -170,8 +186,7 @@ export function Dropdown<T extends object = DropdownItem>({
           ? 0
           : event.key === 'End'
             ? available.length - 1
-            : (current + (event.key === 'ArrowDown' ? 1 : -1) + available.length) %
-              available.length;
+            : (current + (event.key === 'ArrowDown' ? 1 : -1) + available.length) % available.length;
       setActiveIndex(available[next] ?? -1);
     } else if (event.key.length === 1 && !event.ctrlKey && !event.altKey && !event.metaKey) {
       const now = Date.now();
@@ -180,9 +195,7 @@ export function Dropdown<T extends object = DropdownItem>({
         time: now,
       };
       const index = items.findIndex(
-        (item) =>
-          !item.disabled &&
-          String(item.label).toLowerCase().startsWith(search.current.text.toLowerCase()),
+        (item) => !item.disabled && String(item.label).toLowerCase().startsWith(search.current.text.toLowerCase()),
       );
       if (index >= 0) {
         open();
@@ -202,8 +215,7 @@ export function Dropdown<T extends object = DropdownItem>({
     'aria-disabled': disabled || undefined,
     'aria-required': required || undefined,
     'aria-invalid': error ? true : others['aria-invalid'],
-    'aria-describedby':
-      [others['aria-describedby'], error && `${id}-error`].filter(Boolean).join(' ') || undefined,
+    'aria-describedby': [others['aria-describedby'], error && `${id}-error`].filter(Boolean).join(' ') || undefined,
     onKeyDown: keyDown,
   } satisfies React.HTMLAttributes<HTMLElement>;
   return (
@@ -211,14 +223,16 @@ export function Dropdown<T extends object = DropdownItem>({
       data-react-toolbox="dropdown"
       ref={root}
       tabIndex={-1}
-      className={classnames(
-        theme.dropdown,
-        {
-          [theme.up]: up,
-          [theme.active]: active,
-          [theme.disabled]: disabled,
-          [theme.required]: required,
-        },
+      className={cn(
+        'rt-dropdown-dropdown',
+        'relative',
+        materialRoot,
+        materialDescendants,
+        theme?.dropdown,
+        up && cn('rt-dropdown-up', theme?.up),
+        active && cn('rt-dropdown-active', theme?.active),
+        disabled && cn(disabledClasses, theme?.disabled),
+        required && cn(requiredClasses, theme?.required),
         className,
       )}
       onFocus={(event) => {
@@ -227,8 +241,7 @@ export function Dropdown<T extends object = DropdownItem>({
         onFocus?.(event);
       }}
       onBlur={(event) => {
-        if (event.relatedTarget instanceof Node && root.current?.contains(event.relatedTarget))
-          return;
+        if (event.relatedTarget instanceof Node && root.current?.contains(event.relatedTarget)) return;
         event.stopPropagation();
         setActive(false);
         onBlur?.(event);
@@ -240,55 +253,88 @@ export function Dropdown<T extends object = DropdownItem>({
         ref={input}
         tabIndex={0}
         disabled={disabled}
-        className={theme.value}
+        className={cn(valueClasses, theme?.value)}
         onClick={click}
         required={required}
         readOnly
         type={template && selected ? 'hidden' : 'text'}
         error={error}
         label={label}
-        value={
-          typeof selected?.label === 'string' || typeof selected?.label === 'number'
-            ? selected.label
-            : ''
-        }
+        value={typeof selected?.label === 'string' || typeof selected?.label === 'number' ? selected.label : ''}
       />
       {template && selected ? (
         <div
           {...combo}
           tabIndex={disabled ? -1 : 0}
           onClick={click}
-          className={classnames(theme.field, {
-            [theme.errored]: error,
-            [theme.disabled]: disabled,
-            [theme.required]: required,
-          })}
+          className={cn(
+            'rt-dropdown-field',
+            'cursor-pointer p-[var(--input-padding)_0] relative',
+            '[&:focus-visible]:[outline:2px_solid_var(--input-text-highlight-color)] [&:focus-visible]:[outline-offset:-2px]',
+            theme?.field,
+            Boolean(error) && cn('rt-dropdown-errored', '[.rt-dropdown-field&]:pb-0', theme?.errored),
+            disabled && cn(disabledClasses, theme?.disabled),
+            required && cn(requiredClasses, theme?.required),
+          )}
         >
-          <div className={`${theme.templateValue} ${theme.value}`}>
+          <div
+            className={`${cn(
+              'rt-dropdown-templateValue',
+              'bg-[var(--input-text-background-color)] [border-bottom:1px_solid_var(--input-text-bottom-border-color)] text-[color:var(--rt-color-text)] min-h-[var(--input-field-height)] p-[var(--input-field-padding)_0] relative',
+              '[.rt-dropdown-field.rt-dropdown-errored>&]:[border-bottom:2px_solid_var(--input-text-error-color)]',
+              '[.rt-dropdown-field.rt-dropdown-disabled>&]:[border-bottom-style:dotted] [.rt-dropdown-field.rt-dropdown-disabled>&]:text-[color:var(--input-text-disabled-text-color)]',
+              theme?.templateValue,
+            )} ${cn(valueClasses, theme?.value)}`}
+          >
             {template(selected.original)}
           </div>
           {label ? (
-            <label className={theme.label}>
+            <label
+              className={cn(
+                'rt-dropdown-label',
+                'text-[color:var(--input-text-label-color)] text-[length:var(--input-label-font-size)] left-0 leading-[var(--input-field-font-size)] absolute top-[var(--input-focus-label-top)]',
+                '[.rt-dropdown-dropdown.rt-dropdown-active>&]:opacity-[0.5]',
+                '[.rt-dropdown-field.rt-dropdown-errored>&]:text-[color:var(--input-text-error-color)]',
+                theme?.label,
+              )}
+            >
               {label}
-              {required ? <span className={theme.required}> * </span> : null}
+              {required ? <span className={cn(requiredClasses, theme?.required)}> * </span> : null}
             </label>
           ) : null}
           {error ? (
-            <span id={`${id}-error`} className={theme.error}>
+            <span
+              id={`${id}-error`}
+              className={cn(
+                'rt-dropdown-error',
+                'text-[color:var(--input-text-error-color)] text-[length:var(--input-label-font-size)] leading-[var(--input-underline-height)] mb-[calc(-1_*_var(--input-underline-height))]',
+                theme?.error,
+              )}
+            >
               {error}
             </span>
           ) : null}
         </div>
       ) : null}
-      {name ? (
-        <input type="hidden" name={name} disabled={disabled} value={selected?.value ?? ''} />
-      ) : null}
+      {name ? <input type="hidden" name={name} disabled={disabled} value={selected?.value ?? ''} /> : null}
       <ul
         id={`${id}-listbox`}
         role="listbox"
         aria-label={typeof label === 'string' ? label : undefined}
         aria-hidden={!active}
-        className={theme.values}
+        className={cn(
+          'rt-dropdown-values',
+          'bg-[var(--dropdown-color-white)] rounded-[var(--dropdown-value-border-radius)] [list-style:none] m-0 overflow-y-auto p-0 absolute [transition-duration:var(--animation-duration)] [transition-property:max-height,_box-shadow] [transition-timing-function:var(--animation-curve-default)] w-full z-[var(--z-index-high)]',
+          '[&>*]:cursor-pointer [&>*]:overflow-hidden [&>*]:p-[var(--unit)] [&>*]:relative',
+          '[&>*:hover:not(.rt-dropdown-disabled)]:bg-[var(--dropdown-value-hover-background)]',
+          "[&>*[data-active='true']:not(.rt-dropdown-disabled)]:bg-[var(--dropdown-value-hover-background)]",
+          '[&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-0',
+          '[.rt-dropdown-dropdown:not(.rt-dropdown-active)>&]:max-h-0 [.rt-dropdown-dropdown:not(.rt-dropdown-active)>&]:[visibility:hidden]',
+          '[.rt-dropdown-dropdown.rt-dropdown-active>&]:[box-shadow:var(--zdepth-shadow-1)] [.rt-dropdown-dropdown.rt-dropdown-active>&]:max-h-[var(--dropdown-overflow-max-height)] [.rt-dropdown-dropdown.rt-dropdown-active>&]:[visibility:visible]',
+          '[.rt-dropdown-dropdown:not(.rt-dropdown-up)>&]:bottom-auto [.rt-dropdown-dropdown:not(.rt-dropdown-up)>&]:top-0',
+          '[.rt-dropdown-dropdown.rt-dropdown-up>&]:bottom-0 [.rt-dropdown-dropdown.rt-dropdown-up>&]:top-auto',
+          theme?.values,
+        )}
       >
         {items.map((item, index) => (
           <li
@@ -298,10 +344,15 @@ export function Dropdown<T extends object = DropdownItem>({
             aria-selected={item.value === value}
             aria-disabled={item.disabled || undefined}
             data-active={(active && index === activeIndex) || undefined}
-            className={classnames({
-              [theme.selected]: item.value === value,
-              [theme.disabled]: item.disabled,
-            })}
+            className={cn(
+              item.value === value &&
+                cn(
+                  'rt-dropdown-selected',
+                  '[.rt-dropdown-values>*&]:text-[color:var(--dropdown-color-primary)]',
+                  theme?.selected,
+                ),
+              item.disabled && cn(disabledClasses, theme?.disabled),
+            )}
             onMouseDown={(event) => event.preventDefault()}
             onClick={item.disabled ? undefined : (event) => select(item.value, event)}
           >

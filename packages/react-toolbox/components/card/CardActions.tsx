@@ -1,20 +1,25 @@
 'use client';
+import type { CardTheme } from './types';
 import type { ComponentPropsWithRef } from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
-import defaultTheme from './theme';
+import { cn } from '../utils/cn';
 export interface CardActionsProps extends ComponentPropsWithRef<'div'> {
-  theme?: Partial<typeof defaultTheme>;
+  theme?: CardTheme;
 }
-export function CardActions({
-  children,
-  className,
-  theme: suppliedTheme,
-  ...other
-}: CardActionsProps) {
-  const theme = mergeTheme(defaultTheme, suppliedTheme);
+export function CardActions({ children, className, theme, ...other }: CardActionsProps) {
   return (
-    <div className={classnames(theme.cardActions, className)} {...other}>
+    <div
+      className={cn(
+        'rt-card-cardActions',
+        'items-center flex justify-start p-[var(--card-padding-sm)]',
+        "[&_[data-react-toolbox='button']]:m-[0_calc(var(--card-padding-sm)_/_2)] [&_[data-react-toolbox='button']]:min-w-0 [&_[data-react-toolbox='button']]:p-[0_var(--card-padding-sm)]",
+        "[&_[data-react-toolbox='button']:first-child]:ml-0",
+        "[&_[data-react-toolbox='button']:last-child]:mr-0",
+        '[.rt-card-cardMedia_.rt-card-contentOverlay_&]:bg-[var(--card-text-overlay)]',
+        theme?.cardActions,
+        className,
+      )}
+      {...other}
+    >
       {children}
     </div>
   );

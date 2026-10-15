@@ -144,12 +144,12 @@ export async function verifyRegistry() {
       }
       if (
         file.path === 'components/shadcn.ts' ||
-        /\/(theme|types)\.ts$/.test(file.path) ||
+        /\/(styles|types)\.ts$/.test(file.path) ||
         file.path.startsWith('components/utils/')
       ) {
         assert(
           !file.content.startsWith("'use client';"),
-          `Pure data and helpers must remain usable by server components: ${file.path}`,
+          `Shared style constants and helpers must remain usable by server components: ${file.path}`,
         );
       }
     }
@@ -204,6 +204,20 @@ export async function verifyRegistry() {
       stdio: 'inherit',
     });
     await verifyStyles(all, path.join(all, 'src/components/ui/react-toolbox'));
+
+    // Compile only copied source, with host auto-detection disabled. A Button
+    // install must not ship presentation or keyframes from unrelated families.
+    const subset = path.join(temporary, 'button');
+    await symlink(path.join(root, 'node_modules'), path.join(subset, 'node_modules'), 'dir');
+    const minimal = await postcss([tailwind({ base: subset })]).process(
+      '@import "tailwindcss" source(none); @import "./src/components/ui/react-toolbox/setup.css";',
+      { from: path.join(subset, 'consumer.css') },
+    );
+    assert(minimal.css.includes('height: var(--button-height)'), 'Copied Button source must generate its utilities');
+    assert(minimal.css.includes('var(--ripple-duration)'), 'Required Ripple utilities must be detected');
+    assert(!minimal.css.includes('height: var(--slider-knob-size)'), 'Button must not include Slider presentation');
+    assert(!minimal.css.includes('@keyframes rt-progress-bar-'), 'Button must not include unused progress animations');
+    assert(!minimal.css.includes('@keyframes rt-checkbox-'), 'Button must not include unused checkbox animations');
   } finally {
     await rm(temporary, { recursive: true, force: true });
   }

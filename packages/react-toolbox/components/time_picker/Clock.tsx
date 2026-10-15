@@ -1,12 +1,12 @@
 'use client';
+import { cn } from '../utils/cn';
+import type { TimePickerTheme } from './types';
 
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { getAnimationModule } from '../utils/utils';
 import time, { type TimeFormat } from '../utils/time';
 import Hours from './ClockHours';
 import Minutes from './ClockMinutes';
-import defaults from './theme';
 export interface ClockHandle {
   calculateShape(): void;
 }
@@ -15,7 +15,7 @@ export interface ClockProps {
   format?: TimeFormat;
   onChange: (time: Date) => void;
   onHandMoved?: () => void;
-  theme: typeof defaults;
+  theme?: TimePickerTheme;
   time?: Date;
   ref?: React.Ref<ClockHandle>;
 }
@@ -56,10 +56,47 @@ export default function Clock({
       window.removeEventListener('resize', calculateShape);
     };
   }, [calculateShape]);
-  const animation = getAnimationModule(display === 'hours' ? 'zoomOut' : 'zoomIn', theme);
+  const animation =
+    display === 'hours'
+      ? {
+          enter: cn('rt-time-picker-zoomOutEnter', 'absolute opacity-0 [transform:scale(1.25)]', theme?.zoomOutEnter),
+          enterActive: cn(
+            'rt-time-picker-zoomOutEnterActive',
+            '[transition-duration:500ms] [transition-property:transform,_opacity] [transition-timing-function:var(--animation-curve-fast-out-slow-in)]',
+            '[.rt-time-picker-zoomOutEnter&]:opacity-[1] [.rt-time-picker-zoomOutEnter&]:[transform:scale(1)]',
+            theme?.zoomOutEnterActive,
+          ),
+          exit: cn('rt-time-picker-zoomOutExit', 'absolute opacity-[1] [transform:scale(1)]', theme?.zoomOutExit),
+          exitActive: cn(
+            'rt-time-picker-zoomOutExitActive',
+            '[transition-duration:500ms] [transition-property:transform,_opacity] [transition-timing-function:var(--animation-curve-fast-out-slow-in)]',
+            '[.rt-time-picker-zoomOutExit&]:opacity-0 [.rt-time-picker-zoomOutExit&]:[transform:scale(0.85)]',
+            theme?.zoomOutExitActive,
+          ),
+        }
+      : {
+          enter: cn('rt-time-picker-zoomInEnter', 'absolute opacity-0 [transform:scale(0.85)]', theme?.zoomInEnter),
+          enterActive: cn(
+            'rt-time-picker-zoomInEnterActive',
+            '[transition-duration:500ms] [transition-property:transform,_opacity] [transition-timing-function:var(--animation-curve-fast-out-slow-in)]',
+            '[.rt-time-picker-zoomInEnter&]:opacity-[1] [.rt-time-picker-zoomInEnter&]:[transform:scale(1)]',
+            theme?.zoomInEnterActive,
+          ),
+          exit: cn('rt-time-picker-zoomInExit', 'absolute opacity-[1] [transform:scale(1)]', theme?.zoomInExit),
+          exitActive: cn(
+            'rt-time-picker-zoomInExitActive',
+            '[transition-duration:500ms] [transition-property:transform,_opacity] [transition-timing-function:var(--animation-curve-fast-out-slow-in)]',
+            '[.rt-time-picker-zoomInExit&]:opacity-0 [.rt-time-picker-zoomInExit&]:[transform:scale(1.25)]',
+            theme?.zoomInExitActive,
+          ),
+        };
   return (
-    <div data-react-toolbox="clock" className={theme.clock}>
-      <div className={theme.placeholder} style={{ height: shape.radius * 2 }} ref={placeholder}>
+    <div data-react-toolbox="clock" className={cn('rt-time-picker-clock', 'p-[var(--clock-padding)]', theme?.clock)}>
+      <div
+        className={cn('rt-time-picker-placeholder', 'relative z-[var(--z-index-high)]', theme?.placeholder)}
+        style={{ height: shape.radius * 2 }}
+        ref={placeholder}
+      >
         <TransitionGroup
           component={null}
           childFactory={(child) =>
@@ -79,7 +116,11 @@ export default function Clock({
             <div
               key={display}
               ref={displayRefs.current[display]}
-              className={theme.clockWrapper}
+              className={cn(
+                'rt-time-picker-clockWrapper',
+                'bg-[var(--clock-face-background)] rounded-[50%] absolute w-full',
+                theme?.clockWrapper,
+              )}
               style={{ height: shape.radius * 2 }}
             >
               {display === 'hours' ? (

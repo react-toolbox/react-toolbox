@@ -1,21 +1,20 @@
 'use client';
+import { materialRoot, materialDescendants } from '../utils/styles';
+import type { AutocompleteTheme } from './types';
 
 import React, { useEffect, useId, useImperativeHandle, useRef, useState } from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
+import { cn } from '../utils/cn';
 import Chip, { type ChipEvent } from '../chip/Chip';
 import Input, { type InputProps, type InputHandle, type InputElement } from '../input/Input';
-import defaults from './theme';
 
-export type AutocompleteTheme = Partial<typeof defaults>;
+export type { AutocompleteTheme } from './types';
 export type AutocompleteValue = string | string[] | Record<string, React.ReactNode>;
 export type AutocompleteSource =
-  Record<string, React.ReactNode> | readonly (string | readonly [string, React.ReactNode])[];
+  | Record<string, React.ReactNode>
+  | readonly (string | readonly [string, React.ReactNode])[];
 export type AutocompleteEvent = ChipEvent;
-export interface AutocompleteBaseProps extends Omit<
-  InputProps,
-  'value' | 'defaultValue' | 'onChange' | 'onBlur' | 'theme' | 'multiple' | 'ref'
-> {
+export interface AutocompleteBaseProps
+  extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'onBlur' | 'theme' | 'multiple' | 'ref'> {
   allowCreate?: boolean;
   direction?: 'auto' | 'up' | 'down';
   keepFocusOnChange?: boolean;
@@ -45,11 +44,8 @@ export interface AutocompleteObjectProps extends AutocompleteBaseProps {
   value: Record<string, React.ReactNode>;
   onChange?: (value: Record<string, React.ReactNode>, event: AutocompleteEvent) => void;
 }
-export type AutocompleteProps =
-  AutocompleteSingleProps | AutocompleteArrayProps | AutocompleteObjectProps;
-function hasObjectValue(
-  props: AutocompleteArrayProps | AutocompleteObjectProps,
-): props is AutocompleteObjectProps {
+export type AutocompleteProps = AutocompleteSingleProps | AutocompleteArrayProps | AutocompleteObjectProps;
+function hasObjectValue(props: AutocompleteArrayProps | AutocompleteObjectProps): props is AutocompleteObjectProps {
   return props.value != null && !Array.isArray(props.value);
 }
 const emptySource: AutocompleteSource = {};
@@ -91,13 +87,12 @@ export function Autocomplete(props: AutocompleteProps) {
     showSuggestionsWhenValueIsSet = false,
     source = emptySource,
     suggestionMatch = 'start',
-    theme: overrides,
+    theme,
     value,
     id: suppliedId,
     ref,
     ...others
   } = props;
-  const theme = mergeTheme(defaults, overrides);
   const generatedId = useId();
   const id = suppliedId || `autocomplete-${generatedId}`;
   const root = useRef<HTMLDivElement>(null);
@@ -128,9 +123,9 @@ export function Autocomplete(props: AutocompleteProps) {
   const clearQuery = useRef(false);
   const objectValue = value != null && typeof value === 'object' && !Array.isArray(value);
   const vals = multiple ? value : [value];
-  const stringValues = (
-    Array.isArray(vals) ? vals : vals && typeof vals === 'object' ? Object.keys(vals) : []
-  ).map(String);
+  const stringValues = (Array.isArray(vals) ? vals : vals && typeof vals === 'object' ? Object.keys(vals) : []).map(
+    String,
+  );
   const selected =
     showSelectedWhenNotInSource && objectValue
       ? new Map(Object.entries(value))
@@ -191,17 +186,26 @@ export function Autocomplete(props: AutocompleteProps) {
     if (disabled) return;
     event.preventDefault();
     event.stopPropagation();
-    if (objectValue)
-      change({ ...Object.fromEntries(selected), [target]: sourceMap.get(target) ?? target }, event);
+    if (objectValue) change({ ...Object.fromEntries(selected), [target]: sourceMap.get(target) ?? target }, event);
     else change([target, ...selected.keys()], event);
   };
   const renderSelected = () =>
     multiple ? (
-      <ul className={theme.values}>
+      <ul
+        className={cn(
+          'rt-autocomplete-values',
+          'flex-row [flex-wrap:wrap] [list-style:none] m-0 p-[0_0_calc(var(--unit)_/_2)_0]',
+          theme?.values,
+        )}
+      >
         {[...selected].map(([key, text]) => (
           <Chip
             key={key}
-            className={theme.value}
+            className={cn(
+              'rt-autocomplete-value',
+              'm-[var(--autocomplete-value-margin)] mr-[var(--chip-margin-right)]',
+              theme?.value,
+            )}
             deletable
             disabled={disabled}
             deleteLabel={typeof text === 'string' ? `Remove ${text}` : 'Remove'}
@@ -219,7 +223,15 @@ export function Autocomplete(props: AutocompleteProps) {
   return (
     <div
       data-react-toolbox="autocomplete"
-      className={classnames(theme.autocomplete, { [theme.focus]: focus }, className)}
+      className={cn(
+        'rt-autocomplete-autocomplete',
+        'p-0 relative',
+        materialRoot,
+        materialDescendants,
+        theme?.autocomplete,
+        focus && cn('rt-autocomplete-focus', theme?.focus),
+        className,
+      )}
       ref={root}
     >
       {selectedPosition === 'above' ? renderSelected() : null}
@@ -233,12 +245,17 @@ export function Autocomplete(props: AutocompleteProps) {
         aria-expanded={focus && suggestions.size > 0}
         aria-controls={`${id}-listbox`}
         aria-activedescendant={
-          focus && active !== null && keys.indexOf(active) >= 0
-            ? `${id}-option-${keys.indexOf(active)}`
-            : undefined
+          focus && active !== null && keys.indexOf(active) >= 0 ? `${id}-option-${keys.indexOf(active)}` : undefined
         }
         autoComplete="off"
-        className={theme.input}
+        className={cn(
+          'rt-autocomplete-input',
+          'relative',
+          "[&::after]:[border-left:var(--autocomplete-border-size)_solid_transparent] [&::after]:[border-right:var(--autocomplete-border-size)_solid_transparent] [&::after]:[border-top:var(--autocomplete-border-size)_solid_var(--input-chevron-color)] [&::after]:[content:''] [&::after]:h-0 [&::after]:pointer-events-none [&::after]:absolute [&::after]:right-[var(--input-chevron-offset)] [&::after]:top-[50%] [&::after]:[transition:transform_var(--animation-duration)_var(--animation-curve-default)] [&::after]:w-0",
+          '[&:focus-within:not(.rt-input-disabled)::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_87%)]',
+          '[&.rt-input-disabled::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_38%)]',
+          theme?.input,
+        )}
         error={error}
         label={label}
         value={query}
@@ -260,14 +277,10 @@ export function Autocomplete(props: AutocompleteProps) {
           event.target.scrollTop = 0;
           setActive(null);
           setFocus(true);
-          const client = root.current
-            ?.querySelector('[data-react-toolbox="input"]')
-            ?.getBoundingClientRect();
+          const client = root.current?.querySelector('[data-react-toolbox="input"]')?.getBoundingClientRect();
           setDirection(
             direction === 'auto'
-              ? client &&
-                client.top >
-                  (window.innerHeight || document.documentElement.offsetHeight) / 2 + client.height
+              ? client && client.top > (window.innerHeight || document.documentElement.offsetHeight) / 2 + client.height
                 ? 'up'
                 : 'down'
               : direction,
@@ -278,12 +291,9 @@ export function Autocomplete(props: AutocompleteProps) {
           onKeyDown?.(event);
           if (event.defaultPrevented || disabled || event.nativeEvent.isComposing) return;
           clearQuery.current =
-            (event.key === 'Backspace' || event.which === 8) &&
-            showSuggestionsWhenValueIsSet &&
-            showAll;
+            (event.key === 'Backspace' || event.which === 8) && showSuggestionsWhenValueIsSet && showAll;
           if ((event.key === 'Enter' || event.which === 13) && focus) {
-            const target =
-              active != null && suggestions.has(active) ? active : allowCreate ? query : keys[0];
+            const target = active != null && suggestions.has(active) ? active : allowCreate ? query : keys[0];
             if (target != null && (allowCreate ? target.length > 0 : suggestions.has(target))) {
               setActive(target);
               select(event, target);
@@ -295,21 +305,12 @@ export function Autocomplete(props: AutocompleteProps) {
               setFocus(false);
             }
           } else if (event.key === 'Tab') setFocus(false);
-          else if (
-            event.key === 'ArrowDown' ||
-            event.key === 'ArrowUp' ||
-            event.which === 40 ||
-            event.which === 38
-          ) {
+          else if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.which === 40 || event.which === 38) {
             event.preventDefault();
             const down = event.key === 'ArrowDown' || event.which === 40;
             const current = active == null ? -1 : keys.indexOf(active);
             const next =
-              current < 0
-                ? down
-                  ? 0
-                  : keys.length - 1
-                : (current + (down ? 1 : -1) + keys.length) % keys.length;
+              current < 0 ? (down ? 0 : keys.length - 1) : (current + (down ? 1 : -1) + keys.length) % keys.length;
             setActive(keys[next] ?? null);
             setFocus(true);
           }
@@ -324,7 +325,15 @@ export function Autocomplete(props: AutocompleteProps) {
         role="listbox"
         aria-label={typeof label === 'string' ? label : others['aria-label']}
         aria-hidden={!focus}
-        className={classnames(theme.suggestions, { [theme.up]: resolvedDirection === 'up' })}
+        className={cn(
+          'rt-autocomplete-suggestions',
+          'bg-[var(--autocomplete-suggestions-background)] [list-style:none] max-h-0 overflow-x-hidden overflow-y-auto p-0 absolute [transition-duration:var(--animation-duration)] [transition-property:max-height,_box-shadow] [transition-timing-function:var(--animation-curve-default)] [visibility:hidden] w-full z-[var(--z-index-high)]',
+          '[&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-0',
+          '[&:not(.rt-autocomplete-up)]:mt-[calc(-1_*_var(--input-padding))]',
+          '[.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:[box-shadow:var(--zdepth-shadow-1)] [.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:max-h-[var(--autocomplete-overflow-max-height)] [.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:[-ms-overflow-style:none] [.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:[visibility:visible]',
+          theme?.suggestions,
+          resolvedDirection === 'up' && cn('rt-autocomplete-up', '[.rt-autocomplete-suggestions&]:bottom-0', theme?.up),
+        )}
       >
         {[...suggestions].map(([key, text], index) => (
           <li
@@ -332,7 +341,17 @@ export function Autocomplete(props: AutocompleteProps) {
             key={key}
             role="option"
             aria-selected={active === key}
-            className={classnames(theme.suggestion, { [theme.active]: active === key })}
+            className={cn(
+              'rt-autocomplete-suggestion',
+              'cursor-pointer text-[length:var(--input-field-font-size)] p-[var(--autocomplete-suggestion-padding)]',
+              theme?.suggestion,
+              active === key &&
+                cn(
+                  'rt-autocomplete-active',
+                  '[.rt-autocomplete-suggestion&]:bg-[var(--autocomplete-suggestion-active-background)]',
+                  theme?.active,
+                ),
+            )}
             onMouseDown={(event) => select(event, key)}
             onMouseOver={() => setActive(key)}
           >

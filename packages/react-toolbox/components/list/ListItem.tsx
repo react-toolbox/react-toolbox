@@ -1,19 +1,10 @@
 'use client';
-import {
-  Children,
-  cloneElement,
-  isValidElement,
-  type ComponentPropsWithRef,
-  type ReactNode,
-} from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
+import { Children, cloneElement, isValidElement, type ComponentPropsWithRef, type ReactNode } from 'react';
+import { cn } from '../utils/cn';
 import { useRipple, type RippleProps } from '../ripple';
 import ListItemContent from './ListItemContent';
 import ListItemLayout, { type ListItemLayoutProps } from './ListItemLayout';
-import defaultTheme from './theme';
-export interface ListItemProps
-  extends ComponentPropsWithRef<'li'>, ListItemLayoutProps, RippleProps {
+export interface ListItemProps extends ComponentPropsWithRef<'li'>, ListItemLayoutProps, RippleProps {
   to?: string;
 }
 export function ListItem({
@@ -29,7 +20,7 @@ export function ListItem({
   rightActions,
   rightIcon,
   selectable,
-  theme: suppliedTheme,
+  theme,
   to,
   onClick,
   onMouseDown,
@@ -44,14 +35,15 @@ export function ListItem({
   onRippleEnded,
   ...other
 }: ListItemProps) {
-  const theme = mergeTheme(defaultTheme, suppliedTheme);
   const ink = useRipple({
     disabled,
     centered: rippleCentered,
     className: rippleClassName,
     multiple: rippleMultiple,
     spread: rippleSpread,
-    theme: { ripple: theme.ripple },
+    theme: {
+      ripple: cn('rt-list-ripple', '[.rt-list-listItem_&]:text-[color:var(--rt-color-text-secondary)]', theme?.ripple),
+    },
     ripple,
     onRippleEnded,
   });
@@ -63,15 +55,10 @@ export function ListItem({
   } = { left: [], right: [], ignored: [] };
   Children.forEach(children, (child, index) => {
     if (!isValidElement<{ listItemIgnore?: boolean }>(child)) return;
-    const clean = child.props.listItemIgnore
-      ? cloneElement(child, { listItemIgnore: undefined })
-      : child;
+    const clean = child.props.listItemIgnore ? cloneElement(child, { listItemIgnore: undefined }) : child;
     if (child.props.listItemIgnore) grouped.ignored.push(clean);
     else if (child.type === ListItemContent) grouped.content = clean;
-    else
-      grouped[grouped.content ? 'right' : 'left'].push(
-        cloneElement(clean, { key: child.key ?? index }),
-      );
+    else grouped[grouped.content ? 'right' : 'left'].push(cloneElement(clean, { key: child.key ?? index }));
   });
   const content = (
     <ListItemLayout
@@ -91,7 +78,13 @@ export function ListItem({
   return (
     <li
       {...other}
-      className={classnames(theme.listItem, className)}
+      className={cn(
+        'rt-list-listItem',
+        'relative',
+        "[&>[data-react-toolbox='ripple']]:overflow-hidden",
+        theme?.listItem,
+        className,
+      )}
       onClick={(event) => {
         if (disabled) {
           event.preventDefault();

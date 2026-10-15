@@ -1,9 +1,8 @@
 'use client';
-import classnames from 'classnames';
+import { buttonClassName, rippleWrapperClasses, iconClasses } from './styles';
+import { cn } from '../utils/cn';
 import FontIcon from '../font_icon';
-import { mergeTheme } from '../theming';
 import { useRipple } from '../ripple';
-import defaultTheme from './theme';
 import type { ButtonAppearanceProps, ButtonNativeProps, ButtonShapeProps } from './types';
 export type ButtonProps = ButtonAppearanceProps & ButtonShapeProps & ButtonNativeProps;
 export function Button({
@@ -15,7 +14,7 @@ export function Button({
   inverse,
   neutral = true,
   primary = false,
-  theme: suppliedTheme,
+  theme,
   flat: _flat,
   floating,
   label,
@@ -29,24 +28,27 @@ export function Button({
   onRippleEnded,
   ...native
 }: ButtonProps) {
-  const theme = mergeTheme(defaultTheme, suppliedTheme);
   const ink = useRipple({
     disabled,
     centered: rippleCentered,
     className: rippleClassName,
     multiple: rippleMultiple,
     spread: rippleSpread,
-    theme: { rippleWrapper: theme.rippleWrapper },
+    theme: { rippleWrapper: cn(rippleWrapperClasses, theme?.rippleWrapper) },
     ripple,
     onRippleEnded,
   });
-  const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
-  const classes = classnames(
-    theme.button,
-    theme[raised ? 'raised' : floating ? 'floating' : 'flat'],
-    { [theme[level]]: neutral, [theme.mini]: mini, [theme.inverse]: inverse },
+  const classes = buttonClassName({
+    accent,
     className,
-  );
+    floating,
+    inverse,
+    mini,
+    neutral,
+    primary,
+    raised,
+    theme,
+  });
   if (native.href !== undefined) {
     const element = (
       <a
@@ -79,7 +81,7 @@ export function Button({
           ink.onTouchCancel(event);
         }}
       >
-        {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
+        {icon ? <FontIcon className={cn(iconClasses, theme?.icon)} value={icon} /> : null}
         {label}
         {children}
         {ink.ripple}
@@ -118,7 +120,7 @@ export function Button({
           ink.onTouchCancel(event);
         }}
       >
-        {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
+        {icon ? <FontIcon className={cn(iconClasses, theme?.icon)} value={icon} /> : null}
         {label}
         {children}
         {ink.ripple}

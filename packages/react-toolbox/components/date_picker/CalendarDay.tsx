@@ -1,16 +1,16 @@
 'use client';
+import { activeClasses } from './styles';
+import type { DatePickerTheme } from './types';
 
-import React from 'react';
-import classnames from 'classnames';
+import { cn } from '../utils/cn';
 import time, { type DatePickerLocale } from '../utils/time';
-import defaults from './theme';
 export interface CalendarDayProps {
   day: number;
   disabled?: boolean;
   onClick?: (day: number) => void;
   selectedDate: Date;
   sundayFirstDayOfWeek?: boolean;
-  theme: typeof defaults;
+  theme?: DatePickerTheme;
   viewDate: Date;
   locale?: DatePickerLocale;
 }
@@ -38,10 +38,24 @@ export default function CalendarDay({
     <div
       data-react-toolbox="day"
       data-today={today || undefined}
-      className={classnames(theme.day, { [theme.active]: selected, [theme.disabled]: disabled })}
-      style={
-        day === 1 ? { marginLeft: `${(firstDay >= 0 ? firstDay : 6) * (100 / 7)}%` } : undefined
-      }
+      className={cn(
+        'rt-date-picker-day',
+        '[flex:0_0_calc(100%_/_7)] p-[var(--calendar-day-padding-topbottom)_var(--calendar-day-padding-leftright)]',
+        '[&>span]:rounded-[50%] [&>span]:inline-block [&>span]:h-[var(--calendar-row-height)] [&>span]:leading-[var(--calendar-row-height)] [&>span]:w-[var(--calendar-row-height)]',
+        '[&[data-today]:not(.rt-date-picker-active)>span]:text-[color:var(--calendar-primary-color)] [&[data-today]:not(.rt-date-picker-active)>span]:[font-weight:500]',
+        '[&>span:focus-visible]:[outline:2px_solid_var(--calendar-primary-color)] [&>span:focus-visible]:[outline-offset:2px]',
+        '[&:hover:not(.rt-date-picker-disabled)>span]:cursor-pointer',
+        '[&:hover:not(.rt-date-picker-active):not(.rt-date-picker-disabled)>span]:[background:var(--calendar-primary-hover-color)] [&:hover:not(.rt-date-picker-active):not(.rt-date-picker-disabled)>span]:text-[color:var(--calendar-primary-contrast-color)]',
+        theme?.day,
+        selected && cn(activeClasses, theme?.active),
+        disabled &&
+          cn(
+            'rt-date-picker-disabled',
+            '[.rt-date-picker-day&]:opacity-[var(--calendar-day-disable-opacity)]',
+            theme?.disabled,
+          ),
+      )}
+      style={day === 1 ? { marginLeft: `${(firstDay >= 0 ? firstDay : 6) * (100 / 7)}%` } : undefined}
     >
       <span
         role="button"

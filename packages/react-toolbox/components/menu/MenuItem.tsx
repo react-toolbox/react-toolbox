@@ -1,4 +1,6 @@
 'use client';
+import { iconClasses } from './styles';
+import type { MenuTheme } from './types';
 
 import {
   useImperativeHandle,
@@ -9,22 +11,17 @@ import {
   type ReactNode,
   type Ref,
 } from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
+import { cn } from '../utils/cn';
 import { FontIcon } from '../font_icon';
 import { useRipple } from '../ripple';
-import defaults from './theme';
 
-export type MenuItemTheme = Partial<typeof defaults>;
+export type MenuItemTheme = MenuTheme;
 export type MenuItemEvent = MouseEvent<HTMLLIElement> | KeyboardEvent<HTMLLIElement>;
 export interface MenuItemHandle<Value = unknown> {
   readonly node: HTMLLIElement | null;
   readonly value: Value | undefined;
 }
-export interface MenuItemProps<Value = unknown> extends Omit<
-  HTMLAttributes<HTMLLIElement>,
-  'onClick'
-> {
+export interface MenuItemProps<Value = unknown> extends Omit<HTMLAttributes<HTMLLIElement>, 'onClick'> {
   caption?: ReactNode;
   disabled?: boolean;
   icon?: ReactNode;
@@ -52,11 +49,10 @@ export function MenuItem<Value = unknown>({
   onTouchStart,
   onTouchEnd,
   onTouchCancel,
-  theme: overrides,
+  theme,
   ref,
   ...attributes
 }: MenuItemProps<Value>) {
-  const theme = mergeTheme(defaults, overrides);
   const node = useRef<HTMLLIElement>(null);
   const handle: MenuItemHandle<Value> = {
     get node() {
@@ -65,7 +61,13 @@ export function MenuItem<Value = unknown>({
     value,
   };
   useImperativeHandle(ref, () => handle, [value]);
-  const ink = useRipple({ disabled, ripple, theme });
+  const ink = useRipple({
+    disabled,
+    ripple,
+    theme: {
+      ripple: cn('rt-menu-ripple', '[.rt-menu-menuItem_&]:text-[color:var(--rt-color-text-secondary)]', theme?.ripple),
+    },
+  });
   const click = (event: MenuItemEvent) => {
     if (!disabled) onClick?.(event, handle);
   };
@@ -78,10 +80,24 @@ export function MenuItem<Value = unknown>({
       aria-disabled={disabled || undefined}
       aria-checked={attributes.role === 'menuitemradio' ? selected : undefined}
       tabIndex={disabled ? -1 : (attributes.tabIndex ?? 0)}
-      className={classnames(
-        theme.menuItem,
-        selected && theme.selected,
-        disabled && theme.disabled,
+      className={cn(
+        'rt-menu-menuItem',
+        'items-center text-[color:var(--rt-color-text)] flex text-[length:var(--menu-item-font-size)] h-[var(--menu-item-height)] overflow-hidden p-[0_var(--menu-item-padding)] relative',
+        '[&:not(.rt-menu-disabled):hover]:bg-[var(--menu-item-hover-background)] [&:not(.rt-menu-disabled):hover]:cursor-pointer',
+        '[&:not(.rt-menu-disabled):focus-visible]:bg-[var(--menu-item-hover-background)] [&:not(.rt-menu-disabled):focus-visible]:[outline:2px_solid_currentColor] [&:not(.rt-menu-disabled):focus-visible]:[outline-offset:-2px]',
+        theme?.menuItem,
+        selected &&
+          cn(
+            'rt-menu-selected',
+            '[.rt-menu-menuItem&]:bg-[var(--menu-item-selected-background)] [.rt-menu-menuItem&]:[font-weight:500]',
+            theme?.selected,
+          ),
+        disabled &&
+          cn(
+            'rt-menu-disabled',
+            '[.rt-menu-menuItem&]:opacity-[0.5] [.rt-menu-menuItem&]:pointer-events-none',
+            theme?.disabled,
+          ),
         className,
       )}
       onClick={click}
@@ -109,9 +125,13 @@ export function MenuItem<Value = unknown>({
         ink.onTouchCancel(event);
       }}
     >
-      {icon ? <FontIcon value={icon} className={theme.icon} /> : null}
-      <span className={theme.caption}>{caption}</span>
-      {shortcut ? <small className={theme.shortcut}>{shortcut}</small> : null}
+      {icon ? <FontIcon value={icon} className={cn(iconClasses, theme?.icon)} /> : null}
+      <span className={cn('rt-menu-caption', 'grow-[1] text-[length:var(--font-size-normal)]', theme?.caption)}>
+        {caption}
+      </span>
+      {shortcut ? (
+        <small className={cn('rt-menu-shortcut', 'ml-[var(--menu-item-padding)]', theme?.shortcut)}>{shortcut}</small>
+      ) : null}
       {children}
       {ink.ripple}
     </li>

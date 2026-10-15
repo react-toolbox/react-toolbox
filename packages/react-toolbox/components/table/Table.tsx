@@ -1,21 +1,15 @@
 'use client';
-import {
-  Children,
-  cloneElement,
-  isValidElement,
-  type ComponentPropsWithRef,
-  type ReactElement,
-} from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
+import { materialRoot, materialDescendants } from '../utils/styles';
+import type { TableTheme } from './types';
+import { Children, cloneElement, isValidElement, type ComponentPropsWithRef, type ReactElement } from 'react';
+import { cn } from '../utils/cn';
 import TableHead, { type TableHeadProps } from './TableHead';
 import TableRow, { type TableRowProps } from './TableRow';
-import defaultTheme from './theme';
 export interface TableProps extends ComponentPropsWithRef<'table'> {
   multiSelectable?: boolean;
   onRowSelect?: (selectedIndices: number[]) => void;
   selectable?: boolean;
-  theme?: Partial<typeof defaultTheme>;
+  theme?: TableTheme;
 }
 export function Table({
   children,
@@ -23,18 +17,15 @@ export function Table({
   multiSelectable = false,
   onRowSelect,
   selectable = true,
-  theme: suppliedTheme,
+  theme,
   ...other
 }: TableProps) {
-  const theme = mergeTheme(defaultTheme, suppliedTheme);
   const elements = Children.toArray(children);
   const rows = elements.filter(
-    (child): child is ReactElement<TableRowProps> =>
-      isValidElement<TableRowProps>(child) && child.type === TableRow,
+    (child): child is ReactElement<TableRowProps> => isValidElement<TableRowProps>(child) && child.type === TableRow,
   );
   const heads = elements.filter(
-    (child): child is ReactElement<TableHeadProps> =>
-      isValidElement<TableHeadProps>(child) && child.type === TableHead,
+    (child): child is ReactElement<TableHeadProps> => isValidElement<TableHeadProps>(child) && child.type === TableHead,
   );
   const selectedIndices = rows.flatMap((row, index) => (row.props.selected ? [index] : []));
   function selectRow(index: number) {
@@ -47,8 +38,18 @@ export function Table({
     );
   }
   return (
-    <table {...other} className={classnames(theme.table, className)}>
-      <thead className={theme.head}>
+    <table
+      {...other}
+      className={cn(
+        'rt-table-table',
+        'bg-[var(--rt-color-white)] border-collapse text-[length:var(--table-font-size)] w-full',
+        materialRoot,
+        materialDescendants,
+        theme?.table,
+        className,
+      )}
+    >
+      <thead className={cn('rt-table-head', 'pb-[calc(0.3_*_var(--unit))] whitespace-nowrap', theme?.head)}>
         {heads.map((head) =>
           cloneElement(head, {
             selected: selectedIndices.length === rows.length,
@@ -58,9 +59,7 @@ export function Table({
           }),
         )}
       </thead>
-      <tbody>
-        {rows.map((row, idx) => cloneElement(row, { idx, onSelect: selectRow, selectable }))}
-      </tbody>
+      <tbody>{rows.map((row, idx) => cloneElement(row, { idx, onSelect: selectRow, selectable }))}</tbody>
     </table>
   );
 }

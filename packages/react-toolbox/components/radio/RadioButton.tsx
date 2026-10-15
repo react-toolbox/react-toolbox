@@ -1,20 +1,25 @@
 'use client';
+import type { RadioTheme } from './types';
 
 import React, { useImperativeHandle, useRef } from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
+import { cn } from '../utils/cn';
 import Radio from './Radio';
-import defaults from './theme';
-export type RadioButtonTheme = Partial<typeof defaults>;
+const fieldClasses = [
+  'rt-radio-field',
+  'block h-[var(--radio-button-size)] mb-[var(--radio-field-margin-bottom)] relative whitespace-nowrap',
+].join(' ');
+
+export type RadioButtonTheme = RadioTheme;
 export interface RadioButtonHandle {
   focus(): void;
   blur(): void;
   readonly inputElement: HTMLInputElement | null;
 }
-export interface RadioButtonProps extends Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  'onChange' | 'type' | 'size' | 'onMouseEnter' | 'onMouseLeave'
-> {
+export interface RadioButtonProps
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    'onChange' | 'type' | 'size' | 'onMouseEnter' | 'onMouseLeave'
+  > {
   label?: React.ReactNode;
   onMouseEnter?: React.MouseEventHandler<HTMLLabelElement>;
   onMouseLeave?: React.MouseEventHandler<HTMLLabelElement>;
@@ -34,13 +39,12 @@ export function RadioButton({
   onChange,
   onMouseEnter,
   onMouseLeave,
-  theme: overrides,
+  theme,
   ripple,
   ref,
   style,
   ...others
 }: RadioButtonProps) {
-  const theme = mergeTheme(defaults, overrides);
   const input = useRef<HTMLInputElement>(null);
   const handle = {
     focus: () => input.current?.focus(),
@@ -57,7 +61,12 @@ export function RadioButton({
   return (
     <label
       data-react-toolbox="radio-button"
-      className={classnames(theme[disabled ? 'disabled' : 'field'], className)}
+      className={cn(
+        disabled
+          ? cn(fieldClasses, 'rt-radio-disabled', theme?.field, theme?.disabled)
+          : cn(fieldClasses, theme?.field),
+        className,
+      )}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
@@ -65,7 +74,11 @@ export function RadioButton({
         {...others}
         style={style}
         checked={checked}
-        className={theme.input}
+        className={cn(
+          'rt-radio-input',
+          '[-webkit-appearance:none] [-moz-appearance:none] [appearance:none] [border:0] h-0 m-0 opacity-0 p-0 absolute w-0',
+          theme?.input,
+        )}
         disabled={disabled}
         name={name}
         onChange={() => {}}
@@ -74,7 +87,18 @@ export function RadioButton({
         type="radio"
       />
       <Radio disabled={disabled} ripple={ripple} theme={theme} checked={checked} />
-      {label ? <span className={theme.text}>{label}</span> : null}
+      {label ? (
+        <span
+          className={cn(
+            'rt-radio-text',
+            'text-[color:var(--radio-text-color)] inline-block text-[length:var(--radio-text-font-size)] leading-[var(--radio-button-size)] pl-[var(--unit)] align-top whitespace-nowrap',
+            '[.rt-radio-disabled_&]:text-[color:var(--radio-disabled-color)]',
+            theme?.text,
+          )}
+        >
+          {label}
+        </span>
+      ) : null}
       {children}
     </label>
   );

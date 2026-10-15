@@ -1,10 +1,10 @@
 'use client';
+import { activeClasses } from './styles';
+import type { TabsTheme } from './types';
 
 import type { HTMLAttributes, Ref } from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
-import defaults from './theme';
-export type TabContentTheme = Partial<typeof defaults>;
+import { cn } from '../utils/cn';
+export type TabContentTheme = TabsTheme;
 export interface TabContentProps extends HTMLAttributes<HTMLElement> {
   active?: boolean;
   theme?: TabContentTheme;
@@ -13,16 +13,22 @@ export interface TabContentProps extends HTMLAttributes<HTMLElement> {
 export function TabContent({
   active = false,
   hidden = true,
-  theme: overrides,
+  theme,
   className,
   children,
   ...attributes
 }: TabContentProps) {
-  const theme = mergeTheme(defaults, overrides);
   return (
     <section
       {...attributes}
-      className={classnames(theme.tab, active && theme.active, className)}
+      className={cn(
+        'rt-tabs-tab',
+        'flex flex-col overflow-hidden p-[var(--tab-label-v-padding)_var(--tab-label-h-padding)] relative',
+        '[&:not(.rt-tabs-active)]:hidden',
+        theme?.tab,
+        active && cn(activeClasses, theme?.active),
+        className,
+      )}
       role="tabpanel"
       aria-hidden={!active || hidden || undefined}
       hidden={!active || hidden}

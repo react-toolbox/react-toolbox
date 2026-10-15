@@ -1,9 +1,8 @@
 'use client';
-import classnames from 'classnames';
+import { rippleWrapperClasses, buttonClasses, inverseClasses, iconClasses } from './styles';
+import { cn } from '../utils/cn';
 import FontIcon from '../font_icon';
-import { mergeTheme } from '../theming';
 import { useRipple } from '../ripple';
-import defaultTheme from './theme';
 import type { ButtonAppearanceProps, ButtonNativeProps } from './types';
 export type IconButtonProps = ButtonAppearanceProps & ButtonNativeProps;
 export function IconButton({
@@ -15,7 +14,7 @@ export function IconButton({
   inverse,
   neutral = true,
   primary = false,
-  theme: suppliedTheme,
+  theme,
   ripple = true,
   rippleCentered = true,
   rippleClassName,
@@ -24,21 +23,30 @@ export function IconButton({
   onRippleEnded,
   ...native
 }: IconButtonProps) {
-  const theme = mergeTheme(defaultTheme, suppliedTheme);
   const ink = useRipple({
     disabled,
     centered: rippleCentered,
     className: rippleClassName,
     multiple: rippleMultiple,
     spread: rippleSpread,
-    theme: { rippleWrapper: theme.rippleWrapper },
+    theme: { rippleWrapper: cn(rippleWrapperClasses, theme?.rippleWrapper) },
     ripple,
     onRippleEnded,
   });
   const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
-  const classes = classnames(
-    theme.toggle,
-    { [theme[level]]: neutral, [theme.inverse]: inverse },
+  const classes = cn(
+    buttonClasses,
+    'rt-button-toggle',
+    '[background:transparent] rounded-[50%] h-[var(--button-toggle-size)] leading-[var(--button-toggle-size)] align-middle w-[var(--button-toggle-size)]',
+    '[&_svg]:text-[length:var(--button-toggle-font-size)] [&_svg]:h-[var(--button-toggle-size)] [&_svg]:leading-[var(--button-toggle-size)] [&_svg]:align-top',
+    '[.rt-button-primary:not([disabled])&]:text-[color:var(--button-primary-color)]',
+    '[.rt-button-accent:not([disabled])&]:text-[color:var(--button-accent-color)]',
+    '[.rt-button-neutral:not([disabled])&]:text-[color:var(--button-neutral-color-contrast)]',
+    '[.rt-button-neutral:not([disabled]).rt-button-inverse&]:text-[color:var(--button-neutral-color)]',
+    theme?.button,
+    theme?.toggle,
+    neutral && cn(primary ? 'rt-button-primary' : accent ? 'rt-button-accent' : 'rt-button-neutral', theme?.[level]),
+    inverse && cn(inverseClasses, theme?.inverse),
     className,
   );
   if (native.href !== undefined) {
@@ -73,8 +81,7 @@ export function IconButton({
           ink.onTouchCancel(event);
         }}
       >
-        {icon &&
-          (typeof icon === 'string' ? <FontIcon className={theme.icon} value={icon} /> : icon)}
+        {icon && (typeof icon === 'string' ? <FontIcon className={cn(iconClasses, theme?.icon)} value={icon} /> : icon)}
         {children}
         {ink.ripple}
       </a>
@@ -112,8 +119,7 @@ export function IconButton({
           ink.onTouchCancel(event);
         }}
       >
-        {icon &&
-          (typeof icon === 'string' ? <FontIcon className={theme.icon} value={icon} /> : icon)}
+        {icon && (typeof icon === 'string' ? <FontIcon className={cn(iconClasses, theme?.icon)} value={icon} /> : icon)}
         {children}
         {ink.ripple}
       </button>

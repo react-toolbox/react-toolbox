@@ -1,4 +1,7 @@
 'use client';
+import { materialRoot, materialDescendants } from '../utils/styles';
+import { iconClasses } from './styles';
+import type { MenuTheme } from './types';
 
 import {
   useEffect,
@@ -10,22 +13,17 @@ import {
   type ReactNode,
   type Ref,
 } from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
+import { cn } from '../utils/cn';
 import { IconButton } from '../button';
 import Menu, { type MenuProps, type MenuPosition } from './Menu';
-import defaults from './theme';
 
-export type IconMenuTheme = Partial<typeof defaults>;
+export type IconMenuTheme = MenuTheme;
 export interface IconMenuHandle {
   open(): void;
   close(): void;
   readonly node: HTMLDivElement | null;
 }
-export interface IconMenuProps<Value = unknown> extends Omit<
-  HTMLAttributes<HTMLDivElement>,
-  'onSelect' | 'onClick'
-> {
+export interface IconMenuProps<Value = unknown> extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect' | 'onClick'> {
   active?: boolean;
   icon?: ReactNode;
   iconRipple?: boolean;
@@ -56,11 +54,10 @@ export function IconMenu<Value = unknown>({
   position = 'auto',
   selectable = false,
   selected,
-  theme: overrides,
+  theme,
   ref,
   ...attributes
 }: IconMenuProps<Value>) {
-  const theme = mergeTheme(defaults, overrides);
   const id = `toolbox-menu-${useId()}`;
   const node = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(active);
@@ -82,7 +79,7 @@ export function IconMenu<Value = unknown>({
       position,
       selectable,
       selected,
-      overrides,
+      theme,
     ],
   );
   useImperativeHandle(
@@ -97,14 +94,25 @@ export function IconMenu<Value = unknown>({
     [],
   );
   return (
-    <div {...attributes} ref={node} className={classnames(theme.iconMenu, className)}>
+    <div
+      {...attributes}
+      ref={node}
+      className={cn(
+        'rt-menu-iconMenu',
+        'inline-block relative text-center',
+        materialRoot,
+        materialDescendants,
+        theme?.iconMenu,
+        className,
+      )}
+    >
       <IconButton
         id={`${id}-trigger`}
         aria-label={attributes['aria-label'] || 'More options'}
         aria-haspopup="menu"
         aria-expanded={visible}
         aria-controls={id}
-        className={theme.icon}
+        className={cn(iconClasses, theme?.icon)}
         icon={icon}
         inverse={inverse}
         onClick={(event) => {
@@ -136,7 +144,7 @@ export function IconMenu<Value = unknown>({
         ripple={menuRipple}
         selectable={selectable}
         selected={selected}
-        theme={overrides}
+        theme={theme}
       >
         {children}
       </Menu>

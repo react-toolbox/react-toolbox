@@ -1,4 +1,6 @@
 'use client';
+import { materialRoot, materialDescendants } from '../utils/styles';
+import type { SnackbarTheme } from './types';
 
 import {
   useCallback,
@@ -10,14 +12,12 @@ import {
   type ReactNode,
   type Ref,
 } from 'react';
-import classnames from 'classnames';
-import { mergeTheme } from '../theming';
+import { cn } from '../utils/cn';
 import { Button } from '../button';
 import Portal from '../hoc/Portal';
 import usePresence from '../hoc/usePresence';
-import defaults from './theme';
 
-export type SnackbarTheme = Partial<typeof defaults>;
+export type { SnackbarTheme } from './types';
 export interface SnackbarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'> {
   action?: string;
   active?: boolean;
@@ -46,7 +46,7 @@ export function Snackbar({
   onTimeout,
   timeout = 0,
   type,
-  theme: overrides,
+  theme,
   className,
   onMouseEnter,
   onMouseLeave,
@@ -55,7 +55,6 @@ export function Snackbar({
   ref,
   ...attributes
 }: SnackbarProps) {
-  const theme = mergeTheme(defaults, overrides);
   const { present, visible } = usePresence(active, delay);
   const latest = useRef({ visible, timeout, onTimeout });
   latest.current = { visible, timeout, onTimeout };
@@ -64,13 +63,7 @@ export function Snackbar({
   const [multiline, setMultiline] = useState(false);
   const schedule = useCallback(() => {
     const state = clock.current;
-    if (
-      !latest.current.visible ||
-      state.remaining <= 0 ||
-      state.pauses.size ||
-      state.timer !== undefined
-    )
-      return;
+    if (!latest.current.visible || state.remaining <= 0 || state.pauses.size || state.timer !== undefined) return;
     state.started = Date.now();
     state.timer = setTimeout(() => {
       state.timer = undefined;
@@ -89,8 +82,7 @@ export function Snackbar({
   }, []);
   const resume = useCallback(
     (reason: string, restart = false) => {
-      if (restart && clock.current.pauses.has(reason))
-        clock.current.remaining = latest.current.timeout;
+      if (restart && clock.current.pauses.has(reason)) clock.current.remaining = latest.current.timeout;
       clock.current.pauses.delete(reason);
       schedule();
     },
@@ -127,8 +119,7 @@ export function Snackbar({
       setMultiline(labelNode.getBoundingClientRect().height > lineHeight + 0.5);
     };
     measure();
-    const observer =
-      typeof ResizeObserver === 'undefined' ? undefined : new ResizeObserver(measure);
+    const observer = typeof ResizeObserver === 'undefined' ? undefined : new ResizeObserver(measure);
     if (observer) observer.observe(labelNode);
     else window.addEventListener('resize', measure);
     return () => {
@@ -144,10 +135,25 @@ export function Snackbar({
         ref={ref}
         data-react-toolbox="snackbar"
         data-multiline={multiline || undefined}
-        className={classnames(
-          theme.snackbar,
-          type && theme[type],
-          visible && theme.active,
+        className={cn(
+          'rt-snackbar-snackbar',
+          'items-center bg-[var(--snackbar-background-color)] rounded-[0] bottom-0 text-[color:var(--snackbar-color)] flex left-0 m-0 min-h-[calc(4.8_*_var(--unit))] p-[var(--snackbar-vertical-offset)_var(--snackbar-horizontal-offset)] fixed right-0 [transition:all_var(--animation-duration)_var(--animation-curve-default)_var(--animation-duration)] z-[var(--z-index-higher)]',
+          materialRoot,
+          materialDescendants,
+          '[&:not(.rt-snackbar-active)]:[transform:translateY(100%)]',
+          '[@media_screen_and_(max-width:_599px)]:[&[data-multiline]]:min-h-[calc(8_*_var(--unit))]',
+          '[@media_screen_and_(min-width:_600px)]:rounded-[var(--snackbar-border-radius)] [@media_screen_and_(min-width:_600px)]:bottom-[var(--snackbar-horizontal-offset)] [@media_screen_and_(min-width:_600px)]:left-[var(--snackbar-horizontal-offset)] [@media_screen_and_(min-width:_600px)]:right-auto [@media_screen_and_(min-width:_600px)]:min-w-[calc(28.8_*_var(--unit))] [@media_screen_and_(min-width:_600px)]:max-w-[min(calc(56.8_*_var(--unit)),_calc(100vw_-_4.8_*_var(--unit)))]',
+          '[@media_screen_and_(min-width:_600px)]:[&:not(.rt-snackbar-active)]:[transform:translateY(calc(100%_+_var(--snackbar-horizontal-offset)))]',
+          theme?.snackbar,
+          type &&
+            (type === 'accept'
+              ? cn('rt-snackbar-accept', theme?.accept)
+              : type === 'cancel'
+                ? cn('rt-snackbar-cancel', theme?.cancel)
+                : type === 'warning'
+                  ? cn('rt-snackbar-warning', theme?.warning)
+                  : undefined),
+          visible && cn('rt-snackbar-active', '[.rt-snackbar-snackbar&]:[transform:translateY(0%)]', theme?.active),
           className,
         )}
         role={attributes.role || 'status'}
@@ -168,18 +174,36 @@ export function Snackbar({
           onFocus?.(event);
         }}
         onBlur={(event) => {
-          if (!(
-            event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget)
-          ))
+          if (!(event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget)))
             resume('focus');
           onBlur?.(event);
         }}
       >
-        <span ref={setLabelNode} className={theme.label}>
+        <span
+          ref={setLabelNode}
+          className={cn(
+            'rt-snackbar-label',
+            'grow-[1] text-[length:var(--font-size-small)] leading-[calc(2_*_var(--unit))]',
+            theme?.label,
+          )}
+        >
           {label}
           {children}
         </span>
-        {action ? <Button className={theme.button} label={action} onClick={onClick} /> : null}
+        {action ? (
+          <Button
+            className={cn(
+              'rt-snackbar-button',
+              'm-[calc(-0.8_*_var(--unit))_calc(-0.8_*_var(--unit))_calc(-0.8_*_var(--unit))_var(--snackbar-button-offset)] min-w-[calc(6.4_*_var(--unit))] pl-[calc(0.8_*_var(--unit))] pr-[calc(0.8_*_var(--unit))]',
+              '[.rt-snackbar-snackbar.rt-snackbar-accept_&]:text-[color:var(--snackbar-color-accept)]',
+              '[.rt-snackbar-snackbar.rt-snackbar-warning_&]:text-[color:var(--snackbar-color-warning)]',
+              '[.rt-snackbar-snackbar.rt-snackbar-cancel_&]:text-[color:var(--snackbar-color-cancel)]',
+              theme?.button,
+            )}
+            label={action}
+            onClick={onClick}
+          />
+        ) : null}
       </div>
     </Portal>
   );
