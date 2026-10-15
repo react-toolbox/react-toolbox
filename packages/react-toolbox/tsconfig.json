@@ -11,5 +11,5 @@
     "types": ["react", "react-dom"]
   },
   "include": ["components/**/*.ts", "components/**/*.tsx", "tests/types/**/*.tsx"],
-  "exclude": ["node_modules", "dist", "docs", "spec"]
+  "exclude": ["node_modules", "dist"]
 }

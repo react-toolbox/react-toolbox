@@ -288,9 +288,6 @@ importers:
       postcss-calc:
         specifier: ^11.2.3
         version: 11.2.3(postcss@8.5.29)
-      postcss-nested:
-        specifier: ^8.0.1
-        version: 8.0.1(postcss@8.5.29)
       postcss-selector-parser:
         specifier: ^7.1.6
         version: 7.1.6
@@ -2748,12 +2745,6 @@ packages:
     engines: {node: ^22.22.3 || ^24.15 || >=26.0}
     peerDependencies:
       postcss: ^8.5.29
-
-  postcss-nested@8.0.1:
-    resolution: {integrity: sha512-PvSIwDVh1NTw939iu4FBK+oeZfSm0cbErFAjXCTPiStammzobBNE2SiQNezy8Xp+Oud2uLXaLpTauv3UdxWjbQ==}
-    engines: {node: ^22.0.0 || ^24.0.0 || >= 26.0.0}
-    peerDependencies:
-      postcss: ^8.2.14
 
   postcss-selector-parser@7.1.6:
     resolution: {integrity: sha512-7qASPzhKF2l2KLboRZux8CCTRMdGiV08vWmyKzPz22qZ7ZjQBOeY7rNzNoCLSUiftJ7HUq0GERHmxw/t0dCdMw==}
@@ -5508,11 +5499,6 @@ snapshots:
     dependencies:
       '@csstools/css-tokenizer': 4.0.2
       postcss: 8.5.29
-
-  postcss-nested@8.0.1(postcss@8.5.29):
-    dependencies:
-      postcss: 8.5.29
-      postcss-selector-parser: 7.1.6
 
   postcss-selector-parser@7.1.6:
     dependencies:

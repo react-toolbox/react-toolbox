@@ -58,6 +58,6 @@ pnpm test:registry:install
 
 The registry covers 27 public component families, shared foundations, and `all`. The builder derives family dependencies from imports, preserves source bytes, generates the public UI entries, and emits the snapshot served by the docs app. Keep one implementation tree; do not edit generated files.
 
-The docs app still consumes the internal compiled exports and styles. This keeps its development build efficient without adding a second public installation model. Package-style import examples in internal type tests protect those workspace contracts.
+The docs app still consumes the internal compiled exports and styles. This keeps its development build efficient without adding a second public installation model. Package-style import examples in internal type tests protect those workspace contracts. The obsolete `react-toolbox/lib/*` aliases are removed; internal imports use `react-toolbox` or direct family paths such as `react-toolbox/button`. Component usage documentation lives in the Next.js docs app.
 
 [MIT](LICENSE). Original implementation by Javier Velasco Arjona and the React Toolbox contributors.

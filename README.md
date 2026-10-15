@@ -42,7 +42,7 @@ packages/react-toolbox/     Private implementation workspace used by the docs ap
 
 All workspace packages are private. The compiled `react-toolbox` workspace dependency is an internal development convenience for the documentation app. **The registry is the only public distribution.** There is no npm publishing or tarball release workflow.
 
-Historical `docs/` and `spec/` applications stay outside the active workspace. The maintained design audit and registry notes live in `docs/`.
+The documentation application lives in `apps/docs/`. The `docs/` directory contains the maintained design audit and source-registry guide. Original rendering fixtures remain under `packages/react-toolbox/tests/fixtures/` for independent M1 regression checks.
 
 ## Develop
 
@@ -61,7 +61,7 @@ pnpm docs:start          # http://127.0.0.1:3100
 pnpm build:library       # private implementation build
 ```
 
-`pnpm docs:dev` and `pnpm docs:build` run the docs app and its dependencies. The previous `site:*` and `example:*` commands remain aliases. The landing lives at `/`, documentation at `/docs`, installation at `/docs/installation`, and component pages at `/docs/components/<name>`. `/components` redirects to the docs catalog; the unchanged comparison gallery is available at `/playground`. The app also serves `/layout-demo`, `/theme-demo`, `/r/registry.json`, and `/r/<name>.json`.
+`pnpm docs:dev` and `pnpm docs:build` run the docs app and its dependencies. The landing lives at `/`, documentation at `/docs`, installation at `/docs/installation`, and component pages at `/docs/components/<name>`. `/components` redirects to the docs catalog; the unchanged comparison gallery is available at `/playground`. The app also serves `/layout-demo`, `/theme-demo`, `/r/registry.json`, and `/r/<name>.json`.
 
 See the [docs app guide](apps/docs/README.md) for deployment and the [implementation guide](packages/react-toolbox/README.md) for component conventions.
 

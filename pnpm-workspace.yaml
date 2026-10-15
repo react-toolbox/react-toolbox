@@ -1,4 +1,3 @@
-# Historical docs/ and spec/ applications stay outside the active workspace.
 packages:
   - apps/*
   - packages/*

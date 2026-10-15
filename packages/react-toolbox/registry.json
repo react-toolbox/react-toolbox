@@ -189,7 +189,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "2c8f1d4398340b028048d88306437af41ae07d18f8551c9742bc4787a14b3c7e",
+        "sourceSha256": "c2de1e8c3afa750e42385271d85721f5707a649a2438c02f0339b377158a2d52",
         "source": "components/",
         "distribution": "copy-source"
       }

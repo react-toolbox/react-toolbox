@@ -29,8 +29,6 @@ npm install --prefix /private/tmp/react-toolbox-legacy-css --no-save --ignore-sc
 node scripts/compile-legacy-reference.cjs /private/tmp/react-toolbox-legacy-css
 ```
 
-The historical conversion is reproducible with
-`node scripts/migrate-styles.mjs --output=/private/tmp/react-toolbox-historical-css`.
-It makes ordinary CSS and stable JavaScript slot maps in a scratch directory;
-it cannot overwrite maintained M1 corrections. Consumers need none of the
-legacy compiler packages.
+Consumers need none of these legacy compiler packages. The archived originals
+and their compiler are retained only to reproduce the independent test baseline;
+maintained component presentation uses Tailwind classes in the TypeScript source.
