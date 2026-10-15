@@ -3,9 +3,9 @@ import { render, screen, fireEvent, cleanup, act } from '@testing-library/react'
 import { renderToString } from 'react-dom/server';
 import { hydrateRoot } from 'react-dom/client';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { Input, Dropdown, Autocomplete, Checkbox, RadioButton, RadioGroup, Switch, Chip, DatePicker, TimePicker } from '../components';
-import { DatePickerDialog } from '../components/date_picker';
-import Calendar from '../components/date_picker/Calendar';
+import { Input, Dropdown, Autocomplete, Checkbox, RadioButton, RadioGroup, Switch, Chip, DatePicker, TimePicker } from '../src';
+import { DatePickerDialog } from '../src/material/date-picker';
+import Calendar from '../src/material/date-picker/Calendar';
 
 afterEach(() => { cleanup(); vi.useRealTimers(); });
 const strict = children => <StrictMode>{children}</StrictMode>;
@@ -197,7 +197,7 @@ describe('Material 1 control behavior', () => {
   it('opens date pickers only on activation, restores focus without reopening, and honors disabled fields', () => {
     vi.useFakeTimers();
     const view = render(<DatePicker label="Date" value={new Date(2026, 9, 13)} />);
-    const field = screen.getByRole('textbox', { name: 'Date' });
+    const field = screen.getByRole('combobox', { name: 'Date' });
     fireEvent.focus(field);
     expect(field).toHaveAttribute('aria-expanded', 'false');
     fireEvent.keyDown(field, { key: 'Enter' });

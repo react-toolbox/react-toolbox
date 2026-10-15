@@ -33,14 +33,16 @@ Replace `button` with any of the 27 component family names, or `all`. The [insta
 ```text
 apps/docs/                 Next.js landing, documentation, component previews, and /r/*.json
 packages/react-toolbox/     Private implementation workspace used by the docs app
-  components/              Maintained TypeScript components and M1 styles
+  src/material/            Maintained source, matching the installed material/ tree
+    <family>/              Components, types, and automatic-style entry
+    foundations/           Shared styles, theme, motion, portals, and date/time behavior
   scripts/                 Builds, registry generation, and consumer verification
   tests/                   Unit, browser, type, and immutable reference fixtures
-  registry/                Registry setup, generated entries, and payloads
+  registry/                Generated registry payloads and API reference
   registry.json            Generated source catalog
 ```
 
-All workspace packages are private. The compiled `react-toolbox` workspace dependency is an internal development convenience for the documentation app. **The registry is the only public distribution.** There is no npm publishing or tarball release workflow.
+All workspace packages are private. The compiled `react-toolbox` workspace dependency is an internal development convenience for the documentation app. **The registry is the only public distribution.** There is no npm publishing workflow. Tagged source releases archive the registry for repeatable installation and rollback.
 
 The documentation application lives in `apps/docs/`. The `docs/` directory contains the maintained design audit and source-registry guide. Original rendering fixtures remain under `packages/react-toolbox/tests/fixtures/` for independent M1 regression checks.
 
@@ -75,7 +77,7 @@ TOOLBOX_BROWSER=webkit pnpm test:browser
 pnpm test:registry:install
 ```
 
-The registry checks every family’s dependency closure, exact source and CSS contents, schemas, and strict TypeScript. The actual shadcn CLI is also tested in an isolated app with a custom UI alias and no React Toolbox package. That test builds Next.js and checks automatic styles, fonts, tokens, hydration, and interaction in Chromium.
+The registry checks every family’s dependency closure, exact source and CSS contents, schemas, and strict TypeScript. The actual shadcn CLI is also tested in isolated Next.js and Vite apps, with a custom UI alias, existing host components, local source customizations, and no React Toolbox package. Browser checks cover automatic styles, fonts, tokens, hydration, keyboard interaction, and reduced motion. Automated accessibility checks complement the manual verification described in the release guide.
 
 Browser tests start the production site automatically when port 3100 is free. CI builds its own instance. The [M1 audit](docs/material-1-audit.md) records intentional spec corrections. Original CSS and React 16 reference artifacts are never regenerated to approve visual differences; the shared gallery input remains unchanged.
 
@@ -83,7 +85,7 @@ Browser tests start the production site automatically when port 3100 is free. CI
 
 Deploy the documentation app to Vercel with Root Directory `apps/docs`; follow the [Vercel setup](apps/docs/README.md#vercel-deployment). Its build includes the current registry snapshot, so the website and installable component source ship together. The endpoints contain editable source and dependency metadata; no separate npm release is required.
 
-Review changes, run the checks, and update the private implementation manifest’s version when identifying a release. That version is provenance metadata in registry payloads. `/r/<name>.json` follows the deployed source, as in Magic UI. Consumers review and merge updates to their copied files through the shadcn CLI.
+Follow the [source release guide](docs/releases.md). Review changes, run the checks, and update the private implementation manifest’s version when identifying a release. That version is provenance metadata in registry payloads. `/r/<name>.json` follows the deployed source, as in Magic UI. Consumers review and merge updates to their copied files through the shadcn CLI.
 
 After deploying to the public domain, submit `@react-toolbox` to the [shadcn registry directory](https://ui.shadcn.com/docs/registry/namespace). Until listed, users can install by URL or configure the namespace themselves. This repository does not deploy or register the namespace automatically.
 

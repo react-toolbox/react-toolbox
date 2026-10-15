@@ -1,11 +1,11 @@
 import { StrictMode, createRef } from 'react';
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import AppBar from '../components/app_bar';
-import Button, { BrowseButton, IconButton } from '../components/button';
-import { Layout, NavDrawer, Panel, Sidebar } from '../components/layout';
-import { List, ListItem, ListItemContent } from '../components/list';
-import { Table, TableHead, TableRow, TableCell } from '../components/table';
+import AppBar from '../src/material/app-bar';
+import Button, { BrowseButton, IconButton } from '../src/material/button';
+import { Layout, NavDrawer, Panel, Sidebar } from '../src/material/layout';
+import { List, ListItem, ListItemContent } from '../src/material/list';
+import { Table, TableHead, TableRow, TableCell } from '../src/material/table';
 
 afterEach(cleanup);
 

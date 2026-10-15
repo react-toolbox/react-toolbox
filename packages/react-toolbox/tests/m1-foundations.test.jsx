@@ -1,8 +1,8 @@
 import React from 'react';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import Button, { BrowseButton, IconButton } from '../components/button';
-import { ListItemContent, ListItemText } from '../components/list';
+import Button, { BrowseButton, IconButton } from '../src/material/button';
+import { ListItemContent, ListItemText } from '../src/material/list';
 
 afterEach(cleanup);
 

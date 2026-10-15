@@ -1,4 +1,4 @@
-/** Compare against the immutable legacy output plus documented M1 corrections. */
+/** Compare against the immutable output plus documented M1 and accessibility corrections. */
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -59,22 +59,38 @@ for (const [selector, declarations] of expectedRules) {
   }
 }
 for (const selector of modernRules.keys()) {
+  // Accessibility preferences are a separate, opt-in rendering contract. Keep
+  // every normal-motion declaration exact and verify reduced motion in browser tests.
+  if (selector.startsWith('@media (prefers-reduced-motion: reduce) > ')) continue;
   if (!expectedRules.has(selector)) differences.push(`Unexpected selector: ${selector}`);
+}
+
+const reducedMotion = postcss.parse(
+  await readFile(path.join(root, 'src/material/foundations/styles/reduced-motion.css'), 'utf8'),
+);
+for (const node of reducedMotion.nodes) {
+  if (node.type === 'comment') continue;
+  assert.equal(node.type, 'atrule', 'Reduced-motion rules must not affect default M1 styling');
+  assert.equal(node.name, 'media');
+  assert.equal(node.params, '(prefers-reduced-motion: reduce)');
 }
 
 // Component presentation belongs in JSX or explicitly shared constants, not a
 // per-family runtime theme map. The independent declarations above stay exact.
-for await (const file of glob('components/**/theme.ts', { cwd: root })) {
+for await (const file of glob('src/material/**/theme.ts', { cwd: root })) {
   assert.fail(`Obsolete runtime theme map: ${file}`);
 }
 assert.equal(differences.length, 0, `Unreviewed Material 1 style drift:\n${differences.join('\n')}`);
 console.log(
-  `Verified ${compared} declarations across ${expectedRules.size} selectors; ${corrections.length} explicit M1 corrections to the immutable original reference.`,
+  `Verified ${compared} declarations across ${expectedRules.size} selectors; ${corrections.filter(({ category }) => category === 'material').length} M1 and ${corrections.filter(({ category }) => category === 'accessibility').length} accessibility corrections to the immutable original reference.`,
 );
 
 // The optional integration must generate real utilities that resolve variables
 // at the element, without shadowing the original palette or semantic tokens.
-const bridge = (await readFile(path.join(root, 'components/tailwind.css'), 'utf8')).replace(/@import[^;]+;/g, '');
+const bridge = (await readFile(path.join(root, 'src/material/foundations/styles/tailwind.css'), 'utf8')).replace(
+  /@import[^;]+;/g,
+  '',
+);
 const tailwind = await compile(`${bridge}\n@tailwind utilities;`);
 const utilities = [
   'bg-toolbox-primary',

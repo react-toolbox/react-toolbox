@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { defineConfig } from 'tsdown';
 
-const source = path.join(import.meta.dirname, 'components');
+const source = path.join(import.meta.dirname, 'src');
 const clientEntries = new Set(
   readdirSync(source, { recursive: true })
     .filter(
@@ -13,8 +13,8 @@ const clientEntries = new Set(
 );
 
 export default defineConfig({
-  entry: ['components/**/*.ts', 'components/**/*.tsx', '!components/**/__tests__/**'],
-  root: 'components',
+  entry: ['src/**/*.ts', 'src/**/*.tsx', '!src/**/__tests__/**'],
+  root: 'src',
   outDir: 'dist',
   platform: 'neutral',
   format: 'esm',
@@ -22,6 +22,7 @@ export default defineConfig({
   unbundle: true,
   dts: { sourcemap: false, compilerOptions: { declarationMap: false } },
   sourcemap: true,
+  deps: { neverBundle: [/\.css$/] },
   // Preserve source boundaries in the private docs build. Pure utilities, shared
   // style constants, and the shadcn preset stay usable in Server Components.
   banner: ({ fileName }) => ({ js: clientEntries.has(fileName) ? '"use client";' : '' }),

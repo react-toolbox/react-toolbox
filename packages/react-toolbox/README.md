@@ -2,7 +2,7 @@
 
 This **private** workspace maintains the Material Design 1 components and builds the shadcn registry. It also compiles an internal `react-toolbox` dependency for the Next.js docs app. It is not published to npm.
 
-Consumer installation uses the [source registry](../../docs/source-registry.md). The registry copies these exact TypeScript implementations and CSS files, plus small generated entry files that load the styles automatically. It does not substitute shadcn, Radix, or Base UI components.
+Consumer installation uses the [source registry](../../docs/source-registry.md). The registry copies these exact TypeScript implementations and CSS files, including maintained entry files that load the styles automatically. It does not substitute shadcn, Radix, or Base UI components.
 
 ## Use installed components
 
@@ -28,7 +28,7 @@ Component entries preserve React client boundaries. Server Components can render
 
 The CLI adds Tailwind theme aliases such as `bg-toolbox-primary` and the `toolbox-desktop:` variant. The spacing unit is 4px: `gap-2` is 8px, `p-4` is 16px, and `p-6` is 24px. Component presentation uses Tailwind classes beside the JSX they style. Shared constants and variant helpers cover styles reused by related components; no per-component theme maps are built at runtime. Shared CSS contains the original tokens, scoped Preflight compatibility, and keyframe definitions. Tailwind generates utilities from installed source and only includes referenced keyframes.
 
-Use `className` for the root and the typed `theme` prop for local slot classes. Conflicting base utilities are merged with consumer classes last. State, descendant, and responsive styles keep normal Tailwind specificity; match the variant or use an intentional important utility such as `p-6!` to override all CardText keylines. Use `ThemeProvider` for scoped custom properties that follow components into portals:
+Use `className` for the root and the typed `classNames` prop for local slot classes. Conflicting base utilities are merged with consumer classes last. State, descendant, and responsive styles keep normal Tailwind specificity; match the variant or use an intentional important utility such as `p-6!` to override all CardText keylines. The deprecated `theme` prop remains compatible; when both are supplied, `classNames` wins per slot. Use `ThemeProvider` for scoped custom properties that follow components into portals:
 
 ```tsx
 import { ThemeProvider } from '@/components/ui/material/theme';
@@ -60,7 +60,7 @@ pnpm test:registry
 pnpm test:registry:install
 ```
 
-The registry covers 27 public component families, shared foundations, and `all`. The builder derives family dependencies from imports, preserves source bytes, generates the public UI entries, and emits the snapshot served by the docs app. Keep one implementation tree; do not edit generated files.
+The registry covers 27 public component families, shared foundations, and `all`. The builder derives family dependencies from imports, preserves source bytes and public UI entries, and emits the snapshot served by the docs app. Keep one implementation tree in `src/material/`; do not edit generated registry payloads. Each family owns its components and helpers. Shared foundations have separate registry owners so installers receive only required behavioral dependencies.
 
 The docs app still consumes the internal compiled exports and styles. This keeps its development build efficient without adding a second public installation model. Package-style import examples in internal type tests protect those workspace contracts. The obsolete `react-toolbox/lib/*` aliases are removed; internal imports use `react-toolbox` or direct family paths such as `react-toolbox/button`. Component usage documentation lives in the Next.js docs app.
 

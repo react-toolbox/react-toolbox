@@ -2,7 +2,7 @@ import React, { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { renderToString } from 'react-dom/server';
-import { Button, BrowseButton, IconButton, Input, ThemeProvider } from '../components';
+import { Button, BrowseButton, IconButton, Input, ThemeProvider } from '../src';
 
 describe('modern theme API', () => {
   it('adds local class overrides without replacing structural classes', () => {

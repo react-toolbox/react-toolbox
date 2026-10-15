@@ -9,10 +9,10 @@ import config from '../registry.config.mjs';
 // Resolve from this package rather than process.cwd(): workspace-root commands
 // and direct package commands must emit the same catalog and source hashes.
 const root = path.resolve(import.meta.dirname, '..');
-const source = path.join(root, 'components');
+const source = path.join(root, 'src/material');
 const slash = (value) => value.split(path.sep).join('/');
 const schema = 'https://ui.shadcn.com/schema/registry-item.json';
-const familyName = (value) => value.replaceAll('_', '-');
+const familyName = (value) => value;
 async function exists(file) {
   try {
     await access(file);
@@ -57,28 +57,6 @@ export function imports(content, file) {
   return [...found];
 }
 
-// Small public entries load the shared styles automatically. Keep the actual
-// implementations byte-for-byte intact in the adjacent react-toolbox directory.
-export function registryEntry(name, sourceContent = '', families = []) {
-  const module = name === 'all' ? 'index' : name === 'foundation' ? 'theming' : `${name.replaceAll('-', '_')}/index`;
-  const entryName = name === 'all' ? 'index' : name === 'foundation' ? 'theme' : name;
-  const hasDefault = parse(sourceContent, { sourceType: 'module', plugins: ['typescript'] }).program.body.some(
-    (node) =>
-      node.type === 'ExportDefaultDeclaration' ||
-      (node.type === 'ExportNamedDeclaration' &&
-        node.specifiers.some((specifier) => specifier.exported.name === 'default')),
-  );
-  return {
-    path: `registry/generated/${entryName}.tsx`,
-    type: 'registry:ui',
-    target: `${config.entries}/${entryName}.tsx`,
-    content:
-      name === 'all'
-        ? `'use client';\n\nimport '../react-toolbox/setup.css';\n${families.map((family) => `export * from '../react-toolbox/${family}/index';`).join('\n')}\nexport * from '../react-toolbox/theming';\n`
-        : `'use client';\n\nimport '../react-toolbox/setup.css';\nexport * from '../react-toolbox/${module}';\n${hasDefault ? `export { default } from '../react-toolbox/${module}';\n` : ''}`,
-  };
-}
-
 function registryTheme(content) {
   const theme = {};
   const css = {};
@@ -118,12 +96,7 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
   const retired = new Set(config.retiredFamilies);
   const files = (await walk(source)).filter((file) => {
     const relative = slash(path.relative(source, file));
-    return (
-      /\.(?:tsx?|css)$/.test(file) &&
-      !file.endsWith('.d.ts') &&
-      relative !== 'index.ts' &&
-      !(retired.has(relative.split('/')[0]) && /\.tsx?$/.test(file))
-    );
+    return /\.(?:tsx?|css)$/.test(file) && !(retired.has(relative.split('/')[0]) && /\.tsx?$/.test(file));
   });
   const content = new Map(await Promise.all(files.map(async (file) => [file, await readFile(file, 'utf8')])));
   const publicImports = imports(await readFile(path.join(source, 'index.ts'), 'utf8'), 'index.ts');
@@ -131,7 +104,7 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
   for (const specifier of publicImports) {
     if (!specifier.startsWith('./')) throw new Error(`Unexpected public barrel import ${specifier}`);
     const family = specifier.slice(2);
-    if (retired.has(family)) continue;
+    if (retired.has(family) || family === 'theme') continue;
     if (await exists(path.join(source, family, 'index.ts'))) families.push(family);
     else if (!content.has(path.join(source, `${family}.ts`)) && !content.has(path.join(source, `${family}.tsx`))) {
       throw new Error(`Public export ${family} has no registry owner`);
@@ -140,11 +113,20 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
   const familySet = new Set(families);
   const owner = (file) => {
     const relative = slash(path.relative(source, file));
-    const directory = relative.split('/')[0];
-    if (relative.endsWith('.css') || !familySet.has(directory)) return 'foundation';
-    return familyName(directory);
+    const [directory, capability] = relative.split('/');
+    if (relative === 'index.ts') return 'all';
+    if (directory === 'theme') return 'foundation';
+    if (directory === 'foundations')
+      return ['styles', 'theme'].includes(capability) ? 'foundation' : `foundation-${capability}`;
+    if (familySet.has(directory)) return directory;
+    throw new Error(`Source has no registry owner: ${relative}`);
   };
-  const names = ['foundation', ...families.map(familyName), 'all'];
+  const names = [
+    'foundation',
+    ...new Set(files.map(owner).filter((name) => name.startsWith('foundation-'))),
+    ...families,
+    'all',
+  ];
   const groups = new Map(
     names.map((name) => [
       name,
@@ -153,6 +135,8 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
   );
   const versions = { ...pkg.dependencies, ...pkg.devDependencies, ...pkg.peerDependencies };
   const dependency = (group, name) => {
+    // React is the consumer's platform, not a dependency for the installer to upgrade.
+    if (Object.hasOwn(pkg.peerDependencies ?? {}, name)) return;
     if (name === pkg.name) throw new Error('A copied component must never depend on the react-toolbox package');
     if (!versions[name]) throw new Error(`Missing declared package version for ${name}`);
     group.dependencies.add(`${name}@${versions[name]}`);
@@ -164,8 +148,11 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
     const group = groups.get(itemName);
     const relative = slash(path.relative(source, file));
     group.files.push({
-      path: `components/${relative}`,
-      type: 'registry:file',
+      path: `src/material/${relative}`,
+      type:
+        relative === 'index.ts' || (relative.endsWith('/index.ts') && !relative.startsWith('foundations/'))
+          ? 'registry:ui'
+          : 'registry:file',
       target: `${config.target}/${relative}`,
       content: content.get(file),
     });
@@ -181,18 +168,6 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
   }
   const foundation = groups.get('foundation');
   foundation.files.push({
-    path: 'registry/entries/setup.css',
-    type: 'registry:file',
-    target: `${config.target}/setup.css`,
-    content: await readFile(path.join(root, 'registry/entries/setup.css'), 'utf8'),
-  });
-  foundation.files.push({
-    path: 'registry/entries/styles.d.ts',
-    type: 'registry:file',
-    target: `${config.target}/styles.d.ts`,
-    content: await readFile(path.join(root, 'registry/entries/styles.d.ts'), 'utf8'),
-  });
-  foundation.files.push({
     path: 'LICENSE',
     type: 'registry:file',
     target: `${config.target}/LICENSE`,
@@ -203,17 +178,13 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
   for (const family of families) groups.get(familyName(family)).registryDependencies.add('foundation');
   const items = names.map((name) => {
     const group = groups.get(name);
-    const barrel = name === 'all' ? 'index.ts' : `${name.replaceAll('-', '_')}/index.ts`;
-    group.files.push(registryEntry(name, content.get(path.join(source, barrel)), families));
-    if (name === 'all') for (const family of families) group.registryDependencies.add(familyName(family));
-    if (name === 'all') group.registryDependencies.add('foundation');
     const files = group.files.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
     const hash = createHash('sha256');
     for (const file of files) hash.update(file.path).update('\0').update(file.content).update('\0');
     return {
       $schema: schema,
       name,
-      type: name === 'foundation' ? 'registry:lib' : name === 'all' ? 'registry:block' : 'registry:ui',
+      type: name.startsWith('foundation') ? 'registry:lib' : name === 'all' ? 'registry:block' : 'registry:ui',
       title:
         name === 'all'
           ? 'React Toolbox · all components'
@@ -222,19 +193,23 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
             : `React Toolbox ${name.replaceAll('-', ' ')}`,
       description:
         'Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.',
-      ...(name === 'foundation' ? registryTheme(content.get(path.join(source, 'tailwind.css'))) : {}),
+      ...(name === 'foundation'
+        ? registryTheme(content.get(path.join(source, 'foundations/styles/tailwind.css')))
+        : {}),
       dependencies: [...group.dependencies].sort(),
       devDependencies: [...group.devDependencies].sort(),
       registryDependencies: [...group.registryDependencies]
         .sort()
         .map((dependency) => new URL(`${dependency}.json`, base).href),
       files,
-      docs: `Import from your configured ui alias: material${name === 'all' ? '' : name === 'foundation' ? '/theme' : `/${name}`}. Styles and local fonts load automatically. See ${config.homepage}/docs/installation.`,
+      docs: name.startsWith('foundation-')
+        ? `Shared implementation installed automatically by the components that need it. See ${config.homepage}/docs/installation.`
+        : `Import from your configured ui alias: material${name === 'all' ? '' : name === 'foundation' ? '/theme' : `/${name}`}. Styles and local fonts load automatically. See ${config.homepage}/docs/installation.`,
       categories: ['material-design', 'react-toolbox'],
       meta: {
         version: pkg.version,
         sourceSha256: hash.digest('hex'),
-        source: 'components/',
+        source: 'src/material/',
         distribution: 'copy-source',
       },
     };
@@ -267,14 +242,6 @@ export async function buildRegistry(options = {}) {
   await writeFile(
     path.join(root, 'registry/data.json'),
     `${JSON.stringify({ catalog: registry.catalog, items: registry.items })}\n`,
-  );
-  const entries = path.join(root, 'registry/generated');
-  await mkdir(entries, { recursive: true });
-  await Promise.all(
-    registry.items.map((item) => {
-      const entry = item.files.find((file) => file.path.startsWith('registry/generated/'));
-      return writeFile(path.join(root, entry.path), entry.content);
-    }),
   );
   if (options.sourceCatalog !== false)
     await writeFile(path.join(root, 'registry.json'), `${JSON.stringify(registry.catalog, null, 2)}\n`);

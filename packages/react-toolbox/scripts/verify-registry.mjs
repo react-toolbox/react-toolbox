@@ -89,18 +89,29 @@ export async function verifyRegistry() {
     'Source catalog is stale; run pnpm registry:build',
   );
   assert.deepEqual(await createRegistry(), registry, 'Registry generation must be deterministic');
-  assert.equal(registry.items.length, registry.families.length + 2);
+  assert.equal(
+    registry.items.length,
+    registry.families.length + registry.items.filter((item) => item.name.startsWith('foundation')).length + 1,
+  );
   assert.equal(new Set(registry.items.map((item) => item.name)).size, registry.items.length);
+  const buttonFiles = installedFiles(registry, 'button');
+  for (const capability of ['date-time', 'portal', 'collections']) {
+    assert(
+      !buttonFiles.some((file) => file.target.includes(`/foundations/${capability}/`)),
+      `Button must not install unrelated ${capability} helpers`,
+    );
+  }
   for (const retired of ['link', 'navigation']) {
     assert(!registry.items.some((item) => item.name === retired), `${retired} must not have a public registry item`);
     assert(
       !registry.items.some((item) =>
-        item.files.some((file) => file.path.startsWith(`components/${retired}/`) && /\.tsx?$/.test(file.path)),
+        item.files.some((file) => file.path.startsWith(`src/material/${retired}/`) && /\.tsx?$/.test(file.path)),
       ),
       `${retired} implementation must not ship in the public source`,
     );
   }
   for (const item of registry.items) {
+    if (item.name.startsWith('foundation-')) continue;
     const entry = item.files.find((file) => file.type === 'registry:ui');
     assert(entry?.target.startsWith('@ui/material/'), `Public entry must use the material directory: ${item.name}`);
     assert(
@@ -137,15 +148,17 @@ export async function verifyRegistry() {
       if (
         file.path.endsWith('.tsx') ||
         /\/use\w+\.ts$/.test(file.path) ||
-        file.path === 'components/ThemeProvider.ts' ||
-        (file.path.endsWith('/index.ts') && item.name !== 'foundation')
+        file.path === 'src/ThemeProvider.ts' ||
+        (file.path.endsWith('/index.ts') && !item.name.startsWith('foundation'))
       ) {
         assert(file.content.startsWith("'use client';"), `Missing copied-source client boundary: ${file.path}`);
       }
       if (
-        file.path === 'components/shadcn.ts' ||
+        file.path === 'src/material/foundations/theme/shadcn.ts' ||
         /\/(styles|types)\.ts$/.test(file.path) ||
-        file.path.startsWith('components/utils/')
+        file.path.startsWith('src/material/foundations/date-time/') ||
+        file.path.startsWith('src/material/foundations/collections/') ||
+        file.path.endsWith('/cn.ts')
       ) {
         assert(
           !file.content.startsWith("'use client';"),
@@ -170,7 +183,7 @@ export async function verifyRegistry() {
       const directory = path.join(temporary, family);
       await materialize(registry, family.replaceAll('_', '-'), directory);
       await build({
-        entryPoints: [path.join(directory, 'src/components/ui/material', `${family.replaceAll('_', '-')}.tsx`)],
+        entryPoints: [path.join(directory, 'src/components/ui/material', family, 'index.ts')],
         bundle: true,
         write: false,
         format: 'esm',
@@ -203,14 +216,14 @@ export async function verifyRegistry() {
     execFileSync(path.join(root, 'node_modules/.bin/tsc'), ['-p', path.join(all, 'tsconfig.json')], {
       stdio: 'inherit',
     });
-    await verifyStyles(all, path.join(all, 'src/components/ui/react-toolbox'));
+    await verifyStyles(all, path.join(all, 'src/components/ui/material/foundations/styles'));
 
     // Compile only copied source, with host auto-detection disabled. A Button
     // install must not ship presentation or keyframes from unrelated families.
     const subset = path.join(temporary, 'button');
     await symlink(path.join(root, 'node_modules'), path.join(subset, 'node_modules'), 'dir');
     const minimal = await postcss([tailwind({ base: subset })]).process(
-      '@import "tailwindcss" source(none); @import "./src/components/ui/react-toolbox/setup.css";',
+      '@import "tailwindcss" source(none); @import "./src/components/ui/material/foundations/styles/setup.css";',
       { from: path.join(subset, 'consumer.css') },
     );
     assert(minimal.css.includes('height: var(--button-height)'), 'Copied Button source must generate its utilities');

@@ -10,7 +10,7 @@ await mkdir(path.join(root, 'dist'), { recursive: true });
 // entry. Compile a separate complete stylesheet for plain-CSS compatibility.
 await build({
   absWorkingDir: root,
-  entryPoints: ['components/styles.css'],
+  entryPoints: ['src/material/foundations/styles/styles.css'],
   outfile: 'dist/foundation.css',
   bundle: true,
   minify: false,
@@ -18,16 +18,18 @@ await build({
   logLevel: 'warning',
 });
 const standalone = await postcss([tailwind()]).process(
-  '@layer theme, base, components, utilities; @import "tailwindcss/theme.css" layer(theme); @import "tailwindcss/utilities.css" layer(utilities) source(none); @import "./components/styles.css"; @source "./components";',
+  '@layer theme, base, components, utilities; @import "tailwindcss/theme.css" layer(theme); @import "tailwindcss/utilities.css" layer(utilities) source(none); @import "./src/material/foundations/styles/styles.css"; @source "./src/material";',
   { from: path.join(root, 'standalone.css') },
 );
 await writeFile(path.join(root, 'dist/styles.css'), standalone.css);
 for (const name of ['tailwind.css', 'tailwind-preflight.css', 'shadcn.css']) {
-  await copyFile(path.join(root, 'components', name), path.join(root, 'dist', name));
+  await copyFile(path.join(root, 'src/material/foundations/styles', name), path.join(root, 'dist', name));
 }
 await writeFile(
   path.join(root, 'dist/tailwind.css'),
-  (await readFile(path.join(root, 'components/tailwind.css'), 'utf8')).replace('./styles.css', './foundation.css'),
+  (await readFile(path.join(root, 'src/material/foundations/styles/tailwind.css'), 'utf8'))
+    .replace('./styles.css', './foundation.css')
+    .replace('@source "../../"', '@source "./material"'),
 );
 // Typed side-effect imports work with TypeScript's noUncheckedSideEffectImports.
 await writeFile(path.join(root, 'dist/css.d.mts'), 'export {};\n');
@@ -40,3 +42,7 @@ for await (const file of glob('dist/**/*.d.ts', { cwd: root })) {
   const source = await readFile(filename, 'utf8');
   await writeFile(filename, source.replace(/^\/\/[#@] sourceMappingURL=.*$/gm, ''));
 }
+
+// Private workspace imports share the same automatic style entry as copied source.
+await mkdir(path.join(root, 'dist/material/foundations/styles'), { recursive: true });
+await writeFile(path.join(root, 'dist/material/foundations/styles/setup.css'), '@import "../../../styles.css";\n');

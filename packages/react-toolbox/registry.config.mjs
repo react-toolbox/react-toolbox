@@ -4,8 +4,7 @@
 export default {
   name: 'react-toolbox',
   homepage: 'https://react-toolbox.io',
-  target: '@ui/react-toolbox',
-  entries: '@ui/material',
+  target: '@ui/material',
   // Keep the private workspace's reference gallery working, but do not ship
   // these redundant routing wrappers in new source installations.
   retiredFamilies: ['link', 'navigation'],

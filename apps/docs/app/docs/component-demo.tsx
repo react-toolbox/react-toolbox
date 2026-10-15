@@ -246,7 +246,7 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
       );
     case 'menu':
       return (
-        <div className="flex items-center gap-6">
+        <div className="flex w-48 max-w-full items-center justify-between gap-6">
           <span role="status" className="text-sm text-toolbox-text-secondary">
             {text || 'More actions'}
           </span>

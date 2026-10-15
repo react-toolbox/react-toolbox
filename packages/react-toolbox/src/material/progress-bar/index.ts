@@ -1,0 +1,6 @@
+'use client';
+
+import '../foundations/styles/setup.css';
+
+export { ProgressBar as default, ProgressBar } from './ProgressBar';
+export type { ProgressBarProps, ProgressBarTheme, ProgressBarClassNames } from './ProgressBar';

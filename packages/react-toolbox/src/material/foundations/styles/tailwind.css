@@ -1,0 +1,50 @@
+/* Import after @import "tailwindcss". The scoped compatibility layer preserves
+ * native Material 1 geometry with normal Preflight; utilities remain last.
+ * Inline aliases resolve inside the nearest React Toolbox theme scope. */
+@import "./tailwind-preflight.css";
+@import "./styles.css";
+@source "../../";
+
+/* M1 uses an 8dp layout grid and a 4dp icon/type subgrid. Keep utility
+ * spacing independent of the host root font size and the legacy --unit.
+ * Applications can override this normal theme variable after this import. */
+@theme {
+  --spacing: 4px;
+}
+
+/* Match the existing card keyline breakpoint, including its height condition. */
+@custom-variant toolbox-desktop (@media screen and (min-width: 600px) and (min-height: 600px));
+
+@theme inline {
+  --color-toolbox-primary: var(--rt-color-primary);
+  --color-toolbox-primary-dark: var(--rt-color-primary-dark);
+  --color-toolbox-primary-contrast: var(--rt-color-primary-contrast);
+  --color-toolbox-accent: var(--rt-color-accent);
+  --color-toolbox-accent-dark: var(--rt-color-accent-dark);
+  --color-toolbox-accent-contrast: var(--rt-color-accent-contrast);
+  --color-toolbox-background: var(--rt-color-background);
+  --color-toolbox-divider: var(--rt-color-divider);
+  --color-toolbox-text: var(--rt-color-text);
+  --color-toolbox-text-secondary: var(--rt-color-text-secondary);
+
+  --font-toolbox: var(--preferred-font);
+  --text-toolbox: var(--font-size);
+  --text-toolbox-tiny: var(--font-size-tiny);
+  --text-toolbox-small: var(--font-size-small);
+  --text-toolbox-big: var(--font-size-big);
+  --spacing-toolbox: var(--unit);
+  --radius-toolbox: var(--button-border-radius);
+
+  --shadow-toolbox-2p: var(--shadow-2p);
+  --shadow-toolbox-3p: var(--shadow-3p);
+  --shadow-toolbox-4p: var(--shadow-4p);
+  --shadow-toolbox-6p: var(--shadow-6p);
+  --shadow-toolbox-8p: var(--shadow-8p);
+  --shadow-toolbox-16p: var(--shadow-16p);
+
+  --ease-toolbox: var(--animation-curve-default);
+  --ease-toolbox-fast-out-slow-in: var(--animation-curve-fast-out-slow-in);
+  --ease-toolbox-linear-out-slow-in: var(--animation-curve-linear-out-slow-in);
+  --ease-toolbox-fast-out-linear-in: var(--animation-curve-fast-out-linear-in);
+  --transition-duration-toolbox: var(--animation-duration);
+}

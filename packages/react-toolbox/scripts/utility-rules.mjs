@@ -18,7 +18,7 @@ export async function utilityRules(root) {
     }
   }
   const theme = await readFile(path.join(root, 'node_modules/tailwindcss/theme.css'), 'utf8');
-  const bridge = (await readFile(path.join(root, 'components/tailwind.css'), 'utf8')).replace(
+  const bridge = (await readFile(path.join(root, 'src/material/foundations/styles/tailwind.css'), 'utf8')).replace(
     /@(?:import|source)[^;]+;/g,
     '',
   );

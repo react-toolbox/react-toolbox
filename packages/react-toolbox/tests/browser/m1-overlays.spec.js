@@ -8,12 +8,12 @@ import { test, expect } from '@playwright/test';
 const source = `
   import React, { useState } from 'react';
   import { createRoot } from 'react-dom/client';
-  import Dialog from './components/dialog';
-  import Drawer from './components/drawer';
-  import Snackbar from './components/snackbar';
-  import Tooltip from './components/tooltip';
-  import { Tabs, Tab } from './components/tabs';
-  import { IconMenu, MenuItem } from './components/menu';
+  import Dialog from './src/material/dialog';
+  import Drawer from './src/material/drawer';
+  import Snackbar from './src/material/snackbar';
+  import Tooltip from './src/material/tooltip';
+  import { Tabs, Tab } from './src/material/tabs';
+  import { IconMenu, MenuItem } from './src/material/menu';
   const Tip = Tooltip('button');
   function App() {
     const [dialog, setDialog] = useState(false);
@@ -59,7 +59,8 @@ test.beforeAll(async () => {
     bundle: true,
     write: false,
     format: 'iife',
-    loader: { '.js': 'jsx' },
+    // This fixture injects independently compiled CSS below.
+    loader: { '.js': 'jsx', '.css': 'empty' },
     define: { 'process.env.NODE_ENV': '"production"' },
   });
   javascript = result.outputFiles[0].text;

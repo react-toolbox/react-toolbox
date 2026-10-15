@@ -1,0 +1,43 @@
+/** Optional class overrides for the component's rendered parts. */
+export type TimePickerTheme = Partial<
+  Record<
+    | 'container'
+    | 'active'
+    | 'am'
+    | 'amFormat'
+    | 'ampm'
+    | 'button'
+    | 'clock'
+    | 'clockWrapper'
+    | 'dialog'
+    | 'disabled'
+    | 'face'
+    | 'hand'
+    | 'header'
+    | 'hours'
+    | 'hoursDisplay'
+    | 'input'
+    | 'inputElement'
+    | 'knob'
+    | 'minutes'
+    | 'minutesDisplay'
+    | 'number'
+    | 'placeholder'
+    | 'pm'
+    | 'pmFormat'
+    | 'separator'
+    | 'small'
+    | 'zoomInEnter'
+    | 'zoomInEnterActive'
+    | 'zoomInExit'
+    | 'zoomInExitActive'
+    | 'zoomOutEnter'
+    | 'zoomOutEnterActive'
+    | 'zoomOutExit'
+    | 'zoomOutExitActive',
+    string
+  >
+>;
+
+/** Style slots for the component. */
+export type TimePickerClassNames = TimePickerTheme;

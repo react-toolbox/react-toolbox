@@ -44,7 +44,8 @@ playwright-report/
 # Generated source registry and package archives
 packages/react-toolbox/registry/public/
 packages/react-toolbox/registry/data.json
-packages/react-toolbox/registry/generated/
+packages/react-toolbox/registry/api.json
 *.tgz
 .turbo/
 .vercel/
+.env*

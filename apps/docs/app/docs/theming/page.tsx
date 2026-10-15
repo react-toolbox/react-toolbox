@@ -65,11 +65,20 @@ export default function ThemingPage() {
       </DocsSection>
       <DocsSection id="source" title="Go beyond the defaults">
         <p className="text-sm leading-7 text-toolbox-text-secondary">
-          Use <code>className</code> for the root and the <code>theme</code> prop for individual style slots. Component
-          styles are Tailwind classes beside the JSX in <code>react-toolbox/</code>, with shared helpers for related
-          components in your UI directory. Shared CSS holds tokens, keyframes, and Preflight compatibility. All of it is
-          yours to edit.
+          Use <code>className</code> for the root and the <code>classNames</code> prop for individual style slots.
+          Component styles are Tailwind classes beside the JSX in <code>material/</code>, with shared helpers for
+          related components in your UI directory. Shared CSS holds tokens, keyframes, and Preflight compatibility. All
+          of it is yours to edit. The old <code>theme</code> slot prop remains a compatibility alias; prefer{' '}
+          <code>classNames</code> in new code.
         </p>
+        <div className="mt-4">
+          <CodeBlock
+            label="Style slot overrides"
+            code={
+              'import { Button } from "@/components/ui/material/button";\n\n<Button label="Save" classNames={{ icon: "text-xl", button: "min-w-32" }} />'
+            }
+          />
+        </div>
         <p className="mt-4 text-sm leading-7 text-toolbox-text-secondary">
           Consumer classes override conflicting base utilities. State and responsive variants retain normal Tailwind
           precedence: match the variant, or use an intentional important utility such as <code>p-6!</code> to override

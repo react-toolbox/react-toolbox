@@ -1,0 +1,93 @@
+'use client';
+import { mergeStyleSlots } from '../foundations/styles/slots';
+
+import { materialRoot, materialDescendants } from '../foundations/styles/classes';
+import type { AvatarTheme } from './types';
+import type { ComponentPropsWithRef, ReactNode } from 'react';
+import { cn } from '../foundations/styles/cn';
+import FontIcon from '../font-icon';
+export type { AvatarTheme, AvatarClassNames } from './types';
+export interface AvatarProps extends ComponentPropsWithRef<'div'> {
+  alt?: string;
+  cover?: boolean;
+  icon?: ReactNode;
+  image?: ReactNode;
+  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
+  classNames?: AvatarTheme;
+  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
+  theme?: AvatarTheme;
+}
+export function Avatar({
+  alt = '',
+  children,
+  className,
+  cover = false,
+  icon,
+  image,
+  theme: legacyTheme,
+  classNames,
+  title,
+  ...other
+}: AvatarProps) {
+  const theme = mergeStyleSlots(legacyTheme, classNames);
+  return (
+    <div
+      data-react-toolbox="avatar"
+      className={cn(
+        'rt-avatar-avatar',
+        'bg-(--avatar-background) rounded-[50%] text-(--avatar-color) inline-block text-(length:--avatar-font-size) h-(--avatar-size) overflow-hidden relative text-center align-middle w-(--avatar-size)',
+        materialRoot,
+        materialDescendants,
+        '[&>svg]:fill-current [&>svg]:h-(--avatar-size) [&>svg]:w-[1em]',
+        '[&>img]:h-auto [&>img]:max-w-full',
+        "[&>[data-react-toolbox='font-icon']]:block [&>[data-react-toolbox='font-icon']]:leading-(--avatar-size) [&>[data-react-toolbox='font-icon']]:w-full",
+        theme?.avatar,
+        className,
+      )}
+      {...other}
+    >
+      {children}
+      {cover && typeof image === 'string' && (
+        <span
+          aria-label={alt}
+          className={cn(
+            'rt-avatar-image',
+            'bg-transparent bg-center bg-cover rounded-[50%] block h-full absolute w-full',
+            theme?.image,
+          )}
+          style={{ backgroundImage: `url('${image}')` }}
+        />
+      )}
+      {!cover &&
+        (typeof image === 'string' ? (
+          <img
+            alt={alt}
+            className={cn(
+              'rt-avatar-image',
+              'bg-transparent bg-center bg-cover rounded-[50%] block h-full absolute w-full',
+              theme?.image,
+            )}
+            src={image}
+            title={title}
+          />
+        ) : (
+          image
+        ))}
+      {typeof icon === 'string' ? (
+        <FontIcon
+          className={cn('rt-avatar-letter', 'block leading-(--avatar-size) w-full', theme?.letter)}
+          value={icon}
+          alt={alt}
+        />
+      ) : (
+        icon
+      )}
+      {title && (
+        <span className={cn('rt-avatar-letter', 'block leading-(--avatar-size) w-full', theme?.letter)}>
+          {title[0]}
+        </span>
+      )}
+    </div>
+  );
+}
+export default Avatar;

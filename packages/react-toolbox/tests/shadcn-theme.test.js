@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import postcss from 'postcss';
 
-const directory = join(process.cwd(), 'components');
+const directory = join(process.cwd(), 'src/material/foundations/styles');
 const entry = readFileSync(join(directory, 'styles.css'), 'utf8');
 const defaults = new Map();
 for (const [, filename] of entry.matchAll(/@import "\.\/([^"]+)"/g)) {

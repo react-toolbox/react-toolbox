@@ -21,18 +21,22 @@ import {
   Tabs,
   Tab,
   type ButtonProps,
+  type ButtonClassNames,
+  type DatePickerClassNames,
   type ThemeVariables,
   type InputHandle,
-} from '../../components';
+} from '../../src';
 
 const variables: ThemeVariables = { '--rt-color-primary': '#3f51b5' };
 const props: ButtonProps = { primary: true, raised: true, label: 'Save', children: 'Child' };
+const buttonSlots: ButtonClassNames = { button: 'rounded-none', icon: 'text-xl' };
+const pickerSlots: DatePickerClassNames = { inputElement: 'font-medium' };
 const Tip = Tooltip(Button);
 const RippleButton = Ripple({ centered: false })(Button);
 
 export const example = (
   <ThemeProvider variables={variables}>
-    <Button {...props} />
+    <Button {...props} classNames={buttonSlots} />
     <BrowseButton label="Upload" />
     <IconButton icon="add" />
     <Input
@@ -41,7 +45,7 @@ export const example = (
         input?.focus();
       }}
     />
-    <Tip tooltip="Save" label="Save" />
+    <Tip tooltip="Save" label="Save" classNames={{ button: 'rounded-none', tooltip: 'z-50' }} />
     <RippleButton label="Ripple" />
     <Card>
       <CardTitle title="Example" />
@@ -62,7 +66,7 @@ export const example = (
         <TableCell>Value</TableCell>
       </TableRow>
     </Table>
-    <DatePicker value={new Date()} />
+    <DatePicker value={new Date()} classNames={pickerSlots} />
     <TimePicker value={new Date()} />
   </ThemeProvider>
 );
@@ -74,3 +78,5 @@ const obsoleteProvider = <ThemeProvider theme={{ RTButton: { button: 'custom' } 
 const wrongButtonHandler = <Button onClick={(value: number) => value} />;
 // @ts-expect-error Value-first input callbacks receive strings.
 const wrongInputHandler = <Input onChange={(value: number) => value} />;
+// @ts-expect-error Style slots are typed and reject arbitrary part names.
+const wrongSlot = <Button classNames={{ nonexistentPart: 'p-4' }} />;

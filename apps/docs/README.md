@@ -54,18 +54,18 @@ Import the repository into Vercel with these settings:
 | Environment variable, Production and Preview | `ENABLE_EXPERIMENTAL_COREPACK=1` |
 | Output Directory | Next.js default; leave override disabled |
 
-The included [`vercel.json`](vercel.json) runs installation and the docs build from the repository root. Corepack selects the exact pnpm version from the root `packageManager` field; do not rely on Vercel's lockfile-based pnpm detection. Turbo builds the registry and private library before Next.js. Vercel manages the production server; `pnpm docs:start` is only a local preview.
+The included [`vercel.json`](vercel.json) runs installation and the docs build from the repository root. Corepack selects the exact pnpm version from the root `packageManager` field; do not rely on Vercel's lockfile-based pnpm detection. Turbo builds the registry and private library before Next.js. The root `.vercelignore` excludes local build caches, generated registry data, environment files, and test reports; the remote build regenerates its artifacts from source. Vercel manages the production server; `pnpm docs:start` is only a local preview.
 
 Add `react-toolbox.io` to the project's Domains settings and apply the DNS records Vercel provides. Wait for domain verification and a valid HTTPS certificate before publishing the install command. The production domain and `/r/*` endpoints must be publicly accessible without Vercel Authentication, password protection, or an interactive challenge, since the shadcn CLI fetches JSON directly. Preview protection can remain enabled.
 
 After deployment, verify the public registry and run the existing clean-consumer installation check against it:
 
 ```sh
-curl --fail https://react-toolbox.io/r/button.json
+pnpm --filter react-toolbox verify:deployment https://react-toolbox.io
 REGISTRY_TEST_ORIGIN=https://react-toolbox.io pnpm test:registry:install
 ```
 
-The consumer check uses the actual shadcn CLI, follows component dependencies, builds a clean Next.js app, and verifies rendering and interaction. A local build alone does not verify production DNS, TLS, or access protection.
+The deployment check validates HTTPS, documentation pages, and every registry item's exact source and dependency URLs. The consumer check uses the actual shadcn CLI, follows component dependencies, builds clean Next.js and Vite apps, and verifies rendering, interaction, coexistence with shadcn, and customized-source updates. A local build alone does not verify production DNS, TLS, or access protection. Substitute the project's public `vercel.app` origin in both checks to validate a deployment before connecting the custom domain.
 
 The deployment also serves the source registry at `/r/registry.json` and `/r/<name>.json`. A snapshot generated during the private library build is bundled into the server. Dependency links use the request origin, including local previews. There is no separate service, package publish, or runtime filesystem read.
 

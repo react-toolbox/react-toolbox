@@ -72,11 +72,11 @@ export async function componentClasses(root) {
       }
     }
   };
-  for (const family of await readdir(path.join(root, 'components'), { withFileTypes: true })) {
-    if (!family.isDirectory() || family.name === 'utils' || family.name === 'hoc') continue;
-    for (const file of await readdir(path.join(root, 'components', family.name))) {
+  for (const family of await readdir(path.join(root, 'src/material'), { withFileTypes: true })) {
+    if (!family.isDirectory() || family.name === 'foundations') continue;
+    for (const file of await readdir(path.join(root, 'src/material', family.name))) {
       if (!/\.(?:ts|tsx)$/.test(file) || file === 'types.ts' || file === 'index.ts') continue;
-      const filename = path.join(root, 'components', family.name, file);
+      const filename = path.join(root, 'src/material', family.name, file);
       const module = await load(filename);
       const expressions = [];
       walk(module.ast, (node) => {

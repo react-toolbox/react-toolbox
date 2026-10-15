@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
-import { mkdtemp, mkdir, readFile, writeFile, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, writeFile, rm, readdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { spawn } from 'node:child_process';
 import path from 'node:path';
@@ -21,24 +21,40 @@ const server = createServer((request, response) => {
   response.writeHead(item ? 200 : 404, { 'Content-Type': 'application/json' });
   response.end(item ? JSON.stringify(item) : '{}');
 });
-function run(command, args, cwd = directory) {
+function run(command, args, cwd = directory, { declineOverwrite = false } = {}) {
   return new Promise((resolve, reject) => {
     const process = spawn(command, args, {
       cwd,
       env: { ...globalThis.process.env, CI: 'true', NO_COLOR: '1' },
-      stdio: ['ignore', 'pipe', 'pipe'],
+      stdio: [declineOverwrite ? 'pipe' : 'ignore', 'pipe', 'pipe'],
     });
     let output = '';
-    process.stdout.on('data', (chunk) => {
+    let answered = 0;
+    const receive = (chunk) => {
       output += chunk;
-    });
-    process.stderr.on('data', (chunk) => {
-      output += chunk;
-    });
-    process.on('error', reject);
-    process.on('exit', (code) =>
-      code === 0 ? resolve(output) : reject(new Error(`${command} ${args.join(' ')} exited ${code}\n${output}`)),
+      if (declineOverwrite) {
+        if (!answered && /Would you like to overwrite/i.test(output)) {
+          answered = 1;
+          process.stdin.end('n\n');
+        }
+      }
+    };
+    process.stdout.on('data', receive);
+    process.stderr.on('data', receive);
+    const timeout = setTimeout(
+      () => {
+        process.kill();
+        reject(new Error(`Timed out: ${command} ${args.join(' ')}\n${output}`));
+      },
+      declineOverwrite ? 60_000 : 240_000,
     );
+    process.on('close', () => clearTimeout(timeout));
+    process.on('error', reject);
+    process.on('exit', (code) => {
+      if (code !== 0) reject(new Error(`${command} ${args.join(' ')} exited ${code}\n${output}`));
+      else if (declineOverwrite && !answered) reject(new Error('Expected an overwrite prompt for customized source'));
+      else resolve(output);
+    });
   });
 }
 const versions = { ...pkg.dependencies, ...pkg.devDependencies, ...pkg.peerDependencies };
@@ -104,8 +120,8 @@ import Checkbox from '@/widgets/ui/material/checkbox';
 import Input from '@/widgets/ui/material/input';
 import Slider from '@/widgets/ui/material/slider';
 import { ThemeProvider } from '@/widgets/ui/material/theme';
-import { shadcnThemeVariables } from '@/widgets/ui/react-toolbox/shadcn';
-import { range } from '@/widgets/ui/react-toolbox/utils';
+import { shadcnThemeVariables } from '@/widgets/ui/material/foundations/theme/shadcn';
+import { range } from '@/widgets/ui/material/foundations/collections/range';
 import Interaction from './interaction';
 export default function Page() {
   return <main data-server-theme={shadcnThemeVariables['--rt-shadcn']}
@@ -184,6 +200,205 @@ export default function Page() {
     app.kill();
   }
 }
+async function verifyCustomizedUpdate(registry, cli) {
+  const file = installedFiles(registry, 'button').find((entry) => entry.target.endsWith('/button/Button.tsx'));
+  assert(file, 'Button implementation must be present for the update test');
+  const target = path.join(directory, 'src/widgets/ui', file.target.slice('@ui/'.length));
+  const customized = `${file.content}\n// Consumer customization: retain this until overwrite is explicit.\n`;
+  await writeFile(target, customized);
+  console.log(
+    'Checking that a declined update preserves customized source and explicit overwrite restores the release.',
+  );
+  await run(cli, ['add', '@react-toolbox/button', '--yes', '--cwd', directory], directory, {
+    declineOverwrite: true,
+  });
+  assert.equal(await readFile(target, 'utf8'), customized, 'A declined overwrite must retain consumer source');
+  await run(cli, ['add', '@react-toolbox/button', '--yes', '--overwrite', '--cwd', directory]);
+  assert.equal(await readFile(target, 'utf8'), file.content, 'Explicit overwrite must restore the registry source');
+}
+
+async function verifyViteConsumer(registry, cli) {
+  const vite = await mkdtemp(path.join(tmpdir(), 'react-toolbox-vite-'));
+  let app;
+  let browser;
+  try {
+    await mkdir(path.join(vite, 'src/styles'), { recursive: true });
+    await mkdir(path.join(vite, 'src/lib'), { recursive: true });
+    await writeFile(
+      path.join(vite, 'package.json'),
+      JSON.stringify(
+        {
+          name: 'toolbox-vite-shadcn-consumer',
+          version: '1.0.0',
+          private: true,
+          type: 'module',
+          packageManager: workspace.packageManager,
+          dependencies: {
+            react: versions.react,
+            'react-dom': versions['react-dom'],
+            'tailwind-merge': versions['tailwind-merge'],
+            // Standard dependency installed by shadcn init, before individual components.
+            'class-variance-authority': '^0.7.1',
+          },
+          devDependencies: { ...devDependencies, vite: versions.vite },
+        },
+        null,
+        2,
+      ),
+    );
+    const config = JSON.parse(await readFile(path.join(directory, 'components.json'), 'utf8'));
+    config.rsc = false;
+    await writeFile(path.join(vite, 'components.json'), JSON.stringify(config, null, 2));
+    await writeFile(
+      path.join(vite, 'tsconfig.json'),
+      JSON.stringify(
+        {
+          compilerOptions: {
+            target: 'ES2022',
+            lib: ['ES2022', 'DOM', 'DOM.Iterable'],
+            module: 'ESNext',
+            moduleResolution: 'Bundler',
+            jsx: 'react-jsx',
+            strict: true,
+            noEmit: true,
+            skipLibCheck: false,
+            types: ['react', 'react-dom', 'vite/client'],
+            paths: { '@/*': ['./src/*'] },
+          },
+          include: ['src/**/*.ts', 'src/**/*.tsx'],
+        },
+        null,
+        2,
+      ),
+    );
+    await writeFile(
+      path.join(vite, 'vite.config.ts'),
+      `
+import { defineConfig } from 'vite';
+import { fileURLToPath, URL } from 'node:url';
+export default defineConfig({ resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } } });
+`,
+    );
+    await writeFile(
+      path.join(vite, 'postcss.config.mjs'),
+      "export default { plugins: { '@tailwindcss/postcss': {} } };\n",
+    );
+    await writeFile(
+      path.join(vite, 'index.html'),
+      '<!doctype html><html lang="en"><head><title>Source consumer</title></head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body></html>\n',
+    );
+    await writeFile(path.join(vite, 'src/main.tsx'), "import './styles/globals.css';\n");
+    await writeFile(
+      path.join(vite, 'src/lib/utils.ts'),
+      `
+import { twMerge } from 'tailwind-merge';
+export function cn(...values: (string | undefined | false | null)[]) { return twMerge(values.filter(Boolean).join(' ')); }
+`,
+    );
+    await writeFile(
+      path.join(vite, 'src/styles/globals.css'),
+      `
+@import "tailwindcss";
+@theme inline { --color-primary: var(--primary); --color-primary-foreground: var(--primary-foreground); }
+:root { --primary: #172554; --primary-foreground: white; --host-theme: kept; }
+`,
+    );
+    console.log('Installing a clean Vite consumer and an official shadcn Button before adding Material components.');
+    await run('pnpm', ['install', '--ignore-scripts', '--no-frozen-lockfile'], vite);
+    await run(cli, ['add', 'button', '--yes', '--cwd', vite], vite);
+    const hostButton = path.join(vite, 'src/widgets/ui/button.tsx');
+    const hostButtonSource = await readFile(hostButton, 'utf8');
+    const hostUtilities = await readFile(path.join(vite, 'src/lib/utils.ts'), 'utf8');
+    await run(cli, ['add', '@react-toolbox/button', '--yes', '--cwd', vite], vite);
+    assert.equal(
+      await readFile(hostButton, 'utf8'),
+      hostButtonSource,
+      'Material installation must preserve the existing shadcn Button',
+    );
+    assert.equal(
+      await readFile(path.join(vite, 'src/lib/utils.ts'), 'utf8'),
+      hostUtilities,
+      'Material installation must preserve host utilities',
+    );
+    const globals = await readFile(path.join(vite, 'src/styles/globals.css'), 'utf8');
+    const css = postcss.parse(globals);
+    const hostPrimary = [];
+    css.walkDecls('--primary', (declaration) => hostPrimary.push(declaration.value));
+    assert.deepEqual(hostPrimary, ['#172554'], 'Material installation must not replace the host color palette');
+    assert(globals.includes('--host-theme: kept'), 'The host stylesheet must survive installation');
+    assert(
+      !(await readdir(path.join(vite, 'src/widgets/ui/material/foundations'))).includes('date-time'),
+      'A Button consumer must not receive date/time helpers',
+    );
+    for (const file of installedFiles(registry, 'button')) {
+      assert.equal(
+        await readFile(path.join(vite, 'src/widgets/ui', file.target.slice('@ui/'.length)), 'utf8'),
+        file.content,
+        `Vite CLI installation changed maintained source: ${file.path}`,
+      );
+    }
+    await writeFile(
+      path.join(vite, 'src/main.tsx'),
+      `
+import { useState } from 'react';
+import { createRoot } from 'react-dom/client';
+import { Button as HostButton } from '@/widgets/ui/button';
+import { Button } from '@/widgets/ui/material/button';
+import './styles/globals.css';
+function App() {
+  const [count, setCount] = useState(0);
+  return <main><h1>Independent Vite consumer</h1>
+    <HostButton onClick={() => setCount(count + 1)}>Host action</HostButton>
+    <Button primary raised label="Material action" onClick={() => setCount(count + 1)} />
+    <output aria-label="Clicks">{count}</output>
+  </main>;
+}
+createRoot(document.getElementById('root')!).render(<App />);
+`,
+    );
+    await run(path.join(vite, 'node_modules/.bin/tsc'), ['--noEmit'], vite);
+    await run(path.join(vite, 'node_modules/.bin/vite'), ['build'], vite);
+    const socket = createServer();
+    await new Promise((resolve) => socket.listen(0, '127.0.0.1', resolve));
+    const port = socket.address().port;
+    await new Promise((resolve) => socket.close(resolve));
+    app = spawn(
+      path.join(vite, 'node_modules/.bin/vite'),
+      ['preview', '--host', '127.0.0.1', '--port', String(port), '--strictPort'],
+      { cwd: vite, stdio: 'ignore' },
+    );
+    const url = `http://127.0.0.1:${port}`;
+    await assertEventually(async () => assert((await fetch(url)).ok));
+    browser = await chromium.launch();
+    const page = await browser.newPage();
+    const errors = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    await page.goto(url);
+    await page.evaluate(() => document.fonts.ready);
+    const material = page.getByRole('button', { name: 'Material action' });
+    const host = page.getByRole('button', { name: 'Host action' });
+    await material.click();
+    await host.click();
+    assert.equal(await page.getByLabel('Clicks').textContent(), '2', 'Both component systems must remain interactive');
+    await page.mouse.move(0, 0);
+    assert.equal(await material.evaluate((element) => element.getBoundingClientRect().height), 36);
+    assert.equal(await material.evaluate((element) => getComputedStyle(element).backgroundColor), 'rgb(63, 81, 181)');
+    await assertEventually(async () =>
+      assert.equal(
+        await host.evaluate((element) => getComputedStyle(element).backgroundColor),
+        'rgb(23, 37, 84)',
+        'The shadcn button must retain the host palette after its hover transition',
+      ),
+    );
+    assert.deepEqual(errors, [], 'Copied components must run in Vite without browser errors');
+  } finally {
+    await browser?.close();
+    app?.kill();
+    if (process.env.KEEP_REGISTRY_SMOKE) console.log(`Vite consumer retained at ${vite}`);
+    else await rm(vite, { recursive: true, force: true });
+  }
+}
+
 async function assertEventually(check) {
   for (let attempt = 0; ; attempt++) {
     try {
@@ -289,7 +504,7 @@ try {
   rules.walkDecls('--color-toolbox-primary', (declaration) => primaryTokens.push(declaration.value));
   assert.deepEqual(primaryTokens, ['var(--rt-color-primary)'], 'Repeated adds must install the theme exactly once');
   await build({
-    entryPoints: [path.join(directory, 'src/widgets/ui/material/index.tsx')],
+    entryPoints: [path.join(directory, 'src/widgets/ui/material/index.ts')],
     bundle: true,
     write: false,
     format: 'esm',
@@ -298,10 +513,12 @@ try {
     loader: { '.woff': 'file', '.woff2': 'file', '.ttf': 'file', '.eot': 'file' },
     logLevel: 'silent',
   });
-  await verifyStyles(directory, path.join(directory, 'src/widgets/ui/react-toolbox'));
+  await verifyStyles(directory, path.join(directory, 'src/widgets/ui/material/foundations/styles'));
+  await verifyCustomizedUpdate(registry, cli);
   await verifyNextConsumer();
+  await verifyViteConsumer(registry, cli);
   console.log(
-    `shadcn CLI installation passed: ${registry.families.length} families, custom ui alias, exact source, automatic CSS/fonts/theme, strict types, Next.js server rendering, and Chromium interaction/geometry.`,
+    `shadcn CLI installation passed: ${registry.families.length} families, custom ui alias, exact source, automatic CSS/fonts/theme, strict types, Next.js server rendering, Vite, existing shadcn components, safe customized-source updates, and Chromium interaction/geometry.`,
   );
 } finally {
   await new Promise((resolve) => server.close(resolve));

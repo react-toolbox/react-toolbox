@@ -7,6 +7,8 @@ import { components, exampleDependencies } from '../../catalog';
 import { materialGuidelines } from '../../material-guidelines';
 import CodeBlock from '../../code-block';
 import ComponentPreview from '../../component-preview';
+import ApiReference from '../../api-reference';
+import { componentState } from '../../component-state';
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -36,6 +38,8 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
         { id: 'preview', title: 'Preview' },
         { id: 'installation', title: 'Installation' },
         { id: 'usage', title: 'Usage' },
+        { id: 'state', title: 'State and callbacks' },
+        { id: 'api', title: 'API reference' },
         { id: 'material-guidelines', title: 'Material guidelines' },
       ]}
     >
@@ -54,7 +58,7 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
         />
         <p className="mt-4 text-sm leading-6 text-toolbox-text-secondary">
           New here?{' '}
-          <Link href="/docs/installation" className="text-toolbox-primary hover:underline">
+          <Link href="/docs/installation" className="text-toolbox-primary underline underline-offset-2">
             Set up your project
           </Link>{' '}
           first. Styles, fonts, and required components are included.
@@ -65,11 +69,31 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
         <p className="text-sm leading-7 text-toolbox-text-secondary">{component.note}</p>
         <p className="mt-4 text-sm leading-7 text-toolbox-text-secondary">
           Use the Code tab above for a complete example. The import follows your configured UI alias. See{' '}
-          <Link href="/docs/theming" className="text-toolbox-primary hover:underline">
+          <Link href="/docs/theming" className="text-toolbox-primary underline underline-offset-2">
             Theming
           </Link>{' '}
           to customize colors, spacing, and style slots.
         </p>
+      </DocsSection>
+      <DocsSection id="state" title="State and callbacks">
+        <div className="space-y-4 text-sm leading-7 text-toolbox-text-secondary">
+          {componentState[component.slug].map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </div>
+        {component.slug === 'input' && (
+          <div className="mt-4">
+            <CodeBlock
+              label="Controlled and uncontrolled inputs"
+              code={
+                '// Controlled: the parent owns the current value.\nconst [name, setName] = useState("");\n<Input label="Name" value={name} onChange={setName} />\n\n// Uncontrolled: Input owns the value after initialization.\n<Input label="Name" defaultValue="Javi" name="name" />'
+              }
+            />
+          </div>
+        )}
+      </DocsSection>
+      <DocsSection id="api" title="API reference">
+        <ApiReference slug={component.slug} />
       </DocsSection>
       <DocsSection id="material-guidelines" title="Material guidelines">
         <ul className="list-disc space-y-3 pl-5 text-sm leading-7 text-toolbox-text-secondary">

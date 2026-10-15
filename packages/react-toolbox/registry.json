@@ -49,8 +49,6 @@
         "@fontsource/roboto@^5.3.0",
         "classnames@^2.5.1",
         "material-icons@^1.13.14",
-        "react-dom@^19.3.0",
-        "react@^19.3.0",
         "tailwind-merge@^3.7.0"
       ],
       "devDependencies": [],
@@ -59,127 +57,92 @@
         {
           "path": "LICENSE",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/LICENSE"
+          "target": "@ui/material/LICENSE"
         },
         {
-          "path": "components/ThemeProvider.ts",
+          "path": "src/material/foundations/styles/animations.css",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/ThemeProvider.ts"
+          "target": "@ui/material/foundations/styles/animations.css"
         },
         {
-          "path": "components/animations.css",
+          "path": "src/material/foundations/styles/classes.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/animations.css"
+          "target": "@ui/material/foundations/styles/classes.ts"
         },
         {
-          "path": "components/colors.css",
+          "path": "src/material/foundations/styles/cn.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/colors.css"
+          "target": "@ui/material/foundations/styles/cn.ts"
         },
         {
-          "path": "components/hoc/Portal.tsx",
+          "path": "src/material/foundations/styles/colors.css",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/hoc/Portal.tsx"
+          "target": "@ui/material/foundations/styles/colors.css"
         },
         {
-          "path": "components/hoc/useMergedRefs.ts",
+          "path": "src/material/foundations/styles/reduced-motion.css",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/hoc/useMergedRefs.ts"
+          "target": "@ui/material/foundations/styles/reduced-motion.css"
         },
         {
-          "path": "components/hoc/usePresence.ts",
+          "path": "src/material/foundations/styles/setup.css",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/hoc/usePresence.ts"
+          "target": "@ui/material/foundations/styles/setup.css"
         },
         {
-          "path": "components/shadcn.css",
+          "path": "src/material/foundations/styles/shadcn.css",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/shadcn.css"
+          "target": "@ui/material/foundations/styles/shadcn.css"
         },
         {
-          "path": "components/shadcn.ts",
+          "path": "src/material/foundations/styles/slots.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/shadcn.ts"
+          "target": "@ui/material/foundations/styles/slots.ts"
         },
         {
-          "path": "components/styles.css",
+          "path": "src/material/foundations/styles/styles.css",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/styles.css"
+          "target": "@ui/material/foundations/styles/styles.css"
         },
         {
-          "path": "components/tailwind-preflight.css",
+          "path": "src/material/foundations/styles/styles.d.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/tailwind-preflight.css"
+          "target": "@ui/material/foundations/styles/styles.d.ts"
         },
         {
-          "path": "components/tailwind.css",
+          "path": "src/material/foundations/styles/tailwind-preflight.css",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/tailwind.css"
+          "target": "@ui/material/foundations/styles/tailwind-preflight.css"
         },
         {
-          "path": "components/theming.tsx",
+          "path": "src/material/foundations/styles/tailwind.css",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/theming.tsx"
+          "target": "@ui/material/foundations/styles/tailwind.css"
         },
         {
-          "path": "components/tokens.css",
+          "path": "src/material/foundations/styles/tokens.css",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/tokens.css"
+          "target": "@ui/material/foundations/styles/tokens.css"
         },
         {
-          "path": "components/utils/breakpoints.ts",
+          "path": "src/material/foundations/styles/variables.css",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/utils/breakpoints.ts"
+          "target": "@ui/material/foundations/styles/variables.css"
         },
         {
-          "path": "components/utils/cn.ts",
+          "path": "src/material/foundations/theme/ThemeProvider.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/utils/cn.ts"
+          "target": "@ui/material/foundations/theme/ThemeProvider.tsx"
         },
         {
-          "path": "components/utils/events.ts",
+          "path": "src/material/foundations/theme/shadcn.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/utils/events.ts"
+          "target": "@ui/material/foundations/theme/shadcn.ts"
         },
         {
-          "path": "components/utils/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/utils/index.ts"
-        },
-        {
-          "path": "components/utils/styles.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/utils/styles.ts"
-        },
-        {
-          "path": "components/utils/time.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/utils/time.ts"
-        },
-        {
-          "path": "components/utils/utils.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/utils/utils.ts"
-        },
-        {
-          "path": "components/variables.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/variables.css"
-        },
-        {
-          "path": "registry/entries/setup.css",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/setup.css"
-        },
-        {
-          "path": "registry/entries/styles.d.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/styles.d.ts"
-        },
-        {
-          "path": "registry/generated/theme.tsx",
+          "path": "src/material/theme/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/theme.tsx"
+          "target": "@ui/material/theme/index.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/theme. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -189,8 +152,132 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "0e23ede0262de6f913e9514d21b16b90464fc624faee891bc0040e7d0712d7e5",
-        "source": "components/",
+        "sourceSha256": "f737b9d3fa85203dfafb6d9d022fd5566c20710c56ae810ef751d9d109a7af1b",
+        "source": "src/material/",
+        "distribution": "copy-source"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "foundation-collections",
+      "type": "registry:lib",
+      "title": "React Toolbox foundation collections",
+      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/material/foundations/collections/range.ts",
+          "type": "registry:file",
+          "target": "@ui/material/foundations/collections/range.ts"
+        }
+      ],
+      "docs": "Shared implementation installed automatically by the components that need it. See https://react-toolbox.io/docs/installation.",
+      "categories": [
+        "material-design",
+        "react-toolbox"
+      ],
+      "meta": {
+        "version": "3.0.0-next.0",
+        "sourceSha256": "522061ea68b4b25ca866adff98a2fe99e99df93df72f750b5bf6d646132bc2d4",
+        "source": "src/material/",
+        "distribution": "copy-source"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "foundation-date-time",
+      "type": "registry:lib",
+      "title": "React Toolbox foundation date time",
+      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/material/foundations/date-time/calendar.ts",
+          "type": "registry:file",
+          "target": "@ui/material/foundations/date-time/calendar.ts"
+        }
+      ],
+      "docs": "Shared implementation installed automatically by the components that need it. See https://react-toolbox.io/docs/installation.",
+      "categories": [
+        "material-design",
+        "react-toolbox"
+      ],
+      "meta": {
+        "version": "3.0.0-next.0",
+        "sourceSha256": "c582c6d9e0658bcd9368d95fad60ebdae8d136d1f2a82102fa620384fa6f9353",
+        "source": "src/material/",
+        "distribution": "copy-source"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "foundation-motion",
+      "type": "registry:lib",
+      "title": "React Toolbox foundation motion",
+      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/material/foundations/motion/usePresence.ts",
+          "type": "registry:file",
+          "target": "@ui/material/foundations/motion/usePresence.ts"
+        },
+        {
+          "path": "src/material/foundations/motion/useReducedMotion.ts",
+          "type": "registry:file",
+          "target": "@ui/material/foundations/motion/useReducedMotion.ts"
+        }
+      ],
+      "docs": "Shared implementation installed automatically by the components that need it. See https://react-toolbox.io/docs/installation.",
+      "categories": [
+        "material-design",
+        "react-toolbox"
+      ],
+      "meta": {
+        "version": "3.0.0-next.0",
+        "sourceSha256": "87dee42dce1601bd2e28ebe085736a88bca5587285e9d896a3c51b72b7da3c8b",
+        "source": "src/material/",
+        "distribution": "copy-source"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "foundation-portal",
+      "type": "registry:lib",
+      "title": "React Toolbox foundation portal",
+      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [
+        "https://react-toolbox.io/r/foundation.json"
+      ],
+      "files": [
+        {
+          "path": "src/material/foundations/portal/Portal.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/foundations/portal/Portal.tsx"
+        },
+        {
+          "path": "src/material/foundations/portal/useMergedRefs.ts",
+          "type": "registry:file",
+          "target": "@ui/material/foundations/portal/useMergedRefs.ts"
+        }
+      ],
+      "docs": "Shared implementation installed automatically by the components that need it. See https://react-toolbox.io/docs/installation.",
+      "categories": [
+        "material-design",
+        "react-toolbox"
+      ],
+      "meta": {
+        "version": "3.0.0-next.0",
+        "sourceSha256": "432602200b596047fafd6fc83c883025b17341673c3923f77c066d303317e1a1",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -200,9 +287,7 @@
       "type": "registry:ui",
       "title": "React Toolbox app bar",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/button.json",
@@ -210,24 +295,19 @@
       ],
       "files": [
         {
-          "path": "components/app_bar/AppBar.tsx",
+          "path": "src/material/app-bar/AppBar.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/app_bar/AppBar.tsx"
+          "target": "@ui/material/app-bar/AppBar.tsx"
         },
         {
-          "path": "components/app_bar/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/app_bar/index.ts"
-        },
-        {
-          "path": "components/app_bar/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/app_bar/types.ts"
-        },
-        {
-          "path": "registry/generated/app-bar.tsx",
+          "path": "src/material/app-bar/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/app-bar.tsx"
+          "target": "@ui/material/app-bar/index.ts"
+        },
+        {
+          "path": "src/material/app-bar/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/app-bar/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/app-bar. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -237,8 +317,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "92cdaecbc4b0f225e4484984a5bd8b6f42a60cc5983dab28479e85e1dbd22ac1",
-        "source": "components/",
+        "sourceSha256": "698c0235cf0a1c4352b4fb11111d7e1507272ab6bc020e808a3672f1137f6be8",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -248,9 +328,7 @@
       "type": "registry:ui",
       "title": "React Toolbox autocomplete",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/chip.json",
@@ -259,24 +337,19 @@
       ],
       "files": [
         {
-          "path": "components/autocomplete/Autocomplete.tsx",
+          "path": "src/material/autocomplete/Autocomplete.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/autocomplete/Autocomplete.tsx"
+          "target": "@ui/material/autocomplete/Autocomplete.tsx"
         },
         {
-          "path": "components/autocomplete/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/autocomplete/index.ts"
-        },
-        {
-          "path": "components/autocomplete/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/autocomplete/types.ts"
-        },
-        {
-          "path": "registry/generated/autocomplete.tsx",
+          "path": "src/material/autocomplete/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/autocomplete.tsx"
+          "target": "@ui/material/autocomplete/index.ts"
+        },
+        {
+          "path": "src/material/autocomplete/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/autocomplete/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/autocomplete. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -286,8 +359,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "bf7b329aeeb7c236885f22a49920b86dc70a776cb57c343962a33745605645ca",
-        "source": "components/",
+        "sourceSha256": "695cb7311313e7d4fd95c25c24775c450ed1b57b458bc275caf31370532fa4f8",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -297,9 +370,7 @@
       "type": "registry:ui",
       "title": "React Toolbox avatar",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/font-icon.json",
@@ -307,24 +378,19 @@
       ],
       "files": [
         {
-          "path": "components/avatar/Avatar.tsx",
+          "path": "src/material/avatar/Avatar.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/avatar/Avatar.tsx"
+          "target": "@ui/material/avatar/Avatar.tsx"
         },
         {
-          "path": "components/avatar/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/avatar/index.ts"
-        },
-        {
-          "path": "components/avatar/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/avatar/types.ts"
-        },
-        {
-          "path": "registry/generated/avatar.tsx",
+          "path": "src/material/avatar/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/avatar.tsx"
+          "target": "@ui/material/avatar/index.ts"
+        },
+        {
+          "path": "src/material/avatar/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/avatar/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/avatar. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -334,8 +400,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "7517f9660c75e09dda20dc1f43485a374b5e5c8991d3b76e0e763570155ebc75",
-        "source": "components/",
+        "sourceSha256": "6430a5e5504db94b9aab6f7729b1f05c11c0d95910bfcb1dd8c8347b5f9f64fb",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -345,9 +411,7 @@
       "type": "registry:ui",
       "title": "React Toolbox button",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/font-icon.json",
@@ -356,39 +420,34 @@
       ],
       "files": [
         {
-          "path": "components/button/BrowseButton.tsx",
+          "path": "src/material/button/BrowseButton.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/button/BrowseButton.tsx"
+          "target": "@ui/material/button/BrowseButton.tsx"
         },
         {
-          "path": "components/button/Button.tsx",
+          "path": "src/material/button/Button.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/button/Button.tsx"
+          "target": "@ui/material/button/Button.tsx"
         },
         {
-          "path": "components/button/IconButton.tsx",
+          "path": "src/material/button/IconButton.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/button/IconButton.tsx"
+          "target": "@ui/material/button/IconButton.tsx"
         },
         {
-          "path": "components/button/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/button/index.ts"
-        },
-        {
-          "path": "components/button/styles.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/button/styles.ts"
-        },
-        {
-          "path": "components/button/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/button/types.ts"
-        },
-        {
-          "path": "registry/generated/button.tsx",
+          "path": "src/material/button/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/button.tsx"
+          "target": "@ui/material/button/index.ts"
+        },
+        {
+          "path": "src/material/button/styles.ts",
+          "type": "registry:file",
+          "target": "@ui/material/button/styles.ts"
+        },
+        {
+          "path": "src/material/button/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/button/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/button. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -398,8 +457,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "38680cd4c4f30faf5b619a2658abb1298a51a5ebadc26564f7d31388fc426cd3",
-        "source": "components/",
+        "sourceSha256": "2fa9a51f23d88749630ef9a325be9fec765d718609412dc5a264c5f1d917e51e",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -409,9 +468,7 @@
       "type": "registry:ui",
       "title": "React Toolbox card",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/avatar.json",
@@ -419,44 +476,39 @@
       ],
       "files": [
         {
-          "path": "components/card/Card.tsx",
+          "path": "src/material/card/Card.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/card/Card.tsx"
+          "target": "@ui/material/card/Card.tsx"
         },
         {
-          "path": "components/card/CardActions.tsx",
+          "path": "src/material/card/CardActions.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/card/CardActions.tsx"
+          "target": "@ui/material/card/CardActions.tsx"
         },
         {
-          "path": "components/card/CardMedia.tsx",
+          "path": "src/material/card/CardMedia.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/card/CardMedia.tsx"
+          "target": "@ui/material/card/CardMedia.tsx"
         },
         {
-          "path": "components/card/CardText.tsx",
+          "path": "src/material/card/CardText.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/card/CardText.tsx"
+          "target": "@ui/material/card/CardText.tsx"
         },
         {
-          "path": "components/card/CardTitle.tsx",
+          "path": "src/material/card/CardTitle.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/card/CardTitle.tsx"
+          "target": "@ui/material/card/CardTitle.tsx"
         },
         {
-          "path": "components/card/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/card/index.ts"
-        },
-        {
-          "path": "components/card/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/card/types.ts"
-        },
-        {
-          "path": "registry/generated/card.tsx",
+          "path": "src/material/card/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/card.tsx"
+          "target": "@ui/material/card/index.ts"
+        },
+        {
+          "path": "src/material/card/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/card/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/card. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -466,8 +518,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "9c656d7a5d2cec3af0d1fb931fc85f7533b2920d89998bfdd545eaeb1fcc1302",
-        "source": "components/",
+        "sourceSha256": "7e32c63112d92465e0667a45084f176492fdcdd0b98afc05f5d1151a1e0072b7",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -477,9 +529,7 @@
       "type": "registry:ui",
       "title": "React Toolbox checkbox",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json",
@@ -487,29 +537,24 @@
       ],
       "files": [
         {
-          "path": "components/checkbox/Check.tsx",
+          "path": "src/material/checkbox/Check.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/checkbox/Check.tsx"
+          "target": "@ui/material/checkbox/Check.tsx"
         },
         {
-          "path": "components/checkbox/Checkbox.tsx",
+          "path": "src/material/checkbox/Checkbox.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/checkbox/Checkbox.tsx"
+          "target": "@ui/material/checkbox/Checkbox.tsx"
         },
         {
-          "path": "components/checkbox/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/checkbox/index.ts"
-        },
-        {
-          "path": "components/checkbox/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/checkbox/types.ts"
-        },
-        {
-          "path": "registry/generated/checkbox.tsx",
+          "path": "src/material/checkbox/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/checkbox.tsx"
+          "target": "@ui/material/checkbox/index.ts"
+        },
+        {
+          "path": "src/material/checkbox/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/checkbox/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/checkbox. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -519,8 +564,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "6648b4b5074c21a48c1524b6b3b114abacd44ef343081052fb84656a72839a6e",
-        "source": "components/",
+        "sourceSha256": "10aba7925b28de12b7938f35229ee46e78635e345e97c6c6fc72c031a3909759",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -530,9 +575,7 @@
       "type": "registry:ui",
       "title": "React Toolbox chip",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/avatar.json",
@@ -540,24 +583,19 @@
       ],
       "files": [
         {
-          "path": "components/chip/Chip.tsx",
+          "path": "src/material/chip/Chip.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/chip/Chip.tsx"
+          "target": "@ui/material/chip/Chip.tsx"
         },
         {
-          "path": "components/chip/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/chip/index.ts"
-        },
-        {
-          "path": "components/chip/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/chip/types.ts"
-        },
-        {
-          "path": "registry/generated/chip.tsx",
+          "path": "src/material/chip/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/chip.tsx"
+          "target": "@ui/material/chip/index.ts"
+        },
+        {
+          "path": "src/material/chip/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/chip/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/chip. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -567,8 +605,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "a527fea066e033d7798eacc68be4fa04b0dd95e8abc1d5b2dbe8e97a1dcacbf5",
-        "source": "components/",
+        "sourceSha256": "211bdb910a7251338083f771a933fb46ce528effeae7a3e979e2ba665397ee25",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -579,8 +617,7 @@
       "title": "React Toolbox date picker",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "react-transition-group@^4.4.5",
-        "react@^19.3.0"
+        "react-transition-group@^4.4.5"
       ],
       "devDependencies": [
         "@types/react-transition-group@^4.4.12"
@@ -589,58 +626,55 @@
         "https://react-toolbox.io/r/button.json",
         "https://react-toolbox.io/r/dialog.json",
         "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-collections.json",
+        "https://react-toolbox.io/r/foundation-date-time.json",
         "https://react-toolbox.io/r/input.json"
       ],
       "files": [
         {
-          "path": "components/date_picker/Calendar.tsx",
+          "path": "src/material/date-picker/Calendar.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/date_picker/Calendar.tsx"
+          "target": "@ui/material/date-picker/Calendar.tsx"
         },
         {
-          "path": "components/date_picker/CalendarDay.tsx",
+          "path": "src/material/date-picker/CalendarDay.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/date_picker/CalendarDay.tsx"
+          "target": "@ui/material/date-picker/CalendarDay.tsx"
         },
         {
-          "path": "components/date_picker/CalendarMonth.tsx",
+          "path": "src/material/date-picker/CalendarMonth.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/date_picker/CalendarMonth.tsx"
+          "target": "@ui/material/date-picker/CalendarMonth.tsx"
         },
         {
-          "path": "components/date_picker/DatePicker.tsx",
+          "path": "src/material/date-picker/DatePicker.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/date_picker/DatePicker.tsx"
+          "target": "@ui/material/date-picker/DatePicker.tsx"
         },
         {
-          "path": "components/date_picker/DatePickerDialog.tsx",
+          "path": "src/material/date-picker/DatePickerDialog.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/date_picker/DatePickerDialog.tsx"
+          "target": "@ui/material/date-picker/DatePickerDialog.tsx"
         },
         {
-          "path": "components/date_picker/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/date_picker/index.ts"
-        },
-        {
-          "path": "components/date_picker/is-date-disabled.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/date_picker/is-date-disabled.ts"
-        },
-        {
-          "path": "components/date_picker/styles.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/date_picker/styles.ts"
-        },
-        {
-          "path": "components/date_picker/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/date_picker/types.ts"
-        },
-        {
-          "path": "registry/generated/date-picker.tsx",
+          "path": "src/material/date-picker/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/date-picker.tsx"
+          "target": "@ui/material/date-picker/index.ts"
+        },
+        {
+          "path": "src/material/date-picker/is-date-disabled.ts",
+          "type": "registry:file",
+          "target": "@ui/material/date-picker/is-date-disabled.ts"
+        },
+        {
+          "path": "src/material/date-picker/styles.ts",
+          "type": "registry:file",
+          "target": "@ui/material/date-picker/styles.ts"
+        },
+        {
+          "path": "src/material/date-picker/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/date-picker/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/date-picker. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -650,8 +684,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "11872037650c724c498d6bb3c10df27f4b0abfa17204d37f8549b2d517b42276",
-        "source": "components/",
+        "sourceSha256": "e8e313144b8e40f623b0bfe036667976b98732ed2879bbb29318e1d4bbb2121b",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -661,35 +695,30 @@
       "type": "registry:ui",
       "title": "React Toolbox dialog",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/button.json",
         "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-motion.json",
+        "https://react-toolbox.io/r/foundation-portal.json",
         "https://react-toolbox.io/r/overlay.json"
       ],
       "files": [
         {
-          "path": "components/dialog/Dialog.tsx",
+          "path": "src/material/dialog/Dialog.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/dialog/Dialog.tsx"
+          "target": "@ui/material/dialog/Dialog.tsx"
         },
         {
-          "path": "components/dialog/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/dialog/index.ts"
-        },
-        {
-          "path": "components/dialog/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/dialog/types.ts"
-        },
-        {
-          "path": "registry/generated/dialog.tsx",
+          "path": "src/material/dialog/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/dialog.tsx"
+          "target": "@ui/material/dialog/index.ts"
+        },
+        {
+          "path": "src/material/dialog/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/dialog/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/dialog. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -699,8 +728,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "37be9f3ea0b1640b683a74e43638cc2b83546c703058c0b3dc5e05ca0c5a8f92",
-        "source": "components/",
+        "sourceSha256": "959d4540a57760d60e6678b579b9fc91bfeaaa2147ccc06c7b29c48814459aaa",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -710,34 +739,29 @@
       "type": "registry:ui",
       "title": "React Toolbox drawer",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-motion.json",
+        "https://react-toolbox.io/r/foundation-portal.json",
         "https://react-toolbox.io/r/overlay.json"
       ],
       "files": [
         {
-          "path": "components/drawer/Drawer.tsx",
+          "path": "src/material/drawer/Drawer.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/drawer/Drawer.tsx"
+          "target": "@ui/material/drawer/Drawer.tsx"
         },
         {
-          "path": "components/drawer/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/drawer/index.ts"
-        },
-        {
-          "path": "components/drawer/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/drawer/types.ts"
-        },
-        {
-          "path": "registry/generated/drawer.tsx",
+          "path": "src/material/drawer/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/drawer.tsx"
+          "target": "@ui/material/drawer/index.ts"
+        },
+        {
+          "path": "src/material/drawer/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/drawer/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/drawer. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -747,8 +771,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "ecd6906607c66d0ba3ae718f52f7155837404d20bc1cfb9b8cb7c3a9fd4a1ffe",
-        "source": "components/",
+        "sourceSha256": "91044870f3e74d17ac6af700848092ad7adf40441733e125f6f8ed1c391a676d",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -758,9 +782,7 @@
       "type": "registry:ui",
       "title": "React Toolbox dropdown",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json",
@@ -768,24 +790,19 @@
       ],
       "files": [
         {
-          "path": "components/dropdown/Dropdown.tsx",
+          "path": "src/material/dropdown/Dropdown.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/dropdown/Dropdown.tsx"
+          "target": "@ui/material/dropdown/Dropdown.tsx"
         },
         {
-          "path": "components/dropdown/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/dropdown/index.ts"
-        },
-        {
-          "path": "components/dropdown/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/dropdown/types.ts"
-        },
-        {
-          "path": "registry/generated/dropdown.tsx",
+          "path": "src/material/dropdown/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/dropdown.tsx"
+          "target": "@ui/material/dropdown/index.ts"
+        },
+        {
+          "path": "src/material/dropdown/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/dropdown/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/dropdown. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -795,8 +812,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "f5ee9a7a5e58982974d2b9930a750ba3f9e30ebf3b34c511c701b79013e0b57f",
-        "source": "components/",
+        "sourceSha256": "016fbca4a126ba5751b742dcf625d2b38c0dbdeaf4c45dd0fe0191850b40240c",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -806,28 +823,21 @@
       "type": "registry:ui",
       "title": "React Toolbox font icon",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json"
       ],
       "files": [
         {
-          "path": "components/font_icon/FontIcon.tsx",
+          "path": "src/material/font-icon/FontIcon.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/font_icon/FontIcon.tsx"
+          "target": "@ui/material/font-icon/FontIcon.tsx"
         },
         {
-          "path": "components/font_icon/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/font_icon/index.ts"
-        },
-        {
-          "path": "registry/generated/font-icon.tsx",
+          "path": "src/material/font-icon/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/font-icon.tsx"
+          "target": "@ui/material/font-icon/index.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/font-icon. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -837,8 +847,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "359a43806970f587fee6a306d5378ed749b02195f6dbf143292246f80ce98aff",
-        "source": "components/",
+        "sourceSha256": "c001a3d6b6a50ed50b11ed135d3aeedc362793d6ebe1a104129e9faceaa7c1b0",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -848,9 +858,7 @@
       "type": "registry:ui",
       "title": "React Toolbox input",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/font-icon.json",
@@ -858,24 +866,24 @@
       ],
       "files": [
         {
-          "path": "components/input/Input.tsx",
+          "path": "src/material/input/Input.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/input/Input.tsx"
+          "target": "@ui/material/input/Input.tsx"
         },
         {
-          "path": "components/input/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/input/index.ts"
-        },
-        {
-          "path": "components/input/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/input/types.ts"
-        },
-        {
-          "path": "registry/generated/input.tsx",
+          "path": "src/material/input/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/input.tsx"
+          "target": "@ui/material/input/index.ts"
+        },
+        {
+          "path": "src/material/input/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/input/types.ts"
+        },
+        {
+          "path": "src/material/input/value.ts",
+          "type": "registry:file",
+          "target": "@ui/material/input/value.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/input. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -885,8 +893,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "840800670dc15a80490d63883fdb09f36908077571d19420f1e3bd101c3bd2c5",
-        "source": "components/",
+        "sourceSha256": "cc658010b0736a48ff28a221e170860eb554fcffe97605b363e81037781ab623",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -896,9 +904,7 @@
       "type": "registry:ui",
       "title": "React Toolbox layout",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/app-bar.json",
@@ -907,44 +913,44 @@
       ],
       "files": [
         {
-          "path": "components/layout/Layout.tsx",
+          "path": "src/material/layout/Layout.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/layout/Layout.tsx"
+          "target": "@ui/material/layout/Layout.tsx"
         },
         {
-          "path": "components/layout/NavDrawer.tsx",
+          "path": "src/material/layout/NavDrawer.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/layout/NavDrawer.tsx"
+          "target": "@ui/material/layout/NavDrawer.tsx"
         },
         {
-          "path": "components/layout/Panel.tsx",
+          "path": "src/material/layout/Panel.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/layout/Panel.tsx"
+          "target": "@ui/material/layout/Panel.tsx"
         },
         {
-          "path": "components/layout/Sidebar.tsx",
+          "path": "src/material/layout/Sidebar.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/layout/Sidebar.tsx"
+          "target": "@ui/material/layout/Sidebar.tsx"
         },
         {
-          "path": "components/layout/index.ts",
+          "path": "src/material/layout/breakpoints.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/layout/index.ts"
+          "target": "@ui/material/layout/breakpoints.ts"
         },
         {
-          "path": "components/layout/styles.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/layout/styles.ts"
-        },
-        {
-          "path": "components/layout/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/layout/types.ts"
-        },
-        {
-          "path": "registry/generated/layout.tsx",
+          "path": "src/material/layout/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/layout.tsx"
+          "target": "@ui/material/layout/index.ts"
+        },
+        {
+          "path": "src/material/layout/styles.ts",
+          "type": "registry:file",
+          "target": "@ui/material/layout/styles.ts"
+        },
+        {
+          "path": "src/material/layout/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/layout/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/layout. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -954,8 +960,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "ecb7303c74eae0445fc596d7c529f352d9b1fd4be0372936173a544d4d285178",
-        "source": "components/",
+        "sourceSha256": "85f99fcc283b76a322b6274712156bfee195f230fbb5a7593d410c21b31692d2",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -965,9 +971,7 @@
       "type": "registry:ui",
       "title": "React Toolbox list",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/avatar.json",
@@ -978,74 +982,69 @@
       ],
       "files": [
         {
-          "path": "components/list/List.tsx",
+          "path": "src/material/list/List.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/list/List.tsx"
+          "target": "@ui/material/list/List.tsx"
         },
         {
-          "path": "components/list/ListCheckbox.tsx",
+          "path": "src/material/list/ListCheckbox.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/list/ListCheckbox.tsx"
+          "target": "@ui/material/list/ListCheckbox.tsx"
         },
         {
-          "path": "components/list/ListDivider.tsx",
+          "path": "src/material/list/ListDivider.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/list/ListDivider.tsx"
+          "target": "@ui/material/list/ListDivider.tsx"
         },
         {
-          "path": "components/list/ListItem.tsx",
+          "path": "src/material/list/ListItem.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/list/ListItem.tsx"
+          "target": "@ui/material/list/ListItem.tsx"
         },
         {
-          "path": "components/list/ListItemAction.tsx",
+          "path": "src/material/list/ListItemAction.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/list/ListItemAction.tsx"
+          "target": "@ui/material/list/ListItemAction.tsx"
         },
         {
-          "path": "components/list/ListItemActions.tsx",
+          "path": "src/material/list/ListItemActions.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/list/ListItemActions.tsx"
+          "target": "@ui/material/list/ListItemActions.tsx"
         },
         {
-          "path": "components/list/ListItemContent.tsx",
+          "path": "src/material/list/ListItemContent.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/list/ListItemContent.tsx"
+          "target": "@ui/material/list/ListItemContent.tsx"
         },
         {
-          "path": "components/list/ListItemLayout.tsx",
+          "path": "src/material/list/ListItemLayout.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/list/ListItemLayout.tsx"
+          "target": "@ui/material/list/ListItemLayout.tsx"
         },
         {
-          "path": "components/list/ListItemText.tsx",
+          "path": "src/material/list/ListItemText.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/list/ListItemText.tsx"
+          "target": "@ui/material/list/ListItemText.tsx"
         },
         {
-          "path": "components/list/ListSubHeader.tsx",
+          "path": "src/material/list/ListSubHeader.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/list/ListSubHeader.tsx"
+          "target": "@ui/material/list/ListSubHeader.tsx"
         },
         {
-          "path": "components/list/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/list/index.ts"
-        },
-        {
-          "path": "components/list/styles.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/list/styles.ts"
-        },
-        {
-          "path": "components/list/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/list/types.ts"
-        },
-        {
-          "path": "registry/generated/list.tsx",
+          "path": "src/material/list/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/list.tsx"
+          "target": "@ui/material/list/index.ts"
+        },
+        {
+          "path": "src/material/list/styles.ts",
+          "type": "registry:file",
+          "target": "@ui/material/list/styles.ts"
+        },
+        {
+          "path": "src/material/list/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/list/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/list. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -1055,8 +1054,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "65fe755b9179edcfa97b854eb5306e2f58159362443e0e19f5197cde4ed10554",
-        "source": "components/",
+        "sourceSha256": "e6742cdbd97f819acf6ca7603efd255b39e023b87bdbbf77d955a6d713ea13ea",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -1066,9 +1065,7 @@
       "type": "registry:ui",
       "title": "React Toolbox menu",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/button.json",
@@ -1078,44 +1075,39 @@
       ],
       "files": [
         {
-          "path": "components/menu/IconMenu.tsx",
+          "path": "src/material/menu/IconMenu.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/menu/IconMenu.tsx"
+          "target": "@ui/material/menu/IconMenu.tsx"
         },
         {
-          "path": "components/menu/Menu.tsx",
+          "path": "src/material/menu/Menu.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/menu/Menu.tsx"
+          "target": "@ui/material/menu/Menu.tsx"
         },
         {
-          "path": "components/menu/MenuDivider.tsx",
+          "path": "src/material/menu/MenuDivider.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/menu/MenuDivider.tsx"
+          "target": "@ui/material/menu/MenuDivider.tsx"
         },
         {
-          "path": "components/menu/MenuItem.tsx",
+          "path": "src/material/menu/MenuItem.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/menu/MenuItem.tsx"
+          "target": "@ui/material/menu/MenuItem.tsx"
         },
         {
-          "path": "components/menu/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/menu/index.ts"
-        },
-        {
-          "path": "components/menu/styles.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/menu/styles.ts"
-        },
-        {
-          "path": "components/menu/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/menu/types.ts"
-        },
-        {
-          "path": "registry/generated/menu.tsx",
+          "path": "src/material/menu/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/menu.tsx"
+          "target": "@ui/material/menu/index.ts"
+        },
+        {
+          "path": "src/material/menu/styles.ts",
+          "type": "registry:file",
+          "target": "@ui/material/menu/styles.ts"
+        },
+        {
+          "path": "src/material/menu/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/menu/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/menu. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -1125,8 +1117,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "72058b8e892e8519f9f95d999be22399883b721a42b5be6e323a6d1264d70137",
-        "source": "components/",
+        "sourceSha256": "e9b3994364fa00fa56b8045f75a0d4c4001cf6dba9ed37884e39f61a1c03b35c",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -1136,38 +1128,31 @@
       "type": "registry:ui",
       "title": "React Toolbox overlay",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json"
       ],
       "files": [
         {
-          "path": "components/overlay/Overlay.tsx",
+          "path": "src/material/overlay/Overlay.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/overlay/Overlay.tsx"
+          "target": "@ui/material/overlay/Overlay.tsx"
         },
         {
-          "path": "components/overlay/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/overlay/index.ts"
-        },
-        {
-          "path": "components/overlay/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/overlay/types.ts"
-        },
-        {
-          "path": "components/overlay/useModalFocus.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/overlay/useModalFocus.ts"
-        },
-        {
-          "path": "registry/generated/overlay.tsx",
+          "path": "src/material/overlay/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/overlay.tsx"
+          "target": "@ui/material/overlay/index.ts"
+        },
+        {
+          "path": "src/material/overlay/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/overlay/types.ts"
+        },
+        {
+          "path": "src/material/overlay/useModalFocus.ts",
+          "type": "registry:file",
+          "target": "@ui/material/overlay/useModalFocus.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/overlay. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -1177,8 +1162,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "eb03f019bf7cbe4cff80a66c74c399050f92601977da37e61e1db536d672cb42",
-        "source": "components/",
+        "sourceSha256": "ccf8ec918320678286ce8e56a27edb54576182f828031e79285050ac1f835644",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -1188,33 +1173,26 @@
       "type": "registry:ui",
       "title": "React Toolbox progress bar",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json"
       ],
       "files": [
         {
-          "path": "components/progress_bar/ProgressBar.tsx",
+          "path": "src/material/progress-bar/ProgressBar.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/progress_bar/ProgressBar.tsx"
+          "target": "@ui/material/progress-bar/ProgressBar.tsx"
         },
         {
-          "path": "components/progress_bar/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/progress_bar/index.ts"
-        },
-        {
-          "path": "components/progress_bar/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/progress_bar/types.ts"
-        },
-        {
-          "path": "registry/generated/progress-bar.tsx",
+          "path": "src/material/progress-bar/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/progress-bar.tsx"
+          "target": "@ui/material/progress-bar/index.ts"
+        },
+        {
+          "path": "src/material/progress-bar/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/progress-bar/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/progress-bar. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -1224,8 +1202,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "61502e6de3b883ad81fb817a854d8f4af7e65ba5d6c919d6548940db404b1a1c",
-        "source": "components/",
+        "sourceSha256": "9245f8798819f5383e3b02261143acbee51da614eb793e01a74de8a045f77fe0",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -1235,9 +1213,7 @@
       "type": "registry:ui",
       "title": "React Toolbox radio",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json",
@@ -1245,34 +1221,29 @@
       ],
       "files": [
         {
-          "path": "components/radio/Radio.tsx",
+          "path": "src/material/radio/Radio.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/radio/Radio.tsx"
+          "target": "@ui/material/radio/Radio.tsx"
         },
         {
-          "path": "components/radio/RadioButton.tsx",
+          "path": "src/material/radio/RadioButton.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/radio/RadioButton.tsx"
+          "target": "@ui/material/radio/RadioButton.tsx"
         },
         {
-          "path": "components/radio/RadioGroup.tsx",
+          "path": "src/material/radio/RadioGroup.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/radio/RadioGroup.tsx"
+          "target": "@ui/material/radio/RadioGroup.tsx"
         },
         {
-          "path": "components/radio/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/radio/index.ts"
-        },
-        {
-          "path": "components/radio/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/radio/types.ts"
-        },
-        {
-          "path": "registry/generated/radio.tsx",
+          "path": "src/material/radio/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/radio.tsx"
+          "target": "@ui/material/radio/index.ts"
+        },
+        {
+          "path": "src/material/radio/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/radio/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/radio. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -1282,8 +1253,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "984097b988ba8dd53338f0d803bef730a199095f5dfb109862ac402b570c2ea5",
-        "source": "components/",
+        "sourceSha256": "e140483ba0e033d5b015f5d1a2ed0ff5ca27ba392cb94423cf88ee0e5715110f",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -1293,33 +1264,27 @@
       "type": "registry:ui",
       "title": "React Toolbox ripple",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
-        "https://react-toolbox.io/r/foundation.json"
+        "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-motion.json"
       ],
       "files": [
         {
-          "path": "components/ripple/Ripple.tsx",
+          "path": "src/material/ripple/Ripple.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/ripple/Ripple.tsx"
+          "target": "@ui/material/ripple/Ripple.tsx"
         },
         {
-          "path": "components/ripple/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/ripple/index.ts"
-        },
-        {
-          "path": "components/ripple/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/ripple/types.ts"
-        },
-        {
-          "path": "registry/generated/ripple.tsx",
+          "path": "src/material/ripple/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/ripple.tsx"
+          "target": "@ui/material/ripple/index.ts"
+        },
+        {
+          "path": "src/material/ripple/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/ripple/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/ripple. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -1329,8 +1294,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "3be156b1770a18cf1378bc7a0ef04dbb2024c6aa523992ad0883442358828786",
-        "source": "components/",
+        "sourceSha256": "10b408d1d3303b26d1961fd8c4186e47fdce694f3d0f1942bc3ea9dbfe5142b5",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -1340,9 +1305,7 @@
       "type": "registry:ui",
       "title": "React Toolbox slider",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json",
@@ -1351,24 +1314,19 @@
       ],
       "files": [
         {
-          "path": "components/slider/Slider.tsx",
+          "path": "src/material/slider/Slider.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/slider/Slider.tsx"
+          "target": "@ui/material/slider/Slider.tsx"
         },
         {
-          "path": "components/slider/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/slider/index.ts"
-        },
-        {
-          "path": "components/slider/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/slider/types.ts"
-        },
-        {
-          "path": "registry/generated/slider.tsx",
+          "path": "src/material/slider/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/slider.tsx"
+          "target": "@ui/material/slider/index.ts"
+        },
+        {
+          "path": "src/material/slider/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/slider/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/slider. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -1378,8 +1336,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "155ff03e8424d4bac126404a8b5c4f8ac4d2e5248942ae347ac4618a3c2bf120",
-        "source": "components/",
+        "sourceSha256": "e8006526c4dbdccd85b83b107d58101cc5d092046e8a22a8684a1937a9e5e6c7",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -1389,34 +1347,29 @@
       "type": "registry:ui",
       "title": "React Toolbox snackbar",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/button.json",
-        "https://react-toolbox.io/r/foundation.json"
+        "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-motion.json",
+        "https://react-toolbox.io/r/foundation-portal.json"
       ],
       "files": [
         {
-          "path": "components/snackbar/Snackbar.tsx",
+          "path": "src/material/snackbar/Snackbar.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/snackbar/Snackbar.tsx"
+          "target": "@ui/material/snackbar/Snackbar.tsx"
         },
         {
-          "path": "components/snackbar/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/snackbar/index.ts"
-        },
-        {
-          "path": "components/snackbar/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/snackbar/types.ts"
-        },
-        {
-          "path": "registry/generated/snackbar.tsx",
+          "path": "src/material/snackbar/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/snackbar.tsx"
+          "target": "@ui/material/snackbar/index.ts"
+        },
+        {
+          "path": "src/material/snackbar/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/snackbar/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/snackbar. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -1426,8 +1379,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "cc029cc1fb94720ef84da92929e93d317a61cf6f21120f407ccd3366d6e98364",
-        "source": "components/",
+        "sourceSha256": "4831e3ea5448dc9e849dd240ada9927eb327f4cddc3c9f3c5a6e1573ed49044a",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -1437,9 +1390,7 @@
       "type": "registry:ui",
       "title": "React Toolbox switch",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json",
@@ -1447,29 +1398,24 @@
       ],
       "files": [
         {
-          "path": "components/switch/Switch.tsx",
+          "path": "src/material/switch/Switch.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/switch/Switch.tsx"
+          "target": "@ui/material/switch/Switch.tsx"
         },
         {
-          "path": "components/switch/Thumb.tsx",
+          "path": "src/material/switch/Thumb.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/switch/Thumb.tsx"
+          "target": "@ui/material/switch/Thumb.tsx"
         },
         {
-          "path": "components/switch/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/switch/index.ts"
-        },
-        {
-          "path": "components/switch/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/switch/types.ts"
-        },
-        {
-          "path": "registry/generated/switch.tsx",
+          "path": "src/material/switch/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/switch.tsx"
+          "target": "@ui/material/switch/index.ts"
+        },
+        {
+          "path": "src/material/switch/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/switch/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/switch. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -1479,8 +1425,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "e6ea24fe59fe03315c20b966f8b22906dc974e276099e5f1efa05ea2212dbaa0",
-        "source": "components/",
+        "sourceSha256": "4b5cbf2f35d03533c528943f76e442b83b67a7e2d9b8edc254c5dfa3341e6c35",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -1490,9 +1436,7 @@
       "type": "registry:ui",
       "title": "React Toolbox table",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/checkbox.json",
@@ -1501,44 +1445,39 @@
       ],
       "files": [
         {
-          "path": "components/table/Table.tsx",
+          "path": "src/material/table/Table.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/table/Table.tsx"
+          "target": "@ui/material/table/Table.tsx"
         },
         {
-          "path": "components/table/TableCell.tsx",
+          "path": "src/material/table/TableCell.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/table/TableCell.tsx"
+          "target": "@ui/material/table/TableCell.tsx"
         },
         {
-          "path": "components/table/TableHead.tsx",
+          "path": "src/material/table/TableHead.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/table/TableHead.tsx"
+          "target": "@ui/material/table/TableHead.tsx"
         },
         {
-          "path": "components/table/TableRow.tsx",
+          "path": "src/material/table/TableRow.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/table/TableRow.tsx"
+          "target": "@ui/material/table/TableRow.tsx"
         },
         {
-          "path": "components/table/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/table/index.ts"
-        },
-        {
-          "path": "components/table/styles.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/table/styles.ts"
-        },
-        {
-          "path": "components/table/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/table/types.ts"
-        },
-        {
-          "path": "registry/generated/table.tsx",
+          "path": "src/material/table/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/table.tsx"
+          "target": "@ui/material/table/index.ts"
+        },
+        {
+          "path": "src/material/table/styles.ts",
+          "type": "registry:file",
+          "target": "@ui/material/table/styles.ts"
+        },
+        {
+          "path": "src/material/table/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/table/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/table. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -1548,8 +1487,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "55c0371617de77246888a859920678f3b0e64a1d1e836affc98a322d0da78347",
-        "source": "components/",
+        "sourceSha256": "1a156277ac6d18260df37c9284c82be2064576509134a5bfb1d7f6d56b88b230",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -1559,9 +1498,7 @@
       "type": "registry:ui",
       "title": "React Toolbox tabs",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/font-icon.json",
@@ -1570,39 +1507,34 @@
       ],
       "files": [
         {
-          "path": "components/tabs/Tab.tsx",
+          "path": "src/material/tabs/Tab.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/tabs/Tab.tsx"
+          "target": "@ui/material/tabs/Tab.tsx"
         },
         {
-          "path": "components/tabs/TabContent.tsx",
+          "path": "src/material/tabs/TabContent.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/tabs/TabContent.tsx"
+          "target": "@ui/material/tabs/TabContent.tsx"
         },
         {
-          "path": "components/tabs/Tabs.tsx",
+          "path": "src/material/tabs/Tabs.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/tabs/Tabs.tsx"
+          "target": "@ui/material/tabs/Tabs.tsx"
         },
         {
-          "path": "components/tabs/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/tabs/index.ts"
-        },
-        {
-          "path": "components/tabs/styles.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/tabs/styles.ts"
-        },
-        {
-          "path": "components/tabs/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/tabs/types.ts"
-        },
-        {
-          "path": "registry/generated/tabs.tsx",
+          "path": "src/material/tabs/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/tabs.tsx"
+          "target": "@ui/material/tabs/index.ts"
+        },
+        {
+          "path": "src/material/tabs/styles.ts",
+          "type": "registry:file",
+          "target": "@ui/material/tabs/styles.ts"
+        },
+        {
+          "path": "src/material/tabs/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/tabs/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/tabs. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -1612,8 +1544,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "41413f53f4eac983aee6c08c9b0eb74c140077048033f567f2460e8c0493bef1",
-        "source": "components/",
+        "sourceSha256": "1245aadd81e7f5e7f7a00df37790efe380ddbb1559ba02f7e6790e841a6bb228",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -1624,8 +1556,7 @@
       "title": "React Toolbox time picker",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "dependencies": [
-        "react-transition-group@^4.4.5",
-        "react@^19.3.0"
+        "react-transition-group@^4.4.5"
       ],
       "devDependencies": [
         "@types/react-transition-group@^4.4.12"
@@ -1633,58 +1564,65 @@
       "registryDependencies": [
         "https://react-toolbox.io/r/dialog.json",
         "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-collections.json",
+        "https://react-toolbox.io/r/foundation-date-time.json",
         "https://react-toolbox.io/r/input.json"
       ],
       "files": [
         {
-          "path": "components/time_picker/Clock.tsx",
+          "path": "src/material/time-picker/Clock.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/time_picker/Clock.tsx"
+          "target": "@ui/material/time-picker/Clock.tsx"
         },
         {
-          "path": "components/time_picker/ClockFace.tsx",
+          "path": "src/material/time-picker/ClockFace.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/time_picker/ClockFace.tsx"
+          "target": "@ui/material/time-picker/ClockFace.tsx"
         },
         {
-          "path": "components/time_picker/ClockHand.tsx",
+          "path": "src/material/time-picker/ClockHand.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/time_picker/ClockHand.tsx"
+          "target": "@ui/material/time-picker/ClockHand.tsx"
         },
         {
-          "path": "components/time_picker/ClockHours.tsx",
+          "path": "src/material/time-picker/ClockHours.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/time_picker/ClockHours.tsx"
+          "target": "@ui/material/time-picker/ClockHours.tsx"
         },
         {
-          "path": "components/time_picker/ClockMinutes.tsx",
+          "path": "src/material/time-picker/ClockMinutes.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/time_picker/ClockMinutes.tsx"
+          "target": "@ui/material/time-picker/ClockMinutes.tsx"
         },
         {
-          "path": "components/time_picker/TimePicker.tsx",
+          "path": "src/material/time-picker/TimePicker.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/time_picker/TimePicker.tsx"
+          "target": "@ui/material/time-picker/TimePicker.tsx"
         },
         {
-          "path": "components/time_picker/TimePickerDialog.tsx",
+          "path": "src/material/time-picker/TimePickerDialog.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/time_picker/TimePickerDialog.tsx"
+          "target": "@ui/material/time-picker/TimePickerDialog.tsx"
         },
         {
-          "path": "components/time_picker/index.ts",
+          "path": "src/material/time-picker/events.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/time_picker/index.ts"
+          "target": "@ui/material/time-picker/events.ts"
         },
         {
-          "path": "components/time_picker/types.ts",
+          "path": "src/material/time-picker/geometry.ts",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/time_picker/types.ts"
+          "target": "@ui/material/time-picker/geometry.ts"
         },
         {
-          "path": "registry/generated/time-picker.tsx",
+          "path": "src/material/time-picker/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/time-picker.tsx"
+          "target": "@ui/material/time-picker/index.ts"
+        },
+        {
+          "path": "src/material/time-picker/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/time-picker/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/time-picker. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -1694,8 +1632,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "9d56b5de4c425ed987cc0344f817dcf9b71201a00cde35c9426800ceb91d6e4b",
-        "source": "components/",
+        "sourceSha256": "a693e46e3e538e8749ecb8909426fbc05c26d09e99aaecd4210410415647a8e7",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -1705,33 +1643,28 @@
       "type": "registry:ui",
       "title": "React Toolbox tooltip",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "react@^19.3.0"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
-        "https://react-toolbox.io/r/foundation.json"
+        "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-motion.json",
+        "https://react-toolbox.io/r/foundation-portal.json"
       ],
       "files": [
         {
-          "path": "components/tooltip/Tooltip.tsx",
+          "path": "src/material/tooltip/Tooltip.tsx",
           "type": "registry:file",
-          "target": "@ui/react-toolbox/tooltip/Tooltip.tsx"
+          "target": "@ui/material/tooltip/Tooltip.tsx"
         },
         {
-          "path": "components/tooltip/index.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/tooltip/index.ts"
-        },
-        {
-          "path": "components/tooltip/types.ts",
-          "type": "registry:file",
-          "target": "@ui/react-toolbox/tooltip/types.ts"
-        },
-        {
-          "path": "registry/generated/tooltip.tsx",
+          "path": "src/material/tooltip/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/tooltip.tsx"
+          "target": "@ui/material/tooltip/index.ts"
+        },
+        {
+          "path": "src/material/tooltip/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/tooltip/types.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material/tooltip. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -1741,8 +1674,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "a949e35e949176a8865572c0adfd45668179b4b4f7369ba5c58a7386818f4567",
-        "source": "components/",
+        "sourceSha256": "a1563088d4818b9e4c9c01d36019ebf6dd47dbf5bee0e078acbe580e786703d0",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     },
@@ -1786,9 +1719,9 @@
       ],
       "files": [
         {
-          "path": "registry/generated/index.tsx",
+          "path": "src/material/index.ts",
           "type": "registry:ui",
-          "target": "@ui/material/index.tsx"
+          "target": "@ui/material/index.ts"
         }
       ],
       "docs": "Import from your configured ui alias: material. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
@@ -1798,8 +1731,8 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "285139445e13b3ea7dffc9ab83d94977f5a47c89e0eddc46c6f212cd27e42e0c",
-        "source": "components/",
+        "sourceSha256": "d737990fe7a3d25d5b5bc2a6adefb163a1fe9c6b051b35f4eb569f4e7fd75f56",
+        "source": "src/material/",
         "distribution": "copy-source"
       }
     }

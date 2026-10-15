@@ -3,12 +3,12 @@ import { build } from 'esbuild';
 import postcss from 'postcss';
 import tailwind from '@tailwindcss/postcss';
 import { componentClasses } from '../../scripts/component-classes.mjs';
-import { cn } from '../../components/utils/cn.ts';
+import { cn } from '../../src/material/foundations/styles/cn.ts';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 export const css = (
   await postcss([tailwind()]).process(
-    '@layer theme, base, components, utilities; @import "tailwindcss/theme.css" layer(theme); @import "tailwindcss/utilities.css" layer(utilities) source(none); @import "./components/styles.css"; @source "./components";',
+    '@layer theme, base, components, utilities; @import "tailwindcss/theme.css" layer(theme); @import "tailwindcss/utilities.css" layer(utilities) source(none); @import "./src/material/foundations/styles/styles.css"; @source "./src/material";',
     { from: `${root}/fixture.css` },
   )
 ).css;
@@ -21,7 +21,7 @@ const javascript = (
     stdin: {
       resolveDir: root,
       contents: `
-    import { cn } from './components/utils/cn';
+    import { cn } from './src/material/foundations/styles/cn';
     const slots = ${JSON.stringify(slots)};
     function apply(element) {
       if (!(element instanceof Element)) return;

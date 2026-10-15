@@ -4,6 +4,16 @@ Audit date: 13 October 2026. Target: Google's archived [Material Design 1 guidel
 
 This is an implementation audit and correction record, not a certification of complete Material or accessibility compliance. It separates verified M1 corrections from modernization work and deliberate compatibility choices. Material 3 styling, Expressive variants, and additional component families are outside this pass.
 
+The 15 October 2026 release-readiness pass includes explicitly approved accessibility
+departures from original picker defaults: brighter small inactive header text,
+Grey 700 clock numerals, and larger year/AM/PM pointer targets with unchanged text
+positions. Their measured contrast, target sizes, and W3C sources are recorded in
+[the accessibility guide](accessibility.md). A separate
+`packages/react-toolbox/tests/accessibility-style-corrections.json` ledger applies
+after the M1 ledger and validates each previous value; the archived fixtures are
+unchanged. Reduced motion is an additional OS preference, while normal M1 motion
+remains the default.
+
 ## Evidence and scope
 
 The review used M1's component, layout, color, motion, and accessibility guidance, the original component source, and browser measurements. Existing CSS and the independent React 16 reference remain archived under `packages/react-toolbox/tests/fixtures`; they were not rewritten to approve the new appearance. Intentional declaration changes are recorded separately in `packages/react-toolbox/tests/fixtures/m1-style-corrections.json`. Ordinary migration parity and deliberate specification corrections therefore have different evidence.

@@ -71,7 +71,7 @@ function utilityOffset(candidate) {
 
 export async function createCanonicalizer() {
   const theme = await readFile(path.join(root, 'node_modules/tailwindcss/theme.css'), 'utf8');
-  const bridge = (await readFile(path.join(root, 'components/tailwind.css'), 'utf8')).replace(
+  const bridge = (await readFile(path.join(root, 'src/material/foundations/styles/tailwind.css'), 'utf8')).replace(
     /@(?:import|source)[^;]+;/g,
     '',
   );
@@ -123,7 +123,7 @@ async function main() {
   const canonicalize = await createCanonicalizer();
   let count = 0;
   let changedFiles = 0;
-  for (const directory of ['components', '../../apps/docs/app']) {
+  for (const directory of ['src/material', '../../apps/docs/app']) {
     for await (const relative of glob('**/*.{ts,tsx,js,jsx}', { cwd: path.join(root, directory) })) {
       // Shared input for the independent React 16 rendering reference.
       if (directory.endsWith('/app') && relative === 'gallery.jsx') continue;

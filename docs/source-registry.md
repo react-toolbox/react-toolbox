@@ -57,22 +57,25 @@ Entries use the official [`@ui/` target placeholder](https://ui.shadcn.com/docs/
 With the default UI alias, a button installation includes:
 
 ```text
-components/ui/
-  material/
-    button.tsx              Public entry: exports the family and loads styles
-    font-icon.tsx           Required dependency entry
-    ripple.tsx              Required dependency entry
-    theme.tsx               ThemeProvider and its types
-  react-toolbox/            Editable implementation, helpers, CSS, and license
+components/ui/material/
+  button/                  Editable Button family; index.ts loads styles
+  font-icon/               Required component dependency
+  ripple/                  Required interaction dependency
+  theme/                   ThemeProvider and its types
+  foundations/
+    styles/                Design tokens, fonts, keyframes, cn, style slots
+    theme/                 Theme scopes and optional shadcn color mapping
+    motion/                Reduced-motion behavior
+  LICENSE
 ```
 
-The `material/` directory avoids collisions with existing shadcn components without prefixing every filename. Each entry exports the named exports, types, and default export where available. `all` adds `material/index.tsx`, which re-exports the public collection. Standard imports use these entries so styles load automatically.
+The maintained `src/material/` tree is copied directly into `material/`, avoiding collisions with existing shadcn components. Public imports stay `@/components/ui/material/button`. Each family entry exports named components, types, and a default export where available. `all` adds `material/index.ts`. Extra shared capabilities, such as portals and date/time calculations, are installed only when required by the selected family.
 
-Earlier installations used `toolbox-button`, `toolbox-theme`, and similar entry names. Rerun the relevant add command, change imports to `material/button`, `material/theme`, etc., and remove old entry files after updating their consumers. The CLI does not delete files from earlier installations or migrate imports automatically. The internal `react-toolbox/` directory stays in place. After updating all installed components, obsolete internal `<family>/theme.ts` class-map files can also be removed; the public `material/theme.tsx` provider entry is still used for scoped color tokens.
+**Migrating an earlier installation:** commit your customized files first. Earlier versions used flat `material/button.tsx` entries beside a `react-toolbox/` implementation tree (or older `toolbox-button` entries). Copy customizations into the new `material/button/` files, then remove the old flat entries; otherwise module resolution can select the old file instead of the new directory. Once every installed family has migrated and imports have been checked, remove the obsolete `react-toolbox/` implementation tree and `toolbox-*` entries. The CLI does not delete or merge previous layouts automatically. Public import paths remain the same when moving from flat Material entries.
 
 React Server Component boundaries stay in the source. Pure utilities, shared style helpers, and `shadcnThemeVariables` remain usable on the server through the adjacent implementation files. Event handlers still belong in a client component.
 
-The shared foundation contains ordered custom-property definitions, local Roboto fonts, Material Icons, scoped Preflight compatibility, keyframe registrations, and the MIT license. Tailwind classes live beside the JSX they style, with small shared constants and variant helpers for related components. Optional `theme` props add classes to individual parts; they do not construct runtime style maps. The installed `setup.css` explicitly registers copied source with `@source`, including in hosts that disable automatic detection. Tailwind emits utilities for installed families and only their referenced keyframes; a Button installation no longer includes presentation rules for every component. Source files are copied byte-for-byte; entry files are generated from their exports.
+The shared foundation contains ordered custom-property definitions, local Roboto fonts, Material Icons, scoped Preflight compatibility, keyframe registrations, and the MIT license. Tailwind classes live beside the JSX they style, with small shared constants and variant helpers for related components. Optional `classNames` props add classes to individual parts; they do not construct runtime style maps. The installed `setup.css` explicitly registers copied source with `@source`, including in hosts that disable automatic detection. Tailwind emits utilities for installed families and only their referenced keyframes; a Button installation no longer includes presentation rules for every component. Source files are copied byte-for-byte; including the maintained entry files.
 
 ## Themes and spacing
 
@@ -89,15 +92,15 @@ import { ThemeProvider } from '@/components/ui/material/theme';
 </ThemeProvider>
 ```
 
-For deliberate host-color mapping, import the installed `react-toolbox/shadcn.css` from your global stylesheet and use `shadcnThemeVariables` from the adjacent `react-toolbox/shadcn.ts` with `ThemeProvider`. This optional bridge preserves Material geometry and motion. Pass host colors through `ThemeProvider.variables` if they are scoped below the root and must follow portaled content.
+For deliberate host-color mapping, import the installed `material/foundations/styles/shadcn.css` from your global stylesheet and use `shadcnThemeVariables` from the `material/foundations/theme/shadcn.ts` with `ThemeProvider`. This optional bridge preserves Material geometry and motion. Pass host colors through `ThemeProvider.variables` if they are scoped below the root and must follow portaled content.
 
-Use `className` for root utilities and `theme={{ slot: "..." }}` for internal slots. The shared merger resolves conflicting base utilities in favor of the consumer. State and responsive variants still follow normal Tailwind precedence. To override every CardText inset, including its sibling and desktop rules, use `className="p-6!"`; for palette changes across states, prefer the scoped color tokens.
+Use `className` for root utilities and `classNames={{ slot: "..." }}` for internal slots. The old `theme` prop remains a compatibility alias; `classNames` wins when both provide the same slot. The shared merger resolves conflicting base utilities in favor of the consumer. State and responsive variants still follow normal Tailwind precedence. To override every CardText inset, including its sibling and desktop rules, use `className="p-6!"`; for palette changes across states, prefer the scoped color tokens.
 
 ## Updates
 
 The installed source belongs to the application. Commit local changes, rerun the relevant `add` command, and review the CLI’s overwrite prompts and the resulting diff. The CLI does not automatically merge local customizations. There is no `react-toolbox` npm version to upgrade.
 
-`/r/<name>.json` follows the currently deployed source. Each item records the implementation version and a SHA-256 source digest for provenance. Consumers who need to retain a specific source revision should keep their installed files in version control.
+`/r/<name>.json` follows the currently deployed source. Each item records the implementation version and a SHA-256 source digest for provenance. Tagged source releases archive exact payloads with dependencies pinned to the same release. See the [release and rollback guide](releases.md); keep customized installed files in version control.
 
 ## Available items
 
@@ -130,11 +133,15 @@ The installed source belongs to the application. Commit local changes, rerun the
 | `tabs` | Tabs, Tab, TabContent |
 | `time-picker` | TimePicker |
 | `tooltip` | Tooltip, useTooltip |
-| `foundation` | Shared theme, portal, hooks, utilities, styles, fonts, license |
+| `foundation` | Shared theme, styles, fonts, license |
+| `foundation-motion` | Reduced-motion preference and visibility lifecycle |
+| `foundation-portal` | Portal placement and merged refs |
+| `foundation-date-time` | Shared calendar and locale calculations |
+| `foundation-collections` | Shared numeric range helper |
 | `all` | Every family and the complete public barrel |
 
 
-Link and Navigation are retired from the public registry. Use Next.js Link, another router’s link, or a native anchor, composed inside `nav` or a Toolbox List. M1 defines navigation behavior and styling, not a required routing wrapper. Their old implementations remain in the private workspace solely for the historical comparison gallery; neither is included in the copied public TypeScript source or `material/index.tsx`.
+Link and Navigation are retired from the public registry. Use Next.js Link, another router’s link, or a native anchor, composed inside `nav` or a Toolbox List. M1 defines navigation behavior and styling, not a required routing wrapper. Their old implementations remain in the private workspace solely for the historical comparison gallery; neither is included in the copied public TypeScript source or `material/index.ts`.
 
 Family dependencies come from parsed TypeScript imports and exports, including type-only imports. A date picker installs its dialog, button, input, overlay, font-icon, and ripple dependencies. Shared implementation files have one registry owner.
 
@@ -166,7 +173,7 @@ REGISTRY_ORIGIN=https://your-domain.example/toolbox pnpm registry:build
 
 The inspection server uses port 4173. Static output is `packages/react-toolbox/registry/public`, containing `registry.json`, `r/registry.json`, and `r/<name>.json`. Static dependency URLs use the configured origin, including an optional subpath. This is the same source registry, not a separate installation format.
 
-`registry.json` is a generated source catalog; its file paths are relative to `packages/react-toolbox`. Generated entry files, the bundled snapshot, and public payloads are ignored by Git. Run `pnpm registry:build` before inspecting or consuming the catalog directly. Never hand-edit generated files.
+`registry.json` is a generated source catalog; its file paths are relative to `packages/react-toolbox`. The bundled snapshot, generated API reference, and public payloads are ignored by Git. Public entry files are maintained alongside their components. Run `pnpm registry:build` before inspecting or consuming the catalog directly. Never hand-edit generated files.
 
 ## Verification
 

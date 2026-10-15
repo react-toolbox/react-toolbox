@@ -14,7 +14,7 @@ import {
   type CheckboxHandle,
   type RadioButtonHandle,
   type SwitchHandle,
-} from '../../components';
+} from '../../src';
 
 const input = React.createRef<InputHandle>();
 const checkbox = React.createRef<CheckboxHandle>();

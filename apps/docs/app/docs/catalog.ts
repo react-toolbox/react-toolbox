@@ -220,7 +220,7 @@ export const components = [
     code: example(
       'menu',
       'IconMenu, MenuItem, MenuDivider',
-      '<div className="flex items-center gap-6">\n  <span role="status">{selected || "More actions"}</span>\n  <IconMenu icon="more_vert" position="topRight"\n  aria-label="More actions" onSelect={value => setSelected(String(value))}>\n  <MenuItem value="download" caption="Download" icon="file_download" />\n  <MenuItem value="share" caption="Share" icon="share" />\n  <MenuDivider />\n  <MenuItem caption="Unavailable" disabled />\n</IconMenu>\n</div>',
+      '<div className="flex w-48 max-w-full items-center justify-between gap-6">\n  <span role="status">{selected || "More actions"}</span>\n  <IconMenu icon="more_vert" position="topRight"\n  aria-label="More actions" onSelect={value => setSelected(String(value))}>\n  <MenuItem value="download" caption="Download" icon="file_download" />\n  <MenuItem value="share" caption="Share" icon="share" />\n  <MenuDivider />\n  <MenuItem caption="Unavailable" disabled />\n</IconMenu>\n</div>',
       'const [selected, setSelected] = useState("");',
     ),
     note: 'IconMenu handles opening, keyboard navigation, and dismissal. Use onSelect to respond to an item value. Menu and MenuDivider are also available for custom compositions.',

@@ -11,8 +11,8 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Button, IconButton, BrowseButton, AppBar, Avatar, Card, CardTitle, CardText, CardActions, CardMedia, Checkbox, Chip,
   Input, Dropdown, Autocomplete, ProgressBar, RadioButton, RadioGroup, Slider, Switch, List, ListItem, ListDivider, ListSubHeader,
-  Table, TableHead, TableRow, TableCell, Tabs, Tab, Navigation, DatePicker, TimePicker, ThemeProvider, Dialog } from './components';
-import { shadcnThemeVariables } from './components/shadcn';
+  Table, TableHead, TableRow, TableCell, Tabs, Tab, Navigation, DatePicker, TimePicker, ThemeProvider, Dialog } from './src';
+import { shadcnThemeVariables } from './src/material/foundations/theme/shadcn';
 function Bridge() { return <>
   <div id="host" className="bg-primary">Host</div><Button id="default-color" primary raised label="Original" />
   <ThemeProvider variables={{...shadcnThemeVariables, ...window.__SCOPE_TOKENS__}}>
@@ -58,31 +58,33 @@ test.beforeAll(async () => {
       stdin: { contents: source, resolveDir: root, loader: 'jsx' },
       bundle: true,
       write: false,
+      // Compare independently compiled host styles in this fixture.
+      loader: { '.css': 'empty' },
       format: 'iife',
       define: { 'process.env.NODE_ENV': '"production"' },
     })
   ).outputFiles[0].text;
   plain = (
     await postcss([tailwind()]).process(
-      '@layer theme, base, components, utilities; @import "tailwindcss/theme.css" layer(theme); @import "tailwindcss/utilities.css" layer(utilities) source(none); @import "./components/styles.css"; @source "./components";',
+      '@layer theme, base, components, utilities; @import "tailwindcss/theme.css" layer(theme); @import "tailwindcss/utilities.css" layer(utilities) source(none); @import "./src/material/foundations/styles/styles.css"; @source "./src/material";',
       { from: `${root}/integration.css` },
     )
   ).css;
   integrated = (
     await postcss([tailwind()]).process(
-      '@import "tailwindcss"; @import "./components/tailwind.css"; @source inline("h-20 bg-toolbox-primary! text-toolbox-accent! p-4 p-6! gap-2 p-toolbox px-2 toolbox-desktop:px-4");',
+      '@import "tailwindcss"; @import "./src/material/foundations/styles/tailwind.css"; @source inline("h-20 bg-toolbox-primary! text-toolbox-accent! p-4 p-6! gap-2 p-toolbox px-2 toolbox-desktop:px-4");',
       { from: `${root}/integration.css` },
     )
   ).css;
   customSpacing = (
     await postcss([tailwind()]).process(
-      '@import "tailwindcss"; @import "./components/tailwind.css"; @theme { --spacing: 6px; } @source inline("p-4 p-6! gap-2 p-toolbox");',
+      '@import "tailwindcss"; @import "./src/material/foundations/styles/tailwind.css"; @theme { --spacing: 6px; } @source inline("p-4 p-6! gap-2 p-toolbox");',
       { from: `${root}/integration.css` },
     )
   ).css;
   semantic = (
     await postcss([tailwind()]).process(
-      '@import "tailwindcss"; @import "./components/shadcn.css"; @theme inline { --color-primary: var(--primary); } @source inline("bg-primary");',
+      '@import "tailwindcss"; @import "./src/material/foundations/styles/shadcn.css"; @theme inline { --color-primary: var(--primary); } @source inline("bg-primary");',
       { from: `${root}/integration.css` },
     )
   ).css;

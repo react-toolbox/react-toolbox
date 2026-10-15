@@ -14,7 +14,7 @@ test('landing leads into a shared documentation shell with working examples', as
   );
   await expect(page.getByRole('searchbox')).toHaveCount(0);
   await sidebar.getByRole('link', { name: 'Button', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Button', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Button', exact: true, level: 1 })).toBeVisible();
   await expect(sidebar.getByRole('link', { name: 'Button', exact: true })).toHaveAttribute('aria-current', 'page');
   await page.getByRole('button', { name: 'Save', exact: true }).click();
   await expect(page.getByRole('status')).toHaveText('Saved');
@@ -47,7 +47,7 @@ test('mobile documentation navigation closes after following a component', async
   await expect(mobileLink).toHaveCSS('min-height', '48px');
   await expect(mobileLink).toHaveCSS('padding-left', '16px');
   await sidebar.getByRole('link', { name: 'Dialog', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Dialog', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Dialog', exact: true, level: 1 })).toBeVisible();
   await expect(sidebar).toBeHidden();
   await expect(browse).toHaveAttribute('aria-expanded', 'false');
   // Safari does not focus buttons on pointer clicks. Exercise keyboard focus

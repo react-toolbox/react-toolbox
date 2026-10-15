@@ -1,0 +1,73 @@
+name: Source release
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: source-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
+    env:
+      TOOLBOX_BROWSER: ${{ matrix.browser }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter react-toolbox release:snapshot --tag "$GITHUB_REF_NAME"
+      - run: pnpm check
+      - run: pnpm --filter react-toolbox exec playwright install --with-deps ${{ matrix.browser }}
+      - run: pnpm test:browser
+      - run: pnpm test:registry:install
+        if: matrix.browser == 'chromium'
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: release-test-results-${{ matrix.browser }}
+          path: packages/react-toolbox/test-results/
+
+  publish:
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter react-toolbox release:snapshot --tag "$GITHUB_REF_NAME"
+      - name: Publish verified source assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "Release $GITHUB_REF_NAME already exists; immutable assets will not be replaced."
+            exit 1
+          fi
+          release_directory="packages/react-toolbox/dist/releases/$GITHUB_REF_NAME"
+          release_flags=()
+          if [[ "$GITHUB_REF_NAME" == *-* ]]; then release_flags+=(--prerelease); fi
+          gh release create "$GITHUB_REF_NAME" "$release_directory"/* \
+            --verify-tag --draft "${release_flags[@]}" \
+            --title "React Toolbox $GITHUB_REF_NAME" \
+            --notes-file "docs/releases/${GITHUB_REF_NAME#v}.md"
+          gh release edit "$GITHUB_REF_NAME" --draft=false

@@ -10,10 +10,12 @@ import { utilityRules } from './utility-rules.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const fixture = path.join(root, 'tests/fixtures/legacy-styles');
-const entry = await readFile(path.join(root, 'components/styles.css'), 'utf8');
+const entry = await readFile(path.join(root, 'src/material/foundations/styles/styles.css'), 'utf8');
 const sheets = [...entry.matchAll(/@import "\.\/([^"]+)"/g)].map((match) => match[1]);
 const current = postcss.parse(
-  (await Promise.all(sheets.map((name) => readFile(path.join(root, 'components', name), 'utf8')))).join('\n'),
+  (
+    await Promise.all(sheets.map((name) => readFile(path.join(root, 'src/material/foundations/styles', name), 'utf8')))
+  ).join('\n'),
 );
 // @theme is a build-time keyframe registration, not a runtime condition.
 current.walkAtRules('theme', (rule) => rule.replaceWith(...rule.nodes));
@@ -156,21 +158,31 @@ export const legacyRules = declarationsBySelector(normalizedBaseline);
 export const modernRules = declarationsBySelector(resolved);
 export { root, fixture };
 
-export const corrections = JSON.parse(
-  await readFile(path.join(root, 'tests/fixtures/m1-style-corrections.json'), 'utf8'),
-).map((correction) => ({
-  ...correction,
-  selector: normalizeSyntax(correction.selector),
-  ...(correction.afterSelector ? { afterSelector: normalizeSyntax(correction.afterSelector) } : {}),
-}));
+const correctionLedgers = [
+  ['tests/fixtures/m1-style-corrections.json', 'material'],
+  ['tests/accessibility-style-corrections.json', 'accessibility'],
+];
+export const corrections = [];
+for (const [filename, category] of correctionLedgers) {
+  for (const correction of JSON.parse(await readFile(path.join(root, filename), 'utf8'))) {
+    corrections.push({
+      ...correction,
+      category,
+      selector: normalizeSyntax(correction.selector),
+      ...(correction.afterSelector ? { afterSelector: normalizeSyntax(correction.afterSelector) } : {}),
+    });
+  }
+}
 
-// Each correction records both values and its M1 source. Unexpected drift is
-// still an error; the original compiler output is never regenerated to pass.
+// Apply M1 corrections first, then the separately approved WCAG corrections.
+// Each ledger checks its before-value and own source provenance. Unexpected
+// drift is still an error; the original compiler output is never regenerated.
 export function correctedRules() {
   const rules = new Map([...legacyRules].map(([selector, declarations]) => [selector, new Map(declarations)]));
   for (const correction of corrections) {
-    const { selector, property, before, after, source, reason } = correction;
-    assert.ok(source?.startsWith('https://m1.material.io/'), `Missing M1 source: ${selector}`);
+    const { selector, property, before, after, source, reason, category } = correction;
+    const sourcePrefix = category === 'accessibility' ? 'https://www.w3.org/WAI/WCAG22/' : 'https://m1.material.io/';
+    assert.ok(source?.startsWith(sourcePrefix), `Missing ${category} source: ${selector}`);
     assert.ok(reason, `Missing correction rationale: ${selector}`);
     assert.equal(
       rules.get(selector)?.get(property) ?? null,

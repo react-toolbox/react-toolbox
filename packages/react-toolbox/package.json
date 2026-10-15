@@ -1,7 +1,7 @@
 {
   "name": "react-toolbox",
   "description": "React components preserving Google's original Material Design, with modern React and Tailwind-compatible styles.",
-  "homepage": "http://react-toolbox.io/",
+  "homepage": "https://react-toolbox.io/",
   "license": "MIT",
   "version": "3.0.0-next.0",
   "main": "./dist/index.js",
@@ -32,20 +32,25 @@
   },
   "scripts": {
     "build": "tsdown && node scripts/build-styles.mjs",
-    "dev": "tsdown --watch components --no-clean --on-success \"node scripts/build-styles.mjs && node scripts/build-registry.mjs\"",
+    "dev": "tsdown --watch src --no-clean --on-success \"node scripts/build-styles.mjs && node scripts/build-registry.mjs && node scripts/build-api-docs.mjs\"",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:browser": "playwright test",
     "test:styles": "node scripts/verify-styles.mjs",
     "typecheck": "tsc --noEmit",
-    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm test:styles && pnpm test:registry",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm test:styles && pnpm test:registry && pnpm test:api && pnpm test:release",
     "lint": "biome lint . && pnpm lint:tailwind",
     "lint:tailwind": "node scripts/lint-tailwind.mjs",
     "format": "biome format --write .",
     "registry:build": "node scripts/build-registry.mjs",
     "registry:serve": "node scripts/serve-registry.mjs",
     "test:registry": "node scripts/verify-registry.mjs",
-    "test:registry:install": "node scripts/smoke-registry.mjs"
+    "test:registry:install": "node scripts/smoke-registry.mjs",
+    "api:build": "node scripts/build-api-docs.mjs",
+    "test:api": "node scripts/build-api-docs.mjs --check",
+    "release:snapshot": "node scripts/release-registry.mjs",
+    "test:release": "node scripts/verify-release.mjs",
+    "verify:deployment": "node scripts/verify-deployment.mjs"
   },
   "dependencies": {
     "classnames": "^2.5.1",
@@ -57,6 +62,7 @@
     "react-dom": "^19.3.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@babel/parser": "^8.0.7",
     "@biomejs/biome": "^2.5.15",
     "@fontsource/roboto": "^5.3.0",
@@ -82,6 +88,7 @@
     "tailwindcss": "^4.3.3",
     "tsdown": "^0.23.1",
     "typescript": "^7.0.2",
+    "vite": "^8.3.4",
     "vitest": "^5.0.4"
   },
   "type": "module",
@@ -103,263 +110,292 @@
       "import": "./dist/ThemeProvider.js"
     },
     "./package.json": "./package.json",
-    "./*": {
-      "types": "./dist/*/index.d.ts",
-      "import": "./dist/*/index.js"
-    },
     "./tailwind.css": {
       "types": "./dist/css.d.mts",
       "default": "./dist/tailwind.css"
     },
     "./app_bar": {
-      "types": "./dist/app_bar/index.d.ts",
-      "import": "./dist/app_bar/index.js"
+      "types": "./dist/material/app-bar/index.d.ts",
+      "import": "./dist/material/app-bar/index.js"
     },
     "./app_bar/*": {
-      "types": "./dist/app_bar/*.d.ts",
-      "import": "./dist/app_bar/*.js"
+      "types": "./dist/material/app-bar/*.d.ts",
+      "import": "./dist/material/app-bar/*.js"
     },
     "./autocomplete": {
-      "types": "./dist/autocomplete/index.d.ts",
-      "import": "./dist/autocomplete/index.js"
+      "types": "./dist/material/autocomplete/index.d.ts",
+      "import": "./dist/material/autocomplete/index.js"
     },
     "./autocomplete/*": {
-      "types": "./dist/autocomplete/*.d.ts",
-      "import": "./dist/autocomplete/*.js"
+      "types": "./dist/material/autocomplete/*.d.ts",
+      "import": "./dist/material/autocomplete/*.js"
     },
     "./avatar": {
-      "types": "./dist/avatar/index.d.ts",
-      "import": "./dist/avatar/index.js"
+      "types": "./dist/material/avatar/index.d.ts",
+      "import": "./dist/material/avatar/index.js"
     },
     "./avatar/*": {
-      "types": "./dist/avatar/*.d.ts",
-      "import": "./dist/avatar/*.js"
+      "types": "./dist/material/avatar/*.d.ts",
+      "import": "./dist/material/avatar/*.js"
     },
     "./button": {
-      "types": "./dist/button/index.d.ts",
-      "import": "./dist/button/index.js"
+      "types": "./dist/material/button/index.d.ts",
+      "import": "./dist/material/button/index.js"
     },
     "./button/*": {
-      "types": "./dist/button/*.d.ts",
-      "import": "./dist/button/*.js"
+      "types": "./dist/material/button/*.d.ts",
+      "import": "./dist/material/button/*.js"
     },
     "./card": {
-      "types": "./dist/card/index.d.ts",
-      "import": "./dist/card/index.js"
+      "types": "./dist/material/card/index.d.ts",
+      "import": "./dist/material/card/index.js"
     },
     "./card/*": {
-      "types": "./dist/card/*.d.ts",
-      "import": "./dist/card/*.js"
+      "types": "./dist/material/card/*.d.ts",
+      "import": "./dist/material/card/*.js"
     },
     "./checkbox": {
-      "types": "./dist/checkbox/index.d.ts",
-      "import": "./dist/checkbox/index.js"
+      "types": "./dist/material/checkbox/index.d.ts",
+      "import": "./dist/material/checkbox/index.js"
     },
     "./checkbox/*": {
-      "types": "./dist/checkbox/*.d.ts",
-      "import": "./dist/checkbox/*.js"
+      "types": "./dist/material/checkbox/*.d.ts",
+      "import": "./dist/material/checkbox/*.js"
     },
     "./chip": {
-      "types": "./dist/chip/index.d.ts",
-      "import": "./dist/chip/index.js"
+      "types": "./dist/material/chip/index.d.ts",
+      "import": "./dist/material/chip/index.js"
     },
     "./chip/*": {
-      "types": "./dist/chip/*.d.ts",
-      "import": "./dist/chip/*.js"
+      "types": "./dist/material/chip/*.d.ts",
+      "import": "./dist/material/chip/*.js"
     },
     "./date_picker": {
-      "types": "./dist/date_picker/index.d.ts",
-      "import": "./dist/date_picker/index.js"
+      "types": "./dist/material/date-picker/index.d.ts",
+      "import": "./dist/material/date-picker/index.js"
     },
     "./date_picker/*": {
-      "types": "./dist/date_picker/*.d.ts",
-      "import": "./dist/date_picker/*.js"
+      "types": "./dist/material/date-picker/*.d.ts",
+      "import": "./dist/material/date-picker/*.js"
     },
     "./dialog": {
-      "types": "./dist/dialog/index.d.ts",
-      "import": "./dist/dialog/index.js"
+      "types": "./dist/material/dialog/index.d.ts",
+      "import": "./dist/material/dialog/index.js"
     },
     "./dialog/*": {
-      "types": "./dist/dialog/*.d.ts",
-      "import": "./dist/dialog/*.js"
+      "types": "./dist/material/dialog/*.d.ts",
+      "import": "./dist/material/dialog/*.js"
     },
     "./drawer": {
-      "types": "./dist/drawer/index.d.ts",
-      "import": "./dist/drawer/index.js"
+      "types": "./dist/material/drawer/index.d.ts",
+      "import": "./dist/material/drawer/index.js"
     },
     "./drawer/*": {
-      "types": "./dist/drawer/*.d.ts",
-      "import": "./dist/drawer/*.js"
+      "types": "./dist/material/drawer/*.d.ts",
+      "import": "./dist/material/drawer/*.js"
     },
     "./dropdown": {
-      "types": "./dist/dropdown/index.d.ts",
-      "import": "./dist/dropdown/index.js"
+      "types": "./dist/material/dropdown/index.d.ts",
+      "import": "./dist/material/dropdown/index.js"
     },
     "./dropdown/*": {
-      "types": "./dist/dropdown/*.d.ts",
-      "import": "./dist/dropdown/*.js"
+      "types": "./dist/material/dropdown/*.d.ts",
+      "import": "./dist/material/dropdown/*.js"
     },
     "./font_icon": {
-      "types": "./dist/font_icon/index.d.ts",
-      "import": "./dist/font_icon/index.js"
+      "types": "./dist/material/font-icon/index.d.ts",
+      "import": "./dist/material/font-icon/index.js"
     },
     "./font_icon/*": {
-      "types": "./dist/font_icon/*.d.ts",
-      "import": "./dist/font_icon/*.js"
+      "types": "./dist/material/font-icon/*.d.ts",
+      "import": "./dist/material/font-icon/*.js"
     },
     "./input": {
-      "types": "./dist/input/index.d.ts",
-      "import": "./dist/input/index.js"
+      "types": "./dist/material/input/index.d.ts",
+      "import": "./dist/material/input/index.js"
     },
     "./input/*": {
-      "types": "./dist/input/*.d.ts",
-      "import": "./dist/input/*.js"
+      "types": "./dist/material/input/*.d.ts",
+      "import": "./dist/material/input/*.js"
     },
     "./layout": {
-      "types": "./dist/layout/index.d.ts",
-      "import": "./dist/layout/index.js"
+      "types": "./dist/material/layout/index.d.ts",
+      "import": "./dist/material/layout/index.js"
     },
     "./layout/*": {
-      "types": "./dist/layout/*.d.ts",
-      "import": "./dist/layout/*.js"
+      "types": "./dist/material/layout/*.d.ts",
+      "import": "./dist/material/layout/*.js"
     },
     "./link": {
-      "types": "./dist/link/index.d.ts",
-      "import": "./dist/link/index.js"
+      "types": "./dist/material/link/index.d.ts",
+      "import": "./dist/material/link/index.js"
     },
     "./link/*": {
-      "types": "./dist/link/*.d.ts",
-      "import": "./dist/link/*.js"
+      "types": "./dist/material/link/*.d.ts",
+      "import": "./dist/material/link/*.js"
     },
     "./list": {
-      "types": "./dist/list/index.d.ts",
-      "import": "./dist/list/index.js"
+      "types": "./dist/material/list/index.d.ts",
+      "import": "./dist/material/list/index.js"
     },
     "./list/*": {
-      "types": "./dist/list/*.d.ts",
-      "import": "./dist/list/*.js"
+      "types": "./dist/material/list/*.d.ts",
+      "import": "./dist/material/list/*.js"
     },
     "./menu": {
-      "types": "./dist/menu/index.d.ts",
-      "import": "./dist/menu/index.js"
+      "types": "./dist/material/menu/index.d.ts",
+      "import": "./dist/material/menu/index.js"
     },
     "./menu/*": {
-      "types": "./dist/menu/*.d.ts",
-      "import": "./dist/menu/*.js"
+      "types": "./dist/material/menu/*.d.ts",
+      "import": "./dist/material/menu/*.js"
     },
     "./navigation": {
-      "types": "./dist/navigation/index.d.ts",
-      "import": "./dist/navigation/index.js"
+      "types": "./dist/material/navigation/index.d.ts",
+      "import": "./dist/material/navigation/index.js"
     },
     "./navigation/*": {
-      "types": "./dist/navigation/*.d.ts",
-      "import": "./dist/navigation/*.js"
+      "types": "./dist/material/navigation/*.d.ts",
+      "import": "./dist/material/navigation/*.js"
     },
     "./overlay": {
-      "types": "./dist/overlay/index.d.ts",
-      "import": "./dist/overlay/index.js"
+      "types": "./dist/material/overlay/index.d.ts",
+      "import": "./dist/material/overlay/index.js"
     },
     "./overlay/*": {
-      "types": "./dist/overlay/*.d.ts",
-      "import": "./dist/overlay/*.js"
+      "types": "./dist/material/overlay/*.d.ts",
+      "import": "./dist/material/overlay/*.js"
     },
     "./progress_bar": {
-      "types": "./dist/progress_bar/index.d.ts",
-      "import": "./dist/progress_bar/index.js"
+      "types": "./dist/material/progress-bar/index.d.ts",
+      "import": "./dist/material/progress-bar/index.js"
     },
     "./progress_bar/*": {
-      "types": "./dist/progress_bar/*.d.ts",
-      "import": "./dist/progress_bar/*.js"
+      "types": "./dist/material/progress-bar/*.d.ts",
+      "import": "./dist/material/progress-bar/*.js"
     },
     "./radio": {
-      "types": "./dist/radio/index.d.ts",
-      "import": "./dist/radio/index.js"
+      "types": "./dist/material/radio/index.d.ts",
+      "import": "./dist/material/radio/index.js"
     },
     "./radio/*": {
-      "types": "./dist/radio/*.d.ts",
-      "import": "./dist/radio/*.js"
+      "types": "./dist/material/radio/*.d.ts",
+      "import": "./dist/material/radio/*.js"
     },
     "./ripple": {
-      "types": "./dist/ripple/index.d.ts",
-      "import": "./dist/ripple/index.js"
+      "types": "./dist/material/ripple/index.d.ts",
+      "import": "./dist/material/ripple/index.js"
     },
     "./ripple/*": {
-      "types": "./dist/ripple/*.d.ts",
-      "import": "./dist/ripple/*.js"
+      "types": "./dist/material/ripple/*.d.ts",
+      "import": "./dist/material/ripple/*.js"
     },
     "./slider": {
-      "types": "./dist/slider/index.d.ts",
-      "import": "./dist/slider/index.js"
+      "types": "./dist/material/slider/index.d.ts",
+      "import": "./dist/material/slider/index.js"
     },
     "./slider/*": {
-      "types": "./dist/slider/*.d.ts",
-      "import": "./dist/slider/*.js"
+      "types": "./dist/material/slider/*.d.ts",
+      "import": "./dist/material/slider/*.js"
     },
     "./snackbar": {
-      "types": "./dist/snackbar/index.d.ts",
-      "import": "./dist/snackbar/index.js"
+      "types": "./dist/material/snackbar/index.d.ts",
+      "import": "./dist/material/snackbar/index.js"
     },
     "./snackbar/*": {
-      "types": "./dist/snackbar/*.d.ts",
-      "import": "./dist/snackbar/*.js"
+      "types": "./dist/material/snackbar/*.d.ts",
+      "import": "./dist/material/snackbar/*.js"
     },
     "./switch": {
-      "types": "./dist/switch/index.d.ts",
-      "import": "./dist/switch/index.js"
+      "types": "./dist/material/switch/index.d.ts",
+      "import": "./dist/material/switch/index.js"
     },
     "./switch/*": {
-      "types": "./dist/switch/*.d.ts",
-      "import": "./dist/switch/*.js"
+      "types": "./dist/material/switch/*.d.ts",
+      "import": "./dist/material/switch/*.js"
     },
     "./table": {
-      "types": "./dist/table/index.d.ts",
-      "import": "./dist/table/index.js"
+      "types": "./dist/material/table/index.d.ts",
+      "import": "./dist/material/table/index.js"
     },
     "./table/*": {
-      "types": "./dist/table/*.d.ts",
-      "import": "./dist/table/*.js"
+      "types": "./dist/material/table/*.d.ts",
+      "import": "./dist/material/table/*.js"
     },
     "./tabs": {
-      "types": "./dist/tabs/index.d.ts",
-      "import": "./dist/tabs/index.js"
+      "types": "./dist/material/tabs/index.d.ts",
+      "import": "./dist/material/tabs/index.js"
     },
     "./tabs/*": {
-      "types": "./dist/tabs/*.d.ts",
-      "import": "./dist/tabs/*.js"
+      "types": "./dist/material/tabs/*.d.ts",
+      "import": "./dist/material/tabs/*.js"
     },
     "./time_picker": {
-      "types": "./dist/time_picker/index.d.ts",
-      "import": "./dist/time_picker/index.js"
+      "types": "./dist/material/time-picker/index.d.ts",
+      "import": "./dist/material/time-picker/index.js"
     },
     "./time_picker/*": {
-      "types": "./dist/time_picker/*.d.ts",
-      "import": "./dist/time_picker/*.js"
+      "types": "./dist/material/time-picker/*.d.ts",
+      "import": "./dist/material/time-picker/*.js"
     },
     "./tooltip": {
-      "types": "./dist/tooltip/index.d.ts",
-      "import": "./dist/tooltip/index.js"
+      "types": "./dist/material/tooltip/index.d.ts",
+      "import": "./dist/material/tooltip/index.js"
     },
     "./tooltip/*": {
-      "types": "./dist/tooltip/*.d.ts",
-      "import": "./dist/tooltip/*.js"
-    },
-    "./utils": {
-      "types": "./dist/utils/index.d.ts",
-      "import": "./dist/utils/index.js"
-    },
-    "./utils/*": {
-      "types": "./dist/utils/*.d.ts",
-      "import": "./dist/utils/*.js"
+      "types": "./dist/material/tooltip/*.d.ts",
+      "import": "./dist/material/tooltip/*.js"
     },
     "./shadcn.css": {
       "types": "./dist/css.d.mts",
       "default": "./dist/shadcn.css"
     },
     "./shadcn": {
-      "types": "./dist/shadcn.d.ts",
-      "import": "./dist/shadcn.js"
+      "types": "./dist/material/foundations/theme/shadcn.d.ts",
+      "import": "./dist/material/foundations/theme/shadcn.js"
     },
-    "./registry/data.json": "./registry/data.json"
+    "./registry/data.json": "./registry/data.json",
+    "./app-bar": {
+      "types": "./dist/material/app-bar/index.d.ts",
+      "import": "./dist/material/app-bar/index.js"
+    },
+    "./app-bar/*": {
+      "types": "./dist/material/app-bar/*.d.ts",
+      "import": "./dist/material/app-bar/*.js"
+    },
+    "./date-picker": {
+      "types": "./dist/material/date-picker/index.d.ts",
+      "import": "./dist/material/date-picker/index.js"
+    },
+    "./date-picker/*": {
+      "types": "./dist/material/date-picker/*.d.ts",
+      "import": "./dist/material/date-picker/*.js"
+    },
+    "./font-icon": {
+      "types": "./dist/material/font-icon/index.d.ts",
+      "import": "./dist/material/font-icon/index.js"
+    },
+    "./font-icon/*": {
+      "types": "./dist/material/font-icon/*.d.ts",
+      "import": "./dist/material/font-icon/*.js"
+    },
+    "./progress-bar": {
+      "types": "./dist/material/progress-bar/index.d.ts",
+      "import": "./dist/material/progress-bar/index.js"
+    },
+    "./progress-bar/*": {
+      "types": "./dist/material/progress-bar/*.d.ts",
+      "import": "./dist/material/progress-bar/*.js"
+    },
+    "./time-picker": {
+      "types": "./dist/material/time-picker/index.d.ts",
+      "import": "./dist/material/time-picker/index.js"
+    },
+    "./time-picker/*": {
+      "types": "./dist/material/time-picker/*.d.ts",
+      "import": "./dist/material/time-picker/*.js"
+    },
+    "./registry/api.json": "./registry/api.json"
   },
   "private": true
 }

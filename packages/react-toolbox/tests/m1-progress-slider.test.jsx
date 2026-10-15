@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import Slider from '../components/slider';
-import ProgressBar from '../components/progress_bar';
-import Button from '../components/button';
+import Slider from '../src/material/slider';
+import ProgressBar from '../src/material/progress-bar';
+import Button from '../src/material/button';
 
 function ControlledSlider(props) {
   const [value, setValue] = useState(props.value ?? 20);

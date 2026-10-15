@@ -36,7 +36,7 @@ export default function InstallationPage() {
         />
         <p className="mt-4 text-sm leading-7 text-toolbox-text-secondary">
           The CLI copies the component and its dependencies into your project. Replace <code>button</code> with another{' '}
-          <Link href="/docs/components" className="text-toolbox-primary hover:underline">
+          <Link href="/docs/components" className="text-toolbox-primary underline underline-offset-2">
             component name
           </Link>
           , or <code>all</code> for the full collection.
@@ -106,7 +106,7 @@ export default function InstallationPage() {
           To update, run the add command again and review the overwrite prompts. Commit your edits first and check the
           diff before replacing customized files.
         </p>
-        <Link href="/docs/theming" className="mt-6 inline-block text-sm text-toolbox-primary hover:underline">
+        <Link href="/docs/theming" className="mt-6 inline-block text-sm text-toolbox-primary underline underline-offset-2">
           Next: Theming →
         </Link>
       </DocsSection>
