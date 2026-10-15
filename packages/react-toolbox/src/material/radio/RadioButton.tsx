@@ -3,8 +3,10 @@ import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import type { RadioTheme } from './types';
 
-import React, { useImperativeHandle, useRef } from 'react';
+import React, { useContext, useImperativeHandle, useRef } from 'react';
+import { RadioGroupContext } from './context';
 import { cn } from '../foundations/styles/cn';
+import useChecked from '../foundations/forms/useChecked';
 import Radio from './Radio';
 const fieldClasses = [
   'rt-radio-field',
@@ -35,13 +37,16 @@ export interface RadioButtonProps
   onChange?: (event: React.MouseEvent<HTMLInputElement>, handle: RadioButtonHandle) => void;
 }
 export function RadioButton({
-  checked = false,
+  checked: suppliedChecked,
+  defaultChecked: suppliedDefaultChecked,
   children,
   className = '',
-  disabled = false,
+  disabled: suppliedDisabled = false,
   label,
-  name,
+  name: suppliedName,
+  value,
   onChange,
+  onClick,
   onMouseEnter,
   onMouseLeave,
   theme: legacyTheme,
@@ -51,8 +56,14 @@ export function RadioButton({
   style,
   ...others
 }: RadioButtonProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
+  const group = useContext(RadioGroupContext);
+  const theme = mergeStyleSlots(mergeStyleSlots(group?.theme, legacyTheme), classNames);
+  const disabled = Boolean(group?.disabled || suppliedDisabled);
+  const name = group?.name ?? suppliedName;
+  const controlledChecked = group?.value !== undefined ? group.value === value : suppliedChecked;
+  const defaultChecked = suppliedDefaultChecked ?? (group?.defaultValue !== undefined && group.defaultValue === value);
   const input = useRef<HTMLInputElement>(null);
+  const [checked, setChecked] = useChecked(input, controlledChecked, defaultChecked);
   const handle = {
     focus: () => input.current?.focus(),
     blur: () => input.current?.blur(),
@@ -62,8 +73,12 @@ export function RadioButton({
   };
   useImperativeHandle(ref, () => handle);
   const toggle = (event: React.MouseEvent<HTMLInputElement>) => {
-    if (event.pageX !== 0 && event.pageY !== 0) input.current?.blur();
-    if (!disabled && !checked) onChange?.(event, handle);
+    onClick?.(event);
+    if (disabled || event.defaultPrevented || checked) return;
+    const next = event.currentTarget.checked;
+    if (controlledChecked === undefined) setChecked(next);
+    onChange?.(event, handle);
+    if (!event.defaultPrevented) group?.onChange?.(value, event);
   };
   return (
     <label
@@ -80,7 +95,8 @@ export function RadioButton({
       <input
         {...others}
         style={style}
-        checked={checked}
+        checked={controlledChecked}
+        defaultChecked={controlledChecked === undefined ? defaultChecked : undefined}
         className={cn(
           'rt-radio-input',
           '[-webkit-appearance:none] [-moz-appearance:none] appearance-none [border:0] h-0 m-0 opacity-0 p-0 absolute w-0',
@@ -88,6 +104,9 @@ export function RadioButton({
         )}
         disabled={disabled}
         name={name}
+        form={others.form ?? group?.form}
+        required={others.required ?? group?.required}
+        value={value}
         onChange={() => {}}
         onClick={toggle}
         ref={input}

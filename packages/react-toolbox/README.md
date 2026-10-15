@@ -2,7 +2,7 @@
 
 This **private** workspace maintains the Material Design 1 components and builds the shadcn registry. It also compiles an internal `react-toolbox` dependency for the Next.js docs app. It is not published to npm.
 
-Consumer installation uses the [source registry](../../docs/source-registry.md). The registry copies these exact TypeScript implementations and CSS files, including maintained entry files that load the styles automatically. It does not substitute shadcn, Radix, or Base UI components.
+Consumer installation uses the [source registry](../../docs/source-registry.md). The registry copies these exact TypeScript implementations and CSS files, including maintained entry files that load the styles automatically. Radix provides button composition, avatar loading, and the new Dialog, Drawer, Tabs, DropdownMenu, Dropdown and Tooltip parts. Autocomplete parts use Base UI Combobox; tables use native elements and React context. Existing convenience APIs remain available, and native inputs retain browser form semantics. These behavioral dependencies preserve the Material 1 presentation and are installed only for the families that need them. See the [composition guide](../../docs/material-1-audit.md#composition-implementation--16-october-2026) and [consumer feature matrix](../../docs/material-1-audit.md#consumer-feature-comparison--follow-up) for supported workflows and remaining differences.
 
 ## Use installed components
 
@@ -24,11 +24,15 @@ export default function NameForm() {
 
 Component entries preserve React client boundaries. Server Components can render them with serializable props; event handlers belong in client components. The public entries load local Roboto, Material Icons, and the original styles, including scoped Tailwind Preflight compatibility. SVG and React-node icons also work.
 
+Use the exported Root/Trigger/Content parts when you need independent nodes, custom wrappers, or control over portals and focus. The eight relevant documentation pages include working composition examples and their actual source. Radix parts support `asChild`; Base UI parts support `render`. Each part accepts its native or primitive props and refs.
+
 ## Styling and customization
 
 The CLI adds Tailwind theme aliases such as `bg-toolbox-primary` and the `toolbox-desktop:` variant. The spacing unit is 4px: `gap-2` is 8px, `p-4` is 16px, and `p-6` is 24px. Component presentation uses Tailwind classes beside the JSX they style. Shared constants and variant helpers cover styles reused by related components; no per-component theme maps are built at runtime. Shared CSS contains the original tokens, scoped Preflight compatibility, and keyframe definitions. Tailwind generates utilities from installed source and only includes referenced keyframes.
 
-Use `className` for the root and the typed `classNames` prop for local slot classes. Conflicting base utilities are merged with consumer classes last. State, descendant, and responsive styles keep normal Tailwind specificity; match the variant or use an intentional important utility such as `p-6!` to override all CardText keylines. The deprecated `theme` prop remains compatible; when both are supplied, `classNames` wins per slot. Use `ThemeProvider` for scoped custom properties that follow components into portals:
+Set global palette tokens such as `--rt-color-primary` in your stylesheet. Customize composed parts through ordinary `className` utilities, for example `<CardActions className="justify-end">`. Conflicting base utilities are merged with consumer classes last. State, descendant, and responsive styles keep normal Tailwind specificity; match the variant when overriding it. Edit internal JSX in the installed source when a part is not exposed. Existing `classNames` and legacy `theme` slot maps remain compatible, but are not required for customization.
+
+Global colors need no provider. Use `ThemeProvider` only for scoped custom properties that must follow components into portals:
 
 ```tsx
 import { ThemeProvider } from '@/components/ui/material/theme';

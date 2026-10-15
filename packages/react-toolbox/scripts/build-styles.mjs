@@ -18,11 +18,11 @@ await build({
   logLevel: 'warning',
 });
 const standalone = await postcss([tailwind()]).process(
-  '@layer theme, base, components, utilities; @import "tailwindcss/theme.css" layer(theme); @import "tailwindcss/utilities.css" layer(utilities) source(none); @import "./src/material/foundations/styles/styles.css"; @source "./src/material";',
+  '@layer theme, base, components, utilities; @import "tailwindcss/theme.css" layer(theme); @import "tailwindcss/utilities.css" layer(utilities) source(none); @import "./src/material/foundations/styles/styles.css"; @import "./src/material/foundations/styles/composition.css"; @source "./src/material";',
   { from: path.join(root, 'standalone.css') },
 );
 await writeFile(path.join(root, 'dist/styles.css'), standalone.css);
-for (const name of ['tailwind.css', 'tailwind-preflight.css', 'shadcn.css']) {
+for (const name of ['tailwind.css', 'tailwind-preflight.css', 'shadcn.css', 'composition.css']) {
   await copyFile(path.join(root, 'src/material/foundations/styles', name), path.join(root, 'dist', name));
 }
 await writeFile(

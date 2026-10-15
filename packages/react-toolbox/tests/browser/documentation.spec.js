@@ -1,4 +1,18 @@
 import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+
+async function expectAccessibleDocumentation(page) {
+  const { violations } = await new AxeBuilder({ page })
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+    .analyze();
+  expect(
+    violations.map(({ id, nodes }) => ({
+      id,
+      nodes: nodes.map(({ target, failureSummary }) => ({ target, failureSummary })),
+    })),
+    page.url(),
+  ).toEqual([]);
+}
 
 test('landing leads into a shared documentation shell with working examples', async ({ page }) => {
   await page.goto('/');
@@ -79,23 +93,31 @@ test('sidebar section titles stick flush below the app bar while their lists scr
   const expectPinned = async (heading) => {
     await expect.poll(async () => (await heading.boundingBox()).y).toBe(await headerBottom());
     // The title must cover the moving rows, with no exposed strip above it.
-    expect(await heading.evaluate((element) => {
-      const box = element.getBoundingClientRect();
-      return element.contains(document.elementFromPoint(box.x + 24, box.y + 1));
-    })).toBe(true);
+    expect(
+      await heading.evaluate((element) => {
+        const box = element.getBoundingClientRect();
+        return element.contains(document.elementFromPoint(box.x + 24, box.y + 1));
+      }),
+    ).toBe(true);
   };
   expect((await guides.boundingBox()).y).toBe((await headerBottom()) + 32);
-  await scroller.evaluate((element) => { element.scrollTop = 80; });
+  await scroller.evaluate((element) => {
+    element.scrollTop = 80;
+  });
   await expectPinned(guides);
 
   // The next section pushes the preceding title away instead of stacking over it.
-  await scroller.evaluate((element) => { element.scrollTop = 270; });
+  await scroller.evaluate((element) => {
+    element.scrollTop = 270;
+  });
   const oldTitle = await guides.boundingBox();
   const newTitle = await components.boundingBox();
   expect(oldTitle.y).toBeLessThan(await headerBottom());
   expect(oldTitle.y + oldTitle.height).toBeLessThanOrEqual(newTitle.y);
 
-  await scroller.evaluate((element) => { element.scrollTop = 550; });
+  await scroller.evaluate((element) => {
+    element.scrollTop = 550;
+  });
   await expectPinned(components);
   await page.evaluate(() => window.scrollTo(0, 200));
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(200);
@@ -130,36 +152,123 @@ test('documentation copy controls copy the displayed command and report clipboar
   await expect(copy).toHaveText('Select to copy');
 });
 
-test('every registry family has a functioning component page at mobile width', async ({ page, request }) => {
-  test.setTimeout(90_000);
-  await page.setViewportSize({ width: 320, height: 800 });
-  const errors = [];
-  page.on('pageerror', (error) => errors.push(error.message));
-  const catalog = await (await request.get('/r/registry.json')).json();
-  const families = catalog.items.filter((item) => item.type === 'registry:ui');
-  expect(families).toHaveLength(27);
-  for (const family of families) {
-    const response = await page.goto(`/docs/components/${family.name}`);
-    expect(response.status(), family.name).toBe(200);
-    await expect(page.locator('article > h1')).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Material guidelines' })).toBeVisible();
-    await expect(page.locator('#material-guidelines a')).toHaveAttribute('href', /^https:\/\/m1\.material\.io\//);
-    await expect(page.getByRole('tab', { name: 'Preview', exact: true })).toHaveAttribute('aria-selected', 'true');
-    expect(
-      await page.evaluate(() => document.documentElement.scrollWidth),
-      `${family.name} preview`,
-    ).toBeLessThanOrEqual(320);
-    await page.getByRole('tab', { name: 'Code', exact: true }).click();
-    await expect(page.getByLabel('Component example', { exact: true })).toContainText(
-      `@/components/ui/material/${family.name}`,
-    );
-    expect(await page.evaluate(() => document.documentElement.scrollWidth), family.name).toBeLessThanOrEqual(320);
+for (const width of [320, 1440]) {
+  test(`every registry family is accessible and usable at ${width}px`, async ({ context, request }) => {
+    test.setTimeout(180_000);
+    const catalog = await (await request.get('/r/registry.json')).json();
+    const families = catalog.items.filter((item) => item.type === 'registry:ui');
+    expect(families).toHaveLength(27);
+    for (const family of families) {
+      // Each route gets its own page so pending link prefetches from a prior
+      // document cannot report teardown errors in the next route's audit.
+      const page = await context.newPage();
+      const errors = [];
+      page.on('pageerror', (error) => errors.push(error.message));
+      await page.setViewportSize({ width, height: 900 });
+      const response = await page.goto(`/docs/components/${family.name}`);
+      expect(response.status(), family.name).toBe(200);
+      await expect(page.locator('article > h1')).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'Material guidelines' })).toBeVisible();
+      await expect(page.locator('#material-guidelines a')).toHaveAttribute('href', /^https:\/\/m1\.material\.io\//);
+      await expect(page.getByRole('tab', { name: 'Preview', exact: true })).toHaveAttribute('aria-selected', 'true');
+      await expectAccessibleDocumentation(page);
+      expect(
+        await page.evaluate(() => document.documentElement.scrollWidth),
+        `${family.name} preview`,
+      ).toBeLessThanOrEqual(width);
+      await page.getByRole('tab', { name: 'Code', exact: true }).click();
+      await expect(page.getByLabel('Component example', { exact: true })).toContainText(
+        `@/components/ui/material/${family.name}`,
+      );
+      expect(await page.evaluate(() => document.documentElement.scrollWidth), family.name).toBeLessThanOrEqual(width);
+      expect(errors, family.name).toEqual([]);
+      await page.close();
+    }
+    expect((await request.get('/docs/components/not-a-component')).status()).toBe(404);
+    const legacyComponents = await request.get('/components', { maxRedirects: 0 });
+    expect(legacyComponents.status()).toBe(308);
+    expect(legacyComponents.headers().location).toBe('/docs/components');
+  });
+}
+
+test('the desktop sidebar stays below the app bar at the footer as content changes', async ({ page }) => {
+  for (const viewport of [
+    { width: 1440, height: 900 },
+    { width: 1180, height: 520 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto('/docs/components/snackbar');
+    const sidebar = page.getByRole('navigation', { name: 'Documentation sidebar' }).locator('..');
+    const header = page.locator('header[data-react-toolbox="app-bar"]');
+    for (const view of ['Preview', 'Code', 'Preview']) {
+      await page.getByRole('tab', { name: view, exact: true }).click();
+      await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+      await expect(page.locator('footer')).toBeInViewport();
+      await expect
+        .poll(async () => {
+          const bar = await header.boundingBox();
+          return (await sidebar.boundingBox()).y - (bar.y + bar.height);
+        })
+        .toBe(0);
+      const box = await sidebar.boundingBox();
+      expect(box.y + box.height).toBe(viewport.height);
+      // Navigation remains independently scrollable all the way to the last item.
+      await sidebar.evaluate((element) => {
+        element.scrollTop = element.scrollHeight;
+      });
+      await expect(sidebar.getByRole('link', { name: 'Tooltip', exact: true })).toBeInViewport();
+    }
   }
-  expect(errors).toEqual([]);
-  expect((await request.get('/docs/components/not-a-component')).status()).toBe(404);
-  const legacyComponents = await request.get('/components', { maxRedirects: 0 });
-  expect(legacyComponents.status()).toBe(308);
-  expect(legacyComponents.headers().location).toBe('/docs/components');
+});
+
+test('documentation follows Material typography, keylines, touch targets, and table geometry', async ({ page }) => {
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 600, height: 960 },
+    { width: 1440, height: 900 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto('/docs/components/snackbar');
+    const mobile = viewport.width < 600;
+    const header = page.locator('header[data-react-toolbox="app-bar"]');
+    await expect(header).toHaveCSS('height', mobile ? '56px' : '64px');
+    await expect(page.getByRole('link', { name: 'React Toolbox home' })).toHaveCSS('font-size', '20px');
+    await expect(page.locator('article > h1')).toHaveCSS('font-size', viewport.width < 640 ? '34px' : '45px');
+    await expect(page.locator('#installation > h2')).toHaveCSS('font-size', '20px');
+    await expect(page.locator('#installation > h2')).toHaveCSS('font-weight', '500');
+    await expect(page.locator('#usage > p').first()).toHaveCSS('color', 'rgba(0, 0, 0, 0.87)');
+    await expect(page.locator('article > p')).toHaveCSS('color', 'rgba(0, 0, 0, 0.54)');
+    await expect(page.locator('main')).toHaveCSS(
+      'padding-left',
+      mobile ? '16px' : viewport.width < 1024 ? '24px' : '48px',
+    );
+    for (const link of await page.locator('header a, footer a, nav[aria-label="Component pages"] a').all()) {
+      const box = await link.boundingBox();
+      expect(box.height).toBeGreaterThanOrEqual(48);
+      expect(box.width).toBeGreaterThanOrEqual(48);
+    }
+    const table = page.getByRole('table', { name: 'Snackbar API', exact: true });
+    await expect(table.locator('th').first()).toHaveCSS('font-size', '12px');
+    await expect(table.locator('td code').first()).toHaveCSS('font-size', '13px');
+    for (const row of await table.locator('tbody tr').all()) {
+      expect((await row.boundingBox()).height).toBeGreaterThanOrEqual(48);
+    }
+    await expect(page.getByRole('heading', { name: 'Exported TypeScript types' })).toHaveCount(0);
+    await expect(table.getByRole('row')).toHaveCount(7);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(viewport.width);
+  }
+});
+
+test('documentation guides remain accessible on desktop and mobile', async ({ page }) => {
+  test.setTimeout(90_000);
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const path of ['/docs', '/docs/installation', '/docs/theming', '/docs/components']) {
+      await page.goto(path);
+      await expectAccessibleDocumentation(page);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth), path).toBe(width);
+    }
+  }
 });
 
 test('documentation rows have full Material touch areas, keyboard links, and contained ink feedback', async ({
@@ -220,10 +329,10 @@ test('documented list, confirmation, and snackbar examples implement their state
   await page.goto('/docs/components/dialog');
   await page.getByRole('button', { name: 'Open dialog' }).click();
   await page.getByRole('button', { name: 'Cancel', exact: true }).click();
-  await expect(page.getByRole('status')).toHaveText('Draft');
+  await expect(page.locator('#preview').getByRole('status')).toHaveText('Draft');
   await page.getByRole('button', { name: 'Open dialog' }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'Save', exact: true }).click();
-  await expect(page.getByRole('status')).toHaveText('Saved');
+  await expect(page.locator('#preview').getByRole('status')).toHaveText('Saved');
 
   await page.goto('/docs/components/snackbar');
   await page.getByRole('button', { name: 'Save changes' }).click();

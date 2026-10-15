@@ -15,10 +15,22 @@ named standalone icons use an image role as required by [ARIA in HTML](https://w
   role. Decorative icons can use `aria-hidden`; explicit caller roles are retained.
 - Menus support arrow keys, Home, End, typeahead, and Escape. Dropdowns expose
   combobox/listbox state and preserve focus when a selection is made.
-- Modal dialogs and temporary drawers contain keyboard focus, make background
-  content inert, and restore focus on dismissal. Tabs support arrow navigation.
+- Modal dialogs and temporary drawers contain keyboard focus, hide background
+  content from the accessibility tree, and restore focus on dismissal. Nested
+  modals expose only the top surface. Tabs use Radix roving focus for arrows,
+  Home/End, disabled items, and RTL direction.
 - Tooltips appear on keyboard focus, associate their description with the trigger,
-  and dismiss on Escape. Snackbars use a polite live region.
+  and dismiss on Escape. Hovering the tooltip keeps it visible; it tracks scroll
+  and resize and stays within the viewport. Snackbars use a polite live region.
+- Checkbox, radio, switch, and text input support native defaults and form reset.
+  Radio groups compose through wrappers and fragments. Checkbox exposes native
+  indeterminate state. Dropdown supports `name`, `form`, `required`, and native
+  form validation through an associated select; invalid submission focuses the
+  visible combobox and displays the browser's localized validation message.
+- Tables preserve captions, name selection controls, announce mixed selection,
+  and expose sorting through keyboard-operable header buttons and `aria-sort`.
+  Date calendars support arrows, Home/End, PageUp/PageDown, and Shift+PageUp/Down
+  for years, with month-end clamping. Sliders support ten-step page navigation.
 - `prefers-reduced-motion: reduce` removes decorative ink and shortens Material
   transitions. Dialog, drawer, snackbar, and tooltip lifecycles finish without
   relying on a transition event. The preference can change while the page is open.
@@ -94,3 +106,12 @@ notes. These checks have not been performed for this release candidate.
 - Check 200% text resizing, 400% zoom/reflow, narrow screens, forced colors, and
   OS reduced-motion settings. Inspect text, icons, disabled states, and focus
   indicators for contrast in the actual application theme.
+
+
+## Consumer workflow additions
+
+Buttons and custom menu triggers use Radix Slot to preserve native link/button semantics, refs and child event cancellation without nested interactive controls. Give custom triggers an accessible name. Menu checkbox/radio items expose their selection state and remain open for repeated choices; Escape returns focus to the trigger, including after a pointer click in Safari. Cascading submenus are not yet provided.
+
+Autocomplete submits selected IDs, including multi-values, rather than its search query. Its hidden native select supports required validation and reset; invalid submission focuses the visible field. Rich options need textValue for matching and single-value text. Group labels and disabled states are exposed to assistive technology; loading and empty messages are announced through a separate live status outside the listbox. Slider supports native submission/reset and RTL interaction. RadioGroup forwards required and external form association to its native radios.
+
+Manual tabs separate focus from activation: arrows move between enabled tabs, while Enter or Space activates a panel. Dialog/Drawer focus callbacks are cancelable; consumers that prevent the default must place focus on an appropriate connected element. Additional automated evidence lives in feature-parity.test.tsx and browser/feature-parity.spec.js; the manual assistive-technology checks above still apply.

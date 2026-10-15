@@ -9,6 +9,7 @@ import { cn } from '../foundations/styles/cn';
 import { useRipple } from '../ripple';
 export interface CheckProps extends React.HTMLAttributes<HTMLElement> {
   checked?: boolean;
+  indeterminate?: boolean;
   disabled?: boolean;
   ripple?: boolean;
   /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
@@ -18,6 +19,7 @@ export interface CheckProps extends React.HTMLAttributes<HTMLElement> {
 }
 export default function Check({
   checked,
+  indeterminate,
   disabled,
   ripple: enabled,
   theme: legacyTheme,
@@ -69,6 +71,8 @@ export default function Check({
             '[.rt-checkbox-input:focus~.rt-checkbox-check&::before]:bg-(--checkbox-focus-checked-color)',
             theme?.checked,
           ),
+        indeterminate &&
+          '[&&&::after]:animate-none [&&&::after]:border-0 [&&&::after]:bg-(--rt-color-background) [&&&::after]:h-[2px] [&&&::after]:w-[10px] [&&&::after]:left-[2px] [&&&::after]:top-[6px] [&&&::after]:transform-none',
       )}
       onMouseDown={effects.onMouseDown}
       onTouchStart={effects.onTouchStart}

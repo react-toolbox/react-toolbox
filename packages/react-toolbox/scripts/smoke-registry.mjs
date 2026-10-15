@@ -86,6 +86,25 @@ async function verifyNextConsumer() {
     "export default { plugins: { '@tailwindcss/postcss': {} } };\n",
   );
   await writeFile(path.join(directory, 'next.config.mjs'), 'export default { experimental: { cpus: 2 } };\n');
+  // Compile and hydrate the exact public composition recipes in an isolated
+  // consumer. This catches missing primitive dependencies and private imports.
+  const compositionFamilies = ['dialog', 'drawer', 'tabs', 'menu', 'dropdown', 'autocomplete', 'table', 'tooltip'];
+  await mkdir(path.join(directory, 'src/app/examples'), { recursive: true });
+  for (const family of compositionFamilies) {
+    const source = await readFile(path.resolve(root, '../../apps/docs/app/docs/examples', `${family}.tsx`), 'utf8');
+    await writeFile(
+      path.join(directory, 'src/app/examples', `${family}.tsx`),
+      source.replaceAll("'react-toolbox/", "'@/widgets/ui/material/"),
+    );
+  }
+  await writeFile(
+    path.join(directory, 'src/app/compositions.tsx'),
+    "'use client';\n" +
+      compositionFamilies.map((family, index) => `import Example${index} from './examples/${family}';`).join('\n') +
+      '\nexport default function Compositions() { return <section aria-label="Composition examples">' +
+      compositionFamilies.map((family, index) => `<div data-example="${family}"><Example${index} /></div>`).join('') +
+      '</section>; }\n',
+  );
   await writeFile(
     path.join(directory, 'src/app/interaction.tsx'),
     `
@@ -123,12 +142,14 @@ import { ThemeProvider } from '@/widgets/ui/material/theme';
 import { shadcnThemeVariables } from '@/widgets/ui/material/foundations/theme/shadcn';
 import { range } from '@/widgets/ui/material/foundations/collections/range';
 import Interaction from './interaction';
+import Compositions from './compositions';
 export default function Page() {
   return <main data-server-theme={shadcnThemeVariables['--rt-shadcn']}
     data-server-values={range(3).join(',')}>
-    <h1>Copied Material components</h1>
+    <h1 className="text-toolbox-title text-toolbox-primary">Copied Material components</h1>
     <Interaction />
-    <div data-testid="spacing" className="p-6 bg-toolbox-primary" />
+    <Compositions />
+    <div data-testid="spacing" className="min-h-toolbox-touch p-6 bg-toolbox-primary" />
     <ThemeProvider variables={shadcnThemeVariables}>
       <Button label="Source button" />
       <Checkbox label="Source checkbox" />
@@ -170,6 +191,7 @@ export default function Page() {
     const url = `http://127.0.0.1:${port}`;
     await assertEventually(async () => assert((await fetch(url)).ok));
     const page = await browser.newPage();
+    page.setDefaultTimeout(15_000);
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
     await page.goto(url);
@@ -188,12 +210,56 @@ export default function Page() {
     assert.equal(styles.height, 36, 'M1 button geometry must survive a standard Tailwind installation');
     assert(styles.font.includes('Roboto'), 'The public entry must load the original typography');
     assert.equal(styles.background, 'rgb(63, 81, 181)', 'The original M1 palette must remain the default');
+    const animations = await page.evaluate(() => {
+      const names = [];
+      const visit = (rules) => {
+        for (const rule of rules) {
+          if (rule.type === CSSRule.KEYFRAMES_RULE) names.push(rule.name);
+          else if ('cssRules' in rule) visit(rule.cssRules);
+        }
+      };
+      for (const sheet of document.styleSheets) visit(sheet.cssRules);
+      return names;
+    });
+    for (const name of ['toolbox-enter', 'toolbox-exit', 'toolbox-drawer-out', 'rt-checkbox-checkmark-expand']) {
+      assert(animations.includes(name), `Copied styles must register ${name} in the consumer stylesheet`);
+    }
+    console.log('Checking copied dialog motion and form composition.');
+    const composedDialog = page.locator('[data-example="dialog"]');
+    await composedDialog.getByRole('button', { name: 'Edit profile' }).click();
+    const modal = page.getByRole('dialog', { name: 'Edit profile' });
+    await modal.getByRole('textbox', { name: 'Display name' }).fill('Copied composition');
+    assert.notEqual(await modal.evaluate((element) => getComputedStyle(element).boxShadow), 'none');
+    await modal.getByRole('button', { name: 'Save changes' }).click();
+    await assertEventually(async () =>
+      assert.equal(await composedDialog.getByRole('status').textContent(), 'Copied composition'),
+    );
+    await assertEventually(async () => assert.equal(await modal.count(), 0));
+    console.log('Checking copied autocomplete object selection and form values.');
+    const composedAutocomplete = page.locator('[data-example="autocomplete"]');
+    await composedAutocomplete.getByRole('combobox', { name: 'Invite teammates' }).fill('Gra');
+    await page.getByRole('option', { name: /Grace Hopper/ }).click();
+    await composedAutocomplete.getByRole('combobox').press('Escape');
+    await composedAutocomplete.getByRole('button', { name: 'Save teammates' }).click();
+    await assertEventually(async () =>
+      assert.equal(await composedAutocomplete.getByRole('status').textContent(), 'ada, grace'),
+    );
     const spacing = await page.getByTestId('spacing').evaluate((element) => getComputedStyle(element).padding);
     assert.equal(spacing, '24px', 'Registry installation must register Material spacing utilities');
     const utilityColor = await page
       .getByTestId('spacing')
       .evaluate((element) => getComputedStyle(element).backgroundColor);
     assert.equal(utilityColor, 'rgb(63, 81, 181)', 'Registry installation must register Toolbox color utilities');
+    const title = await page.getByRole('heading', { name: 'Copied Material components' }).evaluate((element) => {
+      const style = getComputedStyle(element);
+      return [style.fontSize, style.lineHeight, style.fontWeight, style.color];
+    });
+    assert.deepEqual(
+      title,
+      ['20px', '28px', '500', 'rgb(63, 81, 181)'],
+      'Registry installation must include M1 text-role metadata',
+    );
+    assert.equal(await page.getByTestId('spacing').evaluate((element) => getComputedStyle(element).minHeight), '48px');
     assert.deepEqual(errors, [], 'Copied components must hydrate without browser errors');
   } finally {
     await browser.close();
@@ -371,6 +437,7 @@ createRoot(document.getElementById('root')!).render(<App />);
     await assertEventually(async () => assert((await fetch(url)).ok));
     browser = await chromium.launch();
     const page = await browser.newPage();
+    page.setDefaultTimeout(15_000);
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
     await page.goto(url);

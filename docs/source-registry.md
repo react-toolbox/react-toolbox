@@ -75,7 +75,7 @@ The maintained `src/material/` tree is copied directly into `material/`, avoidin
 
 React Server Component boundaries stay in the source. Pure utilities, shared style helpers, and `shadcnThemeVariables` remain usable on the server through the adjacent implementation files. Event handlers still belong in a client component.
 
-The shared foundation contains ordered custom-property definitions, local Roboto fonts, Material Icons, scoped Preflight compatibility, keyframe registrations, and the MIT license. Tailwind classes live beside the JSX they style, with small shared constants and variant helpers for related components. Optional `classNames` props add classes to individual parts; they do not construct runtime style maps. The installed `setup.css` explicitly registers copied source with `@source`, including in hosts that disable automatic detection. Tailwind emits utilities for installed families and only their referenced keyframes; a Button installation no longer includes presentation rules for every component. Source files are copied byte-for-byte; including the maintained entry files.
+The shared foundation contains ordered custom-property definitions, local Roboto fonts, Material Icons, scoped Preflight compatibility, keyframe registrations, and the MIT license. Tailwind classes live beside the JSX they style, with small shared constants and variant helpers for related components. Each exported component accepts `className` for Tailwind customization. Existing style-slot props remain compatible. The installed `setup.css` explicitly registers copied source with `@source`, including in hosts that disable automatic detection. Tailwind emits utilities for installed families and only their referenced keyframes; a Button installation no longer includes presentation rules for every component. Source files are copied byte-for-byte; including the maintained entry files.
 
 ## Themes and spacing
 
@@ -94,7 +94,7 @@ import { ThemeProvider } from '@/components/ui/material/theme';
 
 For deliberate host-color mapping, import the installed `material/foundations/styles/shadcn.css` from your global stylesheet and use `shadcnThemeVariables` from the `material/foundations/theme/shadcn.ts` with `ThemeProvider`. This optional bridge preserves Material geometry and motion. Pass host colors through `ThemeProvider.variables` if they are scoped below the root and must follow portaled content.
 
-Use `className` for root utilities and `classNames={{ slot: "..." }}` for internal slots. The old `theme` prop remains a compatibility alias; `classNames` wins when both provide the same slot. The shared merger resolves conflicting base utilities in favor of the consumer. State and responsive variants still follow normal Tailwind precedence. To override every CardText inset, including its sibling and desktop rules, use `className="p-6!"`; for palette changes across states, prefer the scoped color tokens.
+Set global colors in CSS with `:root { --rt-color-primary: #455a64; }`; no provider is needed for global tokens. Use `className` on composed parts such as Card, CardText, and CardActions. Edit the installed JSX for internal nodes that are not exposed. The shared merger resolves conflicting base utilities in favor of the consumer; state and responsive variants follow normal Tailwind precedence. Existing `classNames` and `theme` maps remain supported for compatibility (`classNames` wins when both provide a slot), but new customization should start with CSS variables, composition, and source edits.
 
 ## Updates
 
@@ -138,12 +138,17 @@ The installed source belongs to the application. Commit local changes, rerun the
 | `foundation-portal` | Portal placement and merged refs |
 | `foundation-date-time` | Shared calendar and locale calculations |
 | `foundation-collections` | Shared numeric range helper |
+| `foundation-forms` | Native form reset and checked-state synchronization |
 | `all` | Every family and the complete public barrel |
 
 
 Link and Navigation are retired from the public registry. Use Next.js Link, another router’s link, or a native anchor, composed inside `nav` or a Toolbox List. M1 defines navigation behavior and styling, not a required routing wrapper. Their old implementations remain in the private workspace solely for the historical comparison gallery; neither is included in the copied public TypeScript source or `material/index.ts`.
 
 Family dependencies come from parsed TypeScript imports and exports, including type-only imports. A date picker installs its dialog, button, input, overlay, font-icon, and ripple dependencies. Shared implementation files have one registry owner.
+
+Behavioral npm dependencies are also derived from imports. Button and the convenience Menu use Radix Slot; Avatar uses Radix Avatar. Compound Dialog/Drawer, Tabs, DropdownMenu, Dropdown and Tooltip parts install their respective Radix primitives, and Autocomplete parts install Base UI Combobox. Existing implementations may also need roving focus or `aria-hidden`. Other families do not acquire these dependencies unless they compose those components. The installed source keeps its M1 styling and existing public APIs; it can coexist with ordinary shadcn components.
+
+Each family also registers the keyframes referenced by its TypeScript import graph through registry `css` metadata. This keeps animations available when the host compiles imported setup CSS and its Tailwind utility sheet separately, as Next.js does. The definitions are derived from the maintained CSS; a minimal Button installation still excludes unrelated checkbox and progress animations.
 
 ## Maintainer workflow
 

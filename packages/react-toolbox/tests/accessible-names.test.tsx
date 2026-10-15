@@ -49,6 +49,7 @@ describe('picker trigger semantics', () => {
       trigger.focus();
       fireEvent.keyDown(trigger, { key: 'ArrowDown' });
       const dialog = await screen.findByRole('dialog', { name: dialogName });
+      await waitFor(() => expect(dialog).toHaveFocus());
       expect(trigger).toHaveAttribute('aria-expanded', 'true');
       expect(trigger).toHaveAttribute('aria-controls', dialog.id);
       fireEvent.keyDown(dialog, { key: 'Escape' });

@@ -21,8 +21,8 @@ import { IconMenu, Menu, MenuItem } from '../src/material/menu';
 import Layout, { NavDrawer, Panel } from '../src/material/layout';
 import Clock from '../src/material/time-picker/Clock';
 
-const strict = children => <StrictMode>{children}</StrictMode>;
-const advance = ms => act(() => vi.advanceTimersByTime(ms));
+const strict = (children) => <StrictMode>{children}</StrictMode>;
+const advance = (ms) => act(() => vi.advanceTimersByTime(ms));
 
 afterEach(() => {
   cleanup();
@@ -39,13 +39,16 @@ describe('React 19 runtime', () => {
     const second = document.createElement('div');
     document.body.append(first, second);
     const portal = createRef();
-    const content = container => strict(
-      <Context.Provider value="inherited context">
-        <ThemeProvider variables={{ '--rt-color-primary': '#123456' }}>
-          <Portal ref={portal} container={container} className="original-wrapper"><Consumer /></Portal>
-        </ThemeProvider>
-      </Context.Provider>,
-    );
+    const content = (container) =>
+      strict(
+        <Context.Provider value="inherited context">
+          <ThemeProvider variables={{ '--rt-color-primary': '#123456' }}>
+            <Portal ref={portal} container={container} className="original-wrapper">
+              <Consumer />
+            </Portal>
+          </ThemeProvider>
+        </Context.Provider>,
+      );
     const view = render(content(first));
     const wrapper = first.firstElementChild.firstElementChild;
     expect(first.childElementCount).toBe(1);
@@ -66,15 +69,33 @@ describe('React 19 runtime', () => {
 
   it('inherits global tokens unless a portal explicitly supplies custom properties', () => {
     const portal = createRef();
-    const view = render(strict(<Portal ref={portal}><span>Global theme</span></Portal>));
+    const view = render(
+      strict(
+        <Portal ref={portal}>
+          <span>Global theme</span>
+        </Portal>,
+      ),
+    );
     const wrapper = portal.current.getOverlayDOMNode();
     expect(wrapper).not.toHaveAttribute('data-react-toolbox-theme');
     expect(wrapper).not.toHaveAttribute('data-react-toolbox-tokens');
-    view.rerender(strict(<Portal ref={portal} style={{ '--rt-color-primary': '#123456' }}><span>Local theme</span></Portal>));
+    view.rerender(
+      strict(
+        <Portal ref={portal} style={{ '--rt-color-primary': '#123456' }}>
+          <span>Local theme</span>
+        </Portal>,
+      ),
+    );
     expect(wrapper).toHaveAttribute('data-react-toolbox-theme');
     expect(wrapper).toHaveAttribute('data-react-toolbox-tokens', '--rt-color-primary');
     expect(wrapper.style.getPropertyValue('--rt-color-primary')).toBe('#123456');
-    view.rerender(strict(<Portal ref={portal}><span>Global theme</span></Portal>));
+    view.rerender(
+      strict(
+        <Portal ref={portal}>
+          <span>Global theme</span>
+        </Portal>,
+      ),
+    );
     expect(wrapper).not.toHaveAttribute('data-react-toolbox-theme');
     expect(wrapper).not.toHaveAttribute('data-react-toolbox-tokens');
     expect(wrapper.style.getPropertyValue('--rt-color-primary')).toBe('');
@@ -83,13 +104,25 @@ describe('React 19 runtime', () => {
   it('falls back to the body for an empty container ref and moves when it becomes available', () => {
     const container = createRef();
     const portal = createRef();
-    const view = render(strict(<Portal ref={portal} container={container}><span>Ref container</span></Portal>));
+    const view = render(
+      strict(
+        <Portal ref={portal} container={container}>
+          <span>Ref container</span>
+        </Portal>,
+      ),
+    );
     const target = portal.current.getMountNode();
     expect(target.parentNode).toBe(document.body);
     const available = document.createElement('div');
     document.body.append(available);
     container.current = available;
-    view.rerender(strict(<Portal ref={portal} container={container}><span>Ref container</span></Portal>));
+    view.rerender(
+      strict(
+        <Portal ref={portal} container={container}>
+          <span>Ref container</span>
+        </Portal>,
+      ),
+    );
     expect(portal.current.getMountNode()).toBe(target);
     expect(target.parentNode).toBe(available);
     view.unmount();
@@ -118,9 +151,23 @@ describe('React 19 runtime', () => {
 
   it('restores the original scroll state only after the final overlay unlocks', () => {
     document.body.style.overflow = 'scroll';
-    const view = render(strict(<><Overlay active theme={{}} /><Overlay active theme={{}} /></>));
+    const view = render(
+      strict(
+        <>
+          <Overlay active theme={{}} />
+          <Overlay active theme={{}} />
+        </>,
+      ),
+    );
     expect(document.body.style.overflow).toBe('hidden');
-    view.rerender(strict(<><Overlay active={false} theme={{}} /><Overlay active theme={{}} /></>));
+    view.rerender(
+      strict(
+        <>
+          <Overlay active={false} theme={{}} />
+          <Overlay active theme={{}} />
+        </>,
+      ),
+    );
     expect(document.body.style.overflow).toBe('hidden');
     view.unmount();
     expect(document.body.style.overflow).toBe('scroll');
@@ -143,7 +190,14 @@ describe('React 19 runtime', () => {
     expect(dialog).toBeInTheDocument();
     advance(1);
     expect(dialog).not.toBeInTheDocument();
-    render(strict(<><Navigation /><Drawer active>Default drawer</Drawer></>));
+    render(
+      strict(
+        <>
+          <Navigation />
+          <Drawer active>Default drawer</Drawer>
+        </>,
+      ),
+    );
     expect(document.querySelector('[data-react-toolbox="navigation"]').className).toContain('horizontal');
     expect(document.querySelector('[data-react-toolbox="drawer"]').className).toContain('left');
   });
@@ -163,21 +217,35 @@ describe('React 19 runtime', () => {
   it('forwards imperative input refs and updates autocomplete controlled values', () => {
     const input = createRef();
     const source = { a: 'Alpha', b: 'Beta' };
-    const view = render(strict(<><Input ref={input} label="Ref input" /><Autocomplete multiple={false} source={source} value="a" /></>));
+    const view = render(
+      strict(
+        <>
+          <Input ref={input} label="Ref input" />
+          <Autocomplete multiple={false} source={source} value="a" />
+        </>,
+      ),
+    );
     act(() => input.current.focus());
     expect(document.activeElement).toBe(view.container.querySelector('input'));
     act(() => input.current.blur());
-    expect(screen.getByDisplayValue('Alpha')).toBeInTheDocument();
-    view.rerender(strict(<><Input ref={input} label="Ref input" /><Autocomplete multiple={false} source={source} value="b" /></>));
-    expect(screen.getByDisplayValue('Beta')).toBeInTheDocument();
-    fireEvent.focus(screen.getByDisplayValue('Beta'));
-    fireEvent.keyUp(screen.getByDisplayValue('Beta'), { key: 'Escape', keyCode: 27, which: 27 });
+    expect(screen.getByRole('combobox')).toHaveValue('Alpha');
+    view.rerender(
+      strict(
+        <>
+          <Input ref={input} label="Ref input" />
+          <Autocomplete multiple={false} source={source} value="b" />
+        </>,
+      ),
+    );
+    expect(screen.getByRole('combobox')).toHaveValue('Beta');
+    fireEvent.focus(screen.getByRole('combobox'));
+    fireEvent.keyUp(screen.getByRole('combobox'), { key: 'Escape', keyCode: 27, which: 27 });
   });
 
   it('edits a slider through the current Input ref API', () => {
     const onChange = vi.fn();
     render(strict(<Slider editable value={20} step={1} onChange={onChange} />));
-    const input = screen.getByDisplayValue('20');
+    const input = screen.getByRole('textbox');
     fireEvent.focus(input);
     fireEvent.change(input, { target: { value: '35' } });
     fireEvent.blur(input);
@@ -189,7 +257,7 @@ describe('React 19 runtime', () => {
     const value = new Date(2026, 9, 13);
     render(strict(<DatePickerDialog active value={value} />));
     expect(screen.getByText('October 2026')).toBeInTheDocument();
-    fireEvent.click(document.querySelector('[data-react-toolbox="calendar"] #right'));
+    fireEvent.click(screen.getByRole('button', { name: 'Next month' }));
     expect(screen.getByText('November 2026')).toBeInTheDocument();
     expect(screen.getByText('October 2026')).toBeInTheDocument();
     advance(350);
@@ -225,17 +293,43 @@ describe('React 19 runtime', () => {
     advance(1000);
   });
 
-  it('honors repeated controlled IconMenu props after internal toggles', () => {
+  it('preserves internal IconMenu state on rerenders and responds to active changes', () => {
     vi.useFakeTimers();
-    const view = render(strict(<IconMenu active={false}><MenuItem value="one" caption="One" /></IconMenu>));
+    const view = render(
+      strict(
+        <IconMenu active={false}>
+          <MenuItem value="one" caption="One" />
+        </IconMenu>,
+      ),
+    );
     fireEvent.click(view.container.querySelector('[data-react-toolbox="button"]'));
     advance(20);
     expect(view.container.querySelector('[data-react-toolbox="menu"]').className).toContain('active');
-    view.rerender(strict(<IconMenu active={false}><MenuItem value="one" caption="One" /></IconMenu>));
-    expect(view.container.querySelector('[data-react-toolbox="menu"]').className).not.toContain('active');
-    view.rerender(strict(<IconMenu active><MenuItem value="one" caption="One" /></IconMenu>));
+    view.rerender(
+      strict(
+        <IconMenu active={false}>
+          <MenuItem value="one" caption="One" />
+        </IconMenu>,
+      ),
+    );
+    expect(view.container.querySelector('[data-react-toolbox="menu"]').className).toContain('active');
+    view.rerender(
+      strict(
+        <IconMenu active>
+          <MenuItem value="one" caption="One" />
+        </IconMenu>,
+      ),
+    );
     advance(20);
     expect(view.container.querySelector('[data-react-toolbox="menu"]').className).toContain('active');
+    view.rerender(
+      strict(
+        <IconMenu active={false}>
+          <MenuItem value="one" caption="One" />
+        </IconMenu>,
+      ),
+    );
+    expect(view.container.querySelector('[data-react-toolbox="menu"]').className).not.toContain('active');
   });
 
   it('measures static menus in their committed layout and remeasures position changes', () => {
@@ -243,16 +337,32 @@ describe('React 19 runtime', () => {
     vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function measureMenu() {
       return {
         width: this.parentElement?.classList.contains('rt-menu-static') ? 450 : 180,
-        height: 240, left: 0, top: 0, right: 450, bottom: 240,
+        height: 240,
+        left: 0,
+        top: 0,
+        right: 450,
+        bottom: 240,
       };
     });
-    const view = render(strict(<Menu><MenuItem caption="Download" /></Menu>));
+    const view = render(
+      strict(
+        <Menu>
+          <MenuItem caption="Download" />
+        </Menu>,
+      ),
+    );
     const menu = view.container.querySelector('[data-react-toolbox="menu"]');
     expect(menu).toHaveClass('rt-menu-static');
     advance(0);
     expect(menu.querySelector('.rt-menu-outline').style.width).toBe('450px');
     expect(menu.style.width).toBe('');
-    view.rerender(strict(<Menu position="topRight"><MenuItem caption="Download" /></Menu>));
+    view.rerender(
+      strict(
+        <Menu position="topRight">
+          <MenuItem caption="Download" />
+        </Menu>,
+      ),
+    );
     expect(menu.querySelector('.rt-menu-outline').style.width).toBe('180px');
     expect(menu.style.width).toBe('180px');
   });
@@ -260,17 +370,30 @@ describe('React 19 runtime', () => {
   it('keeps menu outlines synchronized with resized or changed content and disconnects observers', () => {
     vi.useFakeTimers();
     const observers = [];
-    vi.stubGlobal('ResizeObserver', vi.fn(function ResizeObserver(callback) {
-      this.callback = callback;
-      this.observe = vi.fn();
-      this.disconnect = vi.fn();
-      observers.push(this);
-    }));
+    vi.stubGlobal(
+      'ResizeObserver',
+      vi.fn(function ResizeObserver(callback) {
+        this.callback = callback;
+        this.observe = vi.fn();
+        this.disconnect = vi.fn();
+        observers.push(this);
+      }),
+    );
     let size = { width: 180, height: 240 };
     vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(() => ({
-      ...size, left: 0, top: 0, right: size.width, bottom: size.height,
+      ...size,
+      left: 0,
+      top: 0,
+      right: size.width,
+      bottom: size.height,
     }));
-    const view = render(strict(<Menu position="topRight"><MenuItem caption="Download" /></Menu>));
+    const view = render(
+      strict(
+        <Menu position="topRight">
+          <MenuItem caption="Download" />
+        </Menu>,
+      ),
+    );
     advance(0);
     const menu = view.container.querySelector('[data-react-toolbox="menu"]');
     const observer = observers[observers.length - 1];
@@ -282,7 +405,14 @@ describe('React 19 runtime', () => {
     expect(menu.querySelector('.rt-menu-outline').style.height).toBe('280px');
     expect(menu.style.width).toBe('260px');
     size = { width: 260, height: 328 };
-    view.rerender(strict(<Menu position="topRight"><MenuItem caption="Download" /><MenuItem caption="Share" /></Menu>));
+    view.rerender(
+      strict(
+        <Menu position="topRight">
+          <MenuItem caption="Download" />
+          <MenuItem caption="Share" />
+        </Menu>,
+      ),
+    );
     expect(menu.querySelector('.rt-menu-outline').style.height).toBe('328px');
     view.unmount();
     expect(observer.disconnect).toHaveBeenCalledOnce();
@@ -292,19 +422,33 @@ describe('React 19 runtime', () => {
   it('aligns static outlines with list margins and leaves popup positioning to its theme', () => {
     vi.useFakeTimers();
     let resize;
-    vi.stubGlobal('ResizeObserver', vi.fn(function ResizeObserver(callback) {
-      resize = callback;
-      this.observe = vi.fn();
-      this.disconnect = vi.fn();
-    }));
+    vi.stubGlobal(
+      'ResizeObserver',
+      vi.fn(function ResizeObserver(callback) {
+        resize = callback;
+        this.observe = vi.fn();
+        this.disconnect = vi.fn();
+      }),
+    );
     vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
-      width: 180, height: 240, left: 8, top: 14, right: 188, bottom: 254,
+      width: 180,
+      height: 240,
+      left: 8,
+      top: 14,
+      right: 188,
+      bottom: 254,
     });
     let top = 14;
     let left = 8;
     vi.spyOn(HTMLElement.prototype, 'offsetTop', 'get').mockImplementation(() => top);
     vi.spyOn(HTMLElement.prototype, 'offsetLeft', 'get').mockImplementation(() => left);
-    const view = render(strict(<Menu><MenuItem caption="Download" /></Menu>));
+    const view = render(
+      strict(
+        <Menu>
+          <MenuItem caption="Download" />
+        </Menu>,
+      ),
+    );
     advance(0);
     const outline = view.container.querySelector('.rt-menu-outline');
     expect(outline.style.top).toBe('14px');
@@ -316,7 +460,13 @@ describe('React 19 runtime', () => {
     expect(outline.style.top).toBe('24px');
     expect(outline.style.left).toBe('16px');
     expect(outline.style.height).toBe('240px');
-    view.rerender(strict(<Menu position="topRight"><MenuItem caption="Download" /></Menu>));
+    view.rerender(
+      strict(
+        <Menu position="topRight">
+          <MenuItem caption="Download" />
+        </Menu>,
+      ),
+    );
     expect(outline.style.top).toBe('');
     expect(outline.style.left).toBe('');
   });
@@ -331,10 +481,21 @@ describe('React 19 runtime', () => {
     const removeWindowListener = vi.spyOn(window, 'removeEventListener');
     let width = 180;
     vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(() => ({
-      width, height: 240, left: 0, top: 0, right: width, bottom: 240,
+      width,
+      height: 240,
+      left: 0,
+      top: 0,
+      right: width,
+      bottom: 240,
     }));
     try {
-      const view = render(strict(<Menu><MenuItem caption="Download" /></Menu>));
+      const view = render(
+        strict(
+          <Menu>
+            <MenuItem caption="Download" />
+          </Menu>,
+        ),
+      );
       advance(0);
       const outline = view.container.querySelector('.rt-menu-outline');
       width = 240;
@@ -355,7 +516,13 @@ describe('React 19 runtime', () => {
   it('handles a menu mounted active and closes it once on an outside click', () => {
     vi.useFakeTimers();
     const onHide = vi.fn();
-    render(strict(<Menu active onHide={onHide}><MenuItem value="one" caption="One" /></Menu>));
+    render(
+      strict(
+        <Menu active onHide={onHide}>
+          <MenuItem value="one" caption="One" />
+        </Menu>,
+      ),
+    );
     fireEvent.click(document.body);
     expect(document.querySelector('[data-react-toolbox="menu"]').className).not.toContain('active');
     expect(onHide).toHaveBeenCalledOnce();
@@ -365,14 +532,25 @@ describe('React 19 runtime', () => {
 
   it('opens dropdowns, selects values and removes the outside-click listener on close', () => {
     const onChange = vi.fn();
-    render(strict(<Dropdown source={[{ value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' }]} value="a" onChange={onChange} />));
+    render(
+      strict(
+        <Dropdown
+          source={[
+            { value: 'a', label: 'Alpha' },
+            { value: 'b', label: 'Beta' },
+          ]}
+          value="a"
+          onChange={onChange}
+        />,
+      ),
+    );
     const root = document.querySelector('[data-react-toolbox="dropdown"]');
-    fireEvent.click(screen.getByDisplayValue('Alpha'));
+    fireEvent.click(screen.getByRole('combobox'));
     expect(root.className).toContain('active');
-    fireEvent.click(screen.getByText('Beta'));
+    fireEvent.click(screen.getByRole('option', { name: 'Beta' }));
     expect(onChange).toHaveBeenCalledWith('b', expect.anything());
     expect(root.className).not.toContain('active');
-    fireEvent.click(screen.getByDisplayValue('Alpha'));
+    fireEvent.click(screen.getByRole('combobox'));
     fireEvent.click(document.body);
     expect(root.className).not.toContain('active');
   });
@@ -380,9 +558,20 @@ describe('React 19 runtime', () => {
   it('renders disabled dropdown options without invalid event handlers', () => {
     const onChange = vi.fn();
     const error = vi.spyOn(console, 'error').mockImplementation(() => {});
-    render(strict(<Dropdown source={[{ value: 'a', label: 'Available' }, { value: 'b', label: 'Unavailable', disabled: true }]} value="a" onChange={onChange} />));
-    fireEvent.click(screen.getByDisplayValue('Available'));
-    fireEvent.click(screen.getByText('Unavailable'));
+    render(
+      strict(
+        <Dropdown
+          source={[
+            { value: 'a', label: 'Available' },
+            { value: 'b', label: 'Unavailable', disabled: true },
+          ]}
+          value="a"
+          onChange={onChange}
+        />,
+      ),
+    );
+    fireEvent.click(screen.getByRole('combobox'));
+    fireEvent.click(screen.getByRole('option', { name: 'Unavailable' }));
     expect(onChange).not.toHaveBeenCalled();
     expect(error).not.toHaveBeenCalled();
   });
@@ -403,22 +592,29 @@ describe('React 19 runtime', () => {
   it('updates a focused slider when its controlled value changes', () => {
     const onChange = vi.fn();
     const view = render(strict(<Slider editable value={20} step={1} onChange={onChange} />));
-    fireEvent.focus(screen.getByDisplayValue('20'));
+    fireEvent.focus(screen.getByRole('textbox'));
     view.rerender(strict(<Slider editable value={40} step={1} onChange={onChange} />));
-    expect(screen.getByDisplayValue('40')).toBeInTheDocument();
-    fireEvent.blur(screen.getByDisplayValue('40'));
+    expect(screen.getByRole('textbox')).toHaveValue('40');
+    fireEvent.blur(screen.getByRole('textbox'));
     expect(onChange).toHaveBeenCalledWith(40, expect.anything());
   });
 
   it('hydrates responsive Layout markup before measuring the client viewport', async () => {
-    const element = strict(<Layout><NavDrawer permanentAt="sm">Navigation</NavDrawer><Panel>Content</Panel></Layout>);
+    const element = strict(
+      <Layout>
+        <NavDrawer permanentAt="sm">Navigation</NavDrawer>
+        <Panel>Content</Panel>
+      </Layout>,
+    );
     const container = document.createElement('div');
     container.innerHTML = renderToString(element);
     document.body.append(container);
     expect(container.firstElementChild.className).not.toContain('navDrawerPinned');
     const onRecoverableError = vi.fn();
     let root;
-    await act(async () => { root = hydrateRoot(container, element, { onRecoverableError }); });
+    await act(async () => {
+      root = hydrateRoot(container, element, { onRecoverableError });
+    });
     expect(onRecoverableError).not.toHaveBeenCalled();
     expect(container.firstElementChild.className).toContain('navDrawerPinned');
     act(() => root.unmount());

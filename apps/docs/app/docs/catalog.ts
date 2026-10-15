@@ -8,7 +8,13 @@ supportingImports.list = "import { FontIcon } from '@/components/ui/material/fon
 
 // These examples compose families that are not already registry dependencies.
 export const exampleDependencies: Partial<Record<ComponentSlug, readonly string[]>> = {
-  drawer: ['button'],
+  dialog: ['button', 'input'],
+  drawer: ['button', 'dialog', 'input'],
+  tabs: ['input'],
+  menu: ['button'],
+  dropdown: ['button'],
+  autocomplete: ['button'],
+  table: ['button'],
   overlay: ['button'],
   tooltip: ['button'],
 };
@@ -29,10 +35,10 @@ export const components = [
     code: example(
       'app-bar',
       'AppBar',
-      '<div>\n  <AppBar title="My collection" leftIcon="menu"\n    onLeftIconClick={() => setMessage("Navigation opened")} />\n  <p role="status">{message || "Try the navigation icon."}</p>\n</div>',
+      '<div>\n  <AppBar title="My collection" leftIcon="menu" leftIconLabel="Open navigation"\n    onLeftIconClick={() => setMessage("Navigation opened")} />\n  <p role="status">{message || "Try the navigation icon."}</p>\n</div>',
       'const [message, setMessage] = useState("");',
     ),
-    note: 'Use leftIcon and rightIcon with their click handlers for navigation and actions. Set fixed when the bar should stay at the top of the viewport.',
+    note: 'Use leftIcon and rightIcon with their click handlers for navigation and actions. Name these buttons with leftIconLabel and rightIconLabel. Set fixed when the bar should stay at the top of the viewport.',
   },
   {
     slug: 'autocomplete',
@@ -45,7 +51,7 @@ export const components = [
       '<Autocomplete label="Country" multiple={false}\n  source={["Spain", "France", "Japan"]}\n  value={country} onChange={setCountry} />',
       'const [country, setCountry] = useState("");',
     ),
-    note: 'Use multiple={false} for a single string value. Multiple selection uses an array of strings and displays selected values as chips.',
+    note: 'Use multiple={false} for a single string value. Multiple selection uses an array of strings and displays selected values as chips. Use defaultValue and name for native forms. Structured options accept value, label, textValue, disabled, and group. Control search text with query/onQueryChange; use suggestionMatch="disabled" for server-filtered results, loading/loadingMessage and emptyMessage for status, and clearable for clearing selection.',
   },
   {
     slug: 'avatar',
@@ -55,9 +61,9 @@ export const components = [
     code: example(
       'avatar',
       'Avatar',
-      '<div className="flex items-center gap-4">\n  <Avatar title="Javi" aria-label="Javi Velasco" />\n  <Avatar icon="person" aria-label="Guest" />\n</div>',
+      '// Add your photo to public/images/javi-and-cora.jpg.\n<div className="flex items-center gap-4">\n  <Avatar image="/images/javi-and-cora.jpg"\n    alt="Javi and Cora" title="Javi and Cora">JC</Avatar>\n  <Avatar title="Javi" aria-label="Javi Velasco" />\n  <Avatar icon="person" aria-label="Guest" />\n</div>',
     ),
-    note: 'Use image for a picture, icon for a Material Icon, or children for initials. A title displays its first initial. Add an accessible label when the avatar conveys identity.',
+    note: 'Use image for a picture, icon for a Material Icon, or children for initials. A title displays its first initial. Radix handles image loading and shows children, an icon, or initials while the image loads or fails. Add an accessible label when the avatar conveys identity. fallbackDelay avoids flashing initials on fast loads; imageProps accepts image attributes, and onLoadingStatusChange reports loading or failure.',
   },
   {
     slug: 'button',
@@ -70,7 +76,7 @@ export const components = [
       '<div className="flex flex-wrap items-center gap-4">\n  <Button primary raised label="Save"\n    onClick={() => setSaved(true)} />\n  <Button label="Reset" onClick={() => setSaved(false)} />\n  <span role="status">{saved ? "Saved" : "Ready"}</span>\n</div>',
       'const [saved, setSaved] = useState(false);',
     ),
-    note: 'Use raised for a primary action, floating for an icon action, and disabled when unavailable. This family also exports IconButton and BrowseButton. Give icon-only buttons an aria-label.',
+    note: 'Use raised for a primary action, floating for an icon action, and disabled when unavailable. This family also exports IconButton and BrowseButton. Give icon-only buttons an aria-label. asChild composes styles, refs, and events onto a router Link or another single ref-forwarding child without nesting interactive elements.',
   },
   {
     slug: 'card',
@@ -82,7 +88,7 @@ export const components = [
       'Card, CardTitle, CardText',
       '<Card className="w-full max-w-sm">\n  <CardTitle title="Room for an idea"\n    subtitle="Start with something small." />\n  <CardText>A little space for your next project.</CardText>\n</Card>',
     ),
-    note: 'Compose CardTitle, CardMedia, CardText, and CardActions inside Card. These parts include Material keyline spacing; avoid adding a second layer of padding around them.',
+    note: 'Compose CardTitle, CardMedia, CardText, and CardActions inside Card. These parts include Material keyline spacing; avoid adding a second layer of padding around them. Give meaningful CardMedia backgrounds alt text, or pass an image element with its own alt.',
   },
   {
     slug: 'checkbox',
@@ -95,7 +101,7 @@ export const components = [
       '<fieldset className="m-0 border-0 p-0">\n  <legend className="mb-4 text-sm font-medium">Notification channels</legend>\n  <Checkbox label="Email" checked={email} onChange={setEmail} />\n  <Checkbox label="Push notifications" checked={push} onChange={setPush} />\n</fieldset>',
       'const [email, setEmail] = useState(true);\n  const [push, setPush] = useState(false);',
     ),
-    note: 'Keep checked in state and update it from onChange. Use a visible label, or supply an aria-label for an otherwise unlabeled control.',
+    note: 'Use checked and onChange for controlled state, or defaultChecked with name for native forms and reset. Set indeterminate for a partially selected collection. Use a visible label, or supply an aria-label for an otherwise unlabeled control.',
   },
   {
     slug: 'chip',
@@ -121,7 +127,7 @@ export const components = [
       '<DatePicker label="Start date"\n  value={date} onChange={setDate} />',
       'const [date, setDate] = useState(new Date(2026, 9, 13));',
     ),
-    note: 'Values are JavaScript Date objects. Use minDate and maxDate to limit the range. The registry includes the input, dialog, and supporting components.',
+    note: 'Values are JavaScript Date objects. Use minDate and maxDate to limit the range. In the calendar, arrows move by day/week, Home/End move within the week, and PageUp/PageDown move by month (hold Shift for years). The registry includes the input, dialog, and supporting components.',
   },
   {
     slug: 'dialog',
@@ -134,7 +140,7 @@ export const components = [
       '<>\n  <Button primary raised label="Open dialog" onClick={() => setActive(true)} />\n  <span role="status">{saved ? "Saved" : "Draft"}</span>\n  <Dialog active={active} title="Save this idea?"\n    onEscKeyDown={() => setActive(false)}\n    onOverlayClick={() => setActive(false)}\n    actions={[\n      { label: "Cancel", onClick: () => setActive(false) },\n      { label: "Save", primary: true, onClick: () => {\n        setSaved(true);\n        setActive(false);\n      } },\n    ]}>\n    You can return to it whenever you are ready.\n  </Dialog>\n</>',
       'const [active, setActive] = useState(false);\n  const [saved, setSaved] = useState(false);',
     ),
-    note: 'Control visibility with active. Supply a title and handle dismissal using onEscKeyDown and onOverlayClick. Dialog manages focus and restores it to the trigger.',
+    note: 'Control visibility with active. Supply a title and handle dismissal using onEscKeyDown and onOverlayClick. Dialog manages focus and restores it to the trigger. onOpenAutoFocus and onCloseAutoFocus can prevent the default and focus a specific element. portalContainer changes the portal destination.',
   },
   {
     slug: 'drawer',
@@ -147,7 +153,7 @@ export const components = [
       '<>\n  <Button primary raised label="Open drawer" onClick={() => setActive(true)} />\n  <Drawer active={active} aria-label="Your collection"\n    onEscKeyDown={() => setActive(false)}\n    onOverlayClick={() => setActive(false)}>\n    <div className="space-y-6 p-6">\n      <h2 className="m-0 text-xl font-medium">Your collection</h2>\n      <Button primary label="Close" onClick={() => setActive(false)} />\n    </div>\n  </Drawer>\n</>',
       'const [active, setActive] = useState(false);',
     ),
-    note: 'Use type="right" for a drawer entering from the right. For responsive navigation that can pin beside content, use NavDrawer from the Layout family.',
+    note: 'Use type="right" for a drawer entering from the right. For responsive navigation that can pin beside content, use NavDrawer from the Layout family. onOpenAutoFocus/onCloseAutoFocus customize focus for temporary drawers; portalContainer changes their destination.',
   },
   {
     slug: 'dropdown',
@@ -160,7 +166,7 @@ export const components = [
       '<Dropdown label="Destination" value={value}\n  onChange={value => setValue(String(value))}\n  source={[\n    { value: "madrid", label: "Madrid" },\n    { value: "tokyo", label: "Tokyo" },\n    { value: "lisbon", label: "Lisbon" },\n  ]} />',
       'const [value, setValue] = useState("madrid");',
     ),
-    note: 'Options use value and label by default. Supply valueKey and labelKey for a different data shape, or template for custom option content.',
+    note: 'Options use value and label by default. Use defaultValue for an uncontrolled field; name, form, required, submission, and reset work with native forms. Supply valueKey and labelKey for a different data shape, or template for custom option content. group/groupKey adds labeled groups; textValue/textKey supplies plain text for custom content and typeahead. open/onOpenChange controls popup visibility.',
   },
   {
     slug: 'font-icon',
@@ -185,7 +191,7 @@ export const components = [
       '<Input label="Project name" value={name}\n  onChange={setName} hint="Something worth making" />',
       'const [name, setName] = useState("");',
     ),
-    note: 'onChange receives the value before the event. Use multiline for a text area, error for validation feedback, and maxLength for a character counter.',
+    note: 'onChange receives the value before the event. Use multiline for a text area, error for validation feedback, and maxLength for a character counter. defaultValue supports native form reset, including externally associated forms.',
   },
   {
     slug: 'layout',
@@ -207,7 +213,7 @@ export const components = [
     code: example(
       'list',
       'List, ListItem',
-      '<div>\n  <List selectable ripple aria-label="Folders">\n    {["Inbox", "Favorites"].map(folder => (\n      <ListItem key={folder} theme={{ item: "p-0" }} itemContent={\n        <button type="button" onClick={() => setSelected(folder)}\n          className="flex min-h-12 w-full items-center border-0 bg-transparent px-4 text-left font-[inherit] text-base text-toolbox-text focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-toolbox-primary">\n          <FontIcon value={folder === "Inbox" ? "inbox" : "favorite_border"}\n            aria-hidden className="mr-8 text-toolbox-text-secondary" />\n          {folder}\n        </button>\n      } />\n    ))}\n  </List>\n  <p role="status">Selected: {selected}</p>\n</div>',
+      '<div>\n  <List selectable ripple aria-label="Folders">\n    {["Inbox", "Favorites"].map(folder => (\n      <ListItem key={folder} className="[--list-horizontal-padding:0px]" itemContent={\n        <button type="button" onClick={() => setSelected(folder)}\n          className="flex min-h-12 w-full items-center border-0 bg-transparent px-4 text-left font-[inherit] text-base text-toolbox-text focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-toolbox-primary">\n          <FontIcon value={folder === "Inbox" ? "inbox" : "favorite_border"}\n            aria-hidden className="mr-8 text-toolbox-text-secondary" />\n          {folder}\n        </button>\n      } />\n    ))}\n  </List>\n  <p role="status">Selected: {selected}</p>\n</div>',
       'const [selected, setSelected] = useState("Inbox");',
     ),
     note: 'Use caption, legend, and icons for content rows. For actions or navigation, itemContent accepts a native button or router link, preserving keyboard access. List supplies selectable and ripple to its rows; subheaders, dividers, and ListCheckbox are also included.',
@@ -223,7 +229,7 @@ export const components = [
       '<div className="flex w-48 max-w-full items-center justify-between gap-6">\n  <span role="status">{selected || "More actions"}</span>\n  <IconMenu icon="more_vert" position="topRight"\n  aria-label="More actions" onSelect={value => setSelected(String(value))}>\n  <MenuItem value="download" caption="Download" icon="file_download" />\n  <MenuItem value="share" caption="Share" icon="share" />\n  <MenuDivider />\n  <MenuItem caption="Unavailable" disabled />\n</IconMenu>\n</div>',
       'const [selected, setSelected] = useState("");',
     ),
-    note: 'IconMenu handles opening, keyboard navigation, and dismissal. Use onSelect to respond to an item value. Menu and MenuDivider are also available for custom compositions.',
+    note: 'IconMenu handles opening, keyboard navigation, and dismissal. Use onSelect to respond to an item value. Use trigger for a custom button or link. MenuCheckboxItem and MenuRadioGroup/MenuRadioItem provide selection menus that stay open. Wrappers and fragments preserve menu behavior; onClick can prevent selection and dismissal.',
   },
   {
     slug: 'overlay',
@@ -308,7 +314,7 @@ export const components = [
       '<Switch label="Do not disturb"\n  checked={checked} onChange={setChecked} />',
       'const [checked, setChecked] = useState(true);',
     ),
-    note: 'Keep checked in state and update it from onChange. Use a short label that describes the setting rather than the action.',
+    note: 'Use checked and onChange for controlled state, or defaultChecked with name for native forms and reset. Set indeterminate for a partially selected collection. Use a short label that describes the setting rather than the action.',
   },
   {
     slug: 'table',

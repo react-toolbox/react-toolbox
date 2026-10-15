@@ -4,9 +4,6 @@ import { mergeStyleSlots } from '../foundations/styles/slots';
 import type { MenuTheme } from './types';
 
 import {
-  Children,
-  cloneElement,
-  isValidElement,
   useCallback,
   useEffect,
   useImperativeHandle,
@@ -19,7 +16,7 @@ import {
   type Ref,
 } from 'react';
 import { cn } from '../foundations/styles/cn';
-import MenuItem, { type MenuItemProps } from './MenuItem';
+import { MenuContext } from './context';
 
 export type { MenuTheme, MenuClassNames } from './types';
 export type MenuPosition = 'auto' | 'static' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
@@ -31,6 +28,9 @@ export interface MenuHandle {
 }
 export interface MenuProps<Value = unknown> extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect' | 'onKeyDown'> {
   active?: boolean;
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
   initialFocus?: 'first' | 'last';
   onHide?: () => void;
   onSelect?: (value: Value | undefined) => void;
@@ -57,6 +57,9 @@ interface Dimensions {
 }
 export function Menu<Value = unknown>({
   active = false,
+  open: controlledOpen,
+  defaultOpen,
+  onOpenChange,
   children,
   className,
   initialFocus = 'first',
@@ -78,7 +81,15 @@ export function Menu<Value = unknown>({
   const theme = mergeStyleSlots(legacyTheme, classNames);
   const root = useRef<HTMLDivElement>(null);
   const menu = useRef<HTMLUListElement>(null);
-  const [visible, setVisible] = useState(active);
+  const [internalOpen, setInternalOpen] = useState(defaultOpen ?? active);
+  const visible = controlledOpen ?? internalOpen;
+  const stateRef = useRef({ controlledOpen, visible, onOpenChange });
+  stateRef.current = { controlledOpen, visible, onOpenChange };
+  const setVisible = useCallback((next: boolean) => {
+    const current = stateRef.current;
+    if (current.controlledOpen === undefined) setInternalOpen(next);
+    if (current.visible !== next) current.onOpenChange?.(next);
+  }, []);
   const [position, setPosition] = useState<ResolvedPosition | undefined>(
     requestedPosition === 'auto' ? undefined : requestedPosition,
   );
@@ -239,6 +250,10 @@ export function Menu<Value = unknown>({
       });
     };
     const outside = (event: Event) => {
+      // React can flush the opening effect before the trigger click reaches
+      // document. That same click is part of this menu's interaction.
+      const trigger = event.target instanceof Element ? event.target.closest('[aria-haspopup="menu"]') : null;
+      if (menu.current?.id && trigger?.getAttribute('aria-controls') === menu.current.id) return;
       if (event.target instanceof Node && !root.current?.contains(event.target)) {
         setVisible(false);
         setRippled(false);
@@ -270,7 +285,7 @@ export function Menu<Value = unknown>({
   );
   const keyDown = (event: KeyboardEvent<HTMLUListElement>) => {
     onKeyDown?.(event);
-    if (event.defaultPrevented || !menu.current) return;
+    if (event.defaultPrevented || event.nativeEvent.isComposing || !menu.current) return;
     const items = Array.from(
       menu.current.querySelectorAll<HTMLElement>(
         '[data-react-toolbox="menu-item"]:not([aria-disabled="true"]):not([hidden])',
@@ -285,12 +300,12 @@ export function Menu<Value = unknown>({
     if (event.key === 'Escape' && visible) {
       event.preventDefault();
       event.stopPropagation();
-      restoreFocus();
+      if (controlledOpen === undefined) restoreFocus();
       hide();
       return;
     }
     if (event.key === 'Tab' && visible && requestedPosition !== 'static') {
-      restoreFocus();
+      if (controlledOpen === undefined) restoreFocus();
       hide();
       return;
     }
@@ -303,13 +318,22 @@ export function Menu<Value = unknown>({
       next = items
         .slice(current + 1)
         .concat(items.slice(0, current + 1))
-        .find((item) => item.textContent?.trim().toLowerCase().startsWith(term));
+        .find((item) =>
+          (item.dataset.textValue ?? item.querySelector('.rt-menu-caption')?.textContent ?? item.textContent)
+            ?.trim()
+            .toLowerCase()
+            .startsWith(term),
+        );
       searchTimer.current = setTimeout(() => {
         search.current = '';
       }, 500);
     }
     if (next) {
       event.preventDefault();
+      if (requestedPosition === 'static')
+        items.forEach((item) => {
+          item.tabIndex = item === next ? 0 : -1;
+        });
       next.focus();
     }
   };
@@ -334,25 +358,15 @@ export function Menu<Value = unknown>({
           top: position?.startsWith('top') && offsetY ? offsetY : undefined,
           bottom: position?.startsWith('bottom') && offsetY ? -offsetY : undefined,
         };
-  let firstEnabled = true;
-  const items = Children.map(children, (item) => {
-    if (!isValidElement<MenuItemProps<Value>>(item) || item.type !== MenuItem) return item;
-    const tabIndex = requestedPosition === 'static' && !item.props.disabled && firstEnabled ? 0 : -1;
-    if (!item.props.disabled) firstEnabled = false;
-    return cloneElement(item, {
-      role: selectable && item.props.value !== undefined ? 'menuitemradio' : 'menuitem',
-      tabIndex,
-      ripple: item.props.ripple || ripple,
-      selected: item.props.value !== undefined && selectable && item.props.value === selected,
-      onClick: (event, handle) => {
-        restoreFocus();
-        setVisible(false);
-        setRippled(ripple);
-        item.props.onClick?.(event, handle);
-        onSelect?.(item.props.value);
-      },
+  useLayoutEffect(() => {
+    const items = menu.current?.querySelectorAll<HTMLElement>('[data-react-toolbox="menu-item"]');
+    let first = true;
+    items?.forEach((item) => {
+      const enabled = !item.hidden && item.getAttribute('aria-disabled') !== 'true';
+      item.tabIndex = requestedPosition === 'static' && enabled && first ? 0 : -1;
+      if (enabled) first = false;
     });
-  });
+  }, [children, requestedPosition]);
   return (
     <div
       {...attributes}
@@ -442,7 +456,23 @@ export function Menu<Value = unknown>({
         )}
         style={{ clip }}
       >
-        {items}
+        <MenuContext.Provider
+          value={{
+            ripple,
+            selectable,
+            selected,
+            select: (value, close) => {
+              if (close) {
+                if (controlledOpen === undefined) restoreFocus();
+                setVisible(false);
+                setRippled(ripple);
+              }
+              onSelect?.(value as Value | undefined);
+            },
+          }}
+        >
+          {children}
+        </MenuContext.Provider>
       </ul>
     </div>
   );

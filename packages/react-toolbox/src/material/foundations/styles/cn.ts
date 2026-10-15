@@ -5,6 +5,28 @@ import { extendTailwindMerge } from 'tailwind-merge';
 // text sizes do not set leading, so retain an explicitly supplied line height.
 const merge = extendTailwindMerge({
   override: { conflictingClassGroups: { 'font-size': [] } },
+  extend: {
+    classGroups: {
+      'font-size': [
+        {
+          text: [
+            'toolbox',
+            'toolbox-tiny',
+            'toolbox-small',
+            'toolbox-big',
+            'toolbox-display-2',
+            'toolbox-display-1',
+            'toolbox-headline',
+            'toolbox-title',
+            'toolbox-subheading',
+            'toolbox-body',
+            'toolbox-body-desktop',
+            'toolbox-caption',
+          ],
+        },
+      ],
+    },
+  },
 });
 
 /** Consumer utilities win over component defaults, including theme slot overrides. */

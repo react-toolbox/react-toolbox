@@ -4,7 +4,12 @@ import { Table, TableCell, TableHead, TableRow } from 'react-toolbox';
 
 export default function SpacingTable() {
   return (
-    <div className="overflow-x-auto rounded-toolbox border border-toolbox-divider">
+    <div
+      role="region"
+      aria-label="Spacing reference"
+      tabIndex={0}
+      className="overflow-x-auto rounded-toolbox border border-toolbox-divider"
+    >
       <Table selectable={false} aria-label="Material spacing utilities">
         <TableHead>
           <TableCell scope="col">Utility</TableCell>

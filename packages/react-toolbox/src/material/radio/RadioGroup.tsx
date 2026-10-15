@@ -2,11 +2,15 @@
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import React, { useId } from 'react';
-import RadioButton, { type RadioButtonProps, type RadioButtonTheme } from './RadioButton';
+import type { RadioButtonTheme } from './RadioButton';
+import { RadioGroupContext } from './context';
 export interface RadioGroupProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   disabled?: boolean;
   name?: string;
+  form?: string;
+  required?: boolean;
   value?: string;
+  defaultValue?: string;
   /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
   classNames?: RadioButtonTheme;
   /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
@@ -19,34 +23,32 @@ export function RadioGroup({
   className = '',
   disabled = false,
   name,
+  form,
+  required,
   onChange,
   theme: legacyTheme,
   classNames,
   value,
+  defaultValue,
   ...others
 }: RadioGroupProps) {
   const theme = mergeStyleSlots(legacyTheme, classNames);
   const id = useId();
   return (
-    <div
-      {...others}
-      role="radiogroup"
-      data-react-toolbox="radio-group"
-      className={className}
-      aria-disabled={disabled || undefined}
+    <RadioGroupContext
+      value={{ name: name || `radio-${id}`, form, required, value, defaultValue, disabled, theme, onChange }}
     >
-      {React.Children.map(children, (child) =>
-        !React.isValidElement<RadioButtonProps>(child) || child.type !== RadioButton
-          ? child
-          : React.cloneElement(child, {
-              checked: child.props.value === value,
-              disabled: disabled || child.props.disabled,
-              name: name || child.props.name || `radio-${id}`,
-              theme: { ...theme, ...child.props.theme },
-              onChange: (event) => onChange?.(child.props.value, event),
-            }),
-      )}
-    </div>
+      <div
+        {...others}
+        role="radiogroup"
+        data-react-toolbox="radio-group"
+        className={className}
+        aria-disabled={disabled || undefined}
+        aria-required={required || undefined}
+      >
+        {children}
+      </div>
+    </RadioGroupContext>
   );
 }
 export default RadioGroup;

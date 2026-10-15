@@ -13,10 +13,13 @@ import {
   useState,
   type HTMLAttributes,
   type ReactNode,
+  type ReactElement,
+  type HTMLProps,
   type Ref,
 } from 'react';
 import { cn } from '../foundations/styles/cn';
 import { IconButton } from '../button';
+import { Slot } from '@radix-ui/react-slot';
 import Menu, { type MenuProps, type MenuPosition } from './Menu';
 
 export type IconMenuTheme = MenuTheme;
@@ -27,6 +30,11 @@ export interface IconMenuHandle {
 }
 export interface IconMenuProps<Value = unknown> extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect' | 'onClick'> {
   active?: boolean;
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  /** A ref-forwarding button or router link used as the trigger. */
+  trigger?: ReactElement<HTMLProps<HTMLElement>>;
   icon?: ReactNode;
   iconRipple?: boolean;
   inverse?: boolean;
@@ -46,6 +54,10 @@ export interface IconMenuProps<Value = unknown> extends Omit<HTMLAttributes<HTML
 }
 export function IconMenu<Value = unknown>({
   active = false,
+  open: controlledOpen,
+  defaultOpen,
+  onOpenChange,
+  trigger,
   children,
   className,
   icon = 'more_vert',
@@ -67,28 +79,20 @@ export function IconMenu<Value = unknown>({
   const theme = mergeStyleSlots(legacyTheme, classNames);
   const id = `toolbox-menu-${useId()}`;
   const node = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(active);
+  const [internalOpen, setOpen] = useState(defaultOpen ?? active);
+  const visible = controlledOpen ?? internalOpen;
+  const setVisible = (next: boolean) => {
+    if (controlledOpen === undefined) setOpen(next);
+    if (next !== visible) onOpenChange?.(next);
+  };
+  const triggerId = trigger?.props.id ?? `${id}-trigger`;
+  const Trigger = trigger ? Slot : IconButton;
   const initialFocus = useRef<'first' | 'last'>('first');
-  useEffect(
-    () => setVisible(active),
-    [
-      active,
-      children,
-      className,
-      icon,
-      iconRipple,
-      inverse,
-      menuRipple,
-      onClick,
-      onHide,
-      onSelect,
-      onShow,
-      position,
-      selectable,
-      selected,
-      theme,
-    ],
-  );
+  const previousActive = useRef(active);
+  useEffect(() => {
+    if (previousActive.current !== active) setOpen(active);
+    previousActive.current = active;
+  }, [active]);
   useImperativeHandle(
     ref,
     () => ({
@@ -98,7 +102,7 @@ export function IconMenu<Value = unknown>({
         return node.current;
       },
     }),
-    [],
+    [controlledOpen, visible, onOpenChange],
   );
   return (
     <div
@@ -113,36 +117,44 @@ export function IconMenu<Value = unknown>({
         className,
       )}
     >
-      <IconButton
-        id={`${id}-trigger`}
-        aria-label={attributes['aria-label'] || 'More options'}
+      <Trigger
+        id={triggerId}
+        aria-label={attributes['aria-label'] || (trigger ? undefined : 'More options')}
         aria-haspopup="menu"
         aria-expanded={visible}
         aria-controls={id}
         className={cn(iconClasses, theme?.icon)}
-        icon={icon}
-        inverse={inverse}
+        {...(trigger ? {} : { icon, inverse, ripple: iconRipple })}
         onClick={(event) => {
-          initialFocus.current = 'first';
-          setVisible((current) => !current);
           onClick?.(event);
+          if (event.defaultPrevented) return;
+          // Safari does not focus buttons on pointer activation. Establish the
+          // actual opener before Menu captures its focus-restoration target.
+          if (!visible) event.currentTarget.focus({ preventScroll: true });
+          initialFocus.current = 'first';
+          setVisible(!visible);
         }}
         onKeyDown={(event) => {
-          if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+          if (
+            !event.defaultPrevented &&
+            !event.nativeEvent.isComposing &&
+            (event.key === 'ArrowDown' || event.key === 'ArrowUp')
+          ) {
             event.preventDefault();
             initialFocus.current = event.key === 'ArrowUp' ? 'last' : 'first';
             setVisible(true);
           }
         }}
-        ripple={iconRipple}
-      />
+      >
+        {trigger}
+      </Trigger>
       <Menu
         id={id}
-        aria-labelledby={`${id}-trigger`}
+        aria-labelledby={triggerId}
         initialFocus={initialFocus.current}
-        active={visible}
+        open={visible}
+        onOpenChange={setVisible}
         onHide={() => {
-          setVisible(false);
           onHide?.();
         }}
         onSelect={onSelect}

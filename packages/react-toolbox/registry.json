@@ -12,6 +12,35 @@
       "cssVars": {
         "theme": {
           "spacing": "4px",
+          "spacing-toolbox-touch": "48px",
+          "container-toolbox-prose": "65ch",
+          "text-toolbox-display-2": "2.8125rem",
+          "text-toolbox-display-2--line-height": "3rem",
+          "text-toolbox-display-2--font-weight": "400",
+          "text-toolbox-display-2--letter-spacing": "normal",
+          "text-toolbox-display-1": "2.125rem",
+          "text-toolbox-display-1--line-height": "2.5rem",
+          "text-toolbox-display-1--font-weight": "400",
+          "text-toolbox-display-1--letter-spacing": "normal",
+          "text-toolbox-headline": "1.5rem",
+          "text-toolbox-headline--line-height": "2rem",
+          "text-toolbox-headline--font-weight": "400",
+          "text-toolbox-title": "1.25rem",
+          "text-toolbox-title--line-height": "1.75rem",
+          "text-toolbox-title--font-weight": "500",
+          "text-toolbox-title--letter-spacing": "normal",
+          "text-toolbox-subheading": "1rem",
+          "text-toolbox-subheading--line-height": "1.5rem",
+          "text-toolbox-subheading--font-weight": "400",
+          "text-toolbox-body": "0.875rem",
+          "text-toolbox-body--line-height": "1.25rem",
+          "text-toolbox-body--font-weight": "400",
+          "text-toolbox-body-desktop": "0.8125rem",
+          "text-toolbox-body-desktop--line-height": "1.25rem",
+          "text-toolbox-body-desktop--font-weight": "400",
+          "text-toolbox-caption": "0.75rem",
+          "text-toolbox-caption--line-height": "1.25rem",
+          "text-toolbox-caption--font-weight": "400",
           "color-toolbox-primary": "var(--rt-color-primary)",
           "color-toolbox-primary-dark": "var(--rt-color-primary-dark)",
           "color-toolbox-primary-contrast": "var(--rt-color-primary-contrast)",
@@ -43,7 +72,9 @@
         }
       },
       "css": {
-        "@custom-variant toolbox-desktop (@media screen and (min-width: 600px) and (min-height: 600px))": {}
+        "@custom-variant toolbox-desktop (@media screen and (min-width: 600px) and (min-height: 600px))": {},
+        "@custom-variant toolbox-mobile-portrait (@media screen and (max-width: 599.98px) and (orientation: portrait))": {},
+        "@custom-variant toolbox-mobile-landscape (@media screen and (max-height: 599.98px) and (orientation: landscape))": {}
       },
       "dependencies": [
         "@fontsource/roboto@^5.3.0",
@@ -78,6 +109,16 @@
           "path": "src/material/foundations/styles/colors.css",
           "type": "registry:file",
           "target": "@ui/material/foundations/styles/colors.css"
+        },
+        {
+          "path": "src/material/foundations/styles/composition.css",
+          "type": "registry:file",
+          "target": "@ui/material/foundations/styles/composition.css"
+        },
+        {
+          "path": "src/material/foundations/styles/composition.ts",
+          "type": "registry:file",
+          "target": "@ui/material/foundations/styles/composition.ts"
         },
         {
           "path": "src/material/foundations/styles/reduced-motion.css",
@@ -152,7 +193,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "f737b9d3fa85203dfafb6d9d022fd5566c20710c56ae810ef751d9d109a7af1b",
+        "sourceSha256": "6c44606a4a9d6a614b88041f174b8d08e403c8d1ba0be648449981151b65f8fe",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -215,6 +256,39 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "foundation-forms",
+      "type": "registry:lib",
+      "title": "React Toolbox foundation forms",
+      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/material/foundations/forms/useChecked.ts",
+          "type": "registry:file",
+          "target": "@ui/material/foundations/forms/useChecked.ts"
+        },
+        {
+          "path": "src/material/foundations/forms/useFormReset.ts",
+          "type": "registry:file",
+          "target": "@ui/material/foundations/forms/useFormReset.ts"
+        }
+      ],
+      "docs": "Shared implementation installed automatically by the components that need it. See https://react-toolbox.io/docs/installation.",
+      "categories": [
+        "material-design",
+        "react-toolbox"
+      ],
+      "meta": {
+        "version": "3.0.0-next.0",
+        "sourceSha256": "344bcd253db7ab483ea3bf23dcab72acc6da7d5eadc4d9d12eb5c03549b389e3",
+        "source": "src/material/",
+        "distribution": "copy-source"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "foundation-motion",
       "type": "registry:lib",
       "title": "React Toolbox foundation motion",
@@ -267,6 +341,11 @@
           "path": "src/material/foundations/portal/useMergedRefs.ts",
           "type": "registry:file",
           "target": "@ui/material/foundations/portal/useMergedRefs.ts"
+        },
+        {
+          "path": "src/material/foundations/portal/usePortalTheme.ts",
+          "type": "registry:file",
+          "target": "@ui/material/foundations/portal/usePortalTheme.ts"
         }
       ],
       "docs": "Shared implementation installed automatically by the components that need it. See https://react-toolbox.io/docs/installation.",
@@ -276,7 +355,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "432602200b596047fafd6fc83c883025b17341673c3923f77c066d303317e1a1",
+        "sourceSha256": "8e2d78c56d864fbaa8c82af0a38ce645ff2a50726fc358a9a810240d7508740a",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -317,7 +396,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "698c0235cf0a1c4352b4fb11111d7e1507272ab6bc020e808a3672f1137f6be8",
+        "sourceSha256": "470e1ccefb93b530832fcf2751b8863b2e9e643419eb8b57a69710e420d6041a",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -328,11 +407,37 @@
       "type": "registry:ui",
       "title": "React Toolbox autocomplete",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [],
+      "css": {
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        }
+      },
+      "dependencies": [
+        "@base-ui/react@^1.9.0"
+      ],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/chip.json",
         "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-forms.json",
+        "https://react-toolbox.io/r/foundation-portal.json",
         "https://react-toolbox.io/r/input.json"
       ],
       "files": [
@@ -347,6 +452,11 @@
           "target": "@ui/material/autocomplete/index.ts"
         },
         {
+          "path": "src/material/autocomplete/parts.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/autocomplete/parts.tsx"
+        },
+        {
           "path": "src/material/autocomplete/types.ts",
           "type": "registry:file",
           "target": "@ui/material/autocomplete/types.ts"
@@ -359,7 +469,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "695cb7311313e7d4fd95c25c24775c450ed1b57b458bc275caf31370532fa4f8",
+        "sourceSha256": "61cd1ea24af5063a3605715fb344d6e15bb9b9c47e559f93a798af176bac43db",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -370,7 +480,9 @@
       "type": "registry:ui",
       "title": "React Toolbox avatar",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [],
+      "dependencies": [
+        "@radix-ui/react-avatar@^1.3.1"
+      ],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/font-icon.json",
@@ -400,7 +512,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "6430a5e5504db94b9aab6f7729b1f05c11c0d95910bfcb1dd8c8347b5f9f64fb",
+        "sourceSha256": "301600543b3a336505710f5c2e29fd8573339cb6dc657d0e21282761e6774216",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -411,7 +523,9 @@
       "type": "registry:ui",
       "title": "React Toolbox button",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [],
+      "dependencies": [
+        "@radix-ui/react-slot@^1.5.0"
+      ],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/font-icon.json",
@@ -428,6 +542,11 @@
           "path": "src/material/button/Button.tsx",
           "type": "registry:file",
           "target": "@ui/material/button/Button.tsx"
+        },
+        {
+          "path": "src/material/button/ButtonElement.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/button/ButtonElement.tsx"
         },
         {
           "path": "src/material/button/IconButton.tsx",
@@ -457,7 +576,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "2fa9a51f23d88749630ef9a325be9fec765d718609412dc5a264c5f1d917e51e",
+        "sourceSha256": "67452e2f9f1f78c2dba462288b95a1177919d2dfaef75ba07a122daeb4eb2146",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -518,7 +637,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "7e32c63112d92465e0667a45084f176492fdcdd0b98afc05f5d1151a1e0072b7",
+        "sourceSha256": "6832b6616a0c3efabf010b44127c6235f4fddfad78ffb17f3590fbdb59f83754",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -529,10 +648,27 @@
       "type": "registry:ui",
       "title": "React Toolbox checkbox",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        }
+      },
       "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-forms.json",
         "https://react-toolbox.io/r/ripple.json"
       ],
       "files": [
@@ -564,7 +700,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "10aba7925b28de12b7938f35229ee46e78635e345e97c6c6fc72c031a3909759",
+        "sourceSha256": "aad50c819486533c3c000466d211831b51b85c440ccf7d6e047560766331bb5c",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -628,6 +764,8 @@
         "https://react-toolbox.io/r/foundation.json",
         "https://react-toolbox.io/r/foundation-collections.json",
         "https://react-toolbox.io/r/foundation-date-time.json",
+        "https://react-toolbox.io/r/foundation-forms.json",
+        "https://react-toolbox.io/r/foundation-portal.json",
         "https://react-toolbox.io/r/input.json"
       ],
       "files": [
@@ -684,7 +822,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "e8e313144b8e40f623b0bfe036667976b98732ed2879bbb29318e1d4bbb2121b",
+        "sourceSha256": "43db91c9f5b439a149f5d35aaec57224df75c3bce62d77b441d83985d6d0fd3c",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -695,7 +833,47 @@
       "type": "registry:ui",
       "title": "React Toolbox dialog",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [],
+      "css": {
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        }
+      },
+      "dependencies": [
+        "@radix-ui/react-dialog@^1.3.1"
+      ],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/button.json",
@@ -716,6 +894,11 @@
           "target": "@ui/material/dialog/index.ts"
         },
         {
+          "path": "src/material/dialog/parts.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/dialog/parts.tsx"
+        },
+        {
           "path": "src/material/dialog/types.ts",
           "type": "registry:file",
           "target": "@ui/material/dialog/types.ts"
@@ -728,7 +911,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "959d4540a57760d60e6678b579b9fc91bfeaaa2147ccc06c7b29c48814459aaa",
+        "sourceSha256": "e941f81d3080e5f01ba6892cfb5059893de75b703af4377047de2b6aa1d8a0ae",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -739,7 +922,63 @@
       "type": "registry:ui",
       "title": "React Toolbox drawer",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [],
+      "css": {
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset, -100%) 0"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset, -100%) 0"
+          }
+        }
+      },
+      "dependencies": [
+        "@radix-ui/react-dialog@^1.3.1"
+      ],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json",
@@ -759,6 +998,11 @@
           "target": "@ui/material/drawer/index.ts"
         },
         {
+          "path": "src/material/drawer/parts.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/drawer/parts.tsx"
+        },
+        {
           "path": "src/material/drawer/types.ts",
           "type": "registry:file",
           "target": "@ui/material/drawer/types.ts"
@@ -771,7 +1015,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "91044870f3e74d17ac6af700848092ad7adf40441733e125f6f8ed1c391a676d",
+        "sourceSha256": "cb3444cd70204dd3d6eb045f0fd021c2b40f4beeb22b05430328240d0f73d146",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -782,10 +1026,36 @@
       "type": "registry:ui",
       "title": "React Toolbox dropdown",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [],
+      "css": {
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        }
+      },
+      "dependencies": [
+        "@radix-ui/react-select@^2.4.1"
+      ],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-forms.json",
+        "https://react-toolbox.io/r/foundation-portal.json",
         "https://react-toolbox.io/r/input.json"
       ],
       "files": [
@@ -800,6 +1070,11 @@
           "target": "@ui/material/dropdown/index.ts"
         },
         {
+          "path": "src/material/dropdown/parts.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/dropdown/parts.tsx"
+        },
+        {
           "path": "src/material/dropdown/types.ts",
           "type": "registry:file",
           "target": "@ui/material/dropdown/types.ts"
@@ -812,7 +1087,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "016fbca4a126ba5751b742dcf625d2b38c0dbdeaf4c45dd0fe0191850b40240c",
+        "sourceSha256": "d4cd2e199957728f2a3ca09bba6192fbda342b75a6e4cd037ec955811ba87c34",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -862,7 +1137,8 @@
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/font-icon.json",
-        "https://react-toolbox.io/r/foundation.json"
+        "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-forms.json"
       ],
       "files": [
         {
@@ -893,7 +1169,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "cc658010b0736a48ff28a221e170860eb554fcffe97605b363e81037781ab623",
+        "sourceSha256": "41fd1dc7ada813aada9374c80e160a0622bec00509dbb6368eafacef53ac1ced",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -904,6 +1180,60 @@
       "type": "registry:ui",
       "title": "React Toolbox layout",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset, -100%) 0"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset, -100%) 0"
+          }
+        }
+      },
       "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
@@ -971,6 +1301,22 @@
       "type": "registry:ui",
       "title": "React Toolbox list",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        }
+      },
       "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
@@ -1065,12 +1411,38 @@
       "type": "registry:ui",
       "title": "React Toolbox menu",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [],
+      "css": {
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        }
+      },
+      "dependencies": [
+        "@radix-ui/react-dropdown-menu@^2.2.1",
+        "@radix-ui/react-slot@^1.5.0"
+      ],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/button.json",
         "https://react-toolbox.io/r/font-icon.json",
         "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-portal.json",
         "https://react-toolbox.io/r/ripple.json"
       ],
       "files": [
@@ -1085,6 +1457,11 @@
           "target": "@ui/material/menu/Menu.tsx"
         },
         {
+          "path": "src/material/menu/MenuCheckboxItem.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/menu/MenuCheckboxItem.tsx"
+        },
+        {
           "path": "src/material/menu/MenuDivider.tsx",
           "type": "registry:file",
           "target": "@ui/material/menu/MenuDivider.tsx"
@@ -1095,9 +1472,24 @@
           "target": "@ui/material/menu/MenuItem.tsx"
         },
         {
+          "path": "src/material/menu/MenuRadioGroup.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/menu/MenuRadioGroup.tsx"
+        },
+        {
+          "path": "src/material/menu/context.ts",
+          "type": "registry:file",
+          "target": "@ui/material/menu/context.ts"
+        },
+        {
           "path": "src/material/menu/index.ts",
           "type": "registry:ui",
           "target": "@ui/material/menu/index.ts"
+        },
+        {
+          "path": "src/material/menu/parts.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/menu/parts.tsx"
         },
         {
           "path": "src/material/menu/styles.ts",
@@ -1117,7 +1509,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "e9b3994364fa00fa56b8045f75a0d4c4001cf6dba9ed37884e39f61a1c03b35c",
+        "sourceSha256": "d2d75f0b52ee28b34b6d1c74061af0bdea4dad236b67e1b7c4a25e5f46cf2ed4",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1128,7 +1520,9 @@
       "type": "registry:ui",
       "title": "React Toolbox overlay",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [],
+      "dependencies": [
+        "aria-hidden@^1.2.6"
+      ],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json"
@@ -1162,7 +1556,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "ccf8ec918320678286ce8e56a27edb54576182f828031e79285050ac1f835644",
+        "sourceSha256": "ec925c3debd82d738ab055229e55eb4cb0e3992b82d729afee154fb401736ba8",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1173,6 +1567,55 @@
       "type": "registry:ui",
       "title": "React Toolbox progress bar",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        }
+      },
       "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
@@ -1217,6 +1660,7 @@
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-forms.json",
         "https://react-toolbox.io/r/ripple.json"
       ],
       "files": [
@@ -1236,6 +1680,11 @@
           "target": "@ui/material/radio/RadioGroup.tsx"
         },
         {
+          "path": "src/material/radio/context.ts",
+          "type": "registry:file",
+          "target": "@ui/material/radio/context.ts"
+        },
+        {
           "path": "src/material/radio/index.ts",
           "type": "registry:ui",
           "target": "@ui/material/radio/index.ts"
@@ -1253,7 +1702,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "e140483ba0e033d5b015f5d1a2ed0ff5ca27ba392cb94423cf88ee0e5715110f",
+        "sourceSha256": "9e6b81f1b064fb85c179b9e6ba65b4a86946dd8ad07e04a8ee70d4dd0fe489b8",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1305,10 +1754,60 @@
       "type": "registry:ui",
       "title": "React Toolbox slider",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        }
+      },
       "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-forms.json",
         "https://react-toolbox.io/r/input.json",
         "https://react-toolbox.io/r/progress-bar.json"
       ],
@@ -1336,7 +1835,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "e8006526c4dbdccd85b83b107d58101cc5d092046e8a22a8684a1937a9e5e6c7",
+        "sourceSha256": "36ecbaf5e48c165c6ac050ae480984277bc7dd2ea725b577ba19afccc4fd6736",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1394,6 +1893,7 @@
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-forms.json",
         "https://react-toolbox.io/r/ripple.json"
       ],
       "files": [
@@ -1425,7 +1925,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "4b5cbf2f35d03533c528943f76e442b83b67a7e2d9b8edc254c5dfa3341e6c35",
+        "sourceSha256": "f5f2f75618f6a8d84a07ab0618cbb84bfde1c61113e0c97d0068adcf02a95a46",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1436,6 +1936,22 @@
       "type": "registry:ui",
       "title": "React Toolbox table",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        }
+      },
       "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
@@ -1470,6 +1986,16 @@
           "target": "@ui/material/table/index.ts"
         },
         {
+          "path": "src/material/table/parts.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/table/parts.tsx"
+        },
+        {
+          "path": "src/material/table/selection.ts",
+          "type": "registry:file",
+          "target": "@ui/material/table/selection.ts"
+        },
+        {
           "path": "src/material/table/styles.ts",
           "type": "registry:file",
           "target": "@ui/material/table/styles.ts"
@@ -1487,7 +2013,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "1a156277ac6d18260df37c9284c82be2064576509134a5bfb1d7f6d56b88b230",
+        "sourceSha256": "9f9a84e1529636e7fbb9024ea4e15e9427166da5fe6b4bf3f7bf0aeddc1628ab",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1498,7 +2024,32 @@
       "type": "registry:ui",
       "title": "React Toolbox tabs",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [],
+      "css": {
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        }
+      },
+      "dependencies": [
+        "@radix-ui/react-roving-focus@^1.2.1",
+        "@radix-ui/react-tabs@^1.2.1"
+      ],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/font-icon.json",
@@ -1527,6 +2078,11 @@
           "target": "@ui/material/tabs/index.ts"
         },
         {
+          "path": "src/material/tabs/parts.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/tabs/parts.tsx"
+        },
+        {
           "path": "src/material/tabs/styles.ts",
           "type": "registry:file",
           "target": "@ui/material/tabs/styles.ts"
@@ -1544,7 +2100,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "1245aadd81e7f5e7f7a00df37790efe380ddbb1559ba02f7e6790e841a6bb228",
+        "sourceSha256": "1eb744ea44bb8e815d48a4890b6925dc6d0680998db8f46d8f4e27bb62d290bf",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1566,6 +2122,8 @@
         "https://react-toolbox.io/r/foundation.json",
         "https://react-toolbox.io/r/foundation-collections.json",
         "https://react-toolbox.io/r/foundation-date-time.json",
+        "https://react-toolbox.io/r/foundation-forms.json",
+        "https://react-toolbox.io/r/foundation-portal.json",
         "https://react-toolbox.io/r/input.json"
       ],
       "files": [
@@ -1632,7 +2190,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "a693e46e3e538e8749ecb8909426fbc05c26d09e99aaecd4210410415647a8e7",
+        "sourceSha256": "dc7beb6b89b79b0a100521d802cf61cd52dc7a3a38dc3185c8050fb63967dfd8",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1643,7 +2201,31 @@
       "type": "registry:ui",
       "title": "React Toolbox tooltip",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [],
+      "css": {
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        }
+      },
+      "dependencies": [
+        "@radix-ui/react-tooltip@^1.4.1"
+      ],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json",
@@ -1662,6 +2244,11 @@
           "target": "@ui/material/tooltip/index.ts"
         },
         {
+          "path": "src/material/tooltip/parts.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/tooltip/parts.tsx"
+        },
+        {
           "path": "src/material/tooltip/types.ts",
           "type": "registry:file",
           "target": "@ui/material/tooltip/types.ts"
@@ -1674,7 +2261,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "a1563088d4818b9e4c9c01d36019ebf6dd47dbf5bee0e078acbe580e786703d0",
+        "sourceSha256": "4fa79b25cdf9080bcd7207b03b2bb169334df170ef2e41c1bc86d369e2201703",
         "source": "src/material/",
         "distribution": "copy-source"
       }

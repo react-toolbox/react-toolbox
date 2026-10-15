@@ -7,6 +7,7 @@
 @import "material-icons/iconfont/material-icons.css" layer(base);
 @import "./tailwind-preflight.css";
 @import "./styles.css";
+@import "./composition.css";
 
 /* Include the installed source even when the host disables automatic scanning. */
 @source "../../";

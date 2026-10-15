@@ -1,9 +1,9 @@
 /* Standard Tailwind with scoped Material Design compatibility. */
 @layer theme, base, components, utilities;
-@import 'tailwindcss';
-@import 'react-toolbox/tailwind.css';
-@import 'material-icons/iconfont/material-icons.css' layer(base);
-@source './**/*.{js,jsx,ts,tsx}';
+@import "tailwindcss";
+@import "react-toolbox/tailwind.css";
+@import "material-icons/iconfont/material-icons.css" layer(base);
+@source "./**/*.{js,jsx,ts,tsx}";
 
 html {
   scroll-padding-top: 32px;
@@ -13,9 +13,20 @@ body {
   margin: 0;
   background: #f7f8fa;
   color: #212121;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   line-height: 1.5;
+}
+
+.documentation-shell {
+  font-family: "Roboto", "Noto", sans-serif;
+}
+
+@layer base {
+  .documentation-shell :where(a, pre, [role="region"]):focus-visible {
+    outline: 2px solid var(--rt-color-primary);
+    outline-offset: 2px;
+  }
 }
 
 /* These styles belong to the gallery shell; component internals are untouched. */
@@ -225,7 +236,7 @@ body {
 
 .gallery-card-art::before,
 .gallery-card-art::after {
-  content: '';
+  content: "";
   position: absolute;
 }
 

@@ -11,9 +11,11 @@ export interface AppBarProps extends Omit<ComponentPropsWithRef<'header'>, 'titl
   fixed?: boolean;
   flat?: boolean;
   leftIcon?: ReactNode;
+  leftIconLabel?: string;
   onLeftIconClick?: ComponentPropsWithRef<'button'>['onClick'];
   onRightIconClick?: ComponentPropsWithRef<'button'>['onClick'];
   rightIcon?: ReactNode;
+  rightIconLabel?: string;
   scrollHide?: boolean;
   /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
   classNames?: AppBarTheme;
@@ -27,9 +29,11 @@ export function AppBar({
   fixed = false,
   flat = false,
   leftIcon,
+  leftIconLabel,
   onLeftIconClick,
   onRightIconClick,
   rightIcon,
+  rightIconLabel,
   scrollHide = false,
   theme: legacyTheme,
   classNames,
@@ -68,7 +72,7 @@ export function AppBar({
     const height = root.current?.getBoundingClientRect().height ?? 0;
     const onScroll = () => {
       const current = window.scrollY;
-      setHidden(current > previous && current > height);
+      setHidden(!root.current?.contains(document.activeElement) && current > previous && current > height);
       previous = current;
     };
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -78,6 +82,10 @@ export function AppBar({
     <header
       {...other}
       ref={attach}
+      onFocusCapture={(event) => {
+        setHidden(false);
+        other.onFocusCapture?.(event);
+      }}
       data-react-toolbox="app-bar"
       className={cn(
         'rt-app-bar-appBar',
@@ -116,6 +124,7 @@ export function AppBar({
               theme?.leftIcon,
             )}
             onClick={onLeftIconClick}
+            aria-label={leftIconLabel}
             icon={leftIcon}
           />
         )}
@@ -142,6 +151,7 @@ export function AppBar({
               theme?.rightIcon,
             )}
             onClick={onRightIconClick}
+            aria-label={rightIconLabel}
             icon={rightIcon}
           />
         )}

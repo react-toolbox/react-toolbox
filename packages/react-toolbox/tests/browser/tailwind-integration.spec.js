@@ -72,7 +72,7 @@ test.beforeAll(async () => {
   ).css;
   integrated = (
     await postcss([tailwind()]).process(
-      '@import "tailwindcss"; @import "./src/material/foundations/styles/tailwind.css"; @source inline("h-20 bg-toolbox-primary! text-toolbox-accent! p-4 p-6! gap-2 p-toolbox px-2 toolbox-desktop:px-4");',
+      '@import "tailwindcss"; @import "./src/material/foundations/styles/tailwind.css"; @source inline("h-20 bg-toolbox-primary! text-toolbox-accent! p-4 p-6! gap-2 p-toolbox px-2 toolbox-desktop:px-4 text-toolbox-title text-toolbox-primary");',
       { from: `${root}/integration.css` },
     )
   ).css;
@@ -181,6 +181,15 @@ test('standard Tailwind Preflight retains exact Material component geometry and 
   expect(fullImage.equals(baseImage)).toBe(true);
   await base.close();
   await full.close();
+});
+
+test('Material text roles retain both size and color when composed through className', async ({ page }) => {
+  await fixture(page, integrated, 'normal', { card: 'text-toolbox-title text-toolbox-primary' });
+  const card = page.locator('#fixture [data-react-toolbox="card"]');
+  await expect(card).toHaveCSS('font-size', '20px');
+  await expect(card).toHaveCSS('line-height', '28px');
+  await expect(card).toHaveCSS('font-weight', '500');
+  await expect(card).toHaveCSS('color', 'rgb(63, 81, 181)');
 });
 
 test('Tailwind utilities override component geometry and resolve scoped Toolbox colors', async ({ page }) => {

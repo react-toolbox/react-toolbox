@@ -18,10 +18,16 @@ import {
 import { cn } from '../foundations/styles/cn';
 import Input, { type InputHandle } from '../input';
 import ProgressBar from '../progress-bar';
+import useFormReset from '../foundations/forms/useFormReset';
 
 export type { SliderTheme, SliderClassNames } from './types';
-export interface SliderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart'> {
+export interface SliderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart' | 'defaultValue'> {
   buffer?: number;
+  defaultValue?: number;
+  name?: string;
+  form?: string;
+  /** Fires after a completed drag, keyboard change, or editable value commit. */
+  onValueCommit?: (value: number) => void;
   disabled?: boolean;
   editable?: boolean;
   max?: number;
@@ -46,6 +52,11 @@ const decimalPlaces = (number: number) => {
 
 export function Slider({
   buffer = 0,
+  defaultValue = 0,
+  name,
+  form,
+  dir,
+  onValueCommit,
   className = '',
   disabled = false,
   editable = false,
@@ -64,16 +75,38 @@ export function Slider({
   tabIndex,
   theme: legacyTheme,
   classNames,
-  value = 0,
+  value: controlledValue,
   ref,
   ...other
 }: SliderProps) {
   const theme = mergeStyleSlots(legacyTheme, classNames);
+  const [internalValue, setValue] = useState(defaultValue);
+  const value = controlledValue ?? internalValue;
+  const native = useRef<HTMLInputElement>(null);
+  const [direction, setDirection] = useState<'ltr' | 'rtl'>('ltr');
+  useEffect(() => {
+    if (container.current)
+      setDirection(
+        dir === 'rtl' || (dir !== 'ltr' && getComputedStyle(container.current).direction === 'rtl') ? 'rtl' : 'ltr',
+      );
+  }, [dir]);
+  useFormReset(native, () => {
+    if (controlledValue === undefined) setValue(defaultValue);
+    setInputValue(null);
+  });
+  const latestValue = useRef(value);
+  latestValue.current = value;
+  const change = (next: number, event?: SyntheticEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    latestValue.current = next;
+    if (controlledValue === undefined) setValue(next);
+    if (event) onChange?.(next, event);
+    else onChange?.(next);
+  };
   const container = useRef<HTMLDivElement>(null);
   const knob = useRef<HTMLDivElement>(null);
   const input = useRef<InputHandle>(null);
   const cancelled = useRef(false);
-  const drag = useRef<{ start: number; length: number; touch: boolean } | null>(null);
+  const drag = useRef<{ start: number; length: number; touch: boolean; initial: number } | null>(null);
   const [pressed, setPressed] = useState(false);
   const [inputValue, setInputValue] = useState<string | null>(null);
   const stepSize = Number.isFinite(step) && step > 0 ? step : 1;
@@ -92,15 +125,18 @@ export function Slider({
   function positionToValue(x: number) {
     const bounds = drag.current;
     if (!bounds || bounds.length <= 0 || max <= min) return trim(value);
+    if (direction === 'rtl') x = bounds.start + bounds.length - (x - bounds.start);
     if (x <= bounds.start) return min;
     if (x >= bounds.start + bounds.length) return max;
     return trim(Math.round((((x - bounds.start) / bounds.length) * (max - min)) / stepSize) * stepSize + min);
   }
-  function end() {
+  function end(event?: Event) {
     if (!drag.current) return;
+    const changed = latestValue.current !== drag.current.initial;
     drag.current = null;
     setPressed(false);
     onDragStop?.();
+    if (event && event.type !== 'touchcancel' && changed) onValueCommit?.(latestValue.current);
   }
   useEffect(() => {
     if (disabled) {
@@ -112,7 +148,7 @@ export function Slider({
     if (!pressed || disabled) return;
     function move(x: number) {
       const next = positionToValue(x);
-      if (next !== value) onChange?.(next);
+      if (next !== latestValue.current) change(next);
     }
     const mouseMove = (event: globalThis.MouseEvent) => {
       event.preventDefault();
@@ -138,7 +174,7 @@ export function Slider({
       document.removeEventListener('touchend', end);
       document.removeEventListener('touchcancel', end);
     };
-  }, [pressed, disabled, value, min, max, stepSize, decimals, onChange, onDragStop]);
+  }, [pressed, disabled, value, min, max, stepSize, decimals, onChange, onDragStop, onValueCommit, direction]);
 
   function start(x: number, touch: boolean) {
     if (!container.current || !knob.current) return;
@@ -148,10 +184,11 @@ export function Slider({
       start: left + knob.current.getBoundingClientRect().width / 2,
       length: width,
       touch,
+      initial: value,
     };
     setPressed(true);
     onDragStart?.();
-    onChange?.(positionToValue(x));
+    change(positionToValue(x));
   }
   function handleMouseDown(event: MouseEvent<HTMLDivElement>) {
     onMouseDown?.(event);
@@ -163,7 +200,7 @@ export function Slider({
   }
   function handleTouchStart(event: TouchEvent<HTMLDivElement>) {
     onTouchStart?.(event);
-    if (disabled || event.defaultPrevented || !event.touches[0]) return;
+    if (disabled || event.defaultPrevented || event.touches.length !== 1 || !event.touches[0]) return;
     start(event.touches[0].pageX - window.scrollX, true);
     event.preventDefault();
     event.stopPropagation();
@@ -171,14 +208,32 @@ export function Slider({
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     onKeyDown?.(event);
     if (disabled || event.defaultPrevented) return;
-    const key = event.key || event.code;
-    if (!['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(key)) return;
+    const pressedKey = event.key || event.code;
+    const key =
+      direction === 'rtl' && (pressedKey === 'ArrowLeft' || pressedKey === 'ArrowRight')
+        ? pressedKey === 'ArrowLeft'
+          ? 'ArrowRight'
+          : 'ArrowLeft'
+        : pressedKey;
+    if (
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey ||
+      !['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'PageUp', 'PageDown'].includes(key)
+    )
+      return;
     event.preventDefault();
     const position = (value - min) / stepSize;
+    const increment = key === 'PageUp' || key === 'PageDown' || event.shiftKey ? 10 : 1;
     const stop =
-      key === 'ArrowUp' || key === 'ArrowRight' ? Math.floor(position + 1e-9) + 1 : Math.ceil(position - 1e-9) - 1;
+      key === 'ArrowUp' || key === 'ArrowRight' || key === 'PageUp'
+        ? Math.floor(position + 1e-9) + increment
+        : Math.ceil(position - 1e-9) - increment;
     const next = key === 'Home' ? min : key === 'End' ? max : trim(min + stop * stepSize);
-    if (next !== value) onChange?.(next);
+    if (next !== value) {
+      change(next);
+      onValueCommit?.(next);
+    }
   }
   const span = max - min;
   const count = span > 0 ? Math.ceil(span / stepSize) : 0;
@@ -207,6 +262,7 @@ export function Slider({
       {...{ disabled }}
       data-react-toolbox="slider"
       style={style}
+      dir={dir}
       ref={ref}
     >
       <div
@@ -232,6 +288,7 @@ export function Slider({
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
       >
+        <input ref={native} type="hidden" name={name} form={form} disabled={disabled} value={trim(value)} />
         <div
           ref={knob}
           className={cn(
@@ -241,7 +298,10 @@ export function Slider({
             '[.rt-slider-slider.rt-slider-ring:has(.rt-slider-container:focus-visible)_&&::before]:bg-(--slider-track-focus-color)',
             theme?.knob,
           )}
-          style={{ left: `${span > 0 ? (100 * (trim(value) - min)) / span : 0}%` }}
+          style={{
+            position: direction === 'rtl' ? 'absolute' : undefined,
+            left: `${direction === 'rtl' ? 100 - (span > 0 ? (100 * (trim(value) - min)) / span : 0) : span > 0 ? (100 * (trim(value) - min)) / span : 0}%`,
+          }}
         >
           <div
             className={cn(
@@ -265,6 +325,7 @@ export function Slider({
           />
         </div>
         <div
+          style={direction === 'rtl' ? { transform: 'scaleX(-1)' } : undefined}
           className={cn(
             'rt-slider-progress',
             'h-full left-[calc(var(--slider-knob-size)/2)] absolute top-0 w-full',
@@ -330,7 +391,11 @@ export function Slider({
           onBlur={(event) => {
             const parsed = parseFloat(inputValue ?? '');
             setInputValue(null);
-            if (!cancelled.current) onChange?.(trim(Number.isFinite(parsed) ? parsed : value), event);
+            if (!cancelled.current) {
+              const next = trim(Number.isFinite(parsed) ? parsed : value);
+              change(next, event);
+              if (next !== value) onValueCommit?.(next);
+            }
             cancelled.current = false;
           }}
           onKeyDown={(event) => {

@@ -6,7 +6,7 @@ import type { DialogTheme } from './types';
 
 import { useId, type HTMLAttributes, type MouseEventHandler, type ReactNode, type Ref } from 'react';
 import { cn } from '../foundations/styles/cn';
-import Portal from '../foundations/portal/Portal';
+import Portal, { type PortalContainer } from '../foundations/portal/Portal';
 import usePresence from '../foundations/motion/usePresence';
 import useMergedRefs from '../foundations/portal/useMergedRefs';
 import { Button, type ButtonProps } from '../button';
@@ -18,6 +18,11 @@ export type DialogActionProps = ButtonProps;
 export interface DialogProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   actions?: DialogActionProps[];
   active?: boolean;
+  /** Cancel the default focus placement and focus a specific field instead. */
+  onOpenAutoFocus?: (event: Event) => void;
+  /** Cancel the default return focus, for example after deleting the opener. */
+  onCloseAutoFocus?: (event: Event) => void;
+  portalContainer?: PortalContainer;
   delay?: number;
   onEscKeyDown?: (event: KeyboardEvent) => void;
   onOverlayClick?: MouseEventHandler<HTMLDivElement>;
@@ -35,6 +40,9 @@ export interface DialogProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title
 export function Dialog({
   actions = [],
   active = false,
+  onOpenAutoFocus,
+  onCloseAutoFocus,
+  portalContainer,
   delay = 500,
   type = 'normal',
   children,
@@ -53,11 +61,12 @@ export function Dialog({
   const theme = mergeStyleSlots(legacyTheme, classNames);
   const titleId = useId();
   const { present, visible } = usePresence(active, delay);
-  const focusRef = useModalFocus(visible);
+  const focusRef = useModalFocus(visible, { onOpenAutoFocus, onCloseAutoFocus });
   const dialogRef = useMergedRefs<HTMLDivElement>(focusRef, ref);
   if (!present) return null;
   return (
     <Portal
+      container={portalContainer}
       className={cn(
         'rt-dialog-wrapper',
         'items-center flex h-screen justify-center fixed top-0 w-screen z-(--z-index-higher)',

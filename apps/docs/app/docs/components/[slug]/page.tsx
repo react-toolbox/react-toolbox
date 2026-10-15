@@ -9,6 +9,8 @@ import CodeBlock from '../../code-block';
 import ComponentPreview from '../../component-preview';
 import ApiReference from '../../api-reference';
 import { componentState } from '../../component-state';
+import CompositionPreview, { hasCompositionExample } from '../../composition-preview';
+import { workflowExamples } from '../../workflow-examples';
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -29,6 +31,7 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
   const next = components[index + 1];
   const guidelines = materialGuidelines[component.slug];
   const dependencies = exampleDependencies[component.slug] ?? [];
+  const workflow = workflowExamples[component.slug];
   return (
     <DocsArticle
       title={component.title}
@@ -38,6 +41,7 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
         { id: 'preview', title: 'Preview' },
         { id: 'installation', title: 'Installation' },
         { id: 'usage', title: 'Usage' },
+        ...(hasCompositionExample(component.slug) ? [{ id: 'composition', title: 'Composition' }] : []),
         { id: 'state', title: 'State and callbacks' },
         { id: 'api', title: 'API reference' },
         { id: 'material-guidelines', title: 'Material guidelines' },
@@ -56,27 +60,38 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
           label={`Install ${component.title}`}
           code={`pnpm dlx shadcn@latest add ${[component.slug, ...dependencies].map((name) => `${new URL(registry.catalog.homepage).origin}/r/${name}.json`).join(' ')}`}
         />
-        <p className="mt-4 text-sm leading-6 text-toolbox-text-secondary">
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
           New here?{' '}
           <Link href="/docs/installation" className="text-toolbox-primary underline underline-offset-2">
             Set up your project
           </Link>{' '}
           first. Styles, fonts, and required components are included.
-          {dependencies.length > 0 && ' This example also installs Button for its trigger.'}
+          {dependencies.length > 0 && ' The command includes the components used by the examples below.'}
         </p>
       </DocsSection>
       <DocsSection id="usage" title="Usage">
-        <p className="text-sm leading-7 text-toolbox-text-secondary">{component.note}</p>
-        <p className="mt-4 text-sm leading-7 text-toolbox-text-secondary">
+        <p className="text-toolbox-body/6 text-toolbox-text">{component.note}</p>
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
           Use the Code tab above for a complete example. The import follows your configured UI alias. See{' '}
           <Link href="/docs/theming" className="text-toolbox-primary underline underline-offset-2">
             Theming
           </Link>{' '}
-          to customize colors, spacing, and style slots.
+          for CSS variables and Tailwind customization.
         </p>
+        {workflow && !hasCompositionExample(component.slug) && (
+          <div className="mt-6 space-y-4">
+            <h3 className="text-toolbox-subheading">{workflow.title}</h3>
+            <CodeBlock label={workflow.title} code={workflow.code} />
+          </div>
+        )}
       </DocsSection>
+      {hasCompositionExample(component.slug) && (
+        <DocsSection id="composition" title="Composition">
+          <CompositionPreview slug={component.slug} />
+        </DocsSection>
+      )}
       <DocsSection id="state" title="State and callbacks">
-        <div className="space-y-4 text-sm leading-7 text-toolbox-text-secondary">
+        <div className="space-y-4 text-toolbox-body/6 text-toolbox-text">
           {componentState[component.slug].map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
@@ -96,15 +111,15 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
         <ApiReference slug={component.slug} />
       </DocsSection>
       <DocsSection id="material-guidelines" title="Material guidelines">
-        <ul className="list-disc space-y-3 pl-5 text-sm leading-7 text-toolbox-text-secondary">
+        <ul className="list-disc space-y-3 pl-5 text-toolbox-body/6 text-toolbox-text">
           {guidelines.guidance.map((point) => (
             <li key={point}>{point}</li>
           ))}
         </ul>
-        <p className="mt-4 text-sm leading-7">
+        <p className="mt-4 text-toolbox-body/6">
           <a
             href={`https://m1.material.io/${guidelines.path}`}
-            className="text-toolbox-primary underline underline-offset-4"
+            className="inline-flex min-h-toolbox-touch items-center text-toolbox-primary underline underline-offset-4"
           >
             Material Design 1: {guidelines.title}
           </a>
@@ -116,14 +131,20 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
       >
         <span>
           {previous && (
-            <Link href={`/docs/components/${previous.slug}`} className="hover:underline">
+            <Link
+              href={`/docs/components/${previous.slug}`}
+              className="inline-flex min-h-toolbox-touch items-center hover:underline"
+            >
               ← {previous.title}
             </Link>
           )}
         </span>
         <span>
           {next && (
-            <Link href={`/docs/components/${next.slug}`} className="hover:underline">
+            <Link
+              href={`/docs/components/${next.slug}`}
+              className="inline-flex min-h-toolbox-touch items-center hover:underline"
+            >
               {next.title} →
             </Link>
           )}

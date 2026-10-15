@@ -3,15 +3,29 @@ import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { checkboxCellClasses } from './styles';
 import type { TableTheme } from './types';
-import { Children, cloneElement, isValidElement, type ComponentPropsWithRef } from 'react';
+import {
+  useContext,
+  useEffect,
+  Children,
+  Fragment,
+  cloneElement,
+  isValidElement,
+  type ComponentPropsWithRef,
+  type ReactNode,
+} from 'react';
 import { cn } from '../foundations/styles/cn';
 import Checkbox from '../checkbox';
+import { TableSelectionContext } from './selection';
 import TableCell, { type TableCellProps } from './TableCell';
 export interface TableRowProps extends Omit<ComponentPropsWithRef<'tr'>, 'onSelect'> {
+  /** Stable identity for selection inside TableRoot. */
+  value?: string;
+  selectionDisabled?: boolean;
   idx?: number;
   onSelect?: (index: number, selected: boolean) => void;
   selectable?: boolean;
   selected?: boolean;
+  selectLabel?: string;
   /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
   classNames?: TableTheme;
   /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
@@ -21,17 +35,39 @@ export function TableRow({
   children,
   className,
   idx = 0,
+  value,
+  selectionDisabled = false,
   onSelect,
-  selectable,
-  selected,
+  selectable: suppliedSelectable,
+  selected: suppliedSelected,
+  selectLabel,
   theme: legacyTheme,
   classNames,
   ...other
 }: TableRowProps) {
   const theme = mergeStyleSlots(legacyTheme, classNames);
+  const selection = useContext(TableSelectionContext);
+  const register = selection?.register;
+  useEffect(
+    () => (value === undefined ? undefined : register?.(value, selectionDisabled || suppliedSelectable === false)),
+    [value, selectionDisabled, suppliedSelectable, register],
+  );
+  const selectable = suppliedSelectable ?? (selection && value !== undefined ? selection.mode !== 'none' : undefined);
+  const selected = suppliedSelected ?? (value !== undefined ? selection?.selected.includes(value) : undefined);
+  let column = 0;
+  const cells = (children: ReactNode): ReactNode =>
+    Children.map(children, (child) => {
+      if (!isValidElement<TableCellProps>(child)) return child;
+      if (child.type === Fragment) return cloneElement(child, {}, cells(child.props.children));
+      const currentColumn = column++;
+      return child.type === TableCell
+        ? cloneElement(child, { column: currentColumn, tagName: child.props.tagName ?? 'td' })
+        : child;
+    });
   return (
     <tr
       {...other}
+      aria-selected={other['aria-selected'] ?? (selectable ? selected : undefined)}
       className={cn(
         'rt-table-row',
         'text-(--table-row-color) h-(--table-row-height) duration-[0.28s] [transition-property:background-color] [transition-timing-function:var(--animation-curve-default)]',
@@ -50,12 +86,18 @@ export function TableRow({
     >
       {selectable && (
         <TableCell className={cn(checkboxCellClasses, theme?.checkboxCell)}>
-          <Checkbox checked={selected} onChange={(value) => onSelect?.(idx, value)} />
+          <Checkbox
+            aria-label={selectLabel ?? `Select row ${value ?? idx + 1}`}
+            checked={selected}
+            disabled={selectionDisabled}
+            onChange={(checked) => {
+              onSelect?.(idx, checked);
+              if (value !== undefined) selection?.select(value, checked);
+            }}
+          />
         </TableCell>
       )}
-      {Children.map(children, (child, column) =>
-        isValidElement<TableCellProps>(child) ? cloneElement(child, { column, tagName: 'td' }) : child,
-      )}
+      {cells(children)}
     </tr>
   );
 }

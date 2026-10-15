@@ -114,8 +114,8 @@ export function Tab({
       onKeyDown={(event) => {
         onKeyDown?.(event);
         if (!event.defaultPrevented && (event.key === 'Enter' || event.key === ' ')) {
-          event.preventDefault();
           click(event);
+          event.preventDefault();
         }
       }}
       onMouseDown={(event) => {

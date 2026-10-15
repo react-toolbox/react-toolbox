@@ -6,6 +6,7 @@ import type { MenuTheme } from './types';
 
 import {
   useImperativeHandle,
+  useContext,
   useRef,
   type HTMLAttributes,
   type KeyboardEvent,
@@ -16,6 +17,7 @@ import {
 import { cn } from '../foundations/styles/cn';
 import { FontIcon } from '../font-icon';
 import { useRipple } from '../ripple';
+import { MenuContext } from './context';
 
 export type MenuItemTheme = MenuTheme;
 export type MenuItemEvent = MouseEvent<HTMLLIElement> | KeyboardEvent<HTMLLIElement>;
@@ -28,6 +30,10 @@ export interface MenuItemProps<Value = unknown> extends Omit<HTMLAttributes<HTML
   disabled?: boolean;
   icon?: ReactNode;
   selected?: boolean;
+  /** Keep the menu open for repeated selections. */
+  closeOnSelect?: boolean;
+  /** Typeahead text when the caption is custom JSX. */
+  textValue?: string;
   shortcut?: ReactNode;
   value?: Value;
   ripple?: boolean;
@@ -44,10 +50,12 @@ export function MenuItem<Value = unknown>({
   className,
   disabled = false,
   icon,
-  selected = false,
+  selected: suppliedSelected,
+  closeOnSelect = true,
+  textValue,
   shortcut,
   value,
-  ripple = true,
+  ripple: suppliedRipple,
   onClick,
   onKeyDown,
   onMouseDown,
@@ -60,6 +68,10 @@ export function MenuItem<Value = unknown>({
   ...attributes
 }: MenuItemProps<Value>) {
   const theme = mergeStyleSlots(legacyTheme, classNames);
+  const menu = useContext(MenuContext);
+  const selected = suppliedSelected ?? (value !== undefined && menu?.selectable && value === menu.selected) ?? false;
+  const role = attributes.role ?? (menu?.selectable && value !== undefined ? 'menuitemradio' : 'menuitem');
+  const ripple = suppliedRipple ?? menu?.ripple ?? true;
   const node = useRef<HTMLLIElement>(null);
   const handle: MenuItemHandle<Value> = {
     get node() {
@@ -76,17 +88,22 @@ export function MenuItem<Value = unknown>({
     },
   });
   const click = (event: MenuItemEvent) => {
-    if (!disabled) onClick?.(event, handle);
+    if (disabled || event.defaultPrevented) return;
+    onClick?.(event, handle);
+    if (!event.defaultPrevented) menu?.select(value, closeOnSelect);
   };
   return (
     <li
       {...attributes}
       ref={node}
       data-react-toolbox="menu-item"
-      role={attributes.role || 'menuitem'}
+      role={role}
+      data-text-value={textValue}
       aria-disabled={disabled || undefined}
-      aria-checked={attributes.role === 'menuitemradio' ? selected : undefined}
-      tabIndex={disabled ? -1 : (attributes.tabIndex ?? 0)}
+      aria-checked={
+        role === 'menuitemradio' || role === 'menuitemcheckbox' ? (attributes['aria-checked'] ?? selected) : undefined
+      }
+      tabIndex={disabled ? -1 : (attributes.tabIndex ?? (menu ? -1 : 0))}
       className={cn(
         'rt-menu-menuItem',
         'items-center text-(--rt-color-text) flex text-(length:--menu-item-font-size) h-(--menu-item-height) overflow-hidden p-[0_var(--menu-item-padding)] relative',
@@ -111,8 +128,8 @@ export function MenuItem<Value = unknown>({
       onKeyDown={(event) => {
         onKeyDown?.(event);
         if (!event.defaultPrevented && !disabled && (event.key === 'Enter' || event.key === ' ')) {
-          event.preventDefault();
           click(event);
+          event.preventDefault();
         }
       }}
       onMouseDown={(event) => {
@@ -132,7 +149,7 @@ export function MenuItem<Value = unknown>({
         ink.onTouchCancel(event);
       }}
     >
-      {icon ? <FontIcon value={icon} className={cn(iconClasses, theme?.icon)} /> : null}
+      {icon ? <FontIcon aria-hidden="true" value={icon} className={cn(iconClasses, theme?.icon)} /> : null}
       <span className={cn('rt-menu-caption', 'grow text-(length:--font-size-normal)', theme?.caption)}>{caption}</span>
       {shortcut ? (
         <small className={cn('rt-menu-shortcut', 'ml-(--menu-item-padding)', theme?.shortcut)}>{shortcut}</small>

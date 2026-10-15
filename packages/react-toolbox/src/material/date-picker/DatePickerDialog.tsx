@@ -80,7 +80,7 @@ export default function DatePickerDialog({
     if (!isDateDisabled(date, constraints)) onSelect?.(date, event);
   };
   const switchDisplay = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) =>
-    setDisplay(event.currentTarget.id === 'years' ? 'years' : 'months');
+    setDisplay(event.currentTarget.dataset.display === 'years' ? 'years' : 'months');
   const displayKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
@@ -125,7 +125,7 @@ export default function DatePickerDialog({
         )}
       >
         <span
-          id="years"
+          data-display="years"
           role="button"
           tabIndex={0}
           aria-label="Choose year"
@@ -143,7 +143,7 @@ export default function DatePickerDialog({
           {date.getFullYear()}
         </span>
         <h3
-          id="months"
+          data-display="months"
           role="button"
           tabIndex={0}
           aria-label="Choose day"

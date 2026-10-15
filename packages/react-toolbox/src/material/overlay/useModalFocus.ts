@@ -1,12 +1,21 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { hideOthers } from 'aria-hidden';
 
 interface ModalEntry {
   node: HTMLElement;
   previous: HTMLElement | null;
 }
 const modals: ModalEntry[] = [];
+let restoreAccessibility: (() => void) | undefined;
+function isolateTopModal() {
+  restoreAccessibility?.();
+  // A parent Portal may detach an entire nested tree before child effect
+  // cleanups run. Never ask aria-hidden to isolate a detached surface.
+  const top = [...modals].reverse().find((entry) => entry.node.isConnected);
+  restoreAccessibility = top ? hideOthers(top.node) : undefined;
+}
 const focusableSelector = 'a[href], button, input, select, textarea, [tabindex], [contenteditable="true"]';
 
 function focusableElements(node: HTMLElement) {
@@ -27,7 +36,13 @@ function focusableElements(node: HTMLElement) {
 
 // A callback ref also handles Portal's deferred mount. Only the top modal owns
 // focus, so a picker opened from a full-screen dialog remains usable.
-export default function useModalFocus(active: boolean) {
+export interface ModalFocusOptions {
+  onOpenAutoFocus?: (event: Event) => void;
+  onCloseAutoFocus?: (event: Event) => void;
+}
+export default function useModalFocus(active: boolean, options: ModalFocusOptions = {}) {
+  const callbacks = useRef(options);
+  callbacks.current = options;
   const [node, setNode] = useState<HTMLElement | null>(null);
   const opener = useRef<HTMLElement | null>(
     typeof document === 'undefined'
@@ -49,7 +64,10 @@ export default function useModalFocus(active: boolean) {
     modals.push(entry);
     const isTop = () => modals[modals.length - 1] === entry;
     const focus = (element: HTMLElement) => element.focus({ preventScroll: true });
-    if (!node.contains(document.activeElement)) focus(node);
+    const openEvent = new Event('toolbox.openAutoFocus', { cancelable: true });
+    callbacks.current.onOpenAutoFocus?.(openEvent);
+    if (!openEvent.defaultPrevented && !node.contains(document.activeElement)) focus(node);
+    isolateTopModal();
 
     const handleFocus = (event: FocusEvent) => {
       if (isTop() && !(event.target instanceof Node && node.contains(event.target))) focus(node);
@@ -76,6 +94,7 @@ export default function useModalFocus(active: boolean) {
     return () => {
       const wasTop = isTop();
       modals.splice(modals.indexOf(entry), 1);
+      isolateTopModal();
       // When a whole nested modal tree closes, the parent's cleanup may run
       // first. Pass its opener down before that parent DOM disappears.
       modals.forEach((remaining) => {
@@ -84,6 +103,9 @@ export default function useModalFocus(active: boolean) {
       document.removeEventListener('focusin', handleFocus);
       document.removeEventListener('keydown', handleKey);
       if (wasTop) {
+        const closeEvent = new Event('toolbox.closeAutoFocus', { cancelable: true });
+        callbacks.current.onCloseAutoFocus?.(closeEvent);
+        if (closeEvent.defaultPrevented) return;
         const usableOpener =
           entry.previous &&
           entry.previous.isConnected &&

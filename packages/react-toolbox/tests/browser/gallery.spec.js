@@ -3,8 +3,8 @@ import { test as base, expect } from '@playwright/test';
 const test = base.extend({
   page: async ({ page }, use) => {
     const errors = [];
-    page.on('pageerror', error => errors.push(error.message));
-    page.on('console', message => {
+    page.on('pageerror', (error) => errors.push(error.message));
+    page.on('console', (message) => {
       if (message.type() === 'error') errors.push(message.text());
     });
     await use(page);
@@ -22,7 +22,10 @@ test('renders every gallery section and the original colors and sizes', async ({
   const primary = page.getByRole('button', { name: 'Primary', exact: true });
   await expect(primary).toHaveCSS('background-color', 'rgb(63, 81, 181)');
   await expect(primary).toHaveCSS('height', '36px');
-  await expect(page.getByRole('button', { name: 'Accent', exact: true })).toHaveCSS('background-color', 'rgb(255, 64, 129)');
+  await expect(page.getByRole('button', { name: 'Accent', exact: true })).toHaveCSS(
+    'background-color',
+    'rgb(255, 64, 129)',
+  );
   await expect(page.getByRole('button', { name: 'Create item', exact: true })).toHaveCSS('height', '56px');
   await expect(page.getByRole('button', { name: 'Disabled', exact: true })).toBeDisabled();
   await page.evaluate(() => document.fonts.ready);
@@ -44,7 +47,9 @@ test('preserves ripple feedback, tooltip behavior, and file selection', async ({
   await expect(page.getByText('Surface interactions: 1')).toBeVisible();
   await page.getByRole('button', { name: 'Hover for tooltip' }).hover();
   await expect(page.getByText('Original Material Design tooltip', { exact: true })).toBeVisible();
-  await page.locator('#buttons input[type="file"]').setInputFiles({ name: 'example.txt', mimeType: 'text/plain', buffer: Buffer.from('A local example') });
+  await page
+    .locator('#buttons input[type="file"]')
+    .setInputFiles({ name: 'example.txt', mimeType: 'text/plain', buffer: Buffer.from('A local example') });
   await expect(page.getByText('example.txt', { exact: true })).toBeVisible();
 });
 
@@ -54,13 +59,13 @@ test('updates form inputs, dropdowns, and autocomplete through existing callback
   await page.getByLabel('Notes', { exact: true }).fill('The original styling, the current React API.');
   await expect(page.locator('#inputs')).toContainText('44/120');
   await page.getByRole('combobox', { name: 'Destination', exact: true }).click();
-  await page.locator('#inputs').getByText('Tokyo', { exact: true }).click();
+  await page.locator('#inputs').getByRole('option', { name: 'Tokyo', exact: true }).click();
   await expect(page.getByText('Destination: Tokyo · Country: Spain')).toBeVisible();
   await page.getByRole('combobox', { name: 'Country', exact: true }).fill('Jap');
-  await page.locator('#inputs').getByText('Japan', { exact: true }).click();
+  await page.locator('#inputs').getByRole('option', { name: 'Japan', exact: true }).click();
   await expect(page.getByText('Destination: Tokyo · Country: Japan')).toBeVisible();
   await page.getByRole('combobox', { name: 'Interests', exact: true }).fill('React');
-  await page.locator('#inputs').getByText('React', { exact: true }).click();
+  await page.locator('#inputs').getByRole('option', { name: 'React', exact: true }).click();
   await expect(page.locator('#inputs [data-react-toolbox="chip"]')).toHaveCount(2);
 });
 
@@ -73,7 +78,11 @@ test('toggles checkbox, radio, switch, list, and removable chip states', async (
   await page.getByText('Compact', { exact: true }).click();
   await page.getByText('Notifications', { exact: true }).click();
   await expect(page.getByText('Density: compact · Notifications off')).toBeVisible();
-  await page.locator('#identity [data-react-toolbox="chip"]').filter({ hasText: 'Remove this chip' }).locator('.rt-chip-delete').click();
+  await page
+    .locator('#identity [data-react-toolbox="chip"]')
+    .filter({ hasText: 'Remove this chip' })
+    .locator('.rt-chip-delete')
+    .click();
   await expect(page.getByRole('button', { name: 'Restore chip' })).toBeVisible();
   await page.getByRole('button', { name: 'Restore chip' }).click();
   await expect(page.getByText('Remove this chip', { exact: true })).toBeVisible();
@@ -117,13 +126,16 @@ test('opens and dismisses portals, calendar, and clock without legacy React APIs
 
 test('edits sliders and sorts and selects table rows', async ({ page }) => {
   const slider = page.locator('#progress [data-react-toolbox="slider"]').first();
-  await slider.locator('input').fill('72');
-  await slider.locator('input').press('Tab');
+  await slider.getByRole('textbox').fill('72');
+  await slider.getByRole('textbox').press('Tab');
   await expect(page.getByText('Progress: 72%')).toBeVisible();
   await slider.getByRole('slider').focus();
   await page.keyboard.press('ArrowUp');
   await expect(page.getByText('Progress: 73%')).toBeVisible();
-  await page.locator('#tables').getByRole('columnheader', { name: /Calories/ }).click();
+  await page
+    .locator('#tables')
+    .getByRole('columnheader', { name: /Calories/ })
+    .click();
   await expect(page.getByText('1 row selected · Calories sorted descending')).toBeVisible();
   await expect(page.locator('#tables tbody tr').first()).toContainText('Cupcake');
   await page.locator('#tables thead [data-react-toolbox="checkbox"]').click();

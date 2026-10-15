@@ -4,6 +4,7 @@ import { createJavaScriptRegexEngine } from 'shiki/engine/javascript';
 import tsx from 'shiki/langs/tsx.mjs';
 import json from 'shiki/langs/json.mjs';
 import shell from 'shiki/langs/shellscript.mjs';
+import css from 'shiki/langs/css.mjs';
 import CopyCodeButton from './copy-code-button';
 
 // Syntax roles are a docs convention, using dark M1 palette shades with at
@@ -24,10 +25,10 @@ const materialCodeTheme: ThemeRegistration = {
 };
 
 // Only Server Components import this module. Code tabs receive rendered React
-// content, keeping the highlighter and its three grammars out of client bundles.
+// content, keeping the highlighter and its grammars out of client bundles.
 const highlighter = createHighlighterCore({
   themes: [materialCodeTheme],
-  langs: [tsx, json, shell],
+  langs: [tsx, json, shell, css],
   engine: createJavaScriptRegexEngine(),
 });
 
@@ -38,17 +39,17 @@ export default async function CodeBlock({
 }: {
   code: string;
   label?: string;
-  language?: 'tsx' | 'Terminal' | 'components.json';
+  language?: 'tsx' | 'Terminal' | 'components.json' | 'css';
 }) {
-  const lang = language === 'Terminal' ? 'shellscript' : language === 'components.json' ? 'json' : 'tsx';
+  const lang = language === 'Terminal' ? 'shellscript' : language === 'components.json' ? 'json' : language;
   const { tokens } = (await highlighter).codeToTokens(code, { lang, theme: 'material-docs' });
   return (
     <div className="min-w-0 overflow-hidden rounded-toolbox border border-toolbox-divider bg-(--palette-grey-50)">
-      <div className="flex min-h-12 items-center justify-between border-b border-toolbox-divider pr-2 pl-4 text-xs text-toolbox-text-secondary">
+      <div className="flex min-h-toolbox-touch items-center justify-between border-b border-toolbox-divider pr-2 pl-4 text-xs text-toolbox-text-secondary">
         <span>{language}</span>
         <CopyCodeButton code={code} label={label} />
       </div>
-      <pre className="m-0 overflow-x-auto p-4 text-xs leading-6" aria-label={label} tabIndex={0}>
+      <pre className="m-0 overflow-x-auto p-4 text-toolbox-body-desktop/6" aria-label={label} tabIndex={0}>
         <code>
           {tokens.map((line, lineIndex) => (
             <Fragment key={lineIndex}>

@@ -11,3 +11,5 @@ export type { TableRowProps } from './TableRow';
 export { default as TableCell } from './TableCell';
 export type { TableCellProps } from './TableCell';
 export { default } from './Table';
+
+export * from './parts';

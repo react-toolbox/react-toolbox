@@ -101,7 +101,9 @@ export function BrowseButton({
         ref={inputRef}
         className={classes}
         type="file"
-        aria-label={label}
+        aria-label={other['aria-label'] ?? label}
+        aria-labelledby={other['aria-labelledby']}
+        aria-describedby={other['aria-describedby']}
         name={name}
         disabled={disabled}
         accept={accept}

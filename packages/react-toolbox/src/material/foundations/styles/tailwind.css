@@ -3,6 +3,7 @@
  * Inline aliases resolve inside the nearest React Toolbox theme scope. */
 @import "./tailwind-preflight.css";
 @import "./styles.css";
+@import "./composition.css";
 @source "../../";
 
 /* M1 uses an 8dp layout grid and a 4dp icon/type subgrid. Keep utility
@@ -10,10 +11,44 @@
  * Applications can override this normal theme variable after this import. */
 @theme {
   --spacing: 4px;
+  --spacing-toolbox-touch: 48px;
+  --container-toolbox-prose: 65ch;
+
+  /* M1 text roles include their leading and weight. These are opt-in names,
+   * so adding Toolbox does not redefine the host's ordinary text-* scale. */
+  --text-toolbox-display-2: 2.8125rem;
+  --text-toolbox-display-2--line-height: 3rem;
+  --text-toolbox-display-2--font-weight: 400;
+  --text-toolbox-display-2--letter-spacing: normal;
+  --text-toolbox-display-1: 2.125rem;
+  --text-toolbox-display-1--line-height: 2.5rem;
+  --text-toolbox-display-1--font-weight: 400;
+  --text-toolbox-display-1--letter-spacing: normal;
+  --text-toolbox-headline: 1.5rem;
+  --text-toolbox-headline--line-height: 2rem;
+  --text-toolbox-headline--font-weight: 400;
+  --text-toolbox-title: 1.25rem;
+  --text-toolbox-title--line-height: 1.75rem;
+  --text-toolbox-title--font-weight: 500;
+  --text-toolbox-title--letter-spacing: normal;
+  --text-toolbox-subheading: 1rem;
+  --text-toolbox-subheading--line-height: 1.5rem;
+  --text-toolbox-subheading--font-weight: 400;
+  --text-toolbox-body: 0.875rem;
+  --text-toolbox-body--line-height: 1.25rem;
+  --text-toolbox-body--font-weight: 400;
+  --text-toolbox-body-desktop: 0.8125rem;
+  --text-toolbox-body-desktop--line-height: 1.25rem;
+  --text-toolbox-body-desktop--font-weight: 400;
+  --text-toolbox-caption: 0.75rem;
+  --text-toolbox-caption--line-height: 1.25rem;
+  --text-toolbox-caption--font-weight: 400;
 }
 
 /* Match the existing card keyline breakpoint, including its height condition. */
 @custom-variant toolbox-desktop (@media screen and (min-width: 600px) and (min-height: 600px));
+@custom-variant toolbox-mobile-portrait (@media screen and (max-width: 599.98px) and (orientation: portrait));
+@custom-variant toolbox-mobile-landscape (@media screen and (max-height: 599.98px) and (orientation: landscape));
 
 @theme inline {
   --color-toolbox-primary: var(--rt-color-primary);

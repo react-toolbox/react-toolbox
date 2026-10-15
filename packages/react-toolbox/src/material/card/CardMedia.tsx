@@ -8,6 +8,8 @@ export interface CardMediaProps extends ComponentPropsWithRef<'div'> {
   aspectRatio?: 'wide' | 'square';
   contentOverlay?: boolean;
   image?: ReactNode;
+  /** Alternative text for a background image; omit for decorative media. */
+  alt?: string;
   /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
   classNames?: CardTheme;
   /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
@@ -20,6 +22,8 @@ export function CardMedia({
   color,
   contentOverlay,
   image,
+  alt,
+  style,
   theme: legacyTheme,
   classNames,
   ...other
@@ -30,6 +34,7 @@ export function CardMedia({
       style={{
         backgroundColor: color || undefined,
         backgroundImage: typeof image === 'string' ? `url('${image}')` : undefined,
+        ...style,
       }}
       className={cn(
         'rt-card-cardMedia',
@@ -56,6 +61,7 @@ export function CardMedia({
       )}
       {...other}
     >
+      {typeof image === 'string' && alt ? <span role="img" aria-label={alt} className="sr-only" /> : null}
       <div
         className={cn(
           'rt-card-content',
@@ -72,6 +78,7 @@ export function CardMedia({
           contentOverlay && cn('rt-card-contentOverlay', theme?.contentOverlay),
         )}
       >
+        {typeof image !== 'string' ? image : null}
         {children}
       </div>
     </div>

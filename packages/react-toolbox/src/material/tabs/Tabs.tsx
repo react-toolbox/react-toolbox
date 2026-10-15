@@ -6,6 +6,7 @@ import type { TabsTheme } from './types';
 
 import {
   Children,
+  Fragment,
   cloneElement,
   isValidElement,
   useCallback,
@@ -16,11 +17,11 @@ import {
   useState,
   type CSSProperties,
   type HTMLAttributes,
-  type KeyboardEvent,
   type ReactElement,
   type Ref,
 } from 'react';
 import { cn } from '../foundations/styles/cn';
+import * as RovingFocus from '@radix-ui/react-roving-focus';
 import { FontIcon } from '../font-icon';
 import Tab, { type TabProps } from './Tab';
 import TabContent, { type TabContentProps } from './TabContent';
@@ -35,6 +36,11 @@ export interface TabsProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChang
   fixed?: boolean;
   hideMode?: 'display' | 'unmounted';
   index?: number;
+  /** Initial selection when index is not controlled. */
+  defaultIndex?: number;
+  /** Manual activation keeps expensive panels unchanged until Enter or Space. */
+  activationMode?: 'automatic' | 'manual';
+  loop?: boolean;
   inverse?: boolean;
   onChange?: (index: number) => void;
   /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
@@ -49,7 +55,10 @@ export function Tabs({
   disableAnimatedBottomBorder,
   fixed = false,
   hideMode = 'unmounted',
-  index = 0,
+  index: controlledIndex,
+  defaultIndex = 0,
+  activationMode = 'automatic',
+  loop = true,
   inverse = false,
   onChange,
   theme: legacyTheme,
@@ -58,9 +67,23 @@ export function Tabs({
   ...attributes
 }: TabsProps) {
   const theme = mergeStyleSlots(legacyTheme, classNames);
+  const [internalIndex, setIndex] = useState(defaultIndex);
+  const index = controlledIndex ?? internalIndex;
+  const [focusedIndex, setFocusedIndex] = useState(index);
+  useEffect(() => setFocusedIndex(index), [index]);
+  const change = (next: number) => {
+    if (next === index) return;
+    if (controlledIndex === undefined) setIndex(next);
+    onChange?.(next);
+  };
   const id = `toolbox-tabs-${useId()}`;
   const root = useRef<HTMLDivElement>(null);
   const navigation = useRef<HTMLDivElement>(null);
+  const keyboardNavigation = useRef(false);
+  const [direction, setDirection] = useState<'ltr' | 'rtl'>('ltr');
+  useEffect(() => {
+    if (root.current) setDirection(getComputedStyle(root.current).direction === 'rtl' ? 'rtl' : 'ltr');
+  }, [attributes.dir]);
   const frame = useRef<number | undefined>(undefined);
   const resizeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const currentIndex = useRef(index);
@@ -85,11 +108,15 @@ export function Tabs({
   }, []);
   const updateArrows = useCallback(() => {
     const node = navigation.current;
-    const last = node?.children[node.children.length - 2];
-    if (!node || !last) return;
+    if (!node) return;
+    const labels = Array.from(node.querySelectorAll<HTMLElement>('[role="tab"]'))
+      .filter((item) => !item.hidden)
+      .map((item) => item.getBoundingClientRect());
     const nav = node.getBoundingClientRect();
-    const label = last.getBoundingClientRect();
-    setArrows({ left: node.scrollLeft > 0, right: nav.right < label.right - 5 });
+    setArrows({
+      left: labels.some((label) => label.left < nav.left - 5),
+      right: labels.some((label) => label.right > nav.right + 5),
+    });
   }, []);
   useImperativeHandle(
     ref,
@@ -121,9 +148,10 @@ export function Tabs({
   const previousIndex = useRef(index);
   useEffect(() => {
     if (previousChildren.current !== children || previousIndex.current !== index) updatePointer(index);
+    updateArrows();
     previousChildren.current = children;
     previousIndex.current = index;
-  }, [children, index, updatePointer]);
+  }, [children, index, updatePointer, updateArrows]);
   const scroll = (factor: number) => {
     const node = navigation.current;
     if (!node) return;
@@ -131,47 +159,28 @@ export function Tabs({
     node.scrollLeft += factor * node.clientWidth;
     if (previous !== node.scrollLeft) updateArrows();
   };
-  const keyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (
-      event.defaultPrevented ||
-      !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key) ||
-      !navigation.current
-    )
-      return;
-    const node = navigation.current;
-    const tabs = Array.from(
-      node.querySelectorAll<HTMLElement>('[role="tab"]:not([aria-disabled="true"]):not([aria-hidden="true"])'),
-    );
-    if (!tabs.length) return;
-    const current = tabs.findIndex((tab) => tab === document.activeElement);
-    const direction = (event.key === 'ArrowRight' ? 1 : -1) * (getComputedStyle(node).direction === 'rtl' ? -1 : 1);
-    const next =
-      event.key === 'Home'
-        ? tabs[0]
-        : event.key === 'End'
-          ? tabs[tabs.length - 1]
-          : tabs[(current + direction + tabs.length) % tabs.length];
-    event.preventDefault();
-    next.focus({ preventScroll: true });
-    next.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
-    onChange?.(Array.from(node.children).indexOf(next));
-    updateArrows();
-  };
   const headers: ReactElement<TabProps>[] = [];
   const explicitContents: ReactElement<TabContentProps>[] = [];
-  Children.forEach(children, (item) => {
-    if (isValidElement<TabProps>(item) && item.type === Tab) headers.push(item);
-    else if (isValidElement<TabContentProps>(item) && item.type === TabContent) explicitContents.push(item);
-  });
+  const collect = (children: React.ReactNode) =>
+    Children.forEach(children, (item) => {
+      if (isValidElement<{ children?: React.ReactNode }>(item) && item.type === Fragment) {
+        collect(item.props.children);
+        return;
+      }
+      if (isValidElement<TabProps>(item) && item.type === Tab) headers.push(item);
+      else if (isValidElement<TabContentProps>(item) && item.type === TabContent) explicitContents.push(item);
+    });
+  collect(children);
   const contents = explicitContents.length
     ? explicitContents
     : headers.some((item) => item.props.children != null)
       ? headers.map((item) => <TabContent>{item.props.children}</TabContent>)
       : [];
-  const selected = headers[index];
+  const navigationIndex = activationMode === 'manual' ? focusedIndex : index;
+  const selected = headers[navigationIndex];
   const focusIndex =
     selected && !selected.props.disabled && !selected.props.hidden
-      ? index
+      ? navigationIndex
       : headers.findIndex((item) => !item.props.disabled && !item.props.hidden);
   const arrow = (direction: 'left' | 'right') => (
     <div
@@ -222,50 +231,90 @@ export function Tabs({
     >
       <div className={cn('rt-tabs-navigationContainer', 'flex', theme?.navigationContainer)}>
         {arrows.left && arrow('left')}
-        <div
-          className={cn(
-            'rt-tabs-navigation',
-            '[box-shadow:inset_0_-1px_var(--tab-navigation-border-color)] flex flex-row overflow-x-hidden relative',
-            '[.rt-tabs-navigationContainer_&]:flex-1',
-            '[.rt-tabs-inverse_&]:bg-(--tab-inverse-bar-color)',
-            theme?.navigation,
-          )}
-          role="tablist"
-          aria-label={attributes['aria-label']}
-          aria-labelledby={attributes['aria-labelledby']}
-          onKeyDown={keyDown}
-          ref={navigation}
+        <RovingFocus.Root
+          asChild
+          orientation="horizontal"
+          dir={direction}
+          loop={loop}
+          currentTabStopId={String(focusIndex)}
+          onCurrentTabStopIdChange={(next) => {
+            if (next !== null) setFocusedIndex(Number(next));
+          }}
+          onEntryFocus={(event) => event.preventDefault()}
         >
-          {headers.map((item, itemIndex) =>
-            cloneElement(item, {
-              children: null,
-              key: itemIndex,
-              index: itemIndex,
-              theme,
-              active: index === itemIndex,
-              tabIndex: itemIndex === focusIndex ? 0 : -1,
-              id: item.props.id || `${id}-tab-${itemIndex}`,
-              'aria-controls':
-                contents[itemIndex] && (hideMode === 'display' || index === itemIndex)
-                  ? contents[itemIndex].props.id || `${id}-panel-${itemIndex}`
-                  : undefined,
-              onClick: (event) => {
-                onChange?.(itemIndex);
-                item.props.onClick?.(event, itemIndex);
-              },
-            }),
-          )}
-          <span
+          <div
             className={cn(
-              'rt-tabs-pointer',
-              'bg-(--tab-pointer-color) h-(--tab-pointer-height) mt-[calc(-1_*_var(--tab-pointer-height))] absolute [transition-duration:var(--animation-duration)] [transition-property:left,width] [transition-timing-function:var(--animation-curve-default)] w-0',
-              '[.rt-tabs-inverse_&]:bg-(--tab-inverse-pointer-color)',
-              theme?.pointer,
-              disableAnimatedBottomBorder && theme?.disableAnimation,
+              'rt-tabs-navigation',
+              '[box-shadow:inset_0_-1px_var(--tab-navigation-border-color)] flex flex-row overflow-x-hidden relative',
+              '[.rt-tabs-navigationContainer_&]:flex-1',
+              '[.rt-tabs-inverse_&]:bg-(--tab-inverse-bar-color)',
+              theme?.navigation,
             )}
-            style={pointer}
-          />
-        </div>
+            role="tablist"
+            aria-label={attributes['aria-label']}
+            aria-labelledby={attributes['aria-labelledby']}
+            tabIndex={-1}
+            onPointerDownCapture={() => {
+              keyboardNavigation.current = false;
+            }}
+            onKeyDownCapture={(event) => {
+              keyboardNavigation.current =
+                !event.altKey &&
+                !event.ctrlKey &&
+                !event.metaKey &&
+                ['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key);
+            }}
+            ref={navigation}
+            onScroll={updateArrows}
+          >
+            {headers.map((item, itemIndex) => (
+              <RovingFocus.Item
+                key={item.key ?? itemIndex}
+                asChild
+                tabStopId={String(itemIndex)}
+                active={index === itemIndex}
+                focusable={!item.props.disabled && !item.props.hidden}
+              >
+                {cloneElement(item, {
+                  children: null,
+                  key: itemIndex,
+                  index: itemIndex,
+                  theme,
+                  active: index === itemIndex,
+                  tabIndex: itemIndex === focusIndex ? 0 : -1,
+                  id: item.props.id || `${id}-tab-${itemIndex}`,
+                  'aria-controls':
+                    contents[itemIndex] && (hideMode === 'display' || index === itemIndex)
+                      ? contents[itemIndex].props.id || `${id}-panel-${itemIndex}`
+                      : undefined,
+                  onFocus: (event) => {
+                    item.props.onFocus?.(event);
+                    if (keyboardNavigation.current && !event.defaultPrevented) {
+                      keyboardNavigation.current = false;
+                      if (activationMode === 'automatic') change(itemIndex);
+                      event.currentTarget.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+                      updateArrows();
+                    }
+                  },
+                  onClick: (event) => {
+                    item.props.onClick?.(event, itemIndex);
+                    if (!event.defaultPrevented) change(itemIndex);
+                  },
+                })}
+              </RovingFocus.Item>
+            ))}
+            <span
+              className={cn(
+                'rt-tabs-pointer',
+                'bg-(--tab-pointer-color) h-(--tab-pointer-height) mt-[calc(-1_*_var(--tab-pointer-height))] absolute [transition-duration:var(--animation-duration)] [transition-property:left,width] [transition-timing-function:var(--animation-curve-default)] w-0',
+                '[.rt-tabs-inverse_&]:bg-(--tab-inverse-pointer-color)',
+                theme?.pointer,
+                disableAnimatedBottomBorder && theme?.disableAnimation,
+              )}
+              style={{ ...pointer, ...(disableAnimatedBottomBorder ? { transition: 'none' } : {}) }}
+            />
+          </div>
+        </RovingFocus.Root>
         {arrows.right && arrow('right')}
       </div>
       {contents.map((item, itemIndex) =>

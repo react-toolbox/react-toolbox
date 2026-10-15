@@ -8,6 +8,7 @@ import React, { useCallback, useEffect, useId, useImperativeHandle, useRef, useS
 import { cn } from '../foundations/styles/cn';
 import FontIcon from '../font-icon/FontIcon';
 import { isValuePresent } from './value';
+import useFormReset from '../foundations/forms/useFormReset';
 
 export type { InputTheme, InputClassNames } from './types';
 export type InputElement = HTMLInputElement | HTMLTextAreaElement;
@@ -63,6 +64,9 @@ export function Input({
   const id = suppliedId || `input-${generatedId}`;
   const node = useRef<InputElement>(null);
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue ?? '');
+  useFormReset(node, () => {
+    if (value === undefined) setUncontrolledValue(node.current?.value ?? '');
+  });
   useImperativeHandle(
     ref,
     () => ({

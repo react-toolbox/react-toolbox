@@ -21,13 +21,14 @@ function SidebarNavigation({ components, onNavigate }: { components: ComponentLi
     return (
       <ListItem
         key={href}
-        theme={{ item: 'p-0', ripple: active ? 'text-toolbox-primary' : '' }}
+        className="[--list-horizontal-padding:0px]"
+        rippleClassName={active ? 'text-toolbox-primary' : undefined}
         itemContent={
           <Link
             href={href}
             aria-current={active ? 'page' : undefined}
             onNavigate={onNavigate}
-            className={`flex min-h-12 min-w-0 flex-1 items-center px-[var(--list-horizontal-padding)] text-sm font-medium no-underline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-toolbox-primary ${active ? 'text-toolbox-primary' : 'text-toolbox-text'}`}
+            className={`flex min-h-toolbox-touch min-w-0 flex-1 items-center px-4 min-[600px]:px-6 text-sm font-medium no-underline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-toolbox-primary ${active ? 'text-toolbox-primary' : 'text-toolbox-text'}`}
           >
             {title}
           </Link>
@@ -67,7 +68,7 @@ function MobileNavigation({ components }: { components: ComponentLink[] }) {
   }, []);
   return (
     <div className="border-b border-toolbox-divider lg:hidden">
-      <div className="flex min-h-12 items-center gap-1 px-4 min-[600px]:px-6">
+      <div className="flex min-h-toolbox-touch items-center gap-1 px-4 min-[600px]:px-6">
         <IconButton
           icon="menu"
           aria-label="Browse documentation"
@@ -102,7 +103,7 @@ export default function DocsSidebar({ components }: { components: ComponentLink[
   const pathname = usePathname();
   return (
     <>
-      <aside className="sticky top-16 hidden h-[calc(100svh-64px)] overflow-y-auto border-r border-toolbox-divider lg:block">
+      <aside className="sticky top-(--docs-appbar-height) hidden h-[calc(100svh-var(--docs-appbar-height))] overflow-y-auto overscroll-contain border-r border-toolbox-divider lg:block">
         <SidebarNavigation components={components} />
       </aside>
       <MobileNavigation key={pathname} components={components} />

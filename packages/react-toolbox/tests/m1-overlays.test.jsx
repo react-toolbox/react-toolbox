@@ -10,7 +10,7 @@ import { Tabs, Tab } from '../src/material/tabs';
 import Tooltip from '../src/material/tooltip';
 import Snackbar from '../src/material/snackbar';
 
-const advance = milliseconds => act(() => vi.advanceTimersByTime(milliseconds));
+const advance = (milliseconds) => act(() => vi.advanceTimersByTime(milliseconds));
 const TipButton = Tooltip('button');
 
 afterEach(() => {
@@ -22,28 +22,52 @@ describe('M1 overlay and navigation behavior', () => {
   it('preserves delayed entrance, cancellable exit, and the direct dialog DOM ref', () => {
     vi.useFakeTimers();
     const ref = createRef();
-    const view = render(<StrictMode><Dialog ref={ref} active={false} delay={80} title="Draft" /></StrictMode>);
+    const view = render(
+      <StrictMode>
+        <Dialog ref={ref} active={false} delay={80} title="Draft" />
+      </StrictMode>,
+    );
     expect(ref.current).toBeNull();
-    view.rerender(<StrictMode><Dialog ref={ref} active delay={80} title="Draft" /></StrictMode>);
+    view.rerender(
+      <StrictMode>
+        <Dialog ref={ref} active delay={80} title="Draft" />
+      </StrictMode>,
+    );
     expect(ref.current).toHaveAttribute('aria-hidden', 'true');
     advance(19);
     expect(ref.current).toHaveAttribute('aria-hidden', 'true');
     advance(1);
     expect(screen.getByRole('dialog', { name: 'Draft' })).toBe(ref.current);
-    view.rerender(<StrictMode><Dialog ref={ref} active={false} delay={80} title="Draft" /></StrictMode>);
+    view.rerender(
+      <StrictMode>
+        <Dialog ref={ref} active={false} delay={80} title="Draft" />
+      </StrictMode>,
+    );
     advance(40);
     expect(ref.current).toHaveAttribute('inert');
-    view.rerender(<StrictMode><Dialog ref={ref} active delay={80} title="Draft" /></StrictMode>);
+    view.rerender(
+      <StrictMode>
+        <Dialog ref={ref} active delay={80} title="Draft" />
+      </StrictMode>,
+    );
     advance(100);
     expect(screen.getByRole('dialog', { name: 'Draft' })).toBe(ref.current);
-    view.rerender(<StrictMode><Dialog ref={ref} active={false} delay={80} title="Draft" /></StrictMode>);
+    view.rerender(
+      <StrictMode>
+        <Dialog ref={ref} active={false} delay={80} title="Draft" />
+      </StrictMode>,
+    );
     advance(80);
     expect(ref.current).toBeNull();
   });
 
   it('uses valid zero-area popup clips before browser measurements exist', () => {
     for (const position of ['topLeft', 'topRight', 'bottomLeft', 'bottomRight']) {
-      const html = renderToString(<Menu position={position}><MenuItem caption="Archive" /></Menu>);
+      const html = renderToString(
+        <Menu position={position}>
+          <MenuItem caption="Archive" />
+        </Menu>,
+      );
       expect(html).not.toContain('undefinedpx');
       expect(html).toContain('clip:rect(0');
     }
@@ -52,14 +76,19 @@ describe('M1 overlay and navigation behavior', () => {
   it('does not apply viewport correction twice when measurements are batched before paint', () => {
     vi.useFakeTimers();
     let anchor = 200;
-    const geometry = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+    const geometry = vi
+      .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
       .mockImplementation(function measureMenu() {
         const top = anchor + (parseFloat(this.parentElement?.style.top) || 0);
         const left = anchor + (parseFloat(this.parentElement?.style.left) || 0);
         return { top, left, bottom: top + 100, right: left + 100, width: 100, height: 100 };
       });
     try {
-      render(<Menu active position="topLeft"><MenuItem caption="Archive" /></Menu>);
+      render(
+        <Menu active position="topLeft">
+          <MenuItem caption="Archive" />
+        </Menu>,
+      );
       advance(0);
       const popup = screen.getByRole('menu').parentElement;
       expect(popup.style.top).toBe('');
@@ -79,9 +108,14 @@ describe('M1 overlay and navigation behavior', () => {
     const opener = document.createElement('button');
     document.body.append(opener);
     opener.focus();
-    const view = render(<StrictMode><Dialog active title="Discard draft?">
-      <button>Keep editing</button><button>Discard</button>
-    </Dialog></StrictMode>);
+    const view = render(
+      <StrictMode>
+        <Dialog active title="Discard draft?">
+          <button>Keep editing</button>
+          <button>Discard</button>
+        </Dialog>
+      </StrictMode>,
+    );
     const dialog = screen.getByRole('dialog', { name: 'Discard draft?' });
     expect(dialog).toHaveAttribute('aria-modal', 'true');
     expect(dialog).toHaveFocus();
@@ -91,7 +125,11 @@ describe('M1 overlay and navigation behavior', () => {
     expect(screen.getByRole('button', { name: 'Discard' })).toHaveFocus();
     act(() => opener.focus());
     expect(dialog).toHaveFocus();
-    view.rerender(<StrictMode><Dialog active={false} title="Discard draft?" /></StrictMode>);
+    view.rerender(
+      <StrictMode>
+        <Dialog active={false} title="Discard draft?" />
+      </StrictMode>,
+    );
     expect(opener).toHaveFocus();
     expect(dialog).toHaveAttribute('inert');
     view.unmount();
@@ -101,11 +139,21 @@ describe('M1 overlay and navigation behavior', () => {
   it('only dismisses the top active overlay and does not escape a non-dismissible one', () => {
     const lower = vi.fn();
     const upper = vi.fn();
-    const view = render(<><Overlay active theme={{}} onEscKeyDown={lower} /><Overlay active theme={{}} onEscKeyDown={upper} /></>);
+    const view = render(
+      <>
+        <Overlay active theme={{}} onEscKeyDown={lower} />
+        <Overlay active theme={{}} onEscKeyDown={upper} />
+      </>,
+    );
     fireEvent.keyDown(document.body, { key: 'Escape' });
     expect(upper).toHaveBeenCalledOnce();
     expect(lower).not.toHaveBeenCalled();
-    view.rerender(<><Overlay active theme={{}} onEscKeyDown={lower} /><Overlay active theme={{}} /></>);
+    view.rerender(
+      <>
+        <Overlay active theme={{}} onEscKeyDown={lower} />
+        <Overlay active theme={{}} />
+      </>,
+    );
     fireEvent.keyDown(document.body, { key: 'Escape' });
     expect(lower).not.toHaveBeenCalled();
   });
@@ -114,7 +162,11 @@ describe('M1 overlay and navigation behavior', () => {
     const opener = document.createElement('button');
     document.body.append(opener);
     opener.focus();
-    const view = render(<Dialog active title="Rename"><input aria-label="Name" autoFocus /></Dialog>);
+    const view = render(
+      <Dialog active title="Rename">
+        <input aria-label="Name" autoFocus />
+      </Dialog>,
+    );
     expect(screen.getByRole('textbox', { name: 'Name' })).toHaveFocus();
     view.unmount();
     expect(opener).toHaveFocus();
@@ -125,9 +177,16 @@ describe('M1 overlay and navigation behavior', () => {
     const opener = document.createElement('button');
     document.body.append(opener);
     opener.focus();
-    const view = render(<StrictMode><Dialog active title="Outer"><button>Open picker</button>
-      <Dialog active title="Inner"><button>Pick</button></Dialog>
-    </Dialog></StrictMode>);
+    const view = render(
+      <StrictMode>
+        <Dialog active title="Outer">
+          <button>Open picker</button>
+          <Dialog active title="Inner">
+            <button>Pick</button>
+          </Dialog>
+        </Dialog>
+      </StrictMode>,
+    );
     view.unmount();
     expect(opener).toHaveFocus();
     opener.remove();
@@ -137,10 +196,12 @@ describe('M1 overlay and navigation behavior', () => {
     vi.useFakeTimers();
     function Example() {
       const [nested, setNested] = useState(false);
-      return <Dialog active title="Outer">
-        {!nested && <button onClick={() => setNested(true)}>Open picker</button>}
-        <Dialog active={nested} title="Inner" onEscKeyDown={() => setNested(false)} />
-      </Dialog>;
+      return (
+        <Dialog active title="Outer">
+          {!nested && <button onClick={() => setNested(true)}>Open picker</button>}
+          <Dialog active={nested} title="Inner" onEscKeyDown={() => setNested(false)} />
+        </Dialog>
+      );
     }
     render(<Example />);
     const opener = screen.getByRole('button', { name: 'Open picker' });
@@ -156,10 +217,18 @@ describe('M1 overlay and navigation behavior', () => {
     const outside = document.createElement('button');
     document.body.append(outside);
     outside.focus();
-    const view = render(<Drawer active withOverlay={false} aria-label="Sections"><button>Home</button></Drawer>);
+    const view = render(
+      <Drawer active withOverlay={false} aria-label="Sections">
+        <button>Home</button>
+      </Drawer>,
+    );
     expect(outside).toHaveFocus();
     expect(screen.getByRole('complementary', { name: 'Sections' })).not.toHaveAttribute('aria-modal');
-    view.rerender(<Drawer active aria-label="Sections"><button>Home</button></Drawer>);
+    view.rerender(
+      <Drawer active aria-label="Sections">
+        <button>Home</button>
+      </Drawer>,
+    );
     expect(screen.getByRole('dialog', { name: 'Sections' })).toHaveFocus();
     view.unmount();
     expect(outside).toHaveFocus();
@@ -169,11 +238,13 @@ describe('M1 overlay and navigation behavior', () => {
   it('opens icon menus from the keyboard, skips disabled items, and restores focus on Escape', () => {
     vi.useFakeTimers();
     const select = vi.fn();
-    render(<IconMenu aria-label="File options" onSelect={select}>
-      <MenuItem caption="Archive" value="archive" />
-      <MenuItem caption="Disabled" disabled />
-      <MenuItem caption="Delete" value="delete" />
-    </IconMenu>);
+    render(
+      <IconMenu aria-label="File options" onSelect={select}>
+        <MenuItem caption="Archive" value="archive" />
+        <MenuItem caption="Disabled" disabled />
+        <MenuItem caption="Delete" value="delete" />
+      </IconMenu>,
+    );
     const trigger = screen.getByRole('button', { name: 'File options' });
     trigger.focus();
     fireEvent.keyDown(trigger, { key: 'ArrowDown' });
@@ -201,9 +272,12 @@ describe('M1 overlay and navigation behavior', () => {
 
   it('announces selected and disabled menu items and blocks disabled keyboard activation', () => {
     const select = vi.fn();
-    render(<Menu selected="one" onSelect={select}>
-      <MenuItem caption="One" value="one" /><MenuItem caption="Two" value="two" disabled />
-    </Menu>);
+    render(
+      <Menu selected="one" onSelect={select}>
+        <MenuItem caption="One" value="one" />
+        <MenuItem caption="Two" value="two" disabled />
+      </Menu>,
+    );
     expect(screen.getByRole('menuitemradio', { name: 'One' })).toHaveAttribute('aria-checked', 'true');
     const disabled = screen.getByRole('menuitemradio', { name: 'Two' });
     expect(disabled).toHaveAttribute('aria-disabled', 'true');
@@ -212,12 +286,21 @@ describe('M1 overlay and navigation behavior', () => {
   });
 
   it('keeps inline tab content aligned after an empty tab and navigates only enabled visible tabs', () => {
+    vi.useFakeTimers();
     function Example() {
       const [index, setIndex] = useState(0);
-      return <Tabs index={index} onChange={setIndex} hideMode="display" aria-label="View">
-        <Tab label="Empty" /><Tab label="Disabled" disabled>Disabled content</Tab>
-        <Tab label="Hidden" hidden>Hidden content</Tab><Tab label="Details">Details content</Tab>
-      </Tabs>;
+      return (
+        <Tabs index={index} onChange={setIndex} hideMode="display" aria-label="View">
+          <Tab label="Empty" />
+          <Tab label="Disabled" disabled>
+            Disabled content
+          </Tab>
+          <Tab label="Hidden" hidden>
+            Hidden content
+          </Tab>
+          <Tab label="Details">Details content</Tab>
+        </Tabs>
+      );
     }
     render(<Example />);
     const empty = screen.getByRole('tab', { name: 'Empty' });
@@ -227,6 +310,7 @@ describe('M1 overlay and navigation behavior', () => {
     expect(details).toHaveAttribute('tabindex', '-1');
     empty.focus();
     fireEvent.keyDown(empty, { key: 'ArrowRight' });
+    advance(1);
     expect(details).toHaveFocus();
     expect(details).toHaveAttribute('aria-selected', 'true');
     const panel = screen.getByRole('tabpanel', { name: 'Details' });
@@ -234,6 +318,7 @@ describe('M1 overlay and navigation behavior', () => {
     expect(details).toHaveAttribute('aria-controls', panel.id);
     expect(panel).toHaveAttribute('aria-labelledby', details.id);
     fireEvent.keyDown(details, { key: 'Home' });
+    advance(1);
     expect(empty).toHaveFocus();
     expect(screen.getByRole('tabpanel')).toBeEmptyDOMElement();
   });
@@ -241,7 +326,14 @@ describe('M1 overlay and navigation behavior', () => {
   it('shows tooltips on keyboard focus, preserves existing descriptions, and dismisses on Escape', () => {
     vi.useFakeTimers();
     const focus = vi.fn();
-    render(<><span id="extra">Description</span><TipButton tooltip="Add a file" aria-describedby="extra" onFocus={focus}>Add</TipButton></>);
+    render(
+      <>
+        <span id="extra">Description</span>
+        <TipButton tooltip="Add a file" aria-describedby="extra" onFocus={focus}>
+          Add
+        </TipButton>
+      </>,
+    );
     const trigger = screen.getByRole('button', { name: 'Add' });
     act(() => trigger.focus());
     advance(1);
@@ -257,10 +349,22 @@ describe('M1 overlay and navigation behavior', () => {
 
   it('keeps a keyboard entry when the controlled active tab becomes disabled or hidden', () => {
     const change = vi.fn();
-    const view = render(<Tabs onChange={change}><Tab label="First" disabled /><Tab label="Second" /><Tab label="Third" /></Tabs>);
+    const view = render(
+      <Tabs onChange={change}>
+        <Tab label="First" disabled />
+        <Tab label="Second" />
+        <Tab label="Third" />
+      </Tabs>,
+    );
     expect(screen.getByRole('tab', { name: 'Second' })).toHaveAttribute('tabindex', '0');
     expect(screen.getByRole('tab', { name: 'First' })).toHaveAttribute('aria-selected', 'true');
-    view.rerender(<Tabs index={1} onChange={change}><Tab label="First" /><Tab label="Second" hidden /><Tab label="Third" /></Tabs>);
+    view.rerender(
+      <Tabs index={1} onChange={change}>
+        <Tab label="First" />
+        <Tab label="Second" hidden />
+        <Tab label="Third" />
+      </Tabs>,
+    );
     expect(screen.getByRole('tab', { name: 'First' })).toHaveAttribute('tabindex', '0');
     expect(change).not.toHaveBeenCalled();
   });
@@ -268,7 +372,11 @@ describe('M1 overlay and navigation behavior', () => {
   it('uses touch hold and retains the tooltip for 1.5 seconds after release', () => {
     vi.useFakeTimers();
     const click = vi.fn();
-    render(<TipButton tooltip="Add a file" onClick={click}>Add</TipButton>);
+    render(
+      <TipButton tooltip="Add a file" onClick={click}>
+        Add
+      </TipButton>,
+    );
     const trigger = screen.getByRole('button', { name: 'Add' });
     fireEvent.touchStart(trigger);
     advance(499);
@@ -288,7 +396,11 @@ describe('M1 overlay and navigation behavior', () => {
 
   it('honors tooltipHideOnClick=false while still dismissing on an outside pointer action', () => {
     vi.useFakeTimers();
-    render(<TipButton tooltip="Add a file" tooltipHideOnClick={false}>Add</TipButton>);
+    render(
+      <TipButton tooltip="Add a file" tooltipHideOnClick={false}>
+        Add
+      </TipButton>,
+    );
     const trigger = screen.getByRole('button', { name: 'Add' });
     fireEvent.mouseEnter(trigger);
     advance(1);

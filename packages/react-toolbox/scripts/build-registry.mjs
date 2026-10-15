@@ -143,7 +143,9 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
     if (name === 'react-transition-group')
       group.devDependencies.add(`@types/react-transition-group@${versions['@types/react-transition-group']}`);
   };
+  const localImports = new Map();
   for (const file of files) {
+    localImports.set(file, []);
     const itemName = owner(file);
     const group = groups.get(itemName);
     const relative = slash(path.relative(source, file));
@@ -161,6 +163,7 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
       if (specifier.startsWith('.')) {
         const target = await resolveSource(file, specifier);
         if (!content.has(target)) throw new Error(`Import escapes distributable source: ${file} -> ${specifier}`);
+        if (/\.tsx?$/.test(target)) localImports.get(file).push(target);
         const targetOwner = owner(target);
         if (targetOwner !== itemName) group.registryDependencies.add(targetOwner);
       } else dependency(group, npmName(specifier));
@@ -176,6 +179,47 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
   dependency(foundation, '@fontsource/roboto');
   dependency(foundation, 'material-icons');
   for (const family of families) groups.get(familyName(family)).registryDependencies.add('foundation');
+  // Source CSS and the host utility sheet may be compiled independently (Next).
+  // Register animations in the host through the supported registry CSS API as
+  // well. Only include names referenced by the family's actual JS import graph.
+  const keyframes = new Map();
+  for (const [file, text] of content) {
+    if (!file.endsWith('.css')) continue;
+    postcss.parse(text).walkAtRules('keyframes', (rule) => {
+      keyframes.set(
+        rule.params,
+        Object.fromEntries(
+          rule.nodes
+            .filter((node) => node.type === 'rule')
+            .map((step) => [
+              step.selector,
+              Object.fromEntries(
+                step.nodes.filter((node) => node.type === 'decl').map((decl) => [decl.prop, decl.value]),
+              ),
+            ]),
+        ),
+      );
+    });
+  }
+  const animationCss = new Map();
+  for (const family of families) {
+    const seen = new Set();
+    const visit = (file) => {
+      if (seen.has(file)) return;
+      seen.add(file);
+      for (const target of localImports.get(file) ?? []) visit(target);
+    };
+    visit(path.join(source, family, 'index.ts'));
+    const implementation = [...seen].map((file) => content.get(file)).join('\n');
+    animationCss.set(
+      family,
+      Object.fromEntries(
+        [...keyframes]
+          .filter(([name]) => implementation.includes(name))
+          .map(([name, rules]) => [`@keyframes ${name}`, rules]),
+      ),
+    );
+  }
   const items = names.map((name) => {
     const group = groups.get(name);
     const files = group.files.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
@@ -195,7 +239,9 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
         'Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.',
       ...(name === 'foundation'
         ? registryTheme(content.get(path.join(source, 'foundations/styles/tailwind.css')))
-        : {}),
+        : animationCss.get(name) && Object.keys(animationCss.get(name)).length
+          ? { css: animationCss.get(name) }
+          : {}),
       dependencies: [...group.dependencies].sort(),
       devDependencies: [...group.devDependencies].sort(),
       registryDependencies: [...group.registryDependencies]

@@ -5,7 +5,12 @@ import type { ApiProperty } from './api-types';
 
 export default function ApiTable({ name, properties }: { name: string; properties: ApiProperty[] }) {
   return (
-    <div className="overflow-x-auto rounded-toolbox border border-toolbox-divider">
+    <div
+      role="region"
+      aria-label={`${name} props`}
+      tabIndex={0}
+      className="overflow-x-auto rounded-toolbox border border-toolbox-divider"
+    >
       <Table selectable={false} aria-label={`${name} API`} className="min-w-[560px] table-fixed">
         <TableHead>
           <TableCell scope="col" className="w-1/4">
@@ -21,14 +26,14 @@ export default function ApiTable({ name, properties }: { name: string; propertie
         {properties.map((property) => (
           <TableRow key={property.name}>
             <TableCell className="align-top">
-              <code className="wrap-break-word text-xs">{property.name}</code>
+              <code className="wrap-break-word">{property.name}</code>
               {property.required && <span className="mt-1 block text-xs text-toolbox-text-secondary">Required</span>}
               {property.description.includes('@deprecated') && (
                 <span className="mt-1 block text-xs text-toolbox-text-secondary">Deprecated alias</span>
               )}
             </TableCell>
             <TableCell className="align-top">
-              <code className="wrap-break-word whitespace-pre-wrap text-xs leading-5">{property.type}</code>
+              <code className="wrap-break-word whitespace-pre-wrap leading-5">{property.type}</code>
               {property.description && (
                 <p className="mt-2 text-xs leading-5 text-toolbox-text-secondary">
                   {property.description.replace('@deprecated ', '')}
@@ -36,7 +41,7 @@ export default function ApiTable({ name, properties }: { name: string; propertie
               )}
             </TableCell>
             <TableCell className="align-top">
-              <code className="wrap-break-word whitespace-pre-wrap text-xs">{property.default ?? '—'}</code>
+              <code className="wrap-break-word whitespace-pre-wrap">{property.default ?? '—'}</code>
             </TableCell>
           </TableRow>
         ))}

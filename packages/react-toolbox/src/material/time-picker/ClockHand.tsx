@@ -70,6 +70,7 @@ export default function ClockHand({
     ref,
     () => ({
       mouseStart(event) {
+        if (event.defaultPrevented || event.button !== 0) return;
         cleanup.current();
         const face = event.currentTarget;
         const mouseMove = (event: MouseEvent) => move(events.getMousePosition(event), face);
@@ -86,6 +87,7 @@ export default function ClockHand({
         move(events.getMousePosition(event), face);
       },
       touchStart(event) {
+        if (event.defaultPrevented || event.touches.length !== 1) return;
         cleanup.current();
         const face = event.currentTarget;
         const touchMove = (event: TouchEvent) => {
@@ -98,11 +100,12 @@ export default function ClockHand({
         cleanup.current = () => {
           document.removeEventListener('touchmove', touchMove);
           document.removeEventListener('touchend', end);
-          document.removeEventListener('touchcancel', end);
+          document.removeEventListener('touchcancel', cancel);
         };
+        const cancel = () => cleanup.current();
         document.addEventListener('touchmove', touchMove);
         document.addEventListener('touchend', end);
-        document.addEventListener('touchcancel', end);
+        document.addEventListener('touchcancel', cancel);
         if (event.touches.length) move(events.getTouchPosition(event), face);
         event.preventDefault();
         event.stopPropagation();

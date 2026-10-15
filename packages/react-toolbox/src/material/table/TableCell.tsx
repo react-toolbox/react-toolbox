@@ -2,7 +2,8 @@
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import type { TableTheme } from './types';
-import type { ComponentPropsWithRef, MouseEvent } from 'react';
+import { useContext, type ComponentPropsWithRef, type MouseEvent } from 'react';
+import { TableCellContext } from './selection';
 import { cn } from '../foundations/styles/cn';
 import FontIcon from '../font-icon';
 export interface TableCellProps extends Omit<ComponentPropsWithRef<'th'>, 'onClick'> {
@@ -25,15 +26,40 @@ export function TableCell({
   onClick,
   row,
   sorted,
-  tagName: Tag = 'td',
+  tagName,
   theme: legacyTheme,
   classNames,
   ...other
 }: TableCellProps) {
+  const inheritedTag = useContext(TableCellContext);
+  const Tag = tagName ?? inheritedTag;
   const theme = mergeStyleSlots(legacyTheme, classNames);
+  const content = (
+    <>
+      {' '}
+      {sorted && (
+        <FontIcon
+          className={cn(
+            'rt-table-sortIcon',
+            'inline-block text-[calc(1.6*var(--unit))] mr-[3px] [transition:0.28s_transform_var(--animation-curve-default)] align-sub',
+            '[.rt-table-headCell.rt-table-sorted:hover_&]:text-(--table-header-sorted-icon-hover-color)',
+            theme?.sortIcon,
+            sorted === 'asc' && cn('rt-table-asc', '[.rt-table-sortIcon&]:transform-[rotate(180deg)]', theme?.asc),
+          )}
+          value="arrow_downward"
+          aria-hidden
+        />
+      )}
+      {children}
+    </>
+  );
   return (
     <Tag
       {...other}
+      scope={other.scope ?? (Tag === 'th' ? 'col' : undefined)}
+      aria-sort={
+        other['aria-sort'] ?? (Tag === 'th' && sorted ? (sorted === 'asc' ? 'ascending' : 'descending') : undefined)
+      }
       className={cn(
         theme?.tableCell,
         Tag === 'th' &&
@@ -64,19 +90,16 @@ export function TableCell({
       )}
       onClick={(event) => onClick?.(event, column, row)}
     >
-      {sorted && (
-        <FontIcon
-          className={cn(
-            'rt-table-sortIcon',
-            'inline-block text-[calc(1.6*var(--unit))] mr-[3px] [transition:0.28s_transform_var(--animation-curve-default)] align-sub',
-            '[.rt-table-headCell.rt-table-sorted:hover_&]:text-(--table-header-sorted-icon-hover-color)',
-            theme?.sortIcon,
-            sorted === 'asc' && cn('rt-table-asc', '[.rt-table-sortIcon&]:transform-[rotate(180deg)]', theme?.asc),
-          )}
-          value="arrow_downward"
-        />
+      {Tag === 'th' && onClick ? (
+        <button
+          type="button"
+          className="inline border-0 bg-transparent p-0 [font:inherit] text-inherit [text-align:inherit] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+        >
+          {content}
+        </button>
+      ) : (
+        content
       )}
-      {children}
     </Tag>
   );
 }

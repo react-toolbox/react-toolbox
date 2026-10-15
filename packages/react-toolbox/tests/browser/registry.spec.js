@@ -4,9 +4,10 @@ test('the docs deployment serves a complete same-origin source registry', async 
   const catalogResponse = await request.get('/r/registry.json');
   expect(catalogResponse.ok()).toBeTruthy();
   const catalog = await catalogResponse.json();
-  expect(catalog.items).toHaveLength(33);
+  expect(catalog.items).toHaveLength(34);
   expect(catalog.items.filter((item) => item.type === 'registry:ui')).toHaveLength(27);
   const names = new Set(catalog.items.map((item) => item.name));
+  expect(names.has('foundation-forms')).toBe(true);
   expect(names.has('link')).toBe(false);
   expect(names.has('navigation')).toBe(false);
   expect((await request.get('/r/link.json')).status()).toBe(404);
@@ -23,7 +24,8 @@ test('the docs deployment serves a complete same-origin source registry', async 
   expect(
     button.files.some(
       (file) =>
-        file.target === '@ui/material/button/index.ts' && file.content.includes("import '../foundations/styles/setup.css'"),
+        file.target === '@ui/material/button/index.ts' &&
+        file.content.includes("import '../foundations/styles/setup.css'"),
     ),
   ).toBeTruthy();
   expect(button.dependencies.some((dependency) => dependency.startsWith('react-toolbox@'))).toBeFalsy();

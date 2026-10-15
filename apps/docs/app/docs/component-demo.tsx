@@ -59,7 +59,12 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
     case 'app-bar':
       return (
         <div className="w-full">
-          <AppBar title="My collection" leftIcon="menu" onLeftIconClick={() => setText('Navigation opened')} />
+          <AppBar
+            title="My collection"
+            leftIcon="menu"
+            leftIconLabel="Open navigation"
+            onLeftIconClick={() => setText('Navigation opened')}
+          />
           <p role="status" className="mt-4 text-center text-sm text-toolbox-text-secondary">
             {text || 'Try the navigation icon.'}
           </p>
@@ -80,6 +85,9 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
     case 'avatar':
       return (
         <div className="flex items-center gap-4">
+          <Avatar image="/images/javi-and-cora.jpg" alt="Javi and Cora" title="Javi and Cora">
+            JC
+          </Avatar>
           <Avatar title="Javi" aria-label="Javi Velasco" />
           <Avatar icon="person" aria-label="Guest" />
         </div>
@@ -218,7 +226,7 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
             {['Inbox', 'Favorites'].map((folder) => (
               <ListItem
                 key={folder}
-                theme={{ item: 'p-0' }}
+                className="[--list-horizontal-padding:0px]"
                 itemContent={
                   <button
                     type="button"

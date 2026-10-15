@@ -43,6 +43,17 @@ export async function useOriginalStyles(page) {
     for (const sheet of document.styleSheets) removeComponentRules(sheet);
   });
   await page.addStyleTag({ content: referenceStyles });
+  // New M1 mixed selection state, absent from the archived implementation.
+  // Keep this explicit reference independent of the generated utility classes;
+  // the browser quality test separately asserts the native state and mark geometry.
+  await page.addStyleTag({
+    content: `
+    .rt-checkbox-input[aria-checked="mixed"] ~ .rt-checkbox-check.rt-checkbox-checked::after {
+      animation: none; border: 0; background-color: var(--rt-color-background);
+      height: 2px; width: 10px; left: 2px; top: 6px; transform: none;
+    }
+  `,
+  });
 }
 
 export async function prepare(page) {

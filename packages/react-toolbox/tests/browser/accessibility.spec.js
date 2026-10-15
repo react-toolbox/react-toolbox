@@ -224,7 +224,7 @@ for (const [name, dialogName] of [
 ]) {
   test(`${name} combobox exposes its dialog relationship and restores keyboard focus`, async ({ page }) => {
     await mount(page);
-    const trigger = page.getByRole('combobox', { name });
+    const trigger = page.getByRole('combobox', { name, includeHidden: true });
     await trigger.focus();
     await page.keyboard.press('ArrowDown');
     const dialog = page.getByRole('dialog', { name: dialogName });
@@ -241,7 +241,7 @@ for (const [name, dialogName] of [
 test('picker hit areas expand without shifting the visible header', async ({ page }) => {
   await mount(page);
   for (const [name, selectors] of [
-    ['Start date', ['#years']],
+    ['Start date', ['.rt-date-picker-year']],
     ['Twelve-hour time', ['.rt-time-picker-am', '.rt-time-picker-pm']],
   ]) {
     await page.getByRole('combobox', { name }).focus();

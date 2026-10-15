@@ -42,6 +42,8 @@ export default function CalendarMonth({
       className={cn('rt-date-picker-month', 'bg-(--calendar-primary-contrast-color) w-full', theme?.month)}
     >
       <span
+        aria-live="polite"
+        aria-atomic="true"
         className={cn(
           'rt-date-picker-title',
           'inline-block [font-weight:500] leading-(--calendar-row-height)',

@@ -6,7 +6,7 @@ import type { DrawerTheme } from './types';
 
 import type { HTMLAttributes, MouseEventHandler, Ref } from 'react';
 import { cn } from '../foundations/styles/cn';
-import Portal from '../foundations/portal/Portal';
+import Portal, { type PortalContainer } from '../foundations/portal/Portal';
 import usePresence from '../foundations/motion/usePresence';
 import useMergedRefs from '../foundations/portal/useMergedRefs';
 import Overlay from '../overlay';
@@ -15,6 +15,11 @@ import useModalFocus from '../overlay/useModalFocus';
 export type { DrawerTheme, DrawerClassNames } from './types';
 export interface DrawerCommonProps {
   active?: boolean;
+  /** Cancel the default focus placement and focus a specific field instead. */
+  onOpenAutoFocus?: (event: Event) => void;
+  /** Cancel the default return focus, for example after deleting the opener. */
+  onCloseAutoFocus?: (event: Event) => void;
+  portalContainer?: PortalContainer;
   delay?: number;
   insideTree?: boolean;
   onOverlayClick?: MouseEventHandler<HTMLDivElement>;
@@ -31,6 +36,9 @@ export interface DrawerProps extends HTMLAttributes<HTMLElement>, DrawerCommonPr
 }
 export function Drawer({
   active = false,
+  onOpenAutoFocus,
+  onCloseAutoFocus,
+  portalContainer,
   delay = 500,
   children,
   className,
@@ -46,7 +54,7 @@ export function Drawer({
 }: DrawerProps) {
   const theme = mergeStyleSlots(legacyTheme, classNames);
   const { present, visible } = usePresence(active, delay);
-  const focusRef = useModalFocus(visible && withOverlay);
+  const focusRef = useModalFocus(visible && withOverlay, { onOpenAutoFocus, onCloseAutoFocus });
   const drawerRef = useMergedRefs(focusRef, ref);
   if (!present) return null;
   const content = (
@@ -99,7 +107,12 @@ export function Drawer({
   return insideTree ? (
     <div className={cn('rt-drawer-wrapper', 'relative z-(--z-index-higher)', theme?.wrapper)}>{content}</div>
   ) : (
-    <Portal className={cn('rt-drawer-wrapper', 'relative z-(--z-index-higher)', theme?.wrapper)}>{content}</Portal>
+    <Portal
+      container={portalContainer}
+      className={cn('rt-drawer-wrapper', 'relative z-(--z-index-higher)', theme?.wrapper)}
+    >
+      {content}
+    </Portal>
   );
 }
 export default Drawer;

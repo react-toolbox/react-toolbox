@@ -6,6 +6,7 @@ import type { SwitchTheme } from './types';
 
 import React, { useImperativeHandle, useRef } from 'react';
 import { cn } from '../foundations/styles/cn';
+import useChecked from '../foundations/forms/useChecked';
 import Thumb from './Thumb';
 const fieldClasses = [
   'rt-switch-field',
@@ -37,13 +38,15 @@ export interface SwitchProps
   onChange?: (checked: boolean, event: React.MouseEvent<HTMLInputElement>) => void;
 }
 export function Switch({
-  checked = false,
+  checked: controlledChecked,
+  defaultChecked = false,
   children,
   className = '',
   disabled = false,
   label,
   name,
   onChange,
+  onClick,
   onMouseEnter,
   onMouseLeave,
   theme: legacyTheme,
@@ -55,6 +58,7 @@ export function Switch({
 }: SwitchProps) {
   const theme = mergeStyleSlots(legacyTheme, classNames);
   const input = useRef<HTMLInputElement>(null);
+  const [checked, setChecked] = useChecked(input, controlledChecked, defaultChecked);
   const handle = {
     focus: () => input.current?.focus(),
     blur: () => input.current?.blur(),
@@ -64,8 +68,11 @@ export function Switch({
   };
   useImperativeHandle(ref, () => handle);
   const toggle = (event: React.MouseEvent<HTMLInputElement>) => {
-    if (event.pageX !== 0 && event.pageY !== 0) input.current?.blur();
-    if (!disabled) onChange?.(!checked, event);
+    onClick?.(event);
+    if (disabled || event.defaultPrevented) return;
+    const next = event.currentTarget.checked;
+    if (controlledChecked === undefined) setChecked(next);
+    onChange?.(next, event);
   };
   return (
     <label
@@ -82,7 +89,8 @@ export function Switch({
       <input
         {...others}
         style={style}
-        checked={checked}
+        checked={controlledChecked}
+        defaultChecked={controlledChecked === undefined ? defaultChecked : undefined}
         className={cn('rt-switch-input', 'h-0 opacity-0 overflow-hidden w-0', theme?.input)}
         disabled={disabled}
         name={name}

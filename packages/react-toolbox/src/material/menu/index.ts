@@ -10,3 +10,8 @@ export type * from './Menu';
 export type * from './MenuItem';
 export type * from './MenuDivider';
 export type * from './IconMenu';
+
+export * from './MenuCheckboxItem';
+export * from './MenuRadioGroup';
+
+export * from './parts';

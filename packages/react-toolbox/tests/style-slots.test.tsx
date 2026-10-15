@@ -2,6 +2,17 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { Button, DatePicker, Input, ThemeProvider, tooltipFactory } from '../src';
 import { mergeStyleSlots } from '../src/material/foundations/styles/slots';
+import { cn } from '../src/material/foundations/styles/cn';
+
+describe('Material Tailwind classes', () => {
+  it('keeps named text sizes independent of colors and lets consumer sizes win', () => {
+    expect(cn('text-toolbox-small', 'text-toolbox-primary')).toBe('text-toolbox-small text-toolbox-primary');
+    expect(cn('text-toolbox-title text-toolbox-primary', 'text-[17px] text-toolbox-accent')).toBe(
+      'text-[17px] text-toolbox-accent',
+    );
+    expect(cn('text-xl text-toolbox-primary', 'text-toolbox-title')).toBe('text-toolbox-primary text-toolbox-title');
+  });
+});
 
 describe('classNames style slots', () => {
   it('keeps the fast path identity and lets current utilities win over compatibility overrides', () => {

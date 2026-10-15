@@ -12,22 +12,24 @@ export default function ThemingPage() {
       description="Keep the Material foundation. Change the parts that make it yours."
       sections={[
         { id: 'colors', title: 'Colors' },
+        { id: 'source', title: 'Component classes' },
+        { id: 'scopes', title: 'Scoped colors' },
         { id: 'spacing', title: 'Spacing' },
-        { id: 'source', title: 'Source and styles' },
       ]}
     >
       <DocsSection id="colors" title="Start with color">
-        <p className="mb-4 text-sm leading-7 text-toolbox-text-secondary">
-          The original indigo and pink palette is the default. Scope a different palette with ThemeProvider. Nested
-          components and their dialogs inherit the same variables.
+        <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
+          Theme shared colors with CSS variables in your global stylesheet. Tailwind utilities such as
+          <code> bg-toolbox-primary</code> use those same variables. The default palette is Material indigo and pink.
         </p>
         <CodeBlock
-          label="Theme example"
+          language="css"
+          label="Global color variables"
           code={
-            "import { Button } from '@/components/ui/material/button';\nimport { ThemeProvider } from '@/components/ui/material/theme';\n\n<ThemeProvider variables={{\n  '--rt-color-primary': '#00695c',\n  '--rt-color-primary-dark': '#004d40',\n  '--rt-color-accent': '#ff6d00',\n}}>\n  <Button primary raised label=\"A different shade\" />\n</ThemeProvider>"
+            ':root {\n  --rt-color-primary: #00695c;\n  --rt-color-primary-dark: #004d40;\n  --rt-color-primary-contrast: #ffffff;\n  --rt-color-accent: #ff6d00;\n  --rt-color-accent-contrast: #212121;\n}'
           }
         />
-        <p className="mt-4 text-sm leading-7 text-toolbox-text-secondary">
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
           On light surfaces, M1 uses 87% black for primary text, 54% for secondary text, 38% for disabled text, and 12%
           for dividers. These docs scope the text variables to alpha colors so they blend with their surface. When
           customizing a palette, check text and icon contrast in every state. See the{' '}
@@ -40,18 +42,61 @@ export default function ThemingPage() {
           .
         </p>
       </DocsSection>
+      <DocsSection id="source" title="Style the components you compose">
+        <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
+          Pass Tailwind utilities through <code>className</code> on each component. Compose the exported parts to
+          customize individual nodes. For an internal element that is not exposed as a component, edit its classes in
+          the installed source. The JSX and styles belong to your application.
+        </p>
+        <CodeBlock
+          label="Compose with className"
+          code={
+            'import { Button } from "@/components/ui/material/button";\nimport { Card, CardText, CardActions } from "@/components/ui/material/card";\n\n<Card className="max-w-md">\n  <CardText className="text-toolbox-text-secondary">\n    Your changes are ready to save.\n  </CardText>\n  <CardActions className="justify-end gap-2">\n    <Button primary className="min-w-24">Save</Button>\n  </CardActions>\n</Card>'
+          }
+        />
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
+          Conflicting base utilities resolve in favor of your classes. Responsive and state variants keep normal
+          Tailwind precedence; match the variant when overriding it. Use CSS variables for colors across states.
+        </p>
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
+          Existing <code>classNames</code> and <code>theme</code> slot maps remain supported for compatibility. They are
+          optional; you do not need a per-component theme object to customize the library.
+        </p>
+      </DocsSection>
+      <DocsSection id="scopes" title="Scope a palette when you need to">
+        <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
+          Global CSS variables need no provider. Use <code>ThemeProvider</code> when a section needs its own palette: it
+          carries scoped variables into dialogs, menus, and other portaled content too.
+        </p>
+        <CodeBlock
+          label="Scoped color variables"
+          code={
+            'import { ThemeProvider } from "@/components/ui/material/theme";\n\n<ThemeProvider variables={{ "--rt-color-primary": "#00695c" }}>\n  <YourSection />\n</ThemeProvider>'
+          }
+        />
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
+          Material tokens use the <code>--rt-color-</code> prefix so they can coexist with a shadcn theme. Map them
+          explicitly to your app’s semantic tokens if you want both libraries to share colors.
+        </p>
+      </DocsSection>
       <DocsSection id="spacing" title="A Material rhythm">
-        <p className="mb-4 text-sm leading-7 text-toolbox-text-secondary">
+        <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
           The registry configures Tailwind’s spacing unit to the Material 4px subgrid. Use ordinary utilities to keep
           page layouts on the same rhythm as the components. Prefer multiples of 8px for layout spacing; the 4px subgrid
           accommodates typography and icons.
         </p>
         <SpacingTable />
-        <p className="mt-4 text-sm leading-7 text-toolbox-text-secondary">
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
+          Use <code>text-toolbox-title</code>, <code>text-toolbox-subheading</code>, and <code>text-toolbox-body</code>{' '}
+          for Material text sizes with matching weight and line height.
+          <code> min-h-toolbox-touch</code> provides a 48px target, and <code>max-w-toolbox-prose</code> keeps reading
+          lines comfortable. These utilities are included by the registry.
+        </p>
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
           Color utilities such as <code>bg-toolbox-primary</code> and <code>text-toolbox-text-secondary</code> follow
           the nearest theme. Card content and actions already include their Material padding.
         </p>
-        <p className="mt-4 text-sm leading-7 text-toolbox-text-secondary">
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
           Use 16px content insets on phones and 24px on larger screens, and allow 48px interaction areas even when an
           icon or button is visually smaller. Follow the{' '}
           <a
@@ -61,32 +106,6 @@ export default function ThemingPage() {
             M1 metrics and keylines
           </a>{' '}
           when composing a page.
-        </p>
-      </DocsSection>
-      <DocsSection id="source" title="Go beyond the defaults">
-        <p className="text-sm leading-7 text-toolbox-text-secondary">
-          Use <code>className</code> for the root and the <code>classNames</code> prop for individual style slots.
-          Component styles are Tailwind classes beside the JSX in <code>material/</code>, with shared helpers for
-          related components in your UI directory. Shared CSS holds tokens, keyframes, and Preflight compatibility. All
-          of it is yours to edit. The old <code>theme</code> slot prop remains a compatibility alias; prefer{' '}
-          <code>classNames</code> in new code.
-        </p>
-        <div className="mt-4">
-          <CodeBlock
-            label="Style slot overrides"
-            code={
-              'import { Button } from "@/components/ui/material/button";\n\n<Button label="Save" classNames={{ icon: "text-xl", button: "min-w-32" }} />'
-            }
-          />
-        </div>
-        <p className="mt-4 text-sm leading-7 text-toolbox-text-secondary">
-          Consumer classes override conflicting base utilities. State and responsive variants retain normal Tailwind
-          precedence: match the variant, or use an intentional important utility such as <code>p-6!</code> to override
-          all CardText insets. Use theme variables to change colors consistently across interaction states.
-        </p>
-        <p className="mt-4 text-sm leading-7 text-toolbox-text-secondary">
-          Keep importing the public entries so their styles and fonts load automatically. Standard shadcn colors do not
-          replace the Material palette unless you explicitly map them.
         </p>
       </DocsSection>
     </DocsArticle>

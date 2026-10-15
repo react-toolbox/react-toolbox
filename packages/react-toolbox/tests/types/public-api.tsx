@@ -18,6 +18,13 @@ import {
   DatePicker,
   TimePicker,
   Checkbox,
+  Autocomplete,
+  Dropdown,
+  Slider,
+  IconMenu,
+  MenuCheckboxItem,
+  MenuRadioGroup,
+  MenuRadioItem,
   Tabs,
   Tab,
   type ButtonProps,
@@ -80,3 +87,63 @@ const wrongButtonHandler = <Button onClick={(value: number) => value} />;
 const wrongInputHandler = <Input onChange={(value: number) => value} />;
 // @ts-expect-error Style slots are typed and reject arbitrary part names.
 const wrongSlot = <Button classNames={{ nonexistentPart: 'p-4' }} />;
+
+export const workflowExamples = (
+  <>
+    <Button asChild ref={React.createRef<HTMLAnchorElement>()}>
+      <a href="/home">Home</a>
+    </Button>
+    <Tip asChild tooltip="View profile">
+      <a href="/profile" ref={React.createRef<HTMLAnchorElement>()}>
+        Profile
+      </a>
+    </Tip>
+    <IconMenu
+      trigger={
+        <Tip asChild tooltip="Display options">
+          <button type="button">Options</button>
+        </Tip>
+      }
+    >
+      <MenuCheckboxItem caption="Toolbar" defaultChecked />
+    </IconMenu>
+    <IconButton asChild aria-label="Home">
+      <a href="/home">Home</a>
+    </IconButton>
+    <Autocomplete
+      multiple={false}
+      defaultValue="ada"
+      source={[{ value: 'ada', label: <b>Ada</b>, textValue: 'Ada', group: 'Team' }]}
+      onChange={(value: string) => value}
+    />
+    <Autocomplete
+      defaultValue={['ada']}
+      onChange={(value: string[]) => value}
+      name="people"
+      clearable
+      loading
+      emptyMessage="No matches"
+    />
+    <Autocomplete defaultValue={{ ada: 'Ada' }} onChange={(value: Record<string, React.ReactNode>) => value} />
+    <Dropdown
+      open={false}
+      onOpenChange={(open: boolean) => open}
+      source={[{ key: 1, text: 'One', category: 'Numbers' }]}
+      valueKey="key"
+      labelKey="text"
+      groupKey="category"
+    />
+    <Slider defaultValue={20} name="volume" form="settings" onValueCommit={(value: number) => value} />
+    <IconMenu trigger={<Button label="Preferences" />} open={false} onOpenChange={(open: boolean) => open}>
+      <MenuCheckboxItem caption="Toolbar" defaultChecked onCheckedChange={(checked: boolean) => checked} />
+      <MenuRadioGroup defaultValue="small" onValueChange={(value: string) => value}>
+        <MenuRadioItem value="small" caption="Small" />
+      </MenuRadioGroup>
+    </IconMenu>
+    <Tabs defaultIndex={0} activationMode="manual" loop={false}>
+      <Tab label="First">Content</Tab>
+    </Tabs>
+    <DatePicker defaultValue={new Date()} open={false} onOpenChange={(open: boolean) => open} />
+    <TimePicker defaultValue={new Date()} />
+  </>
+);

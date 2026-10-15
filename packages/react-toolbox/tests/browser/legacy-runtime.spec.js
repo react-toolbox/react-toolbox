@@ -38,7 +38,7 @@ async function originalPage(context, modern) {
   await original.evaluate(() => document.fonts.ready);
   await expect(original.locator('.rt-tabs-pointer').first()).not.toHaveCSS('width', '0px');
 
-  // The archive remains byte-for-byte immutable. These two DOM corrections
+  // The archive remains byte-for-byte immutable. These explicit DOM corrections
   // accompany the reviewed M1 stylesheet changes; assert the modern contract
   // first, then make the same explicit correction to the historical render.
   // The legacy Switch only styled its disabled label and omitted the native
@@ -48,6 +48,28 @@ async function originalPage(context, modern) {
     inputs.forEach((input) => {
       input.disabled = true;
     });
+  });
+
+  // A selected-chip container is not a list of li children. Preserve all
+  // geometry/styles while adapting the invalid historical ul to a div.
+  await expect(modern.locator('ul.rt-autocomplete-values')).toHaveCount(0);
+  await original.locator('ul.rt-autocomplete-values').evaluateAll((lists) => {
+    for (const list of lists) {
+      const container = document.createElement('div');
+      for (const attribute of list.attributes) container.setAttribute(attribute.name, attribute.value);
+      container.append(...list.childNodes);
+      list.replaceWith(container);
+    }
+  });
+
+  // This gallery starts with one of three rows selected. M1's header must show
+  // the newly supported mixed state. Adapt this one state, not the archive or
+  // any ordinary checked/unchecked styling, and continue comparing exact pixels.
+  await expect(modern.getByRole('checkbox', { name: 'Select all rows' })).toBeChecked({ indeterminate: true });
+  await original.locator('.rt-table-head .rt-checkbox-input').evaluate((input) => {
+    input.indeterminate = true;
+    input.setAttribute('aria-checked', 'mixed');
+    input.nextElementSibling.classList.add('rt-checkbox-checked');
   });
 
   // M1 discrete stops now include the real maximum. This gallery's immutable
@@ -118,8 +140,22 @@ async function compareRuntimes(
       ),
     );
   }
-  const modernImage = await componentCapture(modern, selector).screenshot({ animations });
-  const originalImage = await componentCapture(original, selector).screenshot({ animations });
+  if (selector.startsWith('[data-slider-comparison=')) {
+    // A transition's finished promise resolves before its last frame is painted.
+    // Let both canvases commit the completed pin transform before capturing the
+    // focus halo, whose rasterization otherwise depends on compositor timing.
+    await Promise.all(
+      [modern, original].map((target) =>
+        target.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))),
+      ),
+    );
+  }
+  // Slider transitions have finished above. Playwright's animation disabling
+  // can repaint the released pin's compositor layer differently between the
+  // runtimes; capture that settled native frame without another intervention.
+  const captureAnimations = selector.startsWith('[data-slider-comparison=') ? 'allow' : animations;
+  const modernImage = await componentCapture(modern, selector).screenshot({ animations: captureAnimations });
+  const originalImage = await componentCapture(original, selector).screenshot({ animations: captureAnimations });
   // Compare stable component hooks rather than the migrated implementation
   // utilities. Computed declarations, geometry and every rendered pixel remain exact.
   const normalized = (items) =>
@@ -236,14 +272,16 @@ for (const [name, pinned] of [
     const sliderSelector = `.rt-slider-editable${pinned ? '.rt-slider-pinned' : ':not(.rt-slider-pinned)'}`;
     const canvasSelector = `[data-slider-comparison="${name}"]`;
     for (const target of [page, original]) {
-      await target
-        .locator(sliderSelector)
-        .evaluate((element) =>
-          element.parentElement.setAttribute(
-            'data-slider-comparison',
-            element.classList.contains('rt-slider-pinned') ? 'pinned' : 'continuous',
-          ),
+      await target.locator(sliderSelector).evaluate((element) => {
+        element.parentElement.setAttribute(
+          'data-slider-comparison',
+          element.classList.contains('rt-slider-pinned') ? 'pinned' : 'continuous',
         );
+        // Give both external canvases a compositor layer before interaction.
+        // The animated pin can otherwise promote only one canvas's halo,
+        // changing Chromium's edge rasterization despite identical styles.
+        element.parentElement.style.transform = 'translateZ(0)';
+      });
     }
 
     // Compare both a filled thumb and the hollow minimum-value ring.

@@ -68,7 +68,8 @@ export default function Calendar({
     setViewDate((current) => time.addMonths(current, next === 'left' ? -1 : 1));
   };
   const yearClick = (year: number) => {
-    const next = time.setYear(selectedDate, year);
+    const next = time.addMonths(selectedDate, (year - selectedDate.getFullYear()) * 12);
+    next.setDate(Math.min(selectedDate.getDate(), time.getDaysInMonth(next)));
     setViewDate(next);
     onChange?.(next, false);
   };
@@ -135,7 +136,29 @@ export default function Calendar({
       aria-label="Calendar"
       tabIndex={0}
       onKeyDown={(event) => {
-        if (event.defaultPrevented || display !== 'months') return;
+        if (event.defaultPrevented || display !== 'months' || event.altKey || event.ctrlKey || event.metaKey) return;
+        if (
+          event.target !== event.currentTarget &&
+          !(event.target instanceof Element && event.target.closest('[data-react-toolbox="day"]'))
+        )
+          return;
+        if (['Home', 'End', 'PageUp', 'PageDown'].includes(event.key)) {
+          event.preventDefault();
+          let date: Date;
+          if (event.key === 'Home' || event.key === 'End') {
+            const weekday = (selectedDate.getDay() + (sundayFirstDayOfWeek ? 0 : 6)) % 7;
+            date = time.addDays(selectedDate, event.key === 'Home' ? -weekday : 6 - weekday);
+          } else {
+            date = time.addMonths(selectedDate, (event.key === 'PageUp' ? -1 : 1) * (event.shiftKey ? 12 : 1));
+            date.setDate(Math.min(selectedDate.getDate(), time.getDaysInMonth(date)));
+          }
+          if (!isDateDisabled(date, constraints)) {
+            focusSelectedDay.current = true;
+            setViewDate(date);
+            onChange?.(date, false);
+          }
+          return;
+        }
         const steps: Record<string, number> = {
           ArrowLeft: -1,
           ArrowUp: -7,
@@ -143,7 +166,11 @@ export default function Calendar({
           ArrowDown: 7,
         };
         const legacySteps: Record<number, number> = { 37: -1, 38: -7, 39: 1, 40: 7 };
-        const step = steps[event.key] || legacySteps[event.which];
+        const direction =
+          ['ArrowLeft', 'ArrowRight'].includes(event.key) && getComputedStyle(event.currentTarget).direction === 'rtl'
+            ? -1
+            : 1;
+        const step = (steps[event.key] || legacySteps[event.which]) * direction;
         if (step) {
           event.preventDefault();
           let date: Date | undefined = time.addDays(selectedDate, step);
@@ -190,7 +217,6 @@ export default function Calendar({
               tabIndex={year === viewDate.getFullYear() ? 0 : -1}
               aria-pressed={year === viewDate.getFullYear()}
               className={year === viewDate.getFullYear() ? cn(activeClasses, theme?.active) : ''}
-              id={String(year)}
               key={year}
               onClick={() => yearClick(year)}
               onKeyDown={(event) => {
@@ -239,7 +265,6 @@ export default function Calendar({
           }}
         >
           <IconButton
-            id="left"
             aria-label="Previous month"
             className={cn(
               'rt-date-picker-prev',
@@ -251,7 +276,6 @@ export default function Calendar({
             onClick={() => moveViewMonth('left')}
           />
           <IconButton
-            id="right"
             aria-label="Next month"
             className={cn(
               'rt-date-picker-next',

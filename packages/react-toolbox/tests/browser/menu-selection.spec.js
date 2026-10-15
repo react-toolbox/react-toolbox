@@ -32,7 +32,7 @@ for (const width of [1440, 390]) {
         });
       });
       await page.getByRole('menuitem', { name: caption, exact: false }).click();
-      await expect(page.getByRole('status')).toHaveText(caption.toLowerCase());
+      await expect(page.locator('#preview').getByRole('status')).toHaveText(caption.toLowerCase());
       await expect(trigger).toHaveAttribute('aria-expanded', 'false');
       const frames = await page.evaluate(() => window.menuClosingFrames);
       await testInfo.attach(`menu-closing-${caption}`, {

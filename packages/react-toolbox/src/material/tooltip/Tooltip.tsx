@@ -93,23 +93,33 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
   current.current = state;
   const latest = useRef({ tooltip, tooltipDelay, tooltipPosition, props });
   latest.current = { tooltip, tooltipDelay, tooltipPosition, props };
-  const node = useRef<HTMLSpanElement>(null);
+  const node = useRef<HTMLSpanElement | null>(null);
+  const [tooltipNode, setTooltipNode] = useState<HTMLSpanElement | null>(null);
+  const attachTooltip = useCallback((element: HTMLSpanElement | null) => {
+    node.current = element;
+    setTooltipNode(element);
+  }, []);
   const trigger = useRef<HTMLElement | null>(null);
   const interaction = useRef({
     hovered: false,
+    tooltipHovered: false,
     focused: false,
     touching: false,
     longPressed: false,
     ignoreClickUntil: 0,
   });
-  const timers = useRef<{ activate: Timer; hide: Timer; touch: Timer; release: Timer }>({
+  const timers = useRef<{ activate: Timer; hide: Timer; touch: Timer; release: Timer; hover: Timer }>({
     activate: undefined,
     hide: undefined,
     touch: undefined,
     release: undefined,
+    hover: undefined,
   });
   const deactivate = useCallback(() => {
+    interaction.current.tooltipHovered = false;
+    clearTimeout(timers.current.hover);
     clearTimeout(timers.current.activate);
+    timers.current.activate = undefined;
     clearTimeout(timers.current.hide);
     timers.current.hide = undefined;
     clearTimeout(timers.current.release);
@@ -152,27 +162,54 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
           : requested;
     const x = window.scrollX || window.pageXOffset;
     const y = window.scrollY || window.pageYOffset;
-    if (position === 'bottom') return { top: top + height + y, left: left + width / 2 + x, position };
-    if (position === 'top') return { top: top + y, left: left + width / 2 + x, position };
-    if (position === 'left') return { top: top + height / 2 + y, left: left + x, position };
-    return { top: top + height / 2 + y, left: left + width + x, position };
+    const tooltipWidth = node.current?.offsetWidth || 0;
+    const tooltipHeight = node.current?.offsetHeight || 0;
+    const edge = 8;
+    const clamp = (value: number, low: number, high: number) => Math.max(low, Math.min(value, Math.max(low, high)));
+    const centeredX = clamp(left + width / 2, edge + tooltipWidth / 2, window.innerWidth - edge - tooltipWidth / 2);
+    const centeredY = clamp(top + height / 2, edge + tooltipHeight / 2, window.innerHeight - edge - tooltipHeight / 2);
+    if (position === 'bottom')
+      return {
+        top: clamp(top + height, edge, window.innerHeight - tooltipHeight - edge) + y,
+        left: centeredX + x,
+        position,
+      };
+    if (position === 'top')
+      return { top: clamp(top, tooltipHeight + edge, window.innerHeight - edge) + y, left: centeredX + x, position };
+    if (position === 'left')
+      return { top: centeredY + y, left: clamp(left, tooltipWidth + edge, window.innerWidth - edge) + x, position };
+    return {
+      top: centeredY + y,
+      left: clamp(left + width, edge, window.innerWidth - tooltipWidth - edge) + x,
+      position,
+    };
   }, []);
-  const activate = useCallback((placement: Placement) => {
-    if (latest.current.tooltip == null || latest.current.tooltip === '') return;
-    clearTimeout(timers.current.activate);
-    clearTimeout(timers.current.hide);
-    timers.current.hide = undefined;
-    clearTimeout(timers.current.release);
-    setState((previous) => ({ ...previous, visible: true, position: placement.position }));
-    timers.current.activate = setTimeout(
-      () => setState((previous) => ({ ...previous, active: true, ...placement })),
-      latest.current.tooltipDelay,
-    );
-  }, []);
+  const activate = useCallback(
+    (placement: Placement) => {
+      if (latest.current.tooltip == null || latest.current.tooltip === '') return;
+      clearTimeout(timers.current.hover);
+      clearTimeout(timers.current.activate);
+      clearTimeout(timers.current.hide);
+      timers.current.hide = undefined;
+      clearTimeout(timers.current.release);
+      setState((previous) => ({ ...previous, visible: true, position: placement.position }));
+      timers.current.activate = setTimeout(() => {
+        timers.current.activate = undefined;
+        setState((previous) => ({
+          ...previous,
+          active: true,
+          ...(trigger.current ? calculate(trigger.current) : placement),
+        }));
+      }, latest.current.tooltipDelay);
+    },
+    [calculate],
+  );
   useEffect(() => {
     if (!state.visible) return;
     const escape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      // Retained exit content must not consume Escape from a newly opened menu
+      // or dialog. A pending tooltip still needs to cancel its entrance timer.
+      if (event.key === 'Escape' && (current.current.active || timers.current.activate !== undefined)) {
         event.preventDefault();
         event.stopPropagation();
         deactivate();
@@ -189,6 +226,39 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
     };
   }, [state.visible, deactivate]);
   useEffect(() => () => Object.values(timers.current).forEach(clearTimeout), []);
+  useEffect(() => {
+    if (!state.visible || !tooltipNode || !trigger.current) return;
+    const update = () => {
+      if (!trigger.current?.isConnected) {
+        deactivate();
+        return;
+      }
+      const placement = calculate(trigger.current);
+      setState((previous) =>
+        previous.top === placement.top && previous.left === placement.left && previous.position === placement.position
+          ? previous
+          : { ...previous, ...placement },
+      );
+    };
+    update();
+    window.addEventListener('resize', update);
+    window.addEventListener('scroll', update, true);
+    const observer = typeof ResizeObserver === 'undefined' ? undefined : new ResizeObserver(update);
+    observer?.observe(tooltipNode);
+    observer?.observe(trigger.current);
+    return () => {
+      window.removeEventListener('resize', update);
+      window.removeEventListener('scroll', update, true);
+      observer?.disconnect();
+    };
+  }, [state.visible, tooltipNode, tooltip, tooltipPosition, calculate, deactivate]);
+  const leaveHover = () => {
+    clearTimeout(timers.current.hover);
+    timers.current.hover = setTimeout(() => {
+      if (!interaction.current.hovered && !interaction.current.tooltipHovered && !interaction.current.focused)
+        deactivate();
+    }, 100);
+  };
   const triggerProps: TriggerProps = {
     onMouseEnter: (event) => {
       interaction.current.hovered = true;
@@ -198,7 +268,7 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
     },
     onMouseLeave: (event) => {
       interaction.current.hovered = false;
-      if (!interaction.current.focused) deactivate();
+      leaveHover();
       props.onMouseLeave?.(event);
     },
     onClick: (event) => {
@@ -207,7 +277,7 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
         event.stopPropagation();
         return;
       }
-      if (tooltipHideOnClick && state.active) deactivate();
+      if (tooltipHideOnClick && state.visible) deactivate();
       if (tooltipShowOnClick && !state.active) activate(calculate(event.currentTarget));
       props.onClick?.(event);
     },
@@ -295,7 +365,7 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
         <span
           id={id}
           role="tooltip"
-          ref={node}
+          ref={attachTooltip}
           className={cn(
             'rt-tooltip-tooltip',
             'block font-(family-name:--preferred-font) text-(length:--tooltip-font-size) font-(--font-weight-semi-bold) leading-(--font-size-small) max-w-(--tooltip-max-width) p-(--tooltip-margin) pointer-events-none absolute text-center normal-case transform-[scale(0)_translateX(-50%)] origin-[top_left] [transition:var(--animation-curve-fast-out-linear-in)_var(--tooltip-animation-duration)_transform] z-(--z-index-higher) box-border [-webkit-font-smoothing:antialiased] [font-smoothing:antialiased] [-webkit-text-size-adjust:100%] [-moz-text-size-adjust:100%] [text-size-adjust:100%]',
@@ -314,7 +384,20 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
             positionClass,
           )}
           data-react-toolbox="tooltip"
-          style={{ top: state.top, left: state.left }}
+          style={{
+            top: state.top,
+            left: state.left,
+            pointerEvents: state.active ? 'auto' : undefined,
+            maxWidth: 'min(var(--tooltip-max-width), calc(100vw - 16px))',
+          }}
+          onMouseEnter={() => {
+            interaction.current.tooltipHovered = true;
+            clearTimeout(timers.current.hover);
+          }}
+          onMouseLeave={() => {
+            interaction.current.tooltipHovered = false;
+            leaveHover();
+          }}
           onTransitionEnd={transitionEnd}
         >
           <span
@@ -377,16 +460,20 @@ export function tooltipFactory(options: TooltipOptions = {}) {
         onTouchCancel,
         'aria-describedby': attributes['aria-describedby'],
       });
-      return createElement(
-        Component,
-        {
-          ...attributes,
-          className,
-          ...behavior.triggerProps,
-          ...(typeof Component !== 'string' && options.passthrough !== false ? { theme } : {}),
-        },
-        children,
-        behavior.tooltip,
+      return (
+        <>
+          {createElement(
+            Component,
+            {
+              ...attributes,
+              className,
+              ...behavior.triggerProps,
+              ...(typeof Component !== 'string' && options.passthrough !== false ? { theme } : {}),
+            },
+            children,
+          )}
+          {behavior.tooltip}
+        </>
       );
     };
   };

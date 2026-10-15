@@ -6,6 +6,7 @@ import type { CheckboxTheme } from './types';
 
 import React, { useImperativeHandle, useRef } from 'react';
 import { cn } from '../foundations/styles/cn';
+import useChecked from '../foundations/forms/useChecked';
 import Check from './Check';
 export type { CheckboxTheme, CheckboxClassNames } from './types';
 export interface CheckboxHandle {
@@ -19,6 +20,8 @@ export interface CheckboxProps
     'onChange' | 'type' | 'size' | 'onMouseEnter' | 'onMouseLeave'
   > {
   label?: React.ReactNode;
+  /** A partially selected set; submitted values still follow checked. */
+  indeterminate?: boolean;
   onMouseEnter?: React.MouseEventHandler<HTMLLabelElement>;
   onMouseLeave?: React.MouseEventHandler<HTMLLabelElement>;
   ripple?: boolean;
@@ -30,13 +33,16 @@ export interface CheckboxProps
   onChange?: (checked: boolean, event: React.MouseEvent<HTMLInputElement>) => void;
 }
 export function Checkbox({
-  checked = false,
+  checked: controlledChecked,
+  defaultChecked = false,
   children,
   className = '',
   disabled = false,
   label,
+  indeterminate = false,
   name,
   onChange,
+  onClick,
   onMouseEnter,
   onMouseLeave,
   theme: legacyTheme,
@@ -48,6 +54,10 @@ export function Checkbox({
 }: CheckboxProps) {
   const theme = mergeStyleSlots(legacyTheme, classNames);
   const input = useRef<HTMLInputElement>(null);
+  const [checked, setChecked] = useChecked(input, controlledChecked, defaultChecked);
+  React.useLayoutEffect(() => {
+    if (input.current) input.current.indeterminate = indeterminate;
+  }, [indeterminate, checked]);
   const handle = {
     focus: () => input.current?.focus(),
     blur: () => input.current?.blur(),
@@ -57,8 +67,13 @@ export function Checkbox({
   };
   useImperativeHandle(ref, () => handle);
   const toggle = (event: React.MouseEvent<HTMLInputElement>) => {
-    if (event.pageX !== 0 && event.pageY !== 0) input.current?.blur();
-    if (!disabled) onChange?.(!checked, event);
+    onClick?.(event);
+    if (disabled || event.defaultPrevented) return;
+    const next = event.currentTarget.checked;
+    // Browsers clear the mixed flag on activation; the prop remains authoritative.
+    event.currentTarget.indeterminate = indeterminate;
+    if (controlledChecked === undefined) setChecked(next);
+    onChange?.(next, event);
   };
   return (
     <label
@@ -77,16 +92,25 @@ export function Checkbox({
     >
       <input
         {...others}
-        checked={checked}
+        checked={controlledChecked}
+        defaultChecked={controlledChecked === undefined ? defaultChecked : undefined}
         className={cn('rt-checkbox-input', 'h-0 opacity-0 overflow-hidden absolute w-0', theme?.input)}
         disabled={disabled}
         name={name}
+        aria-checked={indeterminate ? 'mixed' : undefined}
         onChange={() => {}}
         onClick={toggle}
         ref={input}
         type="checkbox"
       />
-      <Check disabled={disabled} ripple={ripple} theme={theme} checked={checked} style={style} />
+      <Check
+        disabled={disabled}
+        ripple={ripple}
+        theme={theme}
+        checked={checked || indeterminate}
+        indeterminate={indeterminate}
+        style={style}
+      />
       {label ? (
         <span
           data-react-toolbox="label"
