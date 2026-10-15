@@ -1,0 +1,212 @@
+.rt-menu-iconMenu {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+
+  
+    box-sizing: border-box;
+    font-family: var(--preferred-font);
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+    .rt-menu-iconMenu *,
+    .rt-menu-iconMenu *::after,
+    .rt-menu-iconMenu *::before {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      -webkit-touch-callout: none;
+    }
+
+    .rt-menu-iconMenu .rt-menu-icon {
+    cursor: pointer;
+  }
+
+.rt-menu-outline {
+  background-color: var(--menu-background-color);
+  border-radius: var(--menu-outline-border-radius);
+  box-shadow: var(--shadow-2p);
+  display: block;
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.rt-menu-menuInner {
+  display: block;
+  list-style: none;
+  padding: var(--menu-padding);
+  position: relative;
+  text-align: left;
+  white-space: nowrap;
+  max-height: calc(100vh - var(--menu-item-height));
+  overflow-y: auto;
+}
+
+.rt-menu-menu {
+  display: inline-block;
+  position: relative;
+}
+
+.rt-menu-menu.rt-menu-topLeft {
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+
+.rt-menu-menu.rt-menu-topLeft > .rt-menu-outline {
+      transform-origin: 0 0;
+    }
+
+.rt-menu-menu.rt-menu-topRight {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+.rt-menu-menu.rt-menu-topRight > .rt-menu-outline {
+      transform-origin: 100% 0;
+    }
+
+.rt-menu-menu.rt-menu-bottomLeft {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+  }
+
+.rt-menu-menu.rt-menu-bottomLeft > .rt-menu-outline {
+      transform-origin: 0 100%;
+    }
+
+.rt-menu-menu.rt-menu-bottomRight {
+    bottom: 0;
+    position: absolute;
+    right: 0;
+  }
+
+.rt-menu-menu.rt-menu-bottomRight > .rt-menu-outline {
+      transform-origin: 100% 100%;
+    }
+
+.rt-menu-menu:not(.rt-menu-static) {
+    pointer-events: none;
+    z-index: var(--z-index-higher);
+  }
+
+.rt-menu-menu:not(.rt-menu-static) > .rt-menu-outline {
+      opacity: 0;
+      transform: scale(0);
+      transition:
+        transform var(--menu-expand-duration) var(--animation-curve-default),
+        opacity var(--menu-fade-duration) var(--animation-curve-default);
+      will-change: transform;
+    }
+
+.rt-menu-menu:not(.rt-menu-static) > .rt-menu-menuInner {
+      left: 0;
+      margin: 0;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+    }
+
+/* Anchor the contents to the same edge before the popup has been measured.
+   Otherwise a zero-width right-origin popup initially extends to the right,
+   and WebKit can retain that overflow after its measured width is applied. */
+.rt-menu-menu.rt-menu-topRight > .rt-menu-menuInner,
+.rt-menu-menu.rt-menu-bottomRight > .rt-menu-menuInner {
+  left: auto;
+  right: 0;
+}
+
+.rt-menu-menu:not(.rt-menu-static).rt-menu-active {
+      pointer-events: all;
+    }
+
+.rt-menu-menu:not(.rt-menu-static).rt-menu-active > .rt-menu-outline {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+.rt-menu-menu:not(.rt-menu-static).rt-menu-active > .rt-menu-menuInner {
+        opacity: 1;
+        transition:
+          opacity var(--menu-fade-duration) var(--animation-curve-default),
+          clip var(--menu-expand-duration) var(--animation-curve-default);
+      }
+
+.rt-menu-menu:not(.rt-menu-static).rt-menu-rippled:not(.rt-menu-active) > .rt-menu-outline {
+        transition-delay: var(--menu-ripple-delay);
+      }
+
+.rt-menu-menu:not(.rt-menu-static).rt-menu-rippled:not(.rt-menu-active) > .rt-menu-menuInner {
+        transition-delay: var(--menu-ripple-delay);
+      }
+
+.rt-menu-menuItem {
+  align-items: center;
+  color: var(--rt-color-text);
+  display: flex;
+  font-size: var(--menu-item-font-size);
+  height: var(--menu-item-height);
+  overflow: hidden;
+  padding: 0 var(--menu-item-padding);
+  position: relative;
+}
+
+.rt-menu-menuItem:not(.rt-menu-disabled):hover {
+    background-color: var(--menu-item-hover-background);
+    cursor: pointer;
+  }
+
+.rt-menu-menuItem.rt-menu-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+.rt-menu-menuItem.rt-menu-selected {
+    background-color: var(--menu-item-selected-background);
+    font-weight: 500;
+  }
+
+.rt-menu-menuItem:not(.rt-menu-disabled):focus-visible {
+  background-color: var(--menu-item-hover-background);
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+}
+
+.rt-menu-menuItem .rt-menu-ripple {
+    color: var(--rt-color-text-secondary);
+  }
+
+.rt-menu-menuItem .rt-menu-icon {
+    font-size: var(--menu-item-icon-font-size);
+    width: var(--menu-item-icon-size);
+  }
+
+.rt-menu-caption {
+  flex-grow: 1;
+  font-size: var(--font-size-normal);
+}
+
+.rt-menu-shortcut {
+  margin-left: var(--menu-item-padding);
+}
+
+.rt-menu-menuDivider {
+  background-color: var(--rt-color-divider);
+  border: 0;
+  display: block;
+  height: 1px;
+  margin: var(--menu-divider-height) 0;
+  outline: 0;
+  padding: 0;
+  width: 100%;
+}

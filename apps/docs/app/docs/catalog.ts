@@ -1,0 +1,361 @@
+const supportingImports: Record<string, string> = Object.fromEntries(
+  ['dialog', 'drawer', 'overlay', 'snackbar'].map((slug) => [
+    slug,
+    "import { Button } from '@/components/ui/material/button';\n",
+  ]),
+);
+supportingImports.list = "import { FontIcon } from '@/components/ui/material/font-icon';\n";
+
+// These examples compose families that are not already registry dependencies.
+export const exampleDependencies: Partial<Record<ComponentSlug, readonly string[]>> = {
+  drawer: ['button'],
+  overlay: ['button'],
+  tooltip: ['button'],
+};
+
+function example(slug: string, imports: string, body: string, state = '') {
+  return `'use client';\n\n${state ? "import { useState } from 'react';\n" : ''}import { ${imports} } from '@/components/ui/material/${slug}';\n${supportingImports[slug] ?? ''}\nexport default function Example() {\n${state ? `  ${state}\n\n` : ''}  return (\n${body
+    .split('\n')
+    .map((line) => `    ${line}`)
+    .join('\n')}\n  );\n}`;
+}
+
+export const components = [
+  {
+    slug: 'app-bar',
+    title: 'App bar',
+    description: 'A home for the title, navigation, and actions of a screen.',
+    icon: 'web_asset',
+    code: example(
+      'app-bar',
+      'AppBar',
+      '<div>\n  <AppBar title="My collection" leftIcon="menu"\n    onLeftIconClick={() => setMessage("Navigation opened")} />\n  <p role="status">{message || "Try the navigation icon."}</p>\n</div>',
+      'const [message, setMessage] = useState("");',
+    ),
+    note: 'Use leftIcon and rightIcon with their click handlers for navigation and actions. Set fixed when the bar should stay at the top of the viewport.',
+  },
+  {
+    slug: 'autocomplete',
+    title: 'Autocomplete',
+    description: 'Suggestions that help people find and select a value.',
+    icon: 'manage_search',
+    code: example(
+      'autocomplete',
+      'Autocomplete',
+      '<Autocomplete label="Country" multiple={false}\n  source={["Spain", "France", "Japan"]}\n  value={country} onChange={setCountry} />',
+      'const [country, setCountry] = useState("");',
+    ),
+    note: 'Use multiple={false} for a single string value. Multiple selection uses an array of strings and displays selected values as chips.',
+  },
+  {
+    slug: 'avatar',
+    title: 'Avatar',
+    description: 'An image, an icon, or initials to represent a person.',
+    icon: 'account_circle',
+    code: example(
+      'avatar',
+      'Avatar',
+      '<div className="flex items-center gap-4">\n  <Avatar title="Javi" aria-label="Javi Velasco" />\n  <Avatar icon="person" aria-label="Guest" />\n</div>',
+    ),
+    note: 'Use image for a picture, icon for a Material Icon, or children for initials. A title displays its first initial. Add an accessible label when the avatar conveys identity.',
+  },
+  {
+    slug: 'button',
+    title: 'Button',
+    description: 'Flat, raised, and floating actions with the original Material ripple.',
+    icon: 'smart_button',
+    code: example(
+      'button',
+      'Button',
+      '<div className="flex flex-wrap items-center gap-4">\n  <Button primary raised label="Save"\n    onClick={() => setSaved(true)} />\n  <Button label="Reset" onClick={() => setSaved(false)} />\n  <span role="status">{saved ? "Saved" : "Ready"}</span>\n</div>',
+      'const [saved, setSaved] = useState(false);',
+    ),
+    note: 'Use raised for a primary action, floating for an icon action, and disabled when unavailable. This family also exports IconButton and BrowseButton. Give icon-only buttons an aria-label.',
+  },
+  {
+    slug: 'card',
+    title: 'Card',
+    description: 'Related content and actions, gathered on a single surface.',
+    icon: 'crop_landscape',
+    code: example(
+      'card',
+      'Card, CardTitle, CardText',
+      '<Card className="w-full max-w-sm">\n  <CardTitle title="Room for an idea"\n    subtitle="Start with something small." />\n  <CardText>A little space for your next project.</CardText>\n</Card>',
+    ),
+    note: 'Compose CardTitle, CardMedia, CardText, and CardActions inside Card. These parts include Material keyline spacing; avoid adding a second layer of padding around them.',
+  },
+  {
+    slug: 'checkbox',
+    title: 'Checkbox',
+    description: 'Select one or more independent options.',
+    icon: 'check_box',
+    code: example(
+      'checkbox',
+      'Checkbox',
+      '<fieldset className="m-0 border-0 p-0">\n  <legend className="mb-4 text-sm font-medium">Notification channels</legend>\n  <Checkbox label="Email" checked={email} onChange={setEmail} />\n  <Checkbox label="Push notifications" checked={push} onChange={setPush} />\n</fieldset>',
+      'const [email, setEmail] = useState(true);\n  const [push, setPush] = useState(false);',
+    ),
+    note: 'Keep checked in state and update it from onChange. Use a visible label, or supply an aria-label for an otherwise unlabeled control.',
+  },
+  {
+    slug: 'chip',
+    title: 'Chip',
+    description: 'Compact labels for people, selections, and small pieces of information.',
+    icon: 'label',
+    code: example(
+      'chip',
+      'Chip',
+      '<div className="flex flex-wrap gap-2">\n  <Chip>Material Design</Chip>\n  {visible && <Chip deletable onDeleteClick={() => setVisible(false)}>\n    TypeScript\n  </Chip>}\n</div>',
+      'const [visible, setVisible] = useState(true);',
+    ),
+    note: 'Set deletable and handle onDeleteClick to remove a selection. The parent owns the collection and decides what happens after removal.',
+  },
+  {
+    slug: 'date-picker',
+    title: 'Date picker',
+    description: 'Choose a date from a familiar Material calendar.',
+    icon: 'event',
+    code: example(
+      'date-picker',
+      'DatePicker',
+      '<DatePicker label="Start date"\n  value={date} onChange={setDate} />',
+      'const [date, setDate] = useState(new Date(2026, 9, 13));',
+    ),
+    note: 'Values are JavaScript Date objects. Use minDate and maxDate to limit the range. The registry includes the input, dialog, and supporting components.',
+  },
+  {
+    slug: 'dialog',
+    title: 'Dialog',
+    description: 'A focused surface for decisions that need your attention.',
+    icon: 'web',
+    code: example(
+      'dialog',
+      'Dialog',
+      '<>\n  <Button primary raised label="Open dialog" onClick={() => setActive(true)} />\n  <span role="status">{saved ? "Saved" : "Draft"}</span>\n  <Dialog active={active} title="Save this idea?"\n    onEscKeyDown={() => setActive(false)}\n    onOverlayClick={() => setActive(false)}\n    actions={[\n      { label: "Cancel", onClick: () => setActive(false) },\n      { label: "Save", primary: true, onClick: () => {\n        setSaved(true);\n        setActive(false);\n      } },\n    ]}>\n    You can return to it whenever you are ready.\n  </Dialog>\n</>',
+      'const [active, setActive] = useState(false);\n  const [saved, setSaved] = useState(false);',
+    ),
+    note: 'Control visibility with active. Supply a title and handle dismissal using onEscKeyDown and onOverlayClick. Dialog manages focus and restores it to the trigger.',
+  },
+  {
+    slug: 'drawer',
+    title: 'Drawer',
+    description: 'A sliding surface for navigation or supporting content.',
+    icon: 'menu_open',
+    code: example(
+      'drawer',
+      'Drawer',
+      '<>\n  <Button primary raised label="Open drawer" onClick={() => setActive(true)} />\n  <Drawer active={active} aria-label="Your collection"\n    onEscKeyDown={() => setActive(false)}\n    onOverlayClick={() => setActive(false)}>\n    <div className="space-y-6 p-6">\n      <h2 className="m-0 text-xl font-medium">Your collection</h2>\n      <Button primary label="Close" onClick={() => setActive(false)} />\n    </div>\n  </Drawer>\n</>',
+      'const [active, setActive] = useState(false);',
+    ),
+    note: 'Use type="right" for a drawer entering from the right. For responsive navigation that can pin beside content, use NavDrawer from the Layout family.',
+  },
+  {
+    slug: 'dropdown',
+    title: 'Dropdown',
+    description: 'Pick a single value from a list of options.',
+    icon: 'arrow_drop_down_circle',
+    code: example(
+      'dropdown',
+      'Dropdown',
+      '<Dropdown label="Destination" value={value}\n  onChange={value => setValue(String(value))}\n  source={[\n    { value: "madrid", label: "Madrid" },\n    { value: "tokyo", label: "Tokyo" },\n    { value: "lisbon", label: "Lisbon" },\n  ]} />',
+      'const [value, setValue] = useState("madrid");',
+    ),
+    note: 'Options use value and label by default. Supply valueKey and labelKey for a different data shape, or template for custom option content.',
+  },
+  {
+    slug: 'font-icon',
+    title: 'Font icon',
+    description: 'The original Material Icons, bundled with your components.',
+    icon: 'insert_emoticon',
+    code: example(
+      'font-icon',
+      'FontIcon',
+      '<div className="flex gap-6 text-toolbox-primary">\n  <FontIcon value="favorite" aria-label="Favorite" />\n  <FontIcon value="star" aria-label="Star" />\n  <FontIcon value="home" aria-label="Home" />\n</div>',
+    ),
+    note: 'Pass a Material Icon name as value. Mark decorative icons aria-hidden, and give meaningful icons an accessible label. The registry includes the local icon font.',
+  },
+  {
+    slug: 'input',
+    title: 'Input',
+    description: 'Text fields with floating labels, helper text, and validation.',
+    icon: 'text_fields',
+    code: example(
+      'input',
+      'Input',
+      '<Input label="Project name" value={name}\n  onChange={setName} hint="Something worth making" />',
+      'const [name, setName] = useState("");',
+    ),
+    note: 'onChange receives the value before the event. Use multiline for a text area, error for validation feedback, and maxLength for a character counter.',
+  },
+  {
+    slug: 'layout',
+    title: 'Layout',
+    description: 'The structure for app bars, navigation drawers, and content panels.',
+    icon: 'dashboard',
+    code: example(
+      'layout',
+      'Layout, Panel',
+      '<Layout className="min-h-48 w-full">\n  <Panel>\n    <div className="p-6">\n      <h2 className="text-xl">Your workspace</h2>\n      <p className="mt-2">A place for everything.</p>\n    </div>\n  </Panel>\n</Layout>',
+    ),
+    note: 'Compose Layout with Panel, NavDrawer, and Sidebar. Use pinned on a navigation drawer to make room for it in the layout instead of placing it over content.',
+  },
+  {
+    slug: 'list',
+    title: 'List',
+    description: 'Rows of related content with icons, captions, and secondary text.',
+    icon: 'view_list',
+    code: example(
+      'list',
+      'List, ListItem',
+      '<div>\n  <List selectable ripple aria-label="Folders">\n    {["Inbox", "Favorites"].map(folder => (\n      <ListItem key={folder} theme={{ item: "p-0" }} itemContent={\n        <button type="button" onClick={() => setSelected(folder)}\n          className="flex min-h-12 w-full items-center border-0 bg-transparent px-4 text-left font-[inherit] text-base text-toolbox-text focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-toolbox-primary">\n          <FontIcon value={folder === "Inbox" ? "inbox" : "favorite_border"}\n            aria-hidden className="mr-8 text-toolbox-text-secondary" />\n          {folder}\n        </button>\n      } />\n    ))}\n  </List>\n  <p role="status">Selected: {selected}</p>\n</div>',
+      'const [selected, setSelected] = useState("Inbox");',
+    ),
+    note: 'Use caption, legend, and icons for content rows. For actions or navigation, itemContent accepts a native button or router link, preserving keyboard access. List supplies selectable and ripple to its rows; subheaders, dividers, and ListCheckbox are also included.',
+  },
+  {
+    slug: 'menu',
+    title: 'Menu',
+    description: 'Contextual actions anchored to an icon button.',
+    icon: 'more_vert',
+    code: example(
+      'menu',
+      'IconMenu, MenuItem, MenuDivider',
+      '<div className="flex items-center gap-6">\n  <span role="status">{selected || "More actions"}</span>\n  <IconMenu icon="more_vert" position="topRight"\n  aria-label="More actions" onSelect={value => setSelected(String(value))}>\n  <MenuItem value="download" caption="Download" icon="file_download" />\n  <MenuItem value="share" caption="Share" icon="share" />\n  <MenuDivider />\n  <MenuItem caption="Unavailable" disabled />\n</IconMenu>\n</div>',
+      'const [selected, setSelected] = useState("");',
+    ),
+    note: 'IconMenu handles opening, keyboard navigation, and dismissal. Use onSelect to respond to an item value. Menu and MenuDivider are also available for custom compositions.',
+  },
+  {
+    slug: 'overlay',
+    title: 'Overlay',
+    description: 'A dimmed backdrop for content that needs focus.',
+    icon: 'layers',
+    code: example(
+      'overlay',
+      'Overlay',
+      '<>\n  <Button primary raised label="Show overlay" onClick={() => setActive(true)} />\n  <Overlay active={active}\n    onClick={() => setActive(false)}\n    onEscKeyDown={() => setActive(false)} />\n</>',
+      'const [active, setActive] = useState(false);',
+    ),
+    note: 'Click the backdrop or press Escape to close this example. Use Dialog or Drawer for modal content that also needs focus management; Overlay supplies the backdrop and scroll lock.',
+  },
+  {
+    slug: 'progress-bar',
+    title: 'Progress bar',
+    description: 'Linear and circular indicators with precise Material motion.',
+    icon: 'timelapse',
+    code: example(
+      'progress-bar',
+      'ProgressBar',
+      '<div className="flex w-full flex-col items-center gap-8">\n  <ProgressBar type="circular" mode="indeterminate"\n    aria-label="Loading" />\n  <ProgressBar mode="determinate" value={65}\n    aria-label="Upload progress" />\n</div>',
+    ),
+    note: 'Use determinate when progress is known, and indeterminate when the duration is unknown. min and max define the range. Supply an aria-label describing the operation.',
+  },
+  {
+    slug: 'radio',
+    title: 'Radio',
+    description: 'Choose exactly one option from a related set.',
+    icon: 'radio_button_checked',
+    code: example(
+      'radio',
+      'RadioGroup, RadioButton',
+      '<RadioGroup name="delivery" value={value}\n  onChange={value => setValue(value ?? "daily")}\n  aria-label="Delivery frequency">\n  <RadioButton label="Daily" value="daily" />\n  <RadioButton label="Weekly" value="weekly" />\n</RadioGroup>',
+      'const [value, setValue] = useState("daily");',
+    ),
+    note: 'Give each RadioButton a distinct value and visible label. RadioGroup keeps a single selected value and shares the input name across the group.',
+  },
+  {
+    slug: 'ripple',
+    title: 'Ripple',
+    description: 'Touch feedback that grows from the point of interaction.',
+    icon: 'touch_app',
+    code: `'use client';\n\nimport { Ripple } from '@/components/ui/material/ripple';\n\nconst RippleButton = Ripple({ passthrough: false })('button');\n\nexport default function Example() {\n  return (\n    <RippleButton className="relative overflow-hidden rounded-toolbox bg-toolbox-primary/10 px-8 py-6 text-toolbox-primary">\n      Click anywhere\n    </RippleButton>\n  );\n}`,
+    note: 'The host needs relative positioning and overflow-hidden. Buttons and several other Toolbox controls already include ripple feedback; no extra wrapper is needed for them.',
+  },
+  {
+    slug: 'slider',
+    title: 'Slider',
+    description: 'Adjust a value along a continuous or stepped range.',
+    icon: 'tune',
+    code: example(
+      'slider',
+      'Slider',
+      '<div className="w-full">\n  <p id="volume-label">Volume: {value}</p>\n  <Slider aria-labelledby="volume-label"\n    min={0} max={100} step={5}\n    value={value} onChange={setValue} />\n</div>',
+      'const [value, setValue] = useState(40);',
+    ),
+    note: 'Use pinned for a discrete value label and snaps to snap to step positions. Keep value in state and provide an accessible label.',
+  },
+  {
+    slug: 'snackbar',
+    title: 'Snackbar',
+    description: 'Brief feedback about an action, with an optional next step.',
+    icon: 'announcement',
+    code: example(
+      'snackbar',
+      'Snackbar',
+      '<>\n  <Button primary raised label="Save changes" onClick={() => {\n    setSaved(true);\n    setActive(true);\n  }} />\n  <span role="status">{saved ? "Saved" : "Unsaved"}</span>\n  <Snackbar active={active} label="Your changes are saved."\n    action="Undo" timeout={4000}\n    onClick={() => { setSaved(false); setActive(false); }}\n    onTimeout={() => setActive(false)} />\n</>',
+      'const [active, setActive] = useState(false);\n  const [saved, setSaved] = useState(false);',
+    ),
+    note: 'The parent controls active. Handle onTimeout to close after the requested duration and onClick for the action button.',
+  },
+  {
+    slug: 'switch',
+    title: 'Switch',
+    description: 'Turn a setting on or off, with an immediate effect.',
+    icon: 'toggle_on',
+    code: example(
+      'switch',
+      'Switch',
+      '<Switch label="Do not disturb"\n  checked={checked} onChange={setChecked} />',
+      'const [checked, setChecked] = useState(true);',
+    ),
+    note: 'Keep checked in state and update it from onChange. Use a short label that describes the setting rather than the action.',
+  },
+  {
+    slug: 'table',
+    title: 'Table',
+    description: 'Structured data with consistent alignment and optional selection.',
+    icon: 'table_chart',
+    code: example(
+      'table',
+      'Table, TableHead, TableRow, TableCell',
+      '<Table selectable={false}>\n  <TableHead>\n    <TableCell>Project</TableCell><TableCell>Status</TableCell>\n  </TableHead>\n  <TableRow>\n    <TableCell>Weekend notes</TableCell><TableCell>Active</TableCell>\n  </TableRow>\n  <TableRow>\n    <TableCell>A new idea</TableCell><TableCell>Draft</TableCell>\n  </TableRow>\n</Table>',
+    ),
+    note: 'Put TableHead and TableRow directly inside Table. Use selectable and onRowSelect for selection, and keep selected on each row in sync with your state.',
+  },
+  {
+    slug: 'tabs',
+    title: 'Tabs',
+    description: 'Move between related views without leaving the page.',
+    icon: 'tab',
+    code: example(
+      'tabs',
+      'Tabs, Tab',
+      '<Tabs index={index} onChange={setIndex}>\n  <Tab label="Overview"><p className="py-6">The big picture.</p></Tab>\n  <Tab label="Details"><p className="py-6">A closer look.</p></Tab>\n  <Tab label="Unavailable" disabled />\n</Tabs>',
+      'const [index, setIndex] = useState(0);',
+    ),
+    note: 'Control the selected tab with index and onChange. Each Tab supplies its label and panel content. Arrow keys move between enabled tabs.',
+  },
+  {
+    slug: 'time-picker',
+    title: 'Time picker',
+    description: 'Choose a time using the original radial clock face.',
+    icon: 'schedule',
+    code: example(
+      'time-picker',
+      'TimePicker',
+      '<TimePicker label="Reminder" format="24hr"\n  value={time} onChange={setTime} />',
+      'const [time, setTime] = useState(new Date(2026, 9, 13, 9, 30));',
+    ),
+    note: 'Values are Date objects. Choose format="24hr" or format="ampm" to match your application.',
+  },
+  {
+    slug: 'tooltip',
+    title: 'Tooltip',
+    description: 'A short explanation that appears on hover or focus.',
+    icon: 'info_outline',
+    code: "'use client';\n\nimport { Button } from '@/components/ui/material/button';\nimport { Tooltip } from '@/components/ui/material/tooltip';\n\nconst HintButton = Tooltip(Button);\n\nexport default function Example() {\n  return (\n    <HintButton primary raised label=\"Save idea\"\n      tooltip=\"Keep this idea for later\" />\n  );\n}",
+    note: 'Wrap a trigger with Tooltip, or use the exported useTooltip hook. Tooltips supplement an accessible label; they should not be the only way to name a control.',
+  },
+] as const;
+
+export type ComponentSlug = (typeof components)[number]['slug'];

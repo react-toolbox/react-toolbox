@@ -1,0 +1,65 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": [
+      "packages/react-toolbox/**",
+      "apps/docs/**",
+      "*.json",
+      "*.js",
+      "*.mjs",
+      "*.ts",
+      "!!packages/react-toolbox/tests/fixtures/**",
+      "!!packages/react-toolbox/registry.json",
+      "!!apps/docs/app/gallery.jsx"
+    ]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "none",
+      "correctness": {
+        "noConstAssign": "error",
+        "noConstantCondition": "error",
+        "noInvalidBuiltinInstantiation": "error",
+        "noUnreachable": "error",
+        "noUnsafeFinally": "error",
+        "useIsNan": "error",
+        "useValidTypeof": "error"
+      },
+      "suspicious": {
+        "noAsyncPromiseExecutor": "error",
+        "noCompareNegZero": "error",
+        "noDuplicateCase": "error",
+        "noDuplicateClassMembers": "error",
+        "noDuplicateObjectKeys": "error",
+        "noFallthroughSwitchClause": "error",
+        "noMisleadingCharacterClass": "error",
+        "noSparseArray": "error",
+        "noUnsafeNegation": "error"
+      }
+    }
+  },
+  "assist": {
+    "enabled": false
+  }
+}

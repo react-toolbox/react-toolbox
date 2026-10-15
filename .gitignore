@@ -40,8 +40,16 @@ public/js/*
 
 # Test coverage folder
 .coverage
-/coverage
+coverage/
 .next/
 test-results/
 playwright-report/
 *.tsbuildinfo
+
+# Generated source registry and old package archives
+packages/react-toolbox/registry/public/
+packages/react-toolbox/registry/data.json
+packages/react-toolbox/registry/generated/
+*.tgz
+.turbo/
+.vercel/

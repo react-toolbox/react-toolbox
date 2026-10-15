@@ -1,0 +1,68 @@
+:root {
+  --tab-label-disabled-opacity: 0.2;
+  --tab-label-h-padding: calc(1.2 * var(--unit));
+  --tab-label-height: calc(4.8 * var(--unit));
+  --tab-icon-height: calc(2.4 * var(--unit));
+  --tab-icon-margin-bottom: var(--unit);
+  --tab-text-height: calc(1.4 * var(--unit));
+  --tab-label-v-padding: calc((var(--tab-label-height) - var(--tab-text-height)) / 2);
+  --tab-navigation-border-color: var(--rt-color-divider);
+  --tab-pointer-color: var(--rt-color-primary);
+  --tab-pointer-height: calc(0.2 * var(--unit));
+  --tab-focus-color: rgb(from var(--rt-color-primary-contrast) r g b / 10%);
+  --tab-text: var(--rt-color-black);
+  --tab-text-color: var(--tab-text);
+  --tab-text-inactive-color: rgb(from var(--tab-text) r g b / 70%);
+  --tab-inverse-bar-color: var(--rt-color-primary);
+  --tab-inverse-pointer-color: var(--rt-color-accent);
+  --tab-inverse-text: var(--rt-color-primary-contrast);
+  --tab-inverse-text-color: var(--tab-inverse-text);
+  --tab-inverse-text-inactive-color: rgb(from var(--tab-inverse-text) r g b / 70%);
+}
+[data-react-toolbox-tokens~="--unit"] {
+  --tab-label-h-padding: calc(1.2 * var(--unit));
+  --tab-label-height: calc(4.8 * var(--unit));
+  --tab-icon-height: calc(2.4 * var(--unit));
+  --tab-icon-margin-bottom: var(--unit);
+  --tab-text-height: calc(1.4 * var(--unit));
+  --tab-pointer-height: calc(0.2 * var(--unit));
+}
+[data-react-toolbox-tokens~="--tab-label-height"],
+[data-react-toolbox-tokens~="--tab-text-height"],
+[data-react-toolbox-tokens~="--unit"] {
+  --tab-label-v-padding: calc((var(--tab-label-height) - var(--tab-text-height)) / 2);
+}
+[data-react-toolbox-tokens~="--rt-color-divider"],
+[data-react-toolbox-tokens~="--rt-color-black"] {
+  --tab-navigation-border-color: var(--rt-color-divider);
+}
+[data-react-toolbox-tokens~="--rt-color-primary"],
+[data-react-toolbox-tokens~="--palette-indigo-500"] {
+  --tab-pointer-color: var(--rt-color-primary);
+  --tab-inverse-bar-color: var(--rt-color-primary);
+}
+[data-react-toolbox-tokens~="--rt-color-dark-contrast"],
+[data-react-toolbox-tokens~="--rt-color-primary-contrast"],
+[data-react-toolbox-tokens~="--rt-color-white"] {
+  --tab-focus-color: rgb(from var(--rt-color-primary-contrast) r g b / 10%);
+  --tab-inverse-text: var(--rt-color-primary-contrast);
+}
+[data-react-toolbox-tokens~="--rt-color-black"] {
+  --tab-text: var(--rt-color-black);
+}
+[data-react-toolbox-tokens~="--rt-color-black"],
+[data-react-toolbox-tokens~="--tab-text"] {
+  --tab-text-color: var(--tab-text);
+  --tab-text-inactive-color: rgb(from var(--tab-text) r g b / 70%);
+}
+[data-react-toolbox-tokens~="--rt-color-accent"],
+[data-react-toolbox-tokens~="--palette-pink-a200"] {
+  --tab-inverse-pointer-color: var(--rt-color-accent);
+}
+[data-react-toolbox-tokens~="--rt-color-dark-contrast"],
+[data-react-toolbox-tokens~="--rt-color-primary-contrast"],
+[data-react-toolbox-tokens~="--rt-color-white"],
+[data-react-toolbox-tokens~="--tab-inverse-text"] {
+  --tab-inverse-text-color: var(--tab-inverse-text);
+  --tab-inverse-text-inactive-color: rgb(from var(--tab-inverse-text) r g b / 70%);
+}

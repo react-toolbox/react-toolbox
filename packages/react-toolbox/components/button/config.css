@@ -1,0 +1,79 @@
+:root {
+  --button-accent-color-contrast: var(--rt-color-accent-contrast);
+  --button-floating-pressed-shadow: 0 12px 17px 2px rgba(0, 0, 0, 0.14), 0 5px 22px 4px rgba(0, 0, 0, 0.12), 0 7px 8px -4px rgba(0, 0, 0, 0.2);
+  --button-border-radius: calc(0.2 * var(--unit));
+  --button-height: calc(3.6 * var(--unit));
+  --button-toggle-font-size: calc(2.4 * var(--unit));
+  --button-toggle-size: calc(4.8 * var(--unit));
+  --button-primary-color: var(--rt-color-primary);
+  --button-primary-color-hover: rgb(from var(--rt-color-primary) r g b / 20%);
+  --button-primary-color-contrast: var(--rt-color-primary-contrast);
+  --button-accent-color-hover: rgb(from var(--rt-color-accent) r g b / 20%);
+  --button-accent-color: var(--rt-color-accent);
+  --button-neutral-color: var(--rt-color-white);
+  --button-neutral-color-contrast: var(--palette-grey-900);
+  --button-neutral-color-hover: rgb(from var(--palette-grey-900) r g b / 20%);
+  --button-floating-font-size: calc(2.4 * var(--unit));
+  --button-floating-height: calc(5.6 * var(--unit));
+  --button-floating-mini-height: calc(4 * var(--unit));
+  --button-floating-mini-font-size: var(--button-floating-font-size);
+  --button-disabled-text-color: rgb(from var(--rt-color-black) r g b / 26%);
+  --button-disabled-background-color: rgb(from var(--rt-color-black) r g b / 12%);
+  --button-disabled-text-color-inverse: rgb(from var(--rt-color-white) r g b / 30%);
+  --button-disabled-background-inverse: rgb(from var(--rt-color-white) r g b / 12%);
+  --button-squared-icon-margin: calc(0.6 * var(--unit));
+  --button-squared-min-width: calc(8.8 * var(--unit));
+  --button-squared-padding: 0 calc(1.6 * var(--unit));
+}
+[data-react-toolbox-tokens~="--unit"] {
+  --button-border-radius: calc(0.2 * var(--unit));
+  --button-height: calc(3.6 * var(--unit));
+  --button-toggle-font-size: calc(2.4 * var(--unit));
+  --button-toggle-size: calc(4.8 * var(--unit));
+  --button-floating-font-size: calc(2.4 * var(--unit));
+  --button-floating-height: calc(5.6 * var(--unit));
+  --button-floating-mini-height: calc(4 * var(--unit));
+  --button-squared-icon-margin: calc(0.6 * var(--unit));
+  --button-squared-min-width: calc(8.8 * var(--unit));
+  --button-squared-padding: 0 calc(1.6 * var(--unit));
+}
+[data-react-toolbox-tokens~="--rt-color-primary"],
+[data-react-toolbox-tokens~="--palette-indigo-500"] {
+  --button-primary-color: var(--rt-color-primary);
+  --button-primary-color-hover: rgb(from var(--rt-color-primary) r g b / 20%);
+}
+[data-react-toolbox-tokens~="--rt-color-dark-contrast"],
+[data-react-toolbox-tokens~="--rt-color-primary-contrast"],
+[data-react-toolbox-tokens~="--rt-color-white"] {
+  --button-primary-color-contrast: var(--rt-color-primary-contrast);
+}
+[data-react-toolbox-tokens~="--rt-color-accent"],
+[data-react-toolbox-tokens~="--palette-pink-a200"] {
+  --button-accent-color-hover: rgb(from var(--rt-color-accent) r g b / 20%);
+  --button-accent-color: var(--rt-color-accent);
+}
+[data-react-toolbox-tokens~="--rt-color-white"] {
+  --button-neutral-color: var(--rt-color-white);
+}
+[data-react-toolbox-tokens~="--palette-grey-900"] {
+  --button-neutral-color-contrast: var(--palette-grey-900);
+  --button-neutral-color-hover: rgb(from var(--palette-grey-900) r g b / 20%);
+}
+[data-react-toolbox-tokens~="--button-floating-font-size"],
+[data-react-toolbox-tokens~="--unit"] {
+  --button-floating-mini-font-size: var(--button-floating-font-size);
+}
+[data-react-toolbox-tokens~="--rt-color-black"] {
+  --button-disabled-text-color: rgb(from var(--rt-color-black) r g b / 26%);
+  --button-disabled-background-color: rgb(from var(--rt-color-black) r g b / 12%);
+}
+
+[data-react-toolbox-tokens~="--rt-color-accent-contrast"],
+[data-react-toolbox-tokens~="--rt-color-dark-contrast"],
+[data-react-toolbox-tokens~="--rt-color-white"] {
+  --button-accent-color-contrast: var(--rt-color-accent-contrast);
+}
+[data-react-toolbox-tokens~="--rt-color-white"] {
+  --button-disabled-text-color-inverse: rgb(from var(--rt-color-white) r g b / 30%);
+  --button-disabled-background-inverse: rgb(from var(--rt-color-white) r g b / 12%);
+}

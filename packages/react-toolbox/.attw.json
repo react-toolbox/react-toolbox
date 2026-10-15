@@ -1,0 +1,5 @@
+{
+  "profile": "esm-only",
+  "excludeEntrypoints": ["styles.css", "tailwind.css", "shadcn.css"],
+  "format": "table-flipped"
+}

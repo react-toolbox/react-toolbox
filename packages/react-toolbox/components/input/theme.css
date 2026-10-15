@@ -1,0 +1,223 @@
+.rt-input-input {
+  padding: var(--input-padding) 0;
+  position: relative;
+
+  
+    box-sizing: border-box;
+    font-family: var(--preferred-font);
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+    .rt-input-input *,
+    .rt-input-input *::after,
+    .rt-input-input *::before {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      -webkit-touch-callout: none;
+    }
+
+    .rt-input-input.rt-input-withIcon {
+    margin-left: calc(var(--input-icon-size) + var(--input-icon-right-space));
+  }
+
+.rt-input-icon {
+  color: var(--input-text-label-color);
+  display: block;
+  font-size: var(--input-icon-font-size) !important;
+  height: var(--input-icon-size);
+  left: calc(-1 * (var(--input-icon-size) + var(--input-icon-right-space)));
+  line-height: var(--input-icon-size) !important;
+  position: absolute;
+  text-align: center;
+  top: var(--input-icon-offset);
+  transition: color var(--animation-duration) var(--animation-curve-default);
+  width: var(--input-icon-size);
+}
+
+.rt-input-counter {
+  color: var(--input-text-label-color);
+  position: absolute;
+  right: 0;
+}
+
+.rt-input-counter,
+.rt-input-error {
+  font-size: var(--input-label-font-size);
+  line-height: var(--input-underline-height);
+  margin-bottom: calc(-1 * var(--input-underline-height));
+}
+
+.rt-input-error {
+  color: var(--input-text-error-color);
+}
+
+.rt-input-hint {
+  color: var(--input-text-label-color);
+  font-size: var(--input-field-font-size);
+  left: 0;
+  line-height: var(--input-field-font-size);
+  opacity: var(--input-hint-opacity);
+  pointer-events: none;
+  position: absolute;
+  top: calc(var(--input-padding) + 1.5 * var(--input-field-padding));
+  transition-duration: var(--animation-duration);
+  transition-property: opacity;
+  transition-timing-function: var(--animation-curve-default);
+}
+
+.rt-input-label {
+  color: var(--input-text-label-color);
+  font-size: var(--input-field-font-size);
+  left: 0;
+  line-height: var(--input-field-font-size);
+  pointer-events: none;
+  position: absolute;
+  top: calc(var(--input-padding) + 1.5 * var(--input-field-padding));
+  transition-duration: var(--animation-duration);
+  transition-property: top, font-size, color;
+  transition-timing-function: var(--animation-curve-default);
+}
+
+.rt-input-label.rt-input-fixed {
+  font-size: var(--input-label-font-size);
+  top: var(--input-focus-label-top);
+}
+
+.rt-input-label.rt-input-fixed ~ .rt-input-hint {
+    display: none;
+  }
+
+.rt-input-bar {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+.rt-input-bar::before,
+  .rt-input-bar::after {
+    background-color: var(--input-text-highlight-color);
+    bottom: 0;
+    content: '';
+    height: 2px;
+    position: absolute;
+    transition-duration: 0.2s;
+    transition-property: width, background-color;
+    transition-timing-function: var(--animation-curve-default);
+    width: 0;
+  }
+
+.rt-input-bar::before {
+    left: 50%;
+  }
+
+.rt-input-bar::after {
+    right: 50%;
+  }
+
+.rt-input-hidden {
+  display: none;
+}
+
+.rt-input-errored {
+  padding-bottom: 0;
+}
+
+.rt-input-errored > .rt-input-inputElement {
+    border-bottom-color: var(--input-text-error-color);
+    border-bottom-width: 2px;
+  }
+
+.rt-input-errored > .rt-input-counter,
+  .rt-input-errored > .rt-input-label {
+    color: var(--input-text-error-color);
+  }
+
+.rt-input-errored > .rt-input-label > .rt-input-required {
+    color: var(--input-text-required-color);
+  }
+
+.rt-input-errored > .rt-input-label {
+  font-size: var(--input-label-font-size);
+  top: var(--input-focus-label-top);
+}
+
+.rt-input-disabled > .rt-input-inputElement {
+  border-bottom-style: dotted;
+  border-bottom-color: var(--input-text-disabled-color);
+  color: var(--input-text-disabled-text-color);
+}
+
+.rt-input-disabled > .rt-input-label {
+  color: var(--input-text-disabled-text-color);
+}
+
+/* stylelint-disable */
+.rt-input-inputElement {
+  background-color: var(--input-text-background-color);
+  border-bottom: 1px solid var(--input-text-bottom-border-color);
+  border-left: 0;
+  border-radius: 0;
+  border-right: 0;
+  border-top: 0;
+  color: var(--input-text-input-element-color);
+  display: block;
+  font-family: inherit;
+  font-size: var(--input-field-font-size);
+  outline: none;
+  padding: var(--input-field-padding) 0;
+  width: 100%;
+}
+.rt-input-inputElement:required {
+    box-shadow: none;
+  }
+.rt-input-inputElement.rt-input-filled ~ .rt-input-hint {
+    display: none;
+  }
+.rt-input-inputElement.rt-input-filled ~ .rt-input-label:not(.rt-input-fixed), .rt-input-inputElement[type='date'] ~ .rt-input-label:not(.rt-input-fixed), .rt-input-inputElement[type='time'] ~ .rt-input-label:not(.rt-input-fixed), .rt-input-inputElement:focus:not([disabled]):not([readonly]) ~ .rt-input-label:not(.rt-input-fixed) {
+      font-size: var(--input-label-font-size);
+      top: var(--input-focus-label-top);
+    }
+.rt-input-inputElement:focus:not([disabled]):not([readonly]) ~ .rt-input-bar::before,
+    .rt-input-inputElement:focus:not([disabled]):not([readonly]) ~ .rt-input-bar::after {
+      width: 50%;
+    }
+.rt-input-inputElement:focus:not([disabled]):not([readonly]) ~ .rt-input-label:not(.rt-input-fixed) {
+      color: var(--input-text-highlight-color);
+    }
+.rt-input-inputElement:focus:not([disabled]):not([readonly]) ~ .rt-input-label > .rt-input-required {
+      color: var(--input-text-required-color);
+    }
+.rt-input-inputElement:focus:not([disabled]):not([readonly]) ~ .rt-input-hint {
+      display: block;
+      opacity: var(--input-hint-opacity);
+    }
+.rt-input-inputElement:focus:not([disabled]):not([readonly]) ~ .rt-input-icon {
+      color: var(--input-text-highlight-color);
+    }
+.rt-input-inputElement:focus:not([disabled]):not([readonly]).rt-input-filled ~ .rt-input-hint {
+      opacity: 0;
+    }
+
+@media (hover: hover) {
+  .rt-input-input:not(.rt-input-errored):not(.rt-input-disabled) > .rt-input-inputElement:hover:not(:focus) {
+    border-bottom-color: rgb(from var(--rt-color-black) r g b / 87%);
+    box-shadow: inset 0 -1px rgb(from var(--rt-color-black) r g b / 87%);
+  }
+}
+
+.rt-input-errored > .rt-input-inputElement:focus:not([disabled]):not([readonly]) ~ .rt-input-label:not(.rt-input-fixed) {
+  color: var(--input-text-error-color);
+}
+
+.rt-input-errored > .rt-input-bar::before,
+.rt-input-errored > .rt-input-bar::after {
+  background-color: var(--input-text-error-color);
+}

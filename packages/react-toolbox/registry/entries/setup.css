@@ -1,0 +1,9 @@
+/* Loaded by every public registry entry. The layer order is part of M1. */
+@layer theme, base, components, utilities;
+@import '@fontsource/roboto/300.css' layer(base);
+@import '@fontsource/roboto/400.css' layer(base);
+@import '@fontsource/roboto/500.css' layer(base);
+@import '@fontsource/roboto/700.css' layer(base);
+@import 'material-icons/iconfont/material-icons.css' layer(base);
+@import './tailwind-preflight.css';
+@import './styles.css';

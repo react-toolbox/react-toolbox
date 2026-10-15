@@ -1,0 +1,132 @@
+# React Toolbox documentation app
+
+A Next.js App Router documentation site using React 19, Next.js 16, and Tailwind CSS 4. The landing page at `/` is a single hero with a live component composition. A shared header links to `/docs`, where a persistent sidebar groups introduction, installation, theming, and all 29 component families. Component pages at `/docs/components/<name>` include an interactive preview, a keyboard-accessible Code tab, copyable install commands, and usage notes. `/components` redirects to the docs catalog. The original comparison gallery remains at `/playground`, preserving its existing inputs, default palette, and motion. `/layout-demo` demonstrates Layout, Panel, NavDrawer, and Sidebar; `/theme-demo` shows scoped CSS variables and inheritance through portals.
+
+This private workspace package is named `@react-toolbox/docs`. It consumes the compiled exports of the private `react-toolbox` workspace dependency for development. Public consumers install editable source through the shadcn registry instead. It has no aliases to library source and does not use `transpilePackages`.
+
+Use Node.js 24.15 or newer. Unless stated otherwise, run every command below from the repository root:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+Open http://127.0.0.1:3000. The root development command runs the app and the private library/registry watcher together, so component changes rebuild the package used by the app.
+
+`pnpm docs:dev` starts the documentation app and its library watcher. Use `pnpm docs:build` and `pnpm docs:start` for the production documentation site.
+
+To run only the app after building its dependency:
+
+```sh
+pnpm --filter react-toolbox build
+pnpm --filter @react-toolbox/docs dev
+```
+
+To build and serve the production app, including its private library and registry dependencies:
+
+```sh
+pnpm exec turbo run build --filter=@react-toolbox/docs
+pnpm --filter @react-toolbox/docs start
+```
+
+The production server uses http://127.0.0.1:3100.
+
+Run this package's checks with `pnpm --filter @react-toolbox/docs typecheck` and `pnpm --filter @react-toolbox/docs lint`. Browser tests belong to the workspace and run from the repository root.
+
+The landing page is a TypeScript Server Component with a small interactive client demo. It uses the original Toolbox and GitHub marks, credits Javi Velasco, and reads the public GitHub star count on the server with hourly revalidation. If GitHub is unavailable or rate limited, the repository link remains visible without inventing a count. No token or browser request to GitHub is needed.
+
+The landing layout uses Tailwind utilities from the library's Material spacing theme: `gap-2` is 8px, `p-4` is 16px, and `p-6` is 24px. Its card keeps the built-in title and content padding; the action labels align to those same responsive keylines, and the switch has a 48px interaction row. The `toolbox-desktop:` variant matches the library's 600px width and height breakpoint.
+
+The gallery remains unchanged JavaScript to preserve the exact input shared with the independent legacy-runtime fixture. The app's type check validates the landing components, generated Next route contracts, and internal workspace import examples in `apps/docs/types/package-contract.ts`; the library has its own strict TypeScript checks.
+
+## Vercel deployment
+
+Keep the workspace available during installation and building: `apps/docs`, `packages/react-toolbox`, and the root package, lockfile, workspace, and Turbo configuration. The app's `workspace:*` dependency is built locally; deploying it does not require publishing the library to npm.
+
+Import the repository into Vercel with these settings:
+
+| Setting | Value |
+| --- | --- |
+| Root Directory | `apps/docs` |
+| Include source files outside the Root Directory | Enabled |
+| Framework Preset | Next.js |
+| Node.js Version | 24.x |
+| Environment variable, Production and Preview | `ENABLE_EXPERIMENTAL_COREPACK=1` |
+| Output Directory | Next.js default; leave override disabled |
+
+The included [`vercel.json`](vercel.json) runs installation and the docs build from the repository root. Corepack selects the exact pnpm version from the root `packageManager` field; do not rely on Vercel's lockfile-based pnpm detection. Turbo builds the registry and private library before Next.js. Vercel manages the production server; `pnpm docs:start` is only a local preview.
+
+Add `react-toolbox.io` to the project's Domains settings and apply the DNS records Vercel provides. Wait for domain verification and a valid HTTPS certificate before publishing the install command. The production domain and `/r/*` endpoints must be publicly accessible without Vercel Authentication, password protection, or an interactive challenge, since the shadcn CLI fetches JSON directly. Preview protection can remain enabled.
+
+After deployment, verify the public registry and run the existing clean-consumer installation check against it:
+
+```sh
+curl --fail https://react-toolbox.io/r/button.json
+REGISTRY_TEST_ORIGIN=https://react-toolbox.io pnpm test:registry:install
+```
+
+The consumer check uses the actual shadcn CLI, follows component dependencies, builds a clean Next.js app, and verifies rendering and interaction. A local build alone does not verify production DNS, TLS, or access protection.
+
+The deployment also serves the source registry at `/r/registry.json` and `/r/<name>.json`. A snapshot generated during the private library build is bundled into the server. Dependency links use the request origin, including local previews. There is no separate service, package publish, or runtime filesystem read.
+
+The installation guide at `/docs/installation` and component-page commands always use `https://react-toolbox.io`, taken from the registry catalog's `homepage`. They are rendered on the server and stay the same in local and preview builds. To test unreleased source, explicitly substitute the preview URL in a CLI command. The `@react-toolbox` shortcut requires a registry entry in the consuming app’s `components.json` until public directory registration is complete.
+
+Vercel references: [Turborepo deployment](https://vercel.com/docs/monorepos/turborepo), [Corepack setup](https://vercel.com/docs/builds/configure-a-build#corepack), and [Node.js versions](https://vercel.com/docs/functions/runtimes/node-js/node-js-versions).
+
+## Internal preview integration
+
+These imports are private workspace plumbing; consumer instructions live in the [registry guide](../../docs/source-registry.md). Import the component stylesheet once in the server layout, and put interactive components in a client component:
+
+```jsx
+// apps/docs/app/layout.jsx
+import 'react-toolbox/styles.css';
+
+export default function Layout({ children }) {
+  return <html lang="en"><body>{children}</body></html>;
+}
+```
+
+```jsx
+// apps/docs/app/example.jsx
+'use client';
+
+import { useState } from 'react';
+import { Button, Input } from 'react-toolbox';
+
+export default function Example() {
+  const [name, setName] = useState('');
+  return (
+    <>
+      <Input label="Your name" value={name} onChange={setName} />
+      <Button label="Save" raised primary onClick={() => { /* save */ }} />
+    </>
+  );
+}
+```
+
+This internal app’s `apps/docs/app/globals.css` imports standard Tailwind, including Preflight, followed by `react-toolbox/tailwind.css`. The library's scoped compatibility rules preserve the original component appearance. Utility classes style the gallery around the components; the component colors, dimensions, shadows, and animation curves come from the library.
+
+Roboto and Material Icons are bundled locally through `@fontsource/roboto` and `material-icons`. Import the icon stylesheet into Tailwind's `base` layer, as this example does, so its default font size and line height do not override the component styles. No Google Fonts request, CDN, or remote image is needed. Dates are initialized with fixed local values so server and browser output agree.
+
+## Browser checks
+
+```sh
+pnpm --filter react-toolbox exec playwright install chromium
+pnpm test:browser
+```
+
+Playwright builds and starts the production example automatically. The suite covers form interactions, toggles, menus, tooltips, ripples, dialogs, drawers, date/time pickers, tables, layouts, and mobile width. Browser errors fail the interaction tests.
+
+Chromium runs by default. Run the same complete suite in WebKit with:
+
+```sh
+pnpm --filter react-toolbox exec playwright install webkit
+TOOLBOX_BROWSER=webkit pnpm test:browser
+```
+
+Visual checks use two independent references:
+
+- The original stylesheet compiled through the legacy PostCSS pipeline, compared against modern CSS on identical markup. The checks include geometry, colors, typography, animation declarations, and exact screenshots, including buffered progress and open pickers.
+- The untouched original component JavaScript running on React 16.14, compared in a separate page with the modern React implementation. Both pages use the same gallery inputs and preloaded local fonts. The checks include initial components, selected controls, tabs, pressed and released continuous/pinned sliders, portaled dialogs and pickers, and a real ripple animation frame paused at 200 milliseconds.
+
+Screenshot comparisons require exact equality, with no pixel tolerance. The surrounding gallery section corners are squared in comparison pages to isolate component rendering from shell antialiasing; component corners, shadows, and geometry are unchanged. Computed-style strings normalize equivalent color syntax and fractional pixel serialization below 0.0001px; this does not relax image comparisons. Images are attached to the Playwright report. The original-runtime fixture records the Git revision, dependency versions, and source hashes; regenerate it with `node packages/react-toolbox/scripts/build-legacy-runtime.mjs` whenever the shared gallery source changes. See [the fixture provenance guide](../../packages/react-toolbox/tests/fixtures/legacy-runtime.md) for its source and regeneration details. These checks verify rendering and representative behavior; they do not claim that the old and new React runtimes have identical performance.

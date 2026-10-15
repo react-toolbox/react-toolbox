@@ -1,0 +1,9 @@
+# Historical docs/ and spec/ applications stay outside the active workspace.
+packages:
+  - apps/*
+  - packages/*
+strictPeerDependencies: true
+allowBuilds:
+  '@biomejs/biome': true
+  esbuild: true
+  sharp: true

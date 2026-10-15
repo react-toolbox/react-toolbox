@@ -1,0 +1,31 @@
+:root {
+  --progress-height: calc(0.4 * var(--unit));
+  --progress-main-color: var(--rt-color-primary);
+  --progress-track-color: var(--palette-grey-200);
+  --progress-secondary-color: rgb(from var(--rt-color-primary-contrast) r g b / 70%);
+  --progress-disabled-color: rgb(from var(--rt-color-black) r g b / 26%);
+  --circle-wrapper-width: 60;
+  --circle-radius: 25;
+  --scale-ratio: calc(var(--circle-radius) / 20);
+}
+[data-react-toolbox-tokens~="--palette-grey-200"] {
+  --progress-track-color: var(--palette-grey-200);
+}
+[data-react-toolbox-tokens~="--unit"] {
+  --progress-height: calc(0.4 * var(--unit));
+}
+[data-react-toolbox-tokens~="--rt-color-primary"],
+[data-react-toolbox-tokens~="--palette-indigo-500"] {
+  --progress-main-color: var(--rt-color-primary);
+}
+[data-react-toolbox-tokens~="--rt-color-dark-contrast"],
+[data-react-toolbox-tokens~="--rt-color-primary-contrast"],
+[data-react-toolbox-tokens~="--rt-color-white"] {
+  --progress-secondary-color: rgb(from var(--rt-color-primary-contrast) r g b / 70%);
+}
+[data-react-toolbox-tokens~="--rt-color-black"] {
+  --progress-disabled-color: rgb(from var(--rt-color-black) r g b / 26%);
+}
+[data-react-toolbox-tokens~="--circle-radius"] {
+  --scale-ratio: calc(var(--circle-radius) / 20);
+}

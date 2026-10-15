@@ -3,6 +3,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -14,16 +17,24 @@ jobs:
       TOOLBOX_BROWSER: ${{ matrix.browser }}
     steps:
       - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
-          node-version: 24
-          cache: npm
-      - run: npm ci
-      - run: npm run check
-      - run: npx playwright install --with-deps ${{ matrix.browser }}
-      - run: npm run test:browser
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm --filter react-toolbox exec playwright install --with-deps ${{ matrix.browser }}
+      - run: pnpm test:browser
+      - run: pnpm test:registry:install
+        if: matrix.browser == 'chromium'
+      - uses: actions/upload-artifact@v7
+        if: matrix.browser == 'chromium'
+        with:
+          name: source-registry
+          path: packages/react-toolbox/registry/public/
       - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: browser-test-results-${{ matrix.browser }}
-          path: test-results/
+          path: packages/react-toolbox/test-results/
