@@ -42,7 +42,7 @@ packages/react-toolbox/     Private implementation workspace used by the docs ap
 
 All workspace packages are private. The compiled `react-toolbox` workspace dependency is an internal development convenience for the documentation app. **The registry is the only public distribution.** There is no npm publishing or tarball release workflow.
 
-Historical `docs/`, `spec/`, and `legacy/` applications stay outside the active workspace. The maintained design audit and registry notes live in `docs/`.
+Historical `docs/` and `spec/` applications stay outside the active workspace. The maintained design audit and registry notes live in `docs/`.
 
 ## Develop
 
