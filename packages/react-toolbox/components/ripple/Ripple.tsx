@@ -160,7 +160,7 @@ export function useRipple({
             data-react-toolbox="ripple"
             className={cn(
               'rt-ripple-rippleWrapper',
-              'bottom-0 left-0 pointer-events-none absolute right-0 top-0 z-[var(--z-index-normal)]',
+              'bottom-0 left-0 pointer-events-none absolute right-0 top-0 z-(--z-index-normal)',
               theme?.rippleWrapper,
             )}
           >
@@ -171,19 +171,19 @@ export function useRipple({
               }}
               className={cn(
                 'rt-ripple-ripple',
-                'bg-[currentColor] rounded-[50%] left-[50%] pointer-events-none absolute top-[50%] [transform-origin:50%_50%] [transition-duration:var(--ripple-duration)] z-[var(--z-index-high)]',
-                '[&:not(.rt-ripple-rippleActive):not(.rt-ripple-rippleRestarting)]:opacity-0 [&:not(.rt-ripple-rippleActive):not(.rt-ripple-rippleRestarting)]:[transition-property:opacity,_transform]',
+                'bg-[currentColor] rounded-[50%] left-[50%] pointer-events-none absolute top-[50%] origin-[50%_50%] duration-(--ripple-duration) z-(--z-index-high)',
+                '[&:not(.rt-ripple-rippleActive):not(.rt-ripple-rippleRestarting)]:opacity-0 [&:not(.rt-ripple-rippleActive):not(.rt-ripple-rippleRestarting)]:[transition-property:opacity,transform]',
                 theme?.ripple,
                 ink.active &&
                   cn(
                     'rt-ripple-rippleActive',
-                    '[.rt-ripple-ripple&]:opacity-[var(--ripple-final-opacity)] [.rt-ripple-ripple&]:[transition-property:transform]',
+                    '[.rt-ripple-ripple&]:opacity-(--ripple-final-opacity) [.rt-ripple-ripple&]:[transition-property:transform]',
                     theme?.rippleActive,
                   ),
                 ink.restarting &&
                   cn(
                     'rt-ripple-rippleRestarting',
-                    '[.rt-ripple-ripple&]:opacity-[var(--ripple-final-opacity)] [.rt-ripple-ripple&]:[transition-property:none]',
+                    '[.rt-ripple-ripple&]:opacity-(--ripple-final-opacity) [.rt-ripple-ripple&]:transition-none',
                     theme?.rippleRestarting,
                   ),
                 className,

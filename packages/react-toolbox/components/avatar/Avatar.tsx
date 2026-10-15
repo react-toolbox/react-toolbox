@@ -28,12 +28,12 @@ export function Avatar({
       data-react-toolbox="avatar"
       className={cn(
         'rt-avatar-avatar',
-        'bg-[var(--avatar-background)] rounded-[50%] text-[color:var(--avatar-color)] inline-block text-[length:var(--avatar-font-size)] h-[var(--avatar-size)] overflow-hidden relative text-center align-middle w-[var(--avatar-size)]',
+        'bg-(--avatar-background) rounded-[50%] text-(--avatar-color) inline-block text-(length:--avatar-font-size) h-(--avatar-size) overflow-hidden relative text-center align-middle w-(--avatar-size)',
         materialRoot,
         materialDescendants,
-        '[&>svg]:fill-current [&>svg]:h-[var(--avatar-size)] [&>svg]:w-[1em]',
+        '[&>svg]:fill-current [&>svg]:h-(--avatar-size) [&>svg]:w-[1em]',
         '[&>img]:h-auto [&>img]:max-w-full',
-        "[&>[data-react-toolbox='font-icon']]:block [&>[data-react-toolbox='font-icon']]:leading-[var(--avatar-size)] [&>[data-react-toolbox='font-icon']]:w-full",
+        "[&>[data-react-toolbox='font-icon']]:block [&>[data-react-toolbox='font-icon']]:leading-(--avatar-size) [&>[data-react-toolbox='font-icon']]:w-full",
         theme?.avatar,
         className,
       )}
@@ -45,7 +45,7 @@ export function Avatar({
           aria-label={alt}
           className={cn(
             'rt-avatar-image',
-            'bg-[transparent] bg-center bg-cover rounded-[50%] block h-full absolute w-full',
+            'bg-transparent bg-center bg-cover rounded-[50%] block h-full absolute w-full',
             theme?.image,
           )}
           style={{ backgroundImage: `url('${image}')` }}
@@ -57,7 +57,7 @@ export function Avatar({
             alt={alt}
             className={cn(
               'rt-avatar-image',
-              'bg-[transparent] bg-center bg-cover rounded-[50%] block h-full absolute w-full',
+              'bg-transparent bg-center bg-cover rounded-[50%] block h-full absolute w-full',
               theme?.image,
             )}
             src={image}
@@ -68,7 +68,7 @@ export function Avatar({
         ))}
       {typeof icon === 'string' ? (
         <FontIcon
-          className={cn('rt-avatar-letter', 'block leading-[var(--avatar-size)] w-full', theme?.letter)}
+          className={cn('rt-avatar-letter', 'block leading-(--avatar-size) w-full', theme?.letter)}
           value={icon}
           alt={alt}
         />
@@ -76,7 +76,7 @@ export function Avatar({
         icon
       )}
       {title && (
-        <span className={cn('rt-avatar-letter', 'block leading-[var(--avatar-size)] w-full', theme?.letter)}>
+        <span className={cn('rt-avatar-letter', 'block leading-(--avatar-size) w-full', theme?.letter)}>
           {title[0]}
         </span>
       )}

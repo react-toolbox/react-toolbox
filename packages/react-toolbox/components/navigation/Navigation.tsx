@@ -27,9 +27,9 @@ export function Navigation({
         type === 'horizontal'
           ? cn(
               'rt-navigation-horizontal',
-              "[&>[data-react-toolbox='button']]:inline-block [&>[data-react-toolbox='button']]:m-[0_calc(var(--navigation-space)_/_2)]",
-              "[&>[data-react-toolbox='link']]:inline-block [&>[data-react-toolbox='link']]:m-[0_calc(var(--navigation-space)_/_2)] [&>[data-react-toolbox='link']]:text-[color:var(--navigation-color)]",
-              'p-[calc(var(--navigation-space)_/_2)]',
+              "[&>[data-react-toolbox='button']]:inline-block [&>[data-react-toolbox='button']]:m-[0_calc(var(--navigation-space)/2)]",
+              "[&>[data-react-toolbox='link']]:inline-block [&>[data-react-toolbox='link']]:m-[0_calc(var(--navigation-space)/2)] [&>[data-react-toolbox='link']]:text-(--navigation-color)",
+              'p-[calc(var(--navigation-space)/2)]',
               materialRoot,
               materialDescendants,
               theme?.horizontal,
@@ -37,9 +37,9 @@ export function Navigation({
           : type === 'vertical'
             ? cn(
                 'rt-navigation-vertical',
-                "[&>[data-react-toolbox='button']]:block [&>[data-react-toolbox='button']]:m-[calc(var(--navigation-space)_/_2)]",
-                "[&>[data-react-toolbox='link']]:block [&>[data-react-toolbox='link']]:m-[calc(var(--navigation-space)_/_2)] [&>[data-react-toolbox='link']]:text-[color:var(--navigation-color)]",
-                'p-[calc(var(--navigation-space)_/_2)]',
+                "[&>[data-react-toolbox='button']]:block [&>[data-react-toolbox='button']]:m-[calc(var(--navigation-space)/2)]",
+                "[&>[data-react-toolbox='link']]:block [&>[data-react-toolbox='link']]:m-[calc(var(--navigation-space)/2)] [&>[data-react-toolbox='link']]:text-(--navigation-color)",
+                'p-[calc(var(--navigation-space)/2)]',
                 materialRoot,
                 materialDescendants,
                 theme?.vertical,

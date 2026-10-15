@@ -70,12 +70,12 @@ export function Overlay({
       }}
       className={cn(
         'rt-overlay-overlay',
-        'bg-[var(--overlay-color)] bottom-0 h-[100vh] left-0 opacity-0 pointer-events-none fixed top-0 [transition:opacity_var(--animation-duration)_var(--animation-curve-default)] w-[100vw]',
+        'bg-(--overlay-color) bottom-0 h-screen left-0 opacity-0 pointer-events-none fixed top-0 [transition:opacity_var(--animation-duration)_var(--animation-curve-default)] w-screen',
         theme?.overlay,
         active &&
           cn(
             'rt-overlay-active',
-            '[.rt-overlay-overlay&]:opacity-[var(--overlay-opacity)] [.rt-overlay-overlay&]:[pointer-events:all]',
+            '[.rt-overlay-overlay&]:opacity-(--overlay-opacity) [.rt-overlay-overlay&]:[pointer-events:all]',
             theme?.active,
           ),
         className,

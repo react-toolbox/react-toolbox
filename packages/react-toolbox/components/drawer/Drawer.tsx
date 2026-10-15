@@ -51,30 +51,30 @@ export function Drawer({
         data-react-toolbox="drawer"
         className={cn(
           'rt-drawer-drawer',
-          'bg-[var(--drawer-background-color)] [box-shadow:var(--shadow-16p)] text-[color:var(--drawer-text-color)] block h-[100vh] overflow-x-hidden overflow-y-auto pointer-events-none fixed top-0 [transform-style:preserve-3d] [transition:transform_var(--animation-duration)_var(--animation-curve-default)] [transition-delay:0s] w-[var(--drawer-mobile-width)] max-w-[calc(100vw_-_var(--standard-increment-mobile))] [outline:none] [will-change:transform]',
+          'bg-(--drawer-background-color) [box-shadow:var(--shadow-16p)] text-(--drawer-text-color) block h-screen overflow-x-hidden overflow-y-auto pointer-events-none fixed top-0 transform-3d [transition:transform_var(--animation-duration)_var(--animation-curve-default)] delay-[0s] w-(--drawer-mobile-width) max-w-[calc(100vw-var(--standard-increment-mobile))] [outline:none] will-change-transform',
           materialRoot,
           materialDescendants,
-          '[@media_screen_and_(min-width:_600px)]:w-[var(--drawer-desktop-width)]',
+          '[@media_screen_and_(min-width:_600px)]:w-(--drawer-desktop-width)',
           theme?.drawer,
           type === 'left'
             ? cn(
                 'rt-drawer-left',
                 '[.rt-drawer-drawer&]:[border-right:1px_solid_var(--drawer-border-color)] [.rt-drawer-drawer&]:left-0',
-                '[.rt-drawer-drawer&:not(.rt-drawer-active)]:[transform:translateX(calc(-1_*_100%))]',
+                '[.rt-drawer-drawer&:not(.rt-drawer-active)]:transform-[translateX(calc(-1*100%))]',
                 theme?.left,
               )
             : type === 'right'
               ? cn(
                   'rt-drawer-right',
                   '[.rt-drawer-drawer&]:[border-left:1px_solid_var(--drawer-border-color)] [.rt-drawer-drawer&]:right-0',
-                  '[.rt-drawer-drawer&:not(.rt-drawer-active)]:[transform:translateX(100%)]',
+                  '[.rt-drawer-drawer&:not(.rt-drawer-active)]:transform-[translateX(100%)]',
                   theme?.right,
                 )
               : undefined,
           visible &&
             cn(
               'rt-drawer-active',
-              '[.rt-drawer-drawer&]:[pointer-events:all] [.rt-drawer-drawer&]:[transform:translateX(0)] [.rt-drawer-drawer&]:[transition-delay:var(--animation-delay)]',
+              '[.rt-drawer-drawer&]:[pointer-events:all] [.rt-drawer-drawer&]:transform-[translateX(0)] [.rt-drawer-drawer&]:delay-(--animation-delay)',
               theme?.active,
             ),
           className,
@@ -90,9 +90,9 @@ export function Drawer({
     </>
   );
   return insideTree ? (
-    <div className={cn('rt-drawer-wrapper', 'relative z-[var(--z-index-higher)]', theme?.wrapper)}>{content}</div>
+    <div className={cn('rt-drawer-wrapper', 'relative z-(--z-index-higher)', theme?.wrapper)}>{content}</div>
   ) : (
-    <Portal className={cn('rt-drawer-wrapper', 'relative z-[var(--z-index-higher)]', theme?.wrapper)}>{content}</Portal>
+    <Portal className={cn('rt-drawer-wrapper', 'relative z-(--z-index-higher)', theme?.wrapper)}>{content}</Portal>
   );
 }
 export default Drawer;

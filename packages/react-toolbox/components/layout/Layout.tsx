@@ -52,7 +52,7 @@ export function Layout({ children, className, theme, ...other }: LayoutProps) {
       {...other}
       className={cn(
         'rt-layout-layout',
-        'items-stretch flex [flex:1] flex-col justify-between min-h-[100vh] min-w-full relative',
+        'items-stretch flex flex-1 flex-col justify-between min-h-screen min-w-full relative',
         materialRoot,
         materialDescendants,
         theme?.layout,
@@ -76,7 +76,7 @@ export function Layout({ children, className, theme, ...other }: LayoutProps) {
               '[@media_screen_and_(min-width:_600px)]:[.rt-layout-navDrawerPinned:not(.rt-layout-navDrawerClipped)_&]:pl-[calc(var(--drawer-desktop-width)_+_var(--appbar-current-h-padding,_var(--appbar-h-padding)))]',
               '[.rt-layout-sidebarPinned:not(.rt-layout-sidebarClipped)_&]:pr-[calc(var(--drawer-mobile-width)_+_var(--appbar-current-h-padding,_var(--appbar-h-padding)))]',
               '[@media_screen_and_(min-width:_600px)]:[.rt-layout-sidebarPinned:not(.rt-layout-sidebarClipped)_&]:pr-[calc(var(--drawer-desktop-width)_+_var(--appbar-current-h-padding,_var(--appbar-h-padding)))]',
-              '[.rt-layout-appbarFixed&]:z-[var(--z-index-high)]',
+              '[.rt-layout-appbarFixed&]:z-(--z-index-high)',
               '[@media_screen_and_(min-width:_840px)]:[.rt-layout-sidebarWidth1.rt-layout-sidebarPinned:not(.rt-layout-sidebarClipped)_&]:pr-[calc(var(--standard-increment-desktop)_*_1_+_var(--appbar-current-h-padding,_var(--appbar-h-padding)))]',
               '[@media_screen_and_(min-width:_840px)]:[.rt-layout-sidebarWidth2.rt-layout-sidebarPinned:not(.rt-layout-sidebarClipped)_&]:pr-[calc(var(--standard-increment-desktop)_*_2_+_var(--appbar-current-h-padding,_var(--appbar-h-padding)))]',
               '[@media_screen_and_(min-width:_840px)]:[.rt-layout-sidebarWidth3.rt-layout-sidebarPinned:not(.rt-layout-sidebarClipped)_&]:pr-[calc(var(--standard-increment-desktop)_*_3_+_var(--appbar-current-h-padding,_var(--appbar-h-padding)))]',

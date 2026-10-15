@@ -50,7 +50,7 @@ export function ListItemLayout({
         selectable &&
           cn(
             'rt-list-selectable',
-            '[.rt-list-item&:not(.rt-list-disabled):hover]:bg-[var(--list-item-hover-color)] [.rt-list-item&:not(.rt-list-disabled):hover]:cursor-pointer',
+            '[.rt-list-item&:not(.rt-list-disabled):hover]:bg-(--list-item-hover-color) [.rt-list-item&:not(.rt-list-disabled):hover]:cursor-pointer',
             theme?.selectable,
           ),
         className,

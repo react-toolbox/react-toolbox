@@ -15,17 +15,17 @@ export function ListItemActions({ type, children, theme }: ListItemActionsProps)
         type === 'left'
           ? cn(
               'rt-list-left',
-              "[&_[data-react-toolbox='font-icon']]:w-[var(--list-item-icon-size)]",
-              "[&_:last-child>[data-react-toolbox='font-icon']]:mr-[var(--list-item-right-icon-margin)]",
-              'items-center flex [flex:0_0_auto]',
+              "[&_[data-react-toolbox='font-icon']]:w-(--list-item-icon-size)",
+              "[&_:last-child>[data-react-toolbox='font-icon']]:mr-(--list-item-right-icon-margin)",
+              'items-center flex flex-[0_0_auto]',
               theme?.left,
             )
           : type === 'right'
             ? cn(
                 'rt-list-right',
                 '[&>:last-child]:mr-0',
-                '[&>:first-child]:ml-[var(--list-horizontal-padding)]',
-                'items-center flex [flex:0_0_auto]',
+                '[&>:first-child]:ml-(--list-horizontal-padding)',
+                'items-center flex flex-[0_0_auto]',
                 theme?.right,
               )
             : undefined

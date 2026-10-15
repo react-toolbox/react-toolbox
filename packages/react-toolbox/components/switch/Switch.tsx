@@ -7,7 +7,7 @@ import { cn } from '../utils/cn';
 import Thumb from './Thumb';
 const fieldClasses = [
   'rt-switch-field',
-  'block mb-[var(--switch-field-margin-bottom)] relative whitespace-normal',
+  'block mb-(--switch-field-margin-bottom) relative whitespace-normal',
   materialRoot,
   materialDescendants,
 ].join(' ');
@@ -90,14 +90,14 @@ export function Switch({
           checked
             ? cn(
                 'rt-switch-on',
-                'rounded-[var(--switch-track-height)] cursor-pointer inline-block h-[var(--switch-track-height)] mt-[calc((var(--switch-total-height)_-_var(--switch-track-height))_/_2)] relative align-top w-[var(--switch-track-length)] [background:var(--switch-track-on-color)]',
-                '[.rt-switch-disabled_&&]:[background:var(--switch-disabled-track-color)] [.rt-switch-disabled_&&]:[cursor:auto]',
+                'rounded-(--switch-track-height) cursor-pointer inline-block h-(--switch-track-height) mt-[calc((var(--switch-total-height)-var(--switch-track-height))/2)] relative align-top w-(--switch-track-length) [background:var(--switch-track-on-color)]',
+                '[.rt-switch-disabled_&&]:[background:var(--switch-disabled-track-color)] [.rt-switch-disabled_&&]:cursor-auto',
                 theme?.on,
               )
             : cn(
                 'rt-switch-off',
-                'rounded-[var(--switch-track-height)] cursor-pointer inline-block h-[var(--switch-track-height)] mt-[calc((var(--switch-total-height)_-_var(--switch-track-height))_/_2)] relative align-top w-[var(--switch-track-length)] [background:var(--switch-track-off-color)]',
-                '[.rt-switch-disabled_&&]:[background:var(--switch-disabled-track-color)] [.rt-switch-disabled_&&]:[cursor:auto]',
+                'rounded-(--switch-track-height) cursor-pointer inline-block h-(--switch-track-height) mt-[calc((var(--switch-total-height)-var(--switch-track-height))/2)] relative align-top w-(--switch-track-length) [background:var(--switch-track-off-color)]',
+                '[.rt-switch-disabled_&&]:[background:var(--switch-disabled-track-color)] [.rt-switch-disabled_&&]:cursor-auto',
                 theme?.off,
               )
         }
@@ -109,8 +109,8 @@ export function Switch({
         <span
           className={cn(
             'rt-switch-text',
-            'text-[color:var(--switch-text-color)] inline-block text-[length:var(--switch-font-size)] leading-[var(--switch-total-height)] pl-[var(--unit)] align-top whitespace-nowrap',
-            '[.rt-switch-disabled_&&]:text-[color:var(--switch-disabled-text-color)]',
+            'text-(--switch-text-color) inline-block text-(length:--switch-font-size) leading-(--switch-total-height) pl-(--unit) align-top whitespace-nowrap',
+            '[.rt-switch-disabled_&&]:text-(--switch-disabled-text-color)',
             theme?.text,
           )}
         >

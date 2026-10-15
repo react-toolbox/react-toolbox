@@ -18,9 +18,9 @@ export function ListItemContent({ children, caption, legend, theme, type, classN
       {...other}
       className={cn(
         'rt-list-itemContentRoot',
-        'block grow-[1] min-w-0',
-        '[&.rt-list-large]:flex [&.rt-list-large]:flex-col [&.rt-list-large]:min-h-[var(--list-item-min-height-legend)] [&.rt-list-large]:justify-center',
-        "[&[data-line-count='3']]:justify-start [&[data-line-count='3']]:min-h-[var(--list-item-three-line-height,_calc(8.8_*_var(--unit)))] [&[data-line-count='3']]:pt-[calc(1.6_*_var(--unit))] [&[data-line-count='3']]:pb-[calc(1.6_*_var(--unit))]",
+        'block grow min-w-0',
+        '[&.rt-list-large]:flex [&.rt-list-large]:flex-col [&.rt-list-large]:min-h-(--list-item-min-height-legend) [&.rt-list-large]:justify-center',
+        "[&[data-line-count='3']]:justify-start [&[data-line-count='3']]:min-h-[var(--list-item-three-line-height,_calc(8.8_*_var(--unit)))] [&[data-line-count='3']]:pt-[calc(1.6*var(--unit))] [&[data-line-count='3']]:pb-[calc(1.6*var(--unit))]",
         theme?.itemContentRoot,
         contentClass,
         className,

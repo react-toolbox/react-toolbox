@@ -42,14 +42,14 @@ export function Table({
       {...other}
       className={cn(
         'rt-table-table',
-        'bg-[var(--rt-color-white)] border-collapse text-[length:var(--table-font-size)] w-full',
+        'bg-(--rt-color-white) border-collapse text-(length:--table-font-size) w-full',
         materialRoot,
         materialDescendants,
         theme?.table,
         className,
       )}
     >
-      <thead className={cn('rt-table-head', 'pb-[calc(0.3_*_var(--unit))] whitespace-nowrap', theme?.head)}>
+      <thead className={cn('rt-table-head', 'pb-[calc(0.3*var(--unit))] whitespace-nowrap', theme?.head)}>
         {heads.map((head) =>
           cloneElement(head, {
             selected: selectedIndices.length === rows.length,

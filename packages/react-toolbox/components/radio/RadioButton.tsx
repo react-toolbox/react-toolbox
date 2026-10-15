@@ -6,7 +6,7 @@ import { cn } from '../utils/cn';
 import Radio from './Radio';
 const fieldClasses = [
   'rt-radio-field',
-  'block h-[var(--radio-button-size)] mb-[var(--radio-field-margin-bottom)] relative whitespace-nowrap',
+  'block h-(--radio-button-size) mb-(--radio-field-margin-bottom) relative whitespace-nowrap',
 ].join(' ');
 
 export type RadioButtonTheme = RadioTheme;
@@ -76,7 +76,7 @@ export function RadioButton({
         checked={checked}
         className={cn(
           'rt-radio-input',
-          '[-webkit-appearance:none] [-moz-appearance:none] [appearance:none] [border:0] h-0 m-0 opacity-0 p-0 absolute w-0',
+          '[-webkit-appearance:none] [-moz-appearance:none] appearance-none [border:0] h-0 m-0 opacity-0 p-0 absolute w-0',
           theme?.input,
         )}
         disabled={disabled}
@@ -91,8 +91,8 @@ export function RadioButton({
         <span
           className={cn(
             'rt-radio-text',
-            'text-[color:var(--radio-text-color)] inline-block text-[length:var(--radio-text-font-size)] leading-[var(--radio-button-size)] pl-[var(--unit)] align-top whitespace-nowrap',
-            '[.rt-radio-disabled_&]:text-[color:var(--radio-disabled-color)]',
+            'text-(--radio-text-color) inline-block text-(length:--radio-text-font-size) leading-(--radio-button-size) pl-(--unit) align-top whitespace-nowrap',
+            '[.rt-radio-disabled_&]:text-(--radio-disabled-color)',
             theme?.text,
           )}
         >

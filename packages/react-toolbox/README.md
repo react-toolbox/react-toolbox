@@ -47,6 +47,10 @@ Public component props remain compatible where practical. Component refs are sta
 
 ## Development
 
+Prefer Tailwind's standard utilities and CSS variable shorthand (`h-(--button-height)`). Run `pnpm lint:tailwind` from the monorepo root to check the components and docs; add `--fix` to apply equivalent suggestions. This check also runs in `pnpm check`.
+
+The check uses the installed Tailwind compiler and compares emitted CSS before suggesting a change. It preserves variants (which determine rule order), selectors, specificity, media conditions, and custom property references. Some editor suggestions intentionally remain: replacing an ancestor selector with `in-*` can lower specificity, and replacing a literal font weight with `font-medium` introduces a dependency on the host's font-weight token. M1 geometry and typography must remain stable when installed into another theme. After changing classes, run the style and browser checks to verify cascade and interaction as well.
+
 From the monorepo root:
 
 ```sh

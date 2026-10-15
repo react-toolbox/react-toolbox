@@ -8,7 +8,7 @@ import time, { type TimeFormat } from '../utils/time';
 import Clock, { type ClockHandle } from './Clock';
 const buttonClasses = [
   'rt-time-picker-button',
-  '[.rt-time-picker-dialog>nav>&:not([disabled])]:text-[color:var(--timepicker-primary-color)]',
+  '[.rt-time-picker-dialog>nav>&:not([disabled])]:text-(--timepicker-primary-color)',
   '[.rt-time-picker-dialog>nav>&:not([disabled]):hover]:[background:var(--timepicker-primary-hover-color)]',
   '[.rt-time-picker-dialog>nav>&:not([disabled]):focus:not(:active)]:[background:var(--timepicker-primary-hover-color)]',
 ].join(' ');
@@ -104,7 +104,7 @@ export default function TimePickerDialog({
       active={active}
       className={cn(
         'rt-time-picker-dialog',
-        'w-[var(--timepicker-dialog-width)]',
+        'w-(--timepicker-dialog-width)',
         '[&>section]:p-0',
         theme?.dialog,
         display === 'hours'
@@ -122,9 +122,9 @@ export default function TimePickerDialog({
       <header
         className={cn(
           'rt-time-picker-header',
-          '[background:var(--timepicker-primary-color)] text-[color:var(--timepicker-primary-contrast-color)] text-[length:var(--timepicker-header-font-size)] p-[var(--timepicker-header-padding)] relative text-center w-full',
-          "[&_[role='spinbutton']:focus-visible]:[outline:2px_solid_currentColor] [&_[role='spinbutton']:focus-visible]:[outline-offset:2px]",
-          "[&_[role='button']:focus-visible]:[outline:2px_solid_currentColor] [&_[role='button']:focus-visible]:[outline-offset:2px]",
+          '[background:var(--timepicker-primary-color)] text-(--timepicker-primary-contrast-color) text-(length:--timepicker-header-font-size) p-(--timepicker-header-padding) relative text-center w-full',
+          "[&_[role='spinbutton']:focus-visible]:[outline:2px_solid_currentColor] [&_[role='spinbutton']:focus-visible]:outline-offset-2",
+          "[&_[role='button']:focus-visible]:[outline:2px_solid_currentColor] [&_[role='button']:focus-visible]:outline-offset-2",
           theme?.header,
         )}
       >
@@ -150,7 +150,7 @@ export default function TimePickerDialog({
         <span
           className={cn(
             'rt-time-picker-separator',
-            'm-[0_calc(var(--timepicker-header-padding)_/_2)] opacity-[0.6]',
+            'm-[0_calc(var(--timepicker-header-padding)/2)] opacity-[0.6]',
             theme?.separator,
           )}
         >
@@ -179,7 +179,7 @@ export default function TimePickerDialog({
           <div
             className={cn(
               'rt-time-picker-ampm',
-              'text-[length:var(--timepicker-ampm-font-size)] h-[calc(var(--timepicker-ampm-height)_*_2)] leading-[var(--timepicker-ampm-height)] mt-[calc(-1_*_var(--timepicker-ampm-height))] absolute right-[calc(2_*_var(--unit))] text-center top-[50%] w-[var(--timepicker-ampm-width)]',
+              'text-(length:--timepicker-ampm-font-size) h-[calc(var(--timepicker-ampm-height)*2)] leading-(--timepicker-ampm-height) mt-[calc(-1_*_var(--timepicker-ampm-height))] absolute right-[calc(2*var(--unit))] text-center top-[50%] w-(--timepicker-ampm-width)',
               theme?.ampm,
             )}
           >

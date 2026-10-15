@@ -12,14 +12,14 @@ export function ListDivider({ inset = false, className, theme, ...other }: ListD
       {...other}
       className={cn(
         'rt-list-divider',
-        'bg-[var(--rt-color-divider)] [border:0] h-[var(--list-divider-height)] m-[calc(-1_*_var(--list-divider-height))_0_0]',
+        'bg-(--rt-color-divider) [border:0] h-(--list-divider-height) m-[calc(-1*var(--list-divider-height))_0_0]',
         '[.rt-list-list+&]:mt-[calc(-1_*_var(--list-vertical-padding))]',
-        '[.rt-list-listItem~&]:mb-[var(--list-vertical-padding)] [.rt-list-listItem~&]:mt-[var(--list-vertical-padding)]',
+        '[.rt-list-listItem~&]:mb-(--list-vertical-padding) [.rt-list-listItem~&]:mt-(--list-vertical-padding)',
         theme?.divider,
         inset &&
           cn(
             'rt-list-inset',
-            '[.rt-list-divider&]:ml-[var(--list-content-left-spacing)] [.rt-list-divider&]:mr-[var(--list-horizontal-padding)]',
+            '[.rt-list-divider&]:ml-(--list-content-left-spacing) [.rt-list-divider&]:mr-(--list-horizontal-padding)',
             theme?.inset,
           ),
         className,

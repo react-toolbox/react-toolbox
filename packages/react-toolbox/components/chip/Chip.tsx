@@ -38,19 +38,19 @@ export function Chip({
 
   const classes = cn(
     'rt-chip-chip',
-    'bg-[var(--chip-background)] rounded-[var(--chip-height)] text-[color:var(--chip-color)] inline-block text-[length:var(--chip-font-size)] leading-[var(--chip-height)] mr-[var(--chip-margin-right)] max-w-full overflow-hidden p-[0_var(--chip-padding)] relative text-ellipsis whitespace-nowrap',
+    'bg-(--chip-background) rounded-(--chip-height) text-(--chip-color) inline-block text-(length:--chip-font-size) leading-(--chip-height) mr-(--chip-margin-right) max-w-full overflow-hidden p-[0_var(--chip-padding)] relative text-ellipsis whitespace-nowrap',
     materialRoot,
     materialDescendants,
-    '[&:focus-visible]:[outline:2px_solid_var(--rt-color-primary)] [&:focus-visible]:[outline-offset:2px]',
+    '[&:focus-visible]:[outline:2px_solid_var(--rt-color-primary)] [&:focus-visible]:outline-offset-2',
     theme?.chip,
     !!deletable &&
-      cn('rt-chip-deletable', 'pr-[calc(var(--chip-remove-size)_+_2_*_var(--chip-remove-margin))]', theme?.deletable),
+      cn('rt-chip-deletable', 'pr-[calc(var(--chip-remove-size)+2*var(--chip-remove-margin))]', theme?.deletable),
     !!hasAvatar &&
       cn(
         'rt-chip-avatar',
-        'text-[length:var(--font-size-small)] pl-0',
-        "[&>[data-react-toolbox='avatar']]:h-[var(--chip-height)] [&>[data-react-toolbox='avatar']]:mr-[var(--chip-icon-margin-right)] [&>[data-react-toolbox='avatar']]:align-middle [&>[data-react-toolbox='avatar']]:w-[var(--chip-height)]",
-        "[&>[data-react-toolbox='avatar']>span]:text-[length:var(--chip-icon-font-size)] [&>[data-react-toolbox='avatar']>span]:leading-[var(--chip-height)]",
+        'text-(length:--font-size-small) pl-0',
+        "[&>[data-react-toolbox='avatar']]:h-(--chip-height) [&>[data-react-toolbox='avatar']]:mr-(--chip-icon-margin-right) [&>[data-react-toolbox='avatar']]:align-middle [&>[data-react-toolbox='avatar']]:w-(--chip-height)",
+        "[&>[data-react-toolbox='avatar']>span]:text-(length:--chip-icon-font-size) [&>[data-react-toolbox='avatar']>span]:leading-(--chip-height)",
         theme?.avatar,
       ),
     className,
@@ -82,8 +82,8 @@ export function Chip({
         <span
           className={cn(
             'rt-chip-delete',
-            'cursor-pointer inline-block h-[var(--chip-remove-size)] m-[var(--chip-remove-margin)] p-[var(--chip-remove-margin)] absolute right-0 w-[var(--chip-remove-size)]',
-            '[&:focus-visible]:[outline:2px_solid_var(--rt-color-primary)] [&:focus-visible]:[outline-offset:2px]',
+            'cursor-pointer inline-block h-(--chip-remove-size) m-(--chip-remove-margin) p-(--chip-remove-margin) absolute right-0 w-(--chip-remove-size)',
+            '[&:focus-visible]:[outline:2px_solid_var(--rt-color-primary)] [&:focus-visible]:outline-offset-2',
             theme?.delete,
           )}
           role="button"
@@ -106,7 +106,7 @@ export function Chip({
             viewBox="0 0 40 40"
             className={cn(
               'rt-chip-deleteIcon',
-              '[background:var(--chip-remove-background)] rounded-[var(--chip-remove-size)] align-top',
+              '[background:var(--chip-remove-background)] rounded-(--chip-remove-size) align-top',
               '[.rt-chip-delete:hover_&]:[background:var(--chip-remove-background-hover)]',
               theme?.deleteIcon,
             )}
@@ -116,7 +116,7 @@ export function Chip({
             <path
               className={cn(
                 'rt-chip-deleteX',
-                '[.rt-chip-deleteIcon_&]:[fill:transparent] [.rt-chip-deleteIcon_&]:[stroke:var(--chip-remove-color)] [.rt-chip-deleteIcon_&]:[stroke-width:var(--chip-remove-stroke-width)]',
+                '[.rt-chip-deleteIcon_&]:fill-transparent [.rt-chip-deleteIcon_&]:stroke-(--chip-remove-color) [.rt-chip-deleteIcon_&]:[stroke-width:var(--chip-remove-stroke-width)]',
                 theme?.deleteX,
               )}
               d="M 12,12 L 28,28 M 28,12 L 12,28"

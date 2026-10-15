@@ -15,7 +15,7 @@ export function MenuDivider({ theme, className, ...attributes }: MenuDividerProp
       data-react-toolbox="menu-divider"
       className={cn(
         'rt-menu-menuDivider',
-        'bg-[var(--rt-color-divider)] [border:0] block h-[1px] m-[var(--menu-divider-height)_0] [outline:0] p-0 w-full',
+        'bg-(--rt-color-divider) [border:0] block h-px m-[var(--menu-divider-height)_0] [outline:0] p-0 w-full',
         theme?.menuDivider,
         className,
       )}

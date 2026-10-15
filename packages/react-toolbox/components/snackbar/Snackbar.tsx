@@ -137,13 +137,13 @@ export function Snackbar({
         data-multiline={multiline || undefined}
         className={cn(
           'rt-snackbar-snackbar',
-          'items-center bg-[var(--snackbar-background-color)] rounded-[0] bottom-0 text-[color:var(--snackbar-color)] flex left-0 m-0 min-h-[calc(4.8_*_var(--unit))] p-[var(--snackbar-vertical-offset)_var(--snackbar-horizontal-offset)] fixed right-0 [transition:all_var(--animation-duration)_var(--animation-curve-default)_var(--animation-duration)] z-[var(--z-index-higher)]',
+          'items-center bg-(--snackbar-background-color) rounded-none bottom-0 text-(--snackbar-color) flex left-0 m-0 min-h-[calc(4.8*var(--unit))] p-[var(--snackbar-vertical-offset)_var(--snackbar-horizontal-offset)] fixed right-0 [transition:all_var(--animation-duration)_var(--animation-curve-default)_var(--animation-duration)] z-(--z-index-higher)',
           materialRoot,
           materialDescendants,
-          '[&:not(.rt-snackbar-active)]:[transform:translateY(100%)]',
-          '[@media_screen_and_(max-width:_599px)]:[&[data-multiline]]:min-h-[calc(8_*_var(--unit))]',
-          '[@media_screen_and_(min-width:_600px)]:rounded-[var(--snackbar-border-radius)] [@media_screen_and_(min-width:_600px)]:bottom-[var(--snackbar-horizontal-offset)] [@media_screen_and_(min-width:_600px)]:left-[var(--snackbar-horizontal-offset)] [@media_screen_and_(min-width:_600px)]:right-auto [@media_screen_and_(min-width:_600px)]:min-w-[calc(28.8_*_var(--unit))] [@media_screen_and_(min-width:_600px)]:max-w-[min(calc(56.8_*_var(--unit)),_calc(100vw_-_4.8_*_var(--unit)))]',
-          '[@media_screen_and_(min-width:_600px)]:[&:not(.rt-snackbar-active)]:[transform:translateY(calc(100%_+_var(--snackbar-horizontal-offset)))]',
+          '[&:not(.rt-snackbar-active)]:transform-[translateY(100%)]',
+          '[@media_screen_and_(max-width:_599px)]:[&[data-multiline]]:min-h-[calc(8*var(--unit))]',
+          '[@media_screen_and_(min-width:_600px)]:rounded-(--snackbar-border-radius) [@media_screen_and_(min-width:_600px)]:bottom-(--snackbar-horizontal-offset) [@media_screen_and_(min-width:_600px)]:left-(--snackbar-horizontal-offset) [@media_screen_and_(min-width:_600px)]:right-auto [@media_screen_and_(min-width:_600px)]:min-w-[calc(28.8*var(--unit))] [@media_screen_and_(min-width:_600px)]:max-w-[min(calc(56.8*var(--unit)),calc(100vw-4.8*var(--unit)))]',
+          '[@media_screen_and_(min-width:_600px)]:[&:not(.rt-snackbar-active)]:transform-[translateY(calc(100%+var(--snackbar-horizontal-offset)))]',
           theme?.snackbar,
           type &&
             (type === 'accept'
@@ -153,7 +153,7 @@ export function Snackbar({
                 : type === 'warning'
                   ? cn('rt-snackbar-warning', theme?.warning)
                   : undefined),
-          visible && cn('rt-snackbar-active', '[.rt-snackbar-snackbar&]:[transform:translateY(0%)]', theme?.active),
+          visible && cn('rt-snackbar-active', '[.rt-snackbar-snackbar&]:transform-[translateY(0%)]', theme?.active),
           className,
         )}
         role={attributes.role || 'status'}
@@ -183,7 +183,7 @@ export function Snackbar({
           ref={setLabelNode}
           className={cn(
             'rt-snackbar-label',
-            'grow-[1] text-[length:var(--font-size-small)] leading-[calc(2_*_var(--unit))]',
+            'grow text-(length:--font-size-small) leading-[calc(2*var(--unit))]',
             theme?.label,
           )}
         >
@@ -194,10 +194,10 @@ export function Snackbar({
           <Button
             className={cn(
               'rt-snackbar-button',
-              'm-[calc(-0.8_*_var(--unit))_calc(-0.8_*_var(--unit))_calc(-0.8_*_var(--unit))_var(--snackbar-button-offset)] min-w-[calc(6.4_*_var(--unit))] pl-[calc(0.8_*_var(--unit))] pr-[calc(0.8_*_var(--unit))]',
-              '[.rt-snackbar-snackbar.rt-snackbar-accept_&]:text-[color:var(--snackbar-color-accept)]',
-              '[.rt-snackbar-snackbar.rt-snackbar-warning_&]:text-[color:var(--snackbar-color-warning)]',
-              '[.rt-snackbar-snackbar.rt-snackbar-cancel_&]:text-[color:var(--snackbar-color-cancel)]',
+              'm-[calc(-0.8*var(--unit))_calc(-0.8*var(--unit))_calc(-0.8*var(--unit))_var(--snackbar-button-offset)] min-w-[calc(6.4*var(--unit))] pl-[calc(0.8*var(--unit))] pr-[calc(0.8*var(--unit))]',
+              '[.rt-snackbar-snackbar.rt-snackbar-accept_&]:text-(--snackbar-color-accept)',
+              '[.rt-snackbar-snackbar.rt-snackbar-warning_&]:text-(--snackbar-color-warning)',
+              '[.rt-snackbar-snackbar.rt-snackbar-cancel_&]:text-(--snackbar-color-cancel)',
               theme?.button,
             )}
             label={action}

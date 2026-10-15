@@ -240,19 +240,19 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
     state.position === 'left'
       ? cn(
           'rt-tooltip-tooltipLeft',
-          '[.rt-tooltip-tooltip&]:[transform:scale(0)_translateX(-100%)_translateY(-50%)]',
+          '[.rt-tooltip-tooltip&]:transform-[scale(0)_translateX(-100%)_translateY(-50%)]',
           theme?.tooltipLeft,
         )
       : state.position === 'right'
         ? cn(
             'rt-tooltip-tooltipRight',
-            '[.rt-tooltip-tooltip&]:[transform:scale(0)_translateX(0)_translateY(-50%)]',
+            '[.rt-tooltip-tooltip&]:transform-[scale(0)_translateX(0)_translateY(-50%)]',
             theme?.tooltipRight,
           )
         : state.position === 'top'
           ? cn(
               'rt-tooltip-tooltipTop',
-              '[.rt-tooltip-tooltip&]:[transform:scale(0)_translateX(-50%)_translateY(-100%)]',
+              '[.rt-tooltip-tooltip&]:transform-[scale(0)_translateX(-50%)_translateY(-100%)]',
               theme?.tooltipTop,
             )
           : undefined;
@@ -272,17 +272,17 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
           ref={node}
           className={cn(
             'rt-tooltip-tooltip',
-            'block font-[family-name:var(--preferred-font)] text-[length:var(--tooltip-font-size)] [font-weight:var(--font-weight-semi-bold)] leading-[var(--font-size-small)] max-w-[var(--tooltip-max-width)] p-[var(--tooltip-margin)] pointer-events-none absolute text-center normal-case [transform:scale(0)_translateX(-50%)] [transform-origin:top_left] [transition:var(--animation-curve-fast-out-linear-in)_var(--tooltip-animation-duration)_transform] z-[var(--z-index-higher)] box-border [-webkit-font-smoothing:antialiased] [font-smoothing:antialiased] [-webkit-text-size-adjust:100%] [-moz-text-size-adjust:100%] [text-size-adjust:100%]',
+            'block font-(family-name:--preferred-font) text-(length:--tooltip-font-size) font-(--font-weight-semi-bold) leading-(--font-size-small) max-w-(--tooltip-max-width) p-(--tooltip-margin) pointer-events-none absolute text-center normal-case transform-[scale(0)_translateX(-50%)] origin-[top_left] [transition:var(--animation-curve-fast-out-linear-in)_var(--tooltip-animation-duration)_transform] z-(--z-index-higher) box-border [-webkit-font-smoothing:antialiased] [font-smoothing:antialiased] [-webkit-text-size-adjust:100%] [-moz-text-size-adjust:100%] [text-size-adjust:100%]',
             materialDescendants,
-            '[@media_(hover:_none)_and_(pointer:_coarse)]:text-[length:calc(1.4_*_var(--unit))] [@media_(hover:_none)_and_(pointer:_coarse)]:leading-[calc(2_*_var(--unit))] [@media_(hover:_none)_and_(pointer:_coarse)]:p-[calc(2.4_*_var(--unit))]',
+            '[@media_(hover:_none)_and_(pointer:_coarse)]:text-[calc(1.4*var(--unit))] [@media_(hover:_none)_and_(pointer:_coarse)]:leading-[calc(2*var(--unit))] [@media_(hover:_none)_and_(pointer:_coarse)]:p-[calc(2.4*var(--unit))]',
             theme?.tooltip,
             state.active &&
               cn(
                 'rt-tooltip-tooltipActive',
-                '[.rt-tooltip-tooltip&]:[transform:scale(1)_translateX(-50%)] [.rt-tooltip-tooltip&]:[transition-timing-function:var(--animation-curve-linear-out-slow-in)]',
-                '[.rt-tooltip-tooltip.rt-tooltip-tooltipTop&]:[transform:scale(1)_translateX(-50%)_translateY(-100%)]',
-                '[.rt-tooltip-tooltip.rt-tooltip-tooltipLeft&]:[transform:scale(1)_translateX(-100%)_translateY(-50%)]',
-                '[.rt-tooltip-tooltip.rt-tooltip-tooltipRight&]:[transform:scale(1)_translateX(0)_translateY(-50%)]',
+                '[.rt-tooltip-tooltip&]:transform-[scale(1)_translateX(-50%)] [.rt-tooltip-tooltip&]:[transition-timing-function:var(--animation-curve-linear-out-slow-in)]',
+                '[.rt-tooltip-tooltip.rt-tooltip-tooltipTop&]:transform-[scale(1)_translateX(-50%)_translateY(-100%)]',
+                '[.rt-tooltip-tooltip.rt-tooltip-tooltipLeft&]:transform-[scale(1)_translateX(-100%)_translateY(-50%)]',
+                '[.rt-tooltip-tooltip.rt-tooltip-tooltipRight&]:transform-[scale(1)_translateX(0)_translateY(-50%)]',
                 theme?.tooltipActive,
               ),
             positionClass,
@@ -294,8 +294,8 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
           <span
             className={cn(
               'rt-tooltip-tooltipInner',
-              '[background:var(--tooltip-background)] rounded-[var(--tooltip-border-radius)] text-[color:var(--tooltip-color)] block p-[calc(0.4_*_var(--unit))_var(--tooltip-padding)]',
-              '[@media_(hover:_none)_and_(pointer:_coarse)]:p-[calc(0.6_*_var(--unit))_calc(1.6_*_var(--unit))]',
+              '[background:var(--tooltip-background)] rounded-(--tooltip-border-radius) text-(--tooltip-color) block p-[calc(0.4*var(--unit))_var(--tooltip-padding)]',
+              '[@media_(hover:_none)_and_(pointer:_coarse)]:p-[calc(0.6*var(--unit))_calc(1.6*var(--unit))]',
               theme?.tooltipInner,
             )}
           >

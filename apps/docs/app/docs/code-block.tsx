@@ -43,7 +43,7 @@ export default async function CodeBlock({
   const lang = language === 'Terminal' ? 'shellscript' : language === 'components.json' ? 'json' : 'tsx';
   const { tokens } = (await highlighter).codeToTokens(code, { lang, theme: 'material-docs' });
   return (
-    <div className="min-w-0 overflow-hidden rounded-toolbox border border-toolbox-divider bg-[var(--palette-grey-50)]">
+    <div className="min-w-0 overflow-hidden rounded-toolbox border border-toolbox-divider bg-(--palette-grey-50)">
       <div className="flex min-h-12 items-center justify-between border-b border-toolbox-divider pr-2 pl-4 text-xs text-toolbox-text-secondary">
         <span>{language}</span>
         <CopyCodeButton code={code} label={label} />

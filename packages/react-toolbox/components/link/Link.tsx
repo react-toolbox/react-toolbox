@@ -17,14 +17,14 @@ export function Link({ active = false, children, className = '', count, icon, la
       data-react-toolbox="link"
       className={cn(
         'rt-link-link',
-        '[align-content:center] items-center cursor-pointer flex flex-row justify-center leading-[1.5] relative [transition:opacity_var(--animation-duration)_var(--animation-curve-default)]',
+        'content-center items-center cursor-pointer flex flex-row justify-center leading-[1.5] relative [transition:opacity_var(--animation-duration)_var(--animation-curve-default)]',
         materialRoot,
         materialDescendants,
         '[&:not(.rt-link-active)]:opacity-[0.5]',
         '[&:hover]:opacity-[1]',
         '[&:active]:opacity-[1]',
         '[&>*]:align-middle',
-        '[&>small]:text-[length:var(--font-size-tiny)] [&>small]:ml-[calc(0.8_*_var(--unit))] [&>small]:text-center',
+        '[&>small]:text-(length:--font-size-tiny) [&>small]:ml-[calc(0.8*var(--unit))] [&>small]:text-center',
         theme?.link,
         active && cn('rt-link-active', theme?.active),
         className,
@@ -33,7 +33,7 @@ export function Link({ active = false, children, className = '', count, icon, la
     >
       {icon ? (
         <FontIcon
-          className={cn('rt-link-icon', 'text-[length:calc(1.8_*_var(--unit))] mr-[var(--unit)]', theme?.icon)}
+          className={cn('rt-link-icon', 'text-[calc(1.8*var(--unit))] mr-(--unit)', theme?.icon)}
           value={icon}
         />
       ) : null}

@@ -45,8 +45,8 @@ export function ListCheckbox({
         checked={checked}
         className={cn(
           'rt-list-checkbox',
-          'items-center cursor-pointer flex h-full m-0 min-h-[var(--list-item-min-height)] w-full',
-          "[&>[data-react-toolbox='check']]:mr-[var(--list-item-right-checkbox-margin)]",
+          'items-center cursor-pointer flex h-full m-0 min-h-(--list-item-min-height) w-full',
+          "[&>[data-react-toolbox='check']]:mr-(--list-item-right-checkbox-margin)",
           "[&>[data-react-toolbox='label']]:pl-0",
           "[.rt-list-item.rt-list-disabled>&>[data-react-toolbox='label']]:opacity-[0.5]",
           theme?.checkbox,

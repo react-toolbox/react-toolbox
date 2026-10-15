@@ -51,13 +51,13 @@ export function ProgressBar({
         type === 'linear'
           ? cn(
               'rt-progress-bar-linear',
-              '[background:var(--progress-track-color)] inline-block h-[var(--progress-height)] overflow-hidden relative w-full',
+              '[background:var(--progress-track-color)] inline-block h-(--progress-height) overflow-hidden relative w-full',
               theme?.linear,
             )
           : type === 'circular'
             ? cn(
                 'rt-progress-bar-circular',
-                'inline-block h-[calc(var(--circle-wrapper-width)_*_1px)] relative [transform:rotate(-90deg)] w-[calc(var(--circle-wrapper-width)_*_1px)]',
+                'inline-block h-[calc(var(--circle-wrapper-width)*1px)] relative transform-[rotate(-90deg)] w-[calc(var(--circle-wrapper-width)*1px)]',
                 theme?.circular,
               )
             : undefined,
@@ -71,7 +71,7 @@ export function ProgressBar({
           className={cn(
             'rt-progress-bar-circle',
             'h-full w-full',
-            '[.rt-progress-bar-circular.rt-progress-bar-indeterminate_&]:[animation:rt-progress-bar-circular-indeterminate-bar-rotate_2s_linear_infinite]',
+            '[.rt-progress-bar-circular.rt-progress-bar-indeterminate_&]:animate-[rt-progress-bar-circular-indeterminate-bar-rotate_2s_linear_infinite]',
             theme?.circle,
           )}
           viewBox="0 0 60 60"
@@ -81,10 +81,10 @@ export function ProgressBar({
           <circle
             className={cn(
               'rt-progress-bar-path',
-              'fill-none [stroke:var(--progress-main-color)] [stroke-dasharray:0,_calc(var(--scale-ratio)_*_200px)] [stroke-dashoffset:0] [stroke-linecap:round] [stroke-miterlimit:20] [stroke-width:4] [transition:stroke-dasharray_var(--animation-duration)_var(--animation-curve-default)]',
-              '[.rt-progress-bar-circular.rt-progress-bar-indeterminate_&]:[animation:rt-progress-bar-circular-indeterminate-bar-dash_1.5s_ease-in-out_infinite] [.rt-progress-bar-circular.rt-progress-bar-indeterminate_&]:[stroke-dasharray:calc(var(--scale-ratio)_*_1px),_calc(var(--scale-ratio)_*_200px)] [.rt-progress-bar-circular.rt-progress-bar-indeterminate_&]:[stroke-dashoffset:0]',
-              '[.rt-progress-bar-circular.rt-progress-bar-indeterminate.rt-progress-bar-multicolor_&]:[animation:rt-progress-bar-circular-indeterminate-bar-dash_1.5s_ease-in-out_infinite,_rt-progress-bar-colors_calc(1.5s_*_4)_ease-in-out_infinite]',
-              '[.rt-progress-bar-circular[disabled]_&]:[stroke:var(--progress-disabled-color)]',
+              'fill-none stroke-(--progress-main-color) [stroke-dasharray:0,calc(var(--scale-ratio)*200px)] [stroke-dashoffset:0] [stroke-linecap:round] [stroke-miterlimit:20] stroke-4 [transition:stroke-dasharray_var(--animation-duration)_var(--animation-curve-default)]',
+              '[.rt-progress-bar-circular.rt-progress-bar-indeterminate_&]:animate-[rt-progress-bar-circular-indeterminate-bar-dash_1.5s_ease-in-out_infinite] [.rt-progress-bar-circular.rt-progress-bar-indeterminate_&]:[stroke-dasharray:calc(var(--scale-ratio)*1px),calc(var(--scale-ratio)*200px)] [.rt-progress-bar-circular.rt-progress-bar-indeterminate_&]:[stroke-dashoffset:0]',
+              '[.rt-progress-bar-circular.rt-progress-bar-indeterminate.rt-progress-bar-multicolor_&]:animate-[rt-progress-bar-circular-indeterminate-bar-dash_1.5s_ease-in-out_infinite,rt-progress-bar-colors_calc(1.5s*4)_ease-in-out_infinite]',
+              '[.rt-progress-bar-circular[disabled]_&]:stroke-(--progress-disabled-color)',
               '[.rt-progress-bar-circular.rt-progress-bar-indeterminate.rt-progress-bar-multicolor[disabled]_&]:[animation-name:rt-progress-bar-circular-indeterminate-bar-dash]',
               theme?.path,
             )}
@@ -107,7 +107,7 @@ export function ProgressBar({
             data-ref="buffer"
             className={cn(
               'rt-progress-bar-buffer',
-              'bottom-0 left-0 absolute right-0 top-0 [transform:scaleX(0)] [transform-origin:left_center] [transition-duration:var(--animation-duration)] [transition-timing-function:var(--animation-curve-default)] [background-image:linear-gradient(to_right,_rgb(from_var(--progress-secondary-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)),_rgb(from_var(--progress-secondary-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255))),_linear-gradient(to_right,_rgb(from_var(--progress-main-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)),_rgb(from_var(--progress-main-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)))]',
+              'bottom-0 left-0 absolute right-0 top-0 transform-[scaleX(0)] origin-[left_center] [transition-duration:var(--animation-duration)] [transition-timing-function:var(--animation-curve-default)] [background-image:linear-gradient(to_right,_rgb(from_var(--progress-secondary-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)),_rgb(from_var(--progress-secondary-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255))),_linear-gradient(to_right,_rgb(from_var(--progress-main-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)),_rgb(from_var(--progress-main-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)))]',
               '[.rt-progress-bar-circular[disabled]_&]:[background-image:linear-gradient(to_right,_rgb(from_var(--progress-secondary-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)),_rgb(from_var(--progress-secondary-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255))),_linear-gradient(to_right,_rgb(from_var(--progress-disabled-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)),_rgb(from_var(--progress-disabled-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)))]',
               '[.rt-progress-bar-linear[disabled]_&]:[background-image:linear-gradient(to_right,_rgb(from_var(--progress-secondary-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)),_rgb(from_var(--progress-secondary-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255))),_linear-gradient(to_right,_rgb(from_var(--progress-disabled-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)),_rgb(from_var(--progress-disabled-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)))]',
               theme?.buffer,
@@ -118,10 +118,10 @@ export function ProgressBar({
             data-ref="value"
             className={cn(
               'rt-progress-bar-value',
-              'bg-[var(--progress-main-color)] bottom-0 left-0 absolute right-0 top-0 [transform:scaleX(0)] [transform-origin:left_center] [transition-duration:var(--animation-duration)] [transition-timing-function:var(--animation-curve-default)]',
-              '[.rt-progress-bar-linear.rt-progress-bar-indeterminate_&]:[animation:rt-progress-bar-linear-indeterminate-bar_1s_linear_infinite] [.rt-progress-bar-linear.rt-progress-bar-indeterminate_&]:[transform-origin:center_center]',
-              '[.rt-progress-bar-circular[disabled]_&]:bg-[var(--progress-disabled-color)]',
-              '[.rt-progress-bar-linear[disabled]_&]:bg-[var(--progress-disabled-color)]',
+              'bg-(--progress-main-color) bottom-0 left-0 absolute right-0 top-0 transform-[scaleX(0)] origin-[left_center] [transition-duration:var(--animation-duration)] [transition-timing-function:var(--animation-curve-default)]',
+              '[.rt-progress-bar-linear.rt-progress-bar-indeterminate_&]:animate-[rt-progress-bar-linear-indeterminate-bar_1s_linear_infinite] [.rt-progress-bar-linear.rt-progress-bar-indeterminate_&]:origin-[center_center]',
+              '[.rt-progress-bar-circular[disabled]_&]:bg-(--progress-disabled-color)',
+              '[.rt-progress-bar-linear[disabled]_&]:bg-(--progress-disabled-color)',
               theme?.value,
             )}
             style={determinate ? { transform: `scaleX(${progress})` } : undefined}

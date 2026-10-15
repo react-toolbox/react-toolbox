@@ -53,7 +53,7 @@ export function Dialog({
     <Portal
       className={cn(
         'rt-dialog-wrapper',
-        'items-center flex h-[100vh] justify-center fixed top-0 w-[100vw] z-[var(--z-index-higher)]',
+        'items-center flex h-screen justify-center fixed top-0 w-screen z-(--z-index-higher)',
         materialRoot,
         materialDescendants,
         theme?.wrapper,
@@ -73,7 +73,7 @@ export function Dialog({
         data-react-toolbox="dialog"
         className={cn(
           'rt-dialog-dialog',
-          'bg-[var(--dialog-color-white)] rounded-[var(--dialog-border-radius)] [box-shadow:var(--zdepth-shadow-5)] flex flex-col max-w-[96vw] max-h-[calc(100vh_-_4.8_*_var(--unit))] [outline:none] opacity-0 [overflow:var(--overflow)] [transform:translateY(calc(-1_*_var(--dialog-translate-y)))] [transition:opacity_var(--animation-duration)_var(--animation-curve-default),_transform_var(--animation-duration)_var(--animation-curve-default)] [&&]:[transition-delay:var(--animation-delay)]',
+          'bg-(--dialog-color-white) rounded-(--dialog-border-radius) [box-shadow:var(--zdepth-shadow-5)] flex flex-col max-w-[96vw] max-h-[calc(100vh-4.8*var(--unit))] [outline:none] opacity-0 [overflow:var(--overflow)] transform-[translateY(calc(-1*var(--dialog-translate-y)))] [transition:opacity_var(--animation-duration)_var(--animation-curve-default),transform_var(--animation-duration)_var(--animation-curve-default)] [&&]:delay-(--animation-delay)',
           theme?.dialog,
           type !== 'custom' &&
             (type === 'small'
@@ -92,14 +92,14 @@ export function Dialog({
                     ? cn(
                         'rt-dialog-fullscreen',
                         'w-[96vw]',
-                        '[@media_screen_and_(max-width:_600px)]:rounded-[0] [@media_screen_and_(max-width:_600px)]:max-h-[100vh] [@media_screen_and_(max-width:_600px)]:max-w-[100vw] [@media_screen_and_(max-width:_600px)]:min-h-[100vh] [@media_screen_and_(max-width:_600px)]:w-[100vw]',
+                        '[@media_screen_and_(max-width:_600px)]:rounded-none [@media_screen_and_(max-width:_600px)]:max-h-screen [@media_screen_and_(max-width:_600px)]:max-w-[100vw] [@media_screen_and_(max-width:_600px)]:min-h-screen [@media_screen_and_(max-width:_600px)]:w-screen',
                         theme?.fullscreen,
                       )
                     : undefined),
           visible &&
             cn(
               'rt-dialog-active',
-              '[.rt-dialog-dialog&]:opacity-[1] [.rt-dialog-dialog&]:[transform:translateY(0%)]',
+              '[.rt-dialog-dialog&]:opacity-[1] [.rt-dialog-dialog&]:transform-[translateY(0%)]',
               theme?.active,
             ),
           className,
@@ -114,8 +114,8 @@ export function Dialog({
         <section
           className={cn(
             'rt-dialog-body',
-            'text-[color:var(--rt-color-text-secondary)] grow-[2] min-h-0 overflow-y-auto p-[var(--dialog-content-padding)]',
-            '[&_p]:text-[length:calc(1.4_*_var(--unit))] [&_p]:[font-weight:400] [&_p]:tracking-[0] [&_p]:leading-[calc(2.4_*_var(--unit))] [&_p]:m-0',
+            'text-(--rt-color-text-secondary) grow-2 min-h-0 overflow-y-auto p-(--dialog-content-padding)',
+            '[&_p]:text-[calc(1.4*var(--unit))] [&_p]:[font-weight:400] [&_p]:tracking-[0] [&_p]:leading-[calc(2.4*var(--unit))] [&_p]:m-0',
             theme?.body,
           )}
         >
@@ -124,7 +124,7 @@ export function Dialog({
               id={titleId}
               className={cn(
                 'rt-dialog-title',
-                'text-[color:var(--dialog-color-title)] grow-0 text-[length:calc(2_*_var(--unit))] [font-weight:500] tracking-[0.02em] leading-[1] m-[0_0_calc(2_*_var(--unit))]',
+                'text-(--dialog-color-title) grow-0 text-[calc(2*var(--unit))] [font-weight:500] tracking-[0.02em] leading-none m-[0_0_calc(2*var(--unit))]',
                 theme?.title,
               )}
             >
@@ -137,7 +137,7 @@ export function Dialog({
           <nav
             className={cn(
               'rt-dialog-navigation',
-              'grow-0 shrink-0 p-[var(--dialog-navigation-padding)] text-right',
+              'grow-0 shrink-0 p-(--dialog-navigation-padding) text-right',
               theme?.navigation,
             )}
           >
@@ -147,7 +147,7 @@ export function Dialog({
                 {...action}
                 className={cn(
                   'rt-dialog-button',
-                  'ml-[var(--dialog-navigation-padding)] min-w-[calc(6.4_*_var(--unit))] pl-[var(--dialog-navigation-padding)] pr-[var(--dialog-navigation-padding)]',
+                  'ml-(--dialog-navigation-padding) min-w-[calc(6.4*var(--unit))] pl-(--dialog-navigation-padding) pr-(--dialog-navigation-padding)',
                   theme?.button,
                   action.className,
                 )}

@@ -58,7 +58,7 @@ export function Checkbox({
       data-react-toolbox="checkbox"
       className={cn(
         'rt-checkbox-field',
-        'block h-[var(--checkbox-size)] mb-[var(--checkbox-field-margin-bottom)] relative whitespace-nowrap',
+        'block h-(--checkbox-size) mb-(--checkbox-field-margin-bottom) relative whitespace-nowrap',
         materialRoot,
         materialDescendants,
         theme?.field,
@@ -85,8 +85,8 @@ export function Checkbox({
           data-react-toolbox="label"
           className={cn(
             'rt-checkbox-text',
-            'text-[color:var(--checkbox-text-color)] inline-block text-[length:var(--checkbox-text-font-size)] leading-[var(--checkbox-size)] pl-[var(--unit)] align-top whitespace-nowrap',
-            '[.rt-checkbox-disabled>&]:text-[color:var(--checkbox-disabled-color)]',
+            'text-(--checkbox-text-color) inline-block text-(length:--checkbox-text-font-size) leading-(--checkbox-size) pl-(--unit) align-top whitespace-nowrap',
+            '[.rt-checkbox-disabled>&]:text-(--checkbox-disabled-color)',
             theme?.text,
           )}
         >

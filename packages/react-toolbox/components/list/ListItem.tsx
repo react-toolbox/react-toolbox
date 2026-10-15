@@ -42,7 +42,7 @@ export function ListItem({
     multiple: rippleMultiple,
     spread: rippleSpread,
     theme: {
-      ripple: cn('rt-list-ripple', '[.rt-list-listItem_&]:text-[color:var(--rt-color-text-secondary)]', theme?.ripple),
+      ripple: cn('rt-list-ripple', '[.rt-list-listItem_&]:text-(--rt-color-text-secondary)', theme?.ripple),
     },
     ripple,
     onRippleEnded,

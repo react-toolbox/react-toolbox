@@ -5,10 +5,10 @@ import { cn } from '../utils/cn';
 import Avatar from '../avatar';
 const titleClasses = [
   'rt-card-title',
-  '[.rt-card-cardTitle_&]:text-[length:calc(2_*_var(--unit))] [.rt-card-cardTitle_&]:[font-weight:500] [.rt-card-cardTitle_&]:tracking-[0.02em] [.rt-card-cardTitle_&]:leading-[1] [.rt-card-cardTitle_&]:m-0 [.rt-card-cardTitle_&]:p-0',
-  '[.rt-card-cardTitle.rt-card-large_&]:text-[length:calc(2.4_*_var(--unit))] [.rt-card-cardTitle.rt-card-large_&]:[-moz-osx-font-smoothing:grayscale] [.rt-card-cardTitle.rt-card-large_&]:[font-weight:400] [.rt-card-cardTitle.rt-card-large_&]:leading-[calc(3.2_*_var(--unit))]',
-  '[.rt-card-cardTitle.rt-card-small_&]:text-[length:calc(1.4_*_var(--unit))] [.rt-card-cardTitle.rt-card-small_&]:tracking-[0] [.rt-card-cardTitle.rt-card-small_&]:leading-[calc(2_*_var(--unit))]',
-  '[.rt-card-cardMedia_.rt-card-cardTitle_&]:text-[color:var(--card-color-white)]',
+  '[.rt-card-cardTitle_&]:text-[calc(2*var(--unit))] [.rt-card-cardTitle_&]:[font-weight:500] [.rt-card-cardTitle_&]:tracking-[0.02em] [.rt-card-cardTitle_&]:leading-none [.rt-card-cardTitle_&]:m-0 [.rt-card-cardTitle_&]:p-0',
+  '[.rt-card-cardTitle.rt-card-large_&]:text-[calc(2.4*var(--unit))] [.rt-card-cardTitle.rt-card-large_&]:[-moz-osx-font-smoothing:grayscale] [.rt-card-cardTitle.rt-card-large_&]:[font-weight:400] [.rt-card-cardTitle.rt-card-large_&]:leading-[calc(3.2*var(--unit))]',
+  '[.rt-card-cardTitle.rt-card-small_&]:text-[calc(1.4*var(--unit))] [.rt-card-cardTitle.rt-card-small_&]:tracking-[0] [.rt-card-cardTitle.rt-card-small_&]:leading-[calc(2*var(--unit))]',
+  '[.rt-card-cardMedia_.rt-card-cardTitle_&]:text-(--card-color-white)',
 ].join(' ');
 
 export interface CardTitleProps extends Omit<ComponentPropsWithRef<'div'>, 'title'> {
@@ -22,18 +22,18 @@ export function CardTitle({ avatar, children, className, subtitle, theme, title,
     <div
       className={cn(
         'rt-card-cardTitle',
-        'items-center flex p-[var(--card-padding)]',
-        "[&_[data-react-toolbox='avatar']]:mr-[var(--card-padding)]",
-        '[&_p]:text-[length:calc(1.4_*_var(--unit))] [&_p]:[font-weight:400] [&_p]:tracking-[0] [&_p]:leading-[calc(2.4_*_var(--unit))] [&_p]:m-0',
-        '[&:last-child]:pb-[var(--card-padding-lg)]',
-        '[.rt-card-cardMedia_.rt-card-contentOverlay_&]:bg-[var(--card-text-overlay)]',
+        'items-center flex p-(--card-padding)',
+        "[&_[data-react-toolbox='avatar']]:mr-(--card-padding)",
+        '[&_p]:text-[calc(1.4*var(--unit))] [&_p]:[font-weight:400] [&_p]:tracking-[0] [&_p]:leading-[calc(2.4*var(--unit))] [&_p]:m-0',
+        '[&:last-child]:pb-(--card-padding-lg)',
+        '[.rt-card-cardMedia_.rt-card-contentOverlay_&]:bg-(--card-text-overlay)',
         theme?.cardTitle,
         Boolean(avatar) &&
           cn(
             'rt-card-small',
-            '[.rt-card-cardTitle&]:p-[var(--card-padding)]',
+            '[.rt-card-cardTitle&]:p-(--card-padding)',
             '[@media_screen_and_(min-width:_600px)_and_(min-height:_600px)]:[.rt-card-cardTitle&]:pl-[var(--card-desktop-horizontal-padding,_calc(2.4_*_var(--unit)))] [@media_screen_and_(min-width:_600px)_and_(min-height:_600px)]:[.rt-card-cardTitle&]:pr-[var(--card-desktop-horizontal-padding,_calc(2.4_*_var(--unit)))]',
-            '[.rt-card-cardTitle&:last-child]:pb-[var(--card-padding)]',
+            '[.rt-card-cardTitle&:last-child]:pb-(--card-padding)',
             theme?.small,
           ),
         !avatar &&
@@ -55,9 +55,9 @@ export function CardTitle({ avatar, children, className, subtitle, theme, title,
           <p
             className={cn(
               'rt-card-subtitle',
-              '[.rt-card-cardTitle_&]:text-[color:var(--rt-color-text-secondary)] [.rt-card-cardTitle_&]:text-[length:calc(1.4_*_var(--unit))] [.rt-card-cardTitle_&]:[font-weight:400] [.rt-card-cardTitle_&]:tracking-[0] [.rt-card-cardTitle_&]:leading-[calc(2.4_*_var(--unit))] [.rt-card-cardTitle_&]:m-0 [.rt-card-cardTitle_&]:p-0',
-              '[.rt-card-cardTitle.rt-card-small_&]:[font-weight:400] [.rt-card-cardTitle.rt-card-small_&]:leading-[calc(2_*_var(--unit))]',
-              '[.rt-card-cardMedia_.rt-card-cardTitle_&]:text-[color:var(--card-color-white)]',
+              '[.rt-card-cardTitle_&]:text-(--rt-color-text-secondary) [.rt-card-cardTitle_&]:text-[calc(1.4*var(--unit))] [.rt-card-cardTitle_&]:[font-weight:400] [.rt-card-cardTitle_&]:tracking-[0] [.rt-card-cardTitle_&]:leading-[calc(2.4*var(--unit))] [.rt-card-cardTitle_&]:m-0 [.rt-card-cardTitle_&]:p-0',
+              '[.rt-card-cardTitle.rt-card-small_&]:[font-weight:400] [.rt-card-cardTitle.rt-card-small_&]:leading-[calc(2*var(--unit))]',
+              '[.rt-card-cardMedia_.rt-card-cardTitle_&]:text-(--card-color-white)',
               theme?.subtitle,
             )}
           >

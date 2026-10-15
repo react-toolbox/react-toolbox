@@ -9,7 +9,7 @@ import Calendar from './Calendar';
 import isDateDisabled, { dayStamp, type DateConstraints } from './is-date-disabled';
 const buttonClasses = [
   'rt-date-picker-button',
-  '[.rt-date-picker-dialog>nav>&:not([disabled])]:text-[color:var(--datepicker-primary-color)]',
+  '[.rt-date-picker-dialog>nav>&:not([disabled])]:text-(--datepicker-primary-color)',
   '[.rt-date-picker-dialog>nav>&:not([disabled]):hover]:[background:var(--datepicker-primary-hover-color)]',
   '[.rt-date-picker-dialog>nav>&:not([disabled]):focus:not(:active)]:[background:var(--datepicker-primary-hover-color)]',
 ].join(' ');
@@ -94,7 +94,7 @@ export default function DatePickerDialog({
       active={active}
       className={cn(
         'rt-date-picker-dialog',
-        'w-[var(--datepicker-dialog-width)]',
+        'w-(--datepicker-dialog-width)',
         '[&>section]:p-0',
         theme?.dialog,
         className,
@@ -106,8 +106,8 @@ export default function DatePickerDialog({
       <header
         className={cn(
           'rt-date-picker-header',
-          'bg-[var(--datepicker-primary-color)] text-[color:var(--datepicker-primary-contrast-color)] cursor-pointer p-[calc(1.6_*_var(--unit))_calc(2_*_var(--unit))]',
-          "[&_[role='button']:focus-visible]:[outline:2px_solid_currentColor] [&_[role='button']:focus-visible]:[outline-offset:2px]",
+          'bg-(--datepicker-primary-color) text-(--datepicker-primary-contrast-color) cursor-pointer p-[calc(1.6*var(--unit))_calc(2*var(--unit))]',
+          "[&_[role='button']:focus-visible]:[outline:2px_solid_currentColor] [&_[role='button']:focus-visible]:outline-offset-2",
           theme?.header,
           display === 'months'
             ? cn('rt-date-picker-monthsDisplay', theme?.monthsDisplay)
@@ -122,9 +122,9 @@ export default function DatePickerDialog({
           aria-pressed={display === 'years'}
           className={cn(
             'rt-date-picker-year',
-            'inline-block text-[length:var(--datepicker-year-font-size)] [transition:opacity,_font-size_var(--animation-duration)_var(--animation-curve-default)]',
-            '[.rt-date-picker-yearsDisplay_&]:text-[length:var(--font-size-normal)]',
-            '[.rt-date-picker-monthsDisplay_&]:opacity-[var(--datepicker-inactive-opacity)]',
+            'inline-block text-(length:--datepicker-year-font-size) [transition:opacity,font-size_var(--animation-duration)_var(--animation-curve-default)]',
+            '[.rt-date-picker-yearsDisplay_&]:text-(length:--font-size-normal)',
+            '[.rt-date-picker-monthsDisplay_&]:opacity-(--datepicker-inactive-opacity)',
             theme?.year,
           )}
           onClick={switchDisplay}
@@ -140,8 +140,8 @@ export default function DatePickerDialog({
           aria-pressed={display === 'months'}
           className={cn(
             'rt-date-picker-date',
-            'block text-[length:calc(3.4_*_var(--unit))] [font-weight:var(--font-weight-semi-bold)] leading-[calc(4_*_var(--unit))] m-0 [text-transform:capitalize] [transition:opacity_var(--animation-duration)_var(--animation-curve-default)]',
-            '[.rt-date-picker-yearsDisplay_&]:opacity-[var(--datepicker-inactive-opacity)]',
+            'block text-[calc(3.4*var(--unit))] font-(--font-weight-semi-bold) leading-[calc(4*var(--unit))] m-0 capitalize [transition:opacity_var(--animation-duration)_var(--animation-curve-default)]',
+            '[.rt-date-picker-yearsDisplay_&]:opacity-(--datepicker-inactive-opacity)',
             theme?.date,
           )}
           onClick={switchDisplay}
@@ -151,7 +151,7 @@ export default function DatePickerDialog({
       <div
         className={cn(
           'rt-date-picker-calendarWrapper',
-          'p-[var(--unit)_calc(0.5_*_var(--unit))_0]',
+          'p-[var(--unit)_calc(0.5*var(--unit))_0]',
           theme?.calendarWrapper,
         )}
       >

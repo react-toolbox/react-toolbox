@@ -355,7 +355,7 @@ export function Menu<Value = unknown>({
       className={cn(
         'rt-menu-menu',
         'inline-block relative',
-        '[&:not(.rt-menu-static)]:pointer-events-none [&:not(.rt-menu-static)]:z-[var(--z-index-higher)]',
+        '[&:not(.rt-menu-static)]:pointer-events-none [&:not(.rt-menu-static)]:z-(--z-index-higher)',
         theme?.menu,
         position &&
           (position === 'static'
@@ -395,14 +395,14 @@ export function Menu<Value = unknown>({
         <div
           className={cn(
             'rt-menu-outline',
-            'bg-[var(--menu-background-color)] rounded-[var(--menu-outline-border-radius)] [box-shadow:var(--shadow-2p)] block left-0 absolute top-0',
-            '[.rt-menu-menu.rt-menu-topLeft>&]:[transform-origin:0_0]',
-            '[.rt-menu-menu.rt-menu-topRight>&&]:[transform-origin:100%_0]',
-            '[.rt-menu-menu.rt-menu-bottomLeft>&]:[transform-origin:0_100%]',
-            '[.rt-menu-menu.rt-menu-bottomRight>&&]:[transform-origin:100%_100%]',
-            '[.rt-menu-menu:not(.rt-menu-static)>&]:opacity-0 [.rt-menu-menu:not(.rt-menu-static)>&]:[transform:scale(0)] [.rt-menu-menu:not(.rt-menu-static)>&]:[transition:transform_var(--menu-expand-duration)_var(--animation-curve-default),_opacity_var(--menu-fade-duration)_var(--animation-curve-default)] [.rt-menu-menu:not(.rt-menu-static)>&]:[will-change:transform]',
-            '[.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:opacity-[1] [.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:[transform:scale(1)]',
-            '[.rt-menu-menu:not(.rt-menu-static).rt-menu-rippled:not(.rt-menu-active)>&]:[transition-delay:var(--menu-ripple-delay)]',
+            'bg-(--menu-background-color) rounded-(--menu-outline-border-radius) [box-shadow:var(--shadow-2p)] block left-0 absolute top-0',
+            '[.rt-menu-menu.rt-menu-topLeft>&]:origin-top-left',
+            '[.rt-menu-menu.rt-menu-topRight>&&]:origin-top-right',
+            '[.rt-menu-menu.rt-menu-bottomLeft>&]:origin-bottom-left',
+            '[.rt-menu-menu.rt-menu-bottomRight>&&]:origin-bottom-right',
+            '[.rt-menu-menu:not(.rt-menu-static)>&]:opacity-0 [.rt-menu-menu:not(.rt-menu-static)>&]:transform-[scale(0)] [.rt-menu-menu:not(.rt-menu-static)>&]:[transition:transform_var(--menu-expand-duration)_var(--animation-curve-default),opacity_var(--menu-fade-duration)_var(--animation-curve-default)] [.rt-menu-menu:not(.rt-menu-static)>&]:will-change-transform',
+            '[.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:opacity-[1] [.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:transform-[scale(1)]',
+            '[.rt-menu-menu:not(.rt-menu-static).rt-menu-rippled:not(.rt-menu-active)>&]:delay-(--menu-ripple-delay)',
             theme?.outline,
           )}
           style={{
@@ -425,12 +425,12 @@ export function Menu<Value = unknown>({
         ref={menu}
         className={cn(
           'rt-menu-menuInner',
-          'block [list-style:none] p-[var(--menu-padding)] relative text-left whitespace-nowrap max-h-[calc(100vh_-_var(--menu-item-height))] overflow-y-auto',
+          'block [list-style:none] p-(--menu-padding) relative text-left whitespace-nowrap max-h-[calc(100vh-var(--menu-item-height))] overflow-y-auto',
           '[.rt-menu-menu:not(.rt-menu-static)>&]:left-0 [.rt-menu-menu:not(.rt-menu-static)>&]:m-0 [.rt-menu-menu:not(.rt-menu-static)>&]:opacity-0 [.rt-menu-menu:not(.rt-menu-static)>&]:absolute [.rt-menu-menu:not(.rt-menu-static)>&]:top-0',
           '[.rt-menu-menu.rt-menu-topRight>&&]:left-auto [.rt-menu-menu.rt-menu-topRight>&&]:right-0',
           '[.rt-menu-menu.rt-menu-bottomRight>&&]:left-auto [.rt-menu-menu.rt-menu-bottomRight>&&]:right-0',
-          '[.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:opacity-[1] [.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:[transition:opacity_var(--menu-fade-duration)_var(--animation-curve-default),_clip_var(--menu-expand-duration)_var(--animation-curve-default)]',
-          '[.rt-menu-menu:not(.rt-menu-static).rt-menu-rippled:not(.rt-menu-active)>&]:[transition-delay:var(--menu-ripple-delay)]',
+          '[.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:opacity-[1] [.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:[transition:opacity_var(--menu-fade-duration)_var(--animation-curve-default),clip_var(--menu-expand-duration)_var(--animation-curve-default)]',
+          '[.rt-menu-menu:not(.rt-menu-static).rt-menu-rippled:not(.rt-menu-active)>&]:delay-(--menu-ripple-delay)',
           theme?.menuInner,
         )}
         style={{ clip }}

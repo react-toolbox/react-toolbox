@@ -8,21 +8,21 @@ import Input, { type InputProps, type InputHandle } from '../input/Input';
 
 const disabledClasses = [
   'rt-dropdown-disabled',
-  '[.rt-dropdown-values>*&]:text-[color:var(--dropdown-color-disabled)] [.rt-dropdown-values>*&]:cursor-not-allowed',
-  '[.rt-dropdown-dropdown&]:[cursor:normal] [.rt-dropdown-dropdown&]:pointer-events-none',
-  '[.rt-dropdown-field&]:[cursor:normal] [.rt-dropdown-field&]:pointer-events-none',
+  '[.rt-dropdown-values>*&]:text-(--dropdown-color-disabled) [.rt-dropdown-values>*&]:cursor-not-allowed',
+  '[.rt-dropdown-dropdown&]:cursor-[normal] [.rt-dropdown-dropdown&]:pointer-events-none',
+  '[.rt-dropdown-field&]:cursor-[normal] [.rt-dropdown-field&]:pointer-events-none',
 ].join(' ');
 
 const requiredClasses = [
   'rt-dropdown-required',
-  '[.rt-dropdown-label_&]:text-[color:var(--input-text-error-color)]',
-  '[.rt-dropdown-field.rt-dropdown-errored>.rt-dropdown-label>&]:text-[color:var(--input-text-error-color)]',
+  '[.rt-dropdown-label_&]:text-(--input-text-error-color)',
+  '[.rt-dropdown-field.rt-dropdown-errored>.rt-dropdown-label>&]:text-(--input-text-error-color)',
 ].join(' ');
 
 const valueClasses = [
   'rt-dropdown-value',
   '[&>input]:cursor-pointer',
-  "[&::after]:[border-left:var(--dropdown-value-border-size)_solid_transparent] [&::after]:[border-right:var(--dropdown-value-border-size)_solid_transparent] [&::after]:[border-top:var(--dropdown-value-border-size)_solid_var(--input-chevron-color)] [&::after]:[content:''] [&::after]:h-0 [&::after]:pointer-events-none [&::after]:absolute [&::after]:right-[var(--input-chevron-offset)] [&::after]:top-[50%] [&::after]:[transition:transform_var(--animation-duration)_var(--animation-curve-default)] [&::after]:w-0",
+  "[&::after]:[border-left:var(--dropdown-value-border-size)_solid_transparent] [&::after]:[border-right:var(--dropdown-value-border-size)_solid_transparent] [&::after]:[border-top:var(--dropdown-value-border-size)_solid_var(--input-chevron-color)] [&::after]:[content:''] [&::after]:h-0 [&::after]:pointer-events-none [&::after]:absolute [&::after]:right-(--input-chevron-offset) [&::after]:top-[50%] [&::after]:[transition:transform_var(--animation-duration)_var(--animation-curve-default)] [&::after]:w-0",
   '[.rt-dropdown-dropdown:focus-within:not(.rt-dropdown-disabled)_&::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_87%)]',
   '[.rt-dropdown-disabled_&::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_38%)]',
   '[.rt-dropdown-dropdown.rt-dropdown-active>&]:opacity-[0.5]',
@@ -270,7 +270,7 @@ export function Dropdown<T extends object = DropdownItem>({
           className={cn(
             'rt-dropdown-field',
             'cursor-pointer p-[var(--input-padding)_0] relative',
-            '[&:focus-visible]:[outline:2px_solid_var(--input-text-highlight-color)] [&:focus-visible]:[outline-offset:-2px]',
+            '[&:focus-visible]:[outline:2px_solid_var(--input-text-highlight-color)] [&:focus-visible]:-outline-offset-2',
             theme?.field,
             Boolean(error) && cn('rt-dropdown-errored', '[.rt-dropdown-field&]:pb-0', theme?.errored),
             disabled && cn(disabledClasses, theme?.disabled),
@@ -280,9 +280,9 @@ export function Dropdown<T extends object = DropdownItem>({
           <div
             className={`${cn(
               'rt-dropdown-templateValue',
-              'bg-[var(--input-text-background-color)] [border-bottom:1px_solid_var(--input-text-bottom-border-color)] text-[color:var(--rt-color-text)] min-h-[var(--input-field-height)] p-[var(--input-field-padding)_0] relative',
+              'bg-(--input-text-background-color) [border-bottom:1px_solid_var(--input-text-bottom-border-color)] text-(--rt-color-text) min-h-(--input-field-height) p-[var(--input-field-padding)_0] relative',
               '[.rt-dropdown-field.rt-dropdown-errored>&]:[border-bottom:2px_solid_var(--input-text-error-color)]',
-              '[.rt-dropdown-field.rt-dropdown-disabled>&]:[border-bottom-style:dotted] [.rt-dropdown-field.rt-dropdown-disabled>&]:text-[color:var(--input-text-disabled-text-color)]',
+              '[.rt-dropdown-field.rt-dropdown-disabled>&]:[border-bottom-style:dotted] [.rt-dropdown-field.rt-dropdown-disabled>&]:text-(--input-text-disabled-text-color)',
               theme?.templateValue,
             )} ${cn(valueClasses, theme?.value)}`}
           >
@@ -292,9 +292,9 @@ export function Dropdown<T extends object = DropdownItem>({
             <label
               className={cn(
                 'rt-dropdown-label',
-                'text-[color:var(--input-text-label-color)] text-[length:var(--input-label-font-size)] left-0 leading-[var(--input-field-font-size)] absolute top-[var(--input-focus-label-top)]',
+                'text-(--input-text-label-color) text-(length:--input-label-font-size) left-0 leading-(--input-field-font-size) absolute top-(--input-focus-label-top)',
                 '[.rt-dropdown-dropdown.rt-dropdown-active>&]:opacity-[0.5]',
-                '[.rt-dropdown-field.rt-dropdown-errored>&]:text-[color:var(--input-text-error-color)]',
+                '[.rt-dropdown-field.rt-dropdown-errored>&]:text-(--input-text-error-color)',
                 theme?.label,
               )}
             >
@@ -307,7 +307,7 @@ export function Dropdown<T extends object = DropdownItem>({
               id={`${id}-error`}
               className={cn(
                 'rt-dropdown-error',
-                'text-[color:var(--input-text-error-color)] text-[length:var(--input-label-font-size)] leading-[var(--input-underline-height)] mb-[calc(-1_*_var(--input-underline-height))]',
+                'text-(--input-text-error-color) text-(length:--input-label-font-size) leading-(--input-underline-height) mb-[calc(-1_*_var(--input-underline-height))]',
                 theme?.error,
               )}
             >
@@ -324,13 +324,13 @@ export function Dropdown<T extends object = DropdownItem>({
         aria-hidden={!active}
         className={cn(
           'rt-dropdown-values',
-          'bg-[var(--dropdown-color-white)] rounded-[var(--dropdown-value-border-radius)] [list-style:none] m-0 overflow-y-auto p-0 absolute [transition-duration:var(--animation-duration)] [transition-property:max-height,_box-shadow] [transition-timing-function:var(--animation-curve-default)] w-full z-[var(--z-index-high)]',
-          '[&>*]:cursor-pointer [&>*]:overflow-hidden [&>*]:p-[var(--unit)] [&>*]:relative',
-          '[&>*:hover:not(.rt-dropdown-disabled)]:bg-[var(--dropdown-value-hover-background)]',
-          "[&>*[data-active='true']:not(.rt-dropdown-disabled)]:bg-[var(--dropdown-value-hover-background)]",
+          'bg-(--dropdown-color-white) rounded-(--dropdown-value-border-radius) [list-style:none] m-0 overflow-y-auto p-0 absolute [transition-duration:var(--animation-duration)] [transition-property:max-height,box-shadow] [transition-timing-function:var(--animation-curve-default)] w-full z-(--z-index-high)',
+          '[&>*]:cursor-pointer [&>*]:overflow-hidden [&>*]:p-(--unit) [&>*]:relative',
+          '[&>*:hover:not(.rt-dropdown-disabled)]:bg-(--dropdown-value-hover-background)',
+          "[&>*[data-active='true']:not(.rt-dropdown-disabled)]:bg-(--dropdown-value-hover-background)",
           '[&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-0',
-          '[.rt-dropdown-dropdown:not(.rt-dropdown-active)>&]:max-h-0 [.rt-dropdown-dropdown:not(.rt-dropdown-active)>&]:[visibility:hidden]',
-          '[.rt-dropdown-dropdown.rt-dropdown-active>&]:[box-shadow:var(--zdepth-shadow-1)] [.rt-dropdown-dropdown.rt-dropdown-active>&]:max-h-[var(--dropdown-overflow-max-height)] [.rt-dropdown-dropdown.rt-dropdown-active>&]:[visibility:visible]',
+          '[.rt-dropdown-dropdown:not(.rt-dropdown-active)>&]:max-h-0 [.rt-dropdown-dropdown:not(.rt-dropdown-active)>&]:invisible',
+          '[.rt-dropdown-dropdown.rt-dropdown-active>&]:[box-shadow:var(--zdepth-shadow-1)] [.rt-dropdown-dropdown.rt-dropdown-active>&]:max-h-(--dropdown-overflow-max-height) [.rt-dropdown-dropdown.rt-dropdown-active>&]:visible',
           '[.rt-dropdown-dropdown:not(.rt-dropdown-up)>&]:bottom-auto [.rt-dropdown-dropdown:not(.rt-dropdown-up)>&]:top-0',
           '[.rt-dropdown-dropdown.rt-dropdown-up>&]:bottom-0 [.rt-dropdown-dropdown.rt-dropdown-up>&]:top-auto',
           theme?.values,
@@ -346,11 +346,7 @@ export function Dropdown<T extends object = DropdownItem>({
             data-active={(active && index === activeIndex) || undefined}
             className={cn(
               item.value === value &&
-                cn(
-                  'rt-dropdown-selected',
-                  '[.rt-dropdown-values>*&]:text-[color:var(--dropdown-color-primary)]',
-                  theme?.selected,
-                ),
+                cn('rt-dropdown-selected', '[.rt-dropdown-values>*&]:text-(--dropdown-color-primary)', theme?.selected),
               item.disabled && cn(disabledClasses, theme?.disabled),
             )}
             onMouseDown={(event) => event.preventDefault()}

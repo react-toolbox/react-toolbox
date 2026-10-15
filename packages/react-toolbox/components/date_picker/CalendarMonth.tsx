@@ -32,20 +32,20 @@ export default function CalendarMonth({
     <div
       ref={nodeRef}
       data-react-toolbox="month"
-      className={cn('rt-date-picker-month', 'bg-[var(--calendar-primary-contrast-color)] w-full', theme?.month)}
+      className={cn('rt-date-picker-month', 'bg-(--calendar-primary-contrast-color) w-full', theme?.month)}
     >
       <span
         className={cn(
           'rt-date-picker-title',
-          'inline-block [font-weight:500] leading-[var(--calendar-row-height)]',
+          'inline-block [font-weight:500] leading-(--calendar-row-height)',
           theme?.title,
         )}
       >{`${time.getFullMonth(viewDate, locale)} ${viewDate.getFullYear()}`}</span>
       <div
         className={cn(
           'rt-date-picker-week',
-          'flex [flex-wrap:wrap] text-[length:var(--calendar-day-font-size)] h-[var(--calendar-row-height)] leading-[var(--calendar-row-height)] opacity-[0.5]',
-          '[&>span]:[flex:0_0_calc(100%_/_7)]',
+          'flex flex-wrap text-(length:--calendar-day-font-size) h-(--calendar-row-height) leading-(--calendar-row-height) opacity-[0.5]',
+          '[&>span]:flex-[0_0_calc(100%/7)]',
           theme?.week,
         )}
       >
@@ -53,13 +53,7 @@ export default function CalendarMonth({
           <span key={index}>{day}</span>
         ))}
       </div>
-      <div
-        className={cn(
-          'rt-date-picker-days',
-          'flex [flex-wrap:wrap] text-[length:var(--calendar-day-font-size)]',
-          theme?.days,
-        )}
-      >
+      <div className={cn('rt-date-picker-days', 'flex flex-wrap text-(length:--calendar-day-font-size)', theme?.days)}>
         {range(1, time.getDaysInMonth(viewDate) + 1).map((day) => (
           <CalendarDay
             key={day}

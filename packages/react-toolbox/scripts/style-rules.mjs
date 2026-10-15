@@ -139,7 +139,11 @@ export function declarationsBySelector(tree) {
         const value = /^stroke-dash(?:array|offset)$/.test(declaration.prop)
           ? declaration.value.replace(/(^|[\s,])(-?[\d.]+)(?=$|[\s,])/g, '$1$2px')
           : declaration.value;
-        const equivalentValue = value.replace(/currentcolor/gi, 'currentColor').replace(/^center center$/, 'center');
+        // Canonical duration utilities use milliseconds; the reference uses seconds.
+        const time = /^(?:transition|animation)-(?:duration|delay)$/.test(declaration.prop)
+          ? value.replace(/(-?[\d.]+)ms\b/g, (_, number) => `${Number(number) / 1000}s`)
+          : value;
+        const equivalentValue = time.replace(/currentcolor/gi, 'currentColor').replace(/^center center$/, 'center');
         properties.set(declaration.prop, normalize(equivalentValue) + (declaration.important ? '!important' : ''));
       }
       selectors.set(key, properties);

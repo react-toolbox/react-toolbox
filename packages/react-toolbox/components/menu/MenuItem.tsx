@@ -65,7 +65,7 @@ export function MenuItem<Value = unknown>({
     disabled,
     ripple,
     theme: {
-      ripple: cn('rt-menu-ripple', '[.rt-menu-menuItem_&]:text-[color:var(--rt-color-text-secondary)]', theme?.ripple),
+      ripple: cn('rt-menu-ripple', '[.rt-menu-menuItem_&]:text-(--rt-color-text-secondary)', theme?.ripple),
     },
   });
   const click = (event: MenuItemEvent) => {
@@ -82,14 +82,14 @@ export function MenuItem<Value = unknown>({
       tabIndex={disabled ? -1 : (attributes.tabIndex ?? 0)}
       className={cn(
         'rt-menu-menuItem',
-        'items-center text-[color:var(--rt-color-text)] flex text-[length:var(--menu-item-font-size)] h-[var(--menu-item-height)] overflow-hidden p-[0_var(--menu-item-padding)] relative',
-        '[&:not(.rt-menu-disabled):hover]:bg-[var(--menu-item-hover-background)] [&:not(.rt-menu-disabled):hover]:cursor-pointer',
-        '[&:not(.rt-menu-disabled):focus-visible]:bg-[var(--menu-item-hover-background)] [&:not(.rt-menu-disabled):focus-visible]:[outline:2px_solid_currentColor] [&:not(.rt-menu-disabled):focus-visible]:[outline-offset:-2px]',
+        'items-center text-(--rt-color-text) flex text-(length:--menu-item-font-size) h-(--menu-item-height) overflow-hidden p-[0_var(--menu-item-padding)] relative',
+        '[&:not(.rt-menu-disabled):hover]:bg-(--menu-item-hover-background) [&:not(.rt-menu-disabled):hover]:cursor-pointer',
+        '[&:not(.rt-menu-disabled):focus-visible]:bg-(--menu-item-hover-background) [&:not(.rt-menu-disabled):focus-visible]:[outline:2px_solid_currentColor] [&:not(.rt-menu-disabled):focus-visible]:-outline-offset-2',
         theme?.menuItem,
         selected &&
           cn(
             'rt-menu-selected',
-            '[.rt-menu-menuItem&]:bg-[var(--menu-item-selected-background)] [.rt-menu-menuItem&]:[font-weight:500]',
+            '[.rt-menu-menuItem&]:bg-(--menu-item-selected-background) [.rt-menu-menuItem&]:[font-weight:500]',
             theme?.selected,
           ),
         disabled &&
@@ -126,11 +126,9 @@ export function MenuItem<Value = unknown>({
       }}
     >
       {icon ? <FontIcon value={icon} className={cn(iconClasses, theme?.icon)} /> : null}
-      <span className={cn('rt-menu-caption', 'grow-[1] text-[length:var(--font-size-normal)]', theme?.caption)}>
-        {caption}
-      </span>
+      <span className={cn('rt-menu-caption', 'grow text-(length:--font-size-normal)', theme?.caption)}>{caption}</span>
       {shortcut ? (
-        <small className={cn('rt-menu-shortcut', 'ml-[var(--menu-item-padding)]', theme?.shortcut)}>{shortcut}</small>
+        <small className={cn('rt-menu-shortcut', 'ml-(--menu-item-padding)', theme?.shortcut)}>{shortcut}</small>
       ) : null}
       {children}
       {ink.ripple}

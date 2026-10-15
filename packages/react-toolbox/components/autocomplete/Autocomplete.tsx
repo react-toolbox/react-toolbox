@@ -194,7 +194,7 @@ export function Autocomplete(props: AutocompleteProps) {
       <ul
         className={cn(
           'rt-autocomplete-values',
-          'flex-row [flex-wrap:wrap] [list-style:none] m-0 p-[0_0_calc(var(--unit)_/_2)_0]',
+          'flex-row flex-wrap [list-style:none] m-0 p-[0_0_calc(var(--unit)/2)_0]',
           theme?.values,
         )}
       >
@@ -203,7 +203,7 @@ export function Autocomplete(props: AutocompleteProps) {
             key={key}
             className={cn(
               'rt-autocomplete-value',
-              'm-[var(--autocomplete-value-margin)] mr-[var(--chip-margin-right)]',
+              'm-(--autocomplete-value-margin) mr-(--chip-margin-right)',
               theme?.value,
             )}
             deletable
@@ -251,7 +251,7 @@ export function Autocomplete(props: AutocompleteProps) {
         className={cn(
           'rt-autocomplete-input',
           'relative',
-          "[&::after]:[border-left:var(--autocomplete-border-size)_solid_transparent] [&::after]:[border-right:var(--autocomplete-border-size)_solid_transparent] [&::after]:[border-top:var(--autocomplete-border-size)_solid_var(--input-chevron-color)] [&::after]:[content:''] [&::after]:h-0 [&::after]:pointer-events-none [&::after]:absolute [&::after]:right-[var(--input-chevron-offset)] [&::after]:top-[50%] [&::after]:[transition:transform_var(--animation-duration)_var(--animation-curve-default)] [&::after]:w-0",
+          "[&::after]:[border-left:var(--autocomplete-border-size)_solid_transparent] [&::after]:[border-right:var(--autocomplete-border-size)_solid_transparent] [&::after]:[border-top:var(--autocomplete-border-size)_solid_var(--input-chevron-color)] [&::after]:[content:''] [&::after]:h-0 [&::after]:pointer-events-none [&::after]:absolute [&::after]:right-(--input-chevron-offset) [&::after]:top-[50%] [&::after]:[transition:transform_var(--animation-duration)_var(--animation-curve-default)] [&::after]:w-0",
           '[&:focus-within:not(.rt-input-disabled)::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_87%)]',
           '[&.rt-input-disabled::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_38%)]',
           theme?.input,
@@ -327,10 +327,10 @@ export function Autocomplete(props: AutocompleteProps) {
         aria-hidden={!focus}
         className={cn(
           'rt-autocomplete-suggestions',
-          'bg-[var(--autocomplete-suggestions-background)] [list-style:none] max-h-0 overflow-x-hidden overflow-y-auto p-0 absolute [transition-duration:var(--animation-duration)] [transition-property:max-height,_box-shadow] [transition-timing-function:var(--animation-curve-default)] [visibility:hidden] w-full z-[var(--z-index-high)]',
+          'bg-(--autocomplete-suggestions-background) [list-style:none] max-h-0 overflow-x-hidden overflow-y-auto p-0 absolute [transition-duration:var(--animation-duration)] [transition-property:max-height,box-shadow] [transition-timing-function:var(--animation-curve-default)] invisible w-full z-(--z-index-high)',
           '[&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-0',
           '[&:not(.rt-autocomplete-up)]:mt-[calc(-1_*_var(--input-padding))]',
-          '[.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:[box-shadow:var(--zdepth-shadow-1)] [.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:max-h-[var(--autocomplete-overflow-max-height)] [.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:[-ms-overflow-style:none] [.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:[visibility:visible]',
+          '[.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:[box-shadow:var(--zdepth-shadow-1)] [.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:max-h-(--autocomplete-overflow-max-height) [.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:[-ms-overflow-style:none] [.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:visible',
           theme?.suggestions,
           resolvedDirection === 'up' && cn('rt-autocomplete-up', '[.rt-autocomplete-suggestions&]:bottom-0', theme?.up),
         )}
@@ -343,12 +343,12 @@ export function Autocomplete(props: AutocompleteProps) {
             aria-selected={active === key}
             className={cn(
               'rt-autocomplete-suggestion',
-              'cursor-pointer text-[length:var(--input-field-font-size)] p-[var(--autocomplete-suggestion-padding)]',
+              'cursor-pointer text-(length:--input-field-font-size) p-(--autocomplete-suggestion-padding)',
               theme?.suggestion,
               active === key &&
                 cn(
                   'rt-autocomplete-active',
-                  '[.rt-autocomplete-suggestion&]:bg-[var(--autocomplete-suggestion-active-background)]',
+                  '[.rt-autocomplete-suggestion&]:bg-(--autocomplete-suggestion-active-background)',
                   theme?.active,
                 ),
             )}

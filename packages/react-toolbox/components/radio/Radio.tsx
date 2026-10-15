@@ -7,11 +7,11 @@ import { cn } from '../utils/cn';
 import { useRipple } from '../ripple';
 const radioClasses = [
   'rt-radio-radio',
-  '[border:calc(0.2_*_var(--unit))_solid_var(--radio-border-color)] rounded-[50%] cursor-pointer inline-block h-[var(--radio-button-size)] relative align-top w-[var(--radio-button-size)]',
+  '[border:calc(0.2*var(--unit))_solid_var(--radio-border-color)] rounded-[50%] cursor-pointer inline-block h-(--radio-button-size) relative align-top w-(--radio-button-size)',
   materialRoot,
   materialDescendants,
-  "[&::before]:bg-[var(--radio-inner-color)] [&::before]:rounded-[50%] [&::before]:[content:''] [&::before]:h-full [&::before]:left-0 [&::before]:absolute [&::before]:top-0 [&::before]:[transform:scale(0)] [&::before]:[transition:transform_0.2s_var(--animation-curve-default)] [&::before]:w-full",
-  '[.rt-radio-disabled_&]:[border-color:var(--radio-disabled-color)] [.rt-radio-disabled_&]:[cursor:auto]',
+  "[&::before]:bg-(--radio-inner-color) [&::before]:rounded-[50%] [&::before]:[content:''] [&::before]:h-full [&::before]:left-0 [&::before]:absolute [&::before]:top-0 [&::before]:transform-[scale(0)] [&::before]:[transition:transform_0.2s_var(--animation-curve-default)] [&::before]:w-full",
+  '[.rt-radio-disabled_&]:border-(--radio-disabled-color) [.rt-radio-disabled_&]:cursor-auto',
   '[.rt-radio-input:focus~&]:[box-shadow:0_0_0_var(--unit)_var(--radio-focus-color)]',
 ].join(' ');
 
@@ -41,7 +41,7 @@ export default function Radio({
     theme: {
       ripple: cn(
         'rt-radio-ripple',
-        '[.rt-radio-radio_&]:bg-[var(--radio-inner-color)] [.rt-radio-radio_&]:opacity-[0.3] [.rt-radio-radio_&]:[transition-duration:650ms]',
+        '[.rt-radio-radio_&]:bg-(--radio-inner-color) [.rt-radio-radio_&]:opacity-[0.3] [.rt-radio-radio_&]:duration-650',
         theme?.ripple,
       ),
     },
@@ -59,10 +59,10 @@ export default function Radio({
           ? cn(
               radioClasses,
               'rt-radio-radioChecked',
-              '[border:calc(0.2_*_var(--unit))_solid_var(--radio-inner-color)]',
-              '[&::before]:[transform:scale(0.65)]',
-              '[.rt-radio-disabled_&]:[border-color:var(--radio-disabled-color)] [.rt-radio-disabled_&]:[cursor:auto]',
-              '[.rt-radio-disabled_&::before]:bg-[var(--radio-disabled-color)]',
+              '[border:calc(0.2*var(--unit))_solid_var(--radio-inner-color)]',
+              '[&::before]:transform-[scale(0.65)]',
+              '[.rt-radio-disabled_&]:border-(--radio-disabled-color) [.rt-radio-disabled_&]:cursor-auto',
+              '[.rt-radio-disabled_&::before]:bg-(--radio-disabled-color)',
               '[.rt-radio-input:focus~&]:[box-shadow:0_0_0_var(--unit)_var(--radio-checked-focus-color)]',
               theme?.radio,
               theme?.radioChecked,

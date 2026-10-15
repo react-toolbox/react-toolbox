@@ -13,7 +13,7 @@ export function Card({ children, className, raised, theme, ...other }: CardProps
       data-react-toolbox="card"
       className={cn(
         'rt-card-card',
-        '[background:var(--card-background-color)] rounded-[calc(0.2_*_var(--unit))] [box-shadow:var(--shadow-2p)] flex flex-col text-[length:var(--card-font-size)] overflow-hidden w-full',
+        '[background:var(--card-background-color)] rounded-[calc(0.2*var(--unit))] [box-shadow:var(--shadow-2p)] flex flex-col text-(length:--card-font-size) overflow-hidden w-full',
         materialRoot,
         materialDescendants,
         theme?.card,

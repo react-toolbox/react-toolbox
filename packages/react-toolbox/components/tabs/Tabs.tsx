@@ -171,8 +171,8 @@ export function Tabs({
       className={cn(
         'rt-tabs-arrowContainer',
         'items-center [box-shadow:inset_0_-1px_var(--tab-navigation-border-color)] cursor-pointer flex',
-        '[&:focus-visible]:[outline:2px_solid_currentColor] [&:focus-visible]:[outline-offset:-2px]',
-        '[.rt-tabs-inverse_&]:bg-[var(--tab-inverse-bar-color)]',
+        '[&:focus-visible]:[outline:2px_solid_currentColor] [&:focus-visible]:-outline-offset-2',
+        '[.rt-tabs-inverse_&]:bg-(--tab-inverse-bar-color)',
         theme?.arrowContainer,
       )}
       role="button"
@@ -189,8 +189,8 @@ export function Tabs({
       <FontIcon
         className={cn(
           'rt-tabs-arrow',
-          'text-[color:var(--tab-text-color)] p-[0_var(--tab-label-h-padding)]',
-          '[.rt-tabs-inverse_&]:text-[color:var(--tab-inverse-text-color)]',
+          'text-(--tab-text-color) p-[0_var(--tab-label-h-padding)]',
+          '[.rt-tabs-inverse_&]:text-(--tab-inverse-text-color)',
           theme?.arrow,
         )}
         value={`keyboard_arrow_${direction}`}
@@ -219,8 +219,8 @@ export function Tabs({
           className={cn(
             'rt-tabs-navigation',
             '[box-shadow:inset_0_-1px_var(--tab-navigation-border-color)] flex flex-row overflow-x-hidden relative',
-            '[.rt-tabs-navigationContainer_&]:[flex:1]',
-            '[.rt-tabs-inverse_&]:bg-[var(--tab-inverse-bar-color)]',
+            '[.rt-tabs-navigationContainer_&]:flex-1',
+            '[.rt-tabs-inverse_&]:bg-(--tab-inverse-bar-color)',
             theme?.navigation,
           )}
           role="tablist"
@@ -251,8 +251,8 @@ export function Tabs({
           <span
             className={cn(
               'rt-tabs-pointer',
-              'bg-[var(--tab-pointer-color)] h-[var(--tab-pointer-height)] mt-[calc(-1_*_var(--tab-pointer-height))] absolute [transition-duration:var(--animation-duration)] [transition-property:left,_width] [transition-timing-function:var(--animation-curve-default)] w-0',
-              '[.rt-tabs-inverse_&]:bg-[var(--tab-inverse-pointer-color)]',
+              'bg-(--tab-pointer-color) h-(--tab-pointer-height) mt-[calc(-1_*_var(--tab-pointer-height))] absolute [transition-duration:var(--animation-duration)] [transition-property:left,width] [transition-timing-function:var(--animation-curve-default)] w-0',
+              '[.rt-tabs-inverse_&]:bg-(--tab-inverse-pointer-color)',
               theme?.pointer,
               disableAnimatedBottomBorder && theme?.disableAnimation,
             )}

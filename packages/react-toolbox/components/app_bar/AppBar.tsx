@@ -74,22 +74,22 @@ export function AppBar({
       data-react-toolbox="app-bar"
       className={cn(
         'rt-app-bar-appBar',
-        '[--appbar-current-h-padding:var(--appbar-h-padding)] [background:var(--appbar-color)] text-[color:var(--appbar-contrast)] font-[family-name:var(--preferred-font)] h-[var(--appbar-height)] p-[0_var(--appbar-current-h-padding)] [transition-duration:0.5s] [transition-property:transform] [transition-timing-function:cubic-bezier(0.215,_0.61,_0.355,_1)] box-border [-webkit-font-smoothing:antialiased] [font-smoothing:antialiased] [-webkit-text-size-adjust:100%] [-moz-text-size-adjust:100%] [text-size-adjust:100%]',
+        '[--appbar-current-h-padding:var(--appbar-h-padding)] [background:var(--appbar-color)] text-(--appbar-contrast) font-(family-name:--preferred-font) h-(--appbar-height) p-[0_var(--appbar-current-h-padding)] duration-500 [transition-property:transform] ease-[cubic-bezier(0.215,0.61,0.355,1)] box-border [-webkit-font-smoothing:antialiased] [font-smoothing:antialiased] [-webkit-text-size-adjust:100%] [-moz-text-size-adjust:100%] [text-size-adjust:100%]',
         materialDescendants,
         '[&:not(.rt-app-bar-flat)]:[box-shadow:var(--shadow-4p)]',
-        '[&_a]:text-[color:var(--appbar-contrast)]',
-        '[@media_screen_and_(max-width:_599.98px)_and_(orientation:_portrait)]:h-[var(--appbar-height-m-portrait)]',
-        '[@media_screen_and_(max-height:_599.98px)_and_(orientation:_landscape)]:h-[var(--appbar-height-m-landscape)]',
+        '[&_a]:text-(--appbar-contrast)',
+        '[@media_screen_and_(max-width:_599.98px)_and_(orientation:_portrait)]:h-(--appbar-height-m-portrait)',
+        '[@media_screen_and_(max-height:_599.98px)_and_(orientation:_landscape)]:h-(--appbar-height-m-landscape)',
         '[@media_screen_and_(max-width:_599.98px)_and_(orientation:_portrait),_screen_and_(max-height:_599.98px)_and_(orientation:_landscape)]:[--appbar-current-h-padding:var(--appbar-h-padding-mobile,_calc(1.6_*_var(--unit)))]',
         theme?.appBar,
         fixed &&
           cn(
             'rt-app-bar-fixed',
-            '[.rt-app-bar-appBar&]:left-0 [.rt-app-bar-appBar&]:fixed [.rt-app-bar-appBar&]:right-0 [.rt-app-bar-appBar&]:top-0 [.rt-app-bar-appBar&]:z-[var(--z-index-highest)]',
+            '[.rt-app-bar-appBar&]:left-0 [.rt-app-bar-appBar&]:fixed [.rt-app-bar-appBar&]:right-0 [.rt-app-bar-appBar&]:top-0 [.rt-app-bar-appBar&]:z-(--z-index-highest)',
             theme?.fixed,
           ),
         flat && cn('rt-app-bar-flat', theme?.flat),
-        hidden && cn('rt-app-bar-scrollHide', '[.rt-app-bar-appBar&]:[transform:translateY(-100%)]', theme?.scrollHide),
+        hidden && cn('rt-app-bar-scrollHide', '[.rt-app-bar-appBar&]:transform-[translateY(-100%)]', theme?.scrollHide),
         className,
       )}
     >
@@ -105,7 +105,7 @@ export function AppBar({
             inverse
             className={cn(
               'rt-app-bar-leftIcon',
-              'shrink-0 ml-[calc((var(--button-toggle-font-size)_-_var(--button-toggle-size))_/_2)] mr-[calc(var(--appbar-title-distance)_-_(var(--button-toggle-size)_+_var(--button-toggle-font-size))_/_2)]',
+              'shrink-0 ml-[calc((var(--button-toggle-font-size)-var(--button-toggle-size))/2)] mr-[calc(var(--appbar-title-distance)-(var(--button-toggle-size)+var(--button-toggle-font-size))/2)]',
               theme?.leftIcon,
             )}
             onClick={onLeftIconClick}
@@ -116,7 +116,7 @@ export function AppBar({
           <h1
             className={cn(
               'rt-app-bar-title',
-              'grow-[1] m-0 text-[length:var(--appbar-title-font-size)] [font-weight:var(--appbar-title-font-weight)] overflow-x-hidden text-ellipsis whitespace-nowrap',
+              'grow m-0 text-(length:--appbar-title-font-size) font-(--appbar-title-font-weight) overflow-x-hidden text-ellipsis whitespace-nowrap',
               theme?.title,
             )}
           >
@@ -131,7 +131,7 @@ export function AppBar({
             inverse
             className={cn(
               'rt-app-bar-rightIcon',
-              'ml-auto shrink-0 mr-[calc((var(--button-toggle-font-size)_-_var(--button-toggle-size))_/_2)]',
+              'ml-auto shrink-0 mr-[calc((var(--button-toggle-font-size)-var(--button-toggle-size))/2)]',
               theme?.rightIcon,
             )}
             onClick={onRightIconClick}

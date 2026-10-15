@@ -13,12 +13,12 @@ export function ListItemText({ className, primary = false, children, theme, ...o
       className={cn(
         'rt-list-itemText',
         'block',
-        '[&:not(.rt-list-primary)]:text-[color:var(--rt-color-text-secondary)] [&:not(.rt-list-primary)]:text-[length:var(--font-size-small)] [&:not(.rt-list-primary)]:pt-[var(--list-item-legend-margin-top)] [&:not(.rt-list-primary)]:whitespace-normal',
+        '[&:not(.rt-list-primary)]:text-(--rt-color-text-secondary) [&:not(.rt-list-primary)]:text-(length:--font-size-small) [&:not(.rt-list-primary)]:pt-(--list-item-legend-margin-top) [&:not(.rt-list-primary)]:whitespace-normal',
         theme?.itemText,
         primary &&
           cn(
             'rt-list-primary',
-            '[.rt-list-itemText&]:text-[color:var(--rt-color-text)] [.rt-list-itemText&]:text-[length:var(--font-size-normal)]',
+            '[.rt-list-itemText&]:text-(--rt-color-text) [.rt-list-itemText&]:text-(length:--font-size-normal)',
             theme?.primary,
           ),
         className,

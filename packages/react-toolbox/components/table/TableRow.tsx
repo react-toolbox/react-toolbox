@@ -27,15 +27,15 @@ export function TableRow({
       {...other}
       className={cn(
         'rt-table-row',
-        'text-[color:var(--table-row-color)] h-[var(--table-row-height)] [transition-duration:0.28s] [transition-property:background-color] [transition-timing-function:var(--animation-curve-default)]',
-        '[&:hover]:bg-[var(--table-hover-color)]',
+        'text-(--table-row-color) h-(--table-row-height) duration-[0.28s] [transition-property:background-color] [transition-timing-function:var(--animation-curve-default)]',
+        '[&:hover]:bg-(--table-hover-color)',
         theme?.row,
         selectable &&
           selected &&
           cn(
             'rt-table-selected',
-            '[.rt-table-row&]:bg-[var(--table-selection-color)]',
-            '[.rt-table-row&:hover]:bg-[var(--table-hover-color)]',
+            '[.rt-table-row&]:bg-(--table-selection-color)',
+            '[.rt-table-row&:hover]:bg-(--table-hover-color)',
             theme?.selected,
           ),
         className,

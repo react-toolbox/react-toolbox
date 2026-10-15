@@ -184,7 +184,7 @@ export function Slider({
     <div
       className={cn(
         'rt-slider-slider',
-        '[&[disabled]]:[cursor:auto] [&[disabled]]:pointer-events-none',
+        '[&[disabled]]:cursor-auto [&[disabled]]:pointer-events-none',
         theme?.slider,
         editable &&
           cn(
@@ -214,11 +214,11 @@ export function Slider({
         tabIndex={disabled ? -1 : (tabIndex ?? 0)}
         className={cn(
           'rt-slider-container',
-          'h-[var(--slider-knob-size)] mr-[var(--slider-knob-size)] relative [outline:none] [touch-action:pan-y] [-webkit-user-select:none] [-moz-user-select:none] select-none w-[calc(100%_-_var(--slider-knob-size))]',
+          'h-(--slider-knob-size) mr-(--slider-knob-size) relative [outline:none] [touch-action:pan-y] [-webkit-user-select:none] [-moz-user-select:none] select-none w-[calc(100%-var(--slider-knob-size))]',
           materialRoot,
           materialDescendants,
-          '[&:not(:last-child)]:mr-[calc(var(--slider-side-separation)_+_var(--slider-knob-size))]',
-          '[&:not(:first-child)]:ml-[var(--slider-side-separation)]',
+          '[&:not(:last-child)]:mr-[calc(var(--slider-side-separation)+var(--slider-knob-size))]',
+          '[&:not(:first-child)]:ml-(--slider-side-separation)',
           theme?.container,
         )}
         onKeyDown={handleKeyDown}
@@ -229,9 +229,9 @@ export function Slider({
           ref={knob}
           className={cn(
             'rt-slider-knob',
-            'items-center bg-[transparent] flex flex-row h-[var(--slider-knob-size)] justify-center left-0 relative top-0 w-[var(--slider-knob-size)] z-[var(--z-index-higher)]',
-            "[.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:bg-[var(--slider-main-color)] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:rounded-[50%] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:bottom-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:[content:''] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:left-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:opacity-[0.26] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:absolute [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:right-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:top-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:z-[var(--z-index-normal)]",
-            '[.rt-slider-slider.rt-slider-ring:has(.rt-slider-container:focus-visible)_&&::before]:bg-[var(--slider-track-focus-color)]',
+            'items-center bg-transparent flex flex-row h-(--slider-knob-size) justify-center left-0 relative top-0 w-(--slider-knob-size) z-(--z-index-higher)',
+            "[.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:bg-(--slider-main-color) [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:rounded-[50%] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:bottom-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:[content:''] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:left-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:opacity-[0.26] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:absolute [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:right-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:top-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:z-(--z-index-normal)",
+            '[.rt-slider-slider.rt-slider-ring:has(.rt-slider-container:focus-visible)_&&::before]:bg-(--slider-track-focus-color)',
             theme?.knob,
           )}
           style={{ left: `${span > 0 ? (100 * (trim(value) - min)) / span : 0}%` }}
@@ -239,19 +239,19 @@ export function Slider({
           <div
             className={cn(
               'rt-slider-innerknob',
-              'bg-[var(--slider-main-color)] rounded-[50%] h-[var(--slider-inner-knob-size)] [transition-duration:0.1s] [transition-property:height,_width,_background-color,_border] [transition-timing-function:var(--animation-curve-default)] w-[var(--slider-inner-knob-size)] z-[var(--z-index-high)]',
-              '[.rt-slider-slider[disabled]_&]:bg-[var(--slider-disabled-color)] [.rt-slider-slider[disabled]_&]:h-[calc(0.8_*_var(--unit))] [.rt-slider-slider[disabled]_&]:w-[calc(0.8_*_var(--unit))] [.rt-slider-slider[disabled]_&]:[box-shadow:0_0_0_calc(0.2_*_var(--unit))_var(--rt-color-background)]',
-              "[.rt-slider-slider.rt-slider-pinned_&::before]:bg-[var(--slider-main-color)] [.rt-slider-slider.rt-slider-pinned_&::before]:rounded-[50%_50%_50%_0] [.rt-slider-slider.rt-slider-pinned_&::before]:[content:''] [.rt-slider-slider.rt-slider-pinned_&::before]:h-[var(--slider-pin-size)] [.rt-slider-slider.rt-slider-pinned_&::before]:left-0 [.rt-slider-slider.rt-slider-pinned_&::before]:ml-[calc((var(--slider-knob-size)_-_var(--slider-pin-size))_/_2)] [.rt-slider-slider.rt-slider-pinned_&::before]:absolute [.rt-slider-slider.rt-slider-pinned_&::before]:top-0 [.rt-slider-slider.rt-slider-pinned_&::before]:[transform:rotate(-45deg)_scale(0)_translate(0)] [.rt-slider-slider.rt-slider-pinned_&::before]:[transition:transform_0.2s_ease,_background-color_0.18s_ease] [.rt-slider-slider.rt-slider-pinned_&::before]:w-[var(--slider-pin-size)]",
-              '[.rt-slider-slider.rt-slider-pinned_&::after]:text-[color:var(--rt-color-background)] [.rt-slider-slider.rt-slider-pinned_&::after]:[content:attr(data-value)] [.rt-slider-slider.rt-slider-pinned_&::after]:text-[length:10px] [.rt-slider-slider.rt-slider-pinned_&::after]:h-[var(--slider-pin-size)] [.rt-slider-slider.rt-slider-pinned_&::after]:left-0 [.rt-slider-slider.rt-slider-pinned_&::after]:absolute [.rt-slider-slider.rt-slider-pinned_&::after]:text-center [.rt-slider-slider.rt-slider-pinned_&::after]:top-0 [.rt-slider-slider.rt-slider-pinned_&::after]:[transform:scale(0)_translate(0)] [.rt-slider-slider.rt-slider-pinned_&::after]:[transition:transform_0.2s_ease,_background-color_0.18s_ease] [.rt-slider-slider.rt-slider-pinned_&::after]:w-[var(--slider-knob-size)]',
-              '[.rt-slider-slider.rt-slider-ring_&]:bg-[transparent] [.rt-slider-slider.rt-slider-ring_&]:[border:var(--slider-empty-knob-border)_solid_var(--slider-track-color)]',
-              '[.rt-slider-slider.rt-slider-ring_&::before]:bg-[var(--slider-main-color)]',
-              '[.rt-slider-slider.rt-slider-ring.rt-slider-pinned_&]:bg-[var(--rt-color-background)]',
-              '[.rt-slider-slider.rt-slider-pressed.rt-slider-pinned_&::before]:[transform:rotate(-45deg)_scale(1)_translate(var(--slider-pin-elevation),_calc(-1_*_var(--slider-pin-elevation)))] [.rt-slider-slider.rt-slider-pressed.rt-slider-pinned_&::before]:[transition-delay:100ms]',
-              '[.rt-slider-slider.rt-slider-pressed.rt-slider-pinned_&::after]:[transform:scale(1)_translate(0,_calc(-1_*_var(--slider-pin-elevation)))] [.rt-slider-slider.rt-slider-pressed.rt-slider-pinned_&::after]:[transition-delay:100ms]',
-              '[.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned)_&]:h-[var(--slider-pressed-knob-size)] [.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned)_&]:[transform:translateZ(0)] [.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned)_&]:w-[var(--slider-pressed-knob-size)]',
-              '[@media_(hover:_hover)]:[.rt-slider-slider:not([disabled]):not(.rt-slider-pinned):not(.rt-slider-pressed)_.rt-slider-knob:hover_&]:h-[var(--slider-hover-knob-size)] [@media_(hover:_hover)]:[.rt-slider-slider:not([disabled]):not(.rt-slider-pinned):not(.rt-slider-pressed)_.rt-slider-knob:hover_&]:w-[var(--slider-hover-knob-size)]',
-              '[.rt-slider-slider:not([disabled]).rt-slider-ring:has(.rt-slider-container:focus-visible)_&]:[border-color:var(--slider-track-focus-color)]',
-              '[.rt-slider-slider:not([disabled]).rt-slider-ring.rt-slider-pressed_&]:[border-color:var(--slider-track-focus-color)]',
+              'bg-(--slider-main-color) rounded-[50%] h-(--slider-inner-knob-size) duration-100 [transition-property:height,width,background-color,border] [transition-timing-function:var(--animation-curve-default)] w-(--slider-inner-knob-size) z-(--z-index-high)',
+              '[.rt-slider-slider[disabled]_&]:bg-(--slider-disabled-color) [.rt-slider-slider[disabled]_&]:h-[calc(0.8*var(--unit))] [.rt-slider-slider[disabled]_&]:w-[calc(0.8*var(--unit))] [.rt-slider-slider[disabled]_&]:[box-shadow:0_0_0_calc(0.2*var(--unit))_var(--rt-color-background)]',
+              "[.rt-slider-slider.rt-slider-pinned_&::before]:bg-(--slider-main-color) [.rt-slider-slider.rt-slider-pinned_&::before]:rounded-[50%_50%_50%_0] [.rt-slider-slider.rt-slider-pinned_&::before]:[content:''] [.rt-slider-slider.rt-slider-pinned_&::before]:h-(--slider-pin-size) [.rt-slider-slider.rt-slider-pinned_&::before]:left-0 [.rt-slider-slider.rt-slider-pinned_&::before]:ml-[calc((var(--slider-knob-size)-var(--slider-pin-size))/2)] [.rt-slider-slider.rt-slider-pinned_&::before]:absolute [.rt-slider-slider.rt-slider-pinned_&::before]:top-0 [.rt-slider-slider.rt-slider-pinned_&::before]:transform-[rotate(-45deg)_scale(0)_translate(0)] [.rt-slider-slider.rt-slider-pinned_&::before]:[transition:transform_0.2s_ease,background-color_0.18s_ease] [.rt-slider-slider.rt-slider-pinned_&::before]:w-(--slider-pin-size)",
+              '[.rt-slider-slider.rt-slider-pinned_&::after]:text-(--rt-color-background) [.rt-slider-slider.rt-slider-pinned_&::after]:[content:attr(data-value)] [.rt-slider-slider.rt-slider-pinned_&::after]:text-[10px] [.rt-slider-slider.rt-slider-pinned_&::after]:h-(--slider-pin-size) [.rt-slider-slider.rt-slider-pinned_&::after]:left-0 [.rt-slider-slider.rt-slider-pinned_&::after]:absolute [.rt-slider-slider.rt-slider-pinned_&::after]:text-center [.rt-slider-slider.rt-slider-pinned_&::after]:top-0 [.rt-slider-slider.rt-slider-pinned_&::after]:transform-[scale(0)_translate(0)] [.rt-slider-slider.rt-slider-pinned_&::after]:[transition:transform_0.2s_ease,background-color_0.18s_ease] [.rt-slider-slider.rt-slider-pinned_&::after]:w-(--slider-knob-size)',
+              '[.rt-slider-slider.rt-slider-ring_&]:bg-transparent [.rt-slider-slider.rt-slider-ring_&]:[border:var(--slider-empty-knob-border)_solid_var(--slider-track-color)]',
+              '[.rt-slider-slider.rt-slider-ring_&::before]:bg-(--slider-main-color)',
+              '[.rt-slider-slider.rt-slider-ring.rt-slider-pinned_&]:bg-(--rt-color-background)',
+              '[.rt-slider-slider.rt-slider-pressed.rt-slider-pinned_&::before]:transform-[rotate(-45deg)_scale(1)_translate(var(--slider-pin-elevation),calc(-1*var(--slider-pin-elevation)))] [.rt-slider-slider.rt-slider-pressed.rt-slider-pinned_&::before]:delay-100',
+              '[.rt-slider-slider.rt-slider-pressed.rt-slider-pinned_&::after]:transform-[scale(1)_translate(0,calc(-1*var(--slider-pin-elevation)))] [.rt-slider-slider.rt-slider-pressed.rt-slider-pinned_&::after]:delay-100',
+              '[.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned)_&]:h-(--slider-pressed-knob-size) [.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned)_&]:transform-[translateZ(0)] [.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned)_&]:w-(--slider-pressed-knob-size)',
+              '[@media_(hover:_hover)]:[.rt-slider-slider:not([disabled]):not(.rt-slider-pinned):not(.rt-slider-pressed)_.rt-slider-knob:hover_&]:h-(--slider-hover-knob-size) [@media_(hover:_hover)]:[.rt-slider-slider:not([disabled]):not(.rt-slider-pinned):not(.rt-slider-pressed)_.rt-slider-knob:hover_&]:w-(--slider-hover-knob-size)',
+              '[.rt-slider-slider:not([disabled]).rt-slider-ring:has(.rt-slider-container:focus-visible)_&]:border-(--slider-track-focus-color)',
+              '[.rt-slider-slider:not([disabled]).rt-slider-ring.rt-slider-pressed_&]:border-(--slider-track-focus-color)',
               theme?.innerknob,
             )}
             data-value={trim(value)}
@@ -260,10 +260,10 @@ export function Slider({
         <div
           className={cn(
             'rt-slider-progress',
-            'h-full left-[calc(var(--slider-knob-size)_/_2)] absolute top-0 w-full',
-            '[.rt-slider-slider.rt-slider-ring_&]:left-[calc(var(--slider-knob-size)_/_2_+_var(--slider-empty-knob-border)_*_2)] [.rt-slider-slider.rt-slider-ring_&]:[transition:left_0.18s_ease,_width_0.18s_ease] [.rt-slider-slider.rt-slider-ring_&]:w-[calc(100%_-_var(--slider-empty-knob-border)_*_2)]',
-            '[.rt-slider-slider.rt-slider-ring.rt-slider-pinned_&]:left-[calc(var(--slider-knob-size)_/_2)] [.rt-slider-slider.rt-slider-ring.rt-slider-pinned_&]:w-full',
-            '[.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned).rt-slider-ring_&]:left-[calc(var(--slider-knob-size)_/_2_+_(var(--slider-pressed-knob-size)_-_var(--slider-empty-knob-border)_*_2)_/_2)] [.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned).rt-slider-ring_&]:w-[calc(100%_-_((var(--slider-pressed-knob-size)_-_var(--slider-empty-knob-border)_*_2)_/_2))]',
+            'h-full left-[calc(var(--slider-knob-size)/2)] absolute top-0 w-full',
+            '[.rt-slider-slider.rt-slider-ring_&]:left-[calc(var(--slider-knob-size)/2+var(--slider-empty-knob-border)*2)] [.rt-slider-slider.rt-slider-ring_&]:[transition:left_0.18s_ease,width_0.18s_ease] [.rt-slider-slider.rt-slider-ring_&]:w-[calc(100%-var(--slider-empty-knob-border)*2)]',
+            '[.rt-slider-slider.rt-slider-ring.rt-slider-pinned_&]:left-[calc(var(--slider-knob-size)/2)] [.rt-slider-slider.rt-slider-ring.rt-slider-pinned_&]:w-full',
+            '[.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned).rt-slider-ring_&]:left-[calc(var(--slider-knob-size)/2+(var(--slider-pressed-knob-size)-var(--slider-empty-knob-border)*2)/2)] [.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned).rt-slider-ring_&]:w-[calc(100%-((var(--slider-pressed-knob-size)-var(--slider-empty-knob-border)*2)/2))]',
             theme?.progress,
           )}
         >
@@ -272,11 +272,11 @@ export function Slider({
             disabled={disabled}
             className={cn(
               'rt-slider-innerprogress',
-              '[.rt-slider-progress_&]:[background:var(--slider-track-color)] [.rt-slider-progress_&]:h-[var(--slider-bar-height)] [.rt-slider-progress_&]:absolute [.rt-slider-progress_&]:top-[calc(var(--slider-knob-size)_/_2_-_var(--slider-bar-height)_/_2)]',
-              "[.rt-slider-progress_&_[data-ref='value']]:[transition-duration:0s]",
+              '[.rt-slider-progress_&]:[background:var(--slider-track-color)] [.rt-slider-progress_&]:h-(--slider-bar-height) [.rt-slider-progress_&]:absolute [.rt-slider-progress_&]:top-[calc(var(--slider-knob-size)/2-var(--slider-bar-height)/2)]',
+              "[.rt-slider-progress_&_[data-ref='value']]:duration-[0s]",
               '[.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&]:[background:var(--slider-track-focus-color)]',
               '[.rt-slider-slider:not([disabled]).rt-slider-pressed_&]:[background:var(--slider-track-focus-color)]',
-              "[.rt-slider-slider[disabled]_&_[data-ref='value']]:bg-[var(--slider-disabled-color)]",
+              "[.rt-slider-slider[disabled]_&_[data-ref='value']]:bg-(--slider-disabled-color)",
               theme?.innerprogress,
             )}
             max={max}
@@ -289,8 +289,8 @@ export function Slider({
             <div
               className={cn(
                 'rt-slider-snaps',
-                'flex flex-row h-[var(--slider-snap-size)] left-0 pointer-events-none absolute top-[calc(var(--slider-knob-size)_/_2_-_var(--slider-snap-size)_/_2)] w-full',
-                "[&::after]:bg-[var(--slider-snap-color)] [&::after]:rounded-[50%] [&::after]:[content:''] [&::after]:hidden [&::after]:h-[var(--slider-snap-size)] [&::after]:w-[var(--slider-snap-size)]",
+                'flex flex-row h-(--slider-snap-size) left-0 pointer-events-none absolute top-[calc(var(--slider-knob-size)/2-var(--slider-snap-size)/2)] w-full',
+                "[&::after]:bg-(--slider-snap-color) [&::after]:rounded-[50%] [&::after]:[content:''] [&::after]:hidden [&::after]:h-(--slider-snap-size) [&::after]:w-(--slider-snap-size)",
                 theme?.snaps,
               )}
             >
@@ -299,8 +299,8 @@ export function Slider({
                   key={stop}
                   className={cn(
                     'rt-slider-snap',
-                    'absolute [transform:translateX(-50%)]',
-                    "[&::after]:bg-[var(--slider-snap-color)] [&::after]:rounded-[50%] [&::after]:[content:''] [&::after]:block [&::after]:h-[var(--slider-snap-size)] [&::after]:w-[var(--slider-snap-size)]",
+                    'absolute transform-[translateX(-50%)]',
+                    "[&::after]:bg-(--slider-snap-color) [&::after]:rounded-[50%] [&::after]:[content:''] [&::after]:block [&::after]:h-(--slider-snap-size) [&::after]:w-(--slider-snap-size)",
                     theme?.snap,
                   )}
                   style={{ left: `${(100 * stop) / span}%` }}
@@ -313,12 +313,7 @@ export function Slider({
       {editable && (
         <Input
           ref={input}
-          className={cn(
-            'rt-slider-input',
-            'mb-0 p-0 w-[var(--slider-input-width)]',
-            '[&>input]:text-center',
-            theme?.input,
-          )}
+          className={cn('rt-slider-input', 'mb-0 p-0 w-(--slider-input-width)', '[&>input]:text-center', theme?.input)}
           disabled={disabled}
           aria-label={other['aria-label'] ? `${other['aria-label']} value` : undefined}
           aria-labelledby={other['aria-labelledby']}

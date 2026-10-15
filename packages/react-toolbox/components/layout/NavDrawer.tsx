@@ -29,10 +29,10 @@ export function NavDrawer({
       )}
       insideTree
       theme={{
-        drawer: cn('rt-layout-navDrawerDrawer', 'z-[var(--z-index-high)]', theme?.navDrawerDrawer),
+        drawer: cn('rt-layout-navDrawerDrawer', 'z-(--z-index-high)', theme?.navDrawerDrawer),
         wrapper: cn(
           'rt-layout-navDrawerWrapper',
-          '[.rt-layout-navDrawerClipped_&]:relative [.rt-layout-navDrawerClipped_&]:z-[var(--z-index-normal)]',
+          '[.rt-layout-navDrawerClipped_&]:relative [.rt-layout-navDrawerClipped_&]:z-(--z-index-normal)',
           theme?.navDrawerWrapper,
         ),
       }}

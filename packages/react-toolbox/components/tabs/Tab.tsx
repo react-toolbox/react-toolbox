@@ -78,29 +78,28 @@ export function Tab({
       tabIndex={disabled || hidden ? -1 : (attributes.tabIndex ?? (active ? 0 : -1))}
       className={cn(
         'rt-tabs-label',
-        'text-[color:var(--tab-text-inactive-color)] text-[length:var(--tab-text-height)] [font-weight:var(--font-weight-semi-bold)] leading-[1] p-[var(--tab-label-v-padding)_var(--tab-label-h-padding)] relative uppercase [transition-duration:var(--animation-duration)] [transition-property:background-color,_box-shadow,_color] [transition-timing-function:var(--animation-curve-default)]',
-        '[&:focus]:bg-[var(--tab-focus-color)] [&:focus]:[outline:none]',
-        '[&:focus-visible]:[outline:2px_solid_currentColor] [&:focus-visible]:[outline-offset:-2px]',
+        'text-(--tab-text-inactive-color) text-(length:--tab-text-height) font-(--font-weight-semi-bold) leading-none p-[var(--tab-label-v-padding)_var(--tab-label-h-padding)] relative uppercase [transition-duration:var(--animation-duration)] [transition-property:background-color,box-shadow,color] [transition-timing-function:var(--animation-curve-default)]',
+        '[&:focus]:bg-(--tab-focus-color) [&:focus]:[outline:none]',
+        '[&:focus-visible]:[outline:2px_solid_currentColor] [&:focus-visible]:-outline-offset-2',
         '[&:not(.rt-tabs-disabled)]:cursor-pointer',
-        '[.rt-tabs-fixed_&]:[flex:1] [.rt-tabs-fixed_&]:text-center',
-        '[.rt-tabs-inverse_&]:text-[color:var(--tab-inverse-text-inactive-color)]',
+        '[.rt-tabs-fixed_&]:flex-1 [.rt-tabs-fixed_&]:text-center',
+        '[.rt-tabs-inverse_&]:text-(--tab-inverse-text-inactive-color)',
         theme?.label,
         active && cn(activeClasses, theme?.active),
         hidden && cn('rt-tabs-hidden', '[.rt-tabs-label&]:hidden', theme?.hidden),
         Boolean(label) &&
           cn(
             'rt-tabs-withText',
-            '[.rt-tabs-label.rt-tabs-withIcon&]:pt-[calc(0.8_*_var(--unit))] [.rt-tabs-label.rt-tabs-withIcon&]:pb-[calc(1.6_*_var(--unit))]',
+            '[.rt-tabs-label.rt-tabs-withIcon&]:pt-[calc(0.8*var(--unit))] [.rt-tabs-label.rt-tabs-withIcon&]:pb-[calc(1.6*var(--unit))]',
             theme?.withText,
           ),
         Boolean(icon) &&
           cn(
             'rt-tabs-withIcon',
-            '[.rt-tabs-label&]:pb-[calc((var(--tab-label-height)_-_var(--tab-icon-height))_/_2)] [.rt-tabs-label&]:pt-[calc((var(--tab-label-height)_-_var(--tab-icon-height))_/_2)] [.rt-tabs-label&]:text-center',
+            '[.rt-tabs-label&]:pb-[calc((var(--tab-label-height)-var(--tab-icon-height))/2)] [.rt-tabs-label&]:pt-[calc((var(--tab-label-height)-var(--tab-icon-height))/2)] [.rt-tabs-label&]:text-center',
             theme?.withIcon,
           ),
-        disabled &&
-          cn('rt-tabs-disabled', '[.rt-tabs-label&]:opacity-[var(--tab-label-disabled-opacity)]', theme?.disabled),
+        disabled && cn('rt-tabs-disabled', '[.rt-tabs-label&]:opacity-(--tab-label-disabled-opacity)', theme?.disabled),
         active && activeClassName,
         className,
       )}
@@ -133,8 +132,8 @@ export function Tab({
         <FontIcon
           className={cn(
             'rt-tabs-icon',
-            'block h-[var(--tab-icon-height)] leading-[var(--tab-icon-height)] m-[0_auto]',
-            '[.rt-tabs-label.rt-tabs-withText_&]:mb-[var(--tab-icon-margin-bottom)]',
+            'block h-(--tab-icon-height) leading-(--tab-icon-height) m-[0_auto]',
+            '[.rt-tabs-label.rt-tabs-withText_&]:mb-(--tab-icon-margin-bottom)',
             theme?.icon,
           )}
           value={icon}

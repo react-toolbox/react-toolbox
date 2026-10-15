@@ -28,7 +28,7 @@ export default function ClockFace({
     <div
       className={cn(
         'rt-time-picker-face',
-        'rounded-[50%] cursor-pointer left-[50%] absolute top-[50%] [transform:translateX(-50%)_translateY(-50%)] z-[var(--z-index-high)]',
+        'rounded-[50%] cursor-pointer left-[50%] absolute top-[50%] transform-[translateX(-50%)_translateY(-50%)] z-(--z-index-high)',
         theme?.face,
       )}
       onTouchStart={onTouchStart}
@@ -40,12 +40,12 @@ export default function ClockFace({
           key={number}
           className={cn(
             'rt-time-picker-number',
-            'h-[var(--clock-number-size)] ml-[calc(-1_*_var(--clock-number-size)_/_2)] mt-[calc(-1_*_var(--clock-number-size)_/_2)] pointer-events-none relative text-center [-webkit-user-select:none] [-moz-user-select:none] select-none w-[var(--clock-number-size)]',
+            'h-(--clock-number-size) ml-[calc(-1*var(--clock-number-size)/2)] mt-[calc(-1*var(--clock-number-size)/2)] pointer-events-none relative text-center [-webkit-user-select:none] [-moz-user-select:none] select-none w-(--clock-number-size)',
             theme?.number,
             number === active &&
               cn(
                 'rt-time-picker-active',
-                '[.rt-time-picker-number&]:text-[color:var(--clock-primary-contrast-color)]',
+                '[.rt-time-picker-number&]:text-(--clock-primary-contrast-color)',
                 theme?.active,
               ),
           )}

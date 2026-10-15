@@ -40,18 +40,18 @@ export default function CalendarDay({
       data-today={today || undefined}
       className={cn(
         'rt-date-picker-day',
-        '[flex:0_0_calc(100%_/_7)] p-[var(--calendar-day-padding-topbottom)_var(--calendar-day-padding-leftright)]',
-        '[&>span]:rounded-[50%] [&>span]:inline-block [&>span]:h-[var(--calendar-row-height)] [&>span]:leading-[var(--calendar-row-height)] [&>span]:w-[var(--calendar-row-height)]',
-        '[&[data-today]:not(.rt-date-picker-active)>span]:text-[color:var(--calendar-primary-color)] [&[data-today]:not(.rt-date-picker-active)>span]:[font-weight:500]',
-        '[&>span:focus-visible]:[outline:2px_solid_var(--calendar-primary-color)] [&>span:focus-visible]:[outline-offset:2px]',
+        'flex-[0_0_calc(100%/7)] p-[var(--calendar-day-padding-topbottom)_var(--calendar-day-padding-leftright)]',
+        '[&>span]:rounded-[50%] [&>span]:inline-block [&>span]:h-(--calendar-row-height) [&>span]:leading-(--calendar-row-height) [&>span]:w-(--calendar-row-height)',
+        '[&[data-today]:not(.rt-date-picker-active)>span]:text-(--calendar-primary-color) [&[data-today]:not(.rt-date-picker-active)>span]:[font-weight:500]',
+        '[&>span:focus-visible]:[outline:2px_solid_var(--calendar-primary-color)] [&>span:focus-visible]:outline-offset-2',
         '[&:hover:not(.rt-date-picker-disabled)>span]:cursor-pointer',
-        '[&:hover:not(.rt-date-picker-active):not(.rt-date-picker-disabled)>span]:[background:var(--calendar-primary-hover-color)] [&:hover:not(.rt-date-picker-active):not(.rt-date-picker-disabled)>span]:text-[color:var(--calendar-primary-contrast-color)]',
+        '[&:hover:not(.rt-date-picker-active):not(.rt-date-picker-disabled)>span]:[background:var(--calendar-primary-hover-color)] [&:hover:not(.rt-date-picker-active):not(.rt-date-picker-disabled)>span]:text-(--calendar-primary-contrast-color)',
         theme?.day,
         selected && cn(activeClasses, theme?.active),
         disabled &&
           cn(
             'rt-date-picker-disabled',
-            '[.rt-date-picker-day&]:opacity-[var(--calendar-day-disable-opacity)]',
+            '[.rt-date-picker-day&]:opacity-(--calendar-day-disable-opacity)',
             theme?.disabled,
           ),
       )}

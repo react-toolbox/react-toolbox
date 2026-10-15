@@ -12,7 +12,7 @@ export function ListSubHeader({ caption, className = '', theme, ...other }: List
       {...other}
       className={cn(
         'rt-list-subheader',
-        'text-[color:var(--rt-color-text-secondary)] text-[length:var(--list-subheader-font-size)] [font-weight:var(--list-subheader-font-weight)] leading-[var(--list-subheader-height)] m-[calc(-1_*_var(--list-vertical-padding))_0_0] pl-[var(--list-horizontal-padding)]',
+        'text-(--rt-color-text-secondary) text-(length:--list-subheader-font-size) font-(--list-subheader-font-weight) leading-(--list-subheader-height) m-[calc(-1*var(--list-vertical-padding))_0_0] pl-(--list-horizontal-padding)',
         theme?.subheader,
         className,
       )}

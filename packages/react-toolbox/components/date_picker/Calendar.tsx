@@ -70,48 +70,48 @@ export default function Calendar({
       ? {
           enter: cn(
             'rt-date-picker-slideLeftEnter',
-            'absolute opacity-0 [transform:translate3d(-100%,_0,_0)]',
+            'absolute opacity-0 transform-[translate3d(-100%,0,0)]',
             theme?.slideLeftEnter,
           ),
           enterActive: cn(
             'rt-date-picker-slideLeftEnterActive',
-            '[transition-duration:350ms] [transition-property:transform,_opacity] [transition-timing-function:ease-in-out]',
-            '[.rt-date-picker-slideLeftEnter&]:opacity-[1] [.rt-date-picker-slideLeftEnter&]:[transform:translate3d(0,_0,_0)]',
+            'duration-350 [transition-property:transform,opacity] ease-[ease-in-out]',
+            '[.rt-date-picker-slideLeftEnter&]:opacity-[1] [.rt-date-picker-slideLeftEnter&]:transform-[translate3d(0,0,0)]',
             theme?.slideLeftEnterActive,
           ),
           exit: cn(
             'rt-date-picker-slideLeftExit',
-            'absolute opacity-[1] [transform:translate3d(0,_0,_0)]',
+            'absolute opacity-[1] transform-[translate3d(0,0,0)]',
             theme?.slideLeftExit,
           ),
           exitActive: cn(
             'rt-date-picker-slideLeftExitActive',
-            '[transition-duration:350ms] [transition-property:transform,_opacity] [transition-timing-function:ease-in-out]',
-            '[.rt-date-picker-slideLeftExit&]:opacity-0 [.rt-date-picker-slideLeftExit&]:[transform:translate3d(100%,_0,_0)]',
+            'duration-350 [transition-property:transform,opacity] ease-[ease-in-out]',
+            '[.rt-date-picker-slideLeftExit&]:opacity-0 [.rt-date-picker-slideLeftExit&]:transform-[translate3d(100%,0,0)]',
             theme?.slideLeftExitActive,
           ),
         }
       : {
           enter: cn(
             'rt-date-picker-slideRightEnter',
-            'absolute opacity-0 [transform:translateX(100%)]',
+            'absolute opacity-0 transform-[translateX(100%)]',
             theme?.slideRightEnter,
           ),
           enterActive: cn(
             'rt-date-picker-slideRightEnterActive',
-            '[transition-duration:350ms] [transition-property:transform,_opacity] [transition-timing-function:ease-in-out]',
-            '[.rt-date-picker-slideRightEnter&]:opacity-[1] [.rt-date-picker-slideRightEnter&]:[transform:translateX(0)]',
+            'duration-350 [transition-property:transform,opacity] ease-[ease-in-out]',
+            '[.rt-date-picker-slideRightEnter&]:opacity-[1] [.rt-date-picker-slideRightEnter&]:transform-[translateX(0)]',
             theme?.slideRightEnterActive,
           ),
           exit: cn(
             'rt-date-picker-slideRightExit',
-            'absolute opacity-[1] [transform:translateX(0)]',
+            'absolute opacity-[1] transform-[translateX(0)]',
             theme?.slideRightExit,
           ),
           exitActive: cn(
             'rt-date-picker-slideRightExitActive',
-            '[transition-duration:350ms] [transition-property:transform,_opacity] [transition-timing-function:ease-in-out]',
-            '[.rt-date-picker-slideRightExit&]:opacity-0 [.rt-date-picker-slideRightExit&]:[transform:translateX(-100%)]',
+            'duration-350 [transition-property:transform,opacity] ease-[ease-in-out]',
+            '[.rt-date-picker-slideRightExit&]:opacity-0 [.rt-date-picker-slideRightExit&]:transform-[translateX(-100%)]',
             theme?.slideRightExitActive,
           ),
         };
@@ -120,8 +120,8 @@ export default function Calendar({
     <div
       className={cn(
         'rt-date-picker-calendar',
-        '[background:var(--calendar-primary-contrast-color)] text-[length:var(--font-size-small)] h-[var(--calendar-total-height)] leading-[var(--calendar-row-height)] overflow-hidden relative text-center',
-        '[&:focus-visible]:[outline:2px_solid_var(--calendar-primary-color)] [&:focus-visible]:[outline-offset:2px]',
+        '[background:var(--calendar-primary-contrast-color)] text-(length:--font-size-small) h-(--calendar-total-height) leading-(--calendar-row-height) overflow-hidden relative text-center',
+        '[&:focus-visible]:[outline:2px_solid_var(--calendar-primary-color)] [&:focus-visible]:outline-offset-2',
         theme?.calendar,
       )}
       role="group"
@@ -170,8 +170,8 @@ export default function Calendar({
           data-react-toolbox="years"
           className={cn(
             'rt-date-picker-years',
-            '[&>li:focus-visible]:[outline:2px_solid_var(--calendar-primary-color)] [&>li:focus-visible]:[outline-offset:2px]',
-            'text-[length:var(--font-size-big)] h-full [list-style:none] m-0 overflow-y-auto p-0',
+            '[&>li:focus-visible]:[outline:2px_solid_var(--calendar-primary-color)] [&>li:focus-visible]:outline-offset-2',
+            'text-(length:--font-size-big) h-full [list-style:none] m-0 overflow-y-auto p-0',
             '[&>li]:cursor-pointer [&>li]:leading-[2.4]',
             theme?.years,
           )}
@@ -236,7 +236,7 @@ export default function Calendar({
             aria-label="Previous month"
             className={cn(
               'rt-date-picker-prev',
-              '[.rt-date-picker-calendar_&]:cursor-pointer [.rt-date-picker-calendar_&]:h-[calc(3.6_*_var(--unit))] [.rt-date-picker-calendar_&]:opacity-[0.7] [.rt-date-picker-calendar_&]:absolute [.rt-date-picker-calendar_&]:top-0 [.rt-date-picker-calendar_&]:z-[var(--z-index-high)] [.rt-date-picker-calendar_&]:left-0',
+              '[.rt-date-picker-calendar_&]:cursor-pointer [.rt-date-picker-calendar_&]:h-[calc(3.6*var(--unit))] [.rt-date-picker-calendar_&]:opacity-[0.7] [.rt-date-picker-calendar_&]:absolute [.rt-date-picker-calendar_&]:top-0 [.rt-date-picker-calendar_&]:z-(--z-index-high) [.rt-date-picker-calendar_&]:left-0',
               '[.rt-date-picker-calendar_&>span]:align-top',
               theme?.prev,
             )}
@@ -248,7 +248,7 @@ export default function Calendar({
             aria-label="Next month"
             className={cn(
               'rt-date-picker-next',
-              '[.rt-date-picker-calendar_&]:cursor-pointer [.rt-date-picker-calendar_&]:h-[calc(3.6_*_var(--unit))] [.rt-date-picker-calendar_&]:opacity-[0.7] [.rt-date-picker-calendar_&]:absolute [.rt-date-picker-calendar_&]:top-0 [.rt-date-picker-calendar_&]:z-[var(--z-index-high)] [.rt-date-picker-calendar_&]:right-0',
+              '[.rt-date-picker-calendar_&]:cursor-pointer [.rt-date-picker-calendar_&]:h-[calc(3.6*var(--unit))] [.rt-date-picker-calendar_&]:opacity-[0.7] [.rt-date-picker-calendar_&]:absolute [.rt-date-picker-calendar_&]:top-0 [.rt-date-picker-calendar_&]:z-(--z-index-high) [.rt-date-picker-calendar_&]:right-0',
               '[.rt-date-picker-calendar_&>span]:align-top',
               theme?.next,
             )}

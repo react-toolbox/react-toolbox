@@ -59,41 +59,41 @@ export default function Clock({
   const animation =
     display === 'hours'
       ? {
-          enter: cn('rt-time-picker-zoomOutEnter', 'absolute opacity-0 [transform:scale(1.25)]', theme?.zoomOutEnter),
+          enter: cn('rt-time-picker-zoomOutEnter', 'absolute opacity-0 transform-[scale(1.25)]', theme?.zoomOutEnter),
           enterActive: cn(
             'rt-time-picker-zoomOutEnterActive',
-            '[transition-duration:500ms] [transition-property:transform,_opacity] [transition-timing-function:var(--animation-curve-fast-out-slow-in)]',
-            '[.rt-time-picker-zoomOutEnter&]:opacity-[1] [.rt-time-picker-zoomOutEnter&]:[transform:scale(1)]',
+            'duration-500 [transition-property:transform,opacity] [transition-timing-function:var(--animation-curve-fast-out-slow-in)]',
+            '[.rt-time-picker-zoomOutEnter&]:opacity-[1] [.rt-time-picker-zoomOutEnter&]:transform-[scale(1)]',
             theme?.zoomOutEnterActive,
           ),
-          exit: cn('rt-time-picker-zoomOutExit', 'absolute opacity-[1] [transform:scale(1)]', theme?.zoomOutExit),
+          exit: cn('rt-time-picker-zoomOutExit', 'absolute opacity-[1] transform-[scale(1)]', theme?.zoomOutExit),
           exitActive: cn(
             'rt-time-picker-zoomOutExitActive',
-            '[transition-duration:500ms] [transition-property:transform,_opacity] [transition-timing-function:var(--animation-curve-fast-out-slow-in)]',
-            '[.rt-time-picker-zoomOutExit&]:opacity-0 [.rt-time-picker-zoomOutExit&]:[transform:scale(0.85)]',
+            'duration-500 [transition-property:transform,opacity] [transition-timing-function:var(--animation-curve-fast-out-slow-in)]',
+            '[.rt-time-picker-zoomOutExit&]:opacity-0 [.rt-time-picker-zoomOutExit&]:transform-[scale(0.85)]',
             theme?.zoomOutExitActive,
           ),
         }
       : {
-          enter: cn('rt-time-picker-zoomInEnter', 'absolute opacity-0 [transform:scale(0.85)]', theme?.zoomInEnter),
+          enter: cn('rt-time-picker-zoomInEnter', 'absolute opacity-0 transform-[scale(0.85)]', theme?.zoomInEnter),
           enterActive: cn(
             'rt-time-picker-zoomInEnterActive',
-            '[transition-duration:500ms] [transition-property:transform,_opacity] [transition-timing-function:var(--animation-curve-fast-out-slow-in)]',
-            '[.rt-time-picker-zoomInEnter&]:opacity-[1] [.rt-time-picker-zoomInEnter&]:[transform:scale(1)]',
+            'duration-500 [transition-property:transform,opacity] [transition-timing-function:var(--animation-curve-fast-out-slow-in)]',
+            '[.rt-time-picker-zoomInEnter&]:opacity-[1] [.rt-time-picker-zoomInEnter&]:transform-[scale(1)]',
             theme?.zoomInEnterActive,
           ),
-          exit: cn('rt-time-picker-zoomInExit', 'absolute opacity-[1] [transform:scale(1)]', theme?.zoomInExit),
+          exit: cn('rt-time-picker-zoomInExit', 'absolute opacity-[1] transform-[scale(1)]', theme?.zoomInExit),
           exitActive: cn(
             'rt-time-picker-zoomInExitActive',
-            '[transition-duration:500ms] [transition-property:transform,_opacity] [transition-timing-function:var(--animation-curve-fast-out-slow-in)]',
-            '[.rt-time-picker-zoomInExit&]:opacity-0 [.rt-time-picker-zoomInExit&]:[transform:scale(1.25)]',
+            'duration-500 [transition-property:transform,opacity] [transition-timing-function:var(--animation-curve-fast-out-slow-in)]',
+            '[.rt-time-picker-zoomInExit&]:opacity-0 [.rt-time-picker-zoomInExit&]:transform-[scale(1.25)]',
             theme?.zoomInExitActive,
           ),
         };
   return (
-    <div data-react-toolbox="clock" className={cn('rt-time-picker-clock', 'p-[var(--clock-padding)]', theme?.clock)}>
+    <div data-react-toolbox="clock" className={cn('rt-time-picker-clock', 'p-(--clock-padding)', theme?.clock)}>
       <div
-        className={cn('rt-time-picker-placeholder', 'relative z-[var(--z-index-high)]', theme?.placeholder)}
+        className={cn('rt-time-picker-placeholder', 'relative z-(--z-index-high)', theme?.placeholder)}
         style={{ height: shape.radius * 2 }}
         ref={placeholder}
       >
@@ -118,7 +118,7 @@ export default function Clock({
               ref={displayRefs.current[display]}
               className={cn(
                 'rt-time-picker-clockWrapper',
-                'bg-[var(--clock-face-background)] rounded-[50%] absolute w-full',
+                'bg-(--clock-face-background) rounded-[50%] absolute w-full',
                 theme?.clockWrapper,
               )}
               style={{ height: shape.radius * 2 }}

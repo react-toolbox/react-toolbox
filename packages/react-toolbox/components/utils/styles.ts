@@ -2,7 +2,7 @@
 // so Tailwind can discover them in copied component source.
 export const materialRoot = [
   'box-border',
-  'font-[family-name:var(--preferred-font)]',
+  'font-(family-name:--preferred-font)',
   '[-webkit-font-smoothing:antialiased]',
   '[font-smoothing:antialiased]',
   '[-webkit-text-size-adjust:100%]',
