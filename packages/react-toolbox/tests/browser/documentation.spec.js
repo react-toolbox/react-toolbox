@@ -125,32 +125,40 @@ test('sidebar section titles stick flush below the app bar while their lists scr
   expect((await header.boundingBox()).y).toBe(0);
 });
 
-test('documentation copy controls copy the displayed command and report clipboard failures', async ({ page }) => {
-  await page.goto('/docs/components/button');
-  await page.evaluate(() => {
-    Object.defineProperty(navigator, 'clipboard', {
-      configurable: true,
-      value: {
-        writeText: async (text) => {
-          window.copiedDocumentation = text;
+for (const [slug, title, dependencies] of [
+  ['button', 'Button', []],
+  ['autocomplete', 'Autocomplete', ['button']],
+  ['drawer', 'Drawer', ['button', 'dialog', 'input']],
+]) {
+  test(`${title} install copies the displayed shell command and reports clipboard failures`, async ({ page }) => {
+    await page.goto(`/docs/components/${slug}`);
+    await page.evaluate(() => {
+      Object.defineProperty(navigator, 'clipboard', {
+        configurable: true,
+        value: {
+          writeText: async (text) => {
+            window.copiedDocumentation = text;
+          },
         },
-      },
+      });
     });
+    const command = await page.getByLabel(`Install ${title}`, { exact: true }).textContent();
+    const urls = [slug, ...dependencies].map((name) => `https://react-toolbox.io/r/${name}.json`);
+    expect(command.replaceAll('\\\n', '').split(/\s+/)).toEqual(['pnpm', 'dlx', 'shadcn@latest', 'add', ...urls]);
+    expect(command.split('\n')).toHaveLength(dependencies.length ? urls.length + 1 : 1);
+    const copy = page.getByRole('button', { name: `Copy install ${slug}`, exact: true });
+    await copy.click();
+    await expect(copy).toHaveText('Copied');
+    expect(await page.evaluate(() => window.copiedDocumentation)).toBe(command);
+    await page.evaluate(() => {
+      navigator.clipboard.writeText = async () => {
+        throw new Error('Clipboard unavailable');
+      };
+    });
+    await copy.click();
+    await expect(copy).toHaveText('Select to copy');
   });
-  const copy = page.getByRole('button', { name: 'Copy install button', exact: true });
-  await copy.click();
-  await expect(copy).toHaveText('Copied');
-  expect(await page.evaluate(() => window.copiedDocumentation)).toBe(
-    await page.getByLabel('Install Button', { exact: true }).textContent(),
-  );
-  await page.evaluate(() => {
-    navigator.clipboard.writeText = async () => {
-      throw new Error('Clipboard unavailable');
-    };
-  });
-  await copy.click();
-  await expect(copy).toHaveText('Select to copy');
-});
+}
 
 for (const width of [320, 1440]) {
   test(`every registry family is accessible and usable at ${width}px`, async ({ context, request }) => {

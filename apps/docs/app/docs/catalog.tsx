@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const supportingImports: Record<string, string> = Object.fromEntries(
   ['dialog', 'drawer', 'overlay', 'snackbar'].map((slug) => [
     slug,
@@ -40,9 +42,8 @@ export const components = [
     ),
     note: (
       <>
-        Use <code>leftIcon</code> and <code>rightIcon</code> with their click handlers for navigation and actions. Name
-        these buttons with <code>leftIconLabel</code> and <code>rightIconLabel</code>. Set <code>fixed</code> when the
-        bar should stay at the top of the viewport.
+        Name icon buttons with <code>leftIconLabel</code> and <code>rightIconLabel</code>. Use <code>fixed</code> to
+        keep the bar at the top of the viewport, or <code>scrollHide</code> to hide it as the window scrolls down.
       </>
     ),
   },
@@ -59,13 +60,9 @@ export const components = [
     ),
     note: (
       <>
-        Use <code>{'multiple={false}'}</code> for a single string value. Multiple selection uses an array of strings and
-        displays selected values as chips. Use <code>defaultValue</code> and <code>name</code> for native forms.
-        Structured options accept <code>value</code>, <code>label</code>, <code>textValue</code>, <code>disabled</code>,
-        and <code>group</code>. Control search text with <code>query</code>/<code>onQueryChange</code>; use{' '}
-        <code>suggestionMatch="disabled"</code> for server-filtered results, <code>loading</code>/
-        <code>loadingMessage</code> and <code>emptyMessage</code> for status, and <code>clearable</code> for clearing
-        selection.
+        Use <code>{'multiple={false}'}</code> for a single string; multiple selection accepts a string array or a record
+        of selected labels. Supply <code>textValue</code> when an option label contains custom content. Use{' '}
+        <code>suggestionMatch="disabled"</code> for server-filtered results.
       </>
     ),
   },
@@ -81,11 +78,9 @@ export const components = [
     ),
     note: (
       <>
-        Use <code>image</code> for a picture, <code>icon</code> for a Material Icon, or <code>children</code> for
-        initials. A <code>title</code> displays its first initial. Radix handles image loading and shows children, an
-        icon, or initials while the image loads or fails. Add an accessible label when the avatar conveys identity.{' '}
-        <code>fallbackDelay</code> avoids flashing initials on fast loads; <code>imageProps</code> accepts image
-        attributes, and <code>onLoadingStatusChange</code> reports loading or failure.
+        While an <code>image</code> loads or fails, the avatar shows <code>children</code>, an <code>icon</code>, or the
+        first initial of <code>title</code>. Use <code>fallbackDelay</code> to avoid flashing the fallback on fast
+        loads, and add an accessible label when the avatar conveys identity.
       </>
     ),
   },
@@ -102,11 +97,9 @@ export const components = [
     ),
     note: (
       <>
-        Use <code>raised</code> for a primary action, <code>floating</code> for an icon action, and{' '}
-        <code>disabled</code> when unavailable. This family also exports <code>IconButton</code> and{' '}
-        <code>BrowseButton</code>. Give icon-only buttons an <code>aria-label</code>. <code>asChild</code> composes
-        styles, refs, and events onto a router <code>Link</code> or another single ref-forwarding child without nesting
-        interactive elements.
+        Give <code>IconButton</code> and other icon-only buttons an <code>aria-label</code>. Use <code>asChild</code>{' '}
+        with a single ref-forwarding router link to apply button styles and behavior without nesting interactive
+        elements. <code>BrowseButton</code> opens a native file picker.
       </>
     ),
   },
@@ -122,10 +115,8 @@ export const components = [
     ),
     note: (
       <>
-        Compose <code>CardTitle</code>, <code>CardMedia</code>, <code>CardText</code>, and <code>CardActions</code>{' '}
-        inside <code>Card</code>. These parts include Material keyline spacing; avoid adding a second layer of padding
-        around them. Give meaningful <code>CardMedia</code> backgrounds <code>alt</code> text, or pass an image element
-        with its own <code>alt</code>.
+        Card parts include Material keyline spacing; avoid adding a second layer of padding around them. Give meaningful{' '}
+        <code>CardMedia</code> backgrounds <code>alt</code> text, or pass an image with its own <code>alt</code>.
       </>
     ),
   },
@@ -142,10 +133,8 @@ export const components = [
     ),
     note: (
       <>
-        Use <code>checked</code> and <code>onChange</code> for controlled state, or <code>defaultChecked</code> with{' '}
-        <code>name</code> for native forms and reset. Set <code>indeterminate</code> for a partially selected
-        collection. Use a visible <code>label</code>, or supply an <code>aria-label</code> for an otherwise unlabeled
-        control.
+        Use <code>indeterminate</code> for a partially selected collection. Provide a visible <code>label</code> or an{' '}
+        <code>aria-label</code> for an otherwise unlabeled control.
       </>
     ),
   },
@@ -162,8 +151,7 @@ export const components = [
     ),
     note: (
       <>
-        Set <code>deletable</code> and handle <code>onDeleteClick</code> to remove a selection. The parent owns the
-        collection and decides what happens after removal.
+        Use <code>deletable</code> for removable selections and <code>deleteLabel</code> to name the delete action.
       </>
     ),
   },
@@ -180,9 +168,9 @@ export const components = [
     ),
     note: (
       <>
-        Values are JavaScript <code>Date</code> objects. Use <code>minDate</code> and <code>maxDate</code> to limit the
-        range. In the calendar, arrows move by day/week, Home/End move within the week, and PageUp/PageDown move by
-        month (hold Shift for years). The registry includes the input, dialog, and supporting components.
+        Values are <code>Date</code> objects, bounded by <code>minDate</code> and <code>maxDate</code>. In the calendar,
+        arrow keys move by day or week, Home/End move within the week, and PageUp/PageDown move by month (hold Shift for
+        years).
       </>
     ),
   },
@@ -199,10 +187,8 @@ export const components = [
     ),
     note: (
       <>
-        Control visibility with <code>active</code>. Supply a <code>title</code> and handle dismissal using{' '}
-        <code>onEscKeyDown</code> and <code>onOverlayClick</code>. <code>Dialog</code> manages focus and restores it to
-        the trigger. <code>onOpenAutoFocus</code> and <code>onCloseAutoFocus</code> can prevent the default and focus a
-        specific element. <code>portalContainer</code> changes the portal destination.
+        Supply a <code>title</code> to name the dialog. Focus moves into the dialog when it opens and returns to the
+        trigger when it closes; customize this with <code>onOpenAutoFocus</code> and <code>onCloseAutoFocus</code>.
       </>
     ),
   },
@@ -219,10 +205,12 @@ export const components = [
     ),
     note: (
       <>
-        Use <code>type="right"</code> for a drawer entering from the right. For responsive navigation that can pin
-        beside content, use <code>NavDrawer</code> from the Layout family. <code>onOpenAutoFocus</code>/
-        <code>onCloseAutoFocus</code> customize focus for temporary drawers; <code>portalContainer</code> changes their
-        destination.
+        Use <code>type="right"</code> to enter from the right. For responsive navigation pinned beside content, use{' '}
+        <code>NavDrawer</code> from{' '}
+        <Link href="/docs/components/layout" className="text-toolbox-primary underline underline-offset-2">
+          Layout
+        </Link>
+        .
       </>
     ),
   },
@@ -239,12 +227,9 @@ export const components = [
     ),
     note: (
       <>
-        Options use <code>value</code> and <code>label</code> by default. Use <code>defaultValue</code> for an
-        uncontrolled field; <code>name</code>, <code>form</code>, <code>required</code>, submission, and reset work with
-        native forms. Supply <code>valueKey</code> and <code>labelKey</code> for a different data shape, or{' '}
-        <code>template</code> for custom option content. <code>group</code>/<code>groupKey</code> adds labeled groups;{' '}
-        <code>textValue</code>/<code>textKey</code> supplies plain text for custom content and typeahead.{' '}
-        <code>open</code>/<code>onOpenChange</code> controls popup visibility.
+        Options use <code>value</code> and <code>label</code>; adapt other data with <code>valueKey</code> and{' '}
+        <code>labelKey</code>. For custom <code>template</code> content, supply plain text with <code>textValue</code>{' '}
+        or <code>textKey</code> so typeahead can match it.
       </>
     ),
   },
@@ -260,8 +245,8 @@ export const components = [
     ),
     note: (
       <>
-        Pass a Material Icon name as <code>value</code>. Mark decorative icons <code>aria-hidden</code>, and give
-        meaningful icons an accessible label. The registry includes the local icon font.
+        Mark decorative icons <code>aria-hidden</code> and give meaningful icons an accessible label. The Material Icons
+        font is bundled locally.
       </>
     ),
   },
@@ -278,9 +263,8 @@ export const components = [
     ),
     note: (
       <>
-        <code>onChange</code> receives the value before the event. Use <code>multiline</code> for a text area,{' '}
-        <code>error</code> for validation feedback, and <code>maxLength</code> for a character counter.{' '}
-        <code>defaultValue</code> supports native form reset, including externally associated forms.
+        Use <code>multiline</code> for a text area and <code>error</code> for validation feedback. Setting{' '}
+        <code>maxLength</code> also displays a character counter.
       </>
     ),
   },
@@ -296,8 +280,9 @@ export const components = [
     ),
     note: (
       <>
-        Compose <code>Layout</code> with <code>Panel</code>, <code>NavDrawer</code>, and <code>Sidebar</code>. Use{' '}
-        <code>pinned</code> on a navigation drawer to make room for it in the layout instead of placing it over content.
+        Compose <code>Panel</code>, <code>NavDrawer</code>, and <code>Sidebar</code> inside <code>Layout</code>. A{' '}
+        <code>pinned</code> drawer reserves space beside the content; <code>permanentAt</code> pins it at a responsive
+        breakpoint. <code>Panel</code> uses document scrolling unless <code>bodyScroll</code> is false.
       </>
     ),
   },
@@ -314,10 +299,8 @@ export const components = [
     ),
     note: (
       <>
-        Use <code>caption</code>, <code>legend</code>, and icons for content rows. For actions or navigation,{' '}
-        <code>itemContent</code> accepts a native button or router link, preserving keyboard access. <code>List</code>{' '}
-        supplies <code>selectable</code> and <code>ripple</code> to its rows; subheaders, dividers, and{' '}
-        <code>ListCheckbox</code> are also included.
+        For actions or navigation, pass a native button or router link to <code>itemContent</code> to preserve keyboard
+        access. Use <code>ListCheckbox</code> for rows with an independent selection control.
       </>
     ),
   },
@@ -334,10 +317,9 @@ export const components = [
     ),
     note: (
       <>
-        <code>IconMenu</code> handles opening, keyboard navigation, and dismissal. Use <code>onSelect</code> to respond
-        to an item value. Use <code>trigger</code> for a custom button or link. <code>MenuCheckboxItem</code> and{' '}
-        <code>MenuRadioGroup</code>/<code>MenuRadioItem</code> provide selection menus that stay open. Wrappers and
-        fragments preserve menu behavior; <code>onClick</code> can prevent selection and dismissal.
+        <code>IconMenu</code> handles keyboard navigation and accepts a custom <code>trigger</code>. Use{' '}
+        <code>MenuCheckboxItem</code> for independent selections, or <code>MenuRadioGroup</code> with{' '}
+        <code>MenuRadioItem</code> for a single choice.
       </>
     ),
   },
@@ -354,8 +336,15 @@ export const components = [
     ),
     note: (
       <>
-        Click the backdrop or press Escape to close this example. Use <code>Dialog</code> or <code>Drawer</code> for
-        modal content that also needs focus management; <code>Overlay</code> supplies the backdrop and scroll lock.
+        <code>Overlay</code> supplies a backdrop and scroll lock. Use{' '}
+        <Link href="/docs/components/dialog" className="text-toolbox-primary underline underline-offset-2">
+          Dialog
+        </Link>{' '}
+        or{' '}
+        <Link href="/docs/components/drawer" className="text-toolbox-primary underline underline-offset-2">
+          Drawer
+        </Link>{' '}
+        for modal content with focus management.
       </>
     ),
   },
@@ -371,9 +360,8 @@ export const components = [
     ),
     note: (
       <>
-        Use <code>determinate</code> when progress is known, and <code>indeterminate</code> when the duration is
-        unknown. <code>min</code> and <code>max</code> define the range. Supply an <code>aria-label</code> describing
-        the operation.
+        Use <code>mode="determinate"</code> for measured progress; the default <code>indeterminate</code> mode shows
+        ongoing work with an unknown amount. Give the indicator an <code>aria-label</code> describing the operation.
       </>
     ),
   },
@@ -390,8 +378,8 @@ export const components = [
     ),
     note: (
       <>
-        Give each <code>RadioButton</code> a distinct <code>value</code> and visible <code>label</code>.{' '}
-        <code>RadioGroup</code> keeps a single selected value and shares the input <code>name</code> across the group.
+        Give each <code>RadioButton</code> a distinct <code>value</code> and visible <code>label</code>, and name the
+        group with <code>aria-label</code> or <code>aria-labelledby</code>.
       </>
     ),
   },
@@ -403,8 +391,12 @@ export const components = [
     code: `'use client';\n\nimport { Ripple } from '@/components/ui/material/ripple';\n\nconst RippleButton = Ripple({ passthrough: false })('button');\n\nexport default function Example() {\n  return (\n    <RippleButton className="relative overflow-hidden rounded-toolbox bg-toolbox-primary/10 px-8 py-6 text-toolbox-primary">\n      Click anywhere\n    </RippleButton>\n  );\n}`,
     note: (
       <>
-        The host needs <code>relative</code> positioning and <code>overflow-hidden</code>. Buttons and several other
-        Toolbox controls already include ripple feedback; no extra wrapper is needed for them.
+        Define <code>Ripple</code> decorators outside render; the host needs <code>relative</code> positioning and{' '}
+        <code>overflow-hidden</code>.{' '}
+        <Link href="/docs/components/button" className="text-toolbox-primary underline underline-offset-2">
+          Buttons
+        </Link>{' '}
+        already include ripple feedback.
       </>
     ),
   },
@@ -421,8 +413,8 @@ export const components = [
     ),
     note: (
       <>
-        Use <code>pinned</code> for a discrete value label and <code>snaps</code> to snap to step positions. Keep{' '}
-        <code>value</code> in state and provide an accessible label.
+        Use <code>pinned</code> to display the value and <code>snaps</code> to snap to step positions. Provide an
+        accessible name with <code>aria-label</code> or <code>aria-labelledby</code>.
       </>
     ),
   },
@@ -439,8 +431,7 @@ export const components = [
     ),
     note: (
       <>
-        The parent controls <code>active</code>. Handle <code>onTimeout</code> to close after the requested duration and{' '}
-        <code>onClick</code> for the action button.
+        Keep the <code>label</code> brief and use <code>action</code> for an optional follow-up such as Undo.
       </>
     ),
   },
@@ -457,9 +448,7 @@ export const components = [
     ),
     note: (
       <>
-        Use <code>checked</code> and <code>onChange</code> for controlled state, or <code>defaultChecked</code> with{' '}
-        <code>name</code> for native forms and reset. Set <code>indeterminate</code> for a partially selected
-        collection. Use a short <code>label</code> that describes the setting rather than the action.
+        Use a short <code>label</code> that names the setting, such as “Do not disturb,” and apply changes immediately.
       </>
     ),
   },
@@ -475,9 +464,8 @@ export const components = [
     ),
     note: (
       <>
-        Put <code>TableHead</code> and <code>TableRow</code> directly inside <code>Table</code>. Use{' '}
-        <code>selectable</code> and <code>onRowSelect</code> for selection, and keep <code>selected</code> on each row
-        in sync with your state.
+        Put <code>TableHead</code> and <code>TableRow</code> directly inside <code>Table</code>. Set{' '}
+        <code>{'selectable={false}'}</code> when rows do not need selection controls.
       </>
     ),
   },
@@ -494,8 +482,7 @@ export const components = [
     ),
     note: (
       <>
-        Control the selected tab with <code>index</code> and <code>onChange</code>. Each <code>Tab</code> supplies its{' '}
-        <code>label</code> and panel content. Arrow keys move between enabled tabs.
+        Each <code>Tab</code> provides its <code>label</code> and panel content. Arrow keys move between enabled tabs.
       </>
     ),
   },
@@ -512,8 +499,8 @@ export const components = [
     ),
     note: (
       <>
-        Values are <code>Date</code> objects. Choose <code>format="24hr"</code> or <code>format="ampm"</code> to match
-        your application.
+        Values are <code>Date</code> objects. Use <code>format="24hr"</code> for a 24-hour clock or{' '}
+        <code>format="ampm"</code> for a 12-hour clock.
       </>
     ),
   },
@@ -525,8 +512,8 @@ export const components = [
     code: "'use client';\n\nimport { Button } from '@/components/ui/material/button';\nimport { Tooltip } from '@/components/ui/material/tooltip';\n\nconst HintButton = Tooltip(Button);\n\nexport default function Example() {\n  return (\n    <HintButton primary raised label=\"Save idea\"\n      tooltip=\"Keep this idea for later\" />\n  );\n}",
     note: (
       <>
-        Wrap a trigger with <code>Tooltip</code>, or use the exported <code>useTooltip</code> hook. Tooltips supplement
-        an accessible label; they should not be the only way to name a control.
+        Define <code>Tooltip</code> decorators outside render, or use <code>useTooltip</code>. Keep essential
+        information visible and give the trigger an accessible label independent of its tooltip.
       </>
     ),
   },

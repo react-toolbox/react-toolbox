@@ -32,6 +32,14 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
   const guidelines = materialGuidelines[component.slug];
   const dependencies = exampleDependencies[component.slug] ?? [];
   const workflow = workflowExamples[component.slug];
+  const stateNotes = componentState[component.slug];
+  const installUrls = [component.slug, ...dependencies].map(
+    (name) => `${new URL(registry.catalog.homepage).origin}/r/${name}.json`,
+  );
+  const installCommand =
+    installUrls.length === 1
+      ? `pnpm dlx shadcn@latest add ${installUrls[0]}`
+      : ['pnpm dlx shadcn@latest add', ...installUrls.map((url) => `  ${url}`)].join(' \\\n');
   return (
     <DocsArticle
       title={component.title}
@@ -42,7 +50,7 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
         { id: 'installation', title: 'Installation' },
         { id: 'usage', title: 'Usage' },
         ...(hasCompositionExample(component.slug) ? [{ id: 'composition', title: 'Composition' }] : []),
-        { id: 'state', title: 'State and callbacks' },
+        ...(stateNotes ? [{ id: 'state', title: 'State and callbacks' }] : []),
         { id: 'api', title: 'API reference' },
         { id: 'material-guidelines', title: 'Material guidelines' },
       ]}
@@ -55,11 +63,7 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
         />
       </section>
       <DocsSection id="installation" title="Installation">
-        <CodeBlock
-          language="Terminal"
-          label={`Install ${component.title}`}
-          code={`pnpm dlx shadcn@latest add ${[component.slug, ...dependencies].map((name) => `${new URL(registry.catalog.homepage).origin}/r/${name}.json`).join(' ')}`}
-        />
+        <CodeBlock language="Terminal" label={`Install ${component.title}`} code={installCommand} />
         <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
           New here?{' '}
           <Link href="/docs/installation" className="text-toolbox-primary underline underline-offset-2">
@@ -71,13 +75,6 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
       </DocsSection>
       <DocsSection id="usage" title="Usage">
         <p className="text-toolbox-body/6 text-toolbox-text">{component.note}</p>
-        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
-          Use the Code tab above for a complete example. The import follows your configured UI alias. See{' '}
-          <Link href="/docs/theming" className="text-toolbox-primary underline underline-offset-2">
-            Theming
-          </Link>{' '}
-          for CSS variables and Tailwind customization.
-        </p>
         {workflow && !hasCompositionExample(component.slug) && (
           <div className="mt-6 space-y-4">
             <h3 className="text-toolbox-subheading">{workflow.title}</h3>
@@ -90,23 +87,23 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
           <CompositionPreview slug={component.slug} />
         </DocsSection>
       )}
-      <DocsSection id="state" title="State and callbacks">
-        <div className="space-y-4 text-toolbox-body/6 text-toolbox-text">
-          {componentState[component.slug].map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-        </div>
-        {component.slug === 'input' && (
-          <div className="mt-4">
-            <CodeBlock
-              label="Controlled and uncontrolled inputs"
-              code={
-                '// Controlled: the parent owns the current value.\nconst [name, setName] = useState("");\n<Input label="Name" value={name} onChange={setName} />\n\n// Uncontrolled: Input owns the value after initialization.\n<Input label="Name" defaultValue="Javi" name="name" />'
-              }
-            />
+      {stateNotes && (
+        <DocsSection id="state" title="State and callbacks">
+          <div className="space-y-3 text-toolbox-body/6 text-toolbox-text [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5">
+            {stateNotes}
           </div>
-        )}
-      </DocsSection>
+          {component.slug === 'input' && (
+            <div className="mt-4">
+              <CodeBlock
+                label="Controlled and uncontrolled inputs"
+                code={
+                  '// Controlled: the parent owns the current value.\nconst [name, setName] = useState("");\n<Input label="Name" value={name} onChange={setName} />\n\n// Uncontrolled: Input owns the value after initialization.\n<Input label="Name" defaultValue="Javi" name="name" />'
+                }
+              />
+            </div>
+          )}
+        </DocsSection>
+      )}
       <DocsSection id="api" title="API reference">
         <ApiReference slug={component.slug} />
       </DocsSection>

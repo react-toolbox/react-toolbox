@@ -14,35 +14,75 @@ import TooltipComposition from './examples/tooltip';
 const examples = {
   dialog: {
     Component: DialogComposition,
-    note: 'Own the form, body, and footer independently. Radix handles focus, dismissal, and accessible titles. Close the controlled root after a successful save.',
+    note: (
+      <>
+        Compose the form, body, and footer independently. <code>DialogRoot</code> coordinates focus and dismissal; close
+        it after a successful save.
+      </>
+    ),
   },
   drawer: {
     Component: DrawerComposition,
-    note: 'Compose a right-hand drawer with a nested dialog. Escape closes the topmost surface and restores focus to its trigger.',
+    note: (
+      <>
+        Nest <code>DialogRoot</code> inside a drawer. Escape closes the topmost surface and restores focus to its
+        trigger.
+      </>
+    ),
   },
   tabs: {
     Component: TabsComposition,
-    note: 'Stable values allow custom trigger wrappers and reordered tabs. Manual activation separates arrow-key focus from selection; forceMount preserves a draft.',
+    note: (
+      <>
+        Stable values support custom trigger wrappers and reordered tabs. <code>activationMode="manual"</code> separates
+        arrow-key focus from selection; <code>forceMount</code> preserves the draft.
+      </>
+    ),
   },
   menu: {
     Component: MenuComposition,
-    note: 'DropdownMenu parts add portaled submenus, checkbox and radio items, typeahead, and collision handling. Prevent the selection event to keep a checkbox menu open.',
+    note: (
+      <>
+        Compose submenus, checkbox items, and radio groups inside <code>DropdownMenuRoot</code>. Prevent{' '}
+        <code>onSelect</code> to keep the menu open after selection.
+      </>
+    ),
   },
   dropdown: {
     Component: DropdownComposition,
-    note: 'Compose the trigger, selected value, groups, and options. The native form receives the value; keyboard navigation and popup positioning come from Radix Select.',
+    note: (
+      <>
+        Compose the trigger, selection, groups, and options. Set <code>name</code> on <code>DropdownRoot</code> to
+        include its value in the native form.
+      </>
+    ),
   },
   autocomplete: {
     Component: AutocompleteComposition,
-    note: 'Base UI powers filtering, multiple selection, removable chips, object values, and native form fields. Style any part with className; use render to substitute its element.',
+    note: (
+      <>
+        <code>AutocompleteRoot</code> supports object values and multiple selection with removable chips. Style parts
+        with <code>className</code> or use <code>render</code> to substitute their elements.
+      </>
+    ),
   },
   table: {
     Component: TableComposition,
-    note: 'Use native table sections and custom row components. Row values keep selection stable through reordering and filtering. Header cells inherit their semantics through wrappers.',
+    note: (
+      <>
+        Compose native sections and custom rows with <code>TableRoot</code>. Row <code>value</code> keeps selection
+        stable through reordering and filtering; header semantics pass through wrappers.
+      </>
+    ),
   },
   tooltip: {
     Component: TooltipComposition,
-    note: 'A shared provider coordinates hover delays. Each root also supports controlled state, keyboard descriptions, collision handling, and touch long-press.',
+    note: (
+      <>
+        <code>TooltipProvider</code> shares hover delays across triggers. Each <code>TooltipRoot</code> supports
+        keyboard descriptions, collision handling, and touch long-press.
+      </>
+    ),
   },
 };
 export function hasCompositionExample(slug: ComponentSlug): slug is keyof typeof examples {
@@ -66,7 +106,7 @@ export default async function CompositionPreview({ slug }: { slug: keyof typeof 
   source = source.replaceAll("'react-toolbox/", "'@/components/ui/material/");
   return (
     <div className="space-y-6">
-      <p className="text-toolbox-body/6 text-toolbox-text">{note} Parts accept native or primitive props and refs.</p>
+      <p className="text-toolbox-body/6 text-toolbox-text">{note}</p>
       <div data-composition-example={slug} className="rounded border border-toolbox-divider bg-white p-6">
         <Component />
       </div>
