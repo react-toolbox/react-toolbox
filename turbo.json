@@ -56,9 +56,10 @@
       "dependsOn": [
         "build"
       ],
-      "outputs": []
-    },
-    "test:styles": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/docs/releases/*.md"
+      ],
       "outputs": []
     },
     "registry:build": {

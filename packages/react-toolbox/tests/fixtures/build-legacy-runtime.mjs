@@ -10,8 +10,8 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 
-const root = path.resolve(import.meta.dirname, '..');
-const fixture = path.join(root, 'tests/fixtures');
+const root = path.resolve(import.meta.dirname, '../..');
+const fixture = import.meta.dirname;
 const workspace = path.resolve(process.env.REACT_TOOLBOX_LEGACY_DIR || path.join(os.tmpdir(), 'react-toolbox-legacy-runtime'));
 const sourceRevision = 'de8578c1187bdf5db5777d403b5880a7e5ec3f5d';
 const dependencies = {
@@ -89,7 +89,7 @@ await build({
   define: { 'process.env.NODE_ENV': '"production"' },
   minify: true,
   legalComments: 'inline',
-  banner: { js: `/* Test-only original React Toolbox runtime. Source: ${sourceRevision}. Rebuild: node scripts/build-legacy-runtime.mjs */` },
+  banner: { js: `/* Test-only original React Toolbox runtime. Source: ${sourceRevision}. Rebuild: node tests/fixtures/build-legacy-runtime.mjs */` },
   plugins: [{
     name: 'original-toolbox-and-compiled-style-maps',
     setup(builder) {

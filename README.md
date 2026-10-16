@@ -36,8 +36,9 @@ packages/react-toolbox/     Private implementation workspace used by the docs ap
   src/material/            Maintained source, matching the installed material/ tree
     <family>/              Components, types, and automatic-style entry
     foundations/           Shared styles, theme, motion, portals, and date/time behavior
-  scripts/                 Builds, registry generation, and consumer verification
-  tests/                   Unit, browser, type, and immutable reference fixtures
+  scripts/                 Builds, releases, deployment, and consumer installation checks
+  tests/                   Component, style, registry, release, browser, and type tests
+    fixtures/              Immutable references and their reproduction tools
   registry/                Generated registry payloads and API reference
   registry.json            Generated source catalog
 ```
@@ -77,7 +78,7 @@ TOOLBOX_BROWSER=webkit pnpm test:browser
 pnpm test:registry:install
 ```
 
-The registry checks every family’s dependency closure, exact source and CSS contents, schemas, and strict TypeScript. The actual shadcn CLI is also tested in isolated Next.js and Vite apps, with a custom UI alias, existing host components, local source customizations, and no React Toolbox package. Browser checks cover automatic styles, fonts, tokens, hydration, keyboard interaction, and reduced motion. Automated accessibility checks complement the manual verification described in the release guide.
+`pnpm test` runs the component, style, registry, and release snapshot tests; `pnpm check` also runs lint and type checks. The registry tests check every family’s dependency closure, exact source and CSS contents, schemas, and strict TypeScript. The actual shadcn CLI is also tested in isolated Next.js and Vite apps, with a custom UI alias, existing host components, local source customizations, and no React Toolbox package. Browser checks cover automatic styles, fonts, tokens, hydration, keyboard interaction, and reduced motion. Automated accessibility checks complement the manual verification described in the release guide.
 
 Browser tests start the production site automatically when port 3100 is free. CI builds its own instance. The [M1 audit](docs/material-1-audit.md) records intentional spec corrections. Original CSS and React 16 reference artifacts are never regenerated to approve visual differences; the shared gallery input remains unchanged.
 

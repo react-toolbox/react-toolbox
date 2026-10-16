@@ -6,7 +6,7 @@ React Toolbox ships editable source through the shadcn registry. The workspace p
 
 1. Update `packages/react-toolbox/package.json` to a new semantic version. Never reuse a release version.
 2. Write `docs/releases/<version>.md`. Describe user-visible changes, migration steps and any known limitations. Record changes to installed paths and props explicitly.
-3. Run `pnpm check`, `pnpm test:browser`, `TOOLBOX_BROWSER=webkit pnpm test:browser`, `pnpm test:registry:install`, and `pnpm --filter react-toolbox test:release`. The installation check creates independent Next.js and Vite projects, uses the real shadcn CLI, and checks coexistence with an official shadcn Button and source overwrite behavior.
+3. Run `pnpm check`, `pnpm test:browser`, `TOOLBOX_BROWSER=webkit pnpm test:browser`, and `pnpm test:registry:install`. The standard test suite includes registry, style, and release snapshot verification. The installation check creates independent Next.js and Vite projects, uses the real shadcn CLI, and checks coexistence with an official shadcn Button and source overwrite behavior.
 4. Complete the manual accessibility checks in `docs/accessibility.md` for keyboard operation, zoom, high contrast and a real screen reader. Automated checks do not establish screen-reader usability.
 5. Build the production documentation and verify its HTTPS registry with `pnpm --filter react-toolbox verify:deployment https://react-toolbox.io`. The live registry and documentation must correspond to the intended release commit.
 6. Commit the source, lockfile and notes. Create and push `v<version>` only when ready to publish. For example, a package version `3.0.0-next.0` requires tag `v3.0.0-next.0`.

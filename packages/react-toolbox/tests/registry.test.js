@@ -1,92 +1,29 @@
+// @vitest-environment node
+import { it } from 'vitest';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdtemp, mkdir, readFile, writeFile, symlink, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, writeFile, symlink, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import { build } from 'esbuild';
 import { registrySchema, registryItemSchema } from 'shadcn/schema';
 import postcss from 'postcss';
 import tailwind from '@tailwindcss/postcss';
-import { createRegistry } from './build-registry.mjs';
+import { createRegistry } from '../scripts/build-registry.mjs';
+import { dependencyClosure, installedFiles, materialize, verifyStyles } from './helpers/registry.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
-export function dependencyClosure(registry, name) {
-  const byName = new Map(registry.items.map((item) => [item.name, item]));
-  const result = new Map();
-  const visiting = new Set();
-  function visit(current) {
-    if (visiting.has(current)) throw new Error(`Registry dependency cycle at ${current}`);
-    if (result.has(current)) return;
-    const item = byName.get(current);
-    assert(item, `Missing registry dependency ${current}`);
-    visiting.add(current);
-    for (const url of item.registryDependencies) {
-      assert(url.startsWith(registry.baseUrl), `Dependency escapes this release: ${url}`);
-      visit(
-        new URL(url).pathname
-          .split('/')
-          .at(-1)
-          .replace(/\.json$/, ''),
-      );
-    }
-    visiting.delete(current);
-    result.set(current, item);
-  }
-  visit(name);
-  return [...result.values()];
-}
-export function installedFiles(registry, name) {
-  const files = new Map();
-  for (const item of dependencyClosure(registry, name))
-    for (const file of item.files) {
-      const previous = files.get(file.target);
-      assert(!previous || previous.content === file.content, `Conflicting contents for ${file.target}`);
-      files.set(file.target, file);
-    }
-  return [...files.values()];
-}
-export async function materialize(registry, name, directory, componentDirectory = 'src/components/ui') {
-  for (const file of installedFiles(registry, name)) {
-    assert(file.target.startsWith('@ui/'));
-    const target = path.join(directory, componentDirectory, file.target.slice('@ui/'.length));
-    await mkdir(path.dirname(target), { recursive: true });
-    await writeFile(target, file.content);
-  }
-}
-export async function verifyStyles(directory, componentRoot) {
-  const css = await build({
-    entryPoints: [path.join(componentRoot, 'setup.css')],
-    bundle: true,
-    write: false,
-    outdir: path.join(directory, 'build'),
-    loader: { '.woff': 'file', '.woff2': 'file', '.ttf': 'file', '.eot': 'file' },
-    logLevel: 'silent',
-  });
-  assert(css.outputFiles.some((file) => file.path.endsWith('.css')));
-  const relative = path.relative(directory, componentRoot).split(path.sep).join('/');
-  for (const entry of ['tailwind.css', 'shadcn.css']) {
-    const fullTailwind = await postcss([tailwind({ base: directory })]).process(
-      `@import 'tailwindcss';\n@import './${relative}/setup.css';\n@import './${relative}/${entry}';\n`,
-      { from: path.join(directory, 'consumer.css') },
-    );
-    assert(fullTailwind.css.includes('.rt-button-button'), 'Full Tailwind consumer did not load component styles');
-    assert(fullTailwind.css.includes('box-sizing: border-box'), 'Full Tailwind consumer did not include Preflight');
-    if (entry === 'shadcn.css')
-      assert(fullTailwind.css.includes('--rt-shadcn'), 'Optional semantic theme bridge was not included');
-  }
-}
-export async function verifyRegistry() {
+
+it('generates deterministic registry items with exact source and complete dependencies', async () => {
   const registry = await createRegistry();
-  registrySchema.parse(registry.catalog);
+  const catalog = registrySchema.parse(registry.catalog);
   registry.items.forEach((item) => registryItemSchema.parse(item));
-  const sourceCatalog = registrySchema.parse(JSON.parse(await readFile(path.join(root, 'registry.json'), 'utf8')));
-  const catalogItems = new Map(sourceCatalog.items.map((item) => [item.name, item]));
+  const catalogItems = new Map(catalog.items.map((item) => [item.name, item]));
   assert.deepEqual(
     [...catalogItems.keys()],
     registry.items.map((item) => item.name),
-    'Source catalog is stale; run pnpm registry:build',
+    'Catalog must include every registry item in order',
   );
   assert.deepEqual(await createRegistry(), registry, 'Registry generation must be deterministic');
   assert.equal(
@@ -171,14 +108,18 @@ export async function verifyRegistry() {
     assert.equal(
       catalogItem.meta?.sourceSha256,
       digest,
-      `Source catalog is stale for ${item.name}; run pnpm registry:build`,
+      `Incorrect catalog source provenance: ${item.name}`,
     );
     dependencyClosure(registry, item.name);
   }
+});
+
+it('compiles isolated families and standalone consumers with scoped styles', async () => {
+  const registry = await createRegistry();
   const temporary = await mkdtemp(path.join(tmpdir(), 'react-toolbox-registry-check-'));
   try {
-    // Bundle every isolated family closure; an accidentally omitted dependency
-    // cannot be satisfied by a sibling from the all-components installation.
+    /** Bundle every isolated family closure; an accidentally omitted dependency
+     * cannot be satisfied by a sibling from the all-components installation. */
     for (const family of registry.families) {
       const directory = path.join(temporary, family);
       await materialize(registry, family.replaceAll('_', '-'), directory);
@@ -218,8 +159,8 @@ export async function verifyRegistry() {
     });
     await verifyStyles(all, path.join(all, 'src/components/ui/material/foundations/styles'));
 
-    // Compile only copied source, with host auto-detection disabled. A Button
-    // install must not ship presentation or keyframes from unrelated families.
+    /** Compile only copied source, with host auto-detection disabled. A Button
+     * install must not ship presentation or keyframes from unrelated families. */
     const subset = path.join(temporary, 'button');
     await symlink(path.join(root, 'node_modules'), path.join(subset, 'node_modules'), 'dir');
     const minimal = await postcss([tailwind({ base: subset })]).process(
@@ -234,9 +175,4 @@ export async function verifyRegistry() {
   } finally {
     await rm(temporary, { recursive: true, force: true });
   }
-  console.log(
-    `Verified ${registry.families.length} isolated family closures, exact source/CSS contents, and a strict standalone all-components TypeScript build.`,
-  );
-  return registry;
-}
-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) await verifyRegistry();
+}, 60_000);

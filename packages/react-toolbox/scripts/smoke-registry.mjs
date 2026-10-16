@@ -8,7 +8,7 @@ import { build } from 'esbuild';
 import { chromium } from '@playwright/test';
 import postcss from 'postcss';
 import { createRegistry } from './build-registry.mjs';
-import { installedFiles, verifyStyles } from './verify-registry.mjs';
+import { installedFiles, verifyStyles } from '../tests/helpers/registry.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 const pkg = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'));

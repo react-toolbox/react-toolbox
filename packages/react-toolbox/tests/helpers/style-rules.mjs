@@ -8,7 +8,7 @@ import calc from 'postcss-calc';
 import selectorParser from 'postcss-selector-parser';
 import { utilityRules } from './utility-rules.mjs';
 
-const root = fileURLToPath(new URL('..', import.meta.url));
+const root = fileURLToPath(new URL('../..', import.meta.url));
 const fixture = path.join(root, 'tests/fixtures/legacy-styles');
 const entry = await readFile(path.join(root, 'src/material/foundations/styles/styles.css'), 'utf8');
 const sheets = [...entry.matchAll(/@import "\.\/([^"]+)"/g)].map((match) => match[1]);

@@ -8,8 +8,10 @@ The fixture is test-only; it is not shipped by the Next.js application or librar
 
 ## Rebuilding
 
+From `packages/react-toolbox`:
+
 ```sh
-node scripts/build-legacy-runtime.mjs
+node tests/fixtures/build-legacy-runtime.mjs
 ```
 
 The first run installs the exact dependencies into the OS temporary directory. Subsequent runs reuse that installation. `--install` reinstalls from the archived `legacy-runtime-lock.json`. Set `REACT_TOOLBOX_LEGACY_DIR` to select another isolated directory. The original source commit must remain available in Git. The script copies the current gallery as shared demo input and writes metadata/hashes to `legacy-runtime.json`.

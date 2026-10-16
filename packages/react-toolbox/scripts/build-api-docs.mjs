@@ -374,10 +374,7 @@ const sourceHash = createHash('sha256');
 for (const module of [...modules.values()].sort((a, b) => a.file.localeCompare(b.file)))
   sourceHash.update(path.relative(root, module.file)).update('\0').update(module.source).update('\0');
 const data = `${JSON.stringify({ schemaVersion: 1, sourceHash: sourceHash.digest('hex'), families: result }, null, 2)}\n`;
-if (process.argv.includes('--check')) {
-  if (!existsSync(output) || readFileSync(output, 'utf8') !== data)
-    throw new Error('API documentation is stale. Run node scripts/build-api-docs.mjs.');
-} else writeFileSync(output, data);
+writeFileSync(output, data);
 console.log(
   `Documented ${Object.keys(result).length} families, ${Object.values(result).reduce((total, family) => total + family.apis.length, 0)} public components/hooks/factories.`,
 );

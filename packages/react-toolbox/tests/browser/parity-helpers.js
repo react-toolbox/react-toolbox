@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import { fileURLToPath } from 'node:url';
-import { componentClasses } from '../../scripts/component-classes.mjs';
+import { componentClasses } from '../helpers/component-classes.mjs';
 
 const utilitySlots = Object.fromEntries(
   Object.entries(await componentClasses(fileURLToPath(new URL('../../', import.meta.url)))).map(([marker, classes]) => [
@@ -8,7 +8,7 @@ const utilitySlots = Object.fromEntries(
     classes.split(/\s+/).filter((name) => name !== marker),
   ]),
 );
-import { referenceCss } from '../../scripts/style-rules.mjs';
+import { referenceCss } from '../helpers/style-rules.mjs';
 
 const referenceStyles = referenceCss();
 
@@ -19,7 +19,7 @@ export const comparisonCanvasStyles =
 
 // Use immutable legacy PostCSS output plus individually reviewed M1 corrections.
 // Keep Next's font and gallery utility styles intact. Current CSS is never copied
-// into this reference, and unexpected declarations still fail verify-styles.
+// into this reference, and unexpected declarations still fail the style tests.
 export async function useOriginalStyles(page) {
   await page.evaluate((slots) => {
     // The independent reference must never inherit migrated presentation utilities.

@@ -2,7 +2,7 @@ import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
 import postcss from 'postcss';
 import tailwind from '@tailwindcss/postcss';
-import { componentClasses } from '../../scripts/component-classes.mjs';
+import { componentClasses } from '../helpers/component-classes.mjs';
 import { cn } from '../../src/material/foundations/styles/cn.ts';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));

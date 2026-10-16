@@ -169,22 +169,20 @@ For Vercel deployment settings and public-domain checks, see the [docs app deplo
 
 The private implementation package keeps its internal build for the docs app. Its version is registry provenance metadata; npm publishing and Changesets are not part of the release workflow. Deploy the docs app to ship the website and registry together.
 
-For standalone inspection or static hosting of the same registry:
+For local inspection, use the docs app's `/r/registry.json` and `/r/<name>.json` routes. To generate the same registry for static hosting:
 
 ```sh
-pnpm registry:serve
 REGISTRY_ORIGIN=https://your-domain.example/toolbox pnpm registry:build
 ```
 
-The inspection server uses port 4173. Static output is `packages/react-toolbox/registry/public`, containing `registry.json`, `r/registry.json`, and `r/<name>.json`. Static dependency URLs use the configured origin, including an optional subpath. This is the same source registry, not a separate installation format.
+Static output is `packages/react-toolbox/registry/public`, containing `registry.json`, `r/registry.json`, and `r/<name>.json`. Static dependency URLs use the configured origin, including an optional subpath. This is the same source registry, not a separate installation format.
 
 `registry.json` is a generated source catalog; its file paths are relative to `packages/react-toolbox`. The bundled snapshot, generated API reference, and public payloads are ignored by Git. Public entry files are maintained alongside their components. Run `pnpm registry:build` before inspecting or consuming the catalog directly. Never hand-edit generated files.
 
 ## Verification
 
 ```sh
-pnpm registry:build
-pnpm test:registry
+pnpm test
 pnpm test:registry:install
 ```
 
