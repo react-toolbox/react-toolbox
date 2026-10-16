@@ -41,7 +41,7 @@ it('preserves the reviewed Material 1 declarations and independent browser refer
       /** Autocomplete composes Chip. Its margin shorthand must retain the Chip
        * end margin that previously won by stylesheet order. Verify the explicit
        * utility against that independent reference value, not a new baseline. */
-      if (selector === '.rt-autocomplete-value' && property === 'margin-right') {
+      if (selector === '.rt-autocomplete-value' && property === 'margin-inline-end') {
         assert.equal(modern.get(property), expectedRules.get('.rt-chip-chip').get(property));
         continue;
       }

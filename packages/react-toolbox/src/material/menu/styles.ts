@@ -1,3 +1,4 @@
+import './tokens.css';
 export const iconClasses = [
   'rt-menu-icon',
   '[.rt-menu-iconMenu_&]:cursor-pointer',

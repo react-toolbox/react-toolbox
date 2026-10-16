@@ -1,9 +1,10 @@
 /* Standard Tailwind with scoped Material Design compatibility. */
 @layer theme, base, components, utilities;
 @import "tailwindcss";
-@import "react-toolbox/tailwind.css";
+@import "react-toolbox/shadcn.css";
 @import "material-icons/iconfont/material-icons.css" layer(base);
 @source "./**/*.{js,jsx,ts,tsx}";
+@source "../../../packages/react-toolbox/src/examples";
 
 /* Use the Material 4px subgrid for documentation layouts. */
 @theme {

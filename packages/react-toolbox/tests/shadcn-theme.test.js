@@ -2,15 +2,13 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import postcss from 'postcss';
+import { readSourceCss } from './helpers/css-imports.mjs';
 
 const directory = join(process.cwd(), 'src/material/foundations/styles');
-const entry = readFileSync(join(directory, 'styles.css'), 'utf8');
 const defaults = new Map();
-for (const [, filename] of entry.matchAll(/@import "\.\/([^"]+)"/g)) {
-  postcss.parse(readFileSync(join(directory, filename), 'utf8')).walkRules(':root', (rule) => {
-    rule.walkDecls(/^--/, (declaration) => defaults.set(declaration.prop, declaration.value));
-  });
-}
+(await readSourceCss(join(directory, 'styles.css'))).walkRules(':root', (rule) => {
+  rule.walkDecls(/^--/, (declaration) => defaults.set(declaration.prop, declaration.value));
+});
 const bridge = postcss.parse(readFileSync(join(directory, 'shadcn.css'), 'utf8'));
 const scoped = new Map();
 bridge.walkDecls(/^--/, (declaration) => scoped.set(declaration.prop, declaration.value));

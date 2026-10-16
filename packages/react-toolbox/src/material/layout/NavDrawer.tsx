@@ -1,10 +1,12 @@
 'use client';
+import '../drawer/tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { pinnedClasses, clippedClasses } from './styles';
 import { cn } from '../foundations/styles/cn';
 import Drawer, { type DrawerProps } from '../drawer';
 import type { LayoutTheme, LayoutBreakpoint } from './types';
+import { useLayoutDrawer } from './useLayoutDrawer';
 export interface NavDrawerProps extends Omit<DrawerProps, 'theme' | 'classNames'> {
   clipped?: boolean;
   permanentAt?: LayoutBreakpoint;
@@ -17,14 +19,15 @@ export interface NavDrawerProps extends Omit<DrawerProps, 'theme' | 'classNames'
 export function NavDrawer({
   active,
   className = '',
-  clipped,
-  permanentAt: _permanentAt,
-  pinned = false,
+  clipped = false,
+  permanentAt,
+  pinned: suppliedPinned = false,
   theme: legacyTheme,
   classNames,
   ...other
 }: NavDrawerProps) {
   const theme = mergeStyleSlots(legacyTheme, classNames);
+  const pinned = useLayoutDrawer('navigation', { pinned: suppliedPinned, clipped, permanentAt });
   return (
     <Drawer
       {...other}
@@ -32,6 +35,8 @@ export function NavDrawer({
       className={cn(
         pinned && cn(pinnedClasses, theme?.pinned),
         clipped && cn(clippedClasses, theme?.clipped),
+        other.type === undefined &&
+          'rtl:[.rt-drawer-left&]:left-auto rtl:[.rt-drawer-left&]:right-0 rtl:[.rt-drawer-left&]:border-r-0 rtl:[.rt-drawer-left&]:[border-left:1px_solid_var(--drawer-border-color)] rtl:[.rt-drawer-left&:not(.rt-drawer-active)]:transform-[translateX(100%)]',
         className,
       )}
       insideTree

@@ -21,7 +21,21 @@ const keyProps: Record<ComponentSlug, Record<string, string[]>> = {
   checkbox: { Checkbox: ['label', 'indeterminate', 'onChange'] },
   chip: { Chip: ['deletable', 'deleteLabel', 'disabled', 'onDeleteClick'] },
   'date-picker': {
-    DatePicker: ['value', 'defaultValue', 'onChange', 'minDate', 'maxDate', 'disabledDates', 'autoOk', 'locale'],
+    DatePicker: [
+      'value',
+      'defaultValue',
+      'onChange',
+      'minDate',
+      'maxDate',
+      'disabledDates',
+      'autoOk',
+      'locale',
+      'clearable',
+      'layout',
+      'labels',
+      'startYear',
+      'endYear',
+    ],
   },
   dialog: {
     Dialog: [
@@ -52,6 +66,7 @@ const keyProps: Record<ComponentSlug, Record<string, string[]>> = {
   radio: { RadioGroup: ['value', 'defaultValue', 'onChange', 'name', 'disabled', 'required'] },
   ripple: { useRipple: ['centered', 'disabled', 'multiple', 'spread'] },
   slider: { Slider: ['value', 'defaultValue', 'onChange', 'onValueCommit', 'min', 'max', 'step', 'pinned'] },
+  sheet: {},
   snackbar: { Snackbar: ['active', 'label', 'action', 'onClick', 'timeout', 'onTimeout'] },
   switch: { Switch: ['label', 'onChange'] },
   table: {
@@ -60,7 +75,22 @@ const keyProps: Record<ComponentSlug, Record<string, string[]>> = {
     TableCell: ['numeric', 'sorted', 'tagName'],
   },
   tabs: { Tabs: ['index', 'defaultIndex', 'onChange', 'activationMode', 'loop', 'hideMode', 'fixed'] },
-  'time-picker': { TimePicker: ['value', 'defaultValue', 'onChange', 'format', 'open', 'onOpenChange'] },
+  'time-picker': {
+    TimePicker: [
+      'value',
+      'defaultValue',
+      'onChange',
+      'format',
+      'minTime',
+      'maxTime',
+      'minuteStep',
+      'clearable',
+      'layout',
+      'labels',
+      'open',
+      'onOpenChange',
+    ],
+  },
   tooltip: { useTooltip: ['tooltip', 'tooltipDelay', 'tooltipPosition', 'tooltipHideOnClick', 'tooltipShowOnClick'] },
 };
 

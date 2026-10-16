@@ -1,15 +1,16 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { itemClasses, disabledClasses } from './styles';
 import type { ListTheme } from './types';
-import type { ReactNode } from 'react';
+import { cloneElement, type ComponentPropsWithRef, type ReactElement, type ReactNode } from 'react';
 import { cn } from '../foundations/styles/cn';
 import Avatar from '../avatar';
 import FontIcon from '../font-icon';
 import ListItemContent from './ListItemContent';
 import ListItemActions from './ListItemActions';
-export interface ListItemLayoutProps {
+export interface ListItemLayoutOptions {
   avatar?: ReactNode;
   caption?: ReactNode;
   className?: string;
@@ -21,14 +22,24 @@ export interface ListItemLayoutProps {
   rightActions?: ReactNode[];
   rightIcon?: ReactNode;
   selectable?: boolean;
+  /** Native button, anchor, or ref-forwarding router link for the row's primary action. */
+  primaryAction?: ReactElement<{
+    children?: ReactNode;
+    className?: string;
+    'aria-disabled'?: boolean | 'true' | 'false';
+    tabIndex?: number;
+    disabled?: boolean;
+  }>;
   /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
   classNames?: ListTheme;
   /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
   theme?: ListTheme;
 }
+export interface ListItemLayoutProps extends ComponentPropsWithRef<'span'>, ListItemLayoutOptions {}
 export function ListItemLayout({
   avatar,
   caption,
+  children,
   className,
   disabled = false,
   itemContent,
@@ -38,18 +49,31 @@ export function ListItemLayout({
   rightActions = [],
   rightIcon,
   selectable = false,
+  primaryAction,
   theme: legacyTheme,
   classNames,
+  ...other
 }: ListItemLayoutProps) {
   const theme = mergeStyleSlots(legacyTheme, classNames);
-  const left = [
-    leftIcon && <FontIcon value={leftIcon} key="leftIcon" />,
+  const leading = [
+    leftIcon && <FontIcon aria-hidden value={leftIcon} key="leftIcon" />,
     avatar && <Avatar image={avatar} key="avatar" />,
-    ...leftActions,
   ];
-  const right = [rightIcon && <FontIcon value={rightIcon} key="rightIcon" />, ...rightActions];
+  const left = primaryAction ? leading : [...leading, ...leftActions];
+  const right = [rightIcon && <FontIcon aria-hidden value={rightIcon} key="rightIcon" />, ...rightActions];
+  const primaryContent = (
+    <>
+      {left.some(Boolean) && (
+        <ListItemActions type="left" theme={theme}>
+          {left}
+        </ListItemActions>
+      )}
+      {itemContent ?? children ?? <ListItemContent theme={theme} caption={caption} legend={legend} />}
+    </>
+  );
   return (
     <span
+      {...other}
       className={cn(
         itemClasses,
         theme?.item,
@@ -63,14 +87,35 @@ export function ListItemLayout({
         className,
       )}
     >
-      {left.some(Boolean) && (
-        <ListItemActions type="left" theme={theme}>
-          {left}
+      {primaryAction && leftActions.length > 0 && (
+        <ListItemActions
+          type="left"
+          theme={theme}
+          onClick={(event) => event.stopPropagation()}
+          onMouseDown={(event) => event.stopPropagation()}
+        >
+          {leftActions}
         </ListItemActions>
       )}
-      {itemContent || <ListItemContent theme={theme} caption={caption} legend={legend} />}
+      {primaryAction
+        ? cloneElement(primaryAction, {
+            'aria-disabled': disabled || primaryAction.props['aria-disabled'],
+            tabIndex: disabled ? -1 : primaryAction.props.tabIndex,
+            ...(primaryAction.type === 'button' && { disabled: disabled || primaryAction.props.disabled }),
+            className: cn(
+              'flex flex-1 min-w-0 items-center self-stretch border-0 bg-transparent p-0 text-inherit [font:inherit] text-start cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--rt-color-primary)',
+              primaryAction.props.className,
+            ),
+            children: primaryContent,
+          })
+        : primaryContent}
       {right.some(Boolean) && (
-        <ListItemActions type="right" theme={theme}>
+        <ListItemActions
+          type="right"
+          theme={theme}
+          onClick={primaryAction ? (event) => event.stopPropagation() : undefined}
+          onMouseDown={primaryAction ? (event) => event.stopPropagation() : undefined}
+        >
           {right}
         </ListItemActions>
       )}

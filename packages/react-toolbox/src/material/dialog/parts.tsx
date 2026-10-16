@@ -1,4 +1,6 @@
 'use client';
+import './tokens.css';
+import '../overlay/tokens.css';
 import * as Primitive from '@radix-ui/react-dialog';
 import type { ComponentProps } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -30,7 +32,7 @@ export function DialogOverlay({ className, style, ...props }: DialogOverlayProps
       {...theme}
       style={{ ...theme.style, ...style }}
       className={cn(
-        'fixed inset-0 z-300 bg-[rgb(from_var(--overlay-color)_r_g_b/var(--overlay-opacity))] data-[state=open]:animate-[toolbox-fade-in_var(--animation-duration)_var(--animation-curve-default)] data-[state=closed]:animate-[toolbox-fade-out_var(--animation-duration)_var(--animation-curve-default)] motion-reduce:animate-none!',
+        'fixed inset-0 z-(--z-index-higher) bg-[rgb(from_var(--overlay-color)_r_g_b/var(--overlay-opacity))] data-[state=open]:animate-[toolbox-fade-in_var(--animation-duration)_var(--animation-curve-default)] data-[state=closed]:animate-[toolbox-fade-out_var(--animation-duration)_var(--animation-curve-default)] motion-reduce:animate-none!',
         className,
       )}
     />
@@ -47,7 +49,7 @@ export function DialogContent({ className, style, ...props }: DialogContentProps
       style={{ ...theme.style, ...style }}
       className={cn(
         surfaceClasses,
-        'fixed left-1/2 top-1/2 z-301 flex w-[560px] max-w-[calc(100vw-48px)] max-h-[calc(100dvh-48px)] -translate-x-1/2 -translate-y-1/2 flex-col [box-shadow:var(--zdepth-shadow-5)] data-[state=open]:animate-[toolbox-enter_var(--animation-duration)_var(--animation-curve-linear-out-slow-in)] data-[state=closed]:animate-[toolbox-exit_var(--animation-duration)_var(--animation-curve-fast-out-linear-in)] motion-reduce:animate-none!',
+        'bg-(--dialog-color-white) text-(--rt-color-text) rounded-(--dialog-border-radius) fixed left-1/2 top-1/2 z-(--z-index-higher) flex w-[560px] max-w-[calc(100vw-48px)] max-h-[calc(100dvh-48px)] -translate-x-1/2 -translate-y-1/2 flex-col [box-shadow:var(--zdepth-shadow-5)] data-[state=open]:animate-[toolbox-enter_var(--animation-duration)_var(--animation-curve-linear-out-slow-in)] data-[state=closed]:animate-[toolbox-exit_var(--animation-duration)_var(--animation-curve-fast-out-linear-in)] motion-reduce:animate-none!',
         className,
       )}
     />
@@ -59,7 +61,7 @@ export function DialogTitle({ className, ...props }: DialogTitleProps) {
     <Primitive.Title
       data-slot="DialogTitle"
       {...props}
-      className={cn('m-0 text-[20px] leading-[28px] font-medium text-(--rt-color-text)', className)}
+      className={cn('m-0 text-[20px] leading-[28px] font-medium text-(--dialog-color-title)', className)}
     />
   );
 }
@@ -79,7 +81,7 @@ export function DialogBody({ className, ...props }: DialogBodyProps) {
     <div
       data-slot="DialogBody"
       {...props}
-      className={cn('min-h-0 overflow-y-auto p-[24px] text-[16px] leading-[24px]', className)}
+      className={cn('min-h-0 overflow-y-auto p-(--dialog-content-padding) text-[16px] leading-[24px]', className)}
     />
   );
 }
@@ -89,7 +91,10 @@ export function DialogFooter({ className, ...props }: DialogFooterProps) {
     <div
       data-slot="DialogFooter"
       {...props}
-      className={cn('flex shrink-0 flex-wrap items-center justify-end gap-[8px] p-[8px]', className)}
+      className={cn(
+        'flex shrink-0 flex-wrap items-center justify-end gap-(--dialog-navigation-padding) p-(--dialog-navigation-padding)',
+        className,
+      )}
     />
   );
 }

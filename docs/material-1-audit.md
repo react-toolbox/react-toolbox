@@ -1,5 +1,7 @@
 # Material Design 1 audit
 
+The [16 October component readiness review](component-review.md) records the latest audit and implementation outcome across every public family. The pass unifies modal ownership and family theming, corrects interaction and composition defects, reduces shared CSS, and adds range sliders/calendars, scheduling constraints, gesture sheets and an editable themed distribution. Its current verification section supersedes the historical results below; earlier statements about missing capabilities describe those earlier revisions.
+
 ## Documentation interface — 15 October 2026
 
 The documentation shell is reviewed against M1 [typography](https://m1.material.io/style/typography.html), [color](https://m1.material.io/style/color.html), [keylines](https://m1.material.io/layout/metrics-keylines.html), [navigation drawers](https://m1.material.io/patterns/navigation-drawer.html), [data tables](https://m1.material.io/components/data-tables.html), and [accessibility](https://m1.material.io/usability/accessibility.html).

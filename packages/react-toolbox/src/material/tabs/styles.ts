@@ -1,3 +1,4 @@
+import './tokens.css';
 export const activeClasses = [
   'rt-tabs-active',
   '[.rt-tabs-label&]:text-(--tab-text-color)',

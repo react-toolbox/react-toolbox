@@ -1,0 +1,37 @@
+@layer theme {
+  /* app bar */
+  :root {
+    --appbar-color: var(--rt-color-primary-dark);
+    --appbar-contrast: var(--rt-color-primary-contrast);
+    --appbar-title-font-size: calc(2 * var(--unit));
+    --appbar-title-font-weight: 500;
+    --appbar-title-total-distance: calc(8 * var(--unit));
+    --appbar-height: calc(6.4 * var(--unit));
+    --appbar-height-m-portrait: calc(5.6 * var(--unit));
+    --appbar-height-m-landscape: calc(4.8 * var(--unit));
+    --appbar-h-padding: calc(2.4 * var(--unit));
+    --appbar-title-distance: calc(var(--appbar-title-total-distance) - var(--appbar-h-padding));
+  }
+  [data-react-toolbox-tokens~="--rt-color-primary-dark"],
+  [data-react-toolbox-tokens~="--palette-indigo-700"] {
+    --appbar-color: var(--rt-color-primary-dark);
+  }
+  [data-react-toolbox-tokens~="--rt-color-dark-contrast"],
+  [data-react-toolbox-tokens~="--rt-color-primary-contrast"],
+  [data-react-toolbox-tokens~="--rt-color-white"] {
+    --appbar-contrast: var(--rt-color-primary-contrast);
+  }
+  [data-react-toolbox-tokens~="--unit"] {
+    --appbar-title-font-size: calc(2 * var(--unit));
+    --appbar-title-total-distance: calc(8 * var(--unit));
+    --appbar-height: calc(6.4 * var(--unit));
+    --appbar-height-m-portrait: calc(5.6 * var(--unit));
+    --appbar-height-m-landscape: calc(4.8 * var(--unit));
+    --appbar-h-padding: calc(2.4 * var(--unit));
+  }
+  [data-react-toolbox-tokens~="--appbar-h-padding"],
+  [data-react-toolbox-tokens~="--appbar-title-total-distance"],
+  [data-react-toolbox-tokens~="--unit"] {
+    --appbar-title-distance: calc(var(--appbar-title-total-distance) - var(--appbar-h-padding));
+  }
+}

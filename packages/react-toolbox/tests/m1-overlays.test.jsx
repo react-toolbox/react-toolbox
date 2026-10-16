@@ -33,9 +33,9 @@ describe('M1 overlay and navigation behavior', () => {
         <Dialog ref={ref} active delay={80} title="Draft" />
       </StrictMode>,
     );
-    expect(ref.current).toHaveAttribute('aria-hidden', 'true');
+    expect(ref.current).not.toHaveClass('rt-dialog-active');
     advance(19);
-    expect(ref.current).toHaveAttribute('aria-hidden', 'true');
+    expect(ref.current).not.toHaveClass('rt-dialog-active');
     advance(1);
     expect(screen.getByRole('dialog', { name: 'Draft' })).toBe(ref.current);
     view.rerender(
@@ -124,7 +124,8 @@ describe('M1 overlay and navigation behavior', () => {
     fireEvent.keyDown(document.activeElement, { key: 'Tab', shiftKey: true });
     expect(screen.getByRole('button', { name: 'Discard' })).toHaveFocus();
     act(() => opener.focus());
-    expect(dialog).toHaveFocus();
+    /** Radix restores the last focused control when focus escapes the modal. */
+    expect(screen.getByRole('button', { name: 'Discard' })).toHaveFocus();
     view.rerender(
       <StrictMode>
         <Dialog active={false} title="Discard draft?" />

@@ -21,6 +21,7 @@ export * from './progress-bar';
 export * from './radio';
 export * from './ripple';
 export * from './slider';
+export * from './sheet';
 export * from './snackbar';
 export * from './switch';
 export * from './table';

@@ -2,7 +2,7 @@
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { buttonClassName, rippleWrapperClasses, iconClasses } from './styles';
-import type { ChangeEventHandler, ComponentPropsWithRef, Ref } from 'react';
+import type { ChangeEventHandler, ComponentPropsWithRef, ComponentPropsWithoutRef, Ref } from 'react';
 import { cn } from '../foundations/styles/cn';
 import FontIcon from '../font-icon';
 import { useRipple } from '../ripple';
@@ -16,6 +16,11 @@ export interface BrowseButtonProps
   name?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   inputRef?: Ref<HTMLInputElement>;
+  /** Native file-input attributes; the outer props continue to describe the visible label. */
+  inputProps?: Omit<
+    ComponentPropsWithoutRef<'input'>,
+    'type' | 'children' | 'accept' | 'multiple' | 'disabled' | 'name' | 'onChange'
+  >;
 }
 export function BrowseButton({
   accent = false,
@@ -38,6 +43,7 @@ export function BrowseButton({
   theme: legacyTheme,
   classNames,
   inputRef,
+  inputProps,
   ripple = true,
   rippleCentered = false,
   rippleClassName,
@@ -95,15 +101,16 @@ export function BrowseButton({
         ink.onTouchCancel(event);
       }}
     >
-      {icon ? <FontIcon className={cn(iconClasses, theme?.icon)} value={icon} /> : null}
+      {icon ? <FontIcon aria-hidden className={cn(iconClasses, theme?.icon)} value={icon} /> : null}
       <span>{label}</span>
       <input
+        {...inputProps}
         ref={inputRef}
-        className={classes}
+        className={cn(classes, inputProps?.className)}
         type="file"
-        aria-label={other['aria-label'] ?? label}
-        aria-labelledby={other['aria-labelledby']}
-        aria-describedby={other['aria-describedby']}
+        aria-label={inputProps?.['aria-label'] ?? other['aria-label'] ?? label}
+        aria-labelledby={inputProps?.['aria-labelledby'] ?? other['aria-labelledby']}
+        aria-describedby={inputProps?.['aria-describedby'] ?? other['aria-describedby']}
         name={name}
         disabled={disabled}
         accept={accept}

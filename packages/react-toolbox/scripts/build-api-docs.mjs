@@ -368,8 +368,8 @@ for (const directory of publicEntries) {
   if (!apis.length) throw new Error(`No documented runtime API for ${directory}`);
   result[path.basename(directory)] = { apis, types };
 }
-if (Object.keys(result).length !== 27)
-  throw new Error(`Expected 27 public component families, found ${Object.keys(result).length}`);
+if (Object.keys(result).length !== publicEntries.length || !publicEntries.length)
+  throw new Error(`Expected ${publicEntries.length} public component families, found ${Object.keys(result).length}`);
 const sourceHash = createHash('sha256');
 for (const module of [...modules.values()].sort((a, b) => a.file.localeCompare(b.file)))
   sourceHash.update(path.relative(root, module.file)).update('\0').update(module.source).update('\0');

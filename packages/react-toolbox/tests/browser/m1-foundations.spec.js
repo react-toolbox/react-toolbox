@@ -171,7 +171,25 @@ test('M1 card text spacing, list line counts and table column gutters', async ({
   expect((await page.locator('.rt-list-item').boundingBox()).height).toBeGreaterThanOrEqual(88);
   await expect(page.locator('td').first()).toHaveCSS('padding-right', '28px');
   await expect(page.locator('td').last()).toHaveCSS('padding-left', '28px');
-  await expect(page.locator('td').last()).toHaveCSS('text-align', 'right');
+  await expect(page.locator('td').last()).toHaveCSS('text-align', 'end');
+  /** Logical alignment keeps numeric values on the physical trailing keyline in both reading directions. */
+  for (const direction of ['ltr', 'rtl']) {
+    await page.locator('table').evaluate((element, dir) => element.setAttribute('dir', dir), direction);
+    const alignment = await page
+      .locator('td')
+      .last()
+      .evaluate((element, dir) => {
+        const range = document.createRange();
+        range.selectNodeContents(element);
+        const text = range.getBoundingClientRect();
+        const cell = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        return dir === 'ltr'
+          ? { actual: text.right, expected: cell.right - parseFloat(style.paddingRight) }
+          : { actual: text.left, expected: cell.left + parseFloat(style.paddingLeft) };
+      }, direction);
+    expect(alignment.actual).toBeCloseTo(alignment.expected, 4);
+  }
   await page.setViewportSize({ width: 1280, height: 800 });
   await expect(page.locator('.rt-card-cardText')).toHaveCSS('padding-left', '24px');
 });

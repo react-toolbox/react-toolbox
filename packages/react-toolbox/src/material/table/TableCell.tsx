@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import type { TableTheme } from './types';
@@ -41,7 +42,7 @@ export function TableCell({
         <FontIcon
           className={cn(
             'rt-table-sortIcon',
-            'inline-block text-[calc(1.6*var(--unit))] mr-[3px] [transition:0.28s_transform_var(--animation-curve-default)] align-sub',
+            'inline-block text-[calc(1.6*var(--unit))] me-[3px] [transition:0.28s_transform_var(--animation-curve-default)] align-sub',
             '[.rt-table-headCell.rt-table-sorted:hover_&]:text-(--table-header-sorted-icon-hover-color)',
             theme?.sortIcon,
             sorted === 'asc' && cn('rt-table-asc', '[.rt-table-sortIcon&]:transform-[rotate(180deg)]', theme?.asc),
@@ -65,17 +66,17 @@ export function TableCell({
         Tag === 'th' &&
           cn(
             'rt-table-headCell',
-            'text-(--table-header-color) text-(length:--table-header-font-size) [font-weight:500] h-(--table-row-height) leading-[calc(2.4*var(--unit))] pb-[8px] text-ellipsis align-bottom p-[12px_var(--table-column-padding)] text-left',
-            '[&:first-of-type]:pl-[24px]',
-            '[&:last-of-type]:pr-[24px]',
+            'text-(--table-header-color) text-(length:--table-header-font-size) [font-weight:500] h-(--table-row-height) leading-[calc(2.4*var(--unit))] pb-[8px] text-ellipsis align-bottom p-[12px_var(--table-column-padding)] text-start',
+            '[&:first-of-type]:ps-[24px]',
+            '[&:last-of-type]:pe-[24px]',
             theme?.headCell,
           ),
         Tag === 'td' &&
           cn(
             'rt-table-rowCell',
-            '[border-bottom:var(--table-dividers)] [border-top:var(--table-dividers)] h-(--table-row-height) pt-(--table-cell-top) align-middle p-[12px_var(--table-column-padding)] text-left',
-            '[&:first-of-type]:pl-[24px]',
-            '[&:last-of-type]:pr-[24px]',
+            '[border-bottom:var(--table-dividers)] [border-top:var(--table-dividers)] h-(--table-row-height) pt-(--table-cell-top) align-middle p-[12px_var(--table-column-padding)] text-start',
+            '[&:first-of-type]:ps-[24px]',
+            '[&:last-of-type]:pe-[24px]',
             theme?.rowCell,
           ),
         sorted &&
@@ -85,7 +86,7 @@ export function TableCell({
             theme?.sorted,
           ),
         numeric &&
-          cn('rt-table-numeric', '[.rt-table-rowCell&]:text-right', '[.rt-table-headCell&]:text-right', theme?.numeric),
+          cn('rt-table-numeric', '[.rt-table-rowCell&]:text-end', '[.rt-table-headCell&]:text-end', theme?.numeric),
         className,
       )}
       onClick={(event) => onClick?.(event, column, row)}

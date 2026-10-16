@@ -1,4 +1,6 @@
 'use client';
+import './tokens.css';
+import '../input/tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
@@ -143,6 +145,7 @@ export function Dropdown<T extends object = DropdownItem>({
   const [activeIndex, setActiveIndex] = useState(-1);
   const [up, setUp] = useState(false);
   const search = useRef({ text: '', time: 0 });
+  const openingIndex = useRef<number | null>(null);
   const items = source.map((item) => {
     if (typeof item !== 'object')
       return {
@@ -194,7 +197,10 @@ export function Dropdown<T extends object = DropdownItem>({
     const rect = root.current.getBoundingClientRect();
     setUp(auto && rect.top > (window.innerHeight || document.documentElement.offsetHeight) / 2 + rect.height);
     const selectedIndex = items.findIndex((item) => !item.disabled && selected && item.value === selected.value);
-    setActiveIndex(selectedIndex < 0 ? items.findIndex((item) => !item.disabled) : selectedIndex);
+    setActiveIndex(
+      openingIndex.current ?? (selectedIndex < 0 ? items.findIndex((item) => !item.disabled) : selectedIndex),
+    );
+    openingIndex.current = null;
   }, [active]);
   const open = () => {
     if (!active && !disabled) setActive(true);
@@ -255,6 +261,7 @@ export function Dropdown<T extends object = DropdownItem>({
         (item) => !item.disabled && item.text.toLowerCase().startsWith(search.current.text.toLowerCase()),
       );
       if (index >= 0) {
+        if (!active) openingIndex.current = index;
         open();
         setActiveIndex(index);
       }
@@ -439,7 +446,7 @@ export function Dropdown<T extends object = DropdownItem>({
         aria-hidden={!active}
         className={cn(
           'rt-dropdown-values',
-          'bg-(--dropdown-color-white) rounded-(--dropdown-value-border-radius) [list-style:none] m-0 overflow-y-auto p-0 absolute [transition-duration:var(--animation-duration)] [transition-property:max-height,box-shadow] [transition-timing-function:var(--animation-curve-default)] w-full z-(--z-index-high)',
+          'bg-(--dropdown-color-white) text-(length:--input-field-font-size) rounded-(--dropdown-value-border-radius) [list-style:none] m-0 overflow-y-auto p-0 absolute [transition-duration:var(--animation-duration)] [transition-property:max-height,box-shadow] [transition-timing-function:var(--animation-curve-default)] w-full z-(--z-index-high)',
           '[&>*]:cursor-pointer [&>*]:overflow-hidden [&>*]:p-(--unit) [&>*]:relative',
           '[&>*:hover:not(.rt-dropdown-disabled)]:bg-(--dropdown-value-hover-background)',
           "[&>*[data-active='true']:not(.rt-dropdown-disabled)]:bg-(--dropdown-value-hover-background)",

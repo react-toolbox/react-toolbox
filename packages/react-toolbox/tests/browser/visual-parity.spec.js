@@ -18,10 +18,11 @@ async function assertParity(page, selector, name, testInfo) {
   });
   const modernImage = await target.screenshot({ animations: 'disabled' });
   const modernStyles = await renderedStyles(page, selector);
+  const scrollPosition = await page.evaluate(() => ({ left: window.scrollX, top: window.scrollY }));
   await useOriginalStyles(page);
-  // Loading the independent stylesheet can change the document's scroll
-  // anchor. Keep the canvas fully inside the viewport before the second capture
-  // so a fractional final row is not clipped by the viewport edge.
+  /** Stylesheet replacement can move the document's scroll anchor beneath a fixed modal.
+   * Restore its backdrop sample, then center ordinary canvases so no final row is clipped. */
+  await page.evaluate((position) => window.scrollTo({ ...position, behavior: 'instant' }), scrollPosition);
   await target.evaluate((node) => node.scrollIntoView({ block: 'center', behavior: 'instant' }));
   const originalImage = await target.screenshot({ animations: 'disabled' });
   const originalStyles = await renderedStyles(page, selector);

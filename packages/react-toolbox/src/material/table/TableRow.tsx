@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { checkboxCellClasses } from './styles';
@@ -15,7 +16,7 @@ import {
 } from 'react';
 import { cn } from '../foundations/styles/cn';
 import Checkbox from '../checkbox';
-import { TableSelectionContext } from './selection';
+import { TableSelectionContext, TableCellContext } from './selection';
 import TableCell, { type TableCellProps } from './TableCell';
 export interface TableRowProps extends Omit<ComponentPropsWithRef<'tr'>, 'onSelect'> {
   /** Stable identity for selection inside TableRoot. */
@@ -46,6 +47,7 @@ export function TableRow({
   ...other
 }: TableRowProps) {
   const theme = mergeStyleSlots(legacyTheme, classNames);
+  const cellTag = useContext(TableCellContext);
   const selection = useContext(TableSelectionContext);
   const register = selection?.register;
   useEffect(
@@ -61,7 +63,7 @@ export function TableRow({
       if (child.type === Fragment) return cloneElement(child, {}, cells(child.props.children));
       const currentColumn = column++;
       return child.type === TableCell
-        ? cloneElement(child, { column: currentColumn, tagName: child.props.tagName ?? 'td' })
+        ? cloneElement(child, { column: currentColumn, tagName: child.props.tagName ?? cellTag })
         : child;
     });
   return (

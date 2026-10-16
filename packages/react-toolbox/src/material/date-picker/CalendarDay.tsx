@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { activeClasses } from './styles';
@@ -10,6 +11,13 @@ export interface CalendarDayProps {
   day: number;
   disabled?: boolean;
   onClick?: (day: number) => void;
+  onFocus?: (day: number) => void;
+  focused?: boolean;
+  selected?: boolean;
+  /** Table calendars provide their own leading empty cells. */
+  withOffset?: boolean;
+  /** Keep unavailable dates discoverable with calendar keyboard navigation. */
+  focusableDisabled?: boolean;
   selectedDate: Date;
   sundayFirstDayOfWeek?: boolean;
   /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
@@ -23,6 +31,11 @@ export default function CalendarDay({
   day,
   disabled,
   onClick,
+  onFocus,
+  focused,
+  selected: selectedOverride,
+  withOffset = true,
+  focusableDisabled = false,
   selectedDate,
   sundayFirstDayOfWeek,
   theme: legacyTheme,
@@ -34,9 +47,10 @@ export default function CalendarDay({
   const date = time.setDay(viewDate, day);
   const today = time.cloneAsDate(date).getTime() === time.cloneAsDate(new Date()).getTime();
   const selected =
-    viewDate.getFullYear() === selectedDate.getFullYear() &&
-    viewDate.getMonth() === selectedDate.getMonth() &&
-    day === selectedDate.getDate();
+    selectedOverride ??
+    (viewDate.getFullYear() === selectedDate.getFullYear() &&
+      viewDate.getMonth() === selectedDate.getMonth() &&
+      day === selectedDate.getDate());
   const firstDay = time.getFirstWeekDay(viewDate) - (sundayFirstDayOfWeek ? 0 : 1);
   const click = () => {
     if (!disabled) onClick?.(day);
@@ -62,15 +76,16 @@ export default function CalendarDay({
             theme?.disabled,
           ),
       )}
-      style={day === 1 ? { marginLeft: `${(firstDay >= 0 ? firstDay : 6) * (100 / 7)}%` } : undefined}
+      style={withOffset && day === 1 ? { marginLeft: `${(firstDay >= 0 ? firstDay : 6) * (100 / 7)}%` } : undefined}
     >
       <span
         role="button"
-        tabIndex={!disabled && selected ? 0 : -1}
+        tabIndex={(!disabled || focusableDisabled) && (focused ?? selected) ? 0 : -1}
         aria-label={time.formatDate(date, locale)}
         aria-current={today ? 'date' : undefined}
         aria-pressed={selected}
         aria-disabled={disabled || undefined}
+        onFocus={() => onFocus?.(day)}
         onClick={click}
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') {

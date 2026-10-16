@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { itemClasses, disabledClasses } from './styles';
@@ -16,6 +17,8 @@ export interface ListCheckboxProps extends Omit<ComponentPropsWithRef<'li'>, 'on
   onBlur?: CheckboxProps['onBlur'];
   onChange?: CheckboxProps['onChange'];
   onFocus?: CheckboxProps['onFocus'];
+  /** Native checkbox state, form attributes, input events, and imperative ref. */
+  checkboxProps?: Omit<CheckboxProps, 'label' | 'children'>;
   /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
   classNames?: ListTheme;
   /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
@@ -23,9 +26,10 @@ export interface ListCheckboxProps extends Omit<ComponentPropsWithRef<'li'>, 'on
 }
 export function ListCheckbox({
   caption,
-  checked = false,
+  checked,
   className,
-  disabled = false,
+  disabled: suppliedDisabled,
+  checkboxProps,
   legend,
   name,
   onBlur,
@@ -36,6 +40,7 @@ export function ListCheckbox({
   ...other
 }: ListCheckboxProps) {
   const theme = mergeStyleSlots(legacyTheme, classNames);
+  const disabled = suppliedDisabled ?? checkboxProps?.disabled ?? false;
   return (
     <li
       {...other}
@@ -49,21 +54,32 @@ export function ListCheckbox({
       )}
     >
       <Checkbox
-        checked={checked}
+        {...checkboxProps}
+        checked={checked ?? checkboxProps?.checked}
         className={cn(
           'rt-list-checkbox',
           'items-center cursor-pointer flex h-full m-0 min-h-(--list-item-min-height) w-full',
-          "[&>[data-react-toolbox='check']]:mr-(--list-item-right-checkbox-margin)",
-          "[&>[data-react-toolbox='label']]:pl-0",
+          "[&>[data-react-toolbox='check']]:me-(--list-item-right-checkbox-margin)",
+          "[&>[data-react-toolbox='label']]:ps-0",
           "[.rt-list-item.rt-list-disabled>&>[data-react-toolbox='label']]:opacity-[0.5]",
           theme?.checkbox,
+          checkboxProps?.className,
         )}
         disabled={disabled}
         label={<ListItemContent caption={caption} legend={legend} />}
-        name={name}
-        onBlur={onBlur}
-        onChange={onChange}
-        onFocus={onFocus}
+        name={name ?? checkboxProps?.name}
+        onBlur={(event) => {
+          checkboxProps?.onBlur?.(event);
+          onBlur?.(event);
+        }}
+        onChange={(checked, event) => {
+          checkboxProps?.onChange?.(checked, event);
+          if (!event.defaultPrevented) onChange?.(checked, event);
+        }}
+        onFocus={(event) => {
+          checkboxProps?.onFocus?.(event);
+          onFocus?.(event);
+        }}
       />
     </li>
   );

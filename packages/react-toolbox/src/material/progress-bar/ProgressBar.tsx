@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import type { ProgressBarTheme } from './types';
@@ -58,7 +59,7 @@ export function ProgressBar({
         type === 'linear'
           ? cn(
               'rt-progress-bar-linear',
-              '[background:var(--progress-track-color)] inline-block h-(--progress-height) overflow-hidden relative w-full',
+              '[background:var(--progress-track-color)] rtl:transform-[scaleX(-1)] inline-block h-(--progress-height) overflow-hidden relative w-full',
               theme?.linear,
             )
           : type === 'circular'

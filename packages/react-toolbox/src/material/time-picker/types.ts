@@ -41,3 +41,14 @@ export type TimePickerTheme = Partial<
 
 /** Style slots for the component. */
 export type TimePickerClassNames = TimePickerTheme;
+
+/** Accessible names and period labels for the time picker. */
+export interface TimePickerLabels {
+  dialog: string;
+  hours: string;
+  minutes: string;
+  am: string;
+  pm: string;
+  clear: string;
+  unavailable: string;
+}

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import DocsArticle, { DocsSection } from '../article';
 import CodeBlock from '../code-block';
 import SpacingTable from './spacing-table';
+import ThemedDistribution from './themed-distribution';
 
 export const metadata: Metadata = { title: 'Theming · React Toolbox' };
 
@@ -11,12 +12,45 @@ export default function ThemingPage() {
       title="Theming"
       description="Keep the Material foundation. Change the parts that make it yours."
       sections={[
+        { id: 'distribution', title: 'Field Notes' },
         { id: 'colors', title: 'Colors' },
         { id: 'source', title: 'Component classes' },
         { id: 'scopes', title: 'Scoped colors' },
+        { id: 'portals', title: 'Portal placement' },
         { id: 'spacing', title: 'Spacing' },
       ]}
     >
+      <DocsSection id="distribution" title="A themed distribution">
+        <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
+          Field Notes is an editable example built from the same components. Switch between the original palette, teal
+          and deep orange, and a dark semantic theme. Dialogs, nested pickers, menus and tooltips carry the selected
+          theme into their portals.
+        </p>
+        <ThemedDistribution />
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
+          The navigation drawer is contained in the example and leaves the documentation usable. It uses a custom portal
+          container and a nonmodal drawer. The visit dialog and its pickers use the page viewport and retain their modal
+          focus and scroll behavior.
+        </p>
+        <div className="my-6">
+          <CodeBlock
+            language="Terminal"
+            label="Install the editable example"
+            code="pnpm dlx shadcn@latest add https://react-toolbox.io/r/example-field-notes.json"
+          />
+        </div>
+        <CodeBlock
+          label="Use Field Notes"
+          code={
+            'import { FieldNotes } from "@/components/ui/examples/field-notes";\n\n<FieldNotes appearance="field-notes" />'
+          }
+        />
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
+          The example exports its theme variables. Copy them into your own provider or edit the installed components.
+          The example imports the optional <code>material/foundations/styles/shadcn.css</code> stylesheet. It maps
+          semantic colors without changing Material dimensions or motion.
+        </p>
+      </DocsSection>
       <DocsSection id="colors" title="Start with color">
         <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
           Theme shared colors with CSS variables in your global stylesheet. Tailwind utilities such as
@@ -77,6 +111,52 @@ export default function ThemingPage() {
         <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
           Material tokens use the <code>--rt-color-</code> prefix so they can coexist with a shadcn theme. Map them
           explicitly to your app’s semantic tokens if you want both libraries to share colors.
+        </p>
+      </DocsSection>
+      <DocsSection id="portals" title="Choose where an overlay renders">
+        <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
+          Compound portal parts accept a <code>container</code> element. For a contained navigation panel, give its
+          container a positioning boundary and override the drawer’s viewport positioning with local dimensions. This is
+          the composition used by Field Notes; no root provider is required.
+        </p>
+        <CodeBlock
+          label="Contained navigation drawer"
+          code={`import { useState } from "react";
+import {
+  DrawerRoot, DrawerTrigger, DrawerPortal,
+  DrawerContent, DrawerTitle, DrawerClose,
+} from "@/components/ui/material/drawer";
+
+function Workspace() {
+  const [viewport, setViewport] = useState<HTMLDivElement | null>(null);
+
+  return (
+    <DrawerRoot modal={false}>
+      <div ref={setViewport} className="relative isolate overflow-hidden">
+        <DrawerTrigger>Open navigation</DrawerTrigger>
+        <YourWorkspace />
+        {viewport && (
+          <DrawerPortal container={viewport}>
+            <DrawerContent
+              aria-describedby={undefined}
+              className="absolute h-full max-w-[calc(100%-56px)]"
+            >
+              <DrawerTitle>Navigation</DrawerTitle>
+              <YourNavigation />
+              <DrawerClose>Close navigation</DrawerClose>
+            </DrawerContent>
+          </DrawerPortal>
+        )}
+      </div>
+    </DrawerRoot>
+  );
+}`}
+        />
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
+          Portal placement and modality are separate. A custom container does not scope a modal’s focus trap or scroll
+          lock. This navigation panel uses <code>{'modal={false}'}</code>, closes on Escape or outside interaction, and
+          has no modal scrim. For an embedded app whose dialogs, responsive layout, and scroll locks must all be
+          independent, render the app in an iframe with its own document.
         </p>
       </DocsSection>
       <DocsSection id="spacing" title="A Material rhythm">

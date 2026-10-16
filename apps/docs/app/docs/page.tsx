@@ -10,7 +10,7 @@ export default function IntroductionPage() {
   return (
     <DocsArticle
       title="The original, renewed."
-      description="Material Design, down to the details. A collection of 27 component families for modern React, with the source in your hands."
+      description="Material Design, down to the details. A collection of 28 component families for modern React, with the source in your hands."
       sections={[
         { id: 'start', title: 'Start building' },
         { id: 'material', title: 'Made of Material' },

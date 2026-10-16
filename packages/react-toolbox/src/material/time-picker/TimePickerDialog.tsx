@@ -1,12 +1,15 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
-import type { TimePickerTheme } from './types';
+import type { TimePickerTheme, TimePickerLabels } from './types';
 
 import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '../foundations/styles/cn';
 import Dialog, { type DialogProps } from '../dialog/Dialog';
-import time, { type TimeFormat } from '../foundations/date-time/calendar';
+import * as time from '../foundations/date-time/time';
+import type { TimeFormat } from '../foundations/date-time/time';
+import { constrainTime, isTimeUnavailable, minuteStep, type TimeConstraints } from './constraints';
 import Clock, { type ClockHandle } from './Clock';
 const buttonClasses = [
   'rt-time-picker-button',
@@ -16,9 +19,11 @@ const buttonClasses = [
 ].join(' ');
 
 export type TimePickerSelectEvent = React.MouseEvent<HTMLElement>;
-export interface TimePickerDialogProps {
+export interface TimePickerDialogProps extends TimeConstraints {
   active?: boolean;
   cancelLabel?: string;
+  labels?: Partial<TimePickerLabels>;
+  layout?: 'portrait' | 'landscape' | 'responsive';
   className?: string;
   id?: string;
   format?: TimeFormat;
@@ -37,6 +42,8 @@ export interface TimePickerDialogProps {
 export default function TimePickerDialog({
   active = false,
   cancelLabel = 'Cancel',
+  labels,
+  layout = 'portrait',
   className,
   format = '24hr',
   id,
@@ -49,14 +56,21 @@ export default function TimePickerDialog({
   theme: legacyTheme,
   classNames,
   value,
+  minTime,
+  maxTime,
+  minuteStep: suppliedStep,
 }: TimePickerDialogProps) {
   const theme = mergeStyleSlots(legacyTheme, classNames);
   const [initialTime] = useState(() => new Date());
   const sourceTime = value ?? initialTime;
-  const [displayTime, setTime] = useState(() => new Date(sourceTime.getTime()));
+  const constraints = { minTime, maxTime, minuteStep: suppliedStep };
+  const [displayTime, setTime] = useState(() => constrainTime(new Date(sourceTime.getTime()), constraints));
   const [display, setDisplay] = useState<'hours' | 'minutes'>('hours');
   const clock = useRef<ClockHandle>(null);
-  useEffect(() => setTime(new Date(sourceTime.getTime())), [sourceTime.getTime(), active]);
+  useEffect(
+    () => setTime(constrainTime(new Date(sourceTime.getTime()), constraints)),
+    [sourceTime.getTime(), active, minTime?.getTime(), maxTime?.getTime(), suppliedStep],
+  );
   useEffect(() => {
     if (active) clock.current?.calculateShape();
   }, [active]);
@@ -64,10 +78,10 @@ export default function TimePickerDialog({
     setTime((previous) => {
       const next = new Date(previous.getTime());
       next.setHours((next.getHours() % 12) + (mode === 'pm' ? 12 : 0));
-      return next;
+      return constrainTime(next, constraints);
     });
   const switchDisplay = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) =>
-    setDisplay(event.currentTarget.id === 'hours' ? 'hours' : 'minutes');
+    setDisplay(event.currentTarget.dataset.display === 'hours' ? 'hours' : 'minutes');
   const keyDown = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
@@ -76,7 +90,7 @@ export default function TimePickerDialog({
     }
     if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
     event.preventDefault();
-    const nextDisplay = event.currentTarget.id === 'hours' ? 'hours' : 'minutes';
+    const nextDisplay = event.currentTarget.dataset.display === 'hours' ? 'hours' : 'minutes';
     const key = event.key;
     setDisplay(nextDisplay);
     setTime((previous) => {
@@ -86,16 +100,29 @@ export default function TimePickerDialog({
       const minimum = twelveHour ? 1 : 0,
         maximum = hours ? (twelveHour ? 12 : 23) : 59;
       const current = hours ? (twelveHour ? next.getHours() % 12 || 12 : next.getHours()) : next.getMinutes();
-      const step = key === 'ArrowUp' || key === 'ArrowRight' ? 1 : -1;
-      const number =
-        key === 'Home'
-          ? minimum
-          : key === 'End'
-            ? maximum
-            : minimum + ((current - minimum + step + maximum - minimum + 1) % (maximum - minimum + 1));
-      if (hours) next.setHours(twelveHour ? (number % 12) + (next.getHours() >= 12 ? 12 : 0) : number);
-      else next.setMinutes(number);
-      return next;
+      const direction = key === 'ArrowUp' || key === 'ArrowRight' ? 1 : -1;
+      if (hours) {
+        const number =
+          key === 'Home'
+            ? minimum
+            : key === 'End'
+              ? maximum
+              : minimum + ((current - minimum + direction + maximum - minimum + 1) % (maximum - minimum + 1));
+        next.setHours(twelveHour ? (number % 12) + (next.getHours() >= 12 ? 12 : 0) : number);
+      } else {
+        /** The final minute mark may be below 59; wrap through marks, not modulo arithmetic on minutes. */
+        const step = minuteStep(constraints);
+        const marks = Array.from({ length: Math.ceil(60 / step) }, (_, index) => index * step);
+        const index = marks.indexOf(current);
+        const number =
+          key === 'Home'
+            ? marks[0]
+            : key === 'End'
+              ? marks[marks.length - 1]
+              : marks[(index + direction + marks.length) % marks.length];
+        next.setMinutes(number);
+      }
+      return constrainTime(next, constraints, key === 'Home' ? 1 : key === 'End' ? -1 : direction);
     });
   };
   const hours = format === 'ampm' ? displayTime.getHours() % 12 || 12 : displayTime.getHours();
@@ -108,6 +135,7 @@ export default function TimePickerDialog({
           label: okLabel,
           className: cn(buttonClasses, theme?.button),
           name,
+          disabled: isTimeUnavailable(displayTime, constraints),
           onClick: (event) => onSelect?.(displayTime, event),
         },
       ]}
@@ -116,6 +144,10 @@ export default function TimePickerDialog({
         'rt-time-picker-dialog',
         'w-(--timepicker-dialog-width)',
         '[&>section]:p-0',
+        layout === 'landscape' &&
+          '[&&]:grid [&&]:w-[calc(var(--timepicker-dialog-width)+var(--picker-landscape-header-width))] [&&]:grid-cols-[var(--picker-landscape-header-width)_minmax(0,1fr)] [&&]:grid-rows-[1fr_auto] [&&]:overflow-y-auto [&>section]:contents [&>section>header]:col-start-1 [&>section>header]:row-span-2 [&>section>header]:row-start-1 [&>section>:not(header)]:col-start-2 [&>section>:not(header)]:row-start-1 [&>nav]:col-start-2 [&>nav]:row-start-2 [&>section>header]:content-center [&>section>header]:flex [&>section>header]:flex-wrap [&>section>header]:items-center [&>section>header]:justify-center [&_.rt-time-picker-ampm]:static [&_.rt-time-picker-ampm]:mt-4 [&_.rt-time-picker-ampm]:flex [&_.rt-time-picker-ampm]:h-auto [&_.rt-time-picker-ampm]:w-full [&_.rt-time-picker-ampm]:justify-center [&_.rt-time-picker-ampm]:gap-4',
+        layout === 'responsive' &&
+          '[@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:grid [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:w-[calc(var(--timepicker-dialog-width)+var(--picker-landscape-header-width))] [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:grid-cols-[var(--picker-landscape-header-width)_minmax(0,1fr)] [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:grid-rows-[1fr_auto] [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:overflow-y-auto [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section]:contents [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:col-start-1 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:row-span-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:row-start-1 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>:not(header)]:col-start-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>:not(header)]:row-start-1 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>nav]:col-start-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>nav]:row-start-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:content-center [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:flex [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:flex-wrap [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:items-center [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:justify-center [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&_.rt-time-picker-ampm]:static [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&_.rt-time-picker-ampm]:mt-4 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&_.rt-time-picker-ampm]:flex [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&_.rt-time-picker-ampm]:h-auto [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&_.rt-time-picker-ampm]:w-full [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&_.rt-time-picker-ampm]:justify-center [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&_.rt-time-picker-ampm]:gap-4',
         theme?.dialog,
         display === 'hours'
           ? cn('rt-time-picker-hoursDisplay', theme?.hoursDisplay)
@@ -127,7 +159,7 @@ export default function TimePickerDialog({
       )}
       onEscKeyDown={onEscKeyDown}
       onOverlayClick={onOverlayClick}
-      aria-label="Choose time"
+      aria-label={labels?.dialog ?? 'Choose time'}
     >
       <header
         className={cn(
@@ -139,10 +171,10 @@ export default function TimePickerDialog({
         )}
       >
         <span
-          id="hours"
+          data-display="hours"
           role="spinbutton"
           tabIndex={0}
-          aria-label="Hours"
+          aria-label={labels?.hours ?? 'Hours'}
           aria-valuemin={format === 'ampm' ? 1 : 0}
           aria-valuemax={format === 'ampm' ? 12 : 23}
           aria-valuenow={hours}
@@ -167,10 +199,10 @@ export default function TimePickerDialog({
           :
         </span>
         <span
-          id="minutes"
+          data-display="minutes"
           role="spinbutton"
           tabIndex={0}
-          aria-label="Minutes"
+          aria-label={labels?.minutes ?? 'Minutes'}
           aria-valuemin={0}
           aria-valuemax={59}
           aria-valuenow={displayTime.getMinutes()}
@@ -222,7 +254,7 @@ export default function TimePickerDialog({
                   }
                 }}
               >
-                {mode.toUpperCase()}
+                {labels?.[mode] ?? mode.toUpperCase()}
               </span>
             ))}
           </div>
@@ -232,7 +264,7 @@ export default function TimePickerDialog({
         ref={clock}
         display={display}
         format={format}
-        onChange={setTime}
+        onChange={(next) => setTime(constrainTime(next, constraints))}
         onHandMoved={() => setDisplay('minutes')}
         theme={theme}
         time={displayTime}

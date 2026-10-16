@@ -10,6 +10,7 @@ import config from '../registry.config.mjs';
 // and direct package commands must emit the same catalog and source hashes.
 const root = path.resolve(import.meta.dirname, '..');
 const source = path.join(root, 'src/material');
+const exampleSource = path.join(root, 'src/examples');
 const slash = (value) => value.split(path.sep).join('/');
 const schema = 'https://ui.shadcn.com/schema/registry-item.json';
 const familyName = (value) => value;
@@ -94,10 +95,12 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
   const prefix = new URL(origin).pathname.replace(/\/$/, '');
   base.pathname = `${prefix}/r/`;
   const retired = new Set(config.retiredFamilies);
-  const files = (await walk(source)).filter((file) => {
-    const relative = slash(path.relative(source, file));
-    return /\.(?:tsx?|css)$/.test(file) && !(retired.has(relative.split('/')[0]) && /\.tsx?$/.test(file));
-  });
+  const files = [...(await walk(source)), ...((await exists(exampleSource)) ? await walk(exampleSource) : [])].filter(
+    (file) => {
+      const relative = slash(path.relative(source, file));
+      return /\.(?:tsx?|css)$/.test(file) && !(retired.has(relative.split('/')[0]) && /\.tsx?$/.test(file));
+    },
+  );
   const content = new Map(await Promise.all(files.map(async (file) => [file, await readFile(file, 'utf8')])));
   const publicImports = imports(await readFile(path.join(source, 'index.ts'), 'utf8'), 'index.ts');
   const families = [];
@@ -111,10 +114,19 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
     }
   }
   const familySet = new Set(families);
+  const examples = [
+    ...new Set(
+      files
+        .filter((file) => file.startsWith(`${exampleSource}/`))
+        .map((file) => `example-${slash(path.relative(exampleSource, file)).split('/')[0]}`),
+    ),
+  ];
   const owner = (file) => {
+    if (file.startsWith(`${exampleSource}/`))
+      return `example-${slash(path.relative(exampleSource, file)).split('/')[0]}`;
     const relative = slash(path.relative(source, file));
     const [directory, capability] = relative.split('/');
-    if (relative === 'index.ts') return 'all';
+    if (relative === 'index.ts' || relative === 'foundations/styles/styles.css') return 'all';
     if (directory === 'theme') return 'foundation';
     if (directory === 'foundations')
       return ['styles', 'theme'].includes(capability) ? 'foundation' : `foundation-${capability}`;
@@ -125,6 +137,7 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
     'foundation',
     ...new Set(files.map(owner).filter((name) => name.startsWith('foundation-'))),
     ...families,
+    ...examples,
     'all',
   ];
   const groups = new Map(
@@ -150,20 +163,28 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
     const group = groups.get(itemName);
     const relative = slash(path.relative(source, file));
     group.files.push({
-      path: `src/material/${relative}`,
+      path: slash(path.relative(root, file)),
       type:
-        relative === 'index.ts' || (relative.endsWith('/index.ts') && !relative.startsWith('foundations/'))
+        relative === 'index.ts' || (/\/index\.tsx?$/.test(relative) && !relative.startsWith('foundations/'))
           ? 'registry:ui'
           : 'registry:file',
-      target: `${config.target}/${relative}`,
+      target: file.startsWith(`${exampleSource}/`)
+        ? `${config.target.replace(/\/material$/, '')}/examples/${slash(path.relative(exampleSource, file))}`
+        : `${config.target}/${relative}`,
       content: content.get(file),
     });
-    if (!/\.tsx?$/.test(file)) continue;
-    for (const specifier of imports(content.get(file), file)) {
+    const references = [];
+    if (file.endsWith('.css')) {
+      postcss.parse(content.get(file)).walkAtRules('import', (rule) => {
+        const specifier = rule.params.match(/^["']([^"']+)["']/)?.[1];
+        if (specifier) references.push(specifier);
+      });
+    } else references.push(...imports(content.get(file), file));
+    for (const specifier of references) {
       if (specifier.startsWith('.')) {
         const target = await resolveSource(file, specifier);
         if (!content.has(target)) throw new Error(`Import escapes distributable source: ${file} -> ${specifier}`);
-        if (/\.tsx?$/.test(target)) localImports.get(file).push(target);
+        localImports.get(file).push(target);
         const targetOwner = owner(target);
         if (targetOwner !== itemName) group.registryDependencies.add(targetOwner);
       } else dependency(group, npmName(specifier));
@@ -228,7 +249,11 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
     return {
       $schema: schema,
       name,
-      type: name.startsWith('foundation') ? 'registry:lib' : name === 'all' ? 'registry:block' : 'registry:ui',
+      type: name.startsWith('foundation')
+        ? 'registry:lib'
+        : name === 'all' || name.startsWith('example-')
+          ? 'registry:block'
+          : 'registry:ui',
       title:
         name === 'all'
           ? 'React Toolbox · all components'
@@ -250,7 +275,9 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
       files,
       docs: name.startsWith('foundation-')
         ? `Shared implementation installed automatically by the components that need it. See ${config.homepage}/docs/installation.`
-        : `Import from your configured ui alias: material${name === 'all' ? '' : name === 'foundation' ? '/theme' : `/${name}`}. Styles and local fonts load automatically. See ${config.homepage}/docs/installation.`,
+        : name.startsWith('example-')
+          ? `Editable composition example. Import from your configured ui alias: examples/${name.slice('example-'.length)}. See ${config.homepage}/docs/theming.`
+          : `Import from your configured ui alias: material${name === 'all' ? '' : name === 'foundation' ? '/theme' : `/${name}`}. Styles and local Roboto 400/500 fonts load automatically. See ${config.homepage}/docs/installation.`,
       categories: ['material-design', 'react-toolbox'],
       meta: {
         version: pkg.version,

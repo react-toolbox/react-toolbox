@@ -62,6 +62,59 @@ async function originalPage(context, modern) {
     }
   });
 
+  /** Native chip removal buttons retain the reviewed icon geometry and gain browser keyboard semantics. */
+  const deleteActions = modern.locator('.rt-chip-delete');
+  const deleteActionCount = await deleteActions.count();
+  expect(deleteActionCount).toBeGreaterThan(0);
+  expect(
+    await deleteActions.evaluateAll((actions) =>
+      actions.every((action) => action instanceof HTMLButtonElement && action.type === 'button'),
+    ),
+  ).toBe(true);
+  await expect(original.locator('span.rt-chip-delete')).toHaveCount(deleteActionCount);
+  await original.locator('span.rt-chip-delete').evaluateAll((actions) => {
+    for (const action of actions) {
+      const button = document.createElement('button');
+      for (const attribute of action.attributes) button.setAttribute(attribute.name, attribute.value);
+      button.type = 'button';
+      button.setAttribute('aria-label', 'Remove');
+      button.append(...action.childNodes);
+      action.replaceWith(button);
+    }
+  });
+
+  /** Preserve each row's archived visual children while introducing its native primary action.
+   * Secondary actions remain siblings. These explicit resets are independent of current utility CSS. */
+  const listActions = modern.locator('#cards .rt-list-item > button');
+  await expect(listActions).toHaveCount(2);
+  expect(await listActions.evaluateAll((actions) => actions.every((action) => action.type === 'button'))).toBe(true);
+  await original.locator('#cards .rt-list-item').evaluateAll((rows) => {
+    for (const caption of ['Material studies', 'Saved inspiration']) {
+      const row = rows.find((element) => element.querySelector('.rt-list-primary')?.textContent === caption);
+      if (!row) throw new Error(`Missing archived list row: ${caption}`);
+      const button = document.createElement('button');
+      button.type = 'button';
+      Object.assign(button.style, {
+        display: 'flex',
+        flex: '1 1 0%',
+        minWidth: '0px',
+        alignItems: 'center',
+        alignSelf: 'stretch',
+        borderWidth: '0px',
+        borderStyle: 'solid',
+        backgroundColor: 'transparent',
+        padding: '0px',
+        color: 'inherit',
+        font: 'inherit',
+        textAlign: 'start',
+        cursor: 'pointer',
+      });
+      const primaryChildren = [...row.children].filter((child) => !child.classList.contains('rt-list-right'));
+      row.prepend(button);
+      button.append(...primaryChildren);
+    }
+  });
+
   // This gallery starts with one of three rows selected. M1's header must show
   // the newly supported mixed state. Adapt this one state, not the archive or
   // any ordinary checked/unchecked styling, and continue comparing exact pixels.
@@ -103,22 +156,6 @@ async function compareRuntimes(
   animations = 'disabled',
   preservePointer = false,
 ) {
-  if (selector.startsWith('[data-slider-comparison=')) {
-    // Align the thumb to the pixel grid by moving only the external canvas. Chromium's
-    // compositor otherwise rasterizes the translated thumb differently
-    // at the shell's fractional y offset. Internal geometry, colors and every
-    // thumb/rail pixel remain compared without overrides, masks or tolerance.
-    await Promise.all(
-      [modern, original].map((target) =>
-        target.locator(selector).evaluate((node) => {
-          const bounds = node.querySelector('.rt-slider-knob').getBoundingClientRect();
-          node.style.position = 'relative';
-          node.style.left = `${(parseFloat(node.style.left) || 0) + Math.round(bounds.x) - bounds.x}px`;
-          node.style.top = `${(parseFloat(node.style.top) || 0) + Math.round(bounds.y) - bounds.y}px`;
-        }),
-      ),
-    );
-  }
   if (animations === 'disabled' && !preservePointer) {
     await modern.mouse.move(0, 0);
     await original.mouse.move(0, 0);
@@ -295,6 +332,14 @@ for (const [name, pinned] of [
         await target.mouse.move(0, 0);
         await expect(slider.locator('.rt-slider-innerknob')).toHaveCSS('width', '12px');
         await slider.scrollIntoViewIfNeeded();
+        /** Align only the external canvas before interaction. Moving it after press can leave
+         * a pin or halo texture rasterized at its former fractional origin in Chromium. */
+        await target.locator(canvasSelector).evaluate((node) => {
+          const bounds = node.querySelector('.rt-slider-knob').getBoundingClientRect();
+          node.style.position = 'relative';
+          node.style.left = `${(parseFloat(node.style.left) || 0) + Math.round(bounds.x) - bounds.x}px`;
+          node.style.top = `${(parseFloat(node.style.top) || 0) + Math.round(bounds.y) - bounds.y}px`;
+        });
         const bounds = await slider.locator('.rt-slider-knob').boundingBox();
         await target.mouse.move(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
         await target.mouse.down();

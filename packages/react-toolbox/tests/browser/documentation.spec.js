@@ -92,7 +92,7 @@ test('sidebar section titles stick flush below the app bar while their lists scr
   };
   const expectPinned = async (heading) => {
     await expect.poll(async () => (await heading.boundingBox()).y).toBe(await headerBottom());
-    // The title must cover the moving rows, with no exposed strip above it.
+    /** The title must cover the moving rows, with no exposed strip above it. */
     expect(
       await heading.evaluate((element) => {
         const box = element.getBoundingClientRect();
@@ -101,23 +101,38 @@ test('sidebar section titles stick flush below the app bar while their lists scr
     ).toBe(true);
   };
   expect((await guides.boundingBox()).y).toBe((await headerBottom()) + 32);
-  await scroller.evaluate((element) => {
-    element.scrollTop = 80;
-  });
+  const scrollerTop = (await scroller.boundingBox()).y;
+  const guidesSection = await guides.locator('xpath=parent::section').boundingBox();
+  const componentsSection = await components.locator('xpath=parent::section').boundingBox();
+  const guidesHeight = (await guides.boundingBox()).height;
+  const componentsHeight = (await components.boundingBox()).height;
+  /** Derive each scroll position from section boundaries so adding guide links preserves the same scenario. */
+  await scroller.evaluate(
+    (element, scrollTop) => {
+      element.scrollTop = scrollTop;
+    },
+    guidesSection.y - scrollerTop + guidesHeight,
+  );
   await expectPinned(guides);
 
-  // The next section pushes the preceding title away instead of stacking over it.
-  await scroller.evaluate((element) => {
-    element.scrollTop = 270;
-  });
+  /** Halfway through the title's exit, the next section pushes it away instead of stacking over it. */
+  await scroller.evaluate(
+    (element, scrollTop) => {
+      element.scrollTop = scrollTop;
+    },
+    guidesSection.y + guidesSection.height - scrollerTop - guidesHeight / 2,
+  );
   const oldTitle = await guides.boundingBox();
   const newTitle = await components.boundingBox();
   expect(oldTitle.y).toBeLessThan(await headerBottom());
   expect(oldTitle.y + oldTitle.height).toBeLessThanOrEqual(newTitle.y);
 
-  await scroller.evaluate((element) => {
-    element.scrollTop = 550;
-  });
+  await scroller.evaluate(
+    (element, scrollTop) => {
+      element.scrollTop = scrollTop;
+    },
+    componentsSection.y - scrollerTop + componentsHeight,
+  );
   await expectPinned(components);
   await page.evaluate(() => window.scrollTo(0, 200));
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(200);
@@ -165,7 +180,7 @@ for (const width of [320, 1440]) {
     test.setTimeout(180_000);
     const catalog = await (await request.get('/r/registry.json')).json();
     const families = catalog.items.filter((item) => item.type === 'registry:ui');
-    expect(families).toHaveLength(27);
+    expect(families).toHaveLength(28);
     for (const family of families) {
       // Each route gets its own page so pending link prefetches from a prior
       // document cannot report teardown errors in the next route's audit.

@@ -2,7 +2,7 @@
  * native Material 1 geometry with normal Preflight; utilities remain last.
  * Inline aliases resolve inside the nearest React Toolbox theme scope. */
 @import "./tailwind-preflight.css";
-@import "./styles.css";
+@import "./base.css";
 @import "./composition.css";
 @source "../../";
 

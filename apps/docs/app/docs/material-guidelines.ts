@@ -5,6 +5,14 @@ type MaterialGuideline = { title: string; path: string; guidance: readonly strin
 // Usage guidance complements the component API; these links target the original
 // Material specification, independently of later Material 2 and 3 revisions.
 export const materialGuidelines: Record<ComponentSlug, MaterialGuideline> = {
+  sheet: {
+    title: 'Bottom sheets',
+    path: 'components/bottom-sheets.html',
+    guidance: [
+      'Use a sheet for contextual content or actions while retaining the underlying task.',
+      'Give the sheet a title and a visible dismissal action. Dragging supplements keyboard and button interaction.',
+    ],
+  },
   'app-bar': {
     title: 'Structure',
     path: 'layout/structure.html',

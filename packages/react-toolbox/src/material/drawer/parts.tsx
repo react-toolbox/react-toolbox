@@ -1,4 +1,6 @@
 'use client';
+import './tokens.css';
+import '../overlay/tokens.css';
 import * as Primitive from '@radix-ui/react-dialog';
 import type { ComponentProps } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -30,13 +32,15 @@ export function DrawerOverlay({ className, style, ...props }: DrawerOverlayProps
       {...theme}
       style={{ ...theme.style, ...style }}
       className={cn(
-        'fixed inset-0 z-300 bg-[rgb(from_var(--overlay-color)_r_g_b/var(--overlay-opacity))] data-[state=open]:animate-[toolbox-fade-in_var(--animation-duration)_var(--animation-curve-default)] data-[state=closed]:animate-[toolbox-fade-out_var(--animation-duration)_var(--animation-curve-default)] motion-reduce:animate-none!',
+        'fixed inset-0 z-(--z-index-higher) bg-[rgb(from_var(--overlay-color)_r_g_b/var(--overlay-opacity))] data-[state=open]:animate-[toolbox-fade-in_var(--animation-duration)_var(--animation-curve-default)] data-[state=closed]:animate-[toolbox-fade-out_var(--animation-duration)_var(--animation-curve-default)] motion-reduce:animate-none!',
         className,
       )}
     />
   );
 }
-export type DrawerContentProps = ComponentProps<typeof Primitive.Content> & { side?: 'left' | 'right' };
+export type DrawerContentProps = ComponentProps<typeof Primitive.Content> & {
+  side?: 'left' | 'right' | 'top' | 'bottom';
+};
 export function DrawerContent({ side = 'left', className, style, ...props }: DrawerContentProps) {
   const theme = usePortalTheme();
   return (
@@ -48,8 +52,14 @@ export function DrawerContent({ side = 'left', className, style, ...props }: Dra
       style={{ ...theme.style, ...style }}
       className={cn(
         surfaceClasses,
-        'fixed inset-y-0 z-301 flex h-dvh w-(--drawer-mobile-width) min-[600px]:w-(--drawer-desktop-width) max-w-[calc(100vw-56px)] flex-col overflow-y-auto rounded-none [box-shadow:var(--shadow-16p)] data-[state=open]:animate-[toolbox-drawer-in_var(--animation-duration)_var(--animation-curve-linear-out-slow-in)] data-[state=closed]:animate-[toolbox-drawer-out_var(--animation-duration)_var(--animation-curve-fast-out-linear-in)] motion-reduce:animate-none!',
-        side === 'left' ? 'left-0 [--drawer-offset:-100%]' : 'right-0 [--drawer-offset:100%]',
+        'bg-(--drawer-background-color) text-(--drawer-text-color) fixed z-(--z-index-higher) flex flex-col overflow-y-auto rounded-none [box-shadow:var(--shadow-16p)] data-[state=open]:animate-[toolbox-drawer-in_var(--animation-duration)_var(--animation-curve-linear-out-slow-in)] data-[state=closed]:animate-[toolbox-drawer-out_var(--animation-duration)_var(--animation-curve-fast-out-linear-in)] motion-reduce:animate-none!',
+        (side === 'left' || side === 'right') &&
+          'inset-y-0 h-dvh w-(--drawer-mobile-width) min-[600px]:w-(--drawer-desktop-width) max-w-[calc(100vw-var(--standard-increment-mobile))]',
+        (side === 'top' || side === 'bottom') && 'inset-x-0 max-h-[calc(100dvh-var(--standard-increment-mobile))]',
+        side === 'left' && 'left-0 [--drawer-offset-x:-100%] [--drawer-offset-y:0]',
+        side === 'right' && 'right-0 [--drawer-offset-x:100%] [--drawer-offset-y:0]',
+        side === 'top' && 'top-0 [--drawer-offset-x:0] [--drawer-offset-y:-100%]',
+        side === 'bottom' && 'bottom-0 [--drawer-offset-x:0] [--drawer-offset-y:100%]',
         className,
       )}
     />

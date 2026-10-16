@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
@@ -25,6 +26,8 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<InputElement>
   label?: React.ReactNode;
   multiline?: boolean;
   rows?: number;
+  cols?: number;
+  wrap?: React.TextareaHTMLAttributes<HTMLTextAreaElement>['wrap'];
   onChange?: (value: string, event: React.ChangeEvent<InputElement>) => void;
   ref?: React.Ref<InputHandle>;
   /** Classes for the component's rendered parts. Applied after legacy theme overrides. */

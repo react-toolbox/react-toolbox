@@ -1,12 +1,21 @@
 'use client';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
-import { Children, cloneElement, isValidElement, type ComponentPropsWithRef, type ReactNode } from 'react';
+import {
+  Children,
+  Fragment,
+  cloneElement,
+  isValidElement,
+  useContext,
+  type ComponentPropsWithRef,
+  type ReactNode,
+} from 'react';
 import { cn } from '../foundations/styles/cn';
 import { useRipple, type RippleProps } from '../ripple';
 import ListItemContent from './ListItemContent';
-import ListItemLayout, { type ListItemLayoutProps } from './ListItemLayout';
-export interface ListItemProps extends ComponentPropsWithRef<'li'>, ListItemLayoutProps, RippleProps {
+import ListItemLayout, { type ListItemLayoutOptions } from './ListItemLayout';
+import { ListContext } from './context';
+export interface ListItemProps extends ComponentPropsWithRef<'li'>, ListItemLayoutOptions, RippleProps {
   to?: string;
 }
 export function ListItem({
@@ -21,7 +30,8 @@ export function ListItem({
   legend,
   rightActions,
   rightIcon,
-  selectable,
+  selectable: suppliedSelectable,
+  primaryAction,
   theme: legacyTheme,
   classNames,
   to,
@@ -30,7 +40,7 @@ export function ListItem({
   onTouchStart,
   onTouchEnd,
   onTouchCancel,
-  ripple = false,
+  ripple: suppliedRipple,
   rippleCentered = false,
   rippleClassName,
   rippleMultiple,
@@ -39,6 +49,9 @@ export function ListItem({
   ...other
 }: ListItemProps) {
   const theme = mergeStyleSlots(legacyTheme, classNames);
+  const list = useContext(ListContext);
+  const selectable = suppliedSelectable ?? list?.selectable ?? false;
+  const ripple = suppliedRipple ?? list?.ripple ?? false;
   const ink = useRipple({
     disabled,
     centered: rippleCentered,
@@ -57,26 +70,63 @@ export function ListItem({
     ignored: ReactNode[];
     content?: ReactNode;
   } = { left: [], right: [], ignored: [] };
-  Children.forEach(children, (child, index) => {
+  const flatten = (nodes: ReactNode): ReactNode[] =>
+    Children.toArray(nodes).flatMap((child) =>
+      isValidElement<{ children?: ReactNode }>(child) && child.type === Fragment
+        ? flatten(child.props.children)
+        : [child],
+    );
+  const childNodes = flatten(children);
+  const hasContentPart = childNodes.some((child) => isValidElement(child) && child.type === ListItemContent);
+  childNodes.forEach((child, index) => {
     if (!isValidElement<{ listItemIgnore?: boolean }>(child)) return;
     const clean = child.props.listItemIgnore ? cloneElement(child, { listItemIgnore: undefined }) : child;
     if (child.props.listItemIgnore) grouped.ignored.push(clean);
     else if (child.type === ListItemContent) grouped.content = clean;
-    else grouped[grouped.content ? 'right' : 'left'].push(cloneElement(clean, { key: child.key ?? index }));
+    else if (hasContentPart)
+      grouped[grouped.content ? 'right' : 'left'].push(cloneElement(clean, { key: child.key ?? index }));
   });
+  const ordinaryChildren = childNodes.filter(
+    (child) => !isValidElement<{ listItemIgnore?: boolean }>(child) || !child.props.listItemIgnore,
+  );
+  const childContent = hasContentPart ? (
+    grouped.content
+  ) : ordinaryChildren.length === 0 ? undefined : ordinaryChildren.every(
+      (child) => typeof child === 'string' || typeof child === 'number',
+    ) ? (
+    <ListItemContent theme={theme} caption={caption ?? ordinaryChildren} legend={legend} />
+  ) : !caption && !legend && ordinaryChildren.length === 1 ? (
+    ordinaryChildren[0]
+  ) : (
+    <ListItemContent theme={theme} caption={caption} legend={legend}>
+      {ordinaryChildren}
+    </ListItemContent>
+  );
   const content = (
     <ListItemLayout
       theme={theme}
       avatar={avatar}
       caption={caption}
       disabled={disabled}
-      itemContent={itemContent ?? grouped.content}
+      itemContent={itemContent ?? childContent}
       leftActions={leftActions ?? grouped.left}
       leftIcon={leftIcon}
       legend={legend}
       rightActions={rightActions ?? grouped.right}
       rightIcon={rightIcon}
       selectable={selectable}
+      primaryAction={
+        primaryAction ??
+        (to ? (
+          <a
+            href={disabled ? undefined : to}
+            aria-disabled={disabled || undefined}
+            tabIndex={disabled ? -1 : undefined}
+          />
+        ) : onClick ? (
+          <button type="button" disabled={disabled} />
+        ) : undefined)
+      }
     />
   );
   return (
@@ -89,11 +139,17 @@ export function ListItem({
         theme?.listItem,
         className,
       )}
+      onClickCapture={(event) => {
+        if (disabled) {
+          event.preventDefault();
+          event.stopPropagation();
+        } else other.onClickCapture?.(event);
+      }}
       onClick={(event) => {
         if (disabled) {
           event.preventDefault();
           event.stopPropagation();
-        } else onClick?.(event);
+        } else if (!event.defaultPrevented) onClick?.(event);
       }}
       onMouseDown={(event) => {
         onMouseDown?.(event);
@@ -112,13 +168,7 @@ export function ListItem({
         ink.onTouchCancel(event);
       }}
     >
-      {to ? (
-        <a href={to} aria-disabled={disabled || undefined} tabIndex={disabled ? -1 : undefined}>
-          {content}
-        </a>
-      ) : (
-        content
-      )}
+      {content}
       {grouped.ignored}
       {ink.ripple}
     </li>

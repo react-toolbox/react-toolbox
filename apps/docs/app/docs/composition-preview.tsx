@@ -10,8 +10,48 @@ import DropdownComposition from './examples/dropdown';
 import AutocompleteComposition from './examples/autocomplete';
 import TableComposition from './examples/table';
 import TooltipComposition from './examples/tooltip';
+import SliderComposition from './examples/slider';
+import CalendarComposition from './examples/date-picker';
+import SchedulingComposition from './examples/time-picker';
+import SheetComposition from './examples/sheet';
 
 const examples = {
+  slider: {
+    Component: SliderComposition,
+    note: (
+      <>
+        Compose multiple named thumbs with <code>minStepsBetweenThumbs</code>, or set{' '}
+        <code>orientation="vertical"</code>. Values, keyboard direction, and form inputs are managed by Radix.
+      </>
+    ),
+  },
+  'date-picker': {
+    Component: CalendarComposition,
+    note: (
+      <>
+        <code>CalendarSelection</code> supports single, multiple and range values, multiple months, week numbers,
+        unavailable-day predicates and clearing. Keyboard focus moves independently from selection.
+      </>
+    ),
+  },
+  'time-picker': {
+    Component: SchedulingComposition,
+    note: (
+      <>
+        Compose a local time window with minute steps and bounds. Keep the date and IANA time zone explicit in your
+        application’s scheduling data.
+      </>
+    ),
+  },
+  sheet: {
+    Component: SheetComposition,
+    note: (
+      <>
+        Fractional snap points use the viewport height. The Expand notes and Reduce notes button provides a keyboard
+        alternative to dragging the handle. Escape or the Done action dismisses the modal.
+      </>
+    ),
+  },
   dialog: {
     Component: DialogComposition,
     note: (

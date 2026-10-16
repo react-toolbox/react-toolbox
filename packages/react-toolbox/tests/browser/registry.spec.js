@@ -1,11 +1,16 @@
 import { test, expect } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+
+const expectedCatalog = JSON.parse(readFileSync(new URL('../../registry.json', import.meta.url), 'utf8'));
 
 test('the docs deployment serves a complete same-origin source registry', async ({ request, baseURL }) => {
   const catalogResponse = await request.get('/r/registry.json');
   expect(catalogResponse.ok()).toBeTruthy();
   const catalog = await catalogResponse.json();
-  expect(catalog.items).toHaveLength(34);
-  expect(catalog.items.filter((item) => item.type === 'registry:ui')).toHaveLength(27);
+  expect(catalog.items.map((item) => item.name)).toEqual(expectedCatalog.items.map((item) => item.name));
+  expect(catalog.items.filter((item) => item.type === 'registry:ui')).toHaveLength(28);
+  expect(catalog.items.filter((item) => item.name.startsWith('example-'))).toHaveLength(3);
+  expect(catalog.items.filter((item) => item.type === 'registry:block')).toHaveLength(4);
   const names = new Set(catalog.items.map((item) => item.name));
   expect(names.has('foundation-forms')).toBe(true);
   expect(names.has('link')).toBe(false);

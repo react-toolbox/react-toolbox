@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
@@ -113,12 +114,26 @@ export function Snackbar({
       clock.current.pauses.clear();
     };
   }, [present, pause, resume]);
-  useEffect(() => {
+  const restart = useCallback(() => {
     clearTimeout(clock.current.timer);
     clock.current.timer = undefined;
-    clock.current.remaining = timeout;
+    clock.current.remaining = latest.current.timeout;
     schedule();
-  }, [visible, timeout, label, children, schedule]);
+  }, [schedule]);
+  useEffect(restart, [visible, timeout, restart]);
+  useEffect(() => {
+    if (!labelNode) return;
+    /** JSX identity can change on every render; only a new rendered message restarts its clock. */
+    let message = labelNode.textContent;
+    const observer = new MutationObserver(() => {
+      const next = labelNode.textContent;
+      if (next === message) return;
+      message = next;
+      restart();
+    });
+    observer.observe(labelNode, { childList: true, characterData: true, subtree: true });
+    return () => observer.disconnect();
+  }, [labelNode, restart]);
   useEffect(() => {
     if (!labelNode) return;
     const measure = () => {

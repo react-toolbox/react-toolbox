@@ -1,9 +1,10 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { activeClasses } from './styles';
 import { cn } from '../foundations/styles/cn';
-import type { DatePickerTheme } from './types';
+import type { DatePickerTheme, DatePickerLabels } from './types';
 
 import React, { useEffect, useRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -14,6 +15,10 @@ import CalendarMonth from './CalendarMonth';
 import isDateDisabled, { dayStamp, type DateConstraints } from './is-date-disabled';
 export interface CalendarProps extends DateConstraints {
   display?: 'months' | 'years';
+  labels?: Partial<DatePickerLabels>;
+  /** Inclusive bounds of the year chooser; date validity still follows minDate/maxDate. */
+  startYear?: number;
+  endYear?: number;
   handleSelect?: (event: React.KeyboardEvent<HTMLElement>) => void;
   locale?: DatePickerLocale;
   onChange?: (date: Date, dayClick: boolean) => void;
@@ -26,6 +31,9 @@ export interface CalendarProps extends DateConstraints {
 }
 export default function Calendar({
   display = 'months',
+  labels,
+  startYear,
+  endYear,
   handleSelect,
   locale,
   onChange,
@@ -39,6 +47,7 @@ export default function Calendar({
   const [initialDate] = useState(() => new Date());
   const selectedDate = suppliedDate ?? initialDate;
   const [viewDate, setViewDate] = useState(selectedDate);
+  const [focusedDate, setFocusedDate] = useState(selectedDate);
   const [direction, setDirection] = useState<'left' | 'right'>('right');
   const monthRefs = useRef(Array.from({ length: 12 }, () => React.createRef<HTMLDivElement>()));
   const years = useRef<HTMLUListElement>(null);
@@ -46,6 +55,7 @@ export default function Calendar({
   const focusSelectedDay = useRef(false);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   useEffect(() => {
+    setFocusedDate(selectedDate);
     setViewDate((current) =>
       current.getFullYear() !== selectedDate.getFullYear() || current.getMonth() !== selectedDate.getMonth()
         ? selectedDate
@@ -59,18 +69,25 @@ export default function Calendar({
     if (focusSelectedDay.current) {
       focusSelectedDay.current = false;
       monthRefs.current[viewDate.getMonth()].current
-        ?.querySelector<HTMLElement>('[data-react-toolbox="day"] [aria-pressed="true"]')
+        ?.querySelector<HTMLElement>('[data-react-toolbox="day"] [tabindex="0"]')
         ?.focus();
     }
   });
   const moveViewMonth = (next: 'left' | 'right') => {
     setDirection(next);
-    setViewDate((current) => time.addMonths(current, next === 'left' ? -1 : 1));
+    const month = time.addMonths(viewDate, next === 'left' ? -1 : 1);
+    month.setDate(Math.min(focusedDate.getDate(), time.getDaysInMonth(month)));
+    const available = range(1, time.getDaysInMonth(month) + 1)
+      .map((day) => time.setDay(month, day))
+      .find((date) => !isDateDisabled(date, constraints));
+    setFocusedDate(isDateDisabled(month, constraints) ? (available ?? month) : month);
+    setViewDate(month);
   };
   const yearClick = (year: number) => {
     const next = time.addMonths(selectedDate, (year - selectedDate.getFullYear()) * 12);
     next.setDate(Math.min(selectedDate.getDate(), time.getDaysInMonth(next)));
     setViewDate(next);
+    setFocusedDate(next);
     onChange?.(next, false);
   };
   const animation =
@@ -124,16 +141,25 @@ export default function Calendar({
           ),
         };
   const month = viewDate.getMonth();
+  const firstYear =
+    startYear ??
+    constraints.minDate?.getFullYear() ??
+    Math.min(1900, selectedDate.getFullYear(), constraints.maxDate?.getFullYear() ?? Infinity);
+  const lastYear =
+    endYear ??
+    constraints.maxDate?.getFullYear() ??
+    Math.max(2099, selectedDate.getFullYear(), constraints.minDate?.getFullYear() ?? -Infinity);
+  const focusedYear = Math.min(lastYear, Math.max(firstYear, viewDate.getFullYear()));
   return (
     <div
       className={cn(
         'rt-date-picker-calendar',
-        '[background:var(--calendar-primary-contrast-color)] text-(length:--font-size-small) h-(--calendar-total-height) leading-(--calendar-row-height) overflow-hidden relative text-center',
+        '[background:var(--calendar-background)] text-(length:--font-size-small) h-(--calendar-total-height) leading-(--calendar-row-height) overflow-hidden relative text-center',
         '[&:focus-visible]:[outline:2px_solid_var(--calendar-primary-color)] [&:focus-visible]:outline-offset-2',
         theme?.calendar,
       )}
       role="group"
-      aria-label="Calendar"
+      aria-label={labels?.calendar ?? 'Calendar'}
       tabIndex={0}
       onKeyDown={(event) => {
         if (event.defaultPrevented || display !== 'months' || event.altKey || event.ctrlKey || event.metaKey) return;
@@ -146,15 +172,16 @@ export default function Calendar({
           event.preventDefault();
           let date: Date;
           if (event.key === 'Home' || event.key === 'End') {
-            const weekday = (selectedDate.getDay() + (sundayFirstDayOfWeek ? 0 : 6)) % 7;
-            date = time.addDays(selectedDate, event.key === 'Home' ? -weekday : 6 - weekday);
+            const weekday = (focusedDate.getDay() + (sundayFirstDayOfWeek ? 0 : 6)) % 7;
+            date = time.addDays(focusedDate, event.key === 'Home' ? -weekday : 6 - weekday);
           } else {
-            date = time.addMonths(selectedDate, (event.key === 'PageUp' ? -1 : 1) * (event.shiftKey ? 12 : 1));
-            date.setDate(Math.min(selectedDate.getDate(), time.getDaysInMonth(date)));
+            date = time.addMonths(focusedDate, (event.key === 'PageUp' ? -1 : 1) * (event.shiftKey ? 12 : 1));
+            date.setDate(Math.min(focusedDate.getDate(), time.getDaysInMonth(date)));
           }
           if (!isDateDisabled(date, constraints)) {
             focusSelectedDay.current = true;
             setViewDate(date);
+            setFocusedDate(date);
             onChange?.(date, false);
           }
           return;
@@ -173,12 +200,12 @@ export default function Calendar({
         const step = (steps[event.key] || legacySteps[event.which]) * direction;
         if (step) {
           event.preventDefault();
-          let date: Date | undefined = time.addDays(selectedDate, step);
+          let date: Date | undefined = time.addDays(focusedDate, step);
           if (constraints.enabledDates?.length)
             date = constraints.enabledDates
               .filter(
                 (candidate) =>
-                  (dayStamp(candidate) - dayStamp(selectedDate)) * step > 0 && !isDateDisabled(candidate, constraints),
+                  (dayStamp(candidate) - dayStamp(focusedDate)) * step > 0 && !isDateDisabled(candidate, constraints),
               )
               .sort((a, b) => (dayStamp(a) - dayStamp(b)) * Math.sign(step))[0];
           else
@@ -191,6 +218,7 @@ export default function Calendar({
           if (date && !isDateDisabled(date, constraints)) {
             focusSelectedDay.current = true;
             setViewDate(date);
+            setFocusedDate(date);
             onChange?.(date, false);
           }
         } else if ((event.key === 'Enter' || event.which === 13) && event.target === event.currentTarget) {
@@ -211,10 +239,10 @@ export default function Calendar({
           )}
           ref={years}
         >
-          {range(1900, 2100).map((year) => (
+          {range(firstYear, lastYear + 1).map((year) => (
             <li
               role="button"
-              tabIndex={year === viewDate.getFullYear() ? 0 : -1}
+              tabIndex={year === focusedYear ? 0 : -1}
               aria-pressed={year === viewDate.getFullYear()}
               className={year === viewDate.getFullYear() ? cn(activeClasses, theme?.active) : ''}
               key={year}
@@ -236,7 +264,7 @@ export default function Calendar({
                   if (sibling instanceof HTMLElement) sibling.focus();
                 }
               }}
-              ref={year === viewDate.getFullYear() ? activeYear : undefined}
+              ref={year === focusedYear ? activeYear : undefined}
             >
               {year}
             </li>
@@ -265,7 +293,7 @@ export default function Calendar({
           }}
         >
           <IconButton
-            aria-label="Previous month"
+            aria-label={labels?.previousMonth ?? 'Previous month'}
             className={cn(
               'rt-date-picker-prev',
               '[.rt-date-picker-calendar_&]:cursor-pointer [.rt-date-picker-calendar_&]:h-[calc(3.6*var(--unit))] [.rt-date-picker-calendar_&]:opacity-[0.7] [.rt-date-picker-calendar_&]:absolute [.rt-date-picker-calendar_&]:top-0 [.rt-date-picker-calendar_&]:z-(--z-index-high) [.rt-date-picker-calendar_&]:left-0',
@@ -276,7 +304,7 @@ export default function Calendar({
             onClick={() => moveViewMonth('left')}
           />
           <IconButton
-            aria-label="Next month"
+            aria-label={labels?.nextMonth ?? 'Next month'}
             className={cn(
               'rt-date-picker-next',
               '[.rt-date-picker-calendar_&]:cursor-pointer [.rt-date-picker-calendar_&]:h-[calc(3.6*var(--unit))] [.rt-date-picker-calendar_&]:opacity-[0.7] [.rt-date-picker-calendar_&]:absolute [.rt-date-picker-calendar_&]:top-0 [.rt-date-picker-calendar_&]:z-(--z-index-high) [.rt-date-picker-calendar_&]:right-0',
@@ -308,6 +336,8 @@ export default function Calendar({
                 locale={locale}
                 onDayClick={(day) => onChange?.(time.setDay(viewDate, day), true)}
                 selectedDate={selectedDate}
+                focusedDate={focusedDate}
+                onDayFocus={(day) => setFocusedDate(time.setDay(viewDate, day))}
                 sundayFirstDayOfWeek={sundayFirstDayOfWeek}
                 theme={theme}
                 viewDate={viewDate}

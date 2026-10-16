@@ -278,8 +278,11 @@ describe('Material 1 control behavior', () => {
     const onSelect = vi.fn();
     render(<DatePickerDialog active value={new Date(2026, 9, 13)} onSelect={onSelect} />);
     const calendar = document.querySelector('[data-react-toolbox="calendar"]');
-    fireEvent.touchStart(calendar, { touches: [{ clientX: 200, clientY: 100 }] });
-    fireEvent.touchEnd(calendar, { changedTouches: [{ clientX: 100, clientY: 105 }] });
+    fireEvent.touchStart(calendar, {
+      touches: [{ clientX: 200, clientY: 100 }],
+      changedTouches: [{ clientX: 200, clientY: 100 }],
+    });
+    fireEvent.touchEnd(calendar, { touches: [], changedTouches: [{ clientX: 100, clientY: 105 }] });
     expect(screen.getByText('November 2026')).toBeInTheDocument();
     act(() => vi.advanceTimersByTime(350));
     expect(screen.queryByText('October 2026')).not.toBeInTheDocument();

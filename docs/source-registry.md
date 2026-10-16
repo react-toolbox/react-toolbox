@@ -85,7 +85,12 @@ The maintained `src/material/` tree is copied directly into `material/`, avoidin
 
 React Server Component boundaries stay in the source. Pure utilities, shared style helpers, and `shadcnThemeVariables` remain usable on the server through the adjacent implementation files. Event handlers still belong in a client component.
 
-The shared foundation contains ordered custom-property definitions, local Roboto fonts, Material Icons, scoped Preflight compatibility, keyframe registrations, and the MIT license. Tailwind classes live beside the JSX they style, with small shared constants and variant helpers for related components. Each exported component accepts `className` for Tailwind customization. Existing style-slot props remain compatible. The installed `setup.css` explicitly registers copied source with `@source`, including in hosts that disable automatic detection. Tailwind emits utilities for installed families and only their referenced keyframes; a Button installation no longer includes presentation rules for every component. Source files are copied byte-for-byte; including the maintained entry files.
+The shared foundation contains base design tokens, local Roboto fonts, Material Icons, scoped Preflight compatibility, keyframe registrations, and the MIT license. Family `tokens.css` files carry component defaults and their scoped recalculation rules; public entries and direct component modules import the token sheets they use. CSS imports also participate in registry dependency discovery, so dependent family tokens are installed and loaded automatically. Tailwind classes live beside the JSX they style, with small shared constants and variant helpers for related components. Each exported component accepts `className` for Tailwind customization. Existing style-slot props remain compatible. The installed `setup.css` explicitly registers copied source with `@source`, including in hosts that disable automatic detection. Tailwind emits utilities for installed families and only their referenced keyframes; a Button installation includes only its Button/Ripple component tokens and presentation rules. The full `styles.css` aggregate belongs to the all-components installation; the optional `tailwind.css` and `shadcn.css` integrations remain available in isolated installs. Source files are copied byte-for-byte; including the maintained entry files.
+
+Automatic font delivery lives in `foundations/styles/fonts.css`: Roboto 400/500 and Material Icons. To use an existing typeface and SVG icons, remove that one import from the editable `setup.css`, set `--preferred-font`, and pass React SVG nodes to icon props. No font binary is required by the JavaScript. Keep the default import for automatic M1 typography; load additional weights only when your application uses them.
+
+The registry also exposes `example-field-notes`, `example-recipes`, and `example-snackbar-queue`. Examples install alongside `material/` under `@ui/examples/`; their relative component imports remain editable. Field Notes includes its optional semantic bridge, supports the original palette, a teal/orange palette, and a dark palette, and transports each through portals. Recipes keep application policies (async actions, pagination, and queueing) outside core components.
+
 
 ## Themes and spacing
 
@@ -133,7 +138,7 @@ The installed source belongs to the application. Commit local changes, rerun the
 | `card` | Card and its content/action helpers |
 | `checkbox` | Checkbox |
 | `chip` | Chip |
-| `date-picker` | DatePicker |
+| `date-picker` | DatePicker, CalendarSelection for single/multiple/range dates |
 | `dialog` | Dialog |
 | `drawer` | Drawer |
 | `dropdown` | Dropdown |
@@ -146,7 +151,8 @@ The installed source belongs to the application. Commit local changes, rerun the
 | `progress-bar` | ProgressBar |
 | `radio` | RadioButton, RadioGroup |
 | `ripple` | Ripple behavior and compatibility decorator |
-| `slider` | Slider |
+| `sheet` | Gesture Sheet parts, snap points and nested sheets |
+| `slider` | Slider and Radix range/vertical Slider parts |
 | `snackbar` | Snackbar |
 | `switch` | Switch |
 | `table` | Table and its row/cell helpers |
@@ -159,6 +165,10 @@ The installed source belongs to the application. Commit local changes, rerun the
 | `foundation-date-time` | Shared calendar and locale calculations |
 | `foundation-collections` | Shared numeric range helper |
 | `foundation-forms` | Native form reset and checked-state synchronization |
+| `foundation-layout` | Shared responsive shell coordination |
+| `example-field-notes` | Editable original/brand/night distribution |
+| `example-recipes` | Forms, table workflows, avatar groups and async/destructive actions |
+| `example-snackbar-queue` | Optional single-message queue and promise tracking |
 | `all` | Every family and the complete public barrel |
 
 
@@ -166,7 +176,7 @@ Link and Navigation are retired from the public registry. Use Next.js Link, anot
 
 Family dependencies come from parsed TypeScript imports and exports, including type-only imports. A date picker installs its dialog, button, input, overlay, font-icon, and ripple dependencies. Shared implementation files have one registry owner.
 
-Behavioral npm dependencies are also derived from imports. Button and the convenience Menu use Radix Slot; Avatar uses Radix Avatar. Compound Dialog/Drawer, Tabs, DropdownMenu, Dropdown and Tooltip parts install their respective Radix primitives, and Autocomplete parts install Base UI Combobox. Existing implementations may also need roving focus or `aria-hidden`. Other families do not acquire these dependencies unless they compose those components. The installed source keeps its M1 styling and existing public APIs; it can coexist with ordinary shadcn components.
+Behavioral npm dependencies are also derived from imports. Button and the convenience Menu use Radix Slot; Avatar uses Radix Avatar. Compound Dialog/Drawer, Tabs, DropdownMenu, Dropdown, Slider and Tooltip parts install their respective Radix primitives, and Autocomplete parts install Base UI Combobox. Convenience modals share Radix focus/layer ownership and scroll locking with compound surfaces. Sheet installs Vaul over the same Radix Dialog dependency. Other families do not acquire these dependencies unless they compose those components. The installed source keeps its M1 styling and existing public APIs; it can coexist with ordinary shadcn components.
 
 Each family also registers the keyframes referenced by its TypeScript import graph through registry `css` metadata. This keeps animations available when the host compiles imported setup CSS and its Tailwind utility sheet separately, as Next.js does. The definitions are derived from the maintained CSS; a minimal Button installation still excludes unrelated checkbox and progress animations.
 

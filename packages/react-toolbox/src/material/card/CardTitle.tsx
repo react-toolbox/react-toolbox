@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import type { CardTheme } from './types';
@@ -14,6 +15,8 @@ const titleClasses = [
 ].join(' ');
 
 export interface CardTitleProps extends Omit<ComponentPropsWithRef<'div'>, 'title'> {
+  /** Heading level follows the surrounding document, independently of visual size. */
+  heading?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   avatar?: ReactNode;
   subtitle?: ReactNode;
   title?: ReactNode;
@@ -23,6 +26,7 @@ export interface CardTitleProps extends Omit<ComponentPropsWithRef<'div'>, 'titl
   theme?: CardTheme;
 }
 export function CardTitle({
+  heading: Heading = 'h5',
   avatar,
   children,
   className,
@@ -38,7 +42,7 @@ export function CardTitle({
       className={cn(
         'rt-card-cardTitle',
         'items-center flex p-(--card-padding)',
-        "[&_[data-react-toolbox='avatar']]:mr-(--card-padding)",
+        "[&_[data-react-toolbox='avatar']]:me-(--card-padding)",
         '[&_p]:text-[calc(1.4*var(--unit))] [&_p]:[font-weight:400] [&_p]:tracking-[0] [&_p]:leading-[calc(2.4*var(--unit))] [&_p]:m-0',
         '[&:last-child]:pb-(--card-padding-lg)',
         '[.rt-card-cardMedia_.rt-card-contentOverlay_&]:bg-(--card-text-overlay)',
@@ -64,8 +68,10 @@ export function CardTitle({
     >
       {typeof avatar === 'string' ? <Avatar image={avatar} /> : avatar}
       <div>
-        {title && <h5 className={cn(titleClasses, theme?.title)}>{title}</h5>}
-        {children && typeof children === 'string' && <h5 className={cn(titleClasses, theme?.title)}>{children}</h5>}
+        {title && <Heading className={cn(titleClasses, theme?.title)}>{title}</Heading>}
+        {children && typeof children === 'string' && (
+          <Heading className={cn(titleClasses, theme?.title)}>{children}</Heading>
+        )}
         {subtitle && (
           <p
             className={cn(

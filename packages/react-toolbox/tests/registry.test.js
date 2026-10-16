@@ -29,7 +29,9 @@ it('generates deterministic registry items with exact source and complete depend
   assert.deepEqual(await createRegistry(), registry, 'Registry generation must be deterministic');
   assert.equal(
     registry.items.length,
-    registry.families.length + registry.items.filter((item) => item.name.startsWith('foundation')).length + 1,
+    registry.families.length +
+      registry.items.filter((item) => item.name.startsWith('foundation') || item.name.startsWith('example-')).length +
+      1,
   );
   assert.equal(new Set(registry.items.map((item) => item.name)).size, registry.items.length);
   const buttonFiles = installedFiles(registry, 'button');
@@ -51,7 +53,10 @@ it('generates deterministic registry items with exact source and complete depend
   for (const item of registry.items) {
     if (item.name.startsWith('foundation-')) continue;
     const entry = item.files.find((file) => file.type === 'registry:ui');
-    assert(entry?.target.startsWith('@ui/material/'), `Public entry must use the material directory: ${item.name}`);
+    assert(
+      entry?.target.startsWith(item.name.startsWith('example-') ? '@ui/examples/' : '@ui/material/'),
+      `Public entry must use the material directory: ${item.name}`,
+    );
     assert(
       !entry.content.includes('react-toolbox/link') && !entry.content.includes('react-toolbox/navigation'),
       'Public entries must not export retired wrappers',
@@ -106,11 +111,7 @@ it('generates deterministic registry items with exact source and complete depend
     }
     const digest = hash.digest('hex');
     assert.equal(item.meta.sourceSha256, digest, `Incorrect source provenance: ${item.name}`);
-    assert.equal(
-      catalogItem.meta?.sourceSha256,
-      digest,
-      `Incorrect catalog source provenance: ${item.name}`,
-    );
+    assert.equal(catalogItem.meta?.sourceSha256, digest, `Incorrect catalog source provenance: ${item.name}`);
     dependencyClosure(registry, item.name);
   }
 });

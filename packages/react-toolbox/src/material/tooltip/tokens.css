@@ -1,0 +1,23 @@
+@layer theme {
+  /* tooltip */
+  :root {
+    --tooltip-background: rgb(from rgb(97, 97, 97) r g b / 90%);
+    --tooltip-margin: calc(1.4 * var(--unit));
+    --tooltip-border-radius: calc(0.2 * var(--unit));
+    --tooltip-color: var(--rt-color-white);
+    --tooltip-font-size: var(--unit);
+    --tooltip-max-width: calc(17 * var(--unit));
+    --tooltip-padding: calc(0.8 * var(--unit));
+    --tooltip-animation-duration: 150ms;
+  }
+  [data-react-toolbox-tokens~="--unit"] {
+    --tooltip-margin: calc(1.4 * var(--unit));
+    --tooltip-border-radius: calc(0.2 * var(--unit));
+    --tooltip-font-size: var(--unit);
+    --tooltip-max-width: calc(17 * var(--unit));
+    --tooltip-padding: calc(0.8 * var(--unit));
+  }
+  [data-react-toolbox-tokens~="--rt-color-white"] {
+    --tooltip-color: var(--rt-color-white);
+  }
+}

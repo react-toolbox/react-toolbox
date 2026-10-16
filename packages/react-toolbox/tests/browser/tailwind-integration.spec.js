@@ -72,25 +72,25 @@ test.beforeAll(async () => {
   ).css;
   integrated = (
     await postcss([tailwind()]).process(
-      '@import "tailwindcss"; @import "./src/material/foundations/styles/tailwind.css"; @source inline("h-20 bg-toolbox-primary! text-toolbox-accent! p-4 p-6! gap-2 p-toolbox px-2 toolbox-desktop:px-4 text-toolbox-title text-toolbox-primary");',
+      '@import "tailwindcss"; @import "./src/material/foundations/styles/styles.css"; @import "./src/material/foundations/styles/tailwind.css"; @source inline("h-20 bg-toolbox-primary! text-toolbox-accent! p-4 p-6! gap-2 p-toolbox px-2 toolbox-desktop:px-4 text-toolbox-title text-toolbox-primary");',
       { from: `${root}/integration.css` },
     )
   ).css;
   customSpacing = (
     await postcss([tailwind()]).process(
-      '@import "tailwindcss"; @theme { --spacing: 6px; } @import "./src/material/foundations/styles/tailwind.css"; @source inline("p-4 p-6! gap-2 p-toolbox");',
+      '@import "tailwindcss"; @theme { --spacing: 6px; } @import "./src/material/foundations/styles/styles.css"; @import "./src/material/foundations/styles/tailwind.css"; @source inline("p-4 p-6! gap-2 p-toolbox");',
       { from: `${root}/integration.css` },
     )
   ).css;
   materialSpacing = (
     await postcss([tailwind()]).process(
-      '@import "tailwindcss"; @import "./src/material/foundations/styles/tailwind.css"; @theme { --spacing: 4px; } @source inline("p-4 p-6! gap-2 p-toolbox");',
+      '@import "tailwindcss"; @import "./src/material/foundations/styles/styles.css"; @import "./src/material/foundations/styles/tailwind.css"; @theme { --spacing: 4px; } @source inline("p-4 p-6! gap-2 p-toolbox");',
       { from: `${root}/integration.css` },
     )
   ).css;
   semantic = (
     await postcss([tailwind()]).process(
-      '@import "tailwindcss"; @import "./src/material/foundations/styles/shadcn.css"; @theme inline { --color-primary: var(--primary); } @source inline("bg-primary");',
+      '@import "tailwindcss"; @import "./src/material/foundations/styles/styles.css"; @import "./src/material/foundations/styles/shadcn.css"; @theme inline { --color-primary: var(--primary); } @source inline("bg-primary");',
       { from: `${root}/integration.css` },
     )
   ).css;

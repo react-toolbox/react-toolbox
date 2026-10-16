@@ -37,3 +37,15 @@ export type DatePickerTheme = Partial<
 
 /** Style slots for the component. */
 export type DatePickerClassNames = DatePickerTheme;
+
+/** Accessible names for the picker and calendar controls. */
+export interface DatePickerLabels {
+  dialog: string;
+  calendar: string;
+  chooseYear: string;
+  chooseDay: string;
+  previousMonth: string;
+  nextMonth: string;
+  clear: string;
+  unavailable: string;
+}

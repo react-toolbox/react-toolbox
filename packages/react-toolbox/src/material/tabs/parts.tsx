@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import * as Primitive from '@radix-ui/react-tabs';
 import { useLayoutEffect, useRef, useState, useImperativeHandle, type ComponentProps, type CSSProperties } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -8,7 +9,11 @@ import { useRipple } from '../ripple';
 export type TabsRootProps = ComponentProps<typeof Primitive.Root>;
 export function TabsRoot({ className, ...props }: TabsRootProps) {
   return (
-    <Primitive.Root data-slot="TabsRoot" {...props} className={cn('box-border [&_*]:box-border font-(family-name:--preferred-font)', className)} />
+    <Primitive.Root
+      data-slot="TabsRoot"
+      {...props}
+      className={cn('box-border [&_*]:box-border font-(family-name:--preferred-font)', className)}
+    />
   );
 }
 export type TabsListProps = ComponentProps<typeof Primitive.List>;
@@ -18,7 +23,7 @@ export function TabsList({ className, ...props }: TabsListProps) {
       data-slot="TabsList"
       {...props}
       className={cn(
-        'relative flex overflow-x-auto border-0 border-b border-solid border-(--rt-color-divider) data-[orientation=vertical]:flex-col data-[orientation=vertical]:border-b-0 data-[orientation=vertical]:border-r [&:has([data-slot=TabsIndicator])_[data-slot=TabsTrigger]]:after:hidden',
+        'relative flex overflow-x-auto border-0 border-b border-solid border-(--tab-navigation-border-color) data-[orientation=vertical]:flex-col data-[orientation=vertical]:border-b-0 data-[orientation=vertical]:border-e [&:has([data-slot=TabsIndicator])_[data-slot=TabsTrigger]]:after:hidden',
         className,
       )}
     />
@@ -46,7 +51,7 @@ export function TabsTrigger({
       disabled={disabled}
       className={cn(
         focusClasses,
-        'relative flex min-h-[48px] min-w-[72px] shrink-0 items-center justify-center gap-[8px] overflow-hidden border-0 bg-transparent px-[24px] py-[12px] text-[14px] leading-[24px] font-medium uppercase text-(--tab-text-inactive-color) data-[state=active]:text-(--tab-text-color) disabled:opacity-(--tab-label-disabled-opacity) focus-visible:bg-(--tab-focus-color) after:absolute after:inset-x-0 after:bottom-0 after:h-[2px] after:bg-(--tab-pointer-color) after:opacity-0 data-[state=active]:after:opacity-100 data-[orientation=vertical]:after:inset-x-auto data-[orientation=vertical]:after:inset-y-0 data-[orientation=vertical]:after:right-0 data-[orientation=vertical]:after:h-auto data-[orientation=vertical]:after:w-[2px]',
+        'relative flex min-h-(--tab-label-height) min-w-[72px] shrink-0 items-center justify-center gap-[8px] overflow-hidden border-0 bg-transparent px-(--tab-label-h-padding) py-(--tab-label-v-padding) text-(length:--tab-text-height) leading-none font-medium uppercase text-(--tab-text-inactive-color) data-[state=active]:text-(--tab-text-color) disabled:opacity-(--tab-label-disabled-opacity) focus-visible:bg-(--tab-focus-color) after:absolute after:inset-x-0 after:bottom-0 after:h-(--tab-pointer-height) after:bg-(--tab-pointer-color) after:opacity-0 data-[state=active]:after:opacity-100 data-[orientation=vertical]:after:inset-x-auto data-[orientation=vertical]:after:inset-y-0 data-[orientation=vertical]:after:end-0 data-[orientation=vertical]:after:h-auto data-[orientation=vertical]:after:w-(--tab-pointer-height)',
         className,
       )}
       onMouseDown={(event) => {
@@ -85,7 +90,7 @@ export function TabsContent({ className, ...props }: TabsContentProps) {
       {...props}
       className={cn(
         focusClasses,
-        'py-[24px] text-[14px] leading-[24px] text-(--rt-color-text) data-[state=inactive]:hidden',
+        'py-[24px] text-(length:--tab-text-height) leading-[24px] text-(--rt-color-text) data-[state=inactive]:hidden',
         className,
       )}
     />
@@ -113,9 +118,9 @@ export function TabsIndicator({ className, style, ref, ...props }: TabsIndicator
         vertical
           ? {
               opacity: 1,
-              right: 0,
+              insetInlineEnd: 0,
               top: 0,
-              width: 2,
+              width: 'var(--tab-pointer-height)',
               height: active.height,
               transform: `translateY(${active.top - bounds.top + list.scrollTop}px)`,
             }
@@ -123,7 +128,7 @@ export function TabsIndicator({ className, style, ref, ...props }: TabsIndicator
               opacity: 1,
               left: 0,
               bottom: 0,
-              height: 2,
+              height: 'var(--tab-pointer-height)',
               width: active.width,
               transform: `translateX(${active.left - bounds.left + list.scrollLeft}px)`,
             },

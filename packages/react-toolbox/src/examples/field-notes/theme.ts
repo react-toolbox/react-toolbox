@@ -1,0 +1,47 @@
+/** A brand palette over the original Material geometry, typography and motion. */
+export const fieldNotesTheme = {
+  '--datepicker-year-inactive-opacity': 0.9,
+  '--timepicker-period-inactive-opacity': 0.9,
+  '--rt-color-primary': '#00695c',
+  '--rt-color-primary-dark': '#004d40',
+  '--rt-color-primary-contrast': '#ffffff',
+  '--rt-color-accent': '#bf360c',
+  '--rt-color-accent-dark': '#870000',
+  '--rt-color-accent-contrast': '#ffffff',
+  '--rt-color-background': '#faf8f2',
+  '--dialog-color-white': '#fffdf7',
+  '--menu-background-color': '#fffdf7',
+  '--dropdown-color-white': '#fffdf7',
+  '--autocomplete-suggestions-background': '#fffdf7',
+  '--drawer-background-color': '#fffdf7',
+};
+
+/** Import the optional shadcn.css bridge to use this semantic variant. */
+export const fieldNotesNightTheme = {
+  /** Keep primary text legible when its tint is painted over a dark card. */
+  '--button-primary-color-hover': 'rgb(from var(--rt-color-primary) r g b / 12%)',
+  '--datepicker-year-inactive-opacity': 0.9,
+  '--timepicker-period-inactive-opacity': 0.9,
+  '--rt-color-text': 'var(--foreground)',
+  '--rt-color-text-secondary': 'var(--muted-foreground)',
+  '--rt-shadcn': 1,
+  '--background': '#152723',
+  '--foreground': '#f4f6ee',
+  '--card': '#203b34',
+  '--card-foreground': '#f4f6ee',
+  '--popover': '#203b34',
+  '--popover-foreground': '#f4f6ee',
+  '--primary': '#80cbc4',
+  '--primary-foreground': '#12332c',
+  '--secondary': '#36564a',
+  '--secondary-foreground': '#ffffff',
+  '--muted': '#304b40',
+  '--muted-foreground': '#c0cfc4',
+  '--rt-color-accent': '#ffa270',
+  '--rt-color-accent-contrast': '#301608',
+  '--accent': '#36564a',
+  '--accent-foreground': '#ffffff',
+  '--border': '#6b8175',
+  '--input': '#8ba298',
+  '--destructive': '#ffb4ab',
+};

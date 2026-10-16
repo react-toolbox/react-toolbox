@@ -95,6 +95,11 @@
           "target": "@ui/material/foundations/styles/animations.css"
         },
         {
+          "path": "src/material/foundations/styles/base.css",
+          "type": "registry:file",
+          "target": "@ui/material/foundations/styles/base.css"
+        },
+        {
           "path": "src/material/foundations/styles/classes.ts",
           "type": "registry:file",
           "target": "@ui/material/foundations/styles/classes.ts"
@@ -120,6 +125,11 @@
           "target": "@ui/material/foundations/styles/composition.ts"
         },
         {
+          "path": "src/material/foundations/styles/fonts.css",
+          "type": "registry:file",
+          "target": "@ui/material/foundations/styles/fonts.css"
+        },
+        {
           "path": "src/material/foundations/styles/reduced-motion.css",
           "type": "registry:file",
           "target": "@ui/material/foundations/styles/reduced-motion.css"
@@ -138,11 +148,6 @@
           "path": "src/material/foundations/styles/slots.ts",
           "type": "registry:file",
           "target": "@ui/material/foundations/styles/slots.ts"
-        },
-        {
-          "path": "src/material/foundations/styles/styles.css",
-          "type": "registry:file",
-          "target": "@ui/material/foundations/styles/styles.css"
         },
         {
           "path": "src/material/foundations/styles/styles.d.ts",
@@ -185,14 +190,14 @@
           "target": "@ui/material/theme/index.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/theme. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/theme. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "3281e3b877874ea01d8f1247f791e8b9e653d33bcfc50027df366905b5f0e964",
+        "sourceSha256": "b640d9e87ed10712eb562a0c7ba35945c18a8bd3c37dc6a164cb5b88857632bd",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -239,6 +244,11 @@
           "path": "src/material/foundations/date-time/calendar.ts",
           "type": "registry:file",
           "target": "@ui/material/foundations/date-time/calendar.ts"
+        },
+        {
+          "path": "src/material/foundations/date-time/time.ts",
+          "type": "registry:file",
+          "target": "@ui/material/foundations/date-time/time.ts"
         }
       ],
       "docs": "Shared implementation installed automatically by the components that need it. See https://react-toolbox.io/docs/installation.",
@@ -248,7 +258,7 @@
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "c582c6d9e0658bcd9368d95fad60ebdae8d136d1f2a82102fa620384fa6f9353",
+        "sourceSha256": "a8c35bacad8f5b3e15d902aaacbb090499c978636061c5fc4099c457b6a5ed79",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -282,6 +292,34 @@
       "meta": {
         "version": "3.0.0-next.0",
         "sourceSha256": "344bcd253db7ab483ea3bf23dcab72acc6da7d5eadc4d9d12eb5c03549b389e3",
+        "source": "src/material/",
+        "distribution": "copy-source"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "foundation-layout",
+      "type": "registry:lib",
+      "title": "React Toolbox foundation layout",
+      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/material/foundations/layout/LayoutContext.ts",
+          "type": "registry:file",
+          "target": "@ui/material/foundations/layout/LayoutContext.ts"
+        }
+      ],
+      "docs": "Shared implementation installed automatically by the components that need it. See https://react-toolbox.io/docs/installation.",
+      "categories": [
+        "material-design",
+        "react-toolbox"
+      ],
+      "meta": {
+        "version": "3.0.0-next.0",
+        "sourceSha256": "ea7b8f7c1f8a9b0dd2d9a6e0aff2ff8d7a7db1a25826416d23aecb10906e4bcf",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -365,48 +403,68 @@
       "type": "registry:ui",
       "title": "React Toolbox app bar",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [],
-      "devDependencies": [],
-      "registryDependencies": [
-        "https://react-toolbox.io/r/button.json",
-        "https://react-toolbox.io/r/foundation.json"
-      ],
-      "files": [
-        {
-          "path": "src/material/app-bar/AppBar.tsx",
-          "type": "registry:file",
-          "target": "@ui/material/app-bar/AppBar.tsx"
-        },
-        {
-          "path": "src/material/app-bar/index.ts",
-          "type": "registry:ui",
-          "target": "@ui/material/app-bar/index.ts"
-        },
-        {
-          "path": "src/material/app-bar/types.ts",
-          "type": "registry:file",
-          "target": "@ui/material/app-bar/types.ts"
-        }
-      ],
-      "docs": "Import from your configured ui alias: material/app-bar. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
-      "categories": [
-        "material-design",
-        "react-toolbox"
-      ],
-      "meta": {
-        "version": "3.0.0-next.0",
-        "sourceSha256": "470e1ccefb93b530832fcf2751b8863b2e9e643419eb8b57a69710e420d6041a",
-        "source": "src/material/",
-        "distribution": "copy-source"
-      }
-    },
-    {
-      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-      "name": "autocomplete",
-      "type": "registry:ui",
-      "title": "React Toolbox autocomplete",
-      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
         "@keyframes toolbox-enter": {
           "from": {
             "opacity": "0",
@@ -425,6 +483,200 @@
           "to": {
             "opacity": "0",
             "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
+        }
+      },
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [
+        "https://react-toolbox.io/r/button.json",
+        "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-layout.json"
+      ],
+      "files": [
+        {
+          "path": "src/material/app-bar/AppBar.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/app-bar/AppBar.tsx"
+        },
+        {
+          "path": "src/material/app-bar/index.ts",
+          "type": "registry:ui",
+          "target": "@ui/material/app-bar/index.ts"
+        },
+        {
+          "path": "src/material/app-bar/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/app-bar/tokens.css"
+        },
+        {
+          "path": "src/material/app-bar/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/app-bar/types.ts"
+        }
+      ],
+      "docs": "Import from your configured ui alias: material/app-bar. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "categories": [
+        "material-design",
+        "react-toolbox"
+      ],
+      "meta": {
+        "version": "3.0.0-next.0",
+        "sourceSha256": "5e09c5b73b58755b73bd00cb8956a1594618476eb2ea253f13eb4b7e59ac9a00",
+        "source": "src/material/",
+        "distribution": "copy-source"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "autocomplete",
+      "type": "registry:ui",
+      "title": "React Toolbox autocomplete",
+      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
           }
         }
       },
@@ -456,19 +708,24 @@
           "target": "@ui/material/autocomplete/parts.tsx"
         },
         {
+          "path": "src/material/autocomplete/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/autocomplete/tokens.css"
+        },
+        {
           "path": "src/material/autocomplete/types.ts",
           "type": "registry:file",
           "target": "@ui/material/autocomplete/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/autocomplete. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/autocomplete. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "61cd1ea24af5063a3605715fb344d6e15bb9b9c47e559f93a798af176bac43db",
+        "sourceSha256": "0f4d4655558e5e5ad1af9d11c258b0b87f747b54776ccaf261828d7a54bc52cf",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -479,6 +736,121 @@
       "type": "registry:ui",
       "title": "React Toolbox avatar",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
+        }
+      },
       "dependencies": [
         "@radix-ui/react-avatar@^1.3.1"
       ],
@@ -499,19 +871,24 @@
           "target": "@ui/material/avatar/index.ts"
         },
         {
+          "path": "src/material/avatar/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/avatar/tokens.css"
+        },
+        {
           "path": "src/material/avatar/types.ts",
           "type": "registry:file",
           "target": "@ui/material/avatar/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/avatar. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/avatar. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "301600543b3a336505710f5c2e29fd8573339cb6dc657d0e21282761e6774216",
+        "sourceSha256": "10f6d8955b099fcd972d6196f6266c6433340b5259cda19f775b55924b3911d1",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -522,6 +899,121 @@
       "type": "registry:ui",
       "title": "React Toolbox button",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
+        }
+      },
       "dependencies": [
         "@radix-ui/react-slot@^1.5.0"
       ],
@@ -563,19 +1055,24 @@
           "target": "@ui/material/button/styles.ts"
         },
         {
+          "path": "src/material/button/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/button/tokens.css"
+        },
+        {
           "path": "src/material/button/types.ts",
           "type": "registry:file",
           "target": "@ui/material/button/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/button. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/button. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "67452e2f9f1f78c2dba462288b95a1177919d2dfaef75ba07a122daeb4eb2146",
+        "sourceSha256": "a73bcba145c3365c14c4a8786df405fbb045beba1c25cdbeaf81451c1aac82e7",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -586,6 +1083,121 @@
       "type": "registry:ui",
       "title": "React Toolbox card",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
+        }
+      },
       "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
@@ -624,19 +1236,24 @@
           "target": "@ui/material/card/index.ts"
         },
         {
+          "path": "src/material/card/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/card/tokens.css"
+        },
+        {
           "path": "src/material/card/types.ts",
           "type": "registry:file",
           "target": "@ui/material/card/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/card. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/card. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "6832b6616a0c3efabf010b44127c6235f4fddfad78ffb17f3590fbdb59f83754",
+        "sourceSha256": "6eb0bd9dd5151ee7b1e29ec12f64a50863ad755af1a049bbe49a38ff50fc799b",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -660,6 +1277,105 @@
             "left": "calc(0.4 * var(--unit))",
             "top": "calc(-0.1 * var(--unit))",
             "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
           }
         }
       },
@@ -687,19 +1403,24 @@
           "target": "@ui/material/checkbox/index.ts"
         },
         {
+          "path": "src/material/checkbox/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/checkbox/tokens.css"
+        },
+        {
           "path": "src/material/checkbox/types.ts",
           "type": "registry:file",
           "target": "@ui/material/checkbox/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/checkbox. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/checkbox. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "aad50c819486533c3c000466d211831b51b85c440ccf7d6e047560766331bb5c",
+        "sourceSha256": "a962c94362d8fe57f1053c1ec3460f33827494731a410050b8789a083d11155a",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -710,6 +1431,121 @@
       "type": "registry:ui",
       "title": "React Toolbox chip",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
+        }
+      },
       "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
@@ -728,19 +1564,24 @@
           "target": "@ui/material/chip/index.ts"
         },
         {
+          "path": "src/material/chip/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/chip/tokens.css"
+        },
+        {
           "path": "src/material/chip/types.ts",
           "type": "registry:file",
           "target": "@ui/material/chip/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/chip. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/chip. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "211bdb910a7251338083f771a933fb46ce528effeae7a3e979e2ba665397ee25",
+        "sourceSha256": "0921a13aac6a975e6997cbffe7f6aea71890bf300823a31694b76c4794597dd5",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -751,6 +1592,121 @@
       "type": "registry:ui",
       "title": "React Toolbox date picker",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
+        }
+      },
       "dependencies": [
         "react-transition-group@^4.4.5"
       ],
@@ -784,6 +1740,11 @@
           "target": "@ui/material/date-picker/CalendarMonth.tsx"
         },
         {
+          "path": "src/material/date-picker/CalendarSelection.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/date-picker/CalendarSelection.tsx"
+        },
+        {
           "path": "src/material/date-picker/DatePicker.tsx",
           "type": "registry:file",
           "target": "@ui/material/date-picker/DatePicker.tsx"
@@ -809,19 +1770,24 @@
           "target": "@ui/material/date-picker/styles.ts"
         },
         {
+          "path": "src/material/date-picker/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/date-picker/tokens.css"
+        },
+        {
           "path": "src/material/date-picker/types.ts",
           "type": "registry:file",
           "target": "@ui/material/date-picker/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/date-picker. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/date-picker. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "968faf2f54653bb8f77c5d64edff6d73e22ad38fd73ae2ec13f77601a3e1b7c6",
+        "sourceSha256": "dc3f84389e7b26ecdec1925b925b9de96f0e35b581bfbb938354190d24a41022",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -833,6 +1799,67 @@
       "title": "React Toolbox dialog",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
         "@keyframes toolbox-enter": {
           "from": {
             "opacity": "0",
@@ -867,6 +1894,22 @@
           },
           "to": {
             "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
           }
         }
       },
@@ -898,19 +1941,24 @@
           "target": "@ui/material/dialog/parts.tsx"
         },
         {
+          "path": "src/material/dialog/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/dialog/tokens.css"
+        },
+        {
           "path": "src/material/dialog/types.ts",
           "type": "registry:file",
           "target": "@ui/material/dialog/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/dialog. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/dialog. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "e941f81d3080e5f01ba6892cfb5059893de75b703af4377047de2b6aa1d8a0ae",
+        "sourceSha256": "5fad87b9e2e38acdf06f7b9a3e67a9c79e31b9a134b06857a72e6cf5de9fd5f9",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -922,6 +1970,67 @@
       "title": "React Toolbox drawer",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
         "@keyframes toolbox-enter": {
           "from": {
             "opacity": "0",
@@ -960,7 +2069,7 @@
         },
         "@keyframes toolbox-drawer-in": {
           "from": {
-            "translate": "var(--drawer-offset, -100%) 0"
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
           },
           "to": {
             "translate": "0 0"
@@ -971,7 +2080,7 @@
             "translate": "0 0"
           },
           "to": {
-            "translate": "var(--drawer-offset, -100%) 0"
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
           }
         }
       },
@@ -1002,19 +2111,24 @@
           "target": "@ui/material/drawer/parts.tsx"
         },
         {
+          "path": "src/material/drawer/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/drawer/tokens.css"
+        },
+        {
           "path": "src/material/drawer/types.ts",
           "type": "registry:file",
           "target": "@ui/material/drawer/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/drawer. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/drawer. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "cb3444cd70204dd3d6eb045f0fd021c2b40f4beeb22b05430328240d0f73d146",
+        "sourceSha256": "7f1cdce107d1f15d77ff9e442e2df40e52816fe39e5dffbe75fa16ebb42c583a",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1026,160 +2140,67 @@
       "title": "React Toolbox dropdown",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "css": {
-        "@keyframes toolbox-enter": {
-          "from": {
-            "opacity": "0",
-            "scale": "0.95"
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
           },
-          "to": {
-            "opacity": "1",
-            "scale": "1"
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
           }
         },
-        "@keyframes toolbox-exit": {
-          "from": {
-            "opacity": "1",
-            "scale": "1"
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
           },
-          "to": {
-            "opacity": "0",
-            "scale": "0.95"
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
           }
-        }
-      },
-      "dependencies": [
-        "@radix-ui/react-select@^2.4.1"
-      ],
-      "devDependencies": [],
-      "registryDependencies": [
-        "https://react-toolbox.io/r/foundation.json",
-        "https://react-toolbox.io/r/foundation-forms.json",
-        "https://react-toolbox.io/r/foundation-portal.json",
-        "https://react-toolbox.io/r/input.json"
-      ],
-      "files": [
-        {
-          "path": "src/material/dropdown/Dropdown.tsx",
-          "type": "registry:file",
-          "target": "@ui/material/dropdown/Dropdown.tsx"
         },
-        {
-          "path": "src/material/dropdown/index.ts",
-          "type": "registry:ui",
-          "target": "@ui/material/dropdown/index.ts"
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
         },
-        {
-          "path": "src/material/dropdown/parts.tsx",
-          "type": "registry:file",
-          "target": "@ui/material/dropdown/parts.tsx"
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
         },
-        {
-          "path": "src/material/dropdown/types.ts",
-          "type": "registry:file",
-          "target": "@ui/material/dropdown/types.ts"
-        }
-      ],
-      "docs": "Import from your configured ui alias: material/dropdown. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
-      "categories": [
-        "material-design",
-        "react-toolbox"
-      ],
-      "meta": {
-        "version": "3.0.0-next.0",
-        "sourceSha256": "d4cd2e199957728f2a3ca09bba6192fbda342b75a6e4cd037ec955811ba87c34",
-        "source": "src/material/",
-        "distribution": "copy-source"
-      }
-    },
-    {
-      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-      "name": "font-icon",
-      "type": "registry:ui",
-      "title": "React Toolbox font icon",
-      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [],
-      "devDependencies": [],
-      "registryDependencies": [
-        "https://react-toolbox.io/r/foundation.json"
-      ],
-      "files": [
-        {
-          "path": "src/material/font-icon/FontIcon.tsx",
-          "type": "registry:file",
-          "target": "@ui/material/font-icon/FontIcon.tsx"
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
         },
-        {
-          "path": "src/material/font-icon/index.ts",
-          "type": "registry:ui",
-          "target": "@ui/material/font-icon/index.ts"
-        }
-      ],
-      "docs": "Import from your configured ui alias: material/font-icon. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
-      "categories": [
-        "material-design",
-        "react-toolbox"
-      ],
-      "meta": {
-        "version": "3.0.0-next.0",
-        "sourceSha256": "c001a3d6b6a50ed50b11ed135d3aeedc362793d6ebe1a104129e9faceaa7c1b0",
-        "source": "src/material/",
-        "distribution": "copy-source"
-      }
-    },
-    {
-      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-      "name": "input",
-      "type": "registry:ui",
-      "title": "React Toolbox input",
-      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [],
-      "devDependencies": [],
-      "registryDependencies": [
-        "https://react-toolbox.io/r/font-icon.json",
-        "https://react-toolbox.io/r/foundation.json",
-        "https://react-toolbox.io/r/foundation-forms.json"
-      ],
-      "files": [
-        {
-          "path": "src/material/input/Input.tsx",
-          "type": "registry:file",
-          "target": "@ui/material/input/Input.tsx"
-        },
-        {
-          "path": "src/material/input/index.ts",
-          "type": "registry:ui",
-          "target": "@ui/material/input/index.ts"
-        },
-        {
-          "path": "src/material/input/types.ts",
-          "type": "registry:file",
-          "target": "@ui/material/input/types.ts"
-        },
-        {
-          "path": "src/material/input/value.ts",
-          "type": "registry:file",
-          "target": "@ui/material/input/value.ts"
-        }
-      ],
-      "docs": "Import from your configured ui alias: material/input. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
-      "categories": [
-        "material-design",
-        "react-toolbox"
-      ],
-      "meta": {
-        "version": "3.0.0-next.0",
-        "sourceSha256": "41fd1dc7ada813aada9374c80e160a0622bec00509dbb6368eafacef53ac1ced",
-        "source": "src/material/",
-        "distribution": "copy-source"
-      }
-    },
-    {
-      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-      "name": "layout",
-      "type": "registry:ui",
-      "title": "React Toolbox layout",
-      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "css": {
         "@keyframes toolbox-enter": {
           "from": {
             "opacity": "0",
@@ -1218,7 +2239,7 @@
         },
         "@keyframes toolbox-drawer-in": {
           "from": {
-            "translate": "var(--drawer-offset, -100%) 0"
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
           },
           "to": {
             "translate": "0 0"
@@ -1229,7 +2250,494 @@
             "translate": "0 0"
           },
           "to": {
-            "translate": "var(--drawer-offset, -100%) 0"
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
+        }
+      },
+      "dependencies": [
+        "@radix-ui/react-select@^2.4.1"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [
+        "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-forms.json",
+        "https://react-toolbox.io/r/foundation-portal.json",
+        "https://react-toolbox.io/r/input.json"
+      ],
+      "files": [
+        {
+          "path": "src/material/dropdown/Dropdown.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/dropdown/Dropdown.tsx"
+        },
+        {
+          "path": "src/material/dropdown/index.ts",
+          "type": "registry:ui",
+          "target": "@ui/material/dropdown/index.ts"
+        },
+        {
+          "path": "src/material/dropdown/parts.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/dropdown/parts.tsx"
+        },
+        {
+          "path": "src/material/dropdown/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/dropdown/tokens.css"
+        },
+        {
+          "path": "src/material/dropdown/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/dropdown/types.ts"
+        }
+      ],
+      "docs": "Import from your configured ui alias: material/dropdown. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "categories": [
+        "material-design",
+        "react-toolbox"
+      ],
+      "meta": {
+        "version": "3.0.0-next.0",
+        "sourceSha256": "b31618242eb385f2cde1390c4c9ed73727f483eaf1ee6de43eb4f02fb70c1b8f",
+        "source": "src/material/",
+        "distribution": "copy-source"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "font-icon",
+      "type": "registry:ui",
+      "title": "React Toolbox font icon",
+      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
+        }
+      },
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [
+        "https://react-toolbox.io/r/foundation.json"
+      ],
+      "files": [
+        {
+          "path": "src/material/font-icon/FontIcon.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/font-icon/FontIcon.tsx"
+        },
+        {
+          "path": "src/material/font-icon/index.ts",
+          "type": "registry:ui",
+          "target": "@ui/material/font-icon/index.ts"
+        }
+      ],
+      "docs": "Import from your configured ui alias: material/font-icon. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "categories": [
+        "material-design",
+        "react-toolbox"
+      ],
+      "meta": {
+        "version": "3.0.0-next.0",
+        "sourceSha256": "c001a3d6b6a50ed50b11ed135d3aeedc362793d6ebe1a104129e9faceaa7c1b0",
+        "source": "src/material/",
+        "distribution": "copy-source"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "input",
+      "type": "registry:ui",
+      "title": "React Toolbox input",
+      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
+        }
+      },
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [
+        "https://react-toolbox.io/r/font-icon.json",
+        "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-forms.json"
+      ],
+      "files": [
+        {
+          "path": "src/material/input/Input.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/input/Input.tsx"
+        },
+        {
+          "path": "src/material/input/index.ts",
+          "type": "registry:ui",
+          "target": "@ui/material/input/index.ts"
+        },
+        {
+          "path": "src/material/input/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/input/tokens.css"
+        },
+        {
+          "path": "src/material/input/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/input/types.ts"
+        },
+        {
+          "path": "src/material/input/value.ts",
+          "type": "registry:file",
+          "target": "@ui/material/input/value.ts"
+        }
+      ],
+      "docs": "Import from your configured ui alias: material/input. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "categories": [
+        "material-design",
+        "react-toolbox"
+      ],
+      "meta": {
+        "version": "3.0.0-next.0",
+        "sourceSha256": "31ad63589318d16d694e3780fdcbfb70af4fd3085d7a5c4b0db24804a25104a8",
+        "source": "src/material/",
+        "distribution": "copy-source"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "layout",
+      "type": "registry:ui",
+      "title": "React Toolbox layout",
+      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
           }
         }
       },
@@ -1238,7 +2746,8 @@
       "registryDependencies": [
         "https://react-toolbox.io/r/app-bar.json",
         "https://react-toolbox.io/r/drawer.json",
-        "https://react-toolbox.io/r/foundation.json"
+        "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-layout.json"
       ],
       "files": [
         {
@@ -1277,19 +2786,29 @@
           "target": "@ui/material/layout/styles.ts"
         },
         {
+          "path": "src/material/layout/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/layout/tokens.css"
+        },
+        {
           "path": "src/material/layout/types.ts",
           "type": "registry:file",
           "target": "@ui/material/layout/types.ts"
+        },
+        {
+          "path": "src/material/layout/useLayoutDrawer.ts",
+          "type": "registry:file",
+          "target": "@ui/material/layout/useLayoutDrawer.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/layout. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/layout. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "85f99fcc283b76a322b6274712156bfee195f230fbb5a7593d410c21b31692d2",
+        "sourceSha256": "27bfe0800e7cdb47967145e6aa25d2f589b4f03cfff93c78b30121ae7269442a",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1313,6 +2832,105 @@
             "left": "calc(0.4 * var(--unit))",
             "top": "calc(-0.1 * var(--unit))",
             "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
           }
         }
       },
@@ -1377,6 +2995,11 @@
           "target": "@ui/material/list/ListSubHeader.tsx"
         },
         {
+          "path": "src/material/list/context.ts",
+          "type": "registry:file",
+          "target": "@ui/material/list/context.ts"
+        },
+        {
           "path": "src/material/list/index.ts",
           "type": "registry:ui",
           "target": "@ui/material/list/index.ts"
@@ -1387,19 +3010,24 @@
           "target": "@ui/material/list/styles.ts"
         },
         {
+          "path": "src/material/list/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/list/tokens.css"
+        },
+        {
           "path": "src/material/list/types.ts",
           "type": "registry:file",
           "target": "@ui/material/list/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/list. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/list. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "e6742cdbd97f819acf6ca7603efd255b39e023b87bdbbf77d955a6d713ea13ea",
+        "sourceSha256": "aed5cf4b7955c7331532a4ba0af2160ea5afe5c22d9b929ff299bf21efc0a18c",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1411,6 +3039,67 @@
       "title": "React Toolbox menu",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
         "@keyframes toolbox-enter": {
           "from": {
             "opacity": "0",
@@ -1430,9 +3119,42 @@
             "opacity": "0",
             "scale": "0.95"
           }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
         }
       },
       "dependencies": [
+        "@radix-ui/react-dismissable-layer@^1.2.1",
         "@radix-ui/react-dropdown-menu@^2.2.1",
         "@radix-ui/react-slot@^1.5.0"
       ],
@@ -1442,6 +3164,7 @@
         "https://react-toolbox.io/r/font-icon.json",
         "https://react-toolbox.io/r/foundation.json",
         "https://react-toolbox.io/r/foundation-portal.json",
+        "https://react-toolbox.io/r/overlay.json",
         "https://react-toolbox.io/r/ripple.json"
       ],
       "files": [
@@ -1496,19 +3219,24 @@
           "target": "@ui/material/menu/styles.ts"
         },
         {
+          "path": "src/material/menu/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/menu/tokens.css"
+        },
+        {
           "path": "src/material/menu/types.ts",
           "type": "registry:file",
           "target": "@ui/material/menu/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/menu. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/menu. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "d2d75f0b52ee28b34b6d1c74061af0bdea4dad236b67e1b7c4a25e5f46cf2ed4",
+        "sourceSha256": "9bc6f3b0a0e0d6e3dc8787e8199f9ee5939156b7ee4d6ba6ef942cff4f4b1f9f",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1519,54 +3247,21 @@
       "type": "registry:ui",
       "title": "React Toolbox overlay",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [
-        "aria-hidden@^1.2.6"
-      ],
-      "devDependencies": [],
-      "registryDependencies": [
-        "https://react-toolbox.io/r/foundation.json"
-      ],
-      "files": [
-        {
-          "path": "src/material/overlay/Overlay.tsx",
-          "type": "registry:file",
-          "target": "@ui/material/overlay/Overlay.tsx"
-        },
-        {
-          "path": "src/material/overlay/index.ts",
-          "type": "registry:ui",
-          "target": "@ui/material/overlay/index.ts"
-        },
-        {
-          "path": "src/material/overlay/types.ts",
-          "type": "registry:file",
-          "target": "@ui/material/overlay/types.ts"
-        },
-        {
-          "path": "src/material/overlay/useModalFocus.ts",
-          "type": "registry:file",
-          "target": "@ui/material/overlay/useModalFocus.ts"
-        }
-      ],
-      "docs": "Import from your configured ui alias: material/overlay. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
-      "categories": [
-        "material-design",
-        "react-toolbox"
-      ],
-      "meta": {
-        "version": "3.0.0-next.0",
-        "sourceSha256": "ec925c3debd82d738ab055229e55eb4cb0e3992b82d729afee154fb401736ba8",
-        "source": "src/material/",
-        "distribution": "copy-source"
-      }
-    },
-    {
-      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-      "name": "progress-bar",
-      "type": "registry:ui",
-      "title": "React Toolbox progress bar",
-      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
         "@keyframes rt-progress-bar-linear-indeterminate-bar": {
           "0%": {
             "transform": "translate(-50%) scaleX(0)"
@@ -1613,6 +3308,235 @@
           "100%": {
             "stroke": "#4285f4"
           }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
+        }
+      },
+      "dependencies": [
+        "@radix-ui/react-dismissable-layer@^1.2.1",
+        "@radix-ui/react-focus-scope@^1.3.1",
+        "@radix-ui/react-slot@^1.5.0",
+        "aria-hidden@^1.2.6",
+        "react-remove-scroll@^2.7.2"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [
+        "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-portal.json"
+      ],
+      "files": [
+        {
+          "path": "src/material/overlay/ActiveSurface.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/overlay/ActiveSurface.tsx"
+        },
+        {
+          "path": "src/material/overlay/ModalSurface.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/overlay/ModalSurface.tsx"
+        },
+        {
+          "path": "src/material/overlay/Overlay.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/overlay/Overlay.tsx"
+        },
+        {
+          "path": "src/material/overlay/index.ts",
+          "type": "registry:ui",
+          "target": "@ui/material/overlay/index.ts"
+        },
+        {
+          "path": "src/material/overlay/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/overlay/tokens.css"
+        },
+        {
+          "path": "src/material/overlay/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/overlay/types.ts"
+        }
+      ],
+      "docs": "Import from your configured ui alias: material/overlay. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "categories": [
+        "material-design",
+        "react-toolbox"
+      ],
+      "meta": {
+        "version": "3.0.0-next.0",
+        "sourceSha256": "a67958cae62d92878996a16de9141ee473686d64433f18405ffe7d67a5222123",
+        "source": "src/material/",
+        "distribution": "copy-source"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "progress-bar",
+      "type": "registry:ui",
+      "title": "React Toolbox progress bar",
+      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
         }
       },
       "dependencies": [],
@@ -1632,19 +3556,24 @@
           "target": "@ui/material/progress-bar/index.ts"
         },
         {
+          "path": "src/material/progress-bar/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/progress-bar/tokens.css"
+        },
+        {
           "path": "src/material/progress-bar/types.ts",
           "type": "registry:file",
           "target": "@ui/material/progress-bar/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/progress-bar. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/progress-bar. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "9245f8798819f5383e3b02261143acbee51da614eb793e01a74de8a045f77fe0",
+        "sourceSha256": "60c60494f54e5e73524abb38a898c176ed9b80a8fbd339108af8bf792b3127dd",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1655,6 +3584,121 @@
       "type": "registry:ui",
       "title": "React Toolbox radio",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
+        }
+      },
       "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
@@ -1689,19 +3733,24 @@
           "target": "@ui/material/radio/index.ts"
         },
         {
+          "path": "src/material/radio/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/radio/tokens.css"
+        },
+        {
           "path": "src/material/radio/types.ts",
           "type": "registry:file",
           "target": "@ui/material/radio/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/radio. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/radio. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "9e6b81f1b064fb85c179b9e6ba65b4a86946dd8ad07e04a8ee70d4dd0fe489b8",
+        "sourceSha256": "ab3758a5f3dcd8e48b13456e1d90169ad744104572b1e446d933087b00bd0cbc",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1712,48 +3761,21 @@
       "type": "registry:ui",
       "title": "React Toolbox ripple",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
-      "dependencies": [],
-      "devDependencies": [],
-      "registryDependencies": [
-        "https://react-toolbox.io/r/foundation.json",
-        "https://react-toolbox.io/r/foundation-motion.json"
-      ],
-      "files": [
-        {
-          "path": "src/material/ripple/Ripple.tsx",
-          "type": "registry:file",
-          "target": "@ui/material/ripple/Ripple.tsx"
-        },
-        {
-          "path": "src/material/ripple/index.ts",
-          "type": "registry:ui",
-          "target": "@ui/material/ripple/index.ts"
-        },
-        {
-          "path": "src/material/ripple/types.ts",
-          "type": "registry:file",
-          "target": "@ui/material/ripple/types.ts"
-        }
-      ],
-      "docs": "Import from your configured ui alias: material/ripple. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
-      "categories": [
-        "material-design",
-        "react-toolbox"
-      ],
-      "meta": {
-        "version": "3.0.0-next.0",
-        "sourceSha256": "10b408d1d3303b26d1961fd8c4186e47fdce694f3d0f1942bc3ea9dbfe5142b5",
-        "source": "src/material/",
-        "distribution": "copy-source"
-      }
-    },
-    {
-      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-      "name": "slider",
-      "type": "registry:ui",
-      "title": "React Toolbox slider",
-      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
         "@keyframes rt-progress-bar-linear-indeterminate-bar": {
           "0%": {
             "transform": "translate(-50%) scaleX(0)"
@@ -1800,9 +3822,224 @@
           "100%": {
             "stroke": "#4285f4"
           }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
         }
       },
       "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [
+        "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-motion.json"
+      ],
+      "files": [
+        {
+          "path": "src/material/ripple/Ripple.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/ripple/Ripple.tsx"
+        },
+        {
+          "path": "src/material/ripple/index.ts",
+          "type": "registry:ui",
+          "target": "@ui/material/ripple/index.ts"
+        },
+        {
+          "path": "src/material/ripple/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/ripple/tokens.css"
+        },
+        {
+          "path": "src/material/ripple/types.ts",
+          "type": "registry:file",
+          "target": "@ui/material/ripple/types.ts"
+        }
+      ],
+      "docs": "Import from your configured ui alias: material/ripple. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "categories": [
+        "material-design",
+        "react-toolbox"
+      ],
+      "meta": {
+        "version": "3.0.0-next.0",
+        "sourceSha256": "900373403c96e1cca29cee1e14868dedd7c2b7d1a09eeb897925b3e98699ba6c",
+        "source": "src/material/",
+        "distribution": "copy-source"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "React Toolbox slider",
+      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
+        }
+      },
+      "dependencies": [
+        "@radix-ui/react-slider@^1.6.1"
+      ],
       "devDependencies": [],
       "registryDependencies": [
         "https://react-toolbox.io/r/foundation.json",
@@ -1822,19 +4059,184 @@
           "target": "@ui/material/slider/index.ts"
         },
         {
+          "path": "src/material/slider/parts.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/slider/parts.tsx"
+        },
+        {
+          "path": "src/material/slider/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/slider/tokens.css"
+        },
+        {
           "path": "src/material/slider/types.ts",
           "type": "registry:file",
           "target": "@ui/material/slider/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/slider. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/slider. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "36ecbaf5e48c165c6ac050ae480984277bc7dd2ea725b577ba19afccc4fd6736",
+        "sourceSha256": "f487d1a97b9d931cb411753cedb9271d78cc4db2fe65f45cbe678daf9ca242c3",
+        "source": "src/material/",
+        "distribution": "copy-source"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "React Toolbox sheet",
+      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
+        }
+      },
+      "dependencies": [
+        "vaul@^1.1.2"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [
+        "https://react-toolbox.io/r/drawer.json",
+        "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/foundation-portal.json",
+        "https://react-toolbox.io/r/overlay.json"
+      ],
+      "files": [
+        {
+          "path": "src/material/sheet/index.ts",
+          "type": "registry:ui",
+          "target": "@ui/material/sheet/index.ts"
+        },
+        {
+          "path": "src/material/sheet/parts.tsx",
+          "type": "registry:file",
+          "target": "@ui/material/sheet/parts.tsx"
+        }
+      ],
+      "docs": "Import from your configured ui alias: material/sheet. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "categories": [
+        "material-design",
+        "react-toolbox"
+      ],
+      "meta": {
+        "version": "3.0.0-next.0",
+        "sourceSha256": "833da1cd6cf7de3384025797ccbe4bb51fe6491921d20a8dfe5d3eac1ebe6c45",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1845,6 +4247,121 @@
       "type": "registry:ui",
       "title": "React Toolbox snackbar",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
+        }
+      },
       "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
@@ -1865,19 +4382,24 @@
           "target": "@ui/material/snackbar/index.ts"
         },
         {
+          "path": "src/material/snackbar/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/snackbar/tokens.css"
+        },
+        {
           "path": "src/material/snackbar/types.ts",
           "type": "registry:file",
           "target": "@ui/material/snackbar/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/snackbar. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/snackbar. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "4831e3ea5448dc9e849dd240ada9927eb327f4cddc3c9f3c5a6e1573ed49044a",
+        "sourceSha256": "6899847f7095e3d45756ab88c7cfc94111f465406ffee2dfff8af536ef620fb7",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1888,6 +4410,121 @@
       "type": "registry:ui",
       "title": "React Toolbox switch",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
+        }
+      },
       "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [
@@ -1912,19 +4549,24 @@
           "target": "@ui/material/switch/index.ts"
         },
         {
+          "path": "src/material/switch/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/switch/tokens.css"
+        },
+        {
           "path": "src/material/switch/types.ts",
           "type": "registry:file",
           "target": "@ui/material/switch/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/switch. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/switch. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "f5f2f75618f6a8d84a07ab0618cbb84bfde1c61113e0c97d0068adcf02a95a46",
+        "sourceSha256": "6de7385d68e2a359cf04b058f05cdf1a013209dccce669744fee7d81e0b51c4a",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -1948,6 +4590,105 @@
             "left": "calc(0.4 * var(--unit))",
             "top": "calc(-0.1 * var(--unit))",
             "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
           }
         }
       },
@@ -2000,19 +4741,24 @@
           "target": "@ui/material/table/styles.ts"
         },
         {
+          "path": "src/material/table/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/table/tokens.css"
+        },
+        {
           "path": "src/material/table/types.ts",
           "type": "registry:file",
           "target": "@ui/material/table/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/table. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/table. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "9f9a84e1529636e7fbb9024ea4e15e9427166da5fe6b4bf3f7bf0aeddc1628ab",
+        "sourceSha256": "2dbe1022c9241533cc4946db992f247e4cb5aa97723edab41ccb8c82c0858cfe",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -2024,6 +4770,67 @@
       "title": "React Toolbox tabs",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
         "@keyframes toolbox-enter": {
           "from": {
             "opacity": "0",
@@ -2042,6 +4849,38 @@
           "to": {
             "opacity": "0",
             "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
           }
         }
       },
@@ -2087,19 +4926,24 @@
           "target": "@ui/material/tabs/styles.ts"
         },
         {
+          "path": "src/material/tabs/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/tabs/tokens.css"
+        },
+        {
           "path": "src/material/tabs/types.ts",
           "type": "registry:file",
           "target": "@ui/material/tabs/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/tabs. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/tabs. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "1eb744ea44bb8e815d48a4890b6925dc6d0680998db8f46d8f4e27bb62d290bf",
+        "sourceSha256": "c5248b97972fa9b7b8888f6efb17a9ccd2b8e28fcce360b117e68149a4105853",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -2110,6 +4954,121 @@
       "type": "registry:ui",
       "title": "React Toolbox time picker",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
+        "@keyframes toolbox-enter": {
+          "from": {
+            "opacity": "0",
+            "scale": "0.95"
+          },
+          "to": {
+            "opacity": "1",
+            "scale": "1"
+          }
+        },
+        "@keyframes toolbox-exit": {
+          "from": {
+            "opacity": "1",
+            "scale": "1"
+          },
+          "to": {
+            "opacity": "0",
+            "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          }
+        }
+      },
       "dependencies": [
         "react-transition-group@^4.4.5"
       ],
@@ -2117,6 +5076,7 @@
         "@types/react-transition-group@^4.4.12"
       ],
       "registryDependencies": [
+        "https://react-toolbox.io/r/button.json",
         "https://react-toolbox.io/r/dialog.json",
         "https://react-toolbox.io/r/foundation.json",
         "https://react-toolbox.io/r/foundation-collections.json",
@@ -2162,6 +5122,11 @@
           "target": "@ui/material/time-picker/TimePickerDialog.tsx"
         },
         {
+          "path": "src/material/time-picker/constraints.ts",
+          "type": "registry:file",
+          "target": "@ui/material/time-picker/constraints.ts"
+        },
+        {
           "path": "src/material/time-picker/events.ts",
           "type": "registry:file",
           "target": "@ui/material/time-picker/events.ts"
@@ -2177,19 +5142,24 @@
           "target": "@ui/material/time-picker/index.ts"
         },
         {
+          "path": "src/material/time-picker/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/time-picker/tokens.css"
+        },
+        {
           "path": "src/material/time-picker/types.ts",
           "type": "registry:file",
           "target": "@ui/material/time-picker/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/time-picker. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/time-picker. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "8e6ba83684d7d39efd49a00dc8ad56d9f893a9f911ca8271a6e203cde88e3329",
+        "sourceSha256": "c62f1ecdf9f39e97c6c7ad1d2ecb34d63891c85c8dc91602c8b38f8b15e1086b",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -2201,6 +5171,67 @@
       "title": "React Toolbox tooltip",
       "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
       "css": {
+        "@keyframes rt-checkbox-checkmark-expand": {
+          "0%": {
+            "height": "0",
+            "left": "calc(0.6 * var(--unit))",
+            "top": "calc(0.9 * var(--unit))",
+            "width": "0"
+          },
+          "100%": {
+            "height": "calc(1.2 * var(--unit))",
+            "left": "calc(0.4 * var(--unit))",
+            "top": "calc(-0.1 * var(--unit))",
+            "width": "calc(0.7 * var(--unit))"
+          }
+        },
+        "@keyframes rt-progress-bar-linear-indeterminate-bar": {
+          "0%": {
+            "transform": "translate(-50%) scaleX(0)"
+          },
+          "50%": {
+            "transform": "translate(-0%) scaleX(0.3)"
+          },
+          "100%": {
+            "transform": "translate(50%) scaleX(0)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-rotate": {
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes rt-progress-bar-circular-indeterminate-bar-dash": {
+          "0%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * 0px)"
+          },
+          "50%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -35px)"
+          },
+          "100%": {
+            "stroke-dasharray": "calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px)",
+            "stroke-dashoffset": "calc(var(--scale-ratio) * -124px)"
+          }
+        },
+        "@keyframes rt-progress-bar-colors": {
+          "0%": {
+            "stroke": "#4285f4"
+          },
+          "25%": {
+            "stroke": "#de3e35"
+          },
+          "50%": {
+            "stroke": "#f7c223"
+          },
+          "75%": {
+            "stroke": "#1b9a59"
+          },
+          "100%": {
+            "stroke": "#4285f4"
+          }
+        },
         "@keyframes toolbox-enter": {
           "from": {
             "opacity": "0",
@@ -2219,6 +5250,38 @@
           "to": {
             "opacity": "0",
             "scale": "0.95"
+          }
+        },
+        "@keyframes toolbox-fade-in": {
+          "from": {
+            "opacity": "0"
+          },
+          "to": {
+            "opacity": "1"
+          }
+        },
+        "@keyframes toolbox-fade-out": {
+          "from": {
+            "opacity": "1"
+          },
+          "to": {
+            "opacity": "0"
+          }
+        },
+        "@keyframes toolbox-drawer-in": {
+          "from": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
+          },
+          "to": {
+            "translate": "0 0"
+          }
+        },
+        "@keyframes toolbox-drawer-out": {
+          "from": {
+            "translate": "0 0"
+          },
+          "to": {
+            "translate": "var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0)"
           }
         }
       },
@@ -2248,19 +5311,171 @@
           "target": "@ui/material/tooltip/parts.tsx"
         },
         {
+          "path": "src/material/tooltip/tokens.css",
+          "type": "registry:file",
+          "target": "@ui/material/tooltip/tokens.css"
+        },
+        {
           "path": "src/material/tooltip/types.ts",
           "type": "registry:file",
           "target": "@ui/material/tooltip/types.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material/tooltip. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material/tooltip. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "4fa79b25cdf9080bcd7207b03b2bb169334df170ef2e41c1bc86d369e2201703",
+        "sourceSha256": "2d63271181343f5e028093d796572d17fe0596430aad95df0e7a7a945e26625a",
+        "source": "src/material/",
+        "distribution": "copy-source"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "example-field-notes",
+      "type": "registry:block",
+      "title": "React Toolbox example field notes",
+      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [
+        "https://react-toolbox.io/r/app-bar.json",
+        "https://react-toolbox.io/r/avatar.json",
+        "https://react-toolbox.io/r/button.json",
+        "https://react-toolbox.io/r/card.json",
+        "https://react-toolbox.io/r/checkbox.json",
+        "https://react-toolbox.io/r/date-picker.json",
+        "https://react-toolbox.io/r/dialog.json",
+        "https://react-toolbox.io/r/drawer.json",
+        "https://react-toolbox.io/r/dropdown.json",
+        "https://react-toolbox.io/r/foundation.json",
+        "https://react-toolbox.io/r/input.json",
+        "https://react-toolbox.io/r/menu.json",
+        "https://react-toolbox.io/r/progress-bar.json",
+        "https://react-toolbox.io/r/slider.json",
+        "https://react-toolbox.io/r/snackbar.json",
+        "https://react-toolbox.io/r/switch.json",
+        "https://react-toolbox.io/r/table.json",
+        "https://react-toolbox.io/r/time-picker.json",
+        "https://react-toolbox.io/r/tooltip.json"
+      ],
+      "files": [
+        {
+          "path": "src/examples/field-notes/index.tsx",
+          "type": "registry:ui",
+          "target": "@ui/examples/field-notes/index.tsx"
+        },
+        {
+          "path": "src/examples/field-notes/styles.css",
+          "type": "registry:file",
+          "target": "@ui/examples/field-notes/styles.css"
+        },
+        {
+          "path": "src/examples/field-notes/theme.ts",
+          "type": "registry:file",
+          "target": "@ui/examples/field-notes/theme.ts"
+        }
+      ],
+      "docs": "Editable composition example. Import from your configured ui alias: examples/field-notes. See https://react-toolbox.io/docs/theming.",
+      "categories": [
+        "material-design",
+        "react-toolbox"
+      ],
+      "meta": {
+        "version": "3.0.0-next.0",
+        "sourceSha256": "09999cbbb67ff3fa4bb8622569a68d17ca272d496906eae5b5d6d083c21e5a8d",
+        "source": "src/material/",
+        "distribution": "copy-source"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "example-recipes",
+      "type": "registry:block",
+      "title": "React Toolbox example recipes",
+      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [
+        "https://react-toolbox.io/r/avatar.json",
+        "https://react-toolbox.io/r/button.json",
+        "https://react-toolbox.io/r/dialog.json",
+        "https://react-toolbox.io/r/input.json",
+        "https://react-toolbox.io/r/table.json"
+      ],
+      "files": [
+        {
+          "path": "src/examples/recipes/avatar-group.tsx",
+          "type": "registry:file",
+          "target": "@ui/examples/recipes/avatar-group.tsx"
+        },
+        {
+          "path": "src/examples/recipes/button-actions.tsx",
+          "type": "registry:file",
+          "target": "@ui/examples/recipes/button-actions.tsx"
+        },
+        {
+          "path": "src/examples/recipes/data-table.tsx",
+          "type": "registry:file",
+          "target": "@ui/examples/recipes/data-table.tsx"
+        },
+        {
+          "path": "src/examples/recipes/index.ts",
+          "type": "registry:ui",
+          "target": "@ui/examples/recipes/index.ts"
+        },
+        {
+          "path": "src/examples/recipes/input-form.tsx",
+          "type": "registry:file",
+          "target": "@ui/examples/recipes/input-form.tsx"
+        },
+        {
+          "path": "src/examples/recipes/styles.css",
+          "type": "registry:file",
+          "target": "@ui/examples/recipes/styles.css"
+        }
+      ],
+      "docs": "Editable composition example. Import from your configured ui alias: examples/recipes. See https://react-toolbox.io/docs/theming.",
+      "categories": [
+        "material-design",
+        "react-toolbox"
+      ],
+      "meta": {
+        "version": "3.0.0-next.0",
+        "sourceSha256": "5644f478abb1f6b475bbeecbdc8907e4d1a707fe399e911b09b270707a163824",
+        "source": "src/material/",
+        "distribution": "copy-source"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "example-snackbar-queue",
+      "type": "registry:block",
+      "title": "React Toolbox example snackbar queue",
+      "description": "Original Material Design components. Editable TypeScript source, styles, and dependencies installed into your application.",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [
+        "https://react-toolbox.io/r/snackbar.json"
+      ],
+      "files": [
+        {
+          "path": "src/examples/snackbar-queue/index.tsx",
+          "type": "registry:ui",
+          "target": "@ui/examples/snackbar-queue/index.tsx"
+        }
+      ],
+      "docs": "Editable composition example. Import from your configured ui alias: examples/snackbar-queue. See https://react-toolbox.io/docs/theming.",
+      "categories": [
+        "material-design",
+        "react-toolbox"
+      ],
+      "meta": {
+        "version": "3.0.0-next.0",
+        "sourceSha256": "c224273a73d586ca3b379a35389428f821c8d405a105553936d22c517502ae2f",
         "source": "src/material/",
         "distribution": "copy-source"
       }
@@ -2295,6 +5510,7 @@
         "https://react-toolbox.io/r/progress-bar.json",
         "https://react-toolbox.io/r/radio.json",
         "https://react-toolbox.io/r/ripple.json",
+        "https://react-toolbox.io/r/sheet.json",
         "https://react-toolbox.io/r/slider.json",
         "https://react-toolbox.io/r/snackbar.json",
         "https://react-toolbox.io/r/switch.json",
@@ -2305,19 +5521,24 @@
       ],
       "files": [
         {
+          "path": "src/material/foundations/styles/styles.css",
+          "type": "registry:file",
+          "target": "@ui/material/foundations/styles/styles.css"
+        },
+        {
           "path": "src/material/index.ts",
           "type": "registry:ui",
           "target": "@ui/material/index.ts"
         }
       ],
-      "docs": "Import from your configured ui alias: material. Styles and local fonts load automatically. See https://react-toolbox.io/docs/installation.",
+      "docs": "Import from your configured ui alias: material. Styles and local Roboto 400/500 fonts load automatically. See https://react-toolbox.io/docs/installation.",
       "categories": [
         "material-design",
         "react-toolbox"
       ],
       "meta": {
         "version": "3.0.0-next.0",
-        "sourceSha256": "d737990fe7a3d25d5b5bc2a6adefb163a1fe9c6b051b35f4eb569f4e7fd75f56",
+        "sourceSha256": "04f341a80a1fd3ac94a7f496b4ba2a180bba47196f0429ada09f35812349f5bc",
         "source": "src/material/",
         "distribution": "copy-source"
       }

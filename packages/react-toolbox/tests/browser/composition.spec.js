@@ -19,7 +19,20 @@ async function accessible(page, scope) {
   ).toEqual([]);
 }
 
-for (const slug of ['dialog', 'drawer', 'tabs', 'menu', 'dropdown', 'autocomplete', 'table', 'tooltip']) {
+for (const slug of [
+  'dialog',
+  'drawer',
+  'tabs',
+  'menu',
+  'dropdown',
+  'autocomplete',
+  'table',
+  'tooltip',
+  'slider',
+  'date-picker',
+  'time-picker',
+  'sheet',
+]) {
   test(`${slug} composition documentation is accessible and fits mobile`, async ({ page }) => {
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
@@ -33,6 +46,25 @@ for (const slug of ['dialog', 'drawer', 'tabs', 'menu', 'dropdown', 'autocomplet
     expect(errors).toEqual([]);
   });
 }
+
+test('sheet composition supports keyboard resizing and dismissal', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 900 });
+  const demo = await example(page, 'sheet');
+  const trigger = demo.getByRole('button', { name: 'Open visit notes' });
+  await trigger.focus();
+  await trigger.press('Enter');
+  const sheet = page.getByRole('dialog', { name: 'Visit notes', exact: true });
+  await expect.poll(async () => Math.round((await sheet.boundingBox()).y)).toBe(450);
+  const resize = sheet.getByRole('button', { name: 'Expand notes' });
+  await resize.focus();
+  await resize.press('Enter');
+  await expect(sheet.getByRole('button', { name: 'Reduce notes' })).toHaveAttribute('aria-expanded', 'true');
+  await expect.poll(async () => Math.round((await sheet.boundingBox()).y)).toBe(90);
+  await accessible(page);
+  await sheet.getByRole('button', { name: 'Done', exact: true }).press('Enter');
+  await expect(sheet).toBeHidden();
+  await expect(trigger).toBeFocused();
+});
 
 test('composed dialog saves through an independent footer and restores focus', async ({ page }) => {
   const demo = await example(page, 'dialog');

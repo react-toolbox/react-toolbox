@@ -88,7 +88,20 @@ async function verifyNextConsumer() {
   await writeFile(path.join(directory, 'next.config.mjs'), 'export default { experimental: { cpus: 2 } };\n');
   // Compile and hydrate the exact public composition recipes in an isolated
   // consumer. This catches missing primitive dependencies and private imports.
-  const compositionFamilies = ['dialog', 'drawer', 'tabs', 'menu', 'dropdown', 'autocomplete', 'table', 'tooltip'];
+  const compositionFamilies = [
+    'dialog',
+    'drawer',
+    'sheet',
+    'tabs',
+    'menu',
+    'dropdown',
+    'autocomplete',
+    'table',
+    'tooltip',
+    'slider',
+    'date-picker',
+    'time-picker',
+  ];
   await mkdir(path.join(directory, 'src/app/examples'), { recursive: true });
   for (const family of compositionFamilies) {
     const source = await readFile(path.resolve(root, '../../apps/docs/app/docs/examples', `${family}.tsx`), 'utf8');
@@ -143,12 +156,18 @@ import { shadcnThemeVariables } from '@/widgets/ui/material/foundations/theme/sh
 import { range } from '@/widgets/ui/material/foundations/collections/range';
 import Interaction from './interaction';
 import Compositions from './compositions';
+import { FieldNotes } from '@/widgets/ui/examples/field-notes';
+import { AvatarGroupRecipe } from '@/widgets/ui/examples/recipes';
+import SnackbarQueueExample from '@/widgets/ui/examples/snackbar-queue';
 export default function Page() {
   return <main data-server-theme={shadcnThemeVariables['--rt-shadcn']}
     data-server-values={range(3).join(',')}>
     <h1 className="text-toolbox-title text-toolbox-primary">Copied Material components</h1>
     <Interaction />
     <Compositions />
+    <section data-registry-example="field-notes"><FieldNotes /></section>
+    <section data-registry-example="recipes"><AvatarGroupRecipe people={[{id:'ada', name:'Ada Lovelace'}]} /></section>
+    <section data-registry-example="snackbar-queue"><SnackbarQueueExample /></section>
     <div data-testid="spacing" className="min-h-toolbox-touch p-6 bg-toolbox-primary" />
     <ThemeProvider variables={shadcnThemeVariables}>
       <Button label="Source button" />
@@ -244,6 +263,26 @@ export default function Page() {
     await assertEventually(async () =>
       assert.equal(await composedAutocomplete.getByRole('status').textContent(), 'ada, grace'),
     );
+    console.log('Checking copied Sheet and editable themed example interactions.');
+    await page.locator('[data-example="sheet"]').getByRole('button', { name: 'Open visit notes' }).click();
+    const notes = page.getByRole('dialog', { name: 'Visit notes' });
+    await notes.getByRole('button', { name: 'Done', exact: true }).click();
+    await assertEventually(async () => assert.equal(await notes.count(), 0));
+    const fieldNotes = page.locator('[data-registry-example="field-notes"]');
+    assert.equal(
+      await fieldNotes
+        .locator('[data-react-toolbox="app-bar"]')
+        .evaluate((element) => getComputedStyle(element).backgroundColor),
+      'rgb(0, 77, 64)',
+    );
+    await fieldNotes.getByRole('button', { name: 'Plan a visit', exact: true }).click();
+    const visit = page.getByRole('dialog', { name: 'Plan a visit', exact: true });
+    await visit.getByRole('textbox', { name: 'Visit name' }).fill('Copied themed visit');
+    await visit.getByRole('button', { name: 'Save visit', exact: true }).click();
+    assert.equal(await page.locator('[data-registry-example="recipes"]').getByText('Ada Lovelace').count(), 1);
+    const queue = page.locator('[data-registry-example="snackbar-queue"]');
+    await queue.getByRole('button', { name: 'Simulate save', exact: true }).click();
+    await assertEventually(async () => assert.equal(await page.getByText('Draft saved', { exact: true }).count(), 1));
     const spacing = await page.getByTestId('spacing').evaluate((element) => getComputedStyle(element).padding);
     assert.equal(spacing, '36px', 'Registry installation must preserve the host spacing scale');
     const utilityColor = await page
@@ -584,6 +623,11 @@ try {
     await run(path.join(root, 'node_modules/.bin/tsc'), ['-p', path.join(directory, 'tsconfig.json')]);
   };
   await verify('date-picker');
+  for (const name of ['sheet', 'example-field-notes', 'example-recipes', 'example-snackbar-queue']) {
+    console.log(`Installing and verifying ${name} through the configured registry.`);
+    await run(cli, ['add', `@react-toolbox/${name}`, '--yes', '--overwrite', '--cwd', directory]);
+    await verify(name);
+  }
   console.log(`Installing all ${registry.families.length} families through the configured @react-toolbox namespace.`);
   await run(cli, ['add', '@react-toolbox/all', '--yes', '--overwrite', '--cwd', directory]);
   await verify('all');

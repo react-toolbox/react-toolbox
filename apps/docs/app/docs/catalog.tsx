@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 const supportingImports: Record<string, string> = Object.fromEntries(
-  ['dialog', 'drawer', 'overlay', 'snackbar'].map((slug) => [
+  ['dialog', 'drawer', 'overlay', 'snackbar', 'sheet'].map((slug) => [
     slug,
     "import { Button } from '@/components/ui/material/button';\n",
   ]),
@@ -11,6 +11,8 @@ supportingImports.list = "import { FontIcon } from '@/components/ui/material/fon
 // These examples compose families that are not already registry dependencies.
 export const exampleDependencies: Partial<Record<ComponentSlug, readonly string[]>> = {
   dialog: ['button', 'input'],
+  sheet: ['button'],
+  'time-picker': ['dropdown', 'button'],
   drawer: ['button', 'dialog', 'input'],
   tabs: ['input'],
   menu: ['button'],
@@ -397,6 +399,23 @@ export const components = [
           Buttons
         </Link>{' '}
         already include ripple feedback.
+      </>
+    ),
+  },
+  {
+    slug: 'sheet',
+    title: 'Sheet',
+    description: 'A gesture-driven sheet with snap points and accessible modal behavior.',
+    icon: 'vertical_align_top',
+    code: example(
+      'sheet',
+      'SheetRoot, SheetTrigger, SheetPortal, SheetOverlay, SheetContent, SheetTitle, SheetDescription, SheetClose, SheetHandle',
+      '<SheetRoot>\n  <SheetTrigger asChild><Button primary raised>Open sheet</Button></SheetTrigger>\n  <SheetPortal>\n    <SheetOverlay />\n    <SheetContent>\n      <SheetHandle aria-label="Resize sheet" />\n      <div className="p-6">\n        <SheetTitle>Visit notes</SheetTitle>\n        <SheetDescription>Keep the current task visible while you add details.</SheetDescription>\n        <SheetClose asChild><Button primary>Done</Button></SheetClose>\n      </div>\n    </SheetContent>\n  </SheetPortal>\n</SheetRoot>',
+    ),
+    note: (
+      <>
+        Use Sheet for dragging and snap points. Use Drawer for a fixed navigation surface. Gesture behavior comes from
+        Vaul and is installed only with this family.
       </>
     ),
   },

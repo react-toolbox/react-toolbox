@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
@@ -80,7 +81,7 @@ export function Checkbox({
       data-react-toolbox="checkbox"
       className={cn(
         'rt-checkbox-field',
-        'block h-(--checkbox-size) mb-(--checkbox-field-margin-bottom) relative whitespace-nowrap',
+        'block min-h-[48px] min-w-[48px] py-[max(0px,calc((48px-var(--checkbox-size))/2))] mb-(--checkbox-field-margin-bottom) relative whitespace-nowrap',
         materialRoot,
         materialDescendants,
         theme?.field,
@@ -116,7 +117,7 @@ export function Checkbox({
           data-react-toolbox="label"
           className={cn(
             'rt-checkbox-text',
-            'text-(--checkbox-text-color) inline-block text-(length:--checkbox-text-font-size) leading-(--checkbox-size) pl-(--unit) align-top whitespace-nowrap',
+            'text-(--checkbox-text-color) inline-block text-(length:--checkbox-text-font-size) leading-(--checkbox-size) ps-(--unit) align-top whitespace-nowrap',
             '[.rt-checkbox-disabled>&]:text-(--checkbox-disabled-color)',
             theme?.text,
           )}

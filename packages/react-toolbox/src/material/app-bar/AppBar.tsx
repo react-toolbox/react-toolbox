@@ -1,11 +1,24 @@
 'use client';
+import './tokens.css';
+import '../button/tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialDescendants } from '../foundations/styles/classes';
 import type { AppBarTheme } from './types';
-import { useCallback, useEffect, useRef, useState, type ComponentPropsWithRef, type ReactNode } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ComponentPropsWithRef,
+  type ReactNode,
+} from 'react';
 import { cn } from '../foundations/styles/cn';
 import { IconButton } from '../button';
+import { LayoutContext } from '../foundations/layout/LayoutContext';
 export type { AppBarTheme, AppBarClassNames } from './types';
 export interface AppBarProps extends Omit<ComponentPropsWithRef<'header'>, 'title'> {
   fixed?: boolean;
@@ -41,7 +54,11 @@ export function AppBar({
   ref,
   ...other
 }: AppBarProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
+  const layout = useContext(LayoutContext);
+  const register = layout?.registerAppBar;
+  const id = useId();
+  useLayoutEffect(() => register?.(id, fixed), [register, id, fixed]);
+  const theme = mergeStyleSlots<AppBarTheme>(layout?.appBarClasses, mergeStyleSlots(legacyTheme, classNames));
   const root = useRef<HTMLElement | null>(null);
   const [hidden, setHidden] = useState(false);
   const attach = useCallback(
@@ -120,7 +137,7 @@ export function AppBar({
             inverse
             className={cn(
               'rt-app-bar-leftIcon',
-              'shrink-0 ml-[calc((var(--button-toggle-font-size)-var(--button-toggle-size))/2)] mr-[calc(var(--appbar-title-distance)-(var(--button-toggle-size)+var(--button-toggle-font-size))/2)]',
+              'shrink-0 ms-[calc((var(--button-toggle-font-size)-var(--button-toggle-size))/2)] me-[calc(var(--appbar-title-distance)-(var(--button-toggle-size)+var(--button-toggle-font-size))/2)]',
               theme?.leftIcon,
             )}
             onClick={onLeftIconClick}
@@ -147,7 +164,7 @@ export function AppBar({
             inverse
             className={cn(
               'rt-app-bar-rightIcon',
-              'ml-auto shrink-0 mr-[calc((var(--button-toggle-font-size)-var(--button-toggle-size))/2)]',
+              'ms-auto shrink-0 me-[calc((var(--button-toggle-font-size)-var(--button-toggle-size))/2)]',
               theme?.rightIcon,
             )}
             onClick={onRightIconClick}

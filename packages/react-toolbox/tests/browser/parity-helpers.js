@@ -148,18 +148,21 @@ export async function renderedStyles(page, selector) {
       'animation-duration',
       'animation-timing-function',
     ];
-    return roots
-      .flatMap((root) => [root, ...root.querySelectorAll('[class*="rt-"]')])
-      .map((element) => {
-        const style = getComputedStyle(element);
-        const utilities = new Set([...element.classList].flatMap((name) => slots[name] || []));
-        return {
-          tag: element.tagName,
-          className: [...element.classList].filter((name) => !utilities.has(name)).join(' '),
-          styles: Object.fromEntries(
-            properties.map((property) => [property, normalizeValue(style.getPropertyValue(property))]),
-          ),
-        };
-      });
+    return (
+      roots
+        /** Native primary buttons are new semantic wrappers without a legacy class hook. */
+        .flatMap((root) => [root, ...root.querySelectorAll('[class*="rt-"], .rt-list-item > button')])
+        .map((element) => {
+          const style = getComputedStyle(element);
+          const utilities = new Set([...element.classList].flatMap((name) => slots[name] || []));
+          return {
+            tag: element.tagName,
+            className: [...element.classList].filter((name) => !utilities.has(name)).join(' '),
+            styles: Object.fromEntries(
+              properties.map((property) => [property, normalizeValue(style.getPropertyValue(property))]),
+            ),
+          };
+        })
+    );
   }, utilitySlots);
 }

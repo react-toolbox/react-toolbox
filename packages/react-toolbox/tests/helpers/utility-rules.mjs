@@ -25,6 +25,13 @@ export async function utilityRules(root) {
   const compiler = await compile(`${theme}\n${bridge}\n@tailwind utilities;`);
   const tree = postcss.parse(compiler.build([...owners.keys()]));
   const output = postcss.root();
+  /** Resolve Tailwind's registered initial values, such as border-style: solid. */
+  const defaults = postcss.rule({ selector: ':root' });
+  tree.walkAtRules('property', (rule) => {
+    const initial = rule.nodes.find((node) => node.type === 'decl' && node.prop === 'initial-value');
+    if (initial) defaults.append({ prop: rule.params, value: initial.value });
+  });
+  output.append(defaults);
   tree.walkRules((rule) => {
     const declarations = rule.nodes.filter((node) => node.type === 'decl' && !node.prop.startsWith('--tw-'));
     if (!declarations.length) return;
@@ -52,7 +59,7 @@ export async function utilityRules(root) {
               value:
                 node.prop === 'opacity' && /^\d+(?:\.\d+)?%$/.test(node.value)
                   ? String(parseFloat(node.value) / 100)
-                  : /(?:^|:)[\w-]+-0!?$/.test(name) && node.value === '0px'
+                  : /(?:^|:)[\w-]+-0!?$/.test(name) && ['0px', 'calc(var(--spacing) * 0)'].includes(node.value)
                     ? '0'
                     : node.value,
             }),

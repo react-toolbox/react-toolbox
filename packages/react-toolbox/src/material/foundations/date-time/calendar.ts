@@ -6,7 +6,8 @@ export interface DateLocale {
   weekdaysLetter?: readonly string[];
 }
 export type DatePickerLocale = string | DateLocale;
-export type TimeFormat = '24hr' | 'ampm';
+export type { TimeFormat } from './time';
+import { formatTime, getTimeMode, setHours, setMinutes } from './time';
 
 const dateLocales: Record<string, DateLocale> = {
   de: {
@@ -222,9 +223,7 @@ const time = {
     return this.getFirstDayOfMonth(d).getDay();
   },
 
-  getTimeMode(d: Date): 'am' | 'pm' {
-    return d.getHours() >= 12 ? 'pm' : 'am';
-  },
+  getTimeMode,
 
   getFullMonth(d: Date, locale: DatePickerLocale = 'en'): string {
     const month = d.getMonth();
@@ -303,17 +302,9 @@ const time = {
     return newDate;
   },
 
-  setHours(d: Date, hours: number): Date {
-    const newDate = this.clone(d);
-    newDate.setHours(hours);
-    return newDate;
-  },
+  setHours,
 
-  setMinutes(d: Date, minutes: number): Date {
-    const newDate = this.clone(d);
-    newDate.setMinutes(minutes);
-    return newDate;
-  },
+  setMinutes,
 
   toggleTimeMode(d: Date): Date {
     const newDate = this.clone(d);
@@ -323,12 +314,7 @@ const time = {
     return newDate;
   },
 
-  formatTime(date: Date, format: TimeFormat): string {
-    const hours = date.getHours();
-    const mins = String(date.getMinutes()).padStart(2, '0');
-    if (format === 'ampm') return `${hours % 12 || 12}${mins === '00' ? '' : `:${mins}`} ${hours < 12 ? 'am' : 'pm'}`;
-    return `${String(hours).padStart(2, '0')}:${mins}`;
-  },
+  formatTime,
 
   dateOutOfRange(date: Date, minDate?: Date, maxDate?: Date): boolean {
     return Boolean((minDate && !(date >= minDate)) || (maxDate && !(date <= maxDate)));

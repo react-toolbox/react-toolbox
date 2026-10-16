@@ -7,22 +7,18 @@ import postcss from 'postcss';
 import calc from 'postcss-calc';
 import selectorParser from 'postcss-selector-parser';
 import { utilityRules } from './utility-rules.mjs';
+import { readSourceCss } from './css-imports.mjs';
 
 const root = fileURLToPath(new URL('../..', import.meta.url));
 const fixture = path.join(root, 'tests/fixtures/legacy-styles');
-const entry = await readFile(path.join(root, 'src/material/foundations/styles/styles.css'), 'utf8');
-const sheets = [...entry.matchAll(/@import "\.\/([^"]+)"/g)].map((match) => match[1]);
-const current = postcss.parse(
-  (
-    await Promise.all(sheets.map((name) => readFile(path.join(root, 'src/material/foundations/styles', name), 'utf8')))
-  ).join('\n'),
-);
+const current = await readSourceCss(path.join(root, 'src/material/foundations/styles/styles.css'));
 // @theme is a build-time keyframe registration, not a runtime condition.
 current.walkAtRules('theme', (rule) => rule.replaceWith(...rule.nodes));
 current.append((await utilityRules(root)).nodes);
 const baseline = postcss.parse(await readFile(path.join(fixture, 'reference.css'), 'utf8'));
 const tokens = new Map();
-const runtimeTokens = new Set();
+/** Layout's public width prop supplies these inline; browser tests cover their resolved geometry. */
+const runtimeTokens = new Set(['--layout-sidebar-units', '--layout-sidebar-percent']);
 current.walkDecls(/^--/, (declaration) => {
   if (declaration.parent.selector === ':root') tokens.set(declaration.prop, declaration.value);
   else if (!declaration.parent.selector?.includes('[data-react-toolbox-tokens')) runtimeTokens.add(declaration.prop);
@@ -97,7 +93,12 @@ current.walkDecls((declaration) => {
       },
     );
   }
-  declaration.value = resolveRelativeColors(resolveVariables(declaration.value));
+  try {
+    declaration.value = resolveRelativeColors(resolveVariables(declaration.value));
+  } catch (error) {
+    error.message += ` at ${declaration.parent.selector}: ${declaration.prop}=${declaration.value}`;
+    throw error;
+  }
 });
 assert.equal(legacyGradientStops, 8, 'Progress gradients must preserve legacy 8-bit alpha painting');
 const calcOptions = { precision: false, unwrapSingleValue: true };
@@ -161,6 +162,7 @@ export { root, fixture };
 const correctionLedgers = [
   ['tests/fixtures/m1-style-corrections.json', 'material'],
   ['tests/accessibility-style-corrections.json', 'accessibility'],
+  ['tests/component-review-style-corrections.json', 'material'],
 ];
 export const corrections = [];
 for (const [filename, category] of correctionLedgers) {

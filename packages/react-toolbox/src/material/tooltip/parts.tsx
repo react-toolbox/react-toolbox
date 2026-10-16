@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import * as Primitive from '@radix-ui/react-tooltip';
 import {
   createContext,
@@ -8,6 +9,8 @@ import {
   useEffect,
   useCallback,
   useMemo,
+  useLayoutEffect,
+  useImperativeHandle,
   type ComponentProps,
 } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -164,19 +167,35 @@ export function TooltipPortal(props: TooltipPortalProps) {
   return <Primitive.Portal {...props} />;
 }
 export type TooltipContentProps = ComponentProps<typeof Primitive.Content>;
-export function TooltipContent({ className, style, ...props }: TooltipContentProps) {
+export function TooltipContent({ className, style, sideOffset, ref, ...props }: TooltipContentProps) {
   const theme = usePortalTheme();
+  const [node, setNode] = useState<HTMLDivElement | null>(null);
+  const [gap, setGap] = useState(14);
+  useImperativeHandle(ref, () => node!, [node]);
+  useLayoutEffect(() => {
+    if (!node || sideOffset !== undefined) return;
+    const media = window.matchMedia?.('(pointer: coarse)');
+    /** A computed length resolves calc(), rem and scoped tokens in the portal. */
+    const measure = () => {
+      const measured = parseFloat(getComputedStyle(node).scrollMarginTop);
+      setGap(Number.isFinite(measured) ? measured : media?.matches ? 24 : 14);
+    };
+    measure();
+    media?.addEventListener('change', measure);
+    return () => media?.removeEventListener('change', measure);
+  }, [node, sideOffset, theme.style, style, className]);
   return (
     <Primitive.Content
       side="bottom"
-      sideOffset={14}
+      ref={setNode}
+      sideOffset={sideOffset ?? gap}
       collisionPadding={8}
       data-slot="TooltipContent"
       {...props}
       {...theme}
       style={{ ...theme.style, ...style }}
       className={cn(
-        'box-border z-500 max-w-[calc(100vw-32px)] rounded-[2px] bg-(--tooltip-background) px-[8px] py-[4px] font-(family-name:--preferred-font) text-[10px] leading-[14px] font-medium text-(--tooltip-color) shadow-none data-[state=delayed-open]:animate-[toolbox-enter_var(--tooltip-animation-duration)_var(--animation-curve-default)] data-[state=instant-open]:animate-[toolbox-enter_var(--tooltip-animation-duration)_var(--animation-curve-default)] data-[state=closed]:animate-[toolbox-exit_var(--tooltip-animation-duration)_var(--animation-curve-default)] [@media(pointer:coarse)]:px-[16px] [@media(pointer:coarse)]:py-[8px] [@media(pointer:coarse)]:text-[14px] [@media(pointer:coarse)]:leading-[16px] motion-reduce:animate-none!',
+        'box-border z-500 max-w-[min(var(--tooltip-max-width),calc(100vw-32px))] scroll-mt-(--tooltip-margin) [@media(pointer:coarse)]:scroll-mt-[calc(2.4*var(--unit))] rounded-(--tooltip-border-radius) bg-(--tooltip-background) px-(--tooltip-padding) py-[4px] font-(family-name:--preferred-font) text-(length:--tooltip-font-size) leading-[14px] font-medium text-(--tooltip-color) shadow-none data-[state=delayed-open]:animate-[toolbox-enter_var(--tooltip-animation-duration)_var(--animation-curve-linear-out-slow-in)] data-[state=instant-open]:animate-[toolbox-enter_var(--tooltip-animation-duration)_var(--animation-curve-linear-out-slow-in)] data-[state=closed]:animate-[toolbox-exit_var(--tooltip-animation-duration)_var(--animation-curve-fast-out-linear-in)] [@media(pointer:coarse)]:px-[16px] [@media(pointer:coarse)]:py-[8px] [@media(pointer:coarse)]:text-[14px] [@media(pointer:coarse)]:leading-[16px] motion-reduce:animate-none!',
         className,
       )}
     />

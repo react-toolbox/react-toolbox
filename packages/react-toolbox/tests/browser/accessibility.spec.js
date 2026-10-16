@@ -3,7 +3,13 @@ import { expect, test } from '@playwright/test';
 import { build } from 'esbuild';
 import { fileURLToPath } from 'node:url';
 import { css } from './material-fixture.js';
-import { components } from '../../../../apps/docs/app/docs/catalog';
+import { readFileSync } from 'node:fs';
+
+const componentSlugs = [
+  ...readFileSync(new URL('../../src/material/index.ts', import.meta.url), 'utf8').matchAll(/from '\.\/([^']+)'/g),
+]
+  .map(([, slug]) => slug)
+  .filter((slug) => !['theme', 'link', 'navigation'].includes(slug));
 
 const source = `
   import React, { useState } from 'react';
@@ -273,7 +279,7 @@ for (const route of [
   '/docs/installation',
   '/docs/theming',
   '/docs/components',
-  ...components.map(({ slug }) => `/docs/components/${slug}`),
+  ...componentSlugs.map((slug) => `/docs/components/${slug}`),
 ]) {
   test(`documentation passes automated accessibility checks: ${route}`, async ({ page }) => {
     await page.goto(route);

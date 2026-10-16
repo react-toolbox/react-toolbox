@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { useState, useCallback, type ComponentProps } from 'react';
 import { cn } from '../foundations/styles/cn';
 import { TableCellContext, TableSelectionContext } from './selection';
@@ -63,7 +64,7 @@ export function TableRoot({
         data-slot="TableRoot"
         {...props}
         className={cn(
-          'box-border [&_*]:box-border w-full border-collapse bg-(--rt-color-white) font-(family-name:--preferred-font) text-(length:--table-font-size)',
+          'box-border [&_*]:box-border w-full border-collapse bg-(--rt-color-background) font-(family-name:--preferred-font) text-(length:--table-font-size)',
           className,
         )}
       >
@@ -102,7 +103,7 @@ export function TableCaption({ className, ...props }: TableCaptionProps) {
     <caption
       data-slot="TableCaption"
       {...props}
-      className={cn('p-[24px] text-left text-[20px] leading-[28px] font-medium', className)}
+      className={cn('p-[24px] text-start text-[20px] leading-[28px] font-medium', className)}
     />
   );
 }

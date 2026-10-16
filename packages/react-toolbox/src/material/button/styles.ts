@@ -1,3 +1,4 @@
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 import { cn } from '../foundations/styles/cn';
 import type { ButtonAppearanceProps, ButtonShapeProps } from './types';
@@ -28,7 +29,7 @@ export const buttonClasses = [
 export const squaredClasses = [
   'rt-button-squared',
   'rounded-(--button-border-radius) min-w-(--button-squared-min-width) p-(--button-squared-padding)',
-  '[&>svg]:mr-[calc(0.5*var(--unit))]',
+  '[&>svg]:me-[calc(0.5*var(--unit))]',
 ].join(' ');
 
 export const solidClasses = [
@@ -87,7 +88,7 @@ export const inverseClasses = [
 
 export const iconClasses = [
   'rt-button-icon',
-  '[.rt-button-squared_&]:text-[120%] [.rt-button-squared_&]:mr-(--button-squared-icon-margin) [.rt-button-squared_&]:align-middle',
+  '[.rt-button-squared_&]:text-[120%] [.rt-button-squared_&]:me-(--button-squared-icon-margin) [.rt-button-squared_&]:align-middle',
   '[.rt-button-toggle>&]:text-(length:--button-toggle-font-size) [.rt-button-toggle>&]:h-(--button-toggle-size) [.rt-button-toggle>&]:leading-(--button-toggle-size) [.rt-button-toggle>&]:align-top',
   "[.rt-button-floating_&:not([data-react-toolbox='tooltip'])]:leading-(--button-floating-height)",
   '[.rt-button-floating.rt-button-mini_&]:leading-(--button-floating-mini-height)',

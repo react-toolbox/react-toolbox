@@ -110,8 +110,14 @@ notes. These checks have not been performed for this release candidate.
 
 ## Consumer workflow additions
 
-Buttons and custom menu triggers use Radix Slot to preserve native link/button semantics, refs and child event cancellation without nested interactive controls. Give custom triggers an accessible name. Menu checkbox/radio items expose their selection state and remain open for repeated choices; Escape returns focus to the trigger, including after a pointer click in Safari. Cascading submenus are not yet provided.
+Buttons and custom menu triggers use Radix Slot to preserve native link/button semantics, refs and child event cancellation without nested interactive controls. Give custom triggers an accessible name. Compound menu checkbox/radio items expose their selection state; prevent onSelect to keep a menu open for repeated choices. Escape returns focus to the trigger, including after a pointer click in Safari. DropdownMenuSub, DropdownMenuSubTrigger and DropdownMenuSubContent provide cascading submenus with shared density and portal themes.
 
 Autocomplete submits selected IDs, including multi-values, rather than its search query. Its hidden native select supports required validation and reset; invalid submission focuses the visible field. Rich options need textValue for matching and single-value text. Group labels and disabled states are exposed to assistive technology; loading and empty messages are announced through a separate live status outside the listbox. Slider supports native submission/reset and RTL interaction. RadioGroup forwards required and external form association to its native radios.
 
 Manual tabs separate focus from activation: arrows move between enabled tabs, while Enter or Space activates a panel. Dialog/Drawer focus callbacks are cancelable; consumers that prevent the default must place focus on an appropriate connected element. Additional automated evidence lives in feature-parity.test.tsx and browser/feature-parity.spec.js; the manual assistive-technology checks above still apply.
+
+The component review adds shared modal ownership across convenience and compound APIs, including nested pickers and gesture sheets. Selection controls preserve their M1 glyphs inside 48px activation areas. Clickable/deletable Chips expose separate native buttons, and List primary actions remain separate from secondary actions.
+
+DatePicker and TimePicker participate in required and unavailable-value validation, focus their visible field on invalid submission, and support clearing and form reset. CalendarSelection moves keyboard focus independently from range/multiple selection. Compound sliders require a distinct accessible name for each thumb. A gesture Sheet should include SheetClose or explicit snap controls so dragging is never the only way to operate it.
+
+The Field Notes distribution is checked in original, brand and night appearances, including its portaled surfaces. Modal menu scans cover the exposed menu alongside separate keyboard containment/restoration tests: axe cannot infer Radix's focus trap from its aria-hidden background. Ordinary and dialog states retain whole-page scans.

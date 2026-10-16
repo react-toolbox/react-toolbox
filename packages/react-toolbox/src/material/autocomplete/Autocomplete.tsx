@@ -1,4 +1,7 @@
 'use client';
+import './tokens.css';
+import '../chip/tokens.css';
+import '../input/tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
@@ -40,6 +43,7 @@ export interface AutocompleteBaseProps
   keepFocusOnChange?: boolean;
   onBlur?: (event: React.FocusEvent<InputElement>, active?: string | null) => void;
   onQueryChange?: (query: string) => void;
+  /** Controlled search text. Uncontrolled single-value queries restore the selected label on blur. */
   query?: string;
   selectedPosition?: 'above' | 'below' | 'none';
   showSelectedWhenNotInSource?: boolean;
@@ -294,7 +298,7 @@ export function Autocomplete(props: AutocompleteProps) {
             key={key}
             className={cn(
               'rt-autocomplete-value',
-              'm-(--autocomplete-value-margin) mr-(--chip-margin-right)',
+              'm-(--autocomplete-value-margin) me-(--chip-margin-right)',
               theme?.value,
             )}
             deletable
@@ -426,6 +430,10 @@ export function Autocomplete(props: AutocompleteProps) {
         value={query}
         onBlur={(event) => {
           setFocus(false);
+          if (!multiple && controlledQuery === undefined) {
+            setQuery(selectedQuery);
+            if (query !== selectedQuery) onQueryChange?.(selectedQuery);
+          }
           onBlur?.(event, active);
         }}
         onChange={(text) => {

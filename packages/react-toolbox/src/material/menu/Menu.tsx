@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import type { MenuTheme } from './types';
@@ -17,6 +18,8 @@ import {
 } from 'react';
 import { cn } from '../foundations/styles/cn';
 import { MenuContext } from './context';
+import { DismissableLayer } from '@radix-ui/react-dismissable-layer';
+import { ActiveSurface } from '../overlay/ActiveSurface';
 
 export type { MenuTheme, MenuClassNames } from './types';
 export type MenuPosition = 'auto' | 'static' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
@@ -368,113 +371,118 @@ export function Menu<Value = unknown>({
     });
   }, [children, requestedPosition]);
   return (
-    <div
-      {...attributes}
-      id={undefined}
-      data-react-toolbox="menu"
-      ref={root}
-      className={cn(
-        'rt-menu-menu',
-        'inline-block relative',
-        '[&:not(.rt-menu-static)]:pointer-events-none [&:not(.rt-menu-static)]:z-(--z-index-higher)',
-        theme?.menu,
-        position &&
-          (position === 'static'
-            ? cn('rt-menu-static', theme?.static)
-            : position === 'topLeft'
-              ? cn(
-                  'rt-menu-topLeft',
-                  '[.rt-menu-menu&]:left-0 [.rt-menu-menu&]:absolute [.rt-menu-menu&]:top-0',
-                  theme?.topLeft,
-                )
-              : position === 'topRight'
-                ? cn(
-                    'rt-menu-topRight',
-                    '[.rt-menu-menu&]:absolute [.rt-menu-menu&]:right-0 [.rt-menu-menu&]:top-0',
-                    theme?.topRight,
-                  )
-                : position === 'bottomLeft'
-                  ? cn(
-                      'rt-menu-bottomLeft',
-                      '[.rt-menu-menu&]:bottom-0 [.rt-menu-menu&]:left-0 [.rt-menu-menu&]:absolute',
-                      theme?.bottomLeft,
-                    )
-                  : position === 'bottomRight'
-                    ? cn(
-                        'rt-menu-bottomRight',
-                        '[.rt-menu-menu&]:bottom-0 [.rt-menu-menu&]:absolute [.rt-menu-menu&]:right-0',
-                        theme?.bottomRight,
-                      )
-                    : undefined),
-        visible && cn('rt-menu-active', '[.rt-menu-menu:not(.rt-menu-static)&]:[pointer-events:all]', theme?.active),
-        rippled && cn('rt-menu-rippled', theme?.rippled),
-        className,
-      )}
-      style={rootStyle}
-    >
-      {outline ? (
+    <DismissableLayer asChild>
+      <ActiveSurface active={visible && requestedPosition !== 'static'}>
         <div
+          {...attributes}
+          id={undefined}
+          data-react-toolbox="menu"
+          ref={root}
           className={cn(
-            'rt-menu-outline',
-            'bg-(--menu-background-color) rounded-(--menu-outline-border-radius) [box-shadow:var(--shadow-2p)] block left-0 absolute top-0',
-            '[.rt-menu-menu.rt-menu-topLeft>&]:origin-top-left',
-            '[.rt-menu-menu.rt-menu-topRight>&&]:origin-top-right',
-            '[.rt-menu-menu.rt-menu-bottomLeft>&]:origin-bottom-left',
-            '[.rt-menu-menu.rt-menu-bottomRight>&&]:origin-bottom-right',
-            '[.rt-menu-menu:not(.rt-menu-static)>&]:opacity-0 [.rt-menu-menu:not(.rt-menu-static)>&]:transform-[scale(0)] [.rt-menu-menu:not(.rt-menu-static)>&]:[transition:transform_var(--menu-expand-duration)_var(--animation-curve-default),opacity_var(--menu-fade-duration)_var(--animation-curve-default)] [.rt-menu-menu:not(.rt-menu-static)>&]:will-change-transform',
-            '[.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:opacity-[1] [.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:transform-[scale(1)]',
-            '[.rt-menu-menu:not(.rt-menu-static).rt-menu-rippled:not(.rt-menu-active)>&]:delay-(--menu-ripple-delay)',
-            theme?.outline,
+            'rt-menu-menu',
+            'inline-block relative',
+            '[&:not(.rt-menu-static)]:pointer-events-none [&:not(.rt-menu-static)]:z-(--z-index-higher)',
+            theme?.menu,
+            position &&
+              (position === 'static'
+                ? cn('rt-menu-static', theme?.static)
+                : position === 'topLeft'
+                  ? cn(
+                      'rt-menu-topLeft',
+                      '[.rt-menu-menu&]:left-0 [.rt-menu-menu&]:absolute [.rt-menu-menu&]:top-0',
+                      theme?.topLeft,
+                    )
+                  : position === 'topRight'
+                    ? cn(
+                        'rt-menu-topRight',
+                        '[.rt-menu-menu&]:absolute [.rt-menu-menu&]:right-0 [.rt-menu-menu&]:top-0',
+                        theme?.topRight,
+                      )
+                    : position === 'bottomLeft'
+                      ? cn(
+                          'rt-menu-bottomLeft',
+                          '[.rt-menu-menu&]:bottom-0 [.rt-menu-menu&]:left-0 [.rt-menu-menu&]:absolute',
+                          theme?.bottomLeft,
+                        )
+                      : position === 'bottomRight'
+                        ? cn(
+                            'rt-menu-bottomRight',
+                            '[.rt-menu-menu&]:bottom-0 [.rt-menu-menu&]:absolute [.rt-menu-menu&]:right-0',
+                            theme?.bottomRight,
+                          )
+                        : undefined),
+            visible &&
+              cn('rt-menu-active', '[.rt-menu-menu:not(.rt-menu-static)&]:[pointer-events:all]', theme?.active),
+            rippled && cn('rt-menu-rippled', theme?.rippled),
+            className,
           )}
-          style={{
-            width: dimensions.width,
-            height: dimensions.height,
-            top: dimensions.outlineTop,
-            left: dimensions.outlineLeft,
-          }}
-        />
-      ) : null}
-      <ul
-        id={attributes.id}
-        role="menu"
-        aria-label={attributes['aria-label']}
-        aria-labelledby={attributes['aria-labelledby']}
-        aria-hidden={(position !== 'static' && !visible) || undefined}
-        inert={(position !== 'static' && !visible) || undefined}
-        tabIndex={-1}
-        onKeyDown={keyDown}
-        ref={menu}
-        className={cn(
-          'rt-menu-menuInner',
-          'block [list-style:none] p-(--menu-padding) relative text-left whitespace-nowrap max-h-[calc(100vh-var(--menu-item-height))] overflow-y-auto',
-          '[.rt-menu-menu:not(.rt-menu-static)>&]:left-0 [.rt-menu-menu:not(.rt-menu-static)>&]:m-0 [.rt-menu-menu:not(.rt-menu-static)>&]:opacity-0 [.rt-menu-menu:not(.rt-menu-static)>&]:absolute [.rt-menu-menu:not(.rt-menu-static)>&]:top-0',
-          '[.rt-menu-menu.rt-menu-topRight>&&]:left-auto [.rt-menu-menu.rt-menu-topRight>&&]:right-0',
-          '[.rt-menu-menu.rt-menu-bottomRight>&&]:left-auto [.rt-menu-menu.rt-menu-bottomRight>&&]:right-0',
-          '[.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:opacity-[1] [.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:[transition:opacity_var(--menu-fade-duration)_var(--animation-curve-default),clip_var(--menu-expand-duration)_var(--animation-curve-default)]',
-          '[.rt-menu-menu:not(.rt-menu-static).rt-menu-rippled:not(.rt-menu-active)>&]:delay-(--menu-ripple-delay)',
-          theme?.menuInner,
-        )}
-        style={{ clip }}
-      >
-        <MenuContext.Provider
-          value={{
-            ripple,
-            selectable,
-            selected,
-            select: (value, close) => {
-              if (close) {
-                if (controlledOpen === undefined) restoreFocus();
-                setVisible(false);
-                setRippled(ripple);
-              }
-              onSelect?.(value as Value | undefined);
-            },
-          }}
+          style={rootStyle}
         >
-          {children}
-        </MenuContext.Provider>
-      </ul>
-    </div>
+          {outline ? (
+            <div
+              className={cn(
+                'rt-menu-outline',
+                'bg-(--menu-background-color) rounded-(--menu-outline-border-radius) [box-shadow:var(--shadow-2p)] block left-0 absolute top-0',
+                '[.rt-menu-menu.rt-menu-topLeft>&]:origin-top-left',
+                '[.rt-menu-menu.rt-menu-topRight>&&]:origin-top-right',
+                '[.rt-menu-menu.rt-menu-bottomLeft>&]:origin-bottom-left',
+                '[.rt-menu-menu.rt-menu-bottomRight>&&]:origin-bottom-right',
+                '[.rt-menu-menu:not(.rt-menu-static)>&]:opacity-0 [.rt-menu-menu:not(.rt-menu-static)>&]:transform-[scale(0)] [.rt-menu-menu:not(.rt-menu-static)>&]:[transition:transform_var(--menu-expand-duration)_var(--animation-curve-default),opacity_var(--menu-fade-duration)_var(--animation-curve-default)] [.rt-menu-menu:not(.rt-menu-static)>&]:will-change-transform',
+                '[.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:opacity-[1] [.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:transform-[scale(1)]',
+                '[.rt-menu-menu:not(.rt-menu-static).rt-menu-rippled:not(.rt-menu-active)>&]:delay-(--menu-ripple-delay)',
+                theme?.outline,
+              )}
+              style={{
+                width: dimensions.width,
+                height: dimensions.height,
+                top: dimensions.outlineTop,
+                left: dimensions.outlineLeft,
+              }}
+            />
+          ) : null}
+          <ul
+            id={attributes.id}
+            role="menu"
+            aria-label={attributes['aria-label']}
+            aria-labelledby={attributes['aria-labelledby']}
+            aria-hidden={(position !== 'static' && !visible) || undefined}
+            inert={(position !== 'static' && !visible) || undefined}
+            tabIndex={-1}
+            onKeyDown={keyDown}
+            ref={menu}
+            className={cn(
+              'rt-menu-menuInner',
+              'block [list-style:none] p-(--menu-padding) relative text-left whitespace-nowrap max-h-[calc(100vh-var(--menu-item-height))] overflow-y-auto',
+              '[.rt-menu-menu:not(.rt-menu-static)>&]:left-0 [.rt-menu-menu:not(.rt-menu-static)>&]:m-0 [.rt-menu-menu:not(.rt-menu-static)>&]:opacity-0 [.rt-menu-menu:not(.rt-menu-static)>&]:absolute [.rt-menu-menu:not(.rt-menu-static)>&]:top-0',
+              '[.rt-menu-menu.rt-menu-topRight>&&]:left-auto [.rt-menu-menu.rt-menu-topRight>&&]:right-0',
+              '[.rt-menu-menu.rt-menu-bottomRight>&&]:left-auto [.rt-menu-menu.rt-menu-bottomRight>&&]:right-0',
+              '[.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:opacity-[1] [.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:[transition:opacity_var(--menu-fade-duration)_var(--animation-curve-default),clip_var(--menu-expand-duration)_var(--animation-curve-default)]',
+              '[.rt-menu-menu:not(.rt-menu-static).rt-menu-rippled:not(.rt-menu-active)>&]:delay-(--menu-ripple-delay)',
+              theme?.menuInner,
+            )}
+            style={{ clip }}
+          >
+            <MenuContext.Provider
+              value={{
+                ripple,
+                selectable,
+                selected,
+                select: (value, close) => {
+                  if (close) {
+                    if (controlledOpen === undefined) restoreFocus();
+                    setVisible(false);
+                    setRippled(ripple);
+                  }
+                  onSelect?.(value as Value | undefined);
+                },
+              }}
+            >
+              {children}
+            </MenuContext.Provider>
+          </ul>
+        </div>
+      </ActiveSurface>
+    </DismissableLayer>
   );
 }
 export default Menu;

@@ -2,6 +2,9 @@ import { css } from './material-fixture.js';
 import { createElement as h } from 'react';
 import { renderToString } from 'react-dom/server';
 import { test, expect } from '@playwright/test';
+import { build } from 'esbuild';
+import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
 
 test('inherits root custom colors inside a portaled dialog', async ({ page }) => {
   await page.goto('/playground');
@@ -15,7 +18,27 @@ test('inherits root custom colors inside a portaled dialog', async ({ page }) =>
 test('recalculates scoped palette and size tokens while retaining unrelated root and explicit parent values', async ({
   page,
 }) => {
-  const { ThemeProvider, Button } = await import('react-toolbox');
+  /** SSR consumers need a CSS-aware bundler, just like the verified Next consumer. */
+  const bundle = await build({
+    stdin: {
+      contents: "export { ThemeProvider, Button } from 'react-toolbox';",
+      resolveDir: fileURLToPath(new URL('../../', import.meta.url)),
+      loader: 'js',
+    },
+    bundle: true,
+    write: false,
+    platform: 'node',
+    format: 'cjs',
+    external: ['react', 'react/*', 'react-dom', 'react-dom/*'],
+    loader: { '.css': 'empty' },
+  });
+  const bundledModule = { exports: {} };
+  new Function('require', 'module', 'exports', bundle.outputFiles[0].text)(
+    createRequire(import.meta.url),
+    bundledModule,
+    bundledModule.exports,
+  );
+  const { ThemeProvider, Button } = bundledModule.exports;
   const markup = renderToString(
     h(
       'div',

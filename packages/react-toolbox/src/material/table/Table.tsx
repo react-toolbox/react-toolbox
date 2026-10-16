@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
@@ -52,6 +53,10 @@ export function Table({
     (child): child is ReactElement<TableHeadProps> => isValidElement<TableHeadProps>(child) && child.type === TableHead,
   );
   const selectedIndices = rows.flatMap((row, index) => (row.props.selected ? [index] : []));
+  const eligibleIndices = rows.flatMap((row, index) =>
+    (row.props.selectable ?? selectable) && !row.props.selectionDisabled ? [index] : [],
+  );
+  const selectedEligible = eligibleIndices.filter((index) => selectedIndices.includes(index));
   const structure = elements.filter(
     (child) => isValidElement(child) && (child.type === 'caption' || child.type === 'colgroup'),
   );
@@ -76,13 +81,20 @@ export function Table({
   }
   const decorateHead = (head: ReactElement<TableHeadProps>) =>
     cloneElement(head, {
-      selected: rows.length > 0 && selectedIndices.length === rows.length,
-      indeterminate: selectedIndices.length > 0 && selectedIndices.length < rows.length,
-      multiSelectable,
+      selected: eligibleIndices.length > 0 && selectedEligible.length === eligibleIndices.length,
+      indeterminate: selectedEligible.length > 0 && selectedEligible.length < eligibleIndices.length,
+      multiSelectable: multiSelectable && eligibleIndices.length > 0,
       selectable,
       onSelect: (value, event) => {
         head.props.onSelect?.(value, event);
-        onRowSelect?.(value ? rows.map((_, index) => index) : []);
+        if (event.defaultPrevented) return;
+        onRowSelect?.(
+          value
+            ? rows.flatMap((_, index) =>
+                selectedIndices.includes(index) || eligibleIndices.includes(index) ? [index] : [],
+              )
+            : selectedIndices.filter((index) => !eligibleIndices.includes(index)),
+        );
       },
     });
   let rowIndex = 0;

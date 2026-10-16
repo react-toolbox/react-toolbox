@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
@@ -277,7 +278,7 @@ export function Slider({
         tabIndex={disabled ? -1 : (tabIndex ?? 0)}
         className={cn(
           'rt-slider-container',
-          'h-(--slider-knob-size) mr-(--slider-knob-size) relative [outline:none] [touch-action:pan-y] [-webkit-user-select:none] [-moz-user-select:none] select-none w-[calc(100%-var(--slider-knob-size))]',
+          'h-[max(48px,var(--slider-knob-size))] mr-(--slider-knob-size) relative [outline:none] [touch-action:pan-y] [-webkit-user-select:none] [-moz-user-select:none] select-none w-[calc(100%-var(--slider-knob-size))]',
           materialRoot,
           materialDescendants,
           '[&:not(:last-child)]:mr-[calc(var(--slider-side-separation)+var(--slider-knob-size))]',
@@ -293,7 +294,7 @@ export function Slider({
           ref={knob}
           className={cn(
             'rt-slider-knob',
-            'items-center bg-transparent flex flex-row h-(--slider-knob-size) justify-center left-0 relative top-0 w-(--slider-knob-size) z-(--z-index-higher)',
+            'items-center bg-transparent flex flex-row h-(--slider-knob-size) justify-center left-0 relative top-[max(0px,calc((48px-var(--slider-knob-size))/2))] w-(--slider-knob-size) z-(--z-index-higher)',
             "[.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:bg-(--slider-main-color) [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:rounded-[50%] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:bottom-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:[content:''] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:left-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:opacity-[0.26] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:absolute [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:right-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:top-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:z-(--z-index-normal)",
             '[.rt-slider-slider.rt-slider-ring:has(.rt-slider-container:focus-visible)_&&::before]:bg-(--slider-track-focus-color)',
             theme?.knob,
@@ -328,7 +329,7 @@ export function Slider({
           style={direction === 'rtl' ? { transform: 'scaleX(-1)' } : undefined}
           className={cn(
             'rt-slider-progress',
-            'h-full left-[calc(var(--slider-knob-size)/2)] absolute top-0 w-full',
+            'h-(--slider-knob-size) left-[calc(var(--slider-knob-size)/2)] absolute top-[max(0px,calc((48px-var(--slider-knob-size))/2))] w-full',
             '[.rt-slider-slider.rt-slider-ring_&]:left-[calc(var(--slider-knob-size)/2+var(--slider-empty-knob-border)*2)] [.rt-slider-slider.rt-slider-ring_&]:[transition:left_0.18s_ease,width_0.18s_ease] [.rt-slider-slider.rt-slider-ring_&]:w-[calc(100%-var(--slider-empty-knob-border)*2)]',
             '[.rt-slider-slider.rt-slider-ring.rt-slider-pinned_&]:left-[calc(var(--slider-knob-size)/2)] [.rt-slider-slider.rt-slider-ring.rt-slider-pinned_&]:w-full',
             '[.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned).rt-slider-ring_&]:left-[calc(var(--slider-knob-size)/2+(var(--slider-pressed-knob-size)-var(--slider-empty-knob-border)*2)/2)] [.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned).rt-slider-ring_&]:w-[calc(100%-((var(--slider-pressed-knob-size)-var(--slider-empty-knob-border)*2)/2))]',

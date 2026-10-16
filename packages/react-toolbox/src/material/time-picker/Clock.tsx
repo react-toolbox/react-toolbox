@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { cn } from '../foundations/styles/cn';
@@ -6,7 +7,8 @@ import type { TimePickerTheme } from './types';
 
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import time, { type TimeFormat } from '../foundations/date-time/calendar';
+import * as time from '../foundations/date-time/time';
+import type { TimeFormat } from '../foundations/date-time/time';
 import Hours from './ClockHours';
 import Minutes from './ClockMinutes';
 export interface ClockHandle {

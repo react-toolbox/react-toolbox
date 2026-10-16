@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
@@ -10,7 +11,7 @@ import useChecked from '../foundations/forms/useChecked';
 import Thumb from './Thumb';
 const fieldClasses = [
   'rt-switch-field',
-  'block mb-(--switch-field-margin-bottom) relative whitespace-normal',
+  'block min-h-[48px] min-w-[48px] py-[max(0px,calc((48px-var(--switch-total-height))/2))] mb-(--switch-field-margin-bottom) relative whitespace-normal',
   materialRoot,
   materialDescendants,
 ].join(' ');
@@ -124,7 +125,7 @@ export function Switch({
         <span
           className={cn(
             'rt-switch-text',
-            'text-(--switch-text-color) inline-block text-(length:--switch-font-size) leading-(--switch-total-height) pl-(--unit) align-top whitespace-nowrap',
+            'text-(--switch-text-color) inline-block text-(length:--switch-font-size) leading-(--switch-total-height) ps-(--unit) align-top whitespace-nowrap',
             '[.rt-switch-disabled_&&]:text-(--switch-disabled-text-color)',
             theme?.text,
           )}

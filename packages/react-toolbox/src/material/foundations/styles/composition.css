@@ -38,7 +38,7 @@
   }
   @keyframes toolbox-drawer-in {
     from {
-      translate: var(--drawer-offset, -100%) 0;
+      translate: var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0);
     }
     to {
       translate: 0 0;
@@ -49,7 +49,7 @@
       translate: 0 0;
     }
     to {
-      translate: var(--drawer-offset, -100%) 0;
+      translate: var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0);
     }
   }
 }

@@ -1,7 +1,8 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
-import type { DatePickerTheme } from './types';
+import type { DatePickerTheme, DatePickerLabels } from './types';
 
 import React, { useEffect, useState } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -21,6 +22,8 @@ export interface DatePickerDialogProps extends DateConstraints {
   active?: boolean;
   autoOk?: boolean;
   cancelLabel?: string;
+  labels?: Partial<DatePickerLabels>;
+  layout?: 'portrait' | 'landscape' | 'responsive';
   className?: string;
   id?: string;
   locale?: DatePickerLocale;
@@ -31,6 +34,8 @@ export interface DatePickerDialogProps extends DateConstraints {
   onOverlayClick?: DialogProps['onOverlayClick'];
   onSelect?: (date: Date, event?: DatePickerSelectEvent) => void;
   sundayFirstDayOfWeek?: boolean;
+  startYear?: number;
+  endYear?: number;
   /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
   classNames?: DatePickerTheme;
   /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
@@ -41,6 +46,8 @@ export default function DatePickerDialog({
   active = false,
   autoOk,
   cancelLabel = 'Cancel',
+  labels,
+  layout = 'portrait',
   className = '',
   id,
   locale,
@@ -51,6 +58,8 @@ export default function DatePickerDialog({
   onOverlayClick,
   onSelect,
   sundayFirstDayOfWeek,
+  startYear,
+  endYear,
   theme: legacyTheme,
   classNames,
   value,
@@ -106,12 +115,16 @@ export default function DatePickerDialog({
         'rt-date-picker-dialog',
         'w-(--datepicker-dialog-width)',
         '[&>section]:p-0',
+        layout === 'landscape' &&
+          '[&&]:grid [&&]:w-[calc(var(--datepicker-dialog-width)+var(--picker-landscape-header-width))] [&&]:grid-cols-[var(--picker-landscape-header-width)_minmax(0,1fr)] [&&]:grid-rows-[1fr_auto] [&&]:overflow-y-auto [&>section]:contents [&>section>header]:col-start-1 [&>section>header]:row-span-2 [&>section>header]:row-start-1 [&>section>:not(header)]:col-start-2 [&>section>:not(header)]:row-start-1 [&>nav]:col-start-2 [&>nav]:row-start-2',
+        layout === 'responsive' &&
+          '[@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:grid [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:w-[calc(var(--datepicker-dialog-width)+var(--picker-landscape-header-width))] [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:grid-cols-[var(--picker-landscape-header-width)_minmax(0,1fr)] [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:grid-rows-[1fr_auto] [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:overflow-y-auto [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section]:contents [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:col-start-1 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:row-span-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:row-start-1 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>:not(header)]:col-start-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>:not(header)]:row-start-1 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>nav]:col-start-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>nav]:row-start-2',
         theme?.dialog,
         className,
       )}
       onEscKeyDown={onEscKeyDown}
       onOverlayClick={onOverlayClick}
-      aria-label="Choose date"
+      aria-label={labels?.dialog ?? 'Choose date'}
     >
       <header
         className={cn(
@@ -128,7 +141,7 @@ export default function DatePickerDialog({
           data-display="years"
           role="button"
           tabIndex={0}
-          aria-label="Choose year"
+          aria-label={labels?.chooseYear ?? 'Choose year'}
           aria-pressed={display === 'years'}
           className={cn(
             'rt-date-picker-year',
@@ -146,7 +159,7 @@ export default function DatePickerDialog({
           data-display="months"
           role="button"
           tabIndex={0}
-          aria-label="Choose day"
+          aria-label={labels?.chooseDay ?? 'Choose day'}
           aria-pressed={display === 'months'}
           className={cn(
             'rt-date-picker-date',
@@ -168,6 +181,9 @@ export default function DatePickerDialog({
         <Calendar
           {...constraints}
           display={display}
+          labels={labels}
+          startYear={startYear}
+          endYear={endYear}
           handleSelect={select}
           onChange={(next, dayClick) => {
             const clamped = clamp(next);

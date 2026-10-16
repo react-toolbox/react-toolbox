@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import type { CardTheme } from './types';
@@ -18,8 +19,8 @@ export function CardActions({ children, className, theme: legacyTheme, className
         'rt-card-cardActions',
         'items-center flex justify-start p-(--card-padding-sm)',
         "[&_[data-react-toolbox='button']]:m-[0_calc(var(--card-padding-sm)/2)] [&_[data-react-toolbox='button']]:min-w-0 [&_[data-react-toolbox='button']]:p-[0_var(--card-padding-sm)]",
-        "[&_[data-react-toolbox='button']:first-child]:ml-0",
-        "[&_[data-react-toolbox='button']:last-child]:mr-0",
+        "[&_[data-react-toolbox='button']:first-child]:ms-0",
+        "[&_[data-react-toolbox='button']:last-child]:me-0",
         '[.rt-card-cardMedia_.rt-card-contentOverlay_&]:bg-(--card-text-overlay)',
         theme?.cardActions,
         className,

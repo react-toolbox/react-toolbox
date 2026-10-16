@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { cn } from '../foundations/styles/cn';
@@ -13,6 +14,8 @@ export interface CalendarMonthProps extends DateConstraints {
   locale?: DatePickerLocale;
   onDayClick?: (day: number) => void;
   selectedDate: Date;
+  focusedDate?: Date;
+  onDayFocus?: (day: number) => void;
   sundayFirstDayOfWeek?: boolean;
   /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
   classNames?: DatePickerTheme;
@@ -25,6 +28,8 @@ export default function CalendarMonth({
   locale,
   onDayClick,
   selectedDate,
+  focusedDate = selectedDate,
+  onDayFocus,
   sundayFirstDayOfWeek,
   theme: legacyTheme,
   classNames,
@@ -39,7 +44,7 @@ export default function CalendarMonth({
     <div
       ref={nodeRef}
       data-react-toolbox="month"
-      className={cn('rt-date-picker-month', 'bg-(--calendar-primary-contrast-color) w-full', theme?.month)}
+      className={cn('rt-date-picker-month', 'bg-(--calendar-background) w-full', theme?.month)}
     >
       <span
         aria-live="polite"
@@ -70,6 +75,12 @@ export default function CalendarMonth({
             locale={locale}
             disabled={isDateDisabled(new Date(viewDate.getFullYear(), viewDate.getMonth(), day), constraints)}
             onClick={onDayClick}
+            onFocus={onDayFocus}
+            focused={
+              focusedDate.getFullYear() === viewDate.getFullYear() &&
+              focusedDate.getMonth() === viewDate.getMonth() &&
+              focusedDate.getDate() === day
+            }
             selectedDate={selectedDate}
             theme={theme}
             viewDate={viewDate}

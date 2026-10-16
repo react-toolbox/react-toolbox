@@ -26,7 +26,9 @@ export function Save() {
 
 The CLI copies the source, installs dependencies, and adds Tailwind tokens. Public entries load component styles and local fonts automatically. No `react-toolbox` npm dependency or separate stylesheet setup is needed. Use your configured UI alias if it differs from `@/components/ui`.
 
-Replace `button` with any of the 27 component family names, or `all`. The [installation guide](docs/source-registry.md) covers the `@react-toolbox` shortcut, customization, and updates. Public instructions always use `https://react-toolbox.io`, including in local and preview builds. The public domain must serve the deployed docs app before these commands work; namespace registration is a separate step.
+Replace `button` with any of the 28 component family names, or `all`. The [installation guide](docs/source-registry.md) covers the `@react-toolbox` shortcut, customization, and updates. Public instructions always use `https://react-toolbox.io`, including in local and preview builds. The public domain must serve the deployed docs app before these commands work; namespace registration is a separate step.
+
+Optional examples install through `example-field-notes`, `example-recipes`, and `example-snackbar-queue`. The Field Notes distribution demonstrates original, brand and night themes at `/docs/theming`; `/docs/recipes` demonstrates application workflows. Range sliders, range calendars, scheduling constraints and gesture sheets are documented alongside their component families.
 
 ## Workspace
 
@@ -66,7 +68,7 @@ pnpm build:library       # private implementation build
 
 `pnpm docs:dev` and `pnpm docs:build` run the docs app and its dependencies. The landing lives at `/`, documentation at `/docs`, installation at `/docs/installation`, and component pages at `/docs/components/<name>`. `/components` redirects to the docs catalog; the unchanged comparison gallery is available at `/playground`. The app also serves `/layout-demo`, `/theme-demo`, `/r/registry.json`, and `/r/<name>.json`.
 
-See the [docs app guide](apps/docs/README.md) for deployment and the [implementation guide](packages/react-toolbox/README.md) for component conventions.
+See the [docs app guide](apps/docs/README.md) for deployment and the [source registry guide](docs/source-registry.md) for component conventions.
 
 ## Verify
 
@@ -78,7 +80,7 @@ TOOLBOX_BROWSER=webkit pnpm test:browser
 pnpm test:registry:install
 ```
 
-`pnpm test` runs the component, style, registry, and release snapshot tests; `pnpm check` also runs lint and type checks. The registry tests check every family’s dependency closure, exact source and CSS contents, schemas, and strict TypeScript. The actual shadcn CLI is also tested in isolated Next.js and Vite apps, with a custom UI alias, existing host components, local source customizations, and no React Toolbox package. Browser checks cover automatic styles, fonts, tokens, hydration, keyboard interaction, and reduced motion. Automated accessibility checks complement the manual verification described in the release guide.
+`pnpm test` runs the component, style, registry, and release snapshot tests; `pnpm check` also runs lint, type checks, and [consumer footprint budgets](docs/footprint.md). The registry tests check every family’s dependency closure, exact source and CSS contents, schemas, and strict TypeScript. The actual shadcn CLI is also tested in isolated Next.js and Vite apps, with a custom UI alias, existing host components, local source customizations, and no React Toolbox package. Browser checks cover automatic styles, fonts, tokens, hydration, keyboard interaction, and reduced motion. Automated accessibility checks complement the manual verification described in the release guide.
 
 Browser tests start the production site automatically when port 3100 is free. CI builds its own instance. The [M1 audit](docs/material-1-audit.md) records intentional spec corrections. Original CSS and React 16 reference artifacts are never regenerated to approve visual differences; the shared gallery input remains unchanged.
 

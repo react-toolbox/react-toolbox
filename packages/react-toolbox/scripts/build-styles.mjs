@@ -28,7 +28,7 @@ for (const name of ['tailwind-preflight.css', 'shadcn.css', 'composition.css']) 
 await writeFile(
   path.join(root, 'dist/tailwind.css'),
   (await readFile(path.join(root, 'src/material/foundations/styles/tailwind.css'), 'utf8'))
-    .replace('./styles.css', './foundation.css')
+    .replace('./base.css', './foundation.css')
     .replace('@source "../../"', '@source "./material"'),
 );
 // Typed side-effect imports work with TypeScript's noUncheckedSideEffectImports.
@@ -46,3 +46,13 @@ for await (const file of glob('dist/**/*.d.ts', { cwd: root })) {
 // Private workspace imports share the same automatic style entry as copied source.
 await mkdir(path.join(root, 'dist/material/foundations/styles'), { recursive: true });
 await writeFile(path.join(root, 'dist/material/foundations/styles/setup.css'), '@import "../../../styles.css";\n');
+
+/** Copied examples use the same relative bridge import in source and in the workspace package. */
+await writeFile(path.join(root, 'dist/material/foundations/styles/shadcn.css'), '@import "../../../shadcn.css";\n');
+
+/** Direct module imports load their family tokens without the global stylesheet. */
+for await (const file of glob(['src/material/*/tokens.css', 'src/examples/**/styles.css'], { cwd: root })) {
+  const destination = path.join(root, 'dist', file.slice('src/'.length));
+  await mkdir(path.dirname(destination), { recursive: true });
+  await copyFile(path.join(root, file), destination);
+}

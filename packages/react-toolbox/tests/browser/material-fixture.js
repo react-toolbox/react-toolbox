@@ -8,7 +8,7 @@ import { cn } from '../../src/material/foundations/styles/cn.ts';
 const root = fileURLToPath(new URL('../../', import.meta.url));
 export const css = (
   await postcss([tailwind()]).process(
-    '@layer theme, base, components, utilities; @import "tailwindcss/theme.css" layer(theme); @import "tailwindcss/utilities.css" layer(utilities) source(none); @import "./src/material/foundations/styles/styles.css"; @source "./src/material";',
+    '@layer theme, base, components, utilities; @import "tailwindcss/theme.css" layer(theme); @import "tailwindcss/utilities.css" layer(utilities) source(none); @import "./src/material/foundations/styles/styles.css"; @import "./src/material/foundations/styles/composition.css"; @source "./src/material";',
     { from: `${root}/fixture.css` },
   )
 ).css;
@@ -42,11 +42,14 @@ const javascript = (
 ).outputFiles[0].text;
 
 export async function setMaterialContent(page, html) {
-  // Classes must be present on first paint, just as in React. Adding them after
-  // mounting would start unrelated color/size transitions in the idle fixture.
+  /** Classes must be present on first paint, just as in React, without starting unrelated transitions.
+   * Escape selector quotes in the HTML attribute; setAttribute below handles them directly. */
   const styled = html.replace(
     /\bclass="([^"]*)"/g,
-    (_, value) => `class="${cn(value.split(/\s+/).map((name) => slots[name] || name))}"`,
+    (_, value) =>
+      `class="${cn(value.split(/\s+/).map((name) => slots[name] || name))
+        .replaceAll('&', '&amp;')
+        .replaceAll('"', '&quot;')}"`,
   );
   await page.setContent(styled);
   await page.addScriptTag({ content: javascript });

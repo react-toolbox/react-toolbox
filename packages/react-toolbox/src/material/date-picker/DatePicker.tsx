@@ -1,17 +1,18 @@
 'use client';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
-import type { DatePickerTheme } from './types';
+import type { DatePickerTheme, DatePickerLabels } from './types';
 
-import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
+import Button from '../button/Button';
 import { cn } from '../foundations/styles/cn';
 import useFormReset from '../foundations/forms/useFormReset';
 import useMergedRefs from '../foundations/portal/useMergedRefs';
 import Input, { type InputProps, type InputElement, type InputHandle } from '../input/Input';
 import time, { type DatePickerLocale } from '../foundations/date-time/calendar';
 import DatePickerDialog, { type DatePickerDialogProps, type DatePickerSelectEvent } from './DatePickerDialog';
-import type { DateConstraints } from './is-date-disabled';
-export type { DatePickerTheme, DatePickerClassNames } from './types';
+import isDateDisabled, { type DateConstraints } from './is-date-disabled';
+export type { DatePickerTheme, DatePickerClassNames, DatePickerLabels } from './types';
 export interface DatePickerProps
   extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'theme' | 'classNames'>,
     DateConstraints {
@@ -20,8 +21,14 @@ export interface DatePickerProps
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   defaultValue?: Date;
+  /** Show a clear action. Controlled consumers clear by setting value to null. */
+  clearable?: boolean;
+  onClear?: () => void;
   autoOk?: boolean;
   cancelLabel?: string;
+  labels?: Partial<DatePickerLabels>;
+  /** Preserve portrait, force landscape, or adapt to wide landscape viewports. */
+  layout?: 'portrait' | 'landscape' | 'responsive';
   inputClassName?: string;
   inputFormat?: (date: Date, locale?: DatePickerLocale) => string;
   locale?: DatePickerLocale;
@@ -32,11 +39,13 @@ export interface DatePickerProps
   onOverlayClick?: DatePickerDialogProps['onOverlayClick'];
   readonly?: boolean;
   sundayFirstDayOfWeek?: boolean;
+  startYear?: number;
+  endYear?: number;
   /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
   classNames?: DatePickerTheme;
   /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
   theme?: DatePickerTheme;
-  value?: Date | string;
+  value?: Date | string | null;
 }
 export function DatePicker({
   active: controlledActive = false,
@@ -44,12 +53,19 @@ export function DatePicker({
   defaultOpen,
   onOpenChange,
   defaultValue,
+  clearable,
+  onClear,
   autoOk,
   cancelLabel,
+  labels,
+  layout,
   className,
   disabled,
+  error,
+  required,
   disabledDates,
   enabledDates,
+  isDateUnavailable,
   inputClassName,
   inputFormat = time.formatDate,
   locale = 'en',
@@ -65,6 +81,8 @@ export function DatePicker({
   onOverlayClick,
   readonly,
   sundayFirstDayOfWeek = false,
+  startYear,
+  endYear,
   theme: legacyTheme,
   classNames,
   value: controlledValue,
@@ -74,8 +92,10 @@ export function DatePicker({
   const theme = mergeStyleSlots(legacyTheme, classNames);
   const dialogId = `date-picker-dialog-${useId()}`;
   const [internalValue, setValue] = useState(defaultValue);
-  const value = controlledValue ?? internalValue;
+  const value = controlledValue === undefined ? internalValue : controlledValue;
   const input = useRef<InputHandle>(null);
+  const native = useRef<HTMLInputElement>(null);
+  const [validationMessage, setValidationMessage] = useState('');
   const inputRef = useMergedRefs(input, ref);
   const [internalOpen, setOpen] = useState(defaultOpen ?? controlledActive);
   const active = !disabled && !readonly && (controlledOpen ?? internalOpen);
@@ -88,16 +108,9 @@ export function DatePicker({
     if (previousActive.current !== controlledActive) setOpen(controlledActive);
     previousActive.current = controlledActive;
   }, [controlledActive]);
-  const native = useMemo(
-    () => ({
-      get current() {
-        return input.current?.inputElement ?? null;
-      },
-    }),
-    [],
-  );
   useFormReset(native, () => {
     if (controlledValue === undefined) setValue(defaultValue);
+    setValidationMessage('');
     setActive(false);
   });
   const dismiss = () => {
@@ -110,13 +123,43 @@ export function DatePicker({
     setActive(true);
   };
   const date = value instanceof Date ? value : undefined;
+  const formattedValue = date ? inputFormat(date, locale) : '';
+  const unavailable = Boolean(
+    date && isDateDisabled(date, { minDate, maxDate, enabledDates, disabledDates, isDateUnavailable }),
+  );
+  useEffect(() => {
+    setValidationMessage('');
+    native.current?.setCustomValidity(unavailable ? (labels?.unavailable ?? 'Choose an available date.') : '');
+  }, [formattedValue, unavailable, labels?.unavailable]);
   return (
     <div data-react-toolbox="date-picker" className={theme?.container}>
+      <input
+        ref={native}
+        type="text"
+        className="sr-only"
+        tabIndex={-1}
+        aria-hidden="true"
+        form={others.form}
+        disabled={readonly || disabled}
+        required={required}
+        value={formattedValue}
+        onChange={() => {}}
+        onInvalid={(event) => {
+          others.onInvalid?.(event);
+          if (!event.defaultPrevented) {
+            setValidationMessage(event.currentTarget.validationMessage);
+            input.current?.focus();
+          }
+          event.preventDefault();
+        }}
+      />
       <Input
         {...others}
         ref={inputRef}
         className={cn('rt-date-picker-input', theme?.input, inputClassName)}
         disabled={readonly || disabled}
+        error={error || validationMessage}
+        required={required}
         role="combobox"
         aria-haspopup="dialog"
         aria-controls={active ? dialogId : undefined}
@@ -157,16 +200,35 @@ export function DatePicker({
         }}
         readOnly
         type="text"
-        value={date ? inputFormat(date, locale) : ''}
+        value={formattedValue}
       />
+      {clearable && value && !disabled && !readonly ? (
+        <Button
+          type="button"
+          primary
+          className="min-h-[48px]"
+          onClick={() => {
+            if (controlledValue === undefined) setValue(undefined);
+            setValidationMessage('');
+            setActive(false);
+            onClear?.();
+            input.current?.focus();
+          }}
+        >
+          {labels?.clear ?? 'Clear date'}
+        </Button>
+      ) : null}
       <DatePickerDialog
         id={dialogId}
         active={active}
         autoOk={autoOk}
         cancelLabel={cancelLabel}
+        labels={labels}
+        layout={layout}
         className={className}
         disabledDates={disabledDates}
         enabledDates={enabledDates}
+        isDateUnavailable={isDateUnavailable}
         locale={locale}
         maxDate={maxDate}
         minDate={minDate}
@@ -177,10 +239,13 @@ export function DatePicker({
         onOverlayClick={onOverlayClick || dismiss}
         onSelect={(next, event) => {
           if (controlledValue === undefined) setValue(next);
+          setValidationMessage('');
           onChange?.(next, event);
           setActive(false);
         }}
         sundayFirstDayOfWeek={sundayFirstDayOfWeek}
+        startYear={startYear}
+        endYear={endYear}
         theme={theme}
         value={date}
       />

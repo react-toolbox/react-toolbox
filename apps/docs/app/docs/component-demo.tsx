@@ -42,6 +42,7 @@ import {
   Tooltip,
 } from 'react-toolbox';
 import type { ComponentSlug } from './catalog';
+import SheetExample from './examples/sheet';
 
 const RippleButton = Ripple({ passthrough: false })('button');
 const HintButton = Tooltip(Button);
@@ -306,6 +307,8 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
           Click anywhere
         </RippleButton>
       );
+    case 'sheet':
+      return <SheetExample />;
     case 'slider':
       return (
         <div className="w-full max-w-sm">

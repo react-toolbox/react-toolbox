@@ -3,6 +3,26 @@ import type { ComponentSlug } from './catalog';
 
 /** Behavior guidance complements the examples and source-derived API contract. */
 export const componentState: Partial<Record<ComponentSlug, ReactNode>> = {
+  sheet: (
+    <ul>
+      <li>
+        <code>SheetRoot</code> accepts Vaul’s <code>open</code>/<code>onOpenChange</code>, <code>direction</code>,{' '}
+        <code>snapPoints</code>, <code>activeSnapPoint</code>/<code>setActiveSnapPoint</code>, and{' '}
+        <code>dismissible</code> options.
+      </li>
+      <li>
+        Use <code>SheetHandle</code> for drag and keyboard resizing; always provide a visible close action.{' '}
+        <code>SheetNestedRoot</code> coordinates sheets opened from another sheet.
+      </li>
+      <li>
+        The parts forward primitive refs, events, and styling props.{' '}
+        <a href="https://vaul.emilkowal.ski/api" className="text-toolbox-primary underline">
+          Full primitive API
+        </a>
+        .
+      </li>
+    </ul>
+  ),
   autocomplete: (
     <ul>
       <li>

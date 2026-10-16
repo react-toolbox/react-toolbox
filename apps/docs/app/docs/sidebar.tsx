@@ -10,6 +10,7 @@ const guides = [
   { href: '/docs', title: 'Introduction' },
   { href: '/docs/installation', title: 'Installation' },
   { href: '/docs/theming', title: 'Theming' },
+  { href: '/docs/recipes', title: 'Recipes' },
   { href: '/docs/components', title: 'All components' },
 ];
 
@@ -99,11 +100,12 @@ function MobileNavigation({ components }: { components: ComponentLink[] }) {
   );
 }
 
+/** Viewport anchoring prevents a fractional document bottom from pulling navigation under the app bar. */
 export default function DocsSidebar({ components }: { components: ComponentLink[] }) {
   const pathname = usePathname();
   return (
     <>
-      <aside className="sticky top-(--docs-appbar-height) hidden h-[calc(100svh-var(--docs-appbar-height))] overflow-y-auto overscroll-contain border-r border-toolbox-divider lg:block">
+      <aside className="fixed inset-s-0 top-(--docs-appbar-height) hidden h-[calc(100svh-var(--docs-appbar-height))] w-[256px] overflow-y-auto overscroll-contain border-r border-toolbox-divider lg:block">
         <SidebarNavigation components={components} />
       </aside>
       <MobileNavigation key={pathname} components={components} />

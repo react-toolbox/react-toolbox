@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
@@ -16,6 +17,7 @@ export interface AvatarProps extends ComponentPropsWithRef<'div'> {
   onLoadingStatusChange?: (status: 'idle' | 'loading' | 'loaded' | 'error') => void;
   imageProps?: Omit<AvatarPrimitive.AvatarImageProps, 'src' | 'alt' | 'asChild' | 'children' | 'onLoadingStatusChange'>;
   icon?: ReactNode;
+  /** URL images use automatic loading/fallback. Custom nodes own their loading and cover styling. */
   image?: ReactNode;
   /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
   classNames?: AvatarTheme;
@@ -38,6 +40,7 @@ export function Avatar({
   ...other
 }: AvatarProps) {
   const theme = mergeStyleSlots(legacyTheme, classNames);
+  const customImage = image != null && image !== false && typeof image !== 'string';
   const fallback =
     children ??
     (typeof icon === 'string' ? (
@@ -71,11 +74,17 @@ export function Avatar({
         )}
         {...other}
       >
-        {fallback != null && (
+        {!customImage && fallback != null && (
           <AvatarPrimitive.Fallback
             delayMs={fallbackDelay}
             asChild={isValidElement(fallback)}
-            className={isValidElement(fallback) ? undefined : 'contents'}
+            className={
+              isValidElement(fallback)
+                ? undefined
+                : typeof fallback === 'string' || typeof fallback === 'number'
+                  ? cn('flex h-full w-full items-center justify-center', theme?.letter)
+                  : 'contents'
+            }
           >
             {fallback}
           </AvatarPrimitive.Fallback>
@@ -100,29 +109,31 @@ export function Avatar({
             />
           </AvatarPrimitive.Image>
         )}
-        {!cover &&
-          (typeof image === 'string' ? (
-            <AvatarPrimitive.Image
-              {...imageProps}
-              onLoadingStatusChange={onLoadingStatusChange}
-              alt={alt}
-              className={cn(
-                'rt-avatar-image',
-                'bg-transparent bg-center bg-cover rounded-[50%] block h-full absolute w-full',
-                theme?.image,
-                imageProps?.className,
-              )}
-              src={image}
-              title={title}
-            />
-          ) : (
-            image
-          ))}
+        {customImage
+          ? image
+          : !cover &&
+            (typeof image === 'string' ? (
+              <AvatarPrimitive.Image
+                {...imageProps}
+                onLoadingStatusChange={onLoadingStatusChange}
+                alt={alt}
+                className={cn(
+                  'rt-avatar-image',
+                  'bg-transparent bg-center bg-cover rounded-[50%] block h-full absolute w-full',
+                  theme?.image,
+                  imageProps?.className,
+                )}
+                src={image}
+                title={title}
+              />
+            ) : (
+              image
+            ))}
       </div>
     </AvatarPrimitive.Root>
   );
 }
-// Radix owns loading/error state; preserve M1's background-cover rendering.
+/** Radix owns URL loading/error state; preserve M1's background-cover rendering. */
 function CoverImage({
   src: _src,
   alt,

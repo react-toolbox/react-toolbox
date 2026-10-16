@@ -1,4 +1,5 @@
 'use client';
+import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import type { RadioTheme } from './types';
@@ -10,7 +11,7 @@ import useChecked from '../foundations/forms/useChecked';
 import Radio from './Radio';
 const fieldClasses = [
   'rt-radio-field',
-  'block h-(--radio-button-size) mb-(--radio-field-margin-bottom) relative whitespace-nowrap',
+  'box-border block min-h-[48px] min-w-[48px] py-[max(0px,calc((48px-var(--radio-button-size))/2))] mb-(--radio-field-margin-bottom) relative whitespace-nowrap',
 ].join(' ');
 
 export type RadioButtonTheme = RadioTheme;
@@ -117,7 +118,7 @@ export function RadioButton({
         <span
           className={cn(
             'rt-radio-text',
-            'text-(--radio-text-color) inline-block text-(length:--radio-text-font-size) leading-(--radio-button-size) pl-(--unit) align-top whitespace-nowrap',
+            'text-(--radio-text-color) inline-block text-(length:--radio-text-font-size) leading-(--radio-button-size) ps-(--unit) align-top whitespace-nowrap',
             '[.rt-radio-disabled_&]:text-(--radio-disabled-color)',
             theme?.text,
           )}

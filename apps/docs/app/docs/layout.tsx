@@ -19,7 +19,7 @@ export default function DocumentationLayout({ children }: { children: ReactNode 
       <DocsHeader documentation />
       <div className="lg:grid lg:grid-cols-[256px_minmax(0,1fr)]">
         <DocsSidebar components={components.map(({ slug, title }) => ({ slug, title }))} />
-        <div className="flex min-w-0 flex-col lg:min-h-[calc(100svh-var(--docs-appbar-height))]">
+        <div className="flex min-w-0 flex-col lg:col-start-2 lg:min-h-[calc(100svh-var(--docs-appbar-height))]">
           <main
             id="docs-content"
             tabIndex={-1}

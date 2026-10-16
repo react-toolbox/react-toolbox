@@ -1,7 +1,10 @@
 'use client';
+import '../drawer/tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
-import { pinnedClasses, clippedClasses } from './styles';
+import { pinnedClasses, clippedClasses, sidebarWidthClasses } from './styles';
+import type { CSSProperties } from 'react';
+import { useLayoutDrawer } from './useLayoutDrawer';
 import { cn } from '../foundations/styles/cn';
 import Drawer, { type DrawerProps } from '../drawer';
 import type { LayoutTheme, LayoutBreakpoint, SidebarWidth } from './types';
@@ -18,24 +21,35 @@ export interface SidebarProps extends Omit<DrawerProps, 'theme' | 'classNames'> 
 export function Sidebar({
   active,
   className = '',
-  clipped,
-  permanentAt: _permanentAt,
-  pinned = false,
+  clipped = false,
+  permanentAt,
+  pinned: suppliedPinned = false,
   theme: legacyTheme,
   classNames,
-  width: _width,
+  width,
+  style,
   type: _type,
   ...other
 }: SidebarProps) {
   const theme = mergeStyleSlots(legacyTheme, classNames);
+  const pinned = useLayoutDrawer('sidebar', { pinned: suppliedPinned, clipped, permanentAt, width });
   return (
     <Drawer
       {...other}
       type="right"
+      data-layout-sidebar-width={width}
+      style={
+        {
+          '--layout-sidebar-units': width && width < 25 ? width : undefined,
+          '--layout-sidebar-percent': width && width >= 25 ? `${width}%` : undefined,
+          ...style,
+        } as CSSProperties
+      }
       active={active || pinned}
       className={cn(
         pinned && cn(pinnedClasses, theme?.pinned),
         clipped && cn(clippedClasses, theme?.clipped),
+        'rtl:[.rt-drawer-right&]:right-auto rtl:[.rt-drawer-right&]:left-0 rtl:[.rt-drawer-right&]:border-l-0 rtl:[.rt-drawer-right&]:[border-right:1px_solid_var(--drawer-border-color)] rtl:[.rt-drawer-right&:not(.rt-drawer-active)]:transform-[translateX(-100%)]',
         className,
       )}
       insideTree
@@ -43,70 +57,8 @@ export function Sidebar({
         drawer: cn(
           'rt-layout-sidebarDrawer',
           'z-(--z-index-high)',
-          '[.rt-layout-sidebarWidth1_&]:w-full',
-          '[@media_screen_and_(min-width:_840px)]:[.rt-layout-sidebarWidth1_&]:w-[calc(var(--standard-increment-desktop)_*_1)]',
-          '[.rt-layout-sidebarWidth2_&]:w-full',
-          '[@media_screen_and_(min-width:_840px)]:[.rt-layout-sidebarWidth2_&]:w-[calc(var(--standard-increment-desktop)*2)]',
-          '[.rt-layout-sidebarWidth3_&]:w-full',
-          '[@media_screen_and_(min-width:_840px)]:[.rt-layout-sidebarWidth3_&]:w-[calc(var(--standard-increment-desktop)*3)]',
-          '[.rt-layout-sidebarWidth4_&]:w-full',
-          '[@media_screen_and_(min-width:_840px)]:[.rt-layout-sidebarWidth4_&]:w-[calc(var(--standard-increment-desktop)*4)]',
-          '[.rt-layout-sidebarWidth5_&]:w-full',
-          '[@media_screen_and_(min-width:_840px)]:[.rt-layout-sidebarWidth5_&]:w-[calc(var(--standard-increment-desktop)*5)]',
-          '[.rt-layout-sidebarWidth6_&]:w-full',
-          '[@media_screen_and_(min-width:_840px)]:[.rt-layout-sidebarWidth6_&]:w-[calc(var(--standard-increment-desktop)*6)]',
-          '[.rt-layout-sidebarWidth7_&]:w-full',
-          '[@media_screen_and_(min-width:_840px)]:[.rt-layout-sidebarWidth7_&]:w-[calc(var(--standard-increment-desktop)*7)]',
-          '[.rt-layout-sidebarWidth8_&]:w-full',
-          '[@media_screen_and_(min-width:_840px)]:[.rt-layout-sidebarWidth8_&]:w-[calc(var(--standard-increment-desktop)*8)]',
-          '[.rt-layout-sidebarWidth9_&]:w-full',
-          '[@media_screen_and_(min-width:_840px)]:[.rt-layout-sidebarWidth9_&]:w-[calc(var(--standard-increment-desktop)*9)]',
-          '[.rt-layout-sidebarWidth10_&]:w-full',
-          '[@media_screen_and_(min-width:_840px)]:[.rt-layout-sidebarWidth10_&]:w-[calc(var(--standard-increment-desktop)*10)]',
-          '[.rt-layout-sidebarWidth11_&]:w-full',
-          '[@media_screen_and_(min-width:_840px)]:[.rt-layout-sidebarWidth11_&]:w-[calc(var(--standard-increment-desktop)*11)]',
-          '[.rt-layout-sidebarWidth12_&]:w-full',
-          '[@media_screen_and_(min-width:_840px)]:[.rt-layout-sidebarWidth12_&]:w-[calc(var(--standard-increment-desktop)*12)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_landscape)]:[.rt-layout-sidebarWidth1_&]:w-[calc(var(--standard-increment-mobile)_*_1)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_portrait)]:[.rt-layout-sidebarWidth1_&]:w-[calc(var(--standard-increment-desktop)_*_1)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_landscape)]:[.rt-layout-sidebarWidth2_&]:w-[calc(var(--standard-increment-mobile)*2)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_portrait)]:[.rt-layout-sidebarWidth2_&]:w-[calc(var(--standard-increment-desktop)*2)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_landscape)]:[.rt-layout-sidebarWidth3_&]:w-[calc(var(--standard-increment-mobile)*3)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_portrait)]:[.rt-layout-sidebarWidth3_&]:w-[calc(var(--standard-increment-desktop)*3)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_landscape)]:[.rt-layout-sidebarWidth4_&]:w-[calc(var(--standard-increment-mobile)*4)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_portrait)]:[.rt-layout-sidebarWidth4_&]:w-[calc(var(--standard-increment-desktop)*4)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_landscape)]:[.rt-layout-sidebarWidth5_&]:w-[calc(var(--standard-increment-mobile)*5)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_portrait)]:[.rt-layout-sidebarWidth5_&]:w-[calc(var(--standard-increment-desktop)*5)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_landscape)]:[.rt-layout-sidebarWidth6_&]:w-[calc(var(--standard-increment-mobile)*6)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_portrait)]:[.rt-layout-sidebarWidth6_&]:w-[calc(var(--standard-increment-desktop)*6)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_landscape)]:[.rt-layout-sidebarWidth7_&]:w-[calc(var(--standard-increment-mobile)*7)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_portrait)]:[.rt-layout-sidebarWidth7_&]:w-[calc(var(--standard-increment-desktop)*7)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_landscape)]:[.rt-layout-sidebarWidth8_&]:w-[calc(var(--standard-increment-mobile)*8)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_portrait)]:[.rt-layout-sidebarWidth8_&]:w-[calc(var(--standard-increment-desktop)*8)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_landscape)]:[.rt-layout-sidebarWidth9_&]:w-[calc(var(--standard-increment-mobile)*9)]',
-          '[@media_screen_and_(min-width:_600px)_and_(orientation:_portrait)]:[.rt-layout-sidebarWidth9_&]:w-[calc(var(--standard-increment-desktop)*9)]',
-          '[@media_screen_and_(min-width:_720px)]:[.rt-layout-sidebarWidth1_&]:w-[calc(var(--standard-increment-desktop)_*_1)]',
-          '[@media_screen_and_(min-width:_720px)]:[.rt-layout-sidebarWidth2_&]:w-[calc(var(--standard-increment-desktop)*2)]',
-          '[@media_screen_and_(min-width:_720px)]:[.rt-layout-sidebarWidth3_&]:w-[calc(var(--standard-increment-desktop)*3)]',
-          '[@media_screen_and_(min-width:_720px)]:[.rt-layout-sidebarWidth4_&]:w-[calc(var(--standard-increment-desktop)*4)]',
-          '[@media_screen_and_(min-width:_720px)]:[.rt-layout-sidebarWidth5_&]:w-[calc(var(--standard-increment-desktop)*5)]',
-          '[@media_screen_and_(min-width:_720px)]:[.rt-layout-sidebarWidth6_&]:w-[calc(var(--standard-increment-desktop)*6)]',
-          '[@media_screen_and_(min-width:_720px)]:[.rt-layout-sidebarWidth7_&]:w-[calc(var(--standard-increment-desktop)*7)]',
-          '[@media_screen_and_(min-width:_720px)]:[.rt-layout-sidebarWidth8_&]:w-[calc(var(--standard-increment-desktop)*8)]',
-          '[@media_screen_and_(min-width:_720px)]:[.rt-layout-sidebarWidth9_&]:w-[calc(var(--standard-increment-desktop)*9)]',
-          '[@media_screen_and_(min-width:_720px)]:[.rt-layout-sidebarWidth10_&]:w-[calc(var(--standard-increment-desktop)*10)]',
-          '[.rt-layout-sidebarWidth25_&]:w-full',
-          '[.rt-layout-sidebarWidth33_&]:w-full',
-          '[.rt-layout-sidebarWidth50_&]:w-full',
-          '[.rt-layout-sidebarWidth66_&]:w-full',
-          '[.rt-layout-sidebarWidth75_&]:w-full',
-          '[.rt-layout-sidebarWidth100_&]:w-full',
-          '[@media_screen_and_(min-width:_720px)]:[.rt-layout-sidebarWidth25_&]:w-[25%]',
-          '[@media_screen_and_(min-width:_720px)]:[.rt-layout-sidebarWidth33_&]:w-[33%]',
-          '[@media_screen_and_(min-width:_720px)]:[.rt-layout-sidebarWidth50_&]:w-[50%]',
-          '[@media_screen_and_(min-width:_720px)]:[.rt-layout-sidebarWidth66_&]:w-[66%]',
-          '[@media_screen_and_(min-width:_720px)]:[.rt-layout-sidebarWidth75_&]:w-[75%]',
-          '[@media_screen_and_(min-width:_720px)]:[.rt-layout-sidebarWidth100_&]:w-full',
+          sidebarWidthClasses,
+          '[.rt-layout-sidebarDrawer&]:w-(--layout-sidebar-width)',
           theme?.sidebarDrawer,
         ),
         wrapper: cn(

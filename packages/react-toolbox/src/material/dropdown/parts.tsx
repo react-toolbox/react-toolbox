@@ -1,4 +1,6 @@
 'use client';
+import './tokens.css';
+import '../input/tokens.css';
 import * as Primitive from '@radix-ui/react-select';
 import type { ComponentProps } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -41,7 +43,7 @@ export function DropdownTrigger({ className, ...props }: DropdownTriggerProps) {
       className={cn(
         surfaceClasses,
         focusClasses,
-        'flex min-h-[48px] w-full items-center justify-between gap-[16px] rounded-none border-0 [box-shadow:inset_0_-1px_0_var(--input-text-bottom-border-color)] focus:[box-shadow:inset_0_-2px_0_var(--rt-color-primary)] bg-transparent px-0 py-[8px] text-[16px] leading-[24px] data-placeholder:text-(--rt-color-text-secondary) disabled:opacity-50',
+        'text-(--input-text-input-element-color) flex min-h-[max(48px,var(--input-field-height))] w-full items-center justify-between gap-[16px] rounded-none border-0 [box-shadow:inset_0_-1px_0_var(--input-text-bottom-border-color)] focus:[box-shadow:inset_0_-2px_0_var(--input-text-highlight-color)] bg-(--input-text-background-color) px-0 py-(--input-field-padding) text-(length:--input-field-font-size) leading-[1.4] data-placeholder:text-(--input-text-label-color) disabled:opacity-50',
         className,
       )}
     />
@@ -53,16 +55,16 @@ export function DropdownContent({ className, style, ...props }: DropdownContentP
   return (
     <Primitive.Content
       data-slot="DropdownContent"
-      position="popper"
+      position="item-aligned"
       sideOffset={4}
-      collisionPadding={8}
+      collisionPadding={16}
       {...props}
       {...theme}
       style={{ ...theme.style, ...style }}
       className={cn(
         surfaceClasses,
         popupClasses,
-        'min-w-(--radix-select-trigger-width) max-h-(--radix-select-content-available-height)',
+        'bg-(--dropdown-color-white) py-(--input-field-padding) text-(--rt-color-text) rounded-(--dropdown-value-border-radius) min-w-(--radix-select-trigger-width) max-h-(--radix-select-content-available-height)',
         className,
       )}
     />
@@ -74,7 +76,17 @@ export function DropdownViewport({ className, ...props }: DropdownViewportProps)
 }
 export type DropdownOptionProps = ComponentProps<typeof Primitive.Item>;
 export function DropdownOption({ className, ...props }: DropdownOptionProps) {
-  return <Primitive.Item data-slot="DropdownOption" {...props} className={cn(optionClasses, className)} />;
+  return (
+    <Primitive.Item
+      data-slot="DropdownOption"
+      {...props}
+      className={cn(
+        optionClasses,
+        'min-h-[max(48px,var(--input-field-height))] px-[calc(1.6*var(--unit))] py-(--input-field-padding) text-(length:--input-field-font-size) leading-[1.4] data-highlighted:bg-(--dropdown-value-hover-background)',
+        className,
+      )}
+    />
+  );
 }
 export type DropdownLabelProps = ComponentProps<typeof Primitive.Label>;
 export function DropdownLabel({ className, ...props }: DropdownLabelProps) {
@@ -82,7 +94,10 @@ export function DropdownLabel({ className, ...props }: DropdownLabelProps) {
     <Primitive.Label
       data-slot="DropdownLabel"
       {...props}
-      className={cn('px-[16px] py-[8px] text-[14px] font-medium text-(--rt-color-text-secondary)', className)}
+      className={cn(
+        'px-[calc(1.6*var(--unit))] py-(--input-field-padding) text-(length:--font-size-small) font-medium text-(--rt-color-text-secondary)',
+        className,
+      )}
     />
   );
 }
