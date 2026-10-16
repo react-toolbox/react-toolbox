@@ -28,6 +28,16 @@ The public URL is `https://react-toolbox.io`. It must point to the deployed docs
 
 The CLI installs required dependencies and source files, adds Tailwind tokens to the configured stylesheet, and preserves unrelated host CSS. Public component entries load fonts and component styles automatically. No separate React Toolbox package, provider, or stylesheet import is required.
 
+For Vite, prefer [Tailwind's Vite plugin](https://tailwindcss.com/docs/installation/using-vite). If an existing Vite project uses `@tailwindcss/postcss`, set its `optimize` option to `false` and let Vite minify the final CSS:
+
+```js
+export default {
+  plugins: { '@tailwindcss/postcss': { optimize: false } },
+};
+```
+
+With Vite 8 and Tailwind 4.3, the PostCSS production optimizer can lose the original paths of imported font stylesheets before Vite resolves their URLs. This configuration preserves the bundled Roboto and Material Icons assets. Next.js can keep its standard PostCSS configuration.
+
 ## Namespace shortcut
 
 Until the namespace is listed in shadcn’s public directory, merge this entry into the application’s existing `components.json`:
@@ -186,7 +196,7 @@ pnpm test
 pnpm test:registry:install
 ```
 
-Checks validate the official shadcn schemas, exact source and CSS contents, provenance, client boundaries, every family’s isolated dependency closure, strict TypeScript, and standalone CSS/font bundles.
+Checks validate the official shadcn schemas, exact source and CSS contents, provenance, client boundaries, every family’s isolated dependency closure, strict TypeScript, and standalone CSS/font bundles, including an AppBar production build in Vite.
 
 The installer test runs the actual pinned shadcn CLI in a clean pnpm application. It installs a date picker by URL, then all families through the namespace with a non-default UI alias. It verifies exact source files, dependency installation without `react-toolbox`, idempotent theme injection, retained host CSS, strict types, and a production Next.js build. Chromium checks hydration, clicks, original button geometry and palette, and Tailwind spacing/color utilities without manual Toolbox stylesheet imports.
 

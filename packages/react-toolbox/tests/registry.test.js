@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { it } from 'vitest';
+import { it, vi } from 'vitest';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdtemp, readFile, writeFile, symlink, rm } from 'node:fs/promises';
@@ -7,6 +7,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { build } from 'esbuild';
+import { build as buildVite } from 'vite';
 import { registrySchema, registryItemSchema } from 'shadcn/schema';
 import postcss from 'postcss';
 import tailwind from '@tailwindcss/postcss';
@@ -176,3 +177,48 @@ it('compiles isolated families and standalone consumers with scoped styles', asy
     await rm(temporary, { recursive: true, force: true });
   }
 }, 60_000);
+
+it('bundles fonts in an isolated AppBar production consumer', async () => {
+  const registry = await createRegistry();
+  const directory = await mkdtemp(path.join(tmpdir(), 'react-toolbox-appbar-'));
+  try {
+    vi.stubEnv('NODE_ENV', 'production');
+    await materialize(registry, 'app-bar', directory);
+    await symlink(path.join(root, 'node_modules'), path.join(directory, 'node_modules'), 'dir');
+    await writeFile(path.join(directory, 'tsconfig.json'), JSON.stringify({ compilerOptions: { jsx: 'react-jsx' } }));
+    await writeFile(
+      path.join(directory, 'index.html'),
+      '<div id="root"></div><script type="module" src="/src/main.tsx"></script>',
+    );
+    await writeFile(
+      path.join(directory, 'src/main.tsx'),
+      `
+import { createRoot } from 'react-dom/client';
+import { AppBar } from './components/ui/material/app-bar';
+import './styles.css';
+createRoot(document.getElementById('root')!).render(<AppBar title="Independent workspace" leftIcon="menu" />);
+`,
+    );
+    await writeFile(path.join(directory, 'src/styles.css'), '@import "tailwindcss";');
+    const bundle = await buildVite({
+      root: directory,
+      configFile: false,
+      logLevel: 'silent',
+      /** Preserve imported font origins until Vite resolves URLs and minifies CSS. */
+      css: { postcss: { plugins: [tailwind({ base: directory, optimize: false })] } },
+      build: { write: false },
+    });
+    const assets = bundle.output.filter((file) => file.type === 'asset');
+    const stylesheet = assets.find((file) => file.fileName.endsWith('.css'));
+    assert(stylesheet, 'The standalone consumer must emit component CSS');
+    for (const font of ['roboto-latin-500-normal.woff2', 'material-icons.woff2']) {
+      const asset = assets.find((file) => file.names.includes(font));
+      assert(asset, `The production build must bundle ${font}`);
+      assert(stylesheet.source.includes(`/${asset.fileName}`), 'Font URLs must point to emitted assets');
+    }
+    assert(!stylesheet.source.includes('url(./files/'), 'Production CSS must not retain unresolved font URLs');
+  } finally {
+    vi.unstubAllEnvs();
+    await rm(directory, { recursive: true, force: true });
+  }
+}, 30_000);

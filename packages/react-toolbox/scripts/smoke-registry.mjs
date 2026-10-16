@@ -345,13 +345,14 @@ import { fileURLToPath, URL } from 'node:url';
 export default defineConfig({ resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } } });
 `,
     );
+    /** Vite resolves imported font URLs after PostCSS, then minifies the CSS itself. */
     await writeFile(
       path.join(vite, 'postcss.config.mjs'),
-      "export default { plugins: { '@tailwindcss/postcss': {} } };\n",
+      "export default { plugins: { '@tailwindcss/postcss': { optimize: false } } };\n",
     );
     await writeFile(
       path.join(vite, 'index.html'),
-      '<!doctype html><html lang="en"><head><title>Source consumer</title></head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body></html>\n',
+      '<!doctype html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1"><title>Source consumer</title></head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body></html>\n',
     );
     await writeFile(path.join(vite, 'src/main.tsx'), "import './styles/globals.css';\n");
     await writeFile(
@@ -375,7 +376,7 @@ export function cn(...values: (string | undefined | false | null)[]) { return tw
     const hostButton = path.join(vite, 'src/widgets/ui/button.tsx');
     const hostButtonSource = await readFile(hostButton, 'utf8');
     const hostUtilities = await readFile(path.join(vite, 'src/lib/utils.ts'), 'utf8');
-    await run(cli, ['add', '@react-toolbox/button', '--yes', '--cwd', vite], vite);
+    await run(cli, ['add', '@react-toolbox/app-bar', '--yes', '--cwd', vite], vite);
     assert.equal(
       await readFile(hostButton, 'utf8'),
       hostButtonSource,
@@ -394,9 +395,9 @@ export function cn(...values: (string | undefined | false | null)[]) { return tw
     assert(globals.includes('--host-theme: kept'), 'The host stylesheet must survive installation');
     assert(
       !(await readdir(path.join(vite, 'src/widgets/ui/material/foundations'))).includes('date-time'),
-      'A Button consumer must not receive date/time helpers',
+      'An AppBar consumer must not receive date/time helpers',
     );
-    for (const file of installedFiles(registry, 'button')) {
+    for (const file of installedFiles(registry, 'app-bar')) {
       assert.equal(
         await readFile(path.join(vite, 'src/widgets/ui', file.target.slice('@ui/'.length)), 'utf8'),
         file.content,
@@ -410,14 +411,16 @@ import { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Button as HostButton } from '@/widgets/ui/button';
 import { Button } from '@/widgets/ui/material/button';
+import { AppBar } from '@/widgets/ui/material/app-bar';
 import './styles/globals.css';
 function App() {
   const [count, setCount] = useState(0);
-  return <main><h1>Independent Vite consumer</h1>
+  return <><AppBar title="Independent workspace" leftIcon="menu" leftIconLabel="Open navigation" onLeftIconClick={() => setCount(count + 1)} />
+  <main><h2>Independent Vite consumer</h2>
     <HostButton onClick={() => setCount(count + 1)}>Host action</HostButton>
     <Button primary raised label="Material action" onClick={() => setCount(count + 1)} />
     <output aria-label="Clicks">{count}</output>
-  </main>;
+  </main></>;
 }
 createRoot(document.getElementById('root')!).render(<App />);
 `,
@@ -441,12 +444,18 @@ createRoot(document.getElementById('root')!).render(<App />);
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
     await page.goto(url);
-    await page.evaluate(() => document.fonts.ready);
+    const fonts = await page.evaluate(async () => {
+      const roboto = await document.fonts.load('500 20px Roboto', 'Independent workspace');
+      const icons = await document.fonts.load('24px "Material Icons"', 'menu');
+      return { roboto: roboto.length, icons: icons.length };
+    });
+    assert(fonts.roboto > 0 && fonts.icons > 0, 'The production consumer must load Roboto and Material Icons');
     const material = page.getByRole('button', { name: 'Material action' });
     const host = page.getByRole('button', { name: 'Host action' });
     await material.click();
     await host.click();
-    assert.equal(await page.getByLabel('Clicks').textContent(), '2', 'Both component systems must remain interactive');
+    await page.getByRole('button', { name: 'Open navigation' }).press('Enter');
+    assert.equal(await page.getByLabel('Clicks').textContent(), '3', 'Host, Material and AppBar actions must work');
     await page.mouse.move(0, 0);
     assert.equal(await material.evaluate((element) => element.getBoundingClientRect().height), 36);
     assert.equal(await material.evaluate((element) => getComputedStyle(element).backgroundColor), 'rgb(63, 81, 181)');
@@ -457,6 +466,20 @@ createRoot(document.getElementById('root')!).render(<App />);
         'The shadcn button must retain the host palette after its hover transition',
       ),
     );
+    for (const [width, height, barHeight, padding] of [
+      [1280, 900, 64, 24],
+      [390, 844, 56, 16],
+      [844, 390, 48, 16],
+    ]) {
+      await page.setViewportSize({ width, height });
+      const geometry = await page.getByRole('banner').evaluate((element) => ({
+        height: element.getBoundingClientRect().height,
+        width: element.getBoundingClientRect().width,
+        padding: getComputedStyle(element).paddingLeft,
+        pageWidth: document.documentElement.scrollWidth,
+      }));
+      assert.deepEqual(geometry, { height: barHeight, width, padding: `${padding}px`, pageWidth: width });
+    }
     assert.deepEqual(errors, [], 'Copied components must run in Vite without browser errors');
   } finally {
     await browser?.close();

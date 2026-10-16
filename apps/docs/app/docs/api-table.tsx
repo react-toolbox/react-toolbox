@@ -11,7 +11,7 @@ export default function ApiTable({ name, properties }: { name: string; propertie
       tabIndex={0}
       className="overflow-x-auto rounded-toolbox border border-toolbox-divider"
     >
-      <Table selectable={false} aria-label={`${name} API`} className="min-w-[560px] table-fixed">
+      <Table selectable={false} aria-label={`${name} API`} className="min-w-[560px] table-auto">
         <TableHead>
           <TableCell scope="col" className="w-1/4">
             Property
@@ -26,14 +26,14 @@ export default function ApiTable({ name, properties }: { name: string; propertie
         {properties.map((property) => (
           <TableRow key={property.name}>
             <TableCell className="align-top">
-              <code className="wrap-break-word">{property.name}</code>
+              <code className="whitespace-nowrap">{property.name}</code>
               {property.required && <span className="mt-1 block text-xs text-toolbox-text-secondary">Required</span>}
               {property.description.includes('@deprecated') && (
                 <span className="mt-1 block text-xs text-toolbox-text-secondary">Deprecated alias</span>
               )}
             </TableCell>
             <TableCell className="align-top">
-              <code className="wrap-break-word whitespace-pre-wrap leading-5">{property.type}</code>
+              <code className="wrap-anywhere whitespace-pre-wrap leading-5">{property.type}</code>
               {property.description && (
                 <p className="mt-2 text-xs leading-5 text-toolbox-text-secondary">
                   {property.description.replace('@deprecated ', '')}
@@ -41,7 +41,7 @@ export default function ApiTable({ name, properties }: { name: string; propertie
               )}
             </TableCell>
             <TableCell className="align-top">
-              <code className="wrap-break-word whitespace-pre-wrap">{property.default ?? '—'}</code>
+              <code className="wrap-anywhere whitespace-pre-wrap">{property.default ?? '—'}</code>
             </TableCell>
           </TableRow>
         ))}

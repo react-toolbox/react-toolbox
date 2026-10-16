@@ -27,6 +27,15 @@ body {
     outline: 2px solid var(--rt-color-primary);
     outline-offset: 2px;
   }
+
+  .documentation-shell :where(p, li) > code {
+    border-radius: var(--button-border-radius);
+    background: color-mix(in srgb, var(--rt-color-text) 5%, transparent);
+    padding: 0.125em 0.25em;
+    font-size: 0.9em;
+    line-height: inherit;
+    box-decoration-break: clone;
+  }
 }
 
 /* These styles belong to the gallery shell; component internals are untouched. */
