@@ -27,7 +27,7 @@ export default function DocumentationLayout({ children }: { children: ReactNode 
           >
             {children}
           </main>
-          <SiteFooter />
+          <SiteFooter documentation />
         </div>
       </div>
     </ThemeProvider>

@@ -21,7 +21,7 @@ export default function HomePage() {
       <DocsHeader />
       <main id="main-content" className="flex flex-1 items-center">
         <section
-          className="mx-auto grid w-full max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-20 lg:py-24"
+          className="mx-auto grid w-full max-w-6xl items-center gap-12 px-4 py-16 toolbox-desktop:px-6 sm:py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-20 lg:py-24"
           aria-labelledby="hero-title"
         >
           <div>

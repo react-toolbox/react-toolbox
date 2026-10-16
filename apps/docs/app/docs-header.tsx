@@ -7,9 +7,9 @@ export default function DocsHeader({ documentation = false }: { documentation?: 
   return (
     <AppBar
       flat
-      className="sticky top-0 z-30 border-b border-toolbox-divider [--appbar-color:var(--rt-color-white)] [--appbar-contrast:var(--rt-color-text)] [--appbar-h-padding:0px] [--appbar-h-padding-mobile:0px]"
+      className="sticky top-0 z-30 border-b border-toolbox-divider [--appbar-color:var(--rt-color-white)] [--appbar-contrast:var(--rt-color-text)]"
     >
-      <div className="flex w-full items-center justify-between gap-3 px-4 min-[600px]:px-6">
+      <div className="flex w-full items-center justify-between gap-3">
         <Link
           className="flex min-h-toolbox-touch min-w-toolbox-touch shrink-0 items-center gap-2 text-toolbox-title no-underline sm:gap-3"
           href="/"
