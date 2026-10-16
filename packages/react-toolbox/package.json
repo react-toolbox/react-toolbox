@@ -31,7 +31,7 @@
     "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
   "scripts": {
-    "build": "tsdown && node scripts/build-styles.mjs",
+    "build": "tsdown --no-clean && node scripts/build-styles.mjs",
     "dev": "tsdown --watch src --no-clean --on-success \"node scripts/build-styles.mjs && node scripts/build-registry.mjs && node scripts/build-api-docs.mjs\"",
     "test": "vitest run",
     "test:watch": "vitest",

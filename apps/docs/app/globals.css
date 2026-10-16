@@ -5,6 +5,11 @@
 @import "material-icons/iconfont/material-icons.css" layer(base);
 @source "./**/*.{js,jsx,ts,tsx}";
 
+/* Use the Material 4px subgrid for documentation layouts. */
+@theme {
+  --spacing: 4px;
+}
+
 html {
   scroll-padding-top: 32px;
 }

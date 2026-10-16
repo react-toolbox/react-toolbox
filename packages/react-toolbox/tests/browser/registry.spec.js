@@ -31,7 +31,7 @@ test('the docs deployment serves a complete same-origin source registry', async 
   expect(button.dependencies.some((dependency) => dependency.startsWith('react-toolbox@'))).toBeFalsy();
   const foundation = await (await request.get('/r/foundation.json')).json();
   expect(foundation.cssVars.theme['color-toolbox-primary']).toBe('var(--rt-color-primary)');
-  expect(foundation.cssVars.theme.spacing).toBe('4px');
+  expect(foundation.cssVars.theme).not.toHaveProperty('spacing');
   expect((await request.get('/r/unknown.json')).status()).toBe(404);
   expect((await request.get('/r/button')).status()).toBe(404);
   const proxied = await (

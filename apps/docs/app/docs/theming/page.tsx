@@ -81,11 +81,22 @@ export default function ThemingPage() {
       </DocsSection>
       <DocsSection id="spacing" title="A Material rhythm">
         <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
-          The registry configures Tailwind’s spacing unit to the Material 4px subgrid. Use ordinary utilities to keep
-          page layouts on the same rhythm as the components. Prefer multiples of 8px for layout spacing; the 4px subgrid
-          accommodates typography and icons.
+          React Toolbox preserves your app’s Tailwind spacing scale. Components keep their Material dimensions;
+          utilities such as <code>p-6</code> and <code>gap-2</code> follow your theme.
+        </p>
+        <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
+          To use the Material 4px subgrid throughout your app, add this optional setting to your global stylesheet after
+          its imports. This site uses it for the spacing shown below.
+        </p>
+        <CodeBlock language="css" label="Optional Material spacing" code={'@theme {\n  --spacing: 4px;\n}'} />
+        <p className="my-4 text-toolbox-body/6 text-toolbox-text">
+          Prefer multiples of 8px for layout spacing; the 4px subgrid accommodates typography and icons.
         </p>
         <SpacingTable />
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
+          Earlier installations may have added <code>--spacing: 4px</code> to your stylesheet. Remove that declaration
+          if you want to restore your app’s spacing scale; updating components does not remove it.
+        </p>
         <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
           Use <code>text-toolbox-title</code>, <code>text-toolbox-subheading</code>, and <code>text-toolbox-body</code>{' '}
           for Material text sizes with matching weight and line height.

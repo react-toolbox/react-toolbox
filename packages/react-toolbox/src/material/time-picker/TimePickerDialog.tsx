@@ -203,13 +203,13 @@ export default function TimePickerDialog({
                   mode === 'am'
                     ? cn(
                         'rt-time-picker-am',
-                        'cursor-pointer block pt-[2px] -mt-[2px] opacity-(--timepicker-period-inactive-opacity)',
+                        'cursor-pointer block pt-[2px] mt-[-2px] opacity-(--timepicker-period-inactive-opacity)',
                         '[.rt-time-picker-dialog.rt-time-picker-amFormat_&]:opacity-[1]',
                         theme?.am,
                       )
                     : cn(
                         'rt-time-picker-pm',
-                        'cursor-pointer block pb-[2px] -mb-[2px] opacity-(--timepicker-period-inactive-opacity)',
+                        'cursor-pointer block pb-[2px] mb-[-2px] opacity-(--timepicker-period-inactive-opacity)',
                         '[.rt-time-picker-dialog.rt-time-picker-pmFormat_&]:opacity-[1]',
                         theme?.pm,
                       )

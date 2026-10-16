@@ -15,6 +15,8 @@ Open http://127.0.0.1:3000. The root development command runs the app and the pr
 
 `pnpm docs:dev` starts the documentation app and its library watcher. Use `pnpm docs:build` and `pnpm docs:start` for the production documentation site.
 
+Library builds preserve existing `dist` files, like the watcher does, so running a production build does not remove exports used by the live development server.
+
 To run only the app after building its dependency:
 
 ```sh
@@ -35,7 +37,7 @@ Run this package's checks with `pnpm --filter @react-toolbox/docs typecheck` and
 
 The landing page is a TypeScript Server Component with a small interactive client demo. It uses the original Toolbox and GitHub marks, credits Javi Velasco, and reads the public GitHub star count on the server with hourly revalidation. If GitHub is unavailable or rate limited, the repository link remains visible without inventing a count. No token or browser request to GitHub is needed.
 
-The landing layout uses Tailwind utilities from the library's Material spacing theme: `gap-2` is 8px, `p-4` is 16px, and `p-6` is 24px. Its card keeps the built-in title and content padding; the action labels align to those same responsive keylines, and the switch has a 48px interaction row. The `toolbox-desktop:` variant matches the library's 600px width and height breakpoint.
+The docs app explicitly sets `@theme { --spacing: 4px; }` in `app/globals.css` for its Material page layouts: `gap-2` is 8px, `p-4` is 16px, and `p-6` is 24px. The library preserves each consuming app's own spacing scale. The landing card keeps the built-in title and content padding; the action labels align to those same responsive keylines, and the switch has a 48px interaction row. The `toolbox-desktop:` variant matches the library's 600px width and height breakpoint.
 
 The gallery remains unchanged JavaScript to preserve the exact input shared with the independent legacy-runtime fixture. The app's type check validates the landing components, generated Next route contracts, and internal workspace import examples in `apps/docs/types/package-contract.ts`; the library has its own strict TypeScript checks.
 

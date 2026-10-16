@@ -6,11 +6,8 @@
 @import "./composition.css";
 @source "../../";
 
-/* M1 uses an 8dp layout grid and a 4dp icon/type subgrid. Keep utility
- * spacing independent of the host root font size and the legacy --unit.
- * Applications can override this normal theme variable after this import. */
+/* Library tokens leave the application's ordinary Tailwind spacing scale intact. */
 @theme {
-  --spacing: 4px;
   --spacing-toolbox-touch: 48px;
   --container-toolbox-prose: 65ch;
 

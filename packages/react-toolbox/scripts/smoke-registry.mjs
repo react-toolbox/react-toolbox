@@ -245,7 +245,7 @@ export default function Page() {
       assert.equal(await composedAutocomplete.getByRole('status').textContent(), 'ada, grace'),
     );
     const spacing = await page.getByTestId('spacing').evaluate((element) => getComputedStyle(element).padding);
-    assert.equal(spacing, '24px', 'Registry installation must register Material spacing utilities');
+    assert.equal(spacing, '36px', 'Registry installation must preserve the host spacing scale');
     const utilityColor = await page
       .getByTestId('spacing')
       .evaluate((element) => getComputedStyle(element).backgroundColor);
@@ -551,7 +551,7 @@ try {
   );
   await writeFile(
     path.join(directory, 'src/styles/globals.css'),
-    '@import \"tailwindcss\";\n:root { --host-theme: kept; }\n',
+    '@import "tailwindcss";\n@theme { --spacing: 6px; }\n:root { --host-theme: kept; }\n',
   );
   await writeFile(
     path.join(directory, 'components.json'),
@@ -590,6 +590,9 @@ try {
   const globals = await readFile(path.join(directory, 'src/styles/globals.css'), 'utf8');
   assert(globals.includes('--host-theme: kept'), 'Installation must preserve the host stylesheet');
   const rules = postcss.parse(globals);
+  const hostSpacing = [];
+  rules.walkDecls('--spacing', (declaration) => hostSpacing.push(declaration.value));
+  assert.deepEqual(hostSpacing, ['6px'], 'Repeated adds must preserve the host spacing scale');
   const primaryTokens = [];
   rules.walkDecls('--color-toolbox-primary', (declaration) => primaryTokens.push(declaration.value));
   assert.deepEqual(primaryTokens, ['var(--rt-color-primary)'], 'Repeated adds must install the theme exactly once');

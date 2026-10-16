@@ -89,7 +89,17 @@ The shared foundation contains ordered custom-property definitions, local Roboto
 
 ## Themes and spacing
 
-The registry adds the maintained Tailwind theme aliases and responsive variant through shadcn’s `cssVars` and `css` fields. `bg-toolbox-primary`, `text-toolbox-text`, `shadow-toolbox-2p`, and the other utilities resolve against the nearest Toolbox scope. Standard spacing uses the M1 4px subgrid: `gap-2` is 8px and `p-6` is 24px. The `toolbox-desktop:` variant matches the component keyline breakpoint at 600px width and height.
+The registry adds the maintained Tailwind theme aliases and responsive variants through shadcn’s `cssVars` and `css` fields. `bg-toolbox-primary`, `text-toolbox-text`, `shadow-toolbox-2p`, and the other utilities resolve against the nearest Toolbox scope. The `toolbox-` names keep these tokens separate from the host theme. Ordinary spacing utilities such as `gap-2` and `p-6` retain the application's Tailwind spacing scale. The `toolbox-desktop:` variant matches the component keyline breakpoint at 600px width and height.
+
+To opt into the M1 4px subgrid for application layouts, add this to the global stylesheet after its imports:
+
+```css
+@theme {
+  --spacing: 4px;
+}
+```
+
+With that setting, `gap-2` is 8px and `p-6` is 24px. The docs app opts in explicitly; the library and registry do not set it. Earlier installations may retain a previously injected `--spacing: 4px` declaration. Remove it to restore the host's spacing scale, or keep it as an explicit application choice; updating components does not remove existing theme declarations.
 
 Keep the host’s ordinary Tailwind import. Component geometry and motion use the classes in the copied components, with shared tokens and keyframes in CSS. They retain the M1 values. Internal colors use `--rt-color-*`, so a host shadcn theme does not silently change the M1 palette.
 

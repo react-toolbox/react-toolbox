@@ -42,7 +42,7 @@ function App() { return <main id="fixture" style={{ width: 1000, padding: 24, di
 </main>};
 createRoot(document.getElementById('root')).render(window.__TAILWIND_BRIDGE__ ? <Bridge /> : <App />);
 `;
-let javascript, plain, integrated, semantic, customSpacing, fonts;
+let javascript, plain, integrated, semantic, customSpacing, materialSpacing, fonts;
 test.beforeAll(async () => {
   fonts = (
     await Promise.all(
@@ -78,7 +78,13 @@ test.beforeAll(async () => {
   ).css;
   customSpacing = (
     await postcss([tailwind()]).process(
-      '@import "tailwindcss"; @import "./src/material/foundations/styles/tailwind.css"; @theme { --spacing: 6px; } @source inline("p-4 p-6! gap-2 p-toolbox");',
+      '@import "tailwindcss"; @theme { --spacing: 6px; } @import "./src/material/foundations/styles/tailwind.css"; @source inline("p-4 p-6! gap-2 p-toolbox");',
+      { from: `${root}/integration.css` },
+    )
+  ).css;
+  materialSpacing = (
+    await postcss([tailwind()]).process(
+      '@import "tailwindcss"; @import "./src/material/foundations/styles/tailwind.css"; @theme { --spacing: 4px; } @source inline("p-4 p-6! gap-2 p-toolbox");',
       { from: `${root}/integration.css` },
     )
   ).css;
@@ -206,19 +212,22 @@ test('Tailwind utilities override component geometry and resolve scoped Toolbox 
   await expect(button).toHaveCSS('color', 'rgb(170, 187, 204)');
 });
 
-for (const override of [false, true]) {
-  test(`Tailwind spacing uses ${override ? 'a later application theme override' : 'the M1 subgrid'} without resizing components`, async ({
-    page,
-  }) => {
-    // Important padding intentionally overrides CardText's sibling and responsive
-    // keylines as well as its base spacing; exercise the public className API.
-    await fixture(page, override ? customSpacing : integrated, 'normal', {
+for (const spacing of [
+  { name: 'the default rem scale', scale: 5 },
+  { name: 'an existing application theme', scale: 6 },
+  { name: 'an explicit Material subgrid opt-in', scale: 4 },
+]) {
+  test(`Tailwind spacing preserves ${spacing.name} without resizing components`, async ({ page }) => {
+    /** Important padding overrides CardText's sibling and responsive keylines
+     * as well as its base spacing; exercise the public className API. */
+    const css = spacing.scale === 5 ? integrated : spacing.scale === 6 ? customSpacing : materialSpacing;
+    await fixture(page, css, 'normal', {
       card: 'p-4',
       text: 'p-6!',
       actions: 'gap-2',
     });
-    // A 20px host root would turn Tailwind's default .25rem spacing into 5px.
-    // The shipped M1 scale is explicitly 4px, independent of that font choice.
+    /** A 20px host root turns Tailwind's default .25rem spacing into 5px.
+     * Application pixel scales and Material geometry remain independent. */
     await page.evaluate(() => {
       document.documentElement.style.fontSize = '20px';
     });
@@ -231,18 +240,17 @@ for (const override of [false, true]) {
       probe.className = 'p-toolbox';
       node.append(probe);
     });
-    const scale = override ? 6 : 4;
-    await expect(card).toHaveCSS('padding', `${scale * 4}px`);
-    await expect(text).toHaveCSS('padding', `${scale * 6}px`);
-    await expect(actions).toHaveCSS('gap', `${scale * 2}px`);
+    await expect(card).toHaveCSS('padding', `${spacing.scale * 4}px`);
+    await expect(text).toHaveCSS('padding', `${spacing.scale * 6}px`);
+    await expect(actions).toHaveCSS('gap', `${spacing.scale * 2}px`);
     await expect(page.locator('#legacy-spacing')).toHaveCSS('padding', '10px');
     await expect(page.locator('#fixture button').first()).toHaveCSS('height', '36px');
-    // Spacing remains a CSS variable so nested application scopes can customize
-    // the scale without changing component --unit or the rest of the page.
-    await card.evaluate((node) => node.style.setProperty('--spacing', '5px'));
-    await expect(card).toHaveCSS('padding', '20px');
-    await expect(text).toHaveCSS('padding', '30px');
-    await expect(actions).toHaveCSS('gap', '10px');
+    /** Nested application scopes can customize spacing without changing
+     * component --unit or the rest of the page. */
+    await card.evaluate((node) => node.style.setProperty('--spacing', '7px'));
+    await expect(card).toHaveCSS('padding', '28px');
+    await expect(text).toHaveCSS('padding', '42px');
+    await expect(actions).toHaveCSS('gap', '14px');
     await expect(page.locator('#legacy-spacing')).toHaveCSS('padding', '10px');
     await expect(page.locator('#fixture button').first()).toHaveCSS('height', '36px');
   });

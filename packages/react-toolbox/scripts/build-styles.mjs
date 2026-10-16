@@ -22,7 +22,7 @@ const standalone = await postcss([tailwind()]).process(
   { from: path.join(root, 'standalone.css') },
 );
 await writeFile(path.join(root, 'dist/styles.css'), standalone.css);
-for (const name of ['tailwind.css', 'tailwind-preflight.css', 'shadcn.css', 'composition.css']) {
+for (const name of ['tailwind-preflight.css', 'shadcn.css', 'composition.css']) {
   await copyFile(path.join(root, 'src/material/foundations/styles', name), path.join(root, 'dist', name));
 }
 await writeFile(

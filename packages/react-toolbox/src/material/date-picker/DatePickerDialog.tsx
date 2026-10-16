@@ -132,7 +132,7 @@ export default function DatePickerDialog({
           aria-pressed={display === 'years'}
           className={cn(
             'rt-date-picker-year',
-            'inline-block text-(length:--datepicker-year-font-size) pt-[8px] -mt-[8px] [transition:opacity,font-size_var(--animation-duration)_var(--animation-curve-default)]',
+            'inline-block text-(length:--datepicker-year-font-size) pt-[8px] mt-[-8px] [transition:opacity,font-size_var(--animation-duration)_var(--animation-curve-default)]',
             '[.rt-date-picker-yearsDisplay_&]:text-(length:--font-size-normal)',
             '[.rt-date-picker-monthsDisplay_&]:opacity-(--datepicker-year-inactive-opacity)',
             theme?.year,
