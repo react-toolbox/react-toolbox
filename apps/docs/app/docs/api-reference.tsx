@@ -75,7 +75,7 @@ export default function ApiReference({ slug }: { slug: ComponentSlug }) {
       </p>
       {Object.entries(keyProps[slug]).map(([name, names]) => {
         const api = family.apis.find((item) => item.name === name);
-        const properties = names.map((propertyName) => {
+        const properties = names.toSorted().map((propertyName) => {
           const property = api?.properties.find((item) => item.name === propertyName);
           if (!property) throw new Error(`Missing documented prop: ${name}.${propertyName}`);
           return property;
