@@ -1,7 +1,7 @@
 /** Generate the documentation contract from the same TypeScript users install. */
 import { parse } from '@babel/parser';
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -374,6 +374,7 @@ const sourceHash = createHash('sha256');
 for (const module of [...modules.values()].sort((a, b) => a.file.localeCompare(b.file)))
   sourceHash.update(path.relative(root, module.file)).update('\0').update(module.source).update('\0');
 const data = `${JSON.stringify({ schemaVersion: 1, sourceHash: sourceHash.digest('hex'), families: result }, null, 2)}\n`;
+mkdirSync(path.dirname(output), { recursive: true });
 writeFileSync(output, data);
 console.log(
   `Documented ${Object.keys(result).length} families, ${Object.values(result).reduce((total, family) => total + family.apis.length, 0)} public components/hooks/factories.`,
