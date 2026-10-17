@@ -81,8 +81,8 @@ export const controls = (
 const wrongInput = <Input onChange={(value: number) => value} />;
 // @ts-expect-error Date pickers produce Date instances.
 const wrongDate = <DatePicker onChange={(value: string) => value} />;
-// @ts-expect-error Theme slots are explicit and local to the component.
-const wrongTheme = <Checkbox theme={{ nonexistent: 'custom' }} />;
+// @ts-expect-error Style slots are explicit and local to the component.
+const wrongSlots = <Checkbox classNames={{ nonexistent: 'custom' }} />;
 // @ts-expect-error Component injection is no longer part of the public API.
 const injected = <Input innerRef={input} />;
 

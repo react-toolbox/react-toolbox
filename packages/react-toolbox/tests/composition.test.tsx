@@ -71,7 +71,7 @@ describe('primitive composition', () => {
     function Example() {
       const [open, setOpen] = useState(false);
       return (
-        <ThemeProvider variables={{ '--color-primary': 'rebeccapurple' }}>
+        <ThemeProvider variables={{ '--rt-color-primary': 'rebeccapurple' }}>
           <D.DialogRoot open={open} onOpenChange={setOpen}>
             <D.DialogTrigger asChild>
               <Button ref={trigger}>Edit</Button>

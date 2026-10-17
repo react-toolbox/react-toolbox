@@ -1,10 +1,10 @@
 import { cn } from './cn';
 
-/** Merge compatibility overrides first, then the current style-slot API. */
-export function mergeStyleSlots<T extends Partial<Record<string, string>>>(legacy?: T, current?: T): T | undefined {
-  if (!legacy) return current;
-  if (!current) return legacy;
+/** Compose inherited or factory slots with instance overrides, letting later utilities win. */
+export function mergeStyleSlots<T extends Partial<Record<string, string>>>(base?: T, overrides?: T): T | undefined {
+  if (!base) return overrides;
+  if (!overrides) return base;
   return Object.fromEntries(
-    [...new Set([...Object.keys(legacy), ...Object.keys(current)])].map((key) => [key, cn(legacy[key], current[key])]),
+    [...new Set([...Object.keys(base), ...Object.keys(overrides)])].map((key) => [key, cn(base[key], overrides[key])]),
   ) as T;
 }

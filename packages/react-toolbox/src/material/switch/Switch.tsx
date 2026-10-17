@@ -1,9 +1,8 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { SwitchTheme } from './types';
+import type { SwitchClassNames } from './types';
 
 import React, { useImperativeHandle, useRef } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -16,7 +15,7 @@ const fieldClasses = [
   materialDescendants,
 ].join(' ');
 
-export type { SwitchTheme, SwitchClassNames } from './types';
+export type { SwitchClassNames } from './types';
 export interface SwitchHandle {
   focus(): void;
   blur(): void;
@@ -31,10 +30,8 @@ export interface SwitchProps
   onMouseEnter?: React.MouseEventHandler<HTMLLabelElement>;
   onMouseLeave?: React.MouseEventHandler<HTMLLabelElement>;
   ripple?: boolean;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: SwitchTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: SwitchTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: SwitchClassNames;
   ref?: React.Ref<SwitchHandle>;
   onChange?: (checked: boolean, event: React.MouseEvent<HTMLInputElement>) => void;
 }
@@ -50,14 +47,12 @@ export function Switch({
   onClick,
   onMouseEnter,
   onMouseLeave,
-  theme: legacyTheme,
   classNames,
   ripple,
   ref,
   style,
   ...others
 }: SwitchProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const input = useRef<HTMLInputElement>(null);
   const [checked, setChecked] = useChecked(input, controlledChecked, defaultChecked);
   const handle = {
@@ -80,8 +75,8 @@ export function Switch({
       data-react-toolbox="switch"
       className={cn(
         disabled
-          ? cn(fieldClasses, 'rt-switch-disabled', theme?.field, theme?.disabled)
-          : cn(fieldClasses, theme?.field),
+          ? cn(fieldClasses, 'rt-switch-disabled', classNames?.field, classNames?.disabled)
+          : cn(fieldClasses, classNames?.field),
         className,
       )}
       onMouseEnter={onMouseEnter}
@@ -92,7 +87,7 @@ export function Switch({
         style={style}
         checked={controlledChecked}
         defaultChecked={controlledChecked === undefined ? defaultChecked : undefined}
-        className={cn('rt-switch-input', 'h-0 opacity-0 overflow-hidden w-0', theme?.input)}
+        className={cn('rt-switch-input', 'h-0 opacity-0 overflow-hidden w-0', classNames?.input)}
         disabled={disabled}
         name={name}
         role="switch"
@@ -108,18 +103,18 @@ export function Switch({
                 'rt-switch-on',
                 'rounded-(--switch-track-height) cursor-pointer inline-block h-(--switch-track-height) mt-[calc((var(--switch-total-height)-var(--switch-track-height))/2)] relative align-top w-(--switch-track-length) [background:var(--switch-track-on-color)]',
                 '[.rt-switch-disabled_&&]:[background:var(--switch-disabled-track-color)] [.rt-switch-disabled_&&]:cursor-auto',
-                theme?.on,
+                classNames?.on,
               )
             : cn(
                 'rt-switch-off',
                 'rounded-(--switch-track-height) cursor-pointer inline-block h-(--switch-track-height) mt-[calc((var(--switch-total-height)-var(--switch-track-height))/2)] relative align-top w-(--switch-track-length) [background:var(--switch-track-off-color)]',
                 '[.rt-switch-disabled_&&]:[background:var(--switch-disabled-track-color)] [.rt-switch-disabled_&&]:cursor-auto',
-                theme?.off,
+                classNames?.off,
               )
         }
       >
         {' '}
-        <Thumb disabled={disabled} ripple={ripple} theme={theme} />{' '}
+        <Thumb disabled={disabled} ripple={ripple} classNames={classNames} />{' '}
       </span>
       {label ? (
         <span
@@ -127,7 +122,7 @@ export function Switch({
             'rt-switch-text',
             'text-(--switch-text-color) inline-block text-(length:--switch-font-size) leading-(--switch-total-height) ps-(--unit) align-top whitespace-nowrap',
             '[.rt-switch-disabled_&&]:text-(--switch-disabled-text-color)',
-            theme?.text,
+            classNames?.text,
           )}
         >
           {label}

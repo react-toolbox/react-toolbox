@@ -1,10 +1,9 @@
 'use client';
 import './tokens.css';
 import '../input/tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { DropdownTheme } from './types';
+import type { DropdownClassNames } from './types';
 
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -41,7 +40,7 @@ export interface DropdownItem {
   group?: string;
   textValue?: string;
 }
-export type { DropdownTheme, DropdownClassNames } from './types';
+export type { DropdownClassNames } from './types';
 export type DropdownEvent =
   | React.MouseEvent<HTMLElement>
   | React.KeyboardEvent<HTMLElement>
@@ -49,7 +48,7 @@ export type DropdownEvent =
 export interface DropdownProps<T extends object = DropdownItem>
   extends Omit<
     InputProps,
-    'value' | 'defaultValue' | 'onChange' | 'onBlur' | 'onFocus' | 'onKeyDown' | 'onClick' | 'theme'
+    'value' | 'defaultValue' | 'onChange' | 'onBlur' | 'onFocus' | 'onKeyDown' | 'onClick' | 'classNames'
   > {
   allowBlank?: boolean;
   auto?: boolean;
@@ -69,10 +68,8 @@ export interface DropdownProps<T extends object = DropdownItem>
   onFocus?: React.FocusEventHandler<HTMLElement>;
   onClick?: React.MouseEventHandler<HTMLElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: DropdownTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: DropdownTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: DropdownClassNames;
 }
 export function Dropdown<T extends object = DropdownItem>({
   allowBlank = true,
@@ -97,7 +94,6 @@ export function Dropdown<T extends object = DropdownItem>({
   required = false,
   source,
   template,
-  theme: legacyTheme,
   classNames,
   value: controlledValue,
   defaultValue,
@@ -105,7 +101,6 @@ export function Dropdown<T extends object = DropdownItem>({
   ref,
   ...others
 }: DropdownProps<T>) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const generatedId = useId();
   const id = suppliedId || `dropdown-${generatedId}`;
   const root = useRef<HTMLDivElement>(null);
@@ -297,13 +292,13 @@ export function Dropdown<T extends object = DropdownItem>({
             'rt-dropdown-selected',
             '[.rt-dropdown-values>*&]:text-(--dropdown-color-primary)',
             item.group && '[&&]:text-(--dropdown-color-primary)',
-            theme?.selected,
+            classNames?.selected,
           ),
         item.disabled &&
           cn(
             disabledClasses,
             item.group && '[&&]:text-(--dropdown-color-disabled) [&&]:cursor-not-allowed',
-            theme?.disabled,
+            classNames?.disabled,
           ),
       )}
       onMouseDown={(event) => event.preventDefault()}
@@ -324,11 +319,11 @@ export function Dropdown<T extends object = DropdownItem>({
         'relative',
         materialRoot,
         materialDescendants,
-        theme?.dropdown,
-        up && cn('rt-dropdown-up', theme?.up),
-        active && cn('rt-dropdown-active', theme?.active),
-        disabled && cn(disabledClasses, theme?.disabled),
-        required && cn(requiredClasses, theme?.required),
+        classNames?.dropdown,
+        up && cn('rt-dropdown-up', classNames?.up),
+        active && cn('rt-dropdown-active', classNames?.active),
+        disabled && cn(disabledClasses, classNames?.disabled),
+        required && cn(requiredClasses, classNames?.required),
         className,
       )}
       onFocus={(event) => {
@@ -349,7 +344,7 @@ export function Dropdown<T extends object = DropdownItem>({
         ref={input}
         tabIndex={0}
         disabled={disabled}
-        className={cn(valueClasses, theme?.value)}
+        className={cn(valueClasses, classNames?.value)}
         onClick={click}
         required={required}
         readOnly
@@ -367,10 +362,10 @@ export function Dropdown<T extends object = DropdownItem>({
             'rt-dropdown-field',
             'cursor-pointer p-[var(--input-padding)_0] relative',
             '[&:focus-visible]:[outline:2px_solid_var(--input-text-highlight-color)] [&:focus-visible]:-outline-offset-2',
-            theme?.field,
-            Boolean(fieldError) && cn('rt-dropdown-errored', '[.rt-dropdown-field&]:pb-0', theme?.errored),
-            disabled && cn(disabledClasses, theme?.disabled),
-            required && cn(requiredClasses, theme?.required),
+            classNames?.field,
+            Boolean(fieldError) && cn('rt-dropdown-errored', '[.rt-dropdown-field&]:pb-0', classNames?.errored),
+            disabled && cn(disabledClasses, classNames?.disabled),
+            required && cn(requiredClasses, classNames?.required),
           )}
         >
           <div
@@ -379,8 +374,8 @@ export function Dropdown<T extends object = DropdownItem>({
               'bg-(--input-text-background-color) [border-bottom:1px_solid_var(--input-text-bottom-border-color)] text-(--rt-color-text) min-h-(--input-field-height) p-[var(--input-field-padding)_0] relative',
               '[.rt-dropdown-field.rt-dropdown-errored>&]:[border-bottom:2px_solid_var(--input-text-error-color)]',
               '[.rt-dropdown-field.rt-dropdown-disabled>&]:[border-bottom-style:dotted] [.rt-dropdown-field.rt-dropdown-disabled>&]:text-(--input-text-disabled-text-color)',
-              theme?.templateValue,
-            )} ${cn(valueClasses, theme?.value)}`}
+              classNames?.templateValue,
+            )} ${cn(valueClasses, classNames?.value)}`}
           >
             {template(selected.original)}
           </div>
@@ -391,11 +386,11 @@ export function Dropdown<T extends object = DropdownItem>({
                 'text-(--input-text-label-color) text-(length:--input-label-font-size) left-0 leading-(--input-field-font-size) absolute top-(--input-focus-label-top)',
                 '[.rt-dropdown-dropdown.rt-dropdown-active>&]:opacity-[0.5]',
                 '[.rt-dropdown-field.rt-dropdown-errored>&]:text-(--input-text-error-color)',
-                theme?.label,
+                classNames?.label,
               )}
             >
               {label}
-              {required ? <span className={cn(requiredClasses, theme?.required)}> * </span> : null}
+              {required ? <span className={cn(requiredClasses, classNames?.required)}> * </span> : null}
             </label>
           ) : null}
           {fieldError ? (
@@ -404,7 +399,7 @@ export function Dropdown<T extends object = DropdownItem>({
               className={cn(
                 'rt-dropdown-error',
                 'text-(--input-text-error-color) text-(length:--input-label-font-size) leading-(--input-underline-height) mb-[calc(-1_*_var(--input-underline-height))]',
-                theme?.error,
+                classNames?.error,
               )}
             >
               {fieldError}
@@ -455,7 +450,7 @@ export function Dropdown<T extends object = DropdownItem>({
           '[.rt-dropdown-dropdown.rt-dropdown-active>&]:[box-shadow:var(--zdepth-shadow-1)] [.rt-dropdown-dropdown.rt-dropdown-active>&]:max-h-(--dropdown-overflow-max-height) [.rt-dropdown-dropdown.rt-dropdown-active>&]:visible',
           '[.rt-dropdown-dropdown:not(.rt-dropdown-up)>&]:bottom-auto [.rt-dropdown-dropdown:not(.rt-dropdown-up)>&]:top-0',
           '[.rt-dropdown-dropdown.rt-dropdown-up>&]:bottom-0 [.rt-dropdown-dropdown.rt-dropdown-up>&]:top-auto',
-          theme?.values,
+          classNames?.values,
         )}
       >
         {[...groups].map(([group, entries], groupIndex) =>

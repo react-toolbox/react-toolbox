@@ -8,6 +8,8 @@ The main architectural finding was independent behavior and presentation in conv
 
 The findings below preserve the original audit and baseline measurements. The authorized implementation is summarized separately here. Verification counts and comparison results describe the recorded 16 October revision, not the current suite. The completed migration's CSS/React 16 references, correction ledgers, and comparison tooling were subsequently retired and remain available in Git history. Three independent component reviews were combined with foundation inspection, consumer-size measurements, and targeted reproductions. Reviewers used the available model; this was not a review across different model families.
 
+The subsequent 3.0 cleanup supersedes compatibility commitments in this audit for `theme` slot props, `XxxTheme` slot types, legacy Toolbox `--color-*` aliases, the `ThemeProvider` workspace subpath, and duplicate `active` props on menus and pickers. Current names and migration steps are in the [source-registry guide](source-registry.md#migrating-to-30). Other documented contracts remain subject to their component API.
+
 ## Implementation outcome
 
 The authorized pass addresses the concrete findings across all 27 existing families and adds Sheet as the 28th. Native controls and structural components remain native; Radix owns shared modal behavior, compound menus/selects/tabs/tooltips, and the new range slider; Base UI remains the combobox foundation. Vaul provides the optional gesture sheet over the same Radix dialog dependency.

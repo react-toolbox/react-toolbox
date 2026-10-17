@@ -1,5 +1,5 @@
 /** Optional class overrides for the component's rendered parts. */
-export type DatePickerTheme = Partial<
+export type DatePickerClassNames = Partial<
   Record<
     | 'container'
     | 'active'
@@ -34,9 +34,6 @@ export type DatePickerTheme = Partial<
     string
   >
 >;
-
-/** Style slots for the component. */
-export type DatePickerClassNames = DatePickerTheme;
 
 /** Accessible names for the picker and calendar controls. */
 export interface DatePickerLabels {

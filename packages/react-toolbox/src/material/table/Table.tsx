@@ -1,9 +1,8 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { TableTheme } from './types';
+import type { TableClassNames } from './types';
 import {
   Children,
   Fragment,
@@ -20,10 +19,8 @@ export interface TableProps extends ComponentPropsWithRef<'table'> {
   multiSelectable?: boolean;
   onRowSelect?: (selectedIndices: number[]) => void;
   selectable?: boolean;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: TableTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: TableTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: TableClassNames;
 }
 export function Table({
   children,
@@ -31,11 +28,9 @@ export function Table({
   multiSelectable = false,
   onRowSelect,
   selectable = true,
-  theme: legacyTheme,
   classNames,
   ...other
 }: TableProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const flatten = (children: ReactNode): ReactNode[] =>
     Children.toArray(children).flatMap((child) =>
       isValidElement<{ children?: ReactNode }>(child) && child.type === Fragment
@@ -131,7 +126,7 @@ export function Table({
         'bg-(--rt-color-white) border-collapse text-(length:--table-font-size) w-full',
         materialRoot,
         materialDescendants,
-        theme?.table,
+        classNames?.table,
         className,
       )}
     >
@@ -139,7 +134,7 @@ export function Table({
       {explicitHeads.length ? (
         explicitHeads.map(decorateSection)
       ) : (
-        <thead className={cn('rt-table-head', 'pb-[calc(0.3*var(--unit))] whitespace-nowrap', theme?.head)}>
+        <thead className={cn('rt-table-head', 'pb-[calc(0.3*var(--unit))] whitespace-nowrap', classNames?.head)}>
           {heads.map((head, index) => cloneElement(decorateHead(head), { key: head.key ?? index }))}
         </thead>
       )}

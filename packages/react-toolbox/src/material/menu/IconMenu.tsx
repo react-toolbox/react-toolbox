@@ -1,12 +1,10 @@
 'use client';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
 import { iconClasses } from './styles';
-import type { MenuTheme } from './types';
+import type { MenuClassNames } from './types';
 
 import {
-  useEffect,
   useId,
   useImperativeHandle,
   useRef,
@@ -22,14 +20,13 @@ import { IconButton } from '../button';
 import { Slot } from '@radix-ui/react-slot';
 import Menu, { type MenuProps, type MenuPosition } from './Menu';
 
-export type IconMenuTheme = MenuTheme;
+export type IconMenuClassNames = MenuClassNames;
 export interface IconMenuHandle {
   open(): void;
   close(): void;
   readonly node: HTMLDivElement | null;
 }
 export interface IconMenuProps<Value = unknown> extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect' | 'onClick'> {
-  active?: boolean;
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -46,14 +43,11 @@ export interface IconMenuProps<Value = unknown> extends Omit<HTMLAttributes<HTML
   position?: MenuPosition;
   selectable?: boolean;
   selected?: Value;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: IconMenuTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: IconMenuTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: IconMenuClassNames;
   ref?: Ref<IconMenuHandle>;
 }
 export function IconMenu<Value = unknown>({
-  active = false,
   open: controlledOpen,
   defaultOpen,
   onOpenChange,
@@ -71,15 +65,13 @@ export function IconMenu<Value = unknown>({
   position = 'auto',
   selectable = false,
   selected,
-  theme: legacyTheme,
   classNames,
   ref,
   ...attributes
 }: IconMenuProps<Value>) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const id = `toolbox-menu-${useId()}`;
   const node = useRef<HTMLDivElement>(null);
-  const [internalOpen, setOpen] = useState(defaultOpen ?? active);
+  const [internalOpen, setOpen] = useState(defaultOpen ?? false);
   const visible = controlledOpen ?? internalOpen;
   const setVisible = (next: boolean) => {
     if (controlledOpen === undefined) setOpen(next);
@@ -88,11 +80,6 @@ export function IconMenu<Value = unknown>({
   const triggerId = trigger?.props.id ?? `${id}-trigger`;
   const Trigger = trigger ? Slot : IconButton;
   const initialFocus = useRef<'first' | 'last'>('first');
-  const previousActive = useRef(active);
-  useEffect(() => {
-    if (previousActive.current !== active) setOpen(active);
-    previousActive.current = active;
-  }, [active]);
   useImperativeHandle(
     ref,
     () => ({
@@ -113,7 +100,7 @@ export function IconMenu<Value = unknown>({
         'inline-block relative text-center',
         materialRoot,
         materialDescendants,
-        theme?.iconMenu,
+        classNames?.iconMenu,
         className,
       )}
     >
@@ -123,7 +110,7 @@ export function IconMenu<Value = unknown>({
         aria-haspopup="menu"
         aria-expanded={visible}
         aria-controls={id}
-        className={cn(iconClasses, theme?.icon)}
+        className={cn(iconClasses, classNames?.icon)}
         {...(trigger ? {} : { icon, inverse, ripple: iconRipple })}
         onClick={(event) => {
           onClick?.(event);
@@ -154,16 +141,14 @@ export function IconMenu<Value = unknown>({
         initialFocus={initialFocus.current}
         open={visible}
         onOpenChange={setVisible}
-        onHide={() => {
-          onHide?.();
-        }}
+        onHide={onHide}
         onSelect={onSelect}
         onShow={onShow}
         position={position}
         ripple={menuRipple}
         selectable={selectable}
         selected={selected}
-        theme={theme}
+        classNames={classNames}
       >
         {children}
       </Menu>
@@ -171,6 +156,3 @@ export function IconMenu<Value = unknown>({
   );
 }
 export default IconMenu;
-
-/** Style slots for the component. */
-export type IconMenuClassNames = IconMenuTheme;

@@ -1,4 +1,4 @@
-import { act, render, screen, cleanup, within } from '@testing-library/react';
+import { act, render, screen, cleanup, within, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect, it, afterEach, vi, describe } from 'vitest';
 import DatePicker from '../src/material/date-picker/DatePicker';
@@ -77,7 +77,13 @@ describe('picker drafts and form reset', () => {
       const open = vi.fn();
       const view = render(
         <form>
-          <Picker label="When" name="when" defaultValue={new Date(2026, 9, 15, 9, 30)} open={false} onOpenChange={open} />
+          <Picker
+            label="When"
+            name="when"
+            defaultValue={new Date(2026, 9, 15, 9, 30)}
+            open={false}
+            onOpenChange={open}
+          />
         </form>,
       );
       const field = screen.getByRole('combobox');
@@ -89,6 +95,36 @@ describe('picker drafts and form reset', () => {
       expect(new FormData(view.container.querySelector('form')!).get('when')).toBe(initial);
       await reset(view.container.querySelector('form')!);
       expect(field).toHaveValue(initial);
+    },
+  );
+
+  it.each([DatePicker, TimePicker])('keeps a controlled picker open until dismissal is accepted', async (Picker) => {
+    const change = vi.fn();
+    const view = render(<Picker open onOpenChange={change} defaultValue={selectedDate} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+    expect(change).toHaveBeenCalledExactlyOnceWith(false);
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    view.rerender(<Picker open={false} onOpenChange={change} defaultValue={selectedDate} />);
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+  });
+
+  it.each([DatePicker, TimePicker])(
+    'opens once from the keyboard and forwards native keypress handlers',
+    async (Picker) => {
+      const change = vi.fn();
+      const keyPress = vi.fn();
+      render(<Picker onOpenChange={change} onKeyPress={keyPress} defaultValue={selectedDate} />);
+      const field = screen.getByRole('combobox');
+      fireEvent.keyPress(field, { key: 'a', charCode: 97 });
+      expect(keyPress).toHaveBeenCalledOnce();
+      expect(change).not.toHaveBeenCalled();
+      field.focus();
+      await userEvent.keyboard('{Enter}');
+      expect(change).toHaveBeenCalledExactlyOnceWith(true);
+      await userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+      expect(change).toHaveBeenLastCalledWith(false);
+      await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+      expect(field).toHaveFocus();
     },
   );
 

@@ -5,3 +5,11 @@
 @import "./tokens.css" layer(theme);
 @import "./animations.css";
 @import "./reduced-motion.css";
+
+@layer base {
+  /* Reserve the glyph before its font loads; component dimensions still take precedence. */
+  [data-react-toolbox="font-icon"].material-icons {
+    width: 1em;
+    overflow: hidden;
+  }
+}

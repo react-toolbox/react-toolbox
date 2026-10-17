@@ -153,8 +153,8 @@ describe('React 19 runtime', () => {
     const view = render(
       strict(
         <>
-          <Overlay active theme={{}} />
-          <Overlay active theme={{}} />
+          <Overlay active />
+          <Overlay active />
         </>,
       ),
     );
@@ -162,8 +162,8 @@ describe('React 19 runtime', () => {
     view.rerender(
       strict(
         <>
-          <Overlay active={false} theme={{}} />
-          <Overlay active theme={{}} />
+          <Overlay active={false} />
+          <Overlay active />
         </>,
       ),
     );
@@ -230,7 +230,7 @@ describe('React 19 runtime', () => {
     );
     expect(screen.getByRole('combobox')).toHaveValue('Beta');
     fireEvent.focus(screen.getByRole('combobox'));
-    fireEvent.keyUp(screen.getByRole('combobox'), { key: 'Escape', keyCode: 27, which: 27 });
+    fireEvent.keyUp(screen.getByRole('combobox'), { key: 'Escape' });
   });
 
   it('edits a slider through the current Input ref API', () => {
@@ -259,12 +259,12 @@ describe('React 19 runtime', () => {
     vi.useFakeTimers();
     const dateChange = vi.fn();
     const date = new Date(2026, 9, 13, 9, 30);
-    const view = render(strict(<DatePicker active value={date} onChange={dateChange} />));
+    const view = render(strict(<DatePicker defaultOpen value={date} onChange={dateChange} />));
     fireEvent.click(screen.getByRole('button', { name: 'Ok' }));
     expect(dateChange).toHaveBeenCalledWith(date, expect.anything());
     view.unmount();
     const timeChange = vi.fn();
-    const timeView = render(strict(<TimePicker active value={date} onChange={timeChange} />));
+    const timeView = render(strict(<TimePicker defaultOpen value={date} onChange={timeChange} />));
     fireEvent.click(screen.getByRole('button', { name: 'Ok' }));
     expect(timeChange).toHaveBeenCalledWith(date, expect.anything());
     timeView.unmount();
@@ -284,11 +284,11 @@ describe('React 19 runtime', () => {
     advance(1000);
   });
 
-  it('preserves internal IconMenu state on rerenders and responds to active changes', () => {
+  it('preserves uncontrolled IconMenu state on rerenders', () => {
     vi.useFakeTimers();
     const view = render(
       strict(
-        <IconMenu active={false}>
+        <IconMenu>
           <MenuItem value="one" caption="One" />
         </IconMenu>,
       ),
@@ -298,29 +298,12 @@ describe('React 19 runtime', () => {
     expect(view.container.querySelector('[data-react-toolbox="menu"]').className).toContain('active');
     view.rerender(
       strict(
-        <IconMenu active={false}>
+        <IconMenu>
           <MenuItem value="one" caption="One" />
         </IconMenu>,
       ),
     );
     expect(view.container.querySelector('[data-react-toolbox="menu"]').className).toContain('active');
-    view.rerender(
-      strict(
-        <IconMenu active>
-          <MenuItem value="one" caption="One" />
-        </IconMenu>,
-      ),
-    );
-    advance(20);
-    expect(view.container.querySelector('[data-react-toolbox="menu"]').className).toContain('active');
-    view.rerender(
-      strict(
-        <IconMenu active={false}>
-          <MenuItem value="one" caption="One" />
-        </IconMenu>,
-      ),
-    );
-    expect(view.container.querySelector('[data-react-toolbox="menu"]').className).not.toContain('active');
   });
 
   it('measures static menus in their committed layout and remeasures position changes', () => {
@@ -504,12 +487,12 @@ describe('React 19 runtime', () => {
     }
   });
 
-  it('handles a menu mounted active and closes it once on an outside click', () => {
+  it('handles an initially open menu and closes it once on an outside click', () => {
     vi.useFakeTimers();
     const onHide = vi.fn();
     render(
       strict(
-        <Menu active onHide={onHide}>
+        <Menu defaultOpen onHide={onHide}>
           <MenuItem value="one" caption="One" />
         </Menu>,
       ),

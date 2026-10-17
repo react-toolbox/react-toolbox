@@ -1,8 +1,7 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
-import type { TimePickerTheme, TimePickerLabels } from './types';
+import type { TimePickerClassNames, TimePickerLabels } from './types';
 
 import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -33,10 +32,8 @@ export interface TimePickerDialogProps extends TimeConstraints {
   onEscKeyDown?: DialogProps['onEscKeyDown'];
   onOverlayClick?: DialogProps['onOverlayClick'];
   onSelect?: (value: Date, event?: TimePickerSelectEvent) => void;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: TimePickerTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: TimePickerTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: TimePickerClassNames;
   value?: Date;
 }
 export default function TimePickerDialog({
@@ -53,14 +50,12 @@ export default function TimePickerDialog({
   onEscKeyDown,
   onOverlayClick,
   onSelect,
-  theme: legacyTheme,
   classNames,
   value,
   minTime,
   maxTime,
   minuteStep: suppliedStep,
 }: TimePickerDialogProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const [initialTime] = useState(() => new Date());
   const sourceTime = value ?? initialTime;
   const constraints = { minTime, maxTime, minuteStep: suppliedStep };
@@ -130,10 +125,10 @@ export default function TimePickerDialog({
     <Dialog
       id={id}
       actions={[
-        { label: cancelLabel, className: cn(buttonClasses, theme?.button), onClick: onDismiss },
+        { label: cancelLabel, className: cn(buttonClasses, classNames?.button), onClick: onDismiss },
         {
           label: okLabel,
-          className: cn(buttonClasses, theme?.button),
+          className: cn(buttonClasses, classNames?.button),
           name,
           disabled: isTimeUnavailable(displayTime, constraints),
           onClick: (event) => onSelect?.(displayTime, event),
@@ -148,13 +143,13 @@ export default function TimePickerDialog({
           '[&&]:grid [&&]:w-[calc(var(--timepicker-dialog-width)+var(--picker-landscape-header-width))] [&&]:grid-cols-[var(--picker-landscape-header-width)_minmax(0,1fr)] [&&]:grid-rows-[1fr_auto] [&&]:overflow-y-auto [&>section]:contents [&>section>header]:col-start-1 [&>section>header]:row-span-2 [&>section>header]:row-start-1 [&>section>:not(header)]:col-start-2 [&>section>:not(header)]:row-start-1 [&>nav]:col-start-2 [&>nav]:row-start-2 [&>section>header]:content-center [&>section>header]:flex [&>section>header]:flex-wrap [&>section>header]:items-center [&>section>header]:justify-center [&_.rt-time-picker-ampm]:static [&_.rt-time-picker-ampm]:mt-4 [&_.rt-time-picker-ampm]:flex [&_.rt-time-picker-ampm]:h-auto [&_.rt-time-picker-ampm]:w-full [&_.rt-time-picker-ampm]:justify-center [&_.rt-time-picker-ampm]:gap-4',
         layout === 'responsive' &&
           '[@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:grid [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:w-[calc(var(--timepicker-dialog-width)+var(--picker-landscape-header-width))] [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:grid-cols-[var(--picker-landscape-header-width)_minmax(0,1fr)] [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:grid-rows-[1fr_auto] [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:overflow-y-auto [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section]:contents [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:col-start-1 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:row-span-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:row-start-1 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>:not(header)]:col-start-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>:not(header)]:row-start-1 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>nav]:col-start-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>nav]:row-start-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:content-center [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:flex [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:flex-wrap [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:items-center [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:justify-center [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&_.rt-time-picker-ampm]:static [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&_.rt-time-picker-ampm]:mt-4 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&_.rt-time-picker-ampm]:flex [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&_.rt-time-picker-ampm]:h-auto [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&_.rt-time-picker-ampm]:w-full [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&_.rt-time-picker-ampm]:justify-center [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&_.rt-time-picker-ampm]:gap-4',
-        theme?.dialog,
+        classNames?.dialog,
         display === 'hours'
-          ? cn('rt-time-picker-hoursDisplay', theme?.hoursDisplay)
-          : cn('rt-time-picker-minutesDisplay', theme?.minutesDisplay),
+          ? cn('rt-time-picker-hoursDisplay', classNames?.hoursDisplay)
+          : cn('rt-time-picker-minutesDisplay', classNames?.minutesDisplay),
         time.getTimeMode(displayTime) === 'am'
-          ? cn('rt-time-picker-amFormat', theme?.amFormat)
-          : cn('rt-time-picker-pmFormat', theme?.pmFormat),
+          ? cn('rt-time-picker-amFormat', classNames?.amFormat)
+          : cn('rt-time-picker-pmFormat', classNames?.pmFormat),
         className,
       )}
       onEscKeyDown={onEscKeyDown}
@@ -167,7 +162,7 @@ export default function TimePickerDialog({
           '[background:var(--timepicker-primary-color)] text-(--timepicker-primary-contrast-color) text-(length:--timepicker-header-font-size) p-(--timepicker-header-padding) relative text-center w-full',
           "[&_[role='spinbutton']:focus-visible]:[outline:2px_solid_currentColor] [&_[role='spinbutton']:focus-visible]:outline-offset-2",
           "[&_[role='button']:focus-visible]:[outline:2px_solid_currentColor] [&_[role='button']:focus-visible]:outline-offset-2",
-          theme?.header,
+          classNames?.header,
         )}
       >
         <span
@@ -182,7 +177,7 @@ export default function TimePickerDialog({
             'rt-time-picker-hours',
             'cursor-pointer inline-block opacity-[0.6]',
             '[.rt-time-picker-dialog.rt-time-picker-hoursDisplay_&]:opacity-[1]',
-            theme?.hours,
+            classNames?.hours,
           )}
           onClick={switchDisplay}
           onKeyDown={keyDown}
@@ -193,7 +188,7 @@ export default function TimePickerDialog({
           className={cn(
             'rt-time-picker-separator',
             'm-[0_calc(var(--timepicker-header-padding)/2)] opacity-[0.6]',
-            theme?.separator,
+            classNames?.separator,
           )}
         >
           :
@@ -210,7 +205,7 @@ export default function TimePickerDialog({
             'rt-time-picker-minutes',
             'cursor-pointer inline-block opacity-[0.6]',
             '[.rt-time-picker-dialog.rt-time-picker-minutesDisplay_&]:opacity-[1]',
-            theme?.minutes,
+            classNames?.minutes,
           )}
           onClick={switchDisplay}
           onKeyDown={keyDown}
@@ -222,7 +217,7 @@ export default function TimePickerDialog({
             className={cn(
               'rt-time-picker-ampm',
               'text-(length:--timepicker-ampm-font-size) h-[calc(var(--timepicker-ampm-height)*2)] leading-(--timepicker-ampm-height) mt-[calc(-1_*_var(--timepicker-ampm-height))] absolute right-[calc(2*var(--unit))] text-center top-[50%] w-(--timepicker-ampm-width)',
-              theme?.ampm,
+              classNames?.ampm,
             )}
           >
             {(['am', 'pm'] as const).map((mode) => (
@@ -237,13 +232,13 @@ export default function TimePickerDialog({
                         'rt-time-picker-am',
                         'cursor-pointer block pt-[2px] mt-[-2px] opacity-(--timepicker-period-inactive-opacity)',
                         '[.rt-time-picker-dialog.rt-time-picker-amFormat_&]:opacity-[1]',
-                        theme?.am,
+                        classNames?.am,
                       )
                     : cn(
                         'rt-time-picker-pm',
                         'cursor-pointer block pb-[2px] mb-[-2px] opacity-(--timepicker-period-inactive-opacity)',
                         '[.rt-time-picker-dialog.rt-time-picker-pmFormat_&]:opacity-[1]',
-                        theme?.pm,
+                        classNames?.pm,
                       )
                 }
                 onClick={() => toggleMode(mode)}
@@ -266,7 +261,7 @@ export default function TimePickerDialog({
         format={format}
         onChange={(next) => setTime(constrainTime(next, constraints))}
         onHandMoved={() => setDisplay('minutes')}
-        theme={theme}
+        classNames={classNames}
         time={displayTime}
       />
     </Dialog>

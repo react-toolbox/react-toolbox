@@ -1,8 +1,7 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
-import type { MenuTheme } from './types';
+import type { MenuClassNames } from './types';
 
 import {
   useCallback,
@@ -21,7 +20,7 @@ import { MenuContext } from './context';
 import { DismissableLayer } from '@radix-ui/react-dismissable-layer';
 import { ActiveSurface } from '../overlay/ActiveSurface';
 
-export type { MenuTheme, MenuClassNames } from './types';
+export type { MenuClassNames } from './types';
 export type MenuPosition = 'auto' | 'static' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 type ResolvedPosition = Exclude<MenuPosition, 'auto'>;
 export interface MenuHandle {
@@ -30,7 +29,6 @@ export interface MenuHandle {
   readonly node: HTMLDivElement | null;
 }
 export interface MenuProps<Value = unknown> extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect' | 'onKeyDown'> {
-  active?: boolean;
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -44,10 +42,8 @@ export interface MenuProps<Value = unknown> extends Omit<HTMLAttributes<HTMLDivE
   ripple?: boolean;
   selectable?: boolean;
   selected?: Value;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: MenuTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: MenuTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: MenuClassNames;
   ref?: Ref<MenuHandle>;
 }
 interface Dimensions {
@@ -59,7 +55,6 @@ interface Dimensions {
   offsetY: number;
 }
 export function Menu<Value = unknown>({
-  active = false,
   open: controlledOpen,
   defaultOpen,
   onOpenChange,
@@ -75,16 +70,14 @@ export function Menu<Value = unknown>({
   ripple = true,
   selectable = true,
   selected,
-  theme: legacyTheme,
   classNames,
   ref,
   style,
   ...attributes
 }: MenuProps<Value>) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const root = useRef<HTMLDivElement>(null);
   const menu = useRef<HTMLUListElement>(null);
-  const [internalOpen, setInternalOpen] = useState(defaultOpen ?? active);
+  const [internalOpen, setInternalOpen] = useState(defaultOpen ?? false);
   const visible = controlledOpen ?? internalOpen;
   const stateRef = useRef({ controlledOpen, visible, onOpenChange });
   stateRef.current = { controlledOpen, visible, onOpenChange };
@@ -101,7 +94,6 @@ export function Menu<Value = unknown>({
   const previousFocus = useRef<HTMLElement | null>(null);
   const callbacks = useRef({ onHide, onShow, initialFocus });
   callbacks.current = { onHide, onShow, initialFocus };
-  const previousActive = useRef(active);
   const previousPosition = useRef(requestedPosition);
   const previousVisible = useRef(visible);
   const search = useRef('');
@@ -193,26 +185,11 @@ export function Menu<Value = unknown>({
     previousPosition.current = requestedPosition;
     setPosition(requestedPosition === 'auto' ? calculatePosition() : requestedPosition);
   }, [requestedPosition, calculatePosition]);
-  useEffect(() => {
-    if (previousActive.current === active) return;
-    previousActive.current = active;
-    if (!active) {
-      hide();
-      return;
-    }
-    const next = requestedPosition === 'auto' ? calculatePosition() : requestedPosition;
-    if (requestedPosition === 'auto' && next !== position) {
-      setPosition(next);
-      const timer = setTimeout(show, 20);
-      return () => clearTimeout(timer);
-    }
-    show();
-  }, [active, requestedPosition, calculatePosition, hide, show]);
   useLayoutEffect(updateDimensions, [
     updateDimensions,
     children,
     className,
-    theme,
+    classNames,
     dimensions.width,
     dimensions.height,
   ]);
@@ -382,38 +359,38 @@ export function Menu<Value = unknown>({
             'rt-menu-menu',
             'inline-block relative',
             '[&:not(.rt-menu-static)]:pointer-events-none [&:not(.rt-menu-static)]:z-(--z-index-higher)',
-            theme?.menu,
+            classNames?.menu,
             position &&
               (position === 'static'
-                ? cn('rt-menu-static', theme?.static)
+                ? cn('rt-menu-static', classNames?.static)
                 : position === 'topLeft'
                   ? cn(
                       'rt-menu-topLeft',
                       '[.rt-menu-menu&]:left-0 [.rt-menu-menu&]:absolute [.rt-menu-menu&]:top-0',
-                      theme?.topLeft,
+                      classNames?.topLeft,
                     )
                   : position === 'topRight'
                     ? cn(
                         'rt-menu-topRight',
                         '[.rt-menu-menu&]:absolute [.rt-menu-menu&]:right-0 [.rt-menu-menu&]:top-0',
-                        theme?.topRight,
+                        classNames?.topRight,
                       )
                     : position === 'bottomLeft'
                       ? cn(
                           'rt-menu-bottomLeft',
                           '[.rt-menu-menu&]:bottom-0 [.rt-menu-menu&]:left-0 [.rt-menu-menu&]:absolute',
-                          theme?.bottomLeft,
+                          classNames?.bottomLeft,
                         )
                       : position === 'bottomRight'
                         ? cn(
                             'rt-menu-bottomRight',
                             '[.rt-menu-menu&]:bottom-0 [.rt-menu-menu&]:absolute [.rt-menu-menu&]:right-0',
-                            theme?.bottomRight,
+                            classNames?.bottomRight,
                           )
                         : undefined),
             visible &&
-              cn('rt-menu-active', '[.rt-menu-menu:not(.rt-menu-static)&]:[pointer-events:all]', theme?.active),
-            rippled && cn('rt-menu-rippled', theme?.rippled),
+              cn('rt-menu-active', '[.rt-menu-menu:not(.rt-menu-static)&]:[pointer-events:all]', classNames?.active),
+            rippled && cn('rt-menu-rippled', classNames?.rippled),
             className,
           )}
           style={rootStyle}
@@ -430,7 +407,7 @@ export function Menu<Value = unknown>({
                 '[.rt-menu-menu:not(.rt-menu-static)>&]:opacity-0 [.rt-menu-menu:not(.rt-menu-static)>&]:transform-[scale(0)] [.rt-menu-menu:not(.rt-menu-static)>&]:[transition:transform_var(--menu-expand-duration)_var(--animation-curve-default),opacity_var(--menu-fade-duration)_var(--animation-curve-default)] [.rt-menu-menu:not(.rt-menu-static)>&]:will-change-transform',
                 '[.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:opacity-[1] [.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:transform-[scale(1)]',
                 '[.rt-menu-menu:not(.rt-menu-static).rt-menu-rippled:not(.rt-menu-active)>&]:delay-(--menu-ripple-delay)',
-                theme?.outline,
+                classNames?.outline,
               )}
               style={{
                 width: dimensions.width,
@@ -458,7 +435,7 @@ export function Menu<Value = unknown>({
               '[.rt-menu-menu.rt-menu-bottomRight>&&]:left-auto [.rt-menu-menu.rt-menu-bottomRight>&&]:right-0',
               '[.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:opacity-[1] [.rt-menu-menu:not(.rt-menu-static).rt-menu-active>&]:[transition:opacity_var(--menu-fade-duration)_var(--animation-curve-default),clip_var(--menu-expand-duration)_var(--animation-curve-default)]',
               '[.rt-menu-menu:not(.rt-menu-static).rt-menu-rippled:not(.rt-menu-active)>&]:delay-(--menu-ripple-delay)',
-              theme?.menuInner,
+              classNames?.menuInner,
             )}
             style={{ clip }}
           >

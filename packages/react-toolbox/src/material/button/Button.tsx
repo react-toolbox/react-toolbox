@@ -1,5 +1,4 @@
 'use client';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { buttonClassName, rippleWrapperClasses, iconClasses } from './styles';
 import { cn } from '../foundations/styles/cn';
@@ -18,7 +17,6 @@ export function Button({
   inverse,
   neutral = true,
   primary = false,
-  theme: legacyTheme,
   classNames,
   flat: _flat,
   floating,
@@ -33,14 +31,13 @@ export function Button({
   onRippleEnded,
   ...native
 }: ButtonProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const ink = useRipple({
     disabled,
     centered: rippleCentered,
     className: rippleClassName,
     multiple: rippleMultiple,
     spread: rippleSpread,
-    theme: { rippleWrapper: cn(rippleWrapperClasses, theme?.rippleWrapper) },
+    classNames: { rippleWrapper: cn(rippleWrapperClasses, classNames?.rippleWrapper) },
     ripple,
     onRippleEnded,
   });
@@ -53,7 +50,7 @@ export function Button({
     neutral,
     primary,
     raised,
-    theme,
+    classNames,
   });
   const element = (
     <ButtonElement
@@ -64,7 +61,7 @@ export function Button({
       ink={ink}
       leading={
         <>
-          {icon ? <FontIcon aria-hidden={true} className={cn(iconClasses, theme?.icon)} value={icon} /> : null}
+          {icon ? <FontIcon aria-hidden={true} className={cn(iconClasses, classNames?.icon)} value={icon} /> : null}
           {label}
         </>
       }

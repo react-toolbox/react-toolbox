@@ -1,9 +1,8 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { RadioTheme } from './types';
+import type { RadioClassNames } from './types';
 
 import React from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -22,16 +21,13 @@ export interface RadioProps extends React.HTMLAttributes<HTMLElement> {
   checked?: boolean;
   disabled?: boolean;
   ripple?: boolean;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: RadioTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: RadioTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: RadioClassNames;
 }
 export default function Radio({
   checked,
   disabled,
   ripple: enabled,
-  theme: legacyTheme,
   classNames,
   children,
   onMouseDown,
@@ -40,17 +36,16 @@ export default function Radio({
   onTouchCancel,
   ...others
 }: RadioProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const effects = useRipple({
     centered: true,
     spread: 2.6,
     disabled,
     ripple: enabled,
-    theme: {
+    classNames: {
       ripple: cn(
         'rt-radio-ripple',
         '[.rt-radio-radio_&]:bg-(--radio-inner-color) [.rt-radio-radio_&]:opacity-[0.3] [.rt-radio-radio_&]:duration-650',
-        theme?.ripple,
+        classNames?.ripple,
       ),
     },
     onMouseDown,
@@ -72,10 +67,10 @@ export default function Radio({
               '[.rt-radio-disabled_&]:border-(--radio-disabled-color) [.rt-radio-disabled_&]:cursor-auto',
               '[.rt-radio-disabled_&::before]:bg-(--radio-disabled-color)',
               '[.rt-radio-input:focus~&]:[box-shadow:0_0_0_var(--unit)_var(--radio-checked-focus-color)]',
-              theme?.radio,
-              theme?.radioChecked,
+              classNames?.radio,
+              classNames?.radioChecked,
             )
-          : cn(radioClasses, theme?.radio)
+          : cn(radioClasses, classNames?.radio)
       }
       onMouseDown={effects.onMouseDown}
       onTouchStart={effects.onTouchStart}

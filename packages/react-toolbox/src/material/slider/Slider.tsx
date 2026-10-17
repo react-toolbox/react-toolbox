@@ -1,9 +1,8 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { SliderTheme } from './types';
+import type { SliderClassNames } from './types';
 
 import {
   useEffect,
@@ -21,7 +20,7 @@ import Input, { type InputHandle } from '../input';
 import ProgressBar from '../progress-bar';
 import useFormReset from '../foundations/forms/useFormReset';
 
-export type { SliderTheme, SliderClassNames } from './types';
+export type { SliderClassNames } from './types';
 export interface SliderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart' | 'defaultValue'> {
   buffer?: number;
   defaultValue?: number;
@@ -39,10 +38,8 @@ export interface SliderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onCha
   pinned?: boolean;
   snaps?: boolean;
   step?: number;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: SliderTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: SliderTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: SliderClassNames;
   value?: number;
   ref?: Ref<HTMLDivElement>;
 }
@@ -74,13 +71,11 @@ export function Slider({
   step = 0.01,
   style,
   tabIndex,
-  theme: legacyTheme,
   classNames,
   value: controlledValue,
   ref,
   ...other
 }: SliderProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const [internalValue, setValue] = useState(defaultValue);
   const value = controlledValue ?? internalValue;
   const native = useRef<HTMLInputElement>(null);
@@ -248,16 +243,16 @@ export function Slider({
       className={cn(
         'rt-slider-slider',
         '[&[disabled]]:cursor-auto [&[disabled]]:pointer-events-none',
-        theme?.slider,
+        classNames?.slider,
         editable &&
           cn(
             'rt-slider-editable',
             '[.rt-slider-slider&]:items-center [.rt-slider-slider&]:flex [.rt-slider-slider&]:flex-row',
-            theme?.editable,
+            classNames?.editable,
           ),
-        pinned && cn('rt-slider-pinned', theme?.pinned),
-        pressed && cn('rt-slider-pressed', theme?.pressed),
-        value === min && cn('rt-slider-ring', theme?.ring),
+        pinned && cn('rt-slider-pinned', classNames?.pinned),
+        pressed && cn('rt-slider-pressed', classNames?.pressed),
+        value === min && cn('rt-slider-ring', classNames?.ring),
         className,
       )}
       {...{ disabled }}
@@ -283,7 +278,7 @@ export function Slider({
           materialDescendants,
           '[&:not(:last-child)]:mr-[calc(var(--slider-side-separation)+var(--slider-knob-size))]',
           '[&:not(:first-child)]:ml-(--slider-side-separation)',
-          theme?.container,
+          classNames?.container,
         )}
         onKeyDown={handleKeyDown}
         onMouseDown={handleMouseDown}
@@ -297,7 +292,7 @@ export function Slider({
             'items-center bg-transparent flex flex-row h-(--slider-knob-size) justify-center left-0 relative top-[max(0px,calc((48px-var(--slider-knob-size))/2))] w-(--slider-knob-size) z-(--z-index-higher)',
             "[.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:bg-(--slider-main-color) [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:rounded-[50%] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:bottom-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:[content:''] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:left-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:opacity-[0.26] [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:absolute [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:right-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:top-0 [.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&::before]:z-(--z-index-normal)",
             '[.rt-slider-slider.rt-slider-ring:has(.rt-slider-container:focus-visible)_&&::before]:bg-(--slider-track-focus-color)',
-            theme?.knob,
+            classNames?.knob,
           )}
           style={{
             position: direction === 'rtl' ? 'absolute' : undefined,
@@ -320,7 +315,7 @@ export function Slider({
               '[@media_(hover:_hover)]:[.rt-slider-slider:not([disabled]):not(.rt-slider-pinned):not(.rt-slider-pressed)_.rt-slider-knob:hover_&]:h-(--slider-hover-knob-size) [@media_(hover:_hover)]:[.rt-slider-slider:not([disabled]):not(.rt-slider-pinned):not(.rt-slider-pressed)_.rt-slider-knob:hover_&]:w-(--slider-hover-knob-size)',
               '[.rt-slider-slider:not([disabled]).rt-slider-ring:has(.rt-slider-container:focus-visible)_&]:border-(--slider-track-focus-color)',
               '[.rt-slider-slider:not([disabled]).rt-slider-ring.rt-slider-pressed_&]:border-(--slider-track-focus-color)',
-              theme?.innerknob,
+              classNames?.innerknob,
             )}
             data-value={trim(value)}
           />
@@ -333,7 +328,7 @@ export function Slider({
             '[.rt-slider-slider.rt-slider-ring_&]:left-[calc(var(--slider-knob-size)/2+var(--slider-empty-knob-border)*2)] [.rt-slider-slider.rt-slider-ring_&]:[transition:left_0.18s_ease,width_0.18s_ease] [.rt-slider-slider.rt-slider-ring_&]:w-[calc(100%-var(--slider-empty-knob-border)*2)]',
             '[.rt-slider-slider.rt-slider-ring.rt-slider-pinned_&]:left-[calc(var(--slider-knob-size)/2)] [.rt-slider-slider.rt-slider-ring.rt-slider-pinned_&]:w-full',
             '[.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned).rt-slider-ring_&]:left-[calc(var(--slider-knob-size)/2+(var(--slider-pressed-knob-size)-var(--slider-empty-knob-border)*2)/2)] [.rt-slider-slider.rt-slider-pressed:not(.rt-slider-pinned).rt-slider-ring_&]:w-[calc(100%-((var(--slider-pressed-knob-size)-var(--slider-empty-knob-border)*2)/2))]',
-            theme?.progress,
+            classNames?.progress,
           )}
         >
           <ProgressBar
@@ -346,7 +341,7 @@ export function Slider({
               '[.rt-slider-slider:not([disabled]):has(.rt-slider-container:focus-visible)_&]:[background:var(--slider-track-focus-color)]',
               '[.rt-slider-slider:not([disabled]).rt-slider-pressed_&]:[background:var(--slider-track-focus-color)]',
               "[.rt-slider-slider[disabled]_&_[data-ref='value']]:bg-(--slider-disabled-color)",
-              theme?.innerprogress,
+              classNames?.innerprogress,
             )}
             max={max}
             min={min}
@@ -360,7 +355,7 @@ export function Slider({
                 'rt-slider-snaps',
                 'flex flex-row h-(--slider-snap-size) left-0 pointer-events-none absolute top-[calc(var(--slider-knob-size)/2-var(--slider-snap-size)/2)] w-full',
                 "[&::after]:bg-(--slider-snap-color) [&::after]:rounded-[50%] [&::after]:[content:''] [&::after]:hidden [&::after]:h-(--slider-snap-size) [&::after]:w-(--slider-snap-size)",
-                theme?.snaps,
+                classNames?.snaps,
               )}
             >
               {stops.map((stop) => (
@@ -370,7 +365,7 @@ export function Slider({
                     'rt-slider-snap',
                     'absolute transform-[translateX(-50%)]',
                     "[&::after]:bg-(--slider-snap-color) [&::after]:rounded-[50%] [&::after]:[content:''] [&::after]:block [&::after]:h-(--slider-snap-size) [&::after]:w-(--slider-snap-size)",
-                    theme?.snap,
+                    classNames?.snap,
                   )}
                   style={{ left: `${(100 * stop) / span}%` }}
                 />
@@ -382,7 +377,12 @@ export function Slider({
       {editable && (
         <Input
           ref={input}
-          className={cn('rt-slider-input', 'mb-0 p-0 w-(--slider-input-width)', '[&>input]:text-center', theme?.input)}
+          className={cn(
+            'rt-slider-input',
+            'mb-0 p-0 w-(--slider-input-width)',
+            '[&>input]:text-center',
+            classNames?.input,
+          )}
           disabled={disabled}
           aria-label={other['aria-label'] ? `${other['aria-label']} value` : undefined}
           aria-labelledby={other['aria-labelledby']}

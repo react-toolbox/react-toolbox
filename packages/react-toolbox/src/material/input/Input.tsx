@@ -1,9 +1,8 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { InputTheme } from './types';
+import type { InputClassNames } from './types';
 
 import React, { useCallback, useEffect, useId, useImperativeHandle, useRef, useState } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -11,7 +10,7 @@ import FontIcon from '../font-icon/FontIcon';
 import { isValuePresent } from './value';
 import useFormReset from '../foundations/forms/useFormReset';
 
-export type { InputTheme, InputClassNames } from './types';
+export type { InputClassNames } from './types';
 export type InputElement = HTMLInputElement | HTMLTextAreaElement;
 export interface InputHandle {
   focus(): void;
@@ -30,10 +29,8 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<InputElement>
   wrap?: React.TextareaHTMLAttributes<HTMLTextAreaElement>['wrap'];
   onChange?: (value: string, event: React.ChangeEvent<InputElement>) => void;
   ref?: React.Ref<InputHandle>;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: InputTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: InputTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: InputClassNames;
 }
 
 export function Input({
@@ -52,7 +49,6 @@ export function Input({
   multiline = false,
   required = false,
   role,
-  theme: legacyTheme,
   classNames,
   type = 'text',
   value,
@@ -62,7 +58,6 @@ export function Input({
   ref,
   ...others
 }: InputProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const generatedId = useId();
   const id = suppliedId || `input-${generatedId}`;
   const node = useRef<InputElement>(null);
@@ -149,8 +144,8 @@ export function Input({
       'bg-(--input-text-background-color) [border-bottom:1px_solid_var(--input-text-bottom-border-color)] [border-left:0] rounded-none [border-right:0] [border-top:0] text-(--input-text-input-element-color) block font-[inherit] text-(length:--input-field-font-size) [outline:none] p-[var(--input-field-padding)_0] w-full',
       '[&:required]:[box-shadow:none]',
       '[@media_(hover:_hover)]:[.rt-input-input:not(.rt-input-errored):not(.rt-input-disabled)>&:hover:not(:focus)]:[border-bottom-color:rgb(from_var(--rt-color-black)_r_g_b_/_87%)] [@media_(hover:_hover)]:[.rt-input-input:not(.rt-input-errored):not(.rt-input-disabled)>&:hover:not(:focus)]:[box-shadow:inset_0_-1px_rgb(from_var(--rt-color-black)_r_g_b_/_87%)]',
-      theme?.inputElement,
-      present && cn('rt-input-filled', theme?.filled),
+      classNames?.inputElement,
+      present && cn('rt-input-filled', classNames?.filled),
     ),
     onChange: handleChange,
     ref: (element: InputElement | null) => {
@@ -173,15 +168,15 @@ export function Input({
         'p-[var(--input-padding)_0] relative',
         materialRoot,
         materialDescendants,
-        theme?.input,
-        disabled && cn('rt-input-disabled', theme?.disabled),
-        Boolean(error) && cn('rt-input-errored', 'pb-0', theme?.errored),
-        type === 'hidden' && cn('rt-input-hidden', 'hidden', theme?.hidden),
+        classNames?.input,
+        disabled && cn('rt-input-disabled', classNames?.disabled),
+        Boolean(error) && cn('rt-input-errored', 'pb-0', classNames?.errored),
+        type === 'hidden' && cn('rt-input-hidden', 'hidden', classNames?.hidden),
         Boolean(icon) &&
           cn(
             'rt-input-withIcon',
             '[.rt-input-input&]:ml-[calc(var(--input-icon-size)+var(--input-icon-right-space))]',
-            theme?.withIcon,
+            classNames?.withIcon,
           ),
         className,
       )}
@@ -193,7 +188,7 @@ export function Input({
             'rt-input-icon',
             'text-(--input-text-label-color) block text-(length:--input-icon-font-size)! h-(--input-icon-size) left-[calc(-1_*_(var(--input-icon-size)_+_var(--input-icon-right-space)))] leading-(--input-icon-size)! absolute text-center top-(--input-icon-offset) [transition:color_var(--animation-duration)_var(--animation-curve-default)] w-(--input-icon-size)',
             '[.rt-input-inputElement:focus:not([disabled]):not([readonly])~&]:text-(--input-text-highlight-color)',
-            theme?.icon,
+            classNames?.icon,
           )}
           value={icon}
         />
@@ -208,7 +203,7 @@ export function Input({
           '[.rt-input-inputElement:focus:not([disabled]):not([readonly])~&::after]:w-[50%]',
           '[.rt-input-errored>&::before]:bg-(--input-text-error-color)',
           '[.rt-input-errored>&::after]:bg-(--input-text-error-color)',
-          theme?.bar,
+          classNames?.bar,
         )}
       />
       {label ? (
@@ -223,12 +218,12 @@ export function Input({
             "[.rt-input-inputElement[type='time']~&:not(.rt-input-fixed)]:text-(length:--input-label-font-size) [.rt-input-inputElement[type='time']~&:not(.rt-input-fixed)]:top-(--input-focus-label-top)",
             '[.rt-input-inputElement:focus:not([disabled]):not([readonly])~&:not(.rt-input-fixed)]:text-(length:--input-label-font-size) [.rt-input-inputElement:focus:not([disabled]):not([readonly])~&:not(.rt-input-fixed)]:top-(--input-focus-label-top) [.rt-input-inputElement:focus:not([disabled]):not([readonly])~&:not(.rt-input-fixed)]:text-(--input-text-highlight-color)',
             '[.rt-input-errored>.rt-input-inputElement:focus:not([disabled]):not([readonly])~&:not(.rt-input-fixed)]:text-(--input-text-error-color)',
-            theme?.label,
+            classNames?.label,
             !floating &&
               cn(
                 'rt-input-fixed',
                 '[.rt-input-label&]:text-(length:--input-label-font-size) [.rt-input-label&]:top-(--input-focus-label-top)',
-                theme?.fixed,
+                classNames?.fixed,
               ),
           )}
           htmlFor={id}
@@ -240,7 +235,7 @@ export function Input({
                 'rt-input-required',
                 '[.rt-input-errored>.rt-input-label>&]:text-(--input-text-required-color)',
                 '[.rt-input-inputElement:focus:not([disabled]):not([readonly])~.rt-input-label>&]:text-(--input-text-required-color)',
-                theme?.required,
+                classNames?.required,
               )}
             >
               {' '}
@@ -260,7 +255,7 @@ export function Input({
             '[.rt-input-inputElement.rt-input-filled~&]:hidden',
             '[.rt-input-inputElement:focus:not([disabled]):not([readonly])~&]:block [.rt-input-inputElement:focus:not([disabled]):not([readonly])~&]:opacity-(--input-hint-opacity)',
             '[.rt-input-inputElement:focus:not([disabled]):not([readonly]).rt-input-filled~&]:opacity-0',
-            theme?.hint,
+            classNames?.hint,
           )}
         >
           {hint}
@@ -272,7 +267,7 @@ export function Input({
           className={cn(
             'rt-input-error',
             'text-(length:--input-label-font-size) leading-(--input-underline-height) mb-[calc(-1_*_var(--input-underline-height))] text-(--input-text-error-color)',
-            theme?.error,
+            classNames?.error,
           )}
         >
           {error}
@@ -285,7 +280,7 @@ export function Input({
             'rt-input-counter',
             'text-(--input-text-label-color) absolute right-0 text-(length:--input-label-font-size) leading-(--input-underline-height) mb-[calc(-1_*_var(--input-underline-height))]',
             '[.rt-input-errored>&]:text-(--input-text-error-color)',
-            theme?.counter,
+            classNames?.counter,
           )}
         >{`${length}/${maxLength}`}</span>
       ) : null}

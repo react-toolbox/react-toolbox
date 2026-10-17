@@ -1,27 +1,16 @@
 'use client';
 import '../app-bar/tokens.css';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import type { ComponentPropsWithRef } from 'react';
 import { cn } from '../foundations/styles/cn';
-import type { LayoutTheme } from './types';
+import type { LayoutClassNames } from './types';
 export interface PanelProps extends ComponentPropsWithRef<'div'> {
   bodyScroll?: boolean;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: LayoutTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: LayoutTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: LayoutClassNames;
 }
-export function Panel({
-  bodyScroll = true,
-  children,
-  className = '',
-  theme: legacyTheme,
-  classNames,
-  ...other
-}: PanelProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
+export function Panel({ bodyScroll = true, children, className = '', classNames, ...other }: PanelProps) {
   return (
     <div
       {...other}
@@ -36,8 +25,8 @@ export function Panel({
         '[.rt-layout-appbarFixed_&:not(.rt-layout-bodyScroll)]:overflow-y-scroll',
         '[@media_screen_and_(max-width:_599.98px)_and_(orientation:_portrait)]:[.rt-layout-appbarFixed_&]:h-[calc(100vh-var(--appbar-height-m-portrait))] [@media_screen_and_(max-width:_599.98px)_and_(orientation:_portrait)]:[.rt-layout-appbarFixed_&]:max-h-[calc(100vh-var(--appbar-height-m-portrait))] [@media_screen_and_(max-width:_599.98px)_and_(orientation:_portrait)]:[.rt-layout-appbarFixed_&]:top-(--appbar-height-m-portrait)',
         '[@media_screen_and_(max-height:_599.98px)_and_(orientation:_landscape)]:[.rt-layout-appbarFixed_&]:h-[calc(100vh-var(--appbar-height-m-landscape))] [@media_screen_and_(max-height:_599.98px)_and_(orientation:_landscape)]:[.rt-layout-appbarFixed_&]:max-h-[calc(100vh-var(--appbar-height-m-landscape))] [@media_screen_and_(max-height:_599.98px)_and_(orientation:_landscape)]:[.rt-layout-appbarFixed_&]:top-(--appbar-height-m-landscape)',
-        theme?.panel,
-        bodyScroll && cn('rt-layout-bodyScroll', theme?.bodyScroll),
+        classNames?.panel,
+        bodyScroll && cn('rt-layout-bodyScroll', classNames?.bodyScroll),
         className,
       )}
     >

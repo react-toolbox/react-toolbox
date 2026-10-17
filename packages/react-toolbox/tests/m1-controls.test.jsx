@@ -263,7 +263,7 @@ describe('Material 1 control behavior', () => {
     vi.useFakeTimers();
     const onChange = vi.fn();
     const value = new Date(2026, 9, 13, 13, 30);
-    render(<TimePicker active value={value} format="ampm" onChange={onChange} />);
+    render(<TimePicker defaultOpen value={value} format="ampm" onChange={onChange} />);
     fireEvent.click(screen.getByRole('button', { name: 'AM' }));
     fireEvent.click(screen.getByRole('button', { name: 'AM' }));
     expect(screen.getByRole('spinbutton', { name: 'Hours' })).toHaveAttribute('aria-valuenow', '1');

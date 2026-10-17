@@ -1,8 +1,5 @@
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
 import './globals.css';
+import { materialIcons, siteRoboto } from './fonts';
 import { siteUrl } from './site-metadata';
 
 export const metadata = {
@@ -17,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${siteRoboto.variable} ${materialIcons.variable}`}>
       <body>{children}</body>
     </html>
   );

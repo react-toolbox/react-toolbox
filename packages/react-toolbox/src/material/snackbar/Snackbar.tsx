@@ -1,9 +1,8 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { SnackbarTheme } from './types';
+import type { SnackbarClassNames } from './types';
 
 import {
   useCallback,
@@ -20,7 +19,7 @@ import { Button } from '../button';
 import Portal from '../foundations/portal/Portal';
 import usePresence from '../foundations/motion/usePresence';
 
-export type { SnackbarTheme, SnackbarClassNames } from './types';
+export type { SnackbarClassNames } from './types';
 export interface SnackbarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'> {
   action?: string;
   active?: boolean;
@@ -30,10 +29,8 @@ export interface SnackbarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onC
   onTimeout?: () => void;
   timeout?: number;
   type?: 'accept' | 'cancel' | 'warning';
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: SnackbarTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: SnackbarTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: SnackbarClassNames;
   ref?: Ref<HTMLDivElement>;
 }
 interface Clock {
@@ -52,7 +49,6 @@ export function Snackbar({
   onTimeout,
   timeout = 0,
   type,
-  theme: legacyTheme,
   classNames,
   className,
   onMouseEnter,
@@ -62,7 +58,6 @@ export function Snackbar({
   ref,
   ...attributes
 }: SnackbarProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const { present, visible } = usePresence(active, delay);
   const latest = useRef({ visible, timeout, onTimeout });
   latest.current = { visible, timeout, onTimeout };
@@ -166,16 +161,17 @@ export function Snackbar({
           '[@media_screen_and_(max-width:_599px)]:[&[data-multiline]]:min-h-[calc(8*var(--unit))]',
           '[@media_screen_and_(min-width:_600px)]:rounded-(--snackbar-border-radius) [@media_screen_and_(min-width:_600px)]:bottom-(--snackbar-horizontal-offset) [@media_screen_and_(min-width:_600px)]:left-(--snackbar-horizontal-offset) [@media_screen_and_(min-width:_600px)]:right-auto [@media_screen_and_(min-width:_600px)]:min-w-[calc(28.8*var(--unit))] [@media_screen_and_(min-width:_600px)]:max-w-[min(calc(56.8*var(--unit)),calc(100vw-4.8*var(--unit)))]',
           '[@media_screen_and_(min-width:_600px)]:[&:not(.rt-snackbar-active)]:transform-[translateY(calc(100%+var(--snackbar-horizontal-offset)))]',
-          theme?.snackbar,
+          classNames?.snackbar,
           type &&
             (type === 'accept'
-              ? cn('rt-snackbar-accept', theme?.accept)
+              ? cn('rt-snackbar-accept', classNames?.accept)
               : type === 'cancel'
-                ? cn('rt-snackbar-cancel', theme?.cancel)
+                ? cn('rt-snackbar-cancel', classNames?.cancel)
                 : type === 'warning'
-                  ? cn('rt-snackbar-warning', theme?.warning)
+                  ? cn('rt-snackbar-warning', classNames?.warning)
                   : undefined),
-          visible && cn('rt-snackbar-active', '[.rt-snackbar-snackbar&]:transform-[translateY(0%)]', theme?.active),
+          visible &&
+            cn('rt-snackbar-active', '[.rt-snackbar-snackbar&]:transform-[translateY(0%)]', classNames?.active),
           className,
         )}
         role={attributes.role || 'status'}
@@ -206,7 +202,7 @@ export function Snackbar({
           className={cn(
             'rt-snackbar-label',
             'grow text-(length:--font-size-small) leading-[calc(2*var(--unit))]',
-            theme?.label,
+            classNames?.label,
           )}
         >
           {label}
@@ -220,7 +216,7 @@ export function Snackbar({
               '[.rt-snackbar-snackbar.rt-snackbar-accept_&]:text-(--snackbar-color-accept)',
               '[.rt-snackbar-snackbar.rt-snackbar-warning_&]:text-(--snackbar-color-warning)',
               '[.rt-snackbar-snackbar.rt-snackbar-cancel_&]:text-(--snackbar-color-cancel)',
-              theme?.button,
+              classNames?.button,
             )}
             label={action}
             onClick={onClick}

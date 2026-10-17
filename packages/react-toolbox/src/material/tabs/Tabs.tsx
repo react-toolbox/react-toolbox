@@ -3,7 +3,7 @@ import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { TabsTheme } from './types';
+import type { TabsClassNames } from './types';
 
 import {
   Children,
@@ -27,7 +27,7 @@ import { FontIcon } from '../font-icon';
 import Tab, { type TabProps } from './Tab';
 import TabContent, { type TabContentProps } from './TabContent';
 
-export type { TabsTheme, TabsClassNames } from './types';
+export type { TabsClassNames } from './types';
 export interface TabsHandle {
   updatePointer(index?: number): void;
   readonly node: HTMLDivElement | null;
@@ -44,10 +44,8 @@ export interface TabsProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChang
   loop?: boolean;
   inverse?: boolean;
   onChange?: (index: number) => void;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: TabsTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: TabsTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: TabsClassNames;
   ref?: Ref<TabsHandle>;
 }
 export function Tabs({
@@ -62,12 +60,10 @@ export function Tabs({
   loop = true,
   inverse = false,
   onChange,
-  theme: legacyTheme,
   classNames,
   ref,
   ...attributes
 }: TabsProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const [internalIndex, setIndex] = useState(defaultIndex);
   const index = controlledIndex ?? internalIndex;
   const [focusedIndex, setFocusedIndex] = useState(index);
@@ -190,7 +186,7 @@ export function Tabs({
         'items-center [box-shadow:inset_0_-1px_var(--tab-navigation-border-color)] cursor-pointer flex',
         '[&:focus-visible]:[outline:2px_solid_currentColor] [&:focus-visible]:-outline-offset-2',
         '[.rt-tabs-inverse_&]:bg-(--tab-inverse-bar-color)',
-        theme?.arrowContainer,
+        classNames?.arrowContainer,
       )}
       role="button"
       tabIndex={0}
@@ -206,9 +202,9 @@ export function Tabs({
       <FontIcon
         className={cn(
           'rt-tabs-arrow',
-          'text-(--tab-text-color) p-[0_var(--tab-label-h-padding)]',
+          'text-(--tab-text-color) p-[0_var(--tab-label-h-padding)] w-[calc(1em+2*var(--tab-label-h-padding))]',
           '[.rt-tabs-inverse_&]:text-(--tab-inverse-text-color)',
-          theme?.arrow,
+          classNames?.arrow,
         )}
         value={`keyboard_arrow_${direction}`}
       />
@@ -224,13 +220,13 @@ export function Tabs({
         'flex flex-col',
         materialRoot,
         materialDescendants,
-        theme?.tabs,
-        fixed && cn('rt-tabs-fixed', theme?.fixed),
-        inverse && cn('rt-tabs-inverse', theme?.inverse),
+        classNames?.tabs,
+        fixed && cn('rt-tabs-fixed', classNames?.fixed),
+        inverse && cn('rt-tabs-inverse', classNames?.inverse),
         className,
       )}
     >
-      <div className={cn('rt-tabs-navigationContainer', 'flex', theme?.navigationContainer)}>
+      <div className={cn('rt-tabs-navigationContainer', 'flex', classNames?.navigationContainer)}>
         {arrows.left && arrow('left')}
         <RovingFocus.Root
           asChild
@@ -249,7 +245,7 @@ export function Tabs({
               '[box-shadow:inset_0_-1px_var(--tab-navigation-border-color)] flex flex-row overflow-x-hidden relative',
               '[.rt-tabs-navigationContainer_&]:flex-1',
               '[.rt-tabs-inverse_&]:bg-(--tab-inverse-bar-color)',
-              theme?.navigation,
+              classNames?.navigation,
             )}
             role="tablist"
             aria-label={attributes['aria-label']}
@@ -280,7 +276,7 @@ export function Tabs({
                   children: null,
                   key: itemIndex,
                   index: itemIndex,
-                  theme,
+                  classNames: mergeStyleSlots(classNames, item.props.classNames),
                   active: index === itemIndex,
                   tabIndex: itemIndex === focusIndex ? 0 : -1,
                   id: item.props.id || `${id}-tab-${itemIndex}`,
@@ -309,8 +305,8 @@ export function Tabs({
                 'rt-tabs-pointer',
                 'bg-(--tab-pointer-color) h-(--tab-pointer-height) mt-[calc(-1_*_var(--tab-pointer-height))] absolute [transition-duration:var(--animation-duration)] [transition-property:left,width] [transition-timing-function:var(--animation-curve-default)] w-0',
                 '[.rt-tabs-inverse_&]:bg-(--tab-inverse-pointer-color)',
-                theme?.pointer,
-                disableAnimatedBottomBorder && theme?.disableAnimation,
+                classNames?.pointer,
+                disableAnimatedBottomBorder && classNames?.disableAnimation,
               )}
               style={{ ...pointer, ...(disableAnimatedBottomBorder ? { transition: 'none' } : {}) }}
             />
@@ -323,7 +319,7 @@ export function Tabs({
           ? null
           : cloneElement(item, {
               key: itemIndex,
-              theme,
+              classNames: mergeStyleSlots(classNames, item.props.classNames),
               active: index === itemIndex,
               hidden: index !== itemIndex && hideMode === 'display',
               id: item.props.id || `${id}-panel-${itemIndex}`,

@@ -1,18 +1,14 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
-import type { CardTheme } from './types';
+import type { CardClassNames } from './types';
 import type { ComponentPropsWithRef } from 'react';
 import { cn } from '../foundations/styles/cn';
 export interface CardActionsProps extends ComponentPropsWithRef<'div'> {
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: CardTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: CardTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: CardClassNames;
 }
-export function CardActions({ children, className, theme: legacyTheme, classNames, ...other }: CardActionsProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
+export function CardActions({ children, className, classNames, ...other }: CardActionsProps) {
   return (
     <div
       className={cn(
@@ -22,7 +18,7 @@ export function CardActions({ children, className, theme: legacyTheme, className
         "[&_[data-react-toolbox='button']:first-child]:ms-0",
         "[&_[data-react-toolbox='button']:last-child]:me-0",
         '[.rt-card-cardMedia_.rt-card-contentOverlay_&]:bg-(--card-text-overlay)',
-        theme?.cardActions,
+        classNames?.cardActions,
         className,
       )}
       {...other}

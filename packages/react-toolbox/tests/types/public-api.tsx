@@ -22,6 +22,7 @@ import {
   Dropdown,
   Slider,
   IconMenu,
+  Menu,
   MenuCheckboxItem,
   MenuRadioGroup,
   MenuRadioItem,
@@ -78,9 +79,18 @@ export const example = (
   </ThemeProvider>
 );
 
-// Public declarations must reject the obsolete injection API and wrong value types.
 // @ts-expect-error The provider scopes CSS variables; it no longer injects named component themes.
 const obsoleteProvider = <ThemeProvider theme={{ RTButton: { button: 'custom' } }} />;
+// @ts-expect-error Components accept classNames for slot overrides.
+const obsoleteSlots = <Button theme={{ button: 'custom' }} />;
+// @ts-expect-error Menu visibility is controlled through open.
+const obsoleteMenuState = <Menu active />;
+// @ts-expect-error IconMenu visibility is controlled through open.
+const obsoleteIconMenuState = <IconMenu active />;
+// @ts-expect-error DatePicker visibility is controlled through open.
+const obsoleteDatePickerState = <DatePicker active />;
+// @ts-expect-error TimePicker visibility is controlled through open.
+const obsoleteTimePickerState = <TimePicker active />;
 // @ts-expect-error Native event handlers receive an event, not a numeric value.
 const wrongButtonHandler = <Button onClick={(value: number) => value} />;
 // @ts-expect-error Value-first input callbacks receive strings.

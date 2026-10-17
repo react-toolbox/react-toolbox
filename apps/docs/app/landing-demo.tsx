@@ -7,6 +7,7 @@ import { Input } from 'react-toolbox/input';
 import { Slider } from 'react-toolbox/slider';
 import { Snackbar } from 'react-toolbox/snackbar';
 import { Switch } from 'react-toolbox/switch';
+import SiteIcon from './site-icon';
 
 export default function LandingDemo() {
   const [name, setName] = useState('Weekend notes');
@@ -53,7 +54,7 @@ export default function LandingDemo() {
             </div>
             <Switch
               className="m-0 flex min-h-12 items-center gap-4"
-              theme={{ input: 'absolute', on: 'mt-0 shrink-0', off: 'mt-0 shrink-0', text: 'p-0' }}
+              classNames={{ input: 'absolute', on: 'mt-0 shrink-0', off: 'mt-0 shrink-0', text: 'p-0' }}
               label="Do not disturb"
               checked={quiet}
               onChange={setQuiet}
@@ -73,7 +74,12 @@ export default function LandingDemo() {
           </CardActions>
           <IconButton
             className="absolute top-4 right-2 toolbox-desktop:right-4"
-            icon={favorite ? 'favorite' : 'favorite_border'}
+            icon={
+              <SiteIcon
+                name={favorite ? 'favorite' : 'favoriteBorder'}
+                style={{ width: 'var(--button-toggle-font-size)' }}
+              />
+            }
             accent={favorite}
             aria-label={favorite ? 'Remove project from favorites' : 'Favorite this project'}
             aria-pressed={favorite}

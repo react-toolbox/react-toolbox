@@ -11,6 +11,10 @@
   --spacing: 4px;
 }
 
+:root {
+  --preferred-font: var(--font-roboto);
+}
+
 html {
   scroll-padding-top: 32px;
 }
@@ -19,13 +23,17 @@ body {
   margin: 0;
   background: #f7f8fa;
   color: #212121;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: var(--preferred-font);
   font-size: 14px;
   line-height: 1.5;
 }
 
 .documentation-shell {
-  font-family: "Roboto", "Noto", sans-serif;
+  font-family: var(--preferred-font);
+}
+
+.material-icons {
+  font-family: var(--font-material-icons);
 }
 
 @layer base {

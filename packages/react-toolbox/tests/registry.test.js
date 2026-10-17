@@ -91,7 +91,7 @@ it('generates deterministic registry items with exact source and complete depend
       if (
         file.path.endsWith('.tsx') ||
         /\/use\w+\.ts$/.test(file.path) ||
-        file.path === 'src/ThemeProvider.ts' ||
+        file.path === 'src/material/theme/index.ts' ||
         (file.path.endsWith('/index.ts') && !item.name.startsWith('foundation'))
       ) {
         assert(file.content.startsWith("'use client';"), `Missing copied-source client boundary: ${file.path}`);

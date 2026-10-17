@@ -1,8 +1,7 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
-import type { DatePickerTheme, DatePickerLabels } from './types';
+import type { DatePickerClassNames, DatePickerLabels } from './types';
 
 import React, { useEffect, useState } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -36,10 +35,8 @@ export interface DatePickerDialogProps extends DateConstraints {
   sundayFirstDayOfWeek?: boolean;
   startYear?: number;
   endYear?: number;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: DatePickerTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: DatePickerTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: DatePickerClassNames;
   value?: Date;
 }
 export default function DatePickerDialog({
@@ -60,12 +57,10 @@ export default function DatePickerDialog({
   sundayFirstDayOfWeek,
   startYear,
   endYear,
-  theme: legacyTheme,
   classNames,
   value,
   ...constraints
 }: DatePickerDialogProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const [initialDate] = useState(() => new Date());
   const sourceDate = value ?? initialDate;
   const clamp = (date: Date) => {
@@ -100,10 +95,10 @@ export default function DatePickerDialog({
     <Dialog
       id={id}
       actions={[
-        { label: cancelLabel, className: cn(buttonClasses, theme?.button), onClick: onDismiss },
+        { label: cancelLabel, className: cn(buttonClasses, classNames?.button), onClick: onDismiss },
         {
           label: okLabel,
-          className: cn(buttonClasses, theme?.button),
+          className: cn(buttonClasses, classNames?.button),
           name,
           onClick: select,
           disabled: isDateDisabled(date, constraints),
@@ -119,7 +114,7 @@ export default function DatePickerDialog({
           '[&&]:grid [&&]:w-[calc(var(--datepicker-dialog-width)+var(--picker-landscape-header-width))] [&&]:grid-cols-[var(--picker-landscape-header-width)_minmax(0,1fr)] [&&]:grid-rows-[1fr_auto] [&&]:overflow-y-auto [&>section]:contents [&>section>header]:col-start-1 [&>section>header]:row-span-2 [&>section>header]:row-start-1 [&>section>:not(header)]:col-start-2 [&>section>:not(header)]:row-start-1 [&>nav]:col-start-2 [&>nav]:row-start-2',
         layout === 'responsive' &&
           '[@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:grid [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:w-[calc(var(--datepicker-dialog-width)+var(--picker-landscape-header-width))] [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:grid-cols-[var(--picker-landscape-header-width)_minmax(0,1fr)] [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:grid-rows-[1fr_auto] [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:overflow-y-auto [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section]:contents [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:col-start-1 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:row-span-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:row-start-1 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>:not(header)]:col-start-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>:not(header)]:row-start-1 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>nav]:col-start-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>nav]:row-start-2',
-        theme?.dialog,
+        classNames?.dialog,
         className,
       )}
       onEscKeyDown={onEscKeyDown}
@@ -131,10 +126,10 @@ export default function DatePickerDialog({
           'rt-date-picker-header',
           'bg-(--datepicker-primary-color) text-(--datepicker-primary-contrast-color) cursor-pointer p-[calc(1.6*var(--unit))_calc(2*var(--unit))]',
           "[&_[role='button']:focus-visible]:[outline:2px_solid_currentColor] [&_[role='button']:focus-visible]:outline-offset-2",
-          theme?.header,
+          classNames?.header,
           display === 'months'
-            ? cn('rt-date-picker-monthsDisplay', theme?.monthsDisplay)
-            : cn('rt-date-picker-yearsDisplay', theme?.yearsDisplay),
+            ? cn('rt-date-picker-monthsDisplay', classNames?.monthsDisplay)
+            : cn('rt-date-picker-yearsDisplay', classNames?.yearsDisplay),
         )}
       >
         <span
@@ -148,7 +143,7 @@ export default function DatePickerDialog({
             'inline-block text-(length:--datepicker-year-font-size) pt-[8px] mt-[-8px] [transition:opacity,font-size_var(--animation-duration)_var(--animation-curve-default)]',
             '[.rt-date-picker-yearsDisplay_&]:text-(length:--font-size-normal)',
             '[.rt-date-picker-monthsDisplay_&]:opacity-(--datepicker-year-inactive-opacity)',
-            theme?.year,
+            classNames?.year,
           )}
           onClick={switchDisplay}
           onKeyDown={displayKeyDown}
@@ -165,7 +160,7 @@ export default function DatePickerDialog({
             'rt-date-picker-date',
             'block text-[calc(3.4*var(--unit))] font-(--font-weight-semi-bold) leading-[calc(4*var(--unit))] m-0 capitalize [transition:opacity_var(--animation-duration)_var(--animation-curve-default)]',
             '[.rt-date-picker-yearsDisplay_&]:opacity-(--datepicker-inactive-opacity)',
-            theme?.date,
+            classNames?.date,
           )}
           onClick={switchDisplay}
           onKeyDown={displayKeyDown}
@@ -175,7 +170,7 @@ export default function DatePickerDialog({
         className={cn(
           'rt-date-picker-calendarWrapper',
           'p-[var(--unit)_calc(0.5*var(--unit))_0]',
-          theme?.calendarWrapper,
+          classNames?.calendarWrapper,
         )}
       >
         <Calendar
@@ -192,7 +187,7 @@ export default function DatePickerDialog({
             if (dayClick && autoOk && !isDateDisabled(clamped, constraints)) onSelect?.(clamped);
           }}
           selectedDate={date}
-          theme={theme}
+          classNames={classNames}
           locale={locale}
           sundayFirstDayOfWeek={sundayFirstDayOfWeek}
         />

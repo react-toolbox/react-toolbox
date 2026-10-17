@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { IconButton } from 'react-toolbox/button';
 import { Drawer } from 'react-toolbox/drawer';
 import { List, ListDivider, ListItem, ListSubHeader } from 'react-toolbox/list';
+import SiteIcon from '../site-icon';
 type ComponentLink = { slug: string; title: string };
 
 const guides = [
@@ -73,7 +74,7 @@ function MobileNavigation({ components }: { components: ComponentLink[] }) {
     <div className="border-b border-toolbox-divider lg:hidden">
       <div className="flex min-h-toolbox-touch items-center gap-1 px-4 min-[600px]:px-6">
         <IconButton
-          icon="menu"
+          icon={<SiteIcon name="menu" style={{ width: 'var(--button-toggle-font-size)' }} />}
           aria-label="Browse documentation"
           className="-ml-3 shrink-0 text-toolbox-text-secondary hover:text-toolbox-text [--button-toggle-size:48px]"
           aria-haspopup="dialog"
@@ -92,7 +93,11 @@ function MobileNavigation({ components }: { components: ComponentLink[] }) {
       >
         <div className="flex min-h-14 items-center justify-between border-b border-toolbox-divider pr-2 pl-4 sm:min-h-16 sm:pl-6">
           <span className="font-medium">Documentation</span>
-          <IconButton icon="close" aria-label="Close navigation" onClick={() => setOpen(false)} />
+          <IconButton
+            icon={<SiteIcon name="close" style={{ width: 'var(--button-toggle-font-size)' }} />}
+            aria-label="Close navigation"
+            onClick={() => setOpen(false)}
+          />
         </div>
         <div className="bg-white">
           <SidebarNavigation components={components} onNavigate={() => setOpen(false)} />

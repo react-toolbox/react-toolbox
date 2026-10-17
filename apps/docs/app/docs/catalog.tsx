@@ -390,7 +390,7 @@ export const components = [
     title: 'Ripple',
     description: 'Touch feedback that grows from the point of interaction.',
     icon: 'touch_app',
-    code: `'use client';\n\nimport { Ripple } from '@/components/ui/material/ripple';\n\nconst RippleButton = Ripple({ passthrough: false })('button');\n\nexport default function Example() {\n  return (\n    <RippleButton className="relative overflow-hidden rounded-toolbox bg-toolbox-primary/10 px-8 py-6 text-toolbox-primary">\n      Click anywhere\n    </RippleButton>\n  );\n}`,
+    code: `'use client';\n\nimport { Ripple } from '@/components/ui/material/ripple';\n\nconst RippleButton = Ripple()('button');\n\nexport default function Example() {\n  return (\n    <RippleButton className="relative overflow-hidden rounded-toolbox bg-toolbox-primary/10 px-8 py-6 text-toolbox-primary">\n      Click anywhere\n    </RippleButton>\n  );\n}`,
     note: (
       <>
         Define <code>Ripple</code> decorators outside render; the host needs <code>relative</code> positioning and{' '}

@@ -4,9 +4,9 @@ import { describe, expect, it } from 'vitest';
 import { renderToString } from 'react-dom/server';
 import { Button, BrowseButton, IconButton, Input, ThemeProvider } from '../src';
 
-describe('modern theme API', () => {
+describe('styling API', () => {
   it('adds local class overrides without replacing structural classes', () => {
-    render(<Button label="Composed" theme={{ button: 'rounded-none custom custom' }} />);
+    render(<Button label="Composed" classNames={{ button: 'rounded-none custom custom' }} />);
     const button = screen.getByRole('button');
     expect(button).toHaveClass('rt-button-button', 'rounded-none', 'custom');
     expect(button.className.split(' ').filter((item) => item === 'custom')).toHaveLength(1);
@@ -17,22 +17,22 @@ describe('modern theme API', () => {
     ['raised', { raised: true }],
     ['floating', { floating: true }],
   ])('keeps root overrides ahead of %s defaults and specific overrides last', (variant, shape) => {
-    const theme = { button: 'h-16 rounded-none', [variant]: 'h-20' };
-    const view = render(<Button {...shape} label="Custom" theme={theme} />);
+    const classNames = { button: 'h-16 rounded-none', [variant]: 'h-20' };
+    const view = render(<Button {...shape} label="Custom" classNames={classNames} />);
     const button = screen.getByRole('button');
     expect(button).toHaveClass('h-20', 'rounded-none');
     expect(button).not.toHaveClass('h-16');
-    view.rerender(<Button {...shape} label="Custom" theme={theme} className="h-24" />);
+    view.rerender(<Button {...shape} label="Custom" classNames={classNames} className="h-24" />);
     expect(button).toHaveClass('h-24');
     expect(button).not.toHaveClass('h-20');
   });
 
   it('applies shared overrides to file-picker labels and icon buttons', () => {
-    const theme = { button: 'h-16 rounded-none' };
+    const classNames = { button: 'h-16 rounded-none' };
     const { container } = render(
       <>
-        <BrowseButton raised label="Upload" theme={theme} />
-        <IconButton icon="add" aria-label="Add" theme={theme} />
+        <BrowseButton raised label="Upload" classNames={classNames} />
+        <IconButton icon="add" aria-label="Add" classNames={classNames} />
       </>,
     );
     expect(container.querySelector('label')).toHaveClass('h-16', 'rounded-none');
@@ -86,37 +86,29 @@ describe('modern theme API', () => {
   });
 });
 
-it('normalizes legacy color inputs without creating host Tailwind aliases', () => {
+it('preserves host custom properties and references alongside Toolbox tokens', () => {
   const { container } = render(
     <ThemeProvider
       variables={{
-        '--color-primary': '#123456',
-        '--color-primary-dark': 'var(--color-primary)',
+        '--rt-color-primary': '#123456',
+        '--rt-color-primary-dark': 'var(--rt-color-primary)',
+        '--color-primary': 'var(--primary)',
         '--primary': '#abcdef',
       }}
-      style={{ '--color-accent': '#654321' }}
+      style={{ '--rt-color-accent': '#654321', '--color-accent': 'var(--accent)' }}
     >
-      <Button label="Legacy colors" />
+      <Button label="Scoped colors" />
     </ThemeProvider>,
   );
   const scope = container.firstElementChild;
   expect(scope.style.getPropertyValue('--rt-color-primary')).toBe('#123456');
-  expect(scope.style.getPropertyValue('--rt-color-accent')).toBe('#654321');
   expect(scope.style.getPropertyValue('--rt-color-primary-dark')).toBe('var(--rt-color-primary)');
+  expect(scope.style.getPropertyValue('--rt-color-accent')).toBe('#654321');
   expect(scope.style.getPropertyValue('--primary')).toBe('#abcdef');
-  expect(scope.style.getPropertyValue('--color-primary')).toBe('');
-  expect(scope.style.getPropertyValue('--color-accent')).toBe('');
+  expect(scope.style.getPropertyValue('--color-primary')).toBe('var(--primary)');
+  expect(scope.style.getPropertyValue('--color-accent')).toBe('var(--accent)');
   expect(scope).toHaveAttribute(
     'data-react-toolbox-tokens',
-    '--rt-color-primary --rt-color-primary-dark --primary --rt-color-accent',
+    '--rt-color-primary --rt-color-primary-dark --color-primary --primary --rt-color-accent --color-accent',
   );
-});
-
-it('lets canonical values win when a scope supplies both color names', () => {
-  const { container } = render(
-    <ThemeProvider variables={{ '--rt-color-primary': '#abcdef', '--color-primary': '#123456' }}>
-      <Button label="Canonical" />
-    </ThemeProvider>,
-  );
-  expect(container.firstElementChild.style.getPropertyValue('--rt-color-primary')).toBe('#abcdef');
 });

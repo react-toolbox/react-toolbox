@@ -10,4 +10,4 @@ export type { IconButtonProps } from './IconButton';
 export { default as BrowseButton } from './BrowseButton';
 export type { BrowseButtonProps } from './BrowseButton';
 export { default } from './Button';
-export type { ButtonTheme, ButtonClassNames, ButtonAppearanceProps, ButtonShapeProps } from './types';
+export type { ButtonClassNames, ButtonAppearanceProps, ButtonShapeProps } from './types';

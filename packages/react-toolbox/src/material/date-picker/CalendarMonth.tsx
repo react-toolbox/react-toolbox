@@ -1,9 +1,8 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { cn } from '../foundations/styles/cn';
-import type { DatePickerTheme } from './types';
+import type { DatePickerClassNames } from './types';
 
 import React from 'react';
 import { range } from '../foundations/collections/range';
@@ -17,10 +16,8 @@ export interface CalendarMonthProps extends DateConstraints {
   focusedDate?: Date;
   onDayFocus?: (day: number) => void;
   sundayFirstDayOfWeek?: boolean;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: DatePickerTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: DatePickerTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: DatePickerClassNames;
   viewDate: Date;
   nodeRef?: React.Ref<HTMLDivElement>;
 }
@@ -31,20 +28,18 @@ export default function CalendarMonth({
   focusedDate = selectedDate,
   onDayFocus,
   sundayFirstDayOfWeek,
-  theme: legacyTheme,
   classNames,
   viewDate,
   nodeRef,
   ...constraints
 }: CalendarMonthProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const days = range(0, 7).map((day) => time.getDayOfWeekLetter(day, locale));
   const week = sundayFirstDayOfWeek ? days : [...days.slice(1), days[0]];
   return (
     <div
       ref={nodeRef}
       data-react-toolbox="month"
-      className={cn('rt-date-picker-month', 'bg-(--calendar-background) w-full', theme?.month)}
+      className={cn('rt-date-picker-month', 'bg-(--calendar-background) w-full', classNames?.month)}
     >
       <span
         aria-live="polite"
@@ -52,7 +47,7 @@ export default function CalendarMonth({
         className={cn(
           'rt-date-picker-title',
           'inline-block [font-weight:500] leading-(--calendar-row-height)',
-          theme?.title,
+          classNames?.title,
         )}
       >{`${time.getFullMonth(viewDate, locale)} ${viewDate.getFullYear()}`}</span>
       <div
@@ -60,14 +55,16 @@ export default function CalendarMonth({
           'rt-date-picker-week',
           'flex flex-wrap text-(length:--calendar-day-font-size) h-(--calendar-row-height) leading-(--calendar-row-height) opacity-[0.5]',
           '[&>span]:flex-[0_0_calc(100%/7)]',
-          theme?.week,
+          classNames?.week,
         )}
       >
         {week.map((day, index) => (
           <span key={index}>{day}</span>
         ))}
       </div>
-      <div className={cn('rt-date-picker-days', 'flex flex-wrap text-(length:--calendar-day-font-size)', theme?.days)}>
+      <div
+        className={cn('rt-date-picker-days', 'flex flex-wrap text-(length:--calendar-day-font-size)', classNames?.days)}
+      >
         {range(1, time.getDaysInMonth(viewDate) + 1).map((day) => (
           <CalendarDay
             key={day}
@@ -82,7 +79,7 @@ export default function CalendarMonth({
               focusedDate.getDate() === day
             }
             selectedDate={selectedDate}
-            theme={theme}
+            classNames={classNames}
             viewDate={viewDate}
             sundayFirstDayOfWeek={sundayFirstDayOfWeek}
           />

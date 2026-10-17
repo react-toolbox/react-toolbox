@@ -1,9 +1,8 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { DrawerTheme } from './types';
+import type { DrawerClassNames } from './types';
 
 import type { HTMLAttributes, MouseEventHandler, Ref } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -12,7 +11,7 @@ import usePresence from '../foundations/motion/usePresence';
 import Overlay from '../overlay';
 import { ModalSurface } from '../overlay/ModalSurface';
 
-export type { DrawerTheme, DrawerClassNames } from './types';
+export type { DrawerClassNames } from './types';
 export interface DrawerCommonProps {
   active?: boolean;
   /** Cancel the default focus placement and focus a specific field instead. */
@@ -28,10 +27,8 @@ export interface DrawerCommonProps {
   withOverlay?: boolean;
 }
 export interface DrawerProps extends HTMLAttributes<HTMLElement>, DrawerCommonProps {
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: DrawerTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: DrawerTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: DrawerClassNames;
   ref?: Ref<HTMLElement>;
 }
 export function Drawer({
@@ -45,14 +42,12 @@ export function Drawer({
   insideTree = false,
   onOverlayClick,
   onEscKeyDown,
-  theme: legacyTheme,
   classNames,
   type = 'left',
   withOverlay = true,
   ref,
   ...attributes
 }: DrawerProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const { present, visible } = usePresence(active, delay);
   if (!present) return null;
   const content = (
@@ -74,27 +69,27 @@ export function Drawer({
             materialRoot,
             materialDescendants,
             '[@media_screen_and_(min-width:_600px)]:w-(--drawer-desktop-width)',
-            theme?.drawer,
+            classNames?.drawer,
             type === 'left'
               ? cn(
                   'rt-drawer-left',
                   '[.rt-drawer-drawer&]:[border-right:1px_solid_var(--drawer-border-color)] [.rt-drawer-drawer&]:left-0',
                   '[.rt-drawer-drawer&:not(.rt-drawer-active)]:transform-[translateX(calc(-1*100%))]',
-                  theme?.left,
+                  classNames?.left,
                 )
               : type === 'right'
                 ? cn(
                     'rt-drawer-right',
                     '[.rt-drawer-drawer&]:[border-left:1px_solid_var(--drawer-border-color)] [.rt-drawer-drawer&]:right-0',
                     '[.rt-drawer-drawer&:not(.rt-drawer-active)]:transform-[translateX(100%)]',
-                    theme?.right,
+                    classNames?.right,
                   )
                 : undefined,
             visible &&
               cn(
                 'rt-drawer-active',
                 '[.rt-drawer-drawer&]:[pointer-events:all] [.rt-drawer-drawer&]:transform-[translateX(0)] [.rt-drawer-drawer&]:delay-(--animation-delay)',
-                theme?.active,
+                classNames?.active,
               ),
             className,
           )}
@@ -110,11 +105,11 @@ export function Drawer({
     </>
   );
   return insideTree ? (
-    <div className={cn('rt-drawer-wrapper', 'relative z-(--z-index-higher)', theme?.wrapper)}>{content}</div>
+    <div className={cn('rt-drawer-wrapper', 'relative z-(--z-index-higher)', classNames?.wrapper)}>{content}</div>
   ) : (
     <Portal
       container={portalContainer}
-      className={cn('rt-drawer-wrapper', 'relative z-(--z-index-higher)', theme?.wrapper)}
+      className={cn('rt-drawer-wrapper', 'relative z-(--z-index-higher)', classNames?.wrapper)}
     >
       {content}
     </Portal>

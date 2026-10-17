@@ -85,7 +85,7 @@ describe('M1 overlay and navigation behavior', () => {
       });
     try {
       render(
-        <Menu active position="topLeft">
+        <Menu defaultOpen position="topLeft">
           <MenuItem caption="Archive" />
         </Menu>,
       );
@@ -142,8 +142,8 @@ describe('M1 overlay and navigation behavior', () => {
     const upper = vi.fn();
     const view = render(
       <>
-        <Overlay active theme={{}} onEscKeyDown={lower} />
-        <Overlay active theme={{}} onEscKeyDown={upper} />
+        <Overlay active onEscKeyDown={lower} />
+        <Overlay active onEscKeyDown={upper} />
       </>,
     );
     fireEvent.keyDown(document.body, { key: 'Escape' });
@@ -151,8 +151,8 @@ describe('M1 overlay and navigation behavior', () => {
     expect(lower).not.toHaveBeenCalled();
     view.rerender(
       <>
-        <Overlay active theme={{}} onEscKeyDown={lower} />
-        <Overlay active theme={{}} />
+        <Overlay active onEscKeyDown={lower} />
+        <Overlay active />
       </>,
     );
     fireEvent.keyDown(document.body, { key: 'Escape' });

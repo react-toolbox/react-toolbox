@@ -1,8 +1,7 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
-import type { TimePickerTheme } from './types';
+import type { TimePickerClassNames } from './types';
 
 import React from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -11,10 +10,8 @@ export interface ClockFaceProps {
   numbers?: readonly number[];
   radius?: number;
   spacing: number;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: TimePickerTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: TimePickerTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: TimePickerClassNames;
   twoDigits?: boolean;
   onTouchStart?: React.TouchEventHandler<HTMLDivElement>;
   onMouseDown?: React.MouseEventHandler<HTMLDivElement>;
@@ -24,20 +21,18 @@ export default function ClockFace({
   numbers = [],
   radius = 0,
   spacing,
-  theme: legacyTheme,
   classNames,
   twoDigits = false,
   onTouchStart,
   onMouseDown,
 }: ClockFaceProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const rad = radius - spacing;
   return (
     <div
       className={cn(
         'rt-time-picker-face',
         'rounded-[50%] cursor-pointer left-[50%] absolute top-[50%] transform-[translateX(-50%)_translateY(-50%)] z-(--z-index-high)',
-        theme?.face,
+        classNames?.face,
       )}
       onTouchStart={onTouchStart}
       onMouseDown={onMouseDown}
@@ -49,12 +44,12 @@ export default function ClockFace({
           className={cn(
             'rt-time-picker-number',
             'h-(--clock-number-size) ml-[calc(-1*var(--clock-number-size)/2)] mt-[calc(-1*var(--clock-number-size)/2)] pointer-events-none relative text-center [-webkit-user-select:none] [-moz-user-select:none] select-none w-(--clock-number-size)',
-            theme?.number,
+            classNames?.number,
             number === active &&
               cn(
                 'rt-time-picker-active',
                 '[.rt-time-picker-number&]:text-(--clock-primary-contrast-color)',
-                theme?.active,
+                classNames?.active,
               ),
           )}
           style={{

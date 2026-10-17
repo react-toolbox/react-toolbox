@@ -1,5 +1,5 @@
 /** Optional class overrides for the component's rendered parts. */
-export type ButtonTheme = Partial<
+export type ButtonClassNames = Partial<
   Record<
     | 'accent'
     | 'button'
@@ -27,10 +27,8 @@ export interface ButtonAppearanceProps extends RippleProps {
   inverse?: boolean;
   neutral?: boolean;
   primary?: boolean;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: ButtonTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: ButtonTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: ButtonClassNames;
 }
 export interface ButtonShapeProps {
   flat?: boolean;
@@ -51,6 +49,3 @@ export type ButtonNativeProps =
       disabled?: boolean;
       type?: string;
     });
-
-/** Style slots for the component. */
-export type ButtonClassNames = ButtonTheme;

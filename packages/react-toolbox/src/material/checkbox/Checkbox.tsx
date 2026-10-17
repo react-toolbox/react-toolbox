@@ -1,15 +1,14 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { CheckboxTheme } from './types';
+import type { CheckboxClassNames } from './types';
 
 import React, { useImperativeHandle, useRef } from 'react';
 import { cn } from '../foundations/styles/cn';
 import useChecked from '../foundations/forms/useChecked';
 import Check from './Check';
-export type { CheckboxTheme, CheckboxClassNames } from './types';
+export type { CheckboxClassNames } from './types';
 export interface CheckboxHandle {
   focus(): void;
   blur(): void;
@@ -26,10 +25,8 @@ export interface CheckboxProps
   onMouseEnter?: React.MouseEventHandler<HTMLLabelElement>;
   onMouseLeave?: React.MouseEventHandler<HTMLLabelElement>;
   ripple?: boolean;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: CheckboxTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: CheckboxTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: CheckboxClassNames;
   ref?: React.Ref<CheckboxHandle>;
   onChange?: (checked: boolean, event: React.MouseEvent<HTMLInputElement>) => void;
 }
@@ -46,14 +43,12 @@ export function Checkbox({
   onClick,
   onMouseEnter,
   onMouseLeave,
-  theme: legacyTheme,
   classNames,
   ripple,
   ref,
   style,
   ...others
 }: CheckboxProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const input = useRef<HTMLInputElement>(null);
   const [checked, setChecked] = useChecked(input, controlledChecked, defaultChecked);
   React.useLayoutEffect(() => {
@@ -84,8 +79,8 @@ export function Checkbox({
         'block min-h-[48px] min-w-[48px] py-[max(0px,calc((48px-var(--checkbox-size))/2))] mb-(--checkbox-field-margin-bottom) relative whitespace-nowrap',
         materialRoot,
         materialDescendants,
-        theme?.field,
-        disabled && cn('rt-checkbox-disabled', theme?.disabled),
+        classNames?.field,
+        disabled && cn('rt-checkbox-disabled', classNames?.disabled),
         className,
       )}
       onMouseEnter={onMouseEnter}
@@ -95,7 +90,7 @@ export function Checkbox({
         {...others}
         checked={controlledChecked}
         defaultChecked={controlledChecked === undefined ? defaultChecked : undefined}
-        className={cn('rt-checkbox-input', 'h-0 opacity-0 overflow-hidden absolute w-0', theme?.input)}
+        className={cn('rt-checkbox-input', 'h-0 opacity-0 overflow-hidden absolute w-0', classNames?.input)}
         disabled={disabled}
         name={name}
         aria-checked={indeterminate ? 'mixed' : undefined}
@@ -107,7 +102,7 @@ export function Checkbox({
       <Check
         disabled={disabled}
         ripple={ripple}
-        theme={theme}
+        classNames={classNames}
         checked={checked || indeterminate}
         indeterminate={indeterminate}
         style={style}
@@ -119,7 +114,7 @@ export function Checkbox({
             'rt-checkbox-text',
             'text-(--checkbox-text-color) inline-block text-(length:--checkbox-text-font-size) leading-(--checkbox-size) ps-(--unit) align-top whitespace-nowrap',
             '[.rt-checkbox-disabled>&]:text-(--checkbox-disabled-color)',
-            theme?.text,
+            classNames?.text,
           )}
         >
           {label}

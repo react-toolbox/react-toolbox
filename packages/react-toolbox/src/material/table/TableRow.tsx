@@ -1,9 +1,8 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { checkboxCellClasses } from './styles';
-import type { TableTheme } from './types';
+import type { TableClassNames } from './types';
 import {
   useContext,
   useEffect,
@@ -27,10 +26,8 @@ export interface TableRowProps extends Omit<ComponentPropsWithRef<'tr'>, 'onSele
   selectable?: boolean;
   selected?: boolean;
   selectLabel?: string;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: TableTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: TableTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: TableClassNames;
 }
 export function TableRow({
   children,
@@ -42,11 +39,9 @@ export function TableRow({
   selectable: suppliedSelectable,
   selected: suppliedSelected,
   selectLabel,
-  theme: legacyTheme,
   classNames,
   ...other
 }: TableRowProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const cellTag = useContext(TableCellContext);
   const selection = useContext(TableSelectionContext);
   const register = selection?.register;
@@ -74,20 +69,20 @@ export function TableRow({
         'rt-table-row',
         'text-(--table-row-color) h-(--table-row-height) duration-[0.28s] [transition-property:background-color] [transition-timing-function:var(--animation-curve-default)]',
         '[&:hover]:bg-(--table-hover-color)',
-        theme?.row,
+        classNames?.row,
         selectable &&
           selected &&
           cn(
             'rt-table-selected',
             '[.rt-table-row&]:bg-(--table-selection-color)',
             '[.rt-table-row&:hover]:bg-(--table-hover-color)',
-            theme?.selected,
+            classNames?.selected,
           ),
         className,
       )}
     >
       {selectable && (
-        <TableCell className={cn(checkboxCellClasses, theme?.checkboxCell)}>
+        <TableCell className={cn(checkboxCellClasses, classNames?.checkboxCell)}>
           <Checkbox
             aria-label={selectLabel ?? `Select row ${value ?? idx + 1}`}
             checked={selected}

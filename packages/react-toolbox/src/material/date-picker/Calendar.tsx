@@ -1,10 +1,9 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { activeClasses } from './styles';
 import { cn } from '../foundations/styles/cn';
-import type { DatePickerTheme, DatePickerLabels } from './types';
+import type { DatePickerClassNames, DatePickerLabels } from './types';
 
 import React, { useEffect, useRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -24,10 +23,8 @@ export interface CalendarProps extends DateConstraints {
   onChange?: (date: Date, dayClick: boolean) => void;
   selectedDate?: Date;
   sundayFirstDayOfWeek?: boolean;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: DatePickerTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: DatePickerTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: DatePickerClassNames;
 }
 export default function Calendar({
   display = 'months',
@@ -39,11 +36,9 @@ export default function Calendar({
   onChange,
   selectedDate: suppliedDate,
   sundayFirstDayOfWeek,
-  theme: legacyTheme,
   classNames,
   ...constraints
 }: CalendarProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const [initialDate] = useState(() => new Date());
   const selectedDate = suppliedDate ?? initialDate;
   const [viewDate, setViewDate] = useState(selectedDate);
@@ -96,48 +91,48 @@ export default function Calendar({
           enter: cn(
             'rt-date-picker-slideLeftEnter',
             'absolute opacity-0 transform-[translate3d(-100%,0,0)]',
-            theme?.slideLeftEnter,
+            classNames?.slideLeftEnter,
           ),
           enterActive: cn(
             'rt-date-picker-slideLeftEnterActive',
             'duration-350 [transition-property:transform,opacity] ease-[ease-in-out]',
             '[.rt-date-picker-slideLeftEnter&]:opacity-[1] [.rt-date-picker-slideLeftEnter&]:transform-[translate3d(0,0,0)]',
-            theme?.slideLeftEnterActive,
+            classNames?.slideLeftEnterActive,
           ),
           exit: cn(
             'rt-date-picker-slideLeftExit',
             'absolute opacity-[1] transform-[translate3d(0,0,0)]',
-            theme?.slideLeftExit,
+            classNames?.slideLeftExit,
           ),
           exitActive: cn(
             'rt-date-picker-slideLeftExitActive',
             'duration-350 [transition-property:transform,opacity] ease-[ease-in-out]',
             '[.rt-date-picker-slideLeftExit&]:opacity-0 [.rt-date-picker-slideLeftExit&]:transform-[translate3d(100%,0,0)]',
-            theme?.slideLeftExitActive,
+            classNames?.slideLeftExitActive,
           ),
         }
       : {
           enter: cn(
             'rt-date-picker-slideRightEnter',
             'absolute opacity-0 transform-[translateX(100%)]',
-            theme?.slideRightEnter,
+            classNames?.slideRightEnter,
           ),
           enterActive: cn(
             'rt-date-picker-slideRightEnterActive',
             'duration-350 [transition-property:transform,opacity] ease-[ease-in-out]',
             '[.rt-date-picker-slideRightEnter&]:opacity-[1] [.rt-date-picker-slideRightEnter&]:transform-[translateX(0)]',
-            theme?.slideRightEnterActive,
+            classNames?.slideRightEnterActive,
           ),
           exit: cn(
             'rt-date-picker-slideRightExit',
             'absolute opacity-[1] transform-[translateX(0)]',
-            theme?.slideRightExit,
+            classNames?.slideRightExit,
           ),
           exitActive: cn(
             'rt-date-picker-slideRightExitActive',
             'duration-350 [transition-property:transform,opacity] ease-[ease-in-out]',
             '[.rt-date-picker-slideRightExit&]:opacity-0 [.rt-date-picker-slideRightExit&]:transform-[translateX(-100%)]',
-            theme?.slideRightExitActive,
+            classNames?.slideRightExitActive,
           ),
         };
   const month = viewDate.getMonth();
@@ -156,7 +151,7 @@ export default function Calendar({
         'rt-date-picker-calendar',
         '[background:var(--calendar-background)] text-(length:--font-size-small) h-(--calendar-total-height) leading-(--calendar-row-height) overflow-hidden relative text-center',
         '[&:focus-visible]:[outline:2px_solid_var(--calendar-primary-color)] [&:focus-visible]:outline-offset-2',
-        theme?.calendar,
+        classNames?.calendar,
       )}
       role="group"
       aria-label={labels?.calendar ?? 'Calendar'}
@@ -192,12 +187,11 @@ export default function Calendar({
           ArrowRight: 1,
           ArrowDown: 7,
         };
-        const legacySteps: Record<number, number> = { 37: -1, 38: -7, 39: 1, 40: 7 };
         const direction =
           ['ArrowLeft', 'ArrowRight'].includes(event.key) && getComputedStyle(event.currentTarget).direction === 'rtl'
             ? -1
             : 1;
-        const step = (steps[event.key] || legacySteps[event.which]) * direction;
+        const step = steps[event.key] * direction;
         if (step) {
           event.preventDefault();
           let date: Date | undefined = time.addDays(focusedDate, step);
@@ -221,7 +215,7 @@ export default function Calendar({
             setFocusedDate(date);
             onChange?.(date, false);
           }
-        } else if ((event.key === 'Enter' || event.which === 13) && event.target === event.currentTarget) {
+        } else if (event.key === 'Enter' && event.target === event.currentTarget) {
           event.preventDefault();
           handleSelect?.(event);
         }
@@ -235,7 +229,7 @@ export default function Calendar({
             '[&>li:focus-visible]:[outline:2px_solid_var(--calendar-primary-color)] [&>li:focus-visible]:outline-offset-2',
             'text-(length:--font-size-big) h-full [list-style:none] m-0 overflow-y-auto p-0',
             '[&>li]:cursor-pointer [&>li]:leading-[2.4]',
-            theme?.years,
+            classNames?.years,
           )}
           ref={years}
         >
@@ -244,7 +238,7 @@ export default function Calendar({
               role="button"
               tabIndex={year === focusedYear ? 0 : -1}
               aria-pressed={year === viewDate.getFullYear()}
-              className={year === viewDate.getFullYear() ? cn(activeClasses, theme?.active) : ''}
+              className={year === viewDate.getFullYear() ? cn(activeClasses, classNames?.active) : ''}
               key={year}
               onClick={() => yearClick(year)}
               onKeyDown={(event) => {
@@ -298,7 +292,7 @@ export default function Calendar({
               'rt-date-picker-prev',
               '[.rt-date-picker-calendar_&]:cursor-pointer [.rt-date-picker-calendar_&]:h-[calc(3.6*var(--unit))] [.rt-date-picker-calendar_&]:opacity-[0.7] [.rt-date-picker-calendar_&]:absolute [.rt-date-picker-calendar_&]:top-0 [.rt-date-picker-calendar_&]:z-(--z-index-high) [.rt-date-picker-calendar_&]:left-0',
               '[.rt-date-picker-calendar_&>span]:align-top',
-              theme?.prev,
+              classNames?.prev,
             )}
             icon="chevron_left"
             onClick={() => moveViewMonth('left')}
@@ -309,7 +303,7 @@ export default function Calendar({
               'rt-date-picker-next',
               '[.rt-date-picker-calendar_&]:cursor-pointer [.rt-date-picker-calendar_&]:h-[calc(3.6*var(--unit))] [.rt-date-picker-calendar_&]:opacity-[0.7] [.rt-date-picker-calendar_&]:absolute [.rt-date-picker-calendar_&]:top-0 [.rt-date-picker-calendar_&]:z-(--z-index-high) [.rt-date-picker-calendar_&]:right-0',
               '[.rt-date-picker-calendar_&>span]:align-top',
-              theme?.next,
+              classNames?.next,
             )}
             icon="chevron_right"
             onClick={() => moveViewMonth('right')}
@@ -339,7 +333,7 @@ export default function Calendar({
                 focusedDate={focusedDate}
                 onDayFocus={(day) => setFocusedDate(time.setDay(viewDate, day))}
                 sundayFirstDayOfWeek={sundayFirstDayOfWeek}
-                theme={theme}
+                classNames={classNames}
                 viewDate={viewDate}
               />
             </CSSTransition>

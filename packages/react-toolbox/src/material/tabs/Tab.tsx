@@ -1,9 +1,8 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { activeClasses } from './styles';
-import type { TabsTheme } from './types';
+import type { TabsClassNames } from './types';
 
 import {
   useEffect,
@@ -18,7 +17,7 @@ import { cn } from '../foundations/styles/cn';
 import { useRipple } from '../ripple';
 import { FontIcon } from '../font-icon';
 
-export type TabTheme = TabsTheme;
+export type TabClassNames = TabsClassNames;
 export type TabEvent = MouseEvent<HTMLDivElement> | KeyboardEvent<HTMLDivElement>;
 export interface TabProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'> {
   active?: boolean;
@@ -30,10 +29,8 @@ export interface TabProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'
   onActive?: () => void;
   onClick?: (event: TabEvent, index?: number) => void;
   ripple?: boolean;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: TabTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: TabTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: TabClassNames;
   ref?: Ref<HTMLDivElement>;
 }
 export function Tab({
@@ -54,12 +51,10 @@ export function Tab({
   onTouchEnd,
   onTouchCancel,
   ripple = true,
-  theme: legacyTheme,
   classNames,
   ref,
   ...attributes
 }: TabProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const previousActive = useRef(active);
   useEffect(() => {
     if (!previousActive.current && active) onActive?.();
@@ -69,7 +64,9 @@ export function Tab({
     centered: false,
     disabled: disabled || hidden,
     ripple,
-    theme: { rippleWrapper: cn('rt-tabs-rippleWrapper', '[.rt-tabs-label>&]:overflow-hidden', theme?.rippleWrapper) },
+    classNames: {
+      rippleWrapper: cn('rt-tabs-rippleWrapper', '[.rt-tabs-label>&]:overflow-hidden', classNames?.rippleWrapper),
+    },
   });
   const click = (event: TabEvent) => {
     if (!disabled && !hidden) onClick?.(event, index);
@@ -92,22 +89,23 @@ export function Tab({
         '[&:not(.rt-tabs-disabled)]:cursor-pointer',
         '[.rt-tabs-fixed_&]:flex-1 [.rt-tabs-fixed_&]:text-center',
         '[.rt-tabs-inverse_&]:text-(--tab-inverse-text-inactive-color)',
-        theme?.label,
-        active && cn(activeClasses, theme?.active),
-        hidden && cn('rt-tabs-hidden', '[.rt-tabs-label&]:hidden', theme?.hidden),
+        classNames?.label,
+        active && cn(activeClasses, classNames?.active),
+        hidden && cn('rt-tabs-hidden', '[.rt-tabs-label&]:hidden', classNames?.hidden),
         Boolean(label) &&
           cn(
             'rt-tabs-withText',
             '[.rt-tabs-label.rt-tabs-withIcon&]:pt-[calc(0.8*var(--unit))] [.rt-tabs-label.rt-tabs-withIcon&]:pb-[calc(1.6*var(--unit))]',
-            theme?.withText,
+            classNames?.withText,
           ),
         Boolean(icon) &&
           cn(
             'rt-tabs-withIcon',
             '[.rt-tabs-label&]:pb-[calc((var(--tab-label-height)-var(--tab-icon-height))/2)] [.rt-tabs-label&]:pt-[calc((var(--tab-label-height)-var(--tab-icon-height))/2)] [.rt-tabs-label&]:text-center',
-            theme?.withIcon,
+            classNames?.withIcon,
           ),
-        disabled && cn('rt-tabs-disabled', '[.rt-tabs-label&]:opacity-(--tab-label-disabled-opacity)', theme?.disabled),
+        disabled &&
+          cn('rt-tabs-disabled', '[.rt-tabs-label&]:opacity-(--tab-label-disabled-opacity)', classNames?.disabled),
         active && activeClassName,
         className,
       )}
@@ -142,7 +140,7 @@ export function Tab({
             'rt-tabs-icon',
             'block h-(--tab-icon-height) leading-(--tab-icon-height) m-[0_auto]',
             '[.rt-tabs-label.rt-tabs-withText_&]:mb-(--tab-icon-margin-bottom)',
-            theme?.icon,
+            classNames?.icon,
           )}
           value={icon}
         />
@@ -154,6 +152,3 @@ export function Tab({
   );
 }
 export default Tab;
-
-/** Style slots for the component. */
-export type TabClassNames = TabTheme;

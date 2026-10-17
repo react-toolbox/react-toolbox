@@ -1,5 +1,5 @@
 /** Optional class overrides for the component's rendered parts. */
-export type InputTheme = Partial<
+export type InputClassNames = Partial<
   Record<
     | 'bar'
     | 'counter'
@@ -19,6 +19,3 @@ export type InputTheme = Partial<
     string
   >
 >;
-
-/** Style slots for the component. */
-export type InputClassNames = InputTheme;

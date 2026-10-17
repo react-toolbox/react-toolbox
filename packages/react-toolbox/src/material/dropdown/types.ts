@@ -1,5 +1,5 @@
 /** Optional class overrides for the component's rendered parts. */
-export type DropdownTheme = Partial<
+export type DropdownClassNames = Partial<
   Record<
     | 'active'
     | 'disabled'
@@ -17,6 +17,3 @@ export type DropdownTheme = Partial<
     string
   >
 >;
-
-/** Style slots for the component. */
-export type DropdownClassNames = DropdownTheme;

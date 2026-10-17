@@ -151,6 +151,7 @@ test('menu and modal keyboard journeys retain accessible names, focus containmen
   await page.keyboard.press('Enter');
   const dialog = page.getByRole('dialog', { name: 'Save changes' });
   await expect(dialog).toBeFocused();
+  await expect(dialog).toHaveCSS('opacity', '1');
   await expectAccessible(page);
   await page.keyboard.press('Shift+Tab');
   await expect(dialog.getByRole('button', { name: 'Save', exact: true })).toBeFocused();

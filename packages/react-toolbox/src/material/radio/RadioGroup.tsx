@@ -1,8 +1,7 @@
 'use client';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import React, { useId } from 'react';
-import type { RadioButtonTheme } from './RadioButton';
+import type { RadioButtonClassNames } from './RadioButton';
 import { RadioGroupContext } from './context';
 export interface RadioGroupProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   disabled?: boolean;
@@ -11,10 +10,8 @@ export interface RadioGroupProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   required?: boolean;
   value?: string;
   defaultValue?: string;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: RadioButtonTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: RadioButtonTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: RadioButtonClassNames;
   onChange?: (value: string | undefined, event: React.MouseEvent<HTMLInputElement>) => void;
   ref?: React.Ref<HTMLDivElement>;
 }
@@ -26,17 +23,15 @@ export function RadioGroup({
   form,
   required,
   onChange,
-  theme: legacyTheme,
   classNames,
   value,
   defaultValue,
   ...others
 }: RadioGroupProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const id = useId();
   return (
     <RadioGroupContext
-      value={{ name: name || `radio-${id}`, form, required, value, defaultValue, disabled, theme, onChange }}
+      value={{ name: name || `radio-${id}`, form, required, value, defaultValue, disabled, classNames, onChange }}
     >
       <div
         {...others}

@@ -29,7 +29,7 @@ const merge = extendTailwindMerge({
   },
 });
 
-/** Consumer utilities win over component defaults, including theme slot overrides. */
+/** Consumer utilities win over component defaults, including style-slot overrides. */
 export function cn(...inputs: Argument[]): string {
   return [
     ...new Set(

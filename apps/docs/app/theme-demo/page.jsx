@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { Button, DatePicker, Input, ThemeProvider } from 'react-toolbox';
 
 const customVariables = {
-  '--color-primary': '#00695c',
-  '--color-primary-dark': '#004d40',
-  '--color-accent': '#ff6d00',
+  '--rt-color-primary': '#00695c',
+  '--rt-color-primary-dark': '#004d40',
+  '--rt-color-accent': '#ff6d00',
 };
 
 export default function ThemeExample() {
@@ -45,7 +45,7 @@ export default function ThemeExample() {
           </div>
         </section>
       </ThemeProvider>
-      <p className="gallery-note">Color customization uses CSS variables. Existing theme slot class names remain available for more specific changes. Tailwind utilities can customize individual components.</p>
+      <p className="gallery-note">Color customization uses CSS variables. Use classNames for named style slots and className for individual components.</p>
       <div className="mt-8"><Button label="Back to component gallery" icon="arrow_back" href="/components" /></div>
     </main>
   );

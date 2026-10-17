@@ -1,8 +1,7 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
-import type { RippleTheme } from './types';
+import type { RippleClassNames } from './types';
 
 import {
   createElement,
@@ -20,17 +19,15 @@ import {
 import { cn } from '../foundations/styles/cn';
 import useReducedMotion from '../foundations/motion/useReducedMotion';
 
-export type { RippleTheme, RippleClassNames } from './types';
+export type { RippleClassNames } from './types';
 export interface RippleOptions {
   centered?: boolean;
   className?: string;
   disabled?: boolean;
   multiple?: boolean;
   spread?: number;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: RippleTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: RippleTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: RippleClassNames;
   ripple?: boolean;
   onRippleEnded?: TransitionEventHandler<HTMLSpanElement>;
   onMouseDown?: MouseEventHandler<HTMLElement>;
@@ -70,7 +67,6 @@ export function useRipple({
   disabled = false,
   multiple = true,
   spread = 2,
-  theme: legacyTheme,
   classNames,
   ripple = true,
   onRippleEnded,
@@ -79,7 +75,6 @@ export function useRipple({
   onTouchEnd: suppliedTouchEnd,
   onTouchCancel: suppliedTouchCancel,
 }: RippleOptions = {}): RippleBehavior {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const reducedMotion = useReducedMotion();
   const [inks, setInks] = useState<Ink[]>([]);
   const nodes = useRef(new Map<number, HTMLSpanElement>());
@@ -178,7 +173,7 @@ export function useRipple({
             className={cn(
               'rt-ripple-rippleWrapper',
               'bottom-0 left-0 pointer-events-none absolute right-0 top-0 z-(--z-index-normal)',
-              theme?.rippleWrapper,
+              classNames?.rippleWrapper,
             )}
           >
             <span
@@ -190,18 +185,18 @@ export function useRipple({
                 'rt-ripple-ripple',
                 'bg-[currentColor] rounded-[50%] left-[50%] pointer-events-none absolute top-[50%] origin-[50%_50%] duration-(--ripple-duration) z-(--z-index-high)',
                 '[&:not(.rt-ripple-rippleActive):not(.rt-ripple-rippleRestarting)]:opacity-0 [&:not(.rt-ripple-rippleActive):not(.rt-ripple-rippleRestarting)]:[transition-property:opacity,transform]',
-                theme?.ripple,
+                classNames?.ripple,
                 ink.active &&
                   cn(
                     'rt-ripple-rippleActive',
                     '[.rt-ripple-ripple&]:opacity-(--ripple-final-opacity) [.rt-ripple-ripple&]:[transition-property:transform]',
-                    theme?.rippleActive,
+                    classNames?.rippleActive,
                   ),
                 ink.restarting &&
                   cn(
                     'rt-ripple-rippleRestarting',
                     '[.rt-ripple-ripple&]:opacity-(--ripple-final-opacity) [.rt-ripple-ripple&]:transition-none',
-                    theme?.rippleRestarting,
+                    classNames?.rippleRestarting,
                   ),
                 className,
               )}
@@ -225,7 +220,7 @@ export function useRipple({
 }
 
 /** Optional convenience decorator for application components. Library components use the hook. */
-export function rippleFactory(options: RippleOptions & { passthrough?: boolean } = {}) {
+export function rippleFactory(options: RippleOptions = {}) {
   return function withRipple<C extends ElementType>(Component: C) {
     return function RippledComponent(props: ComponentPropsWithRef<C> & RippleProps) {
       const {

@@ -1,5 +1,5 @@
 /** Optional class overrides for the component's rendered parts. */
-export type TabsTheme = Partial<
+export type TabsClassNames = Partial<
   Record<
     | 'disableAnimation'
     | 'active'
@@ -22,6 +22,3 @@ export type TabsTheme = Partial<
     string
   >
 >;
-
-/** Style slots for the component. */
-export type TabsClassNames = TabsTheme;

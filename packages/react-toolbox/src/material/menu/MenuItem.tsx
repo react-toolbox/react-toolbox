@@ -1,9 +1,8 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { iconClasses } from './styles';
-import type { MenuTheme } from './types';
+import type { MenuClassNames } from './types';
 
 import {
   useImperativeHandle,
@@ -20,7 +19,7 @@ import { FontIcon } from '../font-icon';
 import { useRipple } from '../ripple';
 import { MenuContext } from './context';
 
-export type MenuItemTheme = MenuTheme;
+export type MenuItemClassNames = MenuClassNames;
 export type MenuItemEvent = MouseEvent<HTMLLIElement> | KeyboardEvent<HTMLLIElement>;
 export interface MenuItemHandle<Value = unknown> {
   readonly node: HTMLLIElement | null;
@@ -39,10 +38,8 @@ export interface MenuItemProps<Value = unknown> extends Omit<HTMLAttributes<HTML
   value?: Value;
   ripple?: boolean;
   onClick?: (event: MenuItemEvent, item: MenuItemHandle<Value>) => void;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: MenuItemTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: MenuItemTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: MenuItemClassNames;
   ref?: Ref<MenuItemHandle<Value>>;
 }
 export function MenuItem<Value = unknown>({
@@ -63,12 +60,10 @@ export function MenuItem<Value = unknown>({
   onTouchStart,
   onTouchEnd,
   onTouchCancel,
-  theme: legacyTheme,
   classNames,
   ref,
   ...attributes
 }: MenuItemProps<Value>) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const menu = useContext(MenuContext);
   const selected = suppliedSelected ?? (value !== undefined && menu?.selectable && value === menu.selected) ?? false;
   const role = attributes.role ?? (menu?.selectable && value !== undefined ? 'menuitemradio' : 'menuitem');
@@ -84,8 +79,8 @@ export function MenuItem<Value = unknown>({
   const ink = useRipple({
     disabled,
     ripple,
-    theme: {
-      ripple: cn('rt-menu-ripple', '[.rt-menu-menuItem_&]:text-(--rt-color-text-secondary)', theme?.ripple),
+    classNames: {
+      ripple: cn('rt-menu-ripple', '[.rt-menu-menuItem_&]:text-(--rt-color-text-secondary)', classNames?.ripple),
     },
   });
   const click = (event: MenuItemEvent) => {
@@ -110,18 +105,18 @@ export function MenuItem<Value = unknown>({
         'items-center text-(--rt-color-text) flex text-(length:--menu-item-font-size) h-(--menu-item-height) overflow-hidden p-[0_var(--menu-item-padding)] relative',
         '[&:not(.rt-menu-disabled):hover]:bg-(--menu-item-hover-background) [&:not(.rt-menu-disabled):hover]:cursor-pointer',
         '[&:not(.rt-menu-disabled):focus-visible]:bg-(--menu-item-hover-background) [&:not(.rt-menu-disabled):focus-visible]:[outline:2px_solid_currentColor] [&:not(.rt-menu-disabled):focus-visible]:-outline-offset-2',
-        theme?.menuItem,
+        classNames?.menuItem,
         selected &&
           cn(
             'rt-menu-selected',
             '[.rt-menu-menuItem&]:bg-(--menu-item-selected-background) [.rt-menu-menuItem&]:[font-weight:500]',
-            theme?.selected,
+            classNames?.selected,
           ),
         disabled &&
           cn(
             'rt-menu-disabled',
             '[.rt-menu-menuItem&]:opacity-[0.5] [.rt-menu-menuItem&]:pointer-events-none',
-            theme?.disabled,
+            classNames?.disabled,
           ),
         className,
       )}
@@ -150,10 +145,12 @@ export function MenuItem<Value = unknown>({
         ink.onTouchCancel(event);
       }}
     >
-      {icon ? <FontIcon aria-hidden="true" value={icon} className={cn(iconClasses, theme?.icon)} /> : null}
-      <span className={cn('rt-menu-caption', 'grow text-(length:--font-size-normal)', theme?.caption)}>{caption}</span>
+      {icon ? <FontIcon aria-hidden="true" value={icon} className={cn(iconClasses, classNames?.icon)} /> : null}
+      <span className={cn('rt-menu-caption', 'grow text-(length:--font-size-normal)', classNames?.caption)}>
+        {caption}
+      </span>
       {shortcut ? (
-        <small className={cn('rt-menu-shortcut', 'ml-(--menu-item-padding)', theme?.shortcut)}>{shortcut}</small>
+        <small className={cn('rt-menu-shortcut', 'ml-(--menu-item-padding)', classNames?.shortcut)}>{shortcut}</small>
       ) : null}
       {children}
       {ink.ripple}
@@ -161,6 +158,3 @@ export function MenuItem<Value = unknown>({
   );
 }
 export default MenuItem;
-
-/** Style slots for the component. */
-export type MenuItemClassNames = MenuItemTheme;

@@ -1,14 +1,13 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { ChipTheme } from './types';
+import type { ChipClassNames } from './types';
 
 import React, { useRef } from 'react';
 import { cn } from '../foundations/styles/cn';
 import Avatar from '../avatar/Avatar';
-export type { ChipTheme, ChipClassNames } from './types';
+export type { ChipClassNames } from './types';
 export type ChipEvent = React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;
 export interface ChipProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onClick'> {
   deletable?: boolean;
@@ -16,10 +15,8 @@ export interface ChipProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'o
   disabled?: boolean;
   onClick?: (event: ChipEvent) => void;
   onDeleteClick?: (event: ChipEvent) => void;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: ChipTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: ChipTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: ChipClassNames;
   ref?: React.Ref<HTMLDivElement>;
 }
 export function Chip({
@@ -32,11 +29,9 @@ export function Chip({
   onDeleteClick,
   onKeyDown,
   tabIndex,
-  theme: legacyTheme,
   classNames,
   ...other
 }: ChipProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const primary = useRef<HTMLButtonElement>(null);
   let hasAvatar = false;
   if (React.Children.count(children)) {
@@ -51,13 +46,13 @@ export function Chip({
     materialRoot,
     materialDescendants,
     '[&:focus-visible]:[outline:2px_solid_var(--rt-color-primary)] [&:focus-visible]:outline-offset-2',
-    theme?.chip,
+    classNames?.chip,
     !!deletable &&
-      cn('rt-chip-deletable', 'pe-[calc(var(--chip-remove-size)+2*var(--chip-remove-margin))]', theme?.deletable),
+      cn('rt-chip-deletable', 'pe-[calc(var(--chip-remove-size)+2*var(--chip-remove-margin))]', classNames?.deletable),
     "[&:has([data-react-toolbox='avatar'])]:text-(length:--font-size-small) [&:has([data-react-toolbox='avatar'])]:ps-0",
     "[&_[data-react-toolbox='avatar']]:h-(--chip-height) [&_[data-react-toolbox='avatar']]:me-(--chip-icon-margin-right) [&_[data-react-toolbox='avatar']]:align-middle [&_[data-react-toolbox='avatar']]:w-(--chip-height)",
     "[&_[data-react-toolbox='avatar']>span]:text-(length:--chip-icon-font-size) [&_[data-react-toolbox='avatar']>span]:leading-(--chip-height)",
-    !!hasAvatar && cn('rt-chip-avatar', 'text-(length:--font-size-small) ps-0', theme?.avatar),
+    !!hasAvatar && cn('rt-chip-avatar', 'text-(length:--font-size-small) ps-0', classNames?.avatar),
     className,
   );
 
@@ -110,7 +105,7 @@ export function Chip({
             'rt-chip-delete',
             'cursor-pointer inline-block h-(--chip-remove-size) m-(--chip-remove-margin) p-(--chip-remove-margin) absolute end-0 top-0 w-(--chip-remove-size) border-0 bg-transparent text-inherit [font:inherit] disabled:cursor-default',
             '[&:focus-visible]:[outline:2px_solid_var(--rt-color-primary)] [&:focus-visible]:outline-offset-2',
-            theme?.delete,
+            classNames?.delete,
           )}
           aria-label={deleteLabel}
           aria-disabled={disabled || undefined}
@@ -133,7 +128,7 @@ export function Chip({
               'rt-chip-deleteIcon',
               '[background:var(--chip-remove-background)] rounded-(--chip-remove-size) align-top',
               '[.rt-chip-delete:hover_&]:[background:var(--chip-remove-background-hover)]',
-              theme?.deleteIcon,
+              classNames?.deleteIcon,
             )}
             aria-hidden="true"
             focusable="false"
@@ -142,7 +137,7 @@ export function Chip({
               className={cn(
                 'rt-chip-deleteX',
                 '[.rt-chip-deleteIcon_&]:fill-transparent [.rt-chip-deleteIcon_&]:stroke-(--chip-remove-color) [.rt-chip-deleteIcon_&]:[stroke-width:var(--chip-remove-stroke-width)]',
-                theme?.deleteX,
+                classNames?.deleteX,
               )}
               d="M 12,12 L 28,28 M 28,12 L 12,28"
             />

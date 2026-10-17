@@ -44,7 +44,7 @@ import {
 import type { ComponentSlug } from './catalog';
 import SheetExample from './examples/sheet';
 
-const RippleButton = Ripple({ passthrough: false })('button');
+const RippleButton = Ripple()('button');
 const HintButton = Tooltip(Button);
 
 export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {

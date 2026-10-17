@@ -12,4 +12,4 @@ export type { SidebarProps } from './Sidebar';
 export { default as Panel } from './Panel';
 export type { PanelProps } from './Panel';
 export { default } from './Layout';
-export type { LayoutTheme, LayoutClassNames, LayoutBreakpoint, SidebarWidth } from './types';
+export type { LayoutClassNames, LayoutBreakpoint, SidebarWidth } from './types';

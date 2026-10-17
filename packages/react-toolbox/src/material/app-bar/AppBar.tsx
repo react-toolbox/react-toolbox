@@ -4,7 +4,7 @@ import '../button/tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialDescendants } from '../foundations/styles/classes';
-import type { AppBarTheme } from './types';
+import type { AppBarClassNames } from './types';
 import {
   useCallback,
   useContext,
@@ -19,7 +19,7 @@ import {
 import { cn } from '../foundations/styles/cn';
 import { IconButton } from '../button';
 import { LayoutContext } from '../foundations/layout/LayoutContext';
-export type { AppBarTheme, AppBarClassNames } from './types';
+export type { AppBarClassNames } from './types';
 export interface AppBarProps extends Omit<ComponentPropsWithRef<'header'>, 'title'> {
   fixed?: boolean;
   flat?: boolean;
@@ -30,10 +30,8 @@ export interface AppBarProps extends Omit<ComponentPropsWithRef<'header'>, 'titl
   rightIcon?: ReactNode;
   rightIconLabel?: string;
   scrollHide?: boolean;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: AppBarTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: AppBarTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: AppBarClassNames;
   title?: ReactNode;
 }
 export function AppBar({
@@ -48,8 +46,7 @@ export function AppBar({
   rightIcon,
   rightIconLabel,
   scrollHide = false,
-  theme: legacyTheme,
-  classNames,
+  classNames: suppliedClassNames,
   title,
   ref,
   ...other
@@ -58,7 +55,7 @@ export function AppBar({
   const register = layout?.registerAppBar;
   const id = useId();
   useLayoutEffect(() => register?.(id, fixed), [register, id, fixed]);
-  const theme = mergeStyleSlots<AppBarTheme>(layout?.appBarClasses, mergeStyleSlots(legacyTheme, classNames));
+  const classNames = mergeStyleSlots<AppBarClassNames>(layout?.appBarClasses, suppliedClassNames);
   const root = useRef<HTMLElement | null>(null);
   const [hidden, setHidden] = useState(false);
   const attach = useCallback(
@@ -113,15 +110,16 @@ export function AppBar({
         '[@media_screen_and_(max-width:_599.98px)_and_(orientation:_portrait)]:h-(--appbar-height-m-portrait)',
         '[@media_screen_and_(max-height:_599.98px)_and_(orientation:_landscape)]:h-(--appbar-height-m-landscape)',
         '[@media_screen_and_(max-width:_599.98px)_and_(orientation:_portrait),_screen_and_(max-height:_599.98px)_and_(orientation:_landscape)]:[--appbar-current-h-padding:var(--appbar-h-padding-mobile,_calc(1.6_*_var(--unit)))]',
-        theme?.appBar,
+        classNames?.appBar,
         fixed &&
           cn(
             'rt-app-bar-fixed',
             '[.rt-app-bar-appBar&]:left-0 [.rt-app-bar-appBar&]:fixed [.rt-app-bar-appBar&]:right-0 [.rt-app-bar-appBar&]:top-0 [.rt-app-bar-appBar&]:z-(--z-index-highest)',
-            theme?.fixed,
+            classNames?.fixed,
           ),
-        flat && cn('rt-app-bar-flat', theme?.flat),
-        hidden && cn('rt-app-bar-scrollHide', '[.rt-app-bar-appBar&]:transform-[translateY(-100%)]', theme?.scrollHide),
+        flat && cn('rt-app-bar-flat', classNames?.flat),
+        hidden &&
+          cn('rt-app-bar-scrollHide', '[.rt-app-bar-appBar&]:transform-[translateY(-100%)]', classNames?.scrollHide),
         className,
       )}
     >
@@ -129,7 +127,7 @@ export function AppBar({
         className={cn(
           'rt-app-bar-inner',
           '[.rt-app-bar-appBar_&]:items-center [.rt-app-bar-appBar_&]:flex [.rt-app-bar-appBar_&]:h-full [.rt-app-bar-appBar_&]:relative [.rt-app-bar-appBar_&]:w-full',
-          theme?.inner,
+          classNames?.inner,
         )}
       >
         {leftIcon && (
@@ -138,7 +136,7 @@ export function AppBar({
             className={cn(
               'rt-app-bar-leftIcon',
               'shrink-0 ms-[calc((var(--button-toggle-font-size)-var(--button-toggle-size))/2)] me-[calc(var(--appbar-title-distance)-(var(--button-toggle-size)+var(--button-toggle-font-size))/2)]',
-              theme?.leftIcon,
+              classNames?.leftIcon,
             )}
             onClick={onLeftIconClick}
             aria-label={leftIconLabel}
@@ -150,7 +148,7 @@ export function AppBar({
             className={cn(
               'rt-app-bar-title',
               'grow m-0 text-(length:--appbar-title-font-size) font-(--appbar-title-font-weight) overflow-x-hidden text-ellipsis whitespace-nowrap',
-              theme?.title,
+              classNames?.title,
             )}
           >
             {title}
@@ -165,7 +163,7 @@ export function AppBar({
             className={cn(
               'rt-app-bar-rightIcon',
               'ms-auto shrink-0 me-[calc((var(--button-toggle-font-size)-var(--button-toggle-size))/2)]',
-              theme?.rightIcon,
+              classNames?.rightIcon,
             )}
             onClick={onRightIconClick}
             aria-label={rightIconLabel}

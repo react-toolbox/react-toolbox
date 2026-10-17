@@ -37,7 +37,7 @@ jobs:
         if: failure()
         with:
           name: release-test-results-${{ matrix.browser }}
-          path: packages/react-toolbox/test-results/
+          path: test-results/
 
   publish:
     needs: verify

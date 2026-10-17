@@ -1,5 +1,4 @@
 'use client';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import {
   Children,
@@ -32,7 +31,6 @@ export function ListItem({
   rightIcon,
   selectable: suppliedSelectable,
   primaryAction,
-  theme: legacyTheme,
   classNames,
   to,
   onClick,
@@ -48,7 +46,6 @@ export function ListItem({
   onRippleEnded,
   ...other
 }: ListItemProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const list = useContext(ListContext);
   const selectable = suppliedSelectable ?? list?.selectable ?? false;
   const ripple = suppliedRipple ?? list?.ripple ?? false;
@@ -58,8 +55,8 @@ export function ListItem({
     className: rippleClassName,
     multiple: rippleMultiple,
     spread: rippleSpread,
-    theme: {
-      ripple: cn('rt-list-ripple', '[.rt-list-listItem_&]:text-(--rt-color-text-secondary)', theme?.ripple),
+    classNames: {
+      ripple: cn('rt-list-ripple', '[.rt-list-listItem_&]:text-(--rt-color-text-secondary)', classNames?.ripple),
     },
     ripple,
     onRippleEnded,
@@ -94,17 +91,17 @@ export function ListItem({
   ) : ordinaryChildren.length === 0 ? undefined : ordinaryChildren.every(
       (child) => typeof child === 'string' || typeof child === 'number',
     ) ? (
-    <ListItemContent theme={theme} caption={caption ?? ordinaryChildren} legend={legend} />
+    <ListItemContent classNames={classNames} caption={caption ?? ordinaryChildren} legend={legend} />
   ) : !caption && !legend && ordinaryChildren.length === 1 ? (
     ordinaryChildren[0]
   ) : (
-    <ListItemContent theme={theme} caption={caption} legend={legend}>
+    <ListItemContent classNames={classNames} caption={caption} legend={legend}>
       {ordinaryChildren}
     </ListItemContent>
   );
   const content = (
     <ListItemLayout
-      theme={theme}
+      classNames={classNames}
       avatar={avatar}
       caption={caption}
       disabled={disabled}
@@ -136,7 +133,7 @@ export function ListItem({
         'rt-list-listItem',
         'relative',
         "[&>[data-react-toolbox='ripple']]:overflow-hidden",
-        theme?.listItem,
+        classNames?.listItem,
         className,
       )}
       onClickCapture={(event) => {

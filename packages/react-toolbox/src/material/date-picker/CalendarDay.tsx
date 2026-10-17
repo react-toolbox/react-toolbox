@@ -1,9 +1,8 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { activeClasses } from './styles';
-import type { DatePickerTheme } from './types';
+import type { DatePickerClassNames } from './types';
 
 import { cn } from '../foundations/styles/cn';
 import time, { type DatePickerLocale } from '../foundations/date-time/calendar';
@@ -20,10 +19,8 @@ export interface CalendarDayProps {
   focusableDisabled?: boolean;
   selectedDate: Date;
   sundayFirstDayOfWeek?: boolean;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: DatePickerTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: DatePickerTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: DatePickerClassNames;
   viewDate: Date;
   locale?: DatePickerLocale;
 }
@@ -38,12 +35,10 @@ export default function CalendarDay({
   focusableDisabled = false,
   selectedDate,
   sundayFirstDayOfWeek,
-  theme: legacyTheme,
   classNames,
   viewDate,
   locale,
 }: CalendarDayProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const date = time.setDay(viewDate, day);
   const today = time.cloneAsDate(date).getTime() === time.cloneAsDate(new Date()).getTime();
   const selected =
@@ -67,13 +62,13 @@ export default function CalendarDay({
         '[&>span:focus-visible]:[outline:2px_solid_var(--calendar-primary-color)] [&>span:focus-visible]:outline-offset-2',
         '[&:hover:not(.rt-date-picker-disabled)>span]:cursor-pointer',
         '[&:hover:not(.rt-date-picker-active):not(.rt-date-picker-disabled)>span]:[background:var(--calendar-primary-hover-color)] [&:hover:not(.rt-date-picker-active):not(.rt-date-picker-disabled)>span]:text-(--calendar-primary-contrast-color)',
-        theme?.day,
-        selected && cn(activeClasses, theme?.active),
+        classNames?.day,
+        selected && cn(activeClasses, classNames?.active),
         disabled &&
           cn(
             'rt-date-picker-disabled',
             '[.rt-date-picker-day&]:opacity-(--calendar-day-disable-opacity)',
-            theme?.disabled,
+            classNames?.disabled,
           ),
       )}
       style={withOffset && day === 1 ? { marginLeft: `${(firstDay >= 0 ? firstDay : 6) * (100 / 7)}%` } : undefined}

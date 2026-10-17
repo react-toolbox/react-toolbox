@@ -4,5 +4,5 @@ import './tokens.css';
 import '../foundations/styles/setup.css';
 
 export { Slider as default, Slider } from './Slider';
-export type { SliderProps, SliderTheme, SliderClassNames } from './Slider';
+export type { SliderProps, SliderClassNames } from './Slider';
 export * from './parts';

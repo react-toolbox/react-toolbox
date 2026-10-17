@@ -1,8 +1,7 @@
 'use client';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { cn } from '../foundations/styles/cn';
-import type { TimePickerTheme } from './types';
+import type { TimePickerClassNames } from './types';
 
 import { useRef } from 'react';
 import { range } from '../foundations/collections/range';
@@ -16,20 +15,10 @@ export interface ClockMinutesProps {
   radius: number;
   selected?: number;
   spacing: number;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: TimePickerTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: TimePickerTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: TimePickerClassNames;
 }
-export default function ClockMinutes({
-  onChange,
-  radius,
-  selected = 0,
-  spacing,
-  theme: legacyTheme,
-  classNames,
-}: ClockMinutesProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
+export default function ClockMinutes({ onChange, radius, selected = 0, spacing, classNames }: ClockMinutesProps) {
   const hand = useRef<ClockHandHandle>(null);
   return (
     <>
@@ -40,16 +29,16 @@ export default function ClockMinutes({
         spacing={spacing}
         radius={radius}
         active={selected}
-        theme={theme}
+        classNames={classNames}
         twoDigits
       />
       <Hand
         ref={hand}
-        className={!minutes.includes(selected) ? cn('rt-time-picker-small', theme?.small) : ''}
+        className={!minutes.includes(selected) ? cn('rt-time-picker-small', classNames?.small) : ''}
         angle={selected * step}
         length={radius - spacing}
         onMove={(degrees) => onChange?.(degrees / step)}
-        theme={theme}
+        classNames={classNames}
         step={step}
       />
     </>

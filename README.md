@@ -30,6 +30,8 @@ Replace `button` with any of the 28 component family names, or `all`. The [insta
 
 Optional examples install through `example-field-notes`, `example-recipes`, and `example-snackbar-queue`. The Field Notes distribution demonstrates original, brand and night themes at `/docs/theming`; `/docs/recipes` demonstrates application workflows. Range sliders, range calendars, scheduling constraints and gesture sheets are documented alongside their component families.
 
+Upgrading an earlier installation requires the [3.0 migration](docs/source-registry.md#migrating-to-30): use `classNames` and `XxxClassNames` for style slots, canonical `--rt-color-*` tokens, and `open`/`onOpenChange` or `defaultOpen` for menus and pickers. Review the [preview release notes](docs/releases/3.0.0-next.0.md) before updating copied source.
+
 ## Workspace
 
 ```text

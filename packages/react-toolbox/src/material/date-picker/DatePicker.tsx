@@ -1,7 +1,6 @@
 'use client';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
-import type { DatePickerTheme, DatePickerLabels } from './types';
+import type { DatePickerClassNames, DatePickerLabels } from './types';
 
 import React, { useEffect, useId, useRef, useState } from 'react';
 import Button from '../button/Button';
@@ -12,11 +11,10 @@ import Input, { type InputProps, type InputElement, type InputHandle } from '../
 import time, { type DatePickerLocale } from '../foundations/date-time/calendar';
 import DatePickerDialog, { type DatePickerDialogProps, type DatePickerSelectEvent } from './DatePickerDialog';
 import isDateDisabled, { type DateConstraints } from './is-date-disabled';
-export type { DatePickerTheme, DatePickerClassNames, DatePickerLabels } from './types';
+export type { DatePickerClassNames, DatePickerLabels } from './types';
 export interface DatePickerProps
-  extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'theme' | 'classNames'>,
+  extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'classNames'>,
     DateConstraints {
-  active?: boolean;
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -41,14 +39,11 @@ export interface DatePickerProps
   sundayFirstDayOfWeek?: boolean;
   startYear?: number;
   endYear?: number;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: DatePickerTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: DatePickerTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: DatePickerClassNames;
   value?: Date | string | null;
 }
 export function DatePicker({
-  active: controlledActive = false,
   open: controlledOpen,
   defaultOpen,
   onOpenChange,
@@ -76,20 +71,17 @@ export function DatePicker({
   onClick,
   onDismiss,
   onEscKeyDown,
-  onKeyPress,
   onKeyDown,
   onOverlayClick,
   readonly,
   sundayFirstDayOfWeek = false,
   startYear,
   endYear,
-  theme: legacyTheme,
   classNames,
   value: controlledValue,
   ref,
   ...others
 }: DatePickerProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const dialogId = `date-picker-dialog-${useId()}`;
   const [internalValue, setValue] = useState(defaultValue);
   const value = controlledValue === undefined ? internalValue : controlledValue;
@@ -97,30 +89,25 @@ export function DatePicker({
   const native = useRef<HTMLInputElement>(null);
   const [validationMessage, setValidationMessage] = useState('');
   const inputRef = useMergedRefs(input, ref);
-  const [internalOpen, setOpen] = useState(defaultOpen ?? controlledActive);
-  const active = !disabled && !readonly && (controlledOpen ?? internalOpen);
-  const setActive = (next: boolean) => {
+  const [internalOpen, setOpen] = useState(defaultOpen ?? false);
+  const visible = !disabled && !readonly && (controlledOpen ?? internalOpen);
+  const setVisible = (next: boolean) => {
     if (controlledOpen === undefined) setOpen(next);
-    if (next !== active) onOpenChange?.(next);
+    if (next !== visible) onOpenChange?.(next);
   };
-  const previousActive = useRef(controlledActive);
-  useEffect(() => {
-    if (previousActive.current !== controlledActive) setOpen(controlledActive);
-    previousActive.current = controlledActive;
-  }, [controlledActive]);
   useFormReset(native, () => {
     if (controlledValue === undefined) setValue(defaultValue);
     setValidationMessage('');
-    setActive(false);
+    setVisible(false);
   });
   const dismiss = () => {
-    setActive(false);
+    setVisible(false);
     onDismiss?.();
   };
   const open = (event: React.SyntheticEvent<InputElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    setActive(true);
+    setVisible(true);
   };
   const date = value instanceof Date ? value : undefined;
   const formattedValue = date ? inputFormat(date, locale) : '';
@@ -132,7 +119,7 @@ export function DatePicker({
     native.current?.setCustomValidity(unavailable ? (labels?.unavailable ?? 'Choose an available date.') : '');
   }, [formattedValue, unavailable, labels?.unavailable]);
   return (
-    <div data-react-toolbox="date-picker" className={theme?.container}>
+    <div data-react-toolbox="date-picker" className={classNames?.container}>
       <input
         ref={native}
         type="text"
@@ -156,25 +143,14 @@ export function DatePicker({
       <Input
         {...others}
         ref={inputRef}
-        className={cn('rt-date-picker-input', theme?.input, inputClassName)}
+        className={cn('rt-date-picker-input', classNames?.input, inputClassName)}
         disabled={readonly || disabled}
         error={error || validationMessage}
         required={required}
         role="combobox"
         aria-haspopup="dialog"
-        aria-controls={active ? dialogId : undefined}
-        aria-expanded={active}
-        onKeyPress={(event) => {
-          onKeyPress?.(event);
-          if (
-            !event.defaultPrevented &&
-            !event.nativeEvent.isComposing &&
-            event.charCode === 13 &&
-            !disabled &&
-            !readonly
-          )
-            open(event);
-        }}
+        aria-controls={visible ? dialogId : undefined}
+        aria-expanded={visible}
         onKeyDown={(event) => {
           onKeyDown?.(event);
           if (
@@ -190,12 +166,12 @@ export function DatePicker({
           onClick?.(event);
           if (!event.defaultPrevented && !disabled && !readonly) open(event);
         }}
-        theme={{
-          input: cn('rt-date-picker-input', theme?.input),
+        classNames={{
+          input: cn('rt-date-picker-input', classNames?.input),
           inputElement: cn(
             'rt-date-picker-inputElement',
             '[.rt-date-picker-input:not(.rt-date-picker-disabled)>&]:cursor-pointer',
-            theme?.inputElement,
+            classNames?.inputElement,
           ),
         }}
         readOnly
@@ -210,7 +186,7 @@ export function DatePicker({
           onClick={() => {
             if (controlledValue === undefined) setValue(undefined);
             setValidationMessage('');
-            setActive(false);
+            setVisible(false);
             onClear?.();
             input.current?.focus();
           }}
@@ -220,7 +196,7 @@ export function DatePicker({
       ) : null}
       <DatePickerDialog
         id={dialogId}
-        active={active}
+        active={visible}
         autoOk={autoOk}
         cancelLabel={cancelLabel}
         labels={labels}
@@ -241,12 +217,12 @@ export function DatePicker({
           if (controlledValue === undefined) setValue(next);
           setValidationMessage('');
           onChange?.(next, event);
-          setActive(false);
+          setVisible(false);
         }}
         sundayFirstDayOfWeek={sundayFirstDayOfWeek}
         startYear={startYear}
         endYear={endYear}
-        theme={theme}
+        classNames={classNames}
         value={date}
       />
     </div>

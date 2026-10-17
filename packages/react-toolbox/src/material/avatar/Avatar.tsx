@@ -1,14 +1,13 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { AvatarTheme } from './types';
+import type { AvatarClassNames } from './types';
 import { isValidElement, type ComponentPropsWithRef, type ReactNode } from 'react';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { cn } from '../foundations/styles/cn';
 import FontIcon from '../font-icon';
-export type { AvatarTheme, AvatarClassNames } from './types';
+export type { AvatarClassNames } from './types';
 export interface AvatarProps extends ComponentPropsWithRef<'div'> {
   alt?: string;
   cover?: boolean;
@@ -19,10 +18,8 @@ export interface AvatarProps extends ComponentPropsWithRef<'div'> {
   icon?: ReactNode;
   /** URL images use automatic loading/fallback. Custom nodes own their loading and cover styling. */
   image?: ReactNode;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: AvatarTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: AvatarTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: AvatarClassNames;
 }
 export function Avatar({
   alt = '',
@@ -34,18 +31,16 @@ export function Avatar({
   imageProps,
   icon,
   image,
-  theme: legacyTheme,
   classNames,
   title,
   ...other
 }: AvatarProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const customImage = image != null && image !== false && typeof image !== 'string';
   const fallback =
     children ??
     (typeof icon === 'string' ? (
       <FontIcon
-        className={cn('rt-avatar-letter', 'block leading-(--avatar-size) w-full', theme?.letter)}
+        className={cn('rt-avatar-letter', 'block leading-(--avatar-size) w-full', classNames?.letter)}
         value={icon}
         alt={alt}
       />
@@ -53,7 +48,7 @@ export function Avatar({
       icon
     )) ??
     (title ? (
-      <span className={cn('rt-avatar-letter', 'block leading-(--avatar-size) w-full', theme?.letter)}>
+      <span className={cn('rt-avatar-letter', 'block leading-(--avatar-size) w-full', classNames?.letter)}>
         {Array.from(title)[0]}
       </span>
     ) : null);
@@ -69,7 +64,7 @@ export function Avatar({
           '[&>svg]:fill-current [&>svg]:h-(--avatar-size) [&>svg]:w-[1em]',
           '[&>img]:h-auto [&>img]:max-w-full',
           "[&>[data-react-toolbox='font-icon']]:block [&>[data-react-toolbox='font-icon']]:leading-(--avatar-size) [&>[data-react-toolbox='font-icon']]:w-full",
-          theme?.avatar,
+          classNames?.avatar,
           className,
         )}
         {...other}
@@ -82,7 +77,7 @@ export function Avatar({
               isValidElement(fallback)
                 ? undefined
                 : typeof fallback === 'string' || typeof fallback === 'number'
-                  ? cn('flex h-full w-full items-center justify-center', theme?.letter)
+                  ? cn('flex h-full w-full items-center justify-center', classNames?.letter)
                   : 'contents'
             }
           >
@@ -102,7 +97,7 @@ export function Avatar({
               className={cn(
                 'rt-avatar-image',
                 'bg-transparent bg-center bg-cover rounded-[50%] block h-full absolute w-full',
-                theme?.image,
+                classNames?.image,
                 imageProps?.className,
               )}
               style={{ backgroundImage: `url('${image}')` }}
@@ -120,7 +115,7 @@ export function Avatar({
                 className={cn(
                   'rt-avatar-image',
                   'bg-transparent bg-center bg-cover rounded-[50%] block h-full absolute w-full',
-                  theme?.image,
+                  classNames?.image,
                   imageProps?.className,
                 )}
                 src={image}

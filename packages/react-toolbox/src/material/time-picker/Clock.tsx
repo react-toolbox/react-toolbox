@@ -1,9 +1,8 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { cn } from '../foundations/styles/cn';
-import type { TimePickerTheme } from './types';
+import type { TimePickerClassNames } from './types';
 
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -19,10 +18,8 @@ export interface ClockProps {
   format?: TimeFormat;
   onChange: (time: Date) => void;
   onHandMoved?: () => void;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: TimePickerTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: TimePickerTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: TimePickerClassNames;
   time?: Date;
   ref?: React.Ref<ClockHandle>;
 }
@@ -31,12 +28,10 @@ export default function Clock({
   format = '24hr',
   onChange,
   onHandMoved,
-  theme: legacyTheme,
   classNames,
   time: suppliedTime,
   ref,
 }: ClockProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const [initialTime] = useState(() => new Date());
   const value = suppliedTime ?? initialTime;
   const placeholder = useRef<HTMLDivElement>(null);
@@ -61,44 +56,52 @@ export default function Clock({
   const animation =
     display === 'hours'
       ? {
-          enter: cn('rt-time-picker-zoomOutEnter', 'absolute opacity-0 transform-[scale(1.25)]', theme?.zoomOutEnter),
+          enter: cn(
+            'rt-time-picker-zoomOutEnter',
+            'absolute opacity-0 transform-[scale(1.25)]',
+            classNames?.zoomOutEnter,
+          ),
           enterActive: cn(
             'rt-time-picker-zoomOutEnterActive',
             'duration-500 [transition-property:transform,opacity] [transition-timing-function:var(--animation-curve-fast-out-slow-in)]',
             '[.rt-time-picker-zoomOutEnter&]:opacity-[1] [.rt-time-picker-zoomOutEnter&]:transform-[scale(1)]',
-            theme?.zoomOutEnterActive,
+            classNames?.zoomOutEnterActive,
           ),
-          exit: cn('rt-time-picker-zoomOutExit', 'absolute opacity-[1] transform-[scale(1)]', theme?.zoomOutExit),
+          exit: cn('rt-time-picker-zoomOutExit', 'absolute opacity-[1] transform-[scale(1)]', classNames?.zoomOutExit),
           exitActive: cn(
             'rt-time-picker-zoomOutExitActive',
             'duration-500 [transition-property:transform,opacity] [transition-timing-function:var(--animation-curve-fast-out-slow-in)]',
             '[.rt-time-picker-zoomOutExit&]:opacity-0 [.rt-time-picker-zoomOutExit&]:transform-[scale(0.85)]',
-            theme?.zoomOutExitActive,
+            classNames?.zoomOutExitActive,
           ),
         }
       : {
-          enter: cn('rt-time-picker-zoomInEnter', 'absolute opacity-0 transform-[scale(0.85)]', theme?.zoomInEnter),
+          enter: cn(
+            'rt-time-picker-zoomInEnter',
+            'absolute opacity-0 transform-[scale(0.85)]',
+            classNames?.zoomInEnter,
+          ),
           enterActive: cn(
             'rt-time-picker-zoomInEnterActive',
             'duration-500 [transition-property:transform,opacity] [transition-timing-function:var(--animation-curve-fast-out-slow-in)]',
             '[.rt-time-picker-zoomInEnter&]:opacity-[1] [.rt-time-picker-zoomInEnter&]:transform-[scale(1)]',
-            theme?.zoomInEnterActive,
+            classNames?.zoomInEnterActive,
           ),
-          exit: cn('rt-time-picker-zoomInExit', 'absolute opacity-[1] transform-[scale(1)]', theme?.zoomInExit),
+          exit: cn('rt-time-picker-zoomInExit', 'absolute opacity-[1] transform-[scale(1)]', classNames?.zoomInExit),
           exitActive: cn(
             'rt-time-picker-zoomInExitActive',
             'duration-500 [transition-property:transform,opacity] [transition-timing-function:var(--animation-curve-fast-out-slow-in)]',
             '[.rt-time-picker-zoomInExit&]:opacity-0 [.rt-time-picker-zoomInExit&]:transform-[scale(1.25)]',
-            theme?.zoomInExitActive,
+            classNames?.zoomInExitActive,
           ),
         };
   return (
     <div
       data-react-toolbox="clock"
-      className={cn('rt-time-picker-clock', 'p-(--clock-padding) text-(--clock-number-color)', theme?.clock)}
+      className={cn('rt-time-picker-clock', 'p-(--clock-padding) text-(--clock-number-color)', classNames?.clock)}
     >
       <div
-        className={cn('rt-time-picker-placeholder', 'relative z-(--z-index-high)', theme?.placeholder)}
+        className={cn('rt-time-picker-placeholder', 'relative z-(--z-index-high)', classNames?.placeholder)}
         style={{ height: radius * 2 }}
         ref={placeholder}
       >
@@ -124,7 +127,7 @@ export default function Clock({
               className={cn(
                 'rt-time-picker-clockWrapper',
                 'bg-(--clock-face-background) rounded-[50%] absolute w-full',
-                theme?.clockWrapper,
+                classNames?.clockWrapper,
               )}
               style={{ height: radius * 2 }}
             >
@@ -135,7 +138,7 @@ export default function Clock({
                   spacing={radius * 0.18}
                   selected={value.getHours()}
                   onHandMoved={onHandMoved}
-                  theme={theme}
+                  classNames={classNames}
                   onChange={(hour) => {
                     if (value.getHours() !== hour) {
                       const adapted =
@@ -158,7 +161,7 @@ export default function Clock({
                   spacing={radius * 0.18}
                   selected={value.getMinutes()}
                   onHandMoved={onHandMoved}
-                  theme={theme}
+                  classNames={classNames}
                   onChange={(minute) => {
                     if (value.getMinutes() !== minute) onChange(time.setMinutes(value, minute));
                   }}

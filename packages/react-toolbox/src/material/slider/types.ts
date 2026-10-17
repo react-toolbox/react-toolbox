@@ -1,5 +1,5 @@
 /** Optional class overrides for the component's rendered parts. */
-export type SliderTheme = Partial<
+export type SliderClassNames = Partial<
   Record<
     | 'container'
     | 'editable'
@@ -17,6 +17,3 @@ export type SliderTheme = Partial<
     string
   >
 >;
-
-/** Style slots for the component. */
-export type SliderClassNames = SliderTheme;

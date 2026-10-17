@@ -1,5 +1,4 @@
 'use client';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { buttonClassName, rippleWrapperClasses, iconClasses } from './styles';
 import type { ChangeEventHandler, ComponentPropsWithRef, ComponentPropsWithoutRef, Ref } from 'react';
@@ -40,7 +39,6 @@ export function BrowseButton({
   onChange,
   primary = false,
   raised,
-  theme: legacyTheme,
   classNames,
   inputRef,
   inputProps,
@@ -56,14 +54,13 @@ export function BrowseButton({
   onTouchCancel,
   ...other
 }: BrowseButtonProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const ink = useRipple({
     disabled,
     centered: rippleCentered,
     className: rippleClassName,
     multiple: rippleMultiple,
     spread: rippleSpread,
-    theme: { rippleWrapper: cn(rippleWrapperClasses, theme?.rippleWrapper) },
+    classNames: { rippleWrapper: cn(rippleWrapperClasses, classNames?.rippleWrapper) },
     ripple,
     onRippleEnded,
   });
@@ -76,7 +73,7 @@ export function BrowseButton({
     neutral,
     primary,
     raised,
-    theme,
+    classNames,
   });
   return (
     <label
@@ -101,7 +98,7 @@ export function BrowseButton({
         ink.onTouchCancel(event);
       }}
     >
-      {icon ? <FontIcon aria-hidden className={cn(iconClasses, theme?.icon)} value={icon} /> : null}
+      {icon ? <FontIcon aria-hidden className={cn(iconClasses, classNames?.icon)} value={icon} /> : null}
       <span>{label}</span>
       <input
         {...inputProps}

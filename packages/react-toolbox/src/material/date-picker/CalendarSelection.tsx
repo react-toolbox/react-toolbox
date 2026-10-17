@@ -8,7 +8,7 @@ import time, { type DatePickerLocale } from '../foundations/date-time/calendar';
 import { cn } from '../foundations/styles/cn';
 import CalendarDay from './CalendarDay';
 import isDateDisabled, { dayStamp, type DateConstraints } from './is-date-disabled';
-import type { DatePickerLabels, DatePickerTheme } from './types';
+import type { DatePickerLabels, DatePickerClassNames } from './types';
 
 export interface DateRange {
   from: Date | undefined;
@@ -26,7 +26,7 @@ export interface CalendarSelectionBaseProps extends DateConstraints {
   locale?: DatePickerLocale;
   labels?: Partial<DatePickerLabels> & { weekNumber?: string };
   className?: string;
-  classNames?: DatePickerTheme;
+  classNames?: DatePickerClassNames;
   clearable?: boolean;
 }
 

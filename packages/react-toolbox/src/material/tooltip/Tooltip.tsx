@@ -3,7 +3,7 @@ import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialDescendants } from '../foundations/styles/classes';
-import type { TooltipTheme } from './types';
+import type { TooltipClassNames } from './types';
 
 import {
   createElement,
@@ -22,7 +22,7 @@ import { cn } from '../foundations/styles/cn';
 import Portal from '../foundations/portal/Portal';
 import useReducedMotion from '../foundations/motion/useReducedMotion';
 
-export type { TooltipTheme, TooltipClassNames } from './types';
+export type { TooltipClassNames } from './types';
 export type TooltipPosition = 'bottom' | 'horizontal' | 'left' | 'right' | 'top' | 'vertical';
 type Position = Exclude<TooltipPosition, 'horizontal' | 'vertical'>;
 export interface TooltipProps {
@@ -31,10 +31,8 @@ export interface TooltipProps {
   tooltipHideOnClick?: boolean;
   tooltipPosition?: TooltipPosition;
   tooltipShowOnClick?: boolean;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: TooltipTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: TooltipTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: TooltipClassNames;
 }
 export interface TooltipOptions {
   className?: string;
@@ -43,10 +41,8 @@ export interface TooltipOptions {
   passthrough?: boolean;
   position?: TooltipPosition;
   showOnClick?: boolean;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: TooltipTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: TooltipTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: TooltipClassNames;
 }
 type TriggerProps = Pick<
   HTMLAttributes<HTMLElement>,
@@ -84,10 +80,8 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
     tooltipHideOnClick = true,
     tooltipPosition = 'vertical',
     tooltipShowOnClick = false,
-    theme: legacyTheme,
     classNames,
   } = props;
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const id = `toolbox-tooltip-${useId()}`;
   const [state, setState] = useState<State>({ active: false, visible: false, position: 'bottom' });
   const current = useRef(state);
@@ -337,19 +331,19 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
       ? cn(
           'rt-tooltip-tooltipLeft',
           '[.rt-tooltip-tooltip&]:transform-[scale(0)_translateX(-100%)_translateY(-50%)]',
-          theme?.tooltipLeft,
+          classNames?.tooltipLeft,
         )
       : state.position === 'right'
         ? cn(
             'rt-tooltip-tooltipRight',
             '[.rt-tooltip-tooltip&]:transform-[scale(0)_translateX(0)_translateY(-50%)]',
-            theme?.tooltipRight,
+            classNames?.tooltipRight,
           )
         : state.position === 'top'
           ? cn(
               'rt-tooltip-tooltipTop',
               '[.rt-tooltip-tooltip&]:transform-[scale(0)_translateX(-50%)_translateY(-100%)]',
-              theme?.tooltipTop,
+              classNames?.tooltipTop,
             )
           : undefined;
   const transitionEnd = (event: TransitionEvent<HTMLSpanElement>) => {
@@ -372,7 +366,7 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
             'block font-(family-name:--preferred-font) text-(length:--tooltip-font-size) font-(--font-weight-semi-bold) leading-(--font-size-small) max-w-(--tooltip-max-width) p-(--tooltip-margin) pointer-events-none absolute text-center normal-case transform-[scale(0)_translateX(-50%)] origin-[top_left] [transition:var(--animation-curve-fast-out-linear-in)_var(--tooltip-animation-duration)_transform] z-(--z-index-higher) box-border [-webkit-font-smoothing:antialiased] [font-smoothing:antialiased] [-webkit-text-size-adjust:100%] [-moz-text-size-adjust:100%] [text-size-adjust:100%]',
             materialDescendants,
             '[@media_(hover:_none)_and_(pointer:_coarse)]:text-[calc(1.4*var(--unit))] [@media_(hover:_none)_and_(pointer:_coarse)]:leading-[calc(2*var(--unit))] [@media_(hover:_none)_and_(pointer:_coarse)]:p-[calc(2.4*var(--unit))]',
-            theme?.tooltip,
+            classNames?.tooltip,
             state.active &&
               cn(
                 'rt-tooltip-tooltipActive',
@@ -380,7 +374,7 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
                 '[.rt-tooltip-tooltip.rt-tooltip-tooltipTop&]:transform-[scale(1)_translateX(-50%)_translateY(-100%)]',
                 '[.rt-tooltip-tooltip.rt-tooltip-tooltipLeft&]:transform-[scale(1)_translateX(-100%)_translateY(-50%)]',
                 '[.rt-tooltip-tooltip.rt-tooltip-tooltipRight&]:transform-[scale(1)_translateX(0)_translateY(-50%)]',
-                theme?.tooltipActive,
+                classNames?.tooltipActive,
               ),
             positionClass,
           )}
@@ -406,7 +400,7 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
               'rt-tooltip-tooltipInner',
               '[background:var(--tooltip-background)] rounded-(--tooltip-border-radius) text-(--tooltip-color) block p-[calc(0.4*var(--unit))_var(--tooltip-padding)]',
               '[@media_(hover:_none)_and_(pointer:_coarse)]:p-[calc(0.6*var(--unit))_calc(1.6*var(--unit))]',
-              theme?.tooltipInner,
+              classNames?.tooltipInner,
             )}
           >
             {tooltip}
@@ -418,12 +412,11 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
 }
 
 export function tooltipFactory(options: TooltipOptions = {}) {
-  const optionSlots = mergeStyleSlots(options.theme, options.classNames);
+  const factoryClassNames = options.classNames;
   return function withTooltip<C extends ElementType>(Component: C) {
     return function TooltippedComponent(props: ComponentPropsWithRef<C> & TooltipProps) {
       const {
         children,
-        theme: legacyTheme,
         classNames,
         tooltip,
         tooltipDelay = options.delay,
@@ -442,14 +435,13 @@ export function tooltipFactory(options: TooltipOptions = {}) {
         onTouchCancel,
         ...attributes
       } = props;
-      const theme = mergeStyleSlots(legacyTheme, classNames);
       const behavior = useTooltip({
         tooltip,
         tooltipDelay,
         tooltipHideOnClick,
         tooltipPosition,
         tooltipShowOnClick,
-        classNames: mergeStyleSlots(optionSlots, theme),
+        classNames: mergeStyleSlots(factoryClassNames, classNames),
         onClick,
         onMouseEnter,
         onMouseLeave,
@@ -469,7 +461,7 @@ export function tooltipFactory(options: TooltipOptions = {}) {
               ...attributes,
               className,
               ...behavior.triggerProps,
-              ...(typeof Component !== 'string' && options.passthrough !== false ? { theme } : {}),
+              ...(typeof Component !== 'string' && options.passthrough !== false ? { classNames } : {}),
             },
             children,
           )}

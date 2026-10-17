@@ -22,6 +22,7 @@ export default function InstallationPage() {
         { id: 'setup', title: 'Set up your project' },
         { id: 'add', title: 'Add a component' },
         { id: 'use', title: 'Use it' },
+        { id: 'fonts', title: 'Fonts and first paint' },
         { id: 'routing', title: 'Navigation and links' },
         { id: 'namespace', title: 'Registry shortcut' },
         { id: 'updates', title: 'Updates' },
@@ -58,6 +59,57 @@ export default function InstallationPage() {
         <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
           Use your configured UI alias if it differs from <code>@/components/ui</code>. Component entries load their
           styles automatically. Add <code>'use client'</code> to examples that use state or event handlers in Next.js.
+        </p>
+      </DocsSection>
+      <DocsSection id="fonts" title="Fonts and first paint">
+        <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
+          Components include Roboto and Material Icons by default. Roboto uses font-display: swap, so text can change
+          appearance when its font finishes loading. Your application controls preloading and the display policy.
+        </p>
+        <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
+          In Next.js, load Roboto through next/font/local in the root layout. This example assumes a root-level app
+          directory and Latin text; adjust the paths and subsets for your project.
+        </p>
+        <CodeBlock
+          label="app/layout.tsx"
+          code={`import localFont from 'next/font/local';
+import type { ReactNode } from 'react';
+import './globals.css';
+
+const appRoboto = localFont({
+  src: [
+    { path: '../node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2', weight: '400' },
+    { path: '../node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2', weight: '500' },
+  ],
+  variable: '--font-app',
+  fallback: ['Helvetica', 'Arial', 'sans-serif'],
+  display: 'optional',
+});
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return <html lang="en" className={appRoboto.variable}><body>{children}</body></html>;
+}`}
+        />
+        <div className="mt-4">
+          <CodeBlock
+            label="app/globals.css (after existing imports)"
+            language="css"
+            code={':root {\n  --preferred-font: var(--font-app);\n}\n\nbody {\n  font-family: var(--preferred-font);\n}'}
+          />
+        </div>
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
+          Remove the two @fontsource/roboto imports from your copied material/foundations/styles/fonts.css to avoid
+          loading Roboto twice. Keep its Material Icons import: built-in calendar arrows, scrollable tabs, and sorted
+          table headers still use it. If you already load a font, reuse its CSS variable instead of adding another loader.
+        </p>
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
+          Next.js preloads these fonts and provides an adjusted fallback. With display: optional, a slow font download
+          leaves the fallback in place for that page load instead of swapping later. Include additional weights only
+          when you use them. Other frameworks can use the same policy with local @font-face rules and font preloads.
+        </p>
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
+          React Toolbox reserves space for font icons while they load. For icons that must appear on first paint,
+          pass an SVG element to the component’s icon prop; font icons still need their font download to render.
         </p>
       </DocsSection>
       <DocsSection id="routing" title="Use your router for navigation">

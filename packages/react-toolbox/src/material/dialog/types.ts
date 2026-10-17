@@ -1,5 +1,5 @@
 /** Optional class overrides for the component's rendered parts. */
-export type DialogTheme = Partial<
+export type DialogClassNames = Partial<
   Record<
     | 'active'
     | 'body'
@@ -15,6 +15,3 @@ export type DialogTheme = Partial<
     string
   >
 >;
-
-/** Style slots for the component. */
-export type DialogClassNames = DialogTheme;

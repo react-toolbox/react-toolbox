@@ -1,27 +1,16 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { cn } from '../foundations/styles/cn';
-import type { ListTheme } from './types';
+import type { ListClassNames } from './types';
 import { Children, isValidElement, type ComponentPropsWithRef } from 'react';
 import ListItemAction, { type ListItemActionProps } from './ListItemAction';
 export interface ListItemActionsProps extends ComponentPropsWithRef<'span'> {
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: ListTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: ListTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: ListClassNames;
   type: 'left' | 'right';
 }
-export function ListItemActions({
-  type,
-  children,
-  className,
-  theme: legacyTheme,
-  classNames,
-  ...other
-}: ListItemActionsProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
+export function ListItemActions({ type, children, className, classNames, ...other }: ListItemActionsProps) {
   return (
     <span
       {...other}
@@ -32,7 +21,7 @@ export function ListItemActions({
               "[&_[data-react-toolbox='font-icon']]:w-(--list-item-icon-size)",
               "[&_:last-child>[data-react-toolbox='font-icon']]:me-(--list-item-right-icon-margin)",
               'items-center flex flex-[0_0_auto]',
-              theme?.left,
+              classNames?.left,
             )
           : type === 'right'
             ? cn(
@@ -40,7 +29,7 @@ export function ListItemActions({
                 '[&>:last-child]:me-0',
                 '[&>:first-child]:ms-(--list-horizontal-padding)',
                 'items-center flex flex-[0_0_auto]',
-                theme?.right,
+                classNames?.right,
               )
             : undefined,
         className,
@@ -48,7 +37,7 @@ export function ListItemActions({
     >
       {Children.toArray(children).map((action, index) =>
         isValidElement<ListItemActionProps['action']['props']>(action) ? (
-          <ListItemAction key={action.key ?? index} theme={theme} action={action} />
+          <ListItemAction key={action.key ?? index} classNames={classNames} action={action} />
         ) : null,
       )}
     </span>

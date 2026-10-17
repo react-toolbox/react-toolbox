@@ -5,8 +5,7 @@ import type { ComponentSlug } from './catalog';
 
 const families: Record<string, FamilyApi> = apiData.families;
 
-// Curate what readers need to choose behavior. Types and defaults still come
-// from the source; inherited HTML props and compatibility APIs stay in the editor.
+/** Curate behavior choices; full types, defaults, and inherited HTML props remain in the source. */
 const keyProps: Record<ComponentSlug, Record<string, string[]>> = {
   'app-bar': { AppBar: ['fixed', 'flat', 'scrollHide', 'leftIconLabel', 'rightIconLabel'] },
   autocomplete: {
@@ -25,6 +24,9 @@ const keyProps: Record<ComponentSlug, Record<string, string[]>> = {
       'value',
       'defaultValue',
       'onChange',
+      'open',
+      'defaultOpen',
+      'onOpenChange',
       'minDate',
       'maxDate',
       'disabledDates',
@@ -88,6 +90,7 @@ const keyProps: Record<ComponentSlug, Record<string, string[]>> = {
       'layout',
       'labels',
       'open',
+      'defaultOpen',
       'onOpenChange',
     ],
   },

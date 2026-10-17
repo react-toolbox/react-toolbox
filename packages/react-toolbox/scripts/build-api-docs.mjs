@@ -234,7 +234,7 @@ function propsFor(module, node, seen = new Set()) {
         required: !member.optional,
         description: documentation(member),
         callback,
-        slots: ['classNames', 'theme'].includes(name) ? literalKeys(module, type) : [],
+        slots: name === 'classNames' ? literalKeys(module, type) : [],
       });
     }
     return result;

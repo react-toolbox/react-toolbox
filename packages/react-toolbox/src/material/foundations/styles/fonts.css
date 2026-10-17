@@ -1,4 +1,4 @@
-/* Automatic M1 typography and ligatures. Remove this import from setup.css to use host fonts and SVG icons. */
+/* Remove the Roboto imports when the host owns typography; retain Material Icons for built-in ligatures. */
 @import "@fontsource/roboto/400.css" layer(base);
 @import "@fontsource/roboto/500.css" layer(base);
 @import "material-icons/iconfont/material-icons.css" layer(base);

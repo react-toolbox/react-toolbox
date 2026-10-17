@@ -141,6 +141,15 @@ test('RTL tab scrolling exposes both ends and keeps the active label visible', a
   await mount(page);
   const first = page.getByRole('tab', { name: 'First' });
   await expect(page.getByRole('button', { name: 'Scroll tabs left' })).toBeVisible();
+  const arrow = page.getByRole('button', { name: 'Scroll tabs left' }).locator('[data-react-toolbox="font-icon"]');
+  const glyph = await arrow.evaluate(element => {
+    const style = getComputedStyle(element);
+    return {
+      width: element.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight),
+      fontSize: parseFloat(style.fontSize),
+    };
+  });
+  expect(glyph.width, 'The padded tab arrow must retain room for its glyph').toBeGreaterThanOrEqual(glyph.fontSize);
   await first.focus();
   await page.keyboard.press('End');
   await expect(page.getByRole('tab', { name: 'Sixth' })).toBeFocused();

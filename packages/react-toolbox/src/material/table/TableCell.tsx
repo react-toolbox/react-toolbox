@@ -1,8 +1,7 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
-import type { TableTheme } from './types';
+import type { TableClassNames } from './types';
 import { useContext, type ComponentPropsWithRef, type MouseEvent } from 'react';
 import { TableCellContext } from './selection';
 import { cn } from '../foundations/styles/cn';
@@ -14,10 +13,8 @@ export interface TableCellProps extends Omit<ComponentPropsWithRef<'th'>, 'onCli
   row?: number;
   sorted?: 'asc' | 'desc';
   tagName?: 'td' | 'th';
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: TableTheme & { tableCell?: string };
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: TableTheme & { tableCell?: string };
+  /** Classes for the component's rendered parts. */
+  classNames?: TableClassNames & { tableCell?: string };
 }
 export function TableCell({
   children,
@@ -28,13 +25,11 @@ export function TableCell({
   row,
   sorted,
   tagName,
-  theme: legacyTheme,
   classNames,
   ...other
 }: TableCellProps) {
   const inheritedTag = useContext(TableCellContext);
   const Tag = tagName ?? inheritedTag;
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const content = (
     <>
       {' '}
@@ -44,8 +39,8 @@ export function TableCell({
             'rt-table-sortIcon',
             'inline-block text-[calc(1.6*var(--unit))] me-[3px] [transition:0.28s_transform_var(--animation-curve-default)] align-sub',
             '[.rt-table-headCell.rt-table-sorted:hover_&]:text-(--table-header-sorted-icon-hover-color)',
-            theme?.sortIcon,
-            sorted === 'asc' && cn('rt-table-asc', '[.rt-table-sortIcon&]:transform-[rotate(180deg)]', theme?.asc),
+            classNames?.sortIcon,
+            sorted === 'asc' && cn('rt-table-asc', '[.rt-table-sortIcon&]:transform-[rotate(180deg)]', classNames?.asc),
           )}
           value="arrow_downward"
           aria-hidden
@@ -62,14 +57,14 @@ export function TableCell({
         other['aria-sort'] ?? (Tag === 'th' && sorted ? (sorted === 'asc' ? 'ascending' : 'descending') : undefined)
       }
       className={cn(
-        theme?.tableCell,
+        classNames?.tableCell,
         Tag === 'th' &&
           cn(
             'rt-table-headCell',
             'text-(--table-header-color) text-(length:--table-header-font-size) [font-weight:500] h-(--table-row-height) leading-[calc(2.4*var(--unit))] pb-[8px] text-ellipsis align-bottom p-[12px_var(--table-column-padding)] text-start',
             '[&:first-of-type]:ps-[24px]',
             '[&:last-of-type]:pe-[24px]',
-            theme?.headCell,
+            classNames?.headCell,
           ),
         Tag === 'td' &&
           cn(
@@ -77,16 +72,21 @@ export function TableCell({
             '[border-bottom:var(--table-dividers)] [border-top:var(--table-dividers)] h-(--table-row-height) pt-(--table-cell-top) align-middle p-[12px_var(--table-column-padding)] text-start',
             '[&:first-of-type]:ps-[24px]',
             '[&:last-of-type]:pe-[24px]',
-            theme?.rowCell,
+            classNames?.rowCell,
           ),
         sorted &&
           cn(
             'rt-table-sorted',
             '[.rt-table-headCell&]:text-(--table-header-sorted-color) [.rt-table-headCell&]:cursor-pointer',
-            theme?.sorted,
+            classNames?.sorted,
           ),
         numeric &&
-          cn('rt-table-numeric', '[.rt-table-rowCell&]:text-end', '[.rt-table-headCell&]:text-end', theme?.numeric),
+          cn(
+            'rt-table-numeric',
+            '[.rt-table-rowCell&]:text-end',
+            '[.rt-table-headCell&]:text-end',
+            classNames?.numeric,
+          ),
         className,
       )}
       onClick={(event) => onClick?.(event, column, row)}

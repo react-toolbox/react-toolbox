@@ -52,7 +52,7 @@ import {
 } from 'react-toolbox';
 
 const TooltipButton = Tooltip(Button);
-const RippleSurface = Ripple({ passthrough: false })('button');
+const RippleSurface = Ripple()('button');
 
 const sections = [
   ['buttons', 'Buttons & ripples'],
@@ -318,7 +318,7 @@ function NavigationExamples({ notify }) {
       <DemoGroup label="Menus & links">
         <div className="grid gap-8 sm:grid-cols-2">
           <div>
-            <Menu selected={menuSelection} onSelect={setMenuSelection} theme={{ menuInner: 'm-0' }}>
+            <Menu selected={menuSelection} onSelect={setMenuSelection} classNames={{ menuInner: 'm-0' }}>
               <MenuItem value="download" caption="Download" icon="file_download" shortcut="⌘D" />
               <MenuItem value="share" caption="Share" icon="share" />
               <MenuDivider />

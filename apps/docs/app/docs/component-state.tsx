@@ -65,8 +65,8 @@ export const componentState: Partial<Record<ComponentSlug, ReactNode>> = {
       </li>
       <li>
         Visibility is internal by default. Use <code>defaultOpen</code> to initialize it or <code>open</code>/
-        <code>onOpenChange</code> to control it. Changes to legacy <code>active</code> synchronize internal state;{' '}
-        <code>onDismiss</code> reports dismissal.
+        <code>onOpenChange</code> to control it. When controlled, update <code>open</code> from{' '}
+        <code>onOpenChange</code>; <code>onDismiss</code> reports dismissal.
       </li>
     </ul>
   ),
@@ -123,7 +123,7 @@ export const componentState: Partial<Record<ComponentSlug, ReactNode>> = {
     <ul>
       <li>
         <code>Menu</code> and <code>IconMenu</code> use <code>open</code>/<code>onOpenChange</code> or{' '}
-        <code>defaultOpen</code>. Changes to legacy <code>active</code> synchronize internal visibility. Update{' '}
+        <code>defaultOpen</code>. When controlled, update <code>open</code> from <code>onOpenChange</code>. Update{' '}
         <code>selected</code> from <code>onSelect</code> for single selection.
       </li>
       <li>
@@ -205,8 +205,8 @@ export const componentState: Partial<Record<ComponentSlug, ReactNode>> = {
       </li>
       <li>
         Visibility is internal by default. Use <code>defaultOpen</code> to initialize it or <code>open</code>/
-        <code>onOpenChange</code> to control it. Changes to legacy <code>active</code> synchronize internal state;{' '}
-        <code>onDismiss</code> reports dismissal.
+        <code>onOpenChange</code> to control it. When controlled, update <code>open</code> from{' '}
+        <code>onOpenChange</code>; <code>onDismiss</code> reports dismissal.
       </li>
     </ul>
   ),

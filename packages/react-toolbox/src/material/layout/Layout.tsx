@@ -4,21 +4,17 @@ import '../drawer/tokens.css';
 import './tokens.css';
 import { useCallback, useLayoutEffect, useState, type ComponentPropsWithRef, type CSSProperties } from 'react';
 import { cn } from '../foundations/styles/cn';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
 import { LayoutContext, type LayoutDrawerState } from '../foundations/layout/LayoutContext';
-import type { LayoutTheme, SidebarWidth } from './types';
+import type { LayoutClassNames, SidebarWidth } from './types';
 import { sidebarWidthClasses } from './styles';
 
 export interface LayoutProps extends ComponentPropsWithRef<'div'> {
-  classNames?: LayoutTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: LayoutTheme;
+  classNames?: LayoutClassNames;
 }
 
 /** Participants register through context, including application wrappers and fragments. */
-export function Layout({ children, className, style, theme: legacyTheme, classNames, ...other }: LayoutProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
+export function Layout({ children, className, style, classNames, ...other }: LayoutProps) {
   const [viewportWidth, setViewportWidth] = useState(0);
   const [appBars, setAppBars] = useState<ReadonlyMap<string, boolean>>(new Map());
   const [navDrawers, setNavDrawers] = useState<ReadonlyMap<string, LayoutDrawerState>>(new Map());
@@ -73,14 +69,14 @@ export function Layout({ children, className, style, theme: legacyTheme, classNa
             '[.rt-layout-navDrawerPinned:not(.rt-layout-navDrawerClipped)_&]:ps-[calc(var(--layout-nav-width)+var(--appbar-current-h-padding,_var(--appbar-h-padding)))]',
             '[.rt-layout-sidebarPinned:not(.rt-layout-sidebarClipped)_&]:pe-[calc(var(--layout-sidebar-width)+var(--appbar-current-h-padding,_var(--appbar-h-padding)))]',
             '[.rt-layout-appbarFixed&]:z-(--z-index-high)',
-            theme?.appbarAppBar,
+            classNames?.appbarAppBar,
           ),
-          fixed: cn('rt-layout-appbarFixed', theme?.appbarFixed),
-          inner: cn('rt-layout-appbarInner', '[transition:var(--layout-side-transition)]', theme?.appbarInner),
+          fixed: cn('rt-layout-appbarFixed', classNames?.appbarFixed),
+          inner: cn('rt-layout-appbarInner', '[transition:var(--layout-side-transition)]', classNames?.appbarInner),
           leftIcon: cn(
             'rt-layout-appbarLeftIcon',
             '[.rt-layout-navDrawerPinned_&]:hidden [.rt-layout-sidebarPinned_&]:hidden',
-            theme?.appbarLeftIcon,
+            classNames?.appbarLeftIcon,
           ),
         },
       }}
@@ -102,13 +98,13 @@ export function Layout({ children, className, style, theme: legacyTheme, classNa
           materialDescendants,
           '[--layout-nav-size:var(--drawer-mobile-width)] [@media_screen_and_(min-width:_600px)]:[--layout-nav-size:var(--drawer-desktop-width)] [--layout-nav-width:min(var(--layout-nav-size),calc(100vw-var(--standard-increment-mobile)))]',
           sidebarWidthClasses,
-          theme?.layout,
-          width && cn(`rt-layout-sidebarWidth${width}`, theme?.[`sidebarWidth${width}`]),
-          navDrawer?.pinned && cn('rt-layout-navDrawerPinned', theme?.navDrawerPinned),
-          navDrawer?.clipped && cn('rt-layout-navDrawerClipped', theme?.navDrawerClipped),
-          sidebar?.pinned && cn('rt-layout-sidebarPinned', theme?.sidebarPinned),
-          sidebar?.clipped && cn('rt-layout-sidebarClipped', theme?.sidebarClipped),
-          appBarFixed && cn('rt-layout-appbarFixed', theme?.appbarFixed),
+          classNames?.layout,
+          width && cn(`rt-layout-sidebarWidth${width}`, classNames?.[`sidebarWidth${width}`]),
+          navDrawer?.pinned && cn('rt-layout-navDrawerPinned', classNames?.navDrawerPinned),
+          navDrawer?.clipped && cn('rt-layout-navDrawerClipped', classNames?.navDrawerClipped),
+          sidebar?.pinned && cn('rt-layout-sidebarPinned', classNames?.sidebarPinned),
+          sidebar?.clipped && cn('rt-layout-sidebarClipped', classNames?.sidebarClipped),
+          appBarFixed && cn('rt-layout-appbarFixed', classNames?.appbarFixed),
           className,
         )}
       >

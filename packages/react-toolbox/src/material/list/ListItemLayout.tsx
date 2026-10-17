@@ -1,9 +1,8 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { itemClasses, disabledClasses } from './styles';
-import type { ListTheme } from './types';
+import type { ListClassNames } from './types';
 import { cloneElement, type ComponentPropsWithRef, type ReactElement, type ReactNode } from 'react';
 import { cn } from '../foundations/styles/cn';
 import Avatar from '../avatar';
@@ -30,10 +29,8 @@ export interface ListItemLayoutOptions {
     tabIndex?: number;
     disabled?: boolean;
   }>;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: ListTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: ListTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: ListClassNames;
 }
 export interface ListItemLayoutProps extends ComponentPropsWithRef<'span'>, ListItemLayoutOptions {}
 export function ListItemLayout({
@@ -50,11 +47,9 @@ export function ListItemLayout({
   rightIcon,
   selectable = false,
   primaryAction,
-  theme: legacyTheme,
   classNames,
   ...other
 }: ListItemLayoutProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const leading = [
     leftIcon && <FontIcon aria-hidden value={leftIcon} key="leftIcon" />,
     avatar && <Avatar image={avatar} key="avatar" />,
@@ -64,11 +59,11 @@ export function ListItemLayout({
   const primaryContent = (
     <>
       {left.some(Boolean) && (
-        <ListItemActions type="left" theme={theme}>
+        <ListItemActions type="left" classNames={classNames}>
           {left}
         </ListItemActions>
       )}
-      {itemContent ?? children ?? <ListItemContent theme={theme} caption={caption} legend={legend} />}
+      {itemContent ?? children ?? <ListItemContent classNames={classNames} caption={caption} legend={legend} />}
     </>
   );
   return (
@@ -76,13 +71,13 @@ export function ListItemLayout({
       {...other}
       className={cn(
         itemClasses,
-        theme?.item,
-        disabled && cn(disabledClasses, theme?.disabled),
+        classNames?.item,
+        disabled && cn(disabledClasses, classNames?.disabled),
         selectable &&
           cn(
             'rt-list-selectable',
             '[.rt-list-item&:not(.rt-list-disabled):hover]:bg-(--list-item-hover-color) [.rt-list-item&:not(.rt-list-disabled):hover]:cursor-pointer',
-            theme?.selectable,
+            classNames?.selectable,
           ),
         className,
       )}
@@ -90,7 +85,7 @@ export function ListItemLayout({
       {primaryAction && leftActions.length > 0 && (
         <ListItemActions
           type="left"
-          theme={theme}
+          classNames={classNames}
           onClick={(event) => event.stopPropagation()}
           onMouseDown={(event) => event.stopPropagation()}
         >
@@ -112,7 +107,7 @@ export function ListItemLayout({
       {right.some(Boolean) && (
         <ListItemActions
           type="right"
-          theme={theme}
+          classNames={classNames}
           onClick={primaryAction ? (event) => event.stopPropagation() : undefined}
           onMouseDown={primaryAction ? (event) => event.stopPropagation() : undefined}
         >

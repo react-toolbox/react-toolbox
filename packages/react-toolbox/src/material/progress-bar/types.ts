@@ -1,5 +1,5 @@
 /** Optional class overrides for the component's rendered parts. */
-export type ProgressBarTheme = Partial<
+export type ProgressBarClassNames = Partial<
   Record<
     | 'buffer'
     | 'circle'
@@ -16,6 +16,3 @@ export type ProgressBarTheme = Partial<
     string
   >
 >;
-
-/** Style slots for the component. */
-export type ProgressBarClassNames = ProgressBarTheme;

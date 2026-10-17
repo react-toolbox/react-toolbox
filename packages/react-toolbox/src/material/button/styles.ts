@@ -1,5 +1,4 @@
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 import { cn } from '../foundations/styles/cn';
 import type { ButtonAppearanceProps, ButtonShapeProps } from './types';
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
@@ -105,10 +104,8 @@ export function buttonClassName({
   neutral,
   primary,
   raised,
-  theme: legacyTheme,
   classNames,
 }: ButtonAppearanceProps & ButtonShapeProps & { className?: string }) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
   return cn(
     buttonClasses,
@@ -117,15 +114,16 @@ export function buttonClassName({
       : floating
         ? cn(solidClasses, floatingClasses)
         : cn(squaredClasses, flatClasses),
-    theme?.button,
+    classNames?.button,
     raised
-      ? cn(theme?.squared, theme?.solid, theme?.raised)
+      ? cn(classNames?.squared, classNames?.solid, classNames?.raised)
       : floating
-        ? cn(theme?.solid, theme?.floating)
-        : cn(theme?.squared, theme?.flat),
-    neutral && cn(primary ? 'rt-button-primary' : accent ? 'rt-button-accent' : 'rt-button-neutral', theme?.[level]),
-    mini && cn(miniClasses, theme?.mini),
-    inverse && cn(inverseClasses, theme?.inverse),
+        ? cn(classNames?.solid, classNames?.floating)
+        : cn(classNames?.squared, classNames?.flat),
+    neutral &&
+      cn(primary ? 'rt-button-primary' : accent ? 'rt-button-accent' : 'rt-button-neutral', classNames?.[level]),
+    mini && cn(miniClasses, classNames?.mini),
+    inverse && cn(inverseClasses, classNames?.inverse),
     className,
   );
 }

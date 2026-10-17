@@ -1,5 +1,5 @@
 /** Optional class overrides for the component's rendered parts. */
-export type LayoutTheme = Partial<
+export type LayoutClassNames = Partial<
   Record<
     | 'appbarAppBar'
     | 'appbarFixed'
@@ -41,6 +41,3 @@ export type LayoutTheme = Partial<
 >;
 export type LayoutBreakpoint = 'sm' | 'smTablet' | 'md' | 'lg' | 'lgTablet' | 'xl' | 'xxl' | 'xxxl';
 export type SidebarWidth = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 25 | 33 | 50 | 66 | 75 | 100;
-
-/** Style slots for the component. */
-export type LayoutClassNames = LayoutTheme;

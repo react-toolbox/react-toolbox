@@ -1,5 +1,5 @@
 /** Optional class overrides for the component's rendered parts. */
-export type MenuTheme = Partial<
+export type MenuClassNames = Partial<
   Record<
     | 'active'
     | 'bottomLeft'
@@ -23,6 +23,3 @@ export type MenuTheme = Partial<
     string
   >
 >;
-
-/** Style slots for the component. */
-export type MenuClassNames = MenuTheme;

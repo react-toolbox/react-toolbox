@@ -4,6 +4,7 @@ import LandingDemo from './landing-demo';
 import SiteFooter from './site-footer';
 import { pageMetadata, siteUrl } from './site-metadata';
 import JsonLd from './json-ld';
+import SiteIcon from './site-icon';
 
 export const metadata = pageMetadata({
   title: 'React Toolbox · Material Design, down to the details',
@@ -46,7 +47,13 @@ export default function HomePage() {
               yours to shape.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Button primary raised href="/docs/installation" label="Get started" icon="arrow_forward" />
+              <Button
+                primary
+                raised
+                href="/docs/installation"
+                label="Get started"
+                icon={<SiteIcon name="arrowForward" />}
+              />
               <Button primary href="/docs/components" label="Browse components" />
             </div>
             <p className="mt-8 text-xs leading-4 text-toolbox-text-secondary">

@@ -1,7 +1,6 @@
 'use client';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
-import type { TimePickerTheme, TimePickerLabels } from './types';
+import type { TimePickerClassNames, TimePickerLabels } from './types';
 
 import React, { useEffect, useId, useRef, useState } from 'react';
 import Button from '../button/Button';
@@ -14,11 +13,10 @@ import type { TimeFormat } from '../foundations/date-time/time';
 import { isTimeUnavailable, type TimeConstraints } from './constraints';
 export type { TimeConstraints } from './constraints';
 import TimePickerDialog, { type TimePickerDialogProps, type TimePickerSelectEvent } from './TimePickerDialog';
-export type { TimePickerTheme, TimePickerClassNames, TimePickerLabels } from './types';
+export type { TimePickerClassNames, TimePickerLabels } from './types';
 export interface TimePickerProps
-  extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'theme' | 'classNames'>,
+  extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'classNames'>,
     TimeConstraints {
-  active?: boolean;
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -38,14 +36,11 @@ export interface TimePickerProps
   onEscKeyDown?: TimePickerDialogProps['onEscKeyDown'];
   onOverlayClick?: TimePickerDialogProps['onOverlayClick'];
   readonly?: boolean;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: TimePickerTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: TimePickerTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: TimePickerClassNames;
   value?: Date | null;
 }
 export function TimePicker({
-  active: controlledActive = false,
   open: controlledOpen,
   defaultOpen,
   onOpenChange,
@@ -70,16 +65,13 @@ export function TimePicker({
   onDismiss,
   onEscKeyDown,
   onKeyDown,
-  onKeyPress,
   onOverlayClick,
   readonly,
-  theme: legacyTheme,
   classNames,
   value: controlledValue,
   ref,
   ...others
 }: TimePickerProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const dialogId = `time-picker-dialog-${useId()}`;
   const [internalValue, setValue] = useState(defaultValue);
   const value = controlledValue === undefined ? internalValue : controlledValue;
@@ -87,30 +79,25 @@ export function TimePicker({
   const native = useRef<HTMLInputElement>(null);
   const [validationMessage, setValidationMessage] = useState('');
   const inputRef = useMergedRefs(input, ref);
-  const [internalOpen, setOpen] = useState(defaultOpen ?? controlledActive);
-  const active = !disabled && !readonly && (controlledOpen ?? internalOpen);
-  const setActive = (next: boolean) => {
+  const [internalOpen, setOpen] = useState(defaultOpen ?? false);
+  const visible = !disabled && !readonly && (controlledOpen ?? internalOpen);
+  const setVisible = (next: boolean) => {
     if (controlledOpen === undefined) setOpen(next);
-    if (next !== active) onOpenChange?.(next);
+    if (next !== visible) onOpenChange?.(next);
   };
-  const previousActive = useRef(controlledActive);
-  useEffect(() => {
-    if (previousActive.current !== controlledActive) setOpen(controlledActive);
-    previousActive.current = controlledActive;
-  }, [controlledActive]);
   useFormReset(native, () => {
     if (controlledValue === undefined) setValue(defaultValue);
     setValidationMessage('');
-    setActive(false);
+    setVisible(false);
   });
   const dismiss = () => {
-    setActive(false);
+    setVisible(false);
     onDismiss?.();
   };
   const open = (event: React.SyntheticEvent<InputElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    setActive(true);
+    setVisible(true);
   };
   const formattedValue = value ? time.formatTime(value, format) : '';
   const unavailable = Boolean(value && isTimeUnavailable(value, { minTime, maxTime, minuteStep }));
@@ -119,7 +106,7 @@ export function TimePicker({
     native.current?.setCustomValidity(unavailable ? (labels?.unavailable ?? 'Choose an available time.') : '');
   }, [formattedValue, unavailable, labels?.unavailable]);
   return (
-    <div data-react-toolbox="time-picker" className={theme?.container}>
+    <div data-react-toolbox="time-picker" className={classNames?.container}>
       <input
         ref={native}
         type="text"
@@ -143,25 +130,14 @@ export function TimePicker({
       <Input
         {...others}
         ref={inputRef}
-        className={cn('rt-time-picker-input', theme?.input, inputClassName)}
+        className={cn('rt-time-picker-input', classNames?.input, inputClassName)}
         disabled={readonly || disabled}
         error={error || validationMessage}
         required={required}
         role="combobox"
         aria-haspopup="dialog"
-        aria-controls={active ? dialogId : undefined}
-        aria-expanded={active}
-        onKeyPress={(event) => {
-          onKeyPress?.(event);
-          if (
-            !event.defaultPrevented &&
-            !event.nativeEvent.isComposing &&
-            event.charCode === 13 &&
-            !disabled &&
-            !readonly
-          )
-            open(event);
-        }}
+        aria-controls={visible ? dialogId : undefined}
+        aria-expanded={visible}
         onKeyDown={(event) => {
           onKeyDown?.(event);
           if (
@@ -177,12 +153,12 @@ export function TimePicker({
           onClick?.(event);
           if (!event.defaultPrevented && !disabled && !readonly) open(event);
         }}
-        theme={{
-          input: cn('rt-time-picker-input', theme?.input),
+        classNames={{
+          input: cn('rt-time-picker-input', classNames?.input),
           inputElement: cn(
             'rt-time-picker-inputElement',
             '[.rt-time-picker-input:not(.rt-time-picker-disabled)>&]:cursor-pointer',
-            theme?.inputElement,
+            classNames?.inputElement,
           ),
         }}
         readOnly
@@ -197,7 +173,7 @@ export function TimePicker({
           onClick={() => {
             if (controlledValue === undefined) setValue(undefined);
             setValidationMessage('');
-            setActive(false);
+            setVisible(false);
             onClear?.();
             input.current?.focus();
           }}
@@ -207,7 +183,7 @@ export function TimePicker({
       ) : null}
       <TimePickerDialog
         id={dialogId}
-        active={active}
+        active={visible}
         cancelLabel={cancelLabel}
         labels={labels}
         layout={layout}
@@ -225,9 +201,9 @@ export function TimePicker({
           if (controlledValue === undefined) setValue(next);
           setValidationMessage('');
           onChange?.(next, event);
-          setActive(false);
+          setVisible(false);
         }}
-        theme={theme}
+        classNames={classNames}
         value={value ?? undefined}
       />
     </div>

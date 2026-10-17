@@ -99,8 +99,9 @@ export default function ThemingPage() {
           Tailwind precedence; match the variant when overriding it. Use CSS variables for colors across states.
         </p>
         <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
-          Existing <code>classNames</code> and <code>theme</code> slot maps remain supported for compatibility. They are
-          optional; you do not need a per-component theme object to customize the library.
+          Use <code>classNames</code> to customize named internal style slots. Slot maps use types such as{' '}
+          <code>ButtonClassNames</code>; the installed types list each component’s available slots. CSS variables
+          control shared colors, and <code>ThemeProvider</code> scopes those variables when needed.
         </p>
       </DocsSection>
       <DocsSection id="scopes" title="Scope a palette when you need to">

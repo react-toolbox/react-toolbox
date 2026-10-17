@@ -1,5 +1,5 @@
 /** Optional class overrides for the component's rendered parts. */
-export type TimePickerTheme = Partial<
+export type TimePickerClassNames = Partial<
   Record<
     | 'container'
     | 'active'
@@ -38,9 +38,6 @@ export type TimePickerTheme = Partial<
     string
   >
 >;
-
-/** Style slots for the component. */
-export type TimePickerClassNames = TimePickerTheme;
 
 /** Accessible names and period labels for the time picker. */
 export interface TimePickerLabels {

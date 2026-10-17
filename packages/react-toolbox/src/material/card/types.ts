@@ -1,5 +1,5 @@
 /** Optional class overrides for the component's rendered parts. */
-export type CardTheme = Partial<
+export type CardClassNames = Partial<
   Record<
     | 'card'
     | 'cardActions'
@@ -18,6 +18,3 @@ export type CardTheme = Partial<
     string
   >
 >;
-
-/** Style slots for the component. */
-export type CardClassNames = CardTheme;

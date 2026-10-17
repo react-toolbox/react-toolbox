@@ -1,5 +1,5 @@
 /** Optional class overrides for the component's rendered parts. */
-export type ListTheme = Partial<
+export type ListClassNames = Partial<
   Record<
     | 'checkbox'
     | 'checkboxItem'
@@ -22,6 +22,3 @@ export type ListTheme = Partial<
     string
   >
 >;
-
-/** Style slots for the component. */
-export type ListClassNames = ListTheme;

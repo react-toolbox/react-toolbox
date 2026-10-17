@@ -1,9 +1,8 @@
 'use client';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { checkboxCellClasses } from './styles';
 import { cn } from '../foundations/styles/cn';
-import type { TableTheme } from './types';
+import type { TableClassNames } from './types';
 import {
   useContext,
   Children,
@@ -24,10 +23,8 @@ export interface TableHeadProps extends Omit<ComponentPropsWithRef<'tr'>, 'onSel
   selected?: boolean;
   indeterminate?: boolean;
   selectLabel?: string;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: TableTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: TableTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: TableClassNames;
 }
 export function TableHead({
   children,
@@ -38,11 +35,9 @@ export function TableHead({
   selected: suppliedSelected,
   indeterminate: suppliedIndeterminate,
   selectLabel = 'Select all rows',
-  theme: legacyTheme,
   classNames,
   ...other
 }: TableHeadProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const selection = useContext(TableSelectionContext);
   const values = selection ? [...selection.rows].filter(([, disabled]) => !disabled).map(([key]) => key) : [];
   const count = values.filter((key) => selection?.selected.includes(key)).length;
@@ -64,7 +59,7 @@ export function TableHead({
     <TableCellContext value="th">
       <tr {...other}>
         {selectable && (
-          <TableCell className={cn(checkboxCellClasses, theme?.checkboxCell)} tagName="th">
+          <TableCell className={cn(checkboxCellClasses, classNames?.checkboxCell)} tagName="th">
             {displaySelect && (
               <Checkbox
                 aria-label={selectLabel}

@@ -102,15 +102,45 @@ describe('menu workflows', () => {
     expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'true');
   });
 
-  it('keeps controlled menus open until the consumer accepts dismissal', async () => {
+  it.each([Menu, IconMenu])('keeps controlled menus open until the consumer accepts dismissal', async (Popup) => {
     const change = vi.fn();
-    render(
-      <Menu open onOpenChange={change} position="topLeft">
+    const view = render(
+      <Popup open={false} onOpenChange={change} position="topLeft">
         <MenuItem caption="Save" />
-      </Menu>,
+      </Popup>,
+    );
+    expect(screen.queryByRole('menu')).toBeNull();
+    view.rerender(
+      <Popup open onOpenChange={change} position="topLeft">
+        <MenuItem caption="Save" />
+      </Popup>,
     );
     await userEvent.click(screen.getByRole('menuitem'));
     expect(change).toHaveBeenCalledWith(false);
     expect(screen.getByRole('menu')).not.toHaveAttribute('aria-hidden', 'true');
+    view.rerender(
+      <Popup open={false} onOpenChange={change} position="topLeft">
+        <MenuItem caption="Save" />
+      </Popup>,
+    );
+    expect(screen.queryByRole('menu')).toBeNull();
+  });
+
+  it.each([Menu, IconMenu])('dismisses an initially open uncontrolled menu', async (Popup) => {
+    const change = vi.fn();
+    const view = render(
+      <Popup defaultOpen onOpenChange={change} position="topLeft">
+        <MenuItem caption="Save" />
+      </Popup>,
+    );
+    await userEvent.click(screen.getByRole('menuitem'));
+    expect(change).toHaveBeenCalledExactlyOnceWith(false);
+    expect(screen.queryByRole('menu')).toBeNull();
+    view.rerender(
+      <Popup defaultOpen onOpenChange={change} position="topLeft">
+        <MenuItem caption="Save again" />
+      </Popup>,
+    );
+    expect(screen.queryByRole('menu')).toBeNull();
   });
 });

@@ -4,6 +4,8 @@ The [16 October component readiness review](component-review.md) records the lat
 
 This document preserves historical audit findings and validation results. Test counts and CSS/React 16 comparison results belong to the recorded revisions. The completed migration's archived renderers, correction ledgers, and rebuild/comparison tooling were subsequently retired and remain available in Git history. Maintained regression tests check current behavior, Material 1 geometry and motion, themes, accessibility, and installed-source integration directly.
 
+The subsequent 3.0 cleanup supersedes the compatibility commitments below for `theme` slot props, `XxxTheme` slot types, legacy Toolbox `--color-*` aliases, the `ThemeProvider` workspace subpath, and duplicate `active` props on menus and pickers. Use the [current migration guide](source-registry.md#migrating-to-30) for supported replacements; the audit retains the decisions made at its recorded revisions.
+
 ## Documentation interface — 15 October 2026
 
 The documentation shell is reviewed against M1 [typography](https://m1.material.io/style/typography.html), [color](https://m1.material.io/style/color.html), [keylines](https://m1.material.io/layout/metrics-keylines.html), [navigation drawers](https://m1.material.io/patterns/navigation-drawer.html), [data tables](https://m1.material.io/components/data-tables.html), and [accessibility](https://m1.material.io/usability/accessibility.html).

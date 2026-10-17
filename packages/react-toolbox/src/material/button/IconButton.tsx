@@ -1,6 +1,5 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { rippleWrapperClasses, buttonClasses, inverseClasses, iconClasses } from './styles';
 import { cn } from '../foundations/styles/cn';
@@ -19,7 +18,6 @@ export function IconButton({
   inverse,
   neutral = true,
   primary = false,
-  theme: legacyTheme,
   classNames,
   ripple = true,
   rippleCentered = true,
@@ -29,14 +27,13 @@ export function IconButton({
   onRippleEnded,
   ...native
 }: IconButtonProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const ink = useRipple({
     disabled,
     centered: rippleCentered,
     className: rippleClassName,
     multiple: rippleMultiple,
     spread: rippleSpread,
-    theme: { rippleWrapper: cn(rippleWrapperClasses, theme?.rippleWrapper) },
+    classNames: { rippleWrapper: cn(rippleWrapperClasses, classNames?.rippleWrapper) },
     ripple,
     onRippleEnded,
   });
@@ -50,10 +47,11 @@ export function IconButton({
     '[.rt-button-accent:not([disabled])&]:text-(--button-accent-color)',
     '[.rt-button-neutral:not([disabled])&]:text-(--button-neutral-color-contrast)',
     '[.rt-button-neutral:not([disabled]).rt-button-inverse&]:text-(--button-neutral-color)',
-    theme?.button,
-    theme?.toggle,
-    neutral && cn(primary ? 'rt-button-primary' : accent ? 'rt-button-accent' : 'rt-button-neutral', theme?.[level]),
-    inverse && cn(inverseClasses, theme?.inverse),
+    classNames?.button,
+    classNames?.toggle,
+    neutral &&
+      cn(primary ? 'rt-button-primary' : accent ? 'rt-button-accent' : 'rt-button-neutral', classNames?.[level]),
+    inverse && cn(inverseClasses, classNames?.inverse),
     className,
   );
   const element = (
@@ -67,7 +65,7 @@ export function IconButton({
         <>
           {icon &&
             (typeof icon === 'string' ? (
-              <FontIcon aria-hidden={true} className={cn(iconClasses, theme?.icon)} value={icon} />
+              <FontIcon aria-hidden={true} className={cn(iconClasses, classNames?.icon)} value={icon} />
             ) : (
               icon
             ))}

@@ -1,9 +1,8 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { DialogTheme } from './types';
+import type { DialogClassNames } from './types';
 
 import { useId, type HTMLAttributes, type MouseEventHandler, type ReactNode, type Ref } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -13,7 +12,7 @@ import { Button, type ButtonProps } from '../button';
 import Overlay from '../overlay';
 import { ModalSurface } from '../overlay/ModalSurface';
 
-export type { DialogTheme, DialogClassNames } from './types';
+export type { DialogClassNames } from './types';
 export type DialogActionProps = ButtonProps;
 export interface DialogProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   actions?: DialogActionProps[];
@@ -29,10 +28,8 @@ export interface DialogProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title
   onOverlayMouseDown?: MouseEventHandler<HTMLDivElement>;
   onOverlayMouseMove?: MouseEventHandler<HTMLDivElement>;
   onOverlayMouseUp?: MouseEventHandler<HTMLDivElement>;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: DialogTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: DialogTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: DialogClassNames;
   title?: ReactNode;
   type?: 'small' | 'normal' | 'large' | 'fullscreen' | 'custom';
   ref?: Ref<HTMLDivElement>;
@@ -52,13 +49,11 @@ export function Dialog({
   onOverlayMouseDown,
   onOverlayMouseMove,
   onOverlayMouseUp,
-  theme: legacyTheme,
   classNames,
   title,
   ref,
   ...attributes
 }: DialogProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const titleId = useId();
   const { present, visible } = usePresence(active, delay);
   if (!present) return null;
@@ -70,7 +65,7 @@ export function Dialog({
         'items-center flex h-screen justify-center fixed top-0 w-screen z-(--z-index-higher)',
         materialRoot,
         materialDescendants,
-        theme?.wrapper,
+        classNames?.wrapper,
       )}
     >
       <Overlay
@@ -94,7 +89,7 @@ export function Dialog({
           className={cn(
             'rt-dialog-dialog',
             'bg-(--dialog-color-white) rounded-(--dialog-border-radius) [box-shadow:var(--zdepth-shadow-5)] flex flex-col max-w-[96vw] max-h-[calc(100vh-4.8*var(--unit))] [outline:none] opacity-0 [overflow:var(--overflow)] transform-[translateY(calc(-1*var(--dialog-translate-y)))] [transition:opacity_var(--animation-duration)_var(--animation-curve-default),transform_var(--animation-duration)_var(--animation-curve-default)] [&&]:delay-(--animation-delay)',
-            theme?.dialog,
+            classNames?.dialog,
             type !== 'custom' &&
               (type === 'small'
                 ? cn(
@@ -102,25 +97,30 @@ export function Dialog({
                     'w-[30vw]',
                     '[@media_screen_and_(max-width:_720px)]:w-[50vw]',
                     '[@media_screen_and_(max-width:_600px)]:w-[75vw]',
-                    theme?.small,
+                    classNames?.small,
                   )
                 : type === 'normal'
-                  ? cn('rt-dialog-normal', 'w-[50vw]', '[@media_screen_and_(max-width:_600px)]:w-[96vw]', theme?.normal)
+                  ? cn(
+                      'rt-dialog-normal',
+                      'w-[50vw]',
+                      '[@media_screen_and_(max-width:_600px)]:w-[96vw]',
+                      classNames?.normal,
+                    )
                   : type === 'large'
-                    ? cn('rt-dialog-large', 'w-[96vw]', theme?.large)
+                    ? cn('rt-dialog-large', 'w-[96vw]', classNames?.large)
                     : type === 'fullscreen'
                       ? cn(
                           'rt-dialog-fullscreen',
                           'w-[96vw]',
                           '[@media_screen_and_(max-width:_600px)]:rounded-none [@media_screen_and_(max-width:_600px)]:max-h-screen [@media_screen_and_(max-width:_600px)]:max-w-[100vw] [@media_screen_and_(max-width:_600px)]:min-h-screen [@media_screen_and_(max-width:_600px)]:w-screen',
-                          theme?.fullscreen,
+                          classNames?.fullscreen,
                         )
                       : undefined),
             visible &&
               cn(
                 'rt-dialog-active',
                 '[.rt-dialog-dialog&]:opacity-[1] [.rt-dialog-dialog&]:transform-[translateY(0%)]',
-                theme?.active,
+                classNames?.active,
               ),
             className,
           )}
@@ -136,7 +136,7 @@ export function Dialog({
               'rt-dialog-body',
               'text-(--rt-color-text-secondary) grow-2 min-h-0 overflow-y-auto p-(--dialog-content-padding)',
               '[&_p]:text-[calc(1.4*var(--unit))] [&_p]:[font-weight:400] [&_p]:tracking-[0] [&_p]:leading-[calc(2.4*var(--unit))] [&_p]:m-0',
-              theme?.body,
+              classNames?.body,
             )}
           >
             {title ? (
@@ -145,7 +145,7 @@ export function Dialog({
                 className={cn(
                   'rt-dialog-title',
                   'text-(--dialog-color-title) grow-0 text-[calc(2*var(--unit))] [font-weight:500] tracking-[0.02em] leading-none m-[0_0_calc(2*var(--unit))]',
-                  theme?.title,
+                  classNames?.title,
                 )}
               >
                 {title}
@@ -158,7 +158,7 @@ export function Dialog({
               className={cn(
                 'rt-dialog-navigation',
                 'grow-0 shrink-0 p-(--dialog-navigation-padding) text-right',
-                theme?.navigation,
+                classNames?.navigation,
               )}
             >
               {actions.map((action, index) => (
@@ -168,7 +168,7 @@ export function Dialog({
                   className={cn(
                     'rt-dialog-button',
                     'ml-(--dialog-navigation-padding) min-w-[calc(6.4*var(--unit))] pl-(--dialog-navigation-padding) pr-(--dialog-navigation-padding)',
-                    theme?.button,
+                    classNames?.button,
                     action.className,
                   )}
                 />

@@ -115,9 +115,9 @@
       "types": "./dist/css.d.mts",
       "default": "./dist/styles.css"
     },
-    "./ThemeProvider": {
-      "types": "./dist/ThemeProvider.d.ts",
-      "import": "./dist/ThemeProvider.js"
+    "./theme": {
+      "types": "./dist/material/theme/index.d.ts",
+      "import": "./dist/material/theme/index.js"
     },
     "./package.json": "./package.json",
     "./tailwind.css": {

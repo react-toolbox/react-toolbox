@@ -1,5 +1,5 @@
 /** Optional class overrides for the component's rendered parts. */
-export type TableTheme = Partial<
+export type TableClassNames = Partial<
   Record<
     | 'asc'
     | 'checkboxCell'
@@ -15,6 +15,3 @@ export type TableTheme = Partial<
     string
   >
 >;
-
-/** Style slots for the component. */
-export type TableClassNames = TableTheme;

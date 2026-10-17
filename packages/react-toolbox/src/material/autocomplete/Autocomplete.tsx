@@ -2,10 +2,9 @@
 import './tokens.css';
 import '../chip/tokens.css';
 import '../input/tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { AutocompleteTheme } from './types';
+import type { AutocompleteClassNames } from './types';
 
 import React, { useEffect, useId, useImperativeHandle, useRef, useState } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -13,7 +12,7 @@ import Chip, { type ChipEvent } from '../chip/Chip';
 import useFormReset from '../foundations/forms/useFormReset';
 import Input, { type InputProps, type InputHandle, type InputElement } from '../input/Input';
 
-export type { AutocompleteTheme, AutocompleteClassNames } from './types';
+export type { AutocompleteClassNames } from './types';
 export type AutocompleteValue = string | string[] | Record<string, React.ReactNode>;
 export interface AutocompleteOption {
   value: string;
@@ -28,7 +27,7 @@ export type AutocompleteSource =
   | readonly (string | readonly [string, React.ReactNode] | AutocompleteOption)[];
 export type AutocompleteEvent = ChipEvent | React.ChangeEvent<HTMLSelectElement>;
 export interface AutocompleteBaseProps
-  extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'onBlur' | 'theme' | 'multiple' | 'ref'> {
+  extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'onBlur' | 'classNames' | 'multiple' | 'ref'> {
   allowCreate?: boolean;
   /** Show a control that clears the selected value(s). */
   clearable?: boolean;
@@ -50,10 +49,8 @@ export interface AutocompleteBaseProps
   showSuggestionsWhenValueIsSet?: boolean;
   source?: AutocompleteSource;
   suggestionMatch?: 'disabled' | 'start' | 'anywhere' | 'word' | 'none';
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: AutocompleteTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: AutocompleteTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: AutocompleteClassNames;
   ref?: React.Ref<InputHandle>;
 }
 export interface AutocompleteSingleProps extends AutocompleteBaseProps {
@@ -126,14 +123,12 @@ export function Autocomplete(props: AutocompleteProps) {
     showSuggestionsWhenValueIsSet = false,
     source = emptySource,
     suggestionMatch = 'start',
-    theme: legacyTheme,
     classNames,
     value: controlledValue,
     id: suppliedId,
     ref,
     ...others
   } = props;
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   const [internalValue, setValue] = useState<AutocompleteValue>(defaultValue ?? (multiple ? [] : ''));
   const value = controlledValue ?? internalValue;
   const native = useRef<HTMLSelectElement>(null);
@@ -290,7 +285,7 @@ export function Autocomplete(props: AutocompleteProps) {
         className={cn(
           'rt-autocomplete-values',
           'flex-row flex-wrap [list-style:none] m-0 p-[0_0_calc(var(--unit)/2)_0]',
-          theme?.values,
+          classNames?.values,
         )}
       >
         {[...selected].map(([key, text]) => (
@@ -299,7 +294,7 @@ export function Autocomplete(props: AutocompleteProps) {
             className={cn(
               'rt-autocomplete-value',
               'm-(--autocomplete-value-margin) me-(--chip-margin-right)',
-              theme?.value,
+              classNames?.value,
             )}
             deletable
             disabled={disabled}
@@ -331,13 +326,13 @@ export function Autocomplete(props: AutocompleteProps) {
       className={cn(
         'rt-autocomplete-suggestion',
         'cursor-pointer text-(length:--input-field-font-size) p-(--autocomplete-suggestion-padding)',
-        theme?.suggestion,
+        classNames?.suggestion,
         optionMap.get(key)?.disabled && '[&&]:cursor-not-allowed opacity-50',
         active === key &&
           cn(
             'rt-autocomplete-active',
             '[.rt-autocomplete-suggestion&]:bg-(--autocomplete-suggestion-active-background)',
-            theme?.active,
+            classNames?.active,
           ),
       )}
       onMouseDown={(event) => {
@@ -365,8 +360,8 @@ export function Autocomplete(props: AutocompleteProps) {
         'p-0 relative',
         materialRoot,
         materialDescendants,
-        theme?.autocomplete,
-        focus && cn('rt-autocomplete-focus', theme?.focus),
+        classNames?.autocomplete,
+        focus && cn('rt-autocomplete-focus', classNames?.focus),
         className,
       )}
       ref={root}
@@ -423,7 +418,7 @@ export function Autocomplete(props: AutocompleteProps) {
           "[&::after]:[border-left:var(--autocomplete-border-size)_solid_transparent] [&::after]:[border-right:var(--autocomplete-border-size)_solid_transparent] [&::after]:[border-top:var(--autocomplete-border-size)_solid_var(--input-chevron-color)] [&::after]:[content:''] [&::after]:h-0 [&::after]:pointer-events-none [&::after]:absolute [&::after]:right-(--input-chevron-offset) [&::after]:top-[50%] [&::after]:[transition:transform_var(--animation-duration)_var(--animation-curve-default)] [&::after]:w-0",
           '[&:focus-within:not(.rt-input-disabled)::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_87%)]',
           '[&.rt-input-disabled::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_38%)]',
-          theme?.input,
+          classNames?.input,
         )}
         error={error || validationMessage}
         label={label}
@@ -464,25 +459,24 @@ export function Autocomplete(props: AutocompleteProps) {
         onKeyDown={(event) => {
           onKeyDown?.(event);
           if (event.defaultPrevented || disabled || event.nativeEvent.isComposing) return;
-          clearQuery.current =
-            (event.key === 'Backspace' || event.which === 8) && showSuggestionsWhenValueIsSet && showAll;
-          if ((event.key === 'Enter' || event.which === 13) && focus) {
+          clearQuery.current = event.key === 'Backspace' && showSuggestionsWhenValueIsSet && showAll;
+          if (event.key === 'Enter' && focus) {
             const target =
               active != null && enabledKeys.includes(active) ? active : allowCreate ? query : enabledKeys[0];
             if (target != null && (allowCreate ? target.length > 0 : suggestions.has(target))) {
               setActive(target);
               select(event, target);
             }
-          } else if (event.key === 'Escape' || event.which === 27) {
+          } else if (event.key === 'Escape') {
             if (focus) {
               event.preventDefault();
               event.stopPropagation();
               setFocus(false);
             }
           } else if (event.key === 'Tab') setFocus(false);
-          else if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.which === 40 || event.which === 38) {
+          else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
             event.preventDefault();
-            const down = event.key === 'ArrowDown' || event.which === 40;
+            const down = event.key === 'ArrowDown';
             const current = active == null ? -1 : enabledKeys.indexOf(active);
             const next =
               current < 0
@@ -511,8 +505,9 @@ export function Autocomplete(props: AutocompleteProps) {
           '[&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-0',
           '[&:not(.rt-autocomplete-up)]:mt-[calc(-1_*_var(--input-padding))]',
           '[.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:[box-shadow:var(--zdepth-shadow-1)] [.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:max-h-(--autocomplete-overflow-max-height) [.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:[-ms-overflow-style:none] [.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:visible',
-          theme?.suggestions,
-          resolvedDirection === 'up' && cn('rt-autocomplete-up', '[.rt-autocomplete-suggestions&]:bottom-0', theme?.up),
+          classNames?.suggestions,
+          resolvedDirection === 'up' &&
+            cn('rt-autocomplete-up', '[.rt-autocomplete-suggestions&]:bottom-0', classNames?.up),
         )}
       >
         {status != null && (

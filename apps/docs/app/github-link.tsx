@@ -1,5 +1,5 @@
-import { FontIcon } from 'react-toolbox/font-icon';
 import { GithubMark } from './brand-icons';
+import SiteIcon from './site-icon';
 
 const repository = 'https://github.com/react-toolbox/react-toolbox';
 
@@ -33,8 +33,8 @@ export default async function GithubLink() {
       <GithubMark className="size-5 shrink-0" />
       {count ? (
         <span className="inline-flex items-center gap-1 tabular-nums">
-          <FontIcon
-            value="star_border"
+          <SiteIcon
+            name="starBorder"
             className="text-base leading-none text-toolbox-text-secondary"
             aria-hidden="true"
           />

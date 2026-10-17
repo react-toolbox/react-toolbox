@@ -29,8 +29,14 @@ test('renders every gallery section and the original colors and sizes', async ({
   await expect(page.getByRole('button', { name: 'Create item', exact: true })).toHaveCSS('height', '56px');
   await expect(page.getByRole('button', { name: 'Disabled', exact: true })).toBeDisabled();
   await page.evaluate(() => document.fonts.ready);
-  expect(await page.evaluate(() => document.fonts.check('14px Roboto'))).toBe(true);
-  expect(await page.evaluate(() => document.fonts.check('24px "Material Icons"'))).toBe(true);
+  for (const selector of ['body', '.material-icons']) {
+    expect(
+      await page.locator(selector).first().evaluate((element) => {
+        const style = getComputedStyle(element);
+        return document.fonts.check(`${style.fontWeight} ${style.fontSize} ${style.fontFamily}`);
+      }),
+    ).toBe(true);
+  }
 });
 
 test('preserves ripple feedback, tooltip behavior, and file selection', async ({ page }) => {

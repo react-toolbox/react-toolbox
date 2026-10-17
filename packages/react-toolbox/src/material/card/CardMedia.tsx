@@ -1,7 +1,6 @@
 'use client';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 
-import type { CardTheme } from './types';
+import type { CardClassNames } from './types';
 import type { ComponentPropsWithRef, ReactNode } from 'react';
 import { cn } from '../foundations/styles/cn';
 export interface CardMediaProps extends ComponentPropsWithRef<'div'> {
@@ -10,10 +9,8 @@ export interface CardMediaProps extends ComponentPropsWithRef<'div'> {
   image?: ReactNode;
   /** Alternative text for a background image; omit for decorative media. */
   alt?: string;
-  /** Classes for the component's rendered parts. Applied after legacy theme overrides. */
-  classNames?: CardTheme;
-  /** @deprecated Use classNames for style slots; use ThemeProvider for design tokens. */
-  theme?: CardTheme;
+  /** Classes for the component's rendered parts. */
+  classNames?: CardClassNames;
 }
 export function CardMedia({
   aspectRatio,
@@ -24,11 +21,9 @@ export function CardMedia({
   image,
   alt,
   style,
-  theme: legacyTheme,
   classNames,
   ...other
 }: CardMediaProps) {
-  const theme = mergeStyleSlots(legacyTheme, classNames);
   return (
     <div
       style={{
@@ -40,21 +35,21 @@ export function CardMedia({
         'rt-card-cardMedia',
         'bg-center bg-no-repeat bg-cover relative',
         "[&::after]:[content:''] [&::after]:block [&::after]:h-0",
-        theme?.cardMedia,
+        classNames?.cardMedia,
         aspectRatio &&
           (aspectRatio === 'wide'
             ? cn(
                 'rt-card-wide',
                 '[.rt-card-cardMedia&]:w-full',
                 '[.rt-card-cardMedia&::after]:pt-[56.25%]',
-                theme?.wide,
+                classNames?.wide,
               )
             : aspectRatio === 'square'
               ? cn(
                   'rt-card-square',
                   '[.rt-card-cardMedia&]:w-full',
                   '[.rt-card-cardMedia&::after]:pt-[100%]',
-                  theme?.square,
+                  classNames?.square,
                 )
               : undefined),
         className,
@@ -74,8 +69,8 @@ export function CardMedia({
           '[.rt-card-cardMedia.rt-card-square_&>iframe]:max-w-full',
           '[.rt-card-cardMedia.rt-card-square_&>video]:max-w-full',
           '[.rt-card-cardMedia.rt-card-square_&>img]:max-w-full',
-          theme?.content,
-          contentOverlay && cn('rt-card-contentOverlay', theme?.contentOverlay),
+          classNames?.content,
+          contentOverlay && cn('rt-card-contentOverlay', classNames?.contentOverlay),
         )}
       >
         {typeof image !== 'string' ? image : null}

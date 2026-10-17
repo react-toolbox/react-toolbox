@@ -9,7 +9,7 @@ const componentSlugs = [
   ).matchAll(/from '\.\/([^']+)'/g),
 ]
   .map(([, slug]) => slug)
-  .filter((slug) => !['theme', 'link', 'navigation'].includes(slug));
+  .filter((slug) => slug !== 'theme');
 
 async function expectAccessible(page) {
   /** Audit settled colors while allowing indeterminate progress to keep running. */
