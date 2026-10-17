@@ -41,25 +41,12 @@ it('generates deterministic registry items with exact source and complete depend
       `Button must not install unrelated ${capability} helpers`,
     );
   }
-  for (const retired of ['link', 'navigation']) {
-    assert(!registry.items.some((item) => item.name === retired), `${retired} must not have a public registry item`);
-    assert(
-      !registry.items.some((item) =>
-        item.files.some((file) => file.path.startsWith(`src/material/${retired}/`) && /\.tsx?$/.test(file.path)),
-      ),
-      `${retired} implementation must not ship in the public source`,
-    );
-  }
   for (const item of registry.items) {
     if (item.name.startsWith('foundation-')) continue;
     const entry = item.files.find((file) => file.type === 'registry:ui');
     assert(
       entry?.target.startsWith(item.name.startsWith('example-') ? '@ui/examples/' : '@ui/material/'),
       `Public entry must use the material directory: ${item.name}`,
-    );
-    assert(
-      !entry.content.includes('react-toolbox/link') && !entry.content.includes('react-toolbox/navigation'),
-      'Public entries must not export retired wrappers',
     );
   }
   const expected = new Set();

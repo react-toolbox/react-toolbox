@@ -1,10 +1,12 @@
 # Material Design 1 audit
 
+> Historical audit. Findings and validation results describe the revisions recorded below. Use the [current guides](../../README.md#guides) for supported behavior and maintenance.
+
 The [16 October component readiness review](component-review.md) records the later audit and implementation outcome across every public family. The pass unifies modal ownership and family theming, corrects interaction and composition defects, reduces shared CSS, and adds range sliders/calendars, scheduling constraints, gesture sheets and an editable themed distribution. Its recorded verification supersedes the earlier results below; statements about missing capabilities describe the revisions under review.
 
 This document preserves historical audit findings and validation results. Test counts and CSS/React 16 comparison results belong to the recorded revisions. The completed migration's archived renderers, correction ledgers, and rebuild/comparison tooling were subsequently retired and remain available in Git history. Maintained regression tests check current behavior, Material 1 geometry and motion, themes, accessibility, and installed-source integration directly.
 
-The subsequent 3.0 cleanup supersedes the compatibility commitments below for `theme` slot props, `XxxTheme` slot types, legacy Toolbox `--color-*` aliases, the `ThemeProvider` workspace subpath, and duplicate `active` props on menus and pickers. Use the [current migration guide](source-registry.md#migrating-to-30) for supported replacements; the audit retains the decisions made at its recorded revisions.
+The subsequent 3.0 cleanup supersedes the compatibility commitments below for `theme` slot props, `XxxTheme` slot types, legacy Toolbox `--color-*` aliases, the `ThemeProvider` workspace subpath, and duplicate `active` props on menus and pickers. Use the [current migration guide](../source-registry.md#migrating-to-30) for supported replacements; the audit retains the decisions made at its recorded revisions.
 
 ## Documentation interface — 15 October 2026
 
@@ -89,7 +91,7 @@ The installed behavioral dependencies are Radix Avatar 1.3.1, Radix Roving Focus
 
 A wholesale Dialog/Select/Menu migration is not presented as completed. Their existing API includes externally managed openers, value-first callbacks, static content, custom templates, exit retention, and scoped portal themes. The changes above fix identified defects while keeping those contracts; future migrations need to demonstrate a simpler implementation under the same tests. Conversely, choosing a native input or table is already consistent with shadcn's approach and does not require a Radix dependency to be accessible.
 
-Regression evidence is grouped by behavior in `tests/native-forms.test.tsx`, `tests/autocomplete.test.tsx`, `tests/overlay-accessibility.test.tsx`, and the other component and browser suites, alongside state, keyboard, Material geometry, hydration, reduced-motion, and registry-consumer checks. The migration also compared original declarations with explicit M1/accessibility corrections; that verifier has been retired. This is a component review with bounded automated evidence, not a completed VoiceOver/NVDA audit or certification of every consumer composition. The manual release checks in [accessibility.md](accessibility.md) remain explicit.
+Regression evidence is grouped by behavior in `tests/native-forms.test.tsx`, `tests/autocomplete.test.tsx`, `tests/overlay-accessibility.test.tsx`, and the other component and browser suites, alongside state, keyboard, Material geometry, hydration, reduced-motion, and registry-consumer checks. The migration also compared original declarations with explicit M1/accessibility corrections; that verifier has been retired. This is a component review with bounded automated evidence, not a completed VoiceOver/NVDA audit or certification of every consumer composition. The manual release checks in [accessibility.md](../accessibility.md) remain explicit.
 
 Validation completed for this change: `pnpm check` (production builds, lint, types, unit tests, styles, registry closures, API and release checks); 139 unit tests; 138 Chromium and 138 WebKit browser tests; and real shadcn CLI installation from the production docs registry into clean Next.js and Vite consumers, including coexistence with an official shadcn Button. The final Chromium suite ran with two workers after an intermittent 22-pixel slider-halo compositor difference under concurrent browser workloads; the isolated case and complete rerun passed without loosening pixel equality. The new mixed checkbox state and corrected chip-container semantics had explicit reference adapters in the migration test harness; archived CSS/runtime fixtures were unchanged during this verification.
 
@@ -190,7 +192,7 @@ The 15 October 2026 release-readiness pass includes explicitly approved accessib
 departures from original picker defaults: brighter small inactive header text,
 Grey 700 clock numerals, and larger year/AM/PM pointer targets with unchanged text
 positions. Their measured contrast, target sizes, and W3C sources are recorded in
-[the accessibility guide](accessibility.md). During the migration, a separate
+[the accessibility guide](../accessibility.md). During the migration, a separate
 accessibility ledger applied after the M1 ledger and validated each previous
 value without changing the archived fixtures. Those ledgers and references are
 retained in Git history. Reduced motion is an additional OS preference, while normal M1 motion
@@ -273,4 +275,4 @@ Public copied entries now use `material/button`, `material/theme`, and the corre
 
 Link and Navigation were retired from the public docs, registry items, and copied TypeScript exports. Native/router links inside semantic navigation or List rows cover these roles without a second routing wrapper. Their old docs URLs redirect to the installation guide's routing section. At this revision, the public catalog had 27 families; the private workspace retained the old implementations for its gallery. This did not remove an M1 interaction pattern. Component geometry, motion, fonts, palette, and archived reference inputs were unchanged during this pass. The private implementations were subsequently removed after the gallery switched to native navigation and List links.
 
-Validation includes the production docs build, docs typecheck/lint, 27 isolated registry dependency closures, strict copied-source compilation, and a real shadcn CLI installation with a custom UI alias into a clean Next.js production app. Browser coverage checks both desktop and mobile layouts, selected-row geometry/ink, code colors and copying, retired routes, registry payloads, and all 27 preview/code pages. Source registry details and migration instructions are in [source-registry.md](source-registry.md).
+Validation includes the production docs build, docs typecheck/lint, 27 isolated registry dependency closures, strict copied-source compilation, and a real shadcn CLI installation with a custom UI alias into a clean Next.js production app. Browser coverage checks both desktop and mobile layouts, selected-row geometry/ink, code colors and copying, retired routes, registry payloads, and all 27 preview/code pages. Source registry details and migration instructions are in [source-registry.md](../source-registry.md).

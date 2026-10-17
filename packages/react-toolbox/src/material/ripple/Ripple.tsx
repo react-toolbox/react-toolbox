@@ -240,13 +240,13 @@ export function rippleFactory(options: RippleOptions = {}) {
       } = props;
       const ink = useRipple({
         ...options,
-        disabled,
-        ripple,
+        disabled: disabled ?? options.disabled,
+        ripple: ripple ?? options.ripple,
         centered: rippleCentered ?? options.centered,
         className: rippleClassName ?? options.className,
         multiple: rippleMultiple ?? options.multiple,
         spread: rippleSpread ?? options.spread,
-        onRippleEnded,
+        onRippleEnded: onRippleEnded ?? options.onRippleEnded,
       });
       return createElement(
         Component,

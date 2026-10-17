@@ -209,7 +209,7 @@ To test unreleased source, explicitly use the local or preview deployment URL. F
 pnpm dlx shadcn@latest add http://127.0.0.1:3100/r/button.json
 ```
 
-For Vercel deployment settings and public-domain checks, see the [docs app deployment guide](../apps/docs/README.md#vercel-deployment).
+For Vercel deployment settings and public-domain checks, see the [deployment guide](deployment.md).
 
 The private implementation package keeps its internal build for the docs app. Its version is registry provenance metadata; npm publishing and Changesets are not part of the release workflow. Deploy the docs app to ship the website and registry together.
 

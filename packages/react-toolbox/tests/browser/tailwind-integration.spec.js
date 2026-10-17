@@ -235,14 +235,14 @@ for (const spacing of [
     const actions = card.locator('.rt-card-cardActions');
     await page.locator('#fixture').evaluate((node) => {
       const probe = document.createElement('div');
-      probe.id = 'legacy-spacing';
+      probe.id = 'toolbox-spacing';
       probe.className = 'p-toolbox';
       node.append(probe);
     });
     await expect(card).toHaveCSS('padding', `${spacing.scale * 4}px`);
     await expect(text).toHaveCSS('padding', `${spacing.scale * 6}px`);
     await expect(actions).toHaveCSS('gap', `${spacing.scale * 2}px`);
-    await expect(page.locator('#legacy-spacing')).toHaveCSS('padding', '10px');
+    await expect(page.locator('#toolbox-spacing')).toHaveCSS('padding', '10px');
     await expect(page.locator('#fixture button').first()).toHaveCSS('height', '36px');
     /** Nested application scopes can customize spacing without changing
      * component --unit or the rest of the page. */
@@ -250,7 +250,7 @@ for (const spacing of [
     await expect(card).toHaveCSS('padding', '28px');
     await expect(text).toHaveCSS('padding', '42px');
     await expect(actions).toHaveCSS('gap', '14px');
-    await expect(page.locator('#legacy-spacing')).toHaveCSS('padding', '10px');
+    await expect(page.locator('#toolbox-spacing')).toHaveCSS('padding', '10px');
     await expect(page.locator('#fixture button').first()).toHaveCSS('height', '36px');
   });
 }

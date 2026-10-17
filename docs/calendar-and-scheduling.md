@@ -5,8 +5,10 @@
 ## Range and multiple-date calendars
 
 ```tsx
+'use client';
+
 import { useState } from 'react';
-import { CalendarSelection, type DateRange } from 'react-toolbox/date-picker';
+import { CalendarSelection, type DateRange } from '@/components/ui/material/date-picker';
 
 function BookingCalendar() {
   const [stay, setStay] = useState<DateRange>({ from: undefined, to: undefined });
@@ -67,8 +69,10 @@ Opening the dialog adjusts an unavailable initial draft to the nearest permitted
 Compose two time pickers for start/end scheduling. This example requires a same-day interval; an overnight booking should explicitly store its end day too.
 
 ```tsx
+'use client';
+
 import { useState } from 'react';
-import { TimePicker } from 'react-toolbox/time-picker';
+import { TimePicker } from '@/components/ui/material/time-picker';
 
 function AppointmentTimes() {
   const [start, setStart] = useState<Date | null>(null);

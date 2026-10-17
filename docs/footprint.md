@@ -24,7 +24,7 @@ The regular setup emits 23 font-face rules: nine subsets for each of Roboto 400 
 
 ## Comparison with the initial audit
 
-The [initial component review](component-review.md) measured Button at 15.52 KiB gzip CSS with all family token declarations and four Roboto weights. The current consumer emits 10.82 KiB, about 30% less. Loaded raw token CSS falls from 51,148 to 5,477 bytes, about 89% less. Button JavaScript is effectively unchanged: 14.33 → 14.36 KiB gzip.
+The [initial component review](archive/component-review.md) measured Button at 15.52 KiB gzip CSS with all family token declarations and four Roboto weights. The current consumer emits 10.82 KiB, about 30% less. Loaded raw token CSS falls from 51,148 to 5,477 bytes, about 89% less. Button JavaScript is effectively unchanged: 14.33 → 14.36 KiB gzip.
 
 This compares the complete audited and current implementations, including correctness changes and font selection, rather than isolating the token split as the only variable. The original setup imported all tokens; the current measurement follows actual component CSS imports. The other maintained scenarios did not have equivalent initial measurements and should not be compared with whole-family numbers or sums of separately compressed bundles.
 

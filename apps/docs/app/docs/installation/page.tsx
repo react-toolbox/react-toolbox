@@ -34,6 +34,11 @@ export default function InstallationPage() {
           already uses it.
         </p>
         <CodeBlock language="Terminal" label="Initialize shadcn" code="pnpm dlx shadcn@latest init" />
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
+          In Vite, use Tailwind’s Vite plugin. If your project uses <code>@tailwindcss/postcss</code> instead, set its{' '}
+          <code>optimize</code> option to <code>false</code> so Vite can resolve imported font URLs before minifying
+          the CSS. Next.js can keep its standard PostCSS configuration.
+        </p>
       </DocsSection>
       <DocsSection id="add" title="2. Add a component">
         <CodeBlock

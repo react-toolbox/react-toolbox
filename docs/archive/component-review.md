@@ -1,5 +1,7 @@
 # Component readiness review
 
+> Historical audit. Findings and validation results describe the revisions recorded below. Use the [current guides](../../README.md#guides) for supported behavior and maintenance.
+
 16 October 2026 · initial audit at `1a486e60` · 27 existing public families reviewed, Sheet added as the 28th, shared foundations and two retired families assessed.
 
 React Toolbox retains its identity as editable Material 1 components with modern React contracts. The authorized implementation keeps the existing public catalog and documents Overlay as a low-level foundation. Link and Navigation were retired from the public registry during this pass; their private compatibility exports were subsequently removed after the gallery switched to native navigation and List links. The implementation corrects the audited behavior and theme inconsistencies, adds the approved capabilities, and makes font loading an explicit distribution choice.
@@ -8,7 +10,7 @@ The main architectural finding was independent behavior and presentation in conv
 
 The findings below preserve the original audit and baseline measurements. The authorized implementation is summarized separately here. Verification counts and comparison results describe the recorded 16 October revision, not the current suite. The completed migration's CSS/React 16 references, correction ledgers, and comparison tooling were subsequently retired and remain available in Git history. Three independent component reviews were combined with foundation inspection, consumer-size measurements, and targeted reproductions. Reviewers used the available model; this was not a review across different model families.
 
-The subsequent 3.0 cleanup supersedes compatibility commitments in this audit for `theme` slot props, `XxxTheme` slot types, legacy Toolbox `--color-*` aliases, the `ThemeProvider` workspace subpath, and duplicate `active` props on menus and pickers. Current names and migration steps are in the [source-registry guide](source-registry.md#migrating-to-30). Other documented contracts remain subject to their component API.
+The subsequent 3.0 cleanup supersedes compatibility commitments in this audit for `theme` slot props, `XxxTheme` slot types, legacy Toolbox `--color-*` aliases, the `ThemeProvider` workspace subpath, and duplicate `active` props on menus and pickers. Current names and migration steps are in the [source-registry guide](../source-registry.md#migrating-to-30). Other documented contracts remain subject to their component API.
 
 ## Implementation outcome
 
@@ -29,10 +31,10 @@ Compatibility also preserves existing `style` targets: Checkbox applies it to th
 
 - Package lint, Tailwind lint, TypeScript, **248 unit/integration tests**, exact style ledgers, registry closure compilation and release checks passed. The documentation production build, lint and TypeScript checks passed.
 - Full browser suites passed: **204 Chromium and 204 WebKit tests**. Coverage included every public family at 320px and desktop widths, automated accessibility, native forms, mixed modal stacks, RTL, reduced motion, landscape pickers, gesture and keyboard sheet controls, scoped light/dark portals, and exact historical rendering comparisons. The final Slider fixture-order correction also passed its four focused cases across both engines and six repeated Chromium probes.
-- Consumer budgets passed. Button CSS measured **10.82 KiB gzip**, compared with **15.52 KiB** in the initial audit (about 30% less); its imported token declarations fell from **51,148 to 5,477 bytes**. The SVG/host-font consumer emitted no font-face declarations. See [measurement method and maintained budgets](footprint.md).
+- Consumer budgets passed. Button CSS measured **10.82 KiB gzip**, compared with **15.52 KiB** in the initial audit (about 30% less); its imported token declarations fell from **51,148 to 5,477 bytes**. The SVG/host-font consumer emitted no font-face declarations. See [measurement method and maintained budgets](../footprint.md).
 - Clean shadcn CLI installations into Next.js and Vite consumers were verified during this pass, including all 28 families and the three editable examples, exact source delivery, strict types, SSR/hydration, source-update preservation and coexistence with an official shadcn Button.
 - Historical CSS and React 16 reference fixtures were unchanged during this verification. Intentional declaration changes had explicit correction-ledger entries; native Chip/List markup used historical-render adapters. Comparisons passed without pixel tolerances or screenshot masks. These comparisons are past migration evidence; current tests assert supported behavior, Material geometry, themes, and accessibility directly.
-- Manual screen-reader announcements, physical mobile touch/virtual-keyboard behavior, forced colors and zoom checks remain release work, as listed in [accessibility guidance](accessibility.md). Automated checks do not establish universal theme or WCAG conformance.
+- Manual screen-reader announcements, physical mobile touch/virtual-keyboard behavior, forced colors and zoom checks remain release work, as listed in [accessibility guidance](../accessibility.md). Automated checks do not establish universal theme or WCAG conformance.
 
 ## Original audit findings
 

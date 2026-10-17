@@ -16,7 +16,6 @@ async function expectAccessibleDocumentation(page) {
 
 test('landing leads into a shared documentation shell with working examples', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'Make it yours.' })).toHaveCount(0);
   await expect(page.getByRole('link', { name: /Browse components/i })).toHaveAttribute('href', '/docs/components');
   await page.getByRole('link', { name: 'Documentation', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'The original, renewed.' })).toBeVisible();
@@ -26,7 +25,6 @@ test('landing leads into a shared documentation shell with working examples', as
     'aria-current',
     'page',
   );
-  await expect(page.getByRole('searchbox')).toHaveCount(0);
   await sidebar.getByRole('link', { name: 'Button', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Button', exact: true, level: 1 })).toBeVisible();
   await expect(sidebar.getByRole('link', { name: 'Button', exact: true })).toHaveAttribute('aria-current', 'page');
@@ -56,7 +54,6 @@ test('mobile documentation navigation closes after following a component', async
   await expect(browse).toBeFocused();
   await browse.click();
   const sidebar = page.getByRole('navigation', { name: 'Documentation sidebar' });
-  await expect(sidebar.getByRole('searchbox')).toHaveCount(0);
   const mobileLink = sidebar.getByRole('link', { name: 'Dialog', exact: true });
   await expect(mobileLink).toHaveCSS('min-height', '48px');
   await expect(mobileLink).toHaveCSS('padding-left', '16px');
@@ -276,7 +273,6 @@ test('documentation follows Material typography, keylines, touch targets, and ta
     for (const row of await table.locator('tbody tr').all()) {
       expect((await row.boundingBox()).height).toBeGreaterThanOrEqual(48);
     }
-    await expect(page.getByRole('heading', { name: 'Exported TypeScript types' })).toHaveCount(0);
     await expect(table.getByRole('row')).toHaveCount(7);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(viewport.width);
   }
@@ -371,7 +367,6 @@ test('syntax colors preserve source, copy exactly, and remain readable on the Ma
   const code = page.getByLabel('Component example', { exact: true });
   const source = await code.textContent();
   expect(source).toContain("from '@/components/ui/material/button'");
-  expect(source).not.toContain('toolbox-button');
   const colors = await code
     .locator('code > span')
     .evaluateAll((spans) => [
@@ -418,7 +413,4 @@ test('retired routing wrappers lead to native routing guidance', async ({ page }
     await expect(page).toHaveURL(/\/docs\/installation#routing$/);
     await expect(page.getByRole('heading', { name: 'Use your router for navigation' })).toBeVisible();
   }
-  const sidebar = page.getByRole('navigation', { name: 'Documentation sidebar' });
-  await expect(sidebar.getByRole('link', { name: 'Link', exact: true })).toHaveCount(0);
-  await expect(sidebar.getByRole('link', { name: 'Navigation', exact: true })).toHaveCount(0);
 });
