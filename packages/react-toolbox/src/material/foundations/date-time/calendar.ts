@@ -6,8 +6,6 @@ export interface DateLocale {
   weekdaysLetter?: readonly string[];
 }
 export type DatePickerLocale = string | DateLocale;
-export type { TimeFormat } from './time';
-import { formatTime, getTimeMode, setHours, setMinutes } from './time';
 
 const dateLocales: Record<string, DateLocale> = {
   de: {
@@ -223,8 +221,6 @@ const time = {
     return this.getFirstDayOfMonth(d).getDay();
   },
 
-  getTimeMode,
-
   getFullMonth(d: Date, locale: DatePickerLocale = 'en'): string {
     const month = d.getMonth();
     const l = (typeof locale === 'string' ? dateLocales[locale] : locale) || dateLocales.en;
@@ -262,10 +258,6 @@ const time = {
     return clonedDate;
   },
 
-  isDateObject(d: unknown): d is Date {
-    return d instanceof Date;
-  },
-
   addDays(d: Date, days: number): Date {
     const newDate = this.clone(d);
     newDate.setDate(d.getDate() + days);
@@ -278,46 +270,10 @@ const time = {
     return newDate;
   },
 
-  addYears(d: Date, years: number): Date {
-    const newDate = this.clone(d);
-    newDate.setFullYear(d.getFullYear() + years);
-    return newDate;
-  },
-
   setDay(d: Date, day: number): Date {
     const newDate = this.clone(d);
     newDate.setDate(day);
     return newDate;
-  },
-
-  setMonth(d: Date, month: number): Date {
-    const newDate = this.clone(d);
-    newDate.setMonth(month);
-    return newDate;
-  },
-
-  setYear(d: Date, year: number): Date {
-    const newDate = this.clone(d);
-    newDate.setFullYear(year);
-    return newDate;
-  },
-
-  setHours,
-
-  setMinutes,
-
-  toggleTimeMode(d: Date): Date {
-    const newDate = this.clone(d);
-    const hours = newDate.getHours();
-
-    newDate.setHours(hours - (hours > 12 ? -12 : 12));
-    return newDate;
-  },
-
-  formatTime,
-
-  dateOutOfRange(date: Date, minDate?: Date, maxDate?: Date): boolean {
-    return Boolean((minDate && !(date >= minDate)) || (maxDate && !(date <= maxDate)));
   },
 
   closestDate(to: Date, date1: Date, date2: Date): Date {

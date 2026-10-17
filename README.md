@@ -42,7 +42,6 @@ packages/react-toolbox/     Private implementation workspace used by the docs ap
   scripts/                 Builds, releases, deployment, and consumer installation checks
   tests/                   Component, style, registry, release, browser, and type tests
   registry/                Generated registry payloads and API reference
-  registry.json            Generated source catalog
 playwright.config.js       Shared browser runner for the website and component library
 ```
 

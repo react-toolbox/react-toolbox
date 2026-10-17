@@ -1,11 +1,4 @@
-/* Shared layout increments and historical navigation compatibility. */
-/* media.css */
-/* Orientation */
-
-/* Devices (defined by max width) */
-
-/* Devices (defined by min-width) */
-
+/* Shared layout increments. */
 :root {
   --standard-increment-mobile: calc(5.6 * var(--unit));
   --standard-increment-desktop: calc(6.4 * var(--unit));
@@ -14,18 +7,6 @@
 [data-react-toolbox-tokens~="--unit"] {
   --standard-increment-mobile: calc(5.6 * var(--unit));
   --standard-increment-desktop: calc(6.4 * var(--unit));
-}
-
-/* navigation */
-:root {
-  --navigation-space: var(--unit);
-  --navigation-color: var(--rt-color-black);
-}
-[data-react-toolbox-tokens~="--unit"] {
-  --navigation-space: var(--unit);
-}
-[data-react-toolbox-tokens~="--rt-color-black"] {
-  --navigation-color: var(--rt-color-black);
 }
 
 /* Shared optional landscape picker header. */

@@ -172,7 +172,7 @@ The installed source belongs to the application. Commit local changes, rerun the
 | `all` | Every family and the complete public barrel |
 
 
-Link and Navigation are retired from the public registry. Use Next.js Link, another router’s link, or a native anchor, composed inside `nav` or a Toolbox List. M1 defines navigation behavior and styling, not a required routing wrapper. Their old implementations remain in the private workspace solely for the historical comparison gallery; neither is included in the copied public TypeScript source or `material/index.ts`.
+Link and Navigation have been removed from the private workspace as well as the public registry. Use Next.js Link, another router’s link, or a native anchor, composed inside `nav` or a Toolbox List. M1 defines navigation behavior and styling, not a required routing wrapper. The gallery uses native navigation and List links.
 
 Family dependencies come from parsed TypeScript imports and exports, including type-only imports. A date picker installs its dialog, button, input, overlay, font-icon, and ripple dependencies. Shared implementation files have one registry owner.
 
@@ -207,7 +207,7 @@ REGISTRY_ORIGIN=https://your-domain.example/toolbox pnpm registry:build
 
 Static output is `packages/react-toolbox/registry/public`, containing `registry.json`, `r/registry.json`, and `r/<name>.json`. Static dependency URLs use the configured origin, including an optional subpath. This is the same source registry, not a separate installation format.
 
-`registry.json` is a generated source catalog; its file paths are relative to `packages/react-toolbox`. The bundled snapshot, generated API reference, and public payloads are ignored by Git. Public entry files are maintained alongside their components. Run `pnpm registry:build` before inspecting or consuming the catalog directly. Never hand-edit generated files.
+`packages/react-toolbox/registry/public/registry.json` is the generated source catalog; its file paths are relative to `packages/react-toolbox`. The catalog, bundled snapshot, generated API reference, and public payloads are ignored by Git. Public entry files are maintained alongside their components. Run `pnpm registry:build` before inspecting or consuming the catalog directly. Never hand-edit generated files.
 
 ## Verification
 

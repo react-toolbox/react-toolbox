@@ -2,7 +2,7 @@
 
 16 October 2026 · initial audit at `1a486e60` · 27 existing public families reviewed, Sheet added as the 28th, shared foundations and two retired families assessed.
 
-React Toolbox retains its identity as editable Material 1 components with modern React contracts. The authorized implementation keeps the existing public catalog, retains Link and Navigation as retired compatibility exports, and documents Overlay as a low-level foundation. It corrects the audited behavior and theme inconsistencies, adds the approved capabilities, and makes font loading an explicit distribution choice.
+React Toolbox retains its identity as editable Material 1 components with modern React contracts. The authorized implementation keeps the existing public catalog and documents Overlay as a low-level foundation. Link and Navigation were retired from the public registry during this pass; their private compatibility exports were subsequently removed after the gallery switched to native navigation and List links. The implementation corrects the audited behavior and theme inconsistencies, adds the approved capabilities, and makes font loading an explicit distribution choice.
 
 The main architectural finding was independent behavior and presentation in convenience components and compound parts. Mixed modal stacks fought over focus, and themes could make compound content unreadable. The implementation shares modal ownership and family tokens while preserving public convenience contracts. Native elements and domain-specific calendars/clocks remain appropriate foundations.
 
@@ -155,7 +155,7 @@ References: [Radix Dialog](https://www.radix-ui.com/primitives/docs/components/d
 
 References: [Radix Avatar](https://www.radix-ui.com/primitives/docs/components/avatar), [shadcn Button](https://ui.shadcn.com/docs/components/radix/button), [Item](https://ui.shadcn.com/docs/components/radix/item), [Sidebar](https://ui.shadcn.com/docs/components/radix/sidebar), [Data Table](https://ui.shadcn.com/docs/components/radix/data-table), and M1 [buttons](https://m1.material.io/components/buttons.html), [cards](https://m1.material.io/components/cards.html), [lists](https://m1.material.io/components/lists.html), [chips](https://m1.material.io/components/chips.html), [tables](https://m1.material.io/components/data-tables.html), [progress](https://m1.material.io/components/progress-activity.html).
 
-**Retired families:** keep Link and Navigation out of the public registry. Native/router links, Button asChild, AppBar, Drawer and List cover their useful composition. Their private reference-gallery use does not justify reviving generic wrappers. A future Radix NavigationMenu would solve a different interaction problem.
+**Retired families:** Link and Navigation have been removed from the private workspace as well as the public registry. Native/router links, Button asChild, AppBar, Drawer and List cover their useful composition. The gallery uses native navigation and List links. A future Radix NavigationMenu would solve a different interaction problem.
 
 ## Shared implementation conventions
 
@@ -252,31 +252,3 @@ These are starter colors, not a verified complete preset. Complete and test all 
 The example should include an app bar/navigation, project cards, a sortable selectable table, a settings form with all native controls, a menu, a drawer, date/time pickers inside a dialog, tooltip icon actions, progress and a queued single snackbar. Put base M1 and Field Notes side by side, with a separate dark semantic-bridge variant to exercise surface/foreground pairs. Include both convenience and compound forms of representative components during validation.
 
 Acceptance requires palette isolation, portal inheritance, keyboard/focus behavior across APIs, required forms, responsive layout, readable states, reduced motion, and measured CSS/font/JS output. This is a concrete follow-up example to build after the correctness work, not a completed demo in this audit.
-
-## Reviewable implementation sequence
-
-The original sequence below recorded suggested review/commit boundaries. Javi subsequently authorized all iterations and the optional capabilities; the implementation outcome and historical verification are recorded above.
-
-| Order | Scope | Suggested commit title |
-| --- | --- | --- |
-| 1 | Restore browser test discovery by removing the accessibility suite's runtime dependency on Next UI. Keep component metadata accessible without importing rendering code. | `test: decouple accessibility discovery from docs UI` |
-| 2 | Unify Dialog modal ownership, then adapt modal Drawer/picker integration as needed; test mixed stacks in both directions before further migrations. | `fix: unify modal focus ownership` |
-| 3 | Align family theme consumption in compound surfaces/fields, including the semantic bridge and custom layers. | `fix: share theme tokens across component APIs` |
-| 4 | Native picker validation, Switch focus, Dropdown typeahead, Calendar keyboard state; decide the Autocomplete blur contract separately. | `fix: close form and keyboard interaction gaps` |
-| 5 | Table bulk selection, percentage Sidebar offsets, Avatar custom images, Snackbar message timing. Split into small independent fixes. | `fix: preserve selection and content contracts` |
-| 6 | List/Chip native action composition and missing native input/part props; wrapper-safe List/Layout structure follows explicit contract review. | `refactor: make list and chip actions composable` |
-| 7 | M1 hit targets, touch tooltip geometry, then separately reviewed desktop density, RTL and landscape coverage. | `fix: complete Material 1 interaction geometry` |
-| 8 | Measured font/CSS/date-helper reductions, with isolated-consumer budgets. | `perf: reduce shared component delivery cost` |
-| 9 | Field Notes theme recipe, installable example, and verified light/dark comparison. | `docs: demonstrate a themed Material distribution` |
-
-Later adapters for Dropdown, Autocomplete, IconMenu, Tabs, Tooltip and Table should follow one family at a time with explicit compatibility cases. Do not combine all migrations into a single cleanup. Native Input/Checkbox/Radio/Switch, structural content, ProgressBar, and domain-specific clock/calendar behavior do not need wholesale Radix replacement.
-
-## Original audit validation and limits
-
-- Library lint, Tailwind lint, types, all **191 existing unit/integration tests**, registry closure compilation and style/release checks passed. Documentation production build, lint and types passed. The initial sandboxed production compilation stalled; the same build completed after an approved run outside the sandbox.
-- The full Chromium suite failed during test discovery: `tests/browser/accessibility.spec.js:6` imports the docs catalog, which now imports `next/link`; Node cannot resolve that extensionless runtime module in this test path. This is a test setup failure, not a successful accessibility run.
-- Excluding only that file, **129 Chromium tests passed**, including documentation scans, composition, theme/Preflight integration, Material measurements and exact reference comparisons.
-- The same runnable WebKit suite had **128 passes and one failure**: `tests/browser/documentation.spec.js:220` expected the sidebar to align exactly with the app bar, but measured a −0.359375px offset. A focused retry reproduced the same offset. This remains an unresolved documentation-layout or assertion issue; no tolerance or visual baseline was changed.
-- Temporary source/React/JSDOM and Chromium probes reproduced the additional defects described above. They were not added as permanent tests during this audit. The modal and theme failures were independently checked by the lead reviewer.
-- Fresh real shadcn CLI installation, manual screen-reader checks, zoom/forced-colors review, large virtualized lists, and full arbitrary-theme conformance were not performed. Existing historical results in the M1 audit remain historical evidence, not fresh results for this revision.
-- `docs/accessibility.md` still says cascading submenus are unavailable despite the current compound implementation; update that guidance when clarifying the recommended API. README also links to a missing `packages/react-toolbox/README.md`. Keep documentation claims aligned with the implementation and available checks.

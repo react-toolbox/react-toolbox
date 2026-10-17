@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// Keep the comparison fixture's gallery input unchanged.
 export default function PlaygroundPage() {
   return <Gallery />;
 }

@@ -12,8 +12,7 @@
       "*.json",
       "*.js",
       "*.mjs",
-      "*.ts",
-      "!!packages/react-toolbox/registry.json"
+      "*.ts"
     ]
   },
   "formatter": {

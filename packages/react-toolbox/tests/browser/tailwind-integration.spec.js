@@ -11,7 +11,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Button, IconButton, BrowseButton, AppBar, Avatar, Card, CardTitle, CardText, CardActions, CardMedia, Checkbox, Chip,
   Input, Dropdown, Autocomplete, ProgressBar, RadioButton, RadioGroup, Slider, Switch, List, ListItem, ListDivider, ListSubHeader,
-  Table, TableHead, TableRow, TableCell, Tabs, Tab, Navigation, DatePicker, TimePicker, ThemeProvider, Dialog } from './src';
+  Table, TableHead, TableRow, TableCell, Tabs, Tab, DatePicker, TimePicker, ThemeProvider, Dialog } from './src';
 import { shadcnThemeVariables } from './src/material/foundations/theme/shadcn';
 function Bridge() { return <>
   <div id="host" className="bg-primary">Host</div><Button id="default-color" primary raised label="Original" />
@@ -26,7 +26,6 @@ function App() { return <main id="fixture" style={{ width: 1000, padding: 24, di
   <section><Button className={window.__CLASSES__?.button} primary raised label="Primary" /><Button accent label="Accent" /><IconButton icon="+" /><BrowseButton label="Upload" />
     <AppBar title="Heading" leftIcon="+" /><Avatar title="Name" />
     <Card className={window.__CLASSES__?.card}><CardTitle title="Card title" subtitle="Card subtitle" /><CardText className={window.__CLASSES__?.text}>Card body text.</CardText><CardActions className={window.__CLASSES__?.actions}><Button label="Read" /></CardActions></Card>
-    <Navigation actions={[{label:'Save'}]} routes={[{label:'Home',href:'#home',count:5}]} />
     <List selectable><ListSubHeader caption="Contacts" /><ListItem caption="One line" /><ListItem caption="Two lines" legend="More text" /><ListDivider /></List>
   </section>
   <section><Input label="Name" value="Value" hint="Hint" /><Input label="Blank" hint="Placeholder" multiline />

@@ -74,7 +74,6 @@
         "REGISTRY_ORIGIN"
       ],
       "outputs": [
-        "registry.json",
         "registry/public/**",
         "registry/data.json"
       ]

@@ -22,7 +22,6 @@ import {
   IconButton,
   IconMenu,
   Input,
-  Link,
   List,
   ListCheckbox,
   ListDivider,
@@ -35,7 +34,6 @@ import {
   Menu,
   MenuDivider,
   MenuItem,
-  Navigation,
   ProgressBar,
   RadioButton,
   RadioGroup,
@@ -340,11 +338,13 @@ function NavigationExamples({ notify }) {
                 </IconMenu>
               </div>
             </div>
-            <Navigation type="vertical" routes={[
-              { href: '#buttons', label: 'Back to buttons', icon: 'arrow_upward' },
-              { href: '/layout-demo', label: 'Open layout example', icon: 'view_quilt' },
-            ]} />
-            <Link href="#pickers" label="Explore date & time" icon="event" />
+            <nav aria-label="Gallery shortcuts">
+              <List selectable ripple>
+                <ListItem to="#buttons" caption="Back to buttons" leftIcon="arrow_upward" />
+                <ListItem to="/layout-demo" caption="Open layout example" leftIcon="view_quilt" />
+                <ListItem to="#pickers" caption="Explore date & time" leftIcon="event" />
+              </List>
+            </nav>
           </div>
         </div>
         <p className="gallery-state" aria-live="polite">Menu selection: {menuSelection}</p>

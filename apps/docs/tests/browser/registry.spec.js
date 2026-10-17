@@ -1,9 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { readFileSync } from 'node:fs';
+import { createRegistry } from '../../../../packages/react-toolbox/scripts/build-registry.mjs';
 
-const expectedCatalog = JSON.parse(
-  readFileSync(new URL('../../../../packages/react-toolbox/registry.json', import.meta.url), 'utf8'),
-);
+const { catalog: expectedCatalog } = await createRegistry();
 
 test('the docs deployment serves a complete same-origin source registry', async ({ request, baseURL }) => {
   const catalogResponse = await request.get('/r/registry.json');

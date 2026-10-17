@@ -124,14 +124,6 @@
       "types": "./dist/css.d.mts",
       "default": "./dist/tailwind.css"
     },
-    "./app_bar": {
-      "types": "./dist/material/app-bar/index.d.ts",
-      "import": "./dist/material/app-bar/index.js"
-    },
-    "./app_bar/*": {
-      "types": "./dist/material/app-bar/*.d.ts",
-      "import": "./dist/material/app-bar/*.js"
-    },
     "./autocomplete": {
       "types": "./dist/material/autocomplete/index.d.ts",
       "import": "./dist/material/autocomplete/index.js"
@@ -180,14 +172,6 @@
       "types": "./dist/material/chip/*.d.ts",
       "import": "./dist/material/chip/*.js"
     },
-    "./date_picker": {
-      "types": "./dist/material/date-picker/index.d.ts",
-      "import": "./dist/material/date-picker/index.js"
-    },
-    "./date_picker/*": {
-      "types": "./dist/material/date-picker/*.d.ts",
-      "import": "./dist/material/date-picker/*.js"
-    },
     "./dialog": {
       "types": "./dist/material/dialog/index.d.ts",
       "import": "./dist/material/dialog/index.js"
@@ -212,14 +196,6 @@
       "types": "./dist/material/dropdown/*.d.ts",
       "import": "./dist/material/dropdown/*.js"
     },
-    "./font_icon": {
-      "types": "./dist/material/font-icon/index.d.ts",
-      "import": "./dist/material/font-icon/index.js"
-    },
-    "./font_icon/*": {
-      "types": "./dist/material/font-icon/*.d.ts",
-      "import": "./dist/material/font-icon/*.js"
-    },
     "./input": {
       "types": "./dist/material/input/index.d.ts",
       "import": "./dist/material/input/index.js"
@@ -235,14 +211,6 @@
     "./layout/*": {
       "types": "./dist/material/layout/*.d.ts",
       "import": "./dist/material/layout/*.js"
-    },
-    "./link": {
-      "types": "./dist/material/link/index.d.ts",
-      "import": "./dist/material/link/index.js"
-    },
-    "./link/*": {
-      "types": "./dist/material/link/*.d.ts",
-      "import": "./dist/material/link/*.js"
     },
     "./list": {
       "types": "./dist/material/list/index.d.ts",
@@ -260,14 +228,6 @@
       "types": "./dist/material/menu/*.d.ts",
       "import": "./dist/material/menu/*.js"
     },
-    "./navigation": {
-      "types": "./dist/material/navigation/index.d.ts",
-      "import": "./dist/material/navigation/index.js"
-    },
-    "./navigation/*": {
-      "types": "./dist/material/navigation/*.d.ts",
-      "import": "./dist/material/navigation/*.js"
-    },
     "./overlay": {
       "types": "./dist/material/overlay/index.d.ts",
       "import": "./dist/material/overlay/index.js"
@@ -275,14 +235,6 @@
     "./overlay/*": {
       "types": "./dist/material/overlay/*.d.ts",
       "import": "./dist/material/overlay/*.js"
-    },
-    "./progress_bar": {
-      "types": "./dist/material/progress-bar/index.d.ts",
-      "import": "./dist/material/progress-bar/index.js"
-    },
-    "./progress_bar/*": {
-      "types": "./dist/material/progress-bar/*.d.ts",
-      "import": "./dist/material/progress-bar/*.js"
     },
     "./radio": {
       "types": "./dist/material/radio/index.d.ts",
@@ -339,14 +291,6 @@
     "./tabs/*": {
       "types": "./dist/material/tabs/*.d.ts",
       "import": "./dist/material/tabs/*.js"
-    },
-    "./time_picker": {
-      "types": "./dist/material/time-picker/index.d.ts",
-      "import": "./dist/material/time-picker/index.js"
-    },
-    "./time_picker/*": {
-      "types": "./dist/material/time-picker/*.d.ts",
-      "import": "./dist/material/time-picker/*.js"
     },
     "./tooltip": {
       "types": "./dist/material/tooltip/index.d.ts",

@@ -5,7 +5,7 @@ import type { TimePickerTheme } from './types';
 
 import React, { useEffect, useRef, useState } from 'react';
 import { range } from '../foundations/collections/range';
-import type { TimeFormat } from '../foundations/date-time/calendar';
+import type { TimeFormat } from '../foundations/date-time/time';
 import Hand, { type ClockHandHandle } from './ClockHand';
 import Face from './ClockFace';
 const outerNumbers = [0, ...range(13, 24)];

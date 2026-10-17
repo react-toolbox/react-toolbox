@@ -13,7 +13,6 @@ const source = path.join(root, 'src/material');
 const exampleSource = path.join(root, 'src/examples');
 const slash = (value) => value.split(path.sep).join('/');
 const schema = 'https://ui.shadcn.com/schema/registry-item.json';
-const familyName = (value) => value;
 async function exists(file) {
   try {
     await access(file);
@@ -94,12 +93,8 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
   // Keep a deployment subpath, when one is explicitly supplied.
   const prefix = new URL(origin).pathname.replace(/\/$/, '');
   base.pathname = `${prefix}/r/`;
-  const retired = new Set(config.retiredFamilies);
   const files = [...(await walk(source)), ...((await exists(exampleSource)) ? await walk(exampleSource) : [])].filter(
-    (file) => {
-      const relative = slash(path.relative(source, file));
-      return /\.(?:tsx?|css)$/.test(file) && !(retired.has(relative.split('/')[0]) && /\.tsx?$/.test(file));
-    },
+    (file) => /\.(?:tsx?|css)$/.test(file),
   );
   const content = new Map(await Promise.all(files.map(async (file) => [file, await readFile(file, 'utf8')])));
   const publicImports = imports(await readFile(path.join(source, 'index.ts'), 'utf8'), 'index.ts');
@@ -107,7 +102,7 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
   for (const specifier of publicImports) {
     if (!specifier.startsWith('./')) throw new Error(`Unexpected public barrel import ${specifier}`);
     const family = specifier.slice(2);
-    if (retired.has(family) || family === 'theme') continue;
+    if (family === 'theme') continue;
     if (await exists(path.join(source, family, 'index.ts'))) families.push(family);
     else if (!content.has(path.join(source, `${family}.ts`)) && !content.has(path.join(source, `${family}.tsx`))) {
       throw new Error(`Public export ${family} has no registry owner`);
@@ -199,7 +194,7 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
   });
   dependency(foundation, '@fontsource/roboto');
   dependency(foundation, 'material-icons');
-  for (const family of families) groups.get(familyName(family)).registryDependencies.add('foundation');
+  for (const family of families) groups.get(family).registryDependencies.add('foundation');
   // Source CSS and the host utility sheet may be compiled independently (Next).
   // Register animations in the host through the supported registry CSS API as
   // well. Only include names referenced by the family's actual JS import graph.
@@ -316,8 +311,6 @@ export async function buildRegistry(options = {}) {
     path.join(root, 'registry/data.json'),
     `${JSON.stringify({ catalog: registry.catalog, items: registry.items })}\n`,
   );
-  if (options.sourceCatalog !== false)
-    await writeFile(path.join(root, 'registry.json'), `${JSON.stringify(registry.catalog, null, 2)}\n`);
   return { ...registry, destination };
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {

@@ -9,7 +9,6 @@ import { Overlay } from '../src/material/overlay/Overlay';
 import Button from '../src/material/button';
 import Dialog from '../src/material/dialog';
 import Drawer from '../src/material/drawer';
-import Navigation from '../src/material/navigation';
 import Input from '../src/material/input';
 import Autocomplete from '../src/material/autocomplete';
 import Slider from '../src/material/slider';
@@ -190,15 +189,7 @@ describe('React 19 runtime', () => {
     expect(dialog).toBeInTheDocument();
     advance(1);
     expect(dialog).not.toBeInTheDocument();
-    render(
-      strict(
-        <>
-          <Navigation />
-          <Drawer active>Default drawer</Drawer>
-        </>,
-      ),
-    );
-    expect(document.querySelector('[data-react-toolbox="navigation"]').className).toContain('horizontal');
+    render(strict(<Drawer active>Default drawer</Drawer>));
     expect(document.querySelector('[data-react-toolbox="drawer"]').className).toContain('left');
   });
 
