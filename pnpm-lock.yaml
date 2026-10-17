@@ -342,9 +342,6 @@ importers:
       postcss:
         specifier: ^8.5.29
         version: 8.5.29
-      postcss-calc:
-        specifier: ^11.2.3
-        version: 11.2.3(postcss@8.5.29)
       postcss-selector-parser:
         specifier: ^7.1.6
         version: 7.1.6
@@ -3221,12 +3218,6 @@ packages:
     resolution: {integrity: sha512-kVzTnYFYEyQ9RGzBjNCd2+yEqWmVbxl3AHPynv3qQ6JTjv4a+kwRcnqQwIpuP3NnrnIrE/Q6wWAIAvMfIE2/Yg==}
     engines: {node: '>=20'}
     hasBin: true
-
-  postcss-calc@11.2.3:
-    resolution: {integrity: sha512-pFW3MR2a4W7uHcSGUiyQGGXZWHon83ljbNwnUJ1mRKublWQbv+3o9NiqhlV4TJfNby+U+zLY2OgiywzhA5eFqw==}
-    engines: {node: ^22.22.3 || ^24.15 || >=26.0}
-    peerDependencies:
-      postcss: ^8.5.29
 
   postcss-selector-parser@7.1.6:
     resolution: {integrity: sha512-7qASPzhKF2l2KLboRZux8CCTRMdGiV08vWmyKzPz22qZ7ZjQBOeY7rNzNoCLSUiftJ7HUq0GERHmxw/t0dCdMw==}
@@ -6471,11 +6462,6 @@ snapshots:
   playwright@1.64.0:
     dependencies:
       playwright-core: 1.64.0
-
-  postcss-calc@11.2.3(postcss@8.5.29):
-    dependencies:
-      '@csstools/css-tokenizer': 4.0.2
-      postcss: 8.5.29
 
   postcss-selector-parser@7.1.6:
     dependencies:

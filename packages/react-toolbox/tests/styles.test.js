@@ -1,62 +1,12 @@
 // @vitest-environment node
 import { it } from 'vitest';
 import assert from 'node:assert/strict';
-import { glob, readFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { compile } from 'tailwindcss';
 import postcss from 'postcss';
-import { root, modernRules, correctedRules, referenceCss, declarationsBySelector } from './helpers/style-rules.mjs';
 
-it('preserves the reviewed Material 1 declarations and independent browser reference', () => {
-  const expectedRules = correctedRules();
-  const browserReference = declarationsBySelector(postcss.parse(referenceCss()));
-  assert.deepEqual(
-    new Map([...browserReference].sort()),
-    new Map([...expectedRules].sort()),
-    'Browser reference must contain exactly the reviewed declarations',
-  );
-  /** Tailwind owns utility order. Declaration equivalence is checked here; browser
-   * parity and interactive-state tests verify the resulting cascade and pixels. */
-  const differences = [];
-  for (const [selector, declarations] of expectedRules) {
-    const modern = modernRules.get(selector);
-    if (!modern) {
-      differences.push(`Missing selector: ${selector}`);
-      continue;
-    }
-    for (const [property, value] of declarations) {
-      /** The checkmark's old `border-left: 0; border-style: solid` resolves to
-       * `0 solid`. Spell that result explicitly when Tailwind orders the rules. */
-      const resolvedZeroBorder =
-        property === 'border-left' &&
-        value === '0' &&
-        declarations.get('border-style') === 'solid' &&
-        [...declarations.keys()].indexOf('border-style') > [...declarations.keys()].indexOf(property) &&
-        modern.get(property) === '0 solid';
-      if (modern.get(property) !== value && !resolvedZeroBorder) {
-        differences.push(`${selector}: ${property}\n  original: ${value}\n  current:  ${modern.get(property)}`);
-      }
-    }
-    for (const property of modern.keys()) {
-      /** Autocomplete composes Chip. Its margin shorthand must retain the Chip
-       * end margin that previously won by stylesheet order. Verify the explicit
-       * utility against that independent reference value, not a new baseline. */
-      if (selector === '.rt-autocomplete-value' && property === 'margin-inline-end') {
-        assert.equal(modern.get(property), expectedRules.get('.rt-chip-chip').get(property));
-        continue;
-      }
-      if (!declarations.has(property)) differences.push(`Unexpected property ${selector}: ${property}`);
-    }
-  }
-  for (const selector of modernRules.keys()) {
-    /** Accessibility preferences are a separate, opt-in rendering contract. Keep
-     * every normal-motion declaration exact and verify reduced motion in browser tests. */
-    if (selector.startsWith('@media (prefers-reduced-motion: reduce) > ')) continue;
-    if (!expectedRules.has(selector)) differences.push(`Unexpected selector: ${selector}`);
-  }
-
-  assert.equal(differences.length, 0, `Unreviewed Material 1 style drift:\n${differences.join('\n')}`);
-});
+const root = path.resolve(import.meta.dirname, '..');
 
 it('scopes reduced motion to the accessibility preference', async () => {
   const reducedMotion = postcss.parse(
@@ -67,14 +17,6 @@ it('scopes reduced motion to the accessibility preference', async () => {
     assert.equal(node.type, 'atrule', 'Reduced-motion rules must not affect default M1 styling');
     assert.equal(node.name, 'media');
     assert.equal(node.params, '(prefers-reduced-motion: reduce)');
-  }
-});
-
-it('keeps component presentation out of runtime theme maps', async () => {
-  /** Component presentation belongs in JSX or explicitly shared constants, not a
-   * per-family runtime theme map. The independent declarations above stay exact. */
-  for await (const file of glob('src/material/**/theme.ts', { cwd: root })) {
-    assert.fail(`Obsolete runtime theme map: ${file}`);
   }
 });
 

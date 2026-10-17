@@ -12,8 +12,7 @@ function walk(node, visit) {
   }
 }
 
-/** Read actual static classes from JSX and shared constants for parity fixtures.
- * No style map is shipped or reconstructed at runtime by the components. */
+/** Give browser fixtures the component classes from maintained JSX and shared constants. */
 export async function componentClasses(root) {
   const modules = new Map();
   async function load(filename) {

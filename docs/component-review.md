@@ -6,14 +6,14 @@ React Toolbox retains its identity as editable Material 1 components with modern
 
 The main architectural finding was independent behavior and presentation in convenience components and compound parts. Mixed modal stacks fought over focus, and themes could make compound content unreadable. The implementation shares modal ownership and family tokens while preserving public convenience contracts. Native elements and domain-specific calendars/clocks remain appropriate foundations.
 
-The findings below preserve the original audit and baseline measurements. The authorized implementation is summarized separately here; archived reference fixtures remain unchanged. Three independent component reviews were combined with foundation inspection, consumer-size measurements, and targeted reproductions. Reviewers used the available model; this was not a review across different model families.
+The findings below preserve the original audit and baseline measurements. The authorized implementation is summarized separately here. Verification counts and comparison results describe the recorded 16 October revision, not the current suite. The completed migration's CSS/React 16 references, correction ledgers, and comparison tooling were subsequently retired and remain available in Git history. Three independent component reviews were combined with foundation inspection, consumer-size measurements, and targeted reproductions. Reviewers used the available model; this was not a review across different model families.
 
 ## Implementation outcome
 
 The authorized pass addresses the concrete findings across all 27 existing families and adds Sheet as the 28th. Native controls and structural components remain native; Radix owns shared modal behavior, compound menus/selects/tabs/tooltips, and the new range slider; Base UI remains the combobox foundation. Vaul provides the optional gesture sheet over the same Radix dialog dependency.
 
 - **Behavior and structure:** shared modal ownership across convenience and compound APIs; native picker validation/reset/clearing; corrected keyboard selection, focus and snackbar timing; eligible table bulk selection; wrapper-safe List/Layout; semantic Chip actions, table headers, card headings, avatar image ownership, and native file-input props.
-- **Material geometry:** 48px selection-control activation areas with original glyphs and table density; mouse/touch tooltip offsets; explicit comfortable/desktop/compact menu density; logical RTL layout; optional landscape pickers. Every intended change is recorded in `tests/fixtures/corrections/component-review-style-corrections.json`, alongside the prior ledgers.
+- **Material geometry:** 48px selection-control activation areas with original glyphs and table density; mouse/touch tooltip offsets; explicit comfortable/desktop/compact menu density; logical RTL layout; optional landscape pickers. The migration recorded the intended declaration changes in a correction ledger, now retained in Git history alongside the prior ledgers.
 - **Optional capabilities:** Radix multi-thumb/range/vertical sliders; single/multiple/range and multi-month calendars with ISO week numbers and unavailable-day predicates; bounded/stepped local times including overnight windows; clear actions and translated picker labels; gesture sheets with snap points and nested stacks.
 - **Customization:** compound parts use the same family color and field tokens as their convenience counterparts. The optional semantic bridge covers light and dark surfaces, selection controls, calendar/clock surfaces, chips and tabs. `--calendar-background` separates the calendar surface from the selected-day foreground.
 - **Distribution:** component token CSS follows actual module imports; shared styles no longer carry every family's defaults. Roboto delivery is 400/500 by default; fonts and icons are one removable stylesheet for SVG/host-font consumers. Clock helpers no longer import calendar locale tables. The maintained footprint checks measure actual installed consumers.
@@ -23,13 +23,13 @@ These are additive capabilities and targeted corrections, not a promise of every
 
 Compatibility also preserves existing `style` targets: Checkbox applies it to the visual Check, while RadioButton and Switch apply it to their native input. Use root `className`, named `classNames` slots or family tokens for visual customization across those controls. Silently moving these styles would change existing consumer behavior.
 
-## Implementation verification
+## Implementation verification — historical results
 
-- Package lint, Tailwind lint, TypeScript, **248 unit/integration tests**, exact style ledgers, registry closure compilation and release checks pass. The documentation production build, lint and TypeScript checks pass.
-- Full browser suites pass: **204 Chromium and 204 WebKit tests**. Coverage includes every public family at 320px and desktop widths, automated accessibility, native forms, mixed modal stacks, RTL, reduced motion, landscape pickers, gesture and keyboard sheet controls, scoped light/dark portals, and exact historical rendering comparisons. The final Slider fixture-order correction also passes its four focused cases across both engines and six repeated Chromium probes.
-- Maintained consumer budgets pass. Button CSS measures **10.82 KiB gzip**, compared with **15.52 KiB** in the initial audit (about 30% less); its imported token declarations fall from **51,148 to 5,477 bytes**. The SVG/host-font consumer emits no font-face declarations. See [measurement method and all budgets](footprint.md).
+- Package lint, Tailwind lint, TypeScript, **248 unit/integration tests**, exact style ledgers, registry closure compilation and release checks passed. The documentation production build, lint and TypeScript checks passed.
+- Full browser suites passed: **204 Chromium and 204 WebKit tests**. Coverage included every public family at 320px and desktop widths, automated accessibility, native forms, mixed modal stacks, RTL, reduced motion, landscape pickers, gesture and keyboard sheet controls, scoped light/dark portals, and exact historical rendering comparisons. The final Slider fixture-order correction also passed its four focused cases across both engines and six repeated Chromium probes.
+- Consumer budgets passed. Button CSS measured **10.82 KiB gzip**, compared with **15.52 KiB** in the initial audit (about 30% less); its imported token declarations fell from **51,148 to 5,477 bytes**. The SVG/host-font consumer emitted no font-face declarations. See [measurement method and maintained budgets](footprint.md).
 - Clean shadcn CLI installations into Next.js and Vite consumers were verified during this pass, including all 28 families and the three editable examples, exact source delivery, strict types, SSR/hydration, source-update preservation and coexistence with an official shadcn Button.
-- Historical CSS and React 16 reference fixtures remain unchanged. Intentional declaration changes have explicit correction-ledger entries. Native Chip/List markup has explicit historical-render adapters; no pixel tolerances or screenshot masks were introduced. Reference stylesheet replacement preserves the viewport scroll position so rounded corners compare against the same backdrop. Slider comparison canvases are aligned before interaction, avoiding texture rasterization at a previous fractional origin; picker geometry waits for the existing delayed entrance and captures related bounds together.
+- Historical CSS and React 16 reference fixtures were unchanged during this verification. Intentional declaration changes had explicit correction-ledger entries; native Chip/List markup used historical-render adapters. Comparisons passed without pixel tolerances or screenshot masks. These comparisons are past migration evidence; current tests assert supported behavior, Material geometry, themes, and accessibility directly.
 - Manual screen-reader announcements, physical mobile touch/virtual-keyboard behavior, forced colors and zoom checks remain release work, as listed in [accessibility guidance](accessibility.md). Automated checks do not establish universal theme or WCAG conformance.
 
 ## Original audit findings
@@ -93,7 +93,7 @@ List and Layout also discover direct children by component identity. Wrappers an
 
 ### Remaining Material 1 gaps
 
-The strict visual tests protect the corrected reference baseline. They do not prove every API, theme, or composition satisfies the specification.
+At the time of this audit, strict visual tests protected the corrected reference baseline. They did not prove every API, theme, or composition satisfied the specification.
 
 - **Touch targets:** measured interactive heights are Checkbox 18px, Radio 20px, Switch 24px, and Slider 32px. M1 calls for 48×48dp touch targets independent of glyph size. Preserve visual geometry while extending activation areas; test adjacent-target overlap and wrapping labels. [M1 accessibility](https://m1.material.io/usability/accessibility.html)
 - **Touch Tooltip:** compound content uses a 14px gap on touch as well as mouse. Chromium measured 14px; M1 specifies 24dp for touch. The convenience hook already distinguishes them. Retain caller offsets and align entrance/exit curves as well. [M1 tooltips](https://m1.material.io/components/tooltips.html)
@@ -101,7 +101,7 @@ The strict visual tests protect the corrected reference baseline. They do not pr
 - **Pickers:** current dialogs provide portrait arrangements, without the M1 landscape arrangement. Internal labels remain partly English despite date localization. The calendar year chooser is fixed to 1900–2099 while Date values are not equivalently restricted. [M1 pickers](https://m1.material.io/components/pickers.html)
 - **Bidirectionality:** AppBar, Chip, List, Table, and Layout retain physical left/right rules. Scope a deliberate RTL pass; directional media/progress behavior should not be mirrored mechanically. [M1 bidirectionality](https://m1.material.io/usability/bidirectionality.html)
 
-Any visual correction should be recorded in the correction ledger and tested against the independently preserved reference. Do not regenerate archived fixtures to make a changed rendering pass.
+The migration required visual corrections to be recorded separately from its preserved reference. With that comparison apparatus retired, maintain direct regression checks for the intended Material measurements and behavior, and document the design evidence for visual changes.
 
 ## Decisions for every component family
 
@@ -255,7 +255,7 @@ Acceptance requires palette isolation, portal inheritance, keyboard/focus behavi
 
 ## Reviewable implementation sequence
 
-The original sequence below provides suggested review/commit boundaries. Javi subsequently authorized all iterations and the optional capabilities; implementation remains unstaged for review.
+The original sequence below recorded suggested review/commit boundaries. Javi subsequently authorized all iterations and the optional capabilities; the implementation outcome and historical verification are recorded above.
 
 | Order | Scope | Suggested commit title |
 | --- | --- | --- |

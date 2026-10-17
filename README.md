@@ -41,7 +41,6 @@ packages/react-toolbox/     Private implementation workspace used by the docs ap
     foundations/           Shared styles, theme, motion, portals, and date/time behavior
   scripts/                 Builds, releases, deployment, and consumer installation checks
   tests/                   Component, style, registry, release, browser, and type tests
-    fixtures/              Immutable references, correction ledgers, and reproduction tools
   registry/                Generated registry payloads and API reference
   registry.json            Generated source catalog
 playwright.config.js       Shared browser runner for the website and component library
@@ -49,7 +48,7 @@ playwright.config.js       Shared browser runner for the website and component l
 
 All workspace packages are private. The compiled `react-toolbox` workspace dependency is an internal development convenience for the documentation app. **The registry is the only public distribution.** There is no npm publishing workflow. Tagged source releases archive the registry for repeatable installation and rollback.
 
-The documentation application lives in `apps/docs/`. The `docs/` directory contains the maintained design audit and source-registry guide. Original rendering fixtures remain under `packages/react-toolbox/tests/fixtures/` for independent M1 regression checks.
+The documentation application lives in `apps/docs/`. The `docs/` directory contains design audits, accessibility guidance, and the source-registry guide. The completed migration's CSS and React 16 comparison fixtures, correction ledgers, and rebuild tools are retained in Git history.
 
 ## Develop
 
@@ -68,7 +67,7 @@ pnpm docs:start          # http://127.0.0.1:3100
 pnpm build:library       # private implementation build
 ```
 
-`pnpm docs:dev` and `pnpm docs:build` run the docs app and its dependencies. The landing lives at `/`, documentation at `/docs`, installation at `/docs/installation`, and component pages at `/docs/components/<name>`. `/components` redirects to the docs catalog; the unchanged comparison gallery is available at `/playground`. The app also serves `/layout-demo`, `/theme-demo`, `/r/registry.json`, and `/r/<name>.json`.
+`pnpm docs:dev` and `pnpm docs:build` run the docs app and its dependencies. The landing lives at `/`, documentation at `/docs`, installation at `/docs/installation`, and component pages at `/docs/components/<name>`. `/components` redirects to the docs catalog; the component gallery is available at `/playground`. The app also serves `/layout-demo`, `/theme-demo`, `/r/registry.json`, and `/r/<name>.json`.
 
 See the [docs app guide](apps/docs/README.md) for deployment and the [source registry guide](docs/source-registry.md) for component conventions.
 
@@ -84,9 +83,9 @@ pnpm test:registry:install
 
 `pnpm test:browser` runs both the docs app and component library browser suites. Use `pnpm --filter @react-toolbox/docs test:browser` or `pnpm --filter react-toolbox test:browser` to run one workspace's checks. Browser reports and failure artifacts are written at the repository root.
 
-`pnpm test` runs the component, style, registry, and release snapshot tests; `pnpm check` also runs lint, type checks, and [consumer footprint budgets](docs/footprint.md). The registry tests check every family’s dependency closure, exact source and CSS contents, schemas, and strict TypeScript. The actual shadcn CLI is also tested in isolated Next.js and Vite apps, with a custom UI alias, existing host components, local source customizations, and no React Toolbox package. Browser checks cover automatic styles, fonts, tokens, hydration, keyboard interaction, and reduced motion. Automated accessibility checks complement the manual verification described in the release guide.
+`pnpm test` runs the component behavior, theming, registry, and release snapshot tests; `pnpm check` also runs lint, type checks, and [consumer footprint budgets](docs/footprint.md). The registry tests check every family’s dependency closure, exact source and CSS contents, schemas, and strict TypeScript. The actual shadcn CLI is also tested in isolated Next.js and Vite apps, with a custom UI alias, existing host components, local source customizations, and no React Toolbox package. Browser checks cover Material 1 geometry and motion, automatic styles, fonts, tokens, hydration, keyboard interaction, and reduced motion. Automated accessibility checks complement the manual verification described in the release guide.
 
-Browser tests start the production site automatically when port 3100 is free. CI builds its own instance. The [M1 audit](docs/material-1-audit.md) records intentional spec corrections. Original CSS and React 16 reference artifacts are never regenerated to approve visual differences; the shared gallery input remains unchanged.
+Browser tests start the production site automatically when port 3100 is free. CI builds its own instance. The [M1 audit](docs/material-1-audit.md) records the design evidence and intentional corrections. Current tests assert supported behavior and measured Material 1 requirements directly; historical CSS and React 16 rendering comparisons were retired after the migration.
 
 ## Release
 

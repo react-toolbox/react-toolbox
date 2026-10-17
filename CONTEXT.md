@@ -31,7 +31,3 @@ _Avoid_: Theme for an individual part override.
 **Source release**:
 An identified edition of the component collection made available for installation, with changes that consumers can review against their customized copies.
 _Avoid_: Deployment when referring to the edition itself.
-
-**Reference baseline**:
-The preserved rendering and behavior used to check Material 1 fidelity, including explicitly reviewed corrections to the original implementation.
-_Avoid_: Legacy code when referring to the independent evidence protecting visual fidelity.

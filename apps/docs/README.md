@@ -1,6 +1,6 @@
 # React Toolbox documentation app
 
-A Next.js App Router documentation site using React 19, Next.js 16, and Tailwind CSS 4. The landing page at `/` is a single hero with a live component composition. A shared header links to `/docs`, where a persistent sidebar groups introduction, installation, theming, and all 27 component families. Component pages at `/docs/components/<name>` include an interactive preview, a keyboard-accessible Code tab, copyable install commands, and usage notes. `/components` redirects to the docs catalog. The original comparison gallery remains at `/playground`, preserving its existing inputs, default palette, and motion. `/layout-demo` demonstrates Layout, Panel, NavDrawer, and Sidebar; `/theme-demo` shows scoped CSS variables and inheritance through portals.
+A Next.js App Router documentation site using React 19, Next.js 16, and Tailwind CSS 4. The landing page at `/` is a single hero with a live component composition. A shared header links to `/docs`, where a persistent sidebar groups introduction, installation, theming, and all 27 component families. Component pages at `/docs/components/<name>` include an interactive preview, a keyboard-accessible Code tab, copyable install commands, and usage notes. `/components` redirects to the docs catalog. The component gallery at `/playground` demonstrates the default palette and motion. `/layout-demo` demonstrates Layout, Panel, NavDrawer, and Sidebar; `/theme-demo` shows scoped CSS variables and inheritance through portals.
 
 This private workspace package is named `@react-toolbox/docs`. It consumes the compiled exports of the private `react-toolbox` workspace dependency for development. Public consumers install editable source through the shadcn registry instead. It has no aliases to library source and does not use `transpilePackages`.
 
@@ -43,7 +43,7 @@ The homepage identifies the site with `WebSite` structured data. Documentation p
 
 The docs app explicitly sets `@theme { --spacing: 4px; }` in `app/globals.css` for its Material page layouts: `gap-2` is 8px, `p-4` is 16px, and `p-6` is 24px. The library preserves each consuming app's own spacing scale. The landing card keeps the built-in title and content padding; the action labels align to those same responsive keylines, and the switch has a 48px interaction row. The `toolbox-desktop:` variant matches the library's 600px width and height breakpoint.
 
-The gallery remains unchanged JavaScript to preserve the exact input shared with the independent legacy-runtime fixture. The app's type check validates the landing components, generated Next route contracts, and internal workspace import examples in `apps/docs/tests/types/package-contract.ts`; the library has its own strict TypeScript checks.
+The gallery remains JavaScript and serves as an interactive example for component integration checks. The app's type check validates the landing components, generated Next route contracts, and internal workspace import examples in `apps/docs/tests/types/package-contract.ts`; the library has its own strict TypeScript checks.
 
 ## Vercel deployment
 
@@ -132,9 +132,6 @@ pnpm --filter react-toolbox exec playwright install webkit
 TOOLBOX_BROWSER=webkit pnpm test:browser
 ```
 
-Visual checks use two independent references:
+Browser checks measure Material 1 geometry, colors, typography, hit areas, and motion directly on the current components. The suites also exercise keyboard and pointer interactions, responsive layouts, themes, Tailwind integration, hydration, and automated accessibility. See [the M1 audit](../../docs/material-1-audit.md) for design evidence and [accessibility guidance](../../docs/accessibility.md) for manual release checks.
 
-- The original stylesheet compiled through the legacy PostCSS pipeline, compared against modern CSS on identical markup. The checks include geometry, colors, typography, animation declarations, and exact screenshots, including buffered progress and open pickers.
-- The untouched original component JavaScript running on React 16.14, compared in a separate page with the modern React implementation. Both pages use the same gallery inputs and preloaded local fonts. The checks include initial components, selected controls, tabs, pressed and released continuous/pinned sliders, portaled dialogs and pickers, and a real ripple animation frame paused at 200 milliseconds.
-
-Screenshot comparisons require exact equality, with no pixel tolerance. The surrounding gallery section corners are squared in comparison pages to isolate component rendering from shell antialiasing; component corners, shadows, and geometry are unchanged. Computed-style strings normalize equivalent color syntax and fractional pixel serialization below 0.0001px; this does not relax image comparisons. Images are attached to the Playwright report. The original-runtime fixture records the Git revision, dependency versions, and source hashes; regenerate it with `node packages/react-toolbox/tests/fixtures/build-legacy-runtime.mjs` whenever the shared gallery source changes. See [the fixture provenance guide](../../packages/react-toolbox/tests/fixtures/legacy-runtime.md) for its source and regeneration details. These checks verify rendering and representative behavior; they do not claim that the old and new React runtimes have identical performance.
+The completed migration used independent original-CSS and React 16 comparisons. Those fixtures, correction ledgers, comparison tests, and rebuild tools have been retired; their provenance and past results remain available in Git history. The gallery no longer needs to remain byte-identical to a historical runtime fixture.

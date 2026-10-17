@@ -125,8 +125,6 @@ async function main() {
   let changedFiles = 0;
   for (const directory of ['src/material', '../../apps/docs/app']) {
     for await (const relative of glob('**/*.{ts,tsx,js,jsx}', { cwd: path.join(root, directory) })) {
-      // Shared input for the independent React 16 rendering reference.
-      if (directory.endsWith('/app') && relative === 'gallery.jsx') continue;
       const filename = path.resolve(root, directory, relative);
       const source = await readFile(filename, 'utf8');
       const edits = [];

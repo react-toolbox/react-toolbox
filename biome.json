@@ -13,9 +13,7 @@
       "*.js",
       "*.mjs",
       "*.ts",
-      "!!packages/react-toolbox/tests/fixtures/**",
-      "!!packages/react-toolbox/registry.json",
-      "!!apps/docs/app/gallery.jsx"
+      "!!packages/react-toolbox/registry.json"
     ]
   },
   "formatter": {

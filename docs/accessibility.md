@@ -61,11 +61,10 @@ the original M1 appearance failed current accessibility requirements:
 
 These changes follow [WCAG text contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
 and [minimum target size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html).
-The exact declaration changes are recorded in
-`packages/react-toolbox/tests/fixtures/corrections/accessibility-style-corrections.json`, separately
-from the immutable original fixtures and the historical M1 correction ledger.
-The same explicit changes are applied to the independent reference renderer;
-unlisted style changes still fail verification.
+The migration recorded exact declaration changes in a separate accessibility
+correction ledger and applied them to its independent reference renderer. That
+completed validation apparatus is retained in Git history. Current checks cover
+the corrected colors, target sizes, semantics, and interactions directly.
 
 The new tokens are `--datepicker-year-inactive-opacity`,
 `--timepicker-period-inactive-opacity`, and `--clock-number-color`. Custom themes
@@ -81,8 +80,8 @@ on representative controls, open menus and dialogs, every public component's
 documentation page, and the landing and getting-started pages.
 Keyboard journeys verify selection, modal focus containment/restoration, and
 reduced-motion behavior. Run the same suite with `TOOLBOX_BROWSER=webkit` to check
-Safari's engine. Existing visual and interaction suites guard the original M1
-behavior with no reduced-motion preference.
+Safari's engine. Material geometry and interaction suites also cover the default
+motion preference.
 
 Axe detects only some accessibility issues. A passing scan is not a WCAG audit or
 a replacement for the manual checks below.

@@ -91,7 +91,6 @@
     "material-icons": "^1.13.14",
     "next": "^16.4.0",
     "postcss": "^8.5.29",
-    "postcss-calc": "^11.2.3",
     "postcss-selector-parser": "^7.1.6",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
