@@ -5,7 +5,11 @@ const device = { chromium: 'Desktop Chrome', webkit: 'Desktop Safari' }[browser]
 if (!device) throw new Error('TOOLBOX_BROWSER must be chromium or webkit');
 
 export default defineConfig({
-  testDir: './tests/browser',
+  testDir: '.',
+  testMatch: [
+    'apps/docs/tests/browser/**/*.spec.js',
+    'packages/react-toolbox/tests/browser/**/*.spec.js',
+  ],
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,

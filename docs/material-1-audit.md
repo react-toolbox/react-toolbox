@@ -12,7 +12,7 @@ The documentation shell is reviewed against M1 [typography](https://m1.material.
 - The reference uses Material table spacing, 12px column headings, 13px data, and rows at least 48px high. Wide tables and source examples scroll locally and remain keyboard accessible. Monospace code, syntax colors, copy controls, and the article contents list are documentation conventions rather than separate M1 component specifications.
 - API pages show selected behavior props and source-derived defaults. Full TypeScript declarations and compatibility slot listings remain in the source instead of being repeated in the UI. Theming leads with global CSS variables, `className` on composed parts, and editable source; existing slot-map APIs remain compatible.
 
-`tests/browser/documentation.spec.js` checks all 27 component pages and four guide/index pages at phone and desktop widths with axe, verifies key dimensions and colors, and exercises navigation, copy controls, preview/code tabs, modal focus, and the sidebar/footer regression in Chromium and WebKit. Automated checks supplement the visual review; they do not certify every possible user theme or content combination.
+`apps/docs/tests/browser/documentation.spec.js` checks all 27 component pages and four guide/index pages at phone and desktop widths with axe, verifies key dimensions and colors, and exercises navigation, copy controls, preview/code tabs, modal focus, and the sidebar/footer regression in Chromium and WebKit. Automated checks supplement the visual review; they do not certify every possible user theme or content combination.
 
 ### Where the documentation fixes belong
 
@@ -85,7 +85,7 @@ The installed behavioral dependencies are Radix Avatar 1.3.1, Radix Roving Focus
 
 A wholesale Dialog/Select/Menu migration is not presented as completed. Their existing API includes externally managed openers, value-first callbacks, static content, custom templates, exit retention, and scoped portal themes. The changes above fix identified defects while keeping those contracts; future migrations need to demonstrate a simpler implementation under the same tests. Conversely, choosing a native input or table is already consistent with shadcn's approach and does not require a Radix dependency to be accessible.
 
-Regression evidence is in `tests/component-quality.test.tsx` and the browser suites, alongside existing state, keyboard, visual, hydration, reduced-motion, and registry-consumer checks. The style verifier continues to compare the original declarations plus the explicit M1/accessibility ledgers. This is a component review with bounded automated evidence, not a completed VoiceOver/NVDA audit or certification of every consumer composition. The manual release checks in [accessibility.md](accessibility.md) remain explicit.
+Regression evidence is grouped by behavior in `tests/native-forms.test.tsx`, `tests/autocomplete.test.tsx`, `tests/overlay-accessibility.test.tsx`, and the other component and browser suites, alongside existing state, keyboard, visual, hydration, reduced-motion, and registry-consumer checks. The style verifier continues to compare the original declarations plus the explicit M1/accessibility ledgers. This is a component review with bounded automated evidence, not a completed VoiceOver/NVDA audit or certification of every consumer composition. The manual release checks in [accessibility.md](accessibility.md) remain explicit.
 
 Validation completed for this change: `pnpm check` (production builds, lint, types, unit tests, styles, registry closures, API and release checks); 139 unit tests; 138 Chromium and 138 WebKit browser tests; and real shadcn CLI installation from the production docs registry into clean Next.js and Vite consumers, including coexistence with an official shadcn Button. The final Chromium suite ran with two workers after an intermittent 22-pixel slider-halo compositor difference under concurrent browser workloads; the isolated case and complete rerun passed without loosening pixel equality. The new mixed checkbox state and corrected chip-container semantics have explicit reference adapters in the test harness; archived CSS/runtime fixtures remain byte-for-byte unchanged.
 
@@ -187,14 +187,14 @@ departures from original picker defaults: brighter small inactive header text,
 Grey 700 clock numerals, and larger year/AM/PM pointer targets with unchanged text
 positions. Their measured contrast, target sizes, and W3C sources are recorded in
 [the accessibility guide](accessibility.md). A separate
-`packages/react-toolbox/tests/accessibility-style-corrections.json` ledger applies
+`packages/react-toolbox/tests/fixtures/corrections/accessibility-style-corrections.json` ledger applies
 after the M1 ledger and validates each previous value; the archived fixtures are
 unchanged. Reduced motion is an additional OS preference, while normal M1 motion
 remains the default.
 
 ## Evidence and scope
 
-The review used M1's component, layout, color, motion, and accessibility guidance, the original component source, and browser measurements. Existing CSS and the independent React 16 reference remain archived under `packages/react-toolbox/tests/fixtures`; they were not rewritten to approve the new appearance. Intentional declaration changes are recorded separately in `packages/react-toolbox/tests/fixtures/m1-style-corrections.json`. Ordinary migration parity and deliberate specification corrections therefore have different evidence.
+The review used M1's component, layout, color, motion, and accessibility guidance, the original component source, and browser measurements. Existing CSS and the independent React 16 reference remain archived under `packages/react-toolbox/tests/fixtures`; they were not rewritten to approve the new appearance. Intentional declaration changes are recorded separately in `packages/react-toolbox/tests/fixtures/corrections/m1-style-corrections.json`. Ordinary migration parity and deliberate specification corrections therefore have different evidence.
 
 M1 uses dp/sp measurements. The library's default `--unit: 10px` maps its existing token formulas to those measurements; consumers can still change the scale. Browser tests check the resulting CSS geometry. Exact shadow implementation was also checked against Google's historical [Material Components Web elevation variables](https://github.com/material-components/material-components-web/blob/v0.35.0/packages/mdc-elevation/_variables.scss), as an implementation reference rather than a replacement design specification.
 

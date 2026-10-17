@@ -62,7 +62,7 @@ the original M1 appearance failed current accessibility requirements:
 These changes follow [WCAG text contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
 and [minimum target size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html).
 The exact declaration changes are recorded in
-`packages/react-toolbox/tests/accessibility-style-corrections.json`, separately
+`packages/react-toolbox/tests/fixtures/corrections/accessibility-style-corrections.json`, separately
 from the immutable original fixtures and the historical M1 correction ledger.
 The same explicit changes are applied to the independent reference renderer;
 unlisted style changes still fail verification.
@@ -114,7 +114,7 @@ Buttons and custom menu triggers use Radix Slot to preserve native link/button s
 
 Autocomplete submits selected IDs, including multi-values, rather than its search query. Its hidden native select supports required validation and reset; invalid submission focuses the visible field. Rich options need textValue for matching and single-value text. Group labels and disabled states are exposed to assistive technology; loading and empty messages are announced through a separate live status outside the listbox. Slider supports native submission/reset and RTL interaction. RadioGroup forwards required and external form association to its native radios.
 
-Manual tabs separate focus from activation: arrows move between enabled tabs, while Enter or Space activates a panel. Dialog/Drawer focus callbacks are cancelable; consumers that prevent the default must place focus on an appropriate connected element. Additional automated evidence lives in feature-parity.test.tsx and browser/feature-parity.spec.js; the manual assistive-technology checks above still apply.
+Manual tabs separate focus from activation: arrows move between enabled tabs, while Enter or Space activates a panel. Dialog/Drawer focus callbacks are cancelable; consumers that prevent the default must place focus on an appropriate connected element. Additional automated evidence lives in `tests/tabs.test.tsx`, `tests/menu-interactions.test.tsx`, `tests/overlay-accessibility.test.tsx`, and `tests/browser/feature-parity.spec.js`; the manual assistive-technology checks above still apply.
 
 The component review adds shared modal ownership across convenience and compound APIs, including nested pickers and gesture sheets. Selection controls preserve their M1 glyphs inside 48px activation areas. Clickable/deletable Chips expose separate native buttons, and List primary actions remain separate from secondary actions.
 

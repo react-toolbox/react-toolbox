@@ -3,13 +3,6 @@ import { expect, test } from '@playwright/test';
 import { build } from 'esbuild';
 import { fileURLToPath } from 'node:url';
 import { css } from './material-fixture.js';
-import { readFileSync } from 'node:fs';
-
-const componentSlugs = [
-  ...readFileSync(new URL('../../src/material/index.ts', import.meta.url), 'utf8').matchAll(/from '\.\/([^']+)'/g),
-]
-  .map(([, slug]) => slug)
-  .filter((slug) => !['theme', 'link', 'navigation'].includes(slug));
 
 const source = `
   import React, { useState } from 'react';
@@ -272,17 +265,3 @@ test('picker hit areas expand without shifting the visible header', async ({ pag
     await expect(page.getByRole('combobox', { name })).toBeFocused();
   }
 });
-
-for (const route of [
-  '/',
-  '/docs',
-  '/docs/installation',
-  '/docs/theming',
-  '/docs/components',
-  ...componentSlugs.map((slug) => `/docs/components/${slug}`),
-]) {
-  test(`documentation passes automated accessibility checks: ${route}`, async ({ page }) => {
-    await page.goto(route);
-    await expectAccessible(page);
-  });
-}

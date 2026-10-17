@@ -1,4 +1,4 @@
-import { FontIcon } from 'react-toolbox';
+import { FontIcon } from 'react-toolbox/font-icon';
 import { GithubMark } from './brand-icons';
 
 const repository = 'https://github.com/react-toolbox/react-toolbox';

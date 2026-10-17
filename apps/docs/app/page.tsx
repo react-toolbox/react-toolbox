@@ -1,13 +1,15 @@
-import type { Metadata } from 'next';
-import { Button } from 'react-toolbox';
+import { Button } from 'react-toolbox/button';
 import DocsHeader from './docs-header';
 import LandingDemo from './landing-demo';
 import SiteFooter from './site-footer';
+import { pageMetadata, siteUrl } from './site-metadata';
+import JsonLd from './json-ld';
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: 'React Toolbox · Material Design, down to the details',
   description: 'The original Material Design components for modern React. A project by Javi Velasco.',
-};
+  path: '/',
+});
 
 // Retry the header's GitHub count even if an upstream failure occurs during a build.
 export const revalidate = 3600;
@@ -15,6 +17,9 @@ export const revalidate = 3600;
 export default function HomePage() {
   return (
     <div className="flex min-h-svh flex-col bg-white text-toolbox-text">
+      <JsonLd
+        data={{ '@context': 'https://schema.org', '@type': 'WebSite', name: 'React Toolbox', url: siteUrl.href }}
+      />
       <a className="sr-only focus:not-sr-only focus:absolute focus:z-10 focus:bg-white focus:p-4" href="#main-content">
         Skip to content
       </a>

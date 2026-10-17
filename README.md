@@ -34,15 +34,17 @@ Optional examples install through `example-field-notes`, `example-recipes`, and 
 
 ```text
 apps/docs/                 Next.js landing, documentation, component previews, and /r/*.json
+  tests/                   Website browser checks and workspace import type checks
 packages/react-toolbox/     Private implementation workspace used by the docs app
   src/material/            Maintained source, matching the installed material/ tree
     <family>/              Components, types, and automatic-style entry
     foundations/           Shared styles, theme, motion, portals, and date/time behavior
   scripts/                 Builds, releases, deployment, and consumer installation checks
   tests/                   Component, style, registry, release, browser, and type tests
-    fixtures/              Immutable references and their reproduction tools
+    fixtures/              Immutable references, correction ledgers, and reproduction tools
   registry/                Generated registry payloads and API reference
   registry.json            Generated source catalog
+playwright.config.js       Shared browser runner for the website and component library
 ```
 
 All workspace packages are private. The compiled `react-toolbox` workspace dependency is an internal development convenience for the documentation app. **The registry is the only public distribution.** There is no npm publishing workflow. Tagged source releases archive the registry for repeatable installation and rollback.
@@ -79,6 +81,8 @@ pnpm test:browser
 TOOLBOX_BROWSER=webkit pnpm test:browser
 pnpm test:registry:install
 ```
+
+`pnpm test:browser` runs both the docs app and component library browser suites. Use `pnpm --filter @react-toolbox/docs test:browser` or `pnpm --filter react-toolbox test:browser` to run one workspace's checks. Browser reports and failure artifacts are written at the repository root.
 
 `pnpm test` runs the component, style, registry, and release snapshot tests; `pnpm check` also runs lint, type checks, and [consumer footprint budgets](docs/footprint.md). The registry tests check every family’s dependency closure, exact source and CSS contents, schemas, and strict TypeScript. The actual shadcn CLI is also tested in isolated Next.js and Vite apps, with a custom UI alias, existing host components, local source customizations, and no React Toolbox package. Browser checks cover automatic styles, fonts, tokens, hydration, keyboard interaction, and reduced motion. Automated accessibility checks complement the manual verification described in the release guide.
 

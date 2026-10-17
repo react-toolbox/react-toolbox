@@ -3,7 +3,9 @@
 import { useEffect, useId, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Drawer, IconButton, List, ListDivider, ListItem, ListSubHeader } from 'react-toolbox';
+import { IconButton } from 'react-toolbox/button';
+import { Drawer } from 'react-toolbox/drawer';
+import { List, ListDivider, ListItem, ListSubHeader } from 'react-toolbox/list';
 type ComponentLink = { slug: string; title: string };
 
 const guides = [

@@ -11,6 +11,7 @@ import ApiReference from '../../api-reference';
 import { componentState } from '../../component-state';
 import CompositionPreview, { hasCompositionExample } from '../../composition-preview';
 import { workflowExamples } from '../../workflow-examples';
+import { pageMetadata } from '../../../site-metadata';
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -19,7 +20,12 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<'/docs/components/[slug]'>): Promise<Metadata> {
   const { slug } = await params;
   const component = components.find((item) => item.slug === slug);
-  return { title: `${component?.title ?? 'Component'} · React Toolbox`, description: component?.description };
+  if (!component) return {};
+  return pageMetadata({
+    title: `${component.title} · React Toolbox`,
+    description: component.description,
+    path: `/docs/components/${component.slug}`,
+  });
 }
 export default async function ComponentPage({ params }: PageProps<'/docs/components/[slug]'>) {
   const { slug } = await params;
@@ -42,9 +48,9 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
       : ['pnpm dlx shadcn@latest add', ...installUrls.map((url) => `  ${url}`)].join(' \\\n');
   return (
     <DocsArticle
+      path={`/docs/components/${component.slug}`}
       title={component.title}
       description={component.description}
-      category="Components"
       sections={[
         { id: 'preview', title: 'Preview' },
         { id: 'installation', title: 'Installation' },

@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start --hostname 127.0.0.1 --port 3100",
     "typecheck": "next typegen && tsc --noEmit",
+    "test:browser": "pnpm --workspace-root exec playwright test apps/docs/tests/browser",
     "lint": "biome lint .",
     "check": "pnpm lint && pnpm typecheck"
   },
@@ -21,7 +22,9 @@
     "shiki": "^4.5.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@biomejs/biome": "^2.5.15",
+    "@playwright/test": "^1.64.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^26.6.5",
     "@types/react": "^19.3.0",

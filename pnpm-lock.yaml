@@ -169,6 +169,9 @@ importers:
       '@biomejs/biome':
         specifier: ^2.5.15
         version: 2.5.15
+      '@playwright/test':
+        specifier: ^1.64.0
+        version: 1.64.0
       turbo:
         specifier: ^2.11.7
         version: 2.11.7
@@ -197,9 +200,15 @@ importers:
         specifier: ^4.5.0
         version: 4.5.0
     devDependencies:
+      '@axe-core/playwright':
+        specifier: ^4.13.0
+        version: 4.13.0(playwright-core@1.64.0)
       '@biomejs/biome':
         specifier: ^2.5.15
         version: 2.5.15
+      '@playwright/test':
+        specifier: ^1.64.0
+        version: 1.64.0
       '@tailwindcss/postcss':
         specifier: ^4.3.3
         version: 4.3.3

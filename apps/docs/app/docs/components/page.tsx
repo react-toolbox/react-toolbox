@@ -1,16 +1,21 @@
-import type { Metadata } from 'next';
 import { CardText, CardTitle, FontIcon } from 'react-toolbox';
 import DocsArticle from '../article';
 import ActionCard from '../action-card';
 import { components } from '../catalog';
+import { pageMetadata } from '../../site-metadata';
 
-export const metadata: Metadata = { title: 'Components · React Toolbox' };
+export const metadata = pageMetadata({
+  title: 'Components · React Toolbox',
+  description:
+    'Explore the React Toolbox Material Design component collection, with interactive previews, installation commands, and API references.',
+  path: '/docs/components',
+});
 
 export default function ComponentsIndex() {
   return (
     <DocsArticle
+      path="/docs/components"
       title="Components"
-      category="Components"
       description="The whole collection, from everyday controls to the details that make an interface feel right. Choose a component to try it and get the code."
     >
       <div className="grid gap-4 sm:grid-cols-2">

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { AppBar } from 'react-toolbox';
+import { AppBar } from 'react-toolbox/app-bar';
 import { ToolboxMark } from './brand-icons';
 import GithubLink from './github-link';
 

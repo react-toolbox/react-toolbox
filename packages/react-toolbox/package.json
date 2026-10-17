@@ -35,7 +35,7 @@
     "dev": "tsdown --watch src --no-clean --on-success \"node scripts/build-styles.mjs && node scripts/build-registry.mjs && node scripts/build-api-docs.mjs\"",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:browser": "playwright test",
+    "test:browser": "pnpm --workspace-root exec playwright test packages/react-toolbox/tests/browser",
     "typecheck": "tsc --noEmit",
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm test:footprint",
     "lint": "biome lint . && pnpm lint:tailwind",

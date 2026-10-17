@@ -1,14 +1,20 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
-import { CardText, CardTitle } from 'react-toolbox';
+import { CardText, CardTitle } from 'react-toolbox/card';
 import DocsArticle, { DocsSection } from './article';
 import ActionCard from './action-card';
+import { pageMetadata } from '../site-metadata';
 
-export const metadata: Metadata = { title: 'Documentation · React Toolbox' };
+export const metadata = pageMetadata({
+  title: 'Documentation · React Toolbox',
+  description:
+    'Build with the original Material Design components for modern React. Explore installation guides, theming, component APIs, and editable examples.',
+  path: '/docs',
+});
 
 export default function IntroductionPage() {
   return (
     <DocsArticle
+      path="/docs"
       title="The original, renewed."
       description="Material Design, down to the details. A collection of 28 component families for modern React, with the source in your hands."
       sections={[

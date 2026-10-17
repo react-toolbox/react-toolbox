@@ -12,14 +12,14 @@
     "build": "turbo run build",
     "build:library": "turbo run build --filter=react-toolbox",
     "start": "pnpm docs:start",
-    "check": "biome lint package.json turbo.json biome.json && turbo run check",
+    "check": "biome lint package.json turbo.json biome.json playwright.config.js && turbo run check",
     "lint": "biome lint . && pnpm lint:tailwind",
     "lint:tailwind": "pnpm --filter react-toolbox lint:tailwind",
     "format": "biome format --write .",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "test:watch": "pnpm --filter react-toolbox test:watch",
-    "test:browser": "pnpm --filter react-toolbox test:browser",
+    "test:browser": "playwright test",
     "registry:build": "turbo run registry:build",
     "test:registry:install": "pnpm --filter react-toolbox test:registry:install",
     "docs:dev": "turbo run dev --filter=@react-toolbox/docs",
@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.15",
+    "@playwright/test": "^1.64.0",
     "turbo": "^2.11.7"
   }
 }

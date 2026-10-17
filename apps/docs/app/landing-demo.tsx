@@ -1,18 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  Button,
-  Card,
-  CardActions,
-  CardText,
-  CardTitle,
-  IconButton,
-  Input,
-  Slider,
-  Snackbar,
-  Switch,
-} from 'react-toolbox';
+import { Button, IconButton } from 'react-toolbox/button';
+import { Card, CardActions, CardText, CardTitle } from 'react-toolbox/card';
+import { Input } from 'react-toolbox/input';
+import { Slider } from 'react-toolbox/slider';
+import { Snackbar } from 'react-toolbox/snackbar';
+import { Switch } from 'react-toolbox/switch';
 
 export default function LandingDemo() {
   const [name, setName] = useState('Weekend notes');

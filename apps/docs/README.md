@@ -37,9 +37,13 @@ Run this package's checks with `pnpm --filter @react-toolbox/docs typecheck` and
 
 The landing page is a TypeScript Server Component with a small interactive client demo. It uses the original Toolbox and GitHub marks, credits Javi Velasco, and reads the public GitHub star count on the server with hourly revalidation. If GitHub is unavailable or rate limited, the repository link remains visible without inventing a count. No token or browser request to GitHub is needed.
 
+The landing and documentation pages include canonical URLs, page-specific descriptions, Open Graph metadata, and large-image Twitter cards. Public URLs use the registry catalog's `homepage`, including in local and preview builds. The two 1200 × 630 social cards at `/opengraph-image` and `/docs/opengraph-image` are generated at build time from the existing Toolbox mark and bundled Roboto fonts; Twitter shares the same images. Site icons use the same mark. `/robots.txt` points to `/sitemap.xml`, which lists the landing page, documentation guides, and current component pages, excluding redirects and demo routes.
+
+The homepage identifies the site with `WebSite` structured data. Documentation pages share visible breadcrumbs and matching `BreadcrumbList` structured data, with all URLs pointing to the canonical domain. The standalone `/playground`, `/layout-demo`, and `/theme-demo` pages use `noindex` metadata; they remain crawlable so search engines can read that directive.
+
 The docs app explicitly sets `@theme { --spacing: 4px; }` in `app/globals.css` for its Material page layouts: `gap-2` is 8px, `p-4` is 16px, and `p-6` is 24px. The library preserves each consuming app's own spacing scale. The landing card keeps the built-in title and content padding; the action labels align to those same responsive keylines, and the switch has a 48px interaction row. The `toolbox-desktop:` variant matches the library's 600px width and height breakpoint.
 
-The gallery remains unchanged JavaScript to preserve the exact input shared with the independent legacy-runtime fixture. The app's type check validates the landing components, generated Next route contracts, and internal workspace import examples in `apps/docs/types/package-contract.ts`; the library has its own strict TypeScript checks.
+The gallery remains unchanged JavaScript to preserve the exact input shared with the independent legacy-runtime fixture. The app's type check validates the landing components, generated Next route contracts, and internal workspace import examples in `apps/docs/tests/types/package-contract.ts`; the library has its own strict TypeScript checks.
 
 ## Vercel deployment
 
@@ -118,6 +122,8 @@ pnpm test:browser
 ```
 
 Playwright builds and starts the production example automatically. The suite covers form interactions, toggles, menus, tooltips, ripples, dialogs, drawers, date/time pickers, tables, layouts, and mobile width. Browser errors fail the interaction tests.
+
+The root `playwright.config.js` runs website checks from `apps/docs/tests/browser` and component integration checks from `packages/react-toolbox/tests/browser`. Run `pnpm --filter @react-toolbox/docs test:browser` for only the website suite. Reports and failure artifacts are written at the repository root.
 
 Chromium runs by default. Run the same complete suite in WebKit with:
 

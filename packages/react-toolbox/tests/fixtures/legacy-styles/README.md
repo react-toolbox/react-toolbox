@@ -14,7 +14,7 @@ default color, dimension, easing, keyframe, and timing comparisons.
 The current stylesheet deliberately retains CSS variables for customization.
 From `packages/react-toolbox`, `pnpm test styles.test.js` resolves their
 original defaults and checks the result against the independently compiled
-reference plus the individually reviewed corrections in `../m1-style-corrections.json`. That separate record
+reference plus the individually reviewed corrections in `../corrections/m1-style-corrections.json`. That separate record
 contains old/new values, M1 sources, rationale, and insertion anchors. Browser
 tests apply those corrections to the archived CSS; they never substitute the
 current stylesheet as their expected result. Circular motion tests still use

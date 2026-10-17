@@ -1,14 +1,20 @@
-import type { Metadata } from 'next';
 import DocsArticle, { DocsSection } from '../article';
 import CodeBlock from '../code-block';
 import SpacingTable from './spacing-table';
 import ThemedDistribution from './themed-distribution';
+import { pageMetadata } from '../../site-metadata';
 
-export const metadata: Metadata = { title: 'Theming · React Toolbox' };
+export const metadata = pageMetadata({
+  title: 'Theming · React Toolbox',
+  description:
+    'Customize React Toolbox colors, component classes, and spacing with CSS variables and Tailwind CSS while keeping the Material Design foundation.',
+  path: '/docs/theming',
+});
 
 export default function ThemingPage() {
   return (
     <DocsArticle
+      path="/docs/theming"
       title="Theming"
       description="Keep the Material foundation. Change the parts that make it yours."
       sections={[

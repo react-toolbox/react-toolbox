@@ -1,13 +1,19 @@
-import type { Metadata } from 'next';
 import DocsArticle, { DocsSection } from '../article';
 import CodeBlock from '../code-block';
 import { ActionRecipes, AvatarRecipes, FormRecipe, TableRecipe, SnackbarRecipe } from './recipes';
+import { pageMetadata } from '../../site-metadata';
 
-export const metadata: Metadata = { title: 'Recipes · React Toolbox' };
+export const metadata = pageMetadata({
+  title: 'Recipes · React Toolbox',
+  description:
+    'Build forms, async actions, avatar groups, data tables, and message queues with editable React Toolbox component recipes.',
+  path: '/docs/recipes',
+});
 
 export default function RecipesPage() {
   return (
     <DocsArticle
+      path="/docs/recipes"
       title="Recipes"
       description="Editable application patterns composed from Material components."
       sections={[

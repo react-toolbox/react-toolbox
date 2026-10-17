@@ -2,7 +2,8 @@
 
 import type { ReactNode } from 'react';
 import Link from 'next/link';
-import { Card, useRipple } from 'react-toolbox';
+import { Card } from 'react-toolbox/card';
+import { useRipple } from 'react-toolbox/ripple';
 
 export default function ActionCard({ href, children }: { href: string; children: ReactNode }) {
   const ink = useRipple();

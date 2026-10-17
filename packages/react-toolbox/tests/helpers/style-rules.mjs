@@ -160,9 +160,9 @@ export const modernRules = declarationsBySelector(resolved);
 export { root, fixture };
 
 const correctionLedgers = [
-  ['tests/fixtures/m1-style-corrections.json', 'material'],
-  ['tests/accessibility-style-corrections.json', 'accessibility'],
-  ['tests/component-review-style-corrections.json', 'material'],
+  ['tests/fixtures/corrections/m1-style-corrections.json', 'material'],
+  ['tests/fixtures/corrections/accessibility-style-corrections.json', 'accessibility'],
+  ['tests/fixtures/corrections/component-review-style-corrections.json', 'material'],
 ];
 export const corrections = [];
 for (const [filename, category] of correctionLedgers) {

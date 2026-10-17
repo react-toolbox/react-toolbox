@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ThemeProvider } from 'react-toolbox';
+import { ThemeProvider } from 'react-toolbox/ThemeProvider';
 import DocsHeader from '../docs-header';
 import SiteFooter from '../site-footer';
 import DocsSidebar from './sidebar';

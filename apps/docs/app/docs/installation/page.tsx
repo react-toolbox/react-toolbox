@@ -1,15 +1,21 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import registry from 'react-toolbox/registry/data.json';
 import DocsArticle, { DocsSection } from '../article';
 import CodeBlock from '../code-block';
+import { pageMetadata } from '../../site-metadata';
 
-export const metadata: Metadata = { title: 'Installation · React Toolbox' };
+export const metadata = pageMetadata({
+  title: 'Installation · React Toolbox',
+  description:
+    'Install React Toolbox with the shadcn CLI. Add editable Material Design components, styles, fonts, and dependencies to your React project.',
+  path: '/docs/installation',
+});
 
 export default function InstallationPage() {
   const origin = new URL(registry.catalog.homepage).origin;
   return (
     <DocsArticle
+      path="/docs/installation"
       title="Installation"
       description="Add a component. Keep the source. Everything you need comes with it, including styles, fonts, and dependencies."
       sections={[
