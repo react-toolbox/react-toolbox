@@ -92,9 +92,13 @@ test('submits selected IDs and slider values, validates and resets native forms'
     ]),
   );
   await page.getByRole('button', { name: 'Clear selection' }).click();
+  await combo.press('Escape');
+  await expect(combo).toHaveAttribute('aria-expanded', 'false');
   await page.getByRole('button', { name: 'Save', exact: true }).click();
   await expect(combo).toBeFocused();
   await expect(combo).toHaveAttribute('aria-invalid', 'true');
+  await combo.press('Escape');
+  await expect(combo).toHaveAttribute('aria-expanded', 'false');
   await page.getByRole('button', { name: 'Reset', exact: true }).click();
   await expect(page.getByRole('slider', { name: 'Volume', exact: true })).toHaveAttribute('aria-valuenow', '40');
   await expect(combo).not.toHaveAttribute('aria-invalid', 'true');
