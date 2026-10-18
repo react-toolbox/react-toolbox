@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
   AppBar,
   Autocomplete,
@@ -46,6 +47,29 @@ import SheetExample from './examples/sheet';
 
 const RippleButton = Ripple()('button');
 const HintButton = Tooltip(Button);
+
+function OverlayDemo() {
+  const [active, setActive] = useState(false);
+  const [container, setContainer] = useState<HTMLElement | null>(null);
+
+  useEffect(() => setContainer(document.body), []);
+
+  return (
+    <>
+      <Button primary raised label="Show overlay" onClick={() => setActive(true)} />
+      {container &&
+        createPortal(
+          <Overlay
+            active={active}
+            className="z-(--z-index-higher)"
+            onClick={() => setActive(false)}
+            onEscKeyDown={() => setActive(false)}
+          />,
+          container,
+        )}
+    </>
+  );
+}
 
 export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
   const [text, setText] = useState('');
@@ -273,12 +297,7 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
         </div>
       );
     case 'overlay':
-      return (
-        <>
-          <Button primary raised label="Show overlay" onClick={() => setActive(true)} />
-          <Overlay active={active} onClick={() => setActive(false)} onEscKeyDown={() => setActive(false)} />
-        </>
-      );
+      return <OverlayDemo />;
     case 'progress-bar':
       return (
         <div className="flex w-full max-w-sm flex-col items-center gap-8">

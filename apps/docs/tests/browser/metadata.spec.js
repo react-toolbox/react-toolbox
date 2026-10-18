@@ -6,7 +6,6 @@ test('shared links expose page-specific metadata to social crawlers', async ({ p
     ['/docs', 'Documentation · React Toolbox'],
     ['/docs/installation', 'Installation · React Toolbox'],
     ['/docs/theming', 'Theming · React Toolbox'],
-    ['/docs/recipes', 'Recipes · React Toolbox'],
     ['/docs/components', 'Components · React Toolbox'],
     ['/docs/components/button', 'Button · React Toolbox'],
     ['/docs/components/time-picker', 'Time picker · React Toolbox'],
@@ -91,7 +90,6 @@ test('the homepage identifies the site and docs breadcrumbs match their structur
     ['/docs', ['Home', 'Docs']],
     ['/docs/installation', ['Home', 'Docs', 'Installation']],
     ['/docs/theming', ['Home', 'Docs', 'Theming']],
-    ['/docs/recipes', ['Home', 'Docs', 'Recipes']],
     ['/docs/components', ['Home', 'Docs', 'Components']],
     ['/docs/components/button', ['Home', 'Docs', 'Components', 'Button']],
     ['/docs/components/time-picker', ['Home', 'Docs', 'Components', 'Time picker']],
@@ -181,9 +179,19 @@ test('the sitemap lists canonical landing and docs pages, including the componen
     '/docs',
     '/docs/installation',
     '/docs/theming',
-    '/docs/recipes',
     '/docs/components',
     ...componentPaths,
   ];
   expect(urls.sort()).toEqual(paths.map((path) => new URL(path, 'https://react-toolbox.io').href).sort());
+});
+
+test('the retired recipes page redirects to the component documentation', async ({ page, request }) => {
+  const response = await request.get('/docs/recipes', { maxRedirects: 0 });
+  expect(response.status()).toBe(308);
+  expect(response.headers().location).toBe('/docs/components');
+  await page.goto('/docs/recipes');
+  await expect(page).toHaveURL('/docs/components');
+  await expect(
+    page.getByRole('navigation', { name: 'Documentation sidebar' }).getByRole('link', { name: 'Recipes', exact: true }),
+  ).toHaveCount(0);
 });

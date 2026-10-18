@@ -26,7 +26,7 @@ export default function DocsArticle({
   ];
 
   return (
-    <div className="grid min-w-0 gap-10 xl:grid-cols-[minmax(0,1fr)_144px]">
+    <div className={`grid min-w-0 gap-10 ${sections.length > 0 ? 'xl:grid-cols-[minmax(0,1fr)_144px]' : ''}`}>
       <JsonLd
         data={{
           '@context': 'https://schema.org',
@@ -39,8 +39,8 @@ export default function DocsArticle({
           })),
         }}
       />
-      <article className="min-w-0">
-        <nav aria-label="Breadcrumb" className="mb-4 text-xs text-toolbox-text-secondary">
+      <article className="@container/article min-w-0">
+        <nav aria-label="Breadcrumb" className="mb-4 text-xs text-toolbox-text-secondary min-[1025px]:text-sm">
           <ol className="flex flex-wrap items-center gap-2">
             {breadcrumbs.map((breadcrumb, index) => (
               <li key={breadcrumb.path} className="flex items-center gap-2">
@@ -61,14 +61,17 @@ export default function DocsArticle({
             ))}
           </ol>
         </nav>
-        <h1 className="text-toolbox-display-1 sm:text-toolbox-display-2">{title}</h1>
+        <h1 className="text-toolbox-display-1 min-[600px]:text-toolbox-display-2">{title}</h1>
         <p className="mt-4 mb-10 text-toolbox-subheading text-toolbox-text-secondary">{description}</p>
         <div className="space-y-10">{children}</div>
       </article>
       {sections.length > 0 && (
         <aside className="hidden xl:block">
-          <nav aria-label="On this page" className="sticky top-24 text-sm leading-5">
-            <p className="mb-4 font-medium">On this page</p>
+          <nav
+            aria-label="On this page"
+            className="sticky top-[calc(var(--docs-appbar-height)+32px)] max-h-[calc(100svh-var(--docs-appbar-height)-64px)] overflow-y-auto overscroll-contain text-sm leading-5"
+          >
+            <p className="flex min-h-toolbox-touch items-center font-medium">On this page</p>
             {sections.map((section) => (
               <a
                 key={section.id}
@@ -87,7 +90,7 @@ export default function DocsArticle({
 
 export function DocsSection({ id, title, children }: Section & { children: ReactNode }) {
   return (
-    <section id={id} className="scroll-mt-24">
+    <section id={id} className="scroll-mt-(--docs-appbar-height)">
       <h2 className="mb-4 text-toolbox-title">{title}</h2>
       {children}
     </section>

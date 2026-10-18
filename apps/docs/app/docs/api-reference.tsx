@@ -115,7 +115,7 @@ export default function ApiReference({ slug }: { slug: ComponentSlug }) {
         });
         return (
           <section key={name} aria-labelledby={`api-${name}`} className="space-y-4">
-            <h3 id={`api-${name}`} className="scroll-mt-24 text-toolbox-subheading">
+            <h3 id={`api-${name}`} className="scroll-mt-(--docs-appbar-height) text-toolbox-subheading">
               <code>{name}</code>
             </h3>
             <ApiTable name={name} properties={properties} />

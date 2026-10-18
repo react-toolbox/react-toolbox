@@ -61,7 +61,7 @@ export default function CalendarDay({
         '[&[data-today]:not(.rt-date-picker-active)>span]:text-(--calendar-primary-color) [&[data-today]:not(.rt-date-picker-active)>span]:[font-weight:500]',
         '[&>span:focus-visible]:[outline:2px_solid_var(--calendar-primary-color)] [&>span:focus-visible]:outline-offset-2',
         '[&:hover:not(.rt-date-picker-disabled)>span]:cursor-pointer',
-        '[&:hover:not(.rt-date-picker-active):not(.rt-date-picker-disabled)>span]:[background:var(--calendar-primary-hover-color)] [&:hover:not(.rt-date-picker-active):not(.rt-date-picker-disabled)>span]:text-(--calendar-primary-contrast-color)',
+        '[&:hover:not(.rt-date-picker-active):not(.rt-date-picker-disabled)>span]:[background:var(--calendar-primary-hover-color)] [&:hover:not(.rt-date-picker-active):not(.rt-date-picker-disabled)>span]:text-(--rt-color-text)',
         classNames?.day,
         selected && cn(activeClasses, classNames?.active),
         disabled &&

@@ -22,7 +22,6 @@ export default function ThemingPage() {
         { id: 'colors', title: 'Colors' },
         { id: 'source', title: 'Component classes' },
         { id: 'scopes', title: 'Scoped colors' },
-        { id: 'portals', title: 'Portal placement' },
         { id: 'spacing', title: 'Spacing' },
       ]}
     >
@@ -118,52 +117,6 @@ export default function ThemingPage() {
         <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
           Material tokens use the <code>--rt-color-</code> prefix so they can coexist with a shadcn theme. Map them
           explicitly to your app’s semantic tokens if you want both libraries to share colors.
-        </p>
-      </DocsSection>
-      <DocsSection id="portals" title="Choose where an overlay renders">
-        <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
-          Compound portal parts accept a <code>container</code> element. For a contained navigation panel, give its
-          container a positioning boundary and override the drawer’s viewport positioning with local dimensions. This is
-          the composition used by Field Notes; no root provider is required.
-        </p>
-        <CodeBlock
-          label="Contained navigation drawer"
-          code={`import { useState } from "react";
-import {
-  DrawerRoot, DrawerTrigger, DrawerPortal,
-  DrawerContent, DrawerTitle, DrawerClose,
-} from "@/components/ui/material/drawer";
-
-function Workspace() {
-  const [viewport, setViewport] = useState<HTMLDivElement | null>(null);
-
-  return (
-    <DrawerRoot modal={false}>
-      <div ref={setViewport} className="relative isolate overflow-hidden">
-        <DrawerTrigger>Open navigation</DrawerTrigger>
-        <YourWorkspace />
-        {viewport && (
-          <DrawerPortal container={viewport}>
-            <DrawerContent
-              aria-describedby={undefined}
-              className="absolute h-full max-w-[calc(100%-56px)]"
-            >
-              <DrawerTitle>Navigation</DrawerTitle>
-              <YourNavigation />
-              <DrawerClose>Close navigation</DrawerClose>
-            </DrawerContent>
-          </DrawerPortal>
-        )}
-      </div>
-    </DrawerRoot>
-  );
-}`}
-        />
-        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
-          Portal placement and modality are separate. A custom container does not scope a modal’s focus trap or scroll
-          lock. This navigation panel uses <code>{'modal={false}'}</code>, closes on Escape or outside interaction, and
-          has no modal scrim. For an embedded app whose dialogs, responsive layout, and scroll locks must all be
-          independent, render the app in an iframe with its own document.
         </p>
       </DocsSection>
       <DocsSection id="spacing" title="A Material rhythm">

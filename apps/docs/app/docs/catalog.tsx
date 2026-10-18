@@ -7,6 +7,7 @@ const supportingImports: Record<string, string> = Object.fromEntries(
   ]),
 );
 supportingImports.list = "import { FontIcon } from '@/components/ui/material/font-icon';\n";
+supportingImports.overlay += "import { useEffect } from 'react';\nimport { createPortal } from 'react-dom';\n";
 
 // These examples compose families that are not already registry dependencies.
 export const exampleDependencies: Partial<Record<ComponentSlug, readonly string[]>> = {
@@ -333,12 +334,13 @@ export const components = [
     code: example(
       'overlay',
       'Overlay',
-      '<>\n  <Button primary raised label="Show overlay" onClick={() => setActive(true)} />\n  <Overlay active={active}\n    onClick={() => setActive(false)}\n    onEscKeyDown={() => setActive(false)} />\n</>',
-      'const [active, setActive] = useState(false);',
+      '<>\n  <Button primary raised label="Show overlay" onClick={() => setActive(true)} />\n  {container && createPortal(\n    <Overlay active={active} className="z-(--z-index-higher)"\n      onClick={() => setActive(false)}\n      onEscKeyDown={() => setActive(false)} />,\n    container,\n  )}\n</>',
+      'const [active, setActive] = useState(false);\n  const [container, setContainer] = useState<HTMLElement | null>(null);\n\n  useEffect(() => setContainer(document.body), []);',
     ),
     note: (
       <>
-        <code>Overlay</code> supplies a backdrop and scroll lock. Use{' '}
+        <code>Overlay</code> supplies a backdrop and scroll lock. Portal a full-screen backdrop to the document body
+        and set its stacking level above your application’s chrome, as shown in the example. Use{' '}
         <Link href="/docs/components/dialog" className="text-toolbox-primary underline underline-offset-2">
           Dialog
         </Link>{' '}

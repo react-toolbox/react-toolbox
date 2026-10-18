@@ -18,7 +18,7 @@ export default function ComponentsIndex() {
       title="Components"
       description="The whole collection, from everyday controls to the details that make an interface feel right. Choose a component to try it and get the code."
     >
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4 @min-[600px]/article:grid-cols-2 @min-[600px]/article:gap-6">
         {components.map((component) => (
           <ActionCard key={component.slug} href={`/docs/components/${component.slug}`}>
             <CardTitle

@@ -19,7 +19,7 @@ Development uses http://127.0.0.1:3000; production preview uses http://127.0.0.1
 | Route | Purpose |
 | --- | --- |
 | `/` | Landing page |
-| `/docs` | Introduction, installation, theming, and recipes |
+| `/docs` | Introduction, installation, and theming |
 | `/docs/components/<name>` | Component preview, copyable source, and API reference |
 | `/playground` | Component integration gallery |
 | `/layout-demo`, `/theme-demo` | Responsive layout and scoped-theme examples |

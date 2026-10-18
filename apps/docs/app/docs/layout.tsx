@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { ThemeProvider } from 'react-toolbox/theme';
 import DocsHeader from '../docs-header';
 import SiteFooter from '../site-footer';
-import DocsSidebar from './sidebar';
+import DocumentationShell from './shell';
 import { components } from './catalog';
 
 export const revalidate = 3600;
@@ -16,20 +16,19 @@ export default function DocumentationLayout({ children }: { children: ReactNode 
       <a className="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:bg-white focus:p-4" href="#docs-content">
         Skip to content
       </a>
-      <DocsHeader documentation />
-      <div className="lg:grid lg:grid-cols-[256px_minmax(0,1fr)]">
-        <DocsSidebar components={components.map(({ slug, title }) => ({ slug, title }))} />
-        <div className="flex min-w-0 flex-col lg:col-start-2 lg:min-h-[calc(100svh-var(--docs-appbar-height))]">
-          <main
-            id="docs-content"
-            tabIndex={-1}
-            className="mx-auto w-full min-w-0 max-w-6xl flex-1 px-4 py-8 outline-none min-[600px]:px-6 sm:py-12 lg:px-12"
-          >
-            {children}
-          </main>
-          <SiteFooter documentation />
-        </div>
-      </div>
+      <DocumentationShell
+        header={<DocsHeader documentation />}
+        components={components.map(({ slug, title }) => ({ slug, title }))}
+      >
+        <main
+          id="docs-content"
+          tabIndex={-1}
+          className="documentation-content w-full min-w-0 flex-1 scroll-mt-(--docs-appbar-height) px-4 py-8 outline-none min-[600px]:py-12 toolbox-desktop:max-[1025px]:px-6 min-[1025px]:px-10 min-[1025px]:pt-8"
+        >
+          {children}
+        </main>
+        <SiteFooter />
+      </DocumentationShell>
     </ThemeProvider>
   );
 }

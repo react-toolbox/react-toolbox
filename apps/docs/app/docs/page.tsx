@@ -3,6 +3,7 @@ import { CardText, CardTitle } from 'react-toolbox/card';
 import DocsArticle, { DocsSection } from './article';
 import ActionCard from './action-card';
 import { pageMetadata } from '../site-metadata';
+import ProjectStory from '../project-story';
 
 export const metadata = pageMetadata({
   title: 'Documentation · React Toolbox',
@@ -21,15 +22,14 @@ export default function IntroductionPage() {
         { id: 'start', title: 'Start building' },
         { id: 'material', title: 'Made of Material' },
         { id: 'your-code', title: 'Your code' },
+        { id: 'story', title: 'Since 2015' },
       ]}
     >
       <DocsSection id="start" title="Start building">
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 @min-[600px]/article:grid-cols-2 @min-[600px]/article:gap-6">
           <ActionCard href="/docs/installation">
             <CardTitle>
-              <h3 className="m-0 text-toolbox-headline group-hover:text-toolbox-primary">
-                Installation <span aria-hidden="true">↗</span>
-              </h3>
+              <h3 className="m-0 text-toolbox-headline group-hover:text-toolbox-primary">Installation</h3>
             </CardTitle>
             <CardText className="text-toolbox-text-secondary">
               Set up your project and add your first component.
@@ -37,9 +37,7 @@ export default function IntroductionPage() {
           </ActionCard>
           <ActionCard href="/docs/components">
             <CardTitle>
-              <h3 className="m-0 text-toolbox-headline group-hover:text-toolbox-primary">
-                Components <span aria-hidden="true">↗</span>
-              </h3>
+              <h3 className="m-0 text-toolbox-headline group-hover:text-toolbox-primary">Components</h3>
             </CardTitle>
             <CardText className="text-toolbox-text-secondary">
               Explore the collection. Try it, then take the code.
@@ -49,19 +47,41 @@ export default function IntroductionPage() {
       </DocsSection>
       <DocsSection id="material" title="Made of Material">
         <p className="text-toolbox-body/6 text-toolbox-text">
-          React Toolbox brings Google’s original Material Design to React: the palette, the shadows, the keylines, and
-          the motion. Raised buttons, floating labels, ripples, and radial time pickers keep the character of the
-          original library.
+          React Toolbox brings Google’s{' '}
+          <a href="https://m1.material.io/" className="text-toolbox-primary underline underline-offset-4">
+            original Material Design
+          </a>{' '}
+          to React: the palette, the shadows, the keylines, and the motion. Raised buttons, floating labels, ripples,
+          and radial time pickers keep the character of the original library.
         </p>
         <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
-          The foundation is modern: React 19, TypeScript, and Tailwind CSS 4. Components use local fonts and preserve
-          their own Material styling. You can use them alongside existing shadcn components.
+          The foundation is modern:{' '}
+          <a href="https://react.dev/" className="text-toolbox-primary underline underline-offset-4">
+            React 19
+          </a>
+          ,{' '}
+          <a href="https://www.typescriptlang.org/" className="text-toolbox-primary underline underline-offset-4">
+            TypeScript
+          </a>
+          , and{' '}
+          <a href="https://tailwindcss.com/" className="text-toolbox-primary underline underline-offset-4">
+            Tailwind CSS 4
+          </a>
+          . Components preserve their own Material styling. You can use them alongside existing{' '}
+          <a href="https://ui.shadcn.com/" className="text-toolbox-primary underline underline-offset-4">
+            shadcn/ui
+          </a>{' '}
+          components.
         </p>
       </DocsSection>
       <DocsSection id="your-code" title="Your project. Your code.">
         <p className="text-toolbox-body/6 text-toolbox-text">
-          Install only what you need through the shadcn CLI. Component source, styles, fonts, and dependencies come with
-          it. Read the code, change a detail, or build something entirely your own.
+          Install only what you need through the{' '}
+          <a href="https://ui.shadcn.com/docs/cli" className="text-toolbox-primary underline underline-offset-4">
+            shadcn CLI
+          </a>
+          . Component source, styles, fonts, and dependencies come with it. Read the code, change a detail, or build
+          something entirely your own.
         </p>
         <Link
           href="/docs/theming"
@@ -69,6 +89,16 @@ export default function IntroductionPage() {
         >
           Explore theming and spacing →
         </Link>
+      </DocsSection>
+      <DocsSection id="story" title="Made in 2015. Revisited with care.">
+        <p className="text-toolbox-body/6 text-toolbox-text">
+          React Toolbox began in 2015 and helped shape my path as a developer. Years later, AI made it possible to
+          return to it and bring it up to date. This is a personal tribute to a project that meant a lot to me, with no
+          grand ambitions. The documentation is a small portal back to the original Material Design era.
+        </p>
+        <div className="mt-4 text-sm text-toolbox-primary">
+          <ProjectStory />
+        </div>
       </DocsSection>
       <div className="flex justify-end border-t border-toolbox-divider pt-6">
         <Link

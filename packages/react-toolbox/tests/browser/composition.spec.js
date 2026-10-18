@@ -20,6 +20,10 @@ async function accessible(page, scope) {
 }
 
 for (const slug of [
+  'button',
+  'avatar',
+  'input',
+  'snackbar',
   'dialog',
   'drawer',
   'tabs',
@@ -41,7 +45,15 @@ for (const slug of [
     await accessible(page);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await page.getByText('Show composition code', { exact: true }).click();
-    await expect(page.getByLabel(`${slug} composition`, { exact: true })).toContainText('@/components/ui/material/');
+    const source = page.getByLabel(`${slug} composition`, { exact: true });
+    await expect(source).toContainText('@/components/ui/');
+    if (['button', 'avatar', 'input', 'snackbar', 'dialog', 'table'].includes(slug)) {
+      await expect(source).toContainText('@/components/ui/examples/');
+      await expect(source).not.toContainText('@/components/ui/material/examples/');
+      await expect(page.getByLabel(`Install ${slug} composition`, { exact: true })).toContainText(
+        slug === 'snackbar' ? 'example-snackbar-queue.json' : 'example-recipes.json',
+      );
+    }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect(errors).toEqual([]);
   });
@@ -205,7 +217,7 @@ test('composed autocomplete filters objects, removes chips, and submits multiple
 });
 
 test('wrapped table rows retain selection when their order changes', async ({ page }) => {
-  const demo = await example(page, 'table');
+  const demo = (await example(page, 'table')).getByRole('region', { name: 'Custom table rows' });
   await expect(demo.getByRole('columnheader', { name: 'Name', exact: true })).toBeVisible();
   await demo.getByRole('button', { name: 'Reverse row order' }).click();
   await expect(demo.getByRole('checkbox', { name: 'Select Ada Lovelace' })).toBeChecked();

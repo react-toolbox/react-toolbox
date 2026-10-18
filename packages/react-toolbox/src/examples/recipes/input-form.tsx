@@ -71,7 +71,7 @@ export function InputFormRecipe({ onSubmitData }: InputFormRecipeProps) {
           aria-label={visible ? 'Hide password' : 'Show password'}
           aria-controls={`${id}-password`}
           aria-pressed={visible}
-          className="absolute inset-e-0 top-(--input-padding)"
+          className="absolute inset-e-0 top-1/2 -translate-y-1/2"
           onClick={() => setVisible((current) => !current)}
         />
       </Input>

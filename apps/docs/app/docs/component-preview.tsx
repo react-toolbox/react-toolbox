@@ -22,7 +22,7 @@ export default function ComponentPreview({ slug, code }: { slug: ComponentSlug; 
           className="min-w-[72px] flex-1 text-center min-[600px]:min-w-[160px] min-[600px]:flex-none min-[600px]:text-[13px]"
         />
         <TabContent className="overflow-visible px-0 pb-0 pt-4">
-          <div className="relative flex min-h-64 min-w-0 items-center justify-center rounded-toolbox border border-toolbox-divider bg-white p-4 sm:p-8">
+          <div className="relative flex min-h-64 min-w-0 items-center justify-center rounded-toolbox border border-toolbox-divider bg-white p-4 @min-[600px]/article:p-6">
             <ComponentDemo key={reset} slug={slug} />
             <ResetButton
               icon="refresh"

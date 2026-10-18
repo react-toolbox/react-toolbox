@@ -10,7 +10,7 @@ import {
   DrawerDescription,
   DrawerClose,
 } from 'react-toolbox/drawer';
-import DialogComposition from './dialog';
+import ProfileDialog from './profile-dialog';
 
 export default function DrawerComposition() {
   return (
@@ -25,7 +25,7 @@ export default function DrawerComposition() {
         <DrawerContent side="right" className="gap-6 p-6">
           <DrawerTitle>Your account</DrawerTitle>
           <DrawerDescription>Manage your profile without leaving this page.</DrawerDescription>
-          <DialogComposition />
+          <ProfileDialog />
           <DrawerClose asChild>
             <Button className="mt-auto">Close account drawer</Button>
           </DrawerClose>

@@ -70,7 +70,7 @@ export function FieldNotes({ appearance = 'field-notes' }: FieldNotesProps) {
         variables={appearance === 'material' ? {} : appearance === 'night' ? fieldNotesNightTheme : fieldNotesTheme}
         className="overflow-hidden rounded-[2px] border border-toolbox-divider bg-toolbox-background text-toolbox-text"
       >
-        <div ref={setViewport} data-field-notes-viewport="" className="relative isolate">
+        <div ref={setViewport} data-field-notes-viewport="" className="@container/field-notes relative isolate">
           <AppBar
             title={
               <>
@@ -90,7 +90,7 @@ export function FieldNotes({ appearance = 'field-notes' }: FieldNotesProps) {
           >
             <TooltipRoot>
               <TooltipTrigger asChild>
-                <Button inverse icon="help_outline" aria-label="About this workspace" />
+                <IconButton inverse icon="help_outline" aria-label="About this workspace" className="shrink-0" />
               </TooltipTrigger>
               <TooltipPortal>
                 <TooltipContent>Plan a field visit and share observations.</TooltipContent>
@@ -100,7 +100,7 @@ export function FieldNotes({ appearance = 'field-notes' }: FieldNotesProps) {
               AM
             </Avatar>
           </AppBar>
-          <div className="grid gap-6 p-4 min-[600px]:p-6 xl:grid-cols-[minmax(0,2fr)_minmax(240px,1fr)]">
+          <div className="grid gap-6 p-4 @min-[600px]/field-notes:p-6 @min-[720px]/field-notes:grid-cols-[minmax(0,2fr)_minmax(240px,1fr)]">
             <Card>
               <CardTitle title="Coastal survey" subtitle="North coast · October 2026" heading="h3" />
               <CardText>
@@ -109,7 +109,7 @@ export function FieldNotes({ appearance = 'field-notes' }: FieldNotesProps) {
                   <span>12 of 18 observations reviewed</span>
                   <DropdownMenuRoot>
                     <DropdownMenuTrigger asChild>
-                      <Button icon="more_vert" aria-label="Survey actions" />
+                      <IconButton icon="more_vert" aria-label="Survey actions" className="shrink-0" />
                     </DropdownMenuTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuContent align="end">

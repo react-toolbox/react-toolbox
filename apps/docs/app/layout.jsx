@@ -8,7 +8,7 @@ export const metadata = {
   title: 'React Toolbox · The original, renewed',
   description:
     'The original React Toolbox Material Design components, running with modern React, Next.js, and Tailwind CSS.',
-  authors: [{ name: 'Javi Velasco', url: 'https://github.com/javivelasco' }],
+  authors: [{ name: 'Javi Velasco', url: 'https://javivelasco.com' }],
   creator: 'Javi Velasco',
 };
 

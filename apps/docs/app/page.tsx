@@ -32,7 +32,7 @@ export default function HomePage() {
         >
           <div>
             <p className="mb-6 text-xs font-medium tracking-widest text-toolbox-primary uppercase">
-              Original Material Design. Modern React.
+              Original Material Design. Since 2015.
             </p>
             <h1
               id="hero-title"

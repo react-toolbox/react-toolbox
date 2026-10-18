@@ -20,6 +20,9 @@ test('landing leads into a shared documentation shell with working examples', as
   await page.getByRole('link', { name: 'Documentation', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'The original, renewed.' })).toBeVisible();
   const sidebar = page.getByRole('navigation', { name: 'Documentation sidebar' });
+  await expect(sidebar).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'On this page' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Breadcrumb', exact: true })).toBeVisible();
   await sidebar.getByRole('link', { name: 'Installation', exact: true }).click();
   await expect(sidebar.getByRole('link', { name: 'Installation', exact: true })).toHaveAttribute(
     'aria-current',
@@ -28,10 +31,14 @@ test('landing leads into a shared documentation shell with working examples', as
   await sidebar.getByRole('link', { name: 'Button', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Button', exact: true, level: 1 })).toBeVisible();
   await expect(sidebar.getByRole('link', { name: 'Button', exact: true })).toHaveAttribute('aria-current', 'page');
+  await page.reload();
+  await expect(sidebar).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'On this page' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Breadcrumb', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Save', exact: true }).click();
-  await expect(page.getByRole('status')).toHaveText('Saved');
+  await expect(page.locator('#preview').getByRole('status')).toHaveText('Saved');
   await page.getByRole('button', { name: 'Reset demo' }).click();
-  await expect(page.getByRole('status')).toHaveText('Ready');
+  await expect(page.locator('#preview').getByRole('status')).toHaveText('Ready');
   await page.getByRole('tab', { name: 'Preview', exact: true }).focus();
   await page.keyboard.press('ArrowRight');
   await expect(page.getByRole('tab', { name: 'Code', exact: true })).toBeFocused();
@@ -46,13 +53,21 @@ test('mobile documentation navigation closes after following a component', async
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/docs/installation');
   const browse = page.getByRole('button', { name: 'Browse documentation' });
+  const buttonBox = await browse.boundingBox();
+  const iconBox = await browse.locator('svg').boundingBox();
+  const labelBox = await browse.getByText('Browse documentation').boundingBox();
+  expect(buttonBox.height).toBeGreaterThanOrEqual(48);
+  expect(iconBox.width).toBe(24);
+  expect(iconBox.height).toBe(24);
+  expect(Math.abs(iconBox.y + iconBox.height / 2 - (buttonBox.y + buttonBox.height / 2))).toBeLessThan(1);
+  expect(Math.abs(iconBox.y + iconBox.height / 2 - (labelBox.y + labelBox.height / 2))).toBeLessThan(1);
   await browse.focus();
   await browse.press('Enter');
   await expect(page.getByRole('dialog', { name: 'Documentation navigation' })).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog', { name: 'Documentation navigation' })).toBeHidden();
   await expect(browse).toBeFocused();
-  await browse.click();
+  await browse.getByText('Browse documentation').click();
   const sidebar = page.getByRole('navigation', { name: 'Documentation sidebar' });
   const mobileLink = sidebar.getByRole('link', { name: 'Dialog', exact: true });
   await expect(mobileLink).toHaveCSS('min-height', '48px');
@@ -253,14 +268,14 @@ test('documentation follows Material typography, keylines, touch targets, and ta
     const header = page.locator('header[data-react-toolbox="app-bar"]');
     await expect(header).toHaveCSS('height', mobile ? '56px' : '64px');
     await expect(page.getByRole('link', { name: 'React Toolbox home' })).toHaveCSS('font-size', '20px');
-    await expect(page.locator('article > h1')).toHaveCSS('font-size', viewport.width < 640 ? '34px' : '45px');
+    await expect(page.locator('article > h1')).toHaveCSS('font-size', viewport.width < 600 ? '34px' : '45px');
     await expect(page.locator('#installation > h2')).toHaveCSS('font-size', '20px');
     await expect(page.locator('#installation > h2')).toHaveCSS('font-weight', '500');
     await expect(page.locator('#usage > p').first()).toHaveCSS('color', 'rgba(0, 0, 0, 0.87)');
     await expect(page.locator('article > p')).toHaveCSS('color', 'rgba(0, 0, 0, 0.54)');
     await expect(page.locator('main')).toHaveCSS(
       'padding-left',
-      mobile ? '16px' : viewport.width < 1024 ? '24px' : '48px',
+      mobile ? '16px' : viewport.width < 1024 ? '24px' : '40px',
     );
     for (const link of await page.locator('header a, footer a, nav[aria-label="Component pages"] a').all()) {
       const box = await link.boundingBox();
@@ -407,10 +422,56 @@ test('syntax colors preserve source, copy exactly, and remain readable on the Ma
   }
 });
 
-test('retired routing wrappers lead to native routing guidance', async ({ page }) => {
+test('retired routing wrappers lead to installation', async ({ page }) => {
   for (const slug of ['link', 'navigation']) {
     await page.goto(`/docs/components/${slug}`);
-    await expect(page).toHaveURL(/\/docs\/installation#routing$/);
-    await expect(page.getByRole('heading', { name: 'Use your router for navigation' })).toBeVisible();
+    await expect(page).toHaveURL(/\/docs\/installation$/);
+    await expect(page.getByRole('heading', { name: 'Installation', level: 1, exact: true })).toBeVisible();
   }
 });
+
+for (const width of [390, 1440]) {
+  test(`overlay demo covers the docs frame and dismisses at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/docs/components/overlay');
+    const trigger = page.getByRole('button', { name: 'Show overlay' });
+    const backdrop = page.locator('.rt-overlay-overlay.rt-overlay-active');
+    await trigger.click();
+    await expect(backdrop).toHaveCSS('opacity', '0.6');
+    await expect(page.locator('body')).toHaveCSS('overflow', 'hidden');
+    expect(await backdrop.boundingBox()).toEqual({ x: 0, y: 0, width, height: 900 });
+    const surfaces = [page.getByRole('banner'), page.locator('article')];
+    if (width > 1024) {
+      surfaces.push(page.getByRole('navigation', { name: 'Documentation sidebar' }));
+      surfaces.push(page.getByRole('navigation', { name: 'On this page' }));
+    }
+    for (const surface of surfaces) {
+      const box = await surface.boundingBox();
+      expect(
+        await backdrop.evaluate((element, point) => document.elementFromPoint(point.x, point.y) === element, {
+          x: box.x + 16,
+          y: box.y + 16,
+        }),
+      ).toBe(true);
+    }
+    await page.keyboard.press('Escape');
+    await expect(backdrop).toHaveCount(0);
+    await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden');
+    await expect(page.locator('.rt-overlay-overlay')).toHaveCSS('opacity', '0');
+
+    await trigger.click();
+    await expect(backdrop).toHaveCSS('opacity', '0.6');
+    const home = page.getByRole('link', { name: 'React Toolbox home' });
+    const homeBox = await home.boundingBox();
+    await page.mouse.click(homeBox.x + homeBox.width / 2, homeBox.y + homeBox.height / 2);
+    await expect(backdrop).toHaveCount(0);
+    await expect(page).toHaveURL(/\/docs\/components\/overlay$/);
+    await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden');
+    await page.getByRole('tab', { name: 'Code', exact: true }).click();
+    const code = page.getByLabel('Component example', { exact: true });
+    await expect(code).toContainText('createPortal');
+    await expect(code).toContainText('z-(--z-index-higher)');
+    await home.click();
+    await expect(page).toHaveURL('/');
+  });
+}

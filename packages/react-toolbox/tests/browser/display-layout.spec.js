@@ -148,6 +148,11 @@ for (const direction of ['ltr', 'rtl']) {
   test(`form recipe affordances and linear progress follow ${direction}`, async ({ page }) => {
     await fixture(page, { direction, recipes: true });
     const password = page.getByLabel(/^Password/);
+    const emptyInput = await password.boundingBox();
+    const hiddenReveal = await page.getByRole('button', { name: 'Show password' }).boundingBox();
+    expect(hiddenReveal.height).toBe(48);
+    expect(hiddenReveal.width).toBe(48);
+    expect(hiddenReveal.y + hiddenReveal.height / 2).toBeCloseTo(emptyInput.y + emptyInput.height / 2, 1);
     await password.fill('secret-words');
     await page.getByRole('button', { name: 'Show password' }).click();
     await expect(password).toHaveAttribute('type', 'text');
@@ -155,7 +160,7 @@ for (const direction of ['ltr', 'rtl']) {
     await expect(page.getByRole('status')).toHaveText('Preferences saved.');
     const input = await password.boundingBox();
     const reveal = await page.getByRole('button', { name: 'Hide password' }).boundingBox();
-    expect(reveal.y).toBe(input.y);
+    expect(reveal.y + reveal.height / 2).toBeCloseTo(input.y + input.height / 2, 1);
     expect(direction === 'ltr' ? reveal.x + reveal.width : reveal.x).toBe(
       direction === 'ltr' ? input.x + input.width : input.x,
     );

@@ -1,6 +1,8 @@
-/* Standard Tailwind with scoped Material Design compatibility. */
-@layer theme, base, components, utilities;
-@import "tailwindcss";
+/* Keep app utilities above standalone utilities loaded by component entry points. */
+@layer theme, base, components, docs-base, utilities, docs-utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(docs-utilities);
 @import "react-toolbox/shadcn.css";
 @import "material-icons/iconfont/material-icons.css" layer(base);
 @source "./**/*.{js,jsx,ts,tsx}";
@@ -28,8 +30,47 @@ body {
   line-height: 1.5;
 }
 
+body:has(.documentation-shell) {
+  background: #fff;
+}
+
 .documentation-shell {
   font-family: var(--preferred-font);
+}
+
+/* Layout restores native defaults. Documentation uses Tailwind's defaults up to each component boundary. */
+@layer docs-base {
+  @scope (.documentation-content) to ([data-react-toolbox], [class^="rt-"], [class*=" rt-"]) {
+    :where(*) {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border: 0 solid;
+    }
+
+    :where(h1, h2, h3, h4, h5, h6) {
+      font-size: inherit;
+      font-weight: inherit;
+    }
+
+    :where(a) {
+      color: inherit;
+      text-decoration: inherit;
+    }
+
+    :where(ol, ul, menu) {
+      list-style: none;
+    }
+
+    :where(button, input, optgroup, select, textarea) {
+      font: inherit;
+      letter-spacing: inherit;
+      color: inherit;
+      border-radius: 0;
+      background-color: transparent;
+      opacity: 1;
+    }
+  }
 }
 
 .material-icons {
@@ -48,6 +89,7 @@ body {
     padding: 0.125em 0.25em;
     font-size: 0.9em;
     line-height: inherit;
+    overflow-wrap: anywhere;
     box-decoration-break: clone;
   }
 }

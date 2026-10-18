@@ -23,7 +23,6 @@ export default function InstallationPage() {
         { id: 'add', title: 'Add a component' },
         { id: 'use', title: 'Use it' },
         { id: 'fonts', title: 'Fonts and first paint' },
-        { id: 'routing', title: 'Navigation and links' },
         { id: 'namespace', title: 'Registry shortcut' },
         { id: 'updates', title: 'Updates' },
       ]}
@@ -36,8 +35,8 @@ export default function InstallationPage() {
         <CodeBlock language="Terminal" label="Initialize shadcn" code="pnpm dlx shadcn@latest init" />
         <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
           In Vite, use Tailwind’s Vite plugin. If your project uses <code>@tailwindcss/postcss</code> instead, set its{' '}
-          <code>optimize</code> option to <code>false</code> so Vite can resolve imported font URLs before minifying
-          the CSS. Next.js can keep its standard PostCSS configuration.
+          <code>optimize</code> option to <code>false</code> so Vite can resolve imported font URLs before minifying the
+          CSS. Next.js can keep its standard PostCSS configuration.
         </p>
       </DocsSection>
       <DocsSection id="add" title="2. Add a component">
@@ -68,24 +67,30 @@ export default function InstallationPage() {
       </DocsSection>
       <DocsSection id="fonts" title="Fonts and first paint">
         <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
-          Components include Roboto and Material Icons by default. Roboto uses font-display: swap, so text can change
-          appearance when its font finishes loading. Your application controls preloading and the display policy.
+          Roboto and Material Icons are included and served with your app. No font service is required. The default
+          Roboto styles use <code>font-display: swap</code>, which can change the text’s appearance when the font
+          arrives.
         </p>
         <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
-          In Next.js, load Roboto through next/font/local in the root layout. This example assumes a root-level app
-          directory and Latin text; adjust the paths and subsets for your project.
+          For a simpler Next.js setup, use{' '}
+          <a
+            href="https://nextjs.org/docs/app/getting-started/fonts"
+            className="text-toolbox-primary underline underline-offset-2"
+          >
+            <code>next/font/google</code>
+          </a>
+          . It downloads the font at build time, then serves it from your own deployment with preloading and an adjusted
+          fallback. Visitors make no requests to Google.
         </p>
         <CodeBlock
           label="app/layout.tsx"
-          code={`import localFont from 'next/font/local';
+          code={`import { Roboto } from 'next/font/google';
 import type { ReactNode } from 'react';
 import './globals.css';
 
-const appRoboto = localFont({
-  src: [
-    { path: '../node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2', weight: '400' },
-    { path: '../node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2', weight: '500' },
-  ],
+const appRoboto = Roboto({
+  weight: ['400', '500'],
+  subsets: ['latin'],
   variable: '--font-app',
   fallback: ['Helvetica', 'Arial', 'sans-serif'],
   display: 'optional',
@@ -99,39 +104,41 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <CodeBlock
             label="app/globals.css (after existing imports)"
             language="css"
-            code={':root {\n  --preferred-font: var(--font-app);\n}\n\nbody {\n  font-family: var(--preferred-font);\n}'}
+            code={
+              ':root {\n  --preferred-font: var(--font-app);\n}\n\nbody {\n  font-family: var(--preferred-font);\n}'
+            }
           />
         </div>
         <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
           Remove the two @fontsource/roboto imports from your copied material/foundations/styles/fonts.css to avoid
           loading Roboto twice. Keep its Material Icons import: built-in calendar arrows, scrollable tabs, and sorted
-          table headers still use it. If you already load a font, reuse its CSS variable instead of adding another loader.
+          table headers still use it. If you already load a font, reuse its CSS variable instead of adding another
+          loader.
         </p>
         <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
-          Next.js preloads these fonts and provides an adjusted fallback. With display: optional, a slow font download
-          leaves the fallback in place for that page load instead of swapping later. Include additional weights only
-          when you use them. Other frameworks can use the same policy with local @font-face rules and font preloads.
+          <a
+            href="https://web.dev/articles/font-best-practices#choose_an_appropriate_font-display_strategy"
+            className="text-toolbox-primary underline underline-offset-2"
+          >
+            <code>display: 'optional'</code>
+          </a>{' '}
+          prevents a late font swap: on a slow first visit, the fallback can stay in place for that page load. A hosted
+          font alone does not prevent flicker. Include the weights and language subsets your app needs.
         </p>
         <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
-          React Toolbox reserves space for font icons while they load. For icons that must appear on first paint,
-          pass an SVG element to the component’s icon prop; font icons still need their font download to render.
+          If your build must work offline or use pinned font files,{' '}
+          <a
+            href="https://nextjs.org/docs/app/getting-started/fonts#local-fonts"
+            className="text-toolbox-primary underline underline-offset-2"
+          >
+            <code>next/font/local</code>
+          </a>{' '}
+          provides the same loading controls with the included Fontsource files. Other frameworks can use local{' '}
+          <code>@font-face</code> rules with <code>font-display: optional</code> and preload critical fonts.
         </p>
-      </DocsSection>
-      <DocsSection id="routing" title="Use your router for navigation">
-        <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
-          In Next.js, use Link from next/link. In other React apps, use your router’s link or a native anchor. React
-          Toolbox supplies Material surfaces and controls; routing stays with your application.
-        </p>
-        <CodeBlock
-          label="Next.js navigation"
-          code={
-            'import Link from \'next/link\';\n\nexport default function ProjectNavigation() {\n  return (\n    <nav aria-label="Projects">\n      <Link href="/projects"\n        className="inline-flex min-h-toolbox-touch items-center px-4 text-sm font-medium text-toolbox-primary focus-visible:outline-2 focus-visible:outline-toolbox-primary">\n        Projects\n      </Link>\n    </nav>\n  );\n}'
-          }
-        />
         <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
-          For a drawer or sidebar, place your router link in ListItem’s itemContent and enable ripple on List. Keep the
-          whole row interactive and use aria-current="page" for the selected destination. Link and Navigation wrappers
-          are no longer part of the public collection.
+          React Toolbox reserves space for font icons while they load. For icons that must appear on first paint, pass
+          an SVG element to the component’s icon prop; font icons still need their font download to render.
         </p>
       </DocsSection>
       <DocsSection id="namespace" title="Use the @react-toolbox shortcut">

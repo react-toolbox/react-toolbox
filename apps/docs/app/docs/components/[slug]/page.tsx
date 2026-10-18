@@ -10,7 +10,6 @@ import ComponentPreview from '../../component-preview';
 import ApiReference from '../../api-reference';
 import { componentState } from '../../component-state';
 import CompositionPreview, { hasCompositionExample } from '../../composition-preview';
-import { workflowExamples } from '../../workflow-examples';
 import { pageMetadata } from '../../../site-metadata';
 
 export const dynamicParams = false;
@@ -29,7 +28,7 @@ export async function generateMetadata({ params }: PageProps<'/docs/components/[
 }
 export default async function ComponentPage({ params }: PageProps<'/docs/components/[slug]'>) {
   const { slug } = await params;
-  if (slug === 'link' || slug === 'navigation') permanentRedirect('/docs/installation#routing');
+  if (slug === 'link' || slug === 'navigation') permanentRedirect('/docs/installation');
   const index = components.findIndex((item) => item.slug === slug);
   const component = components[index];
   if (!component) notFound();
@@ -37,7 +36,6 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
   const next = components[index + 1];
   const guidelines = materialGuidelines[component.slug];
   const dependencies = exampleDependencies[component.slug] ?? [];
-  const workflow = workflowExamples[component.slug];
   const stateNotes = componentState[component.slug];
   const installUrls = [component.slug, ...dependencies].map(
     (name) => `${new URL(registry.catalog.homepage).origin}/r/${name}.json`,
@@ -61,7 +59,7 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
         { id: 'material-guidelines', title: 'Material guidelines' },
       ]}
     >
-      <section id="preview" className="scroll-mt-24" aria-label={`${component.title} example`}>
+      <section id="preview" className="scroll-mt-(--docs-appbar-height)" aria-label={`${component.title} example`}>
         <ComponentPreview
           key={component.slug}
           slug={component.slug}
@@ -81,12 +79,6 @@ export default async function ComponentPage({ params }: PageProps<'/docs/compone
       </DocsSection>
       <DocsSection id="usage" title="Usage">
         <p className="text-toolbox-body/6 text-toolbox-text">{component.note}</p>
-        {workflow && !hasCompositionExample(component.slug) && (
-          <div className="mt-6 space-y-4">
-            <h3 className="text-toolbox-subheading">{workflow.title}</h3>
-            <CodeBlock label={workflow.title} code={workflow.code} />
-          </div>
-        )}
       </DocsSection>
       {hasCompositionExample(component.slug) && (
         <DocsSection id="composition" title="Composition">

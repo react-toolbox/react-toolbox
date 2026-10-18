@@ -1,0 +1,165 @@
+.overlay {
+  background: transparent;
+  animation: none;
+}
+
+.story {
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  border-radius: 0;
+  background: #050505;
+  color: #eeede9;
+  box-shadow: none;
+  font-family: Arial, Helvetica, sans-serif;
+  isolation: isolate;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: enter 280ms ease-out both;
+}
+
+.story[data-state="closed"],
+.overlay[data-state="closed"] {
+  animation: leave 180ms ease-in both;
+}
+
+.page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  padding: 24px clamp(24px, 5vw, 80px);
+  animation: appear 320ms ease-out 80ms both;
+}
+
+.header,
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.header {
+  border-bottom: 1px solid #363636;
+  padding-bottom: 16px;
+}
+
+.body {
+  display: grid;
+  flex: 1;
+  align-content: center;
+  gap: 48px;
+  padding: 72px 0;
+}
+
+.eyebrow {
+  margin-bottom: 28px;
+  color: #aaa9a5;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  color: inherit;
+  font-family: inherit;
+  font-size: clamp(42px, 5.8vw, 88px);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.065em;
+}
+
+.letter {
+  max-width: 440px;
+  align-self: end;
+  color: #bcbcb7;
+  font-size: clamp(15px, 1.3vw, 18px);
+  line-height: 1.7;
+}
+
+.letter p + p {
+  margin-top: 20px;
+}
+
+.signature {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  margin-top: 24px;
+  color: #eeede9;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.footer {
+  border-top: 1px solid #363636;
+  padding-top: 16px;
+  color: #aaa9a5;
+}
+
+.close {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  color: #eeede9;
+  cursor: pointer;
+}
+
+.close:hover,
+.signature:hover {
+  color: #fff;
+}
+
+.story :where(button, a):focus-visible {
+  outline: 1px solid #eeede9;
+  outline-offset: 5px;
+}
+
+@media (min-width: 900px) {
+  .body {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 8vw;
+  }
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes leave {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story,
+  .page,
+  .story[data-state="closed"],
+  .overlay[data-state="closed"] {
+    animation: none;
+  }
+}

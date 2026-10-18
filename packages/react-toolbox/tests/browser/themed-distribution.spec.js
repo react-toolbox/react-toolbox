@@ -28,6 +28,7 @@ async function accessible(page, root) {
 
 for (const appearance of ['Original Material', 'Field Notes', 'Night']) {
   test(`${appearance} preserves scoped colors, accessible states and mixed picker focus`, async ({ page }) => {
+    await page.clock.setFixedTime(new Date(2026, 9, 17, 12));
     await page.goto('/docs/theming');
     await page.getByRole('radiogroup', { name: 'Example appearance' }).getByText(appearance, { exact: true }).click();
     await page.getByRole('button', { name: 'Plan a visit', exact: true }).hover();
@@ -69,7 +70,12 @@ for (const appearance of ['Original Material', 'Field Notes', 'Night']) {
       const picker = parent.getByRole('combobox', { name: label, exact: true });
       await picker.focus();
       await picker.press('ArrowDown');
-      await expect(page.getByRole('dialog', { name: dialogName })).toBeVisible();
+      const dialog = page.getByRole('dialog', { name: dialogName });
+      await expect(dialog).toBeVisible();
+      await expect(dialog).toHaveCSS('opacity', '1');
+      if (label === 'Date') {
+        await dialog.getByRole('button', { name: '17 October 2026', exact: true }).hover();
+      }
       await accessible(page);
       await page.keyboard.press('Escape');
       await expect(picker).toBeFocused();
@@ -140,13 +146,17 @@ for (const width of [1440, 390]) {
   });
 }
 
-test('application recipes remain accessible after filtering and async actions', async ({ page }) => {
-  await page.goto('/docs/recipes');
+test('component compositions remain accessible after filtering and async actions', async ({ page }) => {
+  await page.goto('/docs/components/table#composition');
   await accessible(page);
   await page.getByRole('searchbox', { name: 'Filter projects' }).fill('Coastal');
   await expect(page.getByRole('cell', { name: 'Coastal survey', exact: true })).toBeVisible();
+  await accessible(page);
+  await page.goto('/docs/components/button#composition');
   await page.getByRole('button', { name: 'Save changes', exact: true }).click();
   await expect(page.getByText('Changes saved.', { exact: true })).toBeVisible();
+  await accessible(page);
+  await page.goto('/docs/components/dialog#composition');
   await page.getByRole('button', { name: 'Delete example draft', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Cancel', exact: true })).toBeFocused();
   await accessible(page);

@@ -8,7 +8,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/docs',
     '/docs/installation',
     '/docs/theming',
-    '/docs/recipes',
     '/docs/components',
     ...components.map((component) => `/docs/components/${component.slug}`),
   ];
