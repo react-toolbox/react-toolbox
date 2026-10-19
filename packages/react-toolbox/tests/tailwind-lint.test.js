@@ -8,12 +8,13 @@ describe('Tailwind canonical class lint', () => {
     canonicalize = await createCanonicalizer();
   });
 
+  /** Tailwind builds its canonicalization cache on the first candidate, which is slower on CI runners. */
   it('uses standard utilities and variable shorthand without changing the declarations', async () => {
     expect(await canonicalize('grow-[1]')).toBe('grow');
     expect(await canonicalize('[flex-wrap:wrap]')).toBe('flex-wrap');
     expect(await canonicalize('h-[var(--button-height)]')).toBe('h-(--button-height)');
     expect(await canonicalize('h-(--button-height)')).toBe('h-(--button-height)');
-  });
+  }, 15_000);
 
   it('preserves ancestor specificity, hover conditions, and host-independent values', async () => {
     expect(await canonicalize('[.rt-button-squared_&]:mr-[var(--button-squared-icon-margin)]')).toBe(
