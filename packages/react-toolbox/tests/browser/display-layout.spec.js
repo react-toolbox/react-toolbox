@@ -110,6 +110,7 @@ async function fixture(page, { direction = 'ltr', recipes = false, metrics = fal
     { direction, recipes, metrics, cancellation },
   );
   await page.addScriptTag({ content: javascript });
+  await expect(page.getByRole('main')).toBeVisible();
 }
 
 test('cancelled checkbox activation keeps native state, visual state and table selection synchronized', async ({
