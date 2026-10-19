@@ -1,6 +1,6 @@
 'use client';
 
-import type { DatePickerClassNames, DatePickerLabels } from './types';
+import type { DatePickerLabels } from './types';
 
 import React, { useEffect, useId, useRef, useState } from 'react';
 import Button from '../button/Button';
@@ -11,10 +11,8 @@ import Input, { type InputProps, type InputElement, type InputHandle } from '../
 import time, { type DatePickerLocale } from '../foundations/date-time/calendar';
 import DatePickerDialog, { type DatePickerDialogProps, type DatePickerSelectEvent } from './DatePickerDialog';
 import isDateDisabled, { type DateConstraints } from './is-date-disabled';
-export type { DatePickerClassNames, DatePickerLabels } from './types';
-export interface DatePickerProps
-  extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'classNames'>,
-    DateConstraints {
+export type { DatePickerLabels } from './types';
+export interface DatePickerProps extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange'>, DateConstraints {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -35,14 +33,12 @@ export interface DatePickerProps
   onDismiss?: () => void;
   onEscKeyDown?: DatePickerDialogProps['onEscKeyDown'];
   onOverlayClick?: DatePickerDialogProps['onOverlayClick'];
-  readonly?: boolean;
+  /** Keep the value focusable and submitted while preventing edits and validation. */
+  readOnly?: boolean;
   sundayFirstDayOfWeek?: boolean;
   startYear?: number;
   endYear?: number;
-  /** Classes for the component's rendered parts. */
-  classNames?: DatePickerClassNames;
-  /** Strings are displayed verbatim; use Date for calendar initialization and date constraints. */
-  value?: Date | string | null;
+  value?: Date | null;
 }
 export function DatePicker({
   open: controlledOpen,
@@ -74,11 +70,10 @@ export function DatePicker({
   onEscKeyDown,
   onKeyDown,
   onOverlayClick,
-  readonly,
+  readOnly,
   sundayFirstDayOfWeek = false,
   startYear,
   endYear,
-  classNames,
   value: controlledValue,
   ref,
   ...others
@@ -91,7 +86,7 @@ export function DatePicker({
   const [validationMessage, setValidationMessage] = useState('');
   const inputRef = useMergedRefs(input, ref);
   const [internalOpen, setOpen] = useState(defaultOpen ?? false);
-  const visible = !disabled && !readonly && (controlledOpen ?? internalOpen);
+  const visible = !disabled && !readOnly && (controlledOpen ?? internalOpen);
   const setVisible = (next: boolean) => {
     if (controlledOpen === undefined) setOpen(next);
     if (next !== visible) onOpenChange?.(next);
@@ -110,8 +105,8 @@ export function DatePicker({
     event.stopPropagation();
     setVisible(true);
   };
-  const date = value instanceof Date ? value : undefined;
-  const formattedValue = typeof value === 'string' ? value : date ? inputFormat(date, locale) : '';
+  const date = value ?? undefined;
+  const formattedValue = date ? inputFormat(date, locale) : '';
   const unavailable = Boolean(
     date && isDateDisabled(date, { minDate, maxDate, enabledDates, disabledDates, isDateUnavailable }),
   );
@@ -120,7 +115,7 @@ export function DatePicker({
     native.current?.setCustomValidity(unavailable ? (labels?.unavailable ?? 'Choose an available date.') : '');
   }, [formattedValue, unavailable, labels?.unavailable]);
   return (
-    <div data-react-toolbox="date-picker" className={classNames?.container}>
+    <div data-react-toolbox="date-picker">
       <input
         ref={native}
         type="text"
@@ -129,7 +124,7 @@ export function DatePicker({
         aria-hidden="true"
         form={others.form}
         disabled={disabled}
-        readOnly={readonly}
+        readOnly={readOnly}
         required={required}
         value={formattedValue}
         onChange={() => {}}
@@ -145,42 +140,34 @@ export function DatePicker({
       <Input
         {...others}
         ref={inputRef}
-        className={cn('rt-date-picker-input', classNames?.input, inputClassName)}
+        className={cn('rt-date-picker-input', !readOnly && '[&>input:not(:disabled)]:cursor-pointer', inputClassName)}
         disabled={disabled}
         error={error || validationMessage}
         required={required}
-        role={readonly ? undefined : 'combobox'}
-        aria-haspopup={readonly ? undefined : 'dialog'}
+        role={readOnly ? undefined : 'combobox'}
+        aria-haspopup={readOnly ? undefined : 'dialog'}
         aria-controls={visible ? dialogId : undefined}
-        aria-expanded={readonly ? undefined : visible}
+        aria-expanded={readOnly ? undefined : visible}
         onKeyDown={(event) => {
           onKeyDown?.(event);
           if (
             !event.defaultPrevented &&
             !event.nativeEvent.isComposing &&
             !disabled &&
-            !readonly &&
+            !readOnly &&
             (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown')
           )
             open(event);
         }}
         onClick={(event) => {
           onClick?.(event);
-          if (!event.defaultPrevented && !disabled && !readonly) open(event);
-        }}
-        classNames={{
-          input: cn('rt-date-picker-input', classNames?.input),
-          inputElement: cn(
-            'rt-date-picker-inputElement',
-            !readonly && '[.rt-date-picker-input:not(.rt-date-picker-disabled)>&]:cursor-pointer',
-            classNames?.inputElement,
-          ),
+          if (!event.defaultPrevented && !disabled && !readOnly) open(event);
         }}
         readOnly
         type="text"
         value={formattedValue}
       />
-      {clearable && value && !disabled && !readonly ? (
+      {clearable && value && !disabled && !readOnly ? (
         <Button
           type="button"
           primary
@@ -224,7 +211,6 @@ export function DatePicker({
         sundayFirstDayOfWeek={sundayFirstDayOfWeek}
         startYear={startYear}
         endYear={endYear}
-        classNames={classNames}
         value={date}
       />
     </div>

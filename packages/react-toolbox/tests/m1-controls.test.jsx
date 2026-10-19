@@ -64,6 +64,21 @@ describe('Material 1 control behavior', () => {
     expect(onChange).toHaveBeenCalledWith('', expect.anything());
   });
 
+  it('forwards native keyboard events when a multiline input reaches its limit', () => {
+    const onKeyPress = vi.fn();
+    const onParentKeyPress = vi.fn();
+    render(
+      <form onKeyPress={onParentKeyPress}>
+        <Input multiline label="Limited" maxLength={3} defaultValue="Ada" onKeyPress={onKeyPress} />
+      </form>,
+    );
+    const input = screen.getByRole('textbox', { name: 'Limited' });
+    expect(input).toHaveAttribute('maxlength', '3');
+    expect(fireEvent.keyPress(input, { key: 'a', charCode: 97 })).toBe(true);
+    expect(onKeyPress).toHaveBeenCalledOnce();
+    expect(onParentKeyPress).toHaveBeenCalledOnce();
+  });
+
   it('selects dropdown values by keyboard, skips disabled options, and submits the value rather than label', async () => {
     const onChange = vi.fn();
     let selectedName;
@@ -296,7 +311,7 @@ describe('Material 1 control behavior', () => {
     });
     fireEvent.touchEnd(calendar, { touches: [], changedTouches: [{ clientX: 100, clientY: 105 }] });
     expect(screen.getByText('November 2026')).toBeInTheDocument();
-    act(() => vi.advanceTimersByTime(350));
+    act(() => vi.advanceTimersByTime(0));
     expect(screen.queryByText('October 2026')).not.toBeInTheDocument();
     fireEvent.keyDown(screen.getByRole('button', { name: /^Choose year: / }), { key: 'Enter' });
     const year = screen.getByRole('button', { name: '2026' });

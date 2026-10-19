@@ -268,7 +268,7 @@ for (const width of [320, 1440]) {
     test.setTimeout(180_000);
     const catalog = await (await request.get('/r/registry.json')).json();
     const families = catalog.items.filter((item) => item.type === 'registry:ui');
-    expect(families).toHaveLength(30);
+    expect(families).toHaveLength(29);
     for (const family of families) {
       // Each route gets its own page so pending link prefetches from a prior
       // document cannot report teardown errors in the next route's audit.
@@ -303,9 +303,6 @@ for (const width of [320, 1440]) {
       await page.close();
     }
     expect((await request.get('/docs/components/not-a-component')).status()).toBe(404);
-    const legacyComponents = await request.get('/components', { maxRedirects: 0 });
-    expect(legacyComponents.status()).toBe(308);
-    expect(legacyComponents.headers().location).toBe('/docs/components');
   });
 }
 
@@ -503,15 +500,6 @@ test('syntax colors preserve source, copy exactly, and remain readable on the Ma
   await page.goto('/docs/installation');
   for (const label of ['Registry configuration', 'Initialize shadcn']) {
     await expect(page.getByLabel(label, { exact: true }).locator('code > span').first()).toBeVisible();
-  }
-});
-
-test('retired routing wrappers lead to installation', async ({ page }) => {
-  for (const slug of ['link', 'navigation']) {
-    await page.goto(`/docs/components/${slug}`);
-    await expect(page).toHaveURL(/\/docs\/installation#routing$/);
-    await expect(page.getByRole('heading', { name: 'Use your router for navigation', level: 2 })).toBeInViewport();
-    await expect(page.getByRole('heading', { name: 'Installation', level: 1, exact: true })).toBeVisible();
   }
 });
 

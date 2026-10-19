@@ -14,8 +14,23 @@ test.beforeAll(async () => {
         import { createRoot } from 'react-dom/client';
         import { Button } from './src/material/button';
         import { IconMenu, MenuItem } from './src/material/menu';
+        const options = window.fixtureOptions || {};
+        window.menuClickCount = 0;
+        window.triggerClickCount = 0;
         createRoot(document.getElementById('root')).render(<>
-          <IconMenu aria-label="More actions">
+          <IconMenu aria-label="More actions"
+            onClick={event => {
+              window.menuClickCount++;
+              if (options.cancel === 'menuClick') event.preventDefault();
+            }}
+            trigger={options.custom ? <Button
+              onClick={event => {
+                window.triggerClickCount++;
+                if (options.cancel === 'click') event.preventDefault();
+              }}
+              onPointerDown={event => { if (options.cancel === 'pointerdown') event.preventDefault(); }}
+              onPointerUp={event => { if (options.cancel === 'pointerup') event.preventDefault(); }}
+            >More actions</Button> : undefined}>
             <MenuItem caption="Download" closeOnSelect={false} />
           </IconMenu>
           <Button raised>Save changes</Button>
@@ -32,13 +47,17 @@ test.beforeAll(async () => {
   javascript = result.outputFiles[0].text;
 });
 
-test.beforeEach(async ({ page }) => {
+async function render(page, options = {}) {
   await page.setContent(
     `<meta name="viewport" content="width=device-width, initial-scale=1"><style>${css}</style><div id="root" style="padding:48px"></div>`,
   );
+  await page.evaluate((options) => {
+    window.fixtureOptions = options;
+  }, options);
   await page.addScriptTag({ content: javascript });
   await expect(page.getByRole('button', { name: 'More actions' })).toBeVisible();
-});
+}
+test.beforeEach(async ({ page }) => render(page));
 
 test('menu trigger ink stays clipped while pressed and fades after every click', async ({ page }) => {
   const trigger = page.getByRole('button', { name: 'More actions' });
@@ -127,10 +146,55 @@ test.describe('touch', () => {
     await expect(trigger.locator('[data-react-toolbox="ripple"]')).toHaveCount(0, { timeout: 1500 });
   });
 
-  test('menu opens after a touch tap', async ({ page, browserName }) => {
-    test.fail(browserName === 'webkit', 'Canceling pointerdown suppresses the native touch click in WebKit.');
-    const trigger = page.getByRole('button', { name: 'More actions' });
-    await trigger.tap();
-    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
-  });
+  for (const custom of [false, true]) {
+    test(`menu opens once after a touch tap with a ${custom ? 'custom' : 'default'} trigger`, async ({ page }) => {
+      await render(page, { custom });
+      const trigger = page.getByRole('button', { name: 'More actions' });
+      for (let count = 1; count <= 2; count++) {
+        await trigger.tap();
+        await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+        expect(await page.evaluate(() => window.menuClickCount)).toBe(count);
+        expect(await page.evaluate(() => window.triggerClickCount)).toBe(custom ? count : 0);
+        await page.keyboard.press('Escape');
+        await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+      }
+      await trigger.focus();
+      await page.keyboard.press('Enter');
+      await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+      expect(await page.evaluate(() => window.menuClickCount)).toBe(3);
+    });
+  }
+
+  for (const cancel of ['menuClick', 'click', 'pointerdown', 'pointerup']) {
+    test(`touch activation respects ${cancel} cancellation`, async ({ page }) => {
+      await render(page, { custom: true, cancel });
+      const trigger = page.getByRole('button', { name: 'More actions' });
+      await trigger.tap();
+      await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+      expect(await page.evaluate(() => window.triggerClickCount)).toBe(cancel.startsWith('pointer') ? 0 : 1);
+      expect(await page.evaluate(() => window.menuClickCount)).toBe(cancel.startsWith('pointer') ? 0 : 1);
+    });
+  }
+
+  for (const gesture of ['move', 'cancel']) {
+    test(`touch ${gesture} does not activate the menu`, async ({ page }) => {
+      const trigger = page.getByRole('button', { name: 'More actions' });
+      const box = await trigger.boundingBox();
+      const pointer = {
+        pointerType: 'touch',
+        pointerId: 1,
+        isPrimary: true,
+        button: 0,
+        clientX: box.x + box.width / 2,
+        clientY: box.y + box.height / 2,
+      };
+      await trigger.dispatchEvent('pointerdown', pointer);
+      await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+      if (gesture === 'move') await trigger.dispatchEvent('pointermove', { ...pointer, clientY: pointer.clientY + 20 });
+      else await trigger.dispatchEvent('pointercancel', pointer);
+      await trigger.dispatchEvent('pointerup', pointer);
+      await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+      expect(await page.evaluate(() => window.menuClickCount)).toBe(0);
+    });
+  }
 });

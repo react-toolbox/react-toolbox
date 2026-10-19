@@ -1,8 +1,8 @@
 # Shared component behavior
 
 Convenience components and compound parts now use the same interaction primitives.
-The convenience APIs retain their props, refs, styling slots, domain values and
-native form integration. They no longer maintain separate keyboard, focus,
+The convenience APIs expose domain values, component classes and native form
+integration. They do not maintain separate keyboard, focus,
 dismissal or dragging implementations.
 
 | Family | Shared interaction primitive |
@@ -13,18 +13,26 @@ dismissal or dragging implementations.
 | Autocomplete | Base UI Combobox |
 | Slider | Radix Slider |
 | Tabs | Radix Tabs |
-| Tooltip factory and hook | Radix Tooltip, including the shared touch policy |
+| Tooltip parts and hook | Radix Tooltip, including the shared touch policy |
 
 A permanent Drawer remains an ordinary, nonmodal aside. Domain adapters still
-handle things the primitives do not know: selection IDs, legacy index APIs,
-Material presentation, custom refs, form serialization and source compatibility.
-No public component export was removed.
+handle things the primitives do not know: selection IDs, Material presentation,
+custom refs and form serialization. Removed APIs and their replacements are
+listed in the [3.0 migration guide](source-registry.md#migrating-to-30).
 
 ## Updating an existing installation
 
 Commit your local changes before reinstalling registry items. Review their source
 diffs and the following interaction changes rather than expecting the former
 custom engines' exact event timing or internal DOM structure.
+
+### Native controls
+
+- Checkbox, RadioButton and Switch apply both `className` and `style` to their root
+  label. Native form attributes and event handlers stay on the underlying input.
+- Input delegates multiline length limits to native `maxLength` and truncates
+  overlong change values. Keyboard events remain available to consumers and
+  enclosing forms, including when the field is full.
 
 ### Dialog and Drawer
 
@@ -82,7 +90,9 @@ custom engines' exact event timing or internal DOM structure.
 - Tabs use Radix automatic or manual activation, disabled-item handling and RTL
   navigation. Automatic focus can select a tab. Pointer selection happens on
   mouse-down: cancel `onMouseDown` or `onKeyDown`, not the later click callback.
-  The public index API and panel retention modes remain available.
+  Selection uses string `value`/`defaultValue` and `onValueChange`. Every Tab and
+  explicit TabContent has a matching value, so reordering does not change selection
+  or pair a trigger with a different panel. Panel retention modes remain available.
 
 ### Menu and Tooltip
 
@@ -94,7 +104,7 @@ custom engines' exact event timing or internal DOM structure.
 - IconMenu retains click cancellation, ripple feedback and custom trigger refs.
   Popup placement follows its anchor and available viewport space, not the old
   measured clip rectangle.
-- Tooltip's factory and `useTooltip` share hover, focus, Escape, collision,
+- Tooltip parts and `useTooltip` share hover, focus, Escape, collision,
   reduced-motion and long-press behavior with the compound parts. Touch uses
   Pointer Events: a 500ms hold opens the tooltip, with a 1500ms release window.
   Custom triggers must forward the returned event props, and the hook's returned

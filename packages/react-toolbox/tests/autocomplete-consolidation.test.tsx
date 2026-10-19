@@ -2,7 +2,15 @@ import { createRef } from 'react';
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import Autocomplete from '../src/material/autocomplete';
+import Autocomplete, {
+  AutocompleteRoot,
+  AutocompleteInput,
+  AutocompletePortal,
+  AutocompletePositioner,
+  AutocompletePopup,
+  AutocompleteList,
+  AutocompleteItem,
+} from '../src/material/autocomplete';
 import type { InputHandle } from '../src/material/input/Input';
 import { ThemeProvider } from '../src/material/foundations/theme/ThemeProvider';
 
@@ -55,6 +63,100 @@ const reset = async (form: HTMLFormElement) =>
   });
 
 describe('Autocomplete compound-parts adapter', () => {
+  it('keeps read-only selections focusable and submitted without opening or required validation', async () => {
+    const user = userEvent.setup();
+    const change = vi.fn();
+    const openChange = vi.fn();
+    const view = render(
+      <form>
+        <Autocomplete
+          label="Country"
+          name="country"
+          source={['Spain', 'France']}
+          defaultValue="Spain"
+          multiple={false}
+          readOnly
+          required
+          clearable
+          onChange={change}
+          onOpenChange={openChange}
+        />
+      </form>,
+    );
+    const field = screen.getByRole('combobox', { name: 'Country' });
+    await user.tab();
+    expect(field).toHaveFocus();
+    expect(field).toHaveAttribute('readonly');
+    await user.click(field);
+    await user.keyboard('{ArrowDown}{Enter}f');
+    expect(screen.queryByRole('listbox')).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Clear selection' })).toBeNull();
+    expect(change).not.toHaveBeenCalled();
+    expect(openChange).not.toHaveBeenCalled();
+    const form = view.container.querySelector('form')!;
+    expect(new FormData(form).get('country')).toBe('Spain');
+    view.rerender(
+      <form>
+        <Autocomplete label="Country" name="country" source={['Spain']} multiple={false} value="" readOnly required />
+      </form>,
+    );
+    expect(form.checkValidity()).toBe(true);
+  });
+
+  it.each(['element', 'function'])('preserves stateful popup styles, refs and %s rendering', async (renderKind) => {
+    const popupRef = createRef<HTMLDivElement>();
+    const renderedRef = createRef<HTMLElement>();
+    const popupClick = vi.fn();
+    const renderedClick = vi.fn();
+    const popupStyle = vi.fn((state: { open: boolean }) => ({
+      '--animation-duration': state.open ? '800ms' : '400ms',
+      opacity: 1,
+    }));
+    render(
+      <ThemeProvider variables={{ '--rt-color-primary': '#123456' }}>
+        <AutocompleteRoot items={['Ada']} defaultOpen>
+          <AutocompleteInput aria-label="People" />
+          <AutocompletePortal>
+            <AutocompletePositioner>
+              <AutocompletePopup
+                ref={popupRef}
+                style={popupStyle}
+                onClick={popupClick}
+                render={
+                  renderKind === 'element' ? (
+                    <section ref={renderedRef} onClick={renderedClick} />
+                  ) : (
+                    (props, state) => <section {...props} data-render-open={state.open} />
+                  )
+                }
+              >
+                <AutocompleteList>
+                  <AutocompleteItem value="Ada">Ada</AutocompleteItem>
+                </AutocompleteList>
+              </AutocompletePopup>
+            </AutocompletePositioner>
+          </AutocompletePortal>
+        </AutocompleteRoot>
+      </ThemeProvider>,
+    );
+    await screen.findByRole('option', { name: 'Ada' });
+    const popup = popupRef.current!;
+    expect(popup.tagName).toBe('SECTION');
+    expect(popup).toHaveAttribute('data-slot', 'AutocompletePopup');
+    expect(popup).toHaveAttribute('data-react-toolbox-tokens', '--rt-color-primary --animation-duration');
+    expect(popup.style.getPropertyValue('--animation-duration')).toBe('800ms');
+    expect(popup.style.getPropertyValue('--rt-color-primary')).toBe('#123456');
+    expect(popupStyle).toHaveBeenCalledWith(expect.objectContaining({ open: true }));
+    fireEvent.click(popup);
+    expect(popupClick).toHaveBeenCalledOnce();
+    if (renderKind === 'element') {
+      expect(renderedRef.current).toBe(popup);
+      expect(renderedClick).toHaveBeenCalledOnce();
+    } else {
+      expect(popup).toHaveAttribute('data-render-open', 'true');
+    }
+  });
+
   it('preserves live React callback currentTarget and event methods for keyboard, pointer and chip removal', async () => {
     const user = userEvent.setup();
     const targets: EventTarget[] = [];
@@ -350,7 +452,7 @@ describe('Autocomplete compound-parts adapter', () => {
     expect(query).toHaveBeenLastCalledWith('G');
   });
 
-  it('retains slots, input presentation/ref, scoped portal theme and reduced-motion surface styles', async () => {
+  it('retains root customization, input presentation/ref, scoped portal theme and reduced-motion surface styles', async () => {
     const user = userEvent.setup();
     const ref = createRef<InputHandle>();
     render(
@@ -362,15 +464,7 @@ describe('Autocomplete compound-parts adapter', () => {
           hint="Find someone"
           direction="up"
           source={['Ada']}
-          classNames={{
-            autocomplete: 'custom-root',
-            input: 'custom-input',
-            suggestions: 'custom-list',
-            suggestion: 'custom-option',
-            active: 'custom-active',
-            up: 'custom-up',
-            focus: 'custom-focus',
-          }}
+          className="custom-root"
         />
       </ThemeProvider>,
     );
@@ -380,8 +474,8 @@ describe('Autocomplete compound-parts adapter', () => {
     await user.click(input);
     await user.keyboard('{ArrowDown}');
     const list = screen.getByRole('listbox');
-    expect(list).toHaveClass('custom-list', 'custom-up');
-    expect(screen.getByRole('option', { name: 'Ada' })).toHaveClass('custom-option', 'custom-active');
+    expect(list).toHaveClass('rt-autocomplete-up');
+    expect(screen.getByRole('option', { name: 'Ada' })).toHaveAttribute('data-highlighted');
     expect(input.closest('.custom-root')).not.toContainElement(list);
     const popup = list.closest('[data-slot="AutocompletePopup"]')!;
     expect(popup).toHaveClass('motion-reduce:transition-none', '[box-shadow:var(--shadow-8p)]');

@@ -67,7 +67,7 @@ export type DropdownMenuContentProps = ComponentProps<typeof Primitive.Content> 
   onOpenAutoFocus?: (event: Event) => void;
 };
 export function DropdownMenuContent({ className, style, ...props }: DropdownMenuContentProps) {
-  const theme = usePortalTheme();
+  const theme = usePortalTheme(style);
   const density = useContext(DensityContext);
   return (
     <Primitive.Content
@@ -88,7 +88,7 @@ export function DropdownMenuContent({ className, style, ...props }: DropdownMenu
 }
 export type DropdownMenuSubContentProps = ComponentProps<typeof Primitive.SubContent>;
 export function DropdownMenuSubContent({ className, style, ...props }: DropdownMenuSubContentProps) {
-  const theme = usePortalTheme();
+  const theme = usePortalTheme(style);
   const density = useContext(DensityContext);
   return (
     <Primitive.SubContent

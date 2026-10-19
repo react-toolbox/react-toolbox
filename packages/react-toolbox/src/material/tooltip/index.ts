@@ -3,7 +3,7 @@ import './tokens.css';
 
 import '../foundations/styles/setup.css';
 
-export { default, Tooltip, tooltipFactory, useTooltip } from './Tooltip';
-export type * from './Tooltip';
+export { useTooltip } from './useTooltip';
+export type * from './useTooltip';
 
 export * from './parts';

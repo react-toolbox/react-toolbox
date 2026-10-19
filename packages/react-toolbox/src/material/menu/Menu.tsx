@@ -16,9 +16,7 @@ import {
 import { cn } from '../foundations/styles/cn';
 import { MenuContext } from './context';
 import { DropdownMenuRoot, DropdownMenuTrigger, DropdownMenuContent } from './parts';
-import type { MenuClassNames } from './types';
 
-export type { MenuClassNames } from './types';
 export type MenuPosition = 'auto' | 'static' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 export interface MenuHandle {
   show(): void;
@@ -39,8 +37,6 @@ export interface MenuProps<Value = unknown> extends Omit<HTMLAttributes<HTMLDivE
   ripple?: boolean;
   selectable?: boolean;
   selected?: Value;
-  /** Classes for the component's rendered parts. */
-  classNames?: MenuClassNames;
   ref?: Ref<MenuHandle>;
 }
 
@@ -61,7 +57,6 @@ export function MenuSurface<Value = unknown>({
   ripple = true,
   selectable = true,
   selected,
-  classNames,
   ref,
   style,
   trigger,
@@ -108,11 +103,9 @@ export function MenuSurface<Value = unknown>({
         style={style}
         className={cn(
           'rt-menu-menu inline-block relative',
-          classNames?.menu,
           isStatic && 'rt-menu-static [&_[data-radix-popper-content-wrapper]]:contents!',
-          isStatic && classNames?.static,
-          visible && cn('rt-menu-active', classNames?.active),
-          !isStatic && position !== 'auto' && cn(`rt-menu-${position}`, classNames?.[position]),
+          visible && 'rt-menu-active',
+          !isStatic && position !== 'auto' && cn(`rt-menu-${position}`),
           className,
         )}
       >
@@ -194,8 +187,6 @@ export function MenuSurface<Value = unknown>({
                 isStatic ? 'max-h-[calc(100vh-var(--menu-item-height))]' : 'max-h-(--radix-popper-available-height)',
                 outline &&
                   'rt-menu-outline rounded-(--menu-outline-border-radius) bg-(--menu-background-color) [box-shadow:var(--shadow-8p)]',
-                outline && classNames?.outline,
-                classNames?.menuInner,
               )}
             >
               <MenuContext

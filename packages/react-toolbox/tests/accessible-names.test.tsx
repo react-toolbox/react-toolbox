@@ -18,10 +18,10 @@ describe('standalone icon semantics', () => {
 
   it('hides decorative ligatures without removing explicit names or icon-only tab names', () => {
     render(
-      <Tabs index={0}>
-        <Tab icon="favorite" label="Favorites" />
-        <Tab icon="home" />
-        <Tab icon={<FontIcon value="settings" alt="Settings" />} />
+      <Tabs value="favorites">
+        <Tab value="favorites" icon="favorite" label="Favorites" />
+        <Tab value="home" icon="home" />
+        <Tab value="settings" icon={<FontIcon value="settings" alt="Settings" />} />
       </Tabs>,
     );
     expect(screen.getByRole('tab', { name: 'Favorites' })).toBeInTheDocument();

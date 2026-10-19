@@ -33,8 +33,8 @@ function App() { return <main id="fixture" style={{ width: 1000, padding: 24, di
     <Checkbox label="Selected" checked /><Switch label="Enabled" checked /><RadioGroup value="a"><RadioButton label="First" value="a" /><RadioButton label="Second" value="b" /></RadioGroup>
     <Chip deletable>Chip</Chip><ProgressBar mode="determinate" value={40} buffer={60} /><ProgressBar type="circular" mode="determinate" value={40} />
     <Slider editable snaps pinned value={4} min={0} max={10} step={2} />
-    <Tabs index={0}><Tab label="Selected">Tab body</Tab><Tab label="Other" /></Tabs>
-    <Table><TableHead><TableCell sorted="asc">Name</TableCell><TableCell numeric>Number</TableCell></TableHead><TableRow selected><TableCell>Alpha</TableCell><TableCell numeric>10</TableCell></TableRow></Table>
+    <Tabs value="selected"><Tab value="selected" label="Selected">Tab body</Tab><Tab value="other" label="Other" /></Tabs>
+    <Table selectionMode="multiple" selected={['alpha']}><TableHead><TableCell sorted="asc">Name</TableCell><TableCell numeric>Number</TableCell></TableHead><TableRow value="alpha"><TableCell>Alpha</TableCell><TableCell numeric>10</TableCell></TableRow></Table>
     <Dropdown label="Country" source={[{value:'a',label:'Option A'},{value:'b',label:'Option B'}]} value="a" />
     <Autocomplete label="Search" source={['One','Two']} value="One" multiple={false} />
     <DatePicker label="Date" value={new Date(2025,2,1)} /><TimePicker label="Time" value={new Date(2025,2,1,10,30)} />

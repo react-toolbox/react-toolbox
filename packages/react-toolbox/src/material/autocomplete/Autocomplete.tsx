@@ -4,7 +4,6 @@ import '../chip/tokens.css';
 import '../input/tokens.css';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { AutocompleteClassNames } from './types';
 
 import React, { useEffect, useId, useImperativeHandle, useRef, useState } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -46,7 +45,6 @@ function AutocompleteInputField({
   return <Input {...props} ref={inputRef} className={rootClassName} onChange={(_, event) => onChange?.(event)} />;
 }
 
-export type { AutocompleteClassNames } from './types';
 export type AutocompleteValue = string | string[] | Record<string, React.ReactNode>;
 export interface AutocompleteOption {
   value: string;
@@ -61,8 +59,10 @@ export type AutocompleteSource =
   | readonly (string | readonly [string, React.ReactNode] | AutocompleteOption)[];
 export type AutocompleteEvent = ChipEvent | React.ChangeEvent<HTMLSelectElement>;
 export interface AutocompleteBaseProps
-  extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'onBlur' | 'classNames' | 'multiple' | 'ref'> {
+  extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'onBlur' | 'multiple' | 'ref'> {
   allowCreate?: boolean;
+  /** Keep selected values focusable and submitted while preventing edits and validation. */
+  readOnly?: boolean;
   /** Show a control that clears the selected value(s). */
   clearable?: boolean;
   clearLabel?: string;
@@ -83,8 +83,6 @@ export interface AutocompleteBaseProps
   showSuggestionsWhenValueIsSet?: boolean;
   source?: AutocompleteSource;
   suggestionMatch?: 'disabled' | 'start' | 'anywhere' | 'word' | 'none';
-  /** Classes for the component's rendered parts. */
-  classNames?: AutocompleteClassNames;
   ref?: React.Ref<InputHandle>;
 }
 export interface AutocompleteSingleProps extends AutocompleteBaseProps {
@@ -137,6 +135,7 @@ export function Autocomplete(props: AutocompleteProps) {
     name,
     form,
     required,
+    readOnly = false,
     defaultValue,
     className = '',
     direction = 'auto',
@@ -157,7 +156,6 @@ export function Autocomplete(props: AutocompleteProps) {
     showSuggestionsWhenValueIsSet = false,
     source = emptySource,
     suggestionMatch = 'start',
-    classNames,
     value: controlledValue,
     id: suppliedId,
     ref,
@@ -203,9 +201,9 @@ export function Autocomplete(props: AutocompleteProps) {
   const [internalQuery, setQuery] = useState(selectedQuery);
   const query = controlledQuery ?? internalQuery;
   const [internalOpen, setOpen] = useState(defaultOpen);
-  const focus = !disabled && (controlledOpen ?? internalOpen);
+  const focus = !disabled && !readOnly && (controlledOpen ?? internalOpen);
   const setFocus = (next: boolean) => {
-    if (disabled && next) return;
+    if ((disabled || readOnly) && next) return;
     if (controlledOpen === undefined) setOpen(next);
     if (next !== focus) onOpenChange?.(next);
   };
@@ -265,8 +263,8 @@ export function Autocomplete(props: AutocompleteProps) {
     setFocus(false);
   });
   useEffect(() => {
-    if (disabled) setFocus(false);
-  }, [disabled]);
+    if (disabled || readOnly) setFocus(false);
+  }, [disabled, readOnly]);
   const previousValue = useRef(value);
   useEffect(() => {
     /** Remote results can replace source while the user is typing. Only an actual selection change should replace that in-progress query. */
@@ -275,7 +273,7 @@ export function Autocomplete(props: AutocompleteProps) {
     previousValue.current = value;
   }, [controlledQuery, selectedQuery, multiple, value]);
   const change = (values: string[] | Record<string, React.ReactNode>, event: AutocompleteEvent) => {
-    if (disabled) return;
+    if (disabled || readOnly) return;
     let nextQuery = '';
     if (props.multiple === false) {
       const next = (Array.isArray(values) ? values[0] : Object.keys(values)[0]) ?? '';
@@ -304,9 +302,7 @@ export function Autocomplete(props: AutocompleteProps) {
   };
   const renderSelected = () =>
     multiple ? (
-      <AutocompleteChips
-        className={cn('rt-autocomplete-values', 'min-h-0 gap-0 p-[0_0_calc(var(--unit)/2)_0]', classNames?.values)}
-      >
+      <AutocompleteChips className={cn('rt-autocomplete-values', 'min-h-0 gap-0 p-[0_0_calc(var(--unit)/2)_0]')}>
         {[...selected].map(([key, text]) => (
           <AutocompleteChip
             key={key}
@@ -315,7 +311,6 @@ export function Autocomplete(props: AutocompleteProps) {
             className={cn(
               'rt-autocomplete-value rt-chip-chip rt-chip-deletable',
               'block relative min-h-0 h-(--chip-height) leading-(--chip-height) m-(--autocomplete-value-margin) me-(--chip-margin-right) max-w-full overflow-hidden text-ellipsis whitespace-nowrap pe-[calc(var(--chip-remove-size)+2*var(--chip-remove-margin))]',
-              classNames?.value,
             )}
           >
             {text}
@@ -351,9 +346,8 @@ export function Autocomplete(props: AutocompleteProps) {
         cn(
           'rt-autocomplete-suggestion',
           'cursor-pointer',
-          classNames?.suggestion,
           state.disabled && '[&&]:cursor-not-allowed opacity-50',
-          state.highlighted && cn('rt-autocomplete-active', classNames?.active),
+          state.highlighted && 'rt-autocomplete-active',
         )
       }
     >
@@ -370,7 +364,7 @@ export function Autocomplete(props: AutocompleteProps) {
       id={id}
       multiple={multiple}
       disabled={disabled}
-      readOnly={others.readOnly}
+      readOnly={readOnly}
       value={multiple ? [...selected.keys()] : stringValues[0] || null}
       inputValue={query}
       items={[...groups.values()].flatMap((entries) => entries.map(([key]) => key))}
@@ -432,8 +426,7 @@ export function Autocomplete(props: AutocompleteProps) {
           'p-0 relative',
           materialRoot,
           materialDescendants,
-          classNames?.autocomplete,
-          focus && cn('rt-autocomplete-focus', classNames?.focus),
+          focus && 'rt-autocomplete-focus',
           className,
         )}
         ref={root}
@@ -446,7 +439,7 @@ export function Autocomplete(props: AutocompleteProps) {
           name={name}
           form={form}
           disabled={disabled}
-          required={required}
+          required={required && !readOnly}
           multiple={multiple}
           value={multiple ? stringValues : (stringValues[0] ?? '')}
           onChange={(event) =>
@@ -485,7 +478,7 @@ export function Autocomplete(props: AutocompleteProps) {
           }}
           onFocus={(event) => {
             onFocus?.(event);
-            if (disabled || event.defaultPrevented) {
+            if (disabled || readOnly || event.defaultPrevented) {
               event.preventBaseUIHandler();
               return;
             }
@@ -522,11 +515,10 @@ export function Autocomplete(props: AutocompleteProps) {
               }
               rootClassName={cn(
                 'rt-autocomplete-input',
-                'relative',
-                "[&::after]:[border-left:var(--autocomplete-border-size)_solid_transparent] [&::after]:[border-right:var(--autocomplete-border-size)_solid_transparent] [&::after]:[border-top:var(--autocomplete-border-size)_solid_var(--input-chevron-color)] [&::after]:[content:''] [&::after]:h-0 [&::after]:pointer-events-none [&::after]:absolute [&::after]:right-(--input-chevron-offset) [&::after]:top-[50%] [&::after]:[transition:transform_var(--animation-duration)_var(--animation-curve-default)] [&::after]:w-0",
+                'relative [&>input]:pe-[calc(2*var(--input-chevron-offset)+2*var(--autocomplete-border-size))]',
+                "[&::after]:[border-left:var(--autocomplete-border-size)_solid_transparent] [&::after]:[border-right:var(--autocomplete-border-size)_solid_transparent] [&::after]:[border-top:var(--autocomplete-border-size)_solid_var(--input-chevron-color)] [&::after]:[content:''] [&::after]:h-0 [&::after]:pointer-events-none [&::after]:absolute [&::after]:inset-e-(--input-chevron-offset) [&::after]:top-[50%] [&::after]:[transition:transform_var(--animation-duration)_var(--animation-curve-default)] [&::after]:w-0",
                 '[&:focus-within:not(.rt-input-disabled)::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_87%)]',
                 '[&.rt-input-disabled::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_38%)]',
-                classNames?.input,
               )}
             />
           }
@@ -546,8 +538,7 @@ export function Autocomplete(props: AutocompleteProps) {
                 className={cn(
                   'rt-autocomplete-suggestions',
                   'm-0 p-0 overflow-y-auto max-h-(--autocomplete-overflow-max-height)',
-                  classNames?.suggestions,
-                  resolvedDirection === 'up' && cn('rt-autocomplete-up', classNames?.up),
+                  resolvedDirection === 'up' && 'rt-autocomplete-up',
                 )}
               >
                 {status != null && (
@@ -569,7 +560,7 @@ export function Autocomplete(props: AutocompleteProps) {
             </AutocompletePopup>
           </AutocompletePositioner>
         </AutocompletePortal>
-        {clearable && stringValues.some(Boolean) && (
+        {clearable && !readOnly && stringValues.some(Boolean) && (
           <AutocompleteClear
             onClick={rememberInteraction}
             keepMounted

@@ -8,6 +8,43 @@ beforeEach(() => {
 });
 const rail = () => document.querySelector<HTMLElement>('.rt-slider-container')!;
 
+it.each(['disabled', 'cancelled', 'secondary'] as const)(
+  'does not focus the thumb after a %s pointer press',
+  (reason) => {
+    const onPointerDown = vi.fn((event) => {
+      if (reason === 'cancelled') event.preventDefault();
+    });
+    const onDragStart = vi.fn();
+    const onChange = vi.fn();
+    render(
+      <>
+        <button type="button">Before slider</button>
+        <Slider
+          aria-label="Volume"
+          defaultValue={40}
+          step={5}
+          disabled={reason === 'disabled'}
+          onPointerDown={onPointerDown}
+          onDragStart={onDragStart}
+          onChange={onChange}
+        />
+      </>,
+    );
+    const before = screen.getByRole('button', { name: 'Before slider' });
+    act(() => before.focus());
+    vi.spyOn(rail(), 'getBoundingClientRect').mockReturnValue({ left: 0, width: 100 } as DOMRect);
+    fireEvent.pointerDown(document.querySelector('.rt-slider-innerknob')!, {
+      button: reason === 'secondary' ? 2 : 0,
+      clientX: 40,
+    });
+    expect(onPointerDown).toHaveBeenCalledOnce();
+    expect(onDragStart).not.toHaveBeenCalled();
+    expect(onChange).not.toHaveBeenCalled();
+    expect(before).toHaveFocus();
+    expect(screen.getByRole('slider')).toHaveAttribute('aria-valuenow', '40');
+  },
+);
+
 it('orders drag callbacks around Radix value changes and shows the pressed state only while dragging', () => {
   const calls: string[] = [];
   render(
@@ -60,6 +97,17 @@ it('commits a pending edited value before a drag moves the thumb', () => {
   expect(input).toHaveValue('30');
 });
 
+it('preserves the displayed edit when hydration replays focus before blur', () => {
+  const change = vi.fn();
+  render(<Slider editable aria-label="Brightness" value={40} step={1} onChange={change} />);
+  const input = screen.getByRole('textbox', { name: 'Brightness value' });
+  fireEvent.input(input, { target: { value: '72' } });
+  fireEvent.focus(input);
+  expect(input).toHaveValue('72');
+  fireEvent.blur(input);
+  expect(change).toHaveBeenLastCalledWith(72, expect.anything());
+});
+
 it('leaves modifier shortcuts to the platform and secondary buttons to context menus in compound sliders', () => {
   const change = vi.fn();
   render(
@@ -95,4 +143,30 @@ it('marks the reachable endpoint even when End rounds down to the last full step
   expect(slider).toHaveAttribute('aria-valuemax', '10');
   fireEvent.keyDown(slider, { key: 'ArrowRight' });
   expect(slider).toHaveAttribute('aria-valuenow', '10');
+});
+
+it('updates snap markers when the range, step, or visibility changes', () => {
+  const { rerender } = render(<Slider aria-label="Level" snaps min={0} max={10} step={5} value={5} />);
+  const positions = () => [...rail().querySelectorAll<HTMLElement>('.rt-slider-snap')].map((stop) => stop.style.left);
+  expect(positions()).toEqual(['0%', '50%', '100%']);
+
+  rerender(<Slider aria-label="Level" snaps min={0} max={20} step={5} value={10} />);
+  expect(positions()).toEqual(['0%', '25%', '50%', '75%', '100%']);
+  rerender(<Slider aria-label="Level" snaps min={0} max={20} step={10} value={10} />);
+  expect(positions()).toEqual(['0%', '50%', '100%']);
+  rerender(<Slider aria-label="Level" snaps min={10} max={30} step={10} value={20} />);
+  expect(positions()).toEqual(['0%', '50%', '100%']);
+
+  rerender(<Slider aria-label="Level" min={10} max={30} step={10} value={20} />);
+  expect(rail().querySelector('.rt-slider-snaps')).toBeNull();
+  rerender(<Slider aria-label="Level" snaps min={10} max={30} step={10} value={20} />);
+  expect(positions()).toEqual(['0%', '50%', '100%']);
+});
+
+it('bounds dense snap grids while keeping both track endpoints', () => {
+  render(<Slider aria-label="Level" snaps min={0} max={10000} step={1} />);
+  const markers = [...rail().querySelectorAll<HTMLElement>('.rt-slider-snap')];
+  expect(markers.length).toBeLessThanOrEqual(1002);
+  expect(markers[0].style.left).toBe('0%');
+  expect(markers.at(-1)?.style.left).toBe('100%');
 });

@@ -22,10 +22,10 @@ Development uses http://127.0.0.1:3000; production preview uses http://127.0.0.1
 | `/docs` | Introduction, installation, and theming |
 | `/docs/components/<name>` | Component preview, copyable source, and API reference |
 | `/playground` | Component integration gallery |
-| `/layout-demo`, `/theme-demo` | Responsive layout and scoped-theme examples |
+| `/theme-demo` | Scoped-theme example |
 | `/r/registry.json`, `/r/<name>.json` | Registry catalog and installable source |
 
-`/components` redirects to the docs catalog. Demo routes use `noindex` metadata.
+Demo routes use `noindex` metadata.
 
 - [app/docs/catalog.tsx](app/docs/catalog.tsx) defines component pages and introductory examples; [app/docs/examples/](app/docs/examples/) contains runnable compositions.
 - [app/docs/api-reference.tsx](app/docs/api-reference.tsx) selects useful props from the generated API data. Types and defaults come from the maintained component source.

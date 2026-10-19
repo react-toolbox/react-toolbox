@@ -1,24 +1,18 @@
 'use client';
 import './tokens.css';
 import {
-  createElement,
   useImperativeHandle,
   useLayoutEffect,
   useRef,
   useState,
-  type ComponentPropsWithRef,
-  type ElementType,
   type HTMLAttributes,
   type ReactNode,
   type Ref,
   type RefObject,
 } from 'react';
 import { cn } from '../foundations/styles/cn';
-import { mergeStyleSlots } from '../foundations/styles/slots';
 import { TooltipRoot, TooltipTrigger, TooltipPortal, TooltipContent } from './parts';
-import type { TooltipClassNames } from './types';
 
-export type { TooltipClassNames } from './types';
 export type TooltipPosition = 'bottom' | 'horizontal' | 'left' | 'right' | 'top' | 'vertical';
 type Position = Exclude<TooltipPosition, 'horizontal' | 'vertical'>;
 export interface TooltipProps {
@@ -27,18 +21,8 @@ export interface TooltipProps {
   tooltipHideOnClick?: boolean;
   tooltipPosition?: TooltipPosition;
   tooltipShowOnClick?: boolean;
-  /** Classes for the component's rendered parts. */
-  classNames?: TooltipClassNames;
-}
-export interface TooltipOptions {
+  /** Classes for the tooltip surface. */
   className?: string;
-  delay?: number;
-  hideOnClick?: boolean;
-  passthrough?: boolean;
-  position?: TooltipPosition;
-  showOnClick?: boolean;
-  /** Classes for the component's rendered parts. */
-  classNames?: TooltipClassNames;
 }
 type TriggerProps = Pick<
   HTMLAttributes<HTMLElement>,
@@ -93,7 +77,7 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
     tooltipHideOnClick = true,
     tooltipShowOnClick = false,
     tooltipPosition = 'vertical',
-    classNames,
+    className,
   } = props;
   const [open, setOpen] = useState(false);
   const [target, setTarget] = useState<HTMLElement | null>(null);
@@ -188,94 +172,17 @@ export function useTooltip(props: TooltipProps & TriggerProps) {
             side={side}
             className={cn(
               'rt-tooltip-tooltip',
-              classNames?.tooltip,
-              open && cn('rt-tooltip-tooltipActive', classNames?.tooltipActive),
-              side === 'top' && cn('rt-tooltip-tooltipTop', classNames?.tooltipTop),
-              side === 'left' && cn('rt-tooltip-tooltipLeft', classNames?.tooltipLeft),
-              side === 'right' && cn('rt-tooltip-tooltipRight', classNames?.tooltipRight),
+              open && 'rt-tooltip-tooltipActive',
+              side === 'top' && 'rt-tooltip-tooltipTop',
+              side === 'left' && 'rt-tooltip-tooltipLeft',
+              side === 'right' && 'rt-tooltip-tooltipRight',
+              className,
             )}
           >
-            <span className={cn('rt-tooltip-tooltipInner', classNames?.tooltipInner)}>{tooltip}</span>
+            <span className="rt-tooltip-tooltipInner">{tooltip}</span>
           </TooltipContent>
         </TooltipPortal>
       </TooltipRoot>
     ),
   };
 }
-
-export function tooltipFactory(options: TooltipOptions = {}) {
-  const factoryClassNames = options.classNames;
-  return function withTooltip<C extends ElementType>(Component: C) {
-    return function TooltippedComponent(props: ComponentPropsWithRef<C> & TooltipProps) {
-      const {
-        children,
-        classNames,
-        tooltip,
-        tooltipDelay = options.delay,
-        tooltipHideOnClick = options.hideOnClick,
-        tooltipPosition = options.position,
-        tooltipShowOnClick = options.showOnClick,
-        className = options.className,
-        onClick,
-        onMouseEnter,
-        onMouseLeave,
-        onFocus,
-        onBlur,
-        onTouchStart,
-        onTouchEnd,
-        onTouchMove,
-        onTouchCancel,
-        onPointerMove,
-        onPointerLeave,
-        onPointerDown,
-        onPointerUp,
-        onPointerCancel,
-        onClickCapture,
-        onContextMenu,
-        ...attributes
-      } = props;
-      const behavior = useTooltip({
-        tooltip,
-        tooltipDelay,
-        tooltipHideOnClick,
-        tooltipPosition,
-        tooltipShowOnClick,
-        classNames: mergeStyleSlots(factoryClassNames, classNames),
-        onClick,
-        onMouseEnter,
-        onMouseLeave,
-        onFocus,
-        onBlur,
-        onTouchStart,
-        onTouchEnd,
-        onTouchMove,
-        onTouchCancel,
-        onPointerMove,
-        onPointerLeave,
-        onPointerDown,
-        onPointerUp,
-        onPointerCancel,
-        onClickCapture,
-        onContextMenu,
-        'aria-describedby': attributes['aria-describedby'],
-      });
-      return (
-        <>
-          {createElement(
-            Component,
-            {
-              ...attributes,
-              className,
-              ...behavior.triggerProps,
-              ...(typeof Component !== 'string' && options.passthrough !== false ? { classNames } : {}),
-            },
-            children,
-          )}
-          {behavior.tooltip}
-        </>
-      );
-    };
-  };
-}
-export const Tooltip = tooltipFactory();
-export default Tooltip;

@@ -1,18 +1,13 @@
 'use client';
 import './tokens.css';
 
-import type { OverlayClassNames } from './types';
-
 import { useEffect, useRef, type HTMLAttributes, type Ref } from 'react';
 import { cn } from '../foundations/styles/cn';
 
-export type { OverlayClassNames } from './types';
 export interface OverlayProps extends HTMLAttributes<HTMLDivElement> {
   active?: boolean;
   lockScroll?: boolean;
   onEscKeyDown?: (event: KeyboardEvent) => void;
-  /** Classes for the component's rendered parts. */
-  classNames?: OverlayClassNames;
   ref?: Ref<HTMLDivElement>;
 }
 const scrollLocks = new Set<object>();
@@ -23,7 +18,6 @@ export function Overlay({
   lockScroll = true,
   onEscKeyDown,
   onClick,
-  classNames,
   className,
   ref,
   ...attributes
@@ -74,12 +68,10 @@ export function Overlay({
       className={cn(
         'rt-overlay-overlay',
         'bg-(--overlay-color) bottom-0 h-screen left-0 opacity-0 pointer-events-none fixed top-0 [transition:opacity_var(--animation-duration)_var(--animation-curve-default)] w-screen',
-        classNames?.overlay,
         active &&
           cn(
             'rt-overlay-active',
             '[.rt-overlay-overlay&]:opacity-(--overlay-opacity) [.rt-overlay-overlay&]:[pointer-events:all]',
-            classNames?.active,
           ),
         className,
       )}

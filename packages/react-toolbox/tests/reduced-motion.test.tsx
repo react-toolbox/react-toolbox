@@ -2,8 +2,8 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import usePresence from '../src/material/foundations/motion/usePresence';
 import useReducedMotion from '../src/material/foundations/motion/useReducedMotion';
-import { useRipple } from '../src/material/ripple/Ripple';
-import { useTooltip } from '../src/material/tooltip/Tooltip';
+import { useRipple } from '../src/material/ripple/useRipple';
+import { useTooltip } from '../src/material/tooltip/useTooltip';
 
 function preference(initial: boolean) {
   let matches = initial;

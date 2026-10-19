@@ -45,8 +45,8 @@ export default function ThemeExample() {
           </div>
         </section>
       </ThemeProvider>
-      <p className="gallery-note">Color customization uses CSS variables. Use classNames for named style slots and className for individual components.</p>
-      <div className="mt-8"><Button label="Back to component gallery" icon="arrow_back" href="/components" /></div>
+      <p className="gallery-note">Color customization uses CSS variables. Use className on individual components and compound parts; edit the installed source for internal elements.</p>
+      <div className="mt-8"><Button label="Back to component gallery" icon="arrow_back" href="/playground" /></div>
     </main>
   );
 }

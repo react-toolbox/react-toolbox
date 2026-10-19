@@ -8,7 +8,7 @@ import time, { type DatePickerLocale } from '../foundations/date-time/calendar';
 import { cn } from '../foundations/styles/cn';
 import CalendarDay from './CalendarDay';
 import isDateDisabled, { dayStamp, type DateConstraints } from './is-date-disabled';
-import type { DatePickerLabels, DatePickerClassNames } from './types';
+import type { DatePickerLabels } from './types';
 
 export interface DateRange {
   from: Date | undefined;
@@ -26,7 +26,6 @@ export interface CalendarSelectionBaseProps extends DateConstraints {
   locale?: DatePickerLocale;
   labels?: Partial<DatePickerLabels> & { weekNumber?: string };
   className?: string;
-  classNames?: DatePickerClassNames;
   clearable?: boolean;
 }
 
@@ -150,6 +149,16 @@ export function CalendarSelection(props: CalendarSelectionProps) {
       );
     return Boolean(selectedSingle && dayStamp(selectedSingle) === stamp);
   };
+  const getRangePosition = (date: Date) => {
+    if (!selectedRange.from || !selectedRange.to) return;
+    const start = dayStamp(selectedRange.from);
+    const end = dayStamp(selectedRange.to);
+    const stamp = dayStamp(date);
+    if (start === end || stamp < start || stamp > end) return;
+    if (stamp === start) return 'start';
+    if (stamp === end) return 'end';
+    return 'middle';
+  };
   const weekdays = Array.from({ length: 7 }, (_, day) =>
     time.getDayOfWeekLetter((day + (props.sundayFirstDayOfWeek ? 0 : 1)) % 7, props.locale),
   );
@@ -161,7 +170,6 @@ export function CalendarSelection(props: CalendarSelectionProps) {
       data-react-toolbox="calendar-selection"
       className={cn(
         'inline-flex max-w-full flex-col overflow-x-auto text-center text-(length:--font-size-small)',
-        props.classNames?.calendar,
         props.className,
       )}
       onKeyDown={(event) => {
@@ -213,17 +221,15 @@ export function CalendarSelection(props: CalendarSelectionProps) {
           onClick={() => changeMonth(time.addMonths(viewMonth, 1))}
         />
       </div>
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap items-start gap-4">
         {Array.from({ length: count }, (_, offset) => {
           const month = time.addMonths(viewMonth, offset);
           const leading = (month.getDay() + (props.sundayFirstDayOfWeek ? 0 : 6)) % 7;
           const weeks = Math.ceil((leading + time.getDaysInMonth(month)) / 7);
           return (
-            <table key={monthNumber(month)} className={cn('border-collapse text-center', props.classNames?.month)}>
-              <caption
-                className={cn('leading-(--calendar-row-height) font-medium', props.classNames?.title)}
-              >{`${time.getFullMonth(month, props.locale)} ${month.getFullYear()}`}</caption>
-              <thead className={props.classNames?.week}>
+            <table key={monthNumber(month)} className="border-collapse text-center">
+              <caption className="leading-(--calendar-row-height) font-medium">{`${time.getFullMonth(month, props.locale)} ${month.getFullYear()}`}</caption>
+              <thead>
                 <tr>
                   {props.showWeekNumbers ? (
                     <th scope="col" className="px-2 font-normal text-(--rt-color-text-secondary)">
@@ -241,7 +247,7 @@ export function CalendarSelection(props: CalendarSelectionProps) {
                   ))}
                 </tr>
               </thead>
-              <tbody className={props.classNames?.days}>
+              <tbody>
                 {Array.from({ length: weeks }, (_, week) => (
                   <tr key={week}>
                     {props.showWeekNumbers ? (
@@ -253,22 +259,31 @@ export function CalendarSelection(props: CalendarSelectionProps) {
                       const day = week * 7 + weekday - leading + 1;
                       if (day < 1 || day > time.getDaysInMonth(month)) return <td key={weekday} />;
                       const date = time.setDay(month, day);
+                      const isSelected = selected(date);
+                      const rangePosition = getRangePosition(date);
                       return (
                         <td
                           key={weekday}
-                          className="p-0"
-                          data-range={props.mode === 'range' && selected(date) ? 'selected' : undefined}
+                          className={cn(
+                            'p-0',
+                            rangePosition &&
+                              'relative before:pointer-events-none before:absolute before:inset-x-0 before:top-1/2 before:-translate-y-1/2 before:h-(--calendar-row-height) before:bg-[color-mix(in_srgb,var(--calendar-primary-color)_16%,transparent)]',
+                            rangePosition === 'start' && 'before:inset-s-1/2',
+                            rangePosition === 'end' && 'before:inset-e-1/2',
+                          )}
+                          data-range={rangePosition ?? (props.mode === 'range' && isSelected ? 'single' : undefined)}
                         >
                           <CalendarDay
+                            className={rangePosition ? 'relative' : undefined}
                             day={day}
                             viewDate={month}
                             selectedDate={initialDate}
-                            selected={selected(date)}
+                            selected={isSelected}
+                            rangePosition={rangePosition}
                             focused={dayStamp(date) === dayStamp(visibleFocus)}
                             focusableDisabled
                             withOffset={false}
                             locale={props.locale}
-                            classNames={props.classNames}
                             disabled={isDateDisabled(date, props)}
                             onFocus={() => setFocusedDate(date)}
                             onClick={() => choose(date)}

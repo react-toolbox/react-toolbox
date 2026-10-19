@@ -6,7 +6,7 @@ import { Button, BrowseButton, IconButton, Input, ThemeProvider } from '../src';
 
 describe('styling API', () => {
   it('adds local class overrides without replacing structural classes', () => {
-    render(<Button label="Composed" classNames={{ button: 'rounded-none custom custom' }} />);
+    render(<Button label="Composed" className="rounded-none custom custom" />);
     const button = screen.getByRole('button');
     expect(button).toHaveClass('rt-button-button', 'rounded-none', 'custom');
     expect(button.className.split(' ').filter((item) => item === 'custom')).toHaveLength(1);
@@ -16,23 +16,20 @@ describe('styling API', () => {
     ['flat', {}],
     ['raised', { raised: true }],
     ['floating', { floating: true }],
-  ])('keeps root overrides ahead of %s defaults and specific overrides last', (variant, shape) => {
-    const classNames = { button: 'h-16 rounded-none', [variant]: 'h-20' };
-    const view = render(<Button {...shape} label="Custom" classNames={classNames} />);
+  ])('lets className override %s appearance defaults', (_variant, shape) => {
+    const view = render(<Button {...shape} label="Custom" className="h-20 rounded-none" />);
     const button = screen.getByRole('button');
     expect(button).toHaveClass('h-20', 'rounded-none');
-    expect(button).not.toHaveClass('h-16');
-    view.rerender(<Button {...shape} label="Custom" classNames={classNames} className="h-24" />);
+    view.rerender(<Button {...shape} label="Custom" className="h-24 rounded-none" />);
     expect(button).toHaveClass('h-24');
     expect(button).not.toHaveClass('h-20');
   });
 
   it('applies shared overrides to file-picker labels and icon buttons', () => {
-    const classNames = { button: 'h-16 rounded-none' };
     const { container } = render(
       <>
-        <BrowseButton raised label="Upload" classNames={classNames} />
-        <IconButton icon="add" aria-label="Add" classNames={classNames} />
+        <BrowseButton raised label="Upload" className="h-16 rounded-none" />
+        <IconButton icon="add" aria-label="Add" className="h-16 rounded-none" />
       </>,
     );
     expect(container.querySelector('label')).toHaveClass('h-16', 'rounded-none');

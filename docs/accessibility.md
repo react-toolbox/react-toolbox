@@ -40,7 +40,7 @@ named standalone icons use an image role as required by [ARIA in HTML](https://w
   fabricated completion percentage; determinate progress retains its actual value.
 
 Keep meaningful labels on interactive icons. Use a distinct, descriptive name for
-each progress indicator. Do not remove focus indication in `classNames` overrides.
+each progress indicator. Preserve focus indication when customizing classes or CSS variables.
 Test text/background contrast again after changing design tokens; the original
 palette and every possible consumer customization are not a conformance guarantee.
 
@@ -74,7 +74,7 @@ must recheck contrast against their own surfaces.
 ## Current default corrections
 
 - Snackbar actions inherit the light snackbar text color rather than neutral dark
-  button text. Action slots remain customizable; recheck any custom severity colors.
+  button text. Action components remain customizable; recheck any custom severity colors.
 - Accent surfaces use Material Pink 600 (`#d81b60`) with white text, giving a
   4.95:1 contrast ratio. Material permits choosing the primary and secondary
   palette; Pink A200 is not required. To retain contrast in hover and focus states,
@@ -92,8 +92,8 @@ must recheck contrast against their own surfaces.
 - Calendar arrows move by one day or one week even when dates are unavailable.
   Unavailable dates can receive focus and announce their disabled state, but
   cannot be selected. Keyboard autocomplete selection does not blur its input.
-- DatePicker string values are legacy display-only text. Use a Date value to
-  initialize the calendar and apply date constraints; no locale parsing is guessed.
+- DatePicker accepts Date values so its display, calendar, and constraints share
+  the same date. Use `inputFormat` to customize the displayed and submitted text.
 
 ## Shared interaction primitives
 

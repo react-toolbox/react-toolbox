@@ -18,7 +18,6 @@ export function IconButton({
   inverse,
   neutral = true,
   primary = false,
-  classNames,
   ripple = true,
   rippleCentered = true,
   rippleClassName,
@@ -33,11 +32,10 @@ export function IconButton({
     className: rippleClassName,
     multiple: rippleMultiple,
     spread: rippleSpread,
-    classNames: { rippleWrapper: cn(rippleWrapperClasses, classNames?.rippleWrapper) },
+    wrapperClassName: rippleWrapperClasses,
     ripple,
     onRippleEnded,
   });
-  const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
   const classes = cn(
     buttonClasses,
     'rt-button-toggle',
@@ -47,11 +45,8 @@ export function IconButton({
     '[.rt-button-accent:not([disabled])&]:text-(--button-accent-color)',
     '[.rt-button-neutral:not([disabled])&]:text-(--button-neutral-color-contrast)',
     '[.rt-button-neutral:not([disabled]).rt-button-inverse&]:text-(--button-neutral-color)',
-    classNames?.button,
-    classNames?.toggle,
-    neutral &&
-      cn(primary ? 'rt-button-primary' : accent ? 'rt-button-accent' : 'rt-button-neutral', classNames?.[level]),
-    inverse && cn(inverseClasses, classNames?.inverse),
+    neutral && (primary ? 'rt-button-primary' : accent ? 'rt-button-accent' : 'rt-button-neutral'),
+    inverse && inverseClasses,
     className,
   );
   const element = (
@@ -64,11 +59,7 @@ export function IconButton({
       leading={
         <>
           {icon &&
-            (typeof icon === 'string' ? (
-              <FontIcon aria-hidden={true} className={cn(iconClasses, classNames?.icon)} value={icon} />
-            ) : (
-              icon
-            ))}
+            (typeof icon === 'string' ? <FontIcon aria-hidden={true} className={iconClasses} value={icon} /> : icon)}
         </>
       }
     >

@@ -124,7 +124,9 @@ for (const side of ['top', 'bottom']) {
     const sheet = page.getByRole('dialog', { name: 'Edge sheet' });
     await expect(sheet).toBeVisible();
     await expect(sheet).toHaveCSS(side, '0px');
-    await expect(sheet).toHaveCSS('animation-name', 'none');
+    await expect
+      .poll(() => sheet.evaluate((element) => Number.parseFloat(getComputedStyle(element).animationDuration) * 1000))
+      .toBeLessThanOrEqual(0.01);
     const bounds = await sheet.boundingBox();
     expect(bounds.width).toBe(page.viewportSize().width);
     await page.keyboard.press('Escape');

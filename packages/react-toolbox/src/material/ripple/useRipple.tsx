@@ -1,16 +1,11 @@
 'use client';
 import './tokens.css';
 
-import type { RippleClassNames } from './types';
-
 import {
-  createElement,
   useEffect,
   useLayoutEffect,
   useRef,
   useState,
-  type ComponentPropsWithRef,
-  type ElementType,
   type MouseEventHandler,
   type ReactNode,
   type TouchEventHandler,
@@ -19,15 +14,14 @@ import {
 import { cn } from '../foundations/styles/cn';
 import useReducedMotion from '../foundations/motion/useReducedMotion';
 
-export type { RippleClassNames } from './types';
 export interface RippleOptions {
   centered?: boolean;
   className?: string;
   disabled?: boolean;
   multiple?: boolean;
   spread?: number;
-  /** Classes for the component's rendered parts. */
-  classNames?: RippleClassNames;
+  /** Classes for the container that clips the ink. */
+  wrapperClassName?: string;
   ripple?: boolean;
   onRippleEnded?: TransitionEventHandler<HTMLSpanElement>;
   onMouseDown?: MouseEventHandler<HTMLElement>;
@@ -60,14 +54,14 @@ export interface RippleBehavior {
   onTouchCancel: TouchEventHandler<HTMLElement>;
 }
 
-/** Ink behavior shared by components, with no injected component or theme wrapper. */
+/** Material ink feedback for an interactive element. */
 export function useRipple({
   centered = false,
   className,
   disabled = false,
   multiple = true,
   spread = 2,
-  classNames,
+  wrapperClassName,
   ripple = true,
   onRippleEnded,
   onMouseDown: suppliedMouseDown,
@@ -92,8 +86,7 @@ export function useRipple({
     };
   }, []);
 
-  // Commit scale(0), force that starting geometry, then activate the CSS transition.
-  // This preserves the original ink timing without an extra animation frame delay.
+  /** Commit the starting geometry before activating the CSS transition, without an extra frame delay. */
   useLayoutEffect(() => {
     if (reducedMotion) {
       for (const dispose of listeners.current.values()) dispose();
@@ -173,7 +166,7 @@ export function useRipple({
             className={cn(
               'rt-ripple-rippleWrapper',
               'bottom-0 left-0 pointer-events-none absolute right-0 top-0 z-(--z-index-normal)',
-              classNames?.rippleWrapper,
+              wrapperClassName,
             )}
           >
             <span
@@ -185,18 +178,15 @@ export function useRipple({
                 'rt-ripple-ripple',
                 'bg-[currentColor] rounded-[50%] left-[50%] pointer-events-none absolute top-[50%] origin-[50%_50%] duration-(--ripple-duration) z-(--z-index-high)',
                 '[&:not(.rt-ripple-rippleActive):not(.rt-ripple-rippleRestarting)]:opacity-0 [&:not(.rt-ripple-rippleActive):not(.rt-ripple-rippleRestarting)]:[transition-property:opacity,transform]',
-                classNames?.ripple,
                 ink.active &&
                   cn(
                     'rt-ripple-rippleActive',
                     '[.rt-ripple-ripple&]:opacity-(--ripple-final-opacity) [.rt-ripple-ripple&]:[transition-property:transform]',
-                    classNames?.rippleActive,
                   ),
                 ink.restarting &&
                   cn(
                     'rt-ripple-rippleRestarting',
                     '[.rt-ripple-ripple&]:opacity-(--ripple-final-opacity) [.rt-ripple-ripple&]:transition-none',
-                    classNames?.rippleRestarting,
                   ),
                 className,
               )}
@@ -218,63 +208,3 @@ export function useRipple({
       : null,
   };
 }
-
-/** Optional convenience decorator for application components. Library components use the hook. */
-export function rippleFactory(options: RippleOptions = {}) {
-  return function withRipple<C extends ElementType>(Component: C) {
-    return function RippledComponent(props: ComponentPropsWithRef<C> & RippleProps) {
-      const {
-        children,
-        disabled,
-        ripple,
-        rippleCentered,
-        rippleClassName,
-        rippleMultiple,
-        rippleSpread,
-        onRippleEnded,
-        onMouseDown,
-        onTouchStart,
-        onTouchEnd,
-        onTouchCancel,
-        ...rest
-      } = props;
-      const ink = useRipple({
-        ...options,
-        disabled: disabled ?? options.disabled,
-        ripple: ripple ?? options.ripple,
-        centered: rippleCentered ?? options.centered,
-        className: rippleClassName ?? options.className,
-        multiple: rippleMultiple ?? options.multiple,
-        spread: rippleSpread ?? options.spread,
-        onRippleEnded: onRippleEnded ?? options.onRippleEnded,
-      });
-      return createElement(
-        Component,
-        {
-          ...rest,
-          disabled,
-          onMouseDown: (event: React.MouseEvent<HTMLElement>) => {
-            onMouseDown?.(event);
-            ink.onMouseDown(event);
-          },
-          onTouchStart: (event: React.TouchEvent<HTMLElement>) => {
-            onTouchStart?.(event);
-            ink.onTouchStart(event);
-          },
-          onTouchEnd: (event: React.TouchEvent<HTMLElement>) => {
-            onTouchEnd?.(event);
-            ink.onTouchEnd(event);
-          },
-          onTouchCancel: (event: React.TouchEvent<HTMLElement>) => {
-            onTouchCancel?.(event);
-            ink.onTouchCancel(event);
-          },
-        },
-        children,
-        ink.ripple,
-      );
-    };
-  };
-}
-export { rippleFactory as Ripple };
-export default rippleFactory;

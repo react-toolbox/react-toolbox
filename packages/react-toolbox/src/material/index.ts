@@ -15,7 +15,6 @@ export * from './drawer';
 export * from './dropdown';
 export * from './font-icon';
 export * from './input';
-export * from './layout';
 export * from './list';
 export * from './menu';
 export * from './overlay';

@@ -1,28 +1,31 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { expect, it, vi } from 'vitest';
-import { Ripple } from '../src/material/ripple';
+import { useRipple, type RippleOptions } from '../src/material/ripple';
+
+function RippleButton(options: RippleOptions) {
+  const { ripple, ...events } = useRipple(options);
+  return <button {...events}>Save{ripple}</button>;
+}
 
 it.each([
-  { name: 'disabled', options: { disabled: true }, override: { disabled: false } },
-  { name: 'ripple', options: { ripple: false }, override: { ripple: true } },
-])('preserves the factory $name setting until an instance overrides it', ({ options, override }) => {
-  const RippleButton = Ripple(options)('button');
-  const { rerender } = render(<RippleButton>Save</RippleButton>);
+  { name: 'disabled', options: { disabled: true }, enabled: { disabled: false } },
+  { name: 'ripple', options: { ripple: false }, enabled: { ripple: true } },
+])('updates ink when the $name option changes', ({ options, enabled }) => {
+  const { rerender } = render(<RippleButton {...options} />);
   const button = screen.getByRole('button', { name: 'Save' });
 
   fireEvent.mouseDown(button, { button: 0 });
   expect(button.querySelector('[data-react-toolbox="ripple"]')).toBeNull();
 
-  rerender(<RippleButton {...override}>Save</RippleButton>);
+  rerender(<RippleButton {...enabled} />);
   fireEvent.mouseDown(button, { button: 0 });
   expect(button.querySelector('[data-react-toolbox="ripple"]')).not.toBeNull();
 });
 
-it('uses the factory completion callback unless an instance supplies one', () => {
-  const factoryEnded = vi.fn();
-  const instanceEnded = vi.fn();
-  const RippleButton = Ripple({ onRippleEnded: factoryEnded })('button');
-  const { rerender } = render(<RippleButton>Save</RippleButton>);
+it('uses the latest completion callback and removes finished ink', () => {
+  const initialEnded = vi.fn();
+  const latestEnded = vi.fn();
+  const { rerender } = render(<RippleButton onRippleEnded={initialEnded} />);
   const button = screen.getByRole('button', { name: 'Save' });
 
   const finishRipple = () => {
@@ -37,10 +40,10 @@ it('uses the factory completion callback unless an instance supplies one', () =>
   };
 
   finishRipple();
-  expect(factoryEnded).toHaveBeenCalledOnce();
+  expect(initialEnded).toHaveBeenCalledOnce();
 
-  rerender(<RippleButton onRippleEnded={instanceEnded}>Save</RippleButton>);
+  rerender(<RippleButton onRippleEnded={latestEnded} />);
   finishRipple();
-  expect(instanceEnded).toHaveBeenCalledOnce();
-  expect(factoryEnded).toHaveBeenCalledOnce();
+  expect(latestEnded).toHaveBeenCalledOnce();
+  expect(initialEnded).toHaveBeenCalledOnce();
 });

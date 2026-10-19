@@ -14,12 +14,16 @@ describe('keyboard focus', () => {
   it('uses Radix roving focus for RTL, disabled tabs, and modifier keys', async () => {
     const user = userEvent.setup();
     function Example() {
-      const [index, setIndex] = useState(0);
+      const [tab, setTab] = useState('one');
       return (
-        <Tabs dir="rtl" index={index} onChange={setIndex}>
-          <Tab label="One">First</Tab>
-          <Tab label="Unavailable" disabled />
-          <Tab label="Three">Last</Tab>
+        <Tabs dir="rtl" value={tab} onValueChange={setTab}>
+          <Tab value="one" label="One">
+            First
+          </Tab>
+          <Tab value="unavailable" label="Unavailable" disabled />
+          <Tab value="three" label="Three">
+            Last
+          </Tab>
         </Tabs>
       );
     }
@@ -42,11 +46,15 @@ describe('controlled and uncontrolled selection', () => {
 
   it('supports uncontrolled tabs inside fragments and manual activation', async () => {
     render(
-      <Tabs defaultIndex={0} activationMode="manual">
+      <Tabs defaultValue="one" activationMode="manual">
         <>
-          <Tab label="One">First</Tab>
-          <Tab label="Disabled" disabled />
-          <Tab label="Three">Third</Tab>
+          <Tab value="one" label="One">
+            First
+          </Tab>
+          <Tab value="disabled" label="Disabled" disabled />
+          <Tab value="three" label="Three">
+            Third
+          </Tab>
         </>
       </Tabs>,
     );
@@ -62,19 +70,58 @@ describe('controlled and uncontrolled selection', () => {
     expect(screen.getByRole('tabpanel')).toHaveTextContent('Third');
   });
 
+  it('starts without a selected tab when no value is supplied and selects by value on interaction', async () => {
+    const change = vi.fn();
+    render(
+      <Tabs onValueChange={change}>
+        <Tab value="" label="Empty">
+          Empty value
+        </Tab>
+        <Tab value="tab:" label="Prefixed">
+          Prefixed value
+        </Tab>
+      </Tabs>,
+    );
+    for (const tab of screen.getAllByRole('tab')) expect(tab).toHaveAttribute('aria-selected', 'false');
+    expect(screen.queryByRole('tabpanel')).not.toBeInTheDocument();
+    await userEvent.click(screen.getByRole('tab', { name: 'Empty' }));
+    expect(screen.getByRole('tab', { name: 'Empty' })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('tabpanel')).toHaveTextContent('Empty value');
+    expect(change).toHaveBeenLastCalledWith('');
+    await userEvent.click(screen.getByRole('tab', { name: 'Prefixed' }));
+    expect(screen.getByRole('tab', { name: 'Prefixed' })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('tabpanel')).toHaveTextContent('Prefixed value');
+    expect(change).toHaveBeenLastCalledWith('tab:');
+  });
+
+  it.each(['value', 'defaultValue'] as const)('selects an empty string supplied through %s', (prop) => {
+    render(
+      <Tabs {...{ [prop]: '' }}>
+        <Tab value="" label="Empty">
+          Empty value
+        </Tab>
+        <Tab value="two" label="Two">
+          Second
+        </Tab>
+      </Tabs>,
+    );
+    expect(screen.getByRole('tab', { name: 'Empty' })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('tabpanel')).toHaveTextContent('Empty value');
+  });
+
   it('does not mutate a controlled tab selection and honors prevented activation', async () => {
     const change = vi.fn();
     render(
-      <Tabs index={0} onChange={change}>
-        <Tab label="One" />
-        <Tab label="Two" onMouseDown={(event) => event.preventDefault()} />
-        <Tab label="Three" />
+      <Tabs value="one" onValueChange={change}>
+        <Tab value="one" label="One" />
+        <Tab value="two" label="Two" onMouseDown={(event) => event.preventDefault()} />
+        <Tab value="three" label="Three" />
       </Tabs>,
     );
     await userEvent.click(screen.getByRole('tab', { name: 'Two' }));
     expect(change).not.toHaveBeenCalled();
     await userEvent.click(screen.getByRole('tab', { name: 'Three' }));
-    expect(change).toHaveBeenLastCalledWith(2);
+    expect(change).toHaveBeenLastCalledWith('three');
     expect(screen.getByRole('tab', { name: 'One' })).toHaveAttribute('aria-selected', 'true');
   });
 });

@@ -52,7 +52,9 @@ test('sheet inherits portal theme, focuses content, and restores its trigger', a
   await mount(page);
   const sheet = page.getByRole('dialog', { name: 'File details' });
   await expect(sheet).toHaveCSS('background-color', 'rgb(255, 238, 204)');
-  await expect(sheet).toHaveCSS('animation-name', 'none');
+  await expect
+    .poll(() => sheet.evaluate((element) => Number.parseFloat(getComputedStyle(element).animationDuration)))
+    .toBe(0.00001);
   await expect(sheet).toHaveCSS('transition-property', 'none');
   await expect(page.getByRole('button', { name: 'Expand' })).toBeFocused();
   await page.getByRole('button', { name: 'Done' }).click();
@@ -70,6 +72,23 @@ test('controlled snap points can be expanded using a keyboard action', async ({ 
   await expect.poll(async () => (await sheet.boundingBox()).y).toBeCloseTo(page.viewportSize().height * 0.2, 0);
   await page.keyboard.press('Escape');
   await expect(sheet).toHaveCount(0);
+});
+
+test('changing reduced motion during exit releases the sheet and scroll lock', async ({ page }) => {
+  await mount(page);
+  const sheet = page.getByRole('dialog', { name: 'File details' });
+  await expect(sheet).toBeVisible();
+  await sheet.evaluate((element) => Promise.all(element.getAnimations().map((animation) => animation.finished)));
+  await page.locator('[data-slot=SheetContent], [data-slot=SheetOverlay]').evaluateAll((elements) => {
+    for (const element of elements) element.style.setProperty('--animation-duration-exit', '1000ms');
+  });
+  await page.keyboard.press('Escape');
+  await expect(sheet).toHaveAttribute('data-state', 'closed');
+  await expect.poll(() => sheet.evaluate((element) => element.getAnimations().length)).toBeGreaterThan(0);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(sheet).toHaveCount(0, { timeout: 300 });
+  await expect(page.locator('body')).not.toHaveAttribute('data-scroll-locked');
+  await expect(page.getByRole('button', { name: 'Open sheet' })).toBeFocused();
 });
 
 test('dragging the handle dismisses a bottom sheet', async ({ page }) => {

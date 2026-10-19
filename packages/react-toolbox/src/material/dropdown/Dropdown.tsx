@@ -3,7 +3,6 @@ import './tokens.css';
 import '../input/tokens.css';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { DropdownClassNames } from './types';
 
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -35,8 +34,8 @@ const requiredClasses = [
 
 const valueClasses = [
   'rt-dropdown-value',
-  '[&>input]:cursor-pointer',
-  "[&::after]:[border-left:var(--dropdown-value-border-size)_solid_transparent] [&::after]:[border-right:var(--dropdown-value-border-size)_solid_transparent] [&::after]:[border-top:var(--dropdown-value-border-size)_solid_var(--input-chevron-color)] [&::after]:[content:''] [&::after]:h-0 [&::after]:pointer-events-none [&::after]:absolute [&::after]:right-(--input-chevron-offset) [&::after]:top-[50%] [&::after]:[transition:transform_var(--animation-duration)_var(--animation-curve-default)] [&::after]:w-0",
+  '[&>input]:cursor-pointer [&>input]:pe-[calc(2*var(--input-chevron-offset)+2*var(--dropdown-value-border-size))]',
+  "[&::after]:[border-left:var(--dropdown-value-border-size)_solid_transparent] [&::after]:[border-right:var(--dropdown-value-border-size)_solid_transparent] [&::after]:[border-top:var(--dropdown-value-border-size)_solid_var(--input-chevron-color)] [&::after]:[content:''] [&::after]:h-0 [&::after]:pointer-events-none [&::after]:absolute [&::after]:inset-e-(--input-chevron-offset) [&::after]:top-[50%] [&::after]:[transition:transform_var(--animation-duration)_var(--animation-curve-default)] [&::after]:w-0",
   '[.rt-dropdown-dropdown:focus-within:not(.rt-dropdown-disabled)_&::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_87%)]',
   '[.rt-dropdown-disabled_&::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_38%)]',
 ].join(' ');
@@ -65,17 +64,15 @@ export interface DropdownItem {
   group?: string;
   textValue?: string;
 }
-export type { DropdownClassNames } from './types';
 export type DropdownEvent =
   | React.MouseEvent<HTMLElement>
   | React.KeyboardEvent<HTMLElement>
   | React.ChangeEvent<HTMLSelectElement>;
 export interface DropdownProps<T extends object = DropdownItem>
-  extends Omit<
-    InputProps,
-    'value' | 'defaultValue' | 'onChange' | 'onBlur' | 'onFocus' | 'onKeyDown' | 'onClick' | 'classNames'
-  > {
+  extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'onBlur' | 'onFocus' | 'onKeyDown' | 'onClick'> {
   allowBlank?: boolean;
+  /** Keep the selected value focusable and submitted while preventing edits and validation. */
+  readOnly?: boolean;
   auto?: boolean;
   open?: boolean;
   defaultOpen?: boolean;
@@ -93,8 +90,6 @@ export interface DropdownProps<T extends object = DropdownItem>
   onFocus?: React.FocusEventHandler<HTMLElement>;
   onClick?: React.MouseEventHandler<HTMLElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
-  /** Classes for the component's rendered parts. */
-  classNames?: DropdownClassNames;
 }
 export function Dropdown<T extends object = DropdownItem>({
   allowBlank = true,
@@ -117,9 +112,9 @@ export function Dropdown<T extends object = DropdownItem>({
   onKeyDown,
   onClick,
   required = false,
+  readOnly = false,
   source,
   template,
-  classNames,
   value: controlledValue,
   defaultValue,
   id: suppliedId,
@@ -168,8 +163,9 @@ export function Dropdown<T extends object = DropdownItem>({
     [],
   );
   const [internalOpen, setOpen] = useState(defaultOpen);
-  const active = !disabled && (controlledOpen ?? internalOpen);
+  const active = !disabled && !readOnly && (controlledOpen ?? internalOpen);
   const setActive = (next: boolean) => {
+    if (next && (disabled || readOnly)) return;
     if (controlledOpen === undefined) setOpen(next);
     if (next !== active) onOpenChange?.(next);
   };
@@ -213,8 +209,8 @@ export function Dropdown<T extends object = DropdownItem>({
   const selected =
     items.find((item) => item.value === value) || (!allowBlank ? items.find((item) => !item.disabled) : undefined);
   useEffect(() => {
-    if (disabled) setActive(false);
-  }, [disabled]);
+    if (disabled || readOnly) setActive(false);
+  }, [disabled, readOnly]);
   useEffect(() => {
     if (!active || !root.current || !trigger.current) return;
     const rect = root.current.getBoundingClientRect();
@@ -223,7 +219,7 @@ export function Dropdown<T extends object = DropdownItem>({
     setPlacement({ up, sideOffset: up ? triggerRect.top - rect.bottom : rect.top - triggerRect.bottom });
   }, [active, auto]);
   const select = (next: DropdownValue, event: DropdownEvent) => {
-    if (disabled) return;
+    if (disabled || readOnly) return;
     onBlur?.(event);
     if (name) Object.assign(event.target, { name });
     if (controlledValue === undefined) setValue(next);
@@ -236,6 +232,7 @@ export function Dropdown<T extends object = DropdownItem>({
     'aria-labelledby':
       others['aria-labelledby'] ?? (template && selected && label && !others['aria-label'] ? `${id}-label` : undefined),
     'aria-disabled': disabled || undefined,
+    'aria-readonly': readOnly || undefined,
     'aria-required': required || undefined,
     'aria-invalid': fieldError ? true : others['aria-invalid'],
     'aria-describedby':
@@ -253,10 +250,8 @@ export function Dropdown<T extends object = DropdownItem>({
       onClick={captureSelection}
       className={cn(
         'cursor-pointer',
-        item.value === selected?.value &&
-          cn('rt-dropdown-selected', 'text-(--dropdown-color-primary)', classNames?.selected),
-        item.disabled &&
-          cn(disabledClasses, 'text-(--dropdown-color-disabled) cursor-not-allowed', classNames?.disabled),
+        item.value === selected?.value && cn('rt-dropdown-selected', 'text-(--dropdown-color-primary)'),
+        item.disabled && cn(disabledClasses, 'text-(--dropdown-color-disabled) cursor-not-allowed'),
       )}
     >
       <DropdownOptionText>{template ? template(item.original) : item.label}</DropdownOptionText>
@@ -279,11 +274,10 @@ export function Dropdown<T extends object = DropdownItem>({
         'relative',
         materialRoot,
         materialDescendants,
-        classNames?.dropdown,
-        up && cn('rt-dropdown-up', classNames?.up),
-        active && cn('rt-dropdown-active', classNames?.active),
-        disabled && cn(disabledClasses, classNames?.disabled),
-        required && cn(requiredClasses, classNames?.required),
+        up && 'rt-dropdown-up',
+        active && 'rt-dropdown-active',
+        disabled && disabledClasses,
+        required && requiredClasses,
         className,
       )}
       onKeyDownCapture={onKeyDown}
@@ -330,7 +324,7 @@ export function Dropdown<T extends object = DropdownItem>({
               inputRef={input}
               tabIndex={0}
               disabled={disabled}
-              rootClassName={cn(valueClasses, classNames?.value)}
+              rootClassName={valueClasses}
               required={required}
               error={fieldError}
               label={label}
@@ -353,20 +347,18 @@ export function Dropdown<T extends object = DropdownItem>({
                 'rt-dropdown-field',
                 'cursor-pointer p-[var(--input-padding)_0] relative',
                 '[&:focus-visible]:[outline:2px_solid_var(--input-text-highlight-color)] [&:focus-visible]:-outline-offset-2',
-                classNames?.field,
-                Boolean(fieldError) && cn('rt-dropdown-errored', '[.rt-dropdown-field&]:pb-0', classNames?.errored),
-                disabled && cn(disabledClasses, classNames?.disabled),
-                required && cn(requiredClasses, classNames?.required),
+                Boolean(fieldError) && cn('rt-dropdown-errored', '[.rt-dropdown-field&]:pb-0'),
+                disabled && disabledClasses,
+                required && requiredClasses,
               )}
             >
               <div
                 className={`${cn(
                   'rt-dropdown-templateValue',
-                  'bg-(--input-text-background-color) [border-bottom:1px_solid_var(--input-text-bottom-border-color)] text-(--rt-color-text) min-h-(--input-field-height) p-[var(--input-field-padding)_0] relative',
+                  'bg-(--input-text-background-color) [border-bottom:1px_solid_var(--input-text-bottom-border-color)] text-(--rt-color-text) min-h-(--input-field-height) p-[var(--input-field-padding)_0] pe-[calc(2*var(--input-chevron-offset)+2*var(--dropdown-value-border-size))] relative',
                   '[.rt-dropdown-field.rt-dropdown-errored>&]:[border-bottom:2px_solid_var(--input-text-error-color)]',
                   '[.rt-dropdown-field.rt-dropdown-disabled>&]:[border-bottom-style:dotted] [.rt-dropdown-field.rt-dropdown-disabled>&]:text-(--input-text-disabled-text-color)',
-                  classNames?.templateValue,
-                )} ${cn(valueClasses, classNames?.value)}`}
+                )} ${valueClasses}`}
               >
                 {template(selected.original)}
               </div>
@@ -377,12 +369,11 @@ export function Dropdown<T extends object = DropdownItem>({
                     'rt-dropdown-label',
                     'text-(--input-text-label-color) text-(length:--input-label-font-size) left-0 leading-(--input-field-font-size) absolute top-(--input-focus-label-top)',
                     '[.rt-dropdown-field.rt-dropdown-errored>&]:text-(--input-text-error-color)',
-                    classNames?.label,
                   )}
                 >
                   {label}
                   {required ? (
-                    <span aria-hidden="true" className={cn(requiredClasses, classNames?.required)}>
+                    <span aria-hidden="true" className={requiredClasses}>
                       {' '}
                       *{' '}
                     </span>
@@ -395,7 +386,6 @@ export function Dropdown<T extends object = DropdownItem>({
                   className={cn(
                     'rt-dropdown-error',
                     'text-(--input-text-error-color) text-(length:--input-label-font-size) leading-(--input-underline-height) mb-[calc(-1_*_var(--input-underline-height))]',
-                    classNames?.error,
                   )}
                 >
                   {fieldError}
@@ -412,7 +402,7 @@ export function Dropdown<T extends object = DropdownItem>({
           name={name}
           form={others.form}
           disabled={disabled}
-          required={required}
+          required={required && !readOnly}
           value={selected?.value ?? ''}
           onChange={(event) => {
             const item = items[event.currentTarget.selectedIndex - 1];
@@ -452,10 +442,7 @@ export function Dropdown<T extends object = DropdownItem>({
             sideOffset={placement.sideOffset}
             avoidCollisions={auto}
             aria-label={typeof label === 'string' ? label : undefined}
-            className={cn(
-              'rt-dropdown-values max-h-(--dropdown-overflow-max-height) w-(--radix-select-trigger-width)',
-              classNames?.values,
-            )}
+            className="rt-dropdown-values max-h-(--dropdown-overflow-max-height) w-(--radix-select-trigger-width)"
           >
             <DropdownViewport>
               {[...groups].map(([group, entries]) =>

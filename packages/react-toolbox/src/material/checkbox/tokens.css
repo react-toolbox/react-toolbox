@@ -3,7 +3,7 @@
   :root {
     --checkbox-color: var(--rt-color-primary);
     --checkbox-disabled-color: rgb(from var(--rt-color-black) r g b / 26%);
-    --checkbox-field-margin-bottom: calc(1.5 * var(--unit));
+    --checkbox-field-margin-bottom: 0px;
     --checkbox-focus-checked-color: rgb(from var(--rt-color-primary) r g b / 26%);
     --checkbox-ripple-duration: 650ms;
     --checkbox-size: calc(1.8 * var(--unit));
@@ -26,7 +26,6 @@
     --checkbox-text-color: var(--rt-color-black);
   }
   [data-react-toolbox-tokens~="--unit"] {
-    --checkbox-field-margin-bottom: calc(1.5 * var(--unit));
     --checkbox-size: calc(1.8 * var(--unit));
     --checkbox-total-height: calc(1.8 * var(--unit));
   }

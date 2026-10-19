@@ -8,11 +8,19 @@ import Drawer from '../src/material/drawer';
 import { Overlay } from '../src/material/overlay/Overlay';
 import { IconMenu, Menu, MenuItem } from '../src/material/menu';
 import { Tabs, Tab } from '../src/material/tabs';
-import Tooltip from '../src/material/tooltip';
+import { useTooltip } from '../src/material/tooltip';
 import Snackbar from '../src/material/snackbar';
 
 const advance = (milliseconds) => act(() => vi.advanceTimersByTime(milliseconds));
-const TipButton = Tooltip('button');
+function TipButton({ children, ...props }) {
+  const behavior = useTooltip(props);
+  return (
+    <>
+      <button {...behavior.triggerProps}>{children}</button>
+      {behavior.tooltip}
+    </>
+  );
+}
 
 afterEach(() => {
   cleanup();
@@ -261,17 +269,19 @@ describe('M1 overlay and navigation behavior', () => {
   it('keeps inline tab content aligned after an empty tab and navigates only enabled visible tabs', () => {
     vi.useFakeTimers();
     function Example() {
-      const [index, setIndex] = useState(0);
+      const [tab, setTab] = useState('empty');
       return (
-        <Tabs index={index} onChange={setIndex} hideMode="display" aria-label="View">
-          <Tab label="Empty" />
-          <Tab label="Disabled" disabled>
+        <Tabs value={tab} onValueChange={setTab} hideMode="display" aria-label="View">
+          <Tab value="empty" label="Empty" />
+          <Tab value="disabled" label="Disabled" disabled>
             Disabled content
           </Tab>
-          <Tab label="Hidden" hidden>
+          <Tab value="hidden" label="Hidden" hidden>
             Hidden content
           </Tab>
-          <Tab label="Details">Details content</Tab>
+          <Tab value="details" label="Details">
+            Details content
+          </Tab>
         </Tabs>
       );
     }
@@ -324,27 +334,27 @@ describe('M1 overlay and navigation behavior', () => {
   it('keeps a keyboard entry when the controlled active tab becomes disabled or hidden', async () => {
     const change = vi.fn();
     const view = render(
-      <Tabs index={0} onChange={change}>
-        <Tab label="First" disabled />
-        <Tab label="Second" />
-        <Tab label="Third" />
+      <Tabs value="first" onValueChange={change}>
+        <Tab value="first" label="First" disabled />
+        <Tab value="second" label="Second" />
+        <Tab value="third" label="Third" />
       </Tabs>,
     );
     await userEvent.tab();
     expect(screen.getByRole('tab', { name: 'Second' })).toHaveFocus();
     expect(screen.getByRole('tab', { name: 'First' })).toHaveAttribute('aria-selected', 'true');
-    expect(change).toHaveBeenLastCalledWith(1);
+    expect(change).toHaveBeenLastCalledWith('second');
     view.rerender(
-      <Tabs index={1} onChange={change}>
-        <Tab label="First" />
-        <Tab label="Second" hidden />
-        <Tab label="Third" />
+      <Tabs value="second" onValueChange={change}>
+        <Tab value="first" label="First" />
+        <Tab value="second" label="Second" hidden />
+        <Tab value="third" label="Third" />
       </Tabs>,
     );
     act(() => document.activeElement.blur());
     await userEvent.tab();
     expect(screen.getByRole('tab', { name: 'First' })).toHaveFocus();
-    expect(change).toHaveBeenLastCalledWith(0);
+    expect(change).toHaveBeenLastCalledWith('first');
   });
 
   it('uses touch hold and retains the tooltip for 1.5 seconds after release', () => {

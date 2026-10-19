@@ -29,16 +29,11 @@ afterEach(() => {
 });
 
 describe('convenience modals on compound parts', () => {
-  it('renders Dialog through DialogContent with its title, slots, ref and initial focus', () => {
+  it('renders Dialog through DialogContent with its title, className, ref and initial focus', () => {
     const ref = createRef<HTMLDivElement>();
     render(
       <StrictMode>
-        <Dialog
-          ref={ref}
-          active
-          title="Discard draft?"
-          classNames={{ title: 'custom-title', wrapper: 'custom-wrapper' }}
-        >
+        <Dialog ref={ref} active title="Discard draft?" className="custom-dialog">
           <button>Keep editing</button>
           <button>Discard</button>
         </Dialog>
@@ -51,15 +46,10 @@ describe('convenience modals on compound parts', () => {
     expect(dialog).toHaveAttribute('aria-modal', 'true');
     expect(dialog).toHaveClass('rt-dialog-dialog', 'rt-dialog-normal', 'rt-dialog-active', 'static', 'w-[50vw]');
     expect(dialog).not.toHaveClass('fixed', '-translate-x-1/2', 'w-[560px]');
-    expect(dialog.closest('.rt-dialog-wrapper')).toHaveClass('custom-wrapper');
+    expect(dialog).toHaveClass('custom-dialog');
     const title = screen.getByText('Discard draft?');
     expect(title.tagName).toBe('H6');
-    expect(title).toHaveClass(
-      'rt-dialog-title',
-      'custom-title',
-      'm-[0_0_calc(2*var(--unit))]',
-      'leading-[calc(2.8*var(--unit))]',
-    );
+    expect(title).toHaveClass('rt-dialog-title', 'm-[0_0_calc(2*var(--unit))]', 'leading-[calc(2.8*var(--unit))]');
     expect(title).not.toHaveClass('m-0');
     expect(dialog.querySelector(':scope > section.rt-dialog-body')).toContainElement(title);
     /** Radix places initial focus on the first tabbable control. */

@@ -2,12 +2,10 @@
 import './tokens.css';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { ChipClassNames } from './types';
 
 import React, { useRef } from 'react';
 import { cn } from '../foundations/styles/cn';
 import Avatar from '../avatar/Avatar';
-export type { ChipClassNames } from './types';
 export type ChipEvent = React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;
 export interface ChipProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onClick'> {
   deletable?: boolean;
@@ -15,8 +13,6 @@ export interface ChipProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'o
   disabled?: boolean;
   onClick?: (event: ChipEvent) => void;
   onDeleteClick?: (event: ChipEvent) => void;
-  /** Classes for the component's rendered parts. */
-  classNames?: ChipClassNames;
   ref?: React.Ref<HTMLDivElement>;
 }
 export function Chip({
@@ -29,7 +25,6 @@ export function Chip({
   onDeleteClick,
   onKeyDown,
   tabIndex,
-  classNames,
   ...other
 }: ChipProps) {
   const primary = useRef<HTMLButtonElement>(null);
@@ -46,13 +41,12 @@ export function Chip({
     materialRoot,
     materialDescendants,
     '[&:focus-visible]:[outline:2px_solid_var(--rt-color-primary)] [&:focus-visible]:outline-offset-2',
-    classNames?.chip,
-    !!deletable &&
-      cn('rt-chip-deletable', 'pe-[calc(var(--chip-remove-size)+2*var(--chip-remove-margin))]', classNames?.deletable),
+    !!deletable && cn('rt-chip-deletable', 'pe-[calc(var(--chip-remove-size)+2*var(--chip-remove-margin))]'),
     "[&:has([data-react-toolbox='avatar'])]:text-(length:--font-size-small) [&:has([data-react-toolbox='avatar'])]:ps-0",
     "[&_[data-react-toolbox='avatar']]:h-(--chip-height) [&_[data-react-toolbox='avatar']]:me-(--chip-icon-margin-right) [&_[data-react-toolbox='avatar']]:align-middle [&_[data-react-toolbox='avatar']]:w-(--chip-height)",
     "[&_[data-react-toolbox='avatar']>span]:text-(length:--chip-icon-font-size) [&_[data-react-toolbox='avatar']>span]:leading-(--chip-height)",
-    !!hasAvatar && cn('rt-chip-avatar', 'text-(length:--font-size-small) ps-0', classNames?.avatar),
+    !!hasAvatar && cn('rt-chip-avatar', 'text-(length:--font-size-small) ps-0'),
+    disabled && 'opacity-50',
     className,
   );
 
@@ -105,7 +99,6 @@ export function Chip({
             'rt-chip-delete',
             'cursor-pointer inline-block h-(--chip-remove-size) m-(--chip-remove-margin) p-(--chip-remove-margin) absolute end-0 top-0 w-(--chip-remove-size) border-0 bg-transparent text-inherit [font:inherit] disabled:cursor-default',
             '[&:focus-visible]:[outline:2px_solid_var(--rt-color-primary)] [&:focus-visible]:outline-offset-2',
-            classNames?.delete,
           )}
           aria-label={deleteLabel}
           aria-disabled={disabled || undefined}
@@ -127,8 +120,7 @@ export function Chip({
             className={cn(
               'rt-chip-deleteIcon',
               '[background:var(--chip-remove-background)] rounded-(--chip-remove-size) align-top',
-              '[.rt-chip-delete:hover_&]:[background:var(--chip-remove-background-hover)]',
-              classNames?.deleteIcon,
+              '[.rt-chip-delete:not(:disabled):hover_&]:[background:var(--chip-remove-background-hover)]',
             )}
             aria-hidden="true"
             focusable="false"
@@ -137,7 +129,6 @@ export function Chip({
               className={cn(
                 'rt-chip-deleteX',
                 '[.rt-chip-deleteIcon_&]:fill-transparent [.rt-chip-deleteIcon_&]:stroke-(--chip-remove-color) [.rt-chip-deleteIcon_&]:[stroke-width:var(--chip-remove-stroke-width)]',
-                classNames?.deleteX,
               )}
               d="M 12,12 L 28,28 M 28,12 L 12,28"
             />

@@ -21,7 +21,7 @@ const source = `
   import ProgressBar from './src/material/progress-bar/ProgressBar';
   import IconMenu from './src/material/menu/IconMenu';
   import MenuItem from './src/material/menu/MenuItem';
-  import { useTooltip } from './src/material/tooltip/Tooltip';
+  import { useTooltip } from './src/material/tooltip/useTooltip';
   function App() {
     const [name, setName] = useState('Ada');
     const [destination, setDestination] = useState('Madrid');

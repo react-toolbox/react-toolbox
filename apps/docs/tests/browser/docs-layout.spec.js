@@ -23,8 +23,10 @@ test('documentation preserves content and outer frame keylines across responsive
     expect(breadcrumb.x).toBe(article.x);
     const footerInset = viewport.width >= 600 && viewport.height >= 600 ? 24 : 16;
     expect(footerCredit.x).toBe((viewport.width > 1024 ? 256 : 0) + footerInset);
-    expect(await page.evaluate(() => document.documentElement.scrollWidth), `${viewport.width}×${viewport.height}`)
-      .toBe(viewport.width);
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth),
+      `${viewport.width}×${viewport.height}`,
+    ).toBe(viewport.width);
 
     if (viewport.width <= 1024) {
       const inset = viewport.width >= 600 && viewport.height >= 600 ? 24 : 16;
@@ -48,8 +50,10 @@ test('documentation preserves content and outer frame keylines across responsive
         const tocHeading = await toc.getByText('On this page', { exact: true }).boundingBox();
         expect(tocHeading.y).toBe(breadcrumb.y);
         expect(tocHeading.height).toBe(breadcrumb.height);
-        const firstSidebarLink = await page.getByRole('navigation', { name: 'Documentation sidebar' })
-          .getByRole('link', { name: 'Introduction', exact: true }).boundingBox();
+        const firstSidebarLink = await page
+          .getByRole('navigation', { name: 'Documentation sidebar' })
+          .getByRole('link', { name: 'Introduction', exact: true })
+          .boundingBox();
         expect((await toc.getByRole('link').first().boundingBox()).y).toBe(firstSidebarLink.y);
       }
     }
@@ -119,4 +123,42 @@ test('every table of contents link stays reachable in a short viewport', async (
   await expect(lastLink).toBeInViewport({ ratio: 1 });
   await lastLink.click();
   await expect(page.getByRole('heading', { name: 'Material guidelines', exact: true })).toBeInViewport();
+});
+
+test('mobile navigation releases focus and scroll lock when the permanent sidebar appears', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/docs');
+  await page.getByRole('button', { name: 'Browse documentation' }).click();
+  const drawer = page.getByRole('dialog', { name: 'Documentation navigation' });
+  await expect(drawer).toBeVisible();
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await expect(drawer).toBeHidden();
+  await expect(page.locator('#docs-content')).toBeFocused();
+  await expect(page.getByRole('navigation', { name: 'Documentation sidebar' })).toBeVisible();
+  await expect(page.locator('body')).not.toHaveAttribute('data-scroll-locked');
+});
+
+test('modal navigation and dialogs cover the fixed documentation header', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/docs/components/dialog');
+  const header = page.locator('header[data-react-toolbox="app-bar"]');
+  const headerLayer = await header.evaluate((element) => Number(getComputedStyle(element).zIndex));
+  for (const [button, name, wrapper] of [
+    ['Browse documentation', 'Documentation navigation', '.rt-drawer-wrapper'],
+    ['Open dialog', 'Save this idea?', '.rt-dialog-wrapper'],
+  ]) {
+    await page.getByRole('button', { name: button, exact: true }).click();
+    const dialog = page.getByRole('dialog', { name, exact: true });
+    await expect(dialog).toBeVisible();
+    const modalLayer = await page.locator(wrapper).evaluate((element) => Number(getComputedStyle(element).zIndex));
+    expect(modalLayer).toBeGreaterThan(headerLayer);
+    const overlay = page.locator(`${wrapper} .rt-overlay-overlay`);
+    await expect(overlay).toHaveCSS('opacity', '1');
+    const backdrop = await overlay.boundingBox();
+    const bar = await header.boundingBox();
+    expect(backdrop.y).toBeLessThanOrEqual(bar.y);
+    expect(backdrop.y + backdrop.height).toBeGreaterThanOrEqual(bar.y + bar.height);
+    await page.keyboard.press('Escape');
+    await expect(dialog).toBeHidden();
+  }
 });

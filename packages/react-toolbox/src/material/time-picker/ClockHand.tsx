@@ -2,7 +2,6 @@
 import './tokens.css';
 
 import { cn } from '../foundations/styles/cn';
-import type { TimePickerClassNames } from './types';
 
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { angle360FromPositions } from './geometry';
@@ -22,8 +21,6 @@ export interface ClockHandProps {
   onMove?: (angle: number, radius: number) => void;
   onMoved?: () => void;
   step: number;
-  /** Classes for the component's rendered parts. */
-  classNames?: TimePickerClassNames;
   ref?: React.Ref<ClockHandHandle>;
 }
 export default function ClockHand({
@@ -33,7 +30,6 @@ export default function ClockHand({
   onMove,
   onMoved,
   step,
-  classNames,
   ref,
 }: ClockHandProps) {
   const knob = useRef<HTMLDivElement>(null);
@@ -115,7 +111,6 @@ export default function ClockHand({
         'rt-time-picker-hand',
         'bg-(--clock-primary-color) bottom-[50%] block left-[50%] ml-[calc(-1*var(--clock-hand-width)/2)] absolute origin-[50%_100%] w-(--clock-hand-width)',
         "[&::before]:bg-(--clock-primary-color) [&::before]:rounded-[50%] [&::before]:bottom-0 [&::before]:[content:''] [&::before]:h-(--clock-hand-dot-size) [&::before]:left-[50%] [&::before]:mb-[calc(-1*var(--clock-hand-dot-size)/2)] [&::before]:ml-[calc(-1*var(--clock-hand-dot-size)/2)] [&::before]:absolute [&::before]:w-(--clock-hand-dot-size)",
-        classNames?.hand,
       )} ${className}`}
       style={{ height: length - knobWidth / 2, transform: `rotate(${angle}deg)` }}
     >
@@ -127,7 +122,6 @@ export default function ClockHand({
           '[.rt-time-picker-hand.rt-time-picker-small>&]:bg-(--clock-primary-hover-color)',
           "[.rt-time-picker-hand.rt-time-picker-small>&::after]:[background:var(--clock-primary-color)] [.rt-time-picker-hand.rt-time-picker-small>&::after]:rounded-[50%] [.rt-time-picker-hand.rt-time-picker-small>&::after]:[content:''] [.rt-time-picker-hand.rt-time-picker-small>&::after]:h-(--clock-knob-small-size) [.rt-time-picker-hand.rt-time-picker-small>&::after]:left-[50%] [.rt-time-picker-hand.rt-time-picker-small>&::after]:ml-[calc(-1*var(--clock-knob-small-size)/2)] [.rt-time-picker-hand.rt-time-picker-small>&::after]:mt-[calc(-1*var(--clock-knob-small-size)/2)] [.rt-time-picker-hand.rt-time-picker-small>&::after]:absolute [.rt-time-picker-hand.rt-time-picker-small>&::after]:top-[50%] [.rt-time-picker-hand.rt-time-picker-small>&::after]:w-(--clock-knob-small-size)",
           "[.rt-time-picker-hand.rt-time-picker-small>&::before]:[background:var(--clock-primary-color)] [.rt-time-picker-hand.rt-time-picker-small>&::before]:bottom-0 [.rt-time-picker-hand.rt-time-picker-small>&::before]:[content:''] [.rt-time-picker-hand.rt-time-picker-small>&::before]:h-[calc(var(--clock-knob-size)-var(--clock-knob-small-size))] [.rt-time-picker-hand.rt-time-picker-small>&::before]:left-[50%] [.rt-time-picker-hand.rt-time-picker-small>&::before]:ml-[calc(-1*var(--clock-hand-width)/2)] [.rt-time-picker-hand.rt-time-picker-small>&::before]:absolute [.rt-time-picker-hand.rt-time-picker-small>&::before]:w-(--clock-hand-width)",
-          classNames?.knob,
         )}
       />
     </div>

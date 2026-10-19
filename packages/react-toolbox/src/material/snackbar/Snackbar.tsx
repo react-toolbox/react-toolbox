@@ -2,7 +2,6 @@
 import './tokens.css';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { SnackbarClassNames } from './types';
 
 import {
   useCallback,
@@ -17,20 +16,20 @@ import {
 import { cn } from '../foundations/styles/cn';
 import { Button } from '../button';
 import Portal from '../foundations/portal/Portal';
+import { usePortalTheme } from '../foundations/portal/usePortalTheme';
 import usePresence from '../foundations/motion/usePresence';
+import useMergedRefs from '../foundations/portal/useMergedRefs';
 
-export type { SnackbarClassNames } from './types';
 export interface SnackbarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'> {
   action?: string;
   active?: boolean;
+  /** Override exit retention in milliseconds; by default it follows the surface animation. */
   delay?: number;
   label?: ReactNode;
   onClick?: MouseEventHandler<HTMLElement>;
   onTimeout?: () => void;
   timeout?: number;
   type?: 'accept' | 'cancel' | 'warning';
-  /** Classes for the component's rendered parts. */
-  classNames?: SnackbarClassNames;
   ref?: Ref<HTMLDivElement>;
 }
 interface Clock {
@@ -42,14 +41,13 @@ interface Clock {
 export function Snackbar({
   action,
   active = false,
-  delay = 500,
+  delay,
   children,
   label,
   onClick,
   onTimeout,
   timeout = 0,
   type,
-  classNames,
   className,
   onMouseEnter,
   onMouseLeave,
@@ -58,7 +56,9 @@ export function Snackbar({
   ref,
   ...attributes
 }: SnackbarProps) {
-  const { present, visible } = usePresence(active, delay);
+  const { present, visible, motionRef } = usePresence<HTMLDivElement>(active, delay);
+  const surfaceRef = useMergedRefs(ref, motionRef);
+  const theme = usePortalTheme(attributes.style);
   const latest = useRef({ visible, timeout, onTimeout });
   latest.current = { visible, timeout, onTimeout };
   const clock = useRef<Clock>({ remaining: 0, started: 0, pauses: new Set() });
@@ -149,12 +149,14 @@ export function Snackbar({
     <Portal>
       <div
         {...attributes}
-        ref={ref}
+        {...theme}
+        style={{ ...theme.style, ...attributes.style }}
+        ref={surfaceRef}
         data-react-toolbox="snackbar"
         data-multiline={multiline || undefined}
         className={cn(
           'rt-snackbar-snackbar',
-          'items-center bg-(--snackbar-background-color) rounded-none bottom-0 text-(--snackbar-color) flex left-0 m-0 min-h-[calc(4.8*var(--unit))] p-[var(--snackbar-vertical-offset)_var(--snackbar-horizontal-offset)] fixed right-0 [transition:transform_var(--animation-duration)_var(--animation-curve-default)] z-(--z-index-higher)',
+          'items-center bg-(--snackbar-background-color) rounded-none bottom-0 text-(--snackbar-color) flex left-0 m-0 min-h-[calc(4.8*var(--unit))] p-[var(--snackbar-vertical-offset)_var(--snackbar-horizontal-offset)] fixed right-0 [transition:transform_var(--animation-duration-exit)_var(--animation-curve-fast-out-linear-in)] z-(--z-index-higher)',
           '[box-shadow:var(--shadow-6p)]',
           materialRoot,
           materialDescendants,
@@ -162,17 +164,19 @@ export function Snackbar({
           '[@media_screen_and_(max-width:_599px)]:[&[data-multiline]]:min-h-[calc(8*var(--unit))]',
           '[@media_screen_and_(min-width:_600px)]:rounded-(--snackbar-border-radius) [@media_screen_and_(min-width:_600px)]:bottom-(--snackbar-horizontal-offset) [@media_screen_and_(min-width:_600px)]:left-(--snackbar-horizontal-offset) [@media_screen_and_(min-width:_600px)]:right-auto [@media_screen_and_(min-width:_600px)]:min-w-[calc(28.8*var(--unit))] [@media_screen_and_(min-width:_600px)]:max-w-[min(calc(56.8*var(--unit)),calc(100vw-4.8*var(--unit)))]',
           '[@media_screen_and_(min-width:_600px)]:[&:not(.rt-snackbar-active)]:transform-[translateY(calc(100%+var(--snackbar-horizontal-offset)))]',
-          classNames?.snackbar,
           type &&
             (type === 'accept'
-              ? cn('rt-snackbar-accept', classNames?.accept)
+              ? 'rt-snackbar-accept'
               : type === 'cancel'
-                ? cn('rt-snackbar-cancel', classNames?.cancel)
+                ? 'rt-snackbar-cancel'
                 : type === 'warning'
-                  ? cn('rt-snackbar-warning', classNames?.warning)
+                  ? 'rt-snackbar-warning'
                   : undefined),
           visible &&
-            cn('rt-snackbar-active', '[.rt-snackbar-snackbar&]:transform-[translateY(0%)]', classNames?.active),
+            cn(
+              'rt-snackbar-active',
+              '[.rt-snackbar-snackbar&]:transform-[translateY(0%)] [.rt-snackbar-snackbar&]:duration-(--animation-duration-enter) [.rt-snackbar-snackbar&]:ease-(--animation-curve-linear-out-slow-in)',
+            ),
           className,
         )}
         role={attributes.role || 'status'}
@@ -200,11 +204,7 @@ export function Snackbar({
       >
         <span
           ref={setLabelNode}
-          className={cn(
-            'rt-snackbar-label',
-            'grow text-(length:--font-size-small) leading-[calc(2*var(--unit))]',
-            classNames?.label,
-          )}
+          className={cn('rt-snackbar-label', 'grow text-(length:--font-size-small) leading-[calc(2*var(--unit))]')}
         >
           {label}
           {children}
@@ -219,7 +219,6 @@ export function Snackbar({
               '[.rt-snackbar-snackbar.rt-snackbar-accept_&]:text-(--snackbar-color-accept)',
               '[.rt-snackbar-snackbar.rt-snackbar-warning_&]:text-(--snackbar-color-warning)',
               '[.rt-snackbar-snackbar.rt-snackbar-cancel_&]:text-(--snackbar-color-cancel)',
-              classNames?.button,
             )}
             label={action}
             onClick={onClick}

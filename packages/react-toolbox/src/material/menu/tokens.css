@@ -1,8 +1,8 @@
 @layer theme {
   /* menu */
   :root {
-    --menu-expand-duration: 0.3s;
-    --menu-fade-duration: 0.2s;
+    --menu-expand-duration: var(--animation-duration-enter);
+    --menu-fade-duration: var(--animation-duration-exit);
     --menu-ripple-delay: 0.3s;
     --menu-background-color: var(--rt-color-white);
     --menu-padding: calc(0.8 * var(--unit)) 0;
@@ -17,6 +17,14 @@
     --menu-divider-height: calc(0.8 * var(--unit));
     --menu-icon-size: calc(2.3 * var(--unit));
     --menu-icon-ripple-duration: 650ms;
+  }
+  [data-react-toolbox-tokens~="--animation-duration"],
+  [data-react-toolbox-tokens~="--animation-duration-enter"] {
+    --menu-expand-duration: var(--animation-duration-enter);
+  }
+  [data-react-toolbox-tokens~="--animation-duration"],
+  [data-react-toolbox-tokens~="--animation-duration-exit"] {
+    --menu-fade-duration: var(--animation-duration-exit);
   }
   [data-react-toolbox-tokens~="--rt-color-white"] {
     --menu-background-color: var(--rt-color-white);

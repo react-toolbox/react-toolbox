@@ -31,7 +31,6 @@ export function ListItem({
   rightIcon,
   selectable: suppliedSelectable,
   primaryAction,
-  classNames,
   to,
   onClick,
   onMouseDown,
@@ -52,12 +51,9 @@ export function ListItem({
   const ink = useRipple({
     disabled,
     centered: rippleCentered,
-    className: rippleClassName,
+    className: cn('rt-list-ripple', '[.rt-list-listItem_&]:text-(--rt-color-text-secondary)', rippleClassName),
     multiple: rippleMultiple,
     spread: rippleSpread,
-    classNames: {
-      ripple: cn('rt-list-ripple', '[.rt-list-listItem_&]:text-(--rt-color-text-secondary)', classNames?.ripple),
-    },
     ripple,
     onRippleEnded,
   });
@@ -91,17 +87,16 @@ export function ListItem({
   ) : ordinaryChildren.length === 0 ? undefined : ordinaryChildren.every(
       (child) => typeof child === 'string' || typeof child === 'number',
     ) ? (
-    <ListItemContent classNames={classNames} caption={caption ?? ordinaryChildren} legend={legend} />
+    <ListItemContent caption={caption ?? ordinaryChildren} legend={legend} />
   ) : !caption && !legend && ordinaryChildren.length === 1 ? (
     ordinaryChildren[0]
   ) : (
-    <ListItemContent classNames={classNames} caption={caption} legend={legend}>
+    <ListItemContent caption={caption} legend={legend}>
       {ordinaryChildren}
     </ListItemContent>
   );
   const content = (
     <ListItemLayout
-      classNames={classNames}
       avatar={avatar}
       caption={caption}
       disabled={disabled}
@@ -133,7 +128,7 @@ export function ListItem({
         'rt-list-listItem',
         'relative',
         "[&>[data-react-toolbox='ripple']]:overflow-hidden",
-        classNames?.listItem,
+
         className,
       )}
       onClickCapture={(event) => {

@@ -143,10 +143,7 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
     'all',
   ];
   const groups = new Map(
-    names.map((name) => [
-      name,
-      { files: [], registryDependencies: new Set(), dependencies: new Set(), devDependencies: new Set() },
-    ]),
+    names.map((name) => [name, { files: [], registryDependencies: new Set(), dependencies: new Set() }]),
   );
   const versions = { ...pkg.dependencies, ...pkg.devDependencies, ...pkg.peerDependencies };
   const dependency = (group, name) => {
@@ -155,8 +152,6 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
     if (name === pkg.name) throw new Error('A copied component must never depend on the react-toolbox package');
     if (!versions[name]) throw new Error(`Missing declared package version for ${name}`);
     group.dependencies.add(`${name}@${versions[name]}`);
-    if (name === 'react-transition-group')
-      group.devDependencies.add(`@types/react-transition-group@${versions['@types/react-transition-group']}`);
   };
   const localImports = new Map();
   for (const file of files) {
@@ -270,7 +265,7 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
           ? { css: animationCss.get(name) }
           : {}),
       dependencies: [...group.dependencies].sort(),
-      devDependencies: [...group.devDependencies].sort(),
+      devDependencies: [],
       registryDependencies: [...group.registryDependencies]
         .sort()
         .map((dependency) => new URL(`${dependency}.json`, base).href),

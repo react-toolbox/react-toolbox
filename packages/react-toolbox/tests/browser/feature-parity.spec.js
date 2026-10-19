@@ -13,9 +13,9 @@ import { Dropdown } from './src/material/dropdown';
 import { Slider } from './src/material/slider';
 import { Tabs, Tab } from './src/material/tabs';
 import { IconMenu, MenuCheckboxItem, MenuRadioGroup, MenuRadioItem } from './src/material/menu';
-import { Tooltip } from './src/material/tooltip';
-const HintButton = Tooltip(Button);
+import { TooltipRoot, TooltipTrigger, TooltipPortal, TooltipContent, useTooltip } from './src/material/tooltip';
 function App() {
+  const menuTooltip = useTooltip({ tooltip: 'Change display settings' });
   const [saved, setSaved] = useState('');
   const [commit, setCommit] = useState(40);
   return <main style={{ margin: 32, width: 420 }}>
@@ -37,19 +37,23 @@ function App() {
       { value: 'jp', label: 'Japan', group: 'Asia' },
       { value: 'cn', label: 'China', group: 'Asia', disabled: true },
     ]} />
-    <IconMenu trigger={<HintButton asChild tooltip="Change display settings" tooltipDelay={0}><button type="button">Display options</button></HintButton>}>
+    <IconMenu trigger={<Button asChild {...menuTooltip.triggerProps}><button type="button">Display options</button></Button>}>
       <MenuCheckboxItem caption="Toolbar" defaultChecked />
       <MenuRadioGroup aria-label="Density" defaultValue="comfortable">
         <MenuRadioItem value="comfortable" caption="Comfortable" />
         <MenuRadioItem value="compact" caption="Compact" />
       </MenuRadioGroup>
     </IconMenu>
-    <Tabs defaultIndex={0} activationMode="manual" hideMode="display" aria-label="Settings">
-      <Tab label="Profile"><input aria-label="Display name" defaultValue="Ada" /></Tab>
-      <Tab label="Notifications">Notifications panel</Tab>
+    {menuTooltip.tooltip}
+    <Tabs defaultValue="profile" activationMode="manual" hideMode="display" aria-label="Settings">
+      <Tab value="profile" label="Profile"><input aria-label="Display name" defaultValue="Ada" /></Tab>
+      <Tab value="notifications" label="Notifications">Notifications panel</Tab>
     </Tabs>
     <Slider dir="rtl" defaultValue={25} step={1} aria-label="RTL volume" />
-    <HintButton asChild tooltip="Go to the destination" tooltipDelay={0}><a href="#destination">Router destination</a></HintButton>
+    <TooltipRoot delayDuration={0}>
+      <TooltipTrigger asChild><Button asChild><a href="#destination">Router destination</a></Button></TooltipTrigger>
+      <TooltipPortal><TooltipContent>Go to the destination</TooltipContent></TooltipPortal>
+    </TooltipRoot>
   </main>;
 }
 createRoot(document.getElementById('root')).render(<App />);

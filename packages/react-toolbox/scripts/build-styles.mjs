@@ -1,5 +1,5 @@
 import { build } from 'esbuild';
-import { copyFile, glob, mkdir, readFile, writeFile } from 'node:fs/promises';
+import { copyFile, glob, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import postcss from 'postcss';
 import tailwind from '@tailwindcss/postcss';
@@ -35,6 +35,16 @@ await writeFile(
 await writeFile(path.join(root, 'dist/css.d.mts'), 'export {};\n');
 console.log('Built standalone CSS, Tailwind integration, and optional shadcn theme bridge.');
 
+/** Prune deleted source modules after emission without removing styles used by the running docs app. */
+const sourceModules = new Set();
+for await (const file of glob(['src/**/*.ts', 'src/**/*.tsx'], { cwd: root, exclude: ['src/**/__tests__/**'] })) {
+  sourceModules.add(file.slice('src/'.length).replace(/\.tsx?$/, ''));
+}
+for await (const file of glob(['dist/**/*.js', 'dist/**/*.js.map', 'dist/**/*.d.ts'], { cwd: root })) {
+  const module = file.slice('dist/'.length).replace(/\.(?:js(?:\.map)?|d\.ts)$/, '');
+  if (!sourceModules.has(module)) await rm(path.join(root, file));
+}
+
 // rolldown-plugin-dts with TypeScript 7 currently leaves map comments even when
 // declaration maps are disabled. Do not publish editor links to absent files.
 for await (const file of glob('dist/**/*.d.ts', { cwd: root })) {
@@ -51,8 +61,16 @@ await writeFile(path.join(root, 'dist/material/foundations/styles/setup.css'), '
 await writeFile(path.join(root, 'dist/material/foundations/styles/shadcn.css'), '@import "../../../shadcn.css";\n');
 
 /** Direct module imports load their family tokens without the global stylesheet. */
+const copiedStyles = new Set();
 for await (const file of glob(['src/material/*/tokens.css', 'src/examples/**/styles.css'], { cwd: root })) {
   const destination = path.join(root, 'dist', file.slice('src/'.length));
   await mkdir(path.dirname(destination), { recursive: true });
   await copyFile(path.join(root, file), destination);
+  copiedStyles.add(destination);
+}
+
+/** Removed families and examples must not leave stale styles in the emitted package. */
+for await (const file of glob(['dist/material/*/tokens.css', 'dist/examples/**/*.css'], { cwd: root })) {
+  const destination = path.join(root, file);
+  if (!copiedStyles.has(destination)) await rm(destination);
 }

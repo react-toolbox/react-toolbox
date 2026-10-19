@@ -17,8 +17,21 @@ test('the docs deployment serves a complete same-origin source registry', async 
   expect(names.has('foundation-forms')).toBe(true);
   expect(names.has('link')).toBe(false);
   expect(names.has('navigation')).toBe(false);
+  expect(names.has('layout')).toBe(false);
+  expect(names.has('foundation-layout')).toBe(false);
+  expect(names.has('example-app-shell')).toBe(false);
   expect((await request.get('/r/link.json')).status()).toBe(404);
   expect((await request.get('/r/navigation.json')).status()).toBe(404);
+  for (const path of [
+    '/r/layout.json',
+    '/r/foundation-layout.json',
+    '/docs/components/layout',
+    '/layout-demo',
+    '/app-shell',
+    '/r/example-app-shell.json',
+  ]) {
+    expect((await request.get(path)).status(), path).toBe(404);
+  }
   for (const entry of catalog.items) {
     for (const dependency of entry.registryDependencies) {
       expect(dependency.startsWith(`${baseURL}/r/`)).toBeTruthy();

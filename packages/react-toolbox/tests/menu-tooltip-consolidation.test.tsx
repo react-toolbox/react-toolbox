@@ -3,7 +3,7 @@ import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-libra
 import userEvent from '@testing-library/user-event';
 import { afterEach, expect, it, vi } from 'vitest';
 import { IconMenu, Menu, MenuItem } from '../src/material/menu';
-import { Tooltip, useTooltip } from '../src/material/tooltip';
+import { useTooltip } from '../src/material/tooltip';
 
 afterEach(() => {
   cleanup();
@@ -110,33 +110,28 @@ it('does not restore a standalone popup over an outside input', async () => {
 });
 
 it('connects the tooltip hook to the primitive while preserving external descriptions and refs', async () => {
+  const ref = createRef<HTMLButtonElement>();
   function Example() {
     const behavior = useTooltip({ tooltip: 'Help text', 'aria-describedby': 'existing' });
     return (
       <>
         <span id="existing">Existing text</span>
-        <button {...behavior.triggerProps}>Help</button>
+        <button ref={ref} {...behavior.triggerProps}>
+          Help
+        </button>
         {behavior.tooltip}
       </>
     );
   }
   render(<Example />);
   const trigger = screen.getByRole('button', { name: 'Help' });
+  expect(ref.current).toBe(trigger);
   await userEvent.tab();
   expect(await screen.findByRole('tooltip')).toHaveTextContent('Help text');
   expect(trigger).toHaveAccessibleDescription('Existing text Help text');
   await userEvent.keyboard('{Escape}');
   await waitFor(() => expect(screen.queryByRole('tooltip')).toBeNull());
   expect(trigger).toHaveFocus();
-  const Button = Tooltip('button');
-  const ref = createRef<HTMLButtonElement>();
-  cleanup();
-  render(
-    <Button ref={ref} tooltip="Details">
-      More
-    </Button>,
-  );
-  expect(ref.current).toBe(screen.getByRole('button', { name: 'More' }));
 });
 
 it('retains standalone item activation and cancellation without requiring a popup', async () => {
@@ -164,13 +159,17 @@ it('retains standalone item activation and cancellation without requiring a popu
 
 it('uses the shared long-press policy without activating the trigger', () => {
   vi.useFakeTimers();
-  const Button = Tooltip('button');
   const click = vi.fn();
-  render(
-    <Button tooltip="Help text" onClick={click}>
-      Help
-    </Button>,
-  );
+  function Example() {
+    const behavior = useTooltip({ tooltip: 'Help text', onClick: click });
+    return (
+      <>
+        <button {...behavior.triggerProps}>Help</button>
+        {behavior.tooltip}
+      </>
+    );
+  }
+  render(<Example />);
   const trigger = screen.getByRole('button', { name: 'Help' });
   fireEvent.pointerDown(trigger, { pointerType: 'touch', clientX: 0, clientY: 0 });
   act(() => vi.advanceTimersByTime(499));

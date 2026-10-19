@@ -33,12 +33,12 @@ const source = `
   import RadioGroup from './src/material/radio/RadioGroup';
   import Tabs from './src/material/tabs/Tabs';
   import Tab from './src/material/tabs/Tab';
-  import { useTooltip } from './src/material/tooltip/Tooltip';
+  import { useTooltip } from './src/material/tooltip/useTooltip';
   function App() {
     const [submitted, setSubmitted] = useState('');
     const [country, setCountry] = useState('');
     const [queries, setQueries] = useState(0);
-    const [tab, setTab] = useState(0);
+    const [tab, setTab] = useState('First');
     const tip = useTooltip({ tooltip: 'This description remains available while you hover it.', tooltipPosition: 'right', tooltipDelay: 150 });
     return <main style={{ margin: 32, maxWidth: 400 }}>
       <h1>Component quality</h1>
@@ -63,8 +63,8 @@ const source = `
       <output aria-label="Selected country">{country}</output>
       <output aria-label="Query changes">{queries}</output>
       {window.multipleExamples && <><MultipleSelection compound={false}/><MultipleSelection compound/></>}
-      <div style={{ width: 280 }}><Tabs dir="rtl" index={tab} onChange={setTab}>
-        {['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth'].map(label => <Tab key={label} label={label}>{label} panel</Tab>)}
+      <div style={{ width: 280 }}><Tabs dir="rtl" value={tab} onValueChange={setTab}>
+        {['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth'].map(label => <Tab key={label} value={label} label={label}>{label} panel</Tab>)}
       </Tabs></div>
       <Avatar image="data:image/png;base64,broken" alt="Unavailable photo" title="Ada" />
       <Avatar image="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='indigo'/%3E%3C/svg%3E" alt="Loaded photo" title="Loaded" />

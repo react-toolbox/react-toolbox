@@ -38,7 +38,7 @@ body:has(.documentation-shell) {
   font-family: var(--preferred-font);
 }
 
-/* Layout restores native defaults. Documentation uses Tailwind's defaults up to each component boundary. */
+/* Documentation uses Tailwind's defaults up to each component boundary. */
 @layer docs-base {
   @scope (.documentation-content) to ([data-react-toolbox], [class^="rt-"], [class*=" rt-"]) {
     :where(*) {
@@ -70,6 +70,16 @@ body:has(.documentation-shell) {
       background-color: transparent;
       opacity: 1;
     }
+
+    :where(p, li) > code {
+      border-radius: 3px;
+      background: color-mix(in srgb, var(--rt-color-text) 5%, transparent);
+      padding: 0.125em 0.375em;
+      font-size: 0.9em;
+      line-height: inherit;
+      overflow-wrap: anywhere;
+      box-decoration-break: clone;
+    }
   }
 }
 
@@ -81,16 +91,6 @@ body:has(.documentation-shell) {
   .documentation-shell :where(a, pre, [role="region"]):focus-visible {
     outline: 2px solid var(--rt-color-primary);
     outline-offset: 2px;
-  }
-
-  .documentation-shell :where(p, li) > code {
-    border-radius: var(--button-border-radius);
-    background: color-mix(in srgb, var(--rt-color-text) 5%, transparent);
-    padding: 0.125em 0.25em;
-    font-size: 0.9em;
-    line-height: inherit;
-    overflow-wrap: anywhere;
-    box-decoration-break: clone;
   }
 }
 
@@ -344,10 +344,6 @@ body:has(.documentation-shell) {
   font-size: 12px;
   padding: 12px 0 40px;
   text-align: center;
-}
-
-.layout-demo-content {
-  padding: 32px;
 }
 
 @media (max-width: 640px) {

@@ -1,6 +1,6 @@
 'use client';
 
-import type { TimePickerClassNames, TimePickerLabels } from './types';
+import type { TimePickerLabels } from './types';
 
 import React, { useEffect, useId, useRef, useState } from 'react';
 import Button from '../button/Button';
@@ -13,10 +13,8 @@ import type { TimeFormat } from '../foundations/date-time/time';
 import { isTimeUnavailable, type TimeConstraints } from './constraints';
 export type { TimeConstraints } from './constraints';
 import TimePickerDialog, { type TimePickerDialogProps, type TimePickerSelectEvent } from './TimePickerDialog';
-export type { TimePickerClassNames, TimePickerLabels } from './types';
-export interface TimePickerProps
-  extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange' | 'classNames'>,
-    TimeConstraints {
+export type { TimePickerLabels } from './types';
+export interface TimePickerProps extends Omit<InputProps, 'value' | 'defaultValue' | 'onChange'>, TimeConstraints {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -35,9 +33,8 @@ export interface TimePickerProps
   onDismiss?: () => void;
   onEscKeyDown?: TimePickerDialogProps['onEscKeyDown'];
   onOverlayClick?: TimePickerDialogProps['onOverlayClick'];
-  readonly?: boolean;
-  /** Classes for the component's rendered parts. */
-  classNames?: TimePickerClassNames;
+  /** Keep the value focusable and submitted while preventing edits and validation. */
+  readOnly?: boolean;
   value?: Date | null;
 }
 export function TimePicker({
@@ -66,8 +63,7 @@ export function TimePicker({
   onEscKeyDown,
   onKeyDown,
   onOverlayClick,
-  readonly,
-  classNames,
+  readOnly,
   value: controlledValue,
   ref,
   ...others
@@ -80,7 +76,7 @@ export function TimePicker({
   const [validationMessage, setValidationMessage] = useState('');
   const inputRef = useMergedRefs(input, ref);
   const [internalOpen, setOpen] = useState(defaultOpen ?? false);
-  const visible = !disabled && !readonly && (controlledOpen ?? internalOpen);
+  const visible = !disabled && !readOnly && (controlledOpen ?? internalOpen);
   const setVisible = (next: boolean) => {
     if (controlledOpen === undefined) setOpen(next);
     if (next !== visible) onOpenChange?.(next);
@@ -106,7 +102,7 @@ export function TimePicker({
     native.current?.setCustomValidity(unavailable ? (labels?.unavailable ?? 'Choose an available time.') : '');
   }, [formattedValue, unavailable, labels?.unavailable]);
   return (
-    <div data-react-toolbox="time-picker" className={classNames?.container}>
+    <div data-react-toolbox="time-picker">
       <input
         ref={native}
         type="text"
@@ -115,7 +111,7 @@ export function TimePicker({
         aria-hidden="true"
         form={others.form}
         disabled={disabled}
-        readOnly={readonly}
+        readOnly={readOnly}
         required={required}
         value={formattedValue}
         onChange={() => {}}
@@ -131,42 +127,34 @@ export function TimePicker({
       <Input
         {...others}
         ref={inputRef}
-        className={cn('rt-time-picker-input', classNames?.input, inputClassName)}
+        className={cn('rt-time-picker-input', !readOnly && '[&>input:not(:disabled)]:cursor-pointer', inputClassName)}
         disabled={disabled}
         error={error || validationMessage}
         required={required}
-        role={readonly ? undefined : 'combobox'}
-        aria-haspopup={readonly ? undefined : 'dialog'}
+        role={readOnly ? undefined : 'combobox'}
+        aria-haspopup={readOnly ? undefined : 'dialog'}
         aria-controls={visible ? dialogId : undefined}
-        aria-expanded={readonly ? undefined : visible}
+        aria-expanded={readOnly ? undefined : visible}
         onKeyDown={(event) => {
           onKeyDown?.(event);
           if (
             !event.defaultPrevented &&
             !event.nativeEvent.isComposing &&
             !disabled &&
-            !readonly &&
+            !readOnly &&
             (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown')
           )
             open(event);
         }}
         onClick={(event) => {
           onClick?.(event);
-          if (!event.defaultPrevented && !disabled && !readonly) open(event);
-        }}
-        classNames={{
-          input: cn('rt-time-picker-input', classNames?.input),
-          inputElement: cn(
-            'rt-time-picker-inputElement',
-            !readonly && '[.rt-time-picker-input:not(.rt-time-picker-disabled)>&]:cursor-pointer',
-            classNames?.inputElement,
-          ),
+          if (!event.defaultPrevented && !disabled && !readOnly) open(event);
         }}
         readOnly
         type="text"
         value={formattedValue}
       />
-      {clearable && value && !disabled && !readonly ? (
+      {clearable && value && !disabled && !readOnly ? (
         <Button
           type="button"
           primary
@@ -204,7 +192,6 @@ export function TimePicker({
           onChange?.(next, event);
           setVisible(false);
         }}
-        classNames={classNames}
         value={value ?? undefined}
       />
     </div>

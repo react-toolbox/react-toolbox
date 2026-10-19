@@ -10,7 +10,7 @@ export default function SpacingTable() {
       tabIndex={0}
       className="overflow-x-auto rounded-toolbox border border-toolbox-divider"
     >
-      <Table selectable={false} aria-label="Material spacing utilities">
+      <Table aria-label="Material spacing utilities">
         <TableHead>
           <TableCell scope="col">Utility</TableCell>
           <TableCell scope="col" numeric>

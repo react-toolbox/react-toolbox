@@ -16,6 +16,8 @@ export default defineConfig({
   entry: ['src/**/*.ts', 'src/**/*.tsx', '!src/**/__tests__/**'],
   root: 'src',
   outDir: 'dist',
+  /** Next watches these imports; keep them available until replacement output is written. */
+  clean: false,
   platform: 'neutral',
   format: 'esm',
   target: 'es2022',

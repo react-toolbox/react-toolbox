@@ -6,7 +6,7 @@ The [16 October component readiness review](component-review.md) records the lat
 
 This document preserves historical audit findings and validation results. Test counts and CSS/React 16 comparison results belong to the recorded revisions. The completed migration's archived renderers, correction ledgers, and rebuild/comparison tooling were subsequently retired and remain available in Git history. Maintained regression tests check current behavior, Material 1 geometry and motion, themes, accessibility, and installed-source integration directly.
 
-The subsequent 3.0 cleanup supersedes the compatibility commitments below for `theme` slot props, `XxxTheme` slot types, legacy Toolbox `--color-*` aliases, the `ThemeProvider` workspace subpath, and duplicate `active` props on menus and pickers. Use the [current migration guide](../source-registry.md#migrating-to-30) for supported replacements; the audit retains the decisions made at its recorded revisions.
+The subsequent 3.0 cleanup supersedes the compatibility commitments below for `theme` and `classNames` slot maps and types, Ripple/Tooltip decorators, indexed Tabs, DatePicker display strings, legacy Toolbox `--color-*` aliases, the `ThemeProvider` workspace subpath, and duplicate `active` props on menus and pickers. Use the [current migration guide](../source-registry.md#migrating-to-30) for supported replacements; the audit retains the decisions made at its recorded revisions.
 
 ## Component and documentation review — 19 October 2026
 

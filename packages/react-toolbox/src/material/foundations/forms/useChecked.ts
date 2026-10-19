@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, type RefObject } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react';
 import useFormReset from './useFormReset';
 
 /** Native form semantics with controlled or default state and synchronized visuals. */
@@ -10,6 +10,11 @@ export default function useChecked(
   defaultChecked = false,
 ) {
   const [internal, setInternal] = useState(defaultChecked);
+  const value = checked ?? internal;
+  const current = useRef(value);
+  useLayoutEffect(() => {
+    current.current = value;
+  }, [value]);
   useFormReset(input, () => {
     if (checked === undefined) setInternal(input.current?.checked ?? defaultChecked);
   });
@@ -24,5 +29,11 @@ export default function useChecked(
     document.addEventListener('change', sync);
     return () => document.removeEventListener('change', sync);
   }, [checked, input]);
-  return [checked ?? internal, setInternal] as const;
+  /** React restores controlled state before the browser rolls back a cancelled click. */
+  const restoreInput = () => {
+    setTimeout(() => {
+      if (input.current) input.current.checked = current.current;
+    }, 0);
+  };
+  return [value, setInternal, restoreInput] as const;
 }

@@ -1,7 +1,5 @@
 'use client';
 
-import type { TimePickerClassNames } from './types';
-
 import React, { useEffect, useRef, useState } from 'react';
 import { range } from '../foundations/collections/range';
 import type { TimeFormat } from '../foundations/date-time/time';
@@ -18,18 +16,8 @@ export interface ClockHoursProps {
   radius: number;
   selected: number;
   spacing: number;
-  /** Classes for the component's rendered parts. */
-  classNames?: TimePickerClassNames;
 }
-export default function ClockHours({
-  format,
-  onChange,
-  onHandMoved,
-  radius,
-  selected,
-  spacing,
-  classNames,
-}: ClockHoursProps) {
+export default function ClockHours({ format, onChange, onHandMoved, radius, selected, spacing }: ClockHoursProps) {
   const [inner, setInner] = useState(format === '24hr' && selected > 0 && selected <= 12);
   const hand = useRef<ClockHandHandle>(null);
   useEffect(() => setInner(format === '24hr' && selected > 0 && selected <= 12), [selected, format]);
@@ -46,7 +34,6 @@ export default function ClockHours({
         radius={radius}
         twoDigits={is24hr}
         active={is24hr ? selected : selected % 12 || 12}
-        classNames={classNames}
       />
       {is24hr ? (
         <Face
@@ -55,7 +42,6 @@ export default function ClockHours({
           numbers={innerNumbers}
           spacing={spacing}
           radius={radius - spacing * innerSpacing}
-          classNames={classNames}
           active={selected}
         />
       ) : null}
@@ -68,7 +54,6 @@ export default function ClockHours({
           if (is24hr) setInner(nextInner);
           onChange((format === 'ampm' || nextInner ? innerNumbers : outerNumbers)[degrees / step]);
         }}
-        classNames={classNames}
         onMoved={onHandMoved}
         step={step}
       />

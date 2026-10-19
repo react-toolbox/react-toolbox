@@ -234,7 +234,6 @@ function propsFor(module, node, seen = new Set()) {
         required: !member.optional,
         description: documentation(member),
         callback,
-        slots: name === 'classNames' ? literalKeys(module, type) : [],
       });
     }
     return result;
@@ -301,28 +300,13 @@ function apiFor(file, exportName, reference) {
   const resolved = resolveSymbol(reference.file, reference.name);
   if (!resolved) throw new Error(`Could not resolve public export ${exportName} from ${file}`);
   const { module } = resolved;
-  let node = resolved.node;
-  let decoratedProps = null;
-  let kind = /^use[A-Z]/.test(exportName)
-    ? 'hook'
-    : /Factory$/.test(exportName) || exportName === 'Ripple' || exportName === 'Tooltip'
-      ? 'factory'
-      : 'component';
-  if (node.type === 'VariableDeclarator' && node.init?.type === 'CallExpression') {
-    const factory = resolveSymbol(module.file, qualify(node.init.callee));
-    if (!factory) throw new Error(`Unsupported exported factory ${exportName}`);
-    const decorator = factory.node.body.body.find((statement) => statement.type === 'ReturnStatement')?.argument;
-    if (decorator?.type !== 'FunctionExpression') throw new Error(`Unsupported decorator ${exportName}`);
-    node = decorator;
-    decoratedProps = resolveSymbol(module.file, `${exportName}Props`);
-    kind = 'decorator';
-  }
+  const node = resolved.node;
+  const kind = /^use[A-Z]/.test(exportName) ? 'hook' : 'component';
   if (!['FunctionDeclaration', 'ArrowFunctionExpression', 'FunctionExpression'].includes(node.type))
     throw new Error(`Unsupported runtime export ${exportName}: ${node.type}`);
   const type = argumentType(node);
-  const props = decoratedProps ? propsFor(decoratedProps.module, decoratedProps.node) : propsFor(module, type);
-  const behavior = decoratedProps && resolveSymbol(module.file, `use${exportName}`);
-  const defaults = defaultsFor(module, behavior?.node ?? node);
+  const props = propsFor(module, type);
+  const defaults = defaultsFor(module, node);
   const properties = [...props.properties.values()].map((prop) => ({ ...prop, default: defaults[prop.name] ?? null }));
   return {
     name: exportName,
@@ -333,13 +317,12 @@ function apiFor(file, exportName, reference) {
       .replace(/^export\s+/, ''),
     description: documentation(resolved.node),
     source: path.relative(root, module.file).split(path.sep).join('/'),
-    propsType: decoratedProps ? decoratedProps.name : type ? sourceText(module, type) : null,
+    propsType: type ? sourceText(module, type) : null,
     properties,
     nativeProps: [...props.native],
     nativeDefaults: Object.entries(defaults)
       .filter(([name]) => !props.properties.has(name))
       .map(([name, value]) => ({ name, value })),
-    styleSlots: [...new Set(properties.flatMap((prop) => prop.slots))].sort(),
   };
 }
 
@@ -377,5 +360,5 @@ const data = `${JSON.stringify({ schemaVersion: 1, sourceHash: sourceHash.digest
 mkdirSync(path.dirname(output), { recursive: true });
 writeFileSync(output, data);
 console.log(
-  `Documented ${Object.keys(result).length} families, ${Object.values(result).reduce((total, family) => total + family.apis.length, 0)} public components/hooks/factories.`,
+  `Documented ${Object.keys(result).length} families, ${Object.values(result).reduce((total, family) => total + family.apis.length, 0)} public components/hooks.`,
 );

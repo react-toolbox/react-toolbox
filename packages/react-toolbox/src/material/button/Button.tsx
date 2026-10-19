@@ -1,7 +1,6 @@
 'use client';
 
 import { buttonClassName, rippleWrapperClasses, iconClasses } from './styles';
-import { cn } from '../foundations/styles/cn';
 import FontIcon from '../font-icon';
 import { useRipple } from '../ripple';
 import ButtonElement from './ButtonElement';
@@ -17,8 +16,6 @@ export function Button({
   inverse,
   neutral = true,
   primary = false,
-  classNames,
-  flat: _flat,
   floating,
   label,
   mini,
@@ -37,7 +34,7 @@ export function Button({
     className: rippleClassName,
     multiple: rippleMultiple,
     spread: rippleSpread,
-    classNames: { rippleWrapper: cn(rippleWrapperClasses, classNames?.rippleWrapper) },
+    wrapperClassName: rippleWrapperClasses,
     ripple,
     onRippleEnded,
   });
@@ -50,7 +47,6 @@ export function Button({
     neutral,
     primary,
     raised,
-    classNames,
   });
   const element = (
     <ButtonElement
@@ -61,7 +57,7 @@ export function Button({
       ink={ink}
       leading={
         <>
-          {icon ? <FontIcon aria-hidden={true} className={cn(iconClasses, classNames?.icon)} value={icon} /> : null}
+          {icon ? <FontIcon aria-hidden={true} className={iconClasses} value={icon} /> : null}
           {label}
         </>
       }

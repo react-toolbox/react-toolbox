@@ -27,7 +27,6 @@ export function BrowseButton({
   children,
   className = '',
   disabled = false,
-  flat: _flat,
   floating,
   icon,
   inverse,
@@ -39,7 +38,6 @@ export function BrowseButton({
   onChange,
   primary = false,
   raised,
-  classNames,
   inputRef,
   inputProps,
   ripple = true,
@@ -60,7 +58,7 @@ export function BrowseButton({
     className: rippleClassName,
     multiple: rippleMultiple,
     spread: rippleSpread,
-    classNames: { rippleWrapper: cn(rippleWrapperClasses, classNames?.rippleWrapper) },
+    wrapperClassName: rippleWrapperClasses,
     ripple,
     onRippleEnded,
   });
@@ -73,7 +71,6 @@ export function BrowseButton({
     neutral,
     primary,
     raised,
-    classNames,
   });
   return (
     <label
@@ -98,7 +95,7 @@ export function BrowseButton({
         ink.onTouchCancel(event);
       }}
     >
-      {icon ? <FontIcon aria-hidden className={cn(iconClasses, classNames?.icon)} value={icon} /> : null}
+      {icon ? <FontIcon aria-hidden className={iconClasses} value={icon} /> : null}
       <span>{label}</span>
       <input
         {...inputProps}

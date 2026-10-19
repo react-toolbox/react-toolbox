@@ -1,12 +1,9 @@
 'use client';
 import './tokens.css';
 
-import type { ProgressBarClassNames } from './types';
-
 import type { HTMLAttributes, Ref } from 'react';
 import { cn } from '../foundations/styles/cn';
 
-export type { ProgressBarClassNames } from './types';
 export interface ProgressBarProps extends HTMLAttributes<HTMLDivElement> {
   buffer?: number;
   disabled?: boolean;
@@ -14,8 +11,6 @@ export interface ProgressBarProps extends HTMLAttributes<HTMLDivElement> {
   min?: number;
   mode?: 'determinate' | 'indeterminate';
   multicolor?: boolean;
-  /** Classes for the component's rendered parts. */
-  classNames?: ProgressBarClassNames;
   type?: 'linear' | 'circular';
   value?: number;
   ref?: Ref<HTMLDivElement>;
@@ -30,7 +25,6 @@ export function ProgressBar({
   mode = 'indeterminate',
   multicolor = false,
   type = 'linear',
-  classNames,
   value = 0,
   ref,
   ...other
@@ -55,17 +49,15 @@ export function ProgressBar({
           ? cn(
               'rt-progress-bar-linear',
               '[background:var(--progress-track-color)] rtl:transform-[scaleX(-1)] inline-block h-(--progress-height) overflow-hidden relative w-full',
-              classNames?.linear,
             )
           : type === 'circular'
             ? cn(
                 'rt-progress-bar-circular',
                 'inline-block h-[calc(var(--circle-wrapper-width)*1px)] relative transform-[rotate(-90deg)] w-[calc(var(--circle-wrapper-width)*1px)]',
-                classNames?.circular,
               )
             : undefined,
-        !determinate && cn('rt-progress-bar-indeterminate', classNames?.indeterminate),
-        multicolor && cn('rt-progress-bar-multicolor', classNames?.multicolor),
+        !determinate && 'rt-progress-bar-indeterminate',
+        multicolor && 'rt-progress-bar-multicolor',
         className,
       )}
     >
@@ -75,7 +67,6 @@ export function ProgressBar({
             'rt-progress-bar-circle',
             'h-full w-full',
             '[.rt-progress-bar-circular.rt-progress-bar-indeterminate_&]:animate-[rt-progress-bar-circular-indeterminate-bar-rotate_2s_linear_infinite]',
-            classNames?.circle,
           )}
           viewBox="0 0 60 60"
           aria-hidden="true"
@@ -89,7 +80,6 @@ export function ProgressBar({
               '[.rt-progress-bar-circular.rt-progress-bar-indeterminate.rt-progress-bar-multicolor_&]:animate-[rt-progress-bar-circular-indeterminate-bar-dash_1.5s_ease-in-out_infinite,rt-progress-bar-colors_calc(1.5s*4)_ease-in-out_infinite]',
               '[.rt-progress-bar-circular[disabled]_&]:stroke-(--progress-disabled-color)',
               '[.rt-progress-bar-circular.rt-progress-bar-indeterminate.rt-progress-bar-multicolor[disabled]_&]:[animation-name:rt-progress-bar-circular-indeterminate-bar-dash]',
-              classNames?.path,
             )}
             cx="30"
             cy="30"
@@ -113,7 +103,6 @@ export function ProgressBar({
               'bottom-0 left-0 absolute right-0 top-0 transform-[scaleX(0)] origin-[left_center] [transition-duration:var(--animation-duration)] [transition-timing-function:var(--animation-curve-default)] [background-image:linear-gradient(to_right,_rgb(from_var(--progress-secondary-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)),_rgb(from_var(--progress-secondary-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255))),_linear-gradient(to_right,_rgb(from_var(--progress-main-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)),_rgb(from_var(--progress-main-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)))]',
               '[.rt-progress-bar-circular[disabled]_&]:[background-image:linear-gradient(to_right,_rgb(from_var(--progress-secondary-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)),_rgb(from_var(--progress-secondary-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255))),_linear-gradient(to_right,_rgb(from_var(--progress-disabled-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)),_rgb(from_var(--progress-disabled-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)))]',
               '[.rt-progress-bar-linear[disabled]_&]:[background-image:linear-gradient(to_right,_rgb(from_var(--progress-secondary-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)),_rgb(from_var(--progress-secondary-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255))),_linear-gradient(to_right,_rgb(from_var(--progress-disabled-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)),_rgb(from_var(--progress-disabled-color)_r_g_b_/_calc(round(alpha_*_255_+_0.0001)_/_255)))]',
-              classNames?.buffer,
             )}
             style={determinate ? { transform: `scaleX(${ratio(buffer)})` } : undefined}
           />
@@ -125,7 +114,6 @@ export function ProgressBar({
               '[.rt-progress-bar-linear.rt-progress-bar-indeterminate_&]:animate-[rt-progress-bar-linear-indeterminate-bar_1s_linear_infinite] [.rt-progress-bar-linear.rt-progress-bar-indeterminate_&]:origin-[center_center]',
               '[.rt-progress-bar-circular[disabled]_&]:bg-(--progress-disabled-color)',
               '[.rt-progress-bar-linear[disabled]_&]:bg-(--progress-disabled-color)',
-              classNames?.value,
             )}
             style={determinate ? { transform: `scaleX(${progress})` } : undefined}
           />

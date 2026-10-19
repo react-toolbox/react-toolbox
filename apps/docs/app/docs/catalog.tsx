@@ -141,8 +141,8 @@ export const components = [
     note: (
       <>
         Card parts include Material keyline spacing; avoid adding a second layer of padding around them. Give meaningful{' '}
-        <code>CardMedia</code> backgrounds <code>alt</code> text, or pass an image with its own <code>alt</code>.
-        {' '}Use <code>aspectRatio="wide"</code> for 16:9 media. Photo by{' '}
+        <code>CardMedia</code> backgrounds <code>alt</code> text, or pass an image with its own <code>alt</code>. Use{' '}
+        <code>aspectRatio="wide"</code> for 16:9 media. Photo by{' '}
         <a
           href="https://unsplash.com/photos/green-lake-between-trees-with-mountain-background-EBcIEEqpgfI"
           className="text-toolbox-primary underline underline-offset-2"
@@ -150,7 +150,8 @@ export const components = [
           rel="noreferrer"
         >
           Andrew Maranta on Unsplash
-        </a>.
+        </a>
+        .
       </>
     ),
   },
@@ -234,7 +235,7 @@ export const components = [
     code: example(
       'divider',
       'Divider',
-      '<div className="w-full max-w-sm space-y-4">\n  <p>Project details</p>\n  <Divider />\n  <div className="flex items-center gap-4">\n    <span>Private</span>\n    <Divider orientation="vertical" decorative />\n    <span>Updated today</span>\n  </div>\n</div>',
+      '<div className="grid w-full max-w-sm gap-4">\n  <p>Project details</p>\n  <Divider />\n  <div className="flex items-center gap-4">\n    <span>Private</span>\n    <Divider orientation="vertical" decorative />\n    <span>Updated today</span>\n  </div>\n</div>',
     ),
     note: (
       <>
@@ -257,12 +258,8 @@ export const components = [
     ),
     note: (
       <>
-        Use <code>type="right"</code> to enter from the right. For responsive navigation pinned beside content, use{' '}
-        <code>NavDrawer</code> from{' '}
-        <Link href="/docs/components/layout" className="text-toolbox-primary underline underline-offset-2">
-          Layout
-        </Link>
-        .
+        Use <code>type="right"</code> to enter from the right. Compose a drawer with responsive Tailwind layout for
+        application navigation.
       </>
     ),
   },
@@ -317,24 +314,6 @@ export const components = [
       <>
         Use <code>multiline</code> for a text area and <code>error</code> for validation feedback. Setting{' '}
         <code>maxLength</code> also displays a character counter.
-      </>
-    ),
-  },
-  {
-    slug: 'layout',
-    title: 'Layout',
-    description: 'The structure for app bars, navigation drawers, and content panels.',
-    icon: 'dashboard',
-    code: example(
-      'layout',
-      'Layout, Panel',
-      '<Layout className="min-h-48 w-full">\n  <Panel>\n    <div className="p-6">\n      <h2 className="text-xl">Your workspace</h2>\n      <p className="mt-2">A place for everything.</p>\n    </div>\n  </Panel>\n</Layout>',
-    ),
-    note: (
-      <>
-        Compose <code>Panel</code>, <code>NavDrawer</code>, and <code>Sidebar</code> inside <code>Layout</code>. A{' '}
-        <code>pinned</code> drawer reserves space beside the content; <code>permanentAt</code> pins it at a responsive
-        breakpoint. <code>Panel</code> uses document scrolling unless <code>bodyScroll</code> is false.
       </>
     ),
   },
@@ -441,11 +420,11 @@ export const components = [
     title: 'Ripple',
     description: 'Touch feedback that grows from the point of interaction.',
     icon: 'touch_app',
-    code: `'use client';\n\nimport { Ripple } from '@/components/ui/material/ripple';\n\nconst RippleButton = Ripple()('button');\n\nexport default function Example() {\n  return (\n    <RippleButton className="relative overflow-hidden rounded-toolbox bg-toolbox-primary/10 px-8 py-6 text-toolbox-primary">\n      Click anywhere\n    </RippleButton>\n  );\n}`,
+    code: "'use client';\n\nimport { useRipple } from '@/components/ui/material/ripple';\n\nexport default function Example() {\n  const { ripple, ...events } = useRipple();\n  return (\n    <button {...events} className=\"relative overflow-hidden rounded-toolbox bg-toolbox-primary/10 px-8 py-6 text-toolbox-primary\">\n      Click anywhere\n      {ripple}\n    </button>\n  );\n}",
     note: (
       <>
-        Define <code>Ripple</code> decorators outside render; the host needs <code>relative</code> positioning and{' '}
-        <code>overflow-hidden</code>.{' '}
+        Render the ink returned by <code>useRipple</code> inside the host and attach its event handlers. The host needs{' '}
+        <code>relative</code> positioning and <code>overflow-hidden</code>.{' '}
         <Link href="/docs/components/button" className="text-toolbox-primary underline underline-offset-2">
           Buttons
         </Link>{' '}
@@ -458,15 +437,12 @@ export const components = [
     title: 'Sheet',
     description: 'A gesture-driven sheet with snap points and accessible modal behavior.',
     icon: 'vertical_align_top',
-    code: example(
-      'sheet',
-      'SheetRoot, SheetTrigger, SheetPortal, SheetOverlay, SheetContent, SheetTitle, SheetDescription, SheetClose, SheetHandle',
-      '<SheetRoot>\n  <SheetTrigger asChild><Button primary raised>Open sheet</Button></SheetTrigger>\n  <SheetPortal>\n    <SheetOverlay />\n    <SheetContent>\n      <SheetHandle aria-label="Resize sheet" />\n      <div className="p-6">\n        <SheetTitle>Visit notes</SheetTitle>\n        <SheetDescription>Keep the current task visible while you add details.</SheetDescription>\n        <SheetClose asChild><Button primary>Done</Button></SheetClose>\n      </div>\n    </SheetContent>\n  </SheetPortal>\n</SheetRoot>',
-    ),
+    code: "'use client';\n\nimport { useId, useState } from 'react';\nimport { Button } from '@/components/ui/material/button';\nimport {\n  SheetRoot,\n  SheetTrigger,\n  SheetPortal,\n  SheetOverlay,\n  SheetContent,\n  SheetTitle,\n  SheetDescription,\n  SheetClose,\n  SheetHandle,\n} from '@/components/ui/material/sheet';\n\nexport default function Example() {\n  const contentId = useId();\n  const [snapPoint, setSnapPoint] = useState<number | string | null>(0.5);\n  const expanded = snapPoint === 0.9;\n  return (\n    <SheetRoot snapPoints={[0.5, 0.9]} fadeFromIndex={0} activeSnapPoint={snapPoint} setActiveSnapPoint={setSnapPoint}>\n      <SheetTrigger asChild>\n        <Button primary raised>\n          Open visit notes\n        </Button>\n      </SheetTrigger>\n      <SheetPortal>\n        <SheetOverlay />\n        <SheetContent id={contentId}>\n          <SheetHandle />\n          <div className=\"mx-auto min-h-0 w-full max-w-xl overflow-y-auto p-6\">\n            <SheetTitle>Visit notes</SheetTitle>\n            <SheetDescription>\n              Drag the handle or use the resize button to switch between two sheet sizes.\n            </SheetDescription>\n            <p className=\"my-6 text-toolbox-body\">Bring a notebook, a camera, and the latest survey map.</p>\n            <Button\n              primary\n              aria-controls={contentId}\n              aria-expanded={expanded}\n              onClick={() => setSnapPoint(expanded ? 0.5 : 0.9)}\n            >\n              {expanded ? 'Reduce notes' : 'Expand notes'}\n            </Button>\n            <SheetClose asChild>\n              <Button primary>Done</Button>\n            </SheetClose>\n          </div>\n        </SheetContent>\n      </SheetPortal>\n    </SheetRoot>\n  );\n}",
     note: (
       <>
         Use Sheet for dragging and snap points. Use Drawer for a fixed navigation surface. Gesture behavior comes from
-        Vaul and is installed only with this family.
+        Vaul and is installed only with this family. Keep long content in an inner <code>min-h-0 overflow-y-auto</code>{' '}
+        region so it can scroll while the surrounding sheet handles dragging.
       </>
     ),
   },
@@ -530,12 +506,13 @@ export const components = [
     code: example(
       'table',
       'Table, TableHead, TableRow, TableCell',
-      '<Table selectable={false}>\n  <TableHead>\n    <TableCell>Project</TableCell><TableCell>Status</TableCell>\n  </TableHead>\n  <TableRow>\n    <TableCell>Weekend notes</TableCell><TableCell>Active</TableCell>\n  </TableRow>\n  <TableRow>\n    <TableCell>A new idea</TableCell><TableCell>Draft</TableCell>\n  </TableRow>\n</Table>',
+      '<Table>\n  <TableHead>\n    <TableCell>Project</TableCell><TableCell>Status</TableCell>\n  </TableHead>\n  <TableRow>\n    <TableCell>Weekend notes</TableCell><TableCell>Active</TableCell>\n  </TableRow>\n  <TableRow>\n    <TableCell>A new idea</TableCell><TableCell>Draft</TableCell>\n  </TableRow>\n</Table>',
     ),
     note: (
       <>
-        Put <code>TableHead</code> and <code>TableRow</code> directly inside <code>Table</code>. Set{' '}
-        <code>{'selectable={false}'}</code> when rows do not need selection controls.
+        Put <code>TableHead</code> and <code>TableRow</code> directly inside <code>Table</code>. Selection is off by
+        default. Enable it with <code>selectionMode</code> and give each selectable row a stable string{' '}
+        <code>value</code>.
       </>
     ),
   },
@@ -547,12 +524,13 @@ export const components = [
     code: example(
       'tabs',
       'Tabs, Tab',
-      '<Tabs index={index} onChange={setIndex}>\n  <Tab label="Overview"><p className="py-6">The big picture.</p></Tab>\n  <Tab label="Details"><p className="py-6">A closer look.</p></Tab>\n  <Tab label="Unavailable" disabled />\n</Tabs>',
-      'const [index, setIndex] = useState(0);',
+      '<Tabs value={tab} onValueChange={setTab}>\n  <Tab value="overview" label="Overview"><p className="py-6">The big picture.</p></Tab>\n  <Tab value="details" label="Details"><p className="py-6">A closer look.</p></Tab>\n  <Tab value="unavailable" label="Unavailable" disabled />\n</Tabs>',
+      'const [tab, setTab] = useState("overview");',
     ),
     note: (
       <>
-        Each <code>Tab</code> provides its <code>label</code> and panel content. Arrow keys move between enabled tabs.
+        Each <code>Tab</code> provides a stable string <code>value</code>, its <code>label</code>, and panel content.
+        Arrow keys move between enabled tabs.
       </>
     ),
   },
@@ -579,11 +557,12 @@ export const components = [
     title: 'Tooltip',
     description: 'A short explanation that appears on hover or focus.',
     icon: 'info_outline',
-    code: "'use client';\n\nimport { Button } from '@/components/ui/material/button';\nimport { Tooltip } from '@/components/ui/material/tooltip';\n\nconst HintButton = Tooltip(Button);\n\nexport default function Example() {\n  return (\n    <HintButton primary raised label=\"Save idea\"\n      tooltip=\"Keep this idea for later\" />\n  );\n}",
+    code: "'use client';\n\nimport { Button } from '@/components/ui/material/button';\nimport { TooltipRoot, TooltipTrigger, TooltipPortal, TooltipContent } from '@/components/ui/material/tooltip';\n\nexport default function Example() {\n  return (\n    <TooltipRoot delayDuration={0}>\n      <TooltipTrigger asChild>\n        <Button primary raised label=\"Save idea\" />\n      </TooltipTrigger>\n      <TooltipPortal>\n        <TooltipContent>Keep this idea for later</TooltipContent>\n      </TooltipPortal>\n    </TooltipRoot>\n  );\n}",
     note: (
       <>
-        Define <code>Tooltip</code> decorators outside render, or use <code>useTooltip</code>. Keep essential
-        information visible and give the trigger an accessible label independent of its tooltip.
+        Compose <code>TooltipRoot</code>, <code>TooltipTrigger</code>, and <code>TooltipContent</code>, or use{' '}
+        <code>useTooltip</code>. Keep essential information visible and give the trigger an accessible label independent
+        of its tooltip.
       </>
     ),
   },

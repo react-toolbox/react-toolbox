@@ -1,7 +1,7 @@
 'use client';
 import './tokens.css';
 
-import type { DatePickerClassNames, DatePickerLabels } from './types';
+import type { DatePickerLabels } from './types';
 
 import React, { useEffect, useState } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -35,8 +35,6 @@ export interface DatePickerDialogProps extends DateConstraints {
   sundayFirstDayOfWeek?: boolean;
   startYear?: number;
   endYear?: number;
-  /** Classes for the component's rendered parts. */
-  classNames?: DatePickerClassNames;
   value?: Date;
 }
 export default function DatePickerDialog({
@@ -57,7 +55,6 @@ export default function DatePickerDialog({
   sundayFirstDayOfWeek,
   startYear,
   endYear,
-  classNames,
   value,
   ...constraints
 }: DatePickerDialogProps) {
@@ -96,10 +93,10 @@ export default function DatePickerDialog({
     <Dialog
       id={id}
       actions={[
-        { label: cancelLabel, className: cn(buttonClasses, classNames?.button), onClick: onDismiss },
+        { label: cancelLabel, className: buttonClasses, onClick: onDismiss },
         {
           label: okLabel,
-          className: cn(buttonClasses, classNames?.button),
+          className: buttonClasses,
           name,
           onClick: select,
           disabled: isDateDisabled(date, constraints),
@@ -115,7 +112,6 @@ export default function DatePickerDialog({
           '[&&]:grid [&&]:w-[calc(var(--datepicker-dialog-width)+var(--picker-landscape-header-width))] [&&]:grid-cols-[var(--picker-landscape-header-width)_minmax(0,1fr)] [&&]:grid-rows-[1fr_auto] [&&]:overflow-y-auto [&>section]:contents [&>section>header]:col-start-1 [&>section>header]:row-span-2 [&>section>header]:row-start-1 [&>section>:not(header)]:col-start-2 [&>section>:not(header)]:row-start-1 [&>nav]:col-start-2 [&>nav]:row-start-2',
         layout === 'responsive' &&
           '[@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:grid [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:w-[calc(var(--datepicker-dialog-width)+var(--picker-landscape-header-width))] [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:grid-cols-[var(--picker-landscape-header-width)_minmax(0,1fr)] [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:grid-rows-[1fr_auto] [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&&]:overflow-y-auto [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section]:contents [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:col-start-1 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:row-span-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>header]:row-start-1 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>:not(header)]:col-start-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>section>:not(header)]:row-start-1 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>nav]:col-start-2 [@media_(orientation:_landscape)_and_(min-width:_600px)]:[&>nav]:row-start-2',
-        classNames?.dialog,
         className,
       )}
       onEscKeyDown={onEscKeyDown}
@@ -127,10 +123,7 @@ export default function DatePickerDialog({
           'rt-date-picker-header',
           'bg-(--datepicker-primary-color) text-(--datepicker-primary-contrast-color) cursor-pointer p-[calc(1.6*var(--unit))_calc(2*var(--unit))]',
           "[&_[role='button']:focus-visible]:[outline:2px_solid_currentColor] [&_[role='button']:focus-visible]:outline-offset-2",
-          classNames?.header,
-          display === 'months'
-            ? cn('rt-date-picker-monthsDisplay', classNames?.monthsDisplay)
-            : cn('rt-date-picker-yearsDisplay', classNames?.yearsDisplay),
+          display === 'months' ? 'rt-date-picker-monthsDisplay' : 'rt-date-picker-yearsDisplay',
         )}
       >
         <span
@@ -141,10 +134,9 @@ export default function DatePickerDialog({
           aria-pressed={display === 'years'}
           className={cn(
             'rt-date-picker-year',
-            'inline-block text-(length:--datepicker-year-font-size) pt-[8px] mt-[-8px] [transition:opacity,font-size_var(--animation-duration)_var(--animation-curve-default)]',
+            'inline-block text-(length:--datepicker-year-font-size) pt-[8px] mt-[-8px] [transition:opacity_var(--animation-duration)_var(--animation-curve-default),font-size_var(--animation-duration)_var(--animation-curve-default)]',
             '[.rt-date-picker-yearsDisplay_&]:text-(length:--font-size-normal)',
             '[.rt-date-picker-monthsDisplay_&]:opacity-(--datepicker-year-inactive-opacity)',
-            classNames?.year,
           )}
           onClick={switchDisplay}
           onKeyDown={displayKeyDown}
@@ -161,7 +153,6 @@ export default function DatePickerDialog({
             'rt-date-picker-date',
             'block text-[calc(3.4*var(--unit))] font-(--font-weight-semi-bold) leading-[calc(4*var(--unit))] m-0 capitalize [transition:opacity_var(--animation-duration)_var(--animation-curve-default)]',
             '[.rt-date-picker-yearsDisplay_&]:opacity-(--datepicker-inactive-opacity)',
-            classNames?.date,
           )}
           onClick={switchDisplay}
           onKeyDown={displayKeyDown}
@@ -169,13 +160,7 @@ export default function DatePickerDialog({
           {dateLabel}
         </h3>
       </header>
-      <div
-        className={cn(
-          'rt-date-picker-calendarWrapper',
-          'p-[var(--unit)_calc(0.5*var(--unit))_0]',
-          classNames?.calendarWrapper,
-        )}
-      >
+      <div className={cn('rt-date-picker-calendarWrapper', 'p-[var(--unit)_calc(0.5*var(--unit))_0]')}>
         <Calendar
           {...constraints}
           display={display}
@@ -190,7 +175,6 @@ export default function DatePickerDialog({
             if (dayClick && autoOk && !isDateDisabled(clamped, constraints)) onSelect?.(clamped);
           }}
           selectedDate={date}
-          classNames={classNames}
           locale={locale}
           sundayFirstDayOfWeek={sundayFirstDayOfWeek}
         />

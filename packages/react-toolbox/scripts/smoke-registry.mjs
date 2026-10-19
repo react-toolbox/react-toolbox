@@ -609,7 +609,12 @@ try {
     await run(path.join(root, 'node_modules/.bin/tsc'), ['-p', path.join(directory, 'tsconfig.json')]);
   };
   await verify('date-picker');
-  for (const name of ['sheet', 'example-field-notes', 'example-recipes', 'example-snackbar-queue']) {
+  for (const name of [
+    'sheet',
+    'example-field-notes',
+    'example-recipes',
+    'example-snackbar-queue',
+  ]) {
     console.log(`Installing and verifying ${name} through the configured registry.`);
     await run(cli, ['add', `@react-toolbox/${name}`, '--yes', '--overwrite', '--cwd', directory]);
     await verify(name);

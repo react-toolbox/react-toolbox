@@ -14,11 +14,21 @@ const keyProps: Record<ComponentSlug, Record<string, string[]>> = {
   },
   'app-bar': { AppBar: ['fixed', 'flat', 'scrollHide', 'leftIconLabel', 'rightIconLabel'] },
   autocomplete: {
-    Autocomplete: ['source', 'multiple', 'value', 'defaultValue', 'onChange', 'allowCreate', 'loading', 'clearable'],
+    Autocomplete: [
+      'source',
+      'multiple',
+      'value',
+      'defaultValue',
+      'onChange',
+      'allowCreate',
+      'loading',
+      'clearable',
+      'readOnly',
+    ],
   },
   avatar: { Avatar: ['image', 'alt', 'cover', 'fallbackDelay', 'onLoadingStatusChange'] },
   button: {
-    Button: ['raised', 'flat', 'floating', 'mini', 'primary', 'accent', 'asChild'],
+    Button: ['raised', 'floating', 'mini', 'primary', 'accent', 'asChild'],
     BrowseButton: ['accept', 'multiple', 'onChange'],
   },
   card: { Card: ['raised'], CardMedia: ['aspectRatio', 'contentOverlay', 'image', 'alt'] },
@@ -42,6 +52,7 @@ const keyProps: Record<ComponentSlug, Record<string, string[]>> = {
       'labels',
       'startYear',
       'endYear',
+      'readOnly',
     ],
   },
   dialog: {
@@ -59,11 +70,20 @@ const keyProps: Record<ComponentSlug, Record<string, string[]>> = {
   divider: { Divider: ['orientation', 'decorative'] },
   drawer: { Drawer: ['active', 'type', 'withOverlay', 'insideTree', 'onEscKeyDown', 'onOverlayClick'] },
   dropdown: {
-    Dropdown: ['source', 'value', 'defaultValue', 'onChange', 'allowBlank', 'template', 'groupKey', 'textKey'],
+    Dropdown: [
+      'source',
+      'value',
+      'defaultValue',
+      'onChange',
+      'allowBlank',
+      'template',
+      'groupKey',
+      'textKey',
+      'readOnly',
+    ],
   },
   'font-icon': { FontIcon: ['value', 'alt'] },
   input: { Input: ['label', 'hint', 'error', 'floating', 'multiline', 'onChange'] },
-  layout: { NavDrawer: ['active', 'pinned', 'permanentAt', 'clipped'], Panel: ['bodyScroll'] },
   list: { List: ['selectable', 'ripple'], ListItem: ['caption', 'legend', 'itemContent', 'disabled'] },
   menu: {
     IconMenu: ['trigger', 'open', 'defaultOpen', 'onOpenChange', 'position'],
@@ -93,11 +113,16 @@ const keyProps: Record<ComponentSlug, Record<string, string[]>> = {
   snackbar: { Snackbar: ['active', 'label', 'action', 'onClick', 'timeout', 'onTimeout'] },
   switch: { Switch: ['label', 'onChange'] },
   table: {
-    Table: ['selectable', 'multiSelectable', 'onRowSelect'],
-    TableRow: ['selected'],
+    Table: ['selectionMode', 'selected', 'defaultSelected', 'onSelectionChange'],
+    TableRow: ['value', 'selectionDisabled', 'onSelectionChange'],
+    TableHead: ['displaySelect', 'onSelectionChange'],
     TableCell: ['numeric', 'sorted', 'tagName'],
   },
-  tabs: { Tabs: ['index', 'defaultIndex', 'onChange', 'activationMode', 'loop', 'hideMode', 'fixed'] },
+  tabs: {
+    Tabs: ['value', 'defaultValue', 'onValueChange', 'activationMode', 'loop', 'hideMode', 'fixed'],
+    Tab: ['value', 'label'],
+    TabContent: ['value'],
+  },
   'time-picker': {
     TimePicker: [
       'value',
@@ -107,6 +132,7 @@ const keyProps: Record<ComponentSlug, Record<string, string[]>> = {
       'minTime',
       'maxTime',
       'minuteStep',
+      'readOnly',
       'clearable',
       'layout',
       'labels',

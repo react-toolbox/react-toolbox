@@ -30,13 +30,17 @@ export function SheetPortal(props: SheetPortalProps) {
   return <Primitive.Portal {...props} />;
 }
 
-/** Vaul injects unlayered gesture styles; explicit overrides keep its motion on the Material tokens. */
+/**
+ * Override Vaul's unlayered motion styles while keeping snap/reset transitions on the standard curve.
+ * Directional animation timings do not change its internal 500ms lifecycle timers.
+ * A finite reduced-motion animation lets Radix finish an exit already in progress.
+ */
 const motionClasses =
-  '[animation-duration:var(--animation-duration)]! [transition-duration:var(--animation-duration)]! [animation-timing-function:var(--animation-curve-default)]! [transition-timing-function:var(--animation-curve-default)]! motion-reduce:animate-none! motion-reduce:transition-none!';
+  '[animation-duration:var(--animation-duration-enter)]! [animation-timing-function:var(--animation-curve-linear-out-slow-in)]! data-[state=closed]:[animation-duration:var(--animation-duration-exit)]! data-[state=closed]:[animation-timing-function:var(--animation-curve-fast-out-linear-in)]! [transition-duration:var(--animation-duration)]! [transition-timing-function:var(--animation-curve-default)]! motion-reduce:[&&]:[animation-duration:0.01ms]! motion-reduce:[animation-delay:0ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:transition-none!';
 
 export type SheetOverlayProps = ComponentProps<typeof Primitive.Overlay>;
 export function SheetOverlay({ className, style, ...props }: SheetOverlayProps) {
-  const theme = usePortalTheme();
+  const theme = usePortalTheme(style);
   return (
     <Primitive.Overlay
       data-slot="SheetOverlay"
@@ -52,8 +56,12 @@ export function SheetOverlay({ className, style, ...props }: SheetOverlayProps) 
   );
 }
 export type SheetContentProps = ComponentProps<typeof Primitive.Content>;
+/**
+ * Snap-point padding keeps the translated, offscreen portion clear so every action remains reachable.
+ * Long content belongs in a shrinking inner scroll region so Vaul can arbitrate scrolling and dragging.
+ */
 export function SheetContent({ className, style, ...props }: SheetContentProps) {
-  const theme = usePortalTheme();
+  const theme = usePortalTheme(style);
   return (
     <Primitive.Content
       data-slot="SheetContent"
@@ -69,6 +77,8 @@ export function SheetContent({ className, style, ...props }: SheetContentProps) 
         'data-[vaul-drawer-direction=right]:inset-y-0 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:h-dvh data-[vaul-drawer-direction=right]:w-(--drawer-mobile-width) min-[600px]:data-[vaul-drawer-direction=right]:w-(--drawer-desktop-width) data-[vaul-drawer-direction=right]:max-w-[calc(100vw-var(--standard-increment-mobile))]',
         'data-[vaul-snap-points=true]:data-[vaul-drawer-direction=bottom]:h-dvh data-[vaul-snap-points=true]:data-[vaul-drawer-direction=bottom]:max-h-dvh data-[vaul-snap-points=true]:data-[vaul-drawer-direction=top]:h-dvh data-[vaul-snap-points=true]:data-[vaul-drawer-direction=top]:max-h-dvh',
         'data-[vaul-snap-points=true]:data-[vaul-drawer-direction=left]:w-screen data-[vaul-snap-points=true]:data-[vaul-drawer-direction=left]:max-w-full data-[vaul-snap-points=true]:data-[vaul-drawer-direction=right]:w-screen data-[vaul-snap-points=true]:data-[vaul-drawer-direction=right]:max-w-full',
+        'data-[vaul-snap-points=true]:data-[vaul-drawer-direction=bottom]:pb-(--snap-point-height) data-[vaul-snap-points=true]:data-[vaul-drawer-direction=top]:pt-[calc(-1*var(--snap-point-height))]',
+        'data-[vaul-snap-points=true]:data-[vaul-drawer-direction=right]:pr-(--snap-point-height) data-[vaul-snap-points=true]:data-[vaul-drawer-direction=left]:pl-[calc(-1*var(--snap-point-height))]',
         motionClasses,
         className,
       )}

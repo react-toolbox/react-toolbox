@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Button, IconButton } from 'react-toolbox/button';
-import { Card, CardActions, CardText, CardTitle } from 'react-toolbox/card';
+import { Card, CardActions, CardMedia, CardText, CardTitle } from 'react-toolbox/card';
 import { Input } from 'react-toolbox/input';
 import { Slider } from 'react-toolbox/slider';
 import { Snackbar } from 'react-toolbox/snackbar';
@@ -29,11 +29,31 @@ export default function LandingDemo() {
       <div className="relative pt-6 pr-4 pb-4 sm:pr-6">
         <div className="absolute inset-0 bottom-12 left-8 rounded-toolbox bg-toolbox-primary/8" aria-hidden="true" />
         <Card className="relative">
-          <CardTitle
-            className="pr-16 toolbox-desktop:pr-20"
-            title="Make time for an idea."
-            subtitle="A little space for your next big thing."
+          <CardMedia
+            aspectRatio="wide"
+            image="/images/alpine-lake.webp"
+            alt="Turquoise lake surrounded by pine forests and mountains in Alberta, Canada."
           />
+          <div className="relative">
+            <CardTitle
+              className="pr-16 toolbox-desktop:pr-20"
+              title="Make time for an idea."
+              subtitle="A little space for your next big thing."
+            />
+            <IconButton
+              className="absolute top-4 right-2 toolbox-desktop:right-4"
+              icon={
+                <SiteIcon
+                  name={favorite ? 'favorite' : 'favoriteBorder'}
+                  style={{ width: 'var(--button-toggle-font-size)' }}
+                />
+              }
+              accent={favorite}
+              aria-label={favorite ? 'Remove project from favorites' : 'Favorite this project'}
+              aria-pressed={favorite}
+              onClick={() => setFavorite((current) => !current)}
+            />
+          </div>
           <CardText>
             <Input label="Project name" value={name} onChange={setName} />
             <div className="mt-4">
@@ -53,8 +73,7 @@ export default function LandingDemo() {
               />
             </div>
             <Switch
-              className="m-0 flex min-h-12 items-center gap-4"
-              classNames={{ input: 'absolute', on: 'mt-0 shrink-0', off: 'mt-0 shrink-0', text: 'p-0' }}
+              className="m-0 flex min-h-12 items-center gap-4 [&>input]:absolute [&>.rt-switch-on]:mt-0 [&>.rt-switch-on]:shrink-0 [&>.rt-switch-off]:mt-0 [&>.rt-switch-off]:shrink-0 [&>.rt-switch-text]:p-0"
               label="Do not disturb"
               checked={quiet}
               onChange={setQuiet}
@@ -72,23 +91,18 @@ export default function LandingDemo() {
             />
             <Button label="Reset" onClick={reset} />
           </CardActions>
-          <IconButton
-            className="absolute top-4 right-2 toolbox-desktop:right-4"
-            icon={
-              <SiteIcon
-                name={favorite ? 'favorite' : 'favoriteBorder'}
-                style={{ width: 'var(--button-toggle-font-size)' }}
-              />
-            }
-            accent={favorite}
-            aria-label={favorite ? 'Remove project from favorites' : 'Favorite this project'}
-            aria-pressed={favorite}
-            onClick={() => setFavorite((current) => !current)}
-          />
         </Card>
       </div>
       <figcaption className="mt-4 text-center text-xs leading-4 text-toolbox-text-secondary">
-        Real components. Try them out.
+        Photo by{' '}
+        <a
+          href="https://unsplash.com/photos/green-lake-between-trees-with-mountain-background-EBcIEEqpgfI"
+          className="underline underline-offset-2 hover:text-toolbox-primary"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Andrew Maranta on Unsplash
+        </a>
       </figcaption>
       <Snackbar
         active={Boolean(notification)}

@@ -2,35 +2,13 @@
 import './tokens.css';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { TableClassNames } from './types';
-import {
-  Children,
-  Fragment,
-  cloneElement,
-  isValidElement,
-  type ComponentPropsWithRef,
-  type ReactElement,
-  type ReactNode,
-} from 'react';
+import { Children, Fragment, isValidElement, type ReactElement, type ReactNode } from 'react';
 import { cn } from '../foundations/styles/cn';
 import TableHead, { type TableHeadProps } from './TableHead';
 import TableRow, { type TableRowProps } from './TableRow';
-export interface TableProps extends ComponentPropsWithRef<'table'> {
-  multiSelectable?: boolean;
-  onRowSelect?: (selectedIndices: number[]) => void;
-  selectable?: boolean;
-  /** Classes for the component's rendered parts. */
-  classNames?: TableClassNames;
-}
-export function Table({
-  children,
-  className = '',
-  multiSelectable = false,
-  onRowSelect,
-  selectable = true,
-  classNames,
-  ...other
-}: TableProps) {
+import { TableRoot, type TableRootProps } from './parts';
+export type TableProps = TableRootProps;
+export function Table({ children, className, ...props }: TableProps) {
   const flatten = (children: ReactNode): ReactNode[] =>
     Children.toArray(children).flatMap((child) =>
       isValidElement<{ children?: ReactNode }>(child) && child.type === Fragment
@@ -38,20 +16,12 @@ export function Table({
         : [child],
     );
   const elements = flatten(children);
-  const bodyElements = elements.flatMap((child) =>
-    isValidElement<{ children?: ReactNode }>(child) && child.type === 'tbody' ? flatten(child.props.children) : [child],
-  );
-  const rows = bodyElements.filter(
+  const rows = elements.filter(
     (child): child is ReactElement<TableRowProps> => isValidElement<TableRowProps>(child) && child.type === TableRow,
   );
   const heads = elements.filter(
     (child): child is ReactElement<TableHeadProps> => isValidElement<TableHeadProps>(child) && child.type === TableHead,
   );
-  const selectedIndices = rows.flatMap((row, index) => (row.props.selected ? [index] : []));
-  const eligibleIndices = rows.flatMap((row, index) =>
-    (row.props.selectable ?? selectable) && !row.props.selectionDisabled ? [index] : [],
-  );
-  const selectedEligible = eligibleIndices.filter((index) => selectedIndices.includes(index));
   const structure = elements.filter(
     (child) => isValidElement(child) && (child.type === 'caption' || child.type === 'colgroup'),
   );
@@ -63,89 +33,27 @@ export function Table({
       isValidElement(child) &&
       ![TableHead, TableRow, 'caption', 'colgroup', 'tfoot', 'thead', 'tbody'].includes(child.type as typeof TableHead),
   );
-  function selectRow(index: number) {
-    onRowSelect?.(
-      multiSelectable
-        ? selectedIndices.includes(index)
-          ? selectedIndices.filter((selected) => selected !== index)
-          : [...selectedIndices, index]
-        : selectedIndices.includes(index)
-          ? []
-          : [index],
-    );
-  }
-  const decorateHead = (head: ReactElement<TableHeadProps>) =>
-    cloneElement(head, {
-      selected: eligibleIndices.length > 0 && selectedEligible.length === eligibleIndices.length,
-      indeterminate: selectedEligible.length > 0 && selectedEligible.length < eligibleIndices.length,
-      multiSelectable: multiSelectable && eligibleIndices.length > 0,
-      selectable,
-      onSelect: (value, event) => {
-        head.props.onSelect?.(value, event);
-        if (event.defaultPrevented) return;
-        onRowSelect?.(
-          value
-            ? rows.flatMap((_, index) =>
-                selectedIndices.includes(index) || eligibleIndices.includes(index) ? [index] : [],
-              )
-            : selectedIndices.filter((index) => !eligibleIndices.includes(index)),
-        );
-      },
-    });
-  let rowIndex = 0;
-  const decorateRow = (row: ReactElement<TableRowProps>) => {
-    const idx = rowIndex++;
-    return cloneElement(row, {
-      idx,
-      selectable: row.props.selectable ?? selectable,
-      onSelect: (index, selected) => {
-        row.props.onSelect?.(index, selected);
-        selectRow(index);
-      },
-    });
-  };
-  const decorateSection = (section: ReactNode): ReactNode => {
-    if (!isValidElement<{ children?: ReactNode }>(section)) return section;
-    return cloneElement(
-      section,
-      {},
-      flatten(section.props.children).map((child, index) => {
-        if (isValidElement<TableHeadProps>(child) && child.type === TableHead)
-          return cloneElement(decorateHead(child), { key: child.key ?? index });
-        if (isValidElement<TableRowProps>(child) && child.type === TableRow)
-          return cloneElement(decorateRow(child), { key: child.key ?? index });
-        return child;
-      }),
-    );
-  };
   return (
-    <table
-      {...other}
+    <TableRoot
+      {...props}
       className={cn(
         'rt-table-table',
         'bg-(--rt-color-white) border-collapse text-(length:--table-font-size) w-full',
         materialRoot,
         materialDescendants,
-        classNames?.table,
         className,
       )}
     >
       {structure}
       {explicitHeads.length ? (
-        explicitHeads.map(decorateSection)
+        explicitHeads
       ) : (
-        <thead className={cn('rt-table-head', 'pb-[calc(0.3*var(--unit))] whitespace-nowrap', classNames?.head)}>
-          {heads.map((head, index) => cloneElement(decorateHead(head), { key: head.key ?? index }))}
-        </thead>
+        <thead className={cn('rt-table-head', 'pb-[calc(0.3*var(--unit))] whitespace-nowrap')}>{heads}</thead>
       )}
-      {explicitBodies.length ? (
-        explicitBodies.map(decorateSection)
-      ) : (
-        <tbody>{rows.map((row, index) => cloneElement(decorateRow(row), { key: row.key ?? index }))}</tbody>
-      )}
+      {explicitBodies.length ? explicitBodies : <tbody>{rows}</tbody>}
       {customSections}
       {footer}
-    </table>
+    </TableRoot>
   );
 }
 export default Table;

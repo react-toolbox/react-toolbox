@@ -1,7 +1,6 @@
 'use client';
 
 import { cn } from '../foundations/styles/cn';
-import type { TimePickerClassNames } from './types';
 
 import { useRef } from 'react';
 import { range } from '../foundations/collections/range';
@@ -15,10 +14,8 @@ export interface ClockMinutesProps {
   radius: number;
   selected?: number;
   spacing: number;
-  /** Classes for the component's rendered parts. */
-  classNames?: TimePickerClassNames;
 }
-export default function ClockMinutes({ onChange, radius, selected = 0, spacing, classNames }: ClockMinutesProps) {
+export default function ClockMinutes({ onChange, radius, selected = 0, spacing }: ClockMinutesProps) {
   const hand = useRef<ClockHandHandle>(null);
   return (
     <>
@@ -29,16 +26,14 @@ export default function ClockMinutes({ onChange, radius, selected = 0, spacing, 
         spacing={spacing}
         radius={radius}
         active={selected}
-        classNames={classNames}
         twoDigits
       />
       <Hand
         ref={hand}
-        className={!minutes.includes(selected) ? cn('rt-time-picker-small', classNames?.small) : ''}
+        className={!minutes.includes(selected) ? 'rt-time-picker-small' : ''}
         angle={selected * step}
         length={radius - spacing}
         onMove={(degrees) => onChange?.(degrees / step)}
-        classNames={classNames}
         step={step}
       />
     </>

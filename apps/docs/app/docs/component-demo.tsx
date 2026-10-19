@@ -26,8 +26,6 @@ import {
   Dropdown,
   FontIcon,
   Input,
-  Layout,
-  Panel,
   List,
   ListItem,
   IconMenu,
@@ -37,7 +35,7 @@ import {
   ProgressBar,
   RadioGroup,
   RadioButton,
-  Ripple,
+  useRipple,
   Slider,
   Snackbar,
   Switch,
@@ -48,13 +46,27 @@ import {
   Tabs,
   Tab,
   TimePicker,
-  Tooltip,
+  TooltipRoot,
+  TooltipTrigger,
+  TooltipPortal,
+  TooltipContent,
 } from 'react-toolbox';
 import type { ComponentSlug } from './catalog';
 import SheetExample from './examples/sheet';
 
-const RippleButton = Ripple()('button');
-const HintButton = Tooltip(Button);
+function RippleDemo() {
+  const { ripple, ...events } = useRipple();
+  return (
+    <button
+      {...events}
+      type="button"
+      className="relative overflow-hidden rounded-toolbox border-0 bg-toolbox-primary/10 px-8 py-6 font-[inherit] text-toolbox-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-toolbox-primary"
+    >
+      Click anywhere
+      {ripple}
+    </button>
+  );
+}
 
 function OverlayDemo() {
   const [active, setActive] = useState(false);
@@ -86,7 +98,7 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
   const [active, setActive] = useState(false);
   const [saved, setSaved] = useState(false);
   const [value, setValue] = useState(40);
-  const [index, setIndex] = useState(0);
+  const [tab, setTab] = useState('overview');
   const [date, setDate] = useState(new Date(2026, 9, 13, 9, 30));
   switch (slug) {
     case 'accordion':
@@ -115,12 +127,10 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
     case 'app-bar':
       return (
         <div className="w-full">
-          {/** Keep this standalone example's action visible inside the docs' pinned navigation layout. */}
           <AppBar
             title="My collection"
             leftIcon="menu"
             leftIconLabel="Open navigation"
-            classNames={{ leftIcon: 'inline-flex!' }}
             onLeftIconClick={() => setText('Navigation opened')}
           />
           <p role="status" className="mt-4 text-center text-sm text-toolbox-text-secondary">
@@ -239,7 +249,7 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
       );
     case 'divider':
       return (
-        <div className="w-full max-w-sm space-y-4">
+        <div className="grid w-full max-w-sm gap-4">
           <p>Project details</p>
           <Divider />
           <div className="flex items-center gap-4">
@@ -294,17 +304,6 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
         <div className="w-full max-w-xs">
           <Input label="Project name" value={text} onChange={setText} hint="Something worth making" />
         </div>
-      );
-    case 'layout':
-      return (
-        <Layout className="min-h-48 w-full">
-          <Panel>
-            <div className="p-6">
-              <h2 className="text-xl">Your workspace</h2>
-              <p className="mt-2">A place for everything.</p>
-            </div>
-          </Panel>
-        </Layout>
       );
     case 'list':
       return (
@@ -380,14 +379,7 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
         </RadioGroup>
       );
     case 'ripple':
-      return (
-        <RippleButton
-          type="button"
-          className="relative overflow-hidden rounded-toolbox border-0 bg-toolbox-primary/10 px-8 py-6 font-[inherit] text-toolbox-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-toolbox-primary"
-        >
-          Click anywhere
-        </RippleButton>
-      );
+      return <RippleDemo />;
     case 'sheet':
       return <SheetExample />;
     case 'slider':
@@ -432,7 +424,7 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
     case 'table':
       return (
         <div className="w-full overflow-x-auto">
-          <Table selectable={false}>
+          <Table>
             <TableHead>
               <TableCell>Project</TableCell>
               <TableCell>Status</TableCell>
@@ -451,14 +443,14 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
     case 'tabs':
       return (
         <div className="w-full">
-          <Tabs index={index} onChange={setIndex}>
-            <Tab label="Overview">
+          <Tabs value={tab} onValueChange={setTab}>
+            <Tab value="overview" label="Overview">
               <p className="py-6">The big picture.</p>
             </Tab>
-            <Tab label="Details">
+            <Tab value="details" label="Details">
               <p className="py-6">A closer look.</p>
             </Tab>
-            <Tab label="Unavailable" disabled />
+            <Tab value="unavailable" label="Unavailable" disabled />
           </Tabs>
         </div>
       );
@@ -469,6 +461,15 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
         </div>
       );
     case 'tooltip':
-      return <HintButton primary raised label="Save idea" tooltip="Keep this idea for later" />;
+      return (
+        <TooltipRoot delayDuration={0}>
+          <TooltipTrigger asChild>
+            <Button primary raised label="Save idea" />
+          </TooltipTrigger>
+          <TooltipPortal>
+            <TooltipContent>Keep this idea for later</TooltipContent>
+          </TooltipPortal>
+        </TooltipRoot>
+      );
   }
 }

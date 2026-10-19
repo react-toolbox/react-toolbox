@@ -136,14 +136,6 @@ export const materialGuidelines: Record<ComponentSlug, MaterialGuideline> = {
       'Align related fields to common keylines. Multiline text uses the same type family as other fields, while its content area grows vertically.',
     ],
   },
-  layout: {
-    title: 'Metrics and keylines',
-    path: 'layout/metrics-keylines.html',
-    guidance: [
-      'Arrange surfaces and content on an 8px spacing grid, with a 4px subgrid for type and icons. Use 16px outer insets on phones and 24px on larger screens.',
-      'Reserve at least 48px by 48px for touch interactions. Responsive layouts can reveal persistent navigation as more space becomes available.',
-    ],
-  },
   list: {
     title: 'Lists',
     path: 'components/lists.html',

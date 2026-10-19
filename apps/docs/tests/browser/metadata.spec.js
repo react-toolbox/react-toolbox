@@ -127,7 +127,7 @@ test('the homepage identifies the site and docs breadcrumbs match their structur
 });
 
 test('standalone demos stay out of search results without blocking crawler access', async ({ page, request }) => {
-  for (const path of ['/playground', '/layout-demo', '/theme-demo']) {
+  for (const path of ['/playground', '/theme-demo']) {
     const response = await request.get(path);
     expect(response.ok(), path).toBe(true);
     const robots = await page.evaluate(
@@ -185,13 +185,9 @@ test('the sitemap lists canonical landing and docs pages, including the componen
   expect(urls.sort()).toEqual(paths.map((path) => new URL(path, 'https://react-toolbox.io').href).sort());
 });
 
-test('the retired recipes page redirects to the component documentation', async ({ page, request }) => {
-  const response = await request.get('/docs/recipes', { maxRedirects: 0 });
-  expect(response.status()).toBe(308);
-  expect(response.headers().location).toBe('/docs/components');
-  await page.goto('/docs/recipes');
-  await expect(page).toHaveURL('/docs/components');
-  await expect(
-    page.getByRole('navigation', { name: 'Documentation sidebar' }).getByRole('link', { name: 'Recipes', exact: true }),
-  ).toHaveCount(0);
+test('retired routes are absent from the current documentation', async ({ request }) => {
+  for (const route of ['/components', '/docs/recipes', '/docs/components/link', '/docs/components/navigation']) {
+    const response = await request.get(route, { maxRedirects: 0 });
+    expect(response.status(), route).toBe(404);
+  }
 });

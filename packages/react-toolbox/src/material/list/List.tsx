@@ -2,24 +2,14 @@
 import './tokens.css';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { ListClassNames } from './types';
 import type { ComponentPropsWithRef } from 'react';
 import { cn } from '../foundations/styles/cn';
 import { ListContext } from './context';
 export interface ListProps extends ComponentPropsWithRef<'ul'> {
   ripple?: boolean;
   selectable?: boolean;
-  /** Classes for the component's rendered parts. */
-  classNames?: ListClassNames;
 }
-export function List({
-  children,
-  className = '',
-  ripple = false,
-  selectable = false,
-  classNames,
-  ...other
-}: ListProps) {
+export function List({ children, className = '', ripple = false, selectable = false, ...other }: ListProps) {
   return (
     <ListContext value={{ ripple, selectable }}>
       <ul
@@ -30,7 +20,7 @@ export function List({
           'inline-block [list-style:none] m-0 p-[var(--list-vertical-padding)_0] relative text-start whitespace-nowrap w-full',
           materialRoot,
           materialDescendants,
-          classNames?.list,
+
           className,
         )}
       >

@@ -104,9 +104,7 @@ export function buttonClassName({
   neutral,
   primary,
   raised,
-  classNames,
 }: ButtonAppearanceProps & ButtonShapeProps & { className?: string }) {
-  const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
   return cn(
     buttonClasses,
     raised
@@ -114,16 +112,9 @@ export function buttonClassName({
       : floating
         ? cn(solidClasses, floatingClasses)
         : cn(squaredClasses, flatClasses),
-    classNames?.button,
-    raised
-      ? cn(classNames?.squared, classNames?.solid, classNames?.raised)
-      : floating
-        ? cn(classNames?.solid, classNames?.floating)
-        : cn(classNames?.squared, classNames?.flat),
-    neutral &&
-      cn(primary ? 'rt-button-primary' : accent ? 'rt-button-accent' : 'rt-button-neutral', classNames?.[level]),
-    mini && cn(miniClasses, classNames?.mini),
-    inverse && cn(inverseClasses, classNames?.inverse),
+    neutral && (primary ? 'rt-button-primary' : accent ? 'rt-button-accent' : 'rt-button-neutral'),
+    mini && miniClasses,
+    inverse && inverseClasses,
     className,
   );
 }

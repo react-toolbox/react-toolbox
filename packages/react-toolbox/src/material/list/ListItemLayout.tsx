@@ -2,7 +2,6 @@
 import './tokens.css';
 
 import { itemClasses, disabledClasses } from './styles';
-import type { ListClassNames } from './types';
 import { cloneElement, type ComponentPropsWithRef, type ReactElement, type ReactNode } from 'react';
 import { cn } from '../foundations/styles/cn';
 import { forcedColorsFocusClasses } from '../foundations/styles/composition';
@@ -30,8 +29,6 @@ export interface ListItemLayoutOptions {
     tabIndex?: number;
     disabled?: boolean;
   }>;
-  /** Classes for the component's rendered parts. */
-  classNames?: ListClassNames;
 }
 export interface ListItemLayoutProps extends ComponentPropsWithRef<'span'>, ListItemLayoutOptions {}
 export function ListItemLayout({
@@ -48,7 +45,6 @@ export function ListItemLayout({
   rightIcon,
   selectable = false,
   primaryAction,
-  classNames,
   ...other
 }: ListItemLayoutProps) {
   const leading = [
@@ -59,12 +55,8 @@ export function ListItemLayout({
   const right = [rightIcon && <FontIcon aria-hidden value={rightIcon} key="rightIcon" />, ...rightActions];
   const primaryContent = (
     <>
-      {left.some(Boolean) && (
-        <ListItemActions type="left" classNames={classNames}>
-          {left}
-        </ListItemActions>
-      )}
-      {itemContent ?? children ?? <ListItemContent classNames={classNames} caption={caption} legend={legend} />}
+      {left.some(Boolean) && <ListItemActions type="left">{left}</ListItemActions>}
+      {itemContent ?? children ?? <ListItemContent caption={caption} legend={legend} />}
     </>
   );
   return (
@@ -72,13 +64,12 @@ export function ListItemLayout({
       {...other}
       className={cn(
         itemClasses,
-        classNames?.item,
-        disabled && cn(disabledClasses, classNames?.disabled),
+
+        disabled && disabledClasses,
         selectable &&
           cn(
             'rt-list-selectable',
             '[.rt-list-item&:not(.rt-list-disabled):hover]:bg-(--list-item-hover-color) [.rt-list-item&:not(.rt-list-disabled):hover]:cursor-pointer',
-            classNames?.selectable,
           ),
         className,
       )}
@@ -86,7 +77,6 @@ export function ListItemLayout({
       {primaryAction && leftActions.length > 0 && (
         <ListItemActions
           type="left"
-          classNames={classNames}
           onClick={(event) => event.stopPropagation()}
           onMouseDown={(event) => event.stopPropagation()}
         >
@@ -110,7 +100,6 @@ export function ListItemLayout({
       {right.some(Boolean) && (
         <ListItemActions
           type="right"
-          classNames={classNames}
           onClick={primaryAction ? (event) => event.stopPropagation() : undefined}
           onMouseDown={primaryAction ? (event) => event.stopPropagation() : undefined}
         >

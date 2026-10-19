@@ -1,5 +1,21 @@
 import { test, expect } from '@playwright/test';
 
+test('a labeled input reveals its hint on focus and hides it while filled', async ({ page }) => {
+  await page.goto('/docs/components/input');
+  const field = page.getByRole('textbox', { name: 'Project name', exact: true });
+  const hint = page.getByText('Something worth making', { exact: true });
+  await expect(hint).toBeHidden();
+  await field.click();
+  await expect(hint).toBeVisible();
+  await expect(hint).toHaveCSS('opacity', '1');
+  await field.fill('Weekend notes');
+  await expect(hint).toHaveCSS('opacity', '0');
+  await field.clear();
+  await expect(hint).toHaveCSS('opacity', '1');
+  await field.blur();
+  await expect(hint).toBeHidden();
+});
+
 test('single-line and multiline inputs use the theme font', async ({ page }) => {
   await page.goto('/playground');
   await page.evaluate(() => document.fonts.ready);
@@ -37,6 +53,8 @@ for (const width of [1440, 390]) {
         const bounds = input.getBoundingClientRect();
         const label = field.querySelector('label').getBoundingClientRect();
         const chevron = getComputedStyle(field, '::after');
+        const paddingEnd = parseFloat(getComputedStyle(input).paddingInlineEnd);
+        const chevronSpace = parseFloat(chevron.insetInlineEnd) + 2 * parseFloat(chevron.borderLeftWidth);
         return {
           top: origin.top,
           inputTop: bounds.top - origin.top,
@@ -45,10 +63,14 @@ for (const width of [1440, 390]) {
           labelTop: label.top - origin.top,
           labelHeight: label.height,
           chevronTop: field.getBoundingClientRect().top - origin.top + parseFloat(chevron.top),
+          paddingEnd,
+          chevronSpace,
         };
       });
     const destination = await geometry('Destination');
     const country = await geometry('Country');
+    expect(destination.paddingEnd).toBeGreaterThan(destination.chevronSpace);
+    expect(country.paddingEnd).toBeGreaterThan(country.chevronSpace);
     if (width === 1440) expect(country.top).toBe(destination.top);
     // Compare local keylines too: the phone layout stacks the same controls.
     const { top: destinationTop, ...destinationField } = destination;

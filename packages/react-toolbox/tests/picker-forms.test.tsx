@@ -13,34 +13,40 @@ const reset = async (form: HTMLFormElement) =>
   });
 
 describe('picker form validation', () => {
-  it.each([DatePicker, TimePicker])('keeps readonly values focusable and submitted without opening', async (Picker) => {
-    const view = render(
-      <form>
-        <Picker name="when" label="When" value={selectedDate} readonly required />
-      </form>,
-    );
-    const field = screen.getByRole('textbox');
-    expect(field).not.toHaveAttribute('aria-haspopup');
-    await userEvent.tab();
-    expect(field).toHaveFocus();
-    await userEvent.keyboard('{Enter}');
-    expect(screen.queryByRole('dialog')).toBeNull();
-    expect(field).not.toBeDisabled();
-    const form = view.container.querySelector('form')!;
-    expect(new FormData(form).get('when')).toBe((field as HTMLInputElement).value);
-    expect(form.checkValidity()).toBe(true);
-    view.rerender(
-      <form>
-        <Picker name="when" label="When" readonly required />
-      </form>,
-    );
-    expect(form.checkValidity()).toBe(true);
-  });
+  it.each([DatePicker, TimePicker])(
+    'keeps read-only values focusable and submitted without opening',
+    async (Picker) => {
+      const view = render(
+        <form>
+          <Picker name="when" label="When" value={selectedDate} readOnly required clearable />
+        </form>,
+      );
+      const field = screen.getByRole('textbox');
+      expect(field).not.toHaveAttribute('aria-haspopup');
+      await userEvent.tab();
+      expect(field).toHaveFocus();
+      await userEvent.keyboard('{Enter}');
+      await userEvent.click(field);
+      await userEvent.keyboard(' {ArrowDown}');
+      expect(screen.queryByRole('dialog')).toBeNull();
+      expect(screen.queryByRole('button', { name: /Clear/ })).toBeNull();
+      expect(field).not.toBeDisabled();
+      const form = view.container.querySelector('form')!;
+      expect(new FormData(form).get('when')).toBe((field as HTMLInputElement).value);
+      expect(form.checkValidity()).toBe(true);
+      view.rerender(
+        <form>
+          <Picker name="when" label="When" readOnly required />
+        </form>,
+      );
+      expect(form.checkValidity()).toBe(true);
+    },
+  );
 
-  it('preserves legacy display strings without guessing their locale', () => {
+  it('formats Date values for display and form submission', () => {
     const view = render(
       <form>
-        <DatePicker name="date" label="Date" value="15/10/2026" />
+        <DatePicker name="date" label="Date" value={selectedDate} inputFormat={(date) => `${date.getDate()}/10/2026`} />
       </form>,
     );
     expect(screen.getByRole('combobox')).toHaveValue('15/10/2026');

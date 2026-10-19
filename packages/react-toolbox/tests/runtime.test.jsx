@@ -2,8 +2,6 @@ import React, { StrictMode, createContext, createRef, useContext } from 'react';
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { hydrateRoot } from 'react-dom/client';
-import { renderToString } from 'react-dom/server';
 import Portal from '../src/material/foundations/portal/Portal';
 import { ThemeProvider } from '../src/material/foundations/theme/ThemeProvider';
 import { Overlay } from '../src/material/overlay/Overlay';
@@ -18,7 +16,6 @@ import TimePicker from '../src/material/time-picker';
 import Snackbar from '../src/material/snackbar';
 import Dropdown from '../src/material/dropdown';
 import { IconMenu, Menu, MenuItem } from '../src/material/menu';
-import Layout, { NavDrawer, Panel } from '../src/material/layout';
 import Clock from '../src/material/time-picker/Clock';
 
 const strict = (children) => <StrictMode>{children}</StrictMode>;
@@ -173,18 +170,18 @@ describe('React 19 runtime', () => {
     expect(document.body.style.overflow).toBe('scroll');
   });
 
-  it('retains function defaults and the dialog activation and exit timings', () => {
+  it('retains function defaults and an explicitly configured dialog exit lifetime', () => {
     vi.useFakeTimers();
-    const view = render(strict(<Dialog active={false} title="Default dialog" />));
+    const view = render(strict(<Dialog active={false} title="Default dialog" delay={500} />));
     expect(screen.queryByText('Default dialog')).not.toBeInTheDocument();
-    view.rerender(strict(<Dialog active title="Default dialog" />));
+    view.rerender(strict(<Dialog active title="Default dialog" delay={500} />));
     const dialog = document.querySelector('[data-react-toolbox="dialog"]');
     expect(dialog).toBeInTheDocument();
     expect(dialog.className).toContain('normal');
     expect(dialog.className).not.toContain('active');
     advance(20);
     expect(dialog.className).toContain('active');
-    view.rerender(strict(<Dialog active={false} title="Default dialog" />));
+    view.rerender(strict(<Dialog active={false} title="Default dialog" delay={500} />));
     expect(dialog.className).not.toContain('active');
     advance(499);
     expect(dialog).toBeInTheDocument();
@@ -199,10 +196,9 @@ describe('React 19 runtime', () => {
     const view = render(strict(<Dialog active={false}>Quick dialog</Dialog>));
     view.rerender(strict(<Dialog active>Quick dialog</Dialog>));
     view.rerender(strict(<Dialog active={false}>Quick dialog</Dialog>));
-    advance(20);
     const dialog = document.querySelector('[data-react-toolbox="dialog"]');
     expect(dialog.className).not.toContain('active');
-    advance(480);
+    advance(20);
     expect(dialog).not.toBeInTheDocument();
   });
 
@@ -244,7 +240,7 @@ describe('React 19 runtime', () => {
     expect(onChange).toHaveBeenCalledWith(35, expect.anything());
   });
 
-  it('slides calendar months using DOM refs and preserves the 350ms transition', () => {
+  it('slides calendar months using DOM refs and completes when there is no animation', () => {
     vi.useFakeTimers();
     const value = new Date(2026, 9, 13);
     render(strict(<DatePickerDialog active value={value} />));
@@ -252,7 +248,7 @@ describe('React 19 runtime', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Next month' }));
     expect(screen.getByText('November 2026')).toBeInTheDocument();
     expect(screen.getByText('October 2026')).toBeInTheDocument();
-    advance(350);
+    advance(0);
     expect(screen.queryByText('October 2026')).not.toBeInTheDocument();
   });
 
@@ -272,14 +268,14 @@ describe('React 19 runtime', () => {
     advance(1000);
   });
 
-  it('zooms clock views using DOM refs and preserves the 500ms transition', () => {
+  it('zooms clock views using DOM refs and completes when there is no animation', () => {
     vi.useFakeTimers();
     const props = { time: new Date(2026, 9, 13, 9, 30), onChange: vi.fn() };
     const view = render(strict(<Clock {...props} display="hours" />));
     advance(0);
     view.rerender(strict(<Clock {...props} display="minutes" />));
     expect(view.container.querySelectorAll('.rt-time-picker-clockWrapper')).toHaveLength(2);
-    advance(500);
+    advance(0);
     expect(view.container.querySelectorAll('.rt-time-picker-clockWrapper')).toHaveLength(1);
     view.unmount();
     advance(1000);
@@ -307,18 +303,12 @@ describe('React 19 runtime', () => {
     expect(view.container.querySelector('[data-react-toolbox="menu"]').className).toContain('active');
   });
 
-  it('preserves menu refs and slot classes when switching from inline to floating content', async () => {
+  it('preserves menu refs and root classes when switching from inline to floating content', async () => {
     const ref = createRef();
     const show = vi.fn();
     const hide = vi.fn();
     const content = (position) => (
-      <Menu
-        ref={ref}
-        position={position}
-        onShow={show}
-        onHide={hide}
-        classNames={{ menu: 'custom-menu', menuInner: 'custom-items', outline: 'custom-outline' }}
-      >
+      <Menu ref={ref} position={position} onShow={show} onHide={hide} className="custom-menu">
         <MenuItem caption="Download" value="download" />
       </Menu>
     );
@@ -326,7 +316,7 @@ describe('React 19 runtime', () => {
     const node = ref.current.node;
     expect(node).toHaveClass('custom-menu', 'rt-menu-static');
     expect(screen.getByRole('menuitemradio', { name: 'Download' })).toBeVisible();
-    expect(node.querySelector('.custom-items')).toHaveClass('custom-outline');
+    expect(node.querySelector('.rt-menu-menuInner')).toHaveClass('rt-menu-outline');
     act(() => ref.current.show());
     expect(show).toHaveBeenCalledOnce();
     view.rerender(strict(content('topRight')));
@@ -425,28 +415,6 @@ describe('React 19 runtime', () => {
     expect(screen.getByRole('textbox')).toHaveValue('40');
     fireEvent.blur(screen.getByRole('textbox'));
     expect(onChange).toHaveBeenCalledWith(40, expect.anything());
-  });
-
-  it('hydrates responsive Layout markup before measuring the client viewport', async () => {
-    const element = strict(
-      <Layout>
-        <NavDrawer permanentAt="sm">Navigation</NavDrawer>
-        <Panel>Content</Panel>
-      </Layout>,
-    );
-    const container = document.createElement('div');
-    container.innerHTML = renderToString(element);
-    document.body.append(container);
-    expect(container.firstElementChild.className).not.toContain('navDrawerPinned');
-    const onRecoverableError = vi.fn();
-    let root;
-    await act(async () => {
-      root = hydrateRoot(container, element, { onRecoverableError });
-    });
-    expect(onRecoverableError).not.toHaveBeenCalled();
-    expect(container.firstElementChild.className).toContain('navDrawerPinned');
-    act(() => root.unmount());
-    container.remove();
   });
 
   it('cancels snackbar timeouts on deactivation', () => {

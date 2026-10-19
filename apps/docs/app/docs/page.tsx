@@ -3,7 +3,6 @@ import { CardText, CardTitle } from 'react-toolbox/card';
 import DocsArticle, { DocsSection } from './article';
 import ActionCard from './action-card';
 import { pageMetadata } from '../site-metadata';
-import ProjectStory from '../project-story';
 
 export const metadata = pageMetadata({
   title: 'Documentation · React Toolbox',
@@ -22,7 +21,6 @@ export default function IntroductionPage() {
         { id: 'start', title: 'Start building' },
         { id: 'material', title: 'Made of Material' },
         { id: 'your-code', title: 'Your code' },
-        { id: 'story', title: 'Since 2015' },
       ]}
     >
       <DocsSection id="start" title="Start building">
@@ -89,16 +87,6 @@ export default function IntroductionPage() {
         >
           Explore theming and spacing →
         </Link>
-      </DocsSection>
-      <DocsSection id="story" title="Made in 2015. Revisited with care.">
-        <p className="text-toolbox-body/6 text-toolbox-text">
-          React Toolbox began in 2015 and helped shape my path as a developer. Years later, AI made it possible to
-          return to it and bring it up to date. This is a personal tribute to a project that meant a lot to me, with no
-          grand ambitions. The documentation is a small portal back to the original Material Design era.
-        </p>
-        <div className="mt-4 text-sm text-toolbox-primary">
-          <ProjectStory />
-        </div>
       </DocsSection>
       <div className="flex justify-end border-t border-toolbox-divider pt-6">
         <Link

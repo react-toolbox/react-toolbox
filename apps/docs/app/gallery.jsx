@@ -37,7 +37,7 @@ import {
   ProgressBar,
   RadioButton,
   RadioGroup,
-  Ripple,
+  useRipple,
   Slider,
   Snackbar,
   Switch,
@@ -48,11 +48,11 @@ import {
   TableRow,
   Tabs,
   TimePicker,
-  Tooltip,
+  TooltipRoot,
+  TooltipTrigger,
+  TooltipPortal,
+  TooltipContent,
 } from 'react-toolbox';
-
-const TooltipButton = Tooltip(Button);
-const RippleSurface = Ripple()('button');
 
 const sections = [
   ['buttons', 'Buttons & ripples'],
@@ -107,6 +107,7 @@ function DemoGroup({ label, children }) {
 }
 
 function ButtonExamples({ notify }) {
+  const { ripple, ...rippleEvents } = useRipple();
   const [fileName, setFileName] = useState('');
   const [rippleCount, setRippleCount] = useState(0);
 
@@ -131,7 +132,10 @@ function ButtonExamples({ notify }) {
           <IconButton icon="favorite" accent aria-label="Favorite" onClick={() => notify('Added to favorites')} />
           <IconButton icon="bookmark" primary aria-label="Bookmark" onClick={() => notify('Bookmark saved')} />
           <IconButton icon="delete" disabled aria-label="Disabled delete" />
-          <TooltipButton label="Hover for tooltip" tooltip="Original Material Design tooltip" tooltipDelay={250} />
+          <TooltipRoot delayDuration={250}>
+            <TooltipTrigger asChild><Button label="Hover for tooltip" /></TooltipTrigger>
+            <TooltipPortal><TooltipContent>Original Material Design tooltip</TooltipContent></TooltipPortal>
+          </TooltipRoot>
         </div>
       </DemoGroup>
       <DemoGroup label="Browse button & standalone ripple">
@@ -141,9 +145,10 @@ function ButtonExamples({ notify }) {
             <p className="gallery-state" aria-live="polite">{fileName || 'Files stay on your device.'}</p>
           </div>
           <div>
-            <RippleSurface className="gallery-ripple-surface" onClick={() => setRippleCount(count => count + 1)}>
+            <button {...rippleEvents} className="gallery-ripple-surface" onClick={() => setRippleCount(count => count + 1)}>
               Touch the surface
-            </RippleSurface>
+              {ripple}
+            </button>
             <p className="gallery-state" aria-live="polite">Surface interactions: {rippleCount}</p>
           </div>
         </div>
@@ -293,32 +298,32 @@ function CardExamples({ notify }) {
 }
 
 function NavigationExamples({ notify }) {
-  const [tab, setTab] = useState(0);
-  const [fixedTab, setFixedTab] = useState(0);
+  const [tab, setTab] = useState('overview');
+  const [fixedTab, setFixedTab] = useState('recent');
   const [menuSelection, setMenuSelection] = useState('download');
   return (
-    <Section id="navigation" description="App bars, animated tab indicators, links, and menus. The full layout has its own interactive example.">
+    <Section id="navigation" description="App bars, animated tab indicators, links, and menus.">
       <DemoGroup label="App bar">
         <AppBar title="My collection" leftIcon="menu" rightIcon="search" onLeftIconClick={() => notify('Navigation selected')} onRightIconClick={() => notify('Search selected')} />
       </DemoGroup>
       <DemoGroup label="Tabs">
-        <Tabs index={tab} onChange={setTab}>
-          <Tab label="Overview" icon="dashboard"><p className="gallery-state">Everything in its right place.</p></Tab>
-          <Tab label="Details" icon="description"><p className="gallery-state">The details tab is now selected.</p></Tab>
-          <Tab label="Disabled" disabled><p>Unavailable content.</p></Tab>
+        <Tabs value={tab} onValueChange={setTab}>
+          <Tab value="overview" label="Overview" icon="dashboard"><p className="gallery-state">Everything in its right place.</p></Tab>
+          <Tab value="details" label="Details" icon="description"><p className="gallery-state">The details tab is now selected.</p></Tab>
+          <Tab value="disabled" label="Disabled" disabled><p>Unavailable content.</p></Tab>
         </Tabs>
         <div className="mt-6">
-          <Tabs fixed inverse index={fixedTab} onChange={setFixedTab}>
-            <Tab label="Recent"><p className="gallery-state">Recent items</p></Tab>
-            <Tab label="Favorites"><p className="gallery-state">Favorite items</p></Tab>
-            <Tab label="Archived"><p className="gallery-state">Archived items</p></Tab>
+          <Tabs fixed inverse value={fixedTab} onValueChange={setFixedTab}>
+            <Tab value="recent" label="Recent"><p className="gallery-state">Recent items</p></Tab>
+            <Tab value="favorites" label="Favorites"><p className="gallery-state">Favorite items</p></Tab>
+            <Tab value="archived" label="Archived"><p className="gallery-state">Archived items</p></Tab>
           </Tabs>
         </div>
       </DemoGroup>
       <DemoGroup label="Menus & links">
         <div className="grid gap-8 sm:grid-cols-2">
           <div>
-            <Menu selected={menuSelection} onSelect={setMenuSelection} classNames={{ menuInner: 'm-0' }}>
+            <Menu selected={menuSelection} onSelect={setMenuSelection}>
               <MenuItem value="download" caption="Download" icon="file_download" shortcut="⌘D" />
               <MenuItem value="share" caption="Share" icon="share" />
               <MenuDivider />
@@ -341,7 +346,6 @@ function NavigationExamples({ notify }) {
             <nav aria-label="Gallery shortcuts">
               <List selectable ripple>
                 <ListItem to="#buttons" caption="Back to buttons" leftIcon="arrow_upward" />
-                <ListItem to="/layout-demo" caption="Open layout example" leftIcon="view_quilt" />
                 <ListItem to="#pickers" caption="Explore date & time" leftIcon="event" />
               </List>
             </nav>
@@ -465,9 +469,9 @@ function TableExamples() {
   const [direction, setDirection] = useState('asc');
   const sorted = [...desserts].sort((a, b) => direction === 'asc' ? a.calories - b.calories : b.calories - a.calories);
   return (
-    <Section id="tables" description="Selectable rows, numeric alignment, and sortable headers, using the original table composition API.">
+    <Section id="tables" description="Selectable rows, numeric alignment, and sortable headers.">
       <div className="overflow-x-auto">
-        <Table multiSelectable onRowSelect={indices => setSelected(indices.map(index => sorted[index].name))}>
+        <Table selectionMode="multiple" selected={selected} onSelectionChange={setSelected}>
           <TableHead>
             <TableCell>Dessert (100g serving)</TableCell>
             <TableCell numeric sorted={direction} onClick={() => setDirection(value => value === 'asc' ? 'desc' : 'asc')}>Calories</TableCell>
@@ -475,7 +479,7 @@ function TableExamples() {
             <TableCell numeric>Carbs (g)</TableCell>
           </TableHead>
           {sorted.map(dessert => (
-            <TableRow key={dessert.name} selected={selected.includes(dessert.name)}>
+            <TableRow key={dessert.name} value={dessert.name}>
               <TableCell>{dessert.name}</TableCell>
               <TableCell numeric>{dessert.calories}</TableCell>
               <TableCell numeric>{dessert.fat.toFixed(1)}</TableCell>
@@ -504,7 +508,6 @@ export default function Gallery() {
           </a>
           <div className="flex items-center gap-6">
             <a className="gallery-top-link hidden sm:inline" href="/theme-demo">Theming</a>
-            <a className="gallery-top-link hidden sm:inline" href="/layout-demo">Layout example</a>
             <span className="gallery-version">THE ORIGINAL, RENEWED</span>
           </div>
         </div>

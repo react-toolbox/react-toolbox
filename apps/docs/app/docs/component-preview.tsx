@@ -1,11 +1,20 @@
 'use client';
 
 import { useState, type ReactNode } from 'react';
-import { IconButton, TabsContent, TabsIndicator, TabsList, TabsRoot, TabsTrigger, Tooltip } from 'react-toolbox';
+import {
+  IconButton,
+  TabsContent,
+  TabsIndicator,
+  TabsList,
+  TabsRoot,
+  TabsTrigger,
+  TooltipRoot,
+  TooltipTrigger,
+  TooltipPortal,
+  TooltipContent,
+} from 'react-toolbox';
 import type { ComponentSlug } from './catalog';
 import ComponentDemo from './component-demo';
-
-const ResetButton = Tooltip(IconButton);
 
 export default function ComponentPreview({ slug, code }: { slug: ComponentSlug; code: ReactNode }) {
   const [view, setView] = useState('preview');
@@ -22,24 +31,31 @@ export default function ComponentPreview({ slug, code }: { slug: ComponentSlug; 
           </TabsTrigger>
           <TabsIndicator />
         </TabsList>
-        <ResetButton
-          icon="refresh"
-          aria-label="Reset demo"
-          tooltip="Reset demo"
-          tooltipPosition="left"
-          onClick={() => {
-            setReset((value) => value + 1);
-            setView('preview');
-          }}
-          className="shrink-0"
-        />
+        <TooltipRoot delayDuration={0}>
+          <TooltipTrigger asChild>
+            <IconButton
+              icon="refresh"
+              aria-label="Reset demo"
+              onClick={() => {
+                setReset((value) => value + 1);
+                setView('preview');
+              }}
+              className="shrink-0"
+            />
+          </TooltipTrigger>
+          <TooltipPortal>
+            <TooltipContent side="left">Reset demo</TooltipContent>
+          </TooltipPortal>
+        </TooltipRoot>
       </div>
       <TabsContent value="preview" className="overflow-visible px-0 pb-0 pt-4">
         <div className="flex min-h-64 min-w-0 items-center justify-center rounded-toolbox border border-toolbox-divider bg-white p-4 @min-[600px]/article:p-6">
           <ComponentDemo key={reset} slug={slug} />
         </div>
       </TabsContent>
-      <TabsContent value="code" className="overflow-visible px-0 pb-0 pt-4">{code}</TabsContent>
+      <TabsContent value="code" className="overflow-visible px-0 pb-0 pt-4">
+        {code}
+      </TabsContent>
     </TabsRoot>
   );
 }

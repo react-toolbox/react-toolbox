@@ -89,6 +89,10 @@ export default function ThemingPage() {
           customize individual nodes. For an internal element that is not exposed as a component, edit its classes in
           the installed source. The JSX and styles belong to your application.
         </p>
+        <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
+          Checkbox, RadioButton and Switch apply both <code>className</code> and <code>style</code> to their root label.
+          Native form attributes and event handlers still target the underlying input.
+        </p>
         <CodeBlock
           label="Compose with className"
           code={
@@ -100,9 +104,8 @@ export default function ThemingPage() {
           Tailwind precedence; match the variant when overriding it. Use CSS variables for colors across states.
         </p>
         <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
-          Use <code>classNames</code> to customize named internal style slots. Slot maps use types such as{' '}
-          <code>ButtonClassNames</code>; the installed types list each component’s available slots. CSS variables
-          control shared colors, and <code>ThemeProvider</code> scopes those variables when needed.
+          CSS variables control shared colors, and <code>ThemeProvider</code> scopes those variables when needed. For
+          deeper customization, compose the exported parts or edit the installed source.
         </p>
       </DocsSection>
       <DocsSection id="scopes" title="Scope a palette when you need to">

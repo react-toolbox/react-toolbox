@@ -2,35 +2,22 @@
 import './tokens.css';
 
 import { activeClasses, labelSizeClasses, labelFocusClasses } from './styles';
-import type { TabsClassNames } from './types';
 
-import {
-  useEffect,
-  useRef,
-  type HTMLAttributes,
-  type KeyboardEvent,
-  type MouseEvent,
-  type ReactNode,
-  type Ref,
-} from 'react';
+import { useEffect, useRef, type HTMLAttributes, type ReactNode, type Ref } from 'react';
 import { cn } from '../foundations/styles/cn';
 import { useRipple } from '../ripple';
 import { FontIcon } from '../font-icon';
 
-export type TabClassNames = TabsClassNames;
-export type TabEvent = MouseEvent<HTMLDivElement> | KeyboardEvent<HTMLDivElement>;
-export interface TabProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'> {
+export interface TabProps extends HTMLAttributes<HTMLDivElement> {
+  /** Stable selection value shared by the tab and its panel. */
+  value: string;
   active?: boolean;
   activeClassName?: string;
   disabled?: boolean;
   icon?: ReactNode;
-  index?: number;
   label?: ReactNode;
   onActive?: () => void;
-  onClick?: (event: TabEvent, index?: number) => void;
   ripple?: boolean;
-  /** Classes for the component's rendered parts. */
-  classNames?: TabClassNames;
   ref?: Ref<HTMLDivElement>;
 }
 export function Tab({
@@ -42,7 +29,7 @@ export function Tab({
   hidden = false,
   label,
   icon,
-  index,
+  value: _value,
   onActive,
   onClick,
   onMouseDown,
@@ -50,7 +37,6 @@ export function Tab({
   onTouchEnd,
   onTouchCancel,
   ripple = true,
-  classNames,
   ref,
   ...attributes
 }: TabProps) {
@@ -63,9 +49,7 @@ export function Tab({
     centered: false,
     disabled: disabled || hidden,
     ripple,
-    classNames: {
-      rippleWrapper: cn('rt-tabs-rippleWrapper', '[.rt-tabs-label>&]:overflow-hidden', classNames?.rippleWrapper),
-    },
+    wrapperClassName: 'rt-tabs-rippleWrapper [.rt-tabs-label>&]:overflow-hidden',
   });
   return (
     <div
@@ -85,28 +69,24 @@ export function Tab({
         '[&:not(.rt-tabs-disabled)]:cursor-pointer',
         '[.rt-tabs-fixed_&]:min-w-0 [.rt-tabs-fixed_&]:max-w-none [.rt-tabs-fixed_&]:flex-1 [.rt-tabs-fixed_&]:text-center',
         '[.rt-tabs-inverse_&]:text-(--tab-inverse-text-inactive-color)',
-        classNames?.label,
-        active && cn(activeClasses, classNames?.active),
-        hidden && cn('rt-tabs-hidden', '[.rt-tabs-label&]:hidden', classNames?.hidden),
+        active && activeClasses,
+        hidden && cn('rt-tabs-hidden', '[.rt-tabs-label&]:hidden'),
         Boolean(label) &&
           cn(
             'rt-tabs-withText',
             '[.rt-tabs-label.rt-tabs-withIcon&]:pt-[calc(0.8*var(--unit))] [.rt-tabs-label.rt-tabs-withIcon&]:pb-[calc(1.6*var(--unit))]',
-            classNames?.withText,
           ),
         Boolean(icon) &&
           cn(
             'rt-tabs-withIcon',
             '[.rt-tabs-label&]:pb-[calc((var(--tab-label-height)-var(--tab-icon-height))/2)] [.rt-tabs-label&]:pt-[calc((var(--tab-label-height)-var(--tab-icon-height))/2)] [.rt-tabs-label&]:text-center',
-            classNames?.withIcon,
           ),
-        disabled &&
-          cn('rt-tabs-disabled', '[.rt-tabs-label&]:opacity-(--tab-label-disabled-opacity)', classNames?.disabled),
+        disabled && cn('rt-tabs-disabled', '[.rt-tabs-label&]:opacity-(--tab-label-disabled-opacity)'),
         active && activeClassName,
         className,
       )}
       onClick={(event) => {
-        if (!disabled && !hidden) onClick?.(event, index);
+        if (!disabled && !hidden) onClick?.(event);
       }}
       onMouseDown={(event) => {
         onMouseDown?.(event);
@@ -131,7 +111,6 @@ export function Tab({
             'rt-tabs-icon',
             'block h-(--tab-icon-height) leading-(--tab-icon-height) m-[0_auto]',
             '[.rt-tabs-label.rt-tabs-withText_&]:mb-(--tab-icon-margin-bottom)',
-            classNames?.icon,
           )}
           value={icon}
         />

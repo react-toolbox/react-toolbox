@@ -2,7 +2,6 @@
 import './tokens.css';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
-import type { InputClassNames } from './types';
 
 import React, { useCallback, useEffect, useId, useImperativeHandle, useRef, useState } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -10,7 +9,6 @@ import FontIcon from '../font-icon/FontIcon';
 import { isValuePresent } from './value';
 import useFormReset from '../foundations/forms/useFormReset';
 
-export type { InputClassNames } from './types';
 export type InputElement = HTMLInputElement | HTMLTextAreaElement;
 export interface InputHandle {
   focus(): void;
@@ -29,8 +27,6 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<InputElement>
   wrap?: React.TextareaHTMLAttributes<HTMLTextAreaElement>['wrap'];
   onChange?: (value: string, event: React.ChangeEvent<InputElement>) => void;
   ref?: React.Ref<InputHandle>;
-  /** Classes for the component's rendered parts. */
-  classNames?: InputClassNames;
 }
 
 export function Input({
@@ -49,10 +45,8 @@ export function Input({
   multiline = false,
   required = false,
   role,
-  classNames,
   type = 'text',
   value,
-  onKeyPress,
   rows,
   onChange,
   ref,
@@ -118,20 +112,6 @@ export function Input({
     resize();
     onChange?.(next, event);
   };
-  const handleKeyPress = (event: React.KeyboardEvent<InputElement>) => {
-    const target = event.currentTarget;
-    if (
-      multiline &&
-      maxLength != null &&
-      !(Number(target.selectionEnd) - Number(target.selectionStart)) &&
-      target.value.length === maxLength
-    ) {
-      event.preventDefault();
-      event.stopPropagation();
-      return;
-    }
-    onKeyPress?.(event);
-  };
   const inputProps = {
     ...others,
     id,
@@ -145,8 +125,7 @@ export function Input({
       '[&:required]:[box-shadow:none]',
       '[@media_(forced-colors:_active)]:focus-visible:[outline:2px_solid_Highlight]',
       '[@media_(hover:_hover)]:[.rt-input-input:not(.rt-input-errored):not(.rt-input-disabled)>&:hover:not(:focus)]:[border-bottom-color:rgb(from_var(--rt-color-black)_r_g_b_/_87%)] [@media_(hover:_hover)]:[.rt-input-input:not(.rt-input-errored):not(.rt-input-disabled)>&:hover:not(:focus)]:[box-shadow:inset_0_-1px_rgb(from_var(--rt-color-black)_r_g_b_/_87%)]',
-      classNames?.inputElement,
-      present && cn('rt-input-filled', classNames?.filled),
+      present && 'rt-input-filled',
     ),
     onChange: handleChange,
     ref: (element: InputElement | null) => {
@@ -159,7 +138,6 @@ export function Input({
     required,
     value,
     maxLength,
-    onKeyPress: multiline ? handleKeyPress : onKeyPress,
   };
   return (
     <div
@@ -169,16 +147,11 @@ export function Input({
         'p-[var(--input-padding)_0] relative',
         materialRoot,
         materialDescendants,
-        classNames?.input,
-        disabled && cn('rt-input-disabled', classNames?.disabled),
-        Boolean(error) && cn('rt-input-errored', 'pb-0', classNames?.errored),
-        type === 'hidden' && cn('rt-input-hidden', 'hidden', classNames?.hidden),
+        disabled && 'rt-input-disabled',
+        Boolean(error) && cn('rt-input-errored', 'pb-0'),
+        type === 'hidden' && cn('rt-input-hidden', 'hidden'),
         Boolean(icon) &&
-          cn(
-            'rt-input-withIcon',
-            '[.rt-input-input&]:ml-[calc(var(--input-icon-size)+var(--input-icon-right-space))]',
-            classNames?.withIcon,
-          ),
+          cn('rt-input-withIcon', '[.rt-input-input&]:ml-[calc(var(--input-icon-size)+var(--input-icon-right-space))]'),
         className,
       )}
     >
@@ -189,7 +162,6 @@ export function Input({
             'rt-input-icon',
             'text-(--input-text-label-color) block text-(length:--input-icon-font-size)! h-(--input-icon-size) left-[calc(-1_*_(var(--input-icon-size)_+_var(--input-icon-right-space)))] leading-(--input-icon-size)! absolute text-center top-(--input-icon-offset) [transition:color_var(--animation-duration)_var(--animation-curve-default)] w-(--input-icon-size)',
             '[.rt-input-inputElement:focus:not([disabled]):not([readonly])~&]:text-(--input-text-highlight-color)',
-            classNames?.icon,
           )}
           value={icon}
         />
@@ -198,13 +170,12 @@ export function Input({
         className={cn(
           'rt-input-bar',
           'block relative w-full',
-          "[&::before]:bg-(--input-text-highlight-color) [&::before]:bottom-0 [&::before]:[content:''] [&::before]:h-[2px] [&::before]:absolute [&::before]:duration-200 [&::before]:[transition-property:width,background-color] [&::before]:[transition-timing-function:var(--animation-curve-default)] [&::before]:w-0 [&::before]:left-[50%]",
-          "[&::after]:bg-(--input-text-highlight-color) [&::after]:bottom-0 [&::after]:[content:''] [&::after]:h-[2px] [&::after]:absolute [&::after]:duration-200 [&::after]:[transition-property:width,background-color] [&::after]:[transition-timing-function:var(--animation-curve-default)] [&::after]:w-0 [&::after]:right-[50%]",
-          '[.rt-input-inputElement:focus:not([disabled])~&::before]:w-[50%]',
-          '[.rt-input-inputElement:focus:not([disabled])~&::after]:w-[50%]',
+          "[&::before]:bg-(--input-text-highlight-color) [&::before]:bottom-0 [&::before]:[content:''] [&::before]:h-[2px] [&::before]:absolute [&::before]:duration-200 [&::before]:[transition-property:transform,background-color] [&::before]:[transition-timing-function:var(--animation-curve-default)] [&::before]:w-[50%] [&::before]:left-[50%] [&::before]:origin-left [&::before]:transform-[scaleX(0)]",
+          "[&::after]:bg-(--input-text-highlight-color) [&::after]:bottom-0 [&::after]:[content:''] [&::after]:h-[2px] [&::after]:absolute [&::after]:duration-200 [&::after]:[transition-property:transform,background-color] [&::after]:[transition-timing-function:var(--animation-curve-default)] [&::after]:w-[50%] [&::after]:right-[50%] [&::after]:origin-right [&::after]:transform-[scaleX(0)]",
+          '[.rt-input-inputElement:focus:not([disabled])~&::before]:transform-[scaleX(1)]',
+          '[.rt-input-inputElement:focus:not([disabled])~&::after]:transform-[scaleX(1)]',
           '[.rt-input-errored>&::before]:bg-(--input-text-error-color)',
           '[.rt-input-errored>&::after]:bg-(--input-text-error-color)',
-          classNames?.bar,
         )}
       />
       {label ? (
@@ -219,12 +190,10 @@ export function Input({
             "[.rt-input-inputElement[type='time']~&:not(.rt-input-fixed)]:text-(length:--input-label-font-size) [.rt-input-inputElement[type='time']~&:not(.rt-input-fixed)]:top-(--input-focus-label-top)",
             '[.rt-input-inputElement:focus:not([disabled]):not([readonly])~&:not(.rt-input-fixed)]:text-(length:--input-label-font-size) [.rt-input-inputElement:focus:not([disabled]):not([readonly])~&:not(.rt-input-fixed)]:top-(--input-focus-label-top) [.rt-input-inputElement:focus:not([disabled]):not([readonly])~&:not(.rt-input-fixed)]:text-(--input-text-highlight-color)',
             '[.rt-input-errored>.rt-input-inputElement:focus:not([disabled]):not([readonly])~&:not(.rt-input-fixed)]:text-(--input-text-error-color)',
-            classNames?.label,
             !floating &&
               cn(
                 'rt-input-fixed',
                 '[.rt-input-label&]:text-(length:--input-label-font-size) [.rt-input-label&]:top-(--input-focus-label-top)',
-                classNames?.fixed,
               ),
           )}
           htmlFor={id}
@@ -236,7 +205,6 @@ export function Input({
                 'rt-input-required',
                 '[.rt-input-errored>.rt-input-label>&]:text-(--input-text-required-color)',
                 '[.rt-input-inputElement:focus:not([disabled]):not([readonly])~.rt-input-label>&]:text-(--input-text-required-color)',
-                classNames?.required,
               )}
             >
               {' '}
@@ -248,15 +216,14 @@ export function Input({
       {hint ? (
         <span
           id={`${id}-hint`}
-          hidden={Boolean(label)}
           className={cn(
             'rt-input-hint',
+            Boolean(label) && 'hidden',
             'text-(--input-text-label-color) text-(length:--input-field-font-size) left-0 leading-(--input-field-font-size) opacity-(--input-hint-opacity) pointer-events-none absolute top-[calc(var(--input-padding)+1.5*var(--input-field-padding))] [transition-duration:var(--animation-duration)] [transition-property:opacity] [transition-timing-function:var(--animation-curve-default)]',
             '[.rt-input-label.rt-input-fixed~&]:hidden',
             '[.rt-input-inputElement.rt-input-filled~&]:hidden',
             '[.rt-input-inputElement:focus:not([disabled]):not([readonly])~&]:block [.rt-input-inputElement:focus:not([disabled]):not([readonly])~&]:opacity-(--input-hint-opacity)',
             '[.rt-input-inputElement:focus:not([disabled]):not([readonly]).rt-input-filled~&]:opacity-0',
-            classNames?.hint,
           )}
         >
           {hint}
@@ -270,7 +237,6 @@ export function Input({
               className={cn(
                 'rt-input-error',
                 'min-w-0 flex-1 text-(length:--input-label-font-size) leading-(--input-underline-height) text-(--input-text-error-color)',
-                classNames?.error,
               )}
             >
               {error}
@@ -283,7 +249,6 @@ export function Input({
                 'rt-input-counter',
                 'text-(--input-text-label-color) text-(length:--input-label-font-size) leading-(--input-underline-height)',
                 error ? 'shrink-0 text-(--input-text-error-color)' : 'absolute right-0',
-                classNames?.counter,
               )}
             >{`${length}/${maxLength}`}</span>
           ) : null}

@@ -3,16 +3,17 @@ import './tokens.css';
 
 import { activeClasses } from './styles';
 import { cn } from '../foundations/styles/cn';
-import type { DatePickerClassNames, DatePickerLabels } from './types';
+import type { DatePickerLabels } from './types';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import ViewTransition from '../foundations/motion/ViewTransition';
 import { range } from '../foundations/collections/range';
 import IconButton from '../button/IconButton';
 import time, { type DatePickerLocale } from '../foundations/date-time/calendar';
 import CalendarMonth from './CalendarMonth';
 import isDateDisabled, { dayStamp, type DateConstraints } from './is-date-disabled';
 export interface CalendarProps extends DateConstraints {
+  className?: string;
   display?: 'months' | 'years';
   labels?: Partial<DatePickerLabels>;
   /** Inclusive bounds of the year chooser; date validity still follows minDate/maxDate. */
@@ -23,10 +24,9 @@ export interface CalendarProps extends DateConstraints {
   onChange?: (date: Date, dayClick: boolean) => void;
   selectedDate?: Date;
   sundayFirstDayOfWeek?: boolean;
-  /** Classes for the component's rendered parts. */
-  classNames?: DatePickerClassNames;
 }
 export default function Calendar({
+  className,
   display = 'months',
   labels,
   startYear,
@@ -36,7 +36,6 @@ export default function Calendar({
   onChange,
   selectedDate: suppliedDate,
   sundayFirstDayOfWeek,
-  classNames,
   ...constraints
 }: CalendarProps) {
   const [initialDate] = useState(() => new Date());
@@ -44,7 +43,7 @@ export default function Calendar({
   const [viewDate, setViewDate] = useState(selectedDate);
   const [focusedDate, setFocusedDate] = useState(selectedDate);
   const [direction, setDirection] = useState<'left' | 'right'>('right');
-  const monthRefs = useRef(Array.from({ length: 12 }, () => React.createRef<HTMLDivElement>()));
+  const calendar = useRef<HTMLDivElement>(null);
   const years = useRef<HTMLUListElement>(null);
   const activeYear = useRef<HTMLLIElement>(null);
   const focusSelectedDay = useRef(false);
@@ -63,8 +62,8 @@ export default function Calendar({
         activeYear.current.offsetTop - (years.current.offsetHeight / 2 + activeYear.current.offsetHeight / 2);
     if (focusSelectedDay.current) {
       focusSelectedDay.current = false;
-      monthRefs.current[viewDate.getMonth()].current
-        ?.querySelector<HTMLElement>('[data-react-toolbox="day"] [tabindex="0"]')
+      calendar.current
+        ?.querySelector<HTMLElement>('[data-view-state="current"] [data-react-toolbox="day"] [tabindex="0"]')
         ?.focus();
     }
   });
@@ -97,57 +96,6 @@ export default function Calendar({
     setFocusedDate(next);
     onChange?.(next, false);
   };
-  const animation =
-    direction === 'left'
-      ? {
-          enter: cn(
-            'rt-date-picker-slideLeftEnter',
-            'absolute opacity-0 transform-[translate3d(-100%,0,0)]',
-            classNames?.slideLeftEnter,
-          ),
-          enterActive: cn(
-            'rt-date-picker-slideLeftEnterActive',
-            'duration-350 [transition-property:transform,opacity] ease-[ease-in-out]',
-            '[.rt-date-picker-slideLeftEnter&]:opacity-[1] [.rt-date-picker-slideLeftEnter&]:transform-[translate3d(0,0,0)]',
-            classNames?.slideLeftEnterActive,
-          ),
-          exit: cn(
-            'rt-date-picker-slideLeftExit',
-            'absolute opacity-[1] transform-[translate3d(0,0,0)]',
-            classNames?.slideLeftExit,
-          ),
-          exitActive: cn(
-            'rt-date-picker-slideLeftExitActive',
-            'duration-350 [transition-property:transform,opacity] ease-[ease-in-out]',
-            '[.rt-date-picker-slideLeftExit&]:opacity-0 [.rt-date-picker-slideLeftExit&]:transform-[translate3d(100%,0,0)]',
-            classNames?.slideLeftExitActive,
-          ),
-        }
-      : {
-          enter: cn(
-            'rt-date-picker-slideRightEnter',
-            'absolute opacity-0 transform-[translateX(100%)]',
-            classNames?.slideRightEnter,
-          ),
-          enterActive: cn(
-            'rt-date-picker-slideRightEnterActive',
-            'duration-350 [transition-property:transform,opacity] ease-[ease-in-out]',
-            '[.rt-date-picker-slideRightEnter&]:opacity-[1] [.rt-date-picker-slideRightEnter&]:transform-[translateX(0)]',
-            classNames?.slideRightEnterActive,
-          ),
-          exit: cn(
-            'rt-date-picker-slideRightExit',
-            'absolute opacity-[1] transform-[translateX(0)]',
-            classNames?.slideRightExit,
-          ),
-          exitActive: cn(
-            'rt-date-picker-slideRightExitActive',
-            'duration-350 [transition-property:transform,opacity] ease-[ease-in-out]',
-            '[.rt-date-picker-slideRightExit&]:opacity-0 [.rt-date-picker-slideRightExit&]:transform-[translateX(-100%)]',
-            classNames?.slideRightExitActive,
-          ),
-        };
-  const month = viewDate.getMonth();
   const firstYear =
     startYear ??
     constraints.minDate?.getFullYear() ??
@@ -163,8 +111,9 @@ export default function Calendar({
         'rt-date-picker-calendar',
         '[background:var(--calendar-background)] text-(length:--font-size-small) h-(--calendar-total-height) leading-(--calendar-row-height) overflow-hidden relative text-center',
         '[&:focus-visible]:[outline:2px_solid_var(--calendar-primary-color)] [&:focus-visible]:outline-offset-2',
-        classNames?.calendar,
+        className,
       )}
+      ref={calendar}
       role="group"
       aria-label={labels?.calendar ?? 'Calendar'}
       tabIndex={0}
@@ -216,7 +165,6 @@ export default function Calendar({
             '[&>li:focus-visible]:[outline:2px_solid_var(--calendar-primary-color)] [&>li:focus-visible]:outline-offset-2',
             'text-(length:--font-size-big) h-full [list-style:none] m-0 overflow-y-auto p-0',
             '[&>li]:cursor-pointer [&>li]:leading-[2.4]',
-            classNames?.years,
           )}
           ref={years}
         >
@@ -225,7 +173,7 @@ export default function Calendar({
               role="button"
               tabIndex={year === focusedYear ? 0 : -1}
               aria-pressed={year === viewDate.getFullYear()}
-              className={year === viewDate.getFullYear() ? cn(activeClasses, classNames?.active) : ''}
+              className={year === viewDate.getFullYear() ? activeClasses : ''}
               key={year}
               onClick={() => yearClick(year)}
               onKeyDown={(event) => {
@@ -279,7 +227,6 @@ export default function Calendar({
               'rt-date-picker-prev',
               '[.rt-date-picker-calendar_&]:cursor-pointer [.rt-date-picker-calendar_&]:h-[calc(3.6*var(--unit))] [.rt-date-picker-calendar_&]:opacity-[0.7] [.rt-date-picker-calendar_&]:absolute [.rt-date-picker-calendar_&]:top-0 [.rt-date-picker-calendar_&]:z-(--z-index-high) [.rt-date-picker-calendar_&]:left-0',
               '[.rt-date-picker-calendar_&>span]:align-top',
-              classNames?.prev,
             )}
             icon="chevron_left"
             onClick={() => moveViewMonth('left')}
@@ -290,41 +237,30 @@ export default function Calendar({
               'rt-date-picker-next',
               '[.rt-date-picker-calendar_&]:cursor-pointer [.rt-date-picker-calendar_&]:h-[calc(3.6*var(--unit))] [.rt-date-picker-calendar_&]:opacity-[0.7] [.rt-date-picker-calendar_&]:absolute [.rt-date-picker-calendar_&]:top-0 [.rt-date-picker-calendar_&]:z-(--z-index-high) [.rt-date-picker-calendar_&]:right-0',
               '[.rt-date-picker-calendar_&>span]:align-top',
-              classNames?.next,
             )}
             icon="chevron_right"
             onClick={() => moveViewMonth('right')}
           />
-          <TransitionGroup
-            component={null}
-            childFactory={(child) =>
-              React.isValidElement<{ classNames?: typeof animation }>(child)
-                ? React.cloneElement(child, { classNames: animation })
-                : child
-            }
+          <ViewTransition
+            viewKey={`${viewDate.getFullYear()}-${viewDate.getMonth()}`}
+            view={viewDate}
+            className="ease-(--animation-curve-default)"
+            enterFrom={direction === 'left' ? 'translateX(-100%)' : 'translateX(100%)'}
+            exitTo={direction === 'left' ? 'translateX(100%)' : 'translateX(-100%)'}
           >
-            <CSSTransition
-              mountOnEnter
-              unmountOnExit
-              key={month}
-              nodeRef={monthRefs.current[month]}
-              classNames={animation}
-              timeout={350}
-            >
+            {(month) => (
               <CalendarMonth
                 {...constraints}
-                nodeRef={monthRefs.current[month]}
                 locale={locale}
-                onDayClick={(day) => onChange?.(time.setDay(viewDate, day), true)}
+                onDayClick={(day) => onChange?.(time.setDay(month, day), true)}
                 selectedDate={selectedDate}
                 focusedDate={focusedDate}
-                onDayFocus={(day) => setFocusedDate(time.setDay(viewDate, day))}
+                onDayFocus={(day) => setFocusedDate(time.setDay(month, day))}
                 sundayFirstDayOfWeek={sundayFirstDayOfWeek}
-                classNames={classNames}
-                viewDate={viewDate}
+                viewDate={month}
               />
-            </CSSTransition>
-          </TransitionGroup>
+            )}
+          </ViewTransition>
         </div>
       )}
     </div>

@@ -3,5 +3,5 @@ import './tokens.css';
 
 import '../foundations/styles/setup.css';
 
-export { rippleFactory as default, rippleFactory, Ripple, useRipple } from './Ripple';
-export type { RippleProps, RippleClassNames, RippleOptions, RippleBehavior } from './Ripple';
+export { useRipple } from './useRipple';
+export type { RippleProps, RippleOptions, RippleBehavior } from './useRipple';

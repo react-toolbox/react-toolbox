@@ -2,7 +2,6 @@
 import './tokens.css';
 
 import { iconClasses } from './styles';
-import type { MenuClassNames } from './types';
 
 import {
   useImperativeHandle,
@@ -21,7 +20,6 @@ import { useRipple } from '../ripple';
 import { MenuContext } from './context';
 import { DropdownMenuItem } from './parts';
 
-export type MenuItemClassNames = MenuClassNames;
 export type MenuItemEvent = MouseEvent<HTMLLIElement> | KeyboardEvent<HTMLLIElement>;
 export interface MenuItemHandle<Value = unknown> {
   readonly node: HTMLLIElement | null;
@@ -40,8 +38,6 @@ export interface MenuItemProps<Value = unknown> extends Omit<HTMLAttributes<HTML
   value?: Value;
   ripple?: boolean;
   onClick?: (event: MenuItemEvent, item: MenuItemHandle<Value>) => void;
-  /** Classes for the component's rendered parts. */
-  classNames?: MenuItemClassNames;
   ref?: Ref<MenuItemHandle<Value>>;
 }
 export function MenuItem<Value = unknown>({
@@ -64,7 +60,6 @@ export function MenuItem<Value = unknown>({
   onTouchStart,
   onTouchEnd,
   onTouchCancel,
-  classNames,
   ref,
   ...attributes
 }: MenuItemProps<Value>) {
@@ -83,9 +78,7 @@ export function MenuItem<Value = unknown>({
   const ink = useRipple({
     disabled,
     ripple,
-    classNames: {
-      ripple: cn('rt-menu-ripple', '[.rt-menu-menuItem_&]:text-(--rt-color-text-secondary)', classNames?.ripple),
-    },
+    className: 'rt-menu-ripple [.rt-menu-menuItem_&]:text-(--rt-color-text-secondary)',
   });
   const click = (event: MenuItemEvent) => {
     if (disabled || event.defaultPrevented) return;
@@ -110,19 +103,13 @@ export function MenuItem<Value = unknown>({
         '[&:not(.rt-menu-disabled):hover]:bg-(--menu-item-hover-background) [&:not(.rt-menu-disabled):hover]:cursor-pointer',
         'outline-none [&:not(.rt-menu-disabled):focus-visible]:bg-(--menu-item-hover-background)',
         forcedColorsFocusClasses,
-        classNames?.menuItem,
         selected &&
           cn(
             'rt-menu-selected',
             '[.rt-menu-menuItem&]:bg-(--menu-item-selected-background) [.rt-menu-menuItem&]:[font-weight:500]',
-            classNames?.selected,
           ),
         disabled &&
-          cn(
-            'rt-menu-disabled',
-            '[.rt-menu-menuItem&]:opacity-[0.5] [.rt-menu-menuItem&]:pointer-events-none',
-            classNames?.disabled,
-          ),
+          cn('rt-menu-disabled', '[.rt-menu-menuItem&]:opacity-[0.5] [.rt-menu-menuItem&]:pointer-events-none'),
         className,
       )}
       onClick={click}
@@ -159,13 +146,9 @@ export function MenuItem<Value = unknown>({
         ink.onTouchCancel(event);
       }}
     >
-      {icon ? <FontIcon aria-hidden="true" value={icon} className={cn(iconClasses, classNames?.icon)} /> : null}
-      <span className={cn('rt-menu-caption', 'grow text-(length:--font-size-normal)', classNames?.caption)}>
-        {caption}
-      </span>
-      {shortcut ? (
-        <small className={cn('rt-menu-shortcut', 'ml-(--menu-item-padding)', classNames?.shortcut)}>{shortcut}</small>
-      ) : null}
+      {icon ? <FontIcon aria-hidden="true" value={icon} className={iconClasses} /> : null}
+      <span className={cn('rt-menu-caption', 'grow text-(length:--font-size-normal)')}>{caption}</span>
+      {shortcut ? <small className={cn('rt-menu-shortcut', 'ml-(--menu-item-padding)')}>{shortcut}</small> : null}
       {children}
       {ink.ripple}
     </li>

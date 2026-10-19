@@ -31,8 +31,8 @@
     "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
   "scripts": {
-    "build": "tsdown --no-clean && node scripts/build-styles.mjs",
-    "dev": "tsdown --watch src --no-clean --on-success \"node scripts/build-styles.mjs && node scripts/build-registry.mjs && node scripts/build-api-docs.mjs\"",
+    "build": "tsdown && node scripts/build-styles.mjs",
+    "dev": "tsdown --watch src --on-success \"node scripts/build-styles.mjs && node scripts/build-registry.mjs && node scripts/build-api-docs.mjs\"",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:browser": "pnpm --workspace-root exec playwright test packages/react-toolbox/tests/browser",
@@ -59,7 +59,6 @@
     "@radix-ui/react-tabs": "^1.2.1",
     "@radix-ui/react-tooltip": "^1.4.1",
     "classnames": "^2.5.1",
-    "react-transition-group": "^4.4.5",
     "tailwind-merge": "^3.7.0",
     "vaul": "^1.1.2"
   },
@@ -80,7 +79,6 @@
     "@types/node": "^26.6.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "@types/react-transition-group": "^4.4.12",
     "esbuild": "^0.28.2",
     "jsdom": "^30.1.3",
     "material-icons": "^1.13.14",
@@ -214,14 +212,6 @@
     "./input/*": {
       "types": "./dist/material/input/*.d.ts",
       "import": "./dist/material/input/*.js"
-    },
-    "./layout": {
-      "types": "./dist/material/layout/index.d.ts",
-      "import": "./dist/material/layout/index.js"
-    },
-    "./layout/*": {
-      "types": "./dist/material/layout/*.d.ts",
-      "import": "./dist/material/layout/*.js"
     },
     "./list": {
       "types": "./dist/material/list/index.d.ts",

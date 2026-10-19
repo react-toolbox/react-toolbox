@@ -1,16 +1,13 @@
 'use client';
 import './tokens.css';
 
-import type { ListClassNames } from './types';
 import { useContext, type ComponentPropsWithRef } from 'react';
 import { cn } from '../foundations/styles/cn';
 import { ListContext } from './context';
 export interface ListDividerProps extends ComponentPropsWithRef<'hr'> {
   inset?: boolean;
-  /** Classes for the component's rendered parts. */
-  classNames?: ListClassNames;
 }
-export function ListDivider({ inset = false, className, classNames, ...other }: ListDividerProps) {
+export function ListDivider({ inset = false, className, ...other }: ListDividerProps) {
   const list = useContext(ListContext);
   const divider = (
     <hr
@@ -21,12 +18,11 @@ export function ListDivider({ inset = false, className, classNames, ...other }: 
         '[.rt-list-list+&]:mt-[calc(-1_*_var(--list-vertical-padding))]',
         '[.rt-list-listItem~&]:mb-(--list-vertical-padding) [.rt-list-listItem~&]:mt-(--list-vertical-padding)',
         '[.rt-list-listItem~li>&]:mb-(--list-vertical-padding) [.rt-list-listItem~li>&]:mt-(--list-vertical-padding)',
-        classNames?.divider,
+
         inset &&
           cn(
             'rt-list-inset',
             '[.rt-list-divider&]:ms-(--list-content-left-spacing) [.rt-list-divider&]:me-(--list-horizontal-padding)',
-            classNames?.inset,
           ),
         className,
       )}

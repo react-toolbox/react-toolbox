@@ -1,6 +1,5 @@
 'use client';
 
-import type { CardClassNames } from './types';
 import type { ComponentPropsWithRef, ReactNode } from 'react';
 import { cn } from '../foundations/styles/cn';
 export interface CardMediaProps extends ComponentPropsWithRef<'div'> {
@@ -9,8 +8,6 @@ export interface CardMediaProps extends ComponentPropsWithRef<'div'> {
   image?: ReactNode;
   /** Alternative text for a background image; omit for decorative media. */
   alt?: string;
-  /** Classes for the component's rendered parts. */
-  classNames?: CardClassNames;
 }
 export function CardMedia({
   aspectRatio,
@@ -21,7 +18,6 @@ export function CardMedia({
   image,
   alt,
   style,
-  classNames,
   ...other
 }: CardMediaProps) {
   return (
@@ -35,22 +31,11 @@ export function CardMedia({
         'rt-card-cardMedia',
         'bg-center bg-no-repeat bg-cover relative',
         "[&::after]:[content:''] [&::after]:block [&::after]:h-0",
-        classNames?.cardMedia,
         aspectRatio &&
           (aspectRatio === 'wide'
-            ? cn(
-                'rt-card-wide',
-                '[.rt-card-cardMedia&]:w-full',
-                '[.rt-card-cardMedia&::after]:pt-[56.25%]',
-                classNames?.wide,
-              )
+            ? cn('rt-card-wide', '[.rt-card-cardMedia&]:w-full', '[.rt-card-cardMedia&::after]:pt-[56.25%]')
             : aspectRatio === 'square'
-              ? cn(
-                  'rt-card-square',
-                  '[.rt-card-cardMedia&]:w-full',
-                  '[.rt-card-cardMedia&::after]:pt-[100%]',
-                  classNames?.square,
-                )
+              ? cn('rt-card-square', '[.rt-card-cardMedia&]:w-full', '[.rt-card-cardMedia&::after]:pt-[100%]')
               : undefined),
         className,
       )}
@@ -69,8 +54,7 @@ export function CardMedia({
           '[.rt-card-cardMedia.rt-card-square_&>iframe]:max-w-full',
           '[.rt-card-cardMedia.rt-card-square_&>video]:max-w-full',
           '[.rt-card-cardMedia.rt-card-square_&>img]:max-w-full',
-          classNames?.content,
-          contentOverlay && cn('rt-card-contentOverlay', classNames?.contentOverlay),
+          contentOverlay && 'rt-card-contentOverlay',
         )}
       >
         {typeof image !== 'string' ? image : null}

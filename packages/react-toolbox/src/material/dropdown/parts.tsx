@@ -58,7 +58,7 @@ export function DropdownTrigger({ className, ...props }: DropdownTriggerProps) {
 }
 export type DropdownContentProps = ComponentProps<typeof Primitive.Content>;
 export function DropdownContent({ className, style, ref, ...props }: DropdownContentProps) {
-  const theme = usePortalTheme();
+  const theme = usePortalTheme(style);
   const [node, setNode] = useState<HTMLDivElement | null>(null);
   const contentRef = useMergedRefs(ref, setNode);
   useInertOthers(node);

@@ -118,6 +118,22 @@ describe('native form controls', () => {
     expect((control as HTMLInputElement).indeterminate).toBe(true);
   });
 
+  it.each([
+    ['checkbox', Checkbox, '.rt-checkbox-checked'],
+    ['switch', Switch, '.rt-switch-on'],
+  ] as const)(
+    'keeps an uncontrolled %s and its visual state unchanged after a cancelled change',
+    async (role, Control, selected) => {
+      const change = vi.fn((_, event) => event.preventDefault());
+      const { container } = render(<Control label="Alerts" defaultChecked onChange={change} />);
+      const input = screen.getByRole(role, { name: 'Alerts' });
+      await userEvent.click(input);
+      expect(change).toHaveBeenCalledWith(false, expect.anything());
+      expect(input).toBeChecked();
+      expect(container.querySelector(selected)).toBeInTheDocument();
+    },
+  );
+
   it('composes radio groups through wrappers, resets defaults, and invokes both callbacks', async () => {
     const child = vi.fn(),
       group = vi.fn();
@@ -141,6 +157,40 @@ describe('native form controls', () => {
     expect(screen.getByRole('radio', { name: 'Small' })).toBeChecked();
     expect(screen.getByRole('radio', { name: 'Large' })).not.toBeChecked();
     await waitFor(() => expect(view.container.querySelectorAll('.rt-radio-radioChecked')).toHaveLength(1));
+  });
+
+  it.each([
+    ['checkbox', Checkbox],
+    ['switch', Switch],
+  ] as const)('keeps a controlled %s unchanged when activation is cancelled', async (role, Control) => {
+    render(<Control label="Alerts" checked={false} onChange={(_, event) => event.preventDefault()} />);
+    const input = screen.getByRole(role, { name: 'Alerts' });
+    await userEvent.click(input);
+    expect(input).not.toBeChecked();
+  });
+
+  it.each(['child', 'group'] as const)('retains radio selection when the %s callback cancels it', async (cancelAt) => {
+    const group = vi.fn((_, event) => {
+      if (cancelAt === 'group') event.preventDefault();
+    });
+    const view = render(
+      <form>
+        <RadioGroup name="delivery" defaultValue="daily" onChange={group}>
+          <RadioButton label="Daily" value="daily" />
+          <RadioButton
+            label="Weekly"
+            value="weekly"
+            onChange={cancelAt === 'child' ? (event) => event.preventDefault() : undefined}
+          />
+        </RadioGroup>
+      </form>,
+    );
+    await userEvent.click(screen.getByRole('radio', { name: 'Weekly' }));
+    expect(screen.getByRole('radio', { name: 'Daily' })).toBeChecked();
+    expect(screen.getByRole('radio', { name: 'Weekly' })).not.toBeChecked();
+    expect(view.container.querySelectorAll('.rt-radio-radioChecked')).toHaveLength(1);
+    expect(new FormData(view.container.querySelector('form')!).get('delivery')).toBe('daily');
+    expect(group).toHaveBeenCalledTimes(cancelAt === 'child' ? 0 : 1);
   });
 });
 

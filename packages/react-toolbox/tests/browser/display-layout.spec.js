@@ -12,8 +12,6 @@ test.beforeAll(async () => {
       contents: `
           import React from 'react';
           import { createRoot } from 'react-dom/client';
-          import { Layout, NavDrawer, Sidebar, Panel } from './src/material/layout';
-          import AppBar from './src/material/app-bar';
           import { List, ListItem, ListItemContent, ListItemText, ListSubHeader, ListDivider } from './src/material/list';
           import { Tabs, Tab } from './src/material/tabs';
           import Chip from './src/material/chip';
@@ -23,12 +21,18 @@ test.beforeAll(async () => {
           import Switch from './src/material/switch';
           import { TableRoot, TableHeader, TableHead, TableBody, TableRow, TableCell } from './src/material/table';
           import { InputFormRecipe, AvatarGroupRecipe, AvatarStatusRecipe, DestructiveActionRecipe } from './src/examples/recipes';
-          function Navigation() { return <NavDrawer pinned>Navigation</NavDrawer>; }
-          function Details() { return <Sidebar pinned width={window.fixtureWidth}>Details</Sidebar>; }
-          function Header() { return <AppBar fixed title="Project" />; }
           function App() {
+            if (window.fixtureCancellation) return <main>
+              <Checkbox label="Locked unchecked" checked={false} onChange={(_, event) => event.preventDefault()} />
+              <Checkbox label="Locked checked" defaultChecked onChange={(_, event) => event.preventDefault()} />
+              <Checkbox label="Locked mixed" checked={false} indeterminate onClick={event => event.preventDefault()} />
+              <TableRoot aria-label="Locked table" selectionMode="multiple">
+                <TableHeader><TableHead onSelectionChange={(_, event) => event.preventDefault()}><TableCell>Name</TableCell></TableHead></TableHeader>
+                <TableBody><TableRow value="ada" onSelectionChange={(_, event) => event.preventDefault()}><TableCell>Ada</TableCell></TableRow></TableBody>
+              </TableRoot>
+            </main>;
             if (window.fixtureMetrics) return <main dir={window.fixtureDirection}>
-              <Tabs aria-label="Project views"><Tab label="Overview"/><Tab label="Details"/></Tabs>
+              <Tabs defaultValue="overview" aria-label="Project views"><Tab value="overview" label="Overview"/><Tab value="details" label="Details"/></Tabs>
               <List aria-label="Messages">
                 {[false, true].flatMap(interactive => ['icon', 'avatar'].map(leading => (
                   <ListItem key={leading + interactive}
@@ -61,10 +65,8 @@ test.beforeAll(async () => {
                 <TableBody><TableRow><TableCell>Ada</TableCell></TableRow></TableBody>
               </TableRoot>
             </main>;
-            return <Layout dir={window.fixtureDirection}>
-              {window.fixtureNav && <Navigation />}
-              <Header />
-              <Panel><List selectable>
+            return <main dir={window.fixtureDirection}>
+              <List selectable>
                 <ListSubHeader>Tasks</ListSubHeader>
                 <ListItem caption="Read details" />
                 <ListItem caption="Edit details" onClick={() => {}} />
@@ -72,9 +74,7 @@ test.beforeAll(async () => {
               </List>
               <Chip deletable deleteLabel="Remove passive">Passive</Chip>
               <Chip deletable onClick={() => {}} deleteLabel="Remove interactive">Interactive</Chip>
-              </Panel>
-              <Details />
-            </Layout>;
+            </main>;
           }
           createRoot(document.getElementById('root')).render(<App />);
         `,
@@ -96,28 +96,49 @@ test.beforeAll(async () => {
   ).css;
 });
 
-async function fixture(page, { width, direction = 'ltr', nav = false, recipes = false, metrics = false } = {}) {
+async function fixture(page, { direction = 'ltr', recipes = false, metrics = false, cancellation = false } = {}) {
   await page.setContent(
     `<!doctype html><html lang="en"><head><title>Display regression fixture</title><style>${css}body{margin:0}*{transition:none!important}</style></head><body><div id="root"></div></body></html>`,
   );
   await page.evaluate(
     (options) => {
-      window.fixtureWidth = options.width;
       window.fixtureDirection = options.direction;
-      window.fixtureNav = options.nav;
       window.fixtureRecipes = options.recipes;
       window.fixtureMetrics = options.metrics;
+      window.fixtureCancellation = options.cancellation;
     },
-    { width, direction, nav, recipes, metrics },
+    { direction, recipes, metrics, cancellation },
   );
   await page.addScriptTag({ content: javascript });
-  if (!recipes && !metrics) await expect(page.locator('.rt-layout-layout')).toHaveClass(/rt-layout-sidebarPinned/);
 }
 
+test('cancelled checkbox activation keeps native state, visual state and table selection synchronized', async ({
+  page,
+}) => {
+  await fixture(page, { cancellation: true });
+  for (const activation of ['click', 'keyboard']) {
+    for (const name of ['Locked unchecked', 'Locked checked', 'Locked mixed', 'Select all rows', 'Select row ada']) {
+      const checkbox = page.getByRole('checkbox', { name, exact: true });
+      if (activation === 'click') await checkbox.locator('..').click();
+      else await checkbox.press('Space');
+      await expect(checkbox).toBeChecked({ checked: name === 'Locked checked' });
+      if (name === 'Locked mixed') await expect(checkbox).toBeChecked({ indeterminate: true });
+      await expect(checkbox.locator('..').locator('.rt-checkbox-checked')).toHaveCount(
+        name === 'Locked checked' || name === 'Locked mixed' ? 1 : 0,
+      );
+    }
+  }
+});
+
 for (const direction of ['ltr', 'rtl']) {
-  test(`text tabs center their labels and interactive three-line lists retain top alignment in ${direction}`, async ({ page }) => {
+  test(`text tabs center their labels and interactive three-line lists retain top alignment in ${direction}`, async ({
+    page,
+  }) => {
     await fixture(page, { direction, metrics: true });
-    for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
+    for (const viewport of [
+      { width: 390, height: 844 },
+      { width: 1440, height: 900 },
+    ]) {
       await page.setViewportSize(viewport);
       for (const tab of await page.getByRole('tab').all()) {
         const geometry = await tab.evaluate((element) => {
@@ -139,38 +160,6 @@ for (const direction of ['ltr', 'rtl']) {
     }
   });
 }
-
-for (const direction of ['ltr', 'rtl']) {
-  test(`wrapped layout reserves the rendered percentage sidebar width in ${direction}`, async ({ page }) => {
-    await fixture(page, { width: 50, direction, nav: true });
-    const sidebar = await page.locator('.rt-layout-sidebarDrawer').boundingBox();
-    const nav = await page.locator('.rt-layout-navDrawerDrawer').boundingBox();
-    const panel = await page.locator('[data-react-toolbox="panel"]').boundingBox();
-    expect(sidebar.width).toBe(720);
-    expect(direction === 'ltr' ? panel.x : 1440 - panel.x - panel.width).toBe(nav.width);
-    expect(direction === 'ltr' ? 1440 - panel.x - panel.width : panel.x).toBe(sidebar.width);
-    expect(direction === 'ltr' ? sidebar.x : nav.x).toBeGreaterThan(0);
-    const padding = await page.locator('[data-react-toolbox="app-bar"]').evaluate((element) => {
-      const styles = getComputedStyle(element);
-      return { start: parseFloat(styles.paddingInlineStart), end: parseFloat(styles.paddingInlineEnd) };
-    });
-    expect(padding.start).toBe(nav.width + 24);
-    expect(padding.end).toBe(sidebar.width + 24);
-  });
-}
-
-test('sidebar and panel share responsive numeric and percentage width resolution', async ({ page }) => {
-  for (const width of [4, 10, 12, 50]) {
-    await fixture(page, { width });
-    for (const viewportWidth of [640, 760, 900]) {
-      await page.setViewportSize({ width: viewportWidth, height: 1000 });
-      const sidebar = await page.locator('.rt-layout-sidebarDrawer').boundingBox();
-      const panel = await page.locator('[data-react-toolbox="panel"]').boundingBox();
-      const reserved = viewportWidth - panel.x - panel.width;
-      expect(reserved, `${width} at ${viewportWidth}`).toBeCloseTo(sidebar.width, 1);
-    }
-  }
-});
 
 test('native list and chip actions retain the passive geometry', async ({ page }) => {
   await fixture(page);

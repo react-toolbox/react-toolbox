@@ -2,7 +2,6 @@
 import './tokens.css';
 
 import { itemClasses, disabledClasses } from './styles';
-import type { ListClassNames } from './types';
 import type { ComponentPropsWithRef, ReactNode } from 'react';
 import { cn } from '../foundations/styles/cn';
 import Checkbox, { type CheckboxProps } from '../checkbox';
@@ -18,8 +17,6 @@ export interface ListCheckboxProps extends Omit<ComponentPropsWithRef<'li'>, 'on
   onFocus?: CheckboxProps['onFocus'];
   /** Native checkbox state, form attributes, input events, and imperative ref. */
   checkboxProps?: Omit<CheckboxProps, 'label' | 'children'>;
-  /** Classes for the component's rendered parts. */
-  classNames?: ListClassNames;
 }
 export function ListCheckbox({
   caption,
@@ -32,7 +29,6 @@ export function ListCheckbox({
   onBlur,
   onChange,
   onFocus,
-  classNames,
   ...other
 }: ListCheckboxProps) {
   const disabled = suppliedDisabled ?? checkboxProps?.disabled ?? false;
@@ -41,10 +37,10 @@ export function ListCheckbox({
       {...other}
       className={cn(
         itemClasses,
-        classNames?.item,
+
         'rt-list-checkboxItem',
-        classNames?.checkboxItem,
-        disabled && cn(disabledClasses, classNames?.disabled),
+
+        disabled && disabledClasses,
         className,
       )}
     >
@@ -57,7 +53,7 @@ export function ListCheckbox({
           "[&>[data-react-toolbox='check']]:me-(--list-item-right-checkbox-margin)",
           "[&>[data-react-toolbox='label']]:ps-0",
           "[.rt-list-item.rt-list-disabled>&>[data-react-toolbox='label']]:opacity-[0.5]",
-          classNames?.checkbox,
+
           checkboxProps?.className,
         )}
         disabled={disabled}

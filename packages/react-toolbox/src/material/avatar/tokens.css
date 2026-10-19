@@ -2,15 +2,15 @@
   /* avatar */
   :root {
     --avatar-color: var(--rt-color-white);
-    --avatar-background: var(--palette-grey-500);
+    --avatar-background: var(--palette-grey-600);
     --avatar-size: calc(4 * var(--unit));
     --avatar-font-size: calc(2.4 * var(--unit));
   }
   [data-react-toolbox-tokens~="--rt-color-white"] {
     --avatar-color: var(--rt-color-white);
   }
-  [data-react-toolbox-tokens~="--palette-grey-500"] {
-    --avatar-background: var(--palette-grey-500);
+  [data-react-toolbox-tokens~="--palette-grey-600"] {
+    --avatar-background: var(--palette-grey-600);
   }
   [data-react-toolbox-tokens~="--unit"] {
     --avatar-size: calc(4 * var(--unit));

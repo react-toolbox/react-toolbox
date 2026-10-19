@@ -175,21 +175,23 @@ export const componentState: Partial<Record<ComponentSlug, ReactNode>> = {
   table: (
     <ul>
       <li>
-        <code>TableRoot</code> uses stable row values with <code>selected</code>/<code>onSelectionChange</code> or{' '}
-        <code>defaultSelected</code>. Select-all affects mounted, enabled rows and preserves selections outside the
-        current view.
+        <code>Table</code> and <code>TableRoot</code> use stable row values with <code>selected</code>/
+        <code>onSelectionChange</code> or <code>defaultSelected</code>. Select-all affects mounted, enabled rows and
+        preserves selections outside the current view.
       </li>
       <li>
-        <code>Table</code>'s <code>onRowSelect</code> returns row indices. Update each <code>TableRow</code>'s{' '}
-        <code>selected</code> prop and map indices to your stable item IDs when sorting or filtering.
+        Use <code>selectionMode="single"</code> or <code>selectionMode="multiple"</code> to enable selection. Give each
+        selectable <code>TableRow</code> a stable string <code>value</code>. Rows without a value remain display-only.
+        Row and header <code>onSelectionChange</code> callbacks can cancel the event before selection changes.
       </li>
     </ul>
   ),
   tabs: (
     <ul>
       <li>
-        <code>Tabs</code> accepts <code>index</code>/<code>onChange</code> or <code>defaultIndex</code>. Keyboard focus
-        activates tabs by default; <code>activationMode="manual"</code> waits for Enter or Space.
+        <code>Tabs</code> accepts <code>value</code>/<code>onValueChange</code> or <code>defaultValue</code>. Each tab
+        and panel has a stable string <code>value</code>. Keyboard focus activates tabs by default;{' '}
+        <code>activationMode="manual"</code> waits for Enter or Space.
       </li>
       <li>
         Inactive content unmounts by default. Use <code>hideMode="display"</code> to preserve child state, or{' '}

@@ -37,7 +37,7 @@ export function InputFormRecipe({ onSubmitData }: InputFormRecipeProps) {
         required
         floating={false}
         aria-describedby={`${id}-budget-help`}
-        classNames={{ inputElement: 'ps-[24px] pe-[40px]' }}
+        className="[&>input]:ps-[24px] [&>input]:pe-[40px]"
       >
         <span
           aria-hidden
@@ -64,7 +64,7 @@ export function InputFormRecipe({ onSubmitData }: InputFormRecipeProps) {
         minLength={8}
         required
         aria-describedby={`${id}-password-help`}
-        classNames={{ inputElement: 'pe-[48px]' }}
+        className="[&>input]:pe-[48px]"
       >
         <IconButton
           icon={visible ? 'visibility_off' : 'visibility'}

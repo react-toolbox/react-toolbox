@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useId } from 'react';
-import type { RadioButtonClassNames } from './RadioButton';
 import { RadioGroupContext } from './context';
 export interface RadioGroupProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   disabled?: boolean;
@@ -10,8 +9,6 @@ export interface RadioGroupProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   required?: boolean;
   value?: string;
   defaultValue?: string;
-  /** Classes for the component's rendered parts. */
-  classNames?: RadioButtonClassNames;
   onChange?: (value: string | undefined, event: React.MouseEvent<HTMLInputElement>) => void;
   ref?: React.Ref<HTMLDivElement>;
 }
@@ -23,16 +20,13 @@ export function RadioGroup({
   form,
   required,
   onChange,
-  classNames,
   value,
   defaultValue,
   ...others
 }: RadioGroupProps) {
   const id = useId();
   return (
-    <RadioGroupContext
-      value={{ name: name || `radio-${id}`, form, required, value, defaultValue, disabled, classNames, onChange }}
-    >
+    <RadioGroupContext value={{ name: name || `radio-${id}`, form, required, value, defaultValue, disabled, onChange }}>
       <div
         {...others}
         role="radiogroup"

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound, permanentRedirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import registry from 'react-toolbox/registry/data.json';
 import DocsArticle, { DocsSection } from '../../article';
 import { components, exampleDependencies } from '../../catalog';
@@ -14,7 +14,7 @@ import { pageMetadata } from '../../../site-metadata';
 
 export const dynamicParams = false;
 export function generateStaticParams() {
-  return [...components.map(({ slug }) => ({ slug })), { slug: 'link' }, { slug: 'navigation' }];
+  return components.map(({ slug }) => ({ slug }));
 }
 export async function generateMetadata({ params }: PageProps<'/docs/components/[slug]'>): Promise<Metadata> {
   const { slug } = await params;
@@ -28,7 +28,6 @@ export async function generateMetadata({ params }: PageProps<'/docs/components/[
 }
 export default async function ComponentPage({ params }: PageProps<'/docs/components/[slug]'>) {
   const { slug } = await params;
-  if (slug === 'link' || slug === 'navigation') permanentRedirect('/docs/installation#routing');
   const index = components.findIndex((item) => item.slug === slug);
   const component = components[index];
   if (!component) notFound();

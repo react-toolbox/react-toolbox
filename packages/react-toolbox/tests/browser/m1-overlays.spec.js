@@ -3,36 +3,38 @@ import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
 import { test, expect } from '@playwright/test';
 
-// Exercise the actual source components without changing the public gallery or
-// the immutable old-runtime fixtures. The same cases run in both engines.
+/** Exercise the actual source components in both browser engines. */
 const source = `
   import React, { useState } from 'react';
   import { createRoot } from 'react-dom/client';
   import Dialog from './src/material/dialog';
   import Drawer from './src/material/drawer';
   import Snackbar from './src/material/snackbar';
-  import Tooltip from './src/material/tooltip';
+  import { useTooltip } from './src/material/tooltip';
   import { Tabs, Tab } from './src/material/tabs';
   import { IconMenu, MenuItem } from './src/material/menu';
-  const Tip = Tooltip('button');
+  function Tip() {
+    const behavior = useTooltip({ tooltip: 'Add file' });
+    return <><button {...behavior.triggerProps}>Tip</button>{behavior.tooltip}</>;
+  }
   function App() {
     const [dialog, setDialog] = useState(false);
     const [drawer, setDrawer] = useState(false);
-    const [tab, setTab] = useState(0);
+    const [tab, setTab] = useState('overview');
     return <>
       <button onClick={() => setDialog(true)}>Open dialog</button>
       <button onClick={() => setDrawer(true)}>Open drawer</button>
-      <Tip tooltip="Add file">Tip</Tip>
+      <Tip />
       <IconMenu aria-label="File options" style={{ position: 'fixed', left: 1230, top: 470 }}>
         <MenuItem caption="Archive" />
         <MenuItem caption="Delete" />
         {Array.from({ length: 20 }, (_, index) => <MenuItem key={index} caption={'Option ' + index} />)}
       </IconMenu>
-      <Tabs inverse index={tab} onChange={setTab} aria-label="Text and icon tabs">
-        <Tab icon="home" label="Overview">Overview</Tab>
-        <Tab icon="settings" label="Settings">Settings</Tab>
+      <Tabs inverse value={tab} onValueChange={setTab} aria-label="Text and icon tabs">
+        <Tab value="overview" icon="home" label="Overview">Overview</Tab>
+        <Tab value="settings" icon="settings" label="Settings">Settings</Tab>
       </Tabs>
-      <Tabs index={0} aria-label="Icon tabs"><Tab icon="home" /><Tab icon="settings" /></Tabs>
+      <Tabs value="home" aria-label="Icon tabs"><Tab value="home" icon="home" /><Tab value="settings" icon="settings" /></Tabs>
       <Snackbar active label={innerWidth < 500 ? 'Your message was sent successfully. Undo?' : 'Saved'} action="Undo" />
       <Dialog active={dialog} title="Long content" onEscKeyDown={() => setDialog(false)}
         actions={[{ label: 'Cancel', onClick: () => setDialog(false) }, { label: 'OK', onClick: () => setDialog(false) }]}>

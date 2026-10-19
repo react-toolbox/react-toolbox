@@ -32,13 +32,13 @@ A range starts with `{ from: Date, to: undefined }`, completes on the next avail
 
 For separate dates, use `mode="multiple"` with `value: Date[]` and `onValueChange`; clicking a selected day removes it. Clearing returns `[]`. Single mode uses `Date | null`, with `null` representing an empty selection. `defaultValue` supports uncontrolled usage in each mode. Treat mode as fixed for the lifetime of a calendar.
 
-`month`/`onMonthChange` control the first visible month; `defaultMonth` initializes it. `numberOfMonths` displays consecutive months, wrapping when necessary. When a single month cannot fit a narrow container, the calendar scrolls horizontally to preserve day targets. Week numbers follow ISO weeks. `sundayFirstDayOfWeek` changes the visible week layout. `locale` controls month, weekday, and full date names; `labels` supplies navigation, calendar, clear, and week-number labels. `classNames` accepts the existing calendar style slots, and `className` styles the outer calendar.
+`month`/`onMonthChange` control the first visible month; `defaultMonth` initializes it. `numberOfMonths` displays consecutive months, wrapping when necessary. When a single month cannot fit a narrow container, the calendar scrolls horizontally to preserve day targets. Week numbers follow ISO weeks. `sundayFirstDayOfWeek` changes the visible week layout. `locale` controls month, weekday, and full date names; `labels` supplies navigation, calendar, clear, and week-number labels. `className` styles the outer calendar; CSS variables control its colors and dimensions. Edit the installed calendar source to customize internal elements.
 
 Arrow keys, Home/End, and PageUp/PageDown move focus independently of selection; Shift+PageUp/PageDown moves a year. Unavailable days remain discoverable by arrow keys but cannot be selected. Enter/Space selects the focused day. A calendar supplies values to its consumer; it does not serialize a range or multiple dates into a form automatically.
 
 ## Single pickers and forms
 
-Both pickers validate `required`, including when associated with a separate form through `form`. Invalid submission focuses the visible input. Disabled and readonly pickers do not participate in validation. Submitted values retain the existing display-format strings. Use the selected `Date` values for application serialization.
+Both pickers validate `required`, including when associated with a separate form through `form`. Invalid submission focuses the visible input. Disabled pickers and pickers with `readOnly` do not participate in validation. Read-only values remain focusable and submitted. Submitted values retain the existing display-format strings. Use the selected `Date` values for application serialization.
 
 `clearable` adds a clear action. An uncontrolled picker clears itself; a controlled picker should set `value={null}` in `onClear`. `onChange` continues to receive only `Date` values. Form reset restores an uncontrolled picker's `defaultValue`.
 

@@ -8,7 +8,6 @@ export type ApiProperty = {
 };
 export type ComponentApi = {
   name: string;
-  kind: string;
   signature: string;
   description: string;
   source: string;
@@ -16,7 +15,6 @@ export type ComponentApi = {
   properties: ApiProperty[];
   nativeProps: string[];
   nativeDefaults: { name: string; value: string }[];
-  styleSlots: string[];
 };
 export type FamilyApi = {
   apis: ComponentApi[];

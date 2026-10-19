@@ -1,7 +1,6 @@
 'use client';
 import './tokens.css';
 
-import type { CardClassNames } from './types';
 import type { ComponentPropsWithRef, ReactNode } from 'react';
 import { cn } from '../foundations/styles/cn';
 import Avatar from '../avatar';
@@ -19,8 +18,6 @@ export interface CardTitleProps extends Omit<ComponentPropsWithRef<'div'>, 'titl
   avatar?: ReactNode;
   subtitle?: ReactNode;
   title?: ReactNode;
-  /** Classes for the component's rendered parts. */
-  classNames?: CardClassNames;
 }
 export function CardTitle({
   heading: Heading = 'h5',
@@ -28,7 +25,6 @@ export function CardTitle({
   children,
   className,
   subtitle,
-  classNames,
   title,
   ...other
 }: CardTitleProps) {
@@ -41,21 +37,18 @@ export function CardTitle({
         '[&_p]:text-[calc(1.4*var(--unit))] [&_p]:[font-weight:400] [&_p]:tracking-[0] [&_p]:leading-[calc(2.4*var(--unit))] [&_p]:m-0',
         '[&:last-child]:pb-(--card-padding-lg)',
         '[.rt-card-cardMedia_.rt-card-contentOverlay_&]:bg-(--card-text-overlay)',
-        classNames?.cardTitle,
         Boolean(avatar) &&
           cn(
             'rt-card-small',
             '[.rt-card-cardTitle&]:p-(--card-padding)',
             '[@media_screen_and_(min-width:_600px)_and_(min-height:_600px)]:[.rt-card-cardTitle&]:pl-[var(--card-desktop-horizontal-padding,_calc(2.4_*_var(--unit)))] [@media_screen_and_(min-width:_600px)_and_(min-height:_600px)]:[.rt-card-cardTitle&]:pr-[var(--card-desktop-horizontal-padding,_calc(2.4_*_var(--unit)))]',
             '[.rt-card-cardTitle&:last-child]:pb-(--card-padding)',
-            classNames?.small,
           ),
         !avatar &&
           cn(
             'rt-card-large',
             '[.rt-card-cardTitle&]:p-[var(--card-padding-lg)_var(--card-padding)_var(--card-padding)]',
             '[@media_screen_and_(min-width:_600px)_and_(min-height:_600px)]:[.rt-card-cardTitle&]:pl-[var(--card-desktop-horizontal-padding,_calc(2.4_*_var(--unit)))] [@media_screen_and_(min-width:_600px)_and_(min-height:_600px)]:[.rt-card-cardTitle&]:pr-[var(--card-desktop-horizontal-padding,_calc(2.4_*_var(--unit)))]',
-            classNames?.large,
           ),
         className,
       )}
@@ -63,10 +56,8 @@ export function CardTitle({
     >
       {typeof avatar === 'string' ? <Avatar image={avatar} /> : avatar}
       <div>
-        {title && <Heading className={cn(titleClasses, classNames?.title)}>{title}</Heading>}
-        {children && typeof children === 'string' && (
-          <Heading className={cn(titleClasses, classNames?.title)}>{children}</Heading>
-        )}
+        {title && <Heading className={titleClasses}>{title}</Heading>}
+        {children && typeof children === 'string' && <Heading className={titleClasses}>{children}</Heading>}
         {subtitle && (
           <p
             className={cn(
@@ -74,7 +65,6 @@ export function CardTitle({
               '[.rt-card-cardTitle_&]:text-(--rt-color-text-secondary) [.rt-card-cardTitle_&]:text-[calc(1.4*var(--unit))] [.rt-card-cardTitle_&]:[font-weight:400] [.rt-card-cardTitle_&]:tracking-[0] [.rt-card-cardTitle_&]:leading-[calc(2.4*var(--unit))] [.rt-card-cardTitle_&]:m-0 [.rt-card-cardTitle_&]:p-0',
               '[.rt-card-cardTitle.rt-card-small_&]:[font-weight:400] [.rt-card-cardTitle.rt-card-small_&]:leading-[calc(2*var(--unit))]',
               '[.rt-card-cardMedia_.rt-card-cardTitle_&]:text-(--card-color-white)',
-              classNames?.subtitle,
             )}
           >
             {subtitle}

@@ -1,23 +1,3 @@
-/** Optional class overrides for the component's rendered parts. */
-export type ButtonClassNames = Partial<
-  Record<
-    | 'accent'
-    | 'button'
-    | 'flat'
-    | 'floating'
-    | 'icon'
-    | 'inverse'
-    | 'mini'
-    | 'neutral'
-    | 'primary'
-    | 'raised'
-    | 'rippleWrapper'
-    | 'solid'
-    | 'squared'
-    | 'toggle',
-    string
-  >
->;
 import type { ComponentPropsWithRef, HTMLAttributes, ReactElement, ReactNode, Ref } from 'react';
 import type { RippleProps } from '../ripple';
 export interface ButtonAppearanceProps extends RippleProps {
@@ -27,11 +7,8 @@ export interface ButtonAppearanceProps extends RippleProps {
   inverse?: boolean;
   neutral?: boolean;
   primary?: boolean;
-  /** Classes for the component's rendered parts. */
-  classNames?: ButtonClassNames;
 }
 export interface ButtonShapeProps {
-  flat?: boolean;
   floating?: boolean;
   label?: string;
   mini?: boolean;

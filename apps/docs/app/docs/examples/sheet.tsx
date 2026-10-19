@@ -29,7 +29,7 @@ export default function SheetExample() {
         <SheetOverlay />
         <SheetContent id={contentId}>
           <SheetHandle />
-          <div className="mx-auto w-full max-w-xl p-6">
+          <div className="mx-auto min-h-0 w-full max-w-xl overflow-y-auto p-6">
             <SheetTitle>Visit notes</SheetTitle>
             <SheetDescription>
               Drag the handle or use the resize button to switch between two sheet sizes.

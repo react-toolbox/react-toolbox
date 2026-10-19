@@ -118,26 +118,20 @@ for (const [width, height, barHeight, inset, titleX] of [
   [844, 390, 48, 16, 72],
   [768, 1024, 64, 24, 80],
 ]) {
-  test(`M1 app bar and clipped layout at ${width}×${height}`, async ({ page }) => {
+  test(`M1 app bar metrics at ${width}×${height}`, async ({ page }) => {
     await page.setViewportSize({ width, height });
     await fixture(
       page,
-      `<div class="rt-layout-layout rt-layout-appbarFixed">
-      <header class="rt-app-bar-appBar rt-app-bar-fixed"><div class="rt-app-bar-inner">
+      `<header class="rt-app-bar-appBar rt-app-bar-fixed"><div class="rt-app-bar-inner">
         ${button('nav', 'rt-button-toggle rt-app-bar-leftIcon', icon)}
         <h1 class="rt-app-bar-title">Title</h1>
-      </div></header>
-      <main class="rt-layout-panel rt-layout-bodyScroll">Content</main>
-      <aside class="rt-layout-navDrawerDrawer rt-layout-clipped"></aside>
-    </div>`,
+      </div></header>`,
     );
     await expect(page.locator('header')).toHaveCSS('height', `${barHeight}px`);
     await expect(page.locator('header')).toHaveCSS('padding-left', `${inset}px`);
     expect((await page.locator('h1').boundingBox()).x).toBe(titleX);
     const glyph = await page.locator('#nav .rt-button-icon').boundingBox();
     expect(glyph.x + glyph.width / 2).toBeCloseTo(inset + 12, 1);
-    await expect(page.locator('main')).toHaveCSS('top', `${barHeight}px`);
-    await expect(page.locator('aside')).toHaveCSS('top', `${barHeight}px`);
   });
 }
 

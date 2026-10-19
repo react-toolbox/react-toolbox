@@ -1,10 +1,44 @@
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import ClockHours from '../src/material/time-picker/ClockHours';
 import TimePicker from '../src/material/time-picker/TimePicker';
 
 const selectedDate = new Date(2026, 9, 15, 9, 30);
+
+describe('clock transition completion', () => {
+  afterEach(() => {
+    cleanup();
+    vi.useRealTimers();
+  });
+
+  it('keeps the current clock face when a reversed exit finishes', async () => {
+    vi.useFakeTimers();
+    let finishExit!: () => void;
+    const finished = new Promise<void>((resolve) => {
+      finishExit = resolve;
+    });
+    const transition = { transitionProperty: 'transform', playState: 'running', finished };
+    render(<TimePicker defaultOpen defaultValue={selectedDate} />);
+    const dialog = screen.getByRole('dialog');
+    const hours = dialog.querySelector('.rt-time-picker-clockWrapper')!;
+    Object.defineProperty(hours, 'getAnimations', {
+      value: () => [transition],
+    });
+
+    fireEvent.click(within(dialog).getByRole('spinbutton', { name: 'Minutes' }));
+    expect(dialog.querySelectorAll('.rt-time-picker-clockWrapper')).toHaveLength(2);
+    act(() => vi.advanceTimersByTime(0));
+    fireEvent.click(within(dialog).getByRole('spinbutton', { name: 'Hours' }));
+    await act(async () => {
+      transition.playState = 'finished';
+      finishExit();
+      vi.advanceTimersByTime(0);
+    });
+    expect(dialog.querySelectorAll('.rt-time-picker-clockWrapper')).toHaveLength(1);
+    expect(hours).toBeInTheDocument();
+  });
+});
 
 describe('clock pointer interactions', () => {
   afterEach(() => {

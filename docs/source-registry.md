@@ -73,7 +73,7 @@ components/ui/material/
   ripple/                  Required interaction dependency
   theme/                   ThemeProvider and its types
   foundations/
-    styles/                Design tokens, fonts, keyframes, cn, style slots
+    styles/                Design tokens, fonts, keyframes, cn
     theme/                 Theme scopes and optional shadcn color mapping
     motion/                Reduced-motion behavior
   LICENSE
@@ -85,7 +85,7 @@ The maintained `src/material/` tree is copied directly into `material/`, avoidin
 
 React Server Component boundaries stay in the source. Pure utilities, shared style helpers, and `shadcnThemeVariables` remain usable on the server through the adjacent implementation files. Event handlers still belong in a client component.
 
-The shared foundation contains base design tokens, local Roboto fonts, Material Icons, scoped Preflight compatibility, keyframe registrations, and the MIT license. Family `tokens.css` files carry component defaults and their scoped recalculation rules; public entries and direct component modules import the token sheets they use. CSS imports also participate in registry dependency discovery, so dependent family tokens are installed and loaded automatically. Tailwind classes live beside the JSX they style, with small shared constants and variant helpers for related components. Each exported component accepts `className` for Tailwind customization; components with named internal style slots expose `classNames`. The installed `setup.css` explicitly registers copied source with `@source`, including in hosts that disable automatic detection. Tailwind emits utilities for installed families and only their referenced keyframes; a Button installation includes only its Button/Ripple component tokens and presentation rules. The full `styles.css` aggregate belongs to the all-components installation; the optional `tailwind.css` and `shadcn.css` integrations remain available in isolated installs. Source files are copied byte-for-byte; including the maintained entry files.
+The shared foundation contains base design tokens, local Roboto fonts, Material Icons, scoped Preflight compatibility, keyframe registrations, and the MIT license. Family `tokens.css` files carry component defaults and their scoped recalculation rules; public entries and direct component modules import the token sheets they use. CSS imports also participate in registry dependency discovery, so dependent family tokens are installed and loaded automatically. Tailwind classes live beside the JSX they style, with small shared constants and variant helpers for related components. Use `className` for Tailwind customization on components and exported compound parts; edit installed source for internal nodes. The installed `setup.css` explicitly registers copied source with `@source`, including in hosts that disable automatic detection. Tailwind emits utilities for installed families and only their referenced keyframes; a Button installation includes only its Button/Ripple component tokens and presentation rules. The full `styles.css` aggregate belongs to the all-components installation; the optional `tailwind.css` and `shadcn.css` integrations remain available in isolated installs. Source files are copied byte-for-byte; including the maintained entry files.
 
 Automatic font delivery lives in `foundations/styles/fonts.css`: Roboto 400/500 and Material Icons. To use an existing typeface or a framework font loader, remove only the two Roboto imports from that editable file and set `--preferred-font` to your application's font stack. Keep the Material Icons import: calendar navigation, scrollable tabs, and sorted table headers still use built-in ligatures. Pass React SVG nodes to supported icon props when an icon must appear without waiting for a font download.
 
@@ -123,15 +123,24 @@ import { ThemeProvider } from '@/components/ui/material/theme';
 
 For deliberate host-color mapping, import the installed `material/foundations/styles/shadcn.css` from your global stylesheet and use `shadcnThemeVariables` from the `material/foundations/theme/shadcn.ts` with `ThemeProvider`. This optional bridge preserves Material geometry and motion. Pass host colors through `ThemeProvider.variables` if they are scoped below the root and must follow portaled content.
 
-Set global colors in CSS with `:root { --rt-color-primary: #455a64; }`; no provider is needed for global tokens. Use `className` on composed parts such as Card, CardText, and CardActions, or `classNames` for named internal style slots. Slot types are named `ButtonClassNames`, `InputClassNames`, and so on. Edit the installed JSX for internal nodes that are not exposed. The shared merger resolves conflicting base utilities in favor of the consumer; state and responsive variants follow normal Tailwind precedence. `ThemeProvider` scopes CSS variables and carries them through portals.
+Set global colors in CSS with `:root { --rt-color-primary: #455a64; }`; no provider is needed for global tokens. Use `className` on composed parts such as Card, CardText, and CardActions. Edit the installed JSX for internal nodes that are not exposed. The shared merger resolves conflicting base utilities in favor of the consumer; state and responsive variants follow normal Tailwind precedence. `ThemeProvider` scopes CSS variables and carries them through portals.
 
 ## Migrating to 3.0
 
-- Replace component `theme` slot props with `classNames` and imported `XxxTheme` slot types with `XxxClassNames`.
+- Component `theme` and `classNames` maps and their slot types are removed. Use `className` on components and compound parts, CSS variables for shared visual choices, or edit installed source.
+- Checkbox, RadioButton and Switch apply `style` to the root label, alongside `className`. Move any styles intended for an internal glyph or native input into its installed source.
 - Replace legacy Toolbox `--color-*` keys and `var()` references with their `--rt-color-*` names, for example `--color-primary` → `--rt-color-primary`. `ThemeProvider` no longer translates those aliases. Host variables such as shadcn’s `--primary` stay application-owned.
 - For `Menu`, `IconMenu`, `DatePicker`, and `TimePicker`, replace `active` with controlled `open`/`onOpenChange`, or `defaultOpen` for initial internal visibility. Controlled consumers must update their `open` value when `onOpenChange` fires. `Dialog`, `Drawer`, `Snackbar`, and `Overlay` retain their primary `active` prop.
 - In workspace integrations, import `ThemeProvider` from `react-toolbox/theme`; the `react-toolbox/ThemeProvider` subpath is removed. Installed source continues to use `@/components/ui/material/theme`.
-- Remove the unused `passthrough` option from `Ripple`/`rippleFactory` calls. Keyboard event simulations should set `key`; numeric-only `which` fallbacks are removed.
+- Replace `Ripple`/`rippleFactory` decorators with `useRipple`, and `Tooltip`/`tooltipFactory` decorators with compound Tooltip parts or `useTooltip`.
+- Select tabs with `value`/`defaultValue` and `onValueChange`. Give each `Tab` and explicit `TabContent` a matching string `value`; selection and panel association no longer depend on child indices. Tabs refs expose the root DOM element.
+- Select table rows with stable string `TableRow.value` values, `selected`/`defaultSelected`, and `onSelectionChange`. Enable selection explicitly with `selectionMode="single"` or `"multiple"`; the default is `"none"`. Numeric row selection and cell position callbacks are removed; `TableCell.onClick` receives the native React event.
+- Pass `Date` or `null` to `DatePicker.value`; use `inputFormat` for display and submission formatting.
+- Use the native React `readOnly` prop on DatePicker and TimePicker; the lowercase `readonly` prop is removed.
+- Remove `flat` from `Button` and `BrowseButton`; their default appearance is flat.
+- The `Layout`, `Panel`, `NavDrawer`, and `Sidebar` family is removed. Compose application structure with Tailwind, AppBar, and Drawer.
+- Picker transitions use the shared motion foundation. The `react-transition-group` dependency and its enter/exit class-slot APIs are removed; customize motion with CSS variables and component classes.
+- Keyboard event simulations should set `key`; numeric-only `which` fallbacks are removed.
 
 Commit customizations before reinstalling and review the copied source and application changes together. See the [3.0 preview notes](releases/3.0.0-next.0.md) for the release scope.
 
@@ -160,13 +169,12 @@ The installed source belongs to the application. Commit local changes, rerun the
 | `dropdown` | Dropdown |
 | `font-icon` | FontIcon |
 | `input` | Input |
-| `layout` | Layout, NavDrawer, Panel, Sidebar |
 | `list` | List and its item helpers |
 | `menu` | Menu, MenuItem, MenuDivider, IconMenu |
 | `overlay` | Overlay |
 | `progress-bar` | ProgressBar |
 | `radio` | RadioButton, RadioGroup |
-| `ripple` | Ripple behavior and compatibility decorator |
+| `ripple` | useRipple |
 | `sheet` | Gesture Sheet parts, snap points and nested sheets |
 | `slider` | Slider and Radix range/vertical Slider parts |
 | `snackbar` | Snackbar |
@@ -174,14 +182,13 @@ The installed source belongs to the application. Commit local changes, rerun the
 | `table` | Table and its row/cell helpers |
 | `tabs` | Tabs, Tab, TabContent |
 | `time-picker` | TimePicker |
-| `tooltip` | Tooltip, useTooltip |
+| `tooltip` | Compound Tooltip parts, useTooltip |
 | `foundation` | Shared theme, styles, fonts, license |
 | `foundation-motion` | Reduced-motion preference and visibility lifecycle |
 | `foundation-portal` | Portal placement and merged refs |
 | `foundation-date-time` | Shared calendar and locale calculations |
 | `foundation-collections` | Shared numeric range helper |
 | `foundation-forms` | Native form reset and checked-state synchronization |
-| `foundation-layout` | Shared responsive shell coordination |
 | `example-field-notes` | Editable original/brand/night distribution |
 | `example-recipes` | Forms, table workflows, avatar groups and async/destructive actions |
 | `example-snackbar-queue` | Optional single-message queue and promise tracking |

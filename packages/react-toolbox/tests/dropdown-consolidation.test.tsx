@@ -19,6 +19,48 @@ async function openDropdown(user: ReturnType<typeof userEvent.setup>) {
 }
 
 describe('Dropdown compound-parts adapter', () => {
+  it.each([false, true])('keeps read-only selection focusable and submitted (template: %s)', async (templated) => {
+    const user = userEvent.setup();
+    const change = vi.fn();
+    const openChange = vi.fn();
+    const source = [
+      { value: 'spain', label: 'Spain' },
+      { value: 'france', label: 'France' },
+    ];
+    const view = render(
+      <form>
+        <Dropdown
+          label="Country"
+          name="country"
+          source={source}
+          defaultValue="spain"
+          readOnly
+          required
+          template={templated ? (item) => <strong>{item.label}</strong> : undefined}
+          onChange={change}
+          onOpenChange={openChange}
+        />
+      </form>,
+    );
+    const field = screen.getByRole('combobox', { name: 'Country' });
+    await user.tab();
+    expect(field).toHaveFocus();
+    expect(field).toHaveAttribute('aria-readonly', 'true');
+    await user.click(field);
+    await user.keyboard('{ArrowDown}{Enter} f');
+    expect(screen.queryByRole('listbox')).toBeNull();
+    expect(change).not.toHaveBeenCalled();
+    expect(openChange).not.toHaveBeenCalled();
+    const form = view.container.querySelector('form')!;
+    expect(new FormData(form).get('country')).toBe('spain');
+    view.rerender(
+      <form>
+        <Dropdown label="Country" name="country" source={source} value="" readOnly required />
+      </form>,
+    );
+    expect(form.checkValidity()).toBe(true);
+  });
+
   it('uses option focus, skips disabled options, traps Tab and returns focus after keyboard selection', async () => {
     const user = userEvent.setup();
     const change = vi.fn();
@@ -200,7 +242,7 @@ describe('Dropdown compound-parts adapter', () => {
     expect(new FormData(form).getAll('choice')).toEqual([]);
   });
 
-  it('keeps templated JSX naming, InputHandle, class slots and scoped shadow8 portal styling', async () => {
+  it('keeps templated JSX naming, InputHandle, root customization and scoped shadow8 portal styling', async () => {
     const user = userEvent.setup();
     const ref = createRef<InputHandle>();
     const view = render(
@@ -215,30 +257,23 @@ describe('Dropdown compound-parts adapter', () => {
             { value: 'b', label: 'Ben' },
           ]}
           template={(item) => <strong>{item.label}</strong>}
-          classNames={{
-            dropdown: 'custom-dropdown',
-            field: 'custom-field',
-            label: 'custom-label',
-            selected: 'custom-selected',
-            values: 'custom-values',
-            templateValue: 'custom-template',
-          }}
+          className="custom-dropdown"
         />
       </ThemeProvider>,
     );
     const trigger = screen.getByRole('combobox', { name: 'Person' });
-    expect(trigger).toHaveClass('custom-field');
-    expect(view.container.querySelector('.custom-template')).toHaveTextContent('Ada');
-    expect(view.container.querySelector('.custom-label')).toHaveTextContent('Person');
+    expect(trigger.closest('[data-react-toolbox=dropdown]')).toHaveClass('custom-dropdown');
+    expect(view.container.querySelector('.rt-dropdown-templateValue')).toHaveTextContent('Ada');
+    expect(view.container.querySelector('.rt-input-label')).toHaveTextContent('Person');
     expect(ref.current?.inputElement).toBeInstanceOf(HTMLInputElement);
     act(() => ref.current?.focus());
     expect(trigger).toHaveFocus();
     await user.keyboard('{ArrowDown}');
     const listbox = screen.getByRole('listbox');
     expect(view.container).not.toContainElement(listbox);
-    expect(listbox).toHaveClass('custom-values', '[box-shadow:var(--shadow-8p)]', 'motion-reduce:animate-none!');
+    expect(listbox).toHaveClass('[box-shadow:var(--shadow-8p)]');
     expect(listbox.style.getPropertyValue('--rt-color-primary')).toBe('rebeccapurple');
-    expect(screen.getByRole('option', { name: 'Ada' })).toHaveClass('custom-selected');
+    expect(screen.getByRole('option', { name: 'Ada' })).toHaveAttribute('aria-selected', 'true');
     await waitFor(() => expect(screen.getByRole('option', { name: 'Ada' })).toHaveFocus());
     await user.keyboard('{End}');
     await waitFor(() => expect(screen.getByRole('option', { name: 'Ben' })).toHaveFocus());

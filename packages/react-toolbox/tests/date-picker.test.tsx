@@ -6,6 +6,78 @@ import DatePicker from '../src/material/date-picker/DatePicker';
 
 const selectedDate = new Date(2026, 9, 15, 9, 30);
 
+describe('calendar transition completion', () => {
+  afterEach(() => {
+    cleanup();
+    vi.useRealTimers();
+  });
+
+  it.each(['finished', 'cancelled'])('removes the previous month when its transition is %s', async (outcome) => {
+    vi.useFakeTimers();
+    let settle!: () => void;
+    const finished = new Promise<void>((resolve, reject) => {
+      settle = outcome === 'finished' ? resolve : () => reject(new DOMException('Cancelled', 'AbortError'));
+    });
+    const transition = { transitionProperty: 'transform', playState: 'running', finished };
+    render(<DatePicker defaultOpen defaultValue={selectedDate} />);
+    const previousDay = screen.getByRole('button', { name: '15 October 2026' });
+    const previousMonth = previousDay.closest('[data-view-state]')!;
+    Object.defineProperty(previousMonth, 'getAnimations', {
+      value: () => [
+        transition,
+        /** Decorative keyframe animations must not retain the departing month. */
+        { finished: new Promise(() => {}) },
+      ],
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Next month' }));
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
+    });
+    expect(previousDay).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '15 November 2026' })).toBeInTheDocument();
+
+    await act(async () => {
+      transition.playState = outcome === 'finished' ? 'finished' : 'idle';
+      settle();
+    });
+    expect(previousDay).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '15 November 2026' })).toBeInTheDocument();
+  });
+
+  it('waits for a replacement transition when a theme changes during a month exit', async () => {
+    vi.useFakeTimers();
+    let cancelExit!: () => void;
+    const originalExit = new Promise<void>((_, reject) => {
+      cancelExit = () => reject(new DOMException('Cancelled', 'AbortError'));
+    });
+    let finishReplacement!: () => void;
+    const replacementExit = new Promise<void>((resolve) => {
+      finishReplacement = resolve;
+    });
+    let transition = { transitionProperty: 'transform', playState: 'running', finished: originalExit };
+    render(<DatePicker defaultOpen defaultValue={selectedDate} />);
+    const previousDay = screen.getByRole('button', { name: '15 October 2026' });
+    const previousMonth = previousDay.closest('[data-view-state]')!;
+    Object.defineProperty(previousMonth, 'getAnimations', { value: () => [transition] });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Next month' }));
+    act(() => vi.advanceTimersByTime(0));
+    await act(async () => {
+      transition = { transitionProperty: 'transform', playState: 'running', finished: replacementExit };
+      cancelExit();
+    });
+    expect(previousDay).toBeInTheDocument();
+
+    await act(async () => {
+      transition.playState = 'finished';
+      finishReplacement();
+    });
+    expect(previousDay).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '15 November 2026' })).toBeInTheDocument();
+  });
+});
+
 describe('calendar keyboard navigation', () => {
   it('preserves weekly movement with an allowlist and navigates unavailable days without selecting them', async () => {
     const change = vi.fn();

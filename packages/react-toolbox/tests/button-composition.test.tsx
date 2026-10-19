@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import Button, { BrowseButton, IconButton } from '../src/material/button';
 import { IconMenu, MenuItem } from '../src/material/menu';
-import Tooltip from '../src/material/tooltip';
+import { TooltipRoot, TooltipTrigger, TooltipPortal, TooltipContent, useTooltip } from '../src/material/tooltip';
 
 describe('native refs and pointer events', () => {
   afterEach(cleanup);
@@ -72,15 +72,21 @@ describe('slotted buttons and tooltips', () => {
   });
 
   it('composes tooltip behavior onto an asChild button without changing its single-child contract', async () => {
-    const HintButton = Tooltip(Button);
     const linkRef = createRef<HTMLAnchorElement>();
     const click = vi.fn((event: React.MouseEvent) => event.preventDefault());
     render(
-      <HintButton asChild tooltip="View your profile" tooltipDelay={0}>
-        <a ref={linkRef} href="/profile" onClick={click}>
-          Profile
-        </a>
-      </HintButton>,
+      <TooltipRoot delayDuration={0}>
+        <TooltipTrigger asChild>
+          <Button asChild>
+            <a ref={linkRef} href="/profile" onClick={click}>
+              Profile
+            </a>
+          </Button>
+        </TooltipTrigger>
+        <TooltipPortal>
+          <TooltipContent>View your profile</TooltipContent>
+        </TooltipPortal>
+      </TooltipRoot>,
     );
     const link = screen.getByRole('link', { name: 'Profile' });
     expect(linkRef.current).toBe(link);
@@ -93,21 +99,27 @@ describe('slotted buttons and tooltips', () => {
   });
 
   it('stacks a menu trigger, tooltip and slotted button while preserving the opener ref and focus', async () => {
-    const HintButton = Tooltip(Button);
     const triggerRef = createRef<HTMLButtonElement>();
-    render(
-      <IconMenu
-        trigger={
-          <HintButton asChild tooltip="Change display settings" tooltipDelay={0}>
-            <button type="button" ref={triggerRef}>
-              Display settings
-            </button>
-          </HintButton>
-        }
-      >
-        <MenuItem caption="Compact" />
-      </IconMenu>,
-    );
+    function Example() {
+      const tooltip = useTooltip({ tooltip: 'Change display settings' });
+      return (
+        <>
+          <IconMenu
+            trigger={
+              <Button asChild {...tooltip.triggerProps}>
+                <button type="button" ref={triggerRef}>
+                  Display settings
+                </button>
+              </Button>
+            }
+          >
+            <MenuItem caption="Compact" />
+          </IconMenu>
+          {tooltip.tooltip}
+        </>
+      );
+    }
+    render(<Example />);
     const trigger = screen.getByRole('button', { name: 'Display settings' });
     expect(triggerRef.current).toBe(trigger);
     expect(trigger.querySelector('button')).toBeNull();
@@ -116,6 +128,7 @@ describe('slotted buttons and tooltips', () => {
     await waitFor(() => expect(screen.getByRole('menu')).toHaveFocus());
     await userEvent.keyboard('{ArrowDown}');
     await waitFor(() => expect(screen.getByRole('menuitem', { name: 'Compact' })).toHaveFocus());
+    expect(screen.queryByRole('tooltip')).toBeNull();
     await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(trigger).toHaveFocus());
     expect(trigger).toHaveAttribute('aria-expanded', 'false');

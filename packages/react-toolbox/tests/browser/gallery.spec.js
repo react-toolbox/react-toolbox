@@ -150,20 +150,6 @@ test('edits sliders and sorts and selects table rows', async ({ page }) => {
   await expect(page.getByText('4 rows selected · Calories sorted descending')).toBeVisible();
 });
 
-test('composes the app layout with navigation and a sidebar', async ({ page }) => {
-  await page.getByRole('link', { name: 'Layout example', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Space for your ideas.' })).toBeVisible();
-  await page.getByRole('button', { name: 'Open navigation' }).click();
-  await expect(page.getByText('Pin navigation', { exact: true })).toBeVisible();
-  await page.getByText('Pin navigation', { exact: true }).click();
-  await expect(page.locator('.rt-layout-layout')).toHaveClass(/rt-layout-navDrawerPinned/);
-  await page.getByRole('button', { name: 'Close navigation' }).click();
-  await page.getByRole('button', { name: 'Open details' }).click();
-  await expect(page.getByRole('heading', { name: 'Collection details' })).toBeVisible();
-  await page.getByRole('button', { name: 'Close details' }).click();
-  await expect(page.getByRole('heading', { name: 'Collection details' })).not.toBeVisible();
-});
-
 test('fits the gallery on a phone without changing component styles', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.getByRole('heading', { name: 'Good design is in the details.' })).toBeVisible();

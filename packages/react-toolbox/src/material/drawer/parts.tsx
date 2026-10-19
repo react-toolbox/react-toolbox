@@ -38,7 +38,7 @@ export function DrawerPortal(props: DrawerPortalProps) {
 }
 export type DrawerOverlayProps = ComponentProps<typeof Primitive.Overlay>;
 export function DrawerOverlay({ className, style, ...props }: DrawerOverlayProps) {
-  const theme = usePortalTheme();
+  const theme = usePortalTheme(style);
   return (
     <Primitive.Overlay
       data-slot="DrawerOverlay"
@@ -46,7 +46,7 @@ export function DrawerOverlay({ className, style, ...props }: DrawerOverlayProps
       {...theme}
       style={{ ...theme.style, ...style }}
       className={cn(
-        'fixed inset-0 z-(--z-index-higher) bg-[rgb(from_var(--overlay-color)_r_g_b/var(--overlay-opacity))] data-[state=open]:animate-[toolbox-fade-in_var(--animation-duration)_var(--animation-curve-default)] data-[state=closed]:animate-[toolbox-fade-out_var(--animation-duration)_var(--animation-curve-default)] motion-reduce:animate-none!',
+        'fixed inset-0 z-(--z-index-higher) bg-[rgb(from_var(--overlay-color)_r_g_b/var(--overlay-opacity))] data-[state=open]:animate-[toolbox-fade-in_var(--animation-duration-enter)_var(--animation-curve-linear-out-slow-in)] data-[state=closed]:animate-[toolbox-fade-out_var(--animation-duration-exit)_var(--animation-curve-fast-out-linear-in)] motion-reduce:[animation-duration:0.01ms]! motion-reduce:[animation-delay:0ms]! motion-reduce:[animation-iteration-count:1]!',
         className,
       )}
     />
@@ -63,7 +63,7 @@ export function DrawerContent({
   ref,
   ...props
 }: DrawerContentProps) {
-  const theme = usePortalTheme();
+  const theme = usePortalTheme(style);
   const { node, handleCloseAutoFocus, mounted } = useReturnFocus(onCloseAutoFocus);
   return (
     <ReturnFocusParent value={node}>
@@ -78,7 +78,7 @@ export function DrawerContent({
           style={{ ...theme.style, ...style }}
           className={cn(
             surfaceClasses,
-            'bg-(--drawer-background-color) text-(--drawer-text-color) fixed z-(--z-index-higher) flex flex-col overflow-y-auto rounded-none [box-shadow:var(--shadow-16p)] data-[state=open]:animate-[toolbox-drawer-in_var(--animation-duration)_var(--animation-curve-linear-out-slow-in)] data-[state=closed]:animate-[toolbox-drawer-out_var(--animation-duration)_var(--animation-curve-fast-out-linear-in)] motion-reduce:animate-none!',
+            'bg-(--drawer-background-color) text-(--drawer-text-color) fixed z-(--z-index-higher) flex flex-col overflow-y-auto rounded-none [box-shadow:var(--shadow-16p)] data-[state=open]:animate-[toolbox-drawer-in_var(--animation-duration-enter)_var(--animation-curve-linear-out-slow-in)] data-[state=closed]:animate-[toolbox-drawer-out_var(--animation-duration-exit)_var(--animation-curve-fast-out-linear-in)] motion-reduce:[animation-duration:0.01ms]! motion-reduce:[animation-delay:0ms]! motion-reduce:[animation-iteration-count:1]!',
             (side === 'left' || side === 'right') &&
               'inset-y-0 h-dvh w-(--drawer-mobile-width) min-[600px]:w-(--drawer-desktop-width) max-w-[calc(100vw-var(--standard-increment-mobile))]',
             (side === 'top' || side === 'bottom') && 'inset-x-0 max-h-[calc(100dvh-var(--standard-increment-mobile))]',

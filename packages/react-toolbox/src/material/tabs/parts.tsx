@@ -103,6 +103,8 @@ export type TabsIndicatorProps = ComponentProps<'span'>;
 export function TabsIndicator({ className, style, ref, ...props }: TabsIndicatorProps) {
   const node = useRef<HTMLSpanElement>(null);
   useImperativeHandle(ref, () => node.current!, []);
+  /** Consumer dimensions and decoration must not be multiplied by the default bar's scale. */
+  const scaleIndicator = !className && !style;
   const [position, setPosition] = useState<CSSProperties>({ opacity: 0 });
   useLayoutEffect(() => {
     const list = node.current?.closest<HTMLElement>('[role=tablist]');
@@ -116,6 +118,7 @@ export function TabsIndicator({ className, style, ref, ...props }: TabsIndicator
       const bounds = list.getBoundingClientRect();
       const active = tab.getBoundingClientRect();
       const vertical = list.getAttribute('aria-orientation') === 'vertical';
+      /** Keep the moving axis one pixel wide and express its rendered length as a scale. */
       setPosition(
         vertical
           ? {
@@ -123,16 +126,16 @@ export function TabsIndicator({ className, style, ref, ...props }: TabsIndicator
               insetInlineEnd: 0,
               top: 0,
               width: 'var(--tab-pointer-height)',
-              height: active.height,
-              transform: `translateY(${active.top - bounds.top + list.scrollTop}px)`,
+              height: scaleIndicator ? 1 : active.height,
+              transform: `translateY(${active.top - bounds.top + list.scrollTop}px) scaleY(${scaleIndicator ? active.height : 1})`,
             }
           : {
               opacity: 1,
               left: 0,
               bottom: 0,
               height: 'var(--tab-pointer-height)',
-              width: active.width,
-              transform: `translateX(${active.left - bounds.left + list.scrollLeft}px)`,
+              width: scaleIndicator ? 1 : active.width,
+              transform: `translateX(${active.left - bounds.left + list.scrollLeft}px) scaleX(${scaleIndicator ? active.width : 1})`,
             },
       );
     };
@@ -155,7 +158,7 @@ export function TabsIndicator({ className, style, ref, ...props }: TabsIndicator
       resize.disconnect();
       mutation.disconnect();
     };
-  }, []);
+  }, [scaleIndicator]);
   return (
     <span
       {...props}
@@ -164,7 +167,8 @@ export function TabsIndicator({ className, style, ref, ...props }: TabsIndicator
       data-slot="TabsIndicator"
       style={{ ...position, ...style }}
       className={cn(
-        'pointer-events-none absolute bg-(--tab-pointer-color) transition-[transform,width,height] duration-(--animation-duration) ease-(--animation-curve-default) motion-reduce:transition-none',
+        'pointer-events-none absolute bg-(--tab-pointer-color) duration-(--animation-duration) ease-(--animation-curve-default) motion-reduce:transition-none',
+        scaleIndicator ? 'origin-top-left transition-[transform]' : 'transition-[transform,width,height]',
         className,
       )}
     />

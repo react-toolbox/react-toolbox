@@ -18,7 +18,7 @@ test.beforeAll(async () => {
         import { List, ListItem } from './src/material/list';
         import { DropdownRoot, DropdownTrigger, DropdownSelection } from './src/material/dropdown';
         function App() {
-          const [tab, setTab] = useState(0);
+          const [tab, setTab] = useState('overview');
           return <>
             <TabsRoot defaultValue="preview" activationMode="manual">
               <TabsList aria-label="Example view">
@@ -28,8 +28,8 @@ test.beforeAll(async () => {
               </TabsList>
             </TabsRoot>
             <div style={{ width: 220 }}>
-              <Tabs index={tab} onChange={setTab} inverse aria-label="Inverse tabs">
-                <Tab label="Overview" /><Tab label="Details" />
+              <Tabs value={tab} onValueChange={setTab} inverse aria-label="Inverse tabs">
+                <Tab value="overview" label="Overview" /><Tab value="details" label="Details" />
               </Tabs>
             </div>
             <IconMenu aria-label="File actions"><MenuItem caption="Download" /><MenuItem caption="Share" /></IconMenu>

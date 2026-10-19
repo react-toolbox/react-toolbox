@@ -1,23 +1,11 @@
 'use client';
 
-import { useEffect, useId, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { useEffect, useId, useState, type ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 import { Button, IconButton } from 'react-toolbox/button';
-import { Layout, NavDrawer, Panel } from 'react-toolbox/layout';
+import { Drawer } from 'react-toolbox/drawer';
 import SiteIcon from '../site-icon';
 import DocsSidebar, { type ComponentLink } from './sidebar';
-
-const desktopNavigation = '(min-width: 1025px)';
-
-function subscribeToViewport(onChange: () => void) {
-  const viewport = window.matchMedia(desktopNavigation);
-  viewport.addEventListener('change', onChange);
-  return () => viewport.removeEventListener('change', onChange);
-}
-
-function isDesktopViewport() {
-  return window.matchMedia(desktopNavigation).matches;
-}
 
 export default function DocumentationShell({
   header,
@@ -31,39 +19,43 @@ export default function DocumentationShell({
   const [navigationOpen, setNavigationOpen] = useState(false);
   const pathname = usePathname();
   const navigationId = useId();
-  /** Render navigation in the server HTML; responsive CSS hides it on small screens before hydration. */
-  const desktop = useSyncExternalStore(subscribeToViewport, isDesktopViewport, () => true);
 
   useEffect(() => {
     setNavigationOpen(false);
   }, [pathname]);
 
   useEffect(() => {
-    if (desktop) setNavigationOpen(false);
-  }, [desktop]);
+    const desktop = window.matchMedia('(min-width: 1025px)');
+    const closeMobileNavigation = () => {
+      if (desktop.matches) setNavigationOpen(false);
+    };
+    desktop.addEventListener('change', closeMobileNavigation);
+    return () => desktop.removeEventListener('change', closeMobileNavigation);
+  }, []);
 
   return (
-    <Layout className="[--drawer-desktop-width:256px]">
+    <div className="min-h-svh pt-(--docs-appbar-height) [--drawer-desktop-width:256px]">
       {header}
-      <NavDrawer
-        key={desktop ? 'permanent' : 'modal'}
+      <aside className="fixed inset-s-0 bottom-0 top-(--docs-appbar-height) hidden w-64 overflow-y-auto overscroll-y-contain border-e border-toolbox-divider bg-white min-[1025px]:block">
+        <DocsSidebar components={components} />
+      </aside>
+      <Drawer
         id={navigationId}
         active={navigationOpen}
-        pinned={desktop}
-        clipped={desktop}
         aria-label="Documentation navigation"
         onOverlayClick={() => setNavigationOpen(false)}
         onEscKeyDown={() => setNavigationOpen(false)}
         onCloseAutoFocus={(event) => {
-          if (isDesktopViewport()) {
+          if (window.matchMedia('(min-width: 1025px)').matches) {
             event.preventDefault();
             document.getElementById('docs-content')?.focus({ preventScroll: true });
           }
         }}
-        className="overscroll-y-contain bg-white max-[1025px]:[&.rt-layout-pinned]:hidden min-[1025px]:transform-none min-[1025px]:transition-none"
-        style={{ height: desktop ? 'calc(100dvh - var(--docs-appbar-height))' : '100dvh', paddingTop: 0 }}
+        className="overscroll-y-contain bg-white"
+        style={{ height: '100dvh' }}
+        insideTree
       >
-        <div className="flex h-(--docs-appbar-height) items-center justify-between border-b border-toolbox-divider pr-2 pl-4 toolbox-desktop:pl-6 min-[1025px]:hidden">
+        <div className="flex h-(--docs-appbar-height) items-center justify-between border-b border-toolbox-divider pr-2 pl-4 toolbox-desktop:pl-6">
           <span className="font-medium">Documentation</span>
           <IconButton
             icon={<SiteIcon name="close" />}
@@ -73,11 +65,8 @@ export default function DocumentationShell({
           />
         </div>
         <DocsSidebar components={components} onNavigate={() => setNavigationOpen(false)} />
-      </NavDrawer>
-      <Panel
-        className="inset-s-0 top-(--docs-appbar-height) flex flex-col bg-white [--layout-side-transition:none] min-[1025px]:inset-s-(--layout-nav-width)"
-        style={{ height: 'auto', maxHeight: 'none', minHeight: 'calc(100dvh - var(--docs-appbar-height))' }}
-      >
+      </Drawer>
+      <div className="flex min-h-[calc(100dvh-var(--docs-appbar-height))] flex-col bg-white min-[1025px]:ms-64">
         <div className="shrink-0 border-b border-toolbox-divider min-[1025px]:hidden">
           <Button
             icon={<SiteIcon name="menu" />}
@@ -85,14 +74,13 @@ export default function DocumentationShell({
             aria-expanded={navigationOpen}
             aria-controls={navigationId}
             onClick={() => setNavigationOpen(true)}
-            className="flex min-h-toolbox-touch w-full items-center justify-start gap-8 rounded-none px-4 text-left text-sm normal-case text-toolbox-text-secondary toolbox-desktop:px-6 [&_svg]:size-6 [&_svg]:shrink-0"
-            classNames={{ icon: 'size-6 shrink-0 leading-none [.rt-button-squared_&]:me-0' }}
+            className="flex min-h-toolbox-touch w-full items-center justify-start gap-8 rounded-none px-4 text-left text-sm normal-case text-toolbox-text-secondary toolbox-desktop:px-6 [&_svg]:size-6 [&_svg]:shrink-0 [&_.rt-button-icon]:size-6 [&_.rt-button-icon]:shrink-0 [&_.rt-button-icon]:leading-none [&.rt-button-squared_.rt-button-icon]:me-0"
           >
             <span>Browse documentation</span>
           </Button>
         </div>
         {children}
-      </Panel>
-    </Layout>
+      </div>
+    </div>
   );
 }

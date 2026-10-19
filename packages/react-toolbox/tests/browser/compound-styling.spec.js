@@ -20,7 +20,7 @@ test.beforeAll(async () => {
       import {TooltipRoot,TooltipTrigger,TooltipContent} from './src/material/tooltip';
       import {DropdownMenuRoot,DropdownMenuTrigger,DropdownMenuContent,DropdownMenuItem,DropdownMenuSub,DropdownMenuSubTrigger,DropdownMenuPortal,DropdownMenuSubContent} from './src/material/menu';
       createRoot(document.getElementById('root')).render(<main style={{padding:100}}>
-        <div id="fixed-tabs" style={{width:400}}><Tabs fixed><Tab label="First"/><Tab label="Second"/><Tab label="Third"/></Tabs></div>
+        <div id="fixed-tabs" style={{width:400}}><Tabs defaultValue="first" fixed><Tab value="first" label="First"/><Tab value="second" label="Second"/><Tab value="third" label="Third"/></Tabs></div>
         <TabsRoot defaultValue="first"><TabsList aria-label="Scrollable tabs"><TabsTrigger value="first">First</TabsTrigger><TabsTrigger value="second">Second</TabsTrigger></TabsList></TabsRoot>
         <SliderRoot orientation="vertical" defaultValue={[20,80]} style={{height:200}}>
           <SliderTrack><SliderRange /></SliderTrack><SliderThumb aria-label="Low"/><SliderThumb aria-label="High"/>

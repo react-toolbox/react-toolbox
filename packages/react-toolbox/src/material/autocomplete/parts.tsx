@@ -3,6 +3,7 @@ import './tokens.css';
 import '../chip/tokens.css';
 import '../input/tokens.css';
 import { Combobox as Primitive } from '@base-ui/react/combobox';
+import { useRender } from '@base-ui/react/use-render';
 import { createContext, useContext, useId, useRef, type ComponentProps } from 'react';
 import { cn } from '../foundations/styles/cn';
 import { usePortalTheme } from '../foundations/portal/usePortalTheme';
@@ -140,18 +141,32 @@ export function AutocompletePositioner({ className, ...props }: AutocompletePosi
   );
 }
 export type AutocompletePopupProps = ComponentProps<typeof Primitive.Popup>;
-export function AutocompletePopup({ className, style, ...props }: AutocompletePopupProps) {
-  const theme = usePortalTheme();
+interface AutocompletePopupSurfaceProps {
+  elementProps: ComponentProps<'div'>;
+  state: Primitive.Popup.State;
+  render: AutocompletePopupProps['render'];
+}
+/** Base UI resolves stateful styles before rendering, so theme aliases bind to the actual inline tokens. */
+function AutocompletePopupSurface({ elementProps, state, render }: AutocompletePopupSurfaceProps) {
+  const theme = usePortalTheme(elementProps.style);
+  return useRender({
+    render: typeof render === 'function' ? (props) => render(props, state) : render,
+    props: { ...elementProps, ...theme, style: { ...theme.style, ...elementProps.style } },
+  });
+}
+export function AutocompletePopup({ className, style, render, ...props }: AutocompletePopupProps) {
   return (
     <Primitive.Popup
       data-slot="AutocompletePopup"
       {...props}
-      {...theme}
-      style={(state) => ({ ...theme.style, ...(typeof style === 'function' ? style(state) : style) })}
+      style={style}
+      render={(elementProps, state) => (
+        <AutocompletePopupSurface elementProps={elementProps} state={state} render={render} />
+      )}
       className={(state) =>
         cn(
           surfaceClasses,
-          'bg-(--autocomplete-suggestions-background) text-(--rt-color-text) rounded-[calc(0.2*var(--unit))] min-w-(--anchor-width) max-h-(--available-height) overflow-y-auto py-(--input-field-padding) [box-shadow:var(--shadow-8p)] origin-(--transform-origin) transition-[opacity,scale] duration-(--animation-duration) data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none',
+          'bg-(--autocomplete-suggestions-background) text-(--rt-color-text) rounded-[calc(0.2*var(--unit))] min-w-(--anchor-width) max-h-(--available-height) overflow-y-auto py-(--input-field-padding) [box-shadow:var(--shadow-8p)] origin-(--transform-origin) transition-[opacity,scale] duration-(--animation-duration-enter) ease-(--animation-curve-linear-out-slow-in) data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 data-ending-style:duration-(--animation-duration-exit) data-ending-style:ease-(--animation-curve-fast-out-linear-in) motion-reduce:transition-none',
           typeof className === 'function' ? className(state) : className,
         )
       }

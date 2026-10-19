@@ -81,8 +81,8 @@ export const controls = (
 const wrongInput = <Input onChange={(value: number) => value} />;
 // @ts-expect-error Date pickers produce Date instances.
 const wrongDate = <DatePicker onChange={(value: string) => value} />;
-// @ts-expect-error Style slots are explicit and local to the component.
-const wrongSlots = <Checkbox classNames={{ nonexistent: 'custom' }} />;
+// @ts-expect-error Date values carry calendar semantics; formatting belongs to inputFormat.
+const wrongDateValue = <DatePicker value="15/10/2026" />;
 
 // Omitting value must not erase the single-select discriminant.
 const singleAutocomplete = (
