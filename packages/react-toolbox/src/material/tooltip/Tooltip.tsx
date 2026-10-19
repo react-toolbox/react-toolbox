@@ -1,26 +1,22 @@
 'use client';
 import './tokens.css';
-import { mergeStyleSlots } from '../foundations/styles/slots';
-
-import { materialDescendants } from '../foundations/styles/classes';
-import type { TooltipClassNames } from './types';
-
 import {
   createElement,
-  useCallback,
-  useEffect,
-  useId,
+  useImperativeHandle,
+  useLayoutEffect,
   useRef,
   useState,
   type ComponentPropsWithRef,
   type ElementType,
   type HTMLAttributes,
   type ReactNode,
-  type TransitionEvent,
+  type Ref,
+  type RefObject,
 } from 'react';
 import { cn } from '../foundations/styles/cn';
-import Portal from '../foundations/portal/Portal';
-import useReducedMotion from '../foundations/motion/useReducedMotion';
+import { mergeStyleSlots } from '../foundations/styles/slots';
+import { TooltipRoot, TooltipTrigger, TooltipPortal, TooltipContent } from './parts';
+import type { TooltipClassNames } from './types';
 
 export type { TooltipClassNames } from './types';
 export type TooltipPosition = 'bottom' | 'horizontal' | 'left' | 'right' | 'top' | 'vertical';
@@ -55,359 +51,155 @@ type TriggerProps = Pick<
   | 'onTouchEnd'
   | 'onTouchMove'
   | 'onTouchCancel'
+  | 'onPointerMove'
+  | 'onPointerLeave'
+  | 'onPointerDown'
+  | 'onPointerUp'
+  | 'onPointerCancel'
+  | 'onClickCapture'
+  | 'onContextMenu'
   | 'aria-describedby'
 >;
-interface Placement {
-  top: number;
-  left: number;
-  position: Position;
-}
-interface State {
-  active: boolean;
-  visible: boolean;
-  position: Position;
-  top?: number;
-  left?: number;
-}
-type Timer = ReturnType<typeof setTimeout> | undefined;
+type TriggerHandlers = HTMLAttributes<HTMLElement>;
 
-/** Tooltip behavior is available directly; the decorator below is a convenience API. */
+/** Connect the props-based hook to the same primitive trigger without introducing another DOM element or interaction model. */
+function TriggerBridge({
+  target,
+  handlers,
+  describe,
+  ref,
+  ...props
+}: HTMLAttributes<HTMLElement> & {
+  target: HTMLElement | null;
+  handlers: RefObject<TriggerHandlers>;
+  describe: (description: string | undefined) => void;
+  ref?: Ref<HTMLElement>;
+}) {
+  useImperativeHandle(ref, () => target!, [target]);
+  useLayoutEffect(() => {
+    handlers.current = props;
+  });
+  useLayoutEffect(() => {
+    describe(props['aria-describedby']);
+  }, [describe, props['aria-describedby']]);
+  return null;
+}
+
+/** A props-based adapter over the compound Tooltip, not a separate hover/focus/touch implementation. */
 export function useTooltip(props: TooltipProps & TriggerProps) {
-  const reducedMotion = useReducedMotion();
   const {
     tooltip,
     tooltipDelay = 0,
     tooltipHideOnClick = true,
-    tooltipPosition = 'vertical',
     tooltipShowOnClick = false,
+    tooltipPosition = 'vertical',
     classNames,
   } = props;
-  const id = `toolbox-tooltip-${useId()}`;
-  const [state, setState] = useState<State>({ active: false, visible: false, position: 'bottom' });
-  const current = useRef(state);
-  current.current = state;
-  const latest = useRef({ tooltip, tooltipDelay, tooltipPosition, props });
-  latest.current = { tooltip, tooltipDelay, tooltipPosition, props };
-  const node = useRef<HTMLSpanElement | null>(null);
-  const [tooltipNode, setTooltipNode] = useState<HTMLSpanElement | null>(null);
-  const attachTooltip = useCallback((element: HTMLSpanElement | null) => {
-    node.current = element;
-    setTooltipNode(element);
-  }, []);
-  const trigger = useRef<HTMLElement | null>(null);
-  const interaction = useRef({
-    hovered: false,
-    tooltipHovered: false,
-    focused: false,
-    touching: false,
-    longPressed: false,
-    ignoreClickUntil: 0,
-  });
-  const timers = useRef<{ activate: Timer; hide: Timer; touch: Timer; release: Timer; hover: Timer }>({
-    activate: undefined,
-    hide: undefined,
-    touch: undefined,
-    release: undefined,
-    hover: undefined,
-  });
-  const deactivate = useCallback(() => {
-    interaction.current.tooltipHovered = false;
-    clearTimeout(timers.current.hover);
-    clearTimeout(timers.current.activate);
-    timers.current.activate = undefined;
-    clearTimeout(timers.current.hide);
-    timers.current.hide = undefined;
-    clearTimeout(timers.current.release);
-    if (reducedMotion) {
-      setState((previous) => ({ ...previous, active: false, visible: false }));
-      return;
-    }
-    if (current.current.active) {
-      setState((previous) => ({ ...previous, active: false }));
-      const duration = node.current ? getComputedStyle(node.current).transitionDuration : '';
-      const milliseconds = duration
-        .split(',')
-        .map((value) => parseFloat(value) * (value.trim().endsWith('ms') ? 1 : 1000));
-      timers.current.hide = setTimeout(
-        () => setState((previous) => ({ ...previous, visible: false })),
-        Math.max(0, ...milliseconds.filter(Number.isFinite)) || 200,
-      );
-    } else if (current.current.visible) setState((previous) => ({ ...previous, visible: false }));
-  }, [reducedMotion]);
-  useEffect(() => {
-    if (reducedMotion && timers.current.hide !== undefined) {
-      clearTimeout(timers.current.hide);
-      timers.current.hide = undefined;
-      setState((previous) => ({ ...previous, active: false, visible: false }));
-    }
-  }, [reducedMotion]);
-  const calculate = useCallback((element: HTMLElement): Placement => {
-    trigger.current = element;
-    const { top, left, width, height } = element.getBoundingClientRect();
-    const requested = latest.current.tooltipPosition;
-    const position: Position =
-      requested === 'horizontal'
-        ? left < (window.innerWidth - width) / 2
-          ? 'right'
-          : 'left'
-        : requested === 'vertical'
-          ? top < (window.innerHeight - height) / 2
-            ? 'bottom'
-            : 'top'
-          : requested;
-    const x = window.scrollX || window.pageXOffset;
-    const y = window.scrollY || window.pageYOffset;
-    const tooltipWidth = node.current?.offsetWidth || 0;
-    const tooltipHeight = node.current?.offsetHeight || 0;
-    const edge = 8;
-    const clamp = (value: number, low: number, high: number) => Math.max(low, Math.min(value, Math.max(low, high)));
-    const centeredX = clamp(left + width / 2, edge + tooltipWidth / 2, window.innerWidth - edge - tooltipWidth / 2);
-    const centeredY = clamp(top + height / 2, edge + tooltipHeight / 2, window.innerHeight - edge - tooltipHeight / 2);
-    if (position === 'bottom')
-      return {
-        top: clamp(top + height, edge, window.innerHeight - tooltipHeight - edge) + y,
-        left: centeredX + x,
-        position,
-      };
-    if (position === 'top')
-      return { top: clamp(top, tooltipHeight + edge, window.innerHeight - edge) + y, left: centeredX + x, position };
-    if (position === 'left')
-      return { top: centeredY + y, left: clamp(left, tooltipWidth + edge, window.innerWidth - edge) + x, position };
-    return {
-      top: centeredY + y,
-      left: clamp(left + width, edge, window.innerWidth - tooltipWidth - edge) + x,
-      position,
-    };
-  }, []);
-  const activate = useCallback(
-    (placement: Placement) => {
-      if (latest.current.tooltip == null || latest.current.tooltip === '') return;
-      clearTimeout(timers.current.hover);
-      clearTimeout(timers.current.activate);
-      clearTimeout(timers.current.hide);
-      timers.current.hide = undefined;
-      clearTimeout(timers.current.release);
-      setState((previous) => ({ ...previous, visible: true, position: placement.position }));
-      timers.current.activate = setTimeout(() => {
-        timers.current.activate = undefined;
-        setState((previous) => ({
-          ...previous,
-          active: true,
-          ...(trigger.current ? calculate(trigger.current) : placement),
-        }));
-      }, latest.current.tooltipDelay);
-    },
-    [calculate],
-  );
-  useEffect(() => {
-    if (!state.visible) return;
-    const escape = (event: KeyboardEvent) => {
-      // Retained exit content must not consume Escape from a newly opened menu
-      // or dialog. A pending tooltip still needs to cancel its entrance timer.
-      if (event.key === 'Escape' && (current.current.active || timers.current.activate !== undefined)) {
-        event.preventDefault();
-        event.stopPropagation();
-        deactivate();
-      }
-    };
-    const outside = (event: PointerEvent) => {
-      if (!(event.target instanceof Node && trigger.current?.contains(event.target))) deactivate();
-    };
-    document.addEventListener('keydown', escape, true);
-    document.addEventListener('pointerdown', outside);
-    return () => {
-      document.removeEventListener('keydown', escape, true);
-      document.removeEventListener('pointerdown', outside);
-    };
-  }, [state.visible, deactivate]);
-  useEffect(() => () => Object.values(timers.current).forEach(clearTimeout), []);
-  useEffect(() => {
-    if (!state.visible || !tooltipNode || !trigger.current) return;
-    const update = () => {
-      if (!trigger.current?.isConnected) {
-        deactivate();
-        return;
-      }
-      const placement = calculate(trigger.current);
-      setState((previous) =>
-        previous.top === placement.top && previous.left === placement.left && previous.position === placement.position
-          ? previous
-          : { ...previous, ...placement },
-      );
-    };
-    update();
-    window.addEventListener('resize', update);
-    window.addEventListener('scroll', update, true);
-    const observer = typeof ResizeObserver === 'undefined' ? undefined : new ResizeObserver(update);
-    observer?.observe(tooltipNode);
-    observer?.observe(trigger.current);
-    return () => {
-      window.removeEventListener('resize', update);
-      window.removeEventListener('scroll', update, true);
-      observer?.disconnect();
-    };
-  }, [state.visible, tooltipNode, tooltip, tooltipPosition, calculate, deactivate]);
-  const leaveHover = () => {
-    clearTimeout(timers.current.hover);
-    timers.current.hover = setTimeout(() => {
-      if (!interaction.current.hovered && !interaction.current.tooltipHovered && !interaction.current.focused)
-        deactivate();
-    }, 100);
+  const [open, setOpen] = useState(false);
+  const [target, setTarget] = useState<HTMLElement | null>(null);
+  const [side, setSide] = useState<Position>('bottom');
+  const [description, setDescription] = useState<string>();
+  const handlers = useRef<TriggerHandlers>({});
+  const anchor = (element: HTMLElement) => {
+    setTarget(element);
+    const bounds = element.getBoundingClientRect();
+    setSide(
+      tooltipPosition === 'vertical'
+        ? bounds.top < (window.innerHeight - bounds.height) / 2
+          ? 'bottom'
+          : 'top'
+        : tooltipPosition === 'horizontal'
+          ? bounds.left < (window.innerWidth - bounds.width) / 2
+            ? 'right'
+            : 'left'
+          : tooltipPosition,
+    );
   };
-  const triggerProps: TriggerProps = {
+  const triggerProps: HTMLAttributes<HTMLElement> = {
+    'aria-describedby': [props['aria-describedby'], description].filter(Boolean).join(' ') || undefined,
     onMouseEnter: (event) => {
-      interaction.current.hovered = true;
-      if (interaction.current.touching) return;
-      activate(calculate(event.currentTarget));
+      anchor(event.currentTarget);
       props.onMouseEnter?.(event);
     },
-    onMouseLeave: (event) => {
-      interaction.current.hovered = false;
-      leaveHover();
-      props.onMouseLeave?.(event);
-    },
-    onClick: (event) => {
-      if (interaction.current.ignoreClickUntil > Date.now()) {
-        event.preventDefault();
-        event.stopPropagation();
-        return;
-      }
-      if (tooltipHideOnClick && state.visible) deactivate();
-      if (tooltipShowOnClick && !state.active) activate(calculate(event.currentTarget));
-      props.onClick?.(event);
-    },
+    onMouseLeave: props.onMouseLeave,
     onFocus: (event) => {
-      interaction.current.focused = true;
-      if (!interaction.current.touching) activate(calculate(event.currentTarget));
+      anchor(event.currentTarget);
       props.onFocus?.(event);
+      if (!event.defaultPrevented) handlers.current.onFocus?.(event);
     },
     onBlur: (event) => {
-      if (!(event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget))) {
-        interaction.current.focused = false;
-        if (!interaction.current.hovered) deactivate();
-      }
       props.onBlur?.(event);
+      if (!event.defaultPrevented) handlers.current.onBlur?.(event);
     },
-    onTouchStart: (event) => {
-      interaction.current.touching = true;
-      interaction.current.longPressed = false;
-      clearTimeout(timers.current.touch);
-      clearTimeout(timers.current.release);
-      const element = event.currentTarget;
-      timers.current.touch = setTimeout(() => {
-        interaction.current.longPressed = true;
-        activate(calculate(element));
-      }, 500);
-      props.onTouchStart?.(event);
+    onPointerMove: (event) => {
+      if (target !== event.currentTarget) anchor(event.currentTarget);
+      props.onPointerMove?.(event);
+      if (!event.defaultPrevented) handlers.current.onPointerMove?.(event);
     },
-    onTouchEnd: (event) => {
-      interaction.current.touching = false;
-      clearTimeout(timers.current.touch);
-      if (interaction.current.longPressed) {
-        interaction.current.ignoreClickUntil = Date.now() + 750;
-        timers.current.release = setTimeout(deactivate, 1500);
+    onPointerLeave: (event) => {
+      props.onPointerLeave?.(event);
+      if (!event.defaultPrevented) handlers.current.onPointerLeave?.(event);
+    },
+    onPointerDown: (event) => {
+      anchor(event.currentTarget);
+      props.onPointerDown?.(event);
+      if (!event.defaultPrevented) {
+        handlers.current.onPointerDown?.(event);
+        if (open && !tooltipHideOnClick && event.pointerType !== 'touch') setOpen(true);
       }
-      props.onTouchEnd?.(event);
     },
-    onTouchMove: (event) => {
-      interaction.current.touching = false;
-      clearTimeout(timers.current.touch);
-      clearTimeout(timers.current.release);
-      deactivate();
-      props.onTouchMove?.(event);
+    onPointerUp: (event) => {
+      props.onPointerUp?.(event);
+      if (!event.defaultPrevented) handlers.current.onPointerUp?.(event);
     },
-    onTouchCancel: (event) => {
-      interaction.current.touching = false;
-      clearTimeout(timers.current.touch);
-      clearTimeout(timers.current.release);
-      deactivate();
-      props.onTouchCancel?.(event);
+    onPointerCancel: (event) => {
+      props.onPointerCancel?.(event);
+      if (!event.defaultPrevented) handlers.current.onPointerCancel?.(event);
     },
-    'aria-describedby':
-      [props['aria-describedby'], state.visible ? id : undefined].filter(Boolean).join(' ') || undefined,
-  };
-  const positionClass =
-    state.position === 'left'
-      ? cn(
-          'rt-tooltip-tooltipLeft',
-          '[.rt-tooltip-tooltip&]:transform-[scale(0)_translateX(-100%)_translateY(-50%)]',
-          classNames?.tooltipLeft,
-        )
-      : state.position === 'right'
-        ? cn(
-            'rt-tooltip-tooltipRight',
-            '[.rt-tooltip-tooltip&]:transform-[scale(0)_translateX(0)_translateY(-50%)]',
-            classNames?.tooltipRight,
-          )
-        : state.position === 'top'
-          ? cn(
-              'rt-tooltip-tooltipTop',
-              '[.rt-tooltip-tooltip&]:transform-[scale(0)_translateX(-50%)_translateY(-100%)]',
-              classNames?.tooltipTop,
-            )
-          : undefined;
-  const transitionEnd = (event: TransitionEvent<HTMLSpanElement>) => {
-    if (event.propertyName === 'transform' && !state.active) {
-      clearTimeout(timers.current.hide);
-      timers.current.hide = undefined;
-      setState((previous) => ({ ...previous, visible: false }));
-    }
+    onClickCapture: (event) => {
+      props.onClickCapture?.(event);
+      if (!event.defaultPrevented) handlers.current.onClickCapture?.(event);
+    },
+    onContextMenu: (event) => {
+      props.onContextMenu?.(event);
+      if (!event.defaultPrevented) handlers.current.onContextMenu?.(event);
+    },
+    onClick: (event) => {
+      anchor(event.currentTarget);
+      props.onClick?.(event);
+      if (event.defaultPrevented) return;
+      if (tooltipHideOnClick) handlers.current.onClick?.(event);
+      if (tooltipShowOnClick && !open) setOpen(true);
+    },
+    onTouchStart: props.onTouchStart,
+    onTouchEnd: props.onTouchEnd,
+    onTouchMove: props.onTouchMove,
+    onTouchCancel: props.onTouchCancel,
   };
   return {
     triggerProps,
-    tooltip: state.visible ? (
-      <Portal>
-        <span
-          id={id}
-          role="tooltip"
-          ref={attachTooltip}
-          className={cn(
-            'rt-tooltip-tooltip',
-            'block font-(family-name:--preferred-font) text-(length:--tooltip-font-size) font-(--font-weight-semi-bold) leading-(--font-size-small) max-w-(--tooltip-max-width) p-(--tooltip-margin) pointer-events-none absolute text-center normal-case transform-[scale(0)_translateX(-50%)] origin-[top_left] [transition:var(--animation-curve-fast-out-linear-in)_var(--tooltip-animation-duration)_transform] z-(--z-index-higher) box-border [-webkit-font-smoothing:antialiased] [font-smoothing:antialiased] [-webkit-text-size-adjust:100%] [-moz-text-size-adjust:100%] [text-size-adjust:100%]',
-            materialDescendants,
-            '[@media_(hover:_none)_and_(pointer:_coarse)]:text-[calc(1.4*var(--unit))] [@media_(hover:_none)_and_(pointer:_coarse)]:leading-[calc(2*var(--unit))] [@media_(hover:_none)_and_(pointer:_coarse)]:p-[calc(2.4*var(--unit))]',
-            classNames?.tooltip,
-            state.active &&
-              cn(
-                'rt-tooltip-tooltipActive',
-                '[.rt-tooltip-tooltip&]:transform-[scale(1)_translateX(-50%)] [.rt-tooltip-tooltip&]:[transition-timing-function:var(--animation-curve-linear-out-slow-in)]',
-                '[.rt-tooltip-tooltip.rt-tooltip-tooltipTop&]:transform-[scale(1)_translateX(-50%)_translateY(-100%)]',
-                '[.rt-tooltip-tooltip.rt-tooltip-tooltipLeft&]:transform-[scale(1)_translateX(-100%)_translateY(-50%)]',
-                '[.rt-tooltip-tooltip.rt-tooltip-tooltipRight&]:transform-[scale(1)_translateX(0)_translateY(-50%)]',
-                classNames?.tooltipActive,
-              ),
-            positionClass,
-          )}
-          data-react-toolbox="tooltip"
-          style={{
-            top: state.top,
-            left: state.left,
-            pointerEvents: state.active ? 'auto' : undefined,
-            maxWidth: 'min(var(--tooltip-max-width), calc(100vw - 16px))',
-          }}
-          onMouseEnter={() => {
-            interaction.current.tooltipHovered = true;
-            clearTimeout(timers.current.hover);
-          }}
-          onMouseLeave={() => {
-            interaction.current.tooltipHovered = false;
-            leaveHover();
-          }}
-          onTransitionEnd={transitionEnd}
-        >
-          <span
+    tooltip: (
+      <TooltipRoot open={open && tooltip != null && tooltip !== ''} onOpenChange={setOpen} delayDuration={tooltipDelay}>
+        <TooltipTrigger asChild>
+          <TriggerBridge target={target} handlers={handlers} describe={setDescription} />
+        </TooltipTrigger>
+        <TooltipPortal>
+          <TooltipContent
+            side={side}
             className={cn(
-              'rt-tooltip-tooltipInner',
-              '[background:var(--tooltip-background)] rounded-(--tooltip-border-radius) text-(--tooltip-color) block p-[calc(0.4*var(--unit))_var(--tooltip-padding)]',
-              '[@media_(hover:_none)_and_(pointer:_coarse)]:p-[calc(0.6*var(--unit))_calc(1.6*var(--unit))]',
-              classNames?.tooltipInner,
+              'rt-tooltip-tooltip',
+              classNames?.tooltip,
+              open && cn('rt-tooltip-tooltipActive', classNames?.tooltipActive),
+              side === 'top' && cn('rt-tooltip-tooltipTop', classNames?.tooltipTop),
+              side === 'left' && cn('rt-tooltip-tooltipLeft', classNames?.tooltipLeft),
+              side === 'right' && cn('rt-tooltip-tooltipRight', classNames?.tooltipRight),
             )}
           >
-            {tooltip}
-          </span>
-        </span>
-      </Portal>
-    ) : null,
+            <span className={cn('rt-tooltip-tooltipInner', classNames?.tooltipInner)}>{tooltip}</span>
+          </TooltipContent>
+        </TooltipPortal>
+      </TooltipRoot>
+    ),
   };
 }
 
@@ -433,6 +225,13 @@ export function tooltipFactory(options: TooltipOptions = {}) {
         onTouchEnd,
         onTouchMove,
         onTouchCancel,
+        onPointerMove,
+        onPointerLeave,
+        onPointerDown,
+        onPointerUp,
+        onPointerCancel,
+        onClickCapture,
+        onContextMenu,
         ...attributes
       } = props;
       const behavior = useTooltip({
@@ -451,6 +250,13 @@ export function tooltipFactory(options: TooltipOptions = {}) {
         onTouchEnd,
         onTouchMove,
         onTouchCancel,
+        onPointerMove,
+        onPointerLeave,
+        onPointerDown,
+        onPointerUp,
+        onPointerCancel,
+        onClickCapture,
+        onContextMenu,
         'aria-describedby': attributes['aria-describedby'],
       });
       return (

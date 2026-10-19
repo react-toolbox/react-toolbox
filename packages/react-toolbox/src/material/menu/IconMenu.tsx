@@ -17,8 +17,10 @@ import {
 } from 'react';
 import { cn } from '../foundations/styles/cn';
 import { IconButton } from '../button';
+import { rippleWrapperClasses } from '../button/styles';
+import { useRipple } from '../ripple';
 import { Slot } from '@radix-ui/react-slot';
-import Menu, { type MenuProps, type MenuPosition } from './Menu';
+import { MenuSurface, type MenuProps, type MenuPosition } from './Menu';
 
 export type IconMenuClassNames = MenuClassNames;
 export interface IconMenuHandle {
@@ -79,7 +81,11 @@ export function IconMenu<Value = unknown>({
   };
   const triggerId = trigger?.props.id ?? `${id}-trigger`;
   const Trigger = trigger ? Slot : IconButton;
-  const initialFocus = useRef<'first' | 'last'>('first');
+  const ink = useRipple({
+    centered: true,
+    ripple: !trigger && iconRipple,
+    classNames: { rippleWrapper: rippleWrapperClasses },
+  });
   useImperativeHandle(
     ref,
     () => ({
@@ -104,41 +110,38 @@ export function IconMenu<Value = unknown>({
         className,
       )}
     >
-      <Trigger
-        id={triggerId}
-        aria-label={attributes['aria-label'] || (trigger ? undefined : 'More options')}
-        aria-haspopup="menu"
-        aria-expanded={visible}
-        aria-controls={id}
-        className={cn(iconClasses, classNames?.icon)}
-        {...(trigger ? {} : { icon, inverse, ripple: iconRipple })}
-        onClick={(event) => {
-          onClick?.(event);
-          if (event.defaultPrevented) return;
-          // Safari does not focus buttons on pointer activation. Establish the
-          // actual opener before Menu captures its focus-restoration target.
-          if (!visible) event.currentTarget.focus({ preventScroll: true });
-          initialFocus.current = 'first';
-          setVisible(!visible);
-        }}
-        onKeyDown={(event) => {
-          if (
-            !event.defaultPrevented &&
-            !event.nativeEvent.isComposing &&
-            (event.key === 'ArrowDown' || event.key === 'ArrowUp')
-          ) {
-            event.preventDefault();
-            initialFocus.current = event.key === 'ArrowUp' ? 'last' : 'first';
-            setVisible(true);
-          }
-        }}
-      >
-        {trigger}
-      </Trigger>
-      <Menu
+      <MenuSurface
+        trigger={
+          <Trigger
+            id={triggerId}
+            aria-label={attributes['aria-label'] || (trigger ? undefined : 'More options')}
+            className={cn(iconClasses, classNames?.icon)}
+            {...(trigger ? {} : { icon, inverse, ripple: false })}
+            onPointerDown={(event) => {
+              if (event.defaultPrevented) return;
+              /** Popup triggers suppress compatibility mousedown; start the shared ink first. */
+              if (event.pointerType !== 'touch') ink.onMouseDown(event);
+              event.preventDefault();
+            }}
+            onTouchStart={ink.onTouchStart}
+            onTouchEnd={ink.onTouchEnd}
+            onTouchCancel={ink.onTouchCancel}
+            onKeyDown={(event) => {
+              if (!event.defaultPrevented && (event.key === 'Enter' || event.key === ' ')) {
+                event.preventDefault();
+                event.currentTarget.click();
+              }
+            }}
+            onClick={(event) => {
+              onClick?.(event);
+              if (!event.defaultPrevented) setVisible(!visible);
+            }}
+          >
+            {trigger ?? ink.ripple}
+          </Trigger>
+        }
         id={id}
         aria-labelledby={triggerId}
-        initialFocus={initialFocus.current}
         open={visible}
         onOpenChange={setVisible}
         onHide={onHide}
@@ -151,7 +154,7 @@ export function IconMenu<Value = unknown>({
         classNames={classNames}
       >
         {children}
-      </Menu>
+      </MenuSurface>
     </div>
   );
 }

@@ -9,6 +9,7 @@ import { chromium } from '@playwright/test';
 import postcss from 'postcss';
 import { createRegistry } from './build-registry.mjs';
 import { installedFiles, verifyStyles } from '../tests/helpers/registry.mjs';
+import { compositionSlugs, readCompositionSource } from '../../../apps/docs/app/docs/composition-source.ts';
 
 const root = path.resolve(import.meta.dirname, '..');
 const pkg = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'));
@@ -86,36 +87,21 @@ async function verifyNextConsumer() {
     "export default { plugins: { '@tailwindcss/postcss': {} } };\n",
   );
   await writeFile(path.join(directory, 'next.config.mjs'), 'export default { experimental: { cpus: 2 } };\n');
-  // Compile and hydrate the exact public composition recipes in an isolated
-  // consumer. This catches missing primitive dependencies and private imports.
-  const compositionFamilies = [
-    'dialog',
-    'drawer',
-    'sheet',
-    'tabs',
-    'menu',
-    'dropdown',
-    'autocomplete',
-    'table',
-    'tooltip',
-    'slider',
-    'date-picker',
-    'time-picker',
-  ];
+  /** Compile copied documentation to catch missing dependencies and private imports. */
   await mkdir(path.join(directory, 'src/app/examples'), { recursive: true });
-  for (const family of compositionFamilies) {
-    const source = await readFile(path.resolve(root, '../../apps/docs/app/docs/examples', `${family}.tsx`), 'utf8');
+  for (const family of compositionSlugs) {
+    const source = await readCompositionSource(family, path.resolve(root, '../../apps/docs/app/docs/examples'));
     await writeFile(
       path.join(directory, 'src/app/examples', `${family}.tsx`),
-      source.replaceAll("'react-toolbox/", "'@/widgets/ui/material/"),
+      source.replaceAll("'@/components/ui/", "'@/widgets/ui/"),
     );
   }
   await writeFile(
     path.join(directory, 'src/app/compositions.tsx'),
     "'use client';\n" +
-      compositionFamilies.map((family, index) => `import Example${index} from './examples/${family}';`).join('\n') +
+      compositionSlugs.map((family, index) => `import Example${index} from './examples/${family}';`).join('\n') +
       '\nexport default function Compositions() { return <section aria-label="Composition examples">' +
-      compositionFamilies.map((family, index) => `<div data-example="${family}"><Example${index} /></div>`).join('') +
+      compositionSlugs.map((family, index) => `<div data-example="${family}"><Example${index} /></div>`).join('') +
       '</section>; }\n',
   );
   await writeFile(

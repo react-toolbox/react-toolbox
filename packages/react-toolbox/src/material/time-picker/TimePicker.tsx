@@ -114,7 +114,8 @@ export function TimePicker({
         tabIndex={-1}
         aria-hidden="true"
         form={others.form}
-        disabled={readonly || disabled}
+        disabled={disabled}
+        readOnly={readonly}
         required={required}
         value={formattedValue}
         onChange={() => {}}
@@ -131,13 +132,13 @@ export function TimePicker({
         {...others}
         ref={inputRef}
         className={cn('rt-time-picker-input', classNames?.input, inputClassName)}
-        disabled={readonly || disabled}
+        disabled={disabled}
         error={error || validationMessage}
         required={required}
-        role="combobox"
-        aria-haspopup="dialog"
+        role={readonly ? undefined : 'combobox'}
+        aria-haspopup={readonly ? undefined : 'dialog'}
         aria-controls={visible ? dialogId : undefined}
-        aria-expanded={visible}
+        aria-expanded={readonly ? undefined : visible}
         onKeyDown={(event) => {
           onKeyDown?.(event);
           if (
@@ -157,7 +158,7 @@ export function TimePicker({
           input: cn('rt-time-picker-input', classNames?.input),
           inputElement: cn(
             'rt-time-picker-inputElement',
-            '[.rt-time-picker-input:not(.rt-time-picker-disabled)>&]:cursor-pointer',
+            !readonly && '[.rt-time-picker-input:not(.rt-time-picker-disabled)>&]:cursor-pointer',
             classNames?.inputElement,
           ),
         }}

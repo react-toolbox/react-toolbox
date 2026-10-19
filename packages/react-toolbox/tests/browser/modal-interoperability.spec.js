@@ -19,7 +19,7 @@ function Compound({ active, setActive, title, trigger, children }) {
   </DialogRoot>;
 }
 function Convenience({ active, setActive, title, trigger, children }) {
-  return <>{trigger}<Dialog active={active} title={title} onEscKeyDown={()=>setActive(false)}>{children}</Dialog></>;
+  return <>{trigger}<Dialog active={active} title={title} onEscKeyDown={()=>setActive(false)} onOpenAutoFocus={event => { if (window.autofocus) { const field = event.target.querySelector('[data-initial-focus]'); if (field) { event.preventDefault(); field.focus(); } } }}>{children}</Dialog></>;
 }
 function App() {
   const [outer,setOuter]=useState(false);
@@ -32,7 +32,7 @@ function App() {
     <Outer active={outer} setActive={setOuter} title="Outer">
       <Inner active={inner} setActive={setInner} title="Inner" trigger={<button onClick={()=>setInner(true)}>Open inner</button>}>
         <button onClick={()=>setPicked('clicked')}>Inner action</button>
-        {window.autofocus && <input aria-label="Initial field" autoFocus/>}
+        {window.autofocus && <input aria-label="Initial field" data-initial-focus/>}
       </Inner>
       <DropdownMenuRoot><DropdownMenuTrigger>Options</DropdownMenuTrigger><DropdownMenuPortal>
         <DropdownMenuContent><DropdownMenuItem onSelect={()=>setPicked('archive')}>Archive</DropdownMenuItem></DropdownMenuContent>
@@ -132,7 +132,7 @@ for (const side of ['top', 'bottom']) {
   });
 }
 
-test('React child autofocus runs after the containing modal releases focus', async ({ page }) => {
+test('explicit child autofocus runs after the containing modal releases focus', async ({ page }) => {
   await mount(page, { reverse: true, autofocus: true });
   await page.getByRole('button', { name: 'Open outer' }).click();
   const trigger = page.getByRole('button', { name: 'Open inner' });

@@ -1,6 +1,11 @@
 import { cleanup, fireEvent, render, screen, act } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Slider from '../src/material/slider';
+
+/** Radix's captured pointer can move outside the rail during a drag. */
+beforeEach(() => {
+  vi.spyOn(HTMLElement.prototype, 'hasPointerCapture').mockReturnValue(true);
+});
 
 const reset = async (form: HTMLFormElement) =>
   act(async () => {
@@ -64,11 +69,12 @@ describe('value commits and form submission', () => {
     const slider = screen.getByRole('slider');
     fireEvent.keyDown(slider, { key: 'ArrowLeft' });
     expect(slider).toHaveAttribute('aria-valuenow', '51');
-    vi.spyOn(slider, 'getBoundingClientRect').mockReturnValue({ left: 0, width: 100 } as DOMRect);
-    fireEvent.mouseDown(slider, { button: 0, clientX: 25 });
+    const rail = document.querySelector('.rt-slider-container')!;
+    vi.spyOn(rail, 'getBoundingClientRect').mockReturnValue({ left: 0, width: 100 } as DOMRect);
+    fireEvent.pointerDown(rail, { button: 0, clientX: 25 });
     expect(commit).toHaveBeenCalledTimes(1);
-    fireEvent.mouseMove(document, { clientX: 20 });
-    fireEvent.mouseUp(document);
+    fireEvent.pointerMove(rail, { clientX: 20 });
+    fireEvent.pointerUp(rail);
     expect(commit).toHaveBeenCalledTimes(2);
     expect(commit).toHaveBeenLastCalledWith(80);
   });

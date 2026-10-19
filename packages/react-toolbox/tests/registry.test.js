@@ -2,7 +2,7 @@
 import { it, vi } from 'vitest';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdtemp, readFile, writeFile, symlink, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, writeFile, symlink, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -13,6 +13,7 @@ import postcss from 'postcss';
 import tailwind from '@tailwindcss/postcss';
 import { createRegistry } from '../scripts/build-registry.mjs';
 import { dependencyClosure, installedFiles, materialize, verifyStyles } from './helpers/registry.mjs';
+import { compositionSlugs, readCompositionSource } from '../../../apps/docs/app/docs/composition-source.ts';
 
 const root = path.resolve(import.meta.dirname, '..');
 
@@ -125,6 +126,13 @@ it('compiles isolated families and standalone consumers with scoped styles', asy
     }
     const all = path.join(temporary, 'all');
     await materialize(registry, 'all', all);
+    for (const item of ['example-recipes', 'example-snackbar-queue']) await materialize(registry, item, all);
+    await mkdir(path.join(all, 'src/compositions'), { recursive: true });
+    for (const slug of compositionSlugs) {
+      const source = await readCompositionSource(slug, path.resolve(root, '../../apps/docs/app/docs/examples'));
+      assert(!source.includes('react-toolbox/'), `${slug} must import installed source, not the workspace package`);
+      await writeFile(path.join(all, 'src/compositions', `${slug}.tsx`), source);
+    }
     await symlink(path.join(root, 'node_modules'), path.join(all, 'node_modules'), 'dir');
     await writeFile(
       path.join(all, 'tsconfig.json'),
@@ -139,6 +147,7 @@ it('compiles isolated families and standalone consumers with scoped styles', asy
           noEmit: true,
           skipLibCheck: false,
           types: ['react', 'react-dom'],
+          paths: { '@/*': ['./src/*'] },
         },
         include: ['src/**/*.ts', 'src/**/*.tsx'],
       }),

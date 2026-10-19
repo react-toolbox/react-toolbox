@@ -11,6 +11,19 @@ const reset = async (form: HTMLFormElement) =>
   });
 
 describe('query and selection interactions', () => {
+  it('keeps keyboard focus after selection and accepts a subsequent query', async () => {
+    render(<Autocomplete label="People" source={['Ada', 'Grace']} />);
+    const field = screen.getByRole('combobox');
+    await userEvent.click(field);
+    await userEvent.type(field, 'Ada');
+    await userEvent.keyboard('{ArrowDown}{Enter}');
+    expect(field).toHaveFocus();
+    expect(screen.getByRole('button', { name: 'Remove Ada' })).toBeInTheDocument();
+    await userEvent.type(field, 'Gra');
+    await userEvent.keyboard('{ArrowDown}{Enter}');
+    expect(field).toHaveFocus();
+    expect(screen.getByRole('button', { name: 'Remove Grace' })).toBeInTheDocument();
+  });
   afterEach(() => {
     cleanup();
     vi.restoreAllMocks();
@@ -112,7 +125,7 @@ describe('options and form submission', () => {
     vi.restoreAllMocks();
   });
 
-  it('searches rich options by text, skips disabled choices, submits IDs and resets', async () => {
+  it('searches rich options by text, prevents disabled selection, submits IDs and resets', async () => {
     const view = render(
       <form>
         <Autocomplete
@@ -135,6 +148,9 @@ describe('options and form submission', () => {
     fireEvent.change(input, { target: { value: 'G' } });
     expect(screen.getByRole('group', { name: 'Europe' })).toBeInTheDocument();
     expect(screen.getByRole('option', { name: 'Germany' })).toHaveAttribute('aria-disabled', 'true');
+    fireEvent.keyDown(input, { key: 'ArrowDown' });
+    fireEvent.keyDown(input, { key: 'Enter' });
+    expect(new FormData(form).get('country')).toBe('fr');
     fireEvent.keyDown(input, { key: 'ArrowDown' });
     fireEvent.keyDown(input, { key: 'Enter' });
     expect(input).toHaveValue('Greece');
@@ -203,7 +219,9 @@ describe('options and form submission', () => {
   });
 
   it('preserves a single-value search while remote results replace the source', () => {
-    const view = render(<Autocomplete multiple={false} value="ada" source={{ ada: 'Ada' }} suggestionMatch="disabled" />);
+    const view = render(
+      <Autocomplete multiple={false} value="ada" source={{ ada: 'Ada' }} suggestionMatch="disabled" />,
+    );
     const input = screen.getByRole('combobox');
     fireEvent.focus(input);
     fireEvent.change(input, { target: { value: 'gr' } });

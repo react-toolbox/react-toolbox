@@ -44,7 +44,7 @@ export function SheetOverlay({ className, style, ...props }: SheetOverlayProps) 
       {...theme}
       style={{ ...theme.style, ...style }}
       className={cn(
-        'fixed inset-0 z-(--z-index-higher) bg-[rgb(from_var(--overlay-color)_r_g_b/var(--overlay-opacity))]',
+        'fixed inset-0 z-(--z-index-higher) bg-[rgb(from_var(--overlay-color)_r_g_b/var(--sheet-overlay-opacity,0.2))]',
         motionClasses,
         className,
       )}
@@ -81,7 +81,7 @@ export function SheetTitle({ className, ...props }: SheetTitleProps) {
     <Primitive.Title
       data-slot="SheetTitle"
       {...props}
-      className={cn('m-0 text-[20px] leading-[28px] font-medium', className)}
+      className={cn('m-0 text-[16px] leading-[24px] font-normal text-(--rt-color-text-secondary)', className)}
     />
   );
 }

@@ -17,6 +17,7 @@ function Bridge() { return <>
   <div id="host" className="bg-primary">Host</div><Button id="default-color" primary raised label="Original" />
   <ThemeProvider variables={{...shadcnThemeVariables, ...window.__SCOPE_TOKENS__}}>
     <Button id="bridged-color" primary raised label="Bridged" />
+    <Button id="bridged-accent" accent raised label="Bridged accent" />
     <Card id="bridged-card"><CardText>Card text</CardText></Card>
     <Input id="bridged-input" label="Input" value="Value" />
     <Dialog active title="Themed portal" actions={[{label:'Action',primary:true,raised:true}]}><p>Portal content</p></Dialog>
@@ -113,7 +114,8 @@ async function fixture(page, css, lineHeight = 'normal', classes = {}) {
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator('.rt-tabs-pointer')).not.toHaveCSS('width', '0px');
 }
-async function geometry(page, selector = '#fixture *') {
+/** Primitive hidden form bridges have no visible geometry; compare every rendered surface. */
+async function geometry(page, selector = '#fixture *:not(input[aria-hidden="true"])') {
   return page.locator(selector).evaluateAll((nodes) =>
     nodes.map((node) => {
       const style = getComputedStyle(node),
@@ -308,6 +310,8 @@ for (const scoped of [false, true]) {
     );
     await expect(page.locator('#bridged-card')).toHaveCSS('background-color', 'rgb(240, 240, 255)');
     await expect(page.locator('#bridged-card')).toHaveCSS('color', 'rgb(17, 34, 51)');
+    await expect(page.locator('#bridged-accent')).toHaveCSS('background-color', 'rgb(238, 224, 255)');
+    await expect(page.locator('#bridged-accent')).toHaveCSS('color', 'rgb(34, 34, 34)');
     const dialog = page.getByRole('dialog');
     await expect(dialog).toHaveCSS('background-color', scoped ? 'rgb(224, 255, 255)' : 'rgb(255, 240, 255)');
     await expect(dialog).toHaveCSS('color', scoped ? 'rgb(0, 51, 51)' : 'rgb(51, 34, 68)');
@@ -333,6 +337,16 @@ for (const scoped of [false, true]) {
     await expect(page.locator('#bridged-card')).toHaveCSS('color', 'rgb(238, 238, 238)');
   });
 }
+
+test('shadcn bridge falls back to the Material accent when host colors are absent', async ({ page }) => {
+  await page.setContent(`<!doctype html><style>${semantic}</style><div id="root"></div>`);
+  await page.evaluate(() => {
+    window.__TAILWIND_BRIDGE__ = true;
+  });
+  await page.addScriptTag({ content: javascript });
+  await expect(page.locator('#bridged-accent')).toHaveCSS('background-color', 'rgb(216, 27, 96)');
+  await expect(page.locator('#bridged-accent')).toHaveCSS('color', 'rgb(255, 255, 255)');
+});
 
 for (const [label, lineHeight] of ['Date', 'Time'].flatMap((label) =>
   ['normal', '1.5'].map((height) => [label, height]),

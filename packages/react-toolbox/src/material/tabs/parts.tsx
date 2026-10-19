@@ -1,5 +1,6 @@
 'use client';
 import './tokens.css';
+import { labelSizeClasses, labelFocusClasses } from './styles';
 import * as Primitive from '@radix-ui/react-tabs';
 import { useLayoutEffect, useRef, useState, useImperativeHandle, type ComponentProps, type CSSProperties } from 'react';
 import { cn } from '../foundations/styles/cn';
@@ -50,8 +51,9 @@ export function TabsTrigger({
       asChild={asChild}
       disabled={disabled}
       className={cn(
-        focusClasses,
-        'relative flex min-h-(--tab-label-height) min-w-[72px] shrink-0 items-center justify-center gap-[8px] overflow-hidden border-0 bg-transparent px-(--tab-label-h-padding) py-(--tab-label-v-padding) text-(length:--tab-text-height) leading-none font-medium uppercase text-(--tab-text-inactive-color) data-[state=active]:text-(--tab-text-color) disabled:opacity-(--tab-label-disabled-opacity) focus-visible:bg-(--tab-focus-color) after:absolute after:inset-x-0 after:bottom-0 after:h-(--tab-pointer-height) after:bg-(--tab-pointer-color) after:opacity-0 data-[state=active]:after:opacity-100 data-[orientation=vertical]:after:inset-x-auto data-[orientation=vertical]:after:inset-y-0 data-[orientation=vertical]:after:end-0 data-[orientation=vertical]:after:h-auto data-[orientation=vertical]:after:w-(--tab-pointer-height)',
+        labelFocusClasses,
+        labelSizeClasses,
+        'relative flex min-h-(--tab-label-height) shrink-0 items-center justify-center gap-[8px] overflow-hidden border-0 bg-transparent px-(--tab-label-h-padding) py-(--tab-label-v-padding) text-(length:--tab-text-height) leading-none font-medium uppercase text-(--tab-text-inactive-color) data-[state=active]:text-(--tab-text-color) disabled:opacity-(--tab-label-disabled-opacity) focus-visible:bg-(--tab-focus-color) after:absolute after:inset-x-0 after:bottom-0 after:h-(--tab-pointer-height) after:bg-(--tab-pointer-color) after:opacity-0 data-[state=active]:after:opacity-100 data-[orientation=vertical]:after:inset-x-auto data-[orientation=vertical]:after:inset-y-0 data-[orientation=vertical]:after:end-0 data-[orientation=vertical]:after:h-auto data-[orientation=vertical]:after:w-(--tab-pointer-height)',
         className,
       )}
       onMouseDown={(event) => {

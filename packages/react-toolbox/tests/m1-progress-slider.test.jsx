@@ -12,11 +12,13 @@ function ControlledSlider(props) {
 
 describe('M1 slider interaction', () => {
   it('calls a cancelled knob gesture handler once without starting a drag', () => {
-    const onMouseDown = vi.fn(event => event.preventDefault());
-    const onTouchStart = vi.fn(event => event.preventDefault());
+    const onMouseDown = vi.fn((event) => event.preventDefault());
+    const onTouchStart = vi.fn((event) => event.preventDefault());
     const onDragStart = vi.fn();
     const onChange = vi.fn();
-    render(<Slider onMouseDown={onMouseDown} onTouchStart={onTouchStart} onDragStart={onDragStart} onChange={onChange} />);
+    render(
+      <Slider onMouseDown={onMouseDown} onTouchStart={onTouchStart} onDragStart={onDragStart} onChange={onChange} />,
+    );
     const knob = screen.getByRole('slider').querySelector('.rt-slider-knob');
     fireEvent.mouseDown(knob, { button: 0, clientX: 40 });
     fireEvent.touchStart(knob, { touches: [{ pageX: 40, pageY: 0 }] });
@@ -26,7 +28,12 @@ describe('M1 slider interaction', () => {
     expect(onChange).not.toHaveBeenCalled();
   });
   it('supports keyboard range selection without scrolling or capturing unrelated keys', () => {
-    render(<><ControlledSlider aria-label="Volume" step={5} /><input aria-label="Other field" /></>);
+    render(
+      <>
+        <ControlledSlider aria-label="Volume" step={5} />
+        <input aria-label="Other field" />
+      </>,
+    );
     const slider = screen.getByRole('slider', { name: 'Volume' });
     act(() => slider.focus());
     expect(fireEvent.keyDown(slider, { key: 'ArrowRight' })).toBe(false);
@@ -74,11 +81,12 @@ describe('M1 slider interaction', () => {
     expect(onChange).not.toHaveBeenCalled();
     expect(slider).toHaveAttribute('tabindex', '-1');
     view.rerender(<Slider aria-label="Volume" onChange={onChange} onDragStop={onDragStop} />);
-    fireEvent.touchStart(slider, { touches: [{ pageX: 40, pageY: 0 }] });
-    fireEvent.touchCancel(document);
+    const rail = slider.closest('.rt-slider-container');
+    fireEvent.pointerDown(rail, { pointerType: 'touch', button: 0, clientX: 40 });
+    fireEvent.pointerCancel(rail, { pointerType: 'touch' });
     expect(onDragStop).toHaveBeenCalledOnce();
     onChange.mockClear();
-    fireEvent.touchMove(document, { touches: [{ pageX: 80, pageY: 0 }] });
+    fireEvent.pointerMove(rail, { pointerType: 'touch', clientX: 80 });
     expect(onChange).not.toHaveBeenCalled();
   });
 
@@ -86,11 +94,11 @@ describe('M1 slider interaction', () => {
     const onChange = vi.fn();
     render(<Slider min={0} max={100} value={0} step={1} onChange={onChange} />);
     const slider = screen.getByRole('slider');
-    vi.spyOn(slider, 'getBoundingClientRect').mockReturnValue({ left: 10, width: 200 });
-    vi.spyOn(slider.querySelector('.rt-slider-knob'), 'getBoundingClientRect').mockReturnValue({ width: 32 });
-    fireEvent.mouseDown(slider, { button: 0, clientX: 126 });
+    const rail = slider.closest('.rt-slider-container');
+    vi.spyOn(rail, 'getBoundingClientRect').mockReturnValue({ left: 10, width: 200 });
+    fireEvent.pointerDown(rail, { button: 0, clientX: 110 });
     expect(onChange).toHaveBeenLastCalledWith(50);
-    fireEvent.mouseUp(document);
+    fireEvent.pointerUp(rail);
   });
 
   it('preserves fractional labels and min offsets, including scientific-notation steps', () => {
@@ -110,12 +118,18 @@ describe('M1 slider interaction', () => {
     const onChange = vi.fn();
     render(<Slider snaps min={0} max={10} step={3} onChange={onChange} />);
     const slider = screen.getByRole('slider');
-    expect([...slider.querySelectorAll('.rt-slider-snap')].map(stop => stop.style.left)).toEqual(['0%', '30%', '60%', '90%', '100%']);
-    vi.spyOn(slider, 'getBoundingClientRect').mockReturnValue({ left: 0, width: 200 });
-    vi.spyOn(slider.querySelector('.rt-slider-knob'), 'getBoundingClientRect').mockReturnValue({ width: 32 });
-    fireEvent.mouseDown(slider, { button: 0, clientX: 216 });
+    const rail = slider.closest('.rt-slider-container');
+    expect([...rail.querySelectorAll('.rt-slider-snap')].map((stop) => stop.style.left)).toEqual([
+      '0%',
+      '30%',
+      '60%',
+      '90%',
+      '100%',
+    ]);
+    vi.spyOn(rail, 'getBoundingClientRect').mockReturnValue({ left: 0, width: 200 });
+    fireEvent.pointerDown(rail, { button: 0, clientX: 216 });
     expect(onChange).toHaveBeenLastCalledWith(10);
-    fireEvent.mouseUp(document);
+    fireEvent.pointerUp(rail);
   });
 
   it('returns from an uneven maximum through the same discrete keyboard stops', () => {
@@ -137,7 +151,7 @@ describe('M1 slider interaction', () => {
     fireEvent.keyDown(slider, { key: 'End' });
     expect(slider).toHaveAttribute('aria-valuenow', '2.5');
     expect(slider.querySelector('[data-value]')).toHaveAttribute('data-value', '2.5');
-    expect(slider.querySelector('.rt-slider-knob').style.left).toBe('100%');
+    expect(slider.parentElement.style.left).toContain('100%');
     expect(screen.getByRole('textbox')).toHaveValue('2.5');
     fireEvent.keyDown(slider, { key: 'ArrowLeft' });
     expect(slider).toHaveAttribute('aria-valuenow', '2');

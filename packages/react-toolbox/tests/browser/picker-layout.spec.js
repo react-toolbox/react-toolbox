@@ -17,6 +17,7 @@ test.beforeAll(async () => {
       createRoot(document.getElementById('root')).render(<>
         <DatePicker label="Date" layout="responsive" defaultValue={new Date(2026,9,15)} />
         <TimePicker label="Time" layout="responsive" format="ampm" defaultValue={new Date(2026,9,15,9,30)} />
+        <TimePicker label="24-hour time" layout="responsive" defaultValue={new Date(2026,9,15,9,30)} />
       </>);`,
       },
       bundle: true,
@@ -42,6 +43,7 @@ async function measureParts(dialog, content) {
 for (const [label, content] of [
   ['Date', '.rt-date-picker-calendarWrapper'],
   ['Time', '.rt-time-picker-clock'],
+  ['24-hour time', '.rt-time-picker-clock'],
 ]) {
   test(`${label} picker adapts between landscape and portrait without clipping actions`, async ({ page }) => {
     await page.setViewportSize({ width: 900, height: 600 });
@@ -49,7 +51,7 @@ for (const [label, content] of [
       `<style>${css}*,*::before,*::after{animation:none!important;transition:none!important}</style><div id="root"></div>`,
     );
     await page.addScriptTag({ content: javascript });
-    await page.getByRole('combobox', { name: label }).click();
+    await page.getByRole('combobox', { name: label, exact: true }).click();
     const dialog = page.getByRole('dialog');
     await expect(dialog).toBeVisible();
     /** Disabling CSS motion does not skip the dialog's delayed entrance state. */
@@ -63,6 +65,11 @@ for (const [label, content] of [
     await expect(dialog).toHaveCSS('display', 'flex');
     const { header: portraitHeader, body: portraitBody } = await measureParts(dialog, content);
     expect(portraitHeader.y + portraitHeader.height).toBeLessThanOrEqual(portraitBody.y + 1);
+    if (content === '.rt-time-picker-clock') {
+      /** Large clock digits must not inherit the dialog body's fixed 24px line-height. */
+      await expect(dialog.locator('header')).toHaveCSS('line-height', '78px');
+      expect(portraitHeader.height).toBeCloseTo(98, 0);
+    }
     await expect(dialog.getByRole('button', { name: 'Ok', exact: true })).toBeInViewport();
   });
 }

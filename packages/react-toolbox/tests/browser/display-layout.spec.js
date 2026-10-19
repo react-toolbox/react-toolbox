@@ -14,7 +14,8 @@ test.beforeAll(async () => {
           import { createRoot } from 'react-dom/client';
           import { Layout, NavDrawer, Sidebar, Panel } from './src/material/layout';
           import AppBar from './src/material/app-bar';
-          import { List, ListItem, ListSubHeader, ListDivider } from './src/material/list';
+          import { List, ListItem, ListItemContent, ListItemText, ListSubHeader, ListDivider } from './src/material/list';
+          import { Tabs, Tab } from './src/material/tabs';
           import Chip from './src/material/chip';
           import ProgressBar from './src/material/progress-bar';
           import Checkbox from './src/material/checkbox';
@@ -26,6 +27,21 @@ test.beforeAll(async () => {
           function Details() { return <Sidebar pinned width={window.fixtureWidth}>Details</Sidebar>; }
           function Header() { return <AppBar fixed title="Project" />; }
           function App() {
+            if (window.fixtureMetrics) return <main dir={window.fixtureDirection}>
+              <Tabs aria-label="Project views"><Tab label="Overview"/><Tab label="Details"/></Tabs>
+              <List aria-label="Messages">
+                {[false, true].flatMap(interactive => ['icon', 'avatar'].map(leading => (
+                  <ListItem key={leading + interactive}
+                    leftIcon={leading === 'icon' ? 'folder' : undefined}
+                    avatar={leading === 'avatar' ? <span>A</span> : undefined}
+                    onClick={interactive ? () => {} : undefined}>
+                    <ListItemContent caption="Project notes" legend="Updated today">
+                      <ListItemText>Ready for review</ListItemText>
+                    </ListItemContent>
+                  </ListItem>
+                )))}
+              </List>
+            </main>;
             if (window.fixtureRecipes) return <main dir={window.fixtureDirection} style={{padding:24,maxWidth:600}}>
               <h1>Composition recipes</h1>
               <AvatarGroupRecipe people={[{id:'ada',name:'Ada'},{id:'lin',name:'Lin'},{id:'sam',name:'Sam'}]} maxVisible={2} />
@@ -80,7 +96,7 @@ test.beforeAll(async () => {
   ).css;
 });
 
-async function fixture(page, { width, direction = 'ltr', nav = false, recipes = false } = {}) {
+async function fixture(page, { width, direction = 'ltr', nav = false, recipes = false, metrics = false } = {}) {
   await page.setContent(
     `<!doctype html><html lang="en"><head><title>Display regression fixture</title><style>${css}body{margin:0}*{transition:none!important}</style></head><body><div id="root"></div></body></html>`,
   );
@@ -90,11 +106,38 @@ async function fixture(page, { width, direction = 'ltr', nav = false, recipes = 
       window.fixtureDirection = options.direction;
       window.fixtureNav = options.nav;
       window.fixtureRecipes = options.recipes;
+      window.fixtureMetrics = options.metrics;
     },
-    { width, direction, nav, recipes },
+    { width, direction, nav, recipes, metrics },
   );
   await page.addScriptTag({ content: javascript });
-  if (!recipes) await expect(page.locator('.rt-layout-layout')).toHaveClass(/rt-layout-sidebarPinned/);
+  if (!recipes && !metrics) await expect(page.locator('.rt-layout-layout')).toHaveClass(/rt-layout-sidebarPinned/);
+}
+
+for (const direction of ['ltr', 'rtl']) {
+  test(`text tabs center their labels and interactive three-line lists retain top alignment in ${direction}`, async ({ page }) => {
+    await fixture(page, { direction, metrics: true });
+    for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
+      await page.setViewportSize(viewport);
+      for (const tab of await page.getByRole('tab').all()) {
+        const geometry = await tab.evaluate((element) => {
+          const range = document.createRange();
+          range.selectNodeContents(element);
+          const label = range.getBoundingClientRect();
+          const bounds = element.getBoundingClientRect();
+          return { labelCenter: label.left + label.width / 2, tabCenter: bounds.left + bounds.width / 2 };
+        });
+        expect(geometry.labelCenter).toBeCloseTo(geometry.tabCenter, 1);
+      }
+      for (const row of await page.getByRole('listitem').all()) {
+        const geometry = await row.evaluate((element) => {
+          const leading = element.querySelector('.rt-list-left [data-react-toolbox]');
+          return { rowTop: element.getBoundingClientRect().top, leadingTop: leading.getBoundingClientRect().top };
+        });
+        expect(geometry.leadingTop - geometry.rowTop).toBeCloseTo(16, 1);
+      }
+    }
+  });
 }
 
 for (const direction of ['ltr', 'rtl']) {

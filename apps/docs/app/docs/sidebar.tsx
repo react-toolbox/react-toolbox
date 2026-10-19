@@ -28,7 +28,7 @@ export default function DocsSidebar({ components, onNavigate }: { components: Co
             href={href}
             aria-current={active ? 'page' : undefined}
             onNavigate={onNavigate}
-            className={`flex min-h-toolbox-touch min-w-0 flex-1 items-center px-4 toolbox-desktop:px-6 min-[1025px]:px-6 text-sm font-medium no-underline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-toolbox-primary ${active ? 'text-toolbox-primary' : 'text-toolbox-text'}`}
+            className={`flex min-h-toolbox-touch min-w-0 flex-1 items-center px-4 toolbox-desktop:px-6 min-[1025px]:px-6 text-sm font-medium no-underline outline-none focus-visible:bg-(--list-item-hover-color) forced-colors:focus-visible:[outline:2px_solid_Highlight] forced-colors:focus-visible:-outline-offset-2 ${active ? 'text-toolbox-primary' : 'text-toolbox-text'}`}
           >
             {title}
           </Link>

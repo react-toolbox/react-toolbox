@@ -36,7 +36,7 @@ pnpm --filter react-toolbox verify:deployment https://react-toolbox.io
 REGISTRY_TEST_ORIGIN=https://react-toolbox.io pnpm test:registry:install
 ```
 
-The deployment check validates HTTPS, documentation pages, and every registry item's exact source and dependency URLs. The consumer check uses the actual shadcn CLI, follows component dependencies, builds clean Next.js and Vite apps, and verifies rendering, interaction, coexistence with shadcn, and customized-source updates. Install Chromium using the [root verification instructions](../README.md#verify) before running the consumer check; it requires network access.
+The deployment check validates HTTPS, documentation pages, and every registry item's exact source and dependency URLs. The consumer check uses the actual shadcn CLI, follows component dependencies, builds clean Next.js and Vite apps, and verifies rendering, interaction, coexistence with shadcn, and customized-source updates. Install Chromium using the [root verification instructions](../CONTRIBUTING.md#verify) before running the consumer check; it requires network access.
 
 A local build alone does not verify production DNS, TLS, or access protection. Substitute the project's public `vercel.app` origin in both checks to validate a deployment before connecting the custom domain.
 

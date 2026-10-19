@@ -1,101 +1,57 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
-  "globalDependencies": [
-    "biome.json",
-    ".nvmrc"
-  ],
+  "globalDependencies": ["biome.json", ".nvmrc"],
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**",
-        ".next/**",
-        "!.next/cache/**",
-        "!.next/dev/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "!.next/dev/**"]
     },
     "dev": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     },
     "react-toolbox#dev": {
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "cache": false,
       "persistent": true
     },
     "@react-toolbox/docs#dev": {
-      "dependsOn": [
-        "^build"
-      ],
-      "with": [
-        "react-toolbox#dev"
-      ],
+      "dependsOn": ["^build"],
+      "with": ["react-toolbox#dev"],
       "cache": false,
       "persistent": true
     },
     "check": {
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "cache": false
     },
     "typecheck": {
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "outputs": []
     },
     "test": {
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "inputs": [
         "$TURBO_DEFAULT$",
-        "$TURBO_ROOT$/docs/releases/*.md"
+        "$TURBO_ROOT$/docs/releases/*.md",
+        "$TURBO_ROOT$/apps/docs/app/docs/composition-source.ts",
+        "$TURBO_ROOT$/apps/docs/app/docs/examples/**"
       ],
       "outputs": []
     },
     "registry:build": {
-      "inputs": [
-        "src/**",
-        "scripts/build-registry.mjs",
-        "registry.config.mjs",
-        "package.json",
-        "LICENSE"
-      ],
-      "env": [
-        "REGISTRY_ORIGIN"
-      ],
-      "outputs": [
-        "registry/public/**",
-        "registry/data.json"
-      ]
+      "inputs": ["src/**", "scripts/build-registry.mjs", "registry.config.mjs", "package.json", "LICENSE"],
+      "env": ["REGISTRY_ORIGIN"],
+      "outputs": ["registry/public/**", "registry/data.json"]
     },
     "react-toolbox#build": {
-      "dependsOn": [
-        "registry:build",
-        "api:build"
-      ],
-      "outputs": [
-        "dist/**"
-      ]
+      "dependsOn": ["registry:build", "api:build"],
+      "outputs": ["dist/**"]
     },
     "api:build": {
-      "inputs": [
-        "src/**",
-        "scripts/build-api-docs.mjs",
-        "package.json"
-      ],
-      "outputs": [
-        "registry/api.json"
-      ]
+      "inputs": ["src/**", "scripts/build-api-docs.mjs", "package.json"],
+      "outputs": ["registry/api.json"]
     }
   }
 }

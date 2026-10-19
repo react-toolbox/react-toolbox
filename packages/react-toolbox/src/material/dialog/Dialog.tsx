@@ -1,5 +1,6 @@
 'use client';
 import './tokens.css';
+import { descriptionClasses } from './styles';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
 import type { DialogClassNames } from './types';
@@ -9,8 +10,7 @@ import { cn } from '../foundations/styles/cn';
 import Portal, { type PortalContainer } from '../foundations/portal/Portal';
 import usePresence from '../foundations/motion/usePresence';
 import { Button, type ButtonProps } from '../button';
-import Overlay from '../overlay';
-import { ModalSurface } from '../overlay/ModalSurface';
+import { DialogContent, DialogOverlay, DialogRoot, DialogTitle } from './parts';
 
 export type { DialogClassNames } from './types';
 export type DialogActionProps = ButtonProps;
@@ -58,36 +58,49 @@ export function Dialog({
   const { present, visible } = usePresence(active, delay);
   if (!present) return null;
   return (
-    <Portal
-      container={portalContainer}
-      className={cn(
-        'rt-dialog-wrapper',
-        'items-center flex h-screen justify-center fixed top-0 w-screen z-(--z-index-higher)',
-        materialRoot,
-        materialDescendants,
-        classNames?.wrapper,
-      )}
-    >
-      <Overlay
-        active={visible}
-        lockScroll={false}
-        onClick={onOverlayClick}
-        onMouseDown={onOverlayMouseDown}
-        onMouseMove={onOverlayMouseMove}
-        onMouseUp={onOverlayMouseUp}
-      />
-      <ModalSurface
-        active={active}
-        onOpenAutoFocus={onOpenAutoFocus}
-        onCloseAutoFocus={onCloseAutoFocus}
-        onEscKeyDown={onEscKeyDown}
+    <DialogRoot open={active}>
+      {/* usePresence owns the delayed exit: parts stay force-mounted, so Radix keeps aria-hidden and scroll lock until unmount, then returns focus asynchronously. */}
+      <Portal
+        container={portalContainer}
+        className={cn(
+          'rt-dialog-wrapper',
+          'items-center flex h-screen justify-center fixed top-0 w-screen z-(--z-index-higher)',
+          materialRoot,
+          materialDescendants,
+          classNames?.wrapper,
+        )}
       >
-        <div
+        <DialogOverlay
+          forceMount
+          className={cn(
+            'rt-overlay-overlay',
+            'z-auto opacity-0 data-[state=open]:animate-none data-[state=closed]:animate-none [transition:opacity_var(--animation-duration)_var(--animation-curve-default)]',
+            visible && 'rt-overlay-active opacity-100',
+          )}
+          style={visible ? undefined : { pointerEvents: 'none' }}
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            onOverlayClick?.(event);
+          }}
+          onMouseDown={onOverlayMouseDown}
+          onMouseMove={onOverlayMouseMove}
+          onMouseUp={onOverlayMouseUp}
+        />
+        <DialogContent
+          forceMount
           {...attributes}
           ref={ref}
+          onOpenAutoFocus={onOpenAutoFocus}
+          onCloseAutoFocus={onCloseAutoFocus}
+          onEscapeKeyDown={(event) => {
+            if (active) onEscKeyDown?.(event);
+            event.preventDefault();
+          }}
           data-react-toolbox="dialog"
           className={cn(
             'rt-dialog-dialog',
+            'static w-auto translate-none data-[state=open]:animate-none data-[state=closed]:animate-none',
             'bg-(--dialog-color-white) rounded-(--dialog-border-radius) [box-shadow:var(--zdepth-shadow-5)] flex flex-col max-w-[96vw] max-h-[calc(100vh-4.8*var(--unit))] [outline:none] opacity-0 [overflow:var(--overflow)] transform-[translateY(calc(-1*var(--dialog-translate-y)))] [transition:opacity_var(--animation-duration)_var(--animation-curve-default),transform_var(--animation-duration)_var(--animation-curve-default)] [&&]:delay-(--animation-delay)',
             classNames?.dialog,
             type !== 'custom' &&
@@ -129,27 +142,28 @@ export function Dialog({
           aria-labelledby={attributes['aria-labelledby'] || (!attributes['aria-label'] && title ? titleId : undefined)}
           aria-hidden={!active || undefined}
           inert={!active || undefined}
-          tabIndex={-1}
         >
           <section
             className={cn(
               'rt-dialog-body',
-              'text-(--rt-color-text-secondary) grow-2 min-h-0 overflow-y-auto p-(--dialog-content-padding)',
-              '[&_p]:text-[calc(1.4*var(--unit))] [&_p]:[font-weight:400] [&_p]:tracking-[0] [&_p]:leading-[calc(2.4*var(--unit))] [&_p]:m-0',
+              descriptionClasses,
+              'grow-2 min-h-0 overflow-y-auto p-(--dialog-content-padding)',
+              '[&_p]:text-[calc(1.6*var(--unit))] [&_p]:[font-weight:400] [&_p]:tracking-[0] [&_p]:leading-[calc(2.4*var(--unit))] [&_p]:m-0',
               classNames?.body,
             )}
           >
             {title ? (
-              <h6
+              <DialogTitle
+                asChild
                 id={titleId}
                 className={cn(
                   'rt-dialog-title',
-                  'text-(--dialog-color-title) grow-0 text-[calc(2*var(--unit))] [font-weight:500] tracking-[0.02em] leading-none m-[0_0_calc(2*var(--unit))]',
+                  'grow-0 tracking-[0.02em] m-[0_0_calc(2*var(--unit))]',
                   classNames?.title,
                 )}
               >
-                {title}
-              </h6>
+                <h6>{title}</h6>
+              </DialogTitle>
             ) : null}
             {children}
           </section>
@@ -175,9 +189,9 @@ export function Dialog({
               ))}
             </nav>
           ) : null}
-        </div>
-      </ModalSurface>
-    </Portal>
+        </DialogContent>
+      </Portal>
+    </DialogRoot>
   );
 }
 export default Dialog;

@@ -1,6 +1,6 @@
 # Component readiness review
 
-> Historical audit. Findings and validation results describe the revisions recorded below. Use the [current guides](../../README.md#guides) for supported behavior and maintenance.
+> Historical audit. Findings and validation results describe the revisions recorded below. Use the [current guides](../../CONTRIBUTING.md#guides) for supported behavior and maintenance.
 
 16 October 2026 · initial audit at `1a486e60` · 27 existing public families reviewed, Sheet added as the 28th, shared foundations and two retired families assessed.
 

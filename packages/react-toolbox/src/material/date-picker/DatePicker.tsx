@@ -41,6 +41,7 @@ export interface DatePickerProps
   endYear?: number;
   /** Classes for the component's rendered parts. */
   classNames?: DatePickerClassNames;
+  /** Strings are displayed verbatim; use Date for calendar initialization and date constraints. */
   value?: Date | string | null;
 }
 export function DatePicker({
@@ -110,7 +111,7 @@ export function DatePicker({
     setVisible(true);
   };
   const date = value instanceof Date ? value : undefined;
-  const formattedValue = date ? inputFormat(date, locale) : '';
+  const formattedValue = typeof value === 'string' ? value : date ? inputFormat(date, locale) : '';
   const unavailable = Boolean(
     date && isDateDisabled(date, { minDate, maxDate, enabledDates, disabledDates, isDateUnavailable }),
   );
@@ -127,7 +128,8 @@ export function DatePicker({
         tabIndex={-1}
         aria-hidden="true"
         form={others.form}
-        disabled={readonly || disabled}
+        disabled={disabled}
+        readOnly={readonly}
         required={required}
         value={formattedValue}
         onChange={() => {}}
@@ -144,13 +146,13 @@ export function DatePicker({
         {...others}
         ref={inputRef}
         className={cn('rt-date-picker-input', classNames?.input, inputClassName)}
-        disabled={readonly || disabled}
+        disabled={disabled}
         error={error || validationMessage}
         required={required}
-        role="combobox"
-        aria-haspopup="dialog"
+        role={readonly ? undefined : 'combobox'}
+        aria-haspopup={readonly ? undefined : 'dialog'}
         aria-controls={visible ? dialogId : undefined}
-        aria-expanded={visible}
+        aria-expanded={readonly ? undefined : visible}
         onKeyDown={(event) => {
           onKeyDown?.(event);
           if (
@@ -170,7 +172,7 @@ export function DatePicker({
           input: cn('rt-date-picker-input', classNames?.input),
           inputElement: cn(
             'rt-date-picker-inputElement',
-            '[.rt-date-picker-input:not(.rt-date-picker-disabled)>&]:cursor-pointer',
+            !readonly && '[.rt-date-picker-input:not(.rt-date-picker-disabled)>&]:cursor-pointer',
             classNames?.inputElement,
           ),
         }}

@@ -2,17 +2,30 @@ import { createRef, Fragment } from 'react';
 import { cleanup, fireEvent, render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { List, ListItem, ListItemContent, ListCheckbox, ListDivider, ListItemAction, ListItemActions, ListSubHeader } from '../src/material/list';
+import {
+  List,
+  ListItem,
+  ListItemContent,
+  ListCheckbox,
+  ListDivider,
+  ListItemAction,
+  ListItemActions,
+  ListSubHeader,
+} from '../src/material/list';
 
 describe('list defaults and ripple', () => {
   afterEach(cleanup);
 
   it('inherits list selection and ink while respecting explicit item overrides', () => {
-    const { container } = render(<List selectable ripple>
-      <ListItem caption="Inherited" />
-      <ListItem caption="Explicit" selectable={false} ripple={false} />
-      <ListItem><ListItemContent caption="Custom content" /></ListItem>
-    </List>);
+    const { container } = render(
+      <List selectable ripple>
+        <ListItem caption="Inherited" />
+        <ListItem caption="Explicit" selectable={false} ripple={false} />
+        <ListItem>
+          <ListItemContent caption="Custom content" />
+        </ListItem>
+      </List>,
+    );
     const items = screen.getAllByRole('listitem');
     expect(items[0]?.firstChild).toHaveClass('rt-list-selectable');
     expect(items[1]?.firstChild).not.toHaveClass('rt-list-selectable');
@@ -25,6 +38,19 @@ describe('list defaults and ripple', () => {
 });
 
 describe('composed Material lists', () => {
+  it('uses a supplied navigation link as the whole primary action', async () => {
+    render(
+      <List selectable>
+        <ListItem caption="Projects" primaryAction={<a href="/projects" aria-current="page" />} />
+      </List>,
+    );
+    const link = screen.getByRole('link', { name: 'Projects' });
+    expect(link).toHaveAttribute('href', '/projects');
+    expect(link).toHaveAttribute('aria-current', 'page');
+    await userEvent.tab();
+    expect(link).toHaveFocus();
+  });
+
   it('keeps wrapped secondary list actions independent and disables a custom primary action', async () => {
     const select = vi.fn();
     const archive = vi.fn();

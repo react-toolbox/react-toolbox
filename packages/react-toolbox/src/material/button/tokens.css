@@ -13,6 +13,7 @@
     --button-primary-color-contrast: var(--rt-color-primary-contrast);
     --button-accent-color-hover: rgb(from var(--rt-color-accent) r g b / 20%);
     --button-accent-color: var(--rt-color-accent);
+    --button-accent-text-color: color-mix(in srgb, var(--button-accent-color) 70%, black);
     --button-neutral-color: var(--rt-color-white);
     --button-neutral-color-contrast: var(--palette-grey-900);
     --button-neutral-color-hover: rgb(from var(--palette-grey-900) r g b / 20%);
@@ -51,9 +52,14 @@
     --button-primary-color-contrast: var(--rt-color-primary-contrast);
   }
   [data-react-toolbox-tokens~="--rt-color-accent"],
-  [data-react-toolbox-tokens~="--palette-pink-a200"] {
+  [data-react-toolbox-tokens~="--palette-pink-600"] {
     --button-accent-color-hover: rgb(from var(--rt-color-accent) r g b / 20%);
     --button-accent-color: var(--rt-color-accent);
+  }
+  [data-react-toolbox-tokens~="--rt-color-accent"],
+  [data-react-toolbox-tokens~="--palette-pink-600"],
+  [data-react-toolbox-tokens~="--button-accent-color"] {
+    --button-accent-text-color: color-mix(in srgb, var(--button-accent-color) 70%, black);
   }
   [data-react-toolbox-tokens~="--rt-color-white"] {
     --button-neutral-color: var(--rt-color-white);

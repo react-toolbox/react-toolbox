@@ -121,15 +121,15 @@ export function useRipple({
     const id = !multiple && inks.length ? sequence.current : ++sequence.current;
     listeners.current.get(id)?.();
     const finish = (event: Event) => {
+      if ('pointerType' in event && event.pointerType === 'touch') return;
       if (event.type === 'touchcancel') touchCache.current = false;
       deactivate(id);
     };
-    const event = touch ? 'touchend' : 'mouseup';
-    document.addEventListener(event, finish);
-    if (touch) document.addEventListener('touchcancel', finish);
+    /** Popup triggers can suppress mouseup by canceling pointerdown. End ink even when release propagation is stopped. */
+    const endEvents = touch ? ['touchend', 'touchcancel'] : ['mouseup', 'pointerup', 'pointercancel'];
+    for (const event of endEvents) document.addEventListener(event, finish, true);
     listeners.current.set(id, () => {
-      document.removeEventListener(event, finish);
-      if (touch) document.removeEventListener('touchcancel', finish);
+      for (const event of endEvents) document.removeEventListener(event, finish, true);
     });
     const ink: Ink = {
       id,

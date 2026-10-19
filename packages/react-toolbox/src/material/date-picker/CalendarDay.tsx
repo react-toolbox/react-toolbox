@@ -71,7 +71,9 @@ export default function CalendarDay({
             classNames?.disabled,
           ),
       )}
-      style={withOffset && day === 1 ? { marginLeft: `${(firstDay >= 0 ? firstDay : 6) * (100 / 7)}%` } : undefined}
+      style={
+        withOffset && day === 1 ? { marginInlineStart: `${(firstDay >= 0 ? firstDay : 6) * (100 / 7)}%` } : undefined
+      }
     >
       <span
         role="button"

@@ -98,12 +98,14 @@ describe('mixed modal ownership', () => {
       expect(inner.contains(document.activeElement)).toBe(true);
       expect(document.body).toHaveAttribute('data-scroll-locked');
       fireEvent.keyDown(document.activeElement, { key: 'Escape' });
+      advance(600);
       advance();
       expect(screen.queryByRole('dialog', { name: 'Inner' })).toBeNull();
       expect(screen.getByRole('dialog', { name: 'Outer' })).toBeInTheDocument();
       expect(trigger).toHaveFocus();
       expect(document.body).toHaveAttribute('data-scroll-locked');
       fireEvent.keyDown(trigger, { key: 'Escape' });
+      advance(600);
       advance();
       expect(screen.queryByRole('dialog', { name: 'Outer' })).toBeNull();
       expect(document.body).not.toHaveAttribute('data-scroll-locked');
@@ -148,7 +150,7 @@ describe('mixed modal ownership', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Count 0' }));
     view.rerender(content(false));
     expect(node).toHaveAttribute('inert');
-    expect(document.body).not.toHaveAttribute('data-scroll-locked');
+    expect(document.body).toHaveAttribute('data-scroll-locked');
     advance(100);
     view.rerender(content(true));
     advance(30);
@@ -168,7 +170,7 @@ describe('mixed modal ownership', () => {
     );
     fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
     advance();
-    expect(screen.getByRole('menuitem', { name: 'Archive' })).toHaveFocus();
+    expect(screen.getByRole('menu')).toHaveFocus();
     fireEvent.keyDown(document.activeElement, { key: 'Escape' });
     expect(screen.queryByRole('menu')).toBeNull();
     expect(onEscape).not.toHaveBeenCalled();

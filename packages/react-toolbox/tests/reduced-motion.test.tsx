@@ -123,24 +123,15 @@ describe('reduced motion', () => {
     expect(screen.getByRole('button')).not.toHaveAttribute('aria-describedby');
   });
 
-  it('finishes a tooltip exit on preference changes but keeps an active tooltip available', () => {
+  it('keeps an active tooltip available when the motion preference changes', () => {
     const setPreference = preference(false);
     render(<TooltipButton />);
     const trigger = screen.getByRole('button');
     fireEvent.focus(trigger);
     act(() => vi.advanceTimersByTime(0));
-    fireEvent.blur(trigger);
-    expect(screen.getByRole('tooltip')).toBeInTheDocument();
     setPreference(true);
+    expect(screen.getByRole('tooltip')).toBeInTheDocument();
+    fireEvent.blur(trigger);
     expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
-
-    setPreference(false);
-    fireEvent.focus(trigger);
-    act(() => vi.advanceTimersByTime(0));
-    fireEvent.blur(trigger);
-    fireEvent.focus(trigger);
-    act(() => vi.advanceTimersByTime(0));
-    setPreference(true);
-    expect(screen.getByRole('tooltip')).toBeInTheDocument();
   });
 });

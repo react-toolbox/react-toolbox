@@ -86,6 +86,13 @@ function npmName(specifier) {
   return specifier.startsWith('@') ? specifier.split('/').slice(0, 2).join('/') : specifier.split('/')[0];
 }
 
+/** Documentation sections that render each installable example. */
+const exampleDocs = {
+  'example-field-notes': `${config.homepage}/docs/theming#distribution`,
+  'example-recipes': `the Composition sections of ${config.homepage}/docs/components/button, avatar, input, dialog, and table`,
+  'example-snackbar-queue': `${config.homepage}/docs/components/snackbar#composition`,
+};
+
 /** Build schema-shaped source catalog and JSON payloads directly from maintained files. */
 export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || config.defaultOrigin } = {}) {
   const pkg = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'));
@@ -271,7 +278,7 @@ export async function createRegistry({ origin = process.env.REGISTRY_ORIGIN || c
       docs: name.startsWith('foundation-')
         ? `Shared implementation installed automatically by the components that need it. See ${config.homepage}/docs/installation.`
         : name.startsWith('example-')
-          ? `Editable composition example. Import from your configured ui alias: examples/${name.slice('example-'.length)}. See ${config.homepage}/docs/theming.`
+          ? `Editable composition example. Import from your configured ui alias: examples/${name.slice('example-'.length)}. See ${exampleDocs[name] ?? `${config.homepage}/docs/components`}.`
           : `Import from your configured ui alias: material${name === 'all' ? '' : name === 'foundation' ? '/theme' : `/${name}`}. Styles and local Roboto 400/500 fonts load automatically. See ${config.homepage}/docs/installation.`,
       categories: ['material-design', 'react-toolbox'],
       meta: {

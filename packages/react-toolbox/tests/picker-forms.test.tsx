@@ -13,6 +13,39 @@ const reset = async (form: HTMLFormElement) =>
   });
 
 describe('picker form validation', () => {
+  it.each([DatePicker, TimePicker])('keeps readonly values focusable and submitted without opening', async (Picker) => {
+    const view = render(
+      <form>
+        <Picker name="when" label="When" value={selectedDate} readonly required />
+      </form>,
+    );
+    const field = screen.getByRole('textbox');
+    expect(field).not.toHaveAttribute('aria-haspopup');
+    await userEvent.tab();
+    expect(field).toHaveFocus();
+    await userEvent.keyboard('{Enter}');
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(field).not.toBeDisabled();
+    const form = view.container.querySelector('form')!;
+    expect(new FormData(form).get('when')).toBe((field as HTMLInputElement).value);
+    expect(form.checkValidity()).toBe(true);
+    view.rerender(
+      <form>
+        <Picker name="when" label="When" readonly required />
+      </form>,
+    );
+    expect(form.checkValidity()).toBe(true);
+  });
+
+  it('preserves legacy display strings without guessing their locale', () => {
+    const view = render(
+      <form>
+        <DatePicker name="date" label="Date" value="15/10/2026" />
+      </form>,
+    );
+    expect(screen.getByRole('combobox')).toHaveValue('15/10/2026');
+    expect(new FormData(view.container.querySelector('form')!).get('date')).toBe('15/10/2026');
+  });
   it.each([DatePicker, TimePicker])('validates empty and populated values in an external form', async (Picker) => {
     const view = render(
       <>
@@ -124,7 +157,7 @@ describe('picker drafts and form reset', () => {
       await userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
       expect(change).toHaveBeenLastCalledWith(false);
       await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
-      expect(field).toHaveFocus();
+      await waitFor(() => expect(field).toHaveFocus());
     },
   );
 

@@ -8,6 +8,7 @@ const source = `
   import React, { useState } from 'react';
   import { createRoot } from 'react-dom/client';
   import Button from './src/material/button/Button';
+  import Snackbar from './src/material/snackbar';
   import Input from './src/material/input/Input';
   import Dropdown from './src/material/dropdown/Dropdown';
   import Checkbox from './src/material/checkbox/Checkbox';
@@ -29,6 +30,7 @@ const source = `
     const [volume, setVolume] = useState(40);
     const [dialog, setDialog] = useState(false);
     const [drawer, setDrawer] = useState(false);
+    const [snackbar, setSnackbar] = useState(false);
     const tip = useTooltip({ tooltip: 'More information' });
     return <main style={{ maxWidth: 600, margin: 32 }}>
       <h1>Material accessibility</h1>
@@ -36,13 +38,18 @@ const source = `
       <Input label="Name" value={name} onChange={setName} />
       <Dropdown label="Destination" value={destination} onChange={setDestination}
         source={['Madrid', 'Barcelona', 'London']} />
-      <DatePicker label="Start date" value={new Date(2026, 9, 13, 9, 30)} />
+      <DatePicker sundayFirstDayOfWeek={window.__SUNDAY_FIRST__} label="Start date" value={new Date(2026, 9, 13, 9, 30)} />
       <TimePicker label="Reminder" value={new Date(2026, 9, 13, 9, 30)} />
       <TimePicker label="Twelve-hour time" format="ampm" value={new Date(2026, 9, 13, 9, 30)} />
       <Checkbox label="Subscribe" checked={checked} onChange={setChecked} />
       <Switch label="Notifications" checked={notifications} onChange={setNotifications} />
       <Slider aria-label="Volume" value={volume} onChange={setVolume} step={1} />
       <Button primary raised label="Save" />
+      <Button accent raised label="Accent action" />
+      <Button accent floating icon="add" aria-label="Accent floating action" />
+      <Button accent label="Accent text" />
+      <Button label="Show snackbar" onClick={() => setSnackbar(true)} />
+      <Snackbar active={snackbar} label="Saved changes" action="Undo" />
       <Button primary label="Open dialog" onClick={() => setDialog(true)} />
       <Button primary label="Open drawer" onClick={() => setDrawer(true)} />
       <Button primary {...tip.triggerProps} label="Information" />{tip.tooltip}
@@ -76,10 +83,13 @@ test.beforeAll(async () => {
   ).outputFiles[0].text;
 });
 
-async function mount(page) {
+async function mount(page, sundayFirst = false) {
   await page.setContent(
     `<!doctype html><html lang="en"><head><title>Material accessibility</title><style>${css}</style></head><body><div id="root"></div></body></html>`,
   );
+  await page.evaluate((value) => {
+    window.__SUNDAY_FIRST__ = value;
+  }, sundayFirst);
   await page.addScriptTag({ content: javascript });
   await expect(page.getByRole('heading', { name: 'Material accessibility' })).toBeVisible();
 }
@@ -113,6 +123,58 @@ async function expectAccessible(page) {
   ).toEqual([]);
 }
 
+test('accent text and active snackbar actions retain readable contrast', async ({ page }) => {
+  await mount(page);
+  for (const name of ['Accent action', 'Accent floating action']) {
+    const button = page.getByRole('button', { name, exact: true });
+    await expect(button).toHaveCSS('background-color', 'rgb(216, 27, 96)');
+    await expect(button).toHaveCSS('color', 'rgb(255, 255, 255)');
+    await button.focus();
+    await expectAccessible(page);
+  }
+  await page.getByRole('button', { name: 'Accent text', exact: true }).hover();
+  await expectAccessible(page);
+  await page.getByRole('button', { name: 'Show snackbar' }).click();
+  const undo = page.getByRole('button', { name: 'Undo', exact: true });
+  await expect(undo).toHaveCSS('color', 'rgb(255, 255, 255)');
+  await undo.hover();
+  await expectAccessible(page);
+});
+
+test('read-only picker triggers visibly indicate keyboard focus', async ({ page }) => {
+  await mount(page);
+  for (const name of ['Start date', 'Reminder']) {
+    const field = page.getByRole('combobox', { name, exact: true });
+    await field.focus();
+    await expect(field).toBeFocused();
+    await expect
+      .poll(() =>
+        field.evaluate((node) =>
+          parseFloat(getComputedStyle(node.parentElement.querySelector('.rt-input-bar'), '::before').width),
+        ),
+      )
+      .toBeGreaterThan(0);
+  }
+});
+
+for (const sundayFirst of [false, true]) {
+  test(`RTL calendar aligns the first day with its weekday (${sundayFirst ? 'Sunday' : 'Monday'} first)`, async ({
+    page,
+  }) => {
+    await mount(page, sundayFirst);
+    await page.evaluate(() => {
+      document.documentElement.dir = 'rtl';
+    });
+    await page.getByRole('combobox', { name: 'Start date' }).click();
+    const dialog = page.getByRole('dialog', { name: 'Choose date' });
+    const day = dialog.getByRole('button', { name: '1 October 2026', exact: true });
+    const header = dialog.locator('.rt-date-picker-week > span').nth(sundayFirst ? 4 : 3);
+    const cell = await day.boundingBox();
+    const column = await header.boundingBox();
+    expect(Math.abs(cell.x + cell.width / 2 - (column.x + column.width / 2))).toBeLessThan(1);
+  });
+}
+
 test('form controls expose their names, state and keyboard operation to assistive technology', async ({ page }) => {
   await mount(page);
   await expectAccessible(page);
@@ -127,9 +189,11 @@ test('form controls expose their names, state and keyboard operation to assistiv
   const destination = page.getByRole('combobox', { name: 'Destination' });
   await destination.focus();
   await page.keyboard.press('ArrowDown');
-  await expect(destination).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.getByRole('listbox')).toBeVisible();
+  await expect(page.getByRole('option').first()).toBeFocused();
   await expectAccessible(page);
   await page.keyboard.press('End');
+  await expect(page.getByRole('option', { name: 'London' })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(destination).toHaveValue('London');
   await expect(destination).toBeFocused();
@@ -150,7 +214,7 @@ test('menu and modal keyboard journeys retain accessible names, focus containmen
   await opener.focus();
   await page.keyboard.press('Enter');
   const dialog = page.getByRole('dialog', { name: 'Save changes' });
-  await expect(dialog).toBeFocused();
+  await expect.poll(() => dialog.evaluate((node) => node.contains(document.activeElement))).toBe(true);
   await expect(dialog).toHaveCSS('opacity', '1');
   await expectAccessible(page);
   await page.keyboard.press('Shift+Tab');
@@ -249,6 +313,8 @@ test('picker hit areas expand without shifting the visible header', async ({ pag
     const dialog = page.getByRole('dialog');
     await expect(dialog).toBeVisible();
     const header = dialog.locator('header');
+    /** Compare target geometry without the new first-control autofocus outline. */
+    await dialog.focus();
     const corrected = await header.screenshot({ animations: 'disabled' });
     for (const selector of selectors) {
       const target = dialog.locator(selector);

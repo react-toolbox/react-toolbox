@@ -12,7 +12,8 @@ named standalone icons use an image role as required by [ARIA in HTML](https://w
 - Label text is associated with form controls. Icon-only buttons and progress
   indicators accept an accessible name through `aria-label` or `aria-labelledby`.
 - Standalone icons with `alt`, `aria-label`, or `aria-labelledby` expose an image
-  role. Decorative icons can use `aria-hidden`; explicit caller roles are retained.
+  role. Unlabelled string ligatures are decorative by default; custom React-node content, caller roles and
+  `aria-hidden` overrides are retained. Icon-only controls still need names.
 - Menus support arrow keys, Home, End, typeahead, and Escape. Dropdowns expose
   combobox/listbox state and preserve focus when a selection is made.
 - Modal dialogs and temporary drawers contain keyboard focus, hide background
@@ -70,6 +71,36 @@ The new tokens are `--datepicker-year-inactive-opacity`,
 `--timepicker-period-inactive-opacity`, and `--clock-number-color`. Custom themes
 must recheck contrast against their own surfaces.
 
+## Current default corrections
+
+- Snackbar actions inherit the light snackbar text color rather than neutral dark
+  button text. Action slots remain customizable; recheck any custom severity colors.
+- Accent surfaces use Material Pink 600 (`#d81b60`) with white text, giving a
+  4.95:1 contrast ratio. Material permits choosing the primary and secondary
+  palette; Pink A200 is not required. To retain contrast in hover and focus states,
+  flat accent buttons mix the accent with 30% black through
+  `--button-accent-text-color`, preserving custom accent hues. Set
+  `--rt-color-accent-contrast` alongside custom accent surfaces, and override
+  `--button-accent-text-color` where a dark background needs lighter text.
+  The optional shadcn bridge deliberately follows the host `--accent-foreground`.
+- Inverse tabs use their light text color for the selection indicator, so the
+  deeper accent does not reduce its contrast against the primary-colored bar.
+  Override `--tab-inverse-pointer-color` for a custom indicator color.
+- Read-only inputs retain a visible focus underline. Read-only pickers stay
+  focusable and submit their displayed value without opening or failing required
+  validation; disabled pickers remain excluded from submission.
+- Calendar arrows move by one day or one week even when dates are unavailable.
+  Unavailable dates can receive focus and announce their disabled state, but
+  cannot be selected. Keyboard autocomplete selection does not blur its input.
+- DatePicker string values are legacy display-only text. Use a Date value to
+  initialize the calendar and apply date constraints; no locale parsing is guessed.
+
+## Shared interaction primitives
+
+Convenience and compound APIs share their interaction engines. See the
+[behavior migration guide](component-behavior.md) for focus timing, popup
+keyboard behavior, event cancellation and native form contracts.
+
 ## Automated checks
 
 `pnpm test` covers motion preference changes, cleanup during pending exits, ripple
@@ -82,6 +113,12 @@ Keyboard journeys verify selection, modal focus containment/restoration, and
 reduced-motion behavior. Run the same suite with `TOOLBOX_BROWSER=webkit` to check
 Safari's engine. Material geometry and interaction suites also cover the default
 motion preference.
+
+Open Base UI autocomplete scans cover the composite and its portaled results
+without disabling rules; whole-page scans run before opening and after closing.
+Separate keyboard checks verify that Tab closes the untrapped popup before
+outside focus. Its temporary background ARIA hiding still needs manual
+assistive-technology validation.
 
 Axe detects only some accessibility issues. A passing scan is not a WCAG audit or
 a replacement for the manual checks below.

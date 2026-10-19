@@ -4,11 +4,15 @@ import * as Primitive from '@radix-ui/react-dropdown-menu';
 import { createContext, useContext, type ComponentProps, type CSSProperties } from 'react';
 import { cn } from '../foundations/styles/cn';
 import { usePortalTheme } from '../foundations/portal/usePortalTheme';
-import { surfaceClasses, popupClasses, optionClasses } from '../foundations/styles/composition';
+import {
+  surfaceClasses,
+  popupClasses,
+  optionClasses,
+  forcedColorsFocusClasses,
+} from '../foundations/styles/composition';
 export type MenuDensity = 'comfortable' | 'desktop' | 'compact';
 const DensityContext = createContext<MenuDensity>('comfortable');
-const menuOptionClasses =
-  'min-h-(--menu-item-height) px-(--menu-item-padding) py-0 text-(length:--menu-item-font-size) leading-[24px] whitespace-nowrap data-highlighted:bg-(--menu-item-hover-background)';
+const menuOptionClasses = `min-h-(--menu-item-height) px-(--menu-item-padding) py-0 text-(length:--menu-item-font-size) leading-[24px] whitespace-nowrap data-highlighted:bg-(--menu-item-hover-background) ${forcedColorsFocusClasses}`;
 const densityVariables: Record<MenuDensity, CSSProperties> = {
   comfortable: {},
   desktop: {
@@ -58,7 +62,10 @@ export type DropdownMenuItemIndicatorProps = ComponentProps<typeof Primitive.Ite
 export function DropdownMenuItemIndicator(props: DropdownMenuItemIndicatorProps) {
   return <Primitive.ItemIndicator {...props} />;
 }
-export type DropdownMenuContentProps = ComponentProps<typeof Primitive.Content>;
+export type DropdownMenuContentProps = ComponentProps<typeof Primitive.Content> & {
+  /** Cancel initial focus for persistent inline menus, or choose a specific initial item. */
+  onOpenAutoFocus?: (event: Event) => void;
+};
 export function DropdownMenuContent({ className, style, ...props }: DropdownMenuContentProps) {
   const theme = usePortalTheme();
   const density = useContext(DensityContext);

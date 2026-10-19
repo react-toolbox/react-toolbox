@@ -66,7 +66,7 @@ export const flatClasses = [
   '[background:transparent]',
   '[.rt-button-primary:not([disabled])&]:text-(--button-primary-color)',
   '[.rt-button-primary:not([disabled])&:hover]:[background:var(--button-primary-color-hover)]',
-  '[.rt-button-accent:not([disabled])&]:text-(--button-accent-color)',
+  '[.rt-button-accent:not([disabled])&]:text-(--button-accent-text-color)',
   '[.rt-button-accent:not([disabled])&:hover]:[background:var(--button-accent-color-hover)]',
   '[.rt-button-neutral:not([disabled])&]:text-(--button-neutral-color-contrast)',
   '[.rt-button-neutral:not([disabled])&:hover]:[background:var(--button-neutral-color-hover)]',

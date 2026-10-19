@@ -33,9 +33,11 @@ export default function ThemingPage() {
         </p>
         <ThemedDistribution />
         <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
-          The navigation drawer is contained in the example and leaves the documentation usable. It uses a custom portal
-          container and a nonmodal drawer. The visit dialog and its pickers use the page viewport and retain their modal
-          focus and scroll behavior.
+          The navigation drawer is contained in the example and leaves the documentation usable. In the installed{' '}
+          <code>examples/field-notes/index.tsx</code>, <code>{'<DrawerRoot modal={false}>'}</code> wraps a positioned
+          container, and <code>{'<DrawerPortal container={viewport}>'}</code> renders the drawer inside it with absolute
+          positioning. Portal placement and modality are separate: a custom container does not scope a modal’s focus
+          trap or scroll lock, so the visit dialog and its pickers use the page viewport and keep their modal behavior.
         </p>
         <div className="my-6">
           <CodeBlock

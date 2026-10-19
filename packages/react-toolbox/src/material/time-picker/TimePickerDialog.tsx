@@ -124,6 +124,7 @@ export default function TimePickerDialog({
   return (
     <Dialog
       id={id}
+      type="custom"
       actions={[
         { label: cancelLabel, className: cn(buttonClasses, classNames?.button), onClick: onDismiss },
         {
@@ -159,7 +160,7 @@ export default function TimePickerDialog({
       <header
         className={cn(
           'rt-time-picker-header',
-          '[background:var(--timepicker-primary-color)] text-(--timepicker-primary-contrast-color) text-(length:--timepicker-header-font-size) p-(--timepicker-header-padding) relative text-center w-full',
+          '[background:var(--timepicker-primary-color)] text-(--timepicker-primary-contrast-color) text-(length:--timepicker-header-font-size) leading-normal p-(--timepicker-header-padding) relative text-center w-full',
           "[&_[role='spinbutton']:focus-visible]:[outline:2px_solid_currentColor] [&_[role='spinbutton']:focus-visible]:outline-offset-2",
           "[&_[role='button']:focus-visible]:[outline:2px_solid_currentColor] [&_[role='button']:focus-visible]:outline-offset-2",
           classNames?.header,

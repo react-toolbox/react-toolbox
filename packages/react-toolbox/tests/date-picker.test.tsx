@@ -7,6 +7,32 @@ import DatePicker from '../src/material/date-picker/DatePicker';
 const selectedDate = new Date(2026, 9, 15, 9, 30);
 
 describe('calendar keyboard navigation', () => {
+  it('preserves weekly movement with an allowlist and navigates unavailable days without selecting them', async () => {
+    const change = vi.fn();
+    const view = render(
+      <Calendar
+        selectedDate={new Date(2026, 9, 15)}
+        enabledDates={Array.from({ length: 20 }, (_, day) => new Date(2026, 9, 15 + day))}
+        onChange={change}
+      />,
+    );
+    fireEvent.keyDown(screen.getByRole('group', { name: 'Calendar' }), { key: 'ArrowDown' });
+    expect(change).toHaveBeenLastCalledWith(new Date(2026, 9, 22), false);
+    view.rerender(
+      <Calendar
+        selectedDate={new Date(2026, 9, 16)}
+        isDateUnavailable={(date) => date.getDay() === 0 || date.getDay() === 6}
+        onChange={change}
+      />,
+    );
+    change.mockClear();
+    screen.getByRole('button', { name: '16 October 2026' }).focus();
+    await userEvent.keyboard('{ArrowRight}{Enter}');
+    expect(screen.getByRole('button', { name: '17 October 2026' })).toHaveFocus();
+    expect(change).not.toHaveBeenCalled();
+    await userEvent.keyboard('{ArrowRight}{ArrowRight}');
+    expect(change).toHaveBeenLastCalledWith(new Date(2026, 9, 19), false);
+  });
   afterEach(() => {
     cleanup();
     vi.restoreAllMocks();
@@ -32,10 +58,21 @@ describe('calendar keyboard navigation', () => {
     fireEvent.keyDown(screen.getByRole('button', { name: 'Next month' }), { key: 'ArrowLeft' });
     fireEvent.keyDown(screen.getByRole('group', { name: 'Calendar' }), { key: 'PageUp' });
     expect(change).not.toHaveBeenCalled();
+    expect(screen.getByRole('button', { name: '15 February 2024' })).toHaveAttribute('tabindex', '0');
+    expect(screen.queryByRole('button', { name: '15 January 2024' })).toBeNull();
   });
 });
 
 describe('calendar focus, labels, and year bounds', () => {
+  it('does not make out-of-bounds days tabbable after changing months', async () => {
+    render(<Calendar selectedDate={selectedDate} maxDate={new Date(2026, 9, 31)} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Next month' }));
+    const day = screen.getByRole('button', { name: '15 November 2026' });
+    expect(day).toHaveAttribute('tabindex', '-1');
+    await userEvent.tab();
+    expect(day).not.toHaveFocus();
+  });
+
   it('enters the displayed calendar month by keyboard without committing a date on month navigation', async () => {
     const change = vi.fn();
     render(<Calendar selectedDate={selectedDate} onChange={change} />);
@@ -66,7 +103,7 @@ describe('calendar focus, labels, and year bounds', () => {
     const dialog = await screen.findByRole('dialog', { name: 'Fecha' });
     expect(within(dialog).getByRole('group', { name: 'Calendario' })).toBeInTheDocument();
     expect(within(dialog).getByRole('button', { name: 'Siguiente' })).toBeInTheDocument();
-    await userEvent.click(within(dialog).getByRole('button', { name: 'Año' }));
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Año: 2125' }));
     expect(within(dialog).getByRole('button', { name: '2125' })).toHaveAttribute('aria-pressed', 'true');
     expect(within(dialog).queryByRole('button', { name: '2119' })).toBeNull();
     expect(within(dialog).queryByRole('button', { name: '2131' })).toBeNull();

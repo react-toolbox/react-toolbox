@@ -76,6 +76,7 @@ export default function DatePickerDialog({
   };
   const [date, setDate] = useState(() => clamp(sourceDate));
   const [display, setDisplay] = useState<'months' | 'years'>('months');
+  const dateLabel = `${time.getShortDayOfWeek(date.getDay(), locale)}, ${time.getShortMonth(date, locale)} ${date.getDate()}`;
   useEffect(() => {
     setDate(clamp(sourceDate));
     setDisplay('months');
@@ -136,7 +137,7 @@ export default function DatePickerDialog({
           data-display="years"
           role="button"
           tabIndex={0}
-          aria-label={labels?.chooseYear ?? 'Choose year'}
+          aria-label={`${labels?.chooseYear ?? 'Choose year'}: ${date.getFullYear()}`}
           aria-pressed={display === 'years'}
           className={cn(
             'rt-date-picker-year',
@@ -154,7 +155,7 @@ export default function DatePickerDialog({
           data-display="months"
           role="button"
           tabIndex={0}
-          aria-label={labels?.chooseDay ?? 'Choose day'}
+          aria-label={`${labels?.chooseDay ?? 'Choose day'}: ${dateLabel}`}
           aria-pressed={display === 'months'}
           className={cn(
             'rt-date-picker-date',
@@ -164,7 +165,9 @@ export default function DatePickerDialog({
           )}
           onClick={switchDisplay}
           onKeyDown={displayKeyDown}
-        >{`${time.getShortDayOfWeek(date.getDay(), locale)}, ${time.getShortMonth(date, locale)} ${date.getDate()}`}</h3>
+        >
+          {dateLabel}
+        </h3>
       </header>
       <div
         className={cn(

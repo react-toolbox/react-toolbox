@@ -23,6 +23,7 @@ export default function InstallationPage() {
         { id: 'add', title: 'Add a component' },
         { id: 'use', title: 'Use it' },
         { id: 'fonts', title: 'Fonts and first paint' },
+        { id: 'routing', title: 'Navigation and links' },
         { id: 'namespace', title: 'Registry shortcut' },
         { id: 'updates', title: 'Updates' },
       ]}
@@ -72,7 +73,7 @@ export default function InstallationPage() {
           arrives.
         </p>
         <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
-          For a simpler Next.js setup, use{' '}
+          In Next.js, prefer{' '}
           <a
             href="https://nextjs.org/docs/app/getting-started/fonts"
             className="text-toolbox-primary underline underline-offset-2"
@@ -141,6 +142,23 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           an SVG element to the component’s icon prop; font icons still need their font download to render.
         </p>
       </DocsSection>
+      <DocsSection id="routing" title="Use your router for navigation">
+        <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
+          The earlier <code>Link</code> and <code>Navigation</code> components are retired. React Toolbox supplies
+          Material surfaces and controls; routing stays with your application. In Next.js, use <code>Link</code> from{' '}
+          <code>next/link</code>; elsewhere, use your router’s link or a native anchor.
+        </p>
+        <CodeBlock
+          label="Router links in a List"
+          code={
+            "import Link from 'next/link';\nimport { List, ListItem } from '@/components/ui/material/list';\n\nexport function ProjectNavigation({ current }: { current: string }) {\n  return (\n    <nav aria-label=\"Projects\">\n      <List selectable ripple>\n        <ListItem\n          caption=\"Projects\"\n          primaryAction={<Link href=\"/projects\" aria-current={current === '/projects' ? 'page' : undefined} />}\n        />\n      </List>\n    </nav>\n  );\n}"
+          }
+        />
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
+          Passing the link as <code>primaryAction</code> keeps the whole row interactive and keyboard accessible. Mark
+          the selected destination with <code>aria-current="page"</code>.
+        </p>
+      </DocsSection>
       <DocsSection id="namespace" title="Use the @react-toolbox shortcut">
         <p className="mb-4 text-toolbox-body/6 text-toolbox-text">
           Add this registry to your existing <code>components.json</code>, keeping the rest of its configuration:
@@ -173,8 +191,27 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           entry files in place; remove them after migrating your imports.
         </p>
         <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
-          To update, run the add command again and review the overwrite prompts. Commit your edits first and check the
-          diff before replacing customized files.
+          The installed source is yours; there is no package version to upgrade. To update, commit your edits, run the
+          add command again, and review each overwrite prompt against the diff before replacing a customized file. The{' '}
+          <a
+            href="https://github.com/react-toolbox/react-toolbox/releases"
+            className="text-toolbox-primary underline underline-offset-2"
+          >
+            source releases
+          </a>{' '}
+          carry the notes and migration steps for the behavior changes to expect in that diff, and pin every dependency
+          to one reviewed edition.
+        </p>
+        <p className="mt-4 text-toolbox-body/6 text-toolbox-text">
+          Convenience and compound components now share their interaction primitives. When updating an older copy,
+          review the{' '}
+          <a
+            href="https://github.com/react-toolbox/react-toolbox/blob/dev/docs/component-behavior.md"
+            className="text-toolbox-primary underline underline-offset-2"
+          >
+            behavior migration guide
+          </a>{' '}
+          for focus timing, keyboard navigation and event cancellation changes.
         </p>
         <Link
           href="/docs/theming"

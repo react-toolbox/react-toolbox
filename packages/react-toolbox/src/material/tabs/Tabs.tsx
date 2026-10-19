@@ -1,6 +1,7 @@
 'use client';
 import './tokens.css';
 import { mergeStyleSlots } from '../foundations/styles/slots';
+import { forcedColorsFocusClasses } from '../foundations/styles/composition';
 
 import { materialRoot, materialDescendants } from '../foundations/styles/classes';
 import type { TabsClassNames } from './types';
@@ -22,7 +23,7 @@ import {
   type Ref,
 } from 'react';
 import { cn } from '../foundations/styles/cn';
-import * as RovingFocus from '@radix-ui/react-roving-focus';
+import * as Primitive from '@radix-ui/react-tabs';
 import { FontIcon } from '../font-icon';
 import Tab, { type TabProps } from './Tab';
 import TabContent, { type TabContentProps } from './TabContent';
@@ -66,17 +67,9 @@ export function Tabs({
 }: TabsProps) {
   const [internalIndex, setIndex] = useState(defaultIndex);
   const index = controlledIndex ?? internalIndex;
-  const [focusedIndex, setFocusedIndex] = useState(index);
-  useEffect(() => setFocusedIndex(index), [index]);
-  const change = (next: number) => {
-    if (next === index) return;
-    if (controlledIndex === undefined) setIndex(next);
-    onChange?.(next);
-  };
   const id = `toolbox-tabs-${useId()}`;
   const root = useRef<HTMLDivElement>(null);
   const navigation = useRef<HTMLDivElement>(null);
-  const keyboardNavigation = useRef(false);
   const [direction, setDirection] = useState<'ltr' | 'rtl'>('ltr');
   useEffect(() => {
     if (root.current) setDirection(getComputedStyle(root.current).direction === 'rtl' ? 'rtl' : 'ltr');
@@ -173,19 +166,14 @@ export function Tabs({
     : headers.some((item) => item.props.children != null)
       ? headers.map((item) => <TabContent>{item.props.children}</TabContent>)
       : [];
-  const navigationIndex = activationMode === 'manual' ? focusedIndex : index;
-  const selected = headers[navigationIndex];
-  const focusIndex =
-    selected && !selected.props.disabled && !selected.props.hidden
-      ? navigationIndex
-      : headers.findIndex((item) => !item.props.disabled && !item.props.hidden);
   const arrow = (direction: 'left' | 'right') => (
     <div
       className={cn(
         'rt-tabs-arrowContainer',
-        'items-center [box-shadow:inset_0_-1px_var(--tab-navigation-border-color)] cursor-pointer flex',
-        '[&:focus-visible]:[outline:2px_solid_currentColor] [&:focus-visible]:-outline-offset-2',
-        '[.rt-tabs-inverse_&]:bg-(--tab-inverse-bar-color)',
+        'relative items-center [box-shadow:inset_0_-1px_var(--tab-navigation-border-color)] cursor-pointer flex outline-none text-(--tab-text-color)',
+        "focus-visible:before:content-[''] before:absolute before:inset-0 before:pointer-events-none focus-visible:before:bg-(--tab-focus-color)",
+        forcedColorsFocusClasses,
+        '[.rt-tabs-inverse_&]:bg-(--tab-inverse-bar-color) [.rt-tabs-inverse_&]:text-(--tab-inverse-text-color)',
         classNames?.arrowContainer,
       )}
       role="button"
@@ -211,10 +199,17 @@ export function Tabs({
     </div>
   );
   return (
-    <div
-      {...attributes}
+    <Primitive.Root
+      asChild
       ref={root}
       data-react-toolbox="tabs"
+      dir={direction}
+      value={String(index)}
+      onValueChange={(next) => {
+        if (controlledIndex === undefined) setIndex(Number(next));
+        onChange?.(Number(next));
+      }}
+      activationMode={activationMode}
       className={cn(
         'rt-tabs-tabs',
         'flex flex-col',
@@ -226,20 +221,10 @@ export function Tabs({
         className,
       )}
     >
-      <div className={cn('rt-tabs-navigationContainer', 'flex', classNames?.navigationContainer)}>
-        {arrows.left && arrow('left')}
-        <RovingFocus.Root
-          asChild
-          orientation="horizontal"
-          dir={direction}
-          loop={loop}
-          currentTabStopId={String(focusIndex)}
-          onCurrentTabStopIdChange={(next) => {
-            if (next !== null) setFocusedIndex(Number(next));
-          }}
-          onEntryFocus={(event) => event.preventDefault()}
-        >
-          <div
+      <div {...attributes} dir={attributes.dir}>
+        <div className={cn('rt-tabs-navigationContainer', 'flex', classNames?.navigationContainer)}>
+          {arrows.left && arrow('left')}
+          <Primitive.List
             className={cn(
               'rt-tabs-navigation',
               '[box-shadow:inset_0_-1px_var(--tab-navigation-border-color)] flex flex-row overflow-x-hidden relative',
@@ -247,38 +232,24 @@ export function Tabs({
               '[.rt-tabs-inverse_&]:bg-(--tab-inverse-bar-color)',
               classNames?.navigation,
             )}
-            role="tablist"
             aria-label={attributes['aria-label']}
             aria-labelledby={attributes['aria-labelledby']}
-            tabIndex={-1}
-            onPointerDownCapture={() => {
-              keyboardNavigation.current = false;
-            }}
-            onKeyDownCapture={(event) => {
-              keyboardNavigation.current =
-                !event.altKey &&
-                !event.ctrlKey &&
-                !event.metaKey &&
-                ['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key);
-            }}
+            loop={loop}
             ref={navigation}
             onScroll={updateArrows}
           >
             {headers.map((item, itemIndex) => (
-              <RovingFocus.Item
+              <Primitive.Trigger
                 key={item.key ?? itemIndex}
                 asChild
-                tabStopId={String(itemIndex)}
-                active={index === itemIndex}
-                focusable={!item.props.disabled && !item.props.hidden}
+                value={String(itemIndex)}
+                disabled={item.props.disabled || item.props.hidden}
               >
                 {cloneElement(item, {
                   children: null,
-                  key: itemIndex,
                   index: itemIndex,
                   classNames: mergeStyleSlots(classNames, item.props.classNames),
                   active: index === itemIndex,
-                  tabIndex: itemIndex === focusIndex ? 0 : -1,
                   id: item.props.id || `${id}-tab-${itemIndex}`,
                   'aria-controls':
                     contents[itemIndex] && (hideMode === 'display' || index === itemIndex)
@@ -286,19 +257,11 @@ export function Tabs({
                       : undefined,
                   onFocus: (event) => {
                     item.props.onFocus?.(event);
-                    if (keyboardNavigation.current && !event.defaultPrevented) {
-                      keyboardNavigation.current = false;
-                      if (activationMode === 'automatic') change(itemIndex);
-                      event.currentTarget.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
-                      updateArrows();
-                    }
-                  },
-                  onClick: (event) => {
-                    item.props.onClick?.(event, itemIndex);
-                    if (!event.defaultPrevented) change(itemIndex);
+                    event.currentTarget.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+                    updateArrows();
                   },
                 })}
-              </RovingFocus.Item>
+              </Primitive.Trigger>
             ))}
             <span
               className={cn(
@@ -310,15 +273,17 @@ export function Tabs({
               )}
               style={{ ...pointer, ...(disableAnimatedBottomBorder ? { transition: 'none' } : {}) }}
             />
-          </div>
-        </RovingFocus.Root>
-        {arrows.right && arrow('right')}
-      </div>
-      {contents.map((item, itemIndex) =>
-        hideMode === 'unmounted' && itemIndex !== index
-          ? null
-          : cloneElement(item, {
-              key: itemIndex,
+          </Primitive.List>
+          {arrows.right && arrow('right')}
+        </div>
+        {contents.map((item, itemIndex) => (
+          <Primitive.Content
+            key={itemIndex}
+            asChild
+            value={String(itemIndex)}
+            forceMount={hideMode === 'display' || undefined}
+          >
+            {cloneElement(item, {
               classNames: mergeStyleSlots(classNames, item.props.classNames),
               active: index === itemIndex,
               hidden: index !== itemIndex && hideMode === 'display',
@@ -327,9 +292,11 @@ export function Tabs({
                 ? headers[itemIndex].props.id || `${id}-tab-${itemIndex}`
                 : undefined,
               tabIndex: item.props.tabIndex ?? (index === itemIndex ? 0 : -1),
-            }),
-      )}
-    </div>
+            })}
+          </Primitive.Content>
+        ))}
+      </div>
+    </Primitive.Root>
   );
 }
 export default Tabs;

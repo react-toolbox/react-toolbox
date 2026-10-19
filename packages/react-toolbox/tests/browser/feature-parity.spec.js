@@ -114,11 +114,13 @@ test('supports grouped choices and selection menus with keyboard access and vali
   const dropdown = page.getByRole('combobox', { name: 'Destination' });
   await dropdown.click();
   await expect(page.getByRole('group', { name: 'Asia' })).toBeVisible();
-  await dropdown.press('j');
-  await dropdown.press('Enter');
+  await page.keyboard.press('j');
+  await expect(page.getByRole('option', { name: 'Japan' })).toBeFocused();
+  await page.keyboard.press('Enter');
   await expect(dropdown).toHaveValue('Japan');
   const trigger = page.getByRole('button', { name: 'Display options' });
-  await trigger.click();
+  await trigger.focus();
+  await page.keyboard.press('ArrowDown');
   const toolbar = page.getByRole('menuitemcheckbox', { name: 'Toolbar' });
   await expect(toolbar).toBeFocused();
   await toolbar.press('Space');
@@ -139,12 +141,30 @@ test('supports grouped choices and selection menus with keyboard access and vali
 test('keeps grouped and empty autocomplete results accessible', async ({ page }) => {
   await mount(page);
   const combo = page.getByRole('combobox', { name: 'People' });
+  const auditPage = () => new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+  expect((await auditPage()).violations).toEqual([]);
+  /** Base UI's untrapped combobox hides outside controls from AT only while open.
+   * Audit the open composite without suppressing rules, then verify native Tab closes it
+   * before outside focus and audit the entire restored page. */
+  const auditOpen = () =>
+    new AxeBuilder({ page })
+      .include('[data-react-toolbox="autocomplete"]')
+      .include('[data-slot="AutocompletePositioner"]')
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+      .analyze();
   await combo.fill('Gr');
   await expect(page.getByRole('group', { name: 'Engineering' })).toBeVisible();
-  expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze()).violations).toEqual([]);
+  await expect(page.locator('[data-slot="AutocompletePopup"]')).toHaveCSS('opacity', '1');
+  expect((await auditOpen()).violations).toEqual([]);
   await combo.fill('No matching person');
   await expect(page.getByRole('status').filter({ hasText: 'No people found' })).toBeVisible();
-  expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze()).violations).toEqual([]);
+  expect((await auditOpen()).violations).toEqual([]);
+  await combo.press('Tab');
+  await expect(combo).toHaveAttribute('aria-expanded', 'false');
+  await expect
+    .poll(() => page.evaluate(() => document.activeElement?.closest('[aria-hidden="true"], [inert]') === null))
+    .toBe(true);
+  expect((await auditPage()).violations).toEqual([]);
 });
 
 test('activates tabs manually and keeps their panel state', async ({ page }) => {
@@ -168,10 +188,10 @@ test('moves the RTL slider thumb and active track toward the same value', async 
   const slider = page.getByRole('slider', { name: 'RTL volume' });
   await slider.press('ArrowLeft');
   await expect(slider).toHaveAttribute('aria-valuenow', '26');
-  const bounds = await slider.boundingBox();
+  const bounds = await slider.locator('xpath=ancestor::*[contains(@class, "rt-slider-container")]').boundingBox();
   const knob = await slider.locator('.rt-slider-knob').boundingBox();
-  expect(knob.x - bounds.x).toBeCloseTo(bounds.width * 0.74, 0);
-  await page.mouse.click(bounds.x + 16 + bounds.width * 0.2, bounds.y + bounds.height / 2);
+  expect(knob.x + knob.width / 2 - bounds.x).toBeCloseTo(bounds.width * 0.74, 0);
+  await page.mouse.click(bounds.x + bounds.width * 0.2, bounds.y + bounds.height / 2);
   await expect(slider).toHaveAttribute('aria-valuenow', '80');
   await expect(page.getByRole('link', { name: 'Router destination' })).toHaveAttribute('href', '#destination');
 });

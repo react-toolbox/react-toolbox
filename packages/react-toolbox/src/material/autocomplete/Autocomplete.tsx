@@ -8,9 +8,43 @@ import type { AutocompleteClassNames } from './types';
 
 import React, { useEffect, useId, useImperativeHandle, useRef, useState } from 'react';
 import { cn } from '../foundations/styles/cn';
-import Chip, { type ChipEvent } from '../chip/Chip';
+import type { ChipEvent } from '../chip/Chip';
+import {
+  AutocompleteRoot,
+  AutocompleteInput,
+  AutocompletePortal,
+  AutocompletePositioner,
+  AutocompletePopup,
+  AutocompleteList,
+  AutocompleteItem,
+  AutocompleteGroup,
+  AutocompleteGroupLabel,
+  AutocompleteClear,
+  AutocompleteChips,
+  AutocompleteChip,
+  AutocompleteChipRemove,
+  AutocompleteStatus,
+} from './parts';
 import useFormReset from '../foundations/forms/useFormReset';
 import Input, { type InputProps, type InputHandle, type InputElement } from '../input/Input';
+
+/** Bridge Base UI's DOM ref and change event to Input, retaining Input's complete field presentation. */
+function AutocompleteInputField({
+  ref,
+  inputRef,
+  className: _className,
+  rootClassName,
+  onChange,
+  ...props
+}: Omit<InputProps, 'ref' | 'onChange'> & {
+  ref?: React.Ref<InputElement>;
+  inputRef: React.RefObject<InputHandle | null>;
+  rootClassName?: string;
+  onChange?: React.ChangeEventHandler<InputElement>;
+}) {
+  useImperativeHandle(ref, () => inputRef.current!.inputElement!, [inputRef]);
+  return <Input {...props} ref={inputRef} className={rootClassName} onChange={(_, event) => onChange?.(event)} />;
+}
 
 export type { AutocompleteClassNames } from './types';
 export type AutocompleteValue = string | string[] | Record<string, React.ReactNode>;
@@ -177,7 +211,12 @@ export function Autocomplete(props: AutocompleteProps) {
   };
   const [resolvedDirection, setDirection] = useState(direction);
   const [showAll, setShowAll] = useState(showSuggestionsWhenValueIsSet);
-  const [active, setActive] = useState<string | null>(null);
+  const active = useRef<string | null>(null);
+  /** Base UI clicks highlighted items internally; recover the original React keyboard/pointer event. */
+  const interactions = useRef(new WeakMap<Event, ChipEvent>());
+  const rememberInteraction = (event: ChipEvent) => {
+    interactions.current.set(event.nativeEvent, event);
+  };
   const clearQuery = useRef(false);
   const objectValue = value != null && typeof value === 'object' && !Array.isArray(value);
   const vals = multiple ? value : [value];
@@ -209,10 +248,9 @@ export function Autocomplete(props: AutocompleteProps) {
       multiple ? !selected.has(key) && matches(textFor(key)) : !query || showAll || matches(textFor(key)),
     ),
   );
-  const keys = [...suggestions.keys()];
-  const enabledKeys = keys.filter((key) => !optionMap.get(key)?.disabled);
+  if (allowCreate && query && !sourceMap.has(query) && (!multiple || !selected.has(query)))
+    suggestions.set(query, `Create "${query}"`);
   const status = loading ? loadingMessage : suggestions.size === 0 ? emptyMessage : null;
-  const expanded = focus && (suggestions.size > 0 || status != null);
   useFormReset(native, () => {
     const next = controlledValue ?? defaultValue ?? (multiple ? [] : '');
     if (controlledValue === undefined) setValue(next);
@@ -231,18 +269,11 @@ export function Autocomplete(props: AutocompleteProps) {
   }, [disabled]);
   const previousValue = useRef(value);
   useEffect(() => {
-    // Remote results can replace source while the user is typing. Only an
-    // actual selection change should replace that in-progress query.
+    /** Remote results can replace source while the user is typing. Only an actual selection change should replace that in-progress query. */
     if (!multiple && controlledQuery === undefined && (previousValue.current !== value || !focus))
       setQuery(selectedQuery);
     previousValue.current = value;
   }, [controlledQuery, selectedQuery, multiple, value]);
-  useEffect(() => {
-    if (focus)
-      root.current
-        ?.querySelector<HTMLElement>('[role="option"][aria-selected="true"]')
-        ?.scrollIntoView?.({ block: 'nearest' });
-  }, [active, focus]);
   const change = (values: string[] | Record<string, React.ReactNode>, event: AutocompleteEvent) => {
     if (disabled) return;
     let nextQuery = '';
@@ -267,85 +298,67 @@ export function Autocomplete(props: AutocompleteProps) {
     setShowAll(showSuggestionsWhenValueIsSet);
     if (!keepFocusOnChange) {
       setFocus(false);
-      input.current?.blur();
+      if (event.type !== 'keydown') input.current?.blur();
     }
     onQueryChange?.(nextQuery);
   };
-  const select = (event: AutocompleteEvent, target: string) => {
-    if (disabled || loading || optionMap.get(target)?.disabled) return;
-    event.preventDefault();
-    event.stopPropagation();
-    if (objectValue)
-      change({ ...(value as Record<string, React.ReactNode>), [target]: sourceMap.get(target) ?? target }, event);
-    else change([target, ...stringValues.filter((key) => key && key !== target)], event);
-  };
   const renderSelected = () =>
     multiple ? (
-      <div
-        className={cn(
-          'rt-autocomplete-values',
-          'flex-row flex-wrap [list-style:none] m-0 p-[0_0_calc(var(--unit)/2)_0]',
-          classNames?.values,
-        )}
+      <AutocompleteChips
+        className={cn('rt-autocomplete-values', 'min-h-0 gap-0 p-[0_0_calc(var(--unit)/2)_0]', classNames?.values)}
       >
         {[...selected].map(([key, text]) => (
-          <Chip
+          <AutocompleteChip
             key={key}
+            data-react-toolbox="chip"
+            onKeyDown={rememberInteraction}
             className={cn(
-              'rt-autocomplete-value',
-              'm-(--autocomplete-value-margin) me-(--chip-margin-right)',
+              'rt-autocomplete-value rt-chip-chip rt-chip-deletable',
+              'block relative min-h-0 h-(--chip-height) leading-(--chip-height) m-(--autocomplete-value-margin) me-(--chip-margin-right) max-w-full overflow-hidden text-ellipsis whitespace-nowrap pe-[calc(var(--chip-remove-size)+2*var(--chip-remove-margin))]',
               classNames?.value,
             )}
-            deletable
-            disabled={disabled}
-            deleteLabel={typeof text === 'string' ? `Remove ${text}` : 'Remove'}
-            onDeleteClick={(event) => {
-              if (objectValue) {
-                const remaining = { ...(value as Record<string, React.ReactNode>) };
-                delete remaining[key];
-                change(remaining, event);
-              } else
-                change(
-                  stringValues.filter((selectedKey) => selectedKey !== key),
-                  event,
-                );
-            }}
           >
             {text}
-          </Chip>
+            <AutocompleteChipRemove
+              onClick={rememberInteraction}
+              aria-label={typeof text === 'string' ? `Remove ${text}` : 'Remove'}
+              className="rt-chip-delete cursor-pointer inline-block m-(--chip-remove-margin) p-(--chip-remove-margin) absolute end-0 top-0 disabled:cursor-default"
+            >
+              <svg
+                viewBox="0 0 40 40"
+                aria-hidden="true"
+                focusable="false"
+                className="rt-chip-deleteIcon [background:var(--chip-remove-background)] rounded-(--chip-remove-size) align-top [.rt-chip-delete:hover_&]:[background:var(--chip-remove-background-hover)]"
+              >
+                <path
+                  className="fill-transparent stroke-(--chip-remove-color) [stroke-width:var(--chip-remove-stroke-width)]"
+                  d="M 12,12 L 28,28 M 28,12 L 12,28"
+                />
+              </svg>
+            </AutocompleteChipRemove>
+          </AutocompleteChip>
         ))}
-      </div>
+      </AutocompleteChips>
     ) : null;
   const renderSuggestion = (key: string, text: React.ReactNode) => (
-    <li
-      id={`${id}-option-${keys.indexOf(key)}`}
+    <AutocompleteItem
       key={key}
-      role="option"
-      aria-selected={active === key}
-      aria-disabled={optionMap.get(key)?.disabled || undefined}
-      className={cn(
-        'rt-autocomplete-suggestion',
-        'cursor-pointer text-(length:--input-field-font-size) p-(--autocomplete-suggestion-padding)',
-        classNames?.suggestion,
-        optionMap.get(key)?.disabled && '[&&]:cursor-not-allowed opacity-50',
-        active === key &&
-          cn(
-            'rt-autocomplete-active',
-            '[.rt-autocomplete-suggestion&]:bg-(--autocomplete-suggestion-active-background)',
-            classNames?.active,
-          ),
-      )}
-      onMouseDown={(event) => {
-        // Keep input focus; commit on click so touch scrolling never selects.
-        if (event.button === 0) event.preventDefault();
-      }}
-      onClick={(event) => select(event, key)}
-      onMouseOver={() => {
-        if (!optionMap.get(key)?.disabled) setActive(key);
-      }}
+      value={key}
+      onClick={rememberInteraction}
+      onMouseUp={rememberInteraction}
+      disabled={loading || optionMap.get(key)?.disabled}
+      className={(state) =>
+        cn(
+          'rt-autocomplete-suggestion',
+          'cursor-pointer',
+          classNames?.suggestion,
+          state.disabled && '[&&]:cursor-not-allowed opacity-50',
+          state.highlighted && cn('rt-autocomplete-active', classNames?.active),
+        )
+      }
     >
       {text}
-    </li>
+    </AutocompleteItem>
   );
   const groups = new Map<string | undefined, [string, React.ReactNode][]>();
   for (const entry of suggestions) {
@@ -353,205 +366,222 @@ export function Autocomplete(props: AutocompleteProps) {
     groups.set(group, [...(groups.get(group) ?? []), entry]);
   }
   return (
-    <div
-      data-react-toolbox="autocomplete"
-      className={cn(
-        'rt-autocomplete-autocomplete',
-        'p-0 relative',
-        materialRoot,
-        materialDescendants,
-        classNames?.autocomplete,
-        focus && cn('rt-autocomplete-focus', classNames?.focus),
-        className,
-      )}
-      ref={root}
+    <AutocompleteRoot<string, boolean>
+      id={id}
+      multiple={multiple}
+      disabled={disabled}
+      readOnly={others.readOnly}
+      value={multiple ? [...selected.keys()] : stringValues[0] || null}
+      inputValue={query}
+      items={[...groups.values()].flatMap((entries) => entries.map(([key]) => key))}
+      filter={null}
+      itemToStringLabel={textFor}
+      open={focus && (suggestions.size > 0 || status != null)}
+      onOpenChange={(next, details) => {
+        if (!next && details.reason === 'item-press' && keepFocusOnChange) details.cancel();
+        else setFocus(next);
+      }}
+      onItemHighlighted={(key) => {
+        active.current = key ?? null;
+      }}
+      onInputValueChange={(text, details) => {
+        /** Selection and blur restoration use domain labels, not Base UI's raw IDs. */
+        if (details.reason !== 'input-change') return;
+        const next = clearQuery.current ? '' : text;
+        clearQuery.current = false;
+        setQuery(next);
+        setFocus(true);
+        setShowAll(next ? false : showSuggestionsWhenValueIsSet);
+        onQueryChange?.(next);
+      }}
+      onValueChange={(next, details) => {
+        /** Editing a query must not clear the submitted single selection. */
+        if (details.reason === 'input-clear' || details.reason === 'escape-key') {
+          details.cancel();
+          return;
+        }
+        const event = interactions.current.get(details.event);
+        if (!event) return;
+        const values = Array.isArray(next) ? [...next] : next == null ? [] : [next];
+        /** Unrendered remote selections are still domain values, except when clearing everything. */
+        if (multiple && details.reason !== 'clear-press')
+          values.push(...stringValues.filter((key) => !selected.has(key)));
+        const ordered = [
+          ...values.filter((key) => !stringValues.includes(key)),
+          ...stringValues.filter((key) => values.includes(key)),
+        ];
+        change(
+          objectValue
+            ? Object.fromEntries(
+                ordered.map((key) => [
+                  key,
+                  stringValues.includes(key)
+                    ? (value as Record<string, React.ReactNode>)[key]
+                    : (sourceMap.get(key) ?? key),
+                ]),
+              )
+            : ordered,
+          event,
+        );
+      }}
     >
-      <select
-        ref={native}
-        className="sr-only"
-        tabIndex={-1}
-        aria-hidden="true"
-        name={name}
-        form={form}
-        disabled={disabled}
-        required={required}
-        multiple={multiple}
-        value={multiple ? stringValues : (stringValues[0] ?? '')}
-        onChange={(event) =>
-          change(
-            Array.from(event.currentTarget.selectedOptions, (option) => option.value),
-            event,
-          )
-        }
-        onInvalid={(event) => {
-          event.preventDefault();
-          setValidationMessage(event.currentTarget.validationMessage);
-          input.current?.focus();
-        }}
-      >
-        {!multiple && <option value="" />}
-        {[...new Set([...sourceMap.keys(), ...stringValues])].filter(Boolean).map((key) => (
-          <option key={key} value={key} disabled={optionMap.get(key)?.disabled}>
-            {textFor(key)}
-          </option>
-        ))}
-      </select>
-      {selectedPosition === 'above' ? renderSelected() : null}
-      <Input
-        {...others}
-        id={id}
-        ref={input}
-        disabled={disabled}
-        role="combobox"
-        aria-autocomplete="list"
-        aria-expanded={expanded}
-        aria-required={required || undefined}
-        aria-busy={loading || undefined}
-        aria-controls={`${id}-listbox`}
-        aria-activedescendant={
-          focus && active !== null && keys.indexOf(active) >= 0 ? `${id}-option-${keys.indexOf(active)}` : undefined
-        }
-        autoComplete="off"
+      <div
+        data-react-toolbox="autocomplete"
         className={cn(
-          'rt-autocomplete-input',
-          'relative',
-          "[&::after]:[border-left:var(--autocomplete-border-size)_solid_transparent] [&::after]:[border-right:var(--autocomplete-border-size)_solid_transparent] [&::after]:[border-top:var(--autocomplete-border-size)_solid_var(--input-chevron-color)] [&::after]:[content:''] [&::after]:h-0 [&::after]:pointer-events-none [&::after]:absolute [&::after]:right-(--input-chevron-offset) [&::after]:top-[50%] [&::after]:[transition:transform_var(--animation-duration)_var(--animation-curve-default)] [&::after]:w-0",
-          '[&:focus-within:not(.rt-input-disabled)::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_87%)]',
-          '[&.rt-input-disabled::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_38%)]',
-          classNames?.input,
+          'rt-autocomplete-autocomplete',
+          'p-0 relative',
+          materialRoot,
+          materialDescendants,
+          classNames?.autocomplete,
+          focus && cn('rt-autocomplete-focus', classNames?.focus),
+          className,
         )}
-        error={error || validationMessage}
-        label={label}
-        value={query}
-        onBlur={(event) => {
-          setFocus(false);
-          if (!multiple && controlledQuery === undefined) {
-            setQuery(selectedQuery);
-            if (query !== selectedQuery) onQueryChange?.(selectedQuery);
-          }
-          onBlur?.(event, active);
-        }}
-        onChange={(text) => {
-          if (disabled) return;
-          const next = clearQuery.current ? '' : text;
-          clearQuery.current = false;
-          setQuery(next);
-          setFocus(true);
-          onQueryChange?.(next);
-          setShowAll(next ? false : showSuggestionsWhenValueIsSet);
-          setActive(null);
-        }}
-        onFocus={(event) => {
-          onFocus?.(event);
-          if (disabled || event.defaultPrevented) return;
-          event.target.scrollTop = 0;
-          setActive(null);
-          setFocus(true);
-          const client = root.current?.querySelector('[data-react-toolbox="input"]')?.getBoundingClientRect();
-          setDirection(
-            direction === 'auto'
-              ? client && client.top > (window.innerHeight || document.documentElement.offsetHeight) / 2 + client.height
-                ? 'up'
-                : 'down'
-              : direction,
-          );
-        }}
-        onKeyDown={(event) => {
-          onKeyDown?.(event);
-          if (event.defaultPrevented || disabled || event.nativeEvent.isComposing) return;
-          clearQuery.current = event.key === 'Backspace' && showSuggestionsWhenValueIsSet && showAll;
-          if (event.key === 'Enter' && focus) {
-            const target =
-              active != null && enabledKeys.includes(active) ? active : allowCreate ? query : enabledKeys[0];
-            if (target != null && (allowCreate ? target.length > 0 : suggestions.has(target))) {
-              setActive(target);
-              select(event, target);
-            }
-          } else if (event.key === 'Escape') {
-            if (focus) {
-              event.preventDefault();
-              event.stopPropagation();
-              setFocus(false);
-            }
-          } else if (event.key === 'Tab') setFocus(false);
-          else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-            event.preventDefault();
-            const down = event.key === 'ArrowDown';
-            const current = active == null ? -1 : enabledKeys.indexOf(active);
-            const next =
-              current < 0
-                ? down
-                  ? 0
-                  : enabledKeys.length - 1
-                : (current + (down ? 1 : -1) + enabledKeys.length) % enabledKeys.length;
-            setActive(enabledKeys[next] ?? null);
-            setFocus(true);
-          }
-        }}
-        onKeyUp={(event) => {
-          onKeyUp?.(event);
-        }}
-      />
-      <ul
-        id={`${id}-listbox`}
-        role="listbox"
-        aria-label={typeof label === 'string' ? label : others['aria-label']}
-        aria-hidden={!expanded}
-        aria-busy={loading || undefined}
-        style={!expanded ? { visibility: 'hidden' } : undefined}
-        className={cn(
-          'rt-autocomplete-suggestions',
-          'bg-(--autocomplete-suggestions-background) [list-style:none] max-h-0 overflow-x-hidden overflow-y-auto p-0 absolute [transition-duration:var(--animation-duration)] [transition-property:max-height,box-shadow] [transition-timing-function:var(--animation-curve-default)] invisible w-full z-(--z-index-high)',
-          '[&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-0',
-          '[&:not(.rt-autocomplete-up)]:mt-[calc(-1_*_var(--input-padding))]',
-          '[.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:[box-shadow:var(--zdepth-shadow-1)] [.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:max-h-(--autocomplete-overflow-max-height) [.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:[-ms-overflow-style:none] [.rt-autocomplete-autocomplete.rt-autocomplete-focus_&]:visible',
-          classNames?.suggestions,
-          resolvedDirection === 'up' &&
-            cn('rt-autocomplete-up', '[.rt-autocomplete-suggestions&]:bottom-0', classNames?.up),
-        )}
+        ref={root}
       >
-        {status != null && (
-          <li role="presentation" aria-hidden="true">
-            <span className="block p-(--autocomplete-suggestion-padding)">{status}</span>
-          </li>
-        )}
-        {[...groups].map(([group, entries], groupIndex) =>
-          group ? (
-            <li role="group" aria-labelledby={`${id}-group-${groupIndex}`} key={group}>
-              <div
-                id={`${id}-group-${groupIndex}`}
-                className="text-(--rt-color-text-secondary) text-sm p-(--autocomplete-suggestion-padding)"
-              >
-                {group}
-              </div>
-              <ul role="presentation" className="list-none m-0 p-0">
-                {entries.map(([key, text]) => renderSuggestion(key, text))}
-              </ul>
-            </li>
-          ) : (
-            entries.map(([key, text]) => renderSuggestion(key, text))
-          ),
-        )}
-      </ul>
-      <span role="status" className="sr-only">
-        {focus ? status : null}
-      </span>
-      {clearable && stringValues.some(Boolean) && (
-        <button
-          type="button"
+        <select
+          ref={native}
+          className="sr-only"
+          tabIndex={-1}
+          aria-hidden="true"
+          name={name}
+          form={form}
           disabled={disabled}
-          aria-label={clearLabel}
-          className="text-(--input-text-highlight-color) cursor-pointer bg-transparent border-0 p-(--unit)"
-          onClick={(event) => {
-            change([], event);
+          required={required}
+          multiple={multiple}
+          value={multiple ? stringValues : (stringValues[0] ?? '')}
+          onChange={(event) =>
+            change(
+              Array.from(event.currentTarget.selectedOptions, (option) => option.value),
+              event,
+            )
+          }
+          onInvalid={(event) => {
+            event.preventDefault();
+            setValidationMessage(event.currentTarget.validationMessage);
             input.current?.focus();
           }}
         >
-          {clearLabel}
-        </button>
-      )}
-      {selectedPosition === 'below' ? renderSelected() : null}
-    </div>
+          {!multiple && <option value="" />}
+          {[...new Set([...sourceMap.keys(), ...stringValues])].filter(Boolean).map((key) => (
+            <option key={key} value={key} disabled={optionMap.get(key)?.disabled}>
+              {textFor(key)}
+            </option>
+          ))}
+        </select>
+        {selectedPosition === 'above' ? renderSelected() : null}
+        <AutocompleteInput
+          id={id}
+          disabled={disabled}
+          aria-required={required || undefined}
+          aria-busy={loading || undefined}
+          autoComplete="off"
+          onBlur={(event) => {
+            setFocus(false);
+            if (!multiple && controlledQuery === undefined) {
+              setQuery(selectedQuery);
+              if (query !== selectedQuery) onQueryChange?.(selectedQuery);
+            }
+            onBlur?.(event, active.current);
+          }}
+          onFocus={(event) => {
+            onFocus?.(event);
+            if (disabled || event.defaultPrevented) {
+              event.preventBaseUIHandler();
+              return;
+            }
+            event.target.scrollTop = 0;
+            setFocus(true);
+            const client = root.current?.querySelector('[data-react-toolbox="input"]')?.getBoundingClientRect();
+            setDirection(
+              direction === 'auto'
+                ? client &&
+                  client.top > (window.innerHeight || document.documentElement.offsetHeight) / 2 + client.height
+                  ? 'up'
+                  : 'down'
+                : direction,
+            );
+          }}
+          onKeyDown={(event) => {
+            rememberInteraction(event);
+            onKeyDown?.(event);
+            if (event.defaultPrevented || disabled || event.nativeEvent.isComposing) {
+              event.preventBaseUIHandler();
+              return;
+            }
+            clearQuery.current = event.key === 'Backspace' && showSuggestionsWhenValueIsSet && showAll;
+          }}
+          onKeyUp={onKeyUp}
+          render={
+            <AutocompleteInputField
+              {...others}
+              inputRef={input}
+              error={error || validationMessage}
+              label={label ? <span id={`${id}-label`}>{label}</span> : label}
+              aria-labelledby={
+                others['aria-labelledby'] ?? (!others['aria-label'] && label ? `${id}-label` : undefined)
+              }
+              rootClassName={cn(
+                'rt-autocomplete-input',
+                'relative',
+                "[&::after]:[border-left:var(--autocomplete-border-size)_solid_transparent] [&::after]:[border-right:var(--autocomplete-border-size)_solid_transparent] [&::after]:[border-top:var(--autocomplete-border-size)_solid_var(--input-chevron-color)] [&::after]:[content:''] [&::after]:h-0 [&::after]:pointer-events-none [&::after]:absolute [&::after]:right-(--input-chevron-offset) [&::after]:top-[50%] [&::after]:[transition:transform_var(--animation-duration)_var(--animation-curve-default)] [&::after]:w-0",
+                '[&:focus-within:not(.rt-input-disabled)::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_87%)]',
+                '[&.rt-input-disabled::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_38%)]',
+                classNames?.input,
+              )}
+            />
+          }
+        />
+        <AutocompletePortal>
+          <AutocompletePositioner
+            anchor={() => input.current?.inputElement ?? null}
+            side={resolvedDirection === 'up' ? 'top' : 'bottom'}
+            sideOffset={0}
+            align="start"
+          >
+            <AutocompletePopup className="w-(--anchor-width) max-h-(--autocomplete-overflow-max-height)">
+              <AutocompleteStatus className="sr-only">{status}</AutocompleteStatus>
+              <AutocompleteList
+                aria-label={typeof label === 'string' ? label : others['aria-label']}
+                aria-busy={loading || undefined}
+                className={cn(
+                  'rt-autocomplete-suggestions',
+                  'm-0 p-0 overflow-y-auto max-h-(--autocomplete-overflow-max-height)',
+                  classNames?.suggestions,
+                  resolvedDirection === 'up' && cn('rt-autocomplete-up', classNames?.up),
+                )}
+              >
+                {status != null && (
+                  <div aria-hidden="true" className="px-[calc(1.6*var(--unit))] py-(--autocomplete-suggestion-padding)">
+                    {status}
+                  </div>
+                )}
+                {[...groups].map(([group, entries]) =>
+                  group ? (
+                    <AutocompleteGroup key={group}>
+                      <AutocompleteGroupLabel>{group}</AutocompleteGroupLabel>
+                      {entries.map(([key, text]) => renderSuggestion(key, text))}
+                    </AutocompleteGroup>
+                  ) : (
+                    entries.map(([key, text]) => renderSuggestion(key, text))
+                  ),
+                )}
+              </AutocompleteList>
+            </AutocompletePopup>
+          </AutocompletePositioner>
+        </AutocompletePortal>
+        {clearable && stringValues.some(Boolean) && (
+          <AutocompleteClear
+            onClick={rememberInteraction}
+            keepMounted
+            aria-label={clearLabel}
+            className="h-auto w-auto text-(--input-text-highlight-color) p-(--unit)"
+          >
+            {clearLabel}
+          </AutocompleteClear>
+        )}
+        {selectedPosition === 'below' ? renderSelected() : null}
+      </div>
+    </AutocompleteRoot>
   );
 }
 export default Autocomplete;

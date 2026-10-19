@@ -6,14 +6,14 @@
 
   --rt-color-primary: var(--palette-indigo-500);
   --rt-color-primary-dark: var(--palette-indigo-700);
-  --rt-color-accent: var(--palette-pink-a200);
+  --rt-color-accent: var(--palette-pink-600);
   --rt-color-accent-dark: var(--palette-pink-700);
   --rt-color-primary-contrast: var(--rt-color-dark-contrast);
   --rt-color-accent-contrast: var(--rt-color-dark-contrast);
 
   --unit: 10px;
 
-  --preferred-font: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  --preferred-font: "Roboto", "Helvetica", "Arial", sans-serif;
   --font-size: calc(1.6 * var(--unit));
   --font-size-tiny: calc(1.2 * var(--unit));
   --font-size-small: calc(1.4 * var(--unit));
@@ -24,35 +24,19 @@
   --font-weight-semi-bold: 500;
   --font-weight-bold: 700;
 
-  --shadow-2p:
-    0 2px 2px 0 rgba(0, 0, 0, 0.14),
-    0 3px 1px -2px rgba(0, 0, 0, 0.2),
-    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  --shadow-2p: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 
-  --shadow-3p:
-    0 3px 4px 0 rgba(0, 0, 0, 0.14),
-    0 3px 3px -2px rgba(0, 0, 0, 0.2),
-    0 1px 8px 0 rgba(0, 0, 0, 0.12);
+  --shadow-3p: 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 1px 8px 0 rgba(0, 0, 0, 0.12);
 
-  --shadow-4p:
-    0 4px 5px 0 rgba(0, 0, 0, 0.14),
-    0 1px 10px 0 rgba(0, 0, 0, 0.12),
-    0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-4p: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 
-  --shadow-6p:
-    0 6px 10px 0 rgba(0, 0, 0, 0.14),
-    0 1px 18px 0 rgba(0, 0, 0, 0.12),
-    0 3px 5px -1px rgba(0, 0, 0, 0.2);
+  --shadow-6p: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
 
   --shadow-8p:
-    0 8px 10px 1px rgba(0, 0, 0, 0.14),
-    0 3px 14px 2px rgba(0, 0, 0, 0.12),
-    0 5px 5px -3px rgba(0, 0, 0, 0.2);
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
 
   --shadow-16p:
-    0 16px 24px 2px rgba(0, 0, 0, 0.14),
-    0 6px 30px 5px rgba(0, 0, 0, 0.12),
-    0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 
   --shadow-key-umbra-opacity: 0.2;
   --shadow-key-penumbra-opacity: 0.14;
@@ -77,78 +61,49 @@
   --z-index-normal: 1;
   --z-index-low: -100;
   --z-index-lower: -200;
-
-
 }
 [data-react-toolbox-tokens~="--rt-color-black"] {
   --rt-color-divider: rgb(from var(--rt-color-black) r g b / 12%);
-
-
 }
 [data-react-toolbox-tokens~="--rt-color-white"] {
   --rt-color-background: var(--rt-color-white);
-
-
 }
 [data-react-toolbox-tokens~="--palette-grey-900"] {
   --rt-color-text: var(--palette-grey-900);
-
-
 }
 [data-react-toolbox-tokens~="--palette-grey-600"] {
   --rt-color-text-secondary: var(--palette-grey-600);
-
-
 }
 [data-react-toolbox-tokens~="--palette-indigo-500"] {
-
   --rt-color-primary: var(--palette-indigo-500);
-
-
 }
 [data-react-toolbox-tokens~="--palette-indigo-700"] {
   --rt-color-primary-dark: var(--palette-indigo-700);
-
-
 }
-[data-react-toolbox-tokens~="--palette-pink-a200"] {
-  --rt-color-accent: var(--palette-pink-a200);
-
-
+[data-react-toolbox-tokens~="--palette-pink-600"] {
+  --rt-color-accent: var(--palette-pink-600);
 }
 [data-react-toolbox-tokens~="--palette-pink-700"] {
   --rt-color-accent-dark: var(--palette-pink-700);
-
-
 }
 [data-react-toolbox-tokens~="--rt-color-dark-contrast"],
 [data-react-toolbox-tokens~="--rt-color-white"] {
   --rt-color-primary-contrast: var(--rt-color-dark-contrast);
   --rt-color-accent-contrast: var(--rt-color-dark-contrast);
-
-
 }
 [data-react-toolbox-tokens~="--unit"] {
   --font-size: calc(1.6 * var(--unit));
   --font-size-tiny: calc(1.2 * var(--unit));
   --font-size-small: calc(1.4 * var(--unit));
   --font-size-big: calc(1.8 * var(--unit));
-
-
 }
 [data-react-toolbox-tokens~="--font-size"],
 [data-react-toolbox-tokens~="--unit"] {
   --font-size-normal: var(--font-size);
-
-
 }
 [data-react-toolbox-tokens~="--animation-duration"] {
   --animation-delay: calc(var(--animation-duration) / 5);
-
-
 }
 [data-react-toolbox-tokens~="--animation-curve-fast-out-slow-in"] {
   --animation-curve-default: var(--animation-curve-fast-out-slow-in);
-
-
 }

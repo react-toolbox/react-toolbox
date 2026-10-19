@@ -7,12 +7,22 @@ import type { DropdownClassNames } from './types';
 
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { cn } from '../foundations/styles/cn';
-import Input, { type InputProps, type InputHandle } from '../input/Input';
+import Input, { type InputProps, type InputHandle, type InputElement } from '../input/Input';
+import {
+  DropdownRoot,
+  DropdownTrigger,
+  DropdownPortal,
+  DropdownContent,
+  DropdownViewport,
+  DropdownOption,
+  DropdownOptionText,
+  DropdownGroup,
+  DropdownLabel,
+} from './parts';
 import useFormReset from '../foundations/forms/useFormReset';
 
 const disabledClasses = [
   'rt-dropdown-disabled',
-  '[.rt-dropdown-values>*&]:text-(--dropdown-color-disabled) [.rt-dropdown-values>*&]:cursor-not-allowed',
   '[.rt-dropdown-dropdown&]:cursor-[normal] [.rt-dropdown-dropdown&]:pointer-events-none',
   '[.rt-dropdown-field&]:cursor-[normal] [.rt-dropdown-field&]:pointer-events-none',
 ].join(' ');
@@ -29,8 +39,23 @@ const valueClasses = [
   "[&::after]:[border-left:var(--dropdown-value-border-size)_solid_transparent] [&::after]:[border-right:var(--dropdown-value-border-size)_solid_transparent] [&::after]:[border-top:var(--dropdown-value-border-size)_solid_var(--input-chevron-color)] [&::after]:[content:''] [&::after]:h-0 [&::after]:pointer-events-none [&::after]:absolute [&::after]:right-(--input-chevron-offset) [&::after]:top-[50%] [&::after]:[transition:transform_var(--animation-duration)_var(--animation-curve-default)] [&::after]:w-0",
   '[.rt-dropdown-dropdown:focus-within:not(.rt-dropdown-disabled)_&::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_87%)]',
   '[.rt-dropdown-disabled_&::after]:[border-top-color:rgb(from_var(--rt-color-black)_r_g_b_/_38%)]',
-  '[.rt-dropdown-dropdown.rt-dropdown-active>&]:opacity-[0.5]',
 ].join(' ');
+
+/** Radix needs the native trigger element, while Input exposes its public handle. */
+function DropdownInputTrigger({
+  ref,
+  inputRef,
+  className: _className,
+  rootClassName,
+  ...props
+}: Omit<InputProps, 'ref'> & {
+  ref?: React.Ref<InputElement>;
+  inputRef: React.RefObject<InputHandle | null>;
+  rootClassName?: string;
+}) {
+  React.useImperativeHandle(ref, () => inputRef.current!.inputElement!, [inputRef]);
+  return <Input {...props} ref={inputRef} type="text" readOnly className={rootClassName} />;
+}
 
 export type DropdownValue = string | number;
 export interface DropdownItem {
@@ -104,6 +129,17 @@ export function Dropdown<T extends object = DropdownItem>({
   const generatedId = useId();
   const id = suppliedId || `dropdown-${generatedId}`;
   const root = useRef<HTMLDivElement>(null);
+  const trigger = useRef<HTMLElement | null>(null);
+  const restoreTriggerFocus = useRef(false);
+  const setTrigger = React.useCallback((node: HTMLElement | null) => {
+    /** A first template selection replaces the Input trigger with the template field. */
+    if (!node) restoreTriggerFocus.current = trigger.current === document.activeElement;
+    trigger.current = node;
+    if (node && restoreTriggerFocus.current) {
+      restoreTriggerFocus.current = false;
+      node.focus();
+    }
+  }, []);
   const input = useRef<InputHandle>(null);
   const native = useRef<HTMLSelectElement>(null);
   const [internalValue, setValue] = useState(defaultValue);
@@ -123,8 +159,8 @@ export function Dropdown<T extends object = DropdownItem>({
   React.useImperativeHandle(
     ref,
     () => ({
-      focus: () => root.current?.querySelector<HTMLElement>('[role="combobox"]')?.focus(),
-      blur: () => root.current?.querySelector<HTMLElement>('[role="combobox"]')?.blur(),
+      focus: () => trigger.current?.focus(),
+      blur: () => trigger.current?.blur(),
       get inputElement() {
         return input.current?.inputElement ?? null;
       },
@@ -137,10 +173,19 @@ export function Dropdown<T extends object = DropdownItem>({
     if (controlledOpen === undefined) setOpen(next);
     if (next !== active) onOpenChange?.(next);
   };
-  const [activeIndex, setActiveIndex] = useState(-1);
-  const [up, setUp] = useState(false);
-  const search = useRef({ text: '', time: 0 });
-  const openingIndex = useRef<number | null>(null);
+  const content = useRef<HTMLDivElement>(null);
+  const isWithinDropdown = (target: EventTarget | null) =>
+    target instanceof Node && (root.current?.contains(target) || content.current?.contains(target));
+  const selectionEvent = useRef<DropdownEvent | null>(null);
+  const [placement, setPlacement] = useState({ up: false, sideOffset: 0 });
+  const { up } = placement;
+  /** Radix reports a value only; preserve the initiating event, not native reset notifications. */
+  const captureSelection = (event: DropdownEvent) => {
+    selectionEvent.current = event;
+    queueMicrotask(() => {
+      if (selectionEvent.current === event) selectionEvent.current = null;
+    });
+  };
   const items = source.map((item) => {
     if (typeof item !== 'object')
       return {
@@ -164,42 +209,19 @@ export function Dropdown<T extends object = DropdownItem>({
       original: item,
     };
   });
+  const optionId = (value: DropdownValue) => `${typeof value}:${value}`;
   const selected =
     items.find((item) => item.value === value) || (!allowBlank ? items.find((item) => !item.disabled) : undefined);
   useEffect(() => {
     if (disabled) setActive(false);
   }, [disabled]);
   useEffect(() => {
-    if (!active) return;
-    const outside = (event: Event) => {
-      if (event.target instanceof Node && !root.current?.contains(event.target)) setActive(false);
-    };
-    document.addEventListener('click', outside);
-    document.addEventListener('touchend', outside);
-    return () => {
-      document.removeEventListener('click', outside);
-      document.removeEventListener('touchend', outside);
-    };
-  }, [active, controlledOpen, onOpenChange]);
-  useEffect(() => {
-    if (active)
-      root.current
-        ?.querySelectorAll<HTMLElement>('[role="option"]')
-        [activeIndex]?.scrollIntoView?.({ block: 'nearest' });
-  }, [active, activeIndex]);
-  useEffect(() => {
-    if (!active || !root.current) return;
+    if (!active || !root.current || !trigger.current) return;
     const rect = root.current.getBoundingClientRect();
-    setUp(auto && rect.top > (window.innerHeight || document.documentElement.offsetHeight) / 2 + rect.height);
-    const selectedIndex = items.findIndex((item) => !item.disabled && selected && item.value === selected.value);
-    setActiveIndex(
-      openingIndex.current ?? (selectedIndex < 0 ? items.findIndex((item) => !item.disabled) : selectedIndex),
-    );
-    openingIndex.current = null;
-  }, [active]);
-  const open = () => {
-    if (!active && !disabled) setActive(true);
-  };
+    const triggerRect = trigger.current.getBoundingClientRect();
+    const up = auto && rect.top > window.innerHeight / 2 + rect.height;
+    setPlacement({ up, sideOffset: up ? triggerRect.top - rect.bottom : rect.top - triggerRect.bottom });
+  }, [active, auto]);
   const select = (next: DropdownValue, event: DropdownEvent) => {
     if (disabled) return;
     onBlur?.(event);
@@ -207,111 +229,49 @@ export function Dropdown<T extends object = DropdownItem>({
     if (controlledValue === undefined) setValue(next);
     setValidationMessage('');
     onChange?.(next, event);
-    setActive(false);
-  };
-  const click: React.MouseEventHandler<HTMLElement> = (event) => {
-    onClick?.(event);
-    if (event.defaultPrevented) return;
-    open();
-    event.preventDefault();
-    event.stopPropagation();
-  };
-  const keyDown: React.KeyboardEventHandler<HTMLElement> = (event) => {
-    onKeyDown?.(event);
-    if (event.defaultPrevented || disabled || event.nativeEvent.isComposing) return;
-    const available = items.flatMap((item, index) => (item.disabled ? [] : [index]));
-    if (event.key === 'Escape') {
-      if (active) {
-        event.preventDefault();
-        event.stopPropagation();
-        setActive(false);
-      }
-    } else if (event.key === 'Tab') setActive(false);
-    else if (['Enter', ' ', 'ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
-      event.preventDefault();
-      if (!active) {
-        open();
-        return;
-      }
-      if (event.key === 'Enter' || event.key === ' ') {
-        const item = items[activeIndex];
-        if (item && !item.disabled) select(item.value, event);
-        return;
-      }
-      const current = available.indexOf(activeIndex);
-      const next =
-        event.key === 'Home'
-          ? 0
-          : event.key === 'End'
-            ? available.length - 1
-            : (current + (event.key === 'ArrowDown' ? 1 : -1) + available.length) % available.length;
-      setActiveIndex(available[next] ?? -1);
-    } else if (event.key.length === 1 && !event.ctrlKey && !event.altKey && !event.metaKey) {
-      const now = Date.now();
-      search.current = {
-        text: now - search.current.time < 500 ? search.current.text + event.key : event.key,
-        time: now,
-      };
-      const index = items.findIndex(
-        (item) => !item.disabled && item.text.toLowerCase().startsWith(search.current.text.toLowerCase()),
-      );
-      if (index >= 0) {
-        if (!active) openingIndex.current = index;
-        open();
-        setActiveIndex(index);
-      }
-    }
   };
   const combo = {
     id,
-    role: 'combobox',
     'aria-label': others['aria-label'] || (typeof label === 'string' ? label : undefined),
-    'aria-labelledby': others['aria-labelledby'],
-    'aria-expanded': active,
-    'aria-controls': `${id}-listbox`,
-    'aria-haspopup': 'listbox',
-    'aria-activedescendant': active && activeIndex >= 0 ? `${id}-option-${activeIndex}` : undefined,
+    'aria-labelledby':
+      others['aria-labelledby'] ?? (template && selected && label && !others['aria-label'] ? `${id}-label` : undefined),
     'aria-disabled': disabled || undefined,
     'aria-required': required || undefined,
     'aria-invalid': fieldError ? true : others['aria-invalid'],
     'aria-describedby':
       [others['aria-describedby'], fieldError && `${id}-error`].filter(Boolean).join(' ') || undefined,
-    onKeyDown: keyDown,
   } satisfies React.HTMLAttributes<HTMLElement>;
   const renderOption = (item: (typeof items)[number], index: number) => (
-    <li
+    <DropdownOption
       key={index}
+      value={optionId(item.value)}
+      textValue={item.text}
+      disabled={item.disabled}
       id={`${id}-option-${index}`}
-      role="option"
-      aria-selected={item.value === selected?.value}
-      aria-disabled={item.disabled || undefined}
-      data-active={(active && index === activeIndex) || undefined}
+      onKeyDown={captureSelection}
+      onPointerUp={captureSelection}
+      onClick={captureSelection}
       className={cn(
+        'cursor-pointer',
         item.value === selected?.value &&
-          cn(
-            'rt-dropdown-selected',
-            '[.rt-dropdown-values>*&]:text-(--dropdown-color-primary)',
-            item.group && '[&&]:text-(--dropdown-color-primary)',
-            classNames?.selected,
-          ),
+          cn('rt-dropdown-selected', 'text-(--dropdown-color-primary)', classNames?.selected),
         item.disabled &&
-          cn(
-            disabledClasses,
-            item.group && '[&&]:text-(--dropdown-color-disabled) [&&]:cursor-not-allowed',
-            classNames?.disabled,
-          ),
+          cn(disabledClasses, 'text-(--dropdown-color-disabled) cursor-not-allowed', classNames?.disabled),
       )}
-      onMouseDown={(event) => event.preventDefault()}
-      onClick={item.disabled ? undefined : (event) => select(item.value, event)}
     >
-      {template ? template(item.original) : item.label}
-    </li>
+      <DropdownOptionText>{template ? template(item.original) : item.label}</DropdownOptionText>
+    </DropdownOption>
   );
   const groups = new Map<string | undefined, number[]>();
   items.forEach((item, index) => groups.set(item.group, [...(groups.get(item.group) ?? []), index]));
   return (
     <div
       data-react-toolbox="dropdown"
+      onChange={(event) => {
+        /** The primitive’s nameless select contains internal option IDs, not domain values. */
+        if (event.target instanceof HTMLSelectElement && event.target !== native.current && !event.target.name)
+          event.stopPropagation();
+      }}
       ref={root}
       tabIndex={-1}
       className={cn(
@@ -326,156 +286,192 @@ export function Dropdown<T extends object = DropdownItem>({
         required && cn(requiredClasses, classNames?.required),
         className,
       )}
+      onKeyDownCapture={onKeyDown}
       onFocus={(event) => {
-        event.stopPropagation();
-        open();
-        onFocus?.(event);
+        if (!isWithinDropdown(event.relatedTarget)) onFocus?.(event);
       }}
       onBlur={(event) => {
-        if (event.relatedTarget instanceof Node && root.current?.contains(event.relatedTarget)) return;
-        event.stopPropagation();
-        setActive(false);
-        onBlur?.(event);
+        if (!isWithinDropdown(event.relatedTarget)) onBlur?.(event);
       }}
     >
-      <Input
-        {...others}
-        {...(template && selected ? { id: `${id}-input` } : combo)}
-        ref={input}
-        tabIndex={0}
+      {/** Only the domain-value select is named; primitive IDs stay inside this event boundary. */}
+      <DropdownRoot
+        value={selected ? optionId(selected.value) : ''}
+        open={active}
+        onOpenChange={setActive}
         disabled={disabled}
-        className={cn(valueClasses, classNames?.value)}
-        onClick={click}
-        required={required}
-        readOnly
-        type={template && selected ? 'hidden' : 'text'}
-        error={template && selected ? undefined : fieldError}
-        label={label}
-        value={selected?.text ?? ''}
-      />
-      {template && selected ? (
-        <div
-          {...combo}
-          tabIndex={disabled ? -1 : 0}
-          onClick={click}
-          className={cn(
-            'rt-dropdown-field',
-            'cursor-pointer p-[var(--input-padding)_0] relative',
-            '[&:focus-visible]:[outline:2px_solid_var(--input-text-highlight-color)] [&:focus-visible]:-outline-offset-2',
-            classNames?.field,
-            Boolean(fieldError) && cn('rt-dropdown-errored', '[.rt-dropdown-field&]:pb-0', classNames?.errored),
-            disabled && cn(disabledClasses, classNames?.disabled),
-            required && cn(requiredClasses, classNames?.required),
-          )}
-        >
-          <div
-            className={`${cn(
-              'rt-dropdown-templateValue',
-              'bg-(--input-text-background-color) [border-bottom:1px_solid_var(--input-text-bottom-border-color)] text-(--rt-color-text) min-h-(--input-field-height) p-[var(--input-field-padding)_0] relative',
-              '[.rt-dropdown-field.rt-dropdown-errored>&]:[border-bottom:2px_solid_var(--input-text-error-color)]',
-              '[.rt-dropdown-field.rt-dropdown-disabled>&]:[border-bottom-style:dotted] [.rt-dropdown-field.rt-dropdown-disabled>&]:text-(--input-text-disabled-text-color)',
-              classNames?.templateValue,
-            )} ${cn(valueClasses, classNames?.value)}`}
+        onValueChange={(key) => {
+          const item = items.find((item) => optionId(item.value) === key);
+          if (item && !item.disabled && selectionEvent.current) select(item.value, selectionEvent.current);
+        }}
+      >
+        {template && selected ? (
+          <Input
+            {...others}
+            id={`${id}-input`}
+            ref={input}
+            disabled={disabled}
+            required={required}
+            type="hidden"
+            label={label}
+            value={selected.text}
+          />
+        ) : (
+          <DropdownTrigger
+            ref={setTrigger}
+            asChild
+            className="min-h-0 block border-b border-b-(--input-text-bottom-border-color) [box-shadow:none] focus:[box-shadow:none] disabled:opacity-100"
+            onClick={onClick}
+            onKeyDown={captureSelection}
           >
-            {template(selected.original)}
-          </div>
-          {label ? (
-            <label
-              className={cn(
-                'rt-dropdown-label',
-                'text-(--input-text-label-color) text-(length:--input-label-font-size) left-0 leading-(--input-field-font-size) absolute top-(--input-focus-label-top)',
-                '[.rt-dropdown-dropdown.rt-dropdown-active>&]:opacity-[0.5]',
-                '[.rt-dropdown-field.rt-dropdown-errored>&]:text-(--input-text-error-color)',
-                classNames?.label,
-              )}
-            >
-              {label}
-              {required ? <span className={cn(requiredClasses, classNames?.required)}> * </span> : null}
-            </label>
-          ) : null}
-          {fieldError ? (
-            <span
-              id={`${id}-error`}
-              className={cn(
-                'rt-dropdown-error',
-                'text-(--input-text-error-color) text-(length:--input-label-font-size) leading-(--input-underline-height) mb-[calc(-1_*_var(--input-underline-height))]',
-                classNames?.error,
-              )}
-            >
-              {fieldError}
-            </span>
-          ) : null}
-        </div>
-      ) : null}
-      <select
-        ref={native}
-        className="sr-only"
-        tabIndex={-1}
-        aria-hidden="true"
-        name={name}
-        form={others.form}
-        disabled={disabled}
-        required={required}
-        value={selected?.value ?? ''}
-        onChange={(event) => {
-          const item = items[event.currentTarget.selectedIndex - 1];
-          if (item && !item.disabled) select(item.value, event);
-        }}
-        onInvalid={(event) => {
-          event.preventDefault();
-          setValidationMessage(event.currentTarget.validationMessage);
-          root.current?.querySelector<HTMLElement>('[role="combobox"]')?.focus();
-        }}
-      >
-        <option value="" />
-        {items.map((item, index) => (
-          <option key={index} value={item.value} disabled={item.disabled}>
-            {item.text}
-          </option>
-        ))}
-      </select>
-      <ul
-        id={`${id}-listbox`}
-        role="listbox"
-        aria-label={typeof label === 'string' ? label : undefined}
-        aria-hidden={!active}
-        className={cn(
-          'rt-dropdown-values',
-          'bg-(--dropdown-color-white) text-(length:--input-field-font-size) rounded-(--dropdown-value-border-radius) [list-style:none] m-0 overflow-y-auto p-0 absolute [transition-duration:var(--animation-duration)] [transition-property:max-height,box-shadow] [transition-timing-function:var(--animation-curve-default)] w-full z-(--z-index-high)',
-          '[&>*]:cursor-pointer [&>*]:overflow-hidden [&>*]:p-(--unit) [&>*]:relative',
-          '[&>*:hover:not(.rt-dropdown-disabled)]:bg-(--dropdown-value-hover-background)',
-          "[&>*[data-active='true']:not(.rt-dropdown-disabled)]:bg-(--dropdown-value-hover-background)",
-          '[&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-0',
-          '[.rt-dropdown-dropdown:not(.rt-dropdown-active)>&]:max-h-0 [.rt-dropdown-dropdown:not(.rt-dropdown-active)>&]:invisible',
-          '[.rt-dropdown-dropdown.rt-dropdown-active>&]:[box-shadow:var(--zdepth-shadow-1)] [.rt-dropdown-dropdown.rt-dropdown-active>&]:max-h-(--dropdown-overflow-max-height) [.rt-dropdown-dropdown.rt-dropdown-active>&]:visible',
-          '[.rt-dropdown-dropdown:not(.rt-dropdown-up)>&]:bottom-auto [.rt-dropdown-dropdown:not(.rt-dropdown-up)>&]:top-0',
-          '[.rt-dropdown-dropdown.rt-dropdown-up>&]:bottom-0 [.rt-dropdown-dropdown.rt-dropdown-up>&]:top-auto',
-          classNames?.values,
+            <DropdownInputTrigger
+              {...others}
+              {...combo}
+              inputRef={input}
+              tabIndex={0}
+              disabled={disabled}
+              rootClassName={cn(valueClasses, classNames?.value)}
+              required={required}
+              error={fieldError}
+              label={label}
+              value={selected?.text ?? ''}
+            />
+          </DropdownTrigger>
         )}
-      >
-        {[...groups].map(([group, entries], groupIndex) =>
-          group ? (
-            <li
-              role="group"
-              aria-labelledby={`${id}-group-${groupIndex}`}
-              key={group}
-              className="[&&]:p-0 [&&]:cursor-default [&&]:bg-transparent"
+        {template && selected ? (
+          <DropdownTrigger
+            ref={setTrigger}
+            asChild
+            className="block min-h-0 py-(--input-padding) bg-transparent [box-shadow:none] focus:[box-shadow:none] disabled:opacity-100"
+            onClick={onClick}
+            onKeyDown={captureSelection}
+          >
+            <div
+              {...combo}
+              tabIndex={disabled ? -1 : 0}
+              className={cn(
+                'rt-dropdown-field',
+                'cursor-pointer p-[var(--input-padding)_0] relative',
+                '[&:focus-visible]:[outline:2px_solid_var(--input-text-highlight-color)] [&:focus-visible]:-outline-offset-2',
+                classNames?.field,
+                Boolean(fieldError) && cn('rt-dropdown-errored', '[.rt-dropdown-field&]:pb-0', classNames?.errored),
+                disabled && cn(disabledClasses, classNames?.disabled),
+                required && cn(requiredClasses, classNames?.required),
+              )}
             >
-              <div id={`${id}-group-${groupIndex}`} className="text-(--rt-color-text-secondary) text-sm p-(--unit)">
-                {group}
-              </div>
-              <ul
-                role="presentation"
-                className="list-none m-0 p-0 [&>*]:p-(--unit) [&>*]:cursor-pointer [&>*:hover:not(.rt-dropdown-disabled)]:bg-(--dropdown-value-hover-background) [&>*[data-active='true']:not(.rt-dropdown-disabled)]:bg-(--dropdown-value-hover-background)"
+              <div
+                className={`${cn(
+                  'rt-dropdown-templateValue',
+                  'bg-(--input-text-background-color) [border-bottom:1px_solid_var(--input-text-bottom-border-color)] text-(--rt-color-text) min-h-(--input-field-height) p-[var(--input-field-padding)_0] relative',
+                  '[.rt-dropdown-field.rt-dropdown-errored>&]:[border-bottom:2px_solid_var(--input-text-error-color)]',
+                  '[.rt-dropdown-field.rt-dropdown-disabled>&]:[border-bottom-style:dotted] [.rt-dropdown-field.rt-dropdown-disabled>&]:text-(--input-text-disabled-text-color)',
+                  classNames?.templateValue,
+                )} ${cn(valueClasses, classNames?.value)}`}
               >
-                {entries.map((index) => renderOption(items[index], index))}
-              </ul>
-            </li>
-          ) : (
-            entries.map((index) => renderOption(items[index], index))
-          ),
-        )}
-      </ul>
+                {template(selected.original)}
+              </div>
+              {label ? (
+                <label
+                  id={`${id}-label`}
+                  className={cn(
+                    'rt-dropdown-label',
+                    'text-(--input-text-label-color) text-(length:--input-label-font-size) left-0 leading-(--input-field-font-size) absolute top-(--input-focus-label-top)',
+                    '[.rt-dropdown-field.rt-dropdown-errored>&]:text-(--input-text-error-color)',
+                    classNames?.label,
+                  )}
+                >
+                  {label}
+                  {required ? (
+                    <span aria-hidden="true" className={cn(requiredClasses, classNames?.required)}>
+                      {' '}
+                      *{' '}
+                    </span>
+                  ) : null}
+                </label>
+              ) : null}
+              {fieldError ? (
+                <span
+                  id={`${id}-error`}
+                  className={cn(
+                    'rt-dropdown-error',
+                    'text-(--input-text-error-color) text-(length:--input-label-font-size) leading-(--input-underline-height) mb-[calc(-1_*_var(--input-underline-height))]',
+                    classNames?.error,
+                  )}
+                >
+                  {fieldError}
+                </span>
+              ) : null}
+            </div>
+          </DropdownTrigger>
+        ) : null}
+        <select
+          ref={native}
+          className="sr-only"
+          tabIndex={-1}
+          aria-hidden="true"
+          name={name}
+          form={others.form}
+          disabled={disabled}
+          required={required}
+          value={selected?.value ?? ''}
+          onChange={(event) => {
+            const item = items[event.currentTarget.selectedIndex - 1];
+            if (item && !item.disabled) {
+              select(item.value, event);
+              setActive(false);
+            }
+          }}
+          onInvalid={(event) => {
+            event.preventDefault();
+            setValidationMessage(event.currentTarget.validationMessage);
+            trigger.current?.focus();
+          }}
+        >
+          <option value="" />
+          {items.map((item, index) => (
+            <option key={index} value={item.value} disabled={item.disabled}>
+              {item.text}
+            </option>
+          ))}
+        </select>
+        <DropdownPortal>
+          <DropdownContent
+            ref={content}
+            onCloseAutoFocus={
+              template
+                ? (event) => {
+                    if (event.defaultPrevented || !trigger.current) return;
+                    event.preventDefault();
+                    trigger.current.focus();
+                  }
+                : undefined
+            }
+            position="popper"
+            side={up ? 'top' : 'bottom'}
+            align="start"
+            sideOffset={placement.sideOffset}
+            avoidCollisions={auto}
+            aria-label={typeof label === 'string' ? label : undefined}
+            className={cn(
+              'rt-dropdown-values max-h-(--dropdown-overflow-max-height) w-(--radix-select-trigger-width)',
+              classNames?.values,
+            )}
+          >
+            <DropdownViewport>
+              {[...groups].map(([group, entries]) =>
+                group ? (
+                  <DropdownGroup key={group}>
+                    <DropdownLabel className="text-sm p-(--unit)">{group}</DropdownLabel>
+                    {entries.map((index) => renderOption(items[index], index))}
+                  </DropdownGroup>
+                ) : (
+                  entries.map((index) => renderOption(items[index], index))
+                ),
+              )}
+            </DropdownViewport>
+          </DropdownContent>
+        </DropdownPortal>
+      </DropdownRoot>
     </div>
   );
 }

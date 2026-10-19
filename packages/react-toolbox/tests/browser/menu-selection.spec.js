@@ -19,9 +19,13 @@ for (const width of [1440, 390]) {
               const frames = [];
               const start = performance.now();
               function sample() {
+                const content = element.querySelector('[data-slot=DropdownMenuContent]');
+                if (!content?.isConnected) {
+                  resolve(frames);
+                  return;
+                }
                 const box = element.getBoundingClientRect();
-                const outline = getComputedStyle(element.querySelector('.rt-menu-outline'));
-                frames.push({ x: box.x, y: box.y, opacity: Number(outline.opacity) });
+                frames.push({ x: box.x, y: box.y, opacity: Number(getComputedStyle(content).opacity) });
                 if (performance.now() - start < 650) requestAnimationFrame(sample);
                 else resolve(frames);
               }
@@ -43,7 +47,7 @@ for (const width of [1440, 390]) {
       expect(visibleFrames.length).toBeGreaterThan(0);
       expect(Math.max(...visibleFrames.map((frame) => Math.abs(frame.x - before.x)))).toBeLessThan(0.5);
       expect(Math.max(...visibleFrames.map((frame) => Math.abs(frame.y - before.y)))).toBeLessThan(0.5);
-      await expect(root.locator('.rt-menu-outline')).toHaveCSS('opacity', '0');
+      await expect(root.locator('[data-slot=DropdownMenuContent]')).toHaveCount(0);
     }
   });
 }

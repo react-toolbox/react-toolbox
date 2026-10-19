@@ -8,7 +8,7 @@ import React from 'react';
 import { range } from '../foundations/collections/range';
 import time, { type DatePickerLocale } from '../foundations/date-time/calendar';
 import CalendarDay from './CalendarDay';
-import isDateDisabled, { type DateConstraints } from './is-date-disabled';
+import isDateDisabled, { dayStamp, type DateConstraints } from './is-date-disabled';
 export interface CalendarMonthProps extends DateConstraints {
   locale?: DatePickerLocale;
   onDayClick?: (day: number) => void;
@@ -65,25 +65,32 @@ export default function CalendarMonth({
       <div
         className={cn('rt-date-picker-days', 'flex flex-wrap text-(length:--calendar-day-font-size)', classNames?.days)}
       >
-        {range(1, time.getDaysInMonth(viewDate) + 1).map((day) => (
-          <CalendarDay
-            key={day}
-            day={day}
-            locale={locale}
-            disabled={isDateDisabled(new Date(viewDate.getFullYear(), viewDate.getMonth(), day), constraints)}
-            onClick={onDayClick}
-            onFocus={onDayFocus}
-            focused={
-              focusedDate.getFullYear() === viewDate.getFullYear() &&
-              focusedDate.getMonth() === viewDate.getMonth() &&
-              focusedDate.getDate() === day
-            }
-            selectedDate={selectedDate}
-            classNames={classNames}
-            viewDate={viewDate}
-            sundayFirstDayOfWeek={sundayFirstDayOfWeek}
-          />
-        ))}
+        {range(1, time.getDaysInMonth(viewDate) + 1).map((day) => {
+          const date = new Date(viewDate.getFullYear(), viewDate.getMonth(), day);
+          const withinBounds =
+            (!constraints.minDate || dayStamp(date) >= dayStamp(constraints.minDate)) &&
+            (!constraints.maxDate || dayStamp(date) <= dayStamp(constraints.maxDate));
+          return (
+            <CalendarDay
+              key={day}
+              day={day}
+              focusableDisabled={withinBounds}
+              locale={locale}
+              disabled={isDateDisabled(date, constraints)}
+              onClick={onDayClick}
+              onFocus={onDayFocus}
+              focused={
+                focusedDate.getFullYear() === viewDate.getFullYear() &&
+                focusedDate.getMonth() === viewDate.getMonth() &&
+                focusedDate.getDate() === day
+              }
+              selectedDate={selectedDate}
+              classNames={classNames}
+              viewDate={viewDate}
+              sundayFirstDayOfWeek={sundayFirstDayOfWeek}
+            />
+          );
+        })}
       </div>
     </div>
   );

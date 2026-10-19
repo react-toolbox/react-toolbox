@@ -3,6 +3,7 @@
   :root {
     --dialog-border-radius: calc(0.2 * var(--unit));
     --dialog-color-title: var(--rt-color-black);
+    --dialog-color-text: var(--rt-color-text);
     --dialog-color-white: var(--rt-color-white);
     --dialog-content-padding: calc(2.4 * var(--unit));
     --dialog-navigation-padding: calc(0.8 * var(--unit));
@@ -17,6 +18,10 @@
   }
   [data-react-toolbox-tokens~="--rt-color-black"] {
     --dialog-color-title: var(--rt-color-black);
+  }
+  [data-react-toolbox-tokens~="--rt-color-text"],
+  [data-react-toolbox-tokens~="--palette-grey-900"] {
+    --dialog-color-text: var(--rt-color-text);
   }
   [data-react-toolbox-tokens~="--rt-color-white"] {
     --dialog-color-white: var(--rt-color-white);

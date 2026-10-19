@@ -11,12 +11,12 @@
     --tab-navigation-border-color: var(--rt-color-divider);
     --tab-pointer-color: var(--rt-color-primary);
     --tab-pointer-height: calc(0.2 * var(--unit));
-    --tab-focus-color: rgb(from var(--rt-color-primary-contrast) r g b / 10%);
+    --tab-focus-color: rgb(from currentColor r g b / 12%);
     --tab-text: var(--rt-color-black);
     --tab-text-color: var(--tab-text);
     --tab-text-inactive-color: rgb(from var(--tab-text) r g b / 70%);
     --tab-inverse-bar-color: var(--rt-color-primary);
-    --tab-inverse-pointer-color: var(--rt-color-accent);
+    --tab-inverse-pointer-color: var(--tab-inverse-text);
     --tab-inverse-text: var(--rt-color-primary-contrast);
     --tab-inverse-text-color: var(--tab-inverse-text);
     --tab-inverse-text-inactive-color: rgb(from var(--tab-inverse-text) r g b / 70%);
@@ -46,7 +46,6 @@
   [data-react-toolbox-tokens~="--rt-color-dark-contrast"],
   [data-react-toolbox-tokens~="--rt-color-primary-contrast"],
   [data-react-toolbox-tokens~="--rt-color-white"] {
-    --tab-focus-color: rgb(from var(--rt-color-primary-contrast) r g b / 10%);
     --tab-inverse-text: var(--rt-color-primary-contrast);
   }
   [data-react-toolbox-tokens~="--rt-color-black"] {
@@ -57,14 +56,11 @@
     --tab-text-color: var(--tab-text);
     --tab-text-inactive-color: rgb(from var(--tab-text) r g b / 70%);
   }
-  [data-react-toolbox-tokens~="--rt-color-accent"],
-  [data-react-toolbox-tokens~="--palette-pink-a200"] {
-    --tab-inverse-pointer-color: var(--rt-color-accent);
-  }
   [data-react-toolbox-tokens~="--rt-color-dark-contrast"],
   [data-react-toolbox-tokens~="--rt-color-primary-contrast"],
   [data-react-toolbox-tokens~="--rt-color-white"],
   [data-react-toolbox-tokens~="--tab-inverse-text"] {
+    --tab-inverse-pointer-color: var(--tab-inverse-text);
     --tab-inverse-text-color: var(--tab-inverse-text);
     --tab-inverse-text-inactive-color: rgb(from var(--tab-inverse-text) r g b / 70%);
   }

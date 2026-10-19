@@ -48,9 +48,9 @@ describe('menu workflows', () => {
     screen.getByRole('textbox').focus();
     const trigger = screen.getByRole('button', { name: 'Commands' });
     fireEvent.click(trigger);
-    const command = screen.getByRole('menuitem');
-    await waitFor(() => expect(command).toHaveFocus());
-    fireEvent.keyDown(command, { key: 'Escape' });
+    const menu = screen.getByRole('menu');
+    await waitFor(() => expect(menu).toHaveFocus());
+    fireEvent.keyDown(menu, { key: 'Escape' });
     await waitFor(() => expect(trigger).toHaveFocus());
   });
 
@@ -71,21 +71,22 @@ describe('menu workflows', () => {
       </IconMenu>,
     );
     const trigger = screen.getByRole('button', { name: 'Display options' });
-    await user.click(trigger);
+    trigger.focus();
+    await user.keyboard('{ArrowDown}');
     const toolbar = screen.getByRole('menuitemcheckbox', { name: 'Toolbar' });
     await waitFor(() => expect(toolbar).toHaveFocus());
     fireEvent.keyDown(toolbar, { key: ' ' });
     expect(check).toHaveBeenCalledWith(false);
     expect(toolbar).toHaveAttribute('aria-checked', 'false');
     expect(trigger).toHaveAttribute('aria-expanded', 'true');
-    fireEvent.keyDown(toolbar, { key: 'ArrowDown' });
-    expect(screen.getByRole('menuitemradio', { name: 'Small' })).toHaveFocus();
+    await user.keyboard('{ArrowDown}');
+    await waitFor(() => expect(screen.getByRole('menuitemradio', { name: 'Small' })).toHaveFocus());
     await user.click(screen.getByRole('menuitemradio', { name: 'Large' }));
     expect(radio).toHaveBeenCalledWith('large');
     expect(screen.getByRole('menuitemradio', { name: 'Large' })).toHaveAttribute('aria-checked', 'true');
     await user.keyboard('{Escape}');
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
-    expect(trigger).toHaveFocus();
+    await waitFor(() => expect(trigger).toHaveFocus());
   });
 
   it('allows nested custom items and cancelled commands without closing or notifying selection', async () => {

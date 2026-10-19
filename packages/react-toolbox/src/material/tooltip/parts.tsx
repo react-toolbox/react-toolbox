@@ -15,9 +15,15 @@ import {
 } from 'react';
 import { cn } from '../foundations/styles/cn';
 import { usePortalTheme } from '../foundations/portal/usePortalTheme';
+import useReducedMotion from '../foundations/motion/useReducedMotion';
 
 const ProviderContext = createContext(false);
-const TouchContext = createContext<{ setOpen: (open: boolean) => void; delay: number; duration: number } | null>(null);
+const TouchContext = createContext<{
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  delay: number;
+  duration: number;
+} | null>(null);
 export type TooltipProviderProps = ComponentProps<typeof Primitive.Provider>;
 export function TooltipProvider({ children, ...props }: TooltipProviderProps) {
   return (
@@ -51,8 +57,8 @@ export function TooltipRoot({
     [controlled, onOpenChange],
   );
   const touch = useMemo(
-    () => ({ setOpen, delay: touchDelay, duration: touchDuration }),
-    [setOpen, touchDelay, touchDuration],
+    () => ({ open: controlled ?? internal, setOpen, delay: touchDelay, duration: touchDuration }),
+    [controlled, internal, setOpen, touchDelay, touchDuration],
   );
   const content = (
     <TouchContext value={touch}>
@@ -169,6 +175,8 @@ export function TooltipPortal(props: TooltipPortalProps) {
 export type TooltipContentProps = ComponentProps<typeof Primitive.Content>;
 export function TooltipContent({ className, style, sideOffset, ref, ...props }: TooltipContentProps) {
   const theme = usePortalTheme();
+  const touch = useContext(TouchContext);
+  const reducedMotion = useReducedMotion();
   const [node, setNode] = useState<HTMLDivElement | null>(null);
   const [gap, setGap] = useState(14);
   useImperativeHandle(ref, () => node!, [node]);
@@ -184,6 +192,8 @@ export function TooltipContent({ className, style, sideOffset, ref, ...props }: 
     media?.addEventListener('change', measure);
     return () => media?.removeEventListener('change', measure);
   }, [node, sideOffset, theme.style, style, className]);
+  /** Cancelling a running CSS animation does not emit the animationend Presence waits for. */
+  if (reducedMotion && touch && !touch.open && !props.forceMount) return null;
   return (
     <Primitive.Content
       side="bottom"

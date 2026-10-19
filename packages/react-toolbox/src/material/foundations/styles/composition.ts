@@ -6,3 +6,6 @@ export const optionClasses =
   'relative flex cursor-default items-center gap-[16px] outline-none data-disabled:pointer-events-none data-disabled:opacity-50';
 export const focusClasses =
   'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--rt-color-primary)';
+/** Surface fills disappear in forced colors; retain a system-colored keyboard focus indicator. */
+export const forcedColorsFocusClasses =
+  'forced-colors:focus-visible:[outline:2px_solid_Highlight] forced-colors:focus-visible:-outline-offset-2';

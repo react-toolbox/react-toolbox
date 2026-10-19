@@ -1,12 +1,97 @@
 # Material Design 1 audit
 
-> Historical audit. Findings and validation results describe the revisions recorded below. Use the [current guides](../../README.md#guides) for supported behavior and maintenance.
+> Historical audit. Findings and validation results describe the revisions recorded below. Use the [current guides](../../CONTRIBUTING.md#guides) for supported behavior and maintenance.
 
 The [16 October component readiness review](component-review.md) records the later audit and implementation outcome across every public family. The pass unifies modal ownership and family theming, corrects interaction and composition defects, reduces shared CSS, and adds range sliders/calendars, scheduling constraints, gesture sheets and an editable themed distribution. Its recorded verification supersedes the earlier results below; statements about missing capabilities describe the revisions under review.
 
 This document preserves historical audit findings and validation results. Test counts and CSS/React 16 comparison results belong to the recorded revisions. The completed migration's archived renderers, correction ledgers, and rebuild/comparison tooling were subsequently retired and remain available in Git history. Maintained regression tests check current behavior, Material 1 geometry and motion, themes, accessibility, and installed-source integration directly.
 
 The subsequent 3.0 cleanup supersedes the compatibility commitments below for `theme` slot props, `XxxTheme` slot types, legacy Toolbox `--color-*` aliases, the `ThemeProvider` workspace subpath, and duplicate `active` props on menus and pickers. Use the [current migration guide](../source-registry.md#migrating-to-30) for supported replacements; the audit retains the decisions made at its recorded revisions.
+
+## Component and documentation review — 19 October 2026
+
+This pass reviews the **30 current public families**, including their convenience components, composable parts, tokens, documentation previews, copyable examples, and existing interaction tests. It audits the working tree, including the uncommitted primitive migrations; it does not replace or revert those changes. Dimensions use the default theme and treat CSS pixels as the web equivalent of the specification's density-independent units.
+
+All 30 documentation previews were inspected at 390px and 1440px. Browser checks supplement that inspection with geometry, keyboard and pointer interactions, focus handling, motion, reduced motion, and accessibility. The findings below are bounded to those examples and supported test scenarios, rather than a claim that every possible composition conforms to M1.
+
+### Findings by family
+
+| Family and reference | Review and result |
+| --- | --- |
+| [Accordion](https://m1.material.io/components/expansion-panels.html) | Retains 48/64px collapsed/expanded headers and 24px content insets. Corrected missing 16px separation around expanded items and moved elevation to individual panels. Keyboard expansion and indicator rotation remain supported. |
+| [App bar](https://m1.material.io/layout/structure.html) | Reviewed responsive 48/56/64px heights, keylines, action targets, elevation, and scroll/focus behavior. Fixed the documentation example's menu action being hidden by the surrounding pinned navigation. Motion timing remains a follow-up below. |
+| [Autocomplete](https://m1.material.io/components/text-fields.html) | Corrected convenience options that overrode the composed 48px rows, 16px horizontal insets, and 8px popup padding. Preserved rounded popup corners. Composed disabled fields now share the dotted underline treatment. Filtering, chips, keyboard selection, dismissal, and popup motion are retained. |
+| [Avatar](https://m1.material.io/components/lists.html) | Reviewed 40px circular geometry, icon alignment, loading/error fallback, and identity labels. Documentation correctly distinguishes image size from an interactive target. No additional correction in this pass. |
+| [Button](https://m1.material.io/components/buttons.html) | Reviewed Button, IconButton, BrowseButton, and shared composition: 36px surfaces, 88px minimum width, 48px targets, FAB sizing, elevation, ripple, disabled states, links, and native file selection. No additional correction. The main preview does not yet demonstrate every family variant. |
+| [Card](https://m1.material.io/components/cards.html) | Reviewed elevation, title/body hierarchy, media, responsive insets, actions, and avatar headers. Whole-card interaction remains application composition. No additional correction. |
+| [Checkbox](https://m1.material.io/components/selection-controls.html) | Reviewed checked/mixed/disabled visuals, native forms/reset, label targets, checkmark animation, and reduced motion. Existing theme palette retained. No additional correction. |
+| [Chip](https://m1.material.io/components/chips.html) | Reviewed 32px height, ordinary/contact typography, deletion, disabled state, and keyboard behavior. Expanded contact details are outside the current family contract. No additional correction. |
+| [Date picker](https://m1.material.io/components/pickers.html) | Corrected the unitless selected-year font token to 24px, including scoped unit scaling. Reviewed provisional selection, cancel/confirm, today, unavailable dates, month/year navigation, swipe and keyboard behavior. Range/multiple selection remains an extension. |
+| [Dialog](https://m1.material.io/components/dialogs.html) | Reviewed content/action spacing, elevation, viewport limits, scroll containment, nested modality, focus, dismissal, and retained exit. Retained existing responsive widths: the written specification allows increment-based widths or fixed edge distances and does not establish a universal 24px side margin. |
+| [Divider](https://m1.material.io/components/dividers.html) | Reviewed 1px rules, 12% ink, semantics, insets, and documented vertical extension. No additional correction. |
+| [Drawer](https://m1.material.io/patterns/navigation-drawer.html) | Changed the default surface to white, including the optional theme bridge's fallback; explicit theme overrides remain supported. Reviewed responsive widths, 16dp elevation, scrim, slide motion, keyboard dismissal, and focus restoration. |
+| [Dropdown](https://m1.material.io/components/menus.html) | Removed convenience overrides that defeated 48px option targets and 8px popup padding. Composed disabled triggers now use dotted underlines. Selection, typeahead, form behavior, and focus restoration remain intact; selected-item placement is a follow-up. |
+| [Font icon](https://m1.material.io/style/icons.html) | Reviewed 24px glyphs, font-loading geometry, context colors, and named/decorative semantics. No additional correction. |
+| [Input](https://m1.material.io/components/text-fields.html) | Corrected long error messages overlapping character counters by allowing the message to wrap beside a nonshrinking counter. Reviewed floating labels, hints, icon keylines, focus/error/disabled underlines, multiline entry, native forms, and label motion. |
+| [Layout](https://m1.material.io/layout/responsive-ui.html) | Reviewed pinned/temporary navigation, clipped app bars, responsive panel reservations, and shell examples. No additional geometry correction. Existing motion policy remains a follow-up. |
+| [List](https://m1.material.io/components/lists.html) | Corrected three-line leading icon/avatar alignment inside an interactive primary action. Reviewed row variants, keylines, subheaders, dividers, independent actions, and ripple. LTR and RTL regressions compare passive and interactive rows. |
+| [Menu](https://m1.material.io/components/menus.html) | Corrected convenience divider spacing from 12px to 8px, matching composed separators. Reviewed mobile/desktop density, typeahead, disabled/check/radio items, submenus, collision handling, and entrance/exit curves. |
+| [Overlay](https://m1.material.io/components/dialogs.html) | Reviewed backdrop, scroll lock, and topmost Escape behavior. Documentation correctly identifies the need for a complete modal component when focus containment is required. No additional correction. |
+| [Progress bar](https://m1.material.io/components/progress-activity.html) | Reviewed determinate/indeterminate semantics, clamping, empty zero circle, RTL fill, circular motion, and stationary reduced-motion feedback. Examples represent separate operations. No additional correction. |
+| [Radio](https://m1.material.io/components/selection-controls.html) | Reviewed native grouped selection, labels, focus, disabled styling, inner-circle animation, and reduced motion. Existing theme palette retained. No additional correction. |
+| [Ripple](https://m1.material.io/motion/material-motion.html) | Reviewed press origin, containment, keyboard feedback, secondary-click filtering, cancellation, disabled controls, and reduced-motion suppression. No additional correction. |
+| [Sheet](https://m1.material.io/components/bottom-sheets.html) | Corrected default surface to white, backdrop to 20% black, and title to regular 16px secondary text. Existing drawer surface theme hooks remain supported; `--sheet-overlay-opacity` customizes the sheet scrim. Reviewed drag, snap points, edge variants, dismissal, focus, and motion. Desktop insets remain a follow-up. |
+| [Slider](https://m1.material.io/components/sliders.html) | Composed disabled sliders now use grey 8px thumbs separated from the track, matching the convenience component. Preserved its positioning wrapper and keyboard behavior. Reviewed continuous/discrete forms, ticks, values, range/vertical extensions, and reduced motion; compound pressed-state parity remains a follow-up. |
+| [Snackbar](https://m1.material.io/components/snackbars-toasts.html) | Removed the unconditional animation delay that cut off the exit before it reached the viewport edge. Animate only transform. Reviewed 48/80px metrics, desktop bounds, action semantics, timeout pauses, and queue sequencing. |
+| [Switch](https://m1.material.io/components/selection-controls.html) | Reviewed track/thumb geometry, native toggling, labels, disabled/focus colors, thumb movement, and reduced motion. Existing theme palette retained. No additional correction. |
+| [Table](https://m1.material.io/components/data-tables.html) | Reviewed heading/body typography, row heights, column gaps, numeric alignment, selection, sorting, and narrow-screen overflow. A hover affordance for an unsorted sortable heading needs an explicit sortable contract; see follow-ups. |
+| [Tabs](https://m1.material.io/components/tabs.html) | Corrected ordinary label centering to match composed triggers. Reviewed indicator, keyboard activation, focus, disabled state, icon/text geometry, and reduced motion. Documented the fixed-width extension and current two-line limitation. |
+| [Time picker](https://m1.material.io/components/pickers.html) | Corrected the phone dialog stretching to 96vw instead of its 300px picker width. Reviewed clock geometry, hour/minute and AM/PM selection, constraints, provisional values, confirmation, and keyboard/pointer behavior. |
+| [Tooltip](https://m1.material.io/components/tooltips.html) | Reviewed desktop/touch sizes, 150ms transitions, hover/focus, long press, 1500ms release persistence, collision handling, and accessible descriptions. No additional correction. |
+
+### Documentation presentation
+
+The reset action now shares a toolbar with Preview/Code tabs instead of floating above the example. This prevents it from covering expansion-panel actions on phones. Reset also returns the code view to a fresh preview. The app-bar example explicitly retains its navigation button inside the documentation shell. The modal sheet example keeps its scrim visible at both snap points instead of fading it away while the background remains inert. Material guidance records expansion-panel spacing, sheet defaults, and tab sizing limitations. Existing copyable examples and installation instructions remain available.
+
+### Follow-ups requiring another reviewable iteration
+
+- **Tabs:** `fixed` intentionally fills its container beyond the M1 width bounds. Wrapped labels currently increase row height; exact M1 two-line treatment needs a deliberate 48px/12px layout contract, separate from the existing 72px icon-and-text variant.
+- **Table:** an unsorted sortable header has no hover sort indicator. An explicit sortable contract is preferable to interpreting every header click handler as sorting.
+- **Sheets:** top/bottom surfaces remain full-width on desktop. M1 specifies responsive desktop insets; changes must account for edge and snap-point compositions.
+- **Selection:** convenience Dropdown retains custom popup placement rather than selected-row alignment over the trigger. Composed Slider still lacks full parity with convenience hover/pressed/discrete visuals.
+- **Motion:** shared 350ms and app-bar 500ms defaults remain. M1 recommends simpler 150–200ms desktop transitions; a coordinated change should cover CSS timings and retained modal lifecycles, rather than shortening one side of that contract. See [duration and easing](https://m1.material.io/motion/duration-easing.html).
+- **Examples:** add visible FAB, icon-button, and file-picker variants to the Button page. Expanded contact chips remain outside the current contract.
+
+These are explicit remaining gaps or extensions, not findings silently classified as conforming. Theme choices are preserved: primary/accent mapping and explicit user overrides are not replaced with hard-coded reference colors.
+
+### Validation
+
+- `pnpm check` passed on the final source: lint, types, production library/docs builds, registry/API generation, **342 tests in 48 files**, and footprint budgets.
+- **248 browser cases passed in Chromium and WebKit**, across full-suite runs and focused reruns. The final focused pass ran 34 cases per browser, including every documentation family at 320px and 1440px. Test repairs wait for popup entrance scaling to finish, select the visible preview panel explicitly, and compare fractional font sizes numerically to tolerate WebKit's `28.799999px` serialization.
+- `pnpm test:registry:install` passed for all 30 families in clean Next.js and Vite consumers, including copied source, styles/fonts, strict types, theme coexistence, customized-source updates, and browser interactions. The subsequent autocomplete presentation and sheet-example adjustments were covered by the final build/unit/browser checks.
+- Visual inspection covered all 30 previews at 390px and 1440px, plus open picker and sheet surfaces. Independent review caught and corrected disabled autocomplete height drift and misaligned popup supporting text.
+
+Changes remain unstaged. The follow-ups above are the boundary for the next reviewable iteration.
+
+### Menu ripple regression follow-up — 19 October 2026
+
+The first pass missed a default `IconMenu` trigger regression from the uncommitted primitive migration. The adapter starts ink on `pointerdown` and cancels that event, suppressing the compatibility `mouseup` that the ripple awaited. Its external ink also omitted the icon button's shared circular clipping. This left a growing, unbounded circle active after release. Centered origin and the 800ms duration were unchanged from the earlier implementation.
+
+The correction restores the button's ripple wrapper classes and releases mouse/pen ink on captured `pointerup` or `pointercancel`, retaining `mouseup` support. Listener cleanup remains symmetrical, and an unrelated touch pointer release does not finish mouse ink. Browser regressions cover clipping, repeated clicks, release outside the trigger, stopped propagation, cancellation, ordinary button/menu-item contact origins, and touch ink appearance/removal.
+
+Two trigger-composition issues remain for a separate iteration: custom and compound Button triggers can lose opening ink because their compatibility `mousedown` is suppressed; WebKit suppresses the native touch click after canceled `pointerdown`, preventing `IconMenu` from opening on a tap. The latter is reproduced independently with a plain HTML button and retained as an expected-failure browser regression. Fixing activation must preserve click cancellation, keyboard behavior, and cancellation of scrolling gestures rather than synthesizing an unconditional click on release.
+
+Validation: 56 focused unit tests, typecheck, targeted Biome checks, and the production documentation build passed. The ripple and menu-selection browser suites passed all 9 cases in Chromium; WebKit passed 8 with the touch-activation case failing as explicitly expected. The rebuilt documentation preview was also checked directly: its ink is clipped while held and absent after release.
+
+### Focus treatment follow-up — 19 October 2026
+
+The documentation's Preview tab exposed an outward focus outline clipped by the scrolling tab list, leaving a vertical blue edge. The intended tab focus tint was white on white. Convenience menu items also added a dark rectangular outline over the row highlight already supplied by the compound menu.
+
+Tabs now use a 12% tint derived from their text color, with the existing `--tab-focus-color` override retained. The 2px selection indicator remains independent of focus. Menu rows, list actions, expansion-panel triggers, and documentation navigation use their existing surface fills; dropdown triggers retain their 2px focused underline. Inverse tab scroll arrows draw the tint above their colored base. These controls retain inset system-colored outlines in forced-colors mode. Focusable content panels and unrelated controls retain their existing focus indicators.
+
+This applies the [M1 button focus treatment](https://m1.material.io/components/buttons.html) consistently to these surfaces; it is not a claim that M1 prescribes 12% tint for every component. [Tabs](https://m1.material.io/components/tabs.html) retain their selection indicator, and [accessibility guidance](https://m1.material.io/usability/accessibility.html) still requires a visible indication of focus. Browser focus heuristics can retain focus feedback after a pointer activation; the fill disappears when focus leaves.
+
+Validation: `pnpm check` passed all 342 unit tests, lint, types, builds, registry/API generation, and footprint budgets. The subsequent inverse scroll-arrow adjustment passed the final production build and browser regression. Seven focused component cases and four documentation cases passed in both Chromium and WebKit, covering keyboard navigation, pointer activation, inverse colors, scoped overrides, forced colors, and the original tab clipping at 390px/1440px. Before/after screenshots and independent review verified the visual correction.
 
 ## Documentation interface — 15 October 2026
 

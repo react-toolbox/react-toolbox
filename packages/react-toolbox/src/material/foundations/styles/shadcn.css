@@ -20,6 +20,7 @@
     --button-primary-color-contrast: var(--rt-color-primary-contrast);
     --button-accent-color-hover: rgb(from var(--rt-color-accent) r g b / 20%);
     --button-accent-color: var(--rt-color-accent);
+    --button-accent-text-color: var(--accent-foreground, color-mix(in srgb, var(--rt-color-accent) 70%, black));
     --button-disabled-text-color: rgb(from var(--foreground, var(--rt-color-black)) r g b / 26%);
     --button-disabled-background-color: rgb(from var(--foreground, var(--rt-color-black)) r g b / 12%);
     --checkbox-text-color: var(--foreground, var(--rt-color-black));
@@ -86,7 +87,7 @@
     --tab-pointer-color: var(--rt-color-primary);
     --tab-focus-color: rgb(from var(--rt-color-primary-contrast) r g b / 10%);
     --tab-inverse-bar-color: var(--rt-color-primary);
-    --tab-inverse-pointer-color: var(--rt-color-accent);
+    --tab-inverse-pointer-color: var(--tab-inverse-text);
     --tab-inverse-text: var(--rt-color-primary-contrast);
     --tab-inverse-text-color: var(--tab-inverse-text);
     --tab-inverse-text-inactive-color: rgb(from var(--tab-inverse-text) r g b / 70%);
@@ -108,7 +109,7 @@
     --rt-color-primary: var(--primary, var(--palette-indigo-500));
     --rt-color-primary-dark: var(--primary, var(--palette-indigo-700));
     --rt-color-primary-contrast: var(--primary-foreground, var(--rt-color-dark-contrast));
-    --rt-color-accent: var(--accent, var(--palette-pink-a200));
+    --rt-color-accent: var(--accent, var(--palette-pink-600));
     --rt-color-accent-dark: var(--accent, var(--palette-pink-700));
     --rt-color-accent-contrast: var(--accent-foreground, var(--rt-color-dark-contrast));
     --rt-color-background: var(--background, var(--rt-color-white));
@@ -119,12 +120,13 @@
     --button-neutral-color-contrast: var(--secondary-foreground, var(--palette-grey-900));
     --button-neutral-color-hover: rgb(from var(--secondary-foreground, var(--palette-grey-900)) r g b / 20%);
     --card-background-color: var(--card, var(--rt-color-white));
-    --drawer-background-color: var(--popover, var(--palette-grey-50));
+    --drawer-background-color: var(--popover, var(--rt-color-white));
     --drawer-text-color: var(--popover-foreground, var(--palette-grey-800));
     --drawer-border-color: var(--border, var(--palette-grey-300));
     --autocomplete-suggestions-background: var(--popover, var(--rt-color-white));
     --autocomplete-suggestion-active-background: var(--accent, var(--palette-grey-200));
     --dialog-color-white: var(--popover, var(--rt-color-white));
+    --dialog-color-text: var(--popover-foreground, var(--rt-color-text));
     --dialog-color-title: var(--popover-foreground, var(--rt-color-black));
     --menu-background-color: var(--popover, var(--rt-color-white));
     --menu-item-hover-background: var(--accent, var(--palette-grey-200));

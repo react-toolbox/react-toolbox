@@ -1,12 +1,17 @@
 import apiData from 'react-toolbox/registry/api.json';
 import ApiTable from './api-table';
-import type { FamilyApi } from './api-types';
+import type { ApiProperty, FamilyApi } from './api-types';
 import type { ComponentSlug } from './catalog';
 
 const families: Record<string, FamilyApi> = apiData.families;
 
 /** Curate behavior choices; full types, defaults, and inherited HTML props remain in the source. */
 const keyProps: Record<ComponentSlug, Record<string, string[]>> = {
+  accordion: {
+    AccordionRoot: ['value', 'defaultValue', 'onValueChange', 'multiple', 'disabled'],
+    AccordionItem: ['value', 'disabled'],
+    AccordionPanel: ['keepMounted'],
+  },
   'app-bar': { AppBar: ['fixed', 'flat', 'scrollHide', 'leftIconLabel', 'rightIconLabel'] },
   autocomplete: {
     Autocomplete: ['source', 'multiple', 'value', 'defaultValue', 'onChange', 'allowCreate', 'loading', 'clearable'],
@@ -51,6 +56,7 @@ const keyProps: Record<ComponentSlug, Record<string, string[]>> = {
       'onCloseAutoFocus',
     ],
   },
+  divider: { Divider: ['orientation', 'decorative'] },
   drawer: { Drawer: ['active', 'type', 'withOverlay', 'insideTree', 'onEscKeyDown', 'onOverlayClick'] },
   dropdown: {
     Dropdown: ['source', 'value', 'defaultValue', 'onChange', 'allowBlank', 'template', 'groupKey', 'textKey'],
@@ -68,7 +74,22 @@ const keyProps: Record<ComponentSlug, Record<string, string[]>> = {
   radio: { RadioGroup: ['value', 'defaultValue', 'onChange', 'name', 'disabled', 'required'] },
   ripple: { useRipple: ['centered', 'disabled', 'multiple', 'spread'] },
   slider: { Slider: ['value', 'defaultValue', 'onChange', 'onValueCommit', 'min', 'max', 'step', 'pinned'] },
-  sheet: {},
+  sheet: {
+    SheetRoot: [
+      'open',
+      'defaultOpen',
+      'onOpenChange',
+      'direction',
+      'modal',
+      'dismissible',
+      'snapPoints',
+      'activeSnapPoint',
+      'setActiveSnapPoint',
+      'container',
+      'autoFocus',
+    ],
+    SheetHandle: ['preventCycle'],
+  },
   snackbar: { Snackbar: ['active', 'label', 'action', 'onClick', 'timeout', 'onTimeout'] },
   switch: { Switch: ['label', 'onChange'] },
   table: {
@@ -97,6 +118,36 @@ const keyProps: Record<ComponentSlug, Record<string, string[]>> = {
   tooltip: { useTooltip: ['tooltip', 'tooltipDelay', 'tooltipPosition', 'tooltipHideOnClick', 'tooltipShowOnClick'] },
 };
 
+/** Sheet parts forward Vaul's props; the generated API records only the inherited type, so the curated props are described here. */
+const inheritedProps: Record<string, ApiProperty[]> = {
+  SheetRoot: [
+    prop('open', 'boolean', 'Controlled visibility.'),
+    prop('defaultOpen', 'boolean', 'Open on mount without the enter animation.', 'false'),
+    prop('onOpenChange', '(open: boolean) => void', ''),
+    prop('direction', "'top' | 'bottom' | 'left' | 'right'", 'Edge the sheet enters from.', "'bottom'"),
+    prop('modal', 'boolean', 'Modal sheets trap focus and lock page scrolling.', 'true'),
+    prop(
+      'dismissible',
+      'boolean',
+      'Close on Escape, overlay interaction, or drag. With false, control open yourself.',
+      'true',
+    ),
+    prop('snapPoints', '(number | string)[]', 'Viewport fractions or CSS lengths the sheet rests at.'),
+    prop('activeSnapPoint', 'number | string | null', 'Controlled snap point; pair with setActiveSnapPoint.'),
+    prop('setActiveSnapPoint', '(snapPoint: number | string | null) => void', ''),
+    prop(
+      'container',
+      'HTMLElement | null',
+      'Element that receives the portaled overlay and content. Defaults to document.body.',
+    ),
+    prop('autoFocus', 'boolean', 'Move focus into the sheet when it opens.', 'true'),
+  ],
+  SheetHandle: [prop('preventCycle', 'boolean', 'Keep a handle tap from cycling through snap points.', 'false')],
+};
+function prop(name: string, type: string, description: string, defaultValue: string | null = null): ApiProperty {
+  return { name, type, required: false, description, callback: type.includes('=>'), default: defaultValue };
+}
+
 export default function ApiReference({ slug }: { slug: ComponentSlug }) {
   const family = families[slug];
   if (!family) throw new Error(`Missing API documentation for ${slug}`);
@@ -108,8 +159,10 @@ export default function ApiReference({ slug }: { slug: ComponentSlug }) {
       </p>
       {Object.entries(keyProps[slug]).map(([name, names]) => {
         const api = family.apis.find((item) => item.name === name);
+        if (!api) throw new Error(`Missing documented part: ${name}`);
+        const documented = inheritedProps[name] ?? api.properties;
         const properties = names.toSorted().map((propertyName) => {
-          const property = api?.properties.find((item) => item.name === propertyName);
+          const property = documented.find((item) => item.name === propertyName);
           if (!property) throw new Error(`Missing documented prop: ${name}.${propertyName}`);
           return property;
         });

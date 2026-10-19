@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: PageProps<'/docs/components/[
 }
 export default async function ComponentPage({ params }: PageProps<'/docs/components/[slug]'>) {
   const { slug } = await params;
-  if (slug === 'link' || slug === 'navigation') permanentRedirect('/docs/installation');
+  if (slug === 'link' || slug === 'navigation') permanentRedirect('/docs/installation#routing');
   const index = components.findIndex((item) => item.slug === slug);
   const component = components[index];
   if (!component) notFound();

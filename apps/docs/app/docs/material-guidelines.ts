@@ -5,12 +5,29 @@ type MaterialGuideline = { title: string; path: string; guidance: readonly strin
 // Usage guidance complements the component API; these links target the original
 // Material specification, independently of later Material 2 and 3 revisions.
 export const materialGuidelines: Record<ComponentSlug, MaterialGuideline> = {
+  accordion: {
+    title: 'Expansion panels',
+    path: 'components/expansion-panels.html',
+    guidance: [
+      'Group lightweight editing tasks or related details into panels. Keep a concise summary visible when collapsed.',
+      'Use 48px collapsed and 64px expanded header heights, with 24px horizontal padding and 16px separation around expanded panels. Put form controls and secondary actions inside the panel.',
+    ],
+  },
+  divider: {
+    title: 'Dividers',
+    path: 'components/dividers.html',
+    guidance: [
+      'Use a 1px rule to separate content groups when spacing alone does not make their relationship clear.',
+      'Prefer spacing and headings over redundant rules. Mark a purely visual divider as decorative.',
+    ],
+  },
   sheet: {
     title: 'Bottom sheets',
     path: 'components/bottom-sheets.html',
     guidance: [
       'Use a sheet for contextual content or actions while retaining the underlying task.',
       'Give the sheet a title and a visible dismissal action. Dragging supplements keyboard and button interaction.',
+      'The default modal sheet uses a white surface, a 20% black backdrop, and a regular 16px title. Theme overrides can adapt these colors.',
     ],
   },
   'app-bar': {
@@ -214,7 +231,8 @@ export const materialGuidelines: Record<ComponentSlug, MaterialGuideline> = {
     path: 'components/tabs.html',
     guidance: [
       'Group related peer views. Use short, centered labels and an indicator to identify the selected view; tabs should not submit actions.',
-      'Text-only tabs are 48px high. Fixed tabs share the available width on small screens; the M1 minimum widths are 72px on small screens and 160px on larger screens.',
+      'Keep labels concise and centered. M1 text-only tabs are 48px high, with minimum widths of 72px on small screens and 160px on larger screens.',
+      'The fixed option deliberately shares all available width, overriding the default width bounds. Prefer short, single-line labels; automatic two-line label sizing is not provided.',
     ],
   },
   'time-picker': {

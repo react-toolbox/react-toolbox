@@ -17,24 +17,26 @@ test.beforeEach(async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Good design is in the details.' })).toBeVisible();
 });
 
-test('renders every gallery section and the original colors and sizes', async ({ page }) => {
+test('renders every gallery section with the default Material palette and sizes', async ({ page }) => {
   await expect(page.locator('main > section')).toHaveCount(10);
   const primary = page.getByRole('button', { name: 'Primary', exact: true });
   await expect(primary).toHaveCSS('background-color', 'rgb(63, 81, 181)');
   await expect(primary).toHaveCSS('height', '36px');
-  await expect(page.getByRole('button', { name: 'Accent', exact: true })).toHaveCSS(
-    'background-color',
-    'rgb(255, 64, 129)',
-  );
+  const accent = page.getByRole('button', { name: 'Accent', exact: true });
+  await expect(accent).toHaveCSS('background-color', 'rgb(216, 27, 96)');
+  await expect(accent).toHaveCSS('color', 'rgb(255, 255, 255)');
   await expect(page.getByRole('button', { name: 'Create item', exact: true })).toHaveCSS('height', '56px');
   await expect(page.getByRole('button', { name: 'Disabled', exact: true })).toBeDisabled();
   await page.evaluate(() => document.fonts.ready);
   for (const selector of ['body', '.material-icons']) {
     expect(
-      await page.locator(selector).first().evaluate((element) => {
-        const style = getComputedStyle(element);
-        return document.fonts.check(`${style.fontWeight} ${style.fontSize} ${style.fontFamily}`);
-      }),
+      await page
+        .locator(selector)
+        .first()
+        .evaluate((element) => {
+          const style = getComputedStyle(element);
+          return document.fonts.check(`${style.fontWeight} ${style.fontSize} ${style.fontFamily}`);
+        }),
     ).toBe(true);
   }
 });
@@ -65,13 +67,13 @@ test('updates form inputs, dropdowns, and autocomplete through existing callback
   await page.getByLabel('Notes', { exact: true }).fill('The original styling, the current React API.');
   await expect(page.locator('#inputs')).toContainText('44/120');
   await page.getByRole('combobox', { name: 'Destination', exact: true }).click();
-  await page.locator('#inputs').getByRole('option', { name: 'Tokyo', exact: true }).click();
+  await page.getByRole('option', { name: 'Tokyo', exact: true }).click();
   await expect(page.getByText('Destination: Tokyo · Country: Spain')).toBeVisible();
   await page.getByRole('combobox', { name: 'Country', exact: true }).fill('Jap');
-  await page.locator('#inputs').getByRole('option', { name: 'Japan', exact: true }).click();
+  await page.getByRole('option', { name: 'Japan', exact: true }).click();
   await expect(page.getByText('Destination: Tokyo · Country: Japan')).toBeVisible();
   await page.getByRole('combobox', { name: 'Interests', exact: true }).fill('React');
-  await page.locator('#inputs').getByRole('option', { name: 'React', exact: true }).click();
+  await page.getByRole('option', { name: 'React', exact: true }).click();
   await expect(page.locator('#inputs [data-react-toolbox="chip"]')).toHaveCount(2);
 });
 

@@ -1,3 +1,4 @@
+import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
 import postcss from 'postcss';
@@ -6,12 +7,24 @@ import { componentClasses } from '../helpers/component-classes.mjs';
 import { cn } from '../../src/material/foundations/styles/cn.ts';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
-export const css = (
-  await postcss([tailwind()]).process(
-    '@layer theme, base, components, utilities; @import "tailwindcss/theme.css" layer(theme); @import "tailwindcss/utilities.css" layer(utilities) source(none); @import "./src/material/foundations/styles/styles.css"; @import "./src/material/foundations/styles/composition.css"; @source "./src/material";',
-    { from: `${root}/fixture.css` },
-  )
-).css;
+/** Real ligature fonts keep synthetic fixtures representative, including accessible-name checks. */
+const iconStylesUrl = new URL('../../node_modules/material-icons/iconfont/material-icons.css', import.meta.url);
+let iconStyles = await readFile(iconStylesUrl, 'utf8');
+for (const [, font] of iconStyles.matchAll(/url\("(.+?\.woff2)"\)/g)) {
+  const bytes = await readFile(new URL(font, iconStylesUrl));
+  iconStyles = iconStyles.replace(`url("${font}")`, `url("data:font/woff2;base64,${bytes.toString('base64')}")`);
+}
+iconStyles = iconStyles.replace(/, url\(".+?\.woff"\) format\("woff"\)/g, '');
+
+export const css =
+  (
+    await postcss([tailwind()]).process(
+      '@layer theme, base, components, utilities; @import "tailwindcss/theme.css" layer(theme); @import "tailwindcss/utilities.css" layer(utilities) source(none); @import "./src/material/foundations/styles/styles.css"; @import "./src/material/foundations/styles/composition.css"; @source "./src/material";',
+      { from: `${root}/fixture.css` },
+    )
+  ).css +
+  `
+@layer base {${iconStyles}}`;
 
 // Synthetic DOM fixtures use the same slot classes and merger as React. Keep
 // their original markup/state assertions while exercising real generated CSS.

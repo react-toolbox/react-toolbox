@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 const supportingImports: Record<string, string> = Object.fromEntries(
-  ['dialog', 'drawer', 'overlay', 'snackbar', 'sheet'].map((slug) => [
+  ['card', 'dialog', 'drawer', 'overlay', 'snackbar', 'sheet'].map((slug) => [
     slug,
     "import { Button } from '@/components/ui/material/button';\n",
   ]),
@@ -11,6 +11,7 @@ supportingImports.overlay += "import { useEffect } from 'react';\nimport { creat
 
 // These examples compose families that are not already registry dependencies.
 export const exampleDependencies: Partial<Record<ComponentSlug, readonly string[]>> = {
+  card: ['button'],
   dialog: ['button', 'input'],
   sheet: ['button'],
   'time-picker': ['dropdown', 'button'],
@@ -32,6 +33,27 @@ function example(slug: string, imports: string, body: string, state = '') {
 }
 
 export const components = [
+  {
+    slug: 'accordion',
+    title: 'Accordion',
+    description: 'Material 1 expansion panels for related details and lightweight editing.',
+    icon: 'expand_more',
+    code: example(
+      'accordion',
+      'AccordionRoot, AccordionItem, AccordionHeader, AccordionTrigger, AccordionPanel',
+      '<AccordionRoot defaultValue={["details"]} className="w-full max-w-lg">\n  <AccordionItem value="details">\n    <AccordionHeader><AccordionTrigger>Project details</AccordionTrigger></AccordionHeader>\n    <AccordionPanel>Keep your notes and project details together.</AccordionPanel>\n  </AccordionItem>\n  <AccordionItem value="sharing">\n    <AccordionHeader><AccordionTrigger>Sharing</AccordionTrigger></AccordionHeader>\n    <AccordionPanel>Only invited people can see this project.</AccordionPanel>\n  </AccordionItem>\n  <AccordionItem value="archive" disabled>\n    <AccordionHeader><AccordionTrigger>Archive (unavailable)</AccordionTrigger></AccordionHeader>\n    <AccordionPanel>This project cannot be archived yet.</AccordionPanel>\n  </AccordionItem>\n</AccordionRoot>',
+    ),
+    note: (
+      <>
+        Use <code>value</code> and <code>onValueChange</code> to control the expanded values, or{' '}
+        <code>defaultValue</code> for initial expansion. Both use arrays, even with a single panel. Add{' '}
+        <code>multiple</code> to allow several open panels. Tab moves between triggers; Enter or Space toggles them.
+        Headers default to <code>h3</code>; use <code>{'render={<h2 />}'}</code> for a different heading level. Put
+        interactive controls inside the panel, not inside the trigger. Use <code>keepMounted</code> on a panel to
+        preserve local form state while closed.
+      </>
+    ),
+  },
   {
     slug: 'app-bar',
     title: 'App bar',
@@ -95,7 +117,7 @@ export const components = [
     code: example(
       'button',
       'Button',
-      '<div className="flex flex-wrap items-center gap-4">\n  <Button primary raised label="Save"\n    onClick={() => setSaved(true)} />\n  <Button label="Reset" onClick={() => setSaved(false)} />\n  <span role="status">{saved ? "Saved" : "Ready"}</span>\n</div>',
+      '<div className="flex flex-wrap items-center gap-4">\n  <Button primary raised label="Save"\n    onClick={() => setSaved(true)} />\n  <Button label="Reset" onClick={() => setSaved(false)} />\n  <Button accent raised label="Accent" />\n  <Button accent label="Flat accent" />\n  <Button disabled label="Disabled" />\n  <span role="status">{saved ? "Saved" : "Ready"}</span>\n</div>',
       'const [saved, setSaved] = useState(false);',
     ),
     note: (
@@ -113,13 +135,22 @@ export const components = [
     icon: 'crop_landscape',
     code: example(
       'card',
-      'Card, CardTitle, CardText',
-      '<Card className="w-full max-w-sm">\n  <CardTitle title="Room for an idea"\n    subtitle="Start with something small." />\n  <CardText>A little space for your next project.</CardText>\n</Card>',
+      'Card, CardMedia, CardTitle, CardText, CardActions',
+      '<Card className="w-full max-w-sm">\n  <CardMedia\n    aspectRatio="wide"\n    image="https://images.unsplash.com/photo-1440771671530-f83767b73b53?fit=crop&w=960&h=540&fm=webp&q=80"\n    alt="Turquoise lake surrounded by pine forests and mountains in Alberta, Canada."\n  />\n  <CardTitle heading="h3" title="A moment of quiet" subtitle="Alberta, Canada" />\n  <CardText>Turquoise water, pine forests, and a little room to breathe.</CardText>\n  <CardActions>\n    <Button primary label="View photo"\n      href="https://unsplash.com/photos/green-lake-between-trees-with-mountain-background-EBcIEEqpgfI"\n      target="_blank" rel="noreferrer" />\n  </CardActions>\n</Card>',
     ),
     note: (
       <>
         Card parts include Material keyline spacing; avoid adding a second layer of padding around them. Give meaningful{' '}
         <code>CardMedia</code> backgrounds <code>alt</code> text, or pass an image with its own <code>alt</code>.
+        {' '}Use <code>aspectRatio="wide"</code> for 16:9 media. Photo by{' '}
+        <a
+          href="https://unsplash.com/photos/green-lake-between-trees-with-mountain-background-EBcIEEqpgfI"
+          className="text-toolbox-primary underline underline-offset-2"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Andrew Maranta on Unsplash
+        </a>.
       </>
     ),
   },
@@ -192,6 +223,24 @@ export const components = [
       <>
         Supply a <code>title</code> to name the dialog. Focus moves into the dialog when it opens and returns to the
         trigger when it closes; customize this with <code>onOpenAutoFocus</code> and <code>onCloseAutoFocus</code>.
+      </>
+    ),
+  },
+  {
+    slug: 'divider',
+    title: 'Divider',
+    description: 'A thin rule that separates sections or groups related content.',
+    icon: 'horizontal_rule',
+    code: example(
+      'divider',
+      'Divider',
+      '<div className="w-full max-w-sm space-y-4">\n  <p>Project details</p>\n  <Divider />\n  <div className="flex items-center gap-4">\n    <span>Private</span>\n    <Divider orientation="vertical" decorative />\n    <span>Updated today</span>\n  </div>\n</div>',
+    ),
+    note: (
+      <>
+        A divider is a semantic separator by default. Use <code>decorative</code> when spacing or nearby headings
+        already communicate the grouping. Vertical dividers stretch in a flex row; give them an explicit height outside
+        flex layouts. Use <code>className</code> or <code>style</code> for spacing and inset rules.
       </>
     ),
   },
@@ -339,8 +388,8 @@ export const components = [
     ),
     note: (
       <>
-        <code>Overlay</code> supplies a backdrop and scroll lock. Portal a full-screen backdrop to the document body
-        and set its stacking level above your application’s chrome, as shown in the example. Use{' '}
+        <code>Overlay</code> supplies a backdrop and scroll lock. Portal a full-screen backdrop to the document body and
+        set its stacking level above your application’s chrome, as shown in the example. Use{' '}
         <Link href="/docs/components/dialog" className="text-toolbox-primary underline underline-offset-2">
           Dialog
         </Link>{' '}

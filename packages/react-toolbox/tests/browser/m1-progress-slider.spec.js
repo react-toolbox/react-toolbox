@@ -1,19 +1,31 @@
 import { css, setMaterialContent } from './material-fixture.js';
 import { test, expect } from '@playwright/test';
+import { build } from 'esbuild';
+import { fileURLToPath } from 'node:url';
+
+let sliderScript;
+test.beforeAll(async () => {
+  const result = await build({
+    stdin: {
+      contents: `import React from 'react'; import {createRoot} from 'react-dom/client'; import Slider from './src/material/slider'; createRoot(document.getElementById('root')).render(<Slider aria-label="Volume" value={50} style={{width:320}}/>);`,
+      resolveDir: fileURLToPath(new URL('../../', import.meta.url)),
+      loader: 'jsx',
+    },
+    bundle: true,
+    write: false,
+    format: 'iife',
+    loader: { '.css': 'empty' },
+    define: { 'process.env.NODE_ENV': '"production"' },
+  });
+  sliderScript = result.outputFiles[0].text;
+});
 
 // M1's slider state chart specifies 26% black at rest/disabled and 38% on
 // focus/press. Continuous thumbs use M1's 12px rest / 18px pressed geometry.
 test('M1 slider inactive contrast, focus, disabled disconnection, and continuous-thumb sizing', async ({ page }) => {
-  await setMaterialContent(
-    page,
-    `<style>${css}</style>
-    <div id="slider" class="rt-slider-slider" style="width:320px">
-      <div class="rt-slider-container" role="slider" tabindex="0">
-        <div class="rt-slider-knob" style="left:50%"><div class="rt-slider-innerknob"></div></div>
-        <div class="rt-slider-progress"><div class="rt-progress-bar-linear rt-slider-innerprogress"><span data-ref="value" class="rt-progress-bar-value" style="transform:scaleX(.5)"></span></div></div>
-      </div>
-    </div>`,
-  );
+  await setMaterialContent(page, `<style>${css}</style><div id="root"></div>`);
+  await page.addScriptTag({ content: sliderScript });
+  await page.locator('.rt-slider-slider').evaluate((element) => (element.id = 'slider'));
   const colors = () =>
     page.locator('#slider').evaluate((element) => {
       // Relative colors may serialize as color(srgb) or rgba across engines.
@@ -26,7 +38,7 @@ test('M1 slider inactive contrast, focus, disabled disconnection, and continuous
         ctx.fillRect(0, 0, 1, 1);
         return [...ctx.getImageData(0, 0, 1, 1).data];
       };
-      return { track: sample('.rt-slider-innerprogress'), thumb: sample('.rt-slider-innerknob') };
+      return { track: sample('.rt-slider-progress'), thumb: sample('.rt-slider-innerknob') };
     });
   expect((await colors()).track).toEqual([0, 0, 0, 66]);
   await expect(page.locator('.rt-slider-innerknob')).toHaveCSS('width', '12px');
@@ -77,7 +89,7 @@ test('gallery sliders support keyboard changes and keep their numeric editor ind
   await expect(slider).toHaveAttribute('aria-valuenow', '1');
   await slider.press('End');
   await expect(slider).toHaveAttribute('aria-valuenow', '100');
-  const input = slider.locator('..').getByRole('textbox');
+  const input = slider.locator('xpath=ancestor::*[@data-react-toolbox="slider"]').getByRole('textbox');
   await input.fill('42');
   await input.press('Enter');
   await expect(slider).toHaveAttribute('aria-valuenow', '42');

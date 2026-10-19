@@ -1,6 +1,7 @@
 import React, { createRef, StrictMode, useState } from 'react';
 import { renderToString } from 'react-dom/server';
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import Dialog from '../src/material/dialog';
 import Drawer from '../src/material/drawer';
@@ -16,6 +17,7 @@ const TipButton = Tooltip('button');
 afterEach(() => {
   cleanup();
   vi.useRealTimers();
+  vi.unstubAllGlobals();
 });
 
 describe('M1 overlay and navigation behavior', () => {
@@ -61,50 +63,21 @@ describe('M1 overlay and navigation behavior', () => {
     expect(ref.current).toBeNull();
   });
 
-  it('uses valid zero-area popup clips before browser measurements exist', () => {
+  it('renders open menus on the server without measured geometry', () => {
     for (const position of ['topLeft', 'topRight', 'bottomLeft', 'bottomRight']) {
       const html = renderToString(
-        <Menu position={position}>
+        <Menu defaultOpen position={position}>
           <MenuItem caption="Archive" />
         </Menu>,
       );
       expect(html).not.toContain('undefinedpx');
-      expect(html).toContain('clip:rect(0');
+      expect(html).not.toContain('NaN');
+      expect(html).toContain('role="menu"');
+      expect(html).toContain('Archive');
     }
   });
 
-  it('does not apply viewport correction twice when measurements are batched before paint', () => {
-    vi.useFakeTimers();
-    let anchor = 200;
-    const geometry = vi
-      .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
-      .mockImplementation(function measureMenu() {
-        const top = anchor + (parseFloat(this.parentElement?.style.top) || 0);
-        const left = anchor + (parseFloat(this.parentElement?.style.left) || 0);
-        return { top, left, bottom: top + 100, right: left + 100, width: 100, height: 100 };
-      });
-    try {
-      render(
-        <Menu defaultOpen position="topLeft">
-          <MenuItem caption="Archive" />
-        </Menu>,
-      );
-      advance(0);
-      const popup = screen.getByRole('menu').parentElement;
-      expect(popup.style.top).toBe('');
-      anchor = 1000;
-      act(() => {
-        window.dispatchEvent(new Event('resize'));
-        window.dispatchEvent(new Event('resize'));
-      });
-      expect(parseFloat(popup.style.top)).toBe(window.innerHeight - 24 - 100 - anchor);
-      expect(parseFloat(popup.style.left)).toBe(window.innerWidth - 24 - 100 - anchor);
-    } finally {
-      geometry.mockRestore();
-    }
-  });
-
-  it('contains dialog focus, labels its title, and restores the opener after closing', () => {
+  it('contains dialog focus, labels its title, and restores the opener after closing', async () => {
     const opener = document.createElement('button');
     document.body.append(opener);
     opener.focus();
@@ -118,8 +91,6 @@ describe('M1 overlay and navigation behavior', () => {
     );
     const dialog = screen.getByRole('dialog', { name: 'Discard draft?' });
     expect(dialog).toHaveAttribute('aria-modal', 'true');
-    expect(dialog).toHaveFocus();
-    fireEvent.keyDown(dialog, { key: 'Tab' });
     expect(screen.getByRole('button', { name: 'Keep editing' })).toHaveFocus();
     fireEvent.keyDown(document.activeElement, { key: 'Tab', shiftKey: true });
     expect(screen.getByRole('button', { name: 'Discard' })).toHaveFocus();
@@ -131,8 +102,8 @@ describe('M1 overlay and navigation behavior', () => {
         <Dialog active={false} title="Discard draft?" />
       </StrictMode>,
     );
-    expect(opener).toHaveFocus();
     expect(dialog).toHaveAttribute('inert');
+    await waitFor(() => expect(opener).toHaveFocus());
     view.unmount();
     opener.remove();
   });
@@ -159,7 +130,7 @@ describe('M1 overlay and navigation behavior', () => {
     expect(lower).not.toHaveBeenCalled();
   });
 
-  it('preserves child autofocus and still restores the dialog opener', () => {
+  it('preserves child autofocus and still restores the dialog opener', async () => {
     const opener = document.createElement('button');
     document.body.append(opener);
     opener.focus();
@@ -170,11 +141,11 @@ describe('M1 overlay and navigation behavior', () => {
     );
     expect(screen.getByRole('textbox', { name: 'Name' })).toHaveFocus();
     view.unmount();
-    expect(opener).toHaveFocus();
+    await waitFor(() => expect(opener).toHaveFocus());
     opener.remove();
   });
 
-  it('restores the outside opener when an entire nested modal tree unmounts', () => {
+  it('restores the outside opener when an entire nested modal tree unmounts', async () => {
     const opener = document.createElement('button');
     document.body.append(opener);
     opener.focus();
@@ -189,7 +160,7 @@ describe('M1 overlay and navigation behavior', () => {
       </StrictMode>,
     );
     view.unmount();
-    expect(opener).toHaveFocus();
+    await waitFor(() => expect(opener).toHaveFocus());
     opener.remove();
   });
 
@@ -211,10 +182,12 @@ describe('M1 overlay and navigation behavior', () => {
     advance(20);
     expect(screen.getByRole('dialog', { name: 'Inner' })).toHaveFocus();
     fireEvent.keyDown(document.activeElement, { key: 'Escape' });
-    expect(screen.getByRole('dialog', { name: 'Outer' })).toHaveFocus();
+    advance(600);
+    advance(1);
+    expect(screen.getByRole('dialog', { name: 'Outer' }).contains(document.activeElement)).toBe(true);
   });
 
-  it('traps temporary drawers but leaves permanent drawers nonmodal', () => {
+  it('traps temporary drawers but leaves permanent drawers nonmodal', async () => {
     const outside = document.createElement('button');
     document.body.append(outside);
     outside.focus();
@@ -230,14 +203,13 @@ describe('M1 overlay and navigation behavior', () => {
         <button>Home</button>
       </Drawer>,
     );
-    expect(screen.getByRole('dialog', { name: 'Sections' })).toHaveFocus();
+    expect(screen.getByRole('button', { name: 'Home' })).toHaveFocus();
     view.unmount();
-    expect(outside).toHaveFocus();
+    await waitFor(() => expect(outside).toHaveFocus());
     outside.remove();
   });
 
-  it('opens icon menus from the keyboard, skips disabled items, and restores focus on Escape', () => {
-    vi.useFakeTimers();
+  it('opens icon menus from the keyboard, skips disabled items, and restores focus on Escape', async () => {
     const select = vi.fn();
     render(
       <IconMenu aria-label="File options" onSelect={select}>
@@ -248,26 +220,26 @@ describe('M1 overlay and navigation behavior', () => {
     );
     const trigger = screen.getByRole('button', { name: 'File options' });
     trigger.focus();
-    fireEvent.keyDown(trigger, { key: 'ArrowDown' });
-    advance(25);
-    const menu = screen.getByRole('menu');
+    await userEvent.keyboard('{ArrowDown}');
+    const menu = await screen.findByRole('menu');
     expect(trigger).toHaveAttribute('aria-controls', menu.id);
     expect(trigger).toHaveAttribute('aria-expanded', 'true');
-    expect(screen.getByRole('menuitem', { name: 'Archive' })).toHaveFocus();
-    fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' });
-    expect(screen.getByRole('menuitem', { name: 'Delete' })).toHaveFocus();
-    fireEvent.keyDown(document.activeElement, { key: 'Home' });
-    expect(screen.getByRole('menuitem', { name: 'Archive' })).toHaveFocus();
-    fireEvent.keyDown(document.activeElement, { key: 'd' });
-    expect(screen.getByRole('menuitem', { name: 'Delete' })).toHaveFocus();
-    fireEvent.keyDown(document.activeElement, { key: 'Escape' });
-    expect(trigger).toHaveFocus();
+    await waitFor(() => expect(screen.getByRole('menuitem', { name: 'Archive' })).toHaveFocus());
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => expect(screen.getByRole('menuitem', { name: 'Delete' })).toHaveFocus());
+    await userEvent.keyboard('{Home}');
+    await waitFor(() => expect(screen.getByRole('menuitem', { name: 'Archive' })).toHaveFocus());
+    await userEvent.keyboard('d');
+    await waitFor(() => expect(screen.getByRole('menuitem', { name: 'Delete' })).toHaveFocus());
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(trigger).toHaveFocus());
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
     expect(select).not.toHaveBeenCalled();
-    fireEvent.keyDown(trigger, { key: 'ArrowUp' });
-    advance(25);
-    expect(screen.getByRole('menuitem', { name: 'Delete' })).toHaveFocus();
-    fireEvent.keyDown(document.activeElement, { key: 'Enter' });
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => expect(screen.getByRole('menuitem', { name: 'Archive' })).toHaveFocus());
+    await userEvent.keyboard('{End}');
+    await waitFor(() => expect(screen.getByRole('menuitem', { name: 'Delete' })).toHaveFocus());
+    await userEvent.keyboard('{Enter}');
     expect(select).toHaveBeenCalledExactlyOnceWith('delete');
   });
 
@@ -307,7 +279,8 @@ describe('M1 overlay and navigation behavior', () => {
     const empty = screen.getByRole('tab', { name: 'Empty' });
     const details = screen.getByRole('tab', { name: 'Details' });
     expect(screen.getByRole('tabpanel')).toBeEmptyDOMElement();
-    expect(empty).toHaveAttribute('tabindex', '0');
+    expect(screen.getByRole('tablist')).toHaveAttribute('tabindex', '0');
+    expect(empty).toHaveAttribute('tabindex', '-1');
     expect(details).toHaveAttribute('tabindex', '-1');
     empty.focus();
     fireEvent.keyDown(empty, { key: 'ArrowRight' });
@@ -348,17 +321,19 @@ describe('M1 overlay and navigation behavior', () => {
     expect(trigger).toHaveFocus();
   });
 
-  it('keeps a keyboard entry when the controlled active tab becomes disabled or hidden', () => {
+  it('keeps a keyboard entry when the controlled active tab becomes disabled or hidden', async () => {
     const change = vi.fn();
     const view = render(
-      <Tabs onChange={change}>
+      <Tabs index={0} onChange={change}>
         <Tab label="First" disabled />
         <Tab label="Second" />
         <Tab label="Third" />
       </Tabs>,
     );
-    expect(screen.getByRole('tab', { name: 'Second' })).toHaveAttribute('tabindex', '0');
+    await userEvent.tab();
+    expect(screen.getByRole('tab', { name: 'Second' })).toHaveFocus();
     expect(screen.getByRole('tab', { name: 'First' })).toHaveAttribute('aria-selected', 'true');
+    expect(change).toHaveBeenLastCalledWith(1);
     view.rerender(
       <Tabs index={1} onChange={change}>
         <Tab label="First" />
@@ -366,8 +341,10 @@ describe('M1 overlay and navigation behavior', () => {
         <Tab label="Third" />
       </Tabs>,
     );
-    expect(screen.getByRole('tab', { name: 'First' })).toHaveAttribute('tabindex', '0');
-    expect(change).not.toHaveBeenCalled();
+    act(() => document.activeElement.blur());
+    await userEvent.tab();
+    expect(screen.getByRole('tab', { name: 'First' })).toHaveFocus();
+    expect(change).toHaveBeenLastCalledWith(0);
   });
 
   it('uses touch hold and retains the tooltip for 1.5 seconds after release', () => {
@@ -379,19 +356,17 @@ describe('M1 overlay and navigation behavior', () => {
       </TipButton>,
     );
     const trigger = screen.getByRole('button', { name: 'Add' });
-    fireEvent.touchStart(trigger);
+    fireEvent.pointerDown(trigger, { pointerType: 'touch' });
     advance(499);
     expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
     advance(2);
     expect(screen.getByRole('tooltip')).toHaveClass('rt-tooltip-tooltipActive');
-    fireEvent.touchEnd(trigger);
+    fireEvent.pointerUp(trigger, { pointerType: 'touch' });
     fireEvent.click(trigger);
     expect(click).not.toHaveBeenCalled();
     advance(1499);
     expect(screen.getByRole('tooltip')).toHaveClass('rt-tooltip-tooltipActive');
     advance(1);
-    expect(screen.getByRole('tooltip')).not.toHaveClass('rt-tooltip-tooltipActive');
-    advance(200);
     expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
   });
 
@@ -403,9 +378,9 @@ describe('M1 overlay and navigation behavior', () => {
       </TipButton>,
     );
     const trigger = screen.getByRole('button', { name: 'Add' });
-    fireEvent.mouseEnter(trigger);
+    fireEvent.pointerMove(trigger, { pointerType: 'mouse' });
     advance(1);
-    fireEvent.pointerDown(trigger);
+    fireEvent.pointerDown(trigger, { pointerType: 'mouse' });
     fireEvent.click(trigger);
     advance(250);
     expect(screen.getByRole('tooltip')).toHaveClass('rt-tooltip-tooltipActive');

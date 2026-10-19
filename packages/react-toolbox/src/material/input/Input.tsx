@@ -143,6 +143,7 @@ export function Input({
       '[.rt-input-disabled>&]:[border-bottom-style:dotted] [.rt-input-disabled>&]:border-b-(--input-text-disabled-color) [.rt-input-disabled>&]:text-(--input-text-disabled-text-color)',
       'bg-(--input-text-background-color) [border-bottom:1px_solid_var(--input-text-bottom-border-color)] [border-left:0] rounded-none [border-right:0] [border-top:0] text-(--input-text-input-element-color) block font-[inherit] text-(length:--input-field-font-size) [outline:none] p-[var(--input-field-padding)_0] w-full',
       '[&:required]:[box-shadow:none]',
+      '[@media_(forced-colors:_active)]:focus-visible:[outline:2px_solid_Highlight]',
       '[@media_(hover:_hover)]:[.rt-input-input:not(.rt-input-errored):not(.rt-input-disabled)>&:hover:not(:focus)]:[border-bottom-color:rgb(from_var(--rt-color-black)_r_g_b_/_87%)] [@media_(hover:_hover)]:[.rt-input-input:not(.rt-input-errored):not(.rt-input-disabled)>&:hover:not(:focus)]:[box-shadow:inset_0_-1px_rgb(from_var(--rt-color-black)_r_g_b_/_87%)]',
       classNames?.inputElement,
       present && cn('rt-input-filled', classNames?.filled),
@@ -199,8 +200,8 @@ export function Input({
           'block relative w-full',
           "[&::before]:bg-(--input-text-highlight-color) [&::before]:bottom-0 [&::before]:[content:''] [&::before]:h-[2px] [&::before]:absolute [&::before]:duration-200 [&::before]:[transition-property:width,background-color] [&::before]:[transition-timing-function:var(--animation-curve-default)] [&::before]:w-0 [&::before]:left-[50%]",
           "[&::after]:bg-(--input-text-highlight-color) [&::after]:bottom-0 [&::after]:[content:''] [&::after]:h-[2px] [&::after]:absolute [&::after]:duration-200 [&::after]:[transition-property:width,background-color] [&::after]:[transition-timing-function:var(--animation-curve-default)] [&::after]:w-0 [&::after]:right-[50%]",
-          '[.rt-input-inputElement:focus:not([disabled]):not([readonly])~&::before]:w-[50%]',
-          '[.rt-input-inputElement:focus:not([disabled]):not([readonly])~&::after]:w-[50%]',
+          '[.rt-input-inputElement:focus:not([disabled])~&::before]:w-[50%]',
+          '[.rt-input-inputElement:focus:not([disabled])~&::after]:w-[50%]',
           '[.rt-input-errored>&::before]:bg-(--input-text-error-color)',
           '[.rt-input-errored>&::after]:bg-(--input-text-error-color)',
           classNames?.bar,
@@ -261,28 +262,32 @@ export function Input({
           {hint}
         </span>
       ) : null}
-      {error ? (
-        <span
-          id={`${id}-error`}
-          className={cn(
-            'rt-input-error',
-            'text-(length:--input-label-font-size) leading-(--input-underline-height) mb-[calc(-1_*_var(--input-underline-height))] text-(--input-text-error-color)',
-            classNames?.error,
-          )}
-        >
-          {error}
-        </span>
-      ) : null}
-      {maxLength != null ? (
-        <span
-          id={`${id}-counter`}
-          className={cn(
-            'rt-input-counter',
-            'text-(--input-text-label-color) absolute right-0 text-(length:--input-label-font-size) leading-(--input-underline-height) mb-[calc(-1_*_var(--input-underline-height))]',
-            '[.rt-input-errored>&]:text-(--input-text-error-color)',
-            classNames?.counter,
-          )}
-        >{`${length}/${maxLength}`}</span>
+      {error || maxLength != null ? (
+        <div className={error ? 'flex items-start gap-(--input-field-padding)' : 'contents'}>
+          {error ? (
+            <span
+              id={`${id}-error`}
+              className={cn(
+                'rt-input-error',
+                'min-w-0 flex-1 text-(length:--input-label-font-size) leading-(--input-underline-height) text-(--input-text-error-color)',
+                classNames?.error,
+              )}
+            >
+              {error}
+            </span>
+          ) : null}
+          {maxLength != null ? (
+            <span
+              id={`${id}-counter`}
+              className={cn(
+                'rt-input-counter',
+                'text-(--input-text-label-color) text-(length:--input-label-font-size) leading-(--input-underline-height)',
+                error ? 'shrink-0 text-(--input-text-error-color)' : 'absolute right-0',
+                classNames?.counter,
+              )}
+            >{`${length}/${maxLength}`}</span>
+          ) : null}
+        </div>
       ) : null}
       {children}
     </div>

@@ -1,4 +1,5 @@
-import { readFile } from 'node:fs/promises';
+import type { ComponentType, ReactNode } from 'react';
+import { readCompositionSource, type CompositionSlug } from './composition-source';
 import path from 'node:path';
 import type { ComponentSlug } from './catalog';
 import CodeBlock from './code-block';
@@ -172,7 +173,7 @@ const examples = {
       </>
     ),
   },
-};
+} satisfies Record<CompositionSlug, { Component: ComponentType; note: ReactNode; registryItem?: string }>;
 export function hasCompositionExample(slug: ComponentSlug): slug is keyof typeof examples {
   return slug in examples;
 }
@@ -180,28 +181,7 @@ export default async function CompositionPreview({ slug }: { slug: keyof typeof 
   const example = examples[slug];
   const { Component, note } = example;
   const registryItem = 'registryItem' in example ? example.registryItem : undefined;
-  let source = await readFile(path.join(process.cwd(), 'app/docs/examples', `${slug}.tsx`), 'utf8');
-  if (slug === 'dialog' || slug === 'drawer') {
-    const dialog = await readFile(path.join(process.cwd(), 'app/docs/examples/profile-dialog.tsx'), 'utf8');
-    source =
-      source
-        .replace("import ProfileDialog from './profile-dialog';", '')
-        .replace("import { useState } from 'react';", '')
-        .replace("import { Button } from 'react-toolbox/button';", '') +
-      '\n' +
-      dialog
-        .replace("'use client';", '')
-        .replace("import { useState } from 'react';", '')
-        .replace("import { Button } from 'react-toolbox/button';", '')
-        .replace('export default function ProfileDialog', 'function ProfileDialog');
-    source = source.replace(
-      "'use client';",
-      "'use client';\nimport { useState } from 'react';\nimport { Button } from 'react-toolbox/button';",
-    );
-  }
-  source = source
-    .replaceAll("'react-toolbox/examples/", "'@/components/ui/examples/")
-    .replaceAll("'react-toolbox/", "'@/components/ui/material/");
+  const source = await readCompositionSource(slug, path.join(process.cwd(), 'app/docs/examples'));
   return (
     <div className="space-y-6">
       <p className="text-toolbox-body/6 text-toolbox-text">{note}</p>

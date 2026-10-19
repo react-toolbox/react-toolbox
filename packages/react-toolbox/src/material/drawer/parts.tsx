@@ -2,13 +2,27 @@
 import './tokens.css';
 import '../overlay/tokens.css';
 import * as Primitive from '@radix-ui/react-dialog';
-import type { ComponentProps } from 'react';
+import { useContext, type ComponentProps } from 'react';
 import { cn } from '../foundations/styles/cn';
 import { usePortalTheme } from '../foundations/portal/usePortalTheme';
+import {
+  ReturnFocusModal,
+  ReturnFocusParent,
+  ReturnFocusParentMounted,
+  useReturnFocus,
+} from '../foundations/portal/useReturnFocus';
+import useMergedRefs from '../foundations/portal/useMergedRefs';
 import { surfaceClasses } from '../foundations/styles/composition';
 export type DrawerRootProps = ComponentProps<typeof Primitive.Root>;
-export function DrawerRoot(props: DrawerRootProps) {
-  return <Primitive.Root {...props} />;
+/** Publishes the effective modal mode so content only adds fallback return focus to modal roots. */
+export function DrawerRoot({ modal = true, ...props }: DrawerRootProps) {
+  const parentMounted = useContext(ReturnFocusParentMounted);
+  if (!parentMounted && (props.open ?? props.defaultOpen)) return null;
+  return (
+    <ReturnFocusModal value={modal}>
+      <Primitive.Root modal={modal} {...props} />
+    </ReturnFocusModal>
+  );
 }
 export type DrawerTriggerProps = ComponentProps<typeof Primitive.Trigger>;
 export function DrawerTrigger(props: DrawerTriggerProps) {
@@ -41,28 +55,42 @@ export function DrawerOverlay({ className, style, ...props }: DrawerOverlayProps
 export type DrawerContentProps = ComponentProps<typeof Primitive.Content> & {
   side?: 'left' | 'right' | 'top' | 'bottom';
 };
-export function DrawerContent({ side = 'left', className, style, ...props }: DrawerContentProps) {
+export function DrawerContent({
+  side = 'left',
+  className,
+  style,
+  onCloseAutoFocus,
+  ref,
+  ...props
+}: DrawerContentProps) {
   const theme = usePortalTheme();
+  const { node, handleCloseAutoFocus, mounted } = useReturnFocus(onCloseAutoFocus);
   return (
-    <Primitive.Content
-      data-slot="DrawerContent"
-      data-side={side}
-      {...props}
-      {...theme}
-      style={{ ...theme.style, ...style }}
-      className={cn(
-        surfaceClasses,
-        'bg-(--drawer-background-color) text-(--drawer-text-color) fixed z-(--z-index-higher) flex flex-col overflow-y-auto rounded-none [box-shadow:var(--shadow-16p)] data-[state=open]:animate-[toolbox-drawer-in_var(--animation-duration)_var(--animation-curve-linear-out-slow-in)] data-[state=closed]:animate-[toolbox-drawer-out_var(--animation-duration)_var(--animation-curve-fast-out-linear-in)] motion-reduce:animate-none!',
-        (side === 'left' || side === 'right') &&
-          'inset-y-0 h-dvh w-(--drawer-mobile-width) min-[600px]:w-(--drawer-desktop-width) max-w-[calc(100vw-var(--standard-increment-mobile))]',
-        (side === 'top' || side === 'bottom') && 'inset-x-0 max-h-[calc(100dvh-var(--standard-increment-mobile))]',
-        side === 'left' && 'left-0 [--drawer-offset-x:-100%] [--drawer-offset-y:0]',
-        side === 'right' && 'right-0 [--drawer-offset-x:100%] [--drawer-offset-y:0]',
-        side === 'top' && 'top-0 [--drawer-offset-x:0] [--drawer-offset-y:-100%]',
-        side === 'bottom' && 'bottom-0 [--drawer-offset-x:0] [--drawer-offset-y:100%]',
-        className,
-      )}
-    />
+    <ReturnFocusParent value={node}>
+      <ReturnFocusParentMounted value={mounted}>
+        <Primitive.Content
+          data-slot="DrawerContent"
+          data-side={side}
+          {...props}
+          ref={useMergedRefs(ref, node)}
+          onCloseAutoFocus={handleCloseAutoFocus}
+          {...theme}
+          style={{ ...theme.style, ...style }}
+          className={cn(
+            surfaceClasses,
+            'bg-(--drawer-background-color) text-(--drawer-text-color) fixed z-(--z-index-higher) flex flex-col overflow-y-auto rounded-none [box-shadow:var(--shadow-16p)] data-[state=open]:animate-[toolbox-drawer-in_var(--animation-duration)_var(--animation-curve-linear-out-slow-in)] data-[state=closed]:animate-[toolbox-drawer-out_var(--animation-duration)_var(--animation-curve-fast-out-linear-in)] motion-reduce:animate-none!',
+            (side === 'left' || side === 'right') &&
+              'inset-y-0 h-dvh w-(--drawer-mobile-width) min-[600px]:w-(--drawer-desktop-width) max-w-[calc(100vw-var(--standard-increment-mobile))]',
+            (side === 'top' || side === 'bottom') && 'inset-x-0 max-h-[calc(100dvh-var(--standard-increment-mobile))]',
+            side === 'left' && 'left-0 [--drawer-offset-x:-100%] [--drawer-offset-y:0]',
+            side === 'right' && 'right-0 [--drawer-offset-x:100%] [--drawer-offset-y:0]',
+            side === 'top' && 'top-0 [--drawer-offset-x:0] [--drawer-offset-y:-100%]',
+            side === 'bottom' && 'bottom-0 [--drawer-offset-x:0] [--drawer-offset-y:100%]',
+            className,
+          )}
+        />
+      </ReturnFocusParentMounted>
+    </ReturnFocusParent>
   );
 }
 export type DrawerTitleProps = ComponentProps<typeof Primitive.Title>;

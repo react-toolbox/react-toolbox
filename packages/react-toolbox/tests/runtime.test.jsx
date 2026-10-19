@@ -1,5 +1,6 @@
 import React, { StrictMode, createContext, createRef, useContext } from 'react';
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
@@ -306,188 +307,40 @@ describe('React 19 runtime', () => {
     expect(view.container.querySelector('[data-react-toolbox="menu"]').className).toContain('active');
   });
 
-  it('measures static menus in their committed layout and remeasures position changes', () => {
-    vi.useFakeTimers();
-    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function measureMenu() {
-      return {
-        width: this.parentElement?.classList.contains('rt-menu-static') ? 450 : 180,
-        height: 240,
-        left: 0,
-        top: 0,
-        right: 450,
-        bottom: 240,
-      };
-    });
-    const view = render(
-      strict(
-        <Menu>
-          <MenuItem caption="Download" />
-        </Menu>,
-      ),
+  it('preserves menu refs and slot classes when switching from inline to floating content', async () => {
+    const ref = createRef();
+    const show = vi.fn();
+    const hide = vi.fn();
+    const content = (position) => (
+      <Menu
+        ref={ref}
+        position={position}
+        onShow={show}
+        onHide={hide}
+        classNames={{ menu: 'custom-menu', menuInner: 'custom-items', outline: 'custom-outline' }}
+      >
+        <MenuItem caption="Download" value="download" />
+      </Menu>
     );
-    const menu = view.container.querySelector('[data-react-toolbox="menu"]');
-    expect(menu).toHaveClass('rt-menu-static');
-    advance(0);
-    expect(menu.querySelector('.rt-menu-outline').style.width).toBe('450px');
-    expect(menu.style.width).toBe('');
-    view.rerender(
-      strict(
-        <Menu position="topRight">
-          <MenuItem caption="Download" />
-        </Menu>,
-      ),
-    );
-    expect(menu.querySelector('.rt-menu-outline').style.width).toBe('180px');
-    expect(menu.style.width).toBe('180px');
-  });
-
-  it('keeps menu outlines synchronized with resized or changed content and disconnects observers', () => {
-    vi.useFakeTimers();
-    const observers = [];
-    vi.stubGlobal(
-      'ResizeObserver',
-      vi.fn(function ResizeObserver(callback) {
-        this.callback = callback;
-        this.observe = vi.fn();
-        this.disconnect = vi.fn();
-        observers.push(this);
-      }),
-    );
-    let size = { width: 180, height: 240 };
-    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(() => ({
-      ...size,
-      left: 0,
-      top: 0,
-      right: size.width,
-      bottom: size.height,
-    }));
-    const view = render(
-      strict(
-        <Menu position="topRight">
-          <MenuItem caption="Download" />
-        </Menu>,
-      ),
-    );
-    advance(0);
-    const menu = view.container.querySelector('[data-react-toolbox="menu"]');
-    const observer = observers[observers.length - 1];
-    expect(observer.observe).toHaveBeenCalledWith(menu.querySelector('ul'), { box: 'border-box' });
-    expect(observer.observe).toHaveBeenCalledWith(menu, { box: 'border-box' });
-    size = { width: 260, height: 280 };
-    act(() => observer.callback([]));
-    expect(menu.querySelector('.rt-menu-outline').style.width).toBe('260px');
-    expect(menu.querySelector('.rt-menu-outline').style.height).toBe('280px');
-    expect(menu.style.width).toBe('260px');
-    size = { width: 260, height: 328 };
-    view.rerender(
-      strict(
-        <Menu position="topRight">
-          <MenuItem caption="Download" />
-          <MenuItem caption="Share" />
-        </Menu>,
-      ),
-    );
-    expect(menu.querySelector('.rt-menu-outline').style.height).toBe('328px');
+    const view = render(strict(content('static')));
+    const node = ref.current.node;
+    expect(node).toHaveClass('custom-menu', 'rt-menu-static');
+    expect(screen.getByRole('menuitemradio', { name: 'Download' })).toBeVisible();
+    expect(node.querySelector('.custom-items')).toHaveClass('custom-outline');
+    act(() => ref.current.show());
+    expect(show).toHaveBeenCalledOnce();
+    view.rerender(strict(content('topRight')));
+    expect(ref.current.node).toBe(node);
+    expect(node).not.toHaveClass('rt-menu-static');
+    expect(screen.getByRole('menu')).toBeVisible();
+    act(() => ref.current.hide());
+    await waitFor(() => expect(screen.queryByRole('menu')).toBeNull());
+    expect(hide).toHaveBeenCalledOnce();
     view.unmount();
-    expect(observer.disconnect).toHaveBeenCalledOnce();
-    expect(() => act(() => observer.callback([]))).not.toThrow();
+    expect(ref.current).toBeNull();
   });
 
-  it('aligns static outlines with list margins and leaves popup positioning to its theme', () => {
-    vi.useFakeTimers();
-    let resize;
-    vi.stubGlobal(
-      'ResizeObserver',
-      vi.fn(function ResizeObserver(callback) {
-        resize = callback;
-        this.observe = vi.fn();
-        this.disconnect = vi.fn();
-      }),
-    );
-    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
-      width: 180,
-      height: 240,
-      left: 8,
-      top: 14,
-      right: 188,
-      bottom: 254,
-    });
-    let top = 14;
-    let left = 8;
-    vi.spyOn(HTMLElement.prototype, 'offsetTop', 'get').mockImplementation(() => top);
-    vi.spyOn(HTMLElement.prototype, 'offsetLeft', 'get').mockImplementation(() => left);
-    const view = render(
-      strict(
-        <Menu>
-          <MenuItem caption="Download" />
-        </Menu>,
-      ),
-    );
-    advance(0);
-    const outline = view.container.querySelector('.rt-menu-outline');
-    expect(outline.style.top).toBe('14px');
-    expect(outline.style.left).toBe('8px');
-    expect(outline.style.height).toBe('240px');
-    top = 24;
-    left = 16;
-    act(() => resize([]));
-    expect(outline.style.top).toBe('24px');
-    expect(outline.style.left).toBe('16px');
-    expect(outline.style.height).toBe('240px');
-    view.rerender(
-      strict(
-        <Menu position="topRight">
-          <MenuItem caption="Download" />
-        </Menu>,
-      ),
-    );
-    expect(outline.style.top).toBe('');
-    expect(outline.style.left).toBe('');
-  });
-
-  it('remeasures menu viewport and font changes without ResizeObserver and removes fallback listeners', () => {
-    vi.useFakeTimers();
-    vi.stubGlobal('ResizeObserver', undefined);
-    const originalFonts = Object.getOwnPropertyDescriptor(document, 'fonts');
-    const fonts = new EventTarget();
-    Object.defineProperty(document, 'fonts', { configurable: true, value: fonts });
-    const removeFontListener = vi.spyOn(fonts, 'removeEventListener');
-    const removeWindowListener = vi.spyOn(window, 'removeEventListener');
-    let width = 180;
-    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(() => ({
-      width,
-      height: 240,
-      left: 0,
-      top: 0,
-      right: width,
-      bottom: 240,
-    }));
-    try {
-      const view = render(
-        strict(
-          <Menu>
-            <MenuItem caption="Download" />
-          </Menu>,
-        ),
-      );
-      advance(0);
-      const outline = view.container.querySelector('.rt-menu-outline');
-      width = 240;
-      fireEvent(window, new Event('resize'));
-      expect(outline.style.width).toBe('240px');
-      width = 220;
-      act(() => fonts.dispatchEvent(new Event('loadingdone')));
-      expect(outline.style.width).toBe('220px');
-      view.unmount();
-      expect(removeWindowListener).toHaveBeenCalledWith('resize', expect.any(Function));
-      expect(removeFontListener).toHaveBeenCalledWith('loadingdone', expect.any(Function));
-    } finally {
-      if (originalFonts) Object.defineProperty(document, 'fonts', originalFonts);
-      else delete document.fonts;
-    }
-  });
-
-  it('handles an initially open menu and closes it once on an outside click', () => {
+  it('handles an initially open menu and closes it once on an outside pointer action', () => {
     vi.useFakeTimers();
     const onHide = vi.fn();
     render(
@@ -497,14 +350,15 @@ describe('React 19 runtime', () => {
         </Menu>,
       ),
     );
-    fireEvent.click(document.body);
+    advance(0);
+    fireEvent.pointerDown(document.body, { pointerType: 'mouse' });
     expect(document.querySelector('[data-react-toolbox="menu"]').className).not.toContain('active');
     expect(onHide).toHaveBeenCalledOnce();
-    fireEvent.click(document.body);
+    fireEvent.pointerDown(document.body, { pointerType: 'mouse' });
     expect(onHide).toHaveBeenCalledOnce();
   });
 
-  it('opens dropdowns, selects values and removes the outside-click listener on close', () => {
+  it('opens dropdowns, selects values and dismisses on an outside pointer action', async () => {
     const onChange = vi.fn();
     render(
       strict(
@@ -519,14 +373,14 @@ describe('React 19 runtime', () => {
       ),
     );
     const root = document.querySelector('[data-react-toolbox="dropdown"]');
-    fireEvent.click(screen.getByRole('combobox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(root.className).toContain('active');
-    fireEvent.click(screen.getByRole('option', { name: 'Beta' }));
+    await userEvent.click(screen.getByRole('option', { name: 'Beta' }));
     expect(onChange).toHaveBeenCalledWith('b', expect.anything());
     expect(root.className).not.toContain('active');
-    fireEvent.click(screen.getByRole('combobox'));
-    fireEvent.click(document.body);
-    expect(root.className).not.toContain('active');
+    await userEvent.click(screen.getByRole('combobox'));
+    fireEvent.pointerDown(document.body, { pointerType: 'mouse' });
+    await waitFor(() => expect(root.className).not.toContain('active'));
   });
 
   it('renders disabled dropdown options without invalid event handlers', () => {

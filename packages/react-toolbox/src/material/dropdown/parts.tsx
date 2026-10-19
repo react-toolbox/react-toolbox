@@ -2,10 +2,17 @@
 import './tokens.css';
 import '../input/tokens.css';
 import * as Primitive from '@radix-ui/react-select';
-import type { ComponentProps } from 'react';
+import { useState, type ComponentProps } from 'react';
+import useInertOthers from '../foundations/portal/useInertOthers';
+import useMergedRefs from '../foundations/portal/useMergedRefs';
 import { cn } from '../foundations/styles/cn';
 import { usePortalTheme } from '../foundations/portal/usePortalTheme';
-import { surfaceClasses, popupClasses, optionClasses, focusClasses } from '../foundations/styles/composition';
+import {
+  surfaceClasses,
+  popupClasses,
+  optionClasses,
+  forcedColorsFocusClasses,
+} from '../foundations/styles/composition';
 export type DropdownRootProps = ComponentProps<typeof Primitive.Root>;
 export function DropdownRoot(props: DropdownRootProps) {
   return <Primitive.Root {...props} />;
@@ -42,19 +49,23 @@ export function DropdownTrigger({ className, ...props }: DropdownTriggerProps) {
       {...props}
       className={cn(
         surfaceClasses,
-        focusClasses,
-        'text-(--input-text-input-element-color) flex min-h-[max(48px,var(--input-field-height))] w-full items-center justify-between gap-[16px] rounded-none border-0 [box-shadow:inset_0_-1px_0_var(--input-text-bottom-border-color)] focus:[box-shadow:inset_0_-2px_0_var(--input-text-highlight-color)] bg-(--input-text-background-color) px-0 py-(--input-field-padding) text-(length:--input-field-font-size) leading-[1.4] data-placeholder:text-(--input-text-label-color) disabled:opacity-50',
+        forcedColorsFocusClasses,
+        'text-(--input-text-input-element-color) flex min-h-[max(48px,var(--input-field-height))] w-full items-center justify-between gap-[16px] rounded-none border-0 [box-shadow:inset_0_-1px_0_var(--input-text-bottom-border-color)] focus:[box-shadow:inset_0_-2px_0_var(--input-text-highlight-color)] bg-(--input-text-background-color) px-0 py-(--input-field-padding) text-(length:--input-field-font-size) leading-[1.4] data-placeholder:text-(--input-text-label-color) disabled:[box-shadow:none] disabled:[border-bottom:1px_dotted_var(--input-text-disabled-color)] [&:disabled]:text-(--input-text-disabled-text-color)',
         className,
       )}
     />
   );
 }
 export type DropdownContentProps = ComponentProps<typeof Primitive.Content>;
-export function DropdownContent({ className, style, ...props }: DropdownContentProps) {
+export function DropdownContent({ className, style, ref, ...props }: DropdownContentProps) {
   const theme = usePortalTheme();
+  const [node, setNode] = useState<HTMLDivElement | null>(null);
+  const contentRef = useMergedRefs(ref, setNode);
+  useInertOthers(node);
   return (
     <Primitive.Content
       data-slot="DropdownContent"
+      ref={contentRef}
       position="item-aligned"
       sideOffset={4}
       collisionPadding={16}

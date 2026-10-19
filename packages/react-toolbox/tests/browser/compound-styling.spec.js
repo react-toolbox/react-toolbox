@@ -13,12 +13,15 @@ test.beforeAll(async () => {
         contents: `import React from 'react';
       import {createRoot} from 'react-dom/client';
       import {ThemeProvider} from './src/material/theme';
+      import {Tabs,Tab,TabsRoot,TabsList,TabsTrigger} from './src/material/tabs';
       import {Dropdown,DropdownRoot,DropdownTrigger,DropdownSelection,DropdownPortal,DropdownContent,DropdownViewport,DropdownOption,DropdownOptionText} from './src/material/dropdown';
       import {Autocomplete,AutocompleteRoot,AutocompleteLabel,AutocompleteInputGroup,AutocompleteInput,AutocompletePortal,AutocompletePositioner,AutocompletePopup,AutocompleteList,AutocompleteItem} from './src/material/autocomplete';
       import {SliderRoot,SliderTrack,SliderRange,SliderThumb} from './src/material/slider';
       import {TooltipRoot,TooltipTrigger,TooltipContent} from './src/material/tooltip';
       import {DropdownMenuRoot,DropdownMenuTrigger,DropdownMenuContent,DropdownMenuItem,DropdownMenuSub,DropdownMenuSubTrigger,DropdownMenuPortal,DropdownMenuSubContent} from './src/material/menu';
       createRoot(document.getElementById('root')).render(<main style={{padding:100}}>
+        <div id="fixed-tabs" style={{width:400}}><Tabs fixed><Tab label="First"/><Tab label="Second"/><Tab label="Third"/></Tabs></div>
+        <TabsRoot defaultValue="first"><TabsList aria-label="Scrollable tabs"><TabsTrigger value="first">First</TabsTrigger><TabsTrigger value="second">Second</TabsTrigger></TabsList></TabsRoot>
         <SliderRoot orientation="vertical" defaultValue={[20,80]} style={{height:200}}>
           <SliderTrack><SliderRange /></SliderTrack><SliderThumb aria-label="Low"/><SliderThumb aria-label="High"/>
         </SliderRoot>
@@ -47,6 +50,28 @@ async function mount(page) {
   );
   await page.addScriptTag({ content: javascript });
 }
+
+test('fixed tabs fit narrow and wide containers while scrollable tabs retain Material minimums', async ({ page }) => {
+  await mount(page);
+  const container = page.locator('#fixed-tabs');
+  for (const width of [400, 1000]) {
+    await container.evaluate((node, value) => {
+      node.style.width = `${value}px`;
+    }, width);
+    const tabs = container.getByRole('tab');
+    for (const tab of await tabs.all()) expect((await tab.boundingBox()).width).toBeCloseTo(width / 3, 0);
+    expect(await container.evaluate((node) => node.scrollWidth)).toBe(width);
+  }
+  await expect(page.getByRole('tablist', { name: 'Scrollable tabs' }).getByRole('tab').first()).toHaveCSS(
+    'min-width',
+    '160px',
+  );
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.getByRole('tablist', { name: 'Scrollable tabs' }).getByRole('tab').first()).toHaveCSS(
+    'min-width',
+    '72px',
+  );
+});
 
 test('vertical selected range follows the two values instead of filling the track', async ({ page }) => {
   await mount(page);

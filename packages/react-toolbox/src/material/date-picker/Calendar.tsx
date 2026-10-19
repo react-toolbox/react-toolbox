@@ -68,6 +68,18 @@ export default function Calendar({
         ?.focus();
     }
   });
+  const focusDay = (date: Date) => {
+    if (
+      (constraints.minDate && dayStamp(date) < dayStamp(constraints.minDate)) ||
+      (constraints.maxDate && dayStamp(date) > dayStamp(constraints.maxDate))
+    )
+      return;
+    /** Unavailable days within the calendar bounds remain discoverable without being selected. */
+    focusSelectedDay.current = true;
+    setViewDate(date);
+    setFocusedDate(date);
+    if (!isDateDisabled(date, constraints)) onChange?.(date, false);
+  };
   const moveViewMonth = (next: 'left' | 'right') => {
     setDirection(next);
     const month = time.addMonths(viewDate, next === 'left' ? -1 : 1);
@@ -173,12 +185,7 @@ export default function Calendar({
             date = time.addMonths(focusedDate, (event.key === 'PageUp' ? -1 : 1) * (event.shiftKey ? 12 : 1));
             date.setDate(Math.min(focusedDate.getDate(), time.getDaysInMonth(date)));
           }
-          if (!isDateDisabled(date, constraints)) {
-            focusSelectedDay.current = true;
-            setViewDate(date);
-            setFocusedDate(date);
-            onChange?.(date, false);
-          }
+          focusDay(date);
           return;
         }
         const steps: Record<string, number> = {
@@ -194,30 +201,10 @@ export default function Calendar({
         const step = steps[event.key] * direction;
         if (step) {
           event.preventDefault();
-          let date: Date | undefined = time.addDays(focusedDate, step);
-          if (constraints.enabledDates?.length)
-            date = constraints.enabledDates
-              .filter(
-                (candidate) =>
-                  (dayStamp(candidate) - dayStamp(focusedDate)) * step > 0 && !isDateDisabled(candidate, constraints),
-              )
-              .sort((a, b) => (dayStamp(a) - dayStamp(b)) * Math.sign(step))[0];
-          else
-            for (
-              let tries = 0;
-              tries < (constraints.disabledDates?.length ?? 0) && isDateDisabled(date, constraints);
-              tries += 1
-            )
-              date = time.addDays(date, step);
-          if (date && !isDateDisabled(date, constraints)) {
-            focusSelectedDay.current = true;
-            setViewDate(date);
-            setFocusedDate(date);
-            onChange?.(date, false);
-          }
+          focusDay(time.addDays(focusedDate, step));
         } else if (event.key === 'Enter' && event.target === event.currentTarget) {
           event.preventDefault();
-          handleSelect?.(event);
+          if (!isDateDisabled(focusedDate, constraints)) handleSelect?.(event);
         }
       }}
     >

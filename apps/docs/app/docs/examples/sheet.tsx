@@ -19,7 +19,7 @@ export default function SheetExample() {
   const [snapPoint, setSnapPoint] = useState<number | string | null>(0.5);
   const expanded = snapPoint === 0.9;
   return (
-    <SheetRoot snapPoints={[0.5, 0.9]} activeSnapPoint={snapPoint} setActiveSnapPoint={setSnapPoint}>
+    <SheetRoot snapPoints={[0.5, 0.9]} fadeFromIndex={0} activeSnapPoint={snapPoint} setActiveSnapPoint={setSnapPoint}>
       <SheetTrigger asChild>
         <Button primary raised>
           Open visit notes

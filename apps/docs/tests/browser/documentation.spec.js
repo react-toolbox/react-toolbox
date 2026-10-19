@@ -14,6 +14,75 @@ async function expectAccessibleDocumentation(page) {
   ).toEqual([]);
 }
 
+for (const width of [390, 1440]) {
+  test(`preview tabs show complete keyboard focus without a clipped outline at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/docs/components/menu');
+    await page.keyboard.press('Tab');
+    const preview = page.getByRole('tab', { name: 'Preview', exact: true });
+    await preview.focus();
+    await expect(preview).toHaveCSS('outline-style', 'none');
+    await expect(preview).toHaveCSS('background-color', 'color(srgb 0 0 0 / 0.12)');
+    await expect(preview).toHaveAttribute('aria-selected', 'true');
+    await page.keyboard.press('ArrowRight');
+    const code = page.getByRole('tab', { name: 'Code', exact: true });
+    await expect(code).toBeFocused();
+    await expect(code).toHaveAttribute('aria-selected', 'true');
+    await expect(code).toHaveCSS('outline-style', 'none');
+    await expect(code).toHaveCSS('background-color', 'color(srgb 0 0 0 / 0.12)');
+    await expect(preview).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+  });
+}
+
+test('expansion panels and dividers demonstrate their installed APIs and accessible behavior', async ({ page }) => {
+  await page.goto('/docs/components/accordion');
+  const preview = page.locator('#preview');
+  const details = preview.getByRole('button', { name: 'Project details' });
+  const sharing = preview.getByRole('button', { name: 'Sharing', exact: true });
+  await expect(details).toHaveAttribute('aria-expanded', 'true');
+  await expect(details).toHaveCSS('min-height', '64px');
+  await expect(sharing).toHaveCSS('min-height', '48px');
+  await sharing.focus();
+  await sharing.press('Enter');
+  await expect(preview.getByRole('region', { name: 'Sharing' })).toBeVisible();
+  await expect(details).toHaveAttribute('aria-expanded', 'false');
+  await expect(preview.getByRole('button', { name: 'Archive (unavailable)' })).toBeDisabled();
+  await expect(page.getByRole('heading', { name: 'AccordionRoot', exact: true })).toBeVisible();
+  await expectAccessibleDocumentation(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
+  await details.locator('svg').click();
+  await expect(details).toHaveAttribute('aria-expanded', 'true');
+  await preview.getByRole('tab', { name: 'Code', exact: true }).click();
+  await preview.getByRole('button', { name: 'Reset demo' }).click();
+  await expect(preview.getByRole('tab', { name: 'Preview', exact: true })).toHaveAttribute('aria-selected', 'true');
+  await expect(details).toHaveAttribute('aria-expanded', 'true');
+  await page.goto('/docs/components/divider');
+  const horizontal = page.locator('#preview').getByRole('separator');
+  await expect(horizontal).toHaveCSS('height', '1px');
+  const vertical = page.locator('#preview [data-orientation=vertical]');
+  await expect(vertical).toHaveAttribute('aria-hidden', 'true');
+  await expect(vertical).toHaveCSS('width', '1px');
+  expect((await vertical.boundingBox()).height).toBeGreaterThan(0);
+  await expectAccessibleDocumentation(page);
+});
+
+test('the modal sheet example dims its background at both snap points', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/docs/components/sheet');
+  await page.locator('#preview').getByRole('button', { name: 'Open visit notes' }).click();
+  const sheet = page.getByRole('dialog', { name: 'Visit notes' });
+  const backdrop = page.locator('[data-slot="SheetOverlay"]');
+  await expect(sheet).toBeInViewport();
+  await expect(backdrop).toHaveCSS('opacity', '1');
+  await sheet.getByRole('button', { name: 'Expand notes' }).click();
+  await expect(backdrop).toHaveCSS('opacity', '1');
+  await sheet.getByRole('button', { name: 'Reduce notes' }).click();
+  await expect(backdrop).toHaveCSS('opacity', '1');
+  await sheet.getByRole('button', { name: 'Done' }).click();
+  await expect(sheet).toBeHidden();
+});
+
 test('landing leads into a shared documentation shell with working examples', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('link', { name: /Browse components/i })).toHaveAttribute('href', '/docs/components');
@@ -35,6 +104,10 @@ test('landing leads into a shared documentation shell with working examples', as
   await expect(sidebar).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'On this page' })).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Breadcrumb', exact: true })).toBeVisible();
+  const preview = page.locator('#preview');
+  await expect(preview.getByRole('button', { name: 'Accent', exact: true })).toBeVisible();
+  await expect(preview.getByRole('button', { name: 'Flat accent', exact: true })).toBeVisible();
+  await expect(preview.getByRole('button', { name: 'Disabled', exact: true })).toBeDisabled();
   await page.getByRole('button', { name: 'Save', exact: true }).click();
   await expect(page.locator('#preview').getByRole('status')).toHaveText('Saved');
   await page.getByRole('button', { name: 'Reset demo' }).click();
@@ -43,6 +116,9 @@ test('landing leads into a shared documentation shell with working examples', as
   await page.keyboard.press('ArrowRight');
   await expect(page.getByRole('tab', { name: 'Code', exact: true })).toBeFocused();
   await expect(page.getByLabel('Component example', { exact: true })).toContainText('@/components/ui/material/button');
+  await expect(page.getByLabel('Component example', { exact: true })).toContainText('<Button accent raised');
+  await expect(page.getByLabel('Component example', { exact: true })).toContainText('<Button accent label=');
+  await expect(page.getByLabel('Component example', { exact: true })).toContainText('<Button disabled');
   await page.keyboard.press('Home');
   await expect(page.getByRole('tab', { name: 'Preview', exact: true })).toHaveAttribute('aria-selected', 'true');
   await page.getByRole('link', { name: 'React Toolbox home' }).click();
@@ -192,7 +268,7 @@ for (const width of [320, 1440]) {
     test.setTimeout(180_000);
     const catalog = await (await request.get('/r/registry.json')).json();
     const families = catalog.items.filter((item) => item.type === 'registry:ui');
-    expect(families).toHaveLength(28);
+    expect(families).toHaveLength(30);
     for (const family of families) {
       // Each route gets its own page so pending link prefetches from a prior
       // document cannot report teardown errors in the next route's audit.
@@ -206,6 +282,13 @@ for (const width of [320, 1440]) {
       await expect(page.getByRole('heading', { name: 'Material guidelines' })).toBeVisible();
       await expect(page.locator('#material-guidelines a')).toHaveAttribute('href', /^https:\/\/m1\.material\.io\//);
       await expect(page.getByRole('tab', { name: 'Preview', exact: true })).toHaveAttribute('aria-selected', 'true');
+      if (family.name === 'app-bar') {
+        await page.locator('#preview').getByRole('button', { name: 'Open navigation', exact: true }).click();
+        await expect(page.locator('#preview').getByRole('status')).toHaveText('Navigation opened');
+      }
+      const reset = await page.getByRole('button', { name: 'Reset demo', exact: true }).boundingBox();
+      const canvas = await page.locator('#preview').getByRole('tabpanel', { name: 'Preview', exact: true }).boundingBox();
+      expect(reset.y + reset.height, `${family.name} reset stays outside the example`).toBeLessThanOrEqual(canvas.y);
       await expectAccessibleDocumentation(page);
       expect(
         await page.evaluate(() => document.documentElement.scrollWidth),
@@ -338,7 +421,8 @@ test('documentation rows have full Material touch areas, keyboard links, and con
   await page.keyboard.press('Tab');
   await installation.focus();
   await expect(installation).toBeFocused();
-  await expect(installation).toHaveCSS('outline-style', 'solid');
+  await expect(installation).toHaveCSS('outline-style', 'none');
+  await expect(installation).toHaveCSS('background-color', 'rgb(238, 238, 238)');
   await installation.press('Enter');
   await expect(page).toHaveURL(/\/docs\/installation$/);
   await expect(installation).toHaveAttribute('aria-current', 'page');
@@ -425,7 +509,8 @@ test('syntax colors preserve source, copy exactly, and remain readable on the Ma
 test('retired routing wrappers lead to installation', async ({ page }) => {
   for (const slug of ['link', 'navigation']) {
     await page.goto(`/docs/components/${slug}`);
-    await expect(page).toHaveURL(/\/docs\/installation$/);
+    await expect(page).toHaveURL(/\/docs\/installation#routing$/);
+    await expect(page.getByRole('heading', { name: 'Use your router for navigation', level: 2 })).toBeInViewport();
     await expect(page.getByRole('heading', { name: 'Installation', level: 1, exact: true })).toBeVisible();
   }
 });

@@ -14,8 +14,13 @@ describe('native refs and pointer events', () => {
     const anchor = createRef<HTMLAnchorElement>();
     const label = createRef<HTMLLabelElement>();
     const file = createRef<HTMLInputElement>();
-    render(<><Button ref={button} label="Save" /><IconButton ref={anchor} href="#target" icon="link" />
-      <BrowseButton ref={label} inputRef={file} label="Upload" /></>);
+    render(
+      <>
+        <Button ref={button} label="Save" />
+        <IconButton ref={anchor} href="#target" icon="link" />
+        <BrowseButton ref={label} inputRef={file} label="Upload" />
+      </>,
+    );
     expect(button.current).toBe(screen.getByRole('button', { name: 'Save' }));
     expect(anchor.current?.tagName).toBe('A');
     expect(label.current?.tagName).toBe('LABEL');
@@ -30,7 +35,7 @@ describe('native refs and pointer events', () => {
     fireEvent.mouseDown(screen.getByRole('button'), { button: 0, clientX: 5, clientY: 5 });
     expect(mouseDown).toHaveBeenCalledOnce();
     expect(container.querySelector('[data-react-toolbox="ripple"]')).not.toBeNull();
-    rerender(<Button key="prevented" label="Save" onMouseDown={event => event.preventDefault()} />);
+    rerender(<Button key="prevented" label="Save" onMouseDown={(event) => event.preventDefault()} />);
     fireEvent.mouseDown(screen.getByRole('button'), { button: 0 });
     expect(container.querySelector('[data-react-toolbox="ripple"]')).toBeNull();
   });
@@ -108,6 +113,8 @@ describe('slotted buttons and tooltips', () => {
     expect(trigger.querySelector('button')).toBeNull();
     await userEvent.click(trigger);
     expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    await waitFor(() => expect(screen.getByRole('menu')).toHaveFocus());
+    await userEvent.keyboard('{ArrowDown}');
     await waitFor(() => expect(screen.getByRole('menuitem', { name: 'Compact' })).toHaveFocus());
     await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(trigger).toHaveFocus());

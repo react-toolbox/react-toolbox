@@ -67,7 +67,7 @@ describe('controlled and uncontrolled selection', () => {
     render(
       <Tabs index={0} onChange={change}>
         <Tab label="One" />
-        <Tab label="Two" onClick={(event) => event.preventDefault()} />
+        <Tab label="Two" onMouseDown={(event) => event.preventDefault()} />
         <Tab label="Three" />
       </Tabs>,
     );

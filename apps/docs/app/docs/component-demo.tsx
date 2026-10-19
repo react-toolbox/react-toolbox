@@ -3,17 +3,25 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
+  AccordionRoot,
+  AccordionItem,
+  AccordionHeader,
+  AccordionTrigger,
+  AccordionPanel,
   AppBar,
   Autocomplete,
   Avatar,
   Button,
   Card,
+  CardActions,
+  CardMedia,
   CardTitle,
   CardText,
   Checkbox,
   Chip,
   DatePicker,
   Dialog,
+  Divider,
   Drawer,
   Dropdown,
   FontIcon,
@@ -81,13 +89,38 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
   const [index, setIndex] = useState(0);
   const [date, setDate] = useState(new Date(2026, 9, 13, 9, 30));
   switch (slug) {
+    case 'accordion':
+      return (
+        <AccordionRoot defaultValue={['details']} className="w-full max-w-lg">
+          <AccordionItem value="details">
+            <AccordionHeader>
+              <AccordionTrigger>Project details</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionPanel>Keep your notes and project details together.</AccordionPanel>
+          </AccordionItem>
+          <AccordionItem value="sharing">
+            <AccordionHeader>
+              <AccordionTrigger>Sharing</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionPanel>Only invited people can see this project.</AccordionPanel>
+          </AccordionItem>
+          <AccordionItem value="archive" disabled>
+            <AccordionHeader>
+              <AccordionTrigger>Archive (unavailable)</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionPanel>This project cannot be archived yet.</AccordionPanel>
+          </AccordionItem>
+        </AccordionRoot>
+      );
     case 'app-bar':
       return (
         <div className="w-full">
+          {/** Keep this standalone example's action visible inside the docs' pinned navigation layout. */}
           <AppBar
             title="My collection"
             leftIcon="menu"
             leftIconLabel="Open navigation"
+            classNames={{ leftIcon: 'inline-flex!' }}
             onLeftIconClick={() => setText('Navigation opened')}
           />
           <p role="status" className="mt-4 text-center text-sm text-toolbox-text-secondary">
@@ -122,6 +155,9 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Button primary raised label="Save" onClick={() => setActive(true)} />
           <Button label="Reset" onClick={() => setActive(false)} />
+          <Button accent raised label="Accent" />
+          <Button accent label="Flat accent" />
+          <Button disabled label="Disabled" />
           <span role="status" className="text-sm text-toolbox-text-secondary">
             {active ? 'Saved' : 'Ready'}
           </span>
@@ -130,8 +166,22 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
     case 'card':
       return (
         <Card className="w-full max-w-sm">
-          <CardTitle title="Room for an idea" subtitle="Start with something small." />
-          <CardText>A little space for your next project.</CardText>
+          <CardMedia
+            aspectRatio="wide"
+            image="/images/alpine-lake.webp"
+            alt="Turquoise lake surrounded by pine forests and mountains in Alberta, Canada."
+          />
+          <CardTitle heading="h3" title="A moment of quiet" subtitle="Alberta, Canada" />
+          <CardText>Turquoise water, pine forests, and a little room to breathe.</CardText>
+          <CardActions>
+            <Button
+              primary
+              label="View photo"
+              href="https://unsplash.com/photos/green-lake-between-trees-with-mountain-background-EBcIEEqpgfI"
+              target="_blank"
+              rel="noreferrer"
+            />
+          </CardActions>
         </Card>
       );
     case 'checkbox':
@@ -186,6 +236,18 @@ export default function ComponentDemo({ slug }: { slug: ComponentSlug }) {
             You can return to it whenever you are ready.
           </Dialog>
         </>
+      );
+    case 'divider':
+      return (
+        <div className="w-full max-w-sm space-y-4">
+          <p>Project details</p>
+          <Divider />
+          <div className="flex items-center gap-4">
+            <span>Private</span>
+            <Divider orientation="vertical" decorative />
+            <span>Updated today</span>
+          </div>
+        </div>
       );
     case 'drawer':
       return (

@@ -68,6 +68,7 @@ export function Avatar({
           className,
         )}
         {...other}
+        role={other.role ?? (other['aria-label'] || other['aria-labelledby'] ? 'img' : undefined)}
       >
         {!customImage && fallback != null && (
           <AvatarPrimitive.Fallback

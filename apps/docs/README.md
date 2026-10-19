@@ -4,7 +4,7 @@ The Next.js App Router site serves documentation, interactive examples, and the 
 
 ## Develop
 
-Use the [root setup](../../README.md#develop). Run these commands from the repository root:
+Use the [root setup](../../CONTRIBUTING.md#develop). Run these commands from the repository root:
 
 ```sh
 pnpm docs:dev             # Build dependencies, then watch the library and site
@@ -40,7 +40,7 @@ pnpm --filter @react-toolbox/docs typecheck
 pnpm --filter @react-toolbox/docs test:browser
 ```
 
-Build dependencies with `pnpm build:library` before type checking a fresh checkout. Browser tests build the production site automatically when port 3100 is free. The [root verification commands](../../README.md#verify) install browsers and run both website and component suites. Reports and failure artifacts are written at the repository root.
+Build dependencies with `pnpm build:library` before type checking a fresh checkout. Browser tests build the production site automatically when port 3100 is free. The [root verification commands](../../CONTRIBUTING.md#verify) install browsers and run both website and component suites. Reports and failure artifacts are written at the repository root.
 
 ## Deploy
 

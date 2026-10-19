@@ -8,7 +8,9 @@ test('the docs deployment serves a complete same-origin source registry', async 
   expect(catalogResponse.ok()).toBeTruthy();
   const catalog = await catalogResponse.json();
   expect(catalog.items.map((item) => item.name)).toEqual(expectedCatalog.items.map((item) => item.name));
-  expect(catalog.items.filter((item) => item.type === 'registry:ui')).toHaveLength(28);
+  expect(catalog.items.filter((item) => item.type === 'registry:ui')).toHaveLength(
+    expectedCatalog.items.filter((item) => item.type === 'registry:ui').length,
+  );
   expect(catalog.items.filter((item) => item.name.startsWith('example-'))).toHaveLength(3);
   expect(catalog.items.filter((item) => item.type === 'registry:block')).toHaveLength(4);
   const names = new Set(catalog.items.map((item) => item.name));

@@ -1,7 +1,7 @@
 'use client';
 import './tokens.css';
 
-import { activeClasses } from './styles';
+import { activeClasses, labelSizeClasses, labelFocusClasses } from './styles';
 import type { TabsClassNames } from './types';
 
 import {
@@ -45,7 +45,6 @@ export function Tab({
   index,
   onActive,
   onClick,
-  onKeyDown,
   onMouseDown,
   onTouchStart,
   onTouchEnd,
@@ -68,26 +67,23 @@ export function Tab({
       rippleWrapper: cn('rt-tabs-rippleWrapper', '[.rt-tabs-label>&]:overflow-hidden', classNames?.rippleWrapper),
     },
   });
-  const click = (event: TabEvent) => {
-    if (!disabled && !hidden) onClick?.(event, index);
-  };
   return (
     <div
       {...attributes}
       ref={ref}
       data-react-toolbox="tab"
       role="tab"
+      aria-label={attributes['aria-label'] ?? (!label && typeof icon === 'string' ? icon : undefined)}
       aria-selected={active}
       aria-disabled={disabled || undefined}
       aria-hidden={hidden || undefined}
-      tabIndex={disabled || hidden ? -1 : (attributes.tabIndex ?? (active ? 0 : -1))}
       className={cn(
         'rt-tabs-label',
-        'text-(--tab-text-inactive-color) text-(length:--tab-text-height) font-(--font-weight-semi-bold) leading-none p-[var(--tab-label-v-padding)_var(--tab-label-h-padding)] relative uppercase [transition-duration:var(--animation-duration)] [transition-property:background-color,box-shadow,color] [transition-timing-function:var(--animation-curve-default)]',
-        '[&:focus]:bg-(--tab-focus-color) [&:focus]:[outline:none]',
-        '[&:focus-visible]:[outline:2px_solid_currentColor] [&:focus-visible]:-outline-offset-2',
+        labelSizeClasses,
+        'text-(--tab-text-inactive-color) text-(length:--tab-text-height) font-(--font-weight-semi-bold) leading-none text-center p-[var(--tab-label-v-padding)_var(--tab-label-h-padding)] relative uppercase [transition-duration:var(--animation-duration)] [transition-property:background-color,box-shadow,color] [transition-timing-function:var(--animation-curve-default)]',
+        labelFocusClasses,
         '[&:not(.rt-tabs-disabled)]:cursor-pointer',
-        '[.rt-tabs-fixed_&]:flex-1 [.rt-tabs-fixed_&]:text-center',
+        '[.rt-tabs-fixed_&]:min-w-0 [.rt-tabs-fixed_&]:max-w-none [.rt-tabs-fixed_&]:flex-1 [.rt-tabs-fixed_&]:text-center',
         '[.rt-tabs-inverse_&]:text-(--tab-inverse-text-inactive-color)',
         classNames?.label,
         active && cn(activeClasses, classNames?.active),
@@ -109,13 +105,8 @@ export function Tab({
         active && activeClassName,
         className,
       )}
-      onClick={click}
-      onKeyDown={(event) => {
-        onKeyDown?.(event);
-        if (!event.defaultPrevented && (event.key === 'Enter' || event.key === ' ')) {
-          click(event);
-          event.preventDefault();
-        }
+      onClick={(event) => {
+        if (!disabled && !hidden) onClick?.(event, index);
       }}
       onMouseDown={(event) => {
         onMouseDown?.(event);

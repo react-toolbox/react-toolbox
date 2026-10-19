@@ -154,7 +154,8 @@ export function Snackbar({
         data-multiline={multiline || undefined}
         className={cn(
           'rt-snackbar-snackbar',
-          'items-center bg-(--snackbar-background-color) rounded-none bottom-0 text-(--snackbar-color) flex left-0 m-0 min-h-[calc(4.8*var(--unit))] p-[var(--snackbar-vertical-offset)_var(--snackbar-horizontal-offset)] fixed right-0 [transition:all_var(--animation-duration)_var(--animation-curve-default)_var(--animation-duration)] z-(--z-index-higher)',
+          'items-center bg-(--snackbar-background-color) rounded-none bottom-0 text-(--snackbar-color) flex left-0 m-0 min-h-[calc(4.8*var(--unit))] p-[var(--snackbar-vertical-offset)_var(--snackbar-horizontal-offset)] fixed right-0 [transition:transform_var(--animation-duration)_var(--animation-curve-default)] z-(--z-index-higher)',
+          '[box-shadow:var(--shadow-6p)]',
           materialRoot,
           materialDescendants,
           '[&:not(.rt-snackbar-active)]:transform-[translateY(100%)]',
@@ -210,8 +211,10 @@ export function Snackbar({
         </span>
         {action ? (
           <Button
+            neutral={false}
             className={cn(
               'rt-snackbar-button',
+              'text-(--snackbar-color)',
               'm-[calc(-0.8*var(--unit))_calc(-0.8*var(--unit))_calc(-0.8*var(--unit))_var(--snackbar-button-offset)] min-w-[calc(6.4*var(--unit))] pl-[calc(0.8*var(--unit))] pr-[calc(0.8*var(--unit))]',
               '[.rt-snackbar-snackbar.rt-snackbar-accept_&]:text-(--snackbar-color-accept)',
               '[.rt-snackbar-snackbar.rt-snackbar-warning_&]:text-(--snackbar-color-warning)',

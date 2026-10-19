@@ -23,6 +23,9 @@ describe('native form integration', () => {
     });
     const trigger = screen.getByRole('combobox', { name: /Destination/ });
     expect(trigger).toHaveAttribute('aria-invalid', 'true');
+    expect(trigger).toHaveFocus();
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    await user.click(trigger);
     await user.click(screen.getByRole('option', { name: 'Tokyo' }));
     expect(form.checkValidity()).toBe(true);
     await waitFor(() => expect(new FormData(form).get('city')).toBe('Tokyo'));
@@ -44,15 +47,16 @@ describe('native form integration', () => {
   });
 });
 
-it('preserves a closed dropdown typeahead match when opening', () => {
+it('commits closed dropdown typeahead without opening', () => {
   const change = vi.fn();
   render(<Dropdown source={['Alpha', 'Beta']} onChange={change} />);
   const input = screen.getByRole('combobox');
   fireEvent.focus(input);
   fireEvent.keyDown(input, { key: 'Escape' });
   fireEvent.keyDown(input, { key: 'b' });
-  fireEvent.keyDown(input, { key: 'Enter' });
   expect(change).toHaveBeenCalledWith('Beta', expect.anything());
+  expect(input).toHaveAttribute('aria-expanded', 'false');
+  expect(input).toHaveValue('Beta');
 });
 
 describe('option groups and typeahead', () => {
@@ -61,7 +65,7 @@ describe('option groups and typeahead', () => {
     vi.restoreAllMocks();
   });
 
-  it('groups dropdown options and uses rich option text for typeahead', () => {
+  it('groups dropdown options and uses rich option text for typeahead', async () => {
     const change = vi.fn();
     render(
       <Dropdown
@@ -74,8 +78,10 @@ describe('option groups and typeahead', () => {
       />,
     );
     expect(screen.getByRole('group', { name: 'Americas' })).toBeInTheDocument();
-    fireEvent.keyDown(screen.getByRole('combobox'), { key: 'c' });
-    fireEvent.keyDown(screen.getByRole('combobox'), { key: 'Enter' });
+    await waitFor(() => expect(screen.getByRole('option', { name: 'United States' })).toHaveFocus());
+    await userEvent.keyboard('c');
+    await waitFor(() => expect(screen.getByRole('option', { name: 'Canada' })).toHaveFocus());
+    await userEvent.keyboard('{Enter}');
     expect(change).toHaveBeenCalledWith('ca', expect.anything());
     expect(screen.getByRole('combobox')).toHaveValue('Canada');
   });

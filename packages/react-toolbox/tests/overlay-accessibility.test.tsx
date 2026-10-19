@@ -12,7 +12,7 @@ describe('background accessibility', () => {
     vi.unstubAllGlobals();
   });
 
-  it('hides background content from assistive technology and restores it when a modal closes', () => {
+  it('hides background content through the visible exit and restores it when the modal unmounts', async () => {
     const view = render(
       <StrictMode>
         <button>Outside</button>
@@ -29,7 +29,8 @@ describe('background accessibility', () => {
         <Dialog active={false} title="Confirm" />
       </StrictMode>,
     );
-    expect(screen.getByRole('button', { name: 'Outside' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Outside' })).not.toBeInTheDocument();
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Outside' })).toBeInTheDocument());
   });
 });
 

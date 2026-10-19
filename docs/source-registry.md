@@ -89,7 +89,7 @@ The shared foundation contains base design tokens, local Roboto fonts, Material 
 
 Automatic font delivery lives in `foundations/styles/fonts.css`: Roboto 400/500 and Material Icons. To use an existing typeface or a framework font loader, remove only the two Roboto imports from that editable file and set `--preferred-font` to your application's font stack. Keep the Material Icons import: calendar navigation, scrollable tabs, and sorted table headers still use built-in ligatures. Pass React SVG nodes to supported icon props when an icon must appear without waiting for a font download.
 
-The default Roboto stylesheet uses `font-display: swap`, which can visibly replace fallback text after first paint. Font preloading, fallback metrics, and the display policy belong to the host application. For Next.js, use `next/font/local` with a root-layout CSS variable, then map `--preferred-font` to that variable. `display: 'optional'` prevents a late swap, at the cost of retaining the fallback for that page load when the font arrives too late. Load only the weights and language subsets your application uses. The [installation guide](https://react-toolbox.io/docs/installation#fonts) includes a complete Next.js example.
+The default Roboto stylesheet uses `font-display: swap`, which can visibly replace fallback text after first paint. Font preloading, fallback metrics, and the display policy belong to the host application. For Next.js, prefer `next/font/google`, which downloads Roboto at build time and serves it from your deployment, with a root-layout CSS variable mapped to `--preferred-font`; use `next/font/local` with the included Fontsource files when the build must work offline or pin font files. `display: 'optional'` prevents a late swap, at the cost of retaining the fallback for that page load when the font arrives too late. Load only the weights and language subsets your application uses. The [installation guide](https://react-toolbox.io/docs/installation#fonts) includes a complete Next.js example.
 
 Shared foundation styles reserve the width of Material ligatures before the font loads, while allowing component-specific dimensions to override it. This prevents icon text from stretching controls; it does not make font icons visible before their font arrives.
 
@@ -145,6 +145,7 @@ The installed source belongs to the application. Commit local changes, rerun the
 
 | Item | Public component family |
 | --- | --- |
+| `accordion` | AccordionRoot, AccordionItem, AccordionHeader, AccordionTrigger, AccordionPanel |
 | `app-bar` | AppBar |
 | `autocomplete` | Autocomplete |
 | `avatar` | Avatar |
@@ -154,6 +155,7 @@ The installed source belongs to the application. Commit local changes, rerun the
 | `chip` | Chip |
 | `date-picker` | DatePicker, CalendarSelection for single/multiple/range dates |
 | `dialog` | Dialog |
+| `divider` | Divider |
 | `drawer` | Drawer |
 | `dropdown` | Dropdown |
 | `font-icon` | FontIcon |
@@ -190,7 +192,7 @@ Link and Navigation have been removed from the private workspace as well as the 
 
 Family dependencies come from parsed TypeScript imports and exports, including type-only imports. A date picker installs its dialog, button, input, overlay, font-icon, and ripple dependencies. Shared implementation files have one registry owner.
 
-Behavioral npm dependencies are also derived from imports. Button and the convenience Menu use Radix Slot; Avatar uses Radix Avatar. Compound Dialog/Drawer, Tabs, DropdownMenu, Dropdown, Slider and Tooltip parts install their respective Radix primitives, and Autocomplete parts install Base UI Combobox. Convenience modals share Radix focus/layer ownership and scroll locking with compound surfaces. Sheet installs Vaul over the same Radix Dialog dependency. Other families do not acquire these dependencies unless they compose those components. The installed source keeps its M1 styling and existing public APIs; it can coexist with ordinary shadcn components.
+Behavioral npm dependencies are also derived from imports. Button uses Radix Slot; Avatar uses Radix Avatar. Convenience and compound Dialog/Drawer, Menu, Tabs, Dropdown, Slider and Tooltip share their respective Radix interaction primitives; Autocomplete shares Base UI Combobox. Sheet installs Vaul over the same Radix Dialog dependency. Other families do not acquire these dependencies unless they compose those components. The installed source keeps its M1 styling and public APIs and can coexist with ordinary shadcn components. Read the [behavior migration guide](component-behavior.md) before replacing earlier convenience implementations: keyboard behavior and focus timing now follow the shared primitives.
 
 Each family also registers the keyframes referenced by its TypeScript import graph through registry `css` metadata. This keeps animations available when the host compiles imported setup CSS and its Tailwind utility sheet separately, as Next.js does. The definitions are derived from the maintained CSS; a minimal Button installation still excludes unrelated checkbox and progress animations.
 
@@ -234,6 +236,6 @@ Checks validate the official shadcn schemas, exact source and CSS contents, prov
 
 The installer test runs the actual pinned shadcn CLI in a clean pnpm application. It installs a date picker by URL, then all families through the namespace with a non-default UI alias. It verifies exact source files, dependency installation without `react-toolbox`, idempotent theme injection, retained host CSS, strict types, and a production Next.js build. Chromium checks hydration, clicks, original button geometry and palette, and Tailwind spacing/color utilities without manual Toolbox stylesheet imports.
 
-Set `REGISTRY_TEST_ORIGIN=http://127.0.0.1:3100` to run the same installer test against the actual docs endpoint. Otherwise it uses a temporary local HTTP fixture. It needs network access and the Chromium browser installed by the command in the root README. Temporary consumers are removed unless `KEEP_REGISTRY_SMOKE=1` is set.
+Set `REGISTRY_TEST_ORIGIN=http://127.0.0.1:3100` to run the same installer test against the actual docs endpoint. Otherwise it uses a temporary local HTTP fixture. It needs network access and the Chromium browser installed by the command in the [contributor guide](../CONTRIBUTING.md#verify). Temporary consumers are removed unless `KEEP_REGISTRY_SMOKE=1` is set.
 
 Upstream references: [Magic UI installation](https://magicui.design/docs/installation), [registry items](https://ui.shadcn.com/docs/registry/registry-item-json), and [namespaces](https://ui.shadcn.com/docs/registry/namespace).

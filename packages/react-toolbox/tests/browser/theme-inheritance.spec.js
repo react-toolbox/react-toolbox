@@ -56,6 +56,23 @@ test('recalculates scoped palette and size tokens while retaining unrelated root
           { variables: { '--unit': '12px' } },
           h(Button, { id: 'primary', primary: true, raised: true, label: 'Primary' }),
           h(Button, { id: 'accent', accent: true, raised: true, label: 'Accent' }),
+          h(Button, { id: 'accent-text', accent: true, label: 'Accent text' }),
+        ),
+      ),
+      h(
+        ThemeProvider,
+        { variables: { '--button-accent-color': '#4a148c' } },
+        h(Button, { id: 'component-accent-text', accent: true, label: 'Component accent' }),
+        h(Button, { id: 'component-accent-raised', accent: true, raised: true, label: 'Component surface' }),
+      ),
+      h(
+        ThemeProvider,
+        { variables: { '--palette-pink-600': '#880e4f', '--rt-color-white': '#fffbea' } },
+        h(
+          ThemeProvider,
+          { variables: { '--unit': '12px' } },
+          h(Button, { id: 'scoped-accent', accent: true, raised: true, label: 'Scoped accent' }),
+          h(Button, { id: 'scoped-accent-text', accent: true, label: 'Scoped accent text' }),
         ),
       ),
       h(
@@ -69,6 +86,27 @@ test('recalculates scoped palette and size tokens while retaining unrelated root
   await expect(page.locator('#inherited')).toHaveCSS('background-color', 'rgb(63, 81, 181)');
   await expect(page.locator('#primary')).toHaveCSS('background-color', 'rgb(103, 58, 183)');
   await expect(page.locator('#accent')).toHaveCSS('background-color', 'rgb(0, 105, 92)');
+  /** Resolve CSS Color 4 serialization through canvas so both browser engines compare the same RGB value. */
+  await expect(page.locator('#component-accent-raised')).toHaveCSS('background-color', 'rgb(74, 20, 140)');
+  await expect(page.locator('#scoped-accent')).toHaveCSS('background-color', 'rgb(136, 14, 79)');
+  await expect(page.locator('#scoped-accent')).toHaveCSS('color', 'rgb(255, 251, 234)');
+  for (const [id, expected] of [
+    ['#accent-text', [0, 73.5, 64.4]],
+    ['#component-accent-text', [51.8, 14, 98]],
+    ['#scoped-accent-text', [95.2, 9.8, 55.3]],
+  ]) {
+    const accentText = await page.locator(id).evaluate((node) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 1;
+      const context = canvas.getContext('2d');
+      context.fillStyle = getComputedStyle(node).color;
+      context.fillRect(0, 0, 1, 1);
+      return [...context.getImageData(0, 0, 1, 1).data].slice(0, 3);
+    });
+    for (const [index, channel] of expected.entries()) {
+      expect(Math.abs(accentText[index] - channel)).toBeLessThanOrEqual(1);
+    }
+  }
   await expect(page.locator('#primary')).toHaveCSS('height', '50px');
   expect(await page.locator('#resized').evaluate((element) => element.getBoundingClientRect().height)).toBeCloseTo(
     43.2,

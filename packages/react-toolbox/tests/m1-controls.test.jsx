@@ -1,5 +1,6 @@
 import React, { StrictMode, useState } from 'react';
-import { render, screen, fireEvent, cleanup, act } from '@testing-library/react';
+import { render, screen, fireEvent, cleanup, act, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { renderToString } from 'react-dom/server';
 import { hydrateRoot } from 'react-dom/client';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -63,7 +64,7 @@ describe('Material 1 control behavior', () => {
     expect(onChange).toHaveBeenCalledWith('', expect.anything());
   });
 
-  it('selects dropdown values by keyboard, skips disabled options, and submits the value rather than label', () => {
+  it('selects dropdown values by keyboard, skips disabled options, and submits the value rather than label', async () => {
     const onChange = vi.fn();
     let selectedName;
     function Example() {
@@ -90,17 +91,19 @@ describe('Material 1 control behavior', () => {
     }
     const view = render(strict(<Example />));
     const field = screen.getByRole('combobox', { name: 'Choice' });
-    fireEvent.focus(field);
-    fireEvent.keyDown(field, { key: 'ArrowDown' });
-    expect(document.getElementById(field.getAttribute('aria-activedescendant'))).toHaveTextContent('Charlie');
-    fireEvent.keyDown(field, { key: 'Enter' });
+    field.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => expect(screen.getByRole('option', { name: 'Alpha' })).toHaveFocus());
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => expect(screen.getByRole('option', { name: 'Charlie' })).toHaveFocus());
+    await userEvent.keyboard('{Enter}');
     expect(onChange).toHaveBeenCalledWith('c', expect.anything());
     expect(selectedName).toBe('choice');
     expect(field).toHaveAttribute('aria-expanded', 'false');
     expect(new FormData(view.container.querySelector('form')).get('choice')).toBe('c');
   });
 
-  it('supports primitive dropdown sources and keyboard activation of templates', () => {
+  it('supports primitive dropdown sources and keyboard activation of templates', async () => {
     const onChange = vi.fn();
     render(
       <Dropdown
@@ -112,10 +115,14 @@ describe('Material 1 control behavior', () => {
     );
     const field = screen.getByRole('combobox', { name: 'Letter' });
     expect(field).toHaveAttribute('tabindex', '0');
-    fireEvent.keyDown(field, { key: 'ArrowDown' });
-    fireEvent.keyDown(field, { key: 'End' });
-    fireEvent.keyDown(field, { key: 'Enter' });
+    field.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => expect(screen.getByRole('option', { name: 'Alpha' })).toHaveFocus());
+    await userEvent.keyboard('{End}');
+    await waitFor(() => expect(screen.getByRole('option', { name: 'Beta' })).toHaveFocus());
+    await userEvent.keyboard('{Enter}');
     expect(onChange).toHaveBeenCalledWith('Beta', expect.anything());
+    await waitFor(() => expect(screen.getByRole('combobox', { name: 'Letter' })).toHaveFocus());
   });
 
   it('gives autocomplete instances distinct options and selects the clicked option without prior hover', () => {
@@ -131,9 +138,11 @@ describe('Material 1 control behavior', () => {
     const field = screen.getByRole('combobox', { name: 'First' });
     fireEvent.focus(field);
     const options = screen.getAllByRole('option');
-    expect(new Set([...document.querySelectorAll('[role="option"]')].map((option) => option.id)).size).toBe(4);
+    const firstIds = options.map((option) => option.id);
     fireEvent.click(options.find((option) => option.textContent === 'Beta'));
     expect(onChange).toHaveBeenCalledWith('b', expect.anything());
+    fireEvent.focus(screen.getByRole('combobox', { name: 'Second' }));
+    expect(new Set([...firstIds, ...screen.getAllByRole('option').map((option) => option.id)]).size).toBe(4);
   });
 
   it('accepts the keyboard autocomplete suggestion and does not select undefined when nothing matches', () => {
@@ -240,7 +249,7 @@ describe('Material 1 control behavior', () => {
     expect(screen.getByRole('button', { name: 'Ok' })).toBeDisabled();
   });
 
-  it('scopes calendar arrows to its own focus, skips unavailable dates, and marks today', () => {
+  it('scopes calendar arrows to its own focus, discovers unavailable dates, and marks today', () => {
     const onChange = vi.fn();
     const today = new Date();
     const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1, 18);
@@ -253,6 +262,9 @@ describe('Material 1 control behavior', () => {
     fireEvent.keyDown(screen.getByRole('textbox', { name: 'Unrelated' }), { key: 'ArrowRight' });
     expect(onChange).not.toHaveBeenCalled();
     fireEvent.keyDown(screen.getByRole('group', { name: 'Calendar' }), { key: 'ArrowRight' });
+    expect(onChange).not.toHaveBeenCalled();
+    expect(document.activeElement).toHaveAttribute('aria-disabled', 'true');
+    fireEvent.keyDown(document.activeElement, { key: 'ArrowRight' });
     expect(onChange.mock.calls[0][0].getDate()).toBe(
       new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2).getDate(),
     );
@@ -286,7 +298,7 @@ describe('Material 1 control behavior', () => {
     expect(screen.getByText('November 2026')).toBeInTheDocument();
     act(() => vi.advanceTimersByTime(350));
     expect(screen.queryByText('October 2026')).not.toBeInTheDocument();
-    fireEvent.keyDown(screen.getByRole('button', { name: 'Choose year' }), { key: 'Enter' });
+    fireEvent.keyDown(screen.getByRole('button', { name: /^Choose year: / }), { key: 'Enter' });
     const year = screen.getByRole('button', { name: '2026' });
     fireEvent.keyDown(year, { key: 'ArrowDown' });
     expect(screen.getByRole('button', { name: '2027' })).toHaveFocus();

@@ -3,7 +3,7 @@ import './tokens.css';
 import '../chip/tokens.css';
 import '../input/tokens.css';
 import { Combobox as Primitive } from '@base-ui/react/combobox';
-import { createContext, useContext, useId, type ComponentProps } from 'react';
+import { createContext, useContext, useId, useRef, type ComponentProps } from 'react';
 import { cn } from '../foundations/styles/cn';
 import { usePortalTheme } from '../foundations/portal/usePortalTheme';
 import { surfaceClasses, optionClasses, focusClasses } from '../foundations/styles/composition';
@@ -74,7 +74,7 @@ export function AutocompleteInputGroup({ className, ...props }: AutocompleteInpu
       {...props}
       className={(state) =>
         cn(
-          'box-border [&_*]:box-border relative flex min-h-[max(48px,var(--input-field-height))] items-center border-0 font-(family-name:--preferred-font) [box-shadow:inset_0_-1px_0_var(--input-text-bottom-border-color)] focus-within:[box-shadow:inset_0_-2px_0_var(--input-text-highlight-color)]',
+          "box-border [&_*]:box-border relative flex min-h-[max(48px,var(--input-field-height))] items-center border-0 font-(family-name:--preferred-font) [box-shadow:inset_0_-1px_0_var(--input-text-bottom-border-color)] focus-within:[box-shadow:inset_0_-2px_0_var(--input-text-highlight-color)] data-disabled:[box-shadow:none] data-disabled:after:absolute data-disabled:after:inset-x-0 data-disabled:after:bottom-0 data-disabled:after:[border-bottom:1px_dotted_var(--input-text-disabled-color)] data-disabled:after:content-['']",
           typeof className === 'function' ? className(state) : className,
         )
       }
@@ -89,7 +89,7 @@ export function AutocompleteInput({ className, ...props }: AutocompleteInputProp
       {...props}
       className={(state) =>
         cn(
-          'box-border min-h-[max(48px,var(--input-field-height))] min-w-0 flex-1 border-0 bg-(--input-text-background-color) font-(family-name:--preferred-font) py-(--input-field-padding) text-(length:--input-field-font-size) leading-[1.4] text-(--input-text-input-element-color) outline-none disabled:opacity-50',
+          'box-border min-h-[max(48px,var(--input-field-height))] min-w-0 flex-1 border-0 bg-(--input-text-background-color) font-(family-name:--preferred-font) py-(--input-field-padding) text-(length:--input-field-font-size) leading-[1.4] text-(--input-text-input-element-color) outline-none disabled:text-(--input-text-disabled-text-color)',
           typeof className === 'function' ? className(state) : className,
         )
       }
@@ -151,7 +151,7 @@ export function AutocompletePopup({ className, style, ...props }: AutocompletePo
       className={(state) =>
         cn(
           surfaceClasses,
-          'bg-(--autocomplete-suggestions-background) text-(--rt-color-text) rounded-[calc(0.2*var(--unit))] min-w-(--anchor-width) max-h-(--available-height) overflow-y-auto py-(--autocomplete-suggestion-padding) [box-shadow:var(--shadow-8p)] origin-(--transform-origin) transition-[opacity,scale] duration-(--animation-duration) data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none',
+          'bg-(--autocomplete-suggestions-background) text-(--rt-color-text) rounded-[calc(0.2*var(--unit))] min-w-(--anchor-width) max-h-(--available-height) overflow-y-auto py-(--input-field-padding) [box-shadow:var(--shadow-8p)] origin-(--transform-origin) transition-[opacity,scale] duration-(--animation-duration) data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none',
           typeof className === 'function' ? className(state) : className,
         )
       }
@@ -169,15 +169,28 @@ export function AutocompleteList({ className, ...props }: AutocompleteListProps)
   );
 }
 export type AutocompleteItemProps = ComponentProps<typeof Primitive.Item>;
-export function AutocompleteItem({ className, ...props }: AutocompleteItemProps) {
+export function AutocompleteItem({ className, onPointerDownCapture, onMouseUp, ...props }: AutocompleteItemProps) {
+  const touch = useRef(false);
   return (
     <Primitive.Item
       data-slot="AutocompleteItem"
       {...props}
+      onPointerDownCapture={(event) => {
+        onPointerDownCapture?.(event);
+        touch.current = event.pointerType === 'touch';
+        /** Base UI 1.9 cancels pointer-down, which suppresses WebKit's touch click.
+         * Keep native taps and let the primitive's click handler select exactly once. */
+        if (touch.current && !event.defaultPrevented) event.preventBaseUIHandler();
+      }}
+      onMouseUp={(event) => {
+        onMouseUp?.(event);
+        /** A touch tap is not the primitive's mouse drag-to-select interaction. */
+        if (touch.current) event.preventBaseUIHandler();
+      }}
       className={(state) =>
         cn(
           optionClasses,
-          'min-h-[max(48px,var(--input-field-height))] p-(--autocomplete-suggestion-padding) text-(length:--input-field-font-size) leading-[1.4] data-highlighted:bg-(--autocomplete-suggestion-active-background)',
+          'min-h-[max(48px,var(--input-field-height))] px-[calc(1.6*var(--unit))] py-(--autocomplete-suggestion-padding) text-(length:--input-field-font-size) leading-[1.4] data-highlighted:bg-(--autocomplete-suggestion-active-background)',
           typeof className === 'function' ? className(state) : className,
         )
       }
@@ -192,7 +205,7 @@ export function AutocompleteGroupLabel({ className, ...props }: AutocompleteGrou
       {...props}
       className={(state) =>
         cn(
-          'px-(--autocomplete-suggestion-padding) py-(--input-field-padding) text-(length:--font-size-small) font-medium text-(--rt-color-text-secondary)',
+          'px-[calc(1.6*var(--unit))] py-(--input-field-padding) text-(length:--font-size-small) font-medium text-(--rt-color-text-secondary)',
           typeof className === 'function' ? className(state) : className,
         )
       }
@@ -207,7 +220,7 @@ export function AutocompleteEmpty({ className, ...props }: AutocompleteEmptyProp
       {...props}
       className={(state) =>
         cn(
-          'px-(--autocomplete-suggestion-padding) py-(--input-field-padding) text-(length:--font-size-small) leading-[24px] text-(--rt-color-text-secondary) empty:hidden',
+          'px-[calc(1.6*var(--unit))] py-(--input-field-padding) text-(length:--font-size-small) leading-[24px] text-(--rt-color-text-secondary) empty:hidden',
           typeof className === 'function' ? className(state) : className,
         )
       }
@@ -222,7 +235,7 @@ export function AutocompleteStatus({ className, ...props }: AutocompleteStatusPr
       {...props}
       className={(state) =>
         cn(
-          'px-(--autocomplete-suggestion-padding) py-(--input-field-padding) text-(length:--font-size-small) leading-[24px] text-(--rt-color-text-secondary) empty:hidden',
+          'px-[calc(1.6*var(--unit))] py-(--input-field-padding) text-(length:--font-size-small) leading-[24px] text-(--rt-color-text-secondary) empty:hidden',
           typeof className === 'function' ? className(state) : className,
         )
       }

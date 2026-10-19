@@ -15,9 +15,11 @@ import {
   type Ref,
 } from 'react';
 import { cn } from '../foundations/styles/cn';
+import { forcedColorsFocusClasses } from '../foundations/styles/composition';
 import { FontIcon } from '../font-icon';
 import { useRipple } from '../ripple';
 import { MenuContext } from './context';
+import { DropdownMenuItem } from './parts';
 
 export type MenuItemClassNames = MenuClassNames;
 export type MenuItemEvent = MouseEvent<HTMLLIElement> | KeyboardEvent<HTMLLIElement>;
@@ -57,6 +59,8 @@ export function MenuItem<Value = unknown>({
   onClick,
   onKeyDown,
   onMouseDown,
+  onPointerMove,
+  onPointerLeave,
   onTouchStart,
   onTouchEnd,
   onTouchCancel,
@@ -88,7 +92,7 @@ export function MenuItem<Value = unknown>({
     onClick?.(event, handle);
     if (!event.defaultPrevented) menu?.select(value, closeOnSelect);
   };
-  return (
+  const item = (
     <li
       {...attributes}
       ref={node}
@@ -104,7 +108,8 @@ export function MenuItem<Value = unknown>({
         'rt-menu-menuItem',
         'items-center text-(--rt-color-text) flex text-(length:--menu-item-font-size) h-(--menu-item-height) overflow-hidden p-[0_var(--menu-item-padding)] relative',
         '[&:not(.rt-menu-disabled):hover]:bg-(--menu-item-hover-background) [&:not(.rt-menu-disabled):hover]:cursor-pointer',
-        '[&:not(.rt-menu-disabled):focus-visible]:bg-(--menu-item-hover-background) [&:not(.rt-menu-disabled):focus-visible]:[outline:2px_solid_currentColor] [&:not(.rt-menu-disabled):focus-visible]:-outline-offset-2',
+        'outline-none [&:not(.rt-menu-disabled):focus-visible]:bg-(--menu-item-hover-background)',
+        forcedColorsFocusClasses,
         classNames?.menuItem,
         selected &&
           cn(
@@ -123,10 +128,19 @@ export function MenuItem<Value = unknown>({
       onClick={click}
       onKeyDown={(event) => {
         onKeyDown?.(event);
-        if (!event.defaultPrevented && !disabled && (event.key === 'Enter' || event.key === ' ')) {
+        /** A standalone item has activation, but no menu navigation or selection engine. */
+        if (!menu && !event.defaultPrevented && !disabled && (event.key === 'Enter' || event.key === ' ')) {
           click(event);
           event.preventDefault();
         }
+      }}
+      onPointerMove={(event) => {
+        onPointerMove?.(event);
+        if (menu?.isStatic) event.preventDefault();
+      }}
+      onPointerLeave={(event) => {
+        onPointerLeave?.(event);
+        if (menu?.isStatic) event.preventDefault();
       }}
       onMouseDown={(event) => {
         onMouseDown?.(event);
@@ -155,6 +169,20 @@ export function MenuItem<Value = unknown>({
       {children}
       {ink.ripple}
     </li>
+  );
+  return menu ? (
+    <DropdownMenuItem
+      asChild
+      disabled={disabled}
+      textValue={textValue}
+      onSelect={(event) => {
+        if (!closeOnSelect) event.preventDefault();
+      }}
+    >
+      {item}
+    </DropdownMenuItem>
+  ) : (
+    item
   );
 }
 export default MenuItem;

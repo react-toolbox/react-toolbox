@@ -5,6 +5,7 @@ import { itemClasses, disabledClasses } from './styles';
 import type { ListClassNames } from './types';
 import { cloneElement, type ComponentPropsWithRef, type ReactElement, type ReactNode } from 'react';
 import { cn } from '../foundations/styles/cn';
+import { forcedColorsFocusClasses } from '../foundations/styles/composition';
 import Avatar from '../avatar';
 import FontIcon from '../font-icon';
 import ListItemContent from './ListItemContent';
@@ -98,7 +99,9 @@ export function ListItemLayout({
             tabIndex: disabled ? -1 : primaryAction.props.tabIndex,
             ...(primaryAction.type === 'button' && { disabled: disabled || primaryAction.props.disabled }),
             className: cn(
-              'flex flex-1 min-w-0 items-center self-stretch border-0 bg-transparent p-0 text-inherit [font:inherit] text-start cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--rt-color-primary)',
+              'flex flex-1 min-w-0 items-center self-stretch border-0 bg-transparent p-0 text-inherit [font:inherit] text-start cursor-pointer outline-none focus-visible:bg-(--list-item-hover-color)',
+              forcedColorsFocusClasses,
+              "[&:has(.rt-list-itemContentRoot[data-line-count='3'])]:items-start",
               primaryAction.props.className,
             ),
             children: primaryContent,
