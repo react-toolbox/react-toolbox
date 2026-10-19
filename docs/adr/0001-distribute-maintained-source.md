@@ -1,3 +1,0 @@
-# Distribute the maintained Material source
-
-React Toolbox distributes editable source through a shadcn registry, while its compiled workspace package remains private for the documentation app. The maintained `src/material/` tree matches the installed `material/` tree byte for byte, including public entries, so customizations and release diffs can be compared directly; this deliberately gives up npm-style automatic upgrades and requires consumers to review copied-source updates. Shared capabilities have their own registry items, and component families own their specialized helpers, so small installations do not receive unrelated behavior.
