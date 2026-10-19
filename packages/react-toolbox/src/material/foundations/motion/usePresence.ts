@@ -6,7 +6,7 @@ import useReducedMotion from './useReducedMotion';
 /** Retain a surface until its own exit finishes, unless the consumer supplies an explicit lifetime. */
 export default function usePresence<Element extends HTMLElement = HTMLElement>(active: boolean, delay?: number) {
   const reducedMotion = useReducedMotion();
-  const motionRef = useRef<Element>(null);
+  const [motionElement, setMotionElement] = useState<Element | null>(null);
   const previous = useRef(active);
   const [present, setPresent] = useState(active);
   const [visible, setVisible] = useState(active);
@@ -21,10 +21,14 @@ export default function usePresence<Element extends HTMLElement = HTMLElement>(a
     previous.current = active;
     setPresent(true);
     setVisible(false);
-    if (!active) return;
+  }, [active, reducedMotion]);
+  useLayoutEffect(() => {
+    if (!active || !present || visible || reducedMotion || !motionElement) return;
+    /** Portals may attach after the opening render; establish hidden styles before starting the entrance. */
+    motionElement.getBoundingClientRect();
     const timer = setTimeout(() => setVisible(true), 20);
     return () => clearTimeout(timer);
-  }, [active, reducedMotion]);
+  }, [active, present, visible, reducedMotion, motionElement]);
   useLayoutEffect(() => {
     if (active || visible || !present || reducedMotion) return;
     if (delay !== undefined) {
@@ -36,7 +40,7 @@ export default function usePresence<Element extends HTMLElement = HTMLElement>(a
     const finishExit = () => {
       if (cancelled) return;
       /** Resolve exit styles on the surface only; descendants may contain ongoing activity indicators. */
-      const animations = (motionRef.current?.getAnimations?.() ?? []).filter(
+      const animations = (motionElement?.getAnimations?.() ?? []).filter(
         (animation) =>
           animation.playState !== 'finished' &&
           animation.playState !== 'idle' &&
@@ -54,6 +58,6 @@ export default function usePresence<Element extends HTMLElement = HTMLElement>(a
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [active, visible, present, reducedMotion, delay]);
-  return { present, visible, motionRef };
+  }, [active, visible, present, reducedMotion, delay, motionElement]);
+  return { present, visible, motionRef: setMotionElement };
 }

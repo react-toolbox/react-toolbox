@@ -41,6 +41,16 @@ test.beforeAll(async () => {
           import Snackbar from './src/material/snackbar';
           import { TooltipRoot, TooltipTrigger, TooltipPortal, TooltipContent } from './src/material/tooltip';
           const options = window.fixtureOptions;
+          let portalInitialized = false;
+          /** Consumer portal resolution can outlast the entrance delay on a busy main thread. */
+          const portalContainer = options.slowPortal ? () => {
+            if (!portalInitialized) {
+              portalInitialized = true;
+              const until = performance.now() + 100;
+              while (performance.now() < until) {}
+            }
+            return document.body;
+          } : undefined;
           function Fixture() {
             const [open, setOpen] = useState(false);
             window.setFixtureOpen = value => flushSync(() => setOpen(value));
@@ -73,9 +83,9 @@ test.beforeAll(async () => {
                   <DrawerTitle>Sections</DrawerTitle><button onClick={() => setOpen(false)}>Close</button>
                 </DrawerContent></DrawerPortal>
               </DrawerRoot>}
-              {options.kind === 'dialog' && <Dialog active={open} title='Details' delay={options.delay}
+              {options.kind === 'dialog' && <Dialog active={open} title='Details' delay={options.delay} portalContainer={portalContainer}
                 onEscKeyDown={() => setOpen(false)} actions={[{label:'Close', onClick:() => setOpen(false)}]} />}
-              {options.kind === 'drawer' && <Drawer active={open} aria-label='Sections' delay={options.delay}
+              {options.kind === 'drawer' && <Drawer active={open} aria-label='Sections' delay={options.delay} portalContainer={portalContainer}
                 onEscKeyDown={() => setOpen(false)}><button onClick={() => setOpen(false)}>Close</button></Drawer>}
               {options.kind === 'snackbar' && <Snackbar active={open} label='Saved' action='Dismiss' delay={options.delay} onClick={() => setOpen(false)} />}
               {options.kind === 'tooltip' && <TooltipRoot open={open} onOpenChange={setOpen}>
@@ -259,6 +269,12 @@ test('autocomplete derives durations from its state-dependent style callback', a
 for (const kind of convenienceKinds) {
   test(`${kind} default retention follows custom CSS motion beyond the old 500ms delay`, async ({ page }) => {
     await exerciseMotion(page, kind, 800, 600, { variables: { '--animation-duration': '800ms' } });
+  });
+}
+
+for (const kind of ['dialog', 'drawer']) {
+  test(`${kind} entrance survives delayed portal setup`, async ({ page }) => {
+    await exerciseMotion(page, kind, 200, 150, { slowPortal: true });
   });
 }
 

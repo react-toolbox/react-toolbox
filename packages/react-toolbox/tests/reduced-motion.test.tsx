@@ -23,8 +23,8 @@ function preference(initial: boolean) {
 }
 
 function Presence({ active }: { active: boolean }) {
-  const { present, visible } = usePresence(active, 500);
-  return present ? <div data-testid="presence" data-visible={visible} /> : null;
+  const { present, visible, motionRef } = usePresence<HTMLDivElement>(active, 500);
+  return present ? <div ref={motionRef} data-testid="presence" data-visible={visible} /> : null;
 }
 
 function RippleButton() {
