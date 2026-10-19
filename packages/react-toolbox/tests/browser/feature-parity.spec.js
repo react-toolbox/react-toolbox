@@ -168,6 +168,7 @@ test('keeps grouped and empty autocomplete results accessible', async ({ page })
   await expect
     .poll(() => page.evaluate(() => document.activeElement?.closest('[aria-hidden="true"], [inert]') === null))
     .toBe(true);
+  await expect(page.locator('[data-slot="AutocompletePopup"]')).toHaveCount(0);
   expect((await auditPage()).violations).toEqual([]);
 });
 
