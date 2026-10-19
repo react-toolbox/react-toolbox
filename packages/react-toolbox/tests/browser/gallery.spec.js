@@ -35,7 +35,9 @@ test('renders every gallery section with the default Material palette and sizes'
         .first()
         .evaluate((element) => {
           const style = getComputedStyle(element);
-          return document.fonts.check(`${style.fontWeight} ${style.fontSize} ${style.fontFamily}`);
+          /** Check the web font; optional local fallback faces may be unavailable on Linux. */
+          const family = style.fontFamily.split(',')[0];
+          return document.fonts.check(`${style.fontWeight} ${style.fontSize} ${family}`);
         }),
     ).toBe(true);
   }

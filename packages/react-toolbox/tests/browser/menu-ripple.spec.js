@@ -126,7 +126,9 @@ for (const name of ['Save changes', 'Download']) {
     await page.mouse.down();
     const ripple = control.locator('[data-react-toolbox="ripple"]');
     await expect(ripple).toHaveCount(1);
-    const center = await ripple.locator('span').evaluate((element) => {
+    const center = await ripple.locator('span').evaluate(async (element) => {
+      /** Measure settled ink while still pressed, without rounding from an interpolated transform. */
+      await Promise.all(element.getAnimations().map((animation) => animation.finished));
       const bounds = element.getBoundingClientRect();
       return { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 };
     });

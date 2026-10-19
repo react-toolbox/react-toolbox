@@ -111,7 +111,12 @@ test.describe('touch scrolling', () => {
     const sheet = page.getByRole('dialog', { name: 'Visit notes' });
     await expect.poll(async () => Math.round((await sheet.boundingBox()).y)).toBe(56);
     const input = await page.context().newCDPSession(page);
-    await input.send('Input.synthesizeScrollGesture', { x: 195, y: 450, yDistance: -1000, gestureSourceType: 'touch' });
+    /** Dispatch native touch events; Linux Chromium's synthesized gesture can omit touchmove and scrolling. */
+    await input.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 195, y: 450 }] });
+    for (let y = 430; y >= 150; y -= 20) {
+      await input.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: 195, y }] });
+    }
+    await input.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
     await expect.poll(() => page.getByTestId('notes-content').evaluate((node) => node.scrollTop)).toBeGreaterThan(0);
   });
 });

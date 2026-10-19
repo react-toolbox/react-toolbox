@@ -111,22 +111,31 @@ async function mount(page, kind, options = {}) {
   return page.locator(selectors[kind]);
 }
 
-/** Pause actual browser motion before inspecting short exits, including Base UI transitions. */
+/** Pause actual browser motion as its styles change, before short transitions can finish. */
 async function captureNextMotion(page, kind) {
   await page.evaluate((selector) => {
     window.stopMotionCapture?.();
     window.capturedMotion = undefined;
-    const capture = (event) => {
-      if (!(event.target instanceof Element) || !event.target.matches(selector)) return;
-      const element = event.target;
-      const animations = element.getAnimations().filter((animation) => animation.effect?.target === element);
+    const previousAnimations = new Set(document.querySelector(selector)?.getAnimations());
+    const capture = () => {
+      const element = document.querySelector(selector);
+      if (!element) return;
+      const animations = element
+        .getAnimations()
+        .filter(
+          (animation) =>
+            animation.effect?.target === element &&
+            !previousAnimations.has(animation) &&
+            animation.playState !== 'finished' &&
+            animation.playState !== 'idle',
+        );
       if (!animations.length) return;
       const style = getComputedStyle(element);
       window.capturedMotion = {
         element,
         animations,
         durations: animations.map((animation) => animation.effect.getTiming().duration),
-        curves: (event.type === 'animationstart'
+        curves: (animations[0] instanceof CSSAnimation
           ? style.animationTimingFunction
           : style.transitionTimingFunction
         ).match(/cubic-bezier\([^)]*\)|[\w-]+/g),
@@ -134,10 +143,14 @@ async function captureNextMotion(page, kind) {
       for (const animation of animations) animation.pause();
       window.stopMotionCapture();
     };
+    /** Mutation delivery precedes rendering; animation events may arrive after a short motion has ended. */
+    const observer = new MutationObserver(capture);
     window.stopMotionCapture = () => {
+      observer.disconnect();
       document.removeEventListener('animationstart', capture, true);
       document.removeEventListener('transitionrun', capture, true);
     };
+    observer.observe(document.documentElement, { attributes: true, childList: true, subtree: true });
     document.addEventListener('animationstart', capture, true);
     document.addEventListener('transitionrun', capture, true);
   }, selectors[kind]);

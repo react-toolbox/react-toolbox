@@ -96,6 +96,10 @@ test('autocomplete options, group labels and supporting messages share their tex
   await input.fill('Al');
   const option = page.getByRole('option', { name: 'Alpha', exact: true });
   await expect(option).toBeVisible();
+  /** Compare resting geometry after the popup's scale transition has completed. */
+  await page.locator('[data-slot=AutocompletePopup]').evaluate(async (popup) => {
+    await Promise.all(popup.getAnimations().map((animation) => animation.finished));
+  });
   for (const selector of ['[data-slot=AutocompleteGroupLabel]', '[data-slot=AutocompleteStatus]']) {
     const supporting = page.locator(selector);
     await expect(supporting).toBeVisible();
