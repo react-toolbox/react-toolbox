@@ -1,0 +1,31 @@
+@layer theme {
+  /* card */
+  :root {
+    --card-color-white: var(--rt-color-white);
+    --card-text-overlay: rgb(from var(--rt-color-black) r g b / 35%);
+    --card-background-color: var(--card-color-white);
+    --card-padding-sm: calc(0.8 * var(--unit));
+    --card-padding: calc(1.6 * var(--unit));
+    --card-padding-lg: calc(2.4 * var(--unit));
+    --card-font-size: var(--font-size-small);
+  }
+  [data-react-toolbox-tokens~="--rt-color-white"] {
+    --card-color-white: var(--rt-color-white);
+  }
+  [data-react-toolbox-tokens~="--rt-color-black"] {
+    --card-text-overlay: rgb(from var(--rt-color-black) r g b / 35%);
+  }
+  [data-react-toolbox-tokens~="--card-color-white"],
+  [data-react-toolbox-tokens~="--rt-color-white"] {
+    --card-background-color: var(--card-color-white);
+  }
+  [data-react-toolbox-tokens~="--unit"] {
+    --card-padding-sm: calc(0.8 * var(--unit));
+    --card-padding: calc(1.6 * var(--unit));
+    --card-padding-lg: calc(2.4 * var(--unit));
+  }
+  [data-react-toolbox-tokens~="--font-size-small"],
+  [data-react-toolbox-tokens~="--unit"] {
+    --card-font-size: var(--font-size-small);
+  }
+}

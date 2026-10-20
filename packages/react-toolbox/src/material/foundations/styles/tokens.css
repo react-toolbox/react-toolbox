@@ -1,0 +1,18 @@
+/* Shared layout increments. */
+:root {
+  --standard-increment-mobile: calc(5.6 * var(--unit));
+  --standard-increment-desktop: calc(6.4 * var(--unit));
+}
+
+[data-react-toolbox-tokens~="--unit"] {
+  --standard-increment-mobile: calc(5.6 * var(--unit));
+  --standard-increment-desktop: calc(6.4 * var(--unit));
+}
+
+/* Shared optional landscape picker header. */
+:root {
+  --picker-landscape-header-width: calc(17 * var(--unit));
+}
+[data-react-toolbox-tokens~="--unit"] {
+  --picker-landscape-header-width: calc(17 * var(--unit));
+}

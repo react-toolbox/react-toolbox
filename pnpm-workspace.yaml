@@ -1,0 +1,8 @@
+packages:
+  - apps/*
+  - packages/*
+strictPeerDependencies: true
+allowBuilds:
+  '@biomejs/biome': true
+  esbuild: true
+  sharp: true

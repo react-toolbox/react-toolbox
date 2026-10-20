@@ -1,0 +1,105 @@
+@layer theme {
+  /* time picker */
+  :root {
+    --clock-face-background: var(--palette-grey-200);
+    --clock-number-color: var(--palette-grey-700);
+    --timepicker-header-font-size: calc(5.2 * var(--unit));
+    --timepicker-header-padding: var(--unit);
+    --timepicker-ampm-font-size: calc(1.6 * var(--unit));
+    --timepicker-period-inactive-opacity: 0.75;
+    --timepicker-primary: var(--rt-color-primary);
+    --timepicker-primary-contrast: var(--rt-color-primary-contrast);
+    --timepicker-primary-dark: var(--rt-color-primary-dark);
+    --timepicker-primary-color: var(--timepicker-primary);
+    --timepicker-primary-hover-color: rgb(from var(--timepicker-primary) r g b / 20%);
+    --timepicker-primary-contrast-color: var(--timepicker-primary-contrast);
+    --timepicker-primary-dark-color: var(--timepicker-primary-dark);
+    --timepicker-ampm-height: calc(2.2 * var(--unit));
+    --timepicker-ampm-width: calc(4 * var(--unit));
+    --timepicker-dialog-width: calc(30 * var(--unit));
+    --clock-padding: calc(1.5 * var(--unit)) calc(2 * var(--unit));
+    --clock-primary: var(--rt-color-primary);
+    --clock-primary-contrast: var(--rt-color-primary-contrast);
+    --clock-primary-dark: var(--rt-color-primary-dark);
+    --clock-primary-color: var(--clock-primary);
+    --clock-primary-hover-color: rgb(from var(--clock-primary) r g b / 20%);
+    --clock-primary-contrast-color: var(--clock-primary-contrast);
+    --clock-primary-dark-color: var(--clock-primary-dark);
+    --clock-number-size: calc(2 * var(--unit));
+    --clock-hand-width: calc(0.4 * var(--unit));
+    --clock-hand-dot-size: calc(1 * var(--unit));
+    --clock-knob-size: calc(3.4 * var(--unit));
+    --clock-knob-small-size: calc(1.2 * var(--unit));
+  }
+
+  [data-react-toolbox-tokens~="--palette-grey-200"] {
+    --clock-face-background: var(--palette-grey-200);
+  }
+  [data-react-toolbox-tokens~="--palette-grey-700"] {
+    --clock-number-color: var(--palette-grey-700);
+  }
+  [data-react-toolbox-tokens~="--unit"] {
+    --timepicker-header-font-size: calc(5.2 * var(--unit));
+    --timepicker-header-padding: var(--unit);
+    --timepicker-ampm-font-size: calc(1.6 * var(--unit));
+    --timepicker-ampm-height: calc(2.2 * var(--unit));
+    --timepicker-ampm-width: calc(4 * var(--unit));
+    --timepicker-dialog-width: calc(30 * var(--unit));
+    --clock-padding: calc(1.5 * var(--unit)) calc(2 * var(--unit));
+    --clock-number-size: calc(2 * var(--unit));
+    --clock-hand-width: calc(0.4 * var(--unit));
+    --clock-hand-dot-size: calc(1 * var(--unit));
+    --clock-knob-size: calc(3.4 * var(--unit));
+    --clock-knob-small-size: calc(1.2 * var(--unit));
+  }
+  [data-react-toolbox-tokens~="--rt-color-primary"],
+  [data-react-toolbox-tokens~="--palette-indigo-500"] {
+    --timepicker-primary: var(--rt-color-primary);
+    --clock-primary: var(--rt-color-primary);
+  }
+  [data-react-toolbox-tokens~="--rt-color-dark-contrast"],
+  [data-react-toolbox-tokens~="--rt-color-primary-contrast"],
+  [data-react-toolbox-tokens~="--rt-color-white"] {
+    --timepicker-primary-contrast: var(--rt-color-primary-contrast);
+    --clock-primary-contrast: var(--rt-color-primary-contrast);
+  }
+  [data-react-toolbox-tokens~="--rt-color-primary-dark"],
+  [data-react-toolbox-tokens~="--palette-indigo-700"] {
+    --timepicker-primary-dark: var(--rt-color-primary-dark);
+    --clock-primary-dark: var(--rt-color-primary-dark);
+  }
+  [data-react-toolbox-tokens~="--rt-color-primary"],
+  [data-react-toolbox-tokens~="--palette-indigo-500"],
+  [data-react-toolbox-tokens~="--timepicker-primary"] {
+    --timepicker-primary-color: var(--timepicker-primary);
+    --timepicker-primary-hover-color: rgb(from var(--timepicker-primary) r g b / 20%);
+  }
+  [data-react-toolbox-tokens~="--rt-color-dark-contrast"],
+  [data-react-toolbox-tokens~="--rt-color-primary-contrast"],
+  [data-react-toolbox-tokens~="--rt-color-white"],
+  [data-react-toolbox-tokens~="--timepicker-primary-contrast"] {
+    --timepicker-primary-contrast-color: var(--timepicker-primary-contrast);
+  }
+  [data-react-toolbox-tokens~="--rt-color-primary-dark"],
+  [data-react-toolbox-tokens~="--palette-indigo-700"],
+  [data-react-toolbox-tokens~="--timepicker-primary-dark"] {
+    --timepicker-primary-dark-color: var(--timepicker-primary-dark);
+  }
+  [data-react-toolbox-tokens~="--clock-primary"],
+  [data-react-toolbox-tokens~="--rt-color-primary"],
+  [data-react-toolbox-tokens~="--palette-indigo-500"] {
+    --clock-primary-color: var(--clock-primary);
+    --clock-primary-hover-color: rgb(from var(--clock-primary) r g b / 20%);
+  }
+  [data-react-toolbox-tokens~="--clock-primary-contrast"],
+  [data-react-toolbox-tokens~="--rt-color-dark-contrast"],
+  [data-react-toolbox-tokens~="--rt-color-primary-contrast"],
+  [data-react-toolbox-tokens~="--rt-color-white"] {
+    --clock-primary-contrast-color: var(--clock-primary-contrast);
+  }
+  [data-react-toolbox-tokens~="--clock-primary-dark"],
+  [data-react-toolbox-tokens~="--rt-color-primary-dark"],
+  [data-react-toolbox-tokens~="--palette-indigo-700"] {
+    --clock-primary-dark-color: var(--clock-primary-dark);
+  }
+}

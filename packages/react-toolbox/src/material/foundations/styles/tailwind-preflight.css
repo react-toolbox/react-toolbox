@@ -1,0 +1,256 @@
+/* Scoped inverse of Tailwind v4 Preflight. Each reset property is restored to
+ * the browser default before component styles. SVG presentation attributes
+ * (including path data/radius) and properties Preflight never resets stay intact.
+ * Kept in the components layer so Preflight specificity cannot override it;
+ * element selectors have zero specificity and utilities remain last.
+ * Nested application content receives the same native defaults; its explicit
+ * styles and Tailwind utilities still override this compatibility layer.
+ * Inherited host typography stays intact, including Preflight's html defaults.
+ * Source: https://tailwindcss.com/docs/preflight */
+@layer components {
+  :where([data-react-toolbox], [class^="rt-"], [class*=" rt-"]) {
+    &,
+    & *,
+    &::after,
+    & *::after,
+    &::before,
+    & *::before,
+    &::backdrop,
+    & *::backdrop,
+    &::file-selector-button,
+    & *::file-selector-button {
+      box-sizing: revert;
+      margin: revert;
+      padding: revert;
+      border: revert;
+    }
+    &:where(hr),
+    & :where(hr) {
+      height: revert;
+      color: revert;
+      border-top-width: revert;
+    }
+    &:where(abbr:where([title])),
+    & :where(abbr:where([title])) {
+      -webkit-text-decoration: revert;
+      text-decoration: revert;
+    }
+    &:where(h1),
+    & :where(h1),
+    &:where(h2),
+    & :where(h2),
+    &:where(h3),
+    & :where(h3),
+    &:where(h4),
+    & :where(h4),
+    &:where(h5),
+    & :where(h5),
+    &:where(h6),
+    & :where(h6) {
+      font-size: revert;
+      font-weight: revert;
+    }
+    &:where(a),
+    & :where(a) {
+      color: revert;
+      -webkit-text-decoration: revert;
+      text-decoration: revert;
+    }
+    &:where(b),
+    & :where(b),
+    &:where(strong),
+    & :where(strong) {
+      font-weight: revert;
+    }
+    &:where(code),
+    & :where(code),
+    &:where(kbd),
+    & :where(kbd),
+    &:where(samp),
+    & :where(samp),
+    &:where(pre),
+    & :where(pre) {
+      font-family: revert;
+      font-feature-settings: revert;
+      font-variation-settings: revert;
+      font-size: revert;
+    }
+    &:where(small),
+    & :where(small) {
+      font-size: revert;
+    }
+    &:where(sub),
+    & :where(sub),
+    &:where(sup),
+    & :where(sup) {
+      font-size: revert;
+      line-height: revert;
+      position: revert;
+      vertical-align: revert;
+    }
+    &:where(sub),
+    & :where(sub) {
+      bottom: revert;
+    }
+    &:where(sup),
+    & :where(sup) {
+      top: revert;
+    }
+    &:where(table),
+    & :where(table) {
+      text-indent: revert;
+      border-color: revert;
+      border-collapse: revert;
+    }
+    &:where(:-moz-focusring:where(:not(iframe))),
+    & :where(:-moz-focusring:where(:not(iframe))) {
+      outline: revert;
+    }
+    &:where(progress),
+    & :where(progress) {
+      vertical-align: revert;
+    }
+    &:where(summary),
+    & :where(summary) {
+      display: revert;
+    }
+    &:where(ol),
+    & :where(ol),
+    &:where(ul),
+    & :where(ul),
+    &:where(menu),
+    & :where(menu) {
+      list-style: revert;
+    }
+    &:where(img),
+    & :where(img),
+    &:where(svg),
+    & :where(svg),
+    &:where(video),
+    & :where(video),
+    &:where(canvas),
+    & :where(canvas),
+    &:where(audio),
+    & :where(audio),
+    &:where(iframe),
+    & :where(iframe),
+    &:where(embed),
+    & :where(embed),
+    &:where(object),
+    & :where(object) {
+      display: revert;
+      vertical-align: revert;
+    }
+    &:where(img),
+    & :where(img),
+    &:where(video),
+    & :where(video) {
+      max-width: revert;
+      height: revert;
+    }
+    &:where(button),
+    & :where(button),
+    &:where(input),
+    & :where(input),
+    &:where(select),
+    & :where(select),
+    &:where(optgroup),
+    & :where(optgroup),
+    &:where(textarea),
+    & :where(textarea),
+    &::file-selector-button,
+    & *::file-selector-button {
+      font: revert;
+      font-feature-settings: revert;
+      font-variation-settings: revert;
+      letter-spacing: revert;
+      color: revert;
+      border-radius: revert;
+      background-color: revert;
+      opacity: revert;
+    }
+    &:where(:where(select:where([multiple], [size])) optgroup),
+    & :where(:where(select:where([multiple], [size])) optgroup) {
+      font-weight: revert;
+    }
+    &:where(:where(select:where([multiple], [size])) optgroup option),
+    & :where(:where(select:where([multiple], [size])) optgroup option) {
+      padding-inline-start: revert;
+    }
+    &::file-selector-button,
+    & *::file-selector-button {
+      margin-inline-end: revert;
+    }
+    &::placeholder,
+    & *::placeholder {
+      opacity: revert;
+    }
+    &::placeholder,
+    & *::placeholder {
+      color: revert;
+    }
+    &:where(textarea),
+    & :where(textarea) {
+      resize: revert;
+    }
+    &::-webkit-search-decoration,
+    & *::-webkit-search-decoration {
+      -webkit-appearance: revert;
+    }
+    &::-webkit-date-and-time-value,
+    & *::-webkit-date-and-time-value {
+      min-height: revert;
+      text-align: revert;
+    }
+    &::-webkit-datetime-edit,
+    & *::-webkit-datetime-edit {
+      display: revert;
+    }
+    &::-webkit-datetime-edit-fields-wrapper,
+    & *::-webkit-datetime-edit-fields-wrapper {
+      padding: revert;
+    }
+    &::-webkit-datetime-edit,
+    & *::-webkit-datetime-edit,
+    &::-webkit-datetime-edit-year-field,
+    & *::-webkit-datetime-edit-year-field,
+    &::-webkit-datetime-edit-month-field,
+    & *::-webkit-datetime-edit-month-field,
+    &::-webkit-datetime-edit-day-field,
+    & *::-webkit-datetime-edit-day-field,
+    &::-webkit-datetime-edit-hour-field,
+    & *::-webkit-datetime-edit-hour-field,
+    &::-webkit-datetime-edit-minute-field,
+    & *::-webkit-datetime-edit-minute-field,
+    &::-webkit-datetime-edit-second-field,
+    & *::-webkit-datetime-edit-second-field,
+    &::-webkit-datetime-edit-millisecond-field,
+    & *::-webkit-datetime-edit-millisecond-field,
+    &::-webkit-datetime-edit-meridiem-field,
+    & *::-webkit-datetime-edit-meridiem-field {
+      padding-block: revert;
+    }
+    &::-webkit-calendar-picker-indicator,
+    & *::-webkit-calendar-picker-indicator {
+      line-height: revert;
+    }
+    &:where(:-moz-ui-invalid),
+    & :where(:-moz-ui-invalid) {
+      box-shadow: revert;
+    }
+    &:where(button),
+    & :where(button),
+    &:where(input:where([type="button"], [type="reset"], [type="submit"])),
+    & :where(input:where([type="button"], [type="reset"], [type="submit"])),
+    &::file-selector-button,
+    & *::file-selector-button {
+      appearance: revert;
+    }
+    &::-webkit-inner-spin-button,
+    & *::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button,
+    & *::-webkit-outer-spin-button {
+      height: revert;
+    }
+  }
+}

@@ -22,11 +22,6 @@ lib
 # Dependency directories
 node_modules/
 
-# App directories
-public/styles
-public/js/*
-!public/js/plugins
-
 # OS files
 .DS_Store
 ._*
@@ -40,4 +35,17 @@ public/js/*
 
 # Test coverage folder
 .coverage
-/coverage
+coverage/
+.next/
+test-results/
+playwright-report/
+*.tsbuildinfo
+
+# Generated source registry and package archives
+packages/react-toolbox/registry/public/
+packages/react-toolbox/registry/data.json
+packages/react-toolbox/registry/api.json
+*.tgz
+.turbo/
+.vercel/
+.env*

@@ -1,0 +1,4 @@
+/* Remove the Roboto imports when the host owns typography; retain Material Icons for built-in ligatures. */
+@import "@fontsource/roboto/400.css" layer(base);
+@import "@fontsource/roboto/500.css" layer(base);
+@import "material-icons/iconfont/material-icons.css" layer(base);

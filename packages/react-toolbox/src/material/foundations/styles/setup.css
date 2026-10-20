@@ -1,0 +1,9 @@
+/* Loaded by every public registry entry. The layer order is part of M1. */
+@layer theme, base, components, utilities;
+@import "./fonts.css";
+@import "./tailwind-preflight.css";
+@import "./base.css";
+@import "./composition.css";
+
+/* Include the installed source even when the host disables automatic scanning. */
+@source "../../";

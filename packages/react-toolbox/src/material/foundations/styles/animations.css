@@ -1,0 +1,77 @@
+/* Tailwind emits only keyframes referenced by installed component utilities. */
+@theme {
+  @keyframes rt-checkbox-checkmark-expand {
+    0% {
+      height: 0;
+      left: calc(0.6 * var(--unit));
+      top: calc(0.9 * var(--unit));
+      width: 0;
+    }
+
+    100% {
+      height: calc(1.2 * var(--unit));
+      left: calc(0.4 * var(--unit));
+      top: calc(-0.1 * var(--unit));
+      width: calc(0.7 * var(--unit));
+    }
+  }
+
+  @keyframes rt-progress-bar-linear-indeterminate-bar {
+    0% {
+      transform: translate(-50%) scaleX(0);
+    }
+
+    50% {
+      transform: translate(-0%) scaleX(0.3);
+    }
+
+    100% {
+      transform: translate(50%) scaleX(0);
+    }
+  }
+
+  @keyframes rt-progress-bar-circular-indeterminate-bar-rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes rt-progress-bar-circular-indeterminate-bar-dash {
+    0% {
+      stroke-dasharray: calc(var(--scale-ratio) * 1px), calc(var(--scale-ratio) * 200px);
+      stroke-dashoffset: calc(var(--scale-ratio) * 0px);
+    }
+
+    50% {
+      stroke-dasharray: calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px);
+      stroke-dashoffset: calc(var(--scale-ratio) * -35px);
+    }
+
+    100% {
+      stroke-dasharray: calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px);
+      stroke-dashoffset: calc(var(--scale-ratio) * -124px);
+    }
+  }
+
+  @keyframes rt-progress-bar-colors {
+    0% {
+      stroke: #4285f4;
+    }
+
+    25% {
+      stroke: #de3e35;
+    }
+
+    50% {
+      stroke: #f7c223;
+    }
+
+    75% {
+      stroke: #1b9a59;
+    }
+
+    100% {
+      stroke: #4285f4;
+    }
+  }
+}

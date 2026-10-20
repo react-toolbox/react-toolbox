@@ -1,0 +1,15 @@
+/* Shared Material 1 foundations. Family entries load their own component tokens. */
+@layer theme, base, components, utilities;
+@import "./colors.css" layer(theme);
+@import "./variables.css" layer(theme);
+@import "./tokens.css" layer(theme);
+@import "./animations.css";
+@import "./reduced-motion.css";
+
+@layer base {
+  /* Reserve the glyph before its font loads; component dimensions still take precedence. */
+  [data-react-toolbox="font-icon"].material-icons {
+    width: 1em;
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,372 @@
+{
+  "name": "react-toolbox",
+  "description": "React components preserving Google's original Material Design, with modern React and Tailwind-compatible styles.",
+  "homepage": "https://react-toolbox.io/",
+  "license": "MIT",
+  "version": "3.0.0-next.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "author": {
+    "email": "javier.velasco86@gmail.com",
+    "name": "Javier Velasco Arjona",
+    "url": "http://javivelasco.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/react-toolbox/react-toolbox.git",
+    "directory": "packages/react-toolbox"
+  },
+  "bugs": {
+    "email": "issues@react-toolbox.io",
+    "url": "https://github.com/react-toolbox/react-toolbox/issues"
+  },
+  "keywords": [
+    "components",
+    "material design",
+    "react",
+    "react-component",
+    "toolkit"
+  ],
+  "engines": {
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+  },
+  "scripts": {
+    "build": "tsdown && node scripts/build-styles.mjs",
+    "dev": "tsdown --watch src --on-success \"node scripts/build-styles.mjs && node scripts/build-registry.mjs && node scripts/build-api-docs.mjs\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:browser": "pnpm --workspace-root exec playwright test packages/react-toolbox/tests/browser",
+    "typecheck": "tsc --noEmit",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm test:footprint",
+    "lint": "biome lint . && pnpm lint:tailwind",
+    "lint:tailwind": "node scripts/lint-tailwind.mjs",
+    "format": "biome format --write .",
+    "registry:build": "node scripts/build-registry.mjs",
+    "test:registry:install": "node scripts/smoke-registry.mjs",
+    "test:footprint": "node scripts/measure-footprint.mjs --check",
+    "api:build": "node scripts/build-api-docs.mjs",
+    "release:snapshot": "node scripts/release-registry.mjs",
+    "verify:deployment": "node scripts/verify-deployment.mjs"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.9.0",
+    "@radix-ui/react-avatar": "^1.3.1",
+    "@radix-ui/react-dialog": "^1.3.1",
+    "@radix-ui/react-dropdown-menu": "^2.2.1",
+    "@radix-ui/react-select": "^2.4.1",
+    "@radix-ui/react-slider": "^1.6.1",
+    "@radix-ui/react-slot": "^1.5.0",
+    "@radix-ui/react-tabs": "^1.2.1",
+    "@radix-ui/react-tooltip": "^1.4.1",
+    "classnames": "^2.5.1",
+    "tailwind-merge": "^3.7.0",
+    "vaul": "^1.1.2"
+  },
+  "peerDependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@babel/parser": "^8.0.7",
+    "@biomejs/biome": "^2.5.15",
+    "@fontsource/roboto": "^5.3.0",
+    "@playwright/test": "^1.64.1",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.8",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "esbuild": "^0.28.2",
+    "jsdom": "^30.1.3",
+    "material-icons": "^1.13.14",
+    "next": "^16.4.2",
+    "postcss": "^8.5.30",
+    "postcss-selector-parser": "^7.1.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "shadcn": "^4.22.0",
+    "tailwindcss": "^4.3.3",
+    "tsdown": "^0.23.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.5"
+  },
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": {
+      "types": "./dist/css.d.mts",
+      "default": "./dist/styles.css"
+    },
+    "./theme": {
+      "types": "./dist/material/theme/index.d.ts",
+      "import": "./dist/material/theme/index.js"
+    },
+    "./package.json": "./package.json",
+    "./tailwind.css": {
+      "types": "./dist/css.d.mts",
+      "default": "./dist/tailwind.css"
+    },
+    "./accordion": {
+      "types": "./dist/material/accordion/index.d.ts",
+      "import": "./dist/material/accordion/index.js"
+    },
+    "./accordion/*": {
+      "types": "./dist/material/accordion/*.d.ts",
+      "import": "./dist/material/accordion/*.js"
+    },
+    "./divider": {
+      "types": "./dist/material/divider/index.d.ts",
+      "import": "./dist/material/divider/index.js"
+    },
+    "./divider/*": {
+      "types": "./dist/material/divider/*.d.ts",
+      "import": "./dist/material/divider/*.js"
+    },
+    "./autocomplete": {
+      "types": "./dist/material/autocomplete/index.d.ts",
+      "import": "./dist/material/autocomplete/index.js"
+    },
+    "./autocomplete/*": {
+      "types": "./dist/material/autocomplete/*.d.ts",
+      "import": "./dist/material/autocomplete/*.js"
+    },
+    "./avatar": {
+      "types": "./dist/material/avatar/index.d.ts",
+      "import": "./dist/material/avatar/index.js"
+    },
+    "./avatar/*": {
+      "types": "./dist/material/avatar/*.d.ts",
+      "import": "./dist/material/avatar/*.js"
+    },
+    "./button": {
+      "types": "./dist/material/button/index.d.ts",
+      "import": "./dist/material/button/index.js"
+    },
+    "./button/*": {
+      "types": "./dist/material/button/*.d.ts",
+      "import": "./dist/material/button/*.js"
+    },
+    "./card": {
+      "types": "./dist/material/card/index.d.ts",
+      "import": "./dist/material/card/index.js"
+    },
+    "./card/*": {
+      "types": "./dist/material/card/*.d.ts",
+      "import": "./dist/material/card/*.js"
+    },
+    "./checkbox": {
+      "types": "./dist/material/checkbox/index.d.ts",
+      "import": "./dist/material/checkbox/index.js"
+    },
+    "./checkbox/*": {
+      "types": "./dist/material/checkbox/*.d.ts",
+      "import": "./dist/material/checkbox/*.js"
+    },
+    "./chip": {
+      "types": "./dist/material/chip/index.d.ts",
+      "import": "./dist/material/chip/index.js"
+    },
+    "./chip/*": {
+      "types": "./dist/material/chip/*.d.ts",
+      "import": "./dist/material/chip/*.js"
+    },
+    "./dialog": {
+      "types": "./dist/material/dialog/index.d.ts",
+      "import": "./dist/material/dialog/index.js"
+    },
+    "./dialog/*": {
+      "types": "./dist/material/dialog/*.d.ts",
+      "import": "./dist/material/dialog/*.js"
+    },
+    "./drawer": {
+      "types": "./dist/material/drawer/index.d.ts",
+      "import": "./dist/material/drawer/index.js"
+    },
+    "./drawer/*": {
+      "types": "./dist/material/drawer/*.d.ts",
+      "import": "./dist/material/drawer/*.js"
+    },
+    "./dropdown": {
+      "types": "./dist/material/dropdown/index.d.ts",
+      "import": "./dist/material/dropdown/index.js"
+    },
+    "./dropdown/*": {
+      "types": "./dist/material/dropdown/*.d.ts",
+      "import": "./dist/material/dropdown/*.js"
+    },
+    "./input": {
+      "types": "./dist/material/input/index.d.ts",
+      "import": "./dist/material/input/index.js"
+    },
+    "./input/*": {
+      "types": "./dist/material/input/*.d.ts",
+      "import": "./dist/material/input/*.js"
+    },
+    "./list": {
+      "types": "./dist/material/list/index.d.ts",
+      "import": "./dist/material/list/index.js"
+    },
+    "./list/*": {
+      "types": "./dist/material/list/*.d.ts",
+      "import": "./dist/material/list/*.js"
+    },
+    "./menu": {
+      "types": "./dist/material/menu/index.d.ts",
+      "import": "./dist/material/menu/index.js"
+    },
+    "./menu/*": {
+      "types": "./dist/material/menu/*.d.ts",
+      "import": "./dist/material/menu/*.js"
+    },
+    "./overlay": {
+      "types": "./dist/material/overlay/index.d.ts",
+      "import": "./dist/material/overlay/index.js"
+    },
+    "./overlay/*": {
+      "types": "./dist/material/overlay/*.d.ts",
+      "import": "./dist/material/overlay/*.js"
+    },
+    "./radio": {
+      "types": "./dist/material/radio/index.d.ts",
+      "import": "./dist/material/radio/index.js"
+    },
+    "./radio/*": {
+      "types": "./dist/material/radio/*.d.ts",
+      "import": "./dist/material/radio/*.js"
+    },
+    "./ripple": {
+      "types": "./dist/material/ripple/index.d.ts",
+      "import": "./dist/material/ripple/index.js"
+    },
+    "./ripple/*": {
+      "types": "./dist/material/ripple/*.d.ts",
+      "import": "./dist/material/ripple/*.js"
+    },
+    "./slider": {
+      "types": "./dist/material/slider/index.d.ts",
+      "import": "./dist/material/slider/index.js"
+    },
+    "./slider/*": {
+      "types": "./dist/material/slider/*.d.ts",
+      "import": "./dist/material/slider/*.js"
+    },
+    "./snackbar": {
+      "types": "./dist/material/snackbar/index.d.ts",
+      "import": "./dist/material/snackbar/index.js"
+    },
+    "./snackbar/*": {
+      "types": "./dist/material/snackbar/*.d.ts",
+      "import": "./dist/material/snackbar/*.js"
+    },
+    "./switch": {
+      "types": "./dist/material/switch/index.d.ts",
+      "import": "./dist/material/switch/index.js"
+    },
+    "./switch/*": {
+      "types": "./dist/material/switch/*.d.ts",
+      "import": "./dist/material/switch/*.js"
+    },
+    "./table": {
+      "types": "./dist/material/table/index.d.ts",
+      "import": "./dist/material/table/index.js"
+    },
+    "./table/*": {
+      "types": "./dist/material/table/*.d.ts",
+      "import": "./dist/material/table/*.js"
+    },
+    "./tabs": {
+      "types": "./dist/material/tabs/index.d.ts",
+      "import": "./dist/material/tabs/index.js"
+    },
+    "./tabs/*": {
+      "types": "./dist/material/tabs/*.d.ts",
+      "import": "./dist/material/tabs/*.js"
+    },
+    "./tooltip": {
+      "types": "./dist/material/tooltip/index.d.ts",
+      "import": "./dist/material/tooltip/index.js"
+    },
+    "./tooltip/*": {
+      "types": "./dist/material/tooltip/*.d.ts",
+      "import": "./dist/material/tooltip/*.js"
+    },
+    "./shadcn.css": {
+      "types": "./dist/css.d.mts",
+      "default": "./dist/shadcn.css"
+    },
+    "./shadcn": {
+      "types": "./dist/material/foundations/theme/shadcn.d.ts",
+      "import": "./dist/material/foundations/theme/shadcn.js"
+    },
+    "./registry/data.json": "./registry/data.json",
+    "./app-bar": {
+      "types": "./dist/material/app-bar/index.d.ts",
+      "import": "./dist/material/app-bar/index.js"
+    },
+    "./app-bar/*": {
+      "types": "./dist/material/app-bar/*.d.ts",
+      "import": "./dist/material/app-bar/*.js"
+    },
+    "./date-picker": {
+      "types": "./dist/material/date-picker/index.d.ts",
+      "import": "./dist/material/date-picker/index.js"
+    },
+    "./date-picker/*": {
+      "types": "./dist/material/date-picker/*.d.ts",
+      "import": "./dist/material/date-picker/*.js"
+    },
+    "./font-icon": {
+      "types": "./dist/material/font-icon/index.d.ts",
+      "import": "./dist/material/font-icon/index.js"
+    },
+    "./font-icon/*": {
+      "types": "./dist/material/font-icon/*.d.ts",
+      "import": "./dist/material/font-icon/*.js"
+    },
+    "./progress-bar": {
+      "types": "./dist/material/progress-bar/index.d.ts",
+      "import": "./dist/material/progress-bar/index.js"
+    },
+    "./progress-bar/*": {
+      "types": "./dist/material/progress-bar/*.d.ts",
+      "import": "./dist/material/progress-bar/*.js"
+    },
+    "./time-picker": {
+      "types": "./dist/material/time-picker/index.d.ts",
+      "import": "./dist/material/time-picker/index.js"
+    },
+    "./time-picker/*": {
+      "types": "./dist/material/time-picker/*.d.ts",
+      "import": "./dist/material/time-picker/*.js"
+    },
+    "./registry/api.json": "./registry/api.json",
+    "./examples/field-notes": {
+      "types": "./dist/examples/field-notes/index.d.ts",
+      "import": "./dist/examples/field-notes/index.js"
+    },
+    "./sheet": {
+      "types": "./dist/material/sheet/index.d.ts",
+      "import": "./dist/material/sheet/index.js"
+    },
+    "./examples/recipes": {
+      "types": "./dist/examples/recipes/index.d.ts",
+      "import": "./dist/examples/recipes/index.js"
+    },
+    "./examples/snackbar-queue": {
+      "types": "./dist/examples/snackbar-queue/index.d.ts",
+      "import": "./dist/examples/snackbar-queue/index.js"
+    }
+  },
+  "private": true
+}

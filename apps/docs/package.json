@@ -1,0 +1,36 @@
+{
+  "name": "@react-toolbox/docs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1",
+    "build": "next build",
+    "start": "next start --hostname 127.0.0.1 --port 3100",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test:browser": "pnpm --workspace-root exec playwright test apps/docs/tests/browser",
+    "lint": "biome lint .",
+    "check": "pnpm lint && pnpm typecheck"
+  },
+  "dependencies": {
+    "@fontsource/roboto": "^5.3.0",
+    "material-icons": "^1.13.14",
+    "next": "^16.4.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-toolbox": "workspace:*",
+    "shiki": "^4.5.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@biomejs/biome": "^2.5.15",
+    "@playwright/test": "^1.64.1",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "postcss": "^8.5.30",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2"
+  }
+}

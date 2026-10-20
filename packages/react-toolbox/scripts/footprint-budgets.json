@@ -1,0 +1,14 @@
+{
+  "description": "Upper bounds in bytes, reviewed with the consumer scenarios in measure-footprint.mjs. Do not automatically raise these when a check fails.",
+  "auditBaseline": {
+    "note": "Initial component review, 2026-10-16: selected Button export, Tailwind 4.3.3 and esbuild 0.28.2, automatic four-weight Roboto and Material Icons. Setup then contained every family's tokens, so setup-only CSS included the full token graph. Current CSS includes actual family imports and two Roboto weights. Changes include component fixes as well as the token/font split; this is not an isolated benchmark of one change.",
+    "button": { "jsGzip": 14679, "cssGzip": 15896, "tokenCssRaw": 51148, "fontFaces": 41 }
+  },
+  "cases": {
+    "button": { "jsGzip": 16384, "cssGzip": 12288, "tokenCssRaw": 6144, "fontFaces": 23 },
+    "svg-icon-button": { "jsGzip": 16384, "cssGzip": 10240, "tokenCssRaw": 6144, "fontFaces": 0 },
+    "input": { "jsGzip": 14336, "cssGzip": 12288, "tokenCssRaw": 5632, "fontFaces": 23 },
+    "compound-selection": { "jsGzip": 98304, "cssGzip": 16384, "tokenCssRaw": 12288, "fontFaces": 23 },
+    "mixed-settings": { "jsGzip": 65536, "cssGzip": 28672, "tokenCssRaw": 34816, "fontFaces": 23 }
+  }
+}

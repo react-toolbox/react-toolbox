@@ -1,0 +1,15 @@
+# Build remotely from maintained source, without local caches or test artifacts.
+**/node_modules/**
+**/.next/**
+**/.turbo/**
+**/dist/**
+**/test-results/**
+**/playwright-report/**
+**/coverage/**
+**/*.tsbuildinfo
+**/*.log
+**/*.tgz
+**/.env*
+packages/react-toolbox/registry/public/**
+packages/react-toolbox/registry/data.json
+packages/react-toolbox/registry/api.json

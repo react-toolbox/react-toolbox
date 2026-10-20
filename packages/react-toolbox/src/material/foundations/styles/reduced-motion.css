@@ -1,0 +1,35 @@
+/* Preserve the original M1 motion unless the user requests less movement.
+ * Keep a finite transition so consumer transition-end listeners still run.
+ * Component lifecycles also finish explicitly without depending on that event. */
+@media (prefers-reduced-motion: reduce) {
+  :where([class^="rt-"], [class*=" rt-"]),
+  :where([class^="rt-"], [class*=" rt-"])::before,
+  :where([class^="rt-"], [class*=" rt-"])::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .rt-ripple-ripple {
+    display: none;
+  }
+
+  /* Loading remains visible and semantically indeterminate without spinning,
+   * sweeping or cycling its colors. Determinate values remain unchanged. */
+  .rt-progress-bar-indeterminate .rt-progress-bar-circle,
+  .rt-progress-bar-indeterminate .rt-progress-bar-path,
+  .rt-progress-bar-indeterminate .rt-progress-bar-value {
+    animation: none !important;
+  }
+
+  .rt-progress-bar-linear.rt-progress-bar-indeterminate .rt-progress-bar-value {
+    transform: scaleX(0.35);
+  }
+
+  .rt-progress-bar-circular.rt-progress-bar-indeterminate .rt-progress-bar-path {
+    stroke-dasharray: calc(var(--scale-ratio) * 89px), calc(var(--scale-ratio) * 200px);
+    stroke-dashoffset: 0;
+  }
+}

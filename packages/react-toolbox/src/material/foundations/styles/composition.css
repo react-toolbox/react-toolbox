@@ -1,0 +1,55 @@
+/* Motion for compound parts. The registry also installs these in host CSS. */
+@theme {
+  @keyframes toolbox-enter {
+    from {
+      opacity: 0;
+      scale: 0.95;
+    }
+    to {
+      opacity: 1;
+      scale: 1;
+    }
+  }
+  @keyframes toolbox-exit {
+    from {
+      opacity: 1;
+      scale: 1;
+    }
+    to {
+      opacity: 0;
+      scale: 0.95;
+    }
+  }
+  @keyframes toolbox-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes toolbox-fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes toolbox-drawer-in {
+    from {
+      translate: var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0);
+    }
+    to {
+      translate: 0 0;
+    }
+  }
+  @keyframes toolbox-drawer-out {
+    from {
+      translate: 0 0;
+    }
+    to {
+      translate: var(--drawer-offset-x, -100%) var(--drawer-offset-y, 0);
+    }
+  }
+}
